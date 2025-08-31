@@ -1,1 +1,1 @@
-"""Sub-module initialization"""\n
+"""Sub-module initialization"""
