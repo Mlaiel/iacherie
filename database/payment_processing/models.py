@@ -87,6 +87,11 @@ class PaymentMethodType(Enum):
     WIRE_TRANSFER = "wire_transfer"
     SWIFT = "swift"
     
+    # Banking Direct - Advanced bank integrations
+    PLAID_BANK_ACCOUNT = "plaid_bank_account"
+    OPEN_BANKING_INSTANT = "open_banking_instant"
+    ACH_DIRECT_DEBIT = "ach_direct_debit"
+    
     # Alternative payment methods
     PAYPAL_CREDIT = "paypal_credit"
     KLARNA = "klarna"
@@ -157,6 +162,11 @@ class PaymentProvider(Enum):
     WISE = "wise"
     REMITLY = "remitly"
     TRANSFERGO = "transfergo"
+    
+    # Banking Direct - US/EU bank account connections
+    PLAID = "plaid"
+    OPEN_BANKING = "open_banking"
+    ACH_DIRECT = "ach_direct"
     
     # Alternative
     AMAZON_PAYMENTS = "amazon_payments"

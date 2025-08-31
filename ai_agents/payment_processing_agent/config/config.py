@@ -108,6 +108,40 @@ class PaymentConfig(BaseSettings):
             "fee_rate": 3.4,
             "fixed_fee": 0.35
         },
+        # Banking Direct providers
+        "plaid": {
+            "client_id": "",
+            "client_secret": "",
+            "environment": "production",
+            "supported_countries": ["US", "CA", "GB", "FR", "DE", "ES", "IT", "NL"],
+            "products": ["auth", "transactions", "identity"],
+            "fee_rate": 1.0,
+            "fixed_fee": 0.25
+        },
+        "open_banking": {
+            "client_id": "",
+            "client_secret": "",
+            "api_key": "",
+            "environment": "production",
+            "psd2_license": "PSD2_LICENSED",
+            "redirect_uri": "https://ainflue.com/callback/openbanking",
+            "supported_countries": ["GB", "FR", "DE", "ES", "IT", "NL", "AT", "BE", "IE", "PT"],
+            "fee_rate": 0.8,
+            "fixed_fee": 0.20
+        },
+        "ach_direct": {
+            "api_key": "",
+            "routing_number": "",
+            "account_number": "",
+            "company_name": "Ainflue Platform",
+            "company_id": "AINFLUE01",
+            "environment": "production",
+            "verification_method": "micro_deposit",
+            "settlement_speed": "standard",
+            "max_transaction_amount": 25000.00,
+            "fee_rate": 0.75,
+            "fixed_fee": 1.00
+        },
         "crypto": {
             "bitcoin_network": "mainnet",
             "ethereum_network": "mainnet",
