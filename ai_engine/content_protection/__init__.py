@@ -467,7 +467,8 @@ be prosecuted under international intellectual property law.
 For licensing inquiries, contact: {__email__}
 
 {'='*80}
-"""    print(notice)
+"""
+    print(notice)
 
 
 def print_system_banner():
@@ -491,7 +492,8 @@ def print_system_banner():
 ║  Copyright © 2025 Fahed Mlaiel. All rights reserved.                        ║
 ║  Unauthorized use is strictly prohibited.                                    ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
-"""    print(banner)
+"""
+    print(banner)
 
 
 # Initialize logging for the module
@@ -534,11 +536,13 @@ else:
 
 # Export verification function for external use
 def module_health_check() -> bool:
-    """    Perform a quick health check of the module
+    """
+    Perform a quick health check of the module
     
     Returns:
         True if module is healthy, False otherwise
-    """    try:
+    """
+    try:
         verification = verify_installation()
         return verification["module_loaded"] and len(verification["issues"]) == 0
     except Exception as e:
@@ -551,12 +555,14 @@ __email__ = "mlaiel@live.de"
 
 
 class ContentProtectionSystem:
-    """    Unified Content Protection System
+    """
+    Unified Content Protection System
     
     Main orchestrator for all content protection functionalities
     including fingerprinting, rights management, piracy detection,
     DMCA automation, blockchain verification, and analytics.
-    """    
+    """
+    
     def __init__(self, config=None):
         """Initialize the complete content protection system"""
         self.config = config or {}
@@ -572,7 +578,8 @@ class ContentProtectionSystem:
         self.integrations = PlatformIntegrationManager(config.get('integrations', {}))
     
     async def protect_content(self, content_data, content_metadata):
-        """Complete content protection workflow"""        # Generate fingerprint
+        """Complete content protection workflow"""
+        # Generate fingerprint
         fingerprint = await self.fingerprinter.generate_fingerprint(content_data, content_metadata)
         
         # Register rights
@@ -610,4 +617,5 @@ class ContentProtectionSystem:
 
 # Convenience function for quick setup
 def create_protection_system(config=None):
-    """Create a configured content protection system"""    return ContentProtectionSystem(config)
+    """Create a configured content protection system"""
+    return ContentProtectionSystem(config)
