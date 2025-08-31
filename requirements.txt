@@ -28,6 +28,9 @@ pydantic==2.5.0
 pydantic-settings==2.1.0
 email-validator==2.1.0
 
+# User Management & Authentication
+fastapi-users==12.1.3
+
 # AI & Machine Learning
 torch>=2.2.0
 torchvision>=0.17.0
@@ -72,6 +75,10 @@ spacy>=3.4.0
 # Vector Database
 faiss-cpu==1.7.4
 numpy==1.24.3
+
+# Data Analysis & Machine Learning
+pandas==2.1.4
+scikit-learn==1.3.2
 
 # Web Scraping
 selenium==4.15.0
