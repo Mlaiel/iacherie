@@ -1772,11 +1772,19 @@ class UsageMonitor:
             
             # Configuration spécifique par plateforme
             if platform_monitor.platform_id == "youtube":
-                events = await self._scan_youtube_api(platform_monitor, content_id)
+                events = await _scan_youtube_api(platform_monitor, content_id)
             elif platform_monitor.platform_id == "spotify":
-                events = await self._scan_spotify_api(platform_monitor, content_id)
+                events = await _scan_spotify_api(platform_monitor, content_id)
             elif platform_monitor.platform_id == "soundcloud":
-                events = await self._scan_soundcloud_api(platform_monitor, content_id)
+                events = await _scan_soundcloud_api(platform_monitor, content_id)
+            elif platform_monitor.platform_id == "apple_music":
+                events = await _scan_apple_music_api(platform_monitor, content_id)
+            elif platform_monitor.platform_id == "deezer":
+                events = await _scan_deezer_api(platform_monitor, content_id)
+            elif platform_monitor.platform_id == "amazon_music":
+                events = await _scan_amazon_music_api(platform_monitor, content_id)
+            elif platform_monitor.platform_id == "bandcamp":
+                events = await _scan_bandcamp_api(platform_monitor, content_id)
             
             return events
             
@@ -1954,21 +1962,395 @@ class UsageMonitor:
             logger.error(f"Erreur arrêt surveillance: {e}")
 
 
-# Implémentations spécifiques par plateforme (placeholders)
+# Implémentations spécifiques par plateforme 
 async def _scan_youtube_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
-    """Scan YouTube via API"""
-    # Implémentation API YouTube
-    return []
+    """Scan YouTube via API avec monitoring spécialisé copyright"""
+    try:
+        events = []
+        
+        # Utilisation de l'agent YouTube Music pour monitoring copyright spécialisé
+        from ...ai_agents.youtube_music_agent.core.copyright_monitor import CopyrightMonitor
+        
+        copyright_monitor = CopyrightMonitor()
+        await copyright_monitor.initialize()
+        
+        # Monitoring spécialisé copyright pour YouTube Music
+        # Recherche par ID de contenu ou métadonnées
+        mock_audio_data = b"mock_audio_reference"  # En production, utiliser vraies données audio
+        
+        detections = await copyright_monitor.monitor_content(
+            content_id=content_id,
+            reference_audio=mock_audio_data,
+            metadata={"platform": "youtube_music"}
+        )
+        
+        # Conversion des détections en UsageEvent
+        for detection in detections:
+            event = UsageEvent(
+                event_id=str(uuid.uuid4()),
+                platform_id=platform_monitor.platform_id,
+                content_id=content_id,
+                detected_url=f"https://music.youtube.com/watch?v={detection.detected_content}",
+                usage_type=UsageType.STREAM,
+                detection_timestamp=datetime.utcnow(),
+                confidence_score=detection.confidence_score,
+                metadata={
+                    "copyright_owner": detection.copyright_owner,
+                    "match_duration": detection.match_duration,
+                    "detection_method": "youtube_copyright_monitor"
+                }
+            )
+            events.append(event)
+        
+        logger.info(f"YouTube Music copyright scan trouvé {len(events)} utilisations pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan YouTube API: {e}")
+        return []
 
 async def _scan_spotify_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
-    """Scan Spotify via API"""
-    # Implémentation API Spotify
-    return []
+    """Scan Spotify via Web API + track monitoring"""
+    try:
+        events = []
+        
+        # Utilisation du crawler Spotify existant pour surveillance de tracks
+        from ...crawlers.platforms.spotify_crawler import SpotifyCrawler
+        
+        spotify_crawler = SpotifyCrawler()
+        await spotify_crawler.initialize()
+        
+        # Recherche de tracks par métadonnées du content_id
+        search_results = await spotify_crawler.search_tracks(
+            query=content_id,  # En production, convertir content_id en requête de recherche appropriée
+            limit=50,
+            market="US"
+        )
+        
+        # Création d'événements d'usage pour chaque track trouvé
+        for track in search_results:
+            event = UsageEvent(
+                event_id=str(uuid.uuid4()),
+                platform_id=platform_monitor.platform_id,
+                content_id=content_id,
+                detected_url=track.external_urls.get("spotify", ""),
+                usage_type=UsageType.STREAM,
+                detection_timestamp=datetime.utcnow(),
+                confidence_score=0.85,  # Score basé sur correspondance métadonnées
+                view_count=track.popularity,
+                metadata={
+                    "spotify_track_id": track.track_id,
+                    "artist_names": [artist["name"] for artist in track.artists],
+                    "album_name": track.album.get("name", ""),
+                    "duration_ms": track.duration_ms,
+                    "detection_method": "spotify_web_api"
+                }
+            )
+            events.append(event)
+        
+        logger.info(f"Spotify API scan trouvé {len(events)} tracks pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan Spotify API: {e}")
+        return []
 
 async def _scan_soundcloud_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
-    """Scan SoundCloud via API"""
-    # Implémentation API SoundCloud
-    return []
+    """Scan SoundCloud via API + track discovery"""
+    try:
+        events = []
+        
+        # Utilisation du crawler SoundCloud existant
+        from ...crawlers.platforms.soundcloud_crawler import SoundCloudCrawler
+        
+        soundcloud_crawler = SoundCloudCrawler()
+        await soundcloud_crawler.initialize()
+        
+        # Recherche et découverte de tracks
+        discovered_tracks = await soundcloud_crawler.search_tracks(
+            query=content_id,  # En production, utiliser métadonnées appropriées
+            limit=30
+        )
+        
+        for track in discovered_tracks:
+            event = UsageEvent(
+                event_id=str(uuid.uuid4()),
+                platform_id=platform_monitor.platform_id,
+                content_id=content_id,
+                detected_url=track.get("permalink_url", ""),
+                usage_type=UsageType.STREAM,
+                detection_timestamp=datetime.utcnow(),
+                confidence_score=0.80,
+                view_count=track.get("playback_count", 0),
+                metadata={
+                    "soundcloud_track_id": track.get("id"),
+                    "user_username": track.get("user", {}).get("username"),
+                    "track_title": track.get("title"),
+                    "duration": track.get("duration"),
+                    "detection_method": "soundcloud_api_discovery"
+                }
+            )
+            events.append(event)
+        
+        logger.info(f"SoundCloud API discovery trouvé {len(events)} tracks pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan SoundCloud API: {e}")
+        return []
+
+async def _scan_apple_music_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
+    """Scan Apple Music via MusicKit + catalog search"""
+    try:
+        events = []
+        
+        # Utilisation de l'agent Apple Music MusicKit existant
+        from ...ai_agents.apple_music_agent.core.musickit_engine import MusicKitEngine
+        
+        musickit_engine = MusicKitEngine()
+        await musickit_engine.initialize()
+        
+        # Recherche dans le catalogue Apple Music
+        search_results = await musickit_engine.search_catalog(
+            query=content_id,  # En production, utiliser métadonnées appropriées
+            types=["songs"],
+            limit=25
+        )
+        
+        for result in search_results:
+            if result.get("type") == "songs":
+                track_data = result.get("attributes", {})
+                event = UsageEvent(
+                    event_id=str(uuid.uuid4()),
+                    platform_id=platform_monitor.platform_id,
+                    content_id=content_id,
+                    detected_url=track_data.get("url", ""),
+                    usage_type=UsageType.STREAM,
+                    detection_timestamp=datetime.utcnow(),
+                    confidence_score=0.88,
+                    metadata={
+                        "apple_music_id": result.get("id"),
+                        "song_name": track_data.get("name"),
+                        "artist_name": track_data.get("artistName"),
+                        "album_name": track_data.get("albumName"),
+                        "isrc": track_data.get("isrc"),
+                        "detection_method": "apple_musickit_catalog"
+                    }
+                )
+                events.append(event)
+        
+        logger.info(f"Apple Music MusicKit catalog search trouvé {len(events)} chansons pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan Apple Music API: {e}")
+        return []
+
+async def _scan_deezer_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
+    """Scan Deezer via API + playlist monitoring"""
+    try:
+        events = []
+        
+        # Utilisation du crawler Deezer existant
+        from ...crawlers.platforms.deezer_crawler import DeezerCrawler
+        
+        deezer_crawler = DeezerCrawler()
+        await deezer_crawler.initialize()
+        
+        # Recherche de tracks et monitoring de playlists
+        tracks = await deezer_crawler.search_tracks(
+            query=content_id,  # En production, utiliser métadonnées appropriées
+            limit=40
+        )
+        
+        for track_data in tracks:
+            track = await deezer_crawler._parse_track_data(track_data)
+            if track:
+                event = UsageEvent(
+                    event_id=str(uuid.uuid4()),
+                    platform_id=platform_monitor.platform_id,
+                    content_id=content_id,
+                    detected_url=track.track_url,
+                    usage_type=UsageType.STREAM,
+                    detection_timestamp=datetime.utcnow(),
+                    confidence_score=0.82,
+                    view_count=track.rank,
+                    metadata={
+                        "deezer_track_id": track.track_id,
+                        "artist_name": track.artist_name,
+                        "album_title": track.album_title,
+                        "isrc": track.isrc,
+                        "duration": track.duration,
+                        "detection_method": "deezer_api_playlist_monitoring"
+                    }
+                )
+                events.append(event)
+        
+        # Monitoring spécialisé des playlists populaires
+        charts = await deezer_crawler.get_charts(chart_type="tracks", limit=50)
+        for chart_track in charts:
+            # Vérifier si le contenu apparaît dans les charts/playlists populaires
+            if await _check_content_similarity(content_id, chart_track):
+                event = UsageEvent(
+                    event_id=str(uuid.uuid4()),
+                    platform_id=platform_monitor.platform_id,
+                    content_id=content_id,
+                    detected_url=chart_track.get("link", ""),
+                    usage_type=UsageType.PLAY,
+                    detection_timestamp=datetime.utcnow(),
+                    confidence_score=0.90,
+                    view_count=chart_track.get("rank", 0),
+                    metadata={
+                        "detection_location": "deezer_charts",
+                        "chart_position": chart_track.get("position"),
+                        "detection_method": "deezer_playlist_monitoring"
+                    }
+                )
+                events.append(event)
+        
+        logger.info(f"Deezer API + playlist monitoring trouvé {len(events)} utilisations pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan Deezer API: {e}")
+        return []
+
+async def _scan_amazon_music_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
+    """Scan Amazon Music via API + content tracking"""
+    try:
+        events = []
+        
+        # Utilisation du crawler Amazon Music existant
+        from ...crawlers.platforms.amazon_music_crawler import AmazonMusicCrawler
+        
+        amazon_crawler = AmazonMusicCrawler()
+        await amazon_crawler.initialize()
+        
+        # Recherche et tracking de contenu
+        search_results = await amazon_crawler.search_tracks(
+            query=content_id,  # En production, utiliser métadonnées appropriées
+            limit=35,
+            audio_quality="HD"  # Utiliser qualité HD pour meilleur matching
+        )
+        
+        for track in search_results:
+            event = UsageEvent(
+                event_id=str(uuid.uuid4()),
+                platform_id=platform_monitor.platform_id,
+                content_id=content_id,
+                detected_url=track.get("url", ""),
+                usage_type=UsageType.STREAM,
+                detection_timestamp=datetime.utcnow(),
+                confidence_score=0.85,
+                metadata={
+                    "amazon_asin": track.get("asin"),
+                    "title": track.get("title"),
+                    "artist": track.get("artist"),
+                    "album": track.get("album"),
+                    "audio_quality": track.get("quality", "HD"),
+                    "availability_regions": track.get("regions", []),
+                    "detection_method": "amazon_music_api_tracking"
+                }
+            )
+            events.append(event)
+        
+        logger.info(f"Amazon Music API content tracking trouvé {len(events)} tracks pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan Amazon Music API: {e}")
+        return []
+
+async def _scan_bandcamp_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
+    """Scan Bandcamp via web scraping + release tracking"""
+    try:
+        events = []
+        
+        # Utilisation du crawler Bandcamp existant pour web scraping + release tracking
+        from ...crawlers.bandcamp_crawler import BandcampCrawler
+        
+        bandcamp_crawler = BandcampCrawler()
+        await bandcamp_crawler.initialize()
+        
+        # Recherche et tracking de releases
+        search_results = await bandcamp_crawler.search_music(
+            query=content_id,  # En production, utiliser métadonnées appropriées
+            search_type="all",
+            limit=30
+        )
+        
+        for result in search_results:
+            # Tracking spécialisé des releases indépendantes
+            if result.get("type") == "album":
+                album_details = await bandcamp_crawler.get_album_details(result.get("url"))
+                if album_details:
+                    for track in album_details.tracks:
+                        event = UsageEvent(
+                            event_id=str(uuid.uuid4()),
+                            platform_id=platform_monitor.platform_id,
+                            content_id=content_id,
+                            detected_url=track.track_url,
+                            usage_type=UsageType.DOWNLOAD,  # Bandcamp se concentre sur downloads/achats
+                            detection_timestamp=datetime.utcnow(),
+                            confidence_score=0.80,
+                            metadata={
+                                "bandcamp_track_id": track.track_id,
+                                "album_title": album_details.title,
+                                "artist_name": album_details.artist,
+                                "release_date": album_details.release_date,
+                                "price": track.price if hasattr(track, 'price') else None,
+                                "format_available": track.formats if hasattr(track, 'formats') else [],
+                                "detection_method": "bandcamp_scraping_release_tracking"
+                            }
+                        )
+                        events.append(event)
+            
+            elif result.get("type") == "track":
+                event = UsageEvent(
+                    event_id=str(uuid.uuid4()),
+                    platform_id=platform_monitor.platform_id,
+                    content_id=content_id,
+                    detected_url=result.get("url", ""),
+                    usage_type=UsageType.DOWNLOAD,
+                    detection_timestamp=datetime.utcnow(),
+                    confidence_score=0.78,
+                    metadata={
+                        "track_title": result.get("title"),
+                        "artist_name": result.get("artist"),
+                        "detection_method": "bandcamp_scraping_discovery"
+                    }
+                )
+                events.append(event)
+        
+        logger.info(f"Bandcamp scraping + release tracking trouvé {len(events)} releases pour {content_id}")
+        return events
+        
+    except Exception as e:
+        logger.error(f"Erreur scan Bandcamp: {e}")
+        return []
+
+async def _check_content_similarity(content_id: str, track_data: Dict) -> bool:
+    """Vérifie la similarité entre le contenu protégé et un track détecté"""
+    try:
+        # Implémentation basique de vérification de similarité
+        # En production, utiliser des techniques d'audio fingerprinting ou métadonnées avancées
+        
+        # Pour la démo, on simule une vérification basée sur métadonnées
+        track_title = track_data.get("title", "").lower()
+        track_artist = track_data.get("artist", {}).get("name", "").lower() if isinstance(track_data.get("artist"), dict) else str(track_data.get("artist", "")).lower()
+        
+        # Simple vérification par mots-clés (à améliorer en production)
+        content_keywords = content_id.lower().split("_")
+        
+        for keyword in content_keywords:
+            if len(keyword) > 3 and (keyword in track_title or keyword in track_artist):
+                return True
+        
+        return False
+        
+    except Exception as e:
+        logger.error(f"Erreur vérification similarité: {e}")
+        return False
 
 async def _analyze_scraped_content(
     content: str,

@@ -187,7 +187,9 @@ __legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intel
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""class ContentProtectionService:
+"""
+
+class ContentProtectionService:
     """
     Main service class for the Content Protection System.
     
