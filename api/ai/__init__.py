@@ -16,21 +16,24 @@ try:
     from .nlp import TextAnalyzer
 except ImportError:
     class TextAnalyzer:
-        """Placeholder for missing TextAnalyzer"""        def __init__(self, *args, **kwargs):
+        """Placeholder for missing TextAnalyzer"""
+        def __init__(self, *args, **kwargs):
             raise ImportError("NLP dependencies not available. Install with: pip install spacy")
 
 try:
     from .vision import VisionProcessor
 except ImportError:
     class VisionProcessor:
-        """Placeholder for missing VisionProcessor"""        def __init__(self, *args, **kwargs):
+        """Placeholder for missing VisionProcessor"""
+        def __init__(self, *args, **kwargs):
             raise ImportError("Vision processing dependencies not available")
 
 try:
     from .recommendation import RecommendationEngine
 except ImportError:
     class RecommendationEngine:
-        """Placeholder for missing RecommendationEngine"""        def __init__(self, *args, **kwargs):
+        """Placeholder for missing RecommendationEngine"""
+        def __init__(self, *args, **kwargs):
             raise ImportError("Recommendation engine dependencies not available")
 
 # Import advanced AI processing modules with error handling
