@@ -62,6 +62,7 @@ from datetime import datetime, timezone
 import json
 import hashlib
 import re
+import os
 from collections import defaultdict
 
 # Translation libraries
@@ -69,6 +70,26 @@ from googletrans import Translator as GoogleTranslator
 import openai
 from transformers import pipeline, MarianMTModel, MarianTokenizer
 import torch
+
+# Additional translation providers
+try:
+    import deepl
+    DEEPL_AVAILABLE = True
+except ImportError:
+    DEEPL_AVAILABLE = False
+
+try:
+    from azure.ai.translation.text import TextTranslationClient
+    from azure.core.credentials import AzureKeyCredential
+    AZURE_TRANSLATE_AVAILABLE = True
+except ImportError:
+    AZURE_TRANSLATE_AVAILABLE = False
+
+try:
+    import boto3
+    AWS_TRANSLATE_AVAILABLE = True
+except ImportError:
+    AWS_TRANSLATE_AVAILABLE = False
 
 # Quality assessment
 from textblob import TextBlob
@@ -487,6 +508,30 @@ class TranslationService:
             if self.provider == TranslationProvider.GOOGLE_TRANSLATE:
                 self.client = GoogleTranslator()
             
+            elif self.provider == TranslationProvider.DEEPL:
+                if DEEPL_AVAILABLE:
+                    # Initialize DeepL client (requires API key)
+                    self.client = None  # Will be initialized with API key from config
+                    logger.info("DeepL client ready for initialization")
+                else:
+                    logger.warning("DeepL package not available")
+            
+            elif self.provider == TranslationProvider.AZURE_TRANSLATOR:
+                if AZURE_TRANSLATE_AVAILABLE:
+                    # Initialize Azure Translator client (requires API key)
+                    self.client = None  # Will be initialized with API key from config
+                    logger.info("Azure Translator client ready for initialization")
+                else:
+                    logger.warning("Azure Translator package not available")
+            
+            elif self.provider == TranslationProvider.AWS_TRANSLATE:
+                if AWS_TRANSLATE_AVAILABLE:
+                    # Initialize AWS Translate client (requires credentials)
+                    self.client = None  # Will be initialized with credentials from config
+                    logger.info("AWS Translate client ready for initialization")
+                else:
+                    logger.warning("AWS Translate package not available")
+            
             elif self.provider == TranslationProvider.OPENAI_GPT:
                 # Initialize OpenAI client
                 # self.client = openai.OpenAI()  # Requires API key setup
@@ -506,6 +551,12 @@ class TranslationService:
         try:
             if self.provider == TranslationProvider.GOOGLE_TRANSLATE:
                 result = await self._translate_google(request)
+            elif self.provider == TranslationProvider.DEEPL:
+                result = await self._translate_deepl(request)
+            elif self.provider == TranslationProvider.AZURE_TRANSLATOR:
+                result = await self._translate_azure(request)
+            elif self.provider == TranslationProvider.AWS_TRANSLATE:
+                result = await self._translate_aws(request)
             elif self.provider == TranslationProvider.OPENAI_GPT:
                 result = await self._translate_openai(request)
             elif self.provider == TranslationProvider.MARIAN_MT:
@@ -681,6 +732,171 @@ class TranslationService:
         }
         
         return model_mappings.get((source, target))
+    
+    async def _translate_deepl(self, request: TranslationRequest) -> TranslationResult:
+        """Translate using DeepL API"""
+        try:
+            if not DEEPL_AVAILABLE:
+                raise Exception("DeepL package not available")
+            
+            # Initialize DeepL client with API key from environment
+            import os
+            api_key = os.getenv('DEEPL_API_KEY')
+            if not api_key:
+                raise Exception("DeepL API key not configured")
+                
+            translator = deepl.Translator(api_key)
+            
+            # Map language codes to DeepL format
+            source_lang = self._map_to_deepl_lang(request.source_language)
+            target_lang = self._map_to_deepl_lang(request.target_language)
+            
+            # Perform translation
+            result = translator.translate_text(
+                request.text,
+                source_lang=source_lang,
+                target_lang=target_lang,
+                formality=request.formality if request.formality != "neutral" else None
+            )
+            
+            return TranslationResult(
+                original_text=request.text,
+                translated_text=result.text,
+                source_language=request.source_language,
+                target_language=request.target_language,
+                confidence_score=0.95,  # DeepL typically has high quality
+                provider_used=TranslationProvider.DEEPL,
+                metadata={
+                    "detected_source_lang": result.detected_source_lang,
+                    "model_used": "deepl_neural"
+                }
+            )
+            
+        except Exception as e:
+            logger.error(f"DeepL translation failed: {e}")
+            raise
+    
+    async def _translate_azure(self, request: TranslationRequest) -> TranslationResult:
+        """Translate using Microsoft Azure Translator"""
+        try:
+            if not AZURE_TRANSLATE_AVAILABLE:
+                raise Exception("Azure Translator package not available")
+            
+            # Initialize Azure client with API key and region
+            import os
+            api_key = os.getenv('AZURE_TRANSLATOR_KEY')
+            region = os.getenv('AZURE_TRANSLATOR_REGION', 'global')
+            endpoint = os.getenv('AZURE_TRANSLATOR_ENDPOINT', 'https://api.cognitive.microsofttranslator.com')
+            
+            if not api_key:
+                raise Exception("Azure Translator API key not configured")
+            
+            # Create client
+            credential = AzureKeyCredential(api_key)
+            client = TextTranslationClient(endpoint=endpoint, credential=credential, region=region)
+            
+            # Map language codes
+            source_lang = self._map_to_azure_lang(request.source_language)
+            target_lang = self._map_to_azure_lang(request.target_language)
+            
+            # Perform translation
+            response = await client.translate(
+                body=[{"text": request.text}],
+                from_language=source_lang,
+                to_language=[target_lang]
+            )
+            
+            translated_text = response[0].translations[0].text
+            
+            return TranslationResult(
+                original_text=request.text,
+                translated_text=translated_text,
+                source_language=request.source_language,
+                target_language=request.target_language,
+                confidence_score=0.90,  # Azure typically has high quality
+                provider_used=TranslationProvider.AZURE_TRANSLATOR,
+                metadata={
+                    "model_used": "microsoft_neural",
+                    "detected_source_lang": response[0].detected_language.language if response[0].detected_language else None
+                }
+            )
+            
+        except Exception as e:
+            logger.error(f"Azure translation failed: {e}")
+            raise
+    
+    async def _translate_aws(self, request: TranslationRequest) -> TranslationResult:
+        """Translate using Amazon Translate"""
+        try:
+            if not AWS_TRANSLATE_AVAILABLE:
+                raise Exception("AWS Translate package not available")
+            
+            # Initialize AWS client
+            client = boto3.client(
+                'translate',
+                region_name=os.getenv('AWS_REGION', 'us-east-1')
+            )
+            
+            # Map language codes
+            source_lang = self._map_to_aws_lang(request.source_language)
+            target_lang = self._map_to_aws_lang(request.target_language)
+            
+            # Perform translation
+            response = client.translate_text(
+                Text=request.text,
+                SourceLanguageCode=source_lang,
+                TargetLanguageCode=target_lang
+            )
+            
+            return TranslationResult(
+                original_text=request.text,
+                translated_text=response['TranslatedText'],
+                source_language=request.source_language,
+                target_language=request.target_language,
+                confidence_score=0.85,  # AWS Translate quality
+                provider_used=TranslationProvider.AWS_TRANSLATE,
+                metadata={
+                    "model_used": "amazon_neural",
+                    "applied_terminologies": response.get('AppliedTerminologies', [])
+                }
+            )
+            
+        except Exception as e:
+            logger.error(f"AWS translation failed: {e}")
+            raise
+    
+    def _map_to_deepl_lang(self, language: SupportedLanguage) -> str:
+        """Map language to DeepL language code"""
+        mapping = {
+            SupportedLanguage.ENGLISH: "EN",
+            SupportedLanguage.GERMAN: "DE", 
+            SupportedLanguage.FRENCH: "FR",
+            SupportedLanguage.SPANISH: "ES",
+            SupportedLanguage.ITALIAN: "IT",
+            SupportedLanguage.PORTUGUESE: "PT",
+            SupportedLanguage.DUTCH: "NL",
+            SupportedLanguage.POLISH: "PL",
+            SupportedLanguage.RUSSIAN: "RU",
+            SupportedLanguage.JAPANESE: "JA",
+            SupportedLanguage.CHINESE_SIMPLIFIED: "ZH"
+        }
+        return mapping.get(language, language.value.upper())
+    
+    def _map_to_azure_lang(self, language: SupportedLanguage) -> str:
+        """Map language to Azure Translator language code"""
+        mapping = {
+            SupportedLanguage.CHINESE_SIMPLIFIED: "zh-Hans",
+            SupportedLanguage.CHINESE_TRADITIONAL: "zh-Hant"
+        }
+        return mapping.get(language, language.value)
+    
+    def _map_to_aws_lang(self, language: SupportedLanguage) -> str:
+        """Map language to AWS Translate language code"""
+        mapping = {
+            SupportedLanguage.CHINESE_SIMPLIFIED: "zh",
+            SupportedLanguage.CHINESE_TRADITIONAL: "zh-TW"
+        }
+        return mapping.get(language, language.value)
 
 
 class TranslationEngine:
@@ -695,14 +911,21 @@ class TranslationEngine:
         # Initialize translation services
         self.services = {
             TranslationProvider.GOOGLE_TRANSLATE: TranslationService(TranslationProvider.GOOGLE_TRANSLATE),
+            TranslationProvider.DEEPL: TranslationService(TranslationProvider.DEEPL),
+            TranslationProvider.AZURE_TRANSLATOR: TranslationService(TranslationProvider.AZURE_TRANSLATOR),
+            TranslationProvider.AWS_TRANSLATE: TranslationService(TranslationProvider.AWS_TRANSLATE),
+            TranslationProvider.OPENAI_GPT: TranslationService(TranslationProvider.OPENAI_GPT),
             TranslationProvider.MARIAN_MT: TranslationService(TranslationProvider.MARIAN_MT),
-            # Add more services as needed
         }
         
-        # Provider priority order
+        # Provider priority order (high-quality providers first)
         self.provider_priority = [
-            TranslationProvider.GOOGLE_TRANSLATE,
-            TranslationProvider.MARIAN_MT,
+            TranslationProvider.DEEPL,          # Highest quality for EU languages
+            TranslationProvider.GOOGLE_TRANSLATE, # Broadest language support
+            TranslationProvider.AZURE_TRANSLATOR, # Enterprise-grade quality
+            TranslationProvider.AWS_TRANSLATE,    # Good scaling and quality
+            TranslationProvider.OPENAI_GPT,      # Context-aware but slower
+            TranslationProvider.MARIAN_MT,       # Open source fallback
         ]
         
         self.translation_stats = defaultdict(int)
