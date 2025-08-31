@@ -52,6 +52,12 @@ class ChallengeType(str, Enum):
     COMMUNITY = "community"
     SEASONAL = "seasonal"
     MILESTONE = "milestone"
+    # New specific challenge types for the requirements
+    CREATIVE_MONTHLY = "creative_monthly"
+    TECHNICAL_SEO = "technical_seo"
+    TECHNICAL_REVENUE = "technical_revenue"
+    GLOBAL_COMPETITION = "global_competition"
+    SPECIAL_EVENT = "special_event"
 
 
 class ChallengeDifficulty(str, Enum):
@@ -267,6 +273,280 @@ class ChallengeEngine:
     def _initialize_challenge_templates(self) -> Dict[str, Dict[str, Any]]:
         """Initialize predefined challenge templates."""
         templates = {
+            # 🎨 CHALLENGES CRÉATIFS - Monthly Creative Challenges with Rewards
+            "monthly_creative_masterpiece": {
+                "title": "Monthly Creative Masterpiece Challenge",
+                "description": "Create your most innovative content piece of the month. Showcase creativity, originality, and artistic vision to win amazing monthly rewards.",
+                "challenge_type": ChallengeType.CREATIVE,
+                "difficulty": ChallengeDifficulty.INTERMEDIATE,
+                "duration_days": 30,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.IMAGE, ContentFormat.MIXED_MEDIA],
+                "auto_evaluation": False,
+                "expert_review": True,
+                "community_voting": True,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=2500,
+                        description="Monthly Creative Champion Prize",
+                        rarity="epic"
+                    ),
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="creative_mastermind_monthly",
+                        description="Creative Mastermind Monthly Badge",
+                        rarity="rare"
+                    ),
+                    ChallengeReward(
+                        reward_type="premium_feature",
+                        value="creative_tools_pro_month",
+                        description="1-Month Premium Creative Tools Access",
+                        rarity="epic"
+                    )
+                ],
+                "ranking_rewards": {
+                    "1": [ChallengeReward(reward_type="currency", value=5000, description="First Place Winner", rarity="legendary")],
+                    "2": [ChallengeReward(reward_type="currency", value=3000, description="Second Place Winner", rarity="epic")],
+                    "3": [ChallengeReward(reward_type="currency", value=1500, description="Third Place Winner", rarity="rare")]
+                },
+                "tags": ["monthly", "creative", "masterpiece", "premium"],
+                "skill_requirements": ["creativity", "content_production"],
+                "platform_requirements": ["ai_tools", "content_studio"]
+            },
+            
+            "artistic_innovation_monthly": {
+                "title": "Artistic Innovation Monthly",
+                "description": "Push the boundaries of artistic expression using cutting-edge AI tools. Monthly competition for the most innovative artistic content.",
+                "challenge_type": ChallengeType.CREATIVE,
+                "difficulty": ChallengeDifficulty.ADVANCED,
+                "duration_days": 31,
+                "content_formats": [ContentFormat.MIXED_MEDIA, ContentFormat.VIDEO, ContentFormat.AUDIO],
+                "auto_evaluation": False,
+                "expert_review": True,
+                "community_voting": True,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=3000,
+                        description="Innovation Award",
+                        rarity="epic"
+                    ),
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="ai_artist_innovator",
+                        description="AI Artist Innovator Badge",
+                        rarity="legendary"
+                    )
+                ],
+                "tags": ["monthly", "innovation", "ai", "artistic"],
+                "skill_requirements": ["ai_tools", "creativity", "innovation"],
+                "platform_requirements": ["ai_studio", "advanced_editing"]
+            },
+
+            # 📈 CHALLENGES TECHNIQUES - SEO & Revenue Optimization
+            "seo_optimization_master": {
+                "title": "SEO Optimization Master Challenge",
+                "description": "Optimize your content for maximum search visibility. Improve SEO metrics by 50% to win technical mastery rewards.",
+                "challenge_type": ChallengeType.TECHNICAL,
+                "difficulty": ChallengeDifficulty.ADVANCED,
+                "duration_days": 30,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.TEXT, ContentFormat.PODCAST],
+                "auto_evaluation": True,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="seo_optimization_master",
+                        description="SEO Optimization Master Badge",
+                        rarity="epic"
+                    ),
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=2000,
+                        description="SEO Mastery Bonus",
+                        rarity="rare"
+                    ),
+                    ChallengeReward(
+                        reward_type="premium_feature",
+                        value="advanced_seo_analytics",
+                        description="Advanced SEO Analytics Access",
+                        rarity="epic"
+                    )
+                ],
+                "tags": ["technical", "seo", "optimization", "analytics"],
+                "skill_requirements": ["seo", "analytics", "content_optimization"],
+                "platform_requirements": ["seo_tools", "analytics_dashboard"]
+            },
+
+            "revenue_optimization_champion": {
+                "title": "Revenue Optimization Champion",
+                "description": "Maximize your content monetization. Increase monthly revenue by 40% through strategic optimization and engagement.",
+                "challenge_type": ChallengeType.TECHNICAL,
+                "difficulty": ChallengeDifficulty.EXPERT,
+                "duration_days": 30,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.PODCAST, ContentFormat.LIVE_STREAM],
+                "auto_evaluation": True,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=5000,
+                        description="Revenue Champion Prize",
+                        rarity="legendary"
+                    ),
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="revenue_optimization_expert",
+                        description="Revenue Optimization Expert Badge",
+                        rarity="legendary"
+                    ),
+                    ChallengeReward(
+                        reward_type="premium_feature",
+                        value="monetization_pro_suite",
+                        description="Monetization Pro Suite Access",
+                        rarity="legendary"
+                    )
+                ],
+                "tags": ["technical", "revenue", "monetization", "optimization"],
+                "skill_requirements": ["monetization", "analytics", "business_strategy"],
+                "platform_requirements": ["monetization_tools", "revenue_analytics"]
+            },
+
+            "performance_analytics_master": {
+                "title": "Performance Analytics Master",
+                "description": "Master your content analytics. Improve engagement metrics by 60% and audience growth by 25%.",
+                "challenge_type": ChallengeType.TECHNICAL,
+                "difficulty": ChallengeDifficulty.ADVANCED,
+                "duration_days": 21,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.PODCAST],
+                "auto_evaluation": True,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="analytics_master",
+                        description="Analytics Master Badge",
+                        rarity="epic"
+                    ),
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=1500,
+                        description="Analytics Mastery Reward",
+                        rarity="rare"
+                    )
+                ],
+                "tags": ["technical", "analytics", "performance", "metrics"],
+                "skill_requirements": ["analytics", "data_analysis", "metrics"],
+                "platform_requirements": ["advanced_analytics", "metrics_dashboard"]
+            },
+
+            # 🌍 COMPÉTITIONS GLOBALES - Special Events & Global Competitions
+            "global_creative_championship": {
+                "title": "Global Creative Championship",
+                "description": "The ultimate global creative competition. Creators worldwide compete for the title of Global Creative Champion with massive prizes.",
+                "challenge_type": ChallengeType.COMPETITIVE,
+                "difficulty": ChallengeDifficulty.EXPERT,
+                "duration_days": 45,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.MIXED_MEDIA],
+                "auto_evaluation": False,
+                "expert_review": True,
+                "community_voting": True,
+                "max_participants": 10000,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=15000,
+                        description="Global Championship Participation Prize",
+                        rarity="legendary"
+                    ),
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="global_champion_participant",
+                        description="Global Championship Participant Badge",
+                        rarity="epic"
+                    )
+                ],
+                "ranking_rewards": {
+                    "1": [ChallengeReward(reward_type="currency", value=50000, description="Global Creative Champion", rarity="legendary")],
+                    "2": [ChallengeReward(reward_type="currency", value=25000, description="Global Runner-up", rarity="legendary")],
+                    "3": [ChallengeReward(reward_type="currency", value=15000, description="Global Third Place", rarity="epic")],
+                    "4-10": [ChallengeReward(reward_type="currency", value=5000, description="Global Top 10 Finalist", rarity="epic")]
+                },
+                "tags": ["global", "championship", "competitive", "special_event"],
+                "skill_requirements": ["expert_creativity", "professional_production", "global_appeal"],
+                "platform_requirements": ["premium_tools", "global_distribution"]
+            },
+
+            "world_collaboration_summit": {
+                "title": "World Collaboration Summit",
+                "description": "Global collaboration event where creators from different continents work together on extraordinary projects.",
+                "challenge_type": ChallengeType.COLLABORATIVE,
+                "difficulty": ChallengeDifficulty.MASTER,
+                "duration_days": 60,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.MIXED_MEDIA, ContentFormat.LIVE_STREAM],
+                "team_challenge": True,
+                "max_team_size": 5,
+                "auto_evaluation": False,
+                "expert_review": True,
+                "community_voting": True,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=10000,
+                        description="Global Collaboration Award",
+                        rarity="legendary"
+                    ),
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="world_collaborator",
+                        description="World Collaborator Badge",
+                        rarity="legendary"
+                    )
+                ],
+                "tags": ["global", "collaboration", "team", "summit"],
+                "skill_requirements": ["collaboration", "cross_cultural", "team_leadership"],
+                "platform_requirements": ["collaboration_tools", "global_communication"]
+            },
+
+            "ainflue_anniversary_spectacular": {
+                "title": "Ainflue Anniversary Spectacular",
+                "description": "Annual global celebration competition featuring the best creators worldwide. Special anniversary edition with extraordinary prizes.",
+                "challenge_type": ChallengeType.COMPETITIVE,
+                "difficulty": ChallengeDifficulty.MASTER,
+                "duration_days": 30,
+                "content_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.MIXED_MEDIA, ContentFormat.LIVE_STREAM],
+                "auto_evaluation": False,
+                "expert_review": True,
+                "community_voting": True,
+                "max_participants": 5000,
+                "completion_rewards": [
+                    ChallengeReward(
+                        reward_type="currency",
+                        value=20000,
+                        description="Anniversary Spectacular Prize",
+                        rarity="legendary"
+                    ),
+                    ChallengeReward(
+                        reward_type="badge",
+                        value="ainflue_anniversary_legend",
+                        description="Ainflue Anniversary Legend Badge",
+                        rarity="legendary"
+                    ),
+                    ChallengeReward(
+                        reward_type="premium_feature",
+                        value="lifetime_premium_access",
+                        description="Lifetime Premium Access",
+                        rarity="legendary"
+                    )
+                ],
+                "ranking_rewards": {
+                    "1": [ChallengeReward(reward_type="currency", value=100000, description="Anniversary Grand Champion", rarity="legendary")],
+                    "2": [ChallengeReward(reward_type="currency", value=50000, description="Anniversary Champion", rarity="legendary")],
+                    "3": [ChallengeReward(reward_type="currency", value=25000, description="Anniversary Finalist", rarity="legendary")]
+                },
+                "tags": ["anniversary", "spectacular", "global", "special_event"],
+                "skill_requirements": ["master_creativity", "platform_expertise", "community_impact"],
+                "platform_requirements": ["full_platform_access", "special_tools"]
+            },
+
+            # Original templates (keeping existing ones)
             "30_day_challenge": {
                 "title": "30-Day Content Creation Challenge",
                 "description": "Create and upload content every day for 30 consecutive days",
@@ -488,6 +768,7 @@ class ChallengeEngine:
     def _create_default_criteria(self, challenge_type: ChallengeType) -> List[ChallengeCriteria]:
         """Create default evaluation criteria based on challenge type."""
         criteria_by_type = {
+            # Original challenge types
             ChallengeType.CREATIVE: [
                 ChallengeCriteria(
                     name="Creativity",
@@ -506,6 +787,152 @@ class ChallengeEngine:
                 ChallengeCriteria(
                     name="Audience Engagement",
                     description="Level of audience engagement generated",
+                    weight=0.3,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                )
+            ],
+            
+            # 🎨 Creative Monthly Challenges
+            ChallengeType.CREATIVE_MONTHLY: [
+                ChallengeCriteria(
+                    name="Innovation & Originality",
+                    description="Groundbreaking creative approach and unique artistic vision",
+                    weight=0.35,
+                    max_score=100
+                ),
+                ChallengeCriteria(
+                    name="Technical Mastery",
+                    description="Professional-level technical execution and production quality",
+                    weight=0.25,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="ai_analysis"
+                ),
+                ChallengeCriteria(
+                    name="Artistic Impact",
+                    description="Emotional resonance and artistic impact on audience",
+                    weight=0.25,
+                    max_score=100
+                ),
+                ChallengeCriteria(
+                    name="Community Response",
+                    description="Community engagement and viral potential",
+                    weight=0.15,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                )
+            ],
+            
+            # 📈 Technical SEO Challenges
+            ChallengeType.TECHNICAL_SEO: [
+                ChallengeCriteria(
+                    name="SEO Improvement",
+                    description="Measurable improvement in search rankings and visibility",
+                    weight=0.5,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                ),
+                ChallengeCriteria(
+                    name="Content Optimization",
+                    description="Quality of content optimization for search engines",
+                    weight=0.3,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="ai_analysis"
+                ),
+                ChallengeCriteria(
+                    name="Technical Implementation",
+                    description="Proper implementation of SEO best practices",
+                    weight=0.2,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                )
+            ],
+            
+            # 💰 Revenue Optimization Challenges  
+            ChallengeType.TECHNICAL_REVENUE: [
+                ChallengeCriteria(
+                    name="Revenue Growth",
+                    description="Measurable increase in monetization and revenue",
+                    weight=0.6,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                ),
+                ChallengeCriteria(
+                    name="Monetization Strategy",
+                    description="Effectiveness of monetization strategy implementation",
+                    weight=0.25,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                ),
+                ChallengeCriteria(
+                    name="Audience Engagement",
+                    description="Sustained audience engagement driving revenue",
+                    weight=0.15,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                )
+            ],
+            
+            # 🌍 Global Competition Challenges
+            ChallengeType.GLOBAL_COMPETITION: [
+                ChallengeCriteria(
+                    name="Global Appeal",
+                    description="Universal appeal across cultures and markets",
+                    weight=0.3,
+                    max_score=100
+                ),
+                ChallengeCriteria(
+                    name="Professional Excellence",
+                    description="Industry-standard professional quality",
+                    weight=0.3,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="ai_analysis"
+                ),
+                ChallengeCriteria(
+                    name="Innovation Factor",
+                    description="Revolutionary or groundbreaking elements",
+                    weight=0.25,
+                    max_score=100
+                ),
+                ChallengeCriteria(
+                    name="Global Engagement",
+                    description="International audience engagement and reach",
+                    weight=0.15,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="metric_based"
+                )
+            ],
+            
+            # 🎉 Special Event Challenges
+            ChallengeType.SPECIAL_EVENT: [
+                ChallengeCriteria(
+                    name="Event Relevance",
+                    description="Alignment with special event theme and objectives",
+                    weight=0.35,
+                    max_score=100
+                ),
+                ChallengeCriteria(
+                    name="Spectacular Quality",
+                    description="Exceptional quality worthy of special event status",
+                    weight=0.35,
+                    max_score=100,
+                    auto_evaluate=True,
+                    evaluation_method="ai_analysis"
+                ),
+                ChallengeCriteria(
+                    name="Community Impact",
+                    description="Positive impact on the community and platform",
                     weight=0.3,
                     max_score=100,
                     auto_evaluate=True,
@@ -745,7 +1172,62 @@ class ChallengeEngine:
         
         submission_data = participation.submission_data
         
-        if "engagement_rate" in submission_data:
+        # SEO Challenge Metrics
+        if "seo_ranking_improvement" in submission_data:
+            ranking_improvement = submission_data["seo_ranking_improvement"]
+            # Convert ranking improvement percentage to score
+            score = min(100, ranking_improvement * 2)  # 50% improvement = 100 score
+            return score
+        
+        elif "search_visibility_increase" in submission_data:
+            visibility_increase = submission_data["search_visibility_increase"]
+            score = min(100, visibility_increase * 1.5)  # 67% increase = 100 score
+            return score
+        
+        elif "organic_traffic_growth" in submission_data:
+            traffic_growth = submission_data["organic_traffic_growth"]
+            score = min(100, traffic_growth * 1.2)  # 83% growth = 100 score
+            return score
+        
+        # Revenue Optimization Metrics
+        elif "revenue_increase_percentage" in submission_data:
+            revenue_increase = submission_data["revenue_increase_percentage"]
+            # Convert revenue increase to score (40% target = 100 score)
+            score = min(100, (revenue_increase / 40) * 100)
+            return score
+        
+        elif "monetization_efficiency" in submission_data:
+            efficiency = submission_data["monetization_efficiency"]
+            score = min(100, efficiency * 100)  # Efficiency is 0-1 scale
+            return score
+        
+        elif "cpm_improvement" in submission_data:
+            cpm_improvement = submission_data["cpm_improvement"]
+            score = min(100, cpm_improvement * 2)  # 50% improvement = 100 score
+            return score
+        
+        elif "subscriber_monetization_rate" in submission_data:
+            monetization_rate = submission_data["subscriber_monetization_rate"]
+            score = min(100, monetization_rate * 500)  # 20% rate = 100 score
+            return score
+        
+        # Global Competition Metrics
+        elif "global_reach_countries" in submission_data:
+            countries_reached = submission_data["global_reach_countries"]
+            score = min(100, countries_reached * 2)  # 50 countries = 100 score
+            return score
+        
+        elif "international_engagement_rate" in submission_data:
+            engagement_rate = submission_data["international_engagement_rate"]
+            score = min(100, engagement_rate * 4)  # 25% engagement = 100 score
+            return score
+        
+        elif "cross_cultural_appeal_score" in submission_data:
+            appeal_score = submission_data["cross_cultural_appeal_score"]
+            return min(100, appeal_score)
+        
+        # General engagement metrics
+        elif "engagement_rate" in submission_data:
             engagement_rate = submission_data["engagement_rate"]
             # Convert engagement rate to score (0-100)
             score = min(100, engagement_rate * 4)  # 25% engagement = 100 score
@@ -766,7 +1248,17 @@ class ChallengeEngine:
             score = min(100, improvement * 2)  # 50% improvement = 100 score
             return score
         
-        # Default scoring
+        elif "views_growth" in submission_data:
+            views_growth = submission_data["views_growth"]
+            score = min(100, views_growth * 1)  # 100% growth = 100 score
+            return score
+        
+        elif "subscriber_growth" in submission_data:
+            subscriber_growth = submission_data["subscriber_growth"]
+            score = min(100, subscriber_growth * 2)  # 50% growth = 100 score
+            return score
+        
+        # Default scoring for participation
         return random.uniform(60, 95)
     
     async def _evaluate_ai_based_criterion(

@@ -165,6 +165,11 @@ const CompetitionsPage: React.FC<CompetitionsPageProps> = ({ params }) => {
 
   const categories = [
     'all',
+    'Creative Monthly',
+    'Technical SEO', 
+    'Technical Revenue',
+    'Global Competition',
+    'Special Event',
     'Remix Competition',
     'Beat Battle',
     'Vocal Challenge',
@@ -189,6 +194,318 @@ const CompetitionsPage: React.FC<CompetitionsPageProps> = ({ params }) => {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const mockCompetitions: Competition[] = [
+        // 🎨 Creative Monthly Challenge
+        {
+          id: 'comp-creative-monthly-1',
+          title: 'Monthly Creative Masterpiece Challenge',
+          description: 'Create your most innovative content piece of the month. Showcase creativity, originality, and artistic vision to win amazing monthly rewards.',
+          theme: 'Monthly Creative Excellence',
+          organizer: {
+            id: 'org-1',
+            name: 'Ainflue Platform',
+            avatar: '/organizers/ainflue.jpg',
+            verified: true,
+            type: 'platform'
+          },
+          banner: '/competitions/creative-monthly.jpg',
+          startDate: new Date(Date.now() - 604800000), // 7 days ago
+          endDate: new Date(Date.now() + 1900800000), // 22 days from now
+          submissionDeadline: new Date(Date.now() + 1728000000), // 20 days from now
+          status: 'active',
+          category: 'Creative Monthly',
+          difficulty: 'intermediate',
+          maxParticipants: 2000,
+          currentParticipants: 847,
+          totalSubmissions: 312,
+          prizes: [
+            {
+              position: 1,
+              title: 'Monthly Creative Champion',
+              description: 'Premium creative tools + Cash prize + Feature spotlight',
+              value: 5000,
+              type: 'cash',
+              sponsor: 'Ainflue Creative'
+            },
+            {
+              position: 2,
+              title: 'Creative Innovator',
+              description: 'Creative tools suite + Platform credits',
+              value: 3000,
+              type: 'equipment',
+              sponsor: 'Creative Labs'
+            },
+            {
+              position: 3,
+              title: 'Rising Artist',
+              description: 'Feature on homepage + Creative mentorship',
+              value: 1500,
+              type: 'credits',
+              sponsor: 'Ainflue'
+            }
+          ],
+          rules: [
+            'Original creative content only',
+            'Must showcase artistic innovation',
+            'Maximum duration: 10 minutes for video/audio',
+            'Submit in high quality format',
+            'Include creative process documentation'
+          ],
+          requirements: [
+            'Use platform creative tools',
+            'Demonstrate artistic originality',
+            'Include brief artist statement',
+            'Tag submission with #CreativeMonthly2025'
+          ],
+          judges: [
+            {
+              id: 'judge-creative-1',
+              name: 'Sarah Creative Director',
+              avatar: '/judges/sarah.jpg',
+              title: 'Award-winning Creative Director',
+              bio: 'International creative director with 20+ years experience',
+              credentials: ['Cannes Lions Winner', 'Creative Director of the Year', 'Art Innovation Pioneer'],
+              verified: true
+            }
+          ],
+          isParticipating: true,
+          hasSubmitted: false,
+          entryFee: 0,
+          sponsorBrands: ['Ainflue Creative', 'Creative Labs', 'Innovation Studios'],
+          votingEnabled: true,
+          publicVoting: true,
+          featured: true
+        },
+
+        // 📈 Technical SEO Challenge
+        {
+          id: 'comp-seo-tech-1',
+          title: 'SEO Optimization Master Challenge',
+          description: 'Optimize your content for maximum search visibility. Improve SEO metrics by 50% to win technical mastery rewards.',
+          theme: 'SEO Excellence & Search Optimization',
+          organizer: {
+            id: 'org-2',
+            name: 'SEO Masters Guild',
+            avatar: '/organizers/seo-guild.jpg',
+            verified: true,
+            type: 'brand'
+          },
+          banner: '/competitions/seo-challenge.jpg',
+          startDate: new Date(Date.now() - 1209600000), // 14 days ago
+          endDate: new Date(Date.now() + 1382400000), // 16 days from now
+          submissionDeadline: new Date(Date.now() + 1209600000), // 14 days from now
+          status: 'active',
+          category: 'Technical SEO',
+          difficulty: 'advanced',
+          maxParticipants: 500,
+          currentParticipants: 278,
+          totalSubmissions: 156,
+          prizes: [
+            {
+              position: 1,
+              title: 'SEO Master Champion',
+              description: 'Advanced SEO tools suite + Analytics premium + Cash reward',
+              value: 4000,
+              type: 'equipment',
+              sponsor: 'SEO Pro Tools'
+            },
+            {
+              position: 2,
+              title: 'Search Optimization Expert',
+              description: 'SEO toolkit + Professional consultation',
+              value: 2500,
+              type: 'equipment',
+              sponsor: 'Search Analytics Co'
+            }
+          ],
+          rules: [
+            'Measurable SEO improvements required',
+            'Must document optimization strategies',
+            'Provide before/after analytics',
+            'Follow white-hat SEO practices only'
+          ],
+          requirements: [
+            'Use platform SEO tools',
+            'Show minimum 40% improvement in key metrics',
+            'Document optimization process',
+            'Include analytics reports'
+          ],
+          judges: [
+            {
+              id: 'judge-seo-1',
+              name: 'Dr. Mark SEO Expert',
+              avatar: '/judges/mark-seo.jpg',
+              title: 'SEO Strategy Director',
+              bio: 'Leading SEO expert with proven track record',
+              credentials: ['SEO Industry Leader', 'Google Partner', 'Search Marketing Expert'],
+              verified: true
+            }
+          ],
+          isParticipating: false,
+          hasSubmitted: false,
+          entryFee: 25,
+          sponsorBrands: ['SEO Pro Tools', 'Search Analytics Co'],
+          votingEnabled: false,
+          publicVoting: false,
+          featured: true
+        },
+
+        // 💰 Revenue Optimization Challenge
+        {
+          id: 'comp-revenue-tech-1',
+          title: 'Revenue Optimization Champion',
+          description: 'Maximize your content monetization. Increase monthly revenue by 40% through strategic optimization and engagement.',
+          theme: 'Revenue Growth & Monetization Excellence',
+          organizer: {
+            id: 'org-3',
+            name: 'Monetization Masters',
+            avatar: '/organizers/monetization.jpg',
+            verified: true,
+            type: 'brand'
+          },
+          banner: '/competitions/revenue-optimization.jpg',
+          startDate: new Date(Date.now() - 518400000), // 6 days ago
+          endDate: new Date(Date.now() + 2073600000), // 24 days from now
+          submissionDeadline: new Date(Date.now() + 1900800000), // 22 days from now
+          status: 'active',
+          category: 'Technical Revenue',
+          difficulty: 'expert',
+          maxParticipants: 300,
+          currentParticipants: 189,
+          totalSubmissions: 67,
+          prizes: [
+            {
+              position: 1,
+              title: 'Revenue Champion',
+              description: 'Monetization suite + Revenue share bonus + Business mentorship',
+              value: 7500,
+              type: 'cash',
+              sponsor: 'Revenue Labs'
+            },
+            {
+              position: 2,
+              title: 'Monetization Expert',
+              description: 'Premium monetization tools + Analytics access',
+              value: 4000,
+              type: 'equipment',
+              sponsor: 'MonetizePro'
+            }
+          ],
+          rules: [
+            'Demonstrate measurable revenue increase',
+            'Ethical monetization strategies only',
+            'Provide transparent revenue reports',
+            'Maintain audience engagement quality'
+          ],
+          requirements: [
+            'Show minimum 35% revenue improvement',
+            'Use platform monetization tools',
+            'Document revenue optimization strategy',
+            'Include audience engagement metrics'
+          ],
+          judges: [
+            {
+              id: 'judge-revenue-1',
+              name: 'Lisa Business Strategy',
+              avatar: '/judges/lisa-business.jpg',
+              title: 'Revenue Optimization Specialist',
+              bio: 'Expert in digital content monetization strategies',
+              credentials: ['Business Strategy Expert', 'Revenue Growth Specialist', 'Digital Monetization Pioneer'],
+              verified: true
+            }
+          ],
+          isParticipating: true,
+          hasSubmitted: false,
+          entryFee: 50,
+          sponsorBrands: ['Revenue Labs', 'MonetizePro', 'Business Analytics'],
+          votingEnabled: false,
+          publicVoting: false,
+          featured: true
+        },
+
+        // 🌍 Global Competition
+        {
+          id: 'comp-global-1',
+          title: 'Global Creative Championship 2025',
+          description: 'The ultimate global creative competition. Creators worldwide compete for the title of Global Creative Champion with massive prizes.',
+          theme: 'Global Creative Excellence',
+          organizer: {
+            id: 'org-4',
+            name: 'Global Creative Council',
+            avatar: '/organizers/global-council.jpg',
+            verified: true,
+            type: 'platform'
+          },
+          banner: '/competitions/global-championship.jpg',
+          startDate: new Date(Date.now() + 86400000), // 1 day from now
+          endDate: new Date(Date.now() + 3888000000), // 45 days from now
+          submissionDeadline: new Date(Date.now() + 3715200000), // 43 days from now
+          status: 'upcoming',
+          category: 'Global Competition',
+          difficulty: 'expert',
+          maxParticipants: 10000,
+          currentParticipants: 2847,
+          totalSubmissions: 0,
+          prizes: [
+            {
+              position: 1,
+              title: 'Global Creative Champion',
+              description: 'Lifetime premium access + $50,000 cash + Global recognition',
+              value: 50000,
+              type: 'cash',
+              sponsor: 'Ainflue Global'
+            },
+            {
+              position: 2,
+              title: 'Global Runner-up',
+              description: '$25,000 cash + Premium tools + International exposure',
+              value: 25000,
+              type: 'cash',
+              sponsor: 'Creative Global'
+            },
+            {
+              position: 3,
+              title: 'Global Finalist',
+              description: '$15,000 cash + Professional development package',
+              value: 15000,
+              type: 'cash',
+              sponsor: 'Innovation Global'
+            }
+          ],
+          rules: [
+            'Open to creators worldwide',
+            'Professional-quality submissions required',
+            'Original content with global appeal',
+            'Multi-cultural sensitivity required',
+            'Must represent best creative work'
+          ],
+          requirements: [
+            'Portfolio of your best work',
+            'Global appeal demonstration',
+            'Professional production quality',
+            'Cultural diversity consideration',
+            'Innovation and creativity showcase'
+          ],
+          judges: [
+            {
+              id: 'judge-global-1',
+              name: 'International Creative Panel',
+              avatar: '/judges/global-panel.jpg',
+              title: 'Global Creative Experts',
+              bio: 'Panel of international creative industry leaders',
+              credentials: ['Global Creative Council', 'International Awards Panel', 'Industry Leaders'],
+              verified: true
+            }
+          ],
+          isParticipating: false,
+          hasSubmitted: false,
+          entryFee: 100,
+          sponsorBrands: ['Ainflue Global', 'Creative Global', 'Innovation Global'],
+          votingEnabled: true,
+          publicVoting: true,
+          featured: true
+        },
+
+        // Original competition (keeping existing one)
         {
           id: 'comp-1',
           title: 'AI Summer Remix Championship 2025',
@@ -276,7 +593,7 @@ const CompetitionsPage: React.FC<CompetitionsPageProps> = ({ params }) => {
           sponsorBrands: ['Major Records', 'Pro Audio Co', 'AI Music Labs'],
           votingEnabled: true,
           publicVoting: true,
-          featured: true
+          featured: false
         },
         {
           id: 'comp-2',
