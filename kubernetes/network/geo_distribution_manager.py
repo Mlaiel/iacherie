@@ -41,6 +41,15 @@ logger = logging.getLogger(__name__)
 
 class GeographicRegion(Enum):
     """Geographic regions for content distribution"""
+    # Primary regions as per global deployment requirements
+    US_EAST = "us-east"  # N. Virginia - Primary region
+    US_WEST = "us-west"  # Oregon - Backup + West Coast users
+    EU_WEST = "eu-west"  # Ireland - GDPR Compliance Europe
+    AP_SOUTHEAST = "ap-southeast"  # Singapore - Asia-Pacific
+    AP_NORTHEAST = "ap-northeast"  # Tokyo - Japan + Korea
+    SA_EAST = "sa-east"  # São Paulo - South America
+    
+    # Legacy/secondary regions maintained for compatibility
     NORTH_AMERICA_EAST = "na-east"
     NORTH_AMERICA_WEST = "na-west"
     NORTH_AMERICA_CENTRAL = "na-central"
@@ -220,7 +229,7 @@ class GeographicDistributionManager:
             # Get client location
             client_location = await self._get_client_location(client_ip)
             if not client_location:
-                return GeographicRegion.NORTH_AMERICA_EAST  # Default fallback
+                return GeographicRegion.US_EAST  # Primary region fallback
             
             # Get content distribution configuration
             content_distribution = self.content_distributions.get(content_id)
@@ -255,7 +264,7 @@ class GeographicDistributionManager:
             
         except Exception as e:
             logger.error(f"Failed to determine optimal region: {e}")
-            return GeographicRegion.NORTH_AMERICA_EAST  # Safe fallback
+            return GeographicRegion.US_EAST  # Primary region safe fallback
     
     async def optimize_content_distribution(
         self,
@@ -597,24 +606,79 @@ class GeographicDistributionManager:
     async def _load_regional_configurations(self) -> None:
         """Load regional endpoint configurations"""
         try:
-            # Default regional endpoints for content delivery
+            # Primary regional endpoints for global multi-region deployment
             default_endpoints = {
+                # Primary Regions as per Global Deployment Requirements
+                GeographicRegion.US_EAST: {
+                    'primary': 'https://cdn-us-east.influencer-agent.com',
+                    'secondary': 'https://cdn-us-east-2.influencer-agent.com',
+                    'location': {'lat': 38.9072, 'lon': -77.0369},  # N. Virginia
+                    'region_name': 'US-East (N. Virginia)',
+                    'priority': 'primary',
+                    'compliance': ['SOC2', 'PCI-DSS'],
+                    'aws_region': 'us-east-1'
+                },
+                GeographicRegion.US_WEST: {
+                    'primary': 'https://cdn-us-west.influencer-agent.com',
+                    'secondary': 'https://cdn-us-west-2.influencer-agent.com',
+                    'location': {'lat': 45.5152, 'lon': -122.6784},  # Oregon
+                    'region_name': 'US-West (Oregon)',
+                    'priority': 'backup',
+                    'compliance': ['SOC2', 'PCI-DSS'],
+                    'aws_region': 'us-west-2'
+                },
+                GeographicRegion.EU_WEST: {
+                    'primary': 'https://cdn-eu-west.influencer-agent.com',
+                    'secondary': 'https://cdn-eu-west-2.influencer-agent.com',
+                    'location': {'lat': 53.3498, 'lon': -6.2603},  # Ireland
+                    'region_name': 'EU-West (Ireland)',
+                    'priority': 'high',
+                    'compliance': ['GDPR', 'SOC2', 'ISO27001'],
+                    'aws_region': 'eu-west-1'
+                },
+                GeographicRegion.AP_SOUTHEAST: {
+                    'primary': 'https://cdn-ap-southeast.influencer-agent.com',
+                    'secondary': 'https://cdn-ap-southeast-2.influencer-agent.com',
+                    'location': {'lat': 1.3521, 'lon': 103.8198},  # Singapore
+                    'region_name': 'AP-Southeast (Singapore)',
+                    'priority': 'high',
+                    'compliance': ['SOC2', 'ISO27001'],
+                    'aws_region': 'ap-southeast-1'
+                },
+                GeographicRegion.AP_NORTHEAST: {
+                    'primary': 'https://cdn-ap-northeast.influencer-agent.com',
+                    'secondary': 'https://cdn-ap-northeast-2.influencer-agent.com',
+                    'location': {'lat': 35.6762, 'lon': 139.6503},  # Tokyo
+                    'region_name': 'AP-Northeast (Tokyo)',
+                    'priority': 'high',
+                    'compliance': ['SOC2', 'ISO27001'],
+                    'aws_region': 'ap-northeast-1'
+                },
+                GeographicRegion.SA_EAST: {
+                    'primary': 'https://cdn-sa-east.influencer-agent.com',
+                    'secondary': 'https://cdn-sa-east-2.influencer-agent.com',
+                    'location': {'lat': -23.5505, 'lon': -46.6333},  # São Paulo
+                    'region_name': 'SA-East (São Paulo)',
+                    'priority': 'medium',
+                    'compliance': ['SOC2'],
+                    'aws_region': 'sa-east-1'
+                },
+                
+                # Legacy/Secondary regions for compatibility
                 GeographicRegion.NORTH_AMERICA_EAST: {
                     'primary': 'https://cdn-na-east.influencer-agent.com',
                     'secondary': 'https://cdn-na-east-2.influencer-agent.com',
-                    'location': {'lat': 40.7128, 'lon': -74.0060}  # New York
+                    'location': {'lat': 40.7128, 'lon': -74.0060},  # New York
+                    'region_name': 'North America East (Legacy)',
+                    'priority': 'legacy'
                 },
                 GeographicRegion.EUROPE_WEST: {
                     'primary': 'https://cdn-eu-west.influencer-agent.com',
                     'secondary': 'https://cdn-eu-west-2.influencer-agent.com',
-                    'location': {'lat': 51.5074, 'lon': -0.1278}  # London
-                },
-                GeographicRegion.ASIA_PACIFIC_EAST: {
-                    'primary': 'https://cdn-ap-east.influencer-agent.com',
-                    'secondary': 'https://cdn-ap-east-2.influencer-agent.com',
-                    'location': {'lat': 35.6762, 'lon': 139.6503}  # Tokyo
+                    'location': {'lat': 51.5074, 'lon': -0.1278},  # London
+                    'region_name': 'Europe West (Legacy)',
+                    'priority': 'legacy'
                 }
-                # Add more regional configurations...
             }
             
             self.region_endpoints.update(default_endpoints)

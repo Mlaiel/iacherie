@@ -49,11 +49,16 @@ class IsolationLevel(str, Enum):
 
 class RegionCode(str, Enum):
     """Supported geographic regions for data residency."""
-    US_EAST = "us-east-1"
-    US_WEST = "us-west-2"
-    EU_WEST = "eu-west-1"
+    # Primary Global Deployment Regions
+    US_EAST = "us-east-1"        # N. Virginia - Primary region
+    US_WEST = "us-west-2"        # Oregon - Backup + West Coast users
+    EU_WEST = "eu-west-1"        # Ireland - GDPR Compliance Europe
+    AP_SOUTHEAST = "ap-southeast-1"  # Singapore - Asia-Pacific
+    AP_NORTHEAST = "ap-northeast-1"  # Tokyo - Japan + Korea
+    SA_EAST = "sa-east-1"        # São Paulo - South America
+    
+    # Secondary/Legacy regions maintained for compatibility
     EU_CENTRAL = "eu-central-1"
-    ASIA_PACIFIC = "ap-southeast-1"
     CANADA = "ca-central-1"
     AUSTRALIA = "ap-southeast-2"
 
@@ -273,27 +278,44 @@ class TenantConfig:
 
     # Regional configurations for data residency
     REGIONAL_CONFIGS = {
+        # Primary Global Deployment Regions
         RegionCode.US_EAST: {
-            "name": "US East (Virginia)",
+            "name": "US East (N. Virginia)",
             "data_center": "aws-us-east-1",
             "compliance": ["SOC2", "HIPAA", "PCI_DSS"],
             "latency_targets": {
                 "api_response": 50,  # ms
                 "file_upload": 200   # ms
             },
-            "business_hours_timezone": "America/New_York"
+            "business_hours_timezone": "America/New_York",
+            "priority": "primary",
+            "description": "Primary region for global deployment"
+        },
+        RegionCode.US_WEST: {
+            "name": "US West (Oregon)",
+            "data_center": "aws-us-west-2",
+            "compliance": ["SOC2", "PCI_DSS"],
+            "latency_targets": {
+                "api_response": 55,  # ms
+                "file_upload": 220   # ms
+            },
+            "business_hours_timezone": "America/Los_Angeles",
+            "priority": "backup",
+            "description": "Backup region and West Coast users"
         },
         RegionCode.EU_WEST: {
-            "name": "Europe West (Ireland)",
+            "name": "EU West (Ireland)",
             "data_center": "aws-eu-west-1",
             "compliance": ["GDPR", "ISO27001", "SOC2"],
             "latency_targets": {
                 "api_response": 60,  # ms
                 "file_upload": 250   # ms
             },
-            "business_hours_timezone": "Europe/Dublin"
+            "business_hours_timezone": "Europe/Dublin",
+            "priority": "high",
+            "description": "GDPR compliance for European users"
         },
-        RegionCode.ASIA_PACIFIC: {
+        RegionCode.AP_SOUTHEAST: {
             "name": "Asia Pacific (Singapore)",
             "data_center": "aws-ap-southeast-1",
             "compliance": ["SOC2", "ISO27001"],
@@ -301,7 +323,33 @@ class TenantConfig:
                 "api_response": 80,  # ms
                 "file_upload": 300   # ms
             },
-            "business_hours_timezone": "Asia/Singapore"
+            "business_hours_timezone": "Asia/Singapore",
+            "priority": "high",
+            "description": "Asia-Pacific regional coverage"
+        },
+        RegionCode.AP_NORTHEAST: {
+            "name": "Asia Pacific Northeast (Tokyo)",
+            "data_center": "aws-ap-northeast-1",
+            "compliance": ["SOC2", "ISO27001"],
+            "latency_targets": {
+                "api_response": 75,  # ms
+                "file_upload": 280   # ms
+            },
+            "business_hours_timezone": "Asia/Tokyo",
+            "priority": "high",
+            "description": "Japan and Korea regional coverage"
+        },
+        RegionCode.SA_EAST: {
+            "name": "South America East (São Paulo)",
+            "data_center": "aws-sa-east-1",
+            "compliance": ["SOC2"],
+            "latency_targets": {
+                "api_response": 90,  # ms
+                "file_upload": 350   # ms
+            },
+            "business_hours_timezone": "America/Sao_Paulo",
+            "priority": "medium",
+            "description": "South America regional coverage"
         }
     }
 
