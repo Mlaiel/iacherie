@@ -107,11 +107,13 @@ class ConfigurationManagerProtocol(ABC):
     """Protocol interface pour tous les gestionnaires de configuration"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du manager"""        pass
+        """Initialisation du manager"""
+        pass
     
     @abstractmethod
     async def validate_configuration(self) -> Dict[str, Any]:
-        """Validation de la configuration"""        pass
+        """Validation de la configuration"""
+        pass
     
     @abstractmethod
     async def get_configuration(self) -> Dict[str, Any]:
