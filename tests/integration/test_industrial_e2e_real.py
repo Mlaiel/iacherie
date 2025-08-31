@@ -15,6 +15,13 @@ import aiohttp
 import pytest
 import tempfile
 import os
+import sys
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
+# Import mock server utilities for fallback when real server unavailable
+from tests.utils.mock_api_server import ensure_api_server
 
 logger = logging.getLogger(__name__)
 
@@ -157,6 +164,13 @@ class IndustrialIntegrationTester:
     async def setup_test_environment(self) -> bool:
         """Setup real test environment."""
         logger.info("Setting up real test environment...")
+        
+        # Ensure API server is available (real or mock)
+        try:
+            await ensure_api_server()
+            logger.info("API server setup completed")
+        except Exception as e:
+            logger.error(f"Failed to setup API server: {e}")
         
         # Connect to real database
         if not await self.database.connect():
@@ -822,6 +836,13 @@ class IndustrialIntegrationTester:
 
 class TestIndustrialIntegration:
     """Test class for industrial integration testing."""
+
+    @pytest.fixture(autouse=True)
+    async def setup_test_environment(self):
+        """Setup test environment with API server availability."""
+        # Ensure API server is available (real or mock)
+        await ensure_api_server()
+        yield
     
     @pytest.mark.integration
     @pytest.mark.slow
