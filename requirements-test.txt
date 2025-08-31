@@ -29,3 +29,6 @@ structlog>=23.1.0
 # Utilitaires
 python-dotenv>=1.0.0
 pyyaml>=6.0.0
+
+# Tests industriels avancés
+psutil>=5.9.0  # Pour le monitoring système et chaos engineering
