@@ -111,6 +111,29 @@ class KeywordResearch:
     opportunity_score: float
     market_insights: Dict[str, Any]
 
+@dataclass
+class SeoJob:
+    """SEO processing job definition"""
+    job_id: str
+    content_id: str
+    job_type: str
+    parameters: Dict[str, Any]
+    priority: int = 1  # 1-5 scale
+    created_at: datetime = field(default_factory=datetime.now)
+    status: str = "pending"  # pending, running, completed, failed
+    
+@dataclass 
+class SeoResult:
+    """SEO processing result"""
+    job_id: str
+    content_id: str
+    result_type: str
+    data: Dict[str, Any]
+    success: bool = True
+    error_message: Optional[str] = None
+    processing_time: Optional[float] = None
+    completed_at: datetime = field(default_factory=datetime.now)
+
 class SeoEngine:
     """
     Ultra-Advanced SEO Processing Engine
