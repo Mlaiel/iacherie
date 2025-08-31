@@ -84,7 +84,8 @@ PROMPTS_REGISTRY = {
 PROMPTS_REGISTRY = {k: v for k, v in PROMPTS_REGISTRY.items() if v is not None}
 
 def get_prompts_info() -> Dict[str, Any]:
-    """Get comprehensive information about the prompts system"""    return {
+    """Get comprehensive information about the prompts system"""
+    return {
         "version": __version__,
         "author": __author__,
         "team": __team__,
@@ -114,7 +115,8 @@ def get_prompts_info() -> Dict[str, Any]:
     }
 
 def get_all_prompt_systems() -> Dict[str, Any]:
-    """Get all available prompt systems"""    systems = {
+    """Get all available prompt systems"""
+    systems = {
         "content_creator": get_content_creator_prompts(),
         "protection": get_protection_prompts(),
         "seo_monetization": get_seo_monetization_prompts(),
@@ -127,15 +129,18 @@ def get_all_prompt_systems() -> Dict[str, Any]:
 class PromptSystemManager:
     """Main manager for all prompt systems"""    
     def __init__(self):
-        """Initialize the prompt system manager"""        self.systems = get_all_prompt_systems()
+        """Initialize the prompt system manager"""
+        self.systems = get_all_prompt_systems()
         self.logger = logging.getLogger(__name__)
     
     def get_system(self, system_name: str) -> Any:
-        """Get a specific prompt system"""        return self.systems.get(system_name)
+        """Get a specific prompt system"""
+        return self.systems.get(system_name)
     
     def generate_content_creator_prompt(self, creator_type: str, content_format: str, 
                                       category: str, **kwargs) -> Dict[str, Any]:
-        """Generate content creator prompt"""        context = create_prompt_context(
+        """Generate content creator prompt"""
+        context = create_prompt_context(
             creator_type=creator_type,
             content_format=content_format,
             category=category,
