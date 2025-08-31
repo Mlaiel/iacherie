@@ -42,6 +42,8 @@ class PaymentProcessor(str, Enum):
     PAYU = "payu"  # Eastern Europe
     MOLLIE = "mollie"  # Europe
     COINBASE = "coinbase"  # Crypto
+    BITPAY = "bitpay"  # Crypto - 15+ cryptocurrencies
+    CRYPTO_COM_PAY = "crypto_com_pay"  # Crypto - Wallet integration
     BINANCE_PAY = "binance_pay"  # Crypto
 
 

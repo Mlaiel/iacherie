@@ -65,9 +65,9 @@ Suivi Revenus → Monétisation Automatisée → Analytique Temps Réel
 ### 💳 Traitement Paiements (`payment_processor_config.py`) 
 **Infrastructure paiements globale avec sécurité enterprise**
 
-- ✅ **15+ Processeurs paiement**: Stripe, PayPal, Wise, Adyen, Square, Revolut, Coinbase
+- ✅ **15+ Processeurs paiement**: Stripe, PayPal, Wise, Adyen, Square, Revolut, Coinbase, BitPay, Crypto.com Pay
 - ✅ **Optimisation régionale**: EU (Stripe, Adyen, Mollie), US (Square, Braintree), Asie (Razorpay, Alipay)
-- ✅ **Support crypto**: Bitcoin, Ethereum, USDC, USDT via Coinbase & Binance Pay
+- ✅ **Support crypto**: Bitcoin, Ethereum, USDC, USDT via Coinbase Commerce, BitPay (15+ cryptomonnaies), Crypto.com Pay (intégration portefeuilles)
 - ✅ **Basculement automatique**: Pattern Circuit Breaker avec routage intelligent
 - ✅ **Protection fraude**: Détection fraude ML avancée et scoring risque
 
