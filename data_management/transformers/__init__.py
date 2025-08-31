@@ -1,4 +1,5 @@
-"""🔄 Transformation System - IA Influencer Agent Platform Enterprise
+"""🔄 Transformation System - IA Influencer Agent Platform Enterprise.
+
 ================================================================
 Module: backend/data_management/transformers/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -44,7 +45,8 @@ from .stream_transformer import (
 )
 
 class TransformationType(Enum):
-    """Types de transformations supportées"""
+    """Types de transformations supportées."""
+
     # Transformations audio
     AUDIO_NORMALIZE = "audio_normalize"
     AUDIO_CONVERT = "audio_convert"
@@ -87,7 +89,8 @@ class TransformationType(Enum):
 
 @dataclass
 class TransformationConfig:
-    """Configuration d'une transformation"""
+    """Configuration d'une transformation."""
+
     type: TransformationType
     parameters: Dict[str, Any]
     output_format: Optional[str] = None
@@ -96,7 +99,8 @@ class TransformationConfig:
 
 @dataclass
 class TransformationResult:
-    """Résultat d'une transformation"""
+    """Résultat d'une transformation."""
+
     success: bool
     input_path: str
     output_path: Optional[str]
@@ -107,9 +111,10 @@ class TransformationResult:
     processing_time: float
 
 class TransformationManager:
-    """Gestionnaire principal des transformations"""
+    """Gestionnaire principal des transformations."""
     
     def __init__(self):
+        """Initialize the transformation manager."""
         self.logger = logging.getLogger(__name__)
         
         # Initialisation des transformateurs spécialisés
@@ -226,7 +231,7 @@ class TransformationManager:
         output_path: Optional[str] = None,
         creator_type: Optional[str] = None
     ) -> TransformationResult:
-        """Effectue une transformation selon la configuration"""
+        """Perform a transformation according to the configuration."""
         
         try:
             # Déterminer le transformateur approprié
@@ -271,7 +276,7 @@ class TransformationManager:
         inputs: List[Tuple[str, TransformationConfig]],
         creator_type: Optional[str] = None
     ) -> List[TransformationResult]:
-        """Effectue des transformations en lot"""
+        """Perform batch transformations."""
         results = []
         
         for input_path, config in inputs:
@@ -284,7 +289,7 @@ class TransformationManager:
         self,
         transformations: List[TransformationConfig]
     ) -> 'TransformationPipeline':
-        """Crée un pipeline de transformations séquentielles"""
+        """Create a pipeline of sequential transformations."""
         return TransformationPipeline(transformations, self)
     
     def get_optimal_config(
@@ -293,7 +298,7 @@ class TransformationManager:
         target_use_case: str,
         creator_type: str
     ) -> List[TransformationConfig]:
-        """Suggère une configuration optimale selon l'usage cible"""
+        """Suggest optimal configuration according to target use case."""
         
         file_ext = Path(input_path).suffix.lower().lstrip('.')
         configs = []
@@ -325,7 +330,7 @@ class TransformationManager:
         config: TransformationConfig,
         defaults: Dict[str, Any]
     ) -> TransformationConfig:
-        """Applique les paramètres par défaut du type de créateur"""
+        """Apply default parameters for creator type."""
         
         # Copier la config existante
         new_params = config.parameters.copy()
@@ -344,7 +349,7 @@ class TransformationManager:
         )
     
     def _get_web_publish_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations optimales pour publication web"""
+        """Get optimal configurations for web publishing."""
         configs = []
         
         if content_type == 'audio':
@@ -369,7 +374,7 @@ class TransformationManager:
         return configs
     
     def _get_social_media_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations optimales pour réseaux sociaux"""
+        """Get optimal configurations for social media."""
         configs = []
         
         if content_type == 'video':
@@ -388,7 +393,7 @@ class TransformationManager:
         return configs
     
     def _get_archive_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations pour archivage long terme"""
+        """Get configurations for long-term archiving."""
         configs = []
         
         if content_type == 'audio':
@@ -402,7 +407,7 @@ class TransformationManager:
         return configs
     
     def _get_distribution_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations pour distribution commerciale"""
+        """Get configurations for commercial distribution."""
         configs = []
         
         # Normalisation des métadonnées pour tous types

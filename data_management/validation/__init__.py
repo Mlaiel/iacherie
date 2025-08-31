@@ -1,4 +1,5 @@
-"""🚀 Validation System - IA Influencer Agent Platform Enterprise
+"""🚀 Validation System - IA Influencer Agent Platform Enterprise.
+
 ============================================================
 Module: backend/data_management/validation/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -94,7 +95,8 @@ from .workflow_validator import (
 )
 
 class ValidationLevel(Enum):
-    """Niveaux de validation"""
+    """Niveaux de validation."""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -102,7 +104,8 @@ class ValidationLevel(Enum):
 
 @dataclass
 class ValidationResult:
-    """Résultat de validation"""
+    """Résultat de validation."""
+
     is_valid: bool
     score: float  # 0.0 - 1.0
     errors: List[str]
@@ -110,7 +113,7 @@ class ValidationResult:
     metadata: Dict[str, Any]
     
 class ValidationConfig:
-    """Configuration du système de validation"""
+    """Configuration du système de validation."""
     
     # Tailles maximales par type de créateur (en MB)
     MAX_FILE_SIZES = {
@@ -205,9 +208,10 @@ class ValidationConfig:
     }
 
 class ValidationManager:
-    """Gestionnaire principal du système de validation"""
+    """Gestionnaire principal du système de validation."""
     
     def __init__(self, config: Optional[ValidationConfig] = None):
+        """Initialize the validation manager with optional configuration."""
         self.config = config or ValidationConfig()
         self.logger = logging.getLogger(__name__)
         
@@ -227,7 +231,7 @@ class ValidationManager:
         content_type: str,
         level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationResult:
-        """Valide un fichier selon le type de créateur et niveau requis"""
+        """Validate a file according to creator type and required level."""
         
         # Vérification du cache
         cache_key = self._generate_cache_key(file_path, creator_type, content_type, level)
@@ -305,7 +309,7 @@ class ValidationManager:
         content_types: List[str],
         level: ValidationLevel = ValidationLevel.STANDARD
     ) -> Dict[str, ValidationResult]:
-        """Valide un lot de fichiers"""
+        """Validate a batch of files."""
         results = {}
         
         for i, file_path in enumerate(file_paths):
@@ -315,7 +319,7 @@ class ValidationManager:
         return results
     
     def get_validation_summary(self, results: Dict[str, ValidationResult]) -> Dict[str, Any]:
-        """Génère un résumé des validations"""
+        """Generate a summary of validations."""
         total_files = len(results)
         valid_files = sum(1 for r in results.values() if r.is_valid)
         total_errors = sum(len(r.errors) for r in results.values())
@@ -334,7 +338,7 @@ class ValidationManager:
         }
     
     def _generate_cache_key(self, file_path: str, creator_type: str, content_type: str, level: ValidationLevel) -> str:
-        """Génère une clé de cache pour les résultats de validation"""
+        """Generate a cache key for validation results."""
         # Inclure le hash du fichier pour détecter les modifications
         try:
             with open(file_path, 'rb') as f:
@@ -345,7 +349,7 @@ class ValidationManager:
         return f"{file_path}:{creator_type}:{content_type}:{level.value}:{file_hash}"
     
     def _calculate_validation_score(self, errors: List[str], warnings: List[str], level: ValidationLevel) -> float:
-        """Calcule le score de validation basé sur les erreurs et avertissements"""
+        """Calculate validation score based on errors and warnings."""
         if errors:
             return 0.0  # Score 0 si des erreurs critiques
         
