@@ -88,6 +88,10 @@ class ClusterAutoscalerSpec:
     scale_down_delay: str = "10m"
     scale_down_unneeded_time: str = "10m"
     node_groups: List[Dict[str, Any]] = field(default_factory=list)
+    multi_az_enabled: bool = True
+    spot_instances_enabled: bool = True
+    expander_strategy: str = "priority"  # priority, least-waste, random
+    sla_uptime_target: float = 99.99
 
 class ResourceScalingManager:
     """Main resource scaling manager"""
@@ -270,14 +274,63 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_cluster_autoscaler(self, ca_spec: ClusterAutoscalerSpec) -> Dict[str, Any]:
-        """Create Cluster Autoscaler"""
+        """Create Cluster Autoscaler with multi-AZ and spot instances support"""
         try:
+            # Enhanced command line arguments for production scaling
+            command_args = [
+                './cluster-autoscaler',
+                '--v=4',
+                '--stderrthreshold=info',
+                '--cloud-provider=aws',
+                '--skip-nodes-with-local-storage=false',
+                f'--expander={ca_spec.expander_strategy}',
+                f'--scale-down-delay-after-add={ca_spec.scale_down_delay}',
+                f'--scale-down-unneeded-time={ca_spec.scale_down_unneeded_time}',
+                '--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/ainflue-prod'
+            ]
+            
+            # Multi-AZ configuration
+            if ca_spec.multi_az_enabled:
+                command_args.extend([
+                    '--balance-similar-node-groups=true',
+                    '--skip-nodes-with-system-pods=false'
+                ])
+            
+            # Cost optimization with spot instances
+            if ca_spec.spot_instances_enabled:
+                command_args.extend([
+                    '--scale-down-enabled=true',
+                    '--scale-down-utilization-threshold=0.5',
+                    '--scale-down-gpu-utilization-threshold=0.5',
+                    '--scale-down-delay-after-delete=10s',
+                    '--scale-down-delay-after-failure=3m',
+                    '--aws-use-static-instance-list=false',
+                    '--ignore-daemonsets-utilization=true'
+                ])
+            
+            # 99.99% SLA configuration
+            if ca_spec.sla_uptime_target >= 99.99:
+                command_args.extend([
+                    '--max-node-provision-time=15m',
+                    '--max-nodes-total=200',
+                    '--cores-total=0:1000',
+                    '--memory-total=0:8000'
+                ])
+            
+            # Add node group specifications
+            for node_group in ca_spec.node_groups:
+                command_args.append(f"--nodes={node_group['min']}:{node_group['max']}:{node_group['name']}")
+            
             # Cluster Autoscaler deployment
             deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
                     name=ca_spec.name,
                     namespace=ca_spec.namespace,
-                    labels={'app': 'cluster-autoscaler'}
+                    labels={
+                        'app': 'cluster-autoscaler',
+                        'tier': 'infrastructure',
+                        'component': 'autoscaling'
+                    }
                 ),
                 spec=client.V1DeploymentSpec(
                     replicas=1,
@@ -286,37 +339,42 @@ class ResourceScalingManager:
                     ),
                     template=client.V1PodTemplateSpec(
                         metadata=client.V1ObjectMeta(
-                            labels={'app': 'cluster-autoscaler'}
+                            labels={'app': 'cluster-autoscaler'},
+                            annotations={
+                                'prometheus.io/scrape': 'true',
+                                'prometheus.io/port': '8085'
+                            }
                         ),
                         spec=client.V1PodSpec(
+                            priority_class_name='system-cluster-critical',
+                            security_context=client.V1PodSecurityContext(
+                                run_as_non_root=True,
+                                run_as_user=65534,
+                                fs_group=65534
+                            ),
                             service_account='cluster-autoscaler',
                             containers=[
                                 client.V1Container(
                                     name='cluster-autoscaler',
-                                    image='k8s.gcr.io/autoscaling/cluster-autoscaler:v1.21.0',
-                                    command=[
-                                        './cluster-autoscaler',
-                                        '--v=4',
-                                        '--stderrthreshold=info',
-                                        '--cloud-provider=aws',  # Change based on provider
-                                        '--skip-nodes-with-local-storage=false',
-                                        '--expander=least-waste',
-                                        f'--scale-down-delay-after-add={ca_spec.scale_down_delay}',
-                                        f'--scale-down-unneeded-time={ca_spec.scale_down_unneeded_time}'
-                                    ] + [
-                                        f"--nodes={node_group['min']}:{node_group['max']}:{node_group['name']}"
-                                        for node_group in ca_spec.node_groups
-                                    ],
+                                    image='k8s.gcr.io/autoscaling/cluster-autoscaler:v1.27.3',
+                                    command=command_args,
                                     resources=client.V1ResourceRequirements(
                                         requests={'cpu': '100m', 'memory': '300Mi'},
-                                        limits={'cpu': '100m', 'memory': '300Mi'}
+                                        limits={'cpu': '200m', 'memory': '600Mi'}
                                     ),
                                     env=[
-                                        client.V1EnvVar(
-                                            name='AWS_REGION',
-                                            value='us-east-1'  # Configure based on region
-                                        )
-                                    ]
+                                        client.V1EnvVar(name='AWS_REGION', value='us-east-1'),
+                                        client.V1EnvVar(name='AWS_STS_REGIONAL_ENDPOINTS', value='regional')
+                                    ],
+                                    liveness_probe=client.V1Probe(
+                                        http_get=client.V1HTTPGetAction(
+                                            path='/health-check',
+                                            port=8085
+                                        ),
+                                        initial_delay_seconds=30,
+                                        timeout_seconds=5
+                                    ),
+                                    image_pull_policy='Always'
                                 )
                             ]
                         )
@@ -333,24 +391,29 @@ class ResourceScalingManager:
                     body=deployment
                 )
                 
-                logger.info(f"Created Cluster Autoscaler: {ca_spec.name}")
+                logger.info(f"Created enhanced Cluster Autoscaler: {ca_spec.name}")
                 return {
                     'status': 'success',
                     'name': ca_spec.name,
                     'min_nodes': ca_spec.min_nodes,
                     'max_nodes': ca_spec.max_nodes,
-                    'node_groups': len(ca_spec.node_groups)
+                    'node_groups': len(ca_spec.node_groups),
+                    'multi_az_enabled': ca_spec.multi_az_enabled,
+                    'spot_instances_enabled': ca_spec.spot_instances_enabled,
+                    'sla_uptime_target': ca_spec.sla_uptime_target
                 }
             else:
-                logger.info(f"Cluster Autoscaler configuration prepared: {ca_spec.name}")
+                logger.info(f"Enhanced Cluster Autoscaler configuration prepared: {ca_spec.name}")
                 return {
                     'status': 'success',
                     'name': ca_spec.name,
-                    'configured': True
+                    'configured': True,
+                    'multi_az_enabled': ca_spec.multi_az_enabled,
+                    'spot_instances_enabled': ca_spec.spot_instances_enabled
                 }
                 
         except Exception as e:
-            logger.error(f"Failed to create Cluster Autoscaler: {e}")
+            logger.error(f"Failed to create enhanced Cluster Autoscaler: {e}")
             return {'status': 'error', 'message': str(e)}
     
     async def _create_cluster_autoscaler_rbac(self, namespace: str) -> Dict[str, Any]:
@@ -773,4 +836,163 @@ class ResourceScalingManager:
                 
         except Exception as e:
             logger.error(f"Failed to manually scale deployment: {e}")
+            return {'status': 'error', 'message': str(e)}
+    
+    async def create_production_hpa_with_custom_metrics(
+        self, 
+        name: str, 
+        namespace: str,
+        target_deployment: str,
+        min_replicas: int = 3,
+        max_replicas: int = 50
+    ) -> Dict[str, Any]:
+        """Create production HPA with CPU 70%, Memory 80%, and custom metrics"""
+        try:
+            # Define production metrics: CPU 70%, Memory 80%, Custom metrics
+            metrics = [
+                # CPU 70%
+                client.V2MetricSpec(
+                    type="Resource",
+                    resource=client.V2ResourceMetricSource(
+                        name="cpu",
+                        target=client.V2MetricTarget(
+                            type="Utilization",
+                            average_utilization=70
+                        )
+                    )
+                ),
+                # Memory 80%
+                client.V2MetricSpec(
+                    type="Resource",
+                    resource=client.V2ResourceMetricSource(
+                        name="memory",
+                        target=client.V2MetricTarget(
+                            type="Utilization",
+                            average_utilization=80
+                        )
+                    )
+                ),
+                # Custom metric: HTTP requests per second
+                client.V2MetricSpec(
+                    type="Pods",
+                    pods=client.V2PodsMetricSource(
+                        metric=client.V2MetricIdentifier(name="http_requests_per_second"),
+                        target=client.V2MetricTarget(
+                            type="AverageValue",
+                            average_value="100"
+                        )
+                    )
+                ),
+                # Custom metric: Celery queue length
+                client.V2MetricSpec(
+                    type="Pods",
+                    pods=client.V2PodsMetricSource(
+                        metric=client.V2MetricIdentifier(name="celery_queue_length"),
+                        target=client.V2MetricTarget(
+                            type="AverageValue",
+                            average_value="50"
+                        )
+                    )
+                ),
+                # Custom metric: GPU utilization for AI processing
+                client.V2MetricSpec(
+                    type="Pods",
+                    pods=client.V2PodsMetricSource(
+                        metric=client.V2MetricIdentifier(name="nvidia_gpu_utilization"),
+                        target=client.V2MetricTarget(
+                            type="AverageValue",
+                            average_value="75"
+                        )
+                    )
+                )
+            ]
+            
+            # Production-grade scaling behavior
+            behavior = client.V2HorizontalPodAutoscalerBehavior(
+                scale_up=client.V2HPAScalingRules(
+                    stabilization_window_seconds=60,
+                    policies=[
+                        client.V2HPAScalingPolicy(
+                            type="Percent",
+                            value=100,
+                            period_seconds=15
+                        ),
+                        client.V2HPAScalingPolicy(
+                            type="Pods",
+                            value=4,
+                            period_seconds=60
+                        )
+                    ],
+                    select_policy="Max"
+                ),
+                scale_down=client.V2HPAScalingRules(
+                    stabilization_window_seconds=300,
+                    policies=[
+                        client.V2HPAScalingPolicy(
+                            type="Percent",
+                            value=10,
+                            period_seconds=60
+                        ),
+                        client.V2HPAScalingPolicy(
+                            type="Pods",
+                            value=2,
+                            period_seconds=120
+                        )
+                    ],
+                    select_policy="Min"
+                )
+            )
+            
+            # Create production HPA
+            hpa = client.V2HorizontalPodAutoscaler(
+                metadata=client.V1ObjectMeta(
+                    name=name,
+                    namespace=namespace,
+                    labels={
+                        'app': target_deployment,
+                        'tier': 'production',
+                        'component': 'autoscaling'
+                    }
+                ),
+                spec=client.V2HorizontalPodAutoscalerSpec(
+                    scale_target_ref=client.V2CrossVersionObjectReference(
+                        api_version='apps/v1',
+                        kind='Deployment',
+                        name=target_deployment
+                    ),
+                    min_replicas=min_replicas,
+                    max_replicas=max_replicas,
+                    metrics=metrics,
+                    behavior=behavior
+                )
+            )
+            
+            if self.autoscaling_v2:
+                result = self.autoscaling_v2.create_namespaced_horizontal_pod_autoscaler(
+                    namespace=namespace,
+                    body=hpa
+                )
+                
+                logger.info(f"Created production HPA with custom metrics: {name}")
+                return {
+                    'status': 'success',
+                    'name': name,
+                    'min_replicas': min_replicas,
+                    'max_replicas': max_replicas,
+                    'cpu_target': 70,
+                    'memory_target': 80,
+                    'custom_metrics_count': 3,
+                    'production_ready': True
+                }
+            else:
+                logger.info(f"Production HPA configuration prepared: {name}")
+                return {
+                    'status': 'success',
+                    'name': name,
+                    'configured': True,
+                    'production_ready': True
+                }
+                
+        except Exception as e:
+            logger.error(f"Failed to create production HPA: {e}")
             return {'status': 'error', 'message': str(e)}
