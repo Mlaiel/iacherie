@@ -29,7 +29,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import requests_html
 
-from ..utils.rate_limiter import GenericRateLimiter
+from ..utils.specialized_rate_limiters import GenericRateLimiter, RedditRateLimiter
 from ..utils.proxy_manager import ProxyManager
 from ..utils.user_agent_rotator import UserAgentRotator
 from ..utils.content_extractor import ContentExtractor

@@ -39,7 +39,7 @@ from praw.models import Submission, Comment, Subreddit, Redditor
 import prawcore
 import requests
 
-from ..utils.rate_limiter import RedditRateLimiter
+from ..utils.specialized_rate_limiters import RedditRateLimiter
 from ..utils.proxy_manager import ProxyManager
 from ..utils.user_agent_rotator import UserAgentRotator
 from ...core.config import get_settings

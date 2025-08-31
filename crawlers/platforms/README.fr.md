@@ -66,6 +66,35 @@ Crawlers web ultra-avancés professionnels pour surveillance complète des médi
 - **Bandcamp** - Plateforme de vente de musique
 - **Web Générique** - Crawler de contenu universel pour tout site web
 
+#### 🕸️ Crawlers Spécialisés (82 crawlers)
+
+##### E-commerce - Monitoring Produits Dérivés
+- **Amazon** - Surveillance produits et prix
+- **eBay** - Monitoring enchères et produits
+- **Etsy** - Suivi produits artisanaux et créations
+
+##### Plateformes Éducatives - Contenu Pédagogique
+- **Coursera** - Surveillance cours en ligne
+- **Udemy** - Monitoring formations professionnelles
+- **Khan Academy** - Suivi contenu éducatif gratuit
+- **edX** - Surveillance cours universitaires
+
+##### Sites News - Monitoring Actualités
+- **CNN** - Suivi actualités internationales
+- **BBC** - Monitoring nouvelles mondiales
+- **Reuters** - Surveillance dépêches agences
+- **AP News** - Suivi actualités Associated Press
+- **Guardian** - Monitoring presse britannique
+
+##### Plateformes Podcast - Audio Content Tracking
+- **Spotify Podcasts** - Surveillance podcasts Spotify
+- **Apple Podcasts** - Monitoring iTunes podcasts
+- **Google Podcasts** - Suivi podcasts Google
+
+##### Blogs & Forums Avancés
+- **WordPress** - Surveillance blogs WordPress
+- **Forum Générique** - Monitoring discussions forums
+
 #### Capacités Avancées
 - **Surveillance Temps Réel** - Suivi de contenu en direct et alertes
 - **Analyse Alimentée par IA** - Similarité de contenu et détection de tendances
