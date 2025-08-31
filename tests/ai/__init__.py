@@ -295,11 +295,12 @@ TEST_PRIORITY = {
 }
 
 def run_comprehensive_test_suite():
-    """    Execute comprehensive test suite for all AI modules.
+    """Execute comprehensive test suite for all AI modules.
     
     Returns:
         dict: Test results summary with coverage metrics
-    """    results = {
+    """
+    results = {
         'total_tests': 0,
         'passed': 0,
         'failed': 0,
