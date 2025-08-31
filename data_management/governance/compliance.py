@@ -38,6 +38,9 @@ class ComplianceFramework(Enum):
     SOX = "sox"
     PCI_DSS = "pci_dss"
     ISO27001 = "iso27001"
+    PIPEDA = "pipeda"
+    LGPD = "lgpd"
+    PDPA = "pdpa"
 
 
 class ComplianceStatus(Enum):
@@ -920,6 +923,599 @@ class DMCACompliance(BaseComplianceChecker):
         }
 
 
+class PIPEDACompliance(BaseComplianceChecker):
+    """
+    PIPEDA Compliance Checker
+    
+    Implements Personal Information Protection and Electronic Documents Act (Canada)
+    compliance checking for privacy protection and data handling requirements.
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+        self.framework = ComplianceFramework.PIPEDA
+    
+    async def assess_compliance(
+        self,
+        content_id: str,
+        content_type: str,
+        metadata: Dict[str, Any]
+    ) -> ComplianceReport:
+        """Assess PIPEDA compliance for content"""
+        issues = []
+        score = 100.0
+        
+        try:
+            # Check consent requirements
+            consent_issues = await self._check_consent_requirements(content_id, metadata)
+            issues.extend(consent_issues)
+            
+            # Check collection limitation
+            collection_issues = await self._check_collection_limitation(content_id, metadata)
+            issues.extend(collection_issues)
+            
+            # Check individual access rights
+            access_issues = await self._check_individual_access(content_id, metadata)
+            issues.extend(access_issues)
+            
+            # Check data retention policies
+            retention_issues = await self._check_data_retention(content_id, metadata)
+            issues.extend(retention_issues)
+            
+            score = self._calculate_pipeda_score(issues)
+            status = self._determine_status(score, issues)
+            recommendations = self._generate_pipeda_recommendations(issues)
+            
+            return ComplianceReport(
+                report_id=f"pipeda_{content_id}_{datetime.utcnow().timestamp()}",
+                content_id=content_id,
+                framework=self.framework,
+                status=status,
+                score=score,
+                issues=issues,
+                recommendations=recommendations,
+                assessed_at=datetime.utcnow(),
+                metadata={"content_type": content_type}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Error assessing PIPEDA compliance for {content_id}: {e}")
+            raise ComplianceError(f"PIPEDA assessment failed: {e}")
+    
+    async def _check_consent_requirements(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PIPEDA consent requirements"""
+        issues = []
+        
+        consent_data = metadata.get("consent", {})
+        
+        if not consent_data.get("explicit_consent"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pipeda_consent_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="consent_requirement",
+                description="Explicit consent not obtained as required by PIPEDA",
+                risk_level=RiskLevel.HIGH,
+                detected_at=datetime.utcnow()
+            ))
+        
+        if not consent_data.get("purpose_specified"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pipeda_purpose_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="purpose_specification",
+                description="Purpose for collection not clearly specified",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_collection_limitation(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PIPEDA collection limitation principle"""
+        issues = []
+        
+        collection_data = metadata.get("collection", {})
+        
+        if not collection_data.get("necessary_for_purpose"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pipeda_collection_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="collection_limitation",
+                description="Data collection exceeds what is necessary for stated purpose",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_individual_access(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PIPEDA individual access rights"""
+        issues = []
+        
+        access_data = metadata.get("individual_access", {})
+        
+        if not access_data.get("access_mechanism_available"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pipeda_access_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="individual_access",
+                description="Individual access mechanism not available",
+                risk_level=RiskLevel.HIGH,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_data_retention(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PIPEDA data retention requirements"""
+        issues = []
+        
+        retention_data = metadata.get("retention", {})
+        
+        if not retention_data.get("retention_policy_defined"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pipeda_retention_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="data_retention",
+                description="Data retention policy not defined",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    def _calculate_pipeda_score(self, issues: List[ComplianceIssue]) -> float:
+        """Calculate PIPEDA compliance score"""
+        if not issues:
+            return 100.0
+        
+        deductions = {
+            RiskLevel.CRITICAL: 30,
+            RiskLevel.HIGH: 20,
+            RiskLevel.MEDIUM: 10,
+            RiskLevel.LOW: 5
+        }
+        
+        total_deduction = sum(deductions.get(issue.risk_level, 5) for issue in issues)
+        return max(0, 100 - total_deduction)
+    
+    def _generate_pipeda_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
+        """Generate PIPEDA compliance recommendations"""
+        recommendations = []
+        
+        if any(issue.issue_type == "consent_requirement" for issue in issues):
+            recommendations.append("Implement explicit consent collection mechanisms")
+        
+        if any(issue.issue_type == "purpose_specification" for issue in issues):
+            recommendations.append("Clearly specify and communicate purpose for data collection")
+        
+        if any(issue.issue_type == "individual_access" for issue in issues):
+            recommendations.append("Provide mechanisms for individuals to access their personal information")
+        
+        if any(issue.issue_type == "data_retention" for issue in issues):
+            recommendations.append("Define and implement clear data retention policies")
+        
+        return recommendations
+    
+    def get_framework_info(self) -> Dict[str, Any]:
+        """Get PIPEDA framework information"""
+        return {
+            "name": "Personal Information Protection and Electronic Documents Act",
+            "jurisdiction": "Canada",
+            "effective_date": "2001-01-01",
+            "max_fine": "CAD $100,000",
+            "key_principles": [
+                "accountability",
+                "identifying_purposes",
+                "consent",
+                "limiting_collection",
+                "limiting_use_disclosure_retention",
+                "accuracy",
+                "safeguards",
+                "openness",
+                "individual_access",
+                "challenging_compliance"
+            ]
+        }
+
+
+class LGPDCompliance(BaseComplianceChecker):
+    """
+    LGPD Compliance Checker
+    
+    Implements Lei Geral de Proteção de Dados (Brazil) compliance checking
+    for data protection and privacy rights.
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+        self.framework = ComplianceFramework.LGPD
+    
+    async def assess_compliance(
+        self,
+        content_id: str,
+        content_type: str,
+        metadata: Dict[str, Any]
+    ) -> ComplianceReport:
+        """Assess LGPD compliance for content"""
+        issues = []
+        score = 100.0
+        
+        try:
+            # Check lawful basis
+            lawful_basis_issues = await self._check_lawful_basis(content_id, metadata)
+            issues.extend(lawful_basis_issues)
+            
+            # Check data subject rights
+            rights_issues = await self._check_data_subject_rights(content_id, metadata)
+            issues.extend(rights_issues)
+            
+            # Check data protection officer requirements
+            dpo_issues = await self._check_dpo_requirements(content_id, metadata)
+            issues.extend(dpo_issues)
+            
+            # Check consent mechanisms
+            consent_issues = await self._check_consent_mechanisms(content_id, metadata)
+            issues.extend(consent_issues)
+            
+            score = self._calculate_lgpd_score(issues)
+            status = self._determine_status(score, issues)
+            recommendations = self._generate_lgpd_recommendations(issues)
+            
+            return ComplianceReport(
+                report_id=f"lgpd_{content_id}_{datetime.utcnow().timestamp()}",
+                content_id=content_id,
+                framework=self.framework,
+                status=status,
+                score=score,
+                issues=issues,
+                recommendations=recommendations,
+                assessed_at=datetime.utcnow(),
+                metadata={"content_type": content_type}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Error assessing LGPD compliance for {content_id}: {e}")
+            raise ComplianceError(f"LGPD assessment failed: {e}")
+    
+    async def _check_lawful_basis(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check LGPD lawful basis for processing"""
+        issues = []
+        
+        legal_basis = metadata.get("legal_basis", {})
+        
+        if not legal_basis.get("basis_identified"):
+            issues.append(ComplianceIssue(
+                issue_id=f"lgpd_lawful_basis_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="lawful_basis",
+                description="Lawful basis for processing not identified",
+                risk_level=RiskLevel.HIGH,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_data_subject_rights(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check LGPD data subject rights implementation"""
+        issues = []
+        
+        rights_data = metadata.get("data_subject_rights", {})
+        
+        required_rights = ["access", "rectification", "deletion", "portability", "objection"]
+        for right in required_rights:
+            if not rights_data.get(f"{right}_implemented"):
+                issues.append(ComplianceIssue(
+                    issue_id=f"lgpd_{right}_{content_id}",
+                    framework=self.framework,
+                    content_id=content_id,
+                    issue_type=f"data_subject_{right}",
+                    description=f"Data subject right to {right} not implemented",
+                    risk_level=RiskLevel.MEDIUM,
+                    detected_at=datetime.utcnow()
+                ))
+        
+        return issues
+    
+    async def _check_dpo_requirements(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check LGPD Data Protection Officer requirements"""
+        issues = []
+        
+        dpo_data = metadata.get("dpo", {})
+        
+        if not dpo_data.get("dpo_designated"):
+            issues.append(ComplianceIssue(
+                issue_id=f"lgpd_dpo_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="dpo_designation",
+                description="Data Protection Officer not designated as required",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_consent_mechanisms(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check LGPD consent mechanisms"""
+        issues = []
+        
+        consent_data = metadata.get("consent", {})
+        
+        if not consent_data.get("specific_consent"):
+            issues.append(ComplianceIssue(
+                issue_id=f"lgpd_consent_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="consent_specificity",
+                description="Specific consent not obtained as required by LGPD",
+                risk_level=RiskLevel.HIGH,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    def _calculate_lgpd_score(self, issues: List[ComplianceIssue]) -> float:
+        """Calculate LGPD compliance score"""
+        if not issues:
+            return 100.0
+        
+        deductions = {
+            RiskLevel.CRITICAL: 25,
+            RiskLevel.HIGH: 15,
+            RiskLevel.MEDIUM: 8,
+            RiskLevel.LOW: 3
+        }
+        
+        total_deduction = sum(deductions.get(issue.risk_level, 3) for issue in issues)
+        return max(0, 100 - total_deduction)
+    
+    def _generate_lgpd_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
+        """Generate LGPD compliance recommendations"""
+        recommendations = []
+        
+        if any(issue.issue_type == "lawful_basis" for issue in issues):
+            recommendations.append("Identify and document lawful basis for all data processing")
+        
+        if any("data_subject" in issue.issue_type for issue in issues):
+            recommendations.append("Implement all required data subject rights mechanisms")
+        
+        if any(issue.issue_type == "dpo_designation" for issue in issues):
+            recommendations.append("Designate a qualified Data Protection Officer")
+        
+        if any(issue.issue_type == "consent_specificity" for issue in issues):
+            recommendations.append("Implement specific and granular consent mechanisms")
+        
+        return recommendations
+    
+    def get_framework_info(self) -> Dict[str, Any]:
+        """Get LGPD framework information"""
+        return {
+            "name": "Lei Geral de Proteção de Dados",
+            "jurisdiction": "Brazil",
+            "effective_date": "2020-09-18",
+            "max_fine": "BRL 50,000,000 or 2% of annual revenue",
+            "data_subject_rights": [
+                "confirmation_access",
+                "rectification",
+                "anonymization_blocking_deletion",
+                "portability",
+                "information_sharing",
+                "information_consent",
+                "revoke_consent"
+            ]
+        }
+
+
+class PDPACompliance(BaseComplianceChecker):
+    """
+    PDPA Compliance Checker
+    
+    Implements Personal Data Protection Act (Singapore) compliance checking
+    for personal data protection and privacy requirements.
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+        self.framework = ComplianceFramework.PDPA
+    
+    async def assess_compliance(
+        self,
+        content_id: str,
+        content_type: str,
+        metadata: Dict[str, Any]
+    ) -> ComplianceReport:
+        """Assess PDPA compliance for content"""
+        issues = []
+        score = 100.0
+        
+        try:
+            # Check consent obligations
+            consent_issues = await self._check_consent_obligations(content_id, metadata)
+            issues.extend(consent_issues)
+            
+            # Check notification obligations
+            notification_issues = await self._check_notification_obligations(content_id, metadata)
+            issues.extend(notification_issues)
+            
+            # Check access obligations
+            access_issues = await self._check_access_obligations(content_id, metadata)
+            issues.extend(access_issues)
+            
+            # Check protection obligations
+            protection_issues = await self._check_protection_obligations(content_id, metadata)
+            issues.extend(protection_issues)
+            
+            score = self._calculate_pdpa_score(issues)
+            status = self._determine_status(score, issues)
+            recommendations = self._generate_pdpa_recommendations(issues)
+            
+            return ComplianceReport(
+                report_id=f"pdpa_{content_id}_{datetime.utcnow().timestamp()}",
+                content_id=content_id,
+                framework=self.framework,
+                status=status,
+                score=score,
+                issues=issues,
+                recommendations=recommendations,
+                assessed_at=datetime.utcnow(),
+                metadata={"content_type": content_type}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Error assessing PDPA compliance for {content_id}: {e}")
+            raise ComplianceError(f"PDPA assessment failed: {e}")
+    
+    async def _check_consent_obligations(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PDPA consent obligations"""
+        issues = []
+        
+        consent_data = metadata.get("consent", {})
+        
+        if not consent_data.get("consent_obtained"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pdpa_consent_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="consent_obligation",
+                description="Consent not obtained as required by PDPA",
+                risk_level=RiskLevel.HIGH,
+                detected_at=datetime.utcnow()
+            ))
+        
+        if not consent_data.get("withdrawal_mechanism"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pdpa_withdrawal_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="consent_withdrawal",
+                description="Consent withdrawal mechanism not provided",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_notification_obligations(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PDPA notification obligations"""
+        issues = []
+        
+        notification_data = metadata.get("notification", {})
+        
+        if not notification_data.get("purpose_notified"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pdpa_notification_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="notification_obligation",
+                description="Purpose of collection not notified to individual",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_access_obligations(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PDPA access obligations"""
+        issues = []
+        
+        access_data = metadata.get("access", {})
+        
+        if not access_data.get("access_mechanism"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pdpa_access_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="access_obligation",
+                description="Access mechanism not provided for personal data",
+                risk_level=RiskLevel.MEDIUM,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    async def _check_protection_obligations(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
+        """Check PDPA protection obligations"""
+        issues = []
+        
+        protection_data = metadata.get("protection", {})
+        
+        if not protection_data.get("reasonable_security"):
+            issues.append(ComplianceIssue(
+                issue_id=f"pdpa_protection_{content_id}",
+                framework=self.framework,
+                content_id=content_id,
+                issue_type="protection_obligation",
+                description="Reasonable security arrangements not in place",
+                risk_level=RiskLevel.HIGH,
+                detected_at=datetime.utcnow()
+            ))
+        
+        return issues
+    
+    def _calculate_pdpa_score(self, issues: List[ComplianceIssue]) -> float:
+        """Calculate PDPA compliance score"""
+        if not issues:
+            return 100.0
+        
+        deductions = {
+            RiskLevel.CRITICAL: 25,
+            RiskLevel.HIGH: 15,
+            RiskLevel.MEDIUM: 10,
+            RiskLevel.LOW: 5
+        }
+        
+        total_deduction = sum(deductions.get(issue.risk_level, 5) for issue in issues)
+        return max(0, 100 - total_deduction)
+    
+    def _generate_pdpa_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
+        """Generate PDPA compliance recommendations"""
+        recommendations = []
+        
+        if any(issue.issue_type == "consent_obligation" for issue in issues):
+            recommendations.append("Implement proper consent collection mechanisms")
+        
+        if any(issue.issue_type == "consent_withdrawal" for issue in issues):
+            recommendations.append("Provide easy consent withdrawal mechanisms")
+        
+        if any(issue.issue_type == "notification_obligation" for issue in issues):
+            recommendations.append("Notify individuals about purpose of data collection")
+        
+        if any(issue.issue_type == "access_obligation" for issue in issues):
+            recommendations.append("Provide access mechanisms for personal data")
+        
+        if any(issue.issue_type == "protection_obligation" for issue in issues):
+            recommendations.append("Implement reasonable security arrangements for personal data")
+        
+        return recommendations
+    
+    def get_framework_info(self) -> Dict[str, Any]:
+        """Get PDPA framework information"""
+        return {
+            "name": "Personal Data Protection Act",
+            "jurisdiction": "Singapore",
+            "effective_date": "2014-07-02",
+            "max_fine": "SGD $1,000,000",
+            "key_obligations": [
+                "consent_obligation",
+                "purpose_limitation_obligation",
+                "notification_obligation",
+                "access_and_correction_obligation",
+                "accuracy_obligation",
+                "protection_obligation",
+                "retention_limitation_obligation",
+                "transfer_limitation_obligation",
+                "openness_obligation"
+            ]
+        }
+
+
 class ComplianceManager(BaseManager):
     """
     Central compliance management system
@@ -937,7 +1533,10 @@ class ComplianceManager(BaseManager):
         self.checkers = {
             ComplianceFramework.GDPR: GDPRCompliance(config),
             ComplianceFramework.CCPA: CCPACompliance(config),
-            ComplianceFramework.DMCA: DMCACompliance(config)
+            ComplianceFramework.DMCA: DMCACompliance(config),
+            ComplianceFramework.PIPEDA: PIPEDACompliance(config),
+            ComplianceFramework.LGPD: LGPDCompliance(config),
+            ComplianceFramework.PDPA: PDPACompliance(config)
         }
         
         # Compliance storage

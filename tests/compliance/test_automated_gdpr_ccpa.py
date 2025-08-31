@@ -25,6 +25,7 @@ class ComplianceRegulation(Enum):
     CCPA = "CCPA"
     PIPEDA = "PIPEDA"
     LGPD = "LGPD"
+    PDPA = "PDPA"
 
 
 class ComplianceTestType(Enum):
@@ -124,6 +125,50 @@ class PersonalDataGenerator:
         data["address"]["state"] = "CA"
         data["ccpa_subject"] = True
         data["do_not_sell"] = False
+        return data
+    
+    @staticmethod
+    def generate_canadian_user_data() -> Dict[str, Any]:
+        """Generate Canadian user data for PIPEDA testing."""
+        data = PersonalDataGenerator.generate_user_data()
+        data["address"]["country"] = "CA"
+        data["address"]["city"] = "Toronto"
+        data["pipeda_subject"] = True
+        data["consent_details"] = {
+            "explicit_consent": True,
+            "purpose_specified": True,
+            "withdrawal_available": True
+        }
+        return data
+    
+    @staticmethod
+    def generate_brazilian_user_data() -> Dict[str, Any]:
+        """Generate Brazilian user data for LGPD testing."""
+        data = PersonalDataGenerator.generate_user_data()
+        data["address"]["country"] = "BR"
+        data["address"]["city"] = "São Paulo"
+        data["lgpd_subject"] = True
+        data["lawful_basis"] = "consent"
+        data["data_subject_rights"] = {
+            "access_implemented": True,
+            "rectification_implemented": True,
+            "deletion_implemented": True,
+            "portability_implemented": True
+        }
+        return data
+    
+    @staticmethod
+    def generate_singapore_user_data() -> Dict[str, Any]:
+        """Generate Singapore user data for PDPA testing."""
+        data = PersonalDataGenerator.generate_user_data()
+        data["address"]["country"] = "SG"
+        data["address"]["city"] = "Singapore"
+        data["pdpa_subject"] = True
+        data["consent_obtained"] = True
+        data["notification_obligations"] = {
+            "purpose_notified": True,
+            "data_use_disclosed": True
+        }
         return data
 
 
@@ -495,15 +540,234 @@ class RealComplianceValidator:
                 response_time_ms=(time.time() - start_time) * 1000
             )
     
+    # PIPEDA Compliance Tests
+    async def test_pipeda_consent_collection(self, user_data: Dict[str, Any]) -> ComplianceTestResult:
+        """Test PIPEDA consent collection requirements."""
+        test_name = "pipeda_consent_collection"
+        start_time = time.time()
+        violations = []
+        recommendations = []
+        evidence = {}
+        
+        try:
+            # Create Canadian user data
+            ca_user_data = user_data.copy()
+            ca_user_data["address"]["country"] = "CA"
+            ca_user_data["pipeda_subject"] = True
+            ca_user_data["consent_details"] = {
+                "explicit_consent": True,
+                "purpose_specified": True,
+                "withdrawal_available": True
+            }
+            
+            user_id = await self._create_test_user(ca_user_data)
+            
+            # Test consent verification
+            status, response, response_time = await self._make_api_request(
+                "GET", f"/api/v1/user/{user_id}/pipeda/consent"
+            )
+            
+            evidence["consent_verification"] = {"status": status, "response": response}
+            
+            if status != 200:
+                violations.append("PIPEDA consent verification endpoint not available")
+                recommendations.append("Implement PIPEDA consent verification endpoint")
+            else:
+                consent_data = response.get("consent", {})
+                if not consent_data.get("explicit_consent"):
+                    violations.append("Explicit consent not properly recorded")
+                    recommendations.append("Ensure explicit consent is properly collected and stored")
+            
+            compliance_score = max(0, 100 - (len(violations) * 25))
+            
+            return ComplianceTestResult(
+                test_name=test_name,
+                regulation=ComplianceRegulation.PIPEDA,
+                test_type=ComplianceTestType.DATA_CONSENT,
+                severity=ComplianceSeverity.HIGH if violations else ComplianceSeverity.INFO,
+                passed=len(violations) == 0,
+                compliance_score=compliance_score,
+                violations=violations,
+                recommendations=recommendations,
+                evidence=evidence,
+                response_time_ms=response_time
+            )
+            
+        except Exception as e:
+            return ComplianceTestResult(
+                test_name=test_name,
+                regulation=ComplianceRegulation.PIPEDA,
+                test_type=ComplianceTestType.DATA_CONSENT,
+                severity=ComplianceSeverity.HIGH,
+                passed=False,
+                compliance_score=0,
+                violations=[f"Test execution failed: {str(e)}"],
+                recommendations=["Fix PIPEDA compliance implementation"],
+                evidence=evidence,
+                response_time_ms=(time.time() - start_time) * 1000
+            )
+    
+    # LGPD Compliance Tests
+    async def test_lgpd_data_subject_rights(self, user_data: Dict[str, Any]) -> ComplianceTestResult:
+        """Test LGPD data subject rights implementation."""
+        test_name = "lgpd_data_subject_rights"
+        start_time = time.time()
+        violations = []
+        recommendations = []
+        evidence = {}
+        
+        try:
+            # Create Brazilian user data
+            br_user_data = user_data.copy()
+            br_user_data["address"]["country"] = "BR"
+            br_user_data["lgpd_subject"] = True
+            br_user_data["lawful_basis"] = "consent"
+            
+            user_id = await self._create_test_user(br_user_data)
+            
+            # Test data access right
+            status, response, response_time = await self._make_api_request(
+                "GET", f"/api/v1/user/{user_id}/lgpd/data"
+            )
+            
+            evidence["data_access"] = {"status": status, "response": response}
+            
+            if status != 200:
+                violations.append("LGPD data access right not implemented")
+                recommendations.append("Implement LGPD data access endpoint")
+            
+            # Test data portability
+            status, portability_response, _ = await self._make_api_request(
+                "GET", f"/api/v1/user/{user_id}/lgpd/export"
+            )
+            
+            evidence["data_portability"] = {"status": status, "response": portability_response}
+            
+            if status != 200:
+                violations.append("LGPD data portability not implemented")
+                recommendations.append("Implement LGPD data portability endpoint")
+            
+            compliance_score = max(0, 100 - (len(violations) * 20))
+            
+            return ComplianceTestResult(
+                test_name=test_name,
+                regulation=ComplianceRegulation.LGPD,
+                test_type=ComplianceTestType.DATA_ACCESS,
+                severity=ComplianceSeverity.HIGH if violations else ComplianceSeverity.INFO,
+                passed=len(violations) == 0,
+                compliance_score=compliance_score,
+                violations=violations,
+                recommendations=recommendations,
+                evidence=evidence,
+                response_time_ms=response_time
+            )
+            
+        except Exception as e:
+            return ComplianceTestResult(
+                test_name=test_name,
+                regulation=ComplianceRegulation.LGPD,
+                test_type=ComplianceTestType.DATA_ACCESS,
+                severity=ComplianceSeverity.HIGH,
+                passed=False,
+                compliance_score=0,
+                violations=[f"Test execution failed: {str(e)}"],
+                recommendations=["Fix LGPD compliance implementation"],
+                evidence=evidence,
+                response_time_ms=(time.time() - start_time) * 1000
+            )
+    
+    # PDPA Compliance Tests
+    async def test_pdpa_consent_obligations(self, user_data: Dict[str, Any]) -> ComplianceTestResult:
+        """Test PDPA consent obligations compliance."""
+        test_name = "pdpa_consent_obligations"
+        start_time = time.time()
+        violations = []
+        recommendations = []
+        evidence = {}
+        
+        try:
+            # Create Singapore user data
+            sg_user_data = user_data.copy()
+            sg_user_data["address"]["country"] = "SG"
+            sg_user_data["pdpa_subject"] = True
+            sg_user_data["consent_obtained"] = True
+            
+            user_id = await self._create_test_user(sg_user_data)
+            
+            # Test consent status
+            status, response, response_time = await self._make_api_request(
+                "GET", f"/api/v1/user/{user_id}/pdpa/consent"
+            )
+            
+            evidence["consent_status"] = {"status": status, "response": response}
+            
+            if status != 200:
+                violations.append("PDPA consent status endpoint not available")
+                recommendations.append("Implement PDPA consent status verification")
+            else:
+                consent_info = response.get("consent", {})
+                if not consent_info.get("consent_obtained"):
+                    violations.append("PDPA consent not properly recorded")
+                    recommendations.append("Ensure PDPA consent is properly collected and stored")
+            
+            # Test consent withdrawal
+            withdrawal_request = {
+                "user_id": user_id,
+                "withdraw_consent": True,
+                "reason": "test_withdrawal"
+            }
+            
+            status, withdrawal_response, _ = await self._make_api_request(
+                "POST", f"/api/v1/user/{user_id}/pdpa/withdraw-consent", json=withdrawal_request
+            )
+            
+            evidence["consent_withdrawal"] = {"status": status, "response": withdrawal_response}
+            
+            if status not in [200, 201]:
+                violations.append("PDPA consent withdrawal mechanism not available")
+                recommendations.append("Implement PDPA consent withdrawal mechanism")
+            
+            compliance_score = max(0, 100 - (len(violations) * 25))
+            
+            return ComplianceTestResult(
+                test_name=test_name,
+                regulation=ComplianceRegulation.PDPA,
+                test_type=ComplianceTestType.CONSENT_WITHDRAWAL,
+                severity=ComplianceSeverity.HIGH if violations else ComplianceSeverity.INFO,
+                passed=len(violations) == 0,
+                compliance_score=compliance_score,
+                violations=violations,
+                recommendations=recommendations,
+                evidence=evidence,
+                response_time_ms=response_time
+            )
+            
+        except Exception as e:
+            return ComplianceTestResult(
+                test_name=test_name,
+                regulation=ComplianceRegulation.PDPA,
+                test_type=ComplianceTestType.CONSENT_WITHDRAWAL,
+                severity=ComplianceSeverity.HIGH,
+                passed=False,
+                compliance_score=0,
+                violations=[f"Test execution failed: {str(e)}"],
+                recommendations=["Fix PDPA compliance implementation"],
+                evidence=evidence,
+                response_time_ms=(time.time() - start_time) * 1000
+            )
+    
     async def run_comprehensive_compliance_tests(self) -> List[ComplianceTestResult]:
         """Run comprehensive compliance test suite."""
         logger.info("Starting comprehensive compliance tests...")
         
         results = []
         
-        # Generate test data
+        # Generate test data for different jurisdictions
         eu_user_data = PersonalDataGenerator.generate_eu_user_data()
         ca_user_data = PersonalDataGenerator.generate_california_user_data()
+        canadian_user_data = PersonalDataGenerator.generate_canadian_user_data()
+        brazilian_user_data = PersonalDataGenerator.generate_brazilian_user_data()
+        singapore_user_data = PersonalDataGenerator.generate_singapore_user_data()
         
         # GDPR Tests
         gdpr_tests = [
@@ -534,6 +798,48 @@ class RealComplianceValidator:
                 await asyncio.sleep(2)  # Delay between tests
             except Exception as e:
                 logger.error(f"CCPA test {test_method.__name__} failed: {e}")
+        
+        # PIPEDA Tests
+        pipeda_tests = [
+            self.test_pipeda_consent_collection,
+        ]
+        
+        for test_method in pipeda_tests:
+            try:
+                logger.info(f"Running PIPEDA test: {test_method.__name__}")
+                result = await test_method(canadian_user_data)
+                results.append(result)
+                await asyncio.sleep(2)  # Delay between tests
+            except Exception as e:
+                logger.error(f"PIPEDA test {test_method.__name__} failed: {e}")
+        
+        # LGPD Tests
+        lgpd_tests = [
+            self.test_lgpd_data_subject_rights,
+        ]
+        
+        for test_method in lgpd_tests:
+            try:
+                logger.info(f"Running LGPD test: {test_method.__name__}")
+                result = await test_method(brazilian_user_data)
+                results.append(result)
+                await asyncio.sleep(2)  # Delay between tests
+            except Exception as e:
+                logger.error(f"LGPD test {test_method.__name__} failed: {e}")
+        
+        # PDPA Tests
+        pdpa_tests = [
+            self.test_pdpa_consent_obligations,
+        ]
+        
+        for test_method in pdpa_tests:
+            try:
+                logger.info(f"Running PDPA test: {test_method.__name__}")
+                result = await test_method(singapore_user_data)
+                results.append(result)
+                await asyncio.sleep(2)  # Delay between tests
+            except Exception as e:
+                logger.error(f"PDPA test {test_method.__name__} failed: {e}")
         
         return results
     
@@ -664,3 +970,63 @@ class TestIndustrialCompliance:
             
             # CCPA tests should pass with allowable error margin
             assert opt_out_result.compliance_score >= 70, f"CCPA compliance score too low: {opt_out_result.compliance_score:.1f}"
+    
+    @pytest.mark.compliance
+    @pytest.mark.asyncio
+    async def test_pipeda_compliance_comprehensive(self):
+        """Test comprehensive PIPEDA compliance."""
+        async with RealComplianceValidator() as validator:
+            canadian_user_data = PersonalDataGenerator.generate_canadian_user_data()
+            
+            # Test PIPEDA consent requirements
+            consent_result = await validator.test_pipeda_consent_collection(canadian_user_data)
+            
+            # PIPEDA tests should pass with allowable error margin
+            assert consent_result.compliance_score >= 70, f"PIPEDA compliance score too low: {consent_result.compliance_score:.1f}"
+    
+    @pytest.mark.compliance
+    @pytest.mark.asyncio
+    async def test_lgpd_compliance_comprehensive(self):
+        """Test comprehensive LGPD compliance."""
+        async with RealComplianceValidator() as validator:
+            brazilian_user_data = PersonalDataGenerator.generate_brazilian_user_data()
+            
+            # Test LGPD data subject rights
+            rights_result = await validator.test_lgpd_data_subject_rights(brazilian_user_data)
+            
+            # LGPD tests should pass with allowable error margin
+            assert rights_result.compliance_score >= 70, f"LGPD compliance score too low: {rights_result.compliance_score:.1f}"
+    
+    @pytest.mark.compliance
+    @pytest.mark.asyncio
+    async def test_pdpa_compliance_comprehensive(self):
+        """Test comprehensive PDPA compliance."""
+        async with RealComplianceValidator() as validator:
+            singapore_user_data = PersonalDataGenerator.generate_singapore_user_data()
+            
+            # Test PDPA consent obligations
+            consent_result = await validator.test_pdpa_consent_obligations(singapore_user_data)
+            
+            # PDPA tests should pass with allowable error margin
+            assert consent_result.compliance_score >= 70, f"PDPA compliance score too low: {consent_result.compliance_score:.1f}"
+    
+    @pytest.mark.compliance
+    @pytest.mark.asyncio
+    async def test_global_compliance_comprehensive(self):
+        """Test all global compliance frameworks together."""
+        async with RealComplianceValidator() as validator:
+            results = await validator.run_comprehensive_compliance_tests()
+            report = validator.generate_compliance_report(results)
+            
+            # Log detailed results
+            logger.info(f"Global compliance tests completed: {report['summary']}")
+            
+            # Assert global compliance requirements
+            assert len(results) >= 5, "Should test at least 5 compliance frameworks (GDPR, CCPA, PIPEDA, LGPD, PDPA)"
+            assert report['summary']['compliance_rate'] >= 60, f"Global compliance rate too low: {report['summary']['compliance_rate']:.1f}%"
+            
+            # Verify all required frameworks are tested
+            tested_regulations = {result.regulation.value for result in results}
+            required_regulations = {"GDPR", "CCPA", "PIPEDA", "LGPD", "PDPA"}
+            missing_regulations = required_regulations - tested_regulations
+            assert not missing_regulations, f"Missing compliance tests for: {missing_regulations}"
