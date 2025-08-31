@@ -84,7 +84,8 @@ PROMPTS_REGISTRY = {
 PROMPTS_REGISTRY = {k: v for k, v in PROMPTS_REGISTRY.items() if v is not None}
 
 def get_prompts_info() -> Dict[str, Any]:
-    """Get comprehensive information about the prompts system"""    return {
+    """Get comprehensive information about the prompts system"""
+    return {
         "version": __version__,
         "author": __author__,
         "team": __team__,
