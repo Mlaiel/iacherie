@@ -155,6 +155,9 @@ class PaymentMethod(Enum):
     MOBILE_PAYMENT = "mobile_payment"
     QR_CODE = "qr_code"
     NFC = "nfc"
+    BNPL = "bnpl"
+    IN_PERSON = "in_person"
+    TERMINAL = "terminal"
 
 
 class PaymentTransaction(Base):

@@ -73,6 +73,10 @@ class PaymentMethod(str, Enum):
     ETHEREUM = "ethereum"
     USDC = "usdc"
     USDT = "usdt"
+    VENMO = "venmo"  # PayPal Venmo
+    BNPL = "bnpl"  # Buy Now Pay Later
+    IN_PERSON = "in_person"  # Square in-person payments
+    TERMINAL = "terminal"  # Payment terminal
 
 
 class ProcessorCapability(str, Enum):
@@ -247,7 +251,8 @@ class PaymentProcessorConfig:
                 supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "BRL", "MXN", "INR"],
                 supported_methods=[
                     PaymentMethod.PAYPAL_WALLET, PaymentMethod.CREDIT_CARD,
-                    PaymentMethod.DEBIT_CARD, PaymentMethod.BANK_TRANSFER
+                    PaymentMethod.DEBIT_CARD, PaymentMethod.BANK_TRANSFER,
+                    PaymentMethod.VENMO, PaymentMethod.BNPL
                 ],
                 capabilities=[
                     ProcessorCapability.INSTANT_PAYOUTS, ProcessorCapability.MARKETPLACE_SPLITS,
@@ -320,6 +325,54 @@ class PaymentProcessorConfig:
                 ],
                 settlement_delay_days=0,
                 minimum_payout_amount=Decimal("0.001")
+            ),
+            
+            PaymentProcessor.SQUARE: ProcessorConfig(
+                processor=PaymentProcessor.SQUARE,
+                display_name="Square",
+                api_key=os.getenv("SQUARE_APPLICATION_ID", ""),
+                secret_key=os.getenv("SQUARE_ACCESS_TOKEN", ""),
+                webhook_secret=os.getenv("SQUARE_WEBHOOK_SECRET", ""),
+                environment=os.getenv("SQUARE_ENV", "production"),
+                priority=3,
+                fee_structures={
+                    "USD": FeeStructure(
+                        percentage_fee=Decimal("2.6"),
+                        fixed_fee=Decimal("0.10"),
+                        currency="USD",
+                        international_fee=Decimal("0.5")
+                    ),
+                    "EUR": FeeStructure(
+                        percentage_fee=Decimal("2.5"),
+                        fixed_fee=Decimal("0.25"),
+                        currency="EUR",
+                        international_fee=Decimal("0.5")
+                    ),
+                    "GBP": FeeStructure(
+                        percentage_fee=Decimal("2.5"),
+                        fixed_fee=Decimal("0.20"),
+                        currency="GBP",
+                        international_fee=Decimal("0.5")
+                    )
+                },
+                supported_countries=["US", "CA", "GB", "AU", "JP", "IE", "ES", "FR"],
+                supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD", "JPY"],
+                supported_methods=[
+                    PaymentMethod.CREDIT_CARD, PaymentMethod.DEBIT_CARD,
+                    PaymentMethod.DIGITAL_WALLET, PaymentMethod.APPLE_PAY,
+                    PaymentMethod.GOOGLE_PAY, PaymentMethod.IN_PERSON,
+                    PaymentMethod.TERMINAL, PaymentMethod.BANK_TRANSFER
+                ],
+                capabilities=[
+                    ProcessorCapability.RECURRING_PAYMENTS, ProcessorCapability.INSTANT_PAYOUTS,
+                    ProcessorCapability.MARKETPLACE_SPLITS, ProcessorCapability.FRAUD_DETECTION,
+                    ProcessorCapability.MOBILE_PAYMENTS, ProcessorCapability.B2B_PAYMENTS,
+                    ProcessorCapability.SUBSCRIPTION_BILLING
+                ],
+                api_version="2024-01-19",
+                settlement_delay_days=1,
+                minimum_payout_amount=Decimal("1.00"),
+                webhook_events=["payment.updated", "order.updated", "invoice.payment_made"]
             )
         }
     )
@@ -425,6 +478,7 @@ class PaymentProvider(str, Enum):
     RAZORPAY = "razorpay"
     ADYEN = "adyen"
     BRAINTREE = "braintree"
+    SQUARE = "square"
 
 
 class PaymentMethod(str, Enum):
@@ -439,6 +493,10 @@ class PaymentMethod(str, Enum):
     SEPA_TRANSFER = "sepa_transfer"
     MOBILE_PAYMENT = "mobile_payment"
     VOUCHER = "voucher"
+    VENMO = "venmo"
+    BNPL = "bnpl"
+    IN_PERSON = "in_person"
+    TERMINAL = "terminal"
 
 
 class PaymentStatus(str, Enum):
@@ -625,6 +683,32 @@ class PaymentProcessorConfig:
                 supports_subscriptions=True,
                 supports_marketplace=True,
                 priority=4
+            ),
+            PaymentProvider.SQUARE: PaymentProviderConfig(
+                provider=PaymentProvider.SQUARE,
+                enabled=True,
+                api_key=os.getenv("SQUARE_APPLICATION_ID", ""),
+                api_secret=os.getenv("SQUARE_ACCESS_TOKEN", ""),
+                webhook_secret=os.getenv("SQUARE_WEBHOOK_SECRET", ""),
+                environment=os.getenv("SQUARE_ENVIRONMENT", "sandbox"),
+                supported_currencies=[
+                    "USD", "EUR", "GBP", "CAD", "AUD", "JPY"
+                ],
+                supported_countries=[
+                    "US", "CA", "GB", "AU", "JP", "IE", "ES", "FR"
+                ],
+                processing_fee_percentage=Decimal("2.6"),
+                processing_fee_fixed=Decimal("0.10"),
+                payout_fee_percentage=Decimal("0.0"),
+                payout_fee_fixed=Decimal("0.00"),
+                minimum_amount=Decimal("1.00"),
+                maximum_amount=Decimal("50000.00"),
+                settlement_time_hours=24,
+                supports_refunds=True,
+                supports_disputes=True,
+                supports_subscriptions=True,
+                supports_marketplace=True,
+                priority=3
             )
         }
     )
@@ -647,7 +731,9 @@ class PaymentProcessorConfig:
                 PaymentMethod.DIGITAL_WALLET,
                 PaymentMethod.CREDIT_CARD,
                 PaymentMethod.DEBIT_CARD,
-                PaymentMethod.BANK_ACCOUNT
+                PaymentMethod.BANK_ACCOUNT,
+                PaymentMethod.VENMO,
+                PaymentMethod.BNPL
             ],
             PaymentProvider.WISE: [
                 PaymentMethod.BANK_ACCOUNT,
@@ -660,6 +746,14 @@ class PaymentProcessorConfig:
                 PaymentMethod.DEBIT_CARD,
                 PaymentMethod.DIGITAL_WALLET,
                 PaymentMethod.BANK_ACCOUNT,
+                PaymentMethod.MOBILE_PAYMENT
+            ],
+            PaymentProvider.SQUARE: [
+                PaymentMethod.CREDIT_CARD,
+                PaymentMethod.DEBIT_CARD,
+                PaymentMethod.DIGITAL_WALLET,
+                PaymentMethod.IN_PERSON,
+                PaymentMethod.TERMINAL,
                 PaymentMethod.MOBILE_PAYMENT
             ]
         }
