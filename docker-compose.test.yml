@@ -1,0 +1,112 @@
+# Isolated Testing Environment for Developers
+# Each developer can run their own isolated test environment
+
+version: '3.8'
+
+services:
+  # Developer Test Environment - API
+  test-api-${DEVELOPER_ID:-dev1}:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+      target: testing
+    container_name: ainflue-test-${DEVELOPER_ID:-dev1}
+    ports:
+      - "${TEST_API_PORT:-9000}:8000"
+    environment:
+      - ENVIRONMENT=testing
+      - DEBUG=true
+      - POSTGRES_HOST=test-postgres-${DEVELOPER_ID:-dev1}
+      - REDIS_HOST=test-redis-${DEVELOPER_ID:-dev1}
+      - MONGODB_HOST=test-mongodb-${DEVELOPER_ID:-dev1}
+      - TEST_DATABASE=true
+      - PYTHONPATH=/app
+    depends_on:
+      - test-postgres-${DEVELOPER_ID:-dev1}
+      - test-redis-${DEVELOPER_ID:-dev1}
+      - test-mongodb-${DEVELOPER_ID:-dev1}
+    volumes:
+      - .:/app
+      - ./test-results-${DEVELOPER_ID:-dev1}:/app/test-results
+      - ./coverage-reports-${DEVELOPER_ID:-dev1}:/app/coverage-reports
+    networks:
+      - test-network-${DEVELOPER_ID:-dev1}
+    command: >
+      sh -c "
+        python -m pytest tests/ -v 
+        --html=test-results/report.html 
+        --cov=. 
+        --cov-report=html:coverage-reports
+        --tb=short
+      "
+
+  # Isolated PostgreSQL for testing
+  test-postgres-${DEVELOPER_ID:-dev1}:
+    image: postgres:15
+    container_name: test-postgres-${DEVELOPER_ID:-dev1}
+    environment:
+      POSTGRES_DB: ainflue_test_${DEVELOPER_ID:-dev1}
+      POSTGRES_USER: test_user_${DEVELOPER_ID:-dev1}
+      POSTGRES_PASSWORD: test_password_${DEVELOPER_ID:-dev1}
+    volumes:
+      - test_postgres_data_${DEVELOPER_ID:-dev1}:/var/lib/postgresql/data
+      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "${TEST_POSTGRES_PORT:-5435}:5432"
+    networks:
+      - test-network-${DEVELOPER_ID:-dev1}
+    tmpfs:
+      - /var/lib/postgresql/data  # Use tmpfs for faster tests
+
+  # Isolated Redis for testing
+  test-redis-${DEVELOPER_ID:-dev1}:
+    image: redis:7-alpine
+    container_name: test-redis-${DEVELOPER_ID:-dev1}
+    ports:
+      - "${TEST_REDIS_PORT:-6382}:6379"
+    networks:
+      - test-network-${DEVELOPER_ID:-dev1}
+    command: redis-server --save "" --appendonly no  # No persistence for tests
+
+  # Isolated MongoDB for testing
+  test-mongodb-${DEVELOPER_ID:-dev1}:
+    image: mongo:7
+    container_name: test-mongodb-${DEVELOPER_ID:-dev1}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test_user_${DEVELOPER_ID:-dev1}
+      MONGO_INITDB_ROOT_PASSWORD: test_password_${DEVELOPER_ID:-dev1}
+      MONGO_INITDB_DATABASE: ainflue_test_${DEVELOPER_ID:-dev1}
+    ports:
+      - "${TEST_MONGODB_PORT:-27020}:27017"
+    networks:
+      - test-network-${DEVELOPER_ID:-dev1}
+    tmpfs:
+      - /data/db  # Use tmpfs for faster tests
+
+  # Test Report Server
+  test-reports-${DEVELOPER_ID:-dev1}:
+    image: nginx:alpine
+    container_name: test-reports-${DEVELOPER_ID:-dev1}
+    ports:
+      - "${TEST_REPORTS_PORT:-8081}:80"
+    volumes:
+      - ./test-results-${DEVELOPER_ID:-dev1}:/usr/share/nginx/html/test-results:ro
+      - ./coverage-reports-${DEVELOPER_ID:-dev1}:/usr/share/nginx/html/coverage:ro
+      - ./performance-reports-${DEVELOPER_ID:-dev1}:/usr/share/nginx/html/performance:ro
+      - ./nginx-test-reports.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - test-network-${DEVELOPER_ID:-dev1}
+    depends_on:
+      - test-api-${DEVELOPER_ID:-dev1}
+
+volumes:
+  test_postgres_data_${DEVELOPER_ID:-dev1}:
+  test_redis_data_${DEVELOPER_ID:-dev1}:
+  test_mongodb_data_${DEVELOPER_ID:-dev1}:
+
+networks:
+  test-network-${DEVELOPER_ID:-dev1}:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.2${DEVELOPER_ID_SUBNET:-1}.0.0/16

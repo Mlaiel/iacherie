@@ -33,9 +33,28 @@ cache/
 *.sqlite
 *.sqlite3
 
+# Development artifacts
+test-results/
+test-results-*/
+coverage-reports/
+coverage-reports-*/
+performance-reports/
+performance-reports-*/
+htmlcov/
+.coverage
+*.prof
+bandit-report.json
+
+# Docker development
+docker-compose.override.yml
+nginx-test-reports.conf
+
 # IDE and editor files
 .idea/
 .vscode/
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
 *.swp
 *.swo
 *~
