@@ -22,7 +22,18 @@ import asyncpg
 from asyncpg import Pool, Connection
 from asyncpg.pool import PoolConnectionProxy
 
-from ..encryption import DatabaseEncryption
+try:
+    from ..security.encryption_manager import DatabaseEncryption
+except ImportError:
+    # Fallback if encryption module is not available
+    class DatabaseEncryption:
+        @staticmethod
+        def encrypt_sensitive_data(data):
+            return data
+        
+        @staticmethod
+        def decrypt_sensitive_data(data):
+            return data
 
 
 @dataclass

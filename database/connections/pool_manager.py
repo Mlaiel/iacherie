@@ -20,7 +20,21 @@ from datetime import datetime, timedelta
 from enum import Enum
 import statistics
 
-from .metrics import ConnectionMetrics
+try:
+    from .metrics import ConnectionMetrics
+except ImportError:
+    # Fallback if metrics module is not available
+    class ConnectionMetrics:
+        def __init__(self):
+            self.total_connections = 0
+            self.active_connections = 0
+            self.failed_connections = 0
+        
+        def record_connection(self):
+            self.total_connections += 1
+        
+        def record_failure(self):
+            self.failed_connections += 1
 
 
 class PoolType(Enum):

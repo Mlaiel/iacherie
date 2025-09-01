@@ -99,11 +99,10 @@ class RedisConfig:
 
 @dataclass
 class MongoConfig:
-    """
-MongoDB configuration"""
+    """MongoDB configuration"""
     host: str
-    port: int = 27017
     database: str
+    port: int = 27017
     username: Optional[str] = None
     password: Optional[str] = None
     auth_source: str = "admin"

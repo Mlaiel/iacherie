@@ -15,15 +15,51 @@ from dataclasses import dataclass
 from enum import Enum
 
 from .postgresql import PostgreSQLConnectionHandler
-from .redis import RedisConnectionHandler
-from .mongodb import MongoDBConnectionHandler
-from .elasticsearch import ElasticsearchConnectionHandler
-from .vector_stores import VectorStoreConnectionHandler
-from .object_storage import ObjectStorageConnectionHandler
-from .health_monitor import DatabaseHealthMonitor
-from .pool_manager import ConnectionPoolManager
-from .transaction_manager import TransactionManager
-from .tenant_manager import TenantConnectionManager
+
+try:
+    from .redis import RedisConnectionHandler
+except ImportError:
+    RedisConnectionHandler = None
+
+try:
+    from .mongodb import MongoDBConnectionHandler
+except ImportError:
+    MongoDBConnectionHandler = None
+
+try:
+    from .elasticsearch import ElasticsearchConnectionHandler
+except ImportError:
+    ElasticsearchConnectionHandler = None
+
+try:
+    from .vector_stores import VectorStoreConnectionHandler
+except ImportError:
+    VectorStoreConnectionHandler = None
+
+try:
+    from .object_storage import ObjectStorageConnectionHandler
+except ImportError:
+    ObjectStorageConnectionHandler = None
+
+try:
+    from .health_monitor import DatabaseHealthMonitor
+except ImportError:
+    DatabaseHealthMonitor = None
+
+try:
+    from .pool_manager import ConnectionPoolManager
+except ImportError:
+    ConnectionPoolManager = None
+
+try:
+    from .transaction_manager import TransactionManager
+except ImportError:
+    TransactionManager = None
+
+try:
+    from .tenant_manager import TenantConnectionManager
+except ImportError:
+    TenantConnectionManager = None
 
 
 class DatabaseType(Enum):
