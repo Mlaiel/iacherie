@@ -1,0 +1,430 @@
+# Automated Penetration Testing Pipeline for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Comprehensive security testing automation for enterprise compliance
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pentest-config
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: penetration-testing
+    app.kubernetes.io/component: config
+data:
+  owasp_zap_config.yaml: |
+    contexts:
+      - name: "Ainflue API"
+        urls:
+          - "https://api.ainflue.com"
+        includePaths:
+          - "https://api.ainflue.com/api/v1/.*"
+        excludePaths:
+          - "https://api.ainflue.com/health"
+          - "https://api.ainflue.com/metrics"
+        authentication:
+          method: "bearer"
+          loginUrl: "https://api.ainflue.com/api/v1/auth/login"
+          loggedInIndicator: "token"
+          loggedOutIndicator: "error"
+    
+    scans:
+      - name: "api_security_scan"
+        type: "api"
+        target: "https://api.ainflue.com"
+        policies:
+          - "SQL Injection"
+          - "Cross Site Scripting (Persistent)"
+          - "Cross Site Scripting (Reflected)"
+          - "Path Traversal"
+          - "Remote File Inclusion"
+          - "Server Side Include"
+          - "Script Active Scan Rules"
+          - "Server Side Code Injection"
+        strength: "HIGH"
+        threshold: "MEDIUM"
+      
+      - name: "web_application_scan"
+        type: "web"
+        target: "https://www.ainflue.com"
+        policies:
+          - "Cross Site Scripting (DOM Based)"
+          - "External Redirect"
+          - "CRLF Injection"
+          - "Parameter Pollution"
+          - "Source Code Disclosure"
+        strength: "HIGH"
+        threshold: "LOW"
+
+  nuclei_templates.yaml: |
+    templates:
+      - cves/
+      - default-logins/
+      - exposed-panels/
+      - exposures/
+      - misconfiguration/
+      - takeovers/
+      - technologies/
+      - vulnerabilities/
+    
+    custom_templates:
+      - /etc/nuclei/custom/ainflue-specific.yaml
+    
+    severity: ["critical", "high", "medium"]
+    exclude_tags: ["intrusive"]
+    
+    rate_limit: 150
+    bulk_size: 25
+    timeout: 10
+    retries: 1
+
+  nmap_config.yaml: |
+    scan_profiles:
+      discovery:
+        options: "-sn -PE -PP -PM"
+        description: "Host discovery scan"
+      
+      port_scan:
+        options: "-sS -sU --top-ports=1000"
+        description: "TCP/UDP port scan"
+      
+      service_scan:
+        options: "-sV -sC --script=vuln"
+        description: "Service version and vulnerability detection"
+      
+      comprehensive:
+        options: "-sS -sU -sV -sC -A -O --script=vuln,exploit"
+        description: "Comprehensive security scan"
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: automated-pentest
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: automated-pentest
+spec:
+  schedule: "0 2 * * 0" # Weekly on Sunday at 2 AM
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: automated-pentest
+        spec:
+          restartPolicy: Never
+          serviceAccountName: pentest-runner
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            fsGroup: 1001
+          initContainers:
+          - name: environment-check
+            image: ghcr.io/mlaiel/ainflue/pentest-tools:latest
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                echo "Checking target accessibility..."
+                curl -f -s https://api.ainflue.com/health || exit 1
+                echo "Environment check passed"
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "50m"
+          containers:
+          # OWASP ZAP Scanner
+          - name: zap-scanner
+            image: owasp/zap2docker-weekly:latest
+            command: ["/bin/bash", "-c"]
+            args:
+              - |
+                echo "Starting OWASP ZAP security scan..."
+                
+                # Start ZAP daemon
+                zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
+                
+                # Wait for ZAP to start
+                sleep 30
+                
+                # Run API scan
+                zap-api-scan.py -t https://api.ainflue.com/api/v1/openapi.json \
+                  -f openapi -g gen.conf -r /tmp/zap-api-report.html \
+                  -J /tmp/zap-api-report.json -x /tmp/zap-api-report.xml
+                
+                # Run baseline scan
+                zap-baseline.py -t https://www.ainflue.com \
+                  -r /tmp/zap-baseline-report.html \
+                  -J /tmp/zap-baseline-report.json -x /tmp/zap-baseline-report.xml
+                
+                # Copy reports to shared volume
+                cp /tmp/zap-*.* /reports/
+                
+                echo "OWASP ZAP scan completed"
+            volumeMounts:
+            - name: pentest-reports
+              mountPath: /reports
+            - name: pentest-config
+              mountPath: /etc/zap
+            resources:
+              requests:
+                memory: "1Gi"
+                cpu: "500m"
+              limits:
+                memory: "2Gi"
+                cpu: "1000m"
+          
+          # Nuclei Scanner
+          - name: nuclei-scanner
+            image: projectdiscovery/nuclei:latest
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                echo "Starting Nuclei vulnerability scan..."
+                
+                # Update nuclei templates
+                nuclei -update-templates
+                
+                # Run comprehensive scan
+                nuclei -u https://api.ainflue.com,https://www.ainflue.com \
+                  -t /etc/nuclei/templates/ \
+                  -severity critical,high,medium \
+                  -json -o /reports/nuclei-scan-results.json \
+                  -markdown-export /reports/nuclei-scan-report.md \
+                  -rate-limit 150 -bulk-size 25 -timeout 10 -retries 1
+                
+                echo "Nuclei scan completed"
+            volumeMounts:
+            - name: pentest-reports
+              mountPath: /reports
+            - name: pentest-config
+              mountPath: /etc/nuclei
+            resources:
+              requests:
+                memory: "512Mi"
+                cpu: "250m"
+              limits:
+                memory: "1Gi"
+                cpu: "500m"
+          
+          # Nmap Network Scanner
+          - name: nmap-scanner
+            image: instrumentisto/nmap:latest
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                echo "Starting Nmap network scan..."
+                
+                # Extract domain IP
+                TARGET_IP=$(dig +short api.ainflue.com | head -n1)
+                
+                # Discovery scan
+                nmap -sn -PE -PP -PM $TARGET_IP -oX /reports/nmap-discovery.xml
+                
+                # Port scan
+                nmap -sS --top-ports=1000 $TARGET_IP -oX /reports/nmap-ports.xml
+                
+                # Service detection
+                nmap -sV -sC --script=vuln $TARGET_IP -oX /reports/nmap-services.xml
+                
+                # Generate summary report
+                echo "Nmap scan completed for $TARGET_IP" > /reports/nmap-summary.txt
+                echo "Reports generated:" >> /reports/nmap-summary.txt
+                ls -la /reports/nmap-*.xml >> /reports/nmap-summary.txt
+                
+                echo "Nmap scan completed"
+            volumeMounts:
+            - name: pentest-reports
+              mountPath: /reports
+            securityContext:
+              capabilities:
+                add:
+                  - NET_RAW
+                  - NET_ADMIN
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "200m"
+              limits:
+                memory: "512Mi"
+                cpu: "400m"
+          
+          # Report Processor and Uploader
+          - name: report-processor
+            image: ghcr.io/mlaiel/ainflue/pentest-processor:latest
+            command: ["/bin/bash", "-c"]
+            args:
+              - |
+                echo "Processing penetration test reports..."
+                
+                # Wait for all scanners to complete
+                sleep 60
+                
+                # Process and consolidate reports
+                python3 /usr/local/bin/process_reports.py \
+                  --input-dir /reports \
+                  --output-dir /processed-reports \
+                  --format json,html,pdf \
+                  --template enterprise
+                
+                # Upload reports to S3
+                aws s3 cp /processed-reports/ s3://ainflue-security-reports/penetration-testing/$(date +%Y/%m/%d)/ --recursive
+                
+                # Send notifications
+                python3 /usr/local/bin/send_notifications.py \
+                  --report-dir /processed-reports \
+                  --channels slack,email \
+                  --severity-threshold medium
+                
+                echo "Report processing completed"
+            env:
+            - name: AWS_REGION
+              value: "us-east-1"
+            - name: S3_BUCKET
+              value: "ainflue-security-reports"
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: notification-secrets
+                  key: slack_webhook_url
+            - name: EMAIL_SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: notification-secrets
+                  key: smtp_host
+            - name: EMAIL_SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: notification-secrets
+                  key: smtp_user
+            - name: EMAIL_SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: notification-secrets
+                  key: smtp_pass
+            volumeMounts:
+            - name: pentest-reports
+              mountPath: /reports
+            - name: processed-reports
+              mountPath: /processed-reports
+            resources:
+              requests:
+                memory: "512Mi"
+                cpu: "200m"
+              limits:
+                memory: "1Gi"
+                cpu: "500m"
+          
+          volumes:
+          - name: pentest-reports
+            emptyDir:
+              sizeLimit: 2Gi
+          - name: processed-reports
+            emptyDir:
+              sizeLimit: 1Gi
+          - name: pentest-config
+            configMap:
+              name: pentest-config
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pentest-runner
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: pentest-runner
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pentest-runner
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: pentest-runner
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pentest-runner
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: pentest-runner
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pentest-runner
+subjects:
+- kind: ServiceAccount
+  name: pentest-runner
+  namespace: ainflue-security
+
+---
+# Emergency Penetration Test Job (for immediate security assessments)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: emergency-pentest
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: emergency-pentest
+    security.ainflue.com/priority: "critical"
+spec:
+  backoffLimit: 1
+  activeDeadlineSeconds: 3600 # 1 hour timeout
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: emergency-pentest
+    spec:
+      restartPolicy: Never
+      serviceAccountName: pentest-runner
+      containers:
+      - name: quick-scan
+        image: ghcr.io/mlaiel/ainflue/pentest-tools:latest
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "Running emergency penetration test..."
+            
+            # Quick vulnerability scan
+            nuclei -u https://api.ainflue.com \
+              -t /root/nuclei-templates/cves/ \
+              -severity critical,high \
+              -json -o /tmp/emergency-scan.json
+            
+            # Quick port scan
+            nmap -sS --top-ports=100 api.ainflue.com -oX /tmp/emergency-nmap.xml
+            
+            # Process and send immediate notification
+            python3 /usr/local/bin/emergency_notification.py \
+              --nuclei-report /tmp/emergency-scan.json \
+              --nmap-report /tmp/emergency-nmap.xml \
+              --severity-threshold high
+            
+            echo "Emergency penetration test completed"
+        env:
+        - name: SLACK_WEBHOOK_URL
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: slack_webhook_url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

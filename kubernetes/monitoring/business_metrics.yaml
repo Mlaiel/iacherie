@@ -1,0 +1,530 @@
+# Enterprise Business Metrics Monitoring for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Comprehensive business intelligence and operational metrics
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: business-metrics-config
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: business-metrics
+    app.kubernetes.io/component: config
+data:
+  business_metrics.yaml: |
+    metrics:
+      content_metrics:
+        - name: "total_uploads_24h"
+          description: "Total content uploads in last 24 hours"
+          query: "increase(ainflue_content_uploads_total[24h])"
+          threshold_warning: 1000
+          threshold_critical: 10000
+          unit: "count"
+        
+        - name: "processing_time_avg"
+          description: "Average content processing time"
+          query: "avg(ainflue_content_processing_duration_seconds)"
+          threshold_warning: 30
+          threshold_critical: 60
+          unit: "seconds"
+        
+        - name: "copyright_detection_rate"
+          description: "Copyright violation detection rate"
+          query: "rate(ainflue_copyright_violations_detected_total[1h])"
+          threshold_warning: 0.1
+          threshold_critical: 0.3
+          unit: "violations/hour"
+        
+        - name: "content_quality_score"
+          description: "Average content quality score"
+          query: "avg(ainflue_content_quality_score)"
+          threshold_warning: 7.0
+          threshold_critical: 5.0
+          unit: "score"
+      
+      revenue_metrics:
+        - name: "revenue_24h"
+          description: "Revenue generated in last 24 hours"
+          query: "increase(ainflue_revenue_total_usd[24h])"
+          threshold_warning: 10000
+          threshold_critical: 50000
+          unit: "USD"
+        
+        - name: "commission_rate"
+          description: "Platform commission rate"
+          query: "ainflue_commission_rate_percent"
+          threshold_warning: 15
+          threshold_critical: 20
+          unit: "percent"
+        
+        - name: "payment_success_rate"
+          description: "Payment processing success rate"
+          query: "rate(ainflue_payments_successful_total[1h]) / rate(ainflue_payments_total[1h]) * 100"
+          threshold_warning: 95
+          threshold_critical: 90
+          unit: "percent"
+        
+        - name: "subscription_churn_rate"
+          description: "Monthly subscription churn rate"
+          query: "ainflue_subscription_churn_rate_monthly"
+          threshold_warning: 5
+          threshold_critical: 10
+          unit: "percent"
+      
+      collaboration_metrics:
+        - name: "matching_success_rate"
+          description: "Collaboration matching success rate"
+          query: "rate(ainflue_collaborations_successful_total[1h]) / rate(ainflue_collaborations_attempted_total[1h]) * 100"
+          threshold_warning: 70
+          threshold_critical: 50
+          unit: "percent"
+        
+        - name: "avg_collaboration_value"
+          description: "Average collaboration deal value"
+          query: "avg(ainflue_collaboration_value_usd)"
+          threshold_warning: 1000
+          threshold_critical: 5000
+          unit: "USD"
+        
+        - name: "active_campaigns"
+          description: "Number of active marketing campaigns"
+          query: "ainflue_campaigns_active_total"
+          threshold_warning: 100
+          threshold_critical: 500
+          unit: "count"
+      
+      seo_metrics:
+        - name: "youtube_optimization_score"
+          description: "Average YouTube SEO optimization score"
+          query: "avg(ainflue_seo_youtube_score)"
+          threshold_warning: 7.5
+          threshold_critical: 6.0
+          unit: "score"
+        
+        - name: "tiktok_optimization_score"
+          description: "Average TikTok SEO optimization score"
+          query: "avg(ainflue_seo_tiktok_score)"
+          threshold_warning: 8.0
+          threshold_critical: 6.5
+          unit: "score"
+        
+        - name: "instagram_optimization_score"
+          description: "Average Instagram SEO optimization score"
+          query: "avg(ainflue_seo_instagram_score)"
+          threshold_warning: 7.0
+          threshold_critical: 5.5
+          unit: "score"
+      
+      performance_metrics:
+        - name: "api_response_time_p95"
+          description: "95th percentile API response time"
+          query: "histogram_quantile(0.95, rate(ainflue_http_request_duration_seconds_bucket[5m]))"
+          threshold_warning: 1.0
+          threshold_critical: 2.0
+          unit: "seconds"
+        
+        - name: "error_rate"
+          description: "API error rate"
+          query: "rate(ainflue_http_requests_total{status=~'5..'}[5m]) / rate(ainflue_http_requests_total[5m]) * 100"
+          threshold_warning: 1
+          threshold_critical: 5
+          unit: "percent"
+        
+        - name: "database_connection_utilization"
+          description: "Database connection pool utilization"
+          query: "ainflue_db_connections_active / ainflue_db_connections_max * 100"
+          threshold_warning: 80
+          threshold_critical: 95
+          unit: "percent"
+
+  grafana_dashboard.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Ainflue Business Intelligence Dashboard",
+        "tags": ["business", "revenue", "performance", "seo"],
+        "timezone": "browser",
+        "refresh": "30s",
+        "time": {
+          "from": "now-24h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "Revenue Metrics",
+            "type": "stat",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+            "targets": [
+              {
+                "expr": "increase(ainflue_revenue_total_usd[24h])",
+                "legendFormat": "24h Revenue (USD)"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "unit": "currencyUSD",
+                "min": 0,
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "yellow", "value": 10000},
+                    {"color": "green", "value": 50000}
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "title": "Content Processing",
+            "type": "timeseries",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+            "targets": [
+              {
+                "expr": "rate(ainflue_content_uploads_total[5m])",
+                "legendFormat": "Upload Rate"
+              },
+              {
+                "expr": "rate(ainflue_content_processed_total[5m])",
+                "legendFormat": "Processing Rate"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "SEO Performance by Platform",
+            "type": "bargauge",
+            "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+            "targets": [
+              {
+                "expr": "avg(ainflue_seo_youtube_score)",
+                "legendFormat": "YouTube"
+              },
+              {
+                "expr": "avg(ainflue_seo_tiktok_score)",
+                "legendFormat": "TikTok"
+              },
+              {
+                "expr": "avg(ainflue_seo_instagram_score)",
+                "legendFormat": "Instagram"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "unit": "short",
+                "min": 0,
+                "max": 10,
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "yellow", "value": 6},
+                    {"color": "green", "value": 8}
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": 4,
+            "title": "Collaboration Success Rate",
+            "type": "gauge",
+            "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
+            "targets": [
+              {
+                "expr": "rate(ainflue_collaborations_successful_total[1h]) / rate(ainflue_collaborations_attempted_total[1h]) * 100",
+                "legendFormat": "Success Rate"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "unit": "percent",
+                "min": 0,
+                "max": 100,
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "yellow", "value": 50},
+                    {"color": "green", "value": 70}
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": 5,
+            "title": "System Performance",
+            "type": "timeseries",
+            "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, rate(ainflue_http_request_duration_seconds_bucket[5m]))",
+                "legendFormat": "95th Percentile Response Time"
+              },
+              {
+                "expr": "rate(ainflue_http_requests_total{status=~'5..'}[5m]) / rate(ainflue_http_requests_total[5m]) * 100",
+                "legendFormat": "Error Rate %"
+              }
+            ]
+          }
+        ]
+      }
+    }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-metrics-collector
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: business-metrics-collector
+    app.kubernetes.io/component: metrics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: business-metrics-collector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: business-metrics-collector
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: business-metrics
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+      - name: metrics-collector
+        image: ghcr.io/mlaiel/ainflue/business-metrics:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: metrics
+        - containerPort: 8081
+          name: health
+        env:
+        - name: POSTGRES_CONNECTION
+          valueFrom:
+            secretKeyRef:
+              name: postgres-credentials
+              key: connection_string
+        - name: REDIS_CONNECTION
+          valueFrom:
+            secretKeyRef:
+              name: redis-credentials
+              key: connection_string
+        - name: METRICS_CONFIG
+          value: "/etc/config/business_metrics.yaml"
+        - name: COLLECTION_INTERVAL
+          value: "60" # 1 minute
+        - name: PROMETHEUS_PORT
+          value: "8080"
+        volumeMounts:
+        - name: config
+          mountPath: /etc/config
+          readOnly: true
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "300m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: config
+        configMap:
+          name: business-metrics-config
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: business-metrics
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: business-metrics
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: business-metrics
+  labels:
+    app.kubernetes.io/name: business-metrics
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: business-metrics
+  labels:
+    app.kubernetes.io/name: business-metrics
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: business-metrics
+subjects:
+- kind: ServiceAccount
+  name: business-metrics
+  namespace: ainflue-monitoring
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: business-metrics-collector
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: business-metrics-collector
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: metrics
+  - port: 8081
+    targetPort: 8081
+    name: health
+  selector:
+    app.kubernetes.io/name: business-metrics-collector
+
+---
+# Grafana Dashboard ConfigMap for automatic import
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: business-dashboard
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+    grafana_dashboard: "1"
+data:
+  business-dashboard.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Ainflue Enterprise Business Dashboard",
+        "tags": ["business", "enterprise", "revenue", "seo", "collaboration"],
+        "timezone": "UTC",
+        "refresh": "30s",
+        "time": {
+          "from": "now-6h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "Revenue Overview",
+            "type": "stat",
+            "gridPos": {"h": 6, "w": 6, "x": 0, "y": 0},
+            "targets": [
+              {
+                "expr": "increase(ainflue_revenue_total_usd[24h])",
+                "legendFormat": "24h Revenue"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "unit": "currencyUSD",
+                "decimals": 2,
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "yellow", "value": 10000},
+                    {"color": "green", "value": 50000}
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "title": "Content Processing Rate",
+            "type": "stat",
+            "gridPos": {"h": 6, "w": 6, "x": 6, "y": 0},
+            "targets": [
+              {
+                "expr": "rate(ainflue_content_uploads_total[1h]) * 3600",
+                "legendFormat": "Uploads/Hour"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "unit": "short",
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "yellow", "value": 100},
+                    {"color": "green", "value": 500}
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": 3,
+            "title": "SEO Optimization Scores",
+            "type": "bargauge",
+            "gridPos": {"h": 6, "w": 12, "x": 12, "y": 0},
+            "targets": [
+              {
+                "expr": "avg(ainflue_seo_youtube_score)",
+                "legendFormat": "YouTube"
+              },
+              {
+                "expr": "avg(ainflue_seo_tiktok_score)",
+                "legendFormat": "TikTok"
+              },
+              {
+                "expr": "avg(ainflue_seo_instagram_score)",
+                "legendFormat": "Instagram"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "unit": "short",
+                "min": 0,
+                "max": 10,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "yellow", "value": 6},
+                    {"color": "green", "value": 8}
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }

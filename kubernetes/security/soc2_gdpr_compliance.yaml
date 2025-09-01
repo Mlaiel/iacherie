@@ -1,0 +1,329 @@
+# SOC2 and GDPR Compliance Automation for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Automated compliance monitoring and reporting for enterprise security standards
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: compliance-config
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: compliance
+    app.kubernetes.io/component: config
+data:
+  soc2_controls.yaml: |
+    controls:
+      CC1.1:
+        name: "Control Environment - Integrity and Ethical Values"
+        description: "Demonstrates commitment to integrity and ethical values"
+        automated_checks:
+          - access_control_review
+          - code_integrity_scan
+          - employee_access_audit
+        frequency: daily
+      CC2.1:
+        name: "Communication and Information - Quality Information"
+        description: "Obtains and uses quality information"
+        automated_checks:
+          - data_quality_validation
+          - information_classification
+          - data_retention_compliance
+        frequency: hourly
+      CC3.1:
+        name: "Risk Assessment - Objectives"
+        description: "Specifies suitable objectives"
+        automated_checks:
+          - security_objective_compliance
+          - business_continuity_test
+          - risk_register_update
+        frequency: daily
+      CC6.1:
+        name: "Logical and Physical Access - Access Management"
+        description: "Implements logical access security"
+        automated_checks:
+          - rbac_compliance_check
+          - privilege_escalation_detection
+          - access_review_audit
+        frequency: continuous
+      CC7.1:
+        name: "System Operations - Capacity Management"
+        description: "Manages system capacity"
+        automated_checks:
+          - capacity_monitoring
+          - performance_threshold_check
+          - auto_scaling_validation
+        frequency: continuous
+
+  gdpr_requirements.yaml: |
+    requirements:
+      article_6:
+        name: "Lawfulness of Processing"
+        description: "Processing must have legal basis"
+        automated_checks:
+          - consent_validation
+          - legitimate_interest_assessment
+          - contract_necessity_check
+        frequency: hourly
+      article_17:
+        name: "Right to Erasure"
+        description: "Data subject right to be forgotten"
+        automated_checks:
+          - deletion_request_processing
+          - data_retention_enforcement
+          - backup_purging_validation
+        frequency: daily
+      article_25:
+        name: "Data Protection by Design"
+        description: "Privacy by design implementation"
+        automated_checks:
+          - privacy_impact_assessment
+          - data_minimization_check
+          - encryption_validation
+        frequency: continuous
+      article_32:
+        name: "Security of Processing"
+        description: "Appropriate technical measures"
+        automated_checks:
+          - encryption_at_rest_check
+          - encryption_in_transit_check
+          - access_control_validation
+          - incident_response_test
+        frequency: continuous
+      article_33:
+        name: "Breach Notification"
+        description: "72-hour breach notification"
+        automated_checks:
+          - breach_detection_system
+          - notification_automation
+          - incident_documentation
+        frequency: continuous
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compliance-monitor
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: compliance-monitor
+    app.kubernetes.io/component: monitoring
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: compliance-monitor
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: compliance-monitor
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: compliance-monitor
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+      - name: compliance-monitor
+        image: ghcr.io/mlaiel/ainflue/compliance-monitor:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: metrics
+        - containerPort: 8081
+          name: health
+        env:
+        - name: COMPLIANCE_CONFIG
+          value: "/etc/compliance/soc2_controls.yaml,/etc/compliance/gdpr_requirements.yaml"
+        - name: MONITORING_INTERVAL
+          value: "300" # 5 minutes
+        - name: POSTGRES_CONNECTION
+          valueFrom:
+            secretKeyRef:
+              name: postgres-credentials
+              key: connection_string
+        - name: SLACK_WEBHOOK_URL
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: slack_webhook_url
+        volumeMounts:
+        - name: compliance-config
+          mountPath: /etc/compliance
+          readOnly: true
+        - name: audit-logs
+          mountPath: /var/log/compliance
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: compliance-config
+        configMap:
+          name: compliance-config
+      - name: audit-logs
+        persistentVolumeClaim:
+          claimName: compliance-audit-logs
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: compliance-monitor
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: compliance-monitor
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: compliance-monitor
+  labels:
+    app.kubernetes.io/name: compliance-monitor
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints", "configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["networkpolicies", "ingresses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["policy"]
+  resources: ["podsecuritypolicies"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: compliance-monitor
+  labels:
+    app.kubernetes.io/name: compliance-monitor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: compliance-monitor
+subjects:
+- kind: ServiceAccount
+  name: compliance-monitor
+  namespace: ainflue-security
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: compliance-monitor
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: compliance-monitor
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: metrics
+  - port: 8081
+    targetPort: 8081
+    name: health
+  selector:
+    app.kubernetes.io/name: compliance-monitor
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: compliance-audit-logs
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: compliance-monitor
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: fast-ssd
+
+---
+# Compliance Reporting CronJob
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: compliance-reporting
+  namespace: ainflue-security
+  labels:
+    app.kubernetes.io/name: compliance-reporting
+spec:
+  schedule: "0 6 * * *" # Daily at 6 AM
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: compliance-reporting
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: compliance-monitor
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            fsGroup: 1001
+          containers:
+          - name: compliance-reporter
+            image: ghcr.io/mlaiel/ainflue/compliance-reporter:latest
+            imagePullPolicy: Always
+            env:
+            - name: REPORT_TYPE
+              value: "daily"
+            - name: OUTPUT_FORMAT
+              value: "pdf,json"
+            - name: S3_BUCKET
+              value: "ainflue-compliance-reports"
+            - name: AWS_REGION
+              value: "us-east-1"
+            volumeMounts:
+            - name: compliance-config
+              mountPath: /etc/compliance
+              readOnly: true
+            - name: audit-logs
+              mountPath: /var/log/compliance
+              readOnly: true
+            resources:
+              requests:
+                memory: "512Mi"
+                cpu: "200m"
+              limits:
+                memory: "1Gi"
+                cpu: "500m"
+          volumes:
+          - name: compliance-config
+            configMap:
+              name: compliance-config
+          - name: audit-logs
+            persistentVolumeClaim:
+              claimName: compliance-audit-logs
