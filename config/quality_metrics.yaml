@@ -1,0 +1,258 @@
+# Quality Metrics Configuration for Ainflue Platform
+# Comprehensive quality gates and thresholds configuration
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+quality_gates:
+  # Code Coverage Configuration
+  code_coverage:
+    enabled: true
+    mandatory: true
+    thresholds:
+      minimum_coverage: 90.0
+      branch_coverage: 85.0
+      function_coverage: 95.0
+      line_coverage: 90.0
+    fail_on_decrease: true
+    exclusions:
+      - "*/tests/*"
+      - "*/migrations/*"
+      - "*/venv/*"
+      - "*/node_modules/*"
+      - "*/__pycache__/*"
+      - "conftest.py"
+      - "setup.py"
+    reports:
+      - html
+      - xml
+      - json
+      - lcov
+
+  # Code Quality Gates
+  code_quality:
+    enabled: true
+    mandatory: true
+    tools:
+      - name: "pylint"
+        threshold: 8.0
+        fail_below: 7.0
+      - name: "flake8"
+        max_line_length: 100
+        max_complexity: 10
+      - name: "mypy"
+        strict_mode: true
+        ignore_missing_imports: false
+      - name: "black"
+        line_length: 100
+        target_version: "py312"
+
+  # Code Complexity Analysis
+  code_complexity:
+    enabled: true
+    mandatory: true
+    thresholds:
+      cyclomatic_complexity: 10
+      maintainability_index: 70
+      halstead_difficulty: 15
+      lines_of_code_per_function: 50
+      cognitive_complexity: 15
+    tools:
+      radon:
+        enabled: true
+        min_rank: "C"
+      lizard:
+        enabled: true
+        max_ccn: 10
+
+  # Security Scanning
+  security:
+    enabled: true
+    mandatory: true
+    vulnerability_thresholds:
+      critical: 0
+      high: 0
+      medium: 5
+      low: 10
+    tools:
+      bandit:
+        enabled: true
+        confidence_level: "high"
+        severity_level: "medium"
+      safety:
+        enabled: true
+        ignore_unpinned: false
+      semgrep:
+        enabled: true
+        rules: "auto"
+      trivy:
+        enabled: true
+        scan_types: ["vuln", "secret", "config"]
+
+  # Dependency Scanning
+  dependency_scanning:
+    enabled: true
+    mandatory: true
+    vulnerability_alerts:
+      critical: "immediate"
+      high: "24h"
+      medium: "7d"
+      low: "30d"
+    license_compliance:
+      allowed_licenses:
+        - "MIT"
+        - "Apache-2.0"
+        - "BSD-3-Clause"
+        - "BSD-2-Clause"
+        - "ISC"
+        - "Unlicense"
+      prohibited_licenses:
+        - "GPL-*"
+        - "AGPL-*"
+        - "LGPL-*"
+        - "SSPL-*"
+        - "BSL-*"
+    outdated_packages:
+      warning_age_days: 90
+      critical_age_days: 365
+
+  # Performance Benchmarking
+  performance:
+    enabled: true
+    mandatory: true
+    benchmarks:
+      response_time:
+        p50_threshold_ms: 100
+        p95_threshold_ms: 500
+        p99_threshold_ms: 1000
+      throughput:
+        min_rps: 1000
+        target_rps: 5000
+      resource_usage:
+        max_memory_mb: 512
+        max_cpu_percent: 80
+        max_disk_io_mbps: 100
+    baseline_comparison:
+      enabled: true
+      max_regression_percent: 10
+      min_samples: 10
+
+  # Documentation Coverage
+  documentation:
+    enabled: true
+    mandatory: true
+    thresholds:
+      api_documentation: 100.0
+      code_documentation: 80.0
+      readme_completeness: 90.0
+    requirements:
+      docstrings_required: true
+      api_schemas_required: true
+      examples_required: true
+      changelog_required: true
+
+  # Technical Debt Tracking
+  technical_debt:
+    enabled: true
+    mandatory: false  # Warning only initially
+    metrics:
+      code_duplication:
+        max_percentage: 5.0
+        block_size: 6
+      todo_comments:
+        max_count: 20
+        priority_keywords: ["FIXME", "XXX", "HACK"]
+      deprecated_usage:
+        track_deprecations: true
+        fail_on_deprecated: false
+      design_smells:
+        max_god_classes: 0
+        max_long_methods: 5
+        max_feature_envy: 3
+
+  # API Breaking Changes Detection
+  api_breaking_changes:
+    enabled: true
+    mandatory: true
+    detection:
+      openapi_schema_diff: true
+      endpoint_changes: true
+      response_format_changes: true
+      authentication_changes: true
+    versioning:
+      semantic_versioning: true
+      breaking_change_major_bump: true
+    exemptions:
+      - "internal/*"
+      - "debug/*"
+      - "test/*"
+
+# Quality Metrics Reporting
+reporting:
+  enabled: true
+  formats:
+    - json
+    - html
+    - markdown
+    - junit_xml
+  outputs:
+    - console
+    - file
+    - github_pr_comment
+    - slack_webhook
+  storage:
+    enabled: true
+    backend: "postgresql"
+    retention_days: 365
+    trend_analysis: true
+
+# Integration Configuration
+integrations:
+  github_actions:
+    enabled: true
+    pr_checks: true
+    status_checks: true
+    auto_merge_threshold: 95.0
+  
+  sonarqube:
+    enabled: false  # Can be enabled when SonarQube is available
+    server_url: ""
+    project_key: "ainflue"
+    quality_profile: "Sonar way"
+  
+  slack:
+    enabled: false
+    webhook_url: ""
+    channels:
+      alerts: "#quality-alerts"
+      reports: "#quality-reports"
+
+# Environment-specific overrides
+environments:
+  development:
+    code_coverage:
+      minimum_coverage: 80.0
+    security:
+      vulnerability_thresholds:
+        medium: 10
+        low: 20
+  
+  staging:
+    code_coverage:
+      minimum_coverage: 85.0
+    performance:
+      benchmarks:
+        response_time:
+          p99_threshold_ms: 2000
+  
+  production:
+    code_coverage:
+      minimum_coverage: 95.0
+    security:
+      vulnerability_thresholds:
+        critical: 0
+        high: 0
+        medium: 0
+    performance:
+      benchmarks:
+        response_time:
+          p99_threshold_ms: 500
