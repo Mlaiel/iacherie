@@ -27,6 +27,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   
   // System info
   getSystemInfo: () => ipcRenderer.invoke('get-system-info'),
+  getPlatformInfo: () => ipcRenderer.invoke('get-platform-info'),
   
   // Menu listeners
   onMenuAction: (callback) => {
