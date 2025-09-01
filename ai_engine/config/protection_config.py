@@ -364,7 +364,7 @@ Setup default API endpoints"""
             "protection_level": self.protection_level.value,
             "metadata": metadata,
             "fingerprint": self.generate_content_fingerprint(content_id, ContentType.TEXT),
-            "blockchain_hash": None,  # To be implemented
+            "blockchain_hash": self._generate_blockchain_hash(content_id, metadata),
             "rights_expires": None,  # For time-limited licenses
             "commercial_use_allowed": self.rights_management.commercial_use_allowed,
             "derivative_works_allowed": self.rights_management.derivative_works_allowed,
@@ -444,6 +444,40 @@ Setup default API endpoints"""
                 "jurisdiction": self.compliance.primary_jurisdiction
             }
         }
+    
+    def _generate_blockchain_hash(self, content_id: str, metadata: Dict[str, Any]) -> str:
+        """Generate blockchain-ready hash for content registration"""
+        try:
+            # Create a comprehensive hash based on content and metadata
+            hash_input = {
+                'content_id': content_id,
+                'creator_id': self.rights_management.creator_id,
+                'creator_email': self.rights_management.creator_email,
+                'timestamp': datetime.now().isoformat(),
+                'protection_level': self.protection_level.value,
+                'license_type': self.rights_management.default_license.value,
+                'metadata_hash': hashlib.sha256(json.dumps(metadata, sort_keys=True).encode()).hexdigest()
+            }
+            
+            # Create deterministic string representation
+            hash_string = json.dumps(hash_input, sort_keys=True)
+            
+            # Generate SHA-256 hash for blockchain compatibility
+            blockchain_hash = hashlib.sha256(hash_string.encode()).hexdigest()
+            
+            # Add entropy for uniqueness while maintaining determinism within same second
+            entropy = hashlib.md5(f"{content_id}_{self.rights_management.creator_id}".encode()).hexdigest()[:8]
+            final_hash = f"{blockchain_hash}_{entropy}"
+            
+            logger.info(f"Generated blockchain hash for content {content_id}: {final_hash[:16]}...")
+            
+            return final_hash
+            
+        except Exception as e:
+            logger.error(f"Failed to generate blockchain hash: {e}")
+            # Fallback to simple hash
+            fallback_data = f"{content_id}_{self.rights_management.creator_id}_{datetime.now().isoformat()}"
+            return hashlib.sha256(fallback_data.encode()).hexdigest()
 
     @classmethod
     def from_env(cls) -> 'ProtectionConfig':

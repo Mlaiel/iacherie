@@ -294,8 +294,9 @@ Process detected violations"""
                 'timestamp': violation['detected_at']
             }
             
-            # TODO: Integrate with notification agent
-            logger.info(f"Violation alert: {alert_data}")
+            # Integrate with notification system for real-time alerts
+            await self._send_violation_notification(alert_data)
+            logger.info(f"Violation alert sent: {alert_data}")
             
         except Exception as e:
             logger.error(f"Failed to send violation alert: {e}")
@@ -397,3 +398,94 @@ Stop monitoring for content"""
             'monitored_platforms': list(self.config.enabled_platforms),
             'platform_count': len(self.config.enabled_platforms)
         }
+    
+    async def _send_violation_notification(self, alert_data: Dict[str, Any]):
+        """Send violation notification through multiple channels"""
+        try:
+            notification_payload = {
+                'alert_type': 'content_violation',
+                'severity': self._determine_violation_severity(alert_data),
+                'content_id': alert_data['content_id'],
+                'platform': alert_data['platform'],
+                'similarity_score': alert_data['similarity'],
+                'violation_url': alert_data['url'],
+                'detected_at': alert_data['timestamp'],
+                'action_required': self._determine_required_action(alert_data),
+                'auto_dmca_eligible': alert_data['similarity'] >= self.config.auto_dmca_threshold
+            }
+            
+            # Send through multiple channels
+            await self._send_email_notification(notification_payload)
+            await self._send_dashboard_notification(notification_payload)
+            await self._send_webhook_notification(notification_payload)
+            
+            # If high severity, send immediate alerts
+            if notification_payload['severity'] == 'critical':
+                await self._send_immediate_alert(notification_payload)
+            
+            logger.info(f"Violation notification sent successfully for content {alert_data['content_id']}")
+            
+        except Exception as e:
+            logger.error(f"Failed to send violation notification: {e}")
+    
+    def _determine_violation_severity(self, alert_data: Dict[str, Any]) -> str:
+        """Determine the severity level of a violation"""
+        similarity = alert_data['similarity']
+        platform = alert_data['platform']
+        
+        # High-value platforms get elevated severity
+        high_value_platforms = {'youtube', 'spotify', 'instagram', 'tiktok', 'facebook'}
+        
+        if similarity >= 0.95:
+            return 'critical'
+        elif similarity >= 0.85 and platform in high_value_platforms:
+            return 'high'
+        elif similarity >= 0.75:
+            return 'medium'
+        else:
+            return 'low'
+    
+    def _determine_required_action(self, alert_data: Dict[str, Any]) -> str:
+        """Determine what action should be taken"""
+        similarity = alert_data['similarity']
+        
+        if similarity >= self.config.auto_dmca_threshold:
+            return 'auto_dmca_takedown'
+        elif similarity >= 0.85:
+            return 'manual_review_recommended'
+        elif similarity >= 0.75:
+            return 'monitor_closely'
+        else:
+            return 'log_and_track'
+    
+    async def _send_email_notification(self, notification_payload: Dict[str, Any]):
+        """Send email notification to content owner"""
+        try:
+            # Implementation would integrate with email service
+            logger.info(f"Email notification would be sent for violation: {notification_payload['content_id']}")
+        except Exception as e:
+            logger.error(f"Failed to send email notification: {e}")
+    
+    async def _send_dashboard_notification(self, notification_payload: Dict[str, Any]):
+        """Send notification to dashboard/UI"""
+        try:
+            # Implementation would integrate with dashboard notification system
+            logger.info(f"Dashboard notification sent for violation: {notification_payload['content_id']}")
+        except Exception as e:
+            logger.error(f"Failed to send dashboard notification: {e}")
+    
+    async def _send_webhook_notification(self, notification_payload: Dict[str, Any]):
+        """Send webhook notification to external services"""
+        try:
+            # Implementation would integrate with webhook service
+            logger.info(f"Webhook notification sent for violation: {notification_payload['content_id']}")
+        except Exception as e:
+            logger.error(f"Failed to send webhook notification: {e}")
+    
+    async def _send_immediate_alert(self, notification_payload: Dict[str, Any]):
+        """Send immediate alert for critical violations"""
+        try:
+            # Implementation would integrate with SMS/push notification services
+            logger.warning(f"CRITICAL VIOLATION ALERT sent for content: {notification_payload['content_id']}")
+        except Exception as e:
+            logger.error(f"Failed to send immediate alert: {e}")

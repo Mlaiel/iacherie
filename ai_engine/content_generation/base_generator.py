@@ -248,15 +248,49 @@ Setup content validation rules"""
         return enhanced_result
     
     async def _calculate_quality_metrics(self, result: Dict[str, Any]) -> Dict[str, float]:
-        """
-Calculate quality metrics for generated content"""
-        return {
-            'coherence_score': 0.95,  # To be implemented with actual scoring
-            'relevance_score': 0.92,
-            'creativity_score': 0.88,
-            'technical_quality': 0.96,
-            'overall_score': 0.93
-        }
+        """Calculate quality metrics for generated content"""
+        try:
+            content = result.get('generated_content', '')
+            content_type = result.get('content_type', 'text')
+            
+            # Calculate coherence score based on content analysis
+            coherence_score = await self._analyze_coherence(content, content_type)
+            
+            # Calculate relevance based on keyword consistency and context
+            relevance_score = await self._analyze_relevance(content, result.get('context', {}))
+            
+            # Assess creativity through linguistic diversity and originality
+            creativity_score = await self._analyze_creativity(content, content_type)
+            
+            # Technical quality assessment (grammar, structure, formatting)
+            technical_quality = await self._analyze_technical_quality(content, content_type)
+            
+            # Calculate weighted overall score
+            overall_score = (
+                coherence_score * 0.3 +
+                relevance_score * 0.25 +
+                creativity_score * 0.2 +
+                technical_quality * 0.25
+            )
+            
+            return {
+                'coherence_score': coherence_score,
+                'relevance_score': relevance_score,
+                'creativity_score': creativity_score,
+                'technical_quality': technical_quality,
+                'overall_score': overall_score
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Failed to calculate quality metrics: {e}")
+            # Return default scores if analysis fails
+            return {
+                'coherence_score': 0.75,
+                'relevance_score': 0.75,
+                'creativity_score': 0.75,
+                'technical_quality': 0.75,
+                'overall_score': 0.75
+            }
     
     async def _check_compliance(
         self,
@@ -314,10 +348,242 @@ Clean up generator resources"""
             # Release model resources
             await self._release_model_resources()
             
-            self.logger.info(f"{self.__class__.__name__} resources cleaned up")
+            self.logger.info(f"Generator {self.generator_name} resources cleaned up")
             
         except Exception as e:
-            self.logger.error(f"Error during resource cleanup: {str(e)}")
+            self.logger.error(f"Error during resource cleanup: {e}")
+    
+    async def _analyze_coherence(self, content: str, content_type: str) -> float:
+        """Analyze content coherence and logical flow"""
+        try:
+            if not content or len(content.strip()) == 0:
+                return 0.0
+            
+            # Basic coherence metrics
+            sentences = content.split('.')
+            sentences = [s.strip() for s in sentences if s.strip()]
+            
+            if len(sentences) == 0:
+                return 0.1
+            
+            # Calculate coherence based on:
+            # 1. Sentence length variation (ideal range)
+            sentence_lengths = [len(s.split()) for s in sentences]
+            avg_length = sum(sentence_lengths) / len(sentence_lengths) if sentence_lengths else 0
+            length_score = min(1.0, max(0.1, 1.0 - abs(avg_length - 15) / 20))  # Ideal ~15 words
+            
+            # 2. Repetition penalty
+            words = content.lower().split()
+            unique_words = set(words)
+            repetition_score = min(1.0, len(unique_words) / max(1, len(words)))
+            
+            # 3. Transition words presence (indicates flow)
+            transition_words = ['however', 'therefore', 'moreover', 'furthermore', 'additionally', 
+                             'consequently', 'meanwhile', 'subsequently', 'likewise', 'nevertheless']
+            transition_count = sum(1 for word in words if word in transition_words)
+            transition_score = min(1.0, transition_count / max(1, len(sentences)))
+            
+            # Weighted coherence score
+            coherence = (length_score * 0.4 + repetition_score * 0.4 + transition_score * 0.2)
+            return round(coherence, 2)
+            
+        except Exception as e:
+            self.logger.error(f"Coherence analysis failed: {e}")
+            return 0.5
+    
+    async def _analyze_relevance(self, content: str, context: Dict[str, Any]) -> float:
+        """Analyze content relevance to the given context"""
+        try:
+            if not content:
+                return 0.0
+            
+            content_lower = content.lower()
+            
+            # Extract context keywords
+            target_keywords = []
+            if 'keywords' in context:
+                target_keywords.extend(context['keywords'])
+            if 'topic' in context:
+                target_keywords.append(context['topic'].lower())
+            if 'target_audience' in context:
+                target_keywords.append(context['target_audience'].lower())
+            
+            if not target_keywords:
+                return 0.8  # Default score if no context available
+            
+            # Calculate keyword presence
+            keyword_matches = sum(1 for keyword in target_keywords if keyword in content_lower)
+            keyword_score = min(1.0, keyword_matches / len(target_keywords))
+            
+            # Content length appropriateness
+            word_count = len(content.split())
+            expected_length = context.get('target_length', 200)
+            length_ratio = min(word_count, expected_length) / max(word_count, expected_length)
+            
+            # Combined relevance score
+            relevance = (keyword_score * 0.7 + length_ratio * 0.3)
+            return round(relevance, 2)
+            
+        except Exception as e:
+            self.logger.error(f"Relevance analysis failed: {e}")
+            return 0.5
+    
+    async def _analyze_creativity(self, content: str, content_type: str) -> float:
+        """Analyze content creativity and originality"""
+        try:
+            if not content:
+                return 0.0
+            
+            words = content.split()
+            if len(words) == 0:
+                return 0.0
+            
+            # Vocabulary diversity
+            unique_words = set(word.lower() for word in words)
+            diversity_score = len(unique_words) / len(words)
+            
+            # Sentence structure variety
+            sentences = [s.strip() for s in content.split('.') if s.strip()]
+            sentence_starts = [s.split()[0].lower() for s in sentences if s.split()]
+            unique_starts = set(sentence_starts)
+            structure_variety = len(unique_starts) / max(1, len(sentence_starts))
+            
+            # Adjective and adverb usage (creativity indicators)
+            descriptive_words = ['amazing', 'incredible', 'fantastic', 'brilliant', 'innovative',
+                               'extraordinary', 'remarkable', 'outstanding', 'exceptional', 'unique']
+            descriptive_count = sum(1 for word in words if word.lower() in descriptive_words)
+            descriptive_score = min(1.0, descriptive_count / max(1, len(words) / 50))
+            
+            # Combined creativity score
+            creativity = (diversity_score * 0.5 + structure_variety * 0.3 + descriptive_score * 0.2)
+            return round(min(1.0, creativity), 2)
+            
+        except Exception as e:
+            self.logger.error(f"Creativity analysis failed: {e}")
+            return 0.5
+    
+    async def _analyze_technical_quality(self, content: str, content_type: str) -> float:
+        """Analyze technical quality (grammar, structure, formatting)"""
+        try:
+            if not content:
+                return 0.0
+            
+            # Basic grammar checks
+            grammar_score = await self._basic_grammar_check(content)
+            
+            # Structure analysis
+            structure_score = await self._analyze_structure(content, content_type)
+            
+            # Formatting consistency
+            formatting_score = await self._check_formatting(content, content_type)
+            
+            # Combined technical quality
+            technical_quality = (grammar_score * 0.4 + structure_score * 0.4 + formatting_score * 0.2)
+            return round(technical_quality, 2)
+            
+        except Exception as e:
+            self.logger.error(f"Technical quality analysis failed: {e}")
+            return 0.6
+    
+    async def _basic_grammar_check(self, content: str) -> float:
+        """Basic grammar and punctuation check"""
+        try:
+            # Simple heuristics for grammar quality
+            score = 1.0
+            
+            # Check for proper sentence ending
+            sentences = content.split('.')
+            properly_ended = sum(1 for s in sentences[:-1] if s.strip())
+            total_sentences = len([s for s in sentences if s.strip()])
+            if total_sentences > 0:
+                ending_score = properly_ended / total_sentences
+                score *= ending_score
+            
+            # Check for excessive repetition
+            words = content.split()
+            if len(words) > 10:
+                consecutive_repeats = sum(1 for i in range(len(words)-1) 
+                                        if words[i].lower() == words[i+1].lower())
+                repeat_penalty = max(0, 1 - (consecutive_repeats / len(words)))
+                score *= repeat_penalty
+            
+            return round(score, 2)
+            
+        except Exception as e:
+            self.logger.error(f"Grammar check failed: {e}")
+            return 0.7
+    
+    async def _analyze_structure(self, content: str, content_type: str) -> float:
+        """Analyze content structure appropriateness"""
+        try:
+            if content_type == 'article':
+                return await self._analyze_article_structure(content)
+            elif content_type == 'social_post':
+                return await self._analyze_social_structure(content)
+            else:
+                return await self._analyze_general_structure(content)
+                
+        except Exception as e:
+            self.logger.error(f"Structure analysis failed: {e}")
+            return 0.7
+    
+    async def _analyze_article_structure(self, content: str) -> float:
+        """Analyze article structure"""
+        # Articles should have introduction, body, conclusion
+        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
+        if len(paragraphs) >= 3:
+            return 0.9
+        elif len(paragraphs) >= 2:
+            return 0.7
+        else:
+            return 0.5
+    
+    async def _analyze_social_structure(self, content: str) -> float:
+        """Analyze social media post structure"""
+        # Social posts should be concise and engaging
+        word_count = len(content.split())
+        if 10 <= word_count <= 100:  # Ideal range for social posts
+            return 0.9
+        elif word_count <= 150:
+            return 0.7
+        else:
+            return 0.5
+    
+    async def _analyze_general_structure(self, content: str) -> float:
+        """Analyze general content structure"""
+        sentences = [s.strip() for s in content.split('.') if s.strip()]
+        if len(sentences) >= 3:
+            return 0.8
+        elif len(sentences) >= 2:
+            return 0.6
+        else:
+            return 0.4
+    
+    async def _check_formatting(self, content: str, content_type: str) -> float:
+        """Check formatting consistency"""
+        try:
+            score = 1.0
+            
+            # Check for consistent spacing
+            if '  ' in content:  # Double spaces
+                score *= 0.9
+            
+            # Check for proper capitalization at sentence starts
+            sentences = [s.strip() for s in content.split('.') if s.strip()]
+            proper_caps = sum(1 for s in sentences if s and s[0].isupper())
+            if len(sentences) > 0:
+                cap_score = proper_caps / len(sentences)
+                score *= cap_score
+            
+            return round(score, 2)
+            
+        except Exception as e:
+            self.logger.error(f"Formatting check failed: {e}")
+            return 0.8
+    
+    async def _release_model_resources(self) -> None:
+        """Release model-specific resources - to be implemented by subclasses"""
+        pass
     
     def get_memory_usage(self) -> float:
         """Get current memory usage in MB"""
