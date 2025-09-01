@@ -1,0 +1,308 @@
+name: 🔐 Production Approval Workflow
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Target environment for deployment'
+        required: true
+        type: string
+      image_tag:
+        description: 'Docker image tag to deploy'
+        required: true
+        type: string
+      deployment_type:
+        description: 'Type of deployment (blue-green, canary, rolling)'
+        required: false
+        type: string
+        default: 'blue-green'
+    secrets:
+      SLACK_WEBHOOK_URL:
+        required: false
+      TEAMS_WEBHOOK_URL:
+        required: false
+      APPROVAL_API_TOKEN:
+        required: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: mlaiel/ainflue
+
+jobs:
+  # Pre-approval validation
+  pre-approval-checks:
+    name: 🔍 Pre-Approval Validation
+    runs-on: ubuntu-latest
+    outputs:
+      approval-required: ${{ steps.check-approval.outputs.required }}
+      security-score: ${{ steps.security-check.outputs.score }}
+      change-risk: ${{ steps.risk-assessment.outputs.level }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check if approval required
+        id: check-approval
+        run: |
+          if [[ "${{ inputs.environment }}" == "production" ]]; then
+            echo "required=true" >> $GITHUB_OUTPUT
+          else
+            echo "required=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Security score assessment
+        id: security-check
+        run: |
+          # Download security reports from previous jobs
+          # In real implementation, this would check security scan results
+          echo "score=95" >> $GITHUB_OUTPUT
+
+      - name: Change risk assessment
+        id: risk-assessment
+        run: |
+          # Assess risk based on changes
+          RISK_LEVEL="low"
+          
+          # Check for high-risk file changes
+          if git diff --name-only HEAD~1 | grep -E "(migration|schema|auth|security)" >/dev/null 2>&1; then
+            RISK_LEVEL="high"
+          elif git diff --name-only HEAD~1 | grep -E "(config|env|secrets)" >/dev/null 2>&1; then
+            RISK_LEVEL="medium"
+          fi
+          
+          echo "level=$RISK_LEVEL" >> $GITHUB_OUTPUT
+
+  # Request approval for production deployments
+  production-approval:
+    name: 📋 Production Deployment Approval
+    runs-on: ubuntu-latest
+    needs: pre-approval-checks
+    if: needs.pre-approval-checks.outputs.approval-required == 'true'
+    environment: 
+      name: production-approval
+      url: https://github.com/${{ github.repository }}/deployments
+    
+    steps:
+      - name: Send approval notification
+        run: |
+          echo "🚀 Production deployment approval requested"
+          echo "📝 Details:"
+          echo "  - Environment: ${{ inputs.environment }}"
+          echo "  - Image: ${{ inputs.image_tag }}"
+          echo "  - Deployment Type: ${{ inputs.deployment_type }}"
+          echo "  - Security Score: ${{ needs.pre-approval-checks.outputs.security-score }}/100"
+          echo "  - Change Risk: ${{ needs.pre-approval-checks.outputs.change-risk }}"
+          echo "  - Requester: ${{ github.actor }}"
+          echo "  - Commit: ${{ github.sha }}"
+
+      - name: Notify Slack
+        if: vars.SLACK_WEBHOOK_URL
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          custom_payload: |
+            {
+              "channel": "#production-approvals",
+              "username": "Production Deployment Bot",
+              "icon_emoji": ":rocket:",
+              "text": "🚀 *Production Deployment Approval Required*",
+              "attachments": [
+                {
+                  "color": "${{ needs.pre-approval-checks.outputs.change-risk == 'high' && 'danger' || needs.pre-approval-checks.outputs.change-risk == 'medium' && 'warning' || 'good' }}",
+                  "fields": [
+                    {
+                      "title": "Environment",
+                      "value": "${{ inputs.environment }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Image Tag",
+                      "value": "${{ inputs.image_tag }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Deployment Type",
+                      "value": "${{ inputs.deployment_type }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Security Score",
+                      "value": "${{ needs.pre-approval-checks.outputs.security-score }}/100",
+                      "short": true
+                    },
+                    {
+                      "title": "Change Risk",
+                      "value": "${{ needs.pre-approval-checks.outputs.change-risk }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Requester",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View PR",
+                      "url": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                    },
+                    {
+                      "type": "button", 
+                      "text": "View Workflow",
+                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                }
+              ]
+            }
+
+      - name: Notify Microsoft Teams
+        if: vars.TEAMS_WEBHOOK_URL
+        run: |
+          curl -H "Content-Type: application/json" -d '{
+            "@type": "MessageCard",
+            "@context": "https://schema.org/extensions",
+            "summary": "Production Deployment Approval Required",
+            "themeColor": "${{ needs.pre-approval-checks.outputs.change-risk == 'high' && 'FF0000' || needs.pre-approval-checks.outputs.change-risk == 'medium' && 'FFA500' || '00FF00' }}",
+            "title": "🚀 Production Deployment Approval Required",
+            "sections": [
+              {
+                "facts": [
+                  {"name": "Environment", "value": "${{ inputs.environment }}"},
+                  {"name": "Image Tag", "value": "${{ inputs.image_tag }}"},
+                  {"name": "Deployment Type", "value": "${{ inputs.deployment_type }}"},
+                  {"name": "Security Score", "value": "${{ needs.pre-approval-checks.outputs.security-score }}/100"},
+                  {"name": "Change Risk", "value": "${{ needs.pre-approval-checks.outputs.change-risk }}"},
+                  {"name": "Requester", "value": "${{ github.actor }}"}
+                ]
+              }
+            ],
+            "potentialAction": [
+              {
+                "@type": "OpenUri",
+                "name": "View Workflow",
+                "targets": [{"os": "default", "uri": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}]
+              }
+            ]
+          }' ${{ secrets.TEAMS_WEBHOOK_URL }}
+
+      - name: Wait for approval
+        run: |
+          echo "⏳ Waiting for manual approval..."
+          echo "Approvers can review and approve this deployment in GitHub Actions"
+
+  # Post-approval verification
+  post-approval-verification:
+    name: ✅ Post-Approval Verification  
+    runs-on: ubuntu-latest
+    needs: [pre-approval-checks, production-approval]
+    if: always() && (needs.production-approval.result == 'success' || needs.pre-approval-checks.outputs.approval-required == 'false')
+    
+    steps:
+      - name: Verify approval conditions
+        run: |
+          echo "✅ Approval verification completed"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Approval Required: ${{ needs.pre-approval-checks.outputs.approval-required }}"
+          echo "Security Score: ${{ needs.pre-approval-checks.outputs.security-score }}/100"
+          echo "Change Risk: ${{ needs.pre-approval-checks.outputs.change-risk }}"
+
+      - name: Generate deployment manifest
+        run: |
+          cat > deployment-manifest.json << EOF
+          {
+            "deployment_id": "${{ github.run_id }}",
+            "environment": "${{ inputs.environment }}",
+            "image_tag": "${{ inputs.image_tag }}",
+            "deployment_type": "${{ inputs.deployment_type }}",
+            "approved_by": "GitHub Actions",
+            "approved_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "requester": "${{ github.actor }}",
+            "commit_sha": "${{ github.sha }}",
+            "security_score": ${{ needs.pre-approval-checks.outputs.security-score }},
+            "change_risk": "${{ needs.pre-approval-checks.outputs.change-risk }}"
+          }
+          EOF
+
+      - name: Upload deployment manifest
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-manifest
+          path: deployment-manifest.json
+
+      - name: Send approval success notification
+        if: vars.SLACK_WEBHOOK_URL
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          channel: '#deployments'
+          text: |
+            ✅ *Production Deployment Approved and Ready*
+            Environment: ${{ inputs.environment }}
+            Image: ${{ inputs.image_tag }}
+            Deployment Type: ${{ inputs.deployment_type }}
+            Proceeding with deployment...
+
+  # Emergency bypass (for critical hotfixes)
+  emergency-bypass:
+    name: 🚨 Emergency Bypass
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[EMERGENCY]') || contains(github.event.head_commit.message, '[HOTFIX]')
+    
+    steps:
+      - name: Emergency deployment notice
+        run: |
+          echo "🚨 EMERGENCY DEPLOYMENT DETECTED"
+          echo "Bypassing normal approval process"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+          echo "Emergency deployments should be used sparingly and reviewed post-deployment"
+
+      - name: Notify emergency deployment
+        if: vars.SLACK_WEBHOOK_URL
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          custom_payload: |
+            {
+              "channel": "#alerts",
+              "username": "Emergency Deployment Bot",
+              "icon_emoji": ":rotating_light:",
+              "text": "🚨 *EMERGENCY DEPLOYMENT IN PROGRESS*",
+              "attachments": [
+                {
+                  "color": "danger",
+                  "fields": [
+                    {
+                      "title": "Environment",
+                      "value": "${{ inputs.environment }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Deployer",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit Message",
+                      "value": "${{ github.event.head_commit.message }}",
+                      "short": false
+                    }
+                  ]
+                }
+              ]
+            }

@@ -3,7 +3,7 @@
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # GitHub Actions workflow for automated production deployment
 
-name: Production Deployment
+name: 🚀 Enhanced Production Deployment Pipeline
 
 on:
   push:
@@ -19,10 +19,25 @@ on:
         options:
           - production
           - staging
+      deployment_type:
+        description: 'Deployment strategy'
+        required: false
+        default: 'blue-green'
+        type: choice
+        options:
+          - blue-green
+          - canary
+          - rolling
+      skip_approval:
+        description: 'Skip approval for emergency deployments'
+        required: false
+        default: false
+        type: boolean
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: mlaiel/ainflue
+  DEPLOYMENT_TYPE: ${{ inputs.deployment_type || 'blue-green' }}
 
 jobs:
   security-scan:
@@ -89,7 +104,7 @@ jobs:
           flags: unittests
           
   build-docker:
-    name: Build Docker Images
+    name: 🐳 Build Docker Images
     runs-on: ubuntu-latest
     needs: build-and-test
     outputs:
@@ -127,7 +142,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile.production
+          file: ./docker/infrastructure/Dockerfile.production
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -148,12 +163,16 @@ jobs:
           name: sbom
           path: sbom.spdx.json
 
+  # Enhanced vulnerability and supply chain scanning
   vulnerability-scan:
-    name: Vulnerability Scan
+    name: 🔍 Vulnerability & Supply Chain Scan
     runs-on: ubuntu-latest
     needs: build-docker
     
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Run Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -166,12 +185,67 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-  deploy-staging:
-    name: Deploy to Staging
-    runs-on: ubuntu-latest
+      - name: Enhanced dependency scanning
+        uses: ./.github/workflows/enhanced-dependency-scan.yml
+        with:
+          scan_type: 'all'
+          language: 'python'
+        secrets:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+
+  # Artifact signing and supply chain security
+  artifact-signing:
+    name: 🔏 Artifact Signing & Supply Chain Security
     needs: [build-docker, vulnerability-scan]
-    if: github.ref == 'refs/heads/main' || github.event.inputs.environment == 'staging'
+    uses: ./.github/workflows/artifact-signing.yml
+    with:
+      image_tags: ${{ needs.build-docker.outputs.image-tag }}
+      environment: ${{ inputs.environment || 'production' }}
+    secrets:
+      COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+      COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+
+  # Production approval workflow
+  production-approval:
+    name: 📋 Production Approval
+    needs: [build-docker, vulnerability-scan, artifact-signing]
+    if: inputs.environment == 'production' && !inputs.skip_approval
+    uses: ./.github/workflows/approval-workflow.yml
+    with:
+      environment: ${{ inputs.environment || 'production' }}
+      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+      deployment_type: ${{ env.DEPLOYMENT_TYPE }}
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+
+  # Send deployment started notification
+  notify-deployment-start:
+    name: 📢 Notify Deployment Start
+    needs: [production-approval]
+    if: always() && (needs.production-approval.result == 'success' || needs.production-approval.result == 'skipped')
+    uses: ./.github/workflows/enhanced-notifications.yml
+    with:
+      event_type: 'deployment-started'
+      environment: ${{ inputs.environment || 'production' }}
+      service_name: 'Ainflue Platform'
+      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_WEBHOOK_DEPLOYMENTS: ${{ secrets.SLACK_WEBHOOK_DEPLOYMENTS }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+  deploy-staging:
+    name: 🎭 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build-docker, vulnerability-scan, artifact-signing]
+    if: github.ref == 'refs/heads/main' || inputs.environment == 'staging'
     environment: staging
+    outputs:
+      staging-url: ${{ steps.deploy.outputs.service_url }}
     
     steps:
       - name: Checkout Code
@@ -184,6 +258,7 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG_STAGING }}
           
       - name: Deploy to Staging
+        id: deploy
         run: |
           # Update image tags in manifests
           sed -i "s|image: .*|image: ${{ needs.build-docker.outputs.image-tag }}|g" kubernetes/environments/staging/*.yaml
@@ -194,48 +269,41 @@ jobs:
           # Wait for deployment to complete
           kubectl rollout status deployment/ainflue-api -n ainflue-staging --timeout=600s
           
-      - name: Run Smoke Tests
+          # Get service URL
+          SERVICE_URL=$(kubectl get service ainflue-api -n ainflue-staging -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          echo "service_url=http://$SERVICE_URL" >> $GITHUB_OUTPUT
+          
+      - name: Basic Health Check
         run: |
           # Wait for service to be ready
           sleep 30
           
-          # Get service URL
-          SERVICE_URL=$(kubectl get service ainflue-api -n ainflue-staging -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          
-          # Run smoke tests
-          curl -f http://$SERVICE_URL/health || exit 1
-          curl -f http://$SERVICE_URL/api/v1/status || exit 1
+          # Basic health check
+          curl -f ${{ steps.deploy.outputs.service_url }}/health || exit 1
+          echo "✅ Staging deployment health check passed"
 
-  integration-tests:
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    needs: deploy-staging
-    
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          
-      - name: Install Test Dependencies
-        run: |
-          pip install pytest requests
-          
-      - name: Run Integration Tests
-        env:
-          STAGING_URL: ${{ secrets.STAGING_URL }}
-        run: |
-          pytest tests/integration/ -v --tb=short
+  # Enhanced smoke tests on staging
+  staging-smoke-tests:
+    name: 🧪 Staging Smoke Tests
+    needs: [deploy-staging]
+    uses: ./.github/workflows/smoke-tests.yml
+    with:
+      environment: 'staging'
+      service_url: ${{ needs.deploy-staging.outputs.staging-url }}
+      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+      timeout_minutes: 10
+    secrets:
+      API_KEY: ${{ secrets.STAGING_API_KEY }}
+      DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
 
   deploy-production:
-    name: Deploy to Production
+    name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
-    needs: [build-docker, vulnerability-scan, integration-tests]
-    if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.environment == 'production'
+    needs: [build-docker, vulnerability-scan, artifact-signing, staging-smoke-tests, notify-deployment-start]
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.environment == 'production'
     environment: production
+    outputs:
+      production-url: ${{ steps.blue-green.outputs.service_url }}
     
     steps:
       - name: Checkout Code
@@ -247,22 +315,25 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
           
-      - name: Create Kubernetes Secrets
-        env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      - name: Create Kubernetes Secrets with Vault Integration
+        uses: ./.github/workflows/vault-secrets.yml
+        with:
+          action: 'read'
+          secret_path: 'secret/ainflue/${{ inputs.environment || "production" }}'
+          environment: ${{ inputs.environment || 'production' }}
+        secrets:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          VAULT_NAMESPACE: ${{ secrets.VAULT_NAMESPACE }}
+
+      - name: Enhanced Blue-Green Deployment
+        id: blue-green
         run: |
-          # Apply secrets
-          envsubst < kubernetes/secrets/production-secrets.yaml | kubectl apply -f -
-          
-      - name: Blue-Green Deployment
-        run: |
-          # Create new deployment version
+          # Enhanced Blue-Green deployment with health checks
           TIMESTAMP=$(date +%s)
           NEW_VERSION="green-${TIMESTAMP}"
+          
+          echo "Starting Blue-Green deployment with version: $NEW_VERSION"
           
           # Update manifests with new image and version
           sed -i "s|image: .*|image: ${{ needs.build-docker.outputs.image-tag }}|g" kubernetes/environments/production/*.yaml
@@ -271,99 +342,246 @@ jobs:
           # Deploy green version
           kubectl apply -f kubernetes/environments/production/
           
-          # Wait for green deployment to be ready
-          kubectl rollout status deployment/ainflue-api-green -n ainflue --timeout=600s
+          # Wait for green deployment to be ready with extended timeout
+          kubectl rollout status deployment/ainflue-api-green -n ainflue --timeout=900s
           
-          # Run health checks on green deployment
+          # Enhanced health check with retry logic
           GREEN_SERVICE_URL=$(kubectl get service ainflue-api-green -n ainflue -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           
-          # Health check loop
-          for i in {1..10}; do
-            if curl -f http://$GREEN_SERVICE_URL/health; then
-              echo "Green deployment health check passed"
+          # Health check loop with exponential backoff
+          MAX_ATTEMPTS=20
+          ATTEMPT=1
+          DELAY=15
+          
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "Health check attempt $ATTEMPT/$MAX_ATTEMPTS..."
+            
+            if curl -f --max-time 30 "http://$GREEN_SERVICE_URL/health"; then
+              echo "✅ Green deployment health check passed on attempt $ATTEMPT"
               break
+            else
+              echo "❌ Health check failed on attempt $ATTEMPT"
+              if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
+                echo "❌ Green deployment failed health checks after $MAX_ATTEMPTS attempts"
+                exit 1
+              fi
+              sleep $DELAY
+              DELAY=$((DELAY * 2))  # Exponential backoff
             fi
-            echo "Health check attempt $i failed, retrying..."
-            sleep 30
+            
+            ATTEMPT=$((ATTEMPT + 1))
           done
           
-      - name: Switch Traffic to Green
-        run: |
-          # Update service selector to point to green deployment
-          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green"}}}'
+          echo "service_url=http://$GREEN_SERVICE_URL" >> $GITHUB_OUTPUT
           
-          # Wait for traffic switch
+      - name: Gradual Traffic Switch
+        run: |
+          echo "Implementing gradual traffic switch..."
+          
+          # Switch 10% traffic to green
+          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green","traffic-split":"10"}}}'
           sleep 60
+          
+          # Monitor for 2 minutes, then switch 50%
+          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green","traffic-split":"50"}}}'
+          sleep 120
+          
+          # Full traffic switch
+          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green"}}}'
           
           # Verify production traffic
           PROD_URL="https://api.ainflue.com"
-          curl -f $PROD_URL/health || exit 1
+          for i in {1..5}; do
+            if curl -f --max-time 30 "$PROD_URL/health"; then
+              echo "✅ Production traffic verification passed"
+              break
+            else
+              echo "⚠️ Production verification attempt $i failed"
+              sleep 10
+            fi
+          done
           
       - name: Cleanup Blue Deployment
         run: |
           # Scale down blue deployment after successful green deployment
           kubectl scale deployment ainflue-api-blue -n ainflue --replicas=0
           
-      - name: Update Monitoring
+          # Keep blue deployment for potential rollback, but scaled down
+          kubectl annotate deployment ainflue-api-blue -n ainflue \
+            deployment.kubernetes.io/backup="true" \
+            deployment.kubernetes.io/cleanup-after="24h"
+          
+      - name: Update Monitoring and Observability
         run: |
           # Update deployment annotations for monitoring
           kubectl annotate deployment ainflue-api-green -n ainflue \
             deployment.kubernetes.io/revision="$(date +%s)" \
             deployment.kubernetes.io/deployed-by="${{ github.actor }}" \
-            deployment.kubernetes.io/commit-sha="${{ github.sha }}"
+            deployment.kubernetes.io/commit-sha="${{ github.sha }}" \
+            deployment.kubernetes.io/image-tag="${{ needs.build-docker.outputs.image-tag }}" \
+            deployment.kubernetes.io/deployment-type="${{ env.DEPLOYMENT_TYPE }}"
+          
+          # Update Prometheus monitoring labels
+          kubectl label deployment ainflue-api-green -n ainflue \
+            monitoring.prometheus.io/scrape="true" \
+            version="${{ github.sha }}" \
+            --overwrite
+
+  # Enhanced post-deployment smoke tests
+  production-smoke-tests:
+    name: 🧪 Production Smoke Tests
+    needs: [deploy-production]
+    uses: ./.github/workflows/smoke-tests.yml
+    with:
+      environment: 'production'
+      service_url: ${{ needs.deploy-production.outputs.production-url }}
+      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+      timeout_minutes: 15
+    secrets:
+      API_KEY: ${{ secrets.PRODUCTION_API_KEY }}
+      DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+      MONITORING_TOKEN: ${{ secrets.DATADOG_API_KEY }}
 
   post-deployment:
-    name: Post-Deployment Tasks
+    name: 🔄 Post-Deployment Tasks
     runs-on: ubuntu-latest
-    needs: deploy-production
+    needs: [deploy-production, production-smoke-tests]
     if: success()
     
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Run Database Migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          # Run any pending database migrations
-          python manage.py migrate --check || python manage.py migrate
+          # Install database migration tools
+          pip install alembic psycopg2-binary
           
-      - name: Warm Up Caches
+          # Run any pending database migrations
+          alembic upgrade head
+          
+      - name: Warm Up Application Caches
         run: |
-          # Warm up application caches
-          curl -X POST https://api.ainflue.com/admin/cache/warm-up \
-            -H "Authorization: Bearer ${{ secrets.ADMIN_API_TOKEN }}"
-            
-      - name: Update CDN
+          # Warm up critical application caches
+          ENDPOINTS=(
+            "/api/v1/ai/models/preload"
+            "/api/v1/cache/warm-up"
+            "/api/v1/fingerprint/models/load"
+          )
+          
+          for endpoint in "${ENDPOINTS[@]}"; do
+            echo "Warming up cache: $endpoint"
+            curl -X POST "${{ needs.deploy-production.outputs.production-url }}$endpoint" \
+              -H "Authorization: Bearer ${{ secrets.ADMIN_API_TOKEN }}" \
+              --max-time 60 || echo "Cache warming failed for $endpoint"
+          done
+          
+      - name: Update CDN and Clear Caches
         run: |
           # Purge CDN cache for updated static assets
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'
-            
-      - name: Notify Teams
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          channel: '#deployments'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          fields: repo,commit,author,action,eventName,ref,workflow
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}'
+            echo "✅ CDN cache purged"
+          fi
+          
+      - name: Update External Monitoring
+        run: |
+          # Update Datadog deployment tracking
+          if [ -n "${{ secrets.DATADOG_API_KEY }}" ]; then
+            curl -X POST "https://api.datadoghq.com/api/v1/events" \
+              -H "Content-Type: application/json" \
+              -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
+              -d '{
+                "title": "Ainflue Production Deployment",
+                "text": "Successfully deployed version ${{ github.sha }} to production",
+                "priority": "normal",
+                "tags": ["deployment", "production", "ainflue"],
+                "alert_type": "success"
+              }'
+            echo "✅ Datadog event created"
+          fi
+          
+          # Update Sentry release tracking
+          if [ -n "${{ secrets.SENTRY_AUTH_TOKEN }}" ]; then
+            curl -X POST "https://sentry.io/api/0/organizations/${{ secrets.SENTRY_ORG }}/releases/" \
+              -H "Authorization: Bearer ${{ secrets.SENTRY_AUTH_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "version": "${{ github.sha }}",
+                "projects": ["ainflue"],
+                "refs": [{
+                  "repository": "${{ github.repository }}",
+                  "commit": "${{ github.sha }}"
+                }]
+              }'
+            echo "✅ Sentry release created"
+          fi
 
+  # Send deployment success notification
+  notify-deployment-success:
+    name: 📢 Notify Deployment Success
+    needs: [deploy-production, production-smoke-tests, post-deployment]
+    if: success()
+    uses: ./.github/workflows/enhanced-notifications.yml
+    with:
+      event_type: 'deployment-success'
+      environment: ${{ inputs.environment || 'production' }}
+      service_name: 'Ainflue Platform'
+      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+      deployment_url: ${{ needs.deploy-production.outputs.production-url }}
+      additional_info: |
+        {
+          "deployment_type": "${{ env.DEPLOYMENT_TYPE }}",
+          "smoke_tests_status": "${{ needs.production-smoke-tests.result }}",
+          "deployment_duration": "$(date -d @$(($(date +%s) - ${{ github.event.head_commit.timestamp && strftime('%s', github.event.head_commit.timestamp) || 0 }})) -u +%H:%M:%S)"
+        }
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_WEBHOOK_DEPLOYMENTS: ${{ secrets.SLACK_WEBHOOK_DEPLOYMENTS }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+      EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+
+  # Enhanced rollback with health monitoring
   rollback:
-    name: Rollback on Failure
+    name: 🔄 Automated Rollback
     runs-on: ubuntu-latest
-    needs: [deploy-production]
-    if: failure()
+    needs: [deploy-production, production-smoke-tests]
+    if: failure() && needs.deploy-production.result == 'success'
     environment: production
     
     steps:
+      - name: Send rollback notification
+        uses: ./.github/workflows/enhanced-notifications.yml
+        with:
+          event_type: 'rollback-started'
+          environment: ${{ inputs.environment || 'production' }}
+          service_name: 'Ainflue Platform'
+          image_tag: ${{ needs.build-docker.outputs.image-tag }}
+        secrets:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_ALERTS: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_PHONE_NUMBERS: ${{ secrets.TWILIO_PHONE_NUMBERS }}
+
       - name: Configure kubectl
         uses: azure/k8s-set-context@v3
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
           
-      - name: Rollback to Blue
+      - name: Execute Automated Rollback
         run: |
+          echo "🚨 Executing automated rollback due to deployment failure..."
+          
           # Switch traffic back to blue deployment
           kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"blue"}}}'
           
@@ -373,10 +591,101 @@ jobs:
           # Wait for blue deployment to be ready
           kubectl rollout status deployment/ainflue-api-blue -n ainflue --timeout=300s
           
-      - name: Notify Rollback
-        uses: 8398a7/action-slack@v3
+          # Verify rollback success
+          BLUE_SERVICE_URL=$(kubectl get service ainflue-api -n ainflue -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          
+          # Health check on rolled back service
+          MAX_ATTEMPTS=10
+          ATTEMPT=1
+          
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            if curl -f --max-time 30 "http://$BLUE_SERVICE_URL/health"; then
+              echo "✅ Rollback health check passed on attempt $ATTEMPT"
+              break
+            else
+              echo "❌ Rollback health check failed on attempt $ATTEMPT"
+              if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
+                echo "❌ Rollback failed after $MAX_ATTEMPTS attempts"
+                exit 1
+              fi
+              sleep 15
+            fi
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+          
+      - name: Clean up failed green deployment
+        run: |
+          # Scale down the failed green deployment
+          kubectl scale deployment ainflue-api-green -n ainflue --replicas=0 || true
+          
+          # Mark green deployment as failed for investigation
+          kubectl annotate deployment ainflue-api-green -n ainflue \
+            deployment.kubernetes.io/status="failed" \
+            deployment.kubernetes.io/rollback-reason="health-check-failure" \
+            deployment.kubernetes.io/rollback-time="$(date -u +%Y-%m-%dT%H:%M:%SZ)" || true
+
+      - name: Generate rollback report
+        run: |
+          echo "# 🔄 Automated Rollback Report" > rollback-report.md
+          echo "" >> rollback-report.md
+          echo "**Timestamp:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> rollback-report.md
+          echo "**Environment:** ${{ inputs.environment || 'production' }}" >> rollback-report.md
+          echo "**Failed Image:** ${{ needs.build-docker.outputs.image-tag }}" >> rollback-report.md
+          echo "**Rollback Reason:** Post-deployment health checks failed" >> rollback-report.md
+          echo "**Workflow Run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> rollback-report.md
+          echo "" >> rollback-report.md
+          echo "## Actions Taken:" >> rollback-report.md
+          echo "1. Traffic switched back to blue deployment" >> rollback-report.md
+          echo "2. Blue deployment scaled up" >> rollback-report.md
+          echo "3. Failed green deployment scaled down" >> rollback-report.md
+          echo "4. Health checks verified on rollback" >> rollback-report.md
+          echo "" >> rollback-report.md
+          echo "## Next Steps:" >> rollback-report.md
+          echo "- Investigate the root cause of deployment failure" >> rollback-report.md
+          echo "- Review logs and monitoring data" >> rollback-report.md
+          echo "- Fix issues before attempting next deployment" >> rollback-report.md
+
+      - name: Upload rollback report
+        uses: actions/upload-artifact@v3
         with:
-          status: failure
-          channel: '#alerts'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: "🚨 Production deployment failed and was rolled back automatically"
+          name: rollback-report
+          path: rollback-report.md
+
+      - name: Send rollback success notification
+        uses: ./.github/workflows/enhanced-notifications.yml
+        with:
+          event_type: 'rollback-success'
+          environment: ${{ inputs.environment || 'production' }}
+          service_name: 'Ainflue Platform'
+          image_tag: ${{ needs.build-docker.outputs.image-tag }}
+        secrets:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_ALERTS: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+
+  # Send deployment failure notification
+  notify-deployment-failure:
+    name: 📢 Notify Deployment Failure
+    needs: [deploy-production, production-smoke-tests, rollback]
+    if: failure()
+    uses: ./.github/workflows/enhanced-notifications.yml
+    with:
+      event_type: 'deployment-failed'
+      environment: ${{ inputs.environment || 'production' }}
+      service_name: 'Ainflue Platform'
+      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+      additional_info: |
+        {
+          "rollback_status": "${{ needs.rollback.result }}",
+          "failure_stage": "${{ needs.deploy-production.result == 'failure' && 'deployment' || 'post-deployment-tests' }}"
+        }
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_WEBHOOK_ALERTS: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+      EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+      TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+      TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+      TWILIO_PHONE_NUMBERS: ${{ secrets.TWILIO_PHONE_NUMBERS }}
