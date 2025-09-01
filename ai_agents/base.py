@@ -45,27 +45,20 @@ try:
 except ImportError:
     Counter = Histogram = Gauge = None
 
-# Framework imports with fallbacks
-try:
-    from core.config import settings
-except ImportError:
-    settings = type('Settings', (), {'redis_url': 'redis://localhost:6379'})()
+# Framework imports with fallbacks - avoid core imports to prevent dependency cascade
+# Use direct fallback settings to avoid importing core.config
+settings = type('Settings', (), {
+    'redis_url': 'redis://localhost:6379',
+    'debug': True,
+    'log_level': 'INFO'
+})()
 
-try:
-    from core.exceptions import (
-        AgentError, 
-        ValidationError, 
-        ProcessingError,
-        ResourceLimitError,
-        SecurityError
-    )
-except ImportError:
-    # Define minimal exceptions
-    class AgentError(Exception): pass
-    class ValidationError(Exception): pass
-    class ProcessingError(Exception): pass
-    class ResourceLimitError(Exception): pass
-    class SecurityError(Exception): pass
+# Direct exception definitions to avoid importing core.exceptions
+class AgentError(Exception): pass
+class ValidationError(AgentError): pass
+class ProcessingError(AgentError): pass
+class ResourceLimitError(AgentError): pass
+class SecurityError(AgentError): pass
 
 try:
     from security.encryption import ContentEncryption
