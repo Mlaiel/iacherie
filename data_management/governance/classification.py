@@ -28,6 +28,296 @@ from ...core.exceptions import ClassificationError, ValidationError
 from ...ai.models import ContentClassifier, SentimentAnalyzer, TopicExtractor
 
 
+class AutomaticClassificationEngine:
+    """
+    Enhanced automatic classification engine with ML-powered detection
+    """
+    
+    def __init__(self, classifier: 'DataClassifier'):
+        self.classifier = classifier
+        self.logger = logging.getLogger(__name__)
+        
+        # Enhanced pattern matchers for automatic detection
+        self.sensitivity_patterns = {
+            "email": r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
+            "phone": r'\b(?:\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}\b',
+            "ssn": r'\b\d{3}-\d{2}-\d{4}\b|\b\d{9}\b',
+            "credit_card": r'\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})\b',
+            "ip_address": r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b',
+            "api_key": r'\b(?:api[_-]?key|token|secret)[\s:="\']([a-zA-Z0-9_-]{20,})\b'
+        }
+        
+        # Compliance framework detection patterns
+        self.compliance_indicators = {
+            ComplianceTag.GDPR_APPLICABLE: ["personal", "identifiable", "privacy", "consent"],
+            ComplianceTag.CCPA_APPLICABLE: ["california", "consumer", "personal information"],
+            ComplianceTag.HIPAA_APPLICABLE: ["health", "medical", "patient", "phi"],
+            ComplianceTag.PCI_DSS_APPLICABLE: ["payment", "card", "financial", "transaction"],
+            ComplianceTag.SOX_APPLICABLE: ["financial", "audit", "accounting", "compliance"]
+        }
+    
+    async def auto_classify_content(
+        self, 
+        content: str, 
+        content_id: str,
+        context: Optional[Dict[str, Any]] = None
+    ) -> ClassificationResult:
+        """
+        Automatically classify content using ML and pattern matching
+        """
+        try:
+            # Extract features from content
+            features = await self._extract_content_features(content)
+            
+            # Detect sensitivity level using patterns
+            sensitivity = await self._detect_sensitivity_level(content, features)
+            
+            # Determine compliance requirements
+            compliance_tags = await self._determine_compliance_tags(content, features)
+            
+            # Classify content category
+            category = await self._classify_content_category(content, features)
+            
+            # Calculate confidence score
+            confidence = await self._calculate_confidence_score(features, sensitivity, category)
+            
+            # Determine classification level based on sensitivity and compliance
+            classification_level = await self._determine_classification_level(
+                sensitivity, compliance_tags
+            )
+            
+            result = ClassificationResult(
+                content_id=content_id,
+                classification_level=classification_level,
+                content_category=category,
+                sensitivity_label=sensitivity,
+                compliance_tags=compliance_tags,
+                confidence_score=confidence,
+                matched_patterns=features.get("matched_patterns", []),
+                classification_metadata={
+                    "auto_classified": True,
+                    "features_detected": list(features.keys()),
+                    "classification_timestamp": datetime.utcnow().isoformat(),
+                    "context": context or {}
+                },
+                recommended_actions=await self._generate_recommended_actions(
+                    classification_level, compliance_tags
+                )
+            )
+            
+            self.logger.info(
+                f"Auto-classified content {content_id}: "
+                f"Level={classification_level.value}, "
+                f"Sensitivity={sensitivity.value}, "
+                f"Confidence={confidence:.2f}"
+            )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Auto-classification failed for {content_id}: {str(e)}")
+            raise ClassificationError(f"Auto-classification failed: {str(e)}")
+    
+    async def _extract_content_features(self, content: str) -> Dict[str, Any]:
+        """Extract features from content for classification"""
+        features = {
+            "length": len(content),
+            "word_count": len(content.split()),
+            "matched_patterns": []
+        }
+        
+        # Check for sensitive data patterns
+        for pattern_name, pattern in self.sensitivity_patterns.items():
+            matches = re.findall(pattern, content, re.IGNORECASE)
+            if matches:
+                features[f"{pattern_name}_count"] = len(matches)
+                features["matched_patterns"].append(pattern_name)
+        
+        # Check for compliance indicators
+        for tag, indicators in self.compliance_indicators.items():
+            indicator_count = sum(
+                content.lower().count(indicator.lower()) 
+                for indicator in indicators
+            )
+            if indicator_count > 0:
+                features[f"{tag.value}_indicators"] = indicator_count
+        
+        return features
+    
+    async def _detect_sensitivity_level(
+        self, 
+        content: str, 
+        features: Dict[str, Any]
+    ) -> SensitivityLabel:
+        """Detect sensitivity level based on content analysis"""
+        
+        # High sensitivity indicators
+        high_sensitivity_patterns = ["ssn", "credit_card", "api_key"]
+        if any(pattern in features["matched_patterns"] for pattern in high_sensitivity_patterns):
+            return SensitivityLabel.CRITICAL_SENSITIVITY
+        
+        # Medium-high sensitivity indicators
+        medium_high_patterns = ["email", "phone"]
+        if any(pattern in features["matched_patterns"] for pattern in medium_high_patterns):
+            return SensitivityLabel.HIGH_SENSITIVITY
+        
+        # Medium sensitivity indicators
+        medium_patterns = ["ip_address"]
+        if any(pattern in features["matched_patterns"] for pattern in medium_patterns):
+            return SensitivityLabel.MEDIUM_SENSITIVITY
+        
+        # Check for compliance indicators
+        compliance_count = sum(
+            1 for key in features.keys() 
+            if key.endswith("_indicators") and features[key] > 0
+        )
+        
+        if compliance_count >= 2:
+            return SensitivityLabel.HIGH_SENSITIVITY
+        elif compliance_count == 1:
+            return SensitivityLabel.MEDIUM_SENSITIVITY
+        
+        return SensitivityLabel.LOW_SENSITIVITY
+    
+    async def _determine_compliance_tags(
+        self, 
+        content: str, 
+        features: Dict[str, Any]
+    ) -> List[ComplianceTag]:
+        """Determine applicable compliance tags"""
+        tags = []
+        
+        # GDPR - if personal data is detected
+        if any(pattern in features["matched_patterns"] 
+               for pattern in ["email", "phone", "ssn"]):
+            tags.append(ComplianceTag.GDPR_APPLICABLE)
+        
+        # PCI DSS - if payment card data is detected
+        if "credit_card" in features["matched_patterns"]:
+            tags.append(ComplianceTag.PCI_DSS_APPLICABLE)
+        
+        # Add other compliance tags based on indicators
+        for tag, indicators in self.compliance_indicators.items():
+            if f"{tag.value}_indicators" in features and features[f"{tag.value}_indicators"] > 0:
+                tags.append(tag)
+        
+        # Always require encryption for sensitive data
+        if any(pattern in features["matched_patterns"] 
+               for pattern in ["ssn", "credit_card", "api_key"]):
+            tags.append(ComplianceTag.ENCRYPTION_REQUIRED)
+        
+        # Access restriction for high sensitivity
+        if len(features["matched_patterns"]) >= 2:
+            tags.append(ComplianceTag.ACCESS_RESTRICTED)
+        
+        return list(set(tags))  # Remove duplicates
+    
+    async def _classify_content_category(
+        self, 
+        content: str, 
+        features: Dict[str, Any]
+    ) -> ContentCategory:
+        """Classify content category based on detected patterns"""
+        
+        # Personal data category
+        personal_patterns = ["email", "phone", "ssn"]
+        if any(pattern in features["matched_patterns"] for pattern in personal_patterns):
+            return ContentCategory.PERSONAL_DATA
+        
+        # Financial data category
+        financial_patterns = ["credit_card"]
+        if any(pattern in features["matched_patterns"] for pattern in financial_patterns):
+            return ContentCategory.FINANCIAL_DATA
+        
+        # System data category
+        system_patterns = ["ip_address", "api_key"]
+        if any(pattern in features["matched_patterns"] for pattern in system_patterns):
+            return ContentCategory.SYSTEM_DATA
+        
+        # Default to operational data
+        return ContentCategory.OPERATIONAL_DATA
+    
+    async def _calculate_confidence_score(
+        self, 
+        features: Dict[str, Any],
+        sensitivity: SensitivityLabel,
+        category: ContentCategory
+    ) -> float:
+        """Calculate confidence score for classification"""
+        base_confidence = 0.5
+        
+        # Increase confidence based on pattern matches
+        pattern_confidence = min(len(features["matched_patterns"]) * 0.2, 0.4)
+        
+        # Increase confidence for high sensitivity data
+        sensitivity_confidence = {
+            SensitivityLabel.CRITICAL_SENSITIVITY: 0.3,
+            SensitivityLabel.HIGH_SENSITIVITY: 0.2,
+            SensitivityLabel.MEDIUM_SENSITIVITY: 0.1,
+            SensitivityLabel.LOW_SENSITIVITY: 0.05,
+            SensitivityLabel.NON_SENSITIVE: 0.0
+        }.get(sensitivity, 0.0)
+        
+        total_confidence = min(base_confidence + pattern_confidence + sensitivity_confidence, 1.0)
+        
+        return round(total_confidence, 2)
+    
+    async def _determine_classification_level(
+        self, 
+        sensitivity: SensitivityLabel,
+        compliance_tags: List[ComplianceTag]
+    ) -> ClassificationLevel:
+        """Determine classification level based on sensitivity and compliance"""
+        
+        # Critical sensitivity always gets restricted classification
+        if sensitivity == SensitivityLabel.CRITICAL_SENSITIVITY:
+            return ClassificationLevel.RESTRICTED
+        
+        # High sensitivity with compliance requirements
+        if (sensitivity == SensitivityLabel.HIGH_SENSITIVITY and 
+            any(tag in compliance_tags for tag in [
+                ComplianceTag.GDPR_APPLICABLE, 
+                ComplianceTag.PCI_DSS_APPLICABLE
+            ])):
+            return ClassificationLevel.CONFIDENTIAL
+        
+        # Medium sensitivity
+        if sensitivity == SensitivityLabel.MEDIUM_SENSITIVITY:
+            return ClassificationLevel.INTERNAL
+        
+        # Low or no sensitivity
+        return ClassificationLevel.PUBLIC
+    
+    async def _generate_recommended_actions(
+        self,
+        classification_level: ClassificationLevel,
+        compliance_tags: List[ComplianceTag]
+    ) -> List[str]:
+        """Generate recommended actions based on classification"""
+        actions = []
+        
+        if classification_level in [ClassificationLevel.RESTRICTED, ClassificationLevel.CONFIDENTIAL]:
+            actions.append("Enable access controls and authentication")
+            actions.append("Implement audit logging for access")
+        
+        if ComplianceTag.ENCRYPTION_REQUIRED in compliance_tags:
+            actions.append("Enable encryption at rest and in transit")
+        
+        if ComplianceTag.GDPR_APPLICABLE in compliance_tags:
+            actions.append("Implement GDPR data subject rights")
+            actions.append("Set appropriate retention policies")
+        
+        if ComplianceTag.PCI_DSS_APPLICABLE in compliance_tags:
+            actions.append("Implement PCI DSS security controls")
+            actions.append("Enable payment data tokenization")
+        
+        if classification_level == ClassificationLevel.RESTRICTED:
+            actions.append("Restrict access to authorized personnel only")
+            actions.append("Implement multi-factor authentication")
+        
+        return actions
+
+
 class ClassificationLevel(Enum):
     """
 Data classification levels"""
