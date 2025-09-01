@@ -1,3 +1,7 @@
 /tmp/
 test_gamification_complete.py
 demo_gamification_complete.py
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
