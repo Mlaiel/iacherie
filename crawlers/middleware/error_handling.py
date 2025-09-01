@@ -14,6 +14,7 @@ Business Logic Error Handling:
 - Monetization transaction error management
 - Cross-platform distribution error mitigation
 """
+
 import asyncio
 import json
 import time
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ErrorSeverity(str, Enum):
-    """Error severity levels"""
+    """
+Error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -49,6 +52,7 @@ class ErrorSeverity(str, Enum):
 
 class ErrorCategory(str, Enum):
     """Error categories"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
@@ -68,6 +72,7 @@ class ErrorCategory(str, Enum):
 
 class RecoveryAction(str, Enum):
     """Recovery actions"""
+
     RETRY = "retry"
     FALLBACK = "fallback"
     SKIP = "skip"
@@ -80,6 +85,7 @@ class RecoveryAction(str, Enum):
 
 class BusinessImpact(str, Enum):
     """Business impact levels"""
+
     NONE = "none"
     MINIMAL = "minimal"
     MODERATE = "moderate"
@@ -152,7 +158,8 @@ class ErrorRecoveryManager:
         self._initialize_business_continuity_handlers()
     
     def _initialize_default_strategies(self):
-        """Initialize default recovery strategies"""
+        """
+Initialize default recovery strategies"""
         # Network error strategy
         self.recovery_strategies["network"] = RecoveryStrategy(
             strategy_id="network_recovery",
@@ -223,7 +230,8 @@ class ErrorRecoveryManager:
                              strategy: RecoveryStrategy,
                              context: Dict[str, Any],
                              operation: Callable) -> Any:
-        """Execute recovery strategy"""
+        """
+Execute recovery strategy"""
         attempt = 0
         last_error = error
         
@@ -323,7 +331,8 @@ class ErrorReporter:
         self.cache = CacheManager()
         
     async def report_error(self, error_info: ErrorInfo):
-        """Report error for monitoring and analytics"""
+        """
+Report error for monitoring and analytics"""
         try:
             # Store detailed error information
             error_key = f"errors:{error_info.error_id}"
@@ -469,7 +478,8 @@ class ErrorHandlingMiddleware:
     async def handle_error(self, error: Exception, 
                          context: Dict[str, Any] = None,
                          operation: Callable = None) -> Any:
-        """Main error handling method"""
+        """
+Main error handling method"""
         try:
             # Create error information
             error_info = await self.create_error_info(error, context)
@@ -598,7 +608,8 @@ class ErrorHandlingMiddleware:
             await self.handle_error(error, context)
     
     async def get_error_dashboard_data(self) -> Dict[str, Any]:
-        """Get error data for monitoring dashboard"""
+        """
+Get error data for monitoring dashboard"""
         try:
             # Get error statistics
             hourly_stats = await self.error_reporter.get_error_statistics("24h")
@@ -638,7 +649,8 @@ def get_error_handling_middleware() -> ErrorHandlingMiddleware:
 
 # Decorator for automatic error handling
 def handle_errors(context: Dict[str, Any] = None, auto_recovery: bool = True):
-    """Decorator for automatic error handling"""
+    """
+Decorator for automatic error handling"""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             middleware = get_error_handling_middleware()

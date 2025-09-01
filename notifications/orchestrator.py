@@ -1,4 +1,5 @@
 """Enterprise notification orchestration service with intelligent routing and comprehensive analytics."""
+
 import os
 import json
 import asyncio
@@ -25,7 +26,9 @@ from .templates import NotificationTemplateEngine, PersonalizationContext
 
 
 class DeliveryChannel(str, Enum):
-    """Notification delivery channels."""
+    """
+Notification delivery channels."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push"
@@ -38,6 +41,7 @@ class DeliveryChannel(str, Enum):
 
 class NotificationPriority(str, Enum):
     """Global notification priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -47,6 +51,7 @@ class NotificationPriority(str, Enum):
 
 class DeliveryStrategy(str, Enum):
     """Notification delivery strategies."""
+
     IMMEDIATE = "immediate"
     BATCH = "batch"
     SCHEDULED = "scheduled"
@@ -146,7 +151,8 @@ class UniversalNotification:
 
 @dataclass 
 class DeliveryResult:
-    """Comprehensive delivery result across all channels."""
+    """
+Comprehensive delivery result across all channels."""
     notification_id: str
     user_id: str
     total_channels: int
@@ -215,7 +221,8 @@ class NotificationOrchestrator:
         notification: UniversalNotification,
         user_preferences: Optional[NotificationPreference] = None
     ) -> DeliveryResult:
-        """Send notification across all applicable channels with intelligent routing."""
+        """
+Send notification across all applicable channels with intelligent routing."""
         start_time = datetime.utcnow()
         
         try:
@@ -344,7 +351,8 @@ class NotificationOrchestrator:
         notification: UniversalNotification,
         scheduled_at: datetime
     ) -> str:
-        """Schedule notification for future delivery."""
+        """
+Schedule notification for future delivery."""
         notification.scheduled_at = scheduled_at
         notification.delivery_strategy = DeliveryStrategy.SCHEDULED
         
@@ -377,7 +385,8 @@ class NotificationOrchestrator:
         return self.user_preferences.get(user_id, NotificationPreference(user_id=user_id))
 
     async def get_delivery_status(self, notification_id: str) -> Optional[DeliveryResult]:
-        """Get delivery status for a specific notification."""
+        """
+Get delivery status for a specific notification."""
         return self.delivery_history.get(notification_id)
 
     async def get_user_notifications_summary(
@@ -385,7 +394,8 @@ class NotificationOrchestrator:
         user_id: str,
         time_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Get comprehensive notifications summary for a user."""
+        """
+Get comprehensive notifications summary for a user."""
         cutoff_date = datetime.utcnow() - time_period
         
         user_deliveries = [
@@ -486,7 +496,8 @@ class NotificationOrchestrator:
         notification: UniversalNotification,
         prefs: NotificationPreference
     ):
-        """Apply AI-powered intelligent timing."""
+        """
+Apply AI-powered intelligent timing."""
         if notification.user_id in self.optimal_send_times:
             optimal_hours = self.optimal_send_times[notification.user_id]
             current_hour = datetime.utcnow().hour
@@ -503,7 +514,8 @@ class NotificationOrchestrator:
                 notification.delivery_strategy = DeliveryStrategy.SCHEDULED
 
     async def _schedule_notification(self, notification: UniversalNotification):
-        """Schedule notification for later delivery."""
+        """
+Schedule notification for later delivery."""
         self.notification_queue.append(notification)
 
     async def _can_deliver_now(
@@ -511,7 +523,8 @@ class NotificationOrchestrator:
         notification: UniversalNotification,
         prefs: NotificationPreference
     ) -> bool:
-        """Check if notification can be delivered now based on rate limits and quiet hours."""
+        """
+Check if notification can be delivered now based on rate limits and quiet hours."""
         # Check quiet hours
         if prefs.quiet_hours_start is not None and prefs.quiet_hours_end is not None:
             current_hour = datetime.utcnow().hour
@@ -532,7 +545,8 @@ class NotificationOrchestrator:
         notification: UniversalNotification,
         prefs: NotificationPreference
     ):
-        """Prepare personalized content for each channel."""
+        """
+Prepare personalized content for each channel."""
         if notification.template_id:
             # Use template engine for personalization
             personalization_context = PersonalizationContext(
@@ -742,7 +756,8 @@ class NotificationOrchestrator:
         result: DeliveryResult,
         prefs: NotificationPreference
     ):
-        """Handle fallback delivery for failed channels."""
+        """
+Handle fallback delivery for failed channels."""
         failed_channels = [ch for ch, res in result.channel_results.items() if res.get("status") == "failed"]
         
         # Simple fallback: if email failed, try SMS

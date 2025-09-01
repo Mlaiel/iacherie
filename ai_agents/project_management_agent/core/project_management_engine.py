@@ -6,6 +6,7 @@ resource allocation, timeline tracking, and workflow optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ProjectStatus(Enum):
-    """Project status enumeration"""
+    """
+Project status enumeration"""
+
     PLANNING = "planning"
     IN_PROGRESS = "in_progress"
     ON_HOLD = "on_hold"
@@ -25,6 +28,7 @@ class ProjectStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -44,7 +48,8 @@ class ProjectManagementJob:
 
 @dataclass
 class ProjectManagementResult:
-    """Project management operation result"""
+    """
+Project management operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -53,7 +58,8 @@ class ProjectManagementResult:
     completed_at: datetime = None
 
 class ProjectManagementEngine:
-    """Core project management processing engine"""
+    """
+Core project management processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

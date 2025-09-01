@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class RumblePlatform(PlatformBase):
-    """Rumble video platform integration"""
+    """
+Rumble video platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Rumble platform"""
+        """
+Initialize Rumble platform"""
         super().__init__(config)
         self.api_base = "https://rumble.com/api"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -40,7 +43,8 @@ class RumblePlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Rumble"""
+        """
+Authenticate with Rumble"""
         try:
             # Rumble uses cookie-based authentication
             username = self.config.credentials.get('username')
@@ -144,7 +148,8 @@ class RumblePlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Rumble API"""
+        """
+Make authenticated request to Rumble API"""
         try:
             session = await self._get_session()
             

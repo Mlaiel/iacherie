@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Stage Definition → Dependency Resolution → Execution Coordination → Progress Tracking → Result Aggregation
 """
+
 import asyncio
 import logging
 import time
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class StageState(Enum):
-    """Stage execution states"""
+    """
+Stage execution states"""
+
     PENDING = "pending"
     READY = "ready"
     RUNNING = "running"
@@ -37,6 +40,7 @@ class StageState(Enum):
 
 class CoordinationStrategy(Enum):
     """Coordination strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     PIPELINE = "pipeline"
@@ -47,6 +51,7 @@ class CoordinationStrategy(Enum):
 
 class SynchronizationMode(Enum):
     """Synchronization modes"""
+
     BARRIER = "barrier"
     CHECKPOINT = "checkpoint"
     MILESTONE = "milestone"
@@ -164,17 +169,20 @@ class StageHandler(ABC):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute stage"""
+        """
+Execute stage"""
         pass
     
     @abstractmethod
     def get_stage_type(self) -> str:
-        """Get supported stage type"""
+        """
+Get supported stage type"""
         pass
 
 
 class ContentProcessingStageHandler(StageHandler):
-    """Content processing stage handler"""
+    """
+Content processing stage handler"""
     
     def get_stage_type(self) -> str:
         return "content_processing"
@@ -523,7 +531,8 @@ class DependencyResolver:
         return dependency_graph
     
     def get_execution_order(self, stages: List[StageDefinition]) -> List[List[str]]:
-        """Get optimal execution order"""
+        """
+Get optimal execution order"""
         dependency_graph = self.resolve_dependencies(stages)
         
         # Topological sort with parallel execution groups
@@ -606,7 +615,8 @@ class DependencyResolver:
 
 
 class ProgressTracker:
-    """Stage progress tracker"""
+    """
+Stage progress tracker"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -647,7 +657,8 @@ class ProgressTracker:
         context.overall_progress = total_progress / len(context.stages)
     
     def get_progress_summary(self, context: CoordinationContext) -> Dict[str, Any]:
-        """Get progress summary"""
+        """
+Get progress summary"""
         stage_progress = {}
         
         for stage in context.stages:
@@ -929,7 +940,8 @@ class StageCoordinator:
             await self._execute_sequential(context)  # Default fallback
     
     async def _execute_sequential(self, context: CoordinationContext):
-        """Execute stages sequentially"""
+        """
+Execute stages sequentially"""
         execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         for level in execution_order:
@@ -1025,7 +1037,8 @@ class StageCoordinator:
                         running_stages.add(stage.stage_id)
     
     async def _execute_conditional(self, context: CoordinationContext):
-        """Execute stages with conditional logic"""
+        """
+Execute stages with conditional logic"""
         execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         for level in execution_order:
@@ -1043,7 +1056,8 @@ class StageCoordinator:
                         context.completed_stages.add(stage_id)
     
     async def _execute_dynamic(self, context: CoordinationContext):
-        """Execute stages with dynamic adaptation"""
+        """
+Execute stages with dynamic adaptation"""
         # Start with adaptive strategy
         await self._execute_adaptive(context)
         
@@ -1108,7 +1122,8 @@ class StageCoordinator:
                             await self._execute_single_stage(stage, context)
     
     async def _execute_parallel_level(self, context: CoordinationContext, stage_ids: List[str]):
-        """Execute a level of stages in parallel"""
+        """
+Execute a level of stages in parallel"""
         max_parallel = min(len(stage_ids), context.max_parallel_stages)
         semaphore = asyncio.Semaphore(max_parallel)
         
@@ -1123,7 +1138,8 @@ class StageCoordinator:
         await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _execute_single_stage(self, stage: StageDefinition, context: CoordinationContext) -> StageResult:
-        """Execute single stage"""
+        """
+Execute single stage"""
         stage_result = context.stage_results.get(stage.stage_id)
         if not stage_result:
             stage_result = StageResult(stage_id=stage.stage_id)
@@ -1194,7 +1210,8 @@ class StageCoordinator:
         return await self._evaluate_stage_conditions(stage, context)
     
     async def _evaluate_stage_conditions(self, stage: StageDefinition, context: CoordinationContext) -> bool:
-        """Evaluate stage execution conditions"""
+        """
+Evaluate stage execution conditions"""
         # Check dependency conditions
         for dependency in stage.dependencies:
             if dependency.condition:
@@ -1235,15 +1252,18 @@ class StageCoordinator:
     
     # Public API methods
     def get_coordination_status(self, context_id: str) -> Optional[CoordinationContext]:
-        """Get coordination status"""
+        """
+Get coordination status"""
         return self.active_coordinations.get(context_id) or self.completed_coordinations.get(context_id)
     
     def get_active_coordinations(self) -> Dict[str, CoordinationContext]:
-        """Get all active coordinations"""
+        """
+Get all active coordinations"""
         return self.active_coordinations.copy()
     
     def get_coordination_metrics(self) -> Dict[str, Any]:
-        """Get coordination metrics"""
+        """
+Get coordination metrics"""
         completed_coordinations = list(self.completed_coordinations.values())
         
         return {

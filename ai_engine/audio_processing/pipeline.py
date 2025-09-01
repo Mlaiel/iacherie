@@ -4,8 +4,9 @@ Advanced pipeline system for chaining audio processing operations.
 Supports parallel processing, caching, and intelligent optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable, Type
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStage(Enum):
-    """Pipeline processing stages"""
+    """
+Pipeline processing stages"""
+
     LOAD = "load"
     PREPROCESS = "preprocess"
     ANALYZE = "analyze"
@@ -48,6 +51,7 @@ class PipelineStage(Enum):
 
 class ProcessingMode(Enum):
     """Processing execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     BATCH = "batch"
@@ -57,6 +61,7 @@ class ProcessingMode(Enum):
 
 class CacheStrategy(Enum):
     """Caching strategies for pipeline results"""
+
     NONE = "none"
     MEMORY = "memory"
     DISK = "disk"
@@ -104,7 +109,8 @@ class StageResult:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline execution result"""
+    """
+Complete pipeline execution result"""
     pipeline_name: str
     success: bool
     stage_results: List[StageResult] = field(default_factory=list)
@@ -135,20 +141,24 @@ class PipelineStageBase(ABC):
     async def execute(self, 
                      input_data: Any, 
                      context: Dict[str, Any]) -> StageResult:
-        """Execute the pipeline stage"""
+        """
+Execute the pipeline stage"""
         pass
     
     def set_config(self, config: Dict[str, Any]):
-        """Set stage configuration"""
+        """
+Set stage configuration"""
         self.config.update(config)
     
     def add_dependency(self, stage_name: str):
-        """Add a dependency on another stage"""
+        """
+Add a dependency on another stage"""
         if stage_name not in self.dependencies:
             self.dependencies.append(stage_name)
     
     def get_cache_key(self, input_data: Any, context: Dict[str, Any]) -> str:
-        """Generate cache key for this stage"""
+        """
+Generate cache key for this stage"""
         # Create a simple cache key based on stage name and input hash
         input_str = str(input_data) + str(context) + str(self.config)
         cache_key = f"{self.name}_{hashlib.md5(input_str.encode()).hexdigest()}"
@@ -732,7 +742,8 @@ class PipelineCache:
         self.memory_usage += data_size
     
     def _remove_from_memory(self, cache_key: str):
-        """Remove item from memory cache"""
+        """
+Remove item from memory cache"""
         if cache_key in self.memory_cache:
             data_size = self._estimate_size(self.memory_cache[cache_key])
             del self.memory_cache[cache_key]
@@ -740,14 +751,16 @@ class PipelineCache:
             self.memory_usage -= data_size
     
     def _estimate_size(self, obj) -> int:
-        """Estimate object size in bytes"""
+        """
+Estimate object size in bytes"""
         try:
             return len(pickle.dumps(obj))
         except:
             return 1024  # Default estimate
     
     async def _cleanup_disk_cache(self):
-        """Clean up disk cache if size limit exceeded"""
+        """
+Clean up disk cache if size limit exceeded"""
         try:
             total_size = sum(f.stat().st_size for f in self.cache_directory.glob("*.pkl"))
             max_size = self.max_disk_mb * 1024 * 1024
@@ -894,7 +907,8 @@ class AudioProcessingPipeline:
     async def execute(self, 
                      input_data: Any, 
                      context: Dict[str, Any] = None) -> PipelineResult:
-        """Execute the complete pipeline"""
+        """
+Execute the complete pipeline"""
         start_time = time.time()
         context = context or {}
         
@@ -1112,13 +1126,15 @@ class AudioProcessingPipeline:
                            input_data: Any,
                            context: Dict[str, Any],
                            execution_order: List[List[str]]) -> List[StageResult]:
-        """Execute pipeline in batch mode for multiple inputs"""
+        """
+Execute pipeline in batch mode for multiple inputs"""
         # For now, implement as sequential execution
         # In a full implementation, this would handle batches of inputs
         return await self._execute_sequential(input_data, context, execution_order)
     
     def _get_stage_by_name(self, stage_name: str) -> PipelineStageBase:
-        """Get stage object by name"""
+        """
+Get stage object by name"""
         for stage in self.stages:
             if stage.name == stage_name:
                 return stage
@@ -1145,7 +1161,8 @@ class AudioProcessingPipeline:
                                   stage: PipelineStageBase,
                                   input_data: Any,
                                   context: Dict[str, Any]) -> StageResult:
-        """Execute a single pipeline stage with monitoring"""
+        """
+Execute a single pipeline stage with monitoring"""
         try:
             # Check resource limits
             if self.resource_monitor.current_memory_mb > self.config.memory_limit_mb:
@@ -1202,7 +1219,8 @@ class AudioProcessingPipeline:
 
 
 class ResourceMonitor:
-    """Monitor system resources during pipeline execution"""
+    """
+Monitor system resources during pipeline execution"""
     
     def __init__(self):
         self.start_time = None
@@ -1212,21 +1230,24 @@ class ResourceMonitor:
         self._monitor_task = None
     
     def start(self):
-        """Start resource monitoring"""
+        """
+Start resource monitoring"""
         self.start_time = time.time()
         self.peak_memory = 0
         self.monitoring = True
         self._monitor_task = asyncio.create_task(self._monitor_resources())
     
     def stop(self) -> float:
-        """Stop monitoring and return peak memory usage"""
+        """
+Stop monitoring and return peak memory usage"""
         self.monitoring = False
         if self._monitor_task:
             self._monitor_task.cancel()
         return self.peak_memory
     
     async def _monitor_resources(self):
-        """Monitor resource usage"""
+        """
+Monitor resource usage"""
         try:
             while self.monitoring:
                 # Get current memory usage

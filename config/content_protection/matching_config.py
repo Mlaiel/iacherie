@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -21,7 +22,9 @@ import os
 
 
 class SimilarityMetric(str, Enum):
-    """Similarity measurement metrics."""
+    """
+Similarity measurement metrics."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -58,6 +61,7 @@ class MatchingAlgorithm(str, Enum):
 
 class ContentSimilarityType(str, Enum):
     """Types of content similarity."""
+
     EXACT_MATCH = "exact_match"          # 100% identical
     NEAR_DUPLICATE = "near_duplicate"    # >95% similar
     VARIANT = "variant"                  # 80-95% similar
@@ -117,7 +121,8 @@ class AudioMatchingConfig:
 
 @dataclass
 class VideoMatchingConfig:
-    """Video similarity matching configuration."""
+    """
+Video similarity matching configuration."""
     primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_HNSW
     fallback_algorithm: MatchingAlgorithm = MatchingAlgorithm.CROSS_CORRELATION
     exact_match_threshold: float = 0.95
@@ -175,7 +180,8 @@ class TextMatchingConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
+    """
+Performance optimization configuration."""
     max_concurrent_comparisons: int = 100
     batch_size: int = 1000
     enable_parallel_processing: bool = True
@@ -205,7 +211,8 @@ class QualityConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert and notification configuration."""
+    """
+Alert and notification configuration."""
     enable_real_time_alerts: bool = True
     alert_threshold_exact_match: float = 0.98
     alert_threshold_near_duplicate: float = 0.95
@@ -411,7 +418,8 @@ class SimilarityMatchingConfig:
         return False
     
     def optimize_for_performance(self) -> None:
-        """Optimize configuration for maximum performance."""
+        """
+Optimize configuration for maximum performance."""
         self.matching_precision_mode = "performance"
         
         # Use faster algorithms

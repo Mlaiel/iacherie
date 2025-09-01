@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import hashlib
 import json
@@ -44,7 +45,9 @@ from ..utils.monitoring import MetricsCollector
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "bsc"
@@ -59,6 +62,7 @@ class BlockchainNetwork(Enum):
 
 class ContractType(Enum):
     """Smart contract types"""
+
     LICENSING = "licensing"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
     COPYRIGHT_REGISTRY = "copyright_registry"
@@ -73,6 +77,7 @@ class ContractType(Enum):
 
 class ValidationStatus(Enum):
     """Blockchain validation status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -111,7 +116,8 @@ class SmartContractDeployment:
 
 @dataclass
 class DecentralizedRights:
-    """Decentralized rights management structure"""
+    """
+Decentralized rights management structure"""
     rights_id: str
     content_hash: str
     owner_address: str
@@ -137,7 +143,8 @@ class DecentralizedRights:
 
 @dataclass
 class BlockchainTransaction:
-    """Blockchain transaction record"""
+    """
+Blockchain transaction record"""
     transaction_id: str
     transaction_hash: str
     blockchain_network: BlockchainNetwork
@@ -191,7 +198,8 @@ class BlockchainValidator:
         self.ipfs_client = None
         
     async def initialize_blockchain_connections(self, network_configs: Dict[str, Dict[str, str]]):
-        """Initialize connections to various blockchain networks"""
+        """
+Initialize connections to various blockchain networks"""
         try:
             for network_name, config in network_configs.items():
                 if network_name in [net.value for net in BlockchainNetwork]:
@@ -684,7 +692,8 @@ class BlockchainValidator:
         """
     
     async def _get_contract_template(self, contract_type: ContractType) -> str:
-        """Get smart contract template"""
+        """
+Get smart contract template"""
         return self.contract_factories.get(contract_type, "")
     
     async def _compile_contract(self, source_code: str, params: Dict[str, Any]) -> Dict[str, Any]:
@@ -713,7 +722,8 @@ class BlockchainValidator:
         return 2000000  # Default gas estimate
     
     async def _perform_security_audit(self, compiled_contract: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform automated security audit"""
+        """
+Perform automated security audit"""
         return {
             'audit_score': 95.0,
             'vulnerabilities_found': 0,
@@ -721,7 +731,8 @@ class BlockchainValidator:
         }
     
     async def _calculate_performance_metrics(self, receipt: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate contract performance metrics"""
+        """
+Calculate contract performance metrics"""
         return {
             'gas_efficiency': 0.85,
             'deployment_time': 30.0,  # seconds
@@ -729,17 +740,20 @@ class BlockchainValidator:
         }
     
     async def _save_deployment_record(self, deployment: SmartContractDeployment):
-        """Save deployment record to database"""
+        """
+Save deployment record to database"""
         # Implementation would save to database
         pass
     
     async def _verify_contract_on_explorer(self, deployment: SmartContractDeployment):
-        """Verify contract source code on blockchain explorer"""
+        """
+Verify contract source code on blockchain explorer"""
         # Implementation would submit to Etherscan, BSCScan, etc.
         pass
     
     async def _get_rights_registry_contract(self, blockchain_network: BlockchainNetwork):
-        """Get or deploy rights registry contract"""
+        """
+Get or deploy rights registry contract"""
         # Return existing or deploy new registry contract
         contract_address = "0x742d35Cc6634C0532925a3b8D0C9B0f6c0b83f6"  # Example address
         web3 = self.web3_connections[blockchain_network]
@@ -783,7 +797,8 @@ class BlockchainValidator:
             return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
     
     def _extract_token_id_from_logs(self, logs: List[Dict[str, Any]]) -> Optional[str]:
-        """Extract token ID from transaction logs"""
+        """
+Extract token ID from transaction logs"""
         # Implementation would parse logs to find token ID
         return "12345"  # Example token ID
     
@@ -808,17 +823,20 @@ class BlockchainValidator:
         pass
     
     async def _emit_rights_registration_event(self, rights: DecentralizedRights):
-        """Emit event for rights registration monitoring"""
+        """
+Emit event for rights registration monitoring"""
         # Implementation would emit event for monitoring systems
         pass
     
     async def _save_transaction_record(self, transaction: BlockchainTransaction):
-        """Save transaction record to database"""
+        """
+Save transaction record to database"""
         # Implementation would save to database
         pass
     
     def _determine_transaction_type(self, transaction: Dict[str, Any], receipt: Dict[str, Any]) -> str:
-        """Determine transaction type from transaction data"""
+        """
+Determine transaction type from transaction data"""
         if transaction.get('to') is None:
             return "contract_deployment"
         elif transaction.get('input', '0x') != '0x':
@@ -854,7 +872,8 @@ class BlockchainValidator:
         return signature.hex()
     
     async def _get_royalty_distribution_contract(self, blockchain_network: BlockchainNetwork):
-        """Get royalty distribution contract"""
+        """
+Get royalty distribution contract"""
         contract_address = "0x742d35Cc6634C0532925a3b8D0C9B0f6c0b83f7"  # Example address
         web3 = self.web3_connections[blockchain_network]
         

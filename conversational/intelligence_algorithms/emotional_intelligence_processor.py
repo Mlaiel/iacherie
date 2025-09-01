@@ -29,6 +29,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -72,7 +73,9 @@ logger = logging.getLogger(__name__)
 
 
 class EmotionType(Enum):
-    """Primary emotion types for emotional analysis"""
+    """
+Primary emotion types for emotional analysis"""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -92,6 +95,7 @@ class EmotionType(Enum):
 
 class SentimentLevel(Enum):
     """Sentiment intensity levels"""
+
     VERY_NEGATIVE = "very_negative"
     NEGATIVE = "negative"
     SLIGHTLY_NEGATIVE = "slightly_negative"
@@ -103,6 +107,7 @@ class SentimentLevel(Enum):
 
 class MoodState(Enum):
     """User mood states for personalization"""
+
     ENERGETIC = "energetic"
     CALM = "calm"
     STRESSED = "stressed"

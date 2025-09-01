@@ -95,6 +95,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Backup et recovery automation
 - Monitoring et alerting 24/7
 """
+
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
@@ -120,7 +121,9 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class CrawlerType(Enum):
-    """Types of crawlers"""
+    """
+Types of crawlers"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -137,6 +140,7 @@ class CrawlerType(Enum):
 
 class CrawlStatus(Enum):
     """Crawl job status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -148,6 +152,7 @@ class CrawlStatus(Enum):
 
 class ContentStatus(Enum):
     """Detected content status"""
+
     NEW = "new"
     UPDATED = "updated"
     REMOVED = "removed"
@@ -158,6 +163,7 @@ class ContentStatus(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -167,6 +173,7 @@ class AlertSeverity(Enum):
 
 class AlertType(Enum):
     """Types of alerts"""
+
     COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     BRAND_MENTION = "brand_mention"
@@ -196,7 +203,8 @@ class CrawlJob:
 
 @dataclass
 class DetectedContent:
-    """Detected content structure"""
+    """
+Detected content structure"""
     content_id: str
     url: str
     title: str

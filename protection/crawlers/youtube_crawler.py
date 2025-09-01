@@ -5,12 +5,13 @@ Professional YouTube content discovery and monitoring system.
 Integrates YouTube Data API v3 with Selenium for comprehensive crawling.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import re
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideoInfo:
-    """YouTube video information structure."""
+    """
+YouTube video information structure."""
     video_id: str
     title: str
     description: str
@@ -54,7 +56,8 @@ class YouTubeVideoInfo:
 
 @dataclass
 class YouTubeChannelInfo:
-    """YouTube channel information structure."""
+    """
+YouTube channel information structure."""
     channel_id: str
     title: str
     description: str
@@ -67,10 +70,12 @@ class YouTubeChannelInfo:
     custom_url: Optional[str] = None
 
 class YouTubeAPIClient:
-    """YouTube Data API v3 client with advanced features."""
+    """
+YouTube Data API v3 client with advanced features."""
     
     def __init__(self, api_key: str, quota_limit: int = 10000):
-        """Initialize YouTube API client."""
+        """
+Initialize YouTube API client."""
         self.api_key = api_key
         self.quota_limit = quota_limit
         self.quota_used = 0
@@ -255,14 +260,16 @@ class YouTubeSeleniumCrawler:
     """Selenium-based YouTube crawler for advanced scraping."""
     
     def __init__(self, headless: bool = True, proxy: Optional[str] = None):
-        """Initialize Selenium crawler."""
+        """
+Initialize Selenium crawler."""
         self.headless = headless
         self.proxy = proxy
         self.driver = None
         self.wait = None
         
     def _setup_driver(self) -> webdriver.Chrome:
-        """Setup Chrome WebDriver with optimal configuration."""
+        """
+Setup Chrome WebDriver with optimal configuration."""
         options = Options()
         
         if self.headless:
@@ -401,7 +408,8 @@ class YouTubeSeleniumCrawler:
             return 0
     
     def _parse_like_count(self, text: str) -> int:
-        """Parse like count from aria-label."""
+        """
+Parse like count from aria-label."""
         if not text:
             return 0
         
@@ -431,7 +439,8 @@ class YouTubeCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize YouTube crawler."""
+        """
+Initialize YouTube crawler."""
         super().__init__("youtube", config)
         
         # API configuration
@@ -647,7 +656,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         return True
     
     async def get_quota_status(self) -> Dict[str, Any]:
-        """Get current API quota status."""
+        """
+Get current API quota status."""
         if not self.api_client:
             return {"error": "API client not available"}
         

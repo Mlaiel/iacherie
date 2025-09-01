@@ -19,6 +19,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 import logging
 from datetime import datetime, timezone, timedelta
@@ -51,7 +52,8 @@ Base = declarative_base()
 
 
 class BusinessMetricType(Enum):
-    """Business metric types for IA Influencer platform analytics."""
+    """
+Business metric types for IA Influencer platform analytics."""
     
     # Creator Performance Metrics
     CREATOR_PRODUCTIVITY = "creator_productivity"
@@ -100,6 +102,7 @@ class BusinessMetricType(Enum):
 
 class CreatorCategory(Enum):
     """Creator categories for business analysis."""
+
     
     MUSICIAN = "musician"
     BLOGGER = "blogger"
@@ -134,7 +137,8 @@ class BusinessInsight:
         return self.change_percentage
     
     def determine_trend(self) -> str:
-        """Determine trend direction based on change percentage."""
+        """
+Determine trend direction based on change percentage."""
         if self.change_percentage > 5:
             self.trend_direction = "increasing"
         elif self.change_percentage < -5:
@@ -148,7 +152,8 @@ class BusinessIntelligenceEngine:
     """Ultra-advanced business intelligence engine for IA Influencer platform."""
     
     def __init__(self, db_session: Session):
-        """Initialize the business intelligence engine."""
+        """
+Initialize the business intelligence engine."""
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         self.cache = {}

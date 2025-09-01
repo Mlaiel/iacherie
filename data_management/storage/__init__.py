@@ -8,7 +8,7 @@ Responsibility: Stockage intelligent multi-format avec protection et distributio
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -32,6 +32,7 @@ Upload Multi-Format → Analyse Intelligente → Stockage Multi-Tier →
 Réplication Cross-Cloud → CDN Distribution → Cache Optimisé → 
 Protection Avancée → Analytics Real-time → Lifecycle Management
 """
+
 from typing import Dict, List, Optional, Any, Union, AsyncGenerator, Protocol
 import logging
 from pathlib import Path
@@ -279,7 +280,8 @@ class StorageFactory:
     def create_enterprise_manager(
         config: Optional[Dict[str, Any]] = None
     ) -> StorageManager:
-        """Create enterprise storage manager with full feature set"""
+        """
+Create enterprise storage manager with full feature set"""
         final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
         return StorageManager(final_config)
     
@@ -289,7 +291,8 @@ class StorageFactory:
         credentials: Dict[str, str],
         config: Optional[Dict[str, Any]] = None
     ) -> CloudStorageManager:
-        """Create cloud-specific storage manager"""
+        """
+Create cloud-specific storage manager"""
         cloud_config = CloudConfig(
             provider=provider,
             **credentials,
@@ -304,7 +307,8 @@ class StorageFactory:
         cdn_config: Optional[CDNConfig] = None,
         cache_config: Optional[CacheConfig] = None
     ) -> StorageManager:
-        """Create hybrid storage manager with multiple providers"""
+        """
+Create hybrid storage manager with multiple providers"""
         config = {
             'cloud_config': cloud_config,
             'local_config': local_config,
@@ -315,7 +319,8 @@ class StorageFactory:
         return StorageManager(config)
 
 def initialize_storage_system(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize complete storage system with all components"""
+    """
+Initialize complete storage system with all components"""
     try:
         # Create main storage manager
         storage_manager = StorageFactory.create_enterprise_manager(config)
@@ -364,7 +369,8 @@ def get_optimal_storage_tier(
     file_size: int,
     access_pattern: str = 'unknown'
 ) -> StorageTier:
-    """Determine optimal storage tier based on content characteristics"""
+    """
+Determine optimal storage tier based on content characteristics"""
     # High-priority content types
     if content_type in [ContentType.FINGERPRINT, ContentType.EMBEDDING]:
         return StorageTier.HOT
@@ -465,6 +471,7 @@ from .cache_storage import CacheStorageManager, AsyncCacheStorageManager
 
 class StorageTier(Enum):
     """Niveaux de stockage par fréquence d'accès"""
+
     HOT = "hot"        # Accès fréquent (< 30 jours)
     WARM = "warm"      # Accès occasionnel (30-90 jours)
     COLD = "cold"      # Accès rare (90-365 jours)
@@ -472,6 +479,7 @@ class StorageTier(Enum):
 
 class StorageProvider(Enum):
     """Fournisseurs de stockage supportés"""
+
     LOCAL = "local"
     S3 = "s3"
     MINIO = "minio"
@@ -577,7 +585,8 @@ class StorageConfig:
 
 @dataclass
 class StorageMetadata:
-    """Métadonnées d'un objet stocké"""
+    """
+Métadonnées d'un objet stocké"""
     file_id: str
     original_path: str
     storage_path: str
@@ -595,7 +604,8 @@ class StorageMetadata:
 
 @dataclass
 class StorageResult:
-    """Résultat d'une opération de stockage"""
+    """
+Résultat d'une opération de stockage"""
     success: bool
     file_id: Optional[str]
     storage_path: Optional[str]
@@ -604,7 +614,8 @@ class StorageResult:
     warnings: List[str]
 
 class StorageManager:
-    """Gestionnaire principal du système de stockage multi-tiers"""
+    """
+Gestionnaire principal du système de stockage multi-tiers"""
     
     def __init__(self, config: Optional[StorageConfig] = None):
         self.config = config or StorageConfig()
@@ -635,7 +646,8 @@ class StorageManager:
         tier: Optional[StorageTier] = None,
         tags: Optional[List[str]] = None
     ) -> StorageResult:
-        """Stocke un fichier dans le tiers approprié"""
+        """
+Stocke un fichier dans le tiers approprié"""
         
         try:
             # Déterminer le tiers si non spécifié
@@ -916,12 +928,14 @@ class StorageManager:
         return self.usage_stats
     
     def _determine_optimal_tier(self, file_path: str, creator_type: str, content_type: str) -> StorageTier:
-        """Détermine le tiers de stockage optimal pour un nouveau fichier"""
+        """
+Détermine le tiers de stockage optimal pour un nouveau fichier"""
         # Par défaut, nouveaux fichiers vont en HOT
         return StorageTier.HOT
     
     def _check_storage_limits(self, creator_type: str, tier: StorageTier, file_path: str) -> bool:
-        """Vérifie si les limites de stockage permettent d'ajouter le fichier"""
+        """
+Vérifie si les limites de stockage permettent d'ajouter le fichier"""
         file_size_gb = os.path.getsize(file_path) / (1024**3)  # Convertir en GB
         
         # Récupérer la limite pour ce créateur et tiers
@@ -935,7 +949,8 @@ class StorageManager:
         return (current_usage_gb + file_size_gb) <= tier_limit
     
     def _generate_file_id(self, file_path: str) -> str:
-        """Génère un ID unique pour le fichier"""
+        """
+Génère un ID unique pour le fichier"""
         timestamp = datetime.now().isoformat()
         content = f"{file_path}:{timestamp}"
         return hashlib.sha256(content.encode()).hexdigest()[:16]
@@ -959,7 +974,8 @@ class StorageManager:
         self.usage_stats[creator_type][tier.value] += size_delta
     
     def _calculate_optimal_tier(self, file_age: int, days_since_access: int, access_count: int) -> StorageTier:
-        """Calcule le tiers optimal basé sur les patterns d'usage"""
+        """
+Calcule le tiers optimal basé sur les patterns d'usage"""
         # Logique de migration automatique
         if days_since_access <= 7 and access_count > 5:
             return StorageTier.HOT

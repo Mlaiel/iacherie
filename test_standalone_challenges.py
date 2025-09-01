@@ -26,7 +26,8 @@ from core.challenges.specialized_challenges import (
 
 
 async def test_monthly_creative_challenge():
-    """Test monthly creative challenge creation"""
+    """
+Test monthly creative challenge creation"""
     print("Testing Monthly Creative Challenge...")
     
     manager = SpecializedChallengeManager()

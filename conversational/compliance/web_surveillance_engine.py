@@ -37,7 +37,7 @@ Surveillance Coverage:
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM SECURITY SURVEILLANCE IP WARNING: Unauthorized use, reproduction, reverse 
     engineering, or distribution of this web surveillance code is strictly prohibited. 
@@ -46,6 +46,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     cybersecurity regulations, and national security provisions. Violations will be 
     prosecuted to the full extent of the law with potential criminal charges.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -79,7 +80,9 @@ from .ai_fingerprint_engine import AIFingerprintEngine, ContentType
 
 
 class PlatformType(Enum):
-    """Supported platforms for surveillance"""
+    """
+Supported platforms for surveillance"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -92,6 +95,7 @@ class PlatformType(Enum):
 
 class SurveillanceMode(Enum):
     """Surveillance operation modes"""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -100,6 +104,7 @@ class SurveillanceMode(Enum):
 
 class DetectionMethod(Enum):
     """Content detection methods"""
+
     FINGERPRINT_MATCH = "fingerprint_match"
     METADATA_MATCH = "metadata_match"
     VISUAL_MATCH = "visual_match"
@@ -124,7 +129,8 @@ class SurveillanceTarget:
 
 @dataclass
 class DetectionResult:
-    """Content detection result structure"""
+    """
+Content detection result structure"""
     detection_id: str
     target_id: str
     platform: PlatformType
@@ -141,7 +147,8 @@ class DetectionResult:
 
 @dataclass
 class SurveillanceReport:
-    """Comprehensive surveillance report"""
+    """
+Comprehensive surveillance report"""
     report_id: str
     user_id: int
     scan_period: Tuple[datetime, datetime]
@@ -201,7 +208,8 @@ class WebSurveillanceEngine:
         }
         
     def _initialize_platform_apis(self):
-        """Initialize platform API configurations"""
+        """
+Initialize platform API configurations"""
         try:
             # YouTube Data API
             self.youtube_service = build('youtube', 'v3', 

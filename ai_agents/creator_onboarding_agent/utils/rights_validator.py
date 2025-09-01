@@ -5,6 +5,7 @@ for creator content with AI-powered similarity detection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import hashlib
@@ -46,7 +47,9 @@ from ...integrations.copyright_apis import CopyrightAPIClient
 logger = logging.getLogger(__name__)
 
 class RightsStatus(Enum):
-    """Content rights validation status"""
+    """
+Content rights validation status"""
+
     VERIFIED = "verified"
     PENDING = "pending"
     DISPUTED = "disputed"
@@ -55,6 +58,7 @@ class RightsStatus(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"           # Standard fingerprinting
     STANDARD = "standard"     # Enhanced monitoring
     PREMIUM = "premium"       # Advanced AI protection
@@ -563,7 +567,8 @@ class RightsValidator:
         return max(0.0, min(1.0, total_score))
     
     def _determine_validation_status(self, result: RightsValidationResult) -> RightsStatus:
-        """Determine final validation status based on analysis results."""
+        """
+Determine final validation status based on analysis results."""
         # High confidence and no conflicts
         if result.confidence_score > 0.8 and not result.potential_conflicts:
             return RightsStatus.VERIFIED
@@ -585,7 +590,8 @@ class RightsValidator:
             return RightsStatus.UNKNOWN
     
     def _classify_match_type(self, similarity_score: float) -> str:
-        """Classify similarity match type."""
+        """
+Classify similarity match type."""
         if similarity_score > 0.95:
             return "exact_match"
         elif similarity_score > 0.85:
@@ -714,19 +720,22 @@ class RightsValidator:
     
     async def _setup_monitoring_tasks(self, user_id: str, 
                                     monitoring_config: Dict[str, Any]) -> None:
-        """Schedule automated monitoring tasks."""
+        """
+Schedule automated monitoring tasks."""
         # Placeholder - would setup Celery tasks
         pass
     
     async def _setup_alert_system(self, user_id: str, 
                                 monitoring_config: Dict[str, Any]) -> None:
-        """Configure alert system."""
+        """
+Configure alert system."""
         # Placeholder - would setup notification system
         pass
     
     async def _create_monitoring_entries(self, user_id: str, 
                                        monitoring_config: Dict[str, Any]) -> None:
-        """Create database entries for monitoring."""
+        """
+Create database entries for monitoring."""
         try:
             async with get_db_session() as db:
                 await db.execute("""

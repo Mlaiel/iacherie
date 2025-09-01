@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import json
 import logging
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class TransformationType(Enum):
-    """Content transformation types"""
+    """
+Content transformation types"""
+
     AUDIO_FORMAT = "audio_format"
     AUDIO_QUALITY = "audio_quality"
     AUDIO_EFFECTS = "audio_effects"
@@ -61,6 +64,7 @@ class TransformationType(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -79,7 +83,8 @@ class ContentTransformer(ABC):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform content from source to target format"""
+        """
+Transform content from source to target format"""
         pass
     
     @abstractmethod
@@ -88,12 +93,14 @@ class ContentTransformer(ABC):
         source_format: str,
         target_format: str
     ) -> bool:
-        """Check if transformation is supported"""
+        """
+Check if transformation is supported"""
         pass
 
 
 class MultiFormatTransformer:
-    """Advanced multi-format content transformation engine"""
+    """
+Advanced multi-format content transformation engine"""
     
     def __init__(self):
         self.db = get_database()
@@ -144,7 +151,8 @@ class MultiFormatTransformer:
         source_data: Union[bytes, str, Dict],
         target_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform content with specified configuration"""
+        """
+Transform content with specified configuration"""
         try:
             logger.info(f"Transforming content {content_id} with type {transformation_type.value}")
             
@@ -296,7 +304,8 @@ class MultiFormatTransformer:
         source_data: Union[bytes, str, Dict],
         target_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute the actual transformation"""
+        """
+Execute the actual transformation"""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -487,7 +496,8 @@ class AudioTransformer(ContentTransformer):
         source_data: bytes,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform audio content"""
+        """
+Transform audio content"""
         try:
             config = params['config']
             transformation_type = params['transformation_type']
@@ -632,14 +642,16 @@ class AudioTransformer(ContentTransformer):
 
 
 class ImageTransformer(ContentTransformer):
-    """Advanced image content transformer"""
+    """
+Advanced image content transformer"""
     
     async def transform_image(
         self,
         source_data: bytes,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform image content"""
+        """
+Transform image content"""
         try:
             config = params['config']
             transformation_type = params['transformation_type']
@@ -702,7 +714,8 @@ class ImageTransformer(ContentTransformer):
         image: Image.Image,
         config: Dict[str, Any]
     ) -> bytes:
-        """Resize image"""
+        """
+Resize image"""
         if 'width' in config and 'height' in config:
             new_size = (config['width'], config['height'])
         elif 'scale' in config:
@@ -754,7 +767,8 @@ class ImageTransformer(ContentTransformer):
         return output_buffer.getvalue()
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if image transformation is supported"""
+        """
+Check if image transformation is supported"""
         supported_formats = ['jpeg', 'jpg', 'png', 'webp', 'tiff', 'bmp', 'gif']
         return source_format.lower() in supported_formats and target_format.lower() in supported_formats
 
@@ -765,7 +779,8 @@ class ImageTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform image content from source to target format"""
+        """
+Transform image content from source to target format"""
         try:
             # Load image data
             image = Image.open(io.BytesIO(input_data))
@@ -832,7 +847,8 @@ class VideoTransformer(ContentTransformer):
         source_data: bytes,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform video content"""
+        """
+Transform video content"""
         try:
             config = params['config']
             transformation_type = params['transformation_type']
@@ -886,7 +902,8 @@ class VideoTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform video content from source to target format"""
+        """
+Transform video content from source to target format"""
         try:
             # For video transformation, we would typically use FFmpeg
             # This is a simplified implementation for demonstration
@@ -971,7 +988,8 @@ class TextTransformer(ContentTransformer):
         source_data: Union[str, bytes],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform text content"""
+        """
+Transform text content"""
         try:
             config = params['config']
             transformation_type = params['transformation_type']
@@ -1026,7 +1044,8 @@ class TextTransformer(ContentTransformer):
         return cleaned_text.strip()
 
     async def _translate_text(self, text: str, config: Dict) -> str:
-        """Translate text to target language"""
+        """
+Translate text to target language"""
         # This would integrate with translation service
         target_language = config.get('target_language', 'en')
         
@@ -1061,7 +1080,8 @@ class TextTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform text content from source to target format"""
+        """
+Transform text content from source to target format"""
         try:
             # Decode input text
             text = input_data.decode('utf-8', errors='ignore')
@@ -1142,7 +1162,8 @@ class MetadataTransformer(ContentTransformer):
         source_data: Union[Dict, str, bytes],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform metadata content"""
+        """
+Transform metadata content"""
         try:
             config = params['config']
             transformation_type = params['transformation_type']
@@ -1193,7 +1214,8 @@ class MetadataTransformer(ContentTransformer):
         return extracted
 
     async def _enrich_metadata(self, metadata: Dict, config: Dict) -> Dict:
-        """Enrich metadata with additional information"""
+        """
+Enrich metadata with additional information"""
         enriched = metadata.copy()
         
         # Add timestamp if not present
@@ -1208,7 +1230,8 @@ class MetadataTransformer(ContentTransformer):
         return enriched
 
     async def _normalize_metadata(self, metadata: Dict, config: Dict) -> Dict:
-        """Normalize metadata structure and values"""
+        """
+Normalize metadata structure and values"""
         normalized = {}
         
         # Apply field mappings
@@ -1234,7 +1257,8 @@ class MetadataTransformer(ContentTransformer):
         return normalized
 
     async def _compute_field_value(self, metadata: Dict, field_config: Dict) -> Any:
-        """Compute value for a metadata field"""
+        """
+Compute value for a metadata field"""
         computation_type = field_config.get('type', 'static')
         
         if computation_type == 'static':
@@ -1251,7 +1275,8 @@ class MetadataTransformer(ContentTransformer):
             return None
 
     async def _transform_field_value(self, value: Any, transformation: Dict) -> Any:
-        """Transform a field value"""
+        """
+Transform a field value"""
         transform_type = transformation.get('type', 'identity')
         
         if transform_type == 'identity':
@@ -1270,7 +1295,8 @@ class MetadataTransformer(ContentTransformer):
             return value
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if metadata transformation is supported"""
+        """
+Check if metadata transformation is supported"""
         return True  # Metadata transformations are generally format-agnostic
 
     async def transform(
@@ -1280,7 +1306,8 @@ class MetadataTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform metadata from source to target format"""
+        """
+Transform metadata from source to target format"""
         try:
             # Parse input metadata
             if source_format.lower() == 'json':

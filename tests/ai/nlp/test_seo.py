@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP SEO Module
+"""
+Comprehensive Tests for NLP SEO Module
 
 Industrial-grade tests for AdvancedSEOOptimizer covering keyword research,
 content optimization, ranking analysis, and social media SEO with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -45,11 +48,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestSEOOptimizer:
-    """Comprehensive tests for SEOOptimizer"""
+    """
+Comprehensive tests for SEOOptimizer"""
     
     @pytest.mark.asyncio
     async def test_optimizer_initialization(self, seo_optimizer):
-        """Test SEO optimizer initialization"""
+        """
+Test SEO optimizer initialization"""
         assert seo_optimizer is not None
         assert hasattr(seo_optimizer, 'config')
         assert hasattr(seo_optimizer, 'keyword_researcher')
@@ -65,7 +70,8 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_keyword_research(self, seo_optimizer):
-        """Test keyword research functionality"""
+        """
+Test keyword research functionality"""
         # Test single keyword research
         primary_keyword = "AI content creation"
         
@@ -612,14 +618,16 @@ class TestKeywordResearcher:
     
     @pytest.mark.asyncio
     async def test_keyword_researcher_initialization(self):
-        """Test keyword researcher initialization"""
+        """
+Test keyword researcher initialization"""
         researcher = KeywordResearcher()
         assert researcher is not None
         assert hasattr(researcher, 'research_keywords')
 
     @pytest.mark.asyncio
     async def test_trend_analysis(self):
-        """Test keyword trend analysis"""
+        """
+Test keyword trend analysis"""
         researcher = KeywordResearcher()
         
         trends = await researcher.analyze_keyword_trends(
@@ -635,36 +643,43 @@ class TestContentOptimizer:
     
     @pytest.mark.asyncio
     async def test_content_optimizer_initialization(self):
-        """Test content optimizer initialization"""
+        """
+Test content optimizer initialization"""
         optimizer = ContentOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_content')
 
 class TestRankingAnalyzer:
-    """Test ranking analyzer component"""
+    """
+Test ranking analyzer component"""
     
     @pytest.mark.asyncio
     async def test_ranking_analyzer_initialization(self):
-        """Test ranking analyzer initialization"""
+        """
+Test ranking analyzer initialization"""
         analyzer = RankingAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'analyze_rankings')
 
 class TestSocialSEOOptimizer:
-    """Test social SEO optimizer component"""
+    """
+Test social SEO optimizer component"""
     
     @pytest.mark.asyncio
     async def test_social_seo_optimizer_initialization(self):
-        """Test social SEO optimizer initialization"""
+        """
+Test social SEO optimizer initialization"""
         optimizer = SocialSEOOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_social_seo')
 
 class TestSEOConfig:
-    """Test SEO configuration"""
+    """
+Test SEO configuration"""
     
     def test_config_creation(self):
-        """Test SEO configuration creation"""
+        """
+Test SEO configuration creation"""
         config = SEOConfig(
             target_languages=['en', 'de', 'fr'],
             optimization_level='advanced',

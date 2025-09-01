@@ -9,6 +9,7 @@ Business Logic: User Upload → AI Protection → SEO → Collaboration → Dist
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""
+    """
+Supported compliance frameworks."""
+
     GDPR = "gdpr"
     CCPA = "ccpa" 
     PIPEDA = "pipeda"
@@ -40,6 +43,7 @@ class ComplianceFramework(Enum):
 
 class CompliancePriority(Enum):
     """Compliance priority levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -48,6 +52,7 @@ class CompliancePriority(Enum):
 
 class ContentType(Enum):
     """Content types for multi-format support."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -57,6 +62,7 @@ class ContentType(Enum):
 
 class CreatorType(Enum):
     """Creator types in the IA Influencer ecosystem."""
+
     MUSICIAN = "musician"
     PRODUCER = "producer"
     BLOGGER = "blogger"
@@ -87,7 +93,8 @@ class CompliancePolicy:
 
 @dataclass
 class ComplianceViolation:
-    """Data class for compliance violation tracking."""
+    """
+Data class for compliance violation tracking."""
     violation_id: str
     policy_id: str
     content_id: str
@@ -108,7 +115,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report for creators."""
+    """
+Compliance report for creators."""
     report_id: str
     user_id: str
     creator_type: CreatorType

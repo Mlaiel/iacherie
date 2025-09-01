@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import hashlib
@@ -38,7 +39,9 @@ from ...models.gdpr_models import AnonymizationRecord, AnonymizationMapping
 logger = get_logger(__name__)
 
 class AnonymizationTechnique(Enum):
-    """Advanced anonymization techniques"""
+    """
+Advanced anonymization techniques"""
+
     K_ANONYMITY = "k_anonymity"
     L_DIVERSITY = "l_diversity"
     T_CLOSENESS = "t_closeness"
@@ -52,6 +55,7 @@ class AnonymizationTechnique(Enum):
 
 class PrivacyLevel(Enum):
     """Privacy protection levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -59,6 +63,7 @@ class PrivacyLevel(Enum):
 
 class DataType(Enum):
     """Data types for anonymization"""
+
     IDENTIFIER = "identifier"
     QUASI_IDENTIFIER = "quasi_identifier"
     SENSITIVE_ATTRIBUTE = "sensitive_attribute"
@@ -78,7 +83,8 @@ class AnonymizationConfig:
 
 @dataclass
 class AnonymizationResult:
-    """Results of anonymization process"""
+    """
+Results of anonymization process"""
     original_records: int
     anonymized_records: int
     suppressed_records: int
@@ -911,7 +917,8 @@ class AnonymizationEngine:
         anonymized_data: Dict[str, Any],
         config: AnonymizationConfig
     ) -> float:
-        """Calculate privacy risk of anonymized data"""
+        """
+Calculate privacy risk of anonymized data"""
         try:
             risk_score = 0.0
             

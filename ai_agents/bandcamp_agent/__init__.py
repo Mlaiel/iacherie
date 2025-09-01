@@ -7,6 +7,7 @@ sales management, and fan engagement capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
+
 from .core.bandcamp_engine import BandcampEngine, BandcampRelease, BandcampTrack
 from .core.distribution_manager import DistributionManager
 from .utils.bandcamp_auth import BandcampAuthManager
@@ -28,7 +29,8 @@ def create_bandcamp_agent(config=None):
     return BandcampEngine(config)
 
 def get_module_info():
-    """Get module information and capabilities"""
+    """
+Get module information and capabilities"""
     return {
         "name": "Bandcamp Agent",
         "version": __version__,

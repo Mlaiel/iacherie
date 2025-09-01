@@ -10,12 +10,13 @@ Ultra-advanced database performance optimization for IA Influencer Agent:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This performance optimization engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationLevel(Enum):
-    """Performance optimization levels"""
+    """
+Performance optimization levels"""
+
     BASIC = "basic"          # Essential optimizations only
     STANDARD = "standard"    # Standard performance tuning
     ADVANCED = "advanced"    # Advanced optimization techniques
@@ -46,6 +49,7 @@ class OptimizationLevel(Enum):
 
 class OptimizationType(Enum):
     """Types of performance optimizations"""
+
     INDEX = "index"                    # Index optimization
     QUERY = "query"                   # Query optimization
     PARTITION = "partition"           # Table partitioning
@@ -70,7 +74,8 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationRule:
-    """Performance optimization rule"""
+    """
+Performance optimization rule"""
     rule_id: str
     name: str
     description: str
@@ -85,7 +90,8 @@ class OptimizationRule:
 
 @dataclass
 class OptimizationResult:
-    """Optimization execution result"""
+    """
+Optimization execution result"""
     rule_id: str
     optimization_type: OptimizationType
     status: str  # success, failed, skipped
@@ -123,7 +129,8 @@ class PerformanceOptimizer:
         self._register_builtin_rules()
         
     def register_optimization_rule(self, rule: OptimizationRule) -> None:
-        """Register performance optimization rule"""
+        """
+Register performance optimization rule"""
         self.optimization_rules[rule.rule_id] = rule
         logger.info(f"Registered optimization rule: {rule.rule_id}")
         
@@ -436,12 +443,14 @@ class PerformanceOptimizer:
         return []
         
     async def _execute_partition_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute partitioning optimization"""
+        """
+Execute partitioning optimization"""
         # Implementation for partitioning optimization
         return []
         
     async def _execute_vacuum_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute vacuum optimization"""
+        """
+Execute vacuum optimization"""
         sql_statements = []
         
         if rule.target_table:

@@ -2,7 +2,7 @@
 Enterprise-Grade Security Scanning and Compliance for CI/CD Pipelines
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive security scanning and compliance management for CI/CD
 pipelines, ensuring enterprise-grade security throughout the deployment process.
@@ -17,6 +17,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,9 @@ import yaml
 import re
 
 class ScanType(Enum):
-    """Security scan types"""
+    """
+Security scan types"""
+
     CODE_SECURITY = "code_security"
     DEPENDENCY_SCAN = "dependency_scan"
     CONTAINER_SCAN = "container_scan"
@@ -42,6 +45,7 @@ class ScanType(Enum):
 
 class SeverityLevel(Enum):
     """Vulnerability severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -50,6 +54,7 @@ class SeverityLevel(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standards"""
+
     GDPR = "gdpr"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
@@ -77,7 +82,8 @@ class Vulnerability:
 
 @dataclass
 class ScanResult:
-    """Security scan result"""
+    """
+Security scan result"""
     scan_type: ScanType
     scan_id: str
     timestamp: datetime
@@ -92,7 +98,8 @@ class ScanResult:
 
 @dataclass
 class SecurityPolicy:
-    """Security policy definition"""
+    """
+Security policy definition"""
     name: str
     description: str
     enabled: bool
@@ -106,14 +113,16 @@ class SecurityPolicy:
             self.exclusions = []
 
 class CodeSecurityScanner:
-    """Code security vulnerability scanner"""
+    """
+Code security vulnerability scanner"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def scan_code(self, code_path: Path, 
                        scan_config: Optional[Dict[str, Any]] = None) -> ScanResult:
-        """Scan code for security vulnerabilities"""
+        """
+Scan code for security vulnerabilities"""
         scan_id = self._generate_scan_id("code_security")
         vulnerabilities = []
         
@@ -301,7 +310,8 @@ class CodeSecurityScanner:
         return mapping.get(severity.upper(), SeverityLevel.MEDIUM)
         
     def _map_semgrep_severity(self, severity: str) -> SeverityLevel:
-        """Map Semgrep severity to internal severity"""
+        """
+Map Semgrep severity to internal severity"""
         mapping = {
             'ERROR': SeverityLevel.HIGH,
             'WARNING': SeverityLevel.MEDIUM,
@@ -310,7 +320,8 @@ class CodeSecurityScanner:
         return mapping.get(severity.upper(), SeverityLevel.MEDIUM)
         
     def _generate_scan_id(self, scan_type: str) -> str:
-        """Generate unique scan ID"""
+        """
+Generate unique scan ID"""
         timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"{scan_type}_{timestamp}"
         
@@ -324,14 +335,16 @@ class CodeSecurityScanner:
         return summary
 
 class DependencyScanner:
-    """Dependency vulnerability scanner"""
+    """
+Dependency vulnerability scanner"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def scan_dependencies(self, project_path: Path,
                               scan_config: Optional[Dict[str, Any]] = None) -> ScanResult:
-        """Scan project dependencies for vulnerabilities"""
+        """
+Scan project dependencies for vulnerabilities"""
         scan_id = self._generate_scan_id("dependency_scan")
         vulnerabilities = []
         
@@ -456,7 +469,8 @@ class DependencyScanner:
         return mapping.get(severity.lower(), SeverityLevel.MEDIUM)
         
     def _generate_scan_id(self, scan_type: str) -> str:
-        """Generate unique scan ID"""
+        """
+Generate unique scan ID"""
         timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"{scan_type}_{timestamp}"
         
@@ -470,14 +484,16 @@ class DependencyScanner:
         return summary
 
 class ContainerScanner:
-    """Container image vulnerability scanner"""
+    """
+Container image vulnerability scanner"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def scan_container(self, image_name: str,
                            scan_config: Optional[Dict[str, Any]] = None) -> ScanResult:
-        """Scan container image for vulnerabilities"""
+        """
+Scan container image for vulnerabilities"""
         scan_id = self._generate_scan_id("container_scan")
         vulnerabilities = []
         
@@ -560,7 +576,8 @@ class ContainerScanner:
         return mapping.get(severity.upper(), SeverityLevel.MEDIUM)
         
     def _generate_scan_id(self, scan_type: str) -> str:
-        """Generate unique scan ID"""
+        """
+Generate unique scan ID"""
         timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"{scan_type}_{timestamp}"
         
@@ -574,7 +591,8 @@ class ContainerScanner:
         return summary
 
 class SecurityPolicyManager:
-    """Security policy management and enforcement"""
+    """
+Security policy management and enforcement"""
     
     def __init__(self, policies_dir: Optional[Path] = None):
         self.policies_dir = policies_dir or Path(__file__).parent / "security_policies"

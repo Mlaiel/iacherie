@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -45,7 +46,9 @@ from ...utils.metrics import performance_monitor
 logger = get_structured_logger(__name__)
 
 class CalculationStrategy(str, Enum):
-    """Fee calculation strategy enumeration"""
+    """
+Fee calculation strategy enumeration"""
+
     PERCENTAGE = "percentage"
     FIXED = "fixed"
     TIERED = "tiered"
@@ -57,6 +60,7 @@ class CalculationStrategy(str, Enum):
 
 class FeeType(str, Enum):
     """Fee type enumeration"""
+
     PLATFORM_FEE = "platform_fee"
     PROCESSING_FEE = "processing_fee"
     TRANSACTION_FEE = "transaction_fee"
@@ -140,7 +144,8 @@ class FeeCalculatorEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Fee Calculator Engine"""
+        """
+Initialize Fee Calculator Engine"""
         self.config = config or {}
         
         # Calculator components
@@ -714,7 +719,8 @@ class PlatformFeeCalculator:
     """Platform-specific fee calculator"""
     
     async def initialize(self) -> None:
-        """Initialize platform calculator"""
+        """
+Initialize platform calculator"""
         self.platform_rates = {
             "youtube": Decimal("0.05"),
             "instagram": Decimal("0.04"), 
@@ -737,7 +743,8 @@ class ProcessingFeeCalculator:
     """Processing fee calculator"""
     
     async def initialize(self) -> None:
-        """Initialize processing calculator"""
+        """
+Initialize processing calculator"""
         self.processing_rates = {
             "EUR": {"rate": Decimal("0.029"), "fixed": Decimal("0.30")},
             "USD": {"rate": Decimal("0.029"), "fixed": Decimal("0.30")},
@@ -763,7 +770,8 @@ class PerformanceFeeCalculator:
     """Performance-based fee calculator"""
     
     async def initialize(self) -> None:
-        """Initialize performance calculator"""
+        """
+Initialize performance calculator"""
         self.performance_thresholds = {
             "bronze": {"min_revenue": Decimal("0"), "bonus_rate": Decimal("0.0")},
             "silver": {"min_revenue": Decimal("1000"), "bonus_rate": Decimal("0.05")},
@@ -793,7 +801,8 @@ class TieredFeeCalculator:
     """Tiered fee calculator with volume thresholds"""
     
     async def initialize(self) -> None:
-        """Initialize tiered calculator"""
+        """
+Initialize tiered calculator"""
         self.tier_thresholds = [
             {"min_amount": Decimal("0"), "rate": Decimal("0.030")},
             {"min_amount": Decimal("1000"), "rate": Decimal("0.025")},
@@ -824,7 +833,8 @@ class DynamicFeeCalculator:
     """Dynamic fee calculator based on market conditions"""
     
     async def initialize(self) -> None:
-        """Initialize dynamic calculator"""
+        """
+Initialize dynamic calculator"""
         self.market_conditions = {
             "peak_hours_multiplier": Decimal("1.2"),
             "off_peak_multiplier": Decimal("0.8"),
@@ -856,7 +866,7 @@ class DynamicFeeCalculator:
         )
 
 """Professional Fee Calculator Engine
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides advanced fee calculation capabilities with multiple strategies,
 AI-powered optimization, and real-time market adaptation.

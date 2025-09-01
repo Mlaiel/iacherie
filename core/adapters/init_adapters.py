@@ -12,6 +12,7 @@ of this code is strictly prohibited without explicit written permission.
 Usage:
     python init_adapters.py [--environment ENV] [--config-dir DIR] [--auto-register]
 """
+
 import asyncio
 import logging
 import argparse
@@ -39,7 +40,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 async def initialize_adapter_system(environment: Environment, config_dir: Path = None, auto_register: bool = True):
-    """Initialize the complete adapter system."""
+    """
+Initialize the complete adapter system."""
     
     logger.info(f"Initializing Adapter System for environment: {environment.value}")
     start_time = datetime.utcnow()

@@ -4,10 +4,11 @@ Enterprise-grade automated reporting system for IA Influencer Agent platform.
 Generates comprehensive reports on performance, business metrics, and system health.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import json
 import base64
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports that can be generated"""
+    """
+Types of reports that can be generated"""
+
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_PERFORMANCE = "weekly_performance"
     MONTHLY_BUSINESS = "monthly_business"
@@ -55,6 +58,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     HTML = "html"
     PDF = "pdf"
     JSON = "json"
@@ -64,6 +68,7 @@ class ReportFormat(Enum):
 
 class DeliveryMethod(Enum):
     """Report delivery methods"""
+
     EMAIL = "email"
     FILE_SYSTEM = "file_system"
     API_ENDPOINT = "api_endpoint"
@@ -89,7 +94,8 @@ class ReportConfig:
 
 @dataclass
 class ReportSection:
-    """A section within a report"""
+    """
+A section within a report"""
     title: str
     content: str
     charts: List[str] = field(default_factory=list)
@@ -100,7 +106,8 @@ class ReportSection:
 
 @dataclass
 class Report:
-    """Generated report"""
+    """
+Generated report"""
     report_id: str
     name: str
     report_type: ReportType
@@ -342,7 +349,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate daily summary report sections"""
+        """
+Generate daily summary report sections"""
         sections = []
         
         # Executive Summary
@@ -882,12 +890,14 @@ class ReportingSystem:
             await f.write(template_content)
             
     def _create_default_templates(self) -> None:
-        """Create default report templates"""
+        """
+Create default report templates"""
         # This would create template files
         pass
         
     def _create_default_configs(self) -> None:
-        """Create default report configurations"""
+        """
+Create default report configurations"""
         default_configs = [
             ReportConfig(
                 report_id="daily_summary",
@@ -999,17 +1009,20 @@ class ReportingSystem:
         return report.file_path is not None
         
     async def _deliver_via_api(self, report: Report, endpoints: List[str]) -> bool:
-        """Deliver report via API endpoints"""
+        """
+Deliver report via API endpoints"""
         # Would implement API delivery
         return True
         
     async def _deliver_to_dashboard(self, report: Report) -> bool:
-        """Deliver report to dashboard"""
+        """
+Deliver report to dashboard"""
         # Would implement dashboard delivery
         return True
         
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop for automated report generation"""
+        """
+Main scheduler loop for automated report generation"""
         while self.is_running:
             try:
                 current_time = datetime.utcnow()

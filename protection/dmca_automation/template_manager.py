@@ -7,8 +7,9 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
-Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
+Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import json
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateType(Enum):
-    """Types of legal templates"""
+    """
+Types of legal templates"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     DMCA_COUNTER_NOTICE = "dmca_counter_notice"
     COPYRIGHT_NOTICE = "copyright_notice"
@@ -46,6 +49,7 @@ class TemplateType(Enum):
 
 class TemplateFormat(Enum):
     """Template output formats"""
+
     HTML = "html"
     PDF = "pdf"
     PLAIN_TEXT = "plain_text"
@@ -56,6 +60,7 @@ class TemplateFormat(Enum):
 
 class Jurisdiction(Enum):
     """Legal jurisdictions with specific requirements"""
+
     US_FEDERAL = "us_federal"
     US_CALIFORNIA = "us_california"
     US_NEW_YORK = "us_new_york"
@@ -98,7 +103,8 @@ class TemplateMetadata:
 
 @dataclass
 class TemplateValidationResult:
-    """Template validation result"""
+    """
+Template validation result"""
     is_valid: bool
     validation_score: float
     compliance_issues: List[str]
@@ -109,7 +115,8 @@ class TemplateValidationResult:
 
 @dataclass
 class GeneratedDocument:
-    """Generated document result"""
+    """
+Generated document result"""
     document_id: str
     template_id: str
     content: str
@@ -135,7 +142,8 @@ class TemplateManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize template manager"""
+        """
+Initialize template manager"""
         self.config = config or {}
         self.db = get_database()
         self.validation_service = ValidationService(config)
@@ -665,7 +673,8 @@ class TemplateManager:
         return cleaned_vars
     
     async def _extract_optional_variables(self, content: str) -> List[str]:
-        """Extract optional template variables (with default values)"""
+        """
+Extract optional template variables (with default values)"""
         import re
         
         # Find variables with default values: {{ variable|default("value") }}

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import re
 import string
@@ -43,7 +44,8 @@ import numpy as np
 
 # Create ProcessingError if it doesn't exist
 class ProcessingError(Exception):
-    """Exception raised for text processing errors"""
+    """
+Exception raised for text processing errors"""
     pass
 
 # Download required NLTK data
@@ -75,7 +77,9 @@ except LookupError:
 logger = logging.getLogger(__name__)
 
 class ProcessingLevel(Enum):
-    """Text processing complexity levels"""
+    """
+Text processing complexity levels"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -83,6 +87,7 @@ class ProcessingLevel(Enum):
 
 class TextFormat(Enum):
     """Text format types"""
+
     PLAIN_TEXT = "plain_text"
     HTML = "html"
     MARKDOWN = "markdown"
@@ -112,7 +117,8 @@ class ProcessingOptions:
 
 @dataclass
 class ProcessingResult:
-    """Text processing results and metadata"""
+    """
+Text processing results and metadata"""
     original_text: str
     processed_text: str
     original_length: int
@@ -327,19 +333,22 @@ class TextProcessor:
         return clean_text, len(urls)
     
     async def _remove_emails(self, text: str) -> Tuple[str, int]:
-        """Remove email addresses from text"""
+        """
+Remove email addresses from text"""
         emails = self.patterns['email'].findall(text)
         clean_text = self.patterns['email'].sub('', text)
         return clean_text, len(emails)
     
     async def _remove_phone_numbers(self, text: str) -> Tuple[str, int]:
-        """Remove phone numbers from text"""
+        """
+Remove phone numbers from text"""
         phones = self.patterns['phone'].findall(text)
         clean_text = self.patterns['phone'].sub('', text)
         return clean_text, len(phones)
     
     async def _expand_contractions(self, text: str) -> str:
-        """Expand English contractions"""
+        """
+Expand English contractions"""
         try:
             return contractions.fix(text)
         except Exception as e:
@@ -353,7 +362,8 @@ class TextProcessor:
         return clean_text, len(special_chars)
     
     async def _normalize_whitespace(self, text: str) -> str:
-        """Normalize whitespace characters"""
+        """
+Normalize whitespace characters"""
         # Replace multiple spaces with single space
         text = self.patterns['multiple_spaces'].sub(' ', text)
         
@@ -366,7 +376,8 @@ class TextProcessor:
         return text
     
     async def _advanced_processing(self, text: str, options: ProcessingOptions) -> str:
-        """Apply advanced text processing techniques"""
+        """
+Apply advanced text processing techniques"""
         # Remove repeated characters (e.g., "sooooo" -> "so")
         text = self.patterns['repeated_chars'].sub(r'\1\1', text)
         
@@ -463,7 +474,8 @@ class TextProcessor:
         return ' '.join(filtered_words), short_words_removed, long_words_removed
     
     def _get_nltk_language_code(self, language: str) -> Optional[str]:
-        """Convert language code to NLTK format"""
+        """
+Convert language code to NLTK format"""
         lang_map = {
             'en': 'english',
             'fr': 'french',
@@ -481,7 +493,8 @@ class TextProcessor:
         return lang_map.get(language.lower())
     
     def _get_wordnet_pos(self, treebank_tag: str) -> str:
-        """Convert TreeBank POS tag to WordNet POS tag"""
+        """
+Convert TreeBank POS tag to WordNet POS tag"""
         if treebank_tag.startswith('J'):
             return 'a'  # adjective
         elif treebank_tag.startswith('V'):
@@ -609,7 +622,8 @@ class TextAnalyzer:
         avg_syllables_per_word: float,
         lexical_diversity: float
     ) -> float:
-        """Calculate overall text complexity score"""
+        """
+Calculate overall text complexity score"""
         # Normalize metrics to 0-1 scale and combine
         sentence_complexity = min(1.0, avg_words_per_sentence / 25)  # Assuming 25 words = high complexity
         syllable_complexity = min(1.0, avg_syllables_per_word / 3)   # Assuming 3+ syllables = complex

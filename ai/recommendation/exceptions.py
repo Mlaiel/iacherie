@@ -5,8 +5,9 @@ Comprehensive exception handling and validation for the Ainflue AI recommendatio
 Provides custom exceptions, validation functions, and error management utilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Any, Dict, List, Optional, Union
 import logging
 import traceback
@@ -14,7 +15,8 @@ import traceback
 
 # Base Exception Classes
 class RecommendationError(Exception):
-    """Base exception for recommendation system errors."""
+    """
+Base exception for recommendation system errors."""
     
     def __init__(self, message: str, error_code: str = None, details: Dict[str, Any] = None):
         super().__init__(message)

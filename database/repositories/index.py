@@ -26,6 +26,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Type, Any, Optional
 from sqlalchemy.orm import Session
 import logging
@@ -314,12 +315,14 @@ def quick_health_check(db_session: Session) -> Dict[str, Any]:
     return manager.health_check_all()
 
 def quick_statistics(db_session: Session) -> Dict[str, Any]:
-    """Quick statistics from all repositories"""
+    """
+Quick statistics from all repositories"""
     manager = initialize_repository_manager(db_session)
     return manager.get_all_statistics()
 
 def quick_optimization(db_session: Session) -> Dict[str, Any]:
-    """Quick optimization for all repositories"""
+    """
+Quick optimization for all repositories"""
     manager = initialize_repository_manager(db_session)
     return manager.optimize_all_tables()
 

@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -43,7 +44,9 @@ Base = declarative_base()
 
 
 class ContractType(Enum):
-    """Types of contracts in the system"""
+    """
+Types of contracts in the system"""
+
     LICENSE_AGREEMENT = "license_agreement"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
@@ -64,6 +67,7 @@ class ContractType(Enum):
 
 class ContractStatus(Enum):
     """Contract lifecycle status"""
+
     DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     PENDING_APPROVAL = "pending_approval"
@@ -82,6 +86,7 @@ class ContractStatus(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow step status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -93,6 +98,7 @@ class WorkflowStatus(Enum):
 
 class SignatureType(Enum):
     """Types of signatures"""
+
     ELECTRONIC = "electronic"
     DIGITAL = "digital"
     WET_SIGNATURE = "wet_signature"
@@ -103,6 +109,7 @@ class SignatureType(Enum):
 
 class ApprovalAction(Enum):
     """Approval actions"""
+
     APPROVE = "approve"
     REJECT = "reject"
     REQUEST_CHANGES = "request_changes"
@@ -263,7 +270,8 @@ class Contract(Base):
     
     @property
     def days_until_expiration(self) -> Optional[int]:
-        """Calculate days until contract expiration"""
+        """
+Calculate days until contract expiration"""
         if self.expiration_date:
             delta = self.expiration_date - datetime.utcnow()
             return max(0, delta.days)
@@ -271,7 +279,8 @@ class Contract(Base):
     
     @property
     def is_renewable(self) -> bool:
-        """Check if contract can be renewed"""
+        """
+Check if contract can be renewed"""
         return self.auto_renewal or self.contract_status == ContractStatus.ACTIVE
 
 

@@ -38,16 +38,19 @@ from ai_agents.business_intelligence_agent import (
 
 
 class TestUserBehaviorAgent:
-    """Test User Behavior Agent."""
+    """
+Test User Behavior Agent."""
     
     @pytest.fixture
     def agent(self):
-        """Create user behavior agent instance."""
+        """
+Create user behavior agent instance."""
         return UserBehaviorAgent()
     
     @pytest.fixture
     def behavior_request(self):
-        """Create behavior analysis request."""
+        """
+Create behavior analysis request."""
         return BehaviorAnalysisRequest(
             user_ids=["user_123", "user_456"],
             pattern_types=[BehaviorPatternType.ENGAGEMENT, BehaviorPatternType.CONTENT_CONSUMPTION],
@@ -86,7 +89,8 @@ class TestUserBehaviorAgent:
     
     @pytest.mark.asyncio
     async def test_user_segments_analysis(self, agent):
-        """Test user segments analysis."""
+        """
+Test user segments analysis."""
         segments = await agent._analyze_user_segments([])
         
         assert isinstance(segments, list)
@@ -101,7 +105,8 @@ class TestUserBehaviorAgent:
     
     @pytest.mark.asyncio 
     async def test_behavior_predictions(self, agent):
-        """Test behavior predictions generation."""
+        """
+Test behavior predictions generation."""
         user_ids = ["user_123", "user_456"]
         predictions = await agent._generate_behavior_predictions([], user_ids)
         
@@ -129,16 +134,19 @@ class TestUserBehaviorAgent:
 
 
 class TestPerformanceMetricsAgent:
-    """Test Performance Metrics Agent."""
+    """
+Test Performance Metrics Agent."""
     
     @pytest.fixture
     def agent(self):
-        """Create performance metrics agent instance."""
+        """
+Create performance metrics agent instance."""
         return PerformanceMetricsAgent()
     
     @pytest.fixture
     def metrics_request(self):
-        """Create performance metrics request."""
+        """
+Create performance metrics request."""
         return PerformanceMetricsRequest(
             metric_types=[MetricType.ENGAGEMENT, MetricType.REVENUE, MetricType.SYSTEM_PERFORMANCE],
             include_trends=True,
@@ -178,7 +186,8 @@ class TestPerformanceMetricsAgent:
     
     @pytest.mark.asyncio
     async def test_metrics_by_type_collection(self, agent, metrics_request):
-        """Test collection of metrics by type."""
+        """
+Test collection of metrics by type."""
         for metric_type in MetricType:
             metrics = await agent._collect_metrics_by_type(metric_type, metrics_request)
             
@@ -189,7 +198,8 @@ class TestPerformanceMetricsAgent:
     
     @pytest.mark.asyncio
     async def test_alert_checking(self, agent):
-        """Test alert checking functionality."""
+        """
+Test alert checking functionality."""
         # Create mock metrics that should trigger alerts
         from ai_agents.performance_metrics_agent.models.performance_models import KPIMetric, TrendDirection
         
@@ -237,16 +247,19 @@ class TestPerformanceMetricsAgent:
 
 
 class TestSentimentAnalysisAgent:
-    """Test Sentiment Analysis Agent."""
+    """
+Test Sentiment Analysis Agent."""
     
     @pytest.fixture
     def agent(self):
-        """Create sentiment analysis agent instance."""
+        """
+Create sentiment analysis agent instance."""
         return SentimentAnalysisAgent()
     
     @pytest.fixture
     def sentiment_request(self):
-        """Create sentiment analysis request."""
+        """
+Create sentiment analysis request."""
         return SentimentAnalysisRequest(
             content_text="This is an amazing platform! I love creating content here.",
             content_type=ContentType.TEXT,
@@ -279,7 +292,8 @@ class TestSentimentAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_emotion_profile_generation(self, agent):
-        """Test emotion profile generation."""
+        """
+Test emotion profile generation."""
         # Mock sentiment result
         mock_result = Mock()
         mock_result.emotions = {'joy': 0.8, 'trust': 0.6, 'anticipation': 0.4}
@@ -296,7 +310,8 @@ class TestSentimentAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_sentiment_trends_analysis(self, agent):
-        """Test sentiment trends analysis."""
+        """
+Test sentiment trends analysis."""
         trends = await agent._analyze_sentiment_trends("content_123")
         
         assert trends is not None
@@ -334,16 +349,19 @@ class TestSentimentAnalysisAgent:
 
 
 class TestBusinessIntelligenceAgent:
-    """Test Business Intelligence Agent."""
+    """
+Test Business Intelligence Agent."""
     
     @pytest.fixture
     def agent(self):
-        """Create business intelligence agent instance."""
+        """
+Create business intelligence agent instance."""
         return BusinessIntelligenceAgent()
     
     @pytest.fixture
     def bi_request(self):
-        """Create business intelligence request."""
+        """
+Create business intelligence request."""
         return BusinessIntelligenceRequest(
             analysis_type="comprehensive",
             metric_types=[BusinessMetricType.REVENUE, BusinessMetricType.GROWTH, BusinessMetricType.CUSTOMER],
@@ -378,7 +396,8 @@ class TestBusinessIntelligenceAgent:
     
     @pytest.mark.asyncio
     async def test_executive_summary_generation(self, agent, bi_request):
-        """Test executive summary generation."""
+        """
+Test executive summary generation."""
         summary = await agent._generate_executive_summary(bi_request)
         
         assert isinstance(summary, dict)
@@ -392,7 +411,8 @@ class TestBusinessIntelligenceAgent:
     
     @pytest.mark.asyncio
     async def test_dashboards_generation(self, agent, bi_request):
-        """Test dashboards generation."""
+        """
+Test dashboards generation."""
         dashboards = await agent._generate_dashboards(bi_request)
         
         assert isinstance(dashboards, list)
@@ -407,7 +427,8 @@ class TestBusinessIntelligenceAgent:
     
     @pytest.mark.asyncio
     async def test_business_insights_generation(self, agent, bi_request):
-        """Test business insights generation."""
+        """
+Test business insights generation."""
         insights = await agent._generate_business_insights(bi_request)
         
         assert isinstance(insights, list)
@@ -424,7 +445,8 @@ class TestBusinessIntelligenceAgent:
     
     @pytest.mark.asyncio
     async def test_business_forecasts_generation(self, agent, bi_request):
-        """Test business forecasts generation."""
+        """
+Test business forecasts generation."""
         forecasts = await agent._generate_business_forecasts(bi_request)
         
         assert isinstance(forecasts, dict)
@@ -441,7 +463,8 @@ class TestBusinessIntelligenceAgent:
     
     @pytest.mark.asyncio
     async def test_benchmarks_generation(self, agent, bi_request):
-        """Test benchmarks generation."""
+        """
+Test benchmarks generation."""
         benchmarks = await agent._generate_benchmarks(bi_request)
         
         assert isinstance(benchmarks, dict)
@@ -451,7 +474,8 @@ class TestBusinessIntelligenceAgent:
     
     @pytest.mark.asyncio
     async def test_real_time_business_metrics(self, agent):
-        """Test real-time business metrics."""
+        """
+Test real-time business metrics."""
         metrics = await agent.get_real_time_business_metrics()
         
         assert isinstance(metrics, dict)
@@ -465,12 +489,14 @@ class TestBusinessIntelligenceAgent:
 
 # Integration tests for agent interoperability
 class TestAgentsIntegration:
-    """Test integration between different analytics agents."""
+    """
+Test integration between different analytics agents."""
     
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_cross_agent_data_consistency(self):
-        """Test data consistency across agents."""
+        """
+Test data consistency across agents."""
         # Initialize agents
         user_behavior_agent = UserBehaviorAgent()
         performance_agent = PerformanceMetricsAgent()
@@ -494,7 +520,8 @@ class TestAgentsIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_coordinated_agent_analysis(self):
-        """Test coordinated analysis across multiple agents."""
+        """
+Test coordinated analysis across multiple agents."""
         # Run analysis on all agents with related data
         user_agent = UserBehaviorAgent()
         sentiment_agent = SentimentAnalysisAgent()

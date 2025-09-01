@@ -1,4 +1,5 @@
 """Rights Management Manager - Global Digital Rights Management"""
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -111,7 +112,8 @@ class RightsManagementManager(BaseAgent):
         return ['supported_license_types', 'default_protection_level']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
+        """
+Main request processing logic"""
         action = request.action.lower()
         
         try:
@@ -305,7 +307,8 @@ class RightsManagementManager(BaseAgent):
         return False
     
     async def _calculate_royalties(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate and distribute royalties"""
+        """
+Calculate and distribute royalties"""
         content_id = data.get('content_id')
         usage_data = data.get('usage_data', [])
         calculation_period = data.get('period', 'current_month')

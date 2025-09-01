@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
 """
+
 import logging
 import numpy as np
 from typing import List, Dict, Optional, Tuple, Any
@@ -26,7 +27,9 @@ from backend.core.analytics.metrics import MetricsCollector
 
 
 class ContentType(Enum):
-    """Content type enumeration for matching analysis"""
+    """
+Content type enumeration for matching analysis"""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTOGRAPHY = "photography"
@@ -37,6 +40,7 @@ class ContentType(Enum):
 
 class MatchingStrategy(Enum):
     """Matching strategy enumeration"""
+
     CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
@@ -64,7 +68,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchResult:
-    """Match result data structure"""
+    """
+Match result data structure"""
     creator_a_id: int
     creator_b_id: int
     compatibility_score: float
@@ -124,7 +129,8 @@ class MatchingEngine:
         }
     
     def _initialize_models(self) -> None:
-        """Initialize AI models for matching analysis"""
+        """
+Initialize AI models for matching analysis"""
         try:
             # Load pre-trained content similarity model
             self.content_similarity_model = joblib.load(
@@ -491,7 +497,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate content complementarity score"""
+        """
+Calculate content complementarity score"""
         # Content complementarity analysis
         return 0.80
     
@@ -500,7 +507,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[str, float]:
-        """Assess potential collaboration risks"""
+        """
+Assess potential collaboration risks"""
         return {
             'brand_mismatch': 0.2,
             'audience_conflict': 0.1,
@@ -513,7 +521,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> int:
-        """Estimate combined reach of collaboration"""
+        """
+Estimate combined reach of collaboration"""
         # Calculate estimated reach based on audience sizes and overlap
         return 50000
     
@@ -521,7 +530,8 @@ class MatchingEngine:
         self,
         strategy_scores: Dict[MatchingStrategy, float]
     ) -> float:
-        """Calculate confidence level of the match"""
+        """
+Calculate confidence level of the match"""
         # Statistical confidence calculation
         scores = list(strategy_scores.values())
         return np.mean(scores) * (1 - np.std(scores))
@@ -532,7 +542,8 @@ class MatchingEngine:
         creator_b: CreatorProfile,
         strategy_scores: Dict[MatchingStrategy, float]
     ) -> List[str]:
-        """Generate human-readable match reasons"""
+        """
+Generate human-readable match reasons"""
         reasons = []
         
         for strategy, score in strategy_scores.items():
@@ -596,7 +607,8 @@ class MatchingEngine:
         )
     
     async def get_match_details(self, match_id: str) -> Optional[MatchResult]:
-        """Get detailed information about a specific match"""
+        """
+Get detailed information about a specific match"""
         try:
             # Retrieve match details from database or cache
             # Implementation would query match storage

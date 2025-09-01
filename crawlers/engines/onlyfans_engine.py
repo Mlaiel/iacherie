@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -27,7 +28,9 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class ContentType(Enum):
-    """Content types for OnlyFans"""
+    """
+Content types for OnlyFans"""
+
     IMAGE = "image"
     VIDEO = "video"
     LIVE_STREAM = "live_stream"
@@ -289,7 +292,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
             return ContentType.POST
             
     def _extract_media_urls(self, content: Dict[str, Any]) -> List[str]:
-        """Extract media URLs from content"""
+        """
+Extract media URLs from content"""
         
         urls = []
         media = content.get('media', [])
@@ -303,7 +307,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return urls
         
     def _calculate_engagement_rate(self, content: Dict[str, Any]) -> float:
-        """Calculate engagement rate for content"""
+        """
+Calculate engagement rate for content"""
         
         likes = content.get('favoritesCount', 0)
         comments = content.get('commentsCount', 0)
@@ -316,7 +321,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return min(engagement_rate, 1.0)  # Cap at 100%
         
     async def _determine_monetization_tier(self, content: Dict[str, Any]) -> str:
-        """Determine monetization tier based on content analysis"""
+        """
+Determine monetization tier based on content analysis"""
         
         price = content.get('price', 0)
         engagement = self._calculate_engagement_rate(content)
@@ -445,7 +451,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return distribution
         
     def _calculate_monetization_potential(self, content_list: List[OnlyFansContent]) -> float:
-        """Calculate monetization potential score"""
+        """
+Calculate monetization potential score"""
         
         if not content_list:
             return 0.0
@@ -466,7 +473,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
         content_types: List[ContentType] = None,
         filters: Dict[str, Any] = None
     ) -> List[OnlyFansContent]:
-        """Search content with advanced filtering"""
+        """
+Search content with advanced filtering"""
         
         self.logger.info(f"Searching content: {query}")
         
@@ -549,7 +557,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return True
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
+        """
+Get authenticated headers for API requests"""
         
         return {
             'User-Agent': 'OnlyFans/1.0',
@@ -575,7 +584,8 @@ class OnlyFansEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
+        """
+Apply rate limiting to prevent API abuse"""
         
         # Simple rate limiting implementation
         await asyncio.sleep(60 / self.rate_limit_per_minute)

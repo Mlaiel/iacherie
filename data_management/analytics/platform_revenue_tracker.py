@@ -8,7 +8,7 @@ Responsibility: Suivi automatisé des revenus multi-plateformes avec IA prédict
 ===============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ PLATFORMS SUPPORTÉES:
 📸 Instagram, Pinterest, Getty Images (Photographes)
 📝 Medium, Substack, WordPress (Blogueurs)
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -47,6 +48,7 @@ logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
     """Types de plateformes supportées"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -56,6 +58,7 @@ class PlatformType(Enum):
 
 class RevenueMetricType(Enum):
     """Types de métriques de revenus"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
@@ -110,7 +113,8 @@ class PlatformRevenueTracker:
         self._platform_configs = self._load_platform_configs()
         
     def _initialize_api_clients(self) -> Dict[str, PlatformAPIClient]:
-        """Initialise les clients API pour chaque plateforme"""
+        """
+Initialise les clients API pour chaque plateforme"""
         clients = {}
         
         # Music Streaming Platforms
@@ -417,7 +421,8 @@ class PlatformRevenueTracker:
         return seasonal_factors.get(current_month, 1.0)
     
     async def _get_market_indicators(self) -> Dict[str, float]:
-        """Récupère les indicateurs de marché"""
+        """
+Récupère les indicateurs de marché"""
         return {
             "industry_growth": 0.08,  # 8% annual growth
             "competition_level": 0.75,  # High competition

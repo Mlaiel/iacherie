@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import hashlib
@@ -41,7 +42,9 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
+    """
+Content protection levels."""
+
     MINIMAL = "minimal"          # Basic monitoring
     STANDARD = "standard"        # Regular scanning
     ENHANCED = "enhanced"        # Advanced protection
@@ -50,6 +53,7 @@ class ProtectionLevel(Enum):
 
 class ThreatType(Enum):
     """Content protection threat types."""
+
     DIRECT_COPY = "direct_copy"              # Exact duplication
     MODIFIED_COPY = "modified_copy"          # Altered content
     PARTIAL_USE = "partial_use"              # Portion used
@@ -63,6 +67,7 @@ class ThreatType(Enum):
 
 class ViolationSeverity(Enum):
     """Violation severity levels."""
+
     CRITICAL = "critical"        # Immediate action required
     HIGH = "high"               # Urgent attention needed
     MEDIUM = "medium"           # Monitoring required
@@ -71,6 +76,7 @@ class ViolationSeverity(Enum):
 
 class ActionType(Enum):
     """Recommended actions for violations."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_ACTION = "legal_action"
@@ -120,7 +126,8 @@ class ProtectionViolation:
 
 @dataclass
 class ProtectionRecommendation:
-    """Protection action recommendation."""
+    """
+Protection action recommendation."""
     action_type: ActionType
     priority: int  # 1-5 priority level
     estimated_success_rate: float
@@ -146,7 +153,8 @@ class ProtectionRecommendation:
 
 @dataclass
 class ContentFingerprint:
-    """Unique content fingerprint for protection."""
+    """
+Unique content fingerprint for protection."""
     content_id: str
     fingerprint_type: str  # visual, audio, text, combined
     
@@ -1240,7 +1248,8 @@ class ProtectionAnalyzer:
         return np.mean(confidence_factors)
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get protection analysis analytics and performance metrics."""
+        """
+Get protection analysis analytics and performance metrics."""
         avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {

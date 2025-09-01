@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import json
 import uuid
 import time
@@ -32,7 +33,8 @@ from structlog.contextvars import bind_contextvars, clear_contextvars
 
 
 class EventType(str, Enum):
-    """Standard event types for structured logging"""
+    """
+Standard event types for structured logging"""
     # Platform Events
     PLATFORM_START = "platform.start"
     PLATFORM_STOP = "platform.stop"
@@ -140,7 +142,8 @@ class RequestContext:
 
 @dataclass
 class ContentContext:
-    """Content processing context"""
+    """
+Content processing context"""
     content_id: Optional[str] = None
     content_type: Optional[str] = None  # audio, video, image, text
     content_format: Optional[str] = None  # mp3, mp4, jpg, txt
@@ -152,7 +155,8 @@ class ContentContext:
 
 @dataclass
 class AIContext:
-    """AI processing context"""
+    """
+AI processing context"""
     model_name: Optional[str] = None
     model_version: Optional[str] = None
     inference_type: Optional[str] = None
@@ -164,7 +168,8 @@ class AIContext:
 
 @dataclass
 class PerformanceContext:
-    """Performance monitoring context"""
+    """
+Performance monitoring context"""
     operation: Optional[str] = None
     start_time: Optional[float] = None
     end_time: Optional[float] = None
@@ -177,7 +182,8 @@ class PerformanceContext:
 
 @dataclass
 class SecurityContext:
-    """Security context for threat tracking"""
+    """
+Security context for threat tracking"""
     threat_level: Optional[str] = None
     attack_type: Optional[str] = None
     source_ip: Optional[str] = None
@@ -241,7 +247,8 @@ class StructuredLoggingConfig:
         self._configure_processors()
     
     def _configure_processors(self) -> None:
-        """Configure structlog processors"""
+        """
+Configure structlog processors"""
         processors_list = [
             # Standard processors
             stdlib.filter_by_level,
@@ -279,12 +286,14 @@ class StructuredLoggingConfig:
         )
     
     def _add_timestamp_processor(self, logger, method_name, event_dict):
-        """Add ISO timestamp to log records"""
+        """
+Add ISO timestamp to log records"""
         event_dict['timestamp'] = datetime.now(timezone.utc).isoformat()
         return event_dict
     
     def _add_correlation_processor(self, logger, method_name, event_dict):
-        """Add correlation tracking information"""
+        """
+Add correlation tracking information"""
         if not self.enable_correlation:
             return event_dict
         
@@ -299,7 +308,8 @@ class StructuredLoggingConfig:
         return event_dict
     
     def _add_context_processor(self, logger, method_name, event_dict):
-        """Add context information from context variables"""
+        """
+Add context information from context variables"""
         if not self.enable_context_vars:
             return event_dict
         
@@ -330,7 +340,8 @@ class StructuredLoggingConfig:
         return event_dict
     
     def _add_performance_processor(self, logger, method_name, event_dict):
-        """Add performance metrics"""
+        """
+Add performance metrics"""
         if not self.enable_performance_tracking:
             return event_dict
         
@@ -344,7 +355,8 @@ class StructuredLoggingConfig:
         return event_dict
     
     def _add_security_processor(self, logger, method_name, event_dict):
-        """Add security context"""
+        """
+Add security context"""
         if not self.enable_security_context:
             return event_dict
         
@@ -358,7 +370,8 @@ class StructuredLoggingConfig:
         return event_dict
     
     def _filter_sensitive_data_processor(self, logger, method_name, event_dict):
-        """Filter sensitive data from log records"""
+        """
+Filter sensitive data from log records"""
         sensitive_keys = [
             'password', 'token', 'secret', 'key', 'auth',
             'credential', 'api_key', 'private_key'
@@ -374,79 +387,91 @@ class StructuredLoggingConfig:
         return event_dict
     
     def set_request_context(self, context: RequestContext) -> None:
-        """Set request context for current execution"""
+        """
+Set request context for current execution"""
         if self.enable_context_vars and hasattr(self, 'request_context'):
             self.request_context.set(context)
         else:
             self._thread_local.request_context = context
     
     def get_request_context(self) -> Optional[RequestContext]:
-        """Get current request context"""
+        """
+Get current request context"""
         if self.enable_context_vars and hasattr(self, 'request_context'):
             return self.request_context.get(None)
         return getattr(self._thread_local, 'request_context', None)
     
     def set_content_context(self, context: ContentContext) -> None:
-        """Set content processing context"""
+        """
+Set content processing context"""
         if self.enable_context_vars and hasattr(self, 'content_context'):
             self.content_context.set(context)
         else:
             self._thread_local.content_context = context
     
     def get_content_context(self) -> Optional[ContentContext]:
-        """Get current content context"""
+        """
+Get current content context"""
         if self.enable_context_vars and hasattr(self, 'content_context'):
             return self.content_context.get(None)
         return getattr(self._thread_local, 'content_context', None)
     
     def set_ai_context(self, context: AIContext) -> None:
-        """Set AI processing context"""
+        """
+Set AI processing context"""
         if self.enable_context_vars and hasattr(self, 'ai_context'):
             self.ai_context.set(context)
         else:
             self._thread_local.ai_context = context
     
     def get_ai_context(self) -> Optional[AIContext]:
-        """Get current AI context"""
+        """
+Get current AI context"""
         if self.enable_context_vars and hasattr(self, 'ai_context'):
             return self.ai_context.get(None)
         return getattr(self._thread_local, 'ai_context', None)
     
     def set_performance_context(self, context: PerformanceContext) -> None:
-        """Set performance monitoring context"""
+        """
+Set performance monitoring context"""
         if self.enable_context_vars and hasattr(self, 'performance_context'):
             self.performance_context.set(context)
         else:
             self._thread_local.performance_context = context
     
     def get_performance_context(self) -> Optional[PerformanceContext]:
-        """Get current performance context"""
+        """
+Get current performance context"""
         if self.enable_context_vars and hasattr(self, 'performance_context'):
             return self.performance_context.get(None)
         return getattr(self._thread_local, 'performance_context', None)
     
     def set_security_context(self, context: SecurityContext) -> None:
-        """Set security context"""
+        """
+Set security context"""
         if self.enable_context_vars and hasattr(self, 'security_context'):
             self.security_context.set(context)
         else:
             self._thread_local.security_context = context
     
     def get_security_context(self) -> Optional[SecurityContext]:
-        """Get current security context"""
+        """
+Get current security context"""
         if self.enable_context_vars and hasattr(self, 'security_context'):
             return self.security_context.get(None)
         return getattr(self._thread_local, 'security_context', None)
     
     def set_correlation_id(self, correlation_id: str) -> None:
-        """Set correlation ID for request tracking"""
+        """
+Set correlation ID for request tracking"""
         if self.enable_context_vars:
             bind_contextvars(correlation_id=correlation_id)
         else:
             self._thread_local.correlation_id = correlation_id
     
     def get_correlation_id(self) -> Optional[str]:
-        """Get current correlation ID"""
+        """
+Get current correlation ID"""
         if self.enable_context_vars:
             try:
                 return structlog.get_logger().bind().context.get('correlation_id')
@@ -455,7 +480,8 @@ class StructuredLoggingConfig:
         return getattr(self._thread_local, 'correlation_id', None)
     
     def clear_context(self) -> None:
-        """Clear all context information"""
+        """
+Clear all context information"""
         if self.enable_context_vars:
             clear_contextvars()
             
@@ -477,7 +503,8 @@ class StructuredLoggingConfig:
     
     @contextmanager
     def request_context_manager(self, context: RequestContext):
-        """Context manager for request scope"""
+        """
+Context manager for request scope"""
         old_context = self.get_request_context()
         self.set_request_context(context)
         try:
@@ -491,7 +518,8 @@ class StructuredLoggingConfig:
     
     @contextmanager
     def content_context_manager(self, context: ContentContext):
-        """Context manager for content processing scope"""
+        """
+Context manager for content processing scope"""
         old_context = self.get_content_context()
         self.set_content_context(context)
         try:
@@ -505,7 +533,8 @@ class StructuredLoggingConfig:
     
     @contextmanager
     def ai_context_manager(self, context: AIContext):
-        """Context manager for AI processing scope"""
+        """
+Context manager for AI processing scope"""
         old_context = self.get_ai_context()
         self.set_ai_context(context)
         try:
@@ -519,7 +548,8 @@ class StructuredLoggingConfig:
     
     @contextmanager
     def performance_context_manager(self, operation: str):
-        """Context manager for performance monitoring"""
+        """
+Context manager for performance monitoring"""
         start_time = time.time()
         context = PerformanceContext(
             operation=operation,
@@ -543,7 +573,8 @@ class StructuredLoggingConfig:
     
     @contextmanager
     def security_context_manager(self, context: SecurityContext):
-        """Context manager for security monitoring"""
+        """
+Context manager for security monitoring"""
         old_context = self.get_security_context()
         self.set_security_context(context)
         try:
@@ -655,7 +686,8 @@ def initialize_structured_logging(
 
 
 def get_structured_config() -> StructuredLoggingConfig:
-    """Get the global structured logging configuration"""
+    """
+Get the global structured logging configuration"""
     if not _structured_config:
         initialize_structured_logging()
     

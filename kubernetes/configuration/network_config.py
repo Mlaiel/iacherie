@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade network and service discovery configuration.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
@@ -24,7 +25,9 @@ import ipaddress
 import json
 
 class NetworkTopology(Enum):
-    """Network topology types"""
+    """
+Network topology types"""
+
     MESH = "mesh"
     STAR = "star"
     HYBRID = "hybrid"
@@ -32,6 +35,7 @@ class NetworkTopology(Enum):
 
 class ServiceDiscoveryType(Enum):
     """Service discovery types"""
+
     CONSUL = "consul"
     ETCD = "etcd"
     KUBERNETES = "kubernetes"
@@ -40,6 +44,7 @@ class ServiceDiscoveryType(Enum):
 
 class LoadBalancerType(Enum):
     """Load balancer types"""
+
     NGINX = "nginx"
     HAProxy = "haproxy"
     ENVOY = "envoy"
@@ -49,6 +54,7 @@ class LoadBalancerType(Enum):
 
 class NetworkProtocol(Enum):
     """Network protocols"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -58,6 +64,7 @@ class NetworkProtocol(Enum):
 
 class SecurityPolicy(Enum):
     """Network security policies"""
+
     STRICT = "strict"
     MODERATE = "moderate"
     PERMISSIVE = "permissive"
@@ -142,7 +149,8 @@ class VPCConfig:
 
 @dataclass
 class CDNConfig:
-    """CDN configuration"""
+    """
+CDN configuration"""
     enabled: bool = False
     provider: str = "cloudflare"  # cloudflare, aws_cloudfront, gcp_cdn
     cache_policies: Dict[str, Any] = field(default_factory=dict)
@@ -185,7 +193,8 @@ class NetworkConfigManager:
     """
     
     def __init__(self):
-        """Initialize network configuration manager"""
+        """
+Initialize network configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Network configurations
@@ -471,17 +480,20 @@ class NetworkConfigManager:
         pass
     
     async def _setup_consul_discovery(self) -> None:
-        """Setup Consul service discovery"""
+        """
+Setup Consul service discovery"""
         # Implementation would configure Consul
         pass
     
     async def _setup_etcd_discovery(self) -> None:
-        """Setup etcd service discovery"""
+        """
+Setup etcd service discovery"""
         # Implementation would configure etcd
         pass
     
     async def _setup_load_balancers(self) -> None:
-        """Setup load balancers"""
+        """
+Setup load balancers"""
         lb_config = self.network_config.load_balancer
         
         if lb_config.type == LoadBalancerType.NGINX:
@@ -499,17 +511,20 @@ class NetworkConfigManager:
         pass
     
     async def _setup_haproxy_lb(self) -> None:
-        """Setup HAProxy load balancer"""
+        """
+Setup HAProxy load balancer"""
         # Implementation would configure HAProxy
         pass
     
     async def _setup_envoy_lb(self) -> None:
-        """Setup Envoy proxy"""
+        """
+Setup Envoy proxy"""
         # Implementation would configure Envoy
         pass
     
     async def _configure_firewalls(self) -> None:
-        """Configure firewall rules"""
+        """
+Configure firewall rules"""
         for rule in self.network_config.firewall_rules:
             if rule.enabled:
                 await self._apply_firewall_rule(rule)
@@ -522,7 +537,8 @@ class NetworkConfigManager:
         pass
     
     async def _start_network_monitoring(self) -> None:
-        """Start network monitoring"""
+        """
+Start network monitoring"""
         asyncio.create_task(self._monitor_network_traffic())
         asyncio.create_task(self._monitor_security_events())
         
@@ -614,12 +630,14 @@ class NetworkConfigManager:
         pass
     
     async def _setup_linkerd(self) -> None:
-        """Setup Linkerd service mesh"""
+        """
+Setup Linkerd service mesh"""
         # Implementation would configure Linkerd
         pass
     
     async def _setup_consul_connect(self) -> None:
-        """Setup Consul Connect service mesh"""
+        """
+Setup Consul Connect service mesh"""
         # Implementation would configure Consul Connect
         pass
     
@@ -655,7 +673,8 @@ class NetworkConfigManager:
         pass
     
     async def _update_load_balancer(self, endpoint: ServiceEndpoint) -> None:
-        """Update load balancer configuration"""
+        """
+Update load balancer configuration"""
         # Implementation would update load balancer configuration
         pass
     
@@ -699,7 +718,8 @@ class NetworkConfigManager:
         pass
     
     async def _remove_from_load_balancer(self, service_name: str) -> None:
-        """Remove from load balancer"""
+        """
+Remove from load balancer"""
         # Implementation would remove from load balancer
         pass
     
@@ -779,7 +799,8 @@ class NetworkConfigManager:
         return dict(self.service_registry)
     
     async def get_network_status(self) -> Dict[str, Any]:
-        """Get comprehensive network status"""
+        """
+Get comprehensive network status"""
         return {
             "topology": self.network_config.topology.value,
             "service_discovery": self.network_config.service_discovery.value,

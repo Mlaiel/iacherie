@@ -6,7 +6,7 @@ predictive analytics, performance benchmarking, and advanced reporting
 for content creators across all platforms.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Analytics
 ==========================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -55,6 +58,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Revenue metric types"""
+
     GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     PLATFORM_FEES = "platform_fees"
@@ -68,6 +72,7 @@ class MetricType(Enum):
 
 class ComparisonType(Enum):
     """Comparison analysis types"""
+
     PERIOD_OVER_PERIOD = "period_over_period"
     YEAR_OVER_YEAR = "year_over_year"
     PLATFORM_COMPARISON = "platform_comparison"
@@ -94,7 +99,8 @@ class RevenueMetrics:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight data structure"""
+    """
+Analytics insight data structure"""
     insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     insight_type: str = ""
@@ -143,7 +149,8 @@ class RevenueAnalytics:
         self.pca = PCA(n_components=0.95)  # Retain 95% variance
         
     async def initialize(self):
-        """Initialize the revenue analytics system"""
+        """
+Initialize the revenue analytics system"""
         try:
             # Initialize analytics engine
             await self.analytics_engine.initialize()
@@ -728,7 +735,8 @@ class RevenueAnalytics:
         return start_date, end_date
 
     def _calculate_moving_average(self, data: List[float], window: int) -> List[float]:
-        """Calculate moving average for data series"""
+        """
+Calculate moving average for data series"""
         if len(data) < window:
             return []
         
@@ -740,7 +748,8 @@ class RevenueAnalytics:
         return moving_averages
 
     async def cleanup(self):
-        """Cleanup analytics resources"""
+        """
+Cleanup analytics resources"""
         try:
             # Cleanup analytics engine
             await self.analytics_engine.cleanup()

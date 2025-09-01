@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import uuid
@@ -57,7 +58,9 @@ logger = logging.getLogger(__name__)
 
 
 class JobStatus(Enum):
-    """Job status enumeration"""
+    """
+Job status enumeration"""
+
     PENDING = "pending"
     QUEUED = "queued"
     RUNNING = "running"
@@ -69,6 +72,7 @@ class JobStatus(Enum):
 
 class JobPriority(Enum):
     """Job priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -77,7 +81,9 @@ class JobPriority(Enum):
 
 
 class ProcessingStrategy(Enum):
-    """Processing strategies"""
+    """
+Processing strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     DISTRIBUTED = "distributed"
@@ -141,7 +147,8 @@ class BatchJob:
             self.progress_percentage = (self.processed_items / self.total_items) * 100
     
     def add_error(self, error_message: str):
-        """Add error to log"""
+        """
+Add error to log"""
         timestamp = datetime.now(timezone.utc).isoformat()
         self.error_log.append(f"[{timestamp}] {error_message}")
         
@@ -157,7 +164,8 @@ class BatchJob:
 
 @dataclass
 class BatchConfiguration:
-    """Batch processing configuration"""
+    """
+Batch processing configuration"""
     max_concurrent_jobs: int = 5
     default_workers: int = 4
     enable_distributed: bool = False
@@ -184,7 +192,8 @@ class ProcessingResult:
 
 
 class MultimediaBatchProcessor:
-    """Enterprise multimedia batch processor"""
+    """
+Enterprise multimedia batch processor"""
     
     def __init__(self, config: BatchConfiguration):
         self.config = config
@@ -294,7 +303,8 @@ class MultimediaBatchProcessor:
         return None
         
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a job"""
+        """
+Cancel a job"""
         try:
             job = await self.get_job_status(job_id)
             if not job:
@@ -408,19 +418,23 @@ class MultimediaBatchProcessor:
         self.job_started_handlers.append(handler)
         
     async def add_job_completed_handler(self, handler: Callable):
-        """Add job completed event handler"""
+        """
+Add job completed event handler"""
         self.job_completed_handlers.append(handler)
         
     async def add_job_failed_handler(self, handler: Callable):
-        """Add job failed event handler"""
+        """
+Add job failed event handler"""
         self.job_failed_handlers.append(handler)
         
     async def add_progress_handler(self, handler: Callable):
-        """Add progress update handler"""
+        """
+Add progress update handler"""
         self.progress_handlers.append(handler)
         
     async def health_check(self) -> Dict[str, Any]:
-        """System health check"""
+        """
+System health check"""
         try:
             health = {
                 "status": "healthy",
@@ -490,7 +504,8 @@ class MultimediaBatchProcessor:
                 await self.job_queue.put(job.job_id)
                 
     async def _start_job(self, job_id: str):
-        """Start processing a job"""
+        """
+Start processing a job"""
         try:
             job = self.jobs[job_id]
             job.status = JobStatus.RUNNING
@@ -672,7 +687,8 @@ class MultimediaBatchProcessor:
         parameters: Dict[str, Any],
         output_directory: str
     ) -> ProcessingResult:
-        """Process a single file"""
+        """
+Process a single file"""
         start_time = datetime.now()
         result = ProcessingResult(
             item_id=str(uuid.uuid4()),
@@ -796,13 +812,15 @@ class MultimediaBatchProcessor:
         pass
         
     async def _load_job_from_database(self, job_id: str) -> Optional[BatchJob]:
-        """Load job from database"""
+        """
+Load job from database"""
         # This would implement job loading from database
         # For now, return None
         return None
         
     async def _register_default_functions(self):
-        """Register default processing functions"""
+        """
+Register default processing functions"""
         # Register basic image processing
         await self.register_processing_function("resize_image", self._resize_image)
         await self.register_processing_function("convert_format", self._convert_format)
@@ -816,14 +834,16 @@ class MultimediaBatchProcessor:
         shutil.copy2(input_file, output_file)
         
     async def _convert_format(self, input_file: str, output_file: str, **kwargs):
-        """Default format conversion function"""
+        """
+Default format conversion function"""
         # This would implement actual format conversion
         # For now, just copy the file
         import shutil
         shutil.copy2(input_file, output_file)
         
     async def _extract_metadata(self, input_file: str, output_file: str, **kwargs):
-        """Default metadata extraction function"""
+        """
+Default metadata extraction function"""
         # This would implement actual metadata extraction
         # For now, create a simple metadata file
         metadata = {"file": input_file, "extracted_at": datetime.now().isoformat()}

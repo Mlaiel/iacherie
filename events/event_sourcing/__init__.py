@@ -7,6 +7,7 @@ Version: 3.0.0
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
 """
+
 from typing import Dict, Any, List, Optional, Type, Union, Callable
 from datetime import datetime, timezone
 from dataclasses import dataclass, asdict
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DomainEvent:
-    """Base domain event for event sourcing"""
+    """
+Base domain event for event sourcing"""
     
     event_id: str
     aggregate_id: str
@@ -51,29 +53,34 @@ class DomainEvent:
 
 
 class EventStoreInterface(ABC):
-    """Interface for event store implementations"""
+    """
+Interface for event store implementations"""
     
     @abstractmethod
     async def save_events(self, aggregate_id: str, events: List[DomainEvent], 
                          expected_version: int) -> None:
-        """Save events to the store"""
+        """
+Save events to the store"""
         pass
     
     @abstractmethod
     async def get_events(self, aggregate_id: str, 
                         from_version: int = 0) -> List[DomainEvent]:
-        """Retrieve events for an aggregate"""
+        """
+Retrieve events for an aggregate"""
         pass
     
     @abstractmethod
     async def get_all_events(self, from_event_id: str = None, 
                            limit: int = 1000) -> List[DomainEvent]:
-        """Retrieve all events with optional pagination"""
+        """
+Retrieve all events with optional pagination"""
         pass
 
 
 class PostgreSQLEventStore(EventStoreInterface):
-    """PostgreSQL implementation of event store"""
+    """
+PostgreSQL implementation of event store"""
     
     def __init__(self, db_manager: DatabaseManager, 
                  encryption_manager: EncryptionManager):
@@ -82,7 +89,8 @@ class PostgreSQLEventStore(EventStoreInterface):
         self._ensure_tables_exist()
     
     def _ensure_tables_exist(self):
-        """Create event store tables if they don't exist"""
+        """
+Create event store tables if they don't exist"""
         create_events_table = """
         CREATE TABLE IF NOT EXISTS event_store (
             event_id UUID PRIMARY KEY,
@@ -112,7 +120,8 @@ class PostgreSQLEventStore(EventStoreInterface):
     
     async def save_events(self, aggregate_id: str, events: List[DomainEvent], 
                          expected_version: int) -> None:
-        """Save events with optimistic concurrency control"""
+        """
+Save events with optimistic concurrency control"""
         try:
             async with self.db.transaction():
                 # Check current version
@@ -270,21 +279,25 @@ class AggregateRoot(ABC):
         self.uncommitted_events: List[DomainEvent] = []
     
     def mark_events_as_committed(self):
-        """Mark all uncommitted events as committed"""
+        """
+Mark all uncommitted events as committed"""
         self.uncommitted_events.clear()
     
     def get_uncommitted_events(self) -> List[DomainEvent]:
-        """Get all uncommitted events"""
+        """
+Get all uncommitted events"""
         return self.uncommitted_events.copy()
     
     def apply_event(self, event: DomainEvent):
-        """Apply an event to the aggregate"""
+        """
+Apply an event to the aggregate"""
         self._apply_event(event)
         self.version = event.event_version
     
     def raise_event(self, event_type: str, event_data: Dict[str, Any], 
                    user_id: str = None, correlation_id: str = None):
-        """Raise a new domain event"""
+        """
+Raise a new domain event"""
         event = DomainEvent(
             event_id=str(uuid4()),
             aggregate_id=self.aggregate_id,
@@ -302,18 +315,21 @@ class AggregateRoot(ABC):
     
     @abstractmethod
     def _apply_event(self, event: DomainEvent):
-        """Apply event to aggregate state (to be implemented by subclasses)"""
+        """
+Apply event to aggregate state (to be implemented by subclasses)"""
         pass
 
 
 class EventRepository:
-    """Repository for loading and saving aggregates"""
+    """
+Repository for loading and saving aggregates"""
     
     def __init__(self, event_store: EventStoreInterface):
         self.event_store = event_store
     
     async def save(self, aggregate: AggregateRoot):
-        """Save aggregate by persisting uncommitted events"""
+        """
+Save aggregate by persisting uncommitted events"""
         uncommitted_events = aggregate.get_uncommitted_events()
         if not uncommitted_events:
             return
@@ -328,7 +344,8 @@ class EventRepository:
     
     async def load(self, aggregate_type: Type[AggregateRoot], 
                   aggregate_id: str) -> Optional[AggregateRoot]:
-        """Load aggregate by replaying events"""
+        """
+Load aggregate by replaying events"""
         events = await self.event_store.get_events(aggregate_id)
         if not events:
             return None
@@ -342,14 +359,16 @@ class EventRepository:
 
 
 class SnapshotStore:
-    """Store for aggregate snapshots to improve performance"""
+    """
+Store for aggregate snapshots to improve performance"""
     
     def __init__(self, db_manager: DatabaseManager):
         self.db = db_manager
         self._ensure_tables_exist()
     
     def _ensure_tables_exist(self):
-        """Create snapshot tables if they don't exist"""
+        """
+Create snapshot tables if they don't exist"""
         create_snapshots_table = """
         CREATE TABLE IF NOT EXISTS aggregate_snapshots (
             aggregate_id VARCHAR(255) PRIMARY KEY,
@@ -366,7 +385,8 @@ class SnapshotStore:
         asyncio.create_task(self.db.execute(create_snapshots_table))
     
     async def save_snapshot(self, aggregate: AggregateRoot):
-        """Save aggregate snapshot"""
+        """
+Save aggregate snapshot"""
         try:
             # Serialize aggregate state
             aggregate_data = {
@@ -435,17 +455,20 @@ class EventProjection(ABC):
     
     @abstractmethod
     async def handle(self, event: DomainEvent):
-        """Handle a domain event for projection"""
+        """
+Handle a domain event for projection"""
         pass
     
     @abstractmethod
     def can_handle(self, event_type: str) -> bool:
-        """Check if this projection can handle the event type"""
+        """
+Check if this projection can handle the event type"""
         pass
 
 
 class ProjectionManager:
-    """Manages event projections"""
+    """
+Manages event projections"""
     
     def __init__(self, event_store: EventStoreInterface):
         self.event_store = event_store
@@ -453,11 +476,13 @@ class ProjectionManager:
         self.last_processed_event_id: Optional[str] = None
     
     def register_projection(self, projection: EventProjection):
-        """Register a new projection"""
+        """
+Register a new projection"""
         self.projections.append(projection)
     
     async def rebuild_projections(self):
-        """Rebuild all projections from scratch"""
+        """
+Rebuild all projections from scratch"""
         logger.info("Starting projection rebuild...")
         
         events = await self.event_store.get_all_events()

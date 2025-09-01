@@ -11,6 +11,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ServiceConfiguration:
-    """Service configuration for load balancing"""
+    """
+Service configuration for load balancing"""
     name: str
     port: int
     instances: int
@@ -304,7 +306,8 @@ http {
 """
     
     def _get_haproxy_template(self) -> str:
-        """Get HAProxy configuration template"""
+        """
+Get HAProxy configuration template"""
         return """# HAProxy Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
@@ -401,7 +404,8 @@ backend api_backend
 """
     
     def _get_envoy_template(self) -> str:
-        """Get Envoy configuration template"""
+        """
+Get Envoy configuration template"""
         return """# Envoy Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
@@ -486,7 +490,8 @@ static_resources:
 """
     
     def _get_ssl_template(self) -> str:
-        """Get SSL configuration template"""
+        """
+Get SSL configuration template"""
         return """# SSL Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
@@ -519,7 +524,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
 """
     
     async def _load_schemas(self) -> None:
-        """Load JSON schemas for validation"""
+        """
+Load JSON schemas for validation"""
         # Create default schemas if they don't exist
         await self._create_default_schemas()
         
@@ -811,7 +817,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     async def save_configuration(self, config: LoadBalancerConfiguration) -> bool:
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         try:
             # Create backup of current configuration
             await self._backup_configuration()
@@ -1007,14 +1014,16 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         return self.current_config
     
     async def get_service_configuration(self, service_name: str) -> Optional[ServiceConfiguration]:
-        """Get configuration for a specific service"""
+        """
+Get configuration for a specific service"""
         if self.current_config and service_name in self.current_config.services:
             return self.current_config.services[service_name]
         return None
     
     async def update_service_configuration(self, service_name: str, 
                                          service_config: ServiceConfiguration) -> bool:
-        """Update configuration for a specific service"""
+        """
+Update configuration for a specific service"""
         if not self.current_config:
             return False
         
@@ -1022,7 +1031,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         return await self.save_configuration(self.current_config)
     
     async def shutdown(self) -> None:
-        """Shutdown configuration manager"""
+        """
+Shutdown configuration manager"""
         try:
             logger.info("Shutting down Configuration Manager...")
             

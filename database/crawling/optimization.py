@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,7 +35,9 @@ from ..core.exceptions import (
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""
+    """
+Types of performance metrics."""
+
     THROUGHPUT = "throughput"              # Items processed per time unit
     LATENCY = "latency"                    # Response time metrics
     ERROR_RATE = "error_rate"              # Error percentage
@@ -47,6 +50,7 @@ class MetricType(Enum):
 
 class OptimizationStrategy(Enum):
     """Performance optimization strategies."""
+
     SCALE_UP = "scale_up"                  # Increase resources per instance
     SCALE_OUT = "scale_out"                # Increase number of instances
     LOAD_BALANCE = "load_balance"          # Redistribute workload
@@ -59,6 +63,7 @@ class OptimizationStrategy(Enum):
 
 class ResourceType(Enum):
     """Types of system resources."""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -71,6 +76,7 @@ class ResourceType(Enum):
 
 class PerformanceStatus(Enum):
     """Performance status levels."""
+
     OPTIMAL = "optimal"          # 90-100% efficiency
     GOOD = "good"               # 75-89% efficiency
     ACCEPTABLE = "acceptable"    # 60-74% efficiency
@@ -92,7 +98,8 @@ class CrawlerOptimizationManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize crawler optimization manager."""
+        """
+Initialize crawler optimization manager."""
         super().__init__(db_session)
         self.performance_baselines = {}
         self.optimization_rules = {}
@@ -611,7 +618,8 @@ class CrawlerOptimizationManager(DatabaseManager):
         metric_type: MetricType,
         metric_value: float
     ) -> bool:
-        """Detect if a metric value represents a performance anomaly."""
+        """
+Detect if a metric value represents a performance anomaly."""
         # Get recent metrics for statistical analysis
         recent_metrics = await self.db_session.query(CrawlerPerformanceMetric).filter(
             and_(
@@ -641,7 +649,8 @@ class CrawlerOptimizationManager(DatabaseManager):
         metric_type: MetricType,
         metric_value: float
     ) -> None:
-        """Trigger optimization analysis for anomalous metrics."""
+        """
+Trigger optimization analysis for anomalous metrics."""
         # Implementation would trigger automated optimization analysis
         pass
     
@@ -650,7 +659,8 @@ class CrawlerOptimizationManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: List[Dict[str, Any]]
     ) -> bool:
-        """Validate optimization rule configuration."""
+        """
+Validate optimization rule configuration."""
         required_condition_fields = ["metric_type", "threshold", "comparison"]
         required_action_fields = ["action_type", "parameters"]
         
@@ -695,7 +705,8 @@ class CrawlerOptimizationManager(DatabaseManager):
         allocation_id: str,
         requirements: Dict[ResourceType, float]
     ) -> None:
-        """Apply resource allocation to system."""
+        """
+Apply resource allocation to system."""
         self.resource_allocations[allocation_id] = {
             "requirements": {rt.value: val for rt, val in requirements.items()},
             "allocated_at": datetime.utcnow()
@@ -776,7 +787,8 @@ class CrawlerOptimizationManager(DatabaseManager):
         crawler_id: str,
         duration_minutes: int
     ) -> Dict[str, Any]:
-        """Execute performance benchmark test."""
+        """
+Execute performance benchmark test."""
         # Simplified benchmark execution
         return {
             "throughput": 85.5,
@@ -942,7 +954,8 @@ class CrawlerOptimizationManager(DatabaseManager):
             return PerformanceStatus.CRITICAL.value
     
     async def _generate_performance_predictions(self) -> Dict[str, Any]:
-        """Generate predictive performance analysis."""
+        """
+Generate predictive performance analysis."""
         return {
             "predicted_load_increase": "15% over next 7 days",
             "scaling_recommendations": ["Add 2 crawler instances by day 5"],

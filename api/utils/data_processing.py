@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import pandas as pd
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Callable, Type
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class DataFormat(Enum):
-    """Data format enumeration"""
+    """
+Data format enumeration"""
+
     JSON = "json"
     CSV = "csv"
     PARQUET = "parquet"
@@ -39,6 +42,7 @@ class DataFormat(Enum):
 
 class ProcessingMode(Enum):
     """Data processing mode"""
+
     BATCH = "batch"
     STREAM = "stream"
     REAL_TIME = "real_time"
@@ -46,6 +50,7 @@ class ProcessingMode(Enum):
 
 class ValidationLevel(Enum):
     """Data validation level"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -66,14 +71,16 @@ class ProcessingStats:
     
     @property
     def success_rate(self) -> float:
-        """Calculate processing success rate"""
+        """
+Calculate processing success rate"""
         total = self.records_processed
         return (self.records_validated / total) if total > 0 else 0.0
 
 
 @dataclass
 class DataSchema:
-    """Data schema definition"""
+    """
+Data schema definition"""
     fields: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     required_fields: List[str] = field(default_factory=list)
     validation_rules: Dict[str, List[Callable]] = field(default_factory=dict)
@@ -81,7 +88,8 @@ class DataSchema:
     
     def add_field(self, name: str, field_type: Type, required: bool = False, 
                   validators: Optional[List[Callable]] = None):
-        """Add field definition to schema"""
+        """
+Add field definition to schema"""
         self.fields[name] = {
             'type': field_type,
             'required': required,
@@ -96,7 +104,8 @@ class DataSchema:
 
 
 class DataTransformer:
-    """Advanced data transformation engine"""
+    """
+Advanced data transformation engine"""
     
     def __init__(self):
         self.transformation_cache = {}
@@ -106,7 +115,8 @@ class DataTransformer:
         
     async def transform_dataset(self, data: pd.DataFrame, 
                               transformations: Dict[str, Any]) -> pd.DataFrame:
-        """Apply comprehensive data transformations"""
+        """
+Apply comprehensive data transformations"""
         try:
             transformed_data = data.copy()
             
@@ -247,7 +257,8 @@ class DataTransformer:
         return data
     
     def save_transformers(self, filepath: str):
-        """Save trained transformers to disk"""
+        """
+Save trained transformers to disk"""
         transformers = {
             'scalers': self.scalers,
             'encoders': self.encoders,
@@ -277,12 +288,14 @@ class DataValidator:
         self.custom_validators = {}
         
     def register_validator(self, name: str, validator_func: Callable):
-        """Register custom validator function"""
+        """
+Register custom validator function"""
         self.custom_validators[name] = validator_func
     
     async def validate_dataset(self, data: pd.DataFrame, schema: DataSchema, 
                              level: ValidationLevel = ValidationLevel.STANDARD) -> Dict[str, Any]:
-        """Validate dataset against schema"""
+        """
+Validate dataset against schema"""
         try:
             validation_result = {
                 'valid': True,
@@ -455,7 +468,8 @@ class DataNormalizer:
         self.normalization_stats = {}
         
     async def normalize_influencer_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Normalize influencer-specific data"""
+        """
+Normalize influencer-specific data"""
         normalized_data = data.copy()
         
         # Normalize follower counts (log transformation)
@@ -513,7 +527,8 @@ class DataNormalizer:
 
 
 class BatchProcessor:
-    """High-performance batch data processing"""
+    """
+High-performance batch data processing"""
     
     def __init__(self, batch_size: int = 1000, max_workers: int = 4):
         self.batch_size = batch_size
@@ -523,7 +538,8 @@ class BatchProcessor:
     async def process_large_dataset(self, data: pd.DataFrame, 
                                   processing_func: Callable,
                                   **kwargs) -> pd.DataFrame:
-        """Process large dataset in batches"""
+        """
+Process large dataset in batches"""
         try:
             num_batches = (len(data) + self.batch_size - 1) // self.batch_size
             processed_batches = []
@@ -585,7 +601,8 @@ class StreamProcessor:
         
     async def process_stream_record(self, record: Dict[str, Any], 
                                   processing_func: Callable) -> Dict[str, Any]:
-        """Process individual stream record"""
+        """
+Process individual stream record"""
         try:
             self.data_buffer.append(record)
             self.processing_stats.records_processed += 1
@@ -667,7 +684,8 @@ class StreamProcessor:
 
 
 class DataAggregator:
-    """Advanced data aggregation and summarization"""
+    """
+Advanced data aggregation and summarization"""
     
     def __init__(self):
         self.aggregation_functions = {
@@ -684,7 +702,8 @@ class DataAggregator:
     async def aggregate_influencer_metrics(self, data: pd.DataFrame, 
                                          group_by: List[str],
                                          metrics: List[str]) -> pd.DataFrame:
-        """Aggregate influencer metrics by specified dimensions"""
+        """
+Aggregate influencer metrics by specified dimensions"""
         try:
             aggregation_dict = {}
             
@@ -742,7 +761,8 @@ class DataExporter:
                         filepath: str, 
                         format_type: DataFormat,
                         **kwargs) -> Dict[str, Any]:
-        """Export data to specified format"""
+        """
+Export data to specified format"""
         try:
             export_path = Path(filepath)
             export_path.parent.mkdir(parents=True, exist_ok=True)
@@ -811,5 +831,6 @@ class DataExporter:
 
 
 class DataProcessingError(Exception):
-    """Custom exception for data processing errors"""
+    """
+Custom exception for data processing errors"""
     pass

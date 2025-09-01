@@ -2,7 +2,7 @@
 Enterprise-Grade Automated Legal Response and Takedown Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive automated DMCA takedown and legal response capabilities
 for the IA Influencer Agent platform, enabling creators to protect their intellectual property
@@ -28,6 +28,7 @@ Legal Frameworks Supported:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ import aiofiles
 import aiohttp
 
 class LegalFramework(Enum):
-    """Legal framework types"""
+    """
+Legal framework types"""
+
     DMCA_USA = "dmca_usa"
     COPYRIGHT_DIRECTIVE_EU = "copyright_directive_eu"
     COPYRIGHT_ACT_CANADA = "copyright_act_canada"
@@ -56,6 +59,7 @@ class LegalFramework(Enum):
 
 class TakedownStatus(Enum):
     """Takedown request status"""
+
     DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -68,6 +72,7 @@ class TakedownStatus(Enum):
 
 class ViolationType(Enum):
     """Content violation types"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -77,6 +82,7 @@ class ViolationType(Enum):
 
 class PlatformEndpoint(Enum):
     """Platform takedown endpoints"""
+
     YOUTUBE_COPYRIGHT = "youtube_copyright"
     INSTAGRAM_COPYRIGHT = "instagram_copyright"
     TIKTOK_COPYRIGHT = "tiktok_copyright"
@@ -99,7 +105,8 @@ class CopyrightOwner:
     
 @dataclass
 class InfringementEvidence:
-    """Copyright infringement evidence"""
+    """
+Copyright infringement evidence"""
     original_work_url: str
     original_work_title: str
     original_creation_date: datetime
@@ -116,7 +123,8 @@ class InfringementEvidence:
 
 @dataclass
 class InfringingContent:
-    """Infringing content information"""
+    """
+Infringing content information"""
     platform: str
     infringing_url: str
     content_title: str
@@ -134,7 +142,8 @@ class InfringingContent:
 
 @dataclass
 class TakedownRequest:
-    """DMCA takedown request"""
+    """
+DMCA takedown request"""
     request_id: str
     legal_framework: LegalFramework
     violation_type: ViolationType
@@ -157,7 +166,8 @@ class TakedownRequest:
 
 @dataclass
 class LegalTemplate:
-    """Legal document template"""
+    """
+Legal document template"""
     template_id: str
     name: str
     legal_framework: LegalFramework
@@ -300,8 +310,10 @@ class DMCATemplateGenerator:
         """
         
     def _get_dmca_youtube_template(self) -> str:
-        """YouTube-specific DMCA template"""
-        return """DMCA TAKEDOWN NOTICE - YOUTUBE COPYRIGHT INFRINGEMENT
+        """
+YouTube-specific DMCA template"""
+        return """
+DMCA TAKEDOWN NOTICE - YOUTUBE COPYRIGHT INFRINGEMENT
 
 To: YouTube Legal Department (copyright@youtube.com)
 Date: {{ current_date }}
@@ -343,8 +355,10 @@ Date: {{ current_date }}
         """
         
     def _get_dmca_instagram_template(self) -> str:
-        """Instagram-specific DMCA template"""
-        return """INTELLECTUAL PROPERTY INFRINGEMENT REPORT - INSTAGRAM
+        """
+Instagram-specific DMCA template"""
+        return """
+INTELLECTUAL PROPERTY INFRINGEMENT REPORT - INSTAGRAM
 
 To: Instagram Legal Team
 Platform: Instagram
@@ -384,8 +398,10 @@ Date: {{ current_date }}
         """
         
     def _get_dmca_tiktok_template(self) -> str:
-        """TikTok-specific DMCA template"""
-        return """COPYRIGHT INFRINGEMENT NOTIFICATION - TIKTOK
+        """
+TikTok-specific DMCA template"""
+        return """
+COPYRIGHT INFRINGEMENT NOTIFICATION - TIKTOK
 
 To: TikTok Legal Department
 Subject: Copyright Infringement Report
@@ -425,8 +441,10 @@ Date: {{ current_date }}
         """
         
     def _get_copyright_eu_template(self) -> str:
-        """EU Copyright Directive template"""
-        return """NOTICE OF COPYRIGHT INFRINGEMENT - EU COPYRIGHT DIRECTIVE
+        """
+EU Copyright Directive template"""
+        return """
+NOTICE OF COPYRIGHT INFRINGEMENT - EU COPYRIGHT DIRECTIVE
 
 To: Platform Legal Department
 Subject: Copyright Infringement Under EU Copyright Directive
@@ -472,8 +490,10 @@ Date: {{ current_date }}
         """
         
     def _get_counter_notice_template(self) -> str:
-        """Counter-notice response template"""
-        return """DMCA COUNTER-NOTIFICATION RESPONSE
+        """
+Counter-notice response template"""
+        return """
+DMCA COUNTER-NOTIFICATION RESPONSE
 
 To: {{ platform_name }} Legal Department
 Date: {{ current_date }}
@@ -513,7 +533,8 @@ Date: {{ current_date }}
         """
         
     async def generate_takedown_notice(self, request: TakedownRequest) -> str:
-        """Generate takedown notice from template"""
+        """
+Generate takedown notice from template"""
         try:
             # Select appropriate template
             template_name = self._get_template_name(request.legal_framework, request.infringing_content.platform)
@@ -559,7 +580,8 @@ Date: {{ current_date }}
             return 'dmca_standard.html'
 
 class PlatformSubmissionManager:
-    """Platform-specific takedown submission manager"""
+    """
+Platform-specific takedown submission manager"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -614,7 +636,8 @@ class PlatformSubmissionManager:
         
     async def _submit_via_email(self, request: TakedownRequest, notice_content: str, 
                               platform_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown notice via email"""
+        """
+Submit takedown notice via email"""
         try:
             # Configure email
             smtp_server = self.config.get('smtp_server', 'smtp.gmail.com')
@@ -776,7 +799,8 @@ class DMCALegalPipelineManager:
                                     infringing_content: InfringingContent,
                                     legal_framework: LegalFramework = LegalFramework.DMCA_USA,
                                     violation_type: ViolationType = ViolationType.COPYRIGHT_INFRINGEMENT) -> str:
-        """Create new DMCA takedown request"""
+        """
+Create new DMCA takedown request"""
         
         request_id = f"dmca_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{hashlib.md5(infringing_content.infringing_url.encode()).hexdigest()[:8]}"
         
@@ -866,7 +890,8 @@ class DMCALegalPipelineManager:
     async def update_request_status(self, request_id: str, status: TakedownStatus,
                                   platform_response: Optional[str] = None,
                                   tracking_number: Optional[str] = None):
-        """Update status of takedown request"""
+        """
+Update status of takedown request"""
         if request_id not in self.active_requests:
             raise ValueError(f"Request not found: {request_id}")
             
@@ -986,5 +1011,6 @@ class DMCALegalPipelineManager:
 dmca_legal_pipeline_manager = DMCALegalPipelineManager()
 
 def get_dmca_pipeline_manager() -> DMCALegalPipelineManager:
-    """Get global DMCA legal pipeline manager instance"""
+    """
+Get global DMCA legal pipeline manager instance"""
     return dmca_legal_pipeline_manager

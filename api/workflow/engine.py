@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Callable, Any, Set
 from enum import Enum
@@ -23,7 +24,9 @@ from ..utils.metrics import MetricsCollector
 
 
 class WorkflowEventType(Enum):
-    """Workflow event types for enterprise orchestration."""
+    """
+Workflow event types for enterprise orchestration."""
+
     WORKFLOW_STARTED = "workflow.started"
     WORKFLOW_COMPLETED = "workflow.completed"
     WORKFLOW_FAILED = "workflow.failed"
@@ -42,6 +45,7 @@ class WorkflowEventType(Enum):
 
 class WorkflowState(Enum):
     """Enterprise workflow states."""
+
     DRAFT = "draft"
     READY = "ready"
     RUNNING = "running"
@@ -56,6 +60,7 @@ class WorkflowState(Enum):
 
 class WorkflowPriority(Enum):
     """Workflow execution priorities."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -65,7 +70,8 @@ class WorkflowPriority(Enum):
 
 @dataclass
 class WorkflowCondition:
-    """Workflow execution condition."""
+    """
+Workflow execution condition."""
     name: str
     condition_type: str
     expression: str
@@ -75,14 +81,16 @@ class WorkflowCondition:
     dependencies: List[str] = field(default_factory=list)
     
     def evaluate(self, context: Dict[str, Any]) -> bool:
-        """Evaluate condition against context."""
+        """
+Evaluate condition against context."""
         # Placeholder for condition evaluation logic
         return True
 
 
 @dataclass  
 class WorkflowStage:
-    """Enhanced workflow stage definition."""
+    """
+Enhanced workflow stage definition."""
     id: str
     name: str
     stage_type: str
@@ -99,7 +107,8 @@ class WorkflowStage:
 
 @dataclass
 class WorkflowTemplate:
-    """Enterprise workflow template."""
+    """
+Enterprise workflow template."""
     id: str
     name: str
     version: str
@@ -133,16 +142,19 @@ class WorkflowExecutionContext:
         self.updated_at = datetime.utcnow()
     
     def set_variable(self, key: str, value: Any) -> None:
-        """Set runtime variable."""
+        """
+Set runtime variable."""
         self.variables[key] = value
         self.updated_at = datetime.utcnow()
     
     def get_variable(self, key: str, default: Any = None) -> Any:
-        """Get runtime variable."""
+        """
+Get runtime variable."""
         return self.variables.get(key, default)
     
     def set_stage_result(self, stage_id: str, result: Dict) -> None:
-        """Set result for completed stage."""
+        """
+Set result for completed stage."""
         self.stage_results[stage_id] = {
             "result": result,
             "completed_at": datetime.utcnow().isoformat(),
@@ -487,7 +499,8 @@ class EnterpriseWorkflowEngine:
         self.event_bus.subscribe(WorkflowEventType.ESCALATION_TRIGGERED, self._handle_escalation)
     
     async def register_template(self, template: WorkflowTemplate) -> str:
-        """Register a workflow template."""
+        """
+Register a workflow template."""
         template_id = template.id
         self.templates[template_id] = template
         

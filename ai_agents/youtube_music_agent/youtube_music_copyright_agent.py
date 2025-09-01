@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeMusicTrack:
-    """YouTube Music track information"""
+    """
+YouTube Music track information"""
     video_id: str
     title: str
     artist: str
@@ -55,7 +56,8 @@ class CopyrightClaim:
 
 @dataclass
 class YouTubeMusicAnalytics:
-    """YouTube Music analytics data"""
+    """
+YouTube Music analytics data"""
     video_id: str
     views_28_days: int
     watch_time_hours: int
@@ -69,7 +71,8 @@ class YouTubeMusicAnalytics:
 
 @dataclass
 class CopyrightMonitoringAlert:
-    """Copyright monitoring alert"""
+    """
+Copyright monitoring alert"""
     alert_id: str
     video_id: str
     alert_type: str  # new_upload, content_match, policy_violation
@@ -225,7 +228,8 @@ class YouTubeMusicCopyrightAgent:
     
     # Track and Video Operations
     async def search_music_videos(self, query: str, max_results: int = 25) -> List[YouTubeMusicTrack]:
-        """Search for music videos on YouTube"""
+        """
+Search for music videos on YouTube"""
         params = {
             'part': 'snippet',
             'q': query,
@@ -264,7 +268,8 @@ class YouTubeMusicCopyrightAgent:
         return []
     
     def _parse_youtube_track(self, search_item: Dict, details: Dict) -> YouTubeMusicTrack:
-        """Parse YouTube track data"""
+        """
+Parse YouTube track data"""
         video_id = search_item['id']['videoId']
         snippet = search_item['snippet']
         
@@ -309,7 +314,8 @@ class YouTubeMusicCopyrightAgent:
     
     # Copyright Monitoring
     async def upload_reference_file(self, file_path: str, metadata: Dict[str, Any]) -> str:
-        """Upload reference file to Content ID system"""
+        """
+Upload reference file to Content ID system"""
         # Mock upload process
         reference_id = f"ref_{hashlib.md5(file_path.encode()).hexdigest()[:8]}"
         

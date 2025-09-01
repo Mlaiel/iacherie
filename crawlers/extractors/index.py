@@ -43,6 +43,7 @@ Core Features:
 - Real-time extraction capabilities
 - Enterprise-grade security and protection
 """
+
 import asyncio
 import logging
 import threading
@@ -82,7 +83,9 @@ from .surveillance_extractors import (
 
 # Configuration et énumérations
 class ExtractionMode(Enum):
-    """Modes d'extraction disponibles"""
+    """
+Modes d'extraction disponibles"""
+
     SEQUENTIAL = "sequential"      # Extraction séquentielle
     PARALLEL = "parallel"          # Extraction parallèle
     ADAPTIVE = "adaptive"          # Mode adaptatif intelligent
@@ -92,6 +95,7 @@ class ExtractionMode(Enum):
 
 class PriorityLevel(Enum):
     """Niveaux de priorité pour les extractions"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -101,7 +105,8 @@ class PriorityLevel(Enum):
 
 @dataclass
 class ExtractionJob:
-    """Tâche d'extraction complète"""
+    """
+Tâche d'extraction complète"""
     job_id: str
     extraction_type: str
     priority: PriorityLevel
@@ -172,7 +177,8 @@ class ExtractionOrchestrator:
         self._start_worker_pool()
     
     def _initialize_extractors(self):
-        """Initialise tous les extracteurs disponibles"""
+        """
+Initialise tous les extracteurs disponibles"""
         try:
             # Extracteurs de contenu
             self._content_extractors = {
@@ -340,7 +346,8 @@ class ExtractionOrchestrator:
         return None
     
     async def _collect_metrics(self, job: ExtractionJob, worker_id: str):
-        """Collecte les métriques de performance"""
+        """
+Collecte les métriques de performance"""
         try:
             metrics = {
                 'job_id': job.job_id,
@@ -426,12 +433,14 @@ class ExtractionOrchestrator:
         return await self.wait_for_result(job_id)
     
     async def extract_platform_data(self, platform: str, request: ExtractionRequest) -> ExtractionResult:
-        """Extraction synchrone de données de plateforme"""
+        """
+Extraction synchrone de données de plateforme"""
         job_id = await self.submit_extraction(platform, request, PriorityLevel.NORMAL)
         return await self.wait_for_result(job_id)
     
     async def create_fingerprint(self, content_type: str, request: ExtractionRequest) -> ExtractionResult:
-        """Création synchrone d'empreinte digitale"""
+        """
+Création synchrone d'empreinte digitale"""
         job_id = await self.submit_extraction(f"{content_type}_fingerprint", request, PriorityLevel.HIGH)
         return await self.wait_for_result(job_id)
     
@@ -493,7 +502,8 @@ class ExtractionOrchestrator:
         }
     
     def list_capabilities(self) -> Dict[str, List[ExtractorCapability]]:
-        """Liste toutes les capacités disponibles"""
+        """
+Liste toutes les capacités disponibles"""
         capabilities = {
             'content_extraction': [
                 ExtractorCapability(
@@ -614,7 +624,8 @@ class ExtractionOrchestrator:
         }
     
     async def shutdown(self):
-        """Arrêt propre du système"""
+        """
+Arrêt propre du système"""
         self.logger.info("Shutting down extraction orchestrator...")
         
         self._is_running = False
@@ -641,7 +652,8 @@ class ExtractionInterface:
         self.orchestrator = orchestrator
     
     async def configure_apis(self, **api_configs):
-        """Configure toutes les APIs en une fois"""
+        """
+Configure toutes les APIs en une fois"""
         for platform, config in api_configs.items():
             self.orchestrator.configure_platform_extractor(platform, **config)
     
@@ -712,7 +724,8 @@ class ExtractionInterface:
         return await self.orchestrator.analyze_revenue(platform, request)
     
     async def find_collaborations(self, platform: str, creator_profile: Dict[str, Any]) -> ExtractionResult:
-        """Recherche de collaborations simplifiée"""
+        """
+Recherche de collaborations simplifiée"""
         request = ExtractionRequest(
             metadata={'creator_profile': creator_profile}
         )
@@ -720,7 +733,8 @@ class ExtractionInterface:
         return await self.orchestrator.find_collaborations(platform, request)
     
     async def monitor_content(self, platform: str, targets: List[str], **options) -> ExtractionResult:
-        """Surveillance de contenu simplifiée"""
+        """
+Surveillance de contenu simplifiée"""
         request = ExtractionRequest(
             metadata={'targets': targets, **options}
         )
@@ -733,19 +747,23 @@ extraction_interface = ExtractionInterface()
 
 # Fonctions utilitaires de haut niveau
 async def quick_extract(source: str, **options) -> ExtractionResult:
-    """Extraction rapide avec détection automatique"""
+    """
+Extraction rapide avec détection automatique"""
     return await extraction_interface.extract(source, **options)
 
 async def quick_fingerprint(source: str) -> ExtractionResult:
-    """Création rapide d'empreinte digitale"""
+    """
+Création rapide d'empreinte digitale"""
     return await extraction_interface.create_fingerprint(source)
 
 async def quick_revenue_analysis(platform: str, creator_id: str) -> ExtractionResult:
-    """Analyse rapide de revenus"""
+    """
+Analyse rapide de revenus"""
     return await extraction_interface.analyze_revenue(platform, creator_id)
 
 async def setup_apis(**api_configs):
-    """Configuration rapide des APIs"""
+    """
+Configuration rapide des APIs"""
     await extraction_interface.configure_apis(**api_configs)
 
 # Export des composants principaux

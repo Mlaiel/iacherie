@@ -18,7 +18,7 @@ Key Features:
 - Advanced metrics and observability
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use, copying, modification, or distribution of this code
@@ -27,6 +27,7 @@ Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Set, Union, Tuple
@@ -54,7 +55,9 @@ settings = get_settings()
 
 
 class EventPriority(int, Enum):
-    """Advanced event priority levels for intelligent routing"""
+    """
+Advanced event priority levels for intelligent routing"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -63,7 +66,9 @@ class EventPriority(int, Enum):
 
 
 class DeliveryMode(str, Enum):
-    """Event delivery guarantee modes"""
+    """
+Event delivery guarantee modes"""
+
     FIRE_AND_FORGET = "fire_and_forget"
     AT_LEAST_ONCE = "at_least_once"
     EXACTLY_ONCE = "exactly_once"
@@ -72,6 +77,7 @@ class DeliveryMode(str, Enum):
 
 class EventCategory(str, Enum):
     """Event categorization for AI routing"""
+
     CONTENT_PROCESSING = "content_processing"
     PROTECTION_VIOLATION = "protection_violation"
     REVENUE_TRACKING = "revenue_tracking"
@@ -84,6 +90,7 @@ class EventCategory(str, Enum):
 
 class CircuitBreakerState(str, Enum):
     """Circuit breaker states for fault tolerance"""
+
     CLOSED = "closed"
     OPEN = "open"
     HALF_OPEN = "half_open"
@@ -104,7 +111,8 @@ class EventTrace:
 
 @dataclass
 class CircuitBreaker:
-    """Circuit breaker for fault tolerance"""
+    """
+Circuit breaker for fault tolerance"""
     failure_threshold: int = 5
     recovery_timeout: float = 60.0
     state: CircuitBreakerState = CircuitBreakerState.CLOSED
@@ -115,7 +123,8 @@ class CircuitBreaker:
 
 @dataclass
 class EventSubscription:
-    """Advanced event subscription configuration with AI filtering"""
+    """
+Advanced event subscription configuration with AI filtering"""
     subscriber_id: str
     event_types: Set[str]
     event_categories: Set[EventCategory]
@@ -134,7 +143,8 @@ class EventSubscription:
 
 
 class AdvancedEventFilter(BaseModel):
-    """Advanced AI-powered event filtering configuration"""
+    """
+Advanced AI-powered event filtering configuration"""
     event_types: Optional[List[str]] = Field(default=None, description="Allowed event types")
     event_categories: Optional[List[EventCategory]] = Field(default=None, description="Allowed event categories")
     user_ids: Optional[List[str]] = Field(default=None, description="Allowed user IDs")
@@ -260,7 +270,8 @@ class EventStreamer:
         self.webhook_session: Optional[aiohttp.ClientSession] = None
         
     async def initialize(self) -> None:
-        """Initialize ultra-modern event streamer with AI and security components"""
+        """
+Initialize ultra-modern event streamer with AI and security components"""
         try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
@@ -532,7 +543,8 @@ class EventStreamer:
         return filtered
         
     async def _passes_advanced_filters(self, event: StreamEvent, subscription_id: str) -> bool:
-        """Check if event passes advanced subscription filters"""
+        """
+Check if event passes advanced subscription filters"""
         if subscription_id not in self.event_filters:
             return True
             
@@ -676,7 +688,8 @@ class EventStreamer:
             
     # Specialized Event Routers
     async def _route_content_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route content processing events with AI analysis"""
+        """
+Route content processing events with AI analysis"""
         try:
             # Extract content metadata
             content_data = event.data.get("content", {})
@@ -1348,15 +1361,18 @@ class EventStreamer:
         pass  # Implementation would depend on specific AI framework
         
     async def _update_threat_intelligence(self) -> None:
-        """Update threat intelligence from protection events"""
+        """
+Update threat intelligence from protection events"""
         pass  # Implementation would integrate with security systems
         
     async def _optimize_revenue_streams(self) -> None:
-        """Optimize revenue streams based on performance data"""
+        """
+Optimize revenue streams based on performance data"""
         pass  # Implementation would include revenue optimization algorithms
         
     async def _process_dead_letter_event(self, dead_event: DeadLetterEvent) -> None:
-        """Process events from dead letter queue"""
+        """
+Process events from dead letter queue"""
         try:
             # Log the failure for analysis
             logger.warning(f"Processing dead letter event: {dead_event.failure_reason}")
@@ -1511,7 +1527,8 @@ class EventStreamer:
                 self.metrics.delivery_success_rate = (success_count / total_attempts) * 100
                 
     async def _metrics_collector(self) -> None:
-        """Enhanced metrics collection with AI insights"""
+        """
+Enhanced metrics collection with AI insights"""
         last_event_count = 0
         last_timestamp = datetime.now(timezone.utc)
         

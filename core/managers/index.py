@@ -7,7 +7,7 @@ Responsibility: Centralized access point for all enterprise managers
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -15,6 +15,7 @@ LOGIQUE MÉTIER:
 Application startup → Manager initialization → Service registration → 
 Health monitoring → Lifecycle management → Graceful shutdown
 """
+
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 import logging
 import asyncio
@@ -77,7 +78,8 @@ class ManagerRegistry:
         self._register_manager_factories()
     
     def _register_manager_factories(self):
-        """Register all manager factory functions"""
+        """
+Register all manager factory functions"""
         self._manager_factories = {
             # Core infrastructure managers
             "database": get_database_manager,
@@ -315,23 +317,27 @@ class ManagerRegistry:
         return self._managers.get(manager_name)
     
     def register_startup_callback(self, manager_name: str, callback: callable):
-        """Register a callback to be executed when a manager starts"""
+        """
+Register a callback to be executed when a manager starts"""
         if manager_name not in self._startup_callbacks:
             self._startup_callbacks[manager_name] = []
         self._startup_callbacks[manager_name].append(callback)
     
     def register_shutdown_callback(self, manager_name: str, callback: callable):
-        """Register a callback to be executed when a manager shuts down"""
+        """
+Register a callback to be executed when a manager shuts down"""
         if manager_name not in self._shutdown_callbacks:
             self._shutdown_callbacks[manager_name] = []
         self._shutdown_callbacks[manager_name].append(callback)
     
     def get_all_managers(self) -> Dict[str, Any]:
-        """Get all registered managers"""
+        """
+Get all registered managers"""
         return self._managers.copy()
     
     def get_manager_health_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get health status of all managers"""
+        """
+Get health status of all managers"""
         return _MANAGER_HEALTH_STATUS.copy()
 
 
@@ -427,7 +433,8 @@ def register_shutdown_callback(manager_name: str, callback: callable):
 
 # Convenience functions for direct manager access
 def get_database_manager_instance():
-    """Get database manager instance"""
+    """
+Get database manager instance"""
     return get_manager("database") or get_database_manager()
 
 

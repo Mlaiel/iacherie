@@ -4,6 +4,7 @@ Enterprise-grade audit logging and security monitoring
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Monitoring Specialist + DevOps Engineer
 """
+
 import json
 import asyncio
 import aioredis
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Audit event types"""
+    """
+Audit event types"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
@@ -45,6 +48,7 @@ class AuditEventType(Enum):
 
 class AuditSeverity(Enum):
     """Audit event severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -54,6 +58,7 @@ class AuditSeverity(Enum):
 
 class ThreatLevel(Enum):
     """System threat levels"""
+
     GREEN = "green"      # Normal operations
     YELLOW = "yellow"    # Elevated monitoring
     ORANGE = "orange"    # High alert
@@ -62,6 +67,7 @@ class ThreatLevel(Enum):
 
 class IncidentStatus(Enum):
     """Security incident status"""
+
     OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
@@ -99,7 +105,8 @@ class AuditEvent:
 
 @dataclass
 class SecurityIncident:
-    """Security incident data structure"""
+    """
+Security incident data structure"""
     incident_id: str
     title: str
     description: str
@@ -117,7 +124,8 @@ class SecurityIncident:
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator data structure"""
+    """
+Threat indicator data structure"""
     indicator_id: str
     indicator_type: str  # ip, domain, hash, email, etc.
     value: str
@@ -131,7 +139,8 @@ class ThreatIndicator:
 
 
 class AuditLogger:
-    """Comprehensive audit logging system"""
+    """
+Comprehensive audit logging system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -146,7 +155,8 @@ class AuditLogger:
             self.file_logger = self._setup_file_logger()
     
     def _setup_file_logger(self) -> logging.Logger:
-        """Setup file-based audit logger"""
+        """
+Setup file-based audit logger"""
         audit_logger = logging.getLogger('security_audit')
         audit_logger.setLevel(logging.INFO)
         
@@ -395,14 +405,16 @@ class AuditLogger:
         return [event.to_dict() for event in events]
     
     async def _send_to_siem(self, event_data: Dict[str, Any]):
-        """Send event to SIEM system (placeholder for integration)"""
+        """
+Send event to SIEM system (placeholder for integration)"""
         # Implementation would depend on specific SIEM system
         # Examples: Splunk, ELK Stack, IBM QRadar, etc.
         pass
 
 
 class SecurityMonitor:
-    """Real-time security monitoring and threat detection"""
+    """
+Real-time security monitoring and threat detection"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -433,18 +445,21 @@ class SecurityMonitor:
         self._stop_monitoring = False
     
     def start_monitoring(self):
-        """Start background security monitoring"""
+        """
+Start background security monitoring"""
         if not self.monitoring_task:
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
     
     def stop_monitoring(self):
-        """Stop background security monitoring"""
+        """
+Stop background security monitoring"""
         self._stop_monitoring = True
         if self.monitoring_task:
             self.monitoring_task.cancel()
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while not self._stop_monitoring:
             try:
                 await self._collect_metrics()
@@ -591,21 +606,25 @@ class SecurityMonitor:
         pass
     
     def get_current_threat_level(self) -> str:
-        """Get current system threat level"""
+        """
+Get current system threat level"""
         return self.current_threat_level.value
     
     def get_active_sessions_count(self) -> int:
-        """Get number of active sessions"""
+        """
+Get number of active sessions"""
         return self.metrics['active_sessions']
     
     def get_recent_incidents(self, limit: int = 5) -> List[Dict[str, Any]]:
-        """Get recent security incidents"""
+        """
+Get recent security incidents"""
         incidents = list(self.active_incidents.values())
         incidents.sort(key=lambda x: x.created_at, reverse=True)
         return [asdict(incident, default=str) for incident in incidents[:limit]]
     
     def calculate_security_score(self) -> int:
-        """Calculate overall security score (0-100)"""
+        """
+Calculate overall security score (0-100)"""
         base_score = 100
         
         # Deduct points for active issues
@@ -625,16 +644,19 @@ class SecurityMonitor:
         return max(0, base_score)
     
     def get_failed_auth_attempts(self, hours: int = 24) -> int:
-        """Get failed authentication attempts in specified time period"""
+        """
+Get failed authentication attempts in specified time period"""
         return self.metrics['failed_auth_attempts']
     
     def get_blocked_attacks_count(self, hours: int = 24) -> int:
-        """Get blocked attacks count in specified time period"""
+        """
+Get blocked attacks count in specified time period"""
         return self.metrics['blocked_attacks']
 
 
 class ThreatDetection:
-    """Advanced threat detection using machine learning and pattern analysis"""
+    """
+Advanced threat detection using machine learning and pattern analysis"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -654,7 +676,8 @@ class ThreatDetection:
         self.user_baselines: Dict[str, Dict[str, Any]] = {}
     
     async def analyze_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Analyze event for threats"""
+        """
+Analyze event for threats"""
         
         analysis_result = {
             'is_suspicious': False,
@@ -701,7 +724,8 @@ class ThreatDetection:
         return analysis_result
     
     def _detect_patterns(self, event: AuditEvent) -> List[str]:
-        """Detect known threat patterns"""
+        """
+Detect known threat patterns"""
         threats = []
         
         # Check event details for patterns
@@ -800,7 +824,8 @@ class ThreatDetection:
         }
     
     def _generate_recommendations(self, threat_indicators: List[str]) -> List[str]:
-        """Generate security recommendations based on threats"""
+        """
+Generate security recommendations based on threats"""
         recommendations = []
         
         if any('brute_force' in indicator for indicator in threat_indicators):
@@ -837,7 +862,8 @@ class IncidentResponse:
         self.automated_responses = self.config.get('automated_responses', True)
     
     async def handle_incident(self, incident: SecurityIncident) -> Dict[str, Any]:
-        """Handle security incident"""
+        """
+Handle security incident"""
         
         response_actions = []
         
@@ -861,7 +887,8 @@ class IncidentResponse:
         }
     
     async def _automated_containment(self, incident: SecurityIncident) -> List[str]:
-        """Perform automated containment actions"""
+        """
+Perform automated containment actions"""
         actions = []
         
         # IP blocking for network-based threats
@@ -907,7 +934,8 @@ class IncidentResponse:
 
 
 class ComplianceTracker:
-    """Compliance tracking and reporting"""
+    """
+Compliance tracking and reporting"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -915,7 +943,8 @@ class ComplianceTracker:
         self.reporting_schedule = self.config.get('reporting_schedule', 'monthly')
     
     async def track_compliance_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Track compliance aspects of audit event"""
+        """
+Track compliance aspects of audit event"""
         
         compliance_data = {
             'event_id': event.event_id,
@@ -946,7 +975,8 @@ class ComplianceTracker:
         return compliance_data
     
     def _is_gdpr_relevant(self, event: AuditEvent) -> bool:
-        """Check if event is relevant to GDPR"""
+        """
+Check if event is relevant to GDPR"""
         gdpr_event_types = [
             AuditEventType.DATA_ACCESS,
             AuditEventType.DATA_MODIFICATION,
@@ -957,7 +987,8 @@ class ComplianceTracker:
         return event.event_type in gdpr_event_types
     
     def _is_sox_relevant(self, event: AuditEvent) -> bool:
-        """Check if event is relevant to SOX"""
+        """
+Check if event is relevant to SOX"""
         sox_event_types = [
             AuditEventType.PAYMENT_TRANSACTION,
             AuditEventType.CONFIGURATION_CHANGE,
@@ -967,11 +998,13 @@ class ComplianceTracker:
         return event.event_type in sox_event_types
     
     def _is_pci_relevant(self, event: AuditEvent) -> bool:
-        """Check if event is relevant to PCI-DSS"""
+        """
+Check if event is relevant to PCI-DSS"""
         return event.event_type == AuditEventType.PAYMENT_TRANSACTION
     
     def _get_gdpr_requirements(self, event: AuditEvent) -> List[str]:
-        """Get relevant GDPR requirements"""
+        """
+Get relevant GDPR requirements"""
         requirements = []
         
         if event.event_type == AuditEventType.DATA_ACCESS:

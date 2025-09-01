@@ -5,7 +5,7 @@ Central index for the comprehensive monetization ecosystem, providing easy acces
 to all revenue management, analytics, and optimization components.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -30,6 +30,7 @@ Module Structure:
 
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 
@@ -152,7 +153,7 @@ class MonetizationIndex:
             "version": "1.0.0",
             "author": "Fahed Mlaiel",
             "contact": "mlaiel@live.de",
-            "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+            "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
             "components": {
                 "revenue_engine": {
                     "description": "Core revenue tracking and optimization",
@@ -273,6 +274,7 @@ class MonetizationIndex:
             ],
             "basic_usage": {
                 "initialize": """
+
 from backend.business.monetization import MonetizationSystem
 
 # Initialize the complete monetization system
@@ -404,7 +406,7 @@ analytics = await monetization.financial_analytics.generate_report(
     def get_support_info(cls) -> Dict[str, Any]:
         """Get support and contact information"""
         return {
-            "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+            "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
             "author": "Fahed Mlaiel",
             "contact": "mlaiel@live.de",
             "license": "Proprietary - Commercial licensing required",
@@ -458,9 +460,9 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 logger.info("💰 Monetization Module Index loaded successfully")
 logger.info(f"📊 {len(__all__)} main components available")
-logger.info("🔒 © 2025 Fahed Mlaiel - All rights reserved")
+logger.info("🔒 (c) 2025 Fahed Mlaiel - All rights reserved")

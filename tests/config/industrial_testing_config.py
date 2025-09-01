@@ -10,7 +10,9 @@ from enum import Enum
 
 
 class TestingLevel(Enum):
-    """Testing levels for industrial testing."""
+    """
+Testing levels for industrial testing."""
+
     UNIT = "unit"
     INTEGRATION = "integration"
     SYSTEM = "system"
@@ -20,6 +22,7 @@ class TestingLevel(Enum):
 
 class TestingScope(Enum):
     """Scope of testing."""
+
     FAST = "fast"           # < 30 seconds
     MEDIUM = "medium"       # 30s - 5 minutes
     SLOW = "slow"          # 5 - 30 minutes
@@ -240,12 +243,14 @@ def get_industrial_test_config() -> IndustrialTestConfig:
 
 
 def get_test_suite_config(suite_name: str) -> Dict[str, Any]:
-    """Get configuration for a specific test suite."""
+    """
+Get configuration for a specific test suite."""
     return INDUSTRIAL_TEST_SUITES.get(suite_name, {})
 
 
 def get_pytest_command(command_type: str) -> str:
-    """Get pytest command for specific testing type."""
+    """
+Get pytest command for specific testing type."""
     return PYTEST_COMMANDS.get(command_type, "python -m pytest")
 
 
@@ -256,7 +261,8 @@ def setup_industrial_testing_environment():
 
 
 def validate_industrial_test_results(results: Dict[str, Any], suite_name: str) -> bool:
-    """Validate industrial test results against requirements."""
+    """
+Validate industrial test results against requirements."""
     suite_config = get_test_suite_config(suite_name)
     requirements = suite_config.get("requirements", {})
     

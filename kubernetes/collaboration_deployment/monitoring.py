@@ -18,7 +18,7 @@ Features:
 - Automated performance optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -26,6 +26,7 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected."""
+    """
+Types of metrics collected."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -53,6 +56,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -62,6 +66,7 @@ class AlertSeverity(Enum):
 
 class MonitoringScope(Enum):
     """Monitoring scope levels."""
+
     SERVICE = "service"
     INSTANCE = "instance"
     CLUSTER = "cluster"
@@ -72,6 +77,7 @@ class MonitoringScope(Enum):
 
 class AlertChannel(Enum):
     """Alert notification channels."""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -96,7 +102,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""
+    """
+Alert rule configuration."""
     name: str
     metric: str
     condition: str  # e.g., "> 100", "< 0.95"
@@ -127,7 +134,8 @@ class PerformanceMetrics:
 
 @dataclass
 class CreatorAnalytics:
-    """Creator-specific analytics."""
+    """
+Creator-specific analytics."""
     creator_id: str
     total_content_processed: int
     collaboration_sessions: int
@@ -153,7 +161,8 @@ class CollaborationMonitoringManager:
     - Predictive analytics and forecasting
     """
     def __init__(self, config: Any):
-        """Initialize the collaboration monitoring manager."""
+        """
+Initialize the collaboration monitoring manager."""
         self.config = config
         
         # Monitoring infrastructure
@@ -644,6 +653,7 @@ logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
     """Types of metrics collected."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -652,6 +662,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -661,6 +672,7 @@ class AlertSeverity(Enum):
 
 class MonitoringComponent(Enum):
     """Monitoring system components."""
+
     PROMETHEUS = "prometheus"
     GRAFANA = "grafana"
     JAEGER = "jaeger"
@@ -724,7 +736,8 @@ class CollaborationMonitoringService:
     """
     
     def __init__(self, deployment_config):
-        """Initialize monitoring service."""
+        """
+Initialize monitoring service."""
         self.deployment_config = deployment_config
         self.metrics_config: Dict[str, MetricConfig] = {}
         self.alert_rules: Dict[str, AlertRule] = {}

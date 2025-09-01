@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Callable, Any, Union
 from enum import Enum
@@ -23,7 +24,9 @@ from ..utils.metrics import MetricsCollector
 
 
 class TaskType(Enum):
-    """Task types for workflow scheduling."""
+    """
+Task types for workflow scheduling."""
+
     ONE_TIME = "one_time"
     RECURRING = "recurring"
     CONDITIONAL = "conditional"
@@ -34,6 +37,7 @@ class TaskType(Enum):
 
 class TaskStatus(Enum):
     """Task execution status."""
+
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -46,6 +50,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -55,7 +60,8 @@ class TaskPriority(Enum):
 
 @dataclass
 class ScheduleConfiguration:
-    """Configuration for task scheduling."""
+    """
+Configuration for task scheduling."""
     task_type: TaskType
     cron_expression: Optional[str] = None
     start_time: Optional[datetime] = None
@@ -87,7 +93,8 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecutionContext:
-    """Context for task execution."""
+    """
+Context for task execution."""
     task_id: str
     execution_id: str
     scheduled_time: datetime
@@ -99,7 +106,8 @@ class TaskExecutionContext:
 
 
 class TaskHandler:
-    """Base class for task handlers."""
+    """
+Base class for task handlers."""
     
     def __init__(self, handler_type: str):
         self.handler_type = handler_type
@@ -327,7 +335,8 @@ class TaskHandler:
 
 
 class ContentAnalysisTaskHandler(TaskHandler):
-    """Handler for content analysis tasks."""
+    """
+Handler for content analysis tasks."""
     
     def __init__(self):
         super().__init__("content_analysis")

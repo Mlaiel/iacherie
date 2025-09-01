@@ -9,6 +9,7 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
+
 import numpy as np
 import asyncio
 from typing import Dict, List, Optional, Tuple, Union, Any, NamedTuple
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class MatchScore(NamedTuple):
-    """Container for match scoring results."""
+    """
+Container for match scoring results."""
     overall_score: float
     feature_scores: Dict[str, float]
     confidence: float
@@ -37,7 +39,8 @@ class MatchScore(NamedTuple):
 
 @dataclass
 class MatchCandidate:
-    """Represents a candidate match in the database."""
+    """
+Represents a candidate match in the database."""
     
     fingerprint_id: str
     fingerprint_hash: str
@@ -50,7 +53,8 @@ class MatchCandidate:
 
 @dataclass 
 class MatchQuery:
-    """Query parameters for fingerprint matching."""
+    """
+Query parameters for fingerprint matching."""
     
     target_fingerprint: str
     target_features: Optional[np.ndarray] = None
@@ -80,7 +84,8 @@ class SpectralMatcher:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the spectral matcher."""
+        """
+Initialize the spectral matcher."""
         self.config = config or self._default_config()
         self.executor = ThreadPoolExecutor(max_workers=self.config['max_workers'])
         self.scaler = StandardScaler()
@@ -250,7 +255,8 @@ class TemporalMatcher:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the temporal matcher."""
+        """
+Initialize the temporal matcher."""
         self.config = config or self._default_config()
         self.executor = ThreadPoolExecutor(max_workers=self.config['max_workers'])
         
@@ -370,7 +376,8 @@ class FingerprintMatchingEngine:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the matching engine."""
+        """
+Initialize the matching engine."""
         self.config = config or self._default_config()
         
         # Initialize sub-components
@@ -574,7 +581,8 @@ class FingerprintMatchingEngine:
         )
     
     def _calculate_overall_score(self, algorithm_scores: Dict[str, float]) -> float:
-        """Calculate weighted overall score from individual algorithms."""
+        """
+Calculate weighted overall score from individual algorithms."""
         if not algorithm_scores:
             return 0.0
         
@@ -604,7 +612,8 @@ class FingerprintMatchingEngine:
         algorithm_scores: Dict[str, float], 
         algorithm_data: Dict[str, Dict]
     ) -> float:
-        """Calculate confidence in the match result."""
+        """
+Calculate confidence in the match result."""
         if not algorithm_scores:
             return 0.0
         
@@ -623,7 +632,8 @@ class FingerprintMatchingEngine:
         return max(0.0, min(1.0, confidence))
     
     def _determine_match_quality(self, overall_score: float, confidence: float) -> str:
-        """Determine match quality category."""
+        """
+Determine match quality category."""
         combined_metric = (overall_score + confidence) / 2
         
         if combined_metric >= 0.9:
@@ -671,7 +681,8 @@ class FingerprintMatchingEngine:
         results: List[MatchResult], 
         execution_time: float
     ):
-        """Update performance statistics."""
+        """
+Update performance statistics."""
         if not self.config['performance_monitoring']:
             return
         
@@ -688,7 +699,8 @@ class FingerprintMatchingEngine:
                 metric_list[:] = metric_list[-max_metrics:]
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get current performance statistics."""
+        """
+Get current performance statistics."""
         stats = dict(self.match_statistics)
         
         if self.performance_metrics['execution_time']:
@@ -698,7 +710,8 @@ class FingerprintMatchingEngine:
         return stats
     
     async def cleanup(self):
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         try:
             if hasattr(self.spectral_matcher, 'cleanup'):
                 self.spectral_matcher.cleanup()

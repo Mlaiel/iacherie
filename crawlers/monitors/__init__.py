@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Union, Set
@@ -56,7 +57,9 @@ from ..config.monitoring_config import MonitoringConfig
 logger = logging.getLogger(__name__)
 
 class MonitoringLevel(Enum):
-    """Monitoring intensity levels."""
+    """
+Monitoring intensity levels."""
+
     MINIMAL = "minimal"
     STANDARD = "standard" 
     ENHANCED = "enhanced"
@@ -65,6 +68,7 @@ class MonitoringLevel(Enum):
 
 class MonitoringPriority(Enum):
     """Monitoring priority levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -72,7 +76,9 @@ class MonitoringPriority(Enum):
     EMERGENCY = 5
 
 class MonitoringScope(Enum):
-    """Monitoring scope definitions."""
+    """
+Monitoring scope definitions."""
+
     CONTENT_PROTECTION = "content_protection"
     REVENUE_TRACKING = "revenue_tracking"
     PLATFORM_SURVEILLANCE = "platform_surveillance"
@@ -133,7 +139,8 @@ class MonitoringOrchestrator:
         self._setup_event_processing()
         
     def _initialize_monitoring_engines(self) -> None:
-        """Initialize all monitoring engines."""
+        """
+Initialize all monitoring engines."""
         try:
             # Core monitoring engines
             self.monitoring_engines.update({
@@ -227,7 +234,8 @@ class MonitoringOrchestrator:
         engine: MonitorEngine, 
         targets: List[MonitoringTarget]
     ) -> None:
-        """Start monitoring for specific engine."""
+        """
+Start monitoring for specific engine."""
         try:
             await engine.initialize()
             await engine.start_monitoring(targets)
@@ -288,7 +296,8 @@ class MonitoringOrchestrator:
         self.event_handlers[event_type].append(handler)
     
     async def _handle_security_threat(self, event: MonitoringEvent) -> None:
-        """Handle security threat events."""
+        """
+Handle security threat events."""
         threat_level = event.data.get("threat_level", ThreatLevel.LOW)
         
         if threat_level in [ThreatLevel.HIGH, ThreatLevel.CRITICAL]:
@@ -336,32 +345,38 @@ class MonitoringOrchestrator:
         pass
     
     async def _trigger_revenue_investigation(self, event: MonitoringEvent) -> None:
-        """Trigger revenue anomaly investigation."""
+        """
+Trigger revenue anomaly investigation."""
         # Implement revenue investigation logic
         pass
     
     async def _trigger_content_protection(self, event: MonitoringEvent) -> None:
-        """Trigger content protection measures."""
+        """
+Trigger content protection measures."""
         # Implement content protection logic
         pass
     
     async def _trigger_performance_optimization(self, event: MonitoringEvent) -> None:
-        """Trigger performance optimization actions."""
+        """
+Trigger performance optimization actions."""
         # Implement performance optimization logic
         pass
     
     async def _trigger_compliance_response(self, event: MonitoringEvent) -> None:
-        """Trigger compliance violation response."""
+        """
+Trigger compliance violation response."""
         # Implement compliance response logic
         pass
     
     async def _log_security_event(self, event: MonitoringEvent) -> None:
-        """Log security event with enhanced details."""
+        """
+Log security event with enhanced details."""
         # Implement security logging
         pass
     
     async def _send_notifications(self, event: MonitoringEvent) -> None:
-        """Send notifications for critical events."""
+        """
+Send notifications for critical events."""
         await self.notification_manager.send_alert(
             event_type=event.event_type,
             priority=event.priority,
@@ -370,7 +385,8 @@ class MonitoringOrchestrator:
         )
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring status."""
+        """
+Get comprehensive monitoring status."""
         status = {
             "active_engines": len([e for e in self.active_monitors.values() if e]),
             "total_engines": len(self.monitoring_engines),
@@ -421,12 +437,14 @@ def get_monitoring_orchestrator() -> MonitoringOrchestrator:
     return monitoring_orchestrator
 
 async def start_global_monitoring(targets: List[MonitoringTarget]) -> bool:
-    """Start global monitoring system."""
+    """
+Start global monitoring system."""
     orchestrator = get_monitoring_orchestrator()
     return await orchestrator.start_monitoring(targets)
 
 async def stop_global_monitoring() -> bool:
-    """Stop global monitoring system."""
+    """
+Stop global monitoring system."""
     global monitoring_orchestrator
     if monitoring_orchestrator:
         result = await monitoring_orchestrator.stop_monitoring()

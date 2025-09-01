@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScalingStrategy(Enum):
-    """Auto-scaling strategies"""
+    """
+Auto-scaling strategies"""
+
     REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     HYBRID = "hybrid"
@@ -55,6 +58,7 @@ class ScalingStrategy(Enum):
 
 class ResourceType(Enum):
     """Resource types for scaling"""
+
     CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
@@ -67,6 +71,7 @@ class ResourceType(Enum):
 
 class WorkloadType(Enum):
     """AI workload types"""
+
     TRAINING = "training"
     INFERENCE = "inference"
     BATCH_PROCESSING = "batch_processing"
@@ -81,6 +86,7 @@ class WorkloadType(Enum):
 
 class ScalingDirection(Enum):
     """Scaling directions"""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
@@ -90,6 +96,7 @@ class ScalingDirection(Enum):
 
 class PriorityLevel(Enum):
     """Workload priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"

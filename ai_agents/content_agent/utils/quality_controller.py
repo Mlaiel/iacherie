@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -89,7 +90,9 @@ settings = get_settings()
 
 
 class QualityDimension(str, Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     ACCURACY = "accuracy"
     CLARITY = "clarity"
     COMPLETENESS = "completeness"
@@ -106,6 +109,7 @@ class QualityDimension(str, Enum):
 
 class QualityLevel(str, Enum):
     """Quality level standards"""
+
     DRAFT = "draft"
     REVIEW_READY = "review_ready"
     PROFESSIONAL = "professional"
@@ -115,6 +119,7 @@ class QualityLevel(str, Enum):
 
 class ContentFormat(str, Enum):
     """Content format types for quality assessment"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -161,7 +166,8 @@ class QualityMetrics:
 
 @dataclass
 class QualityCriteria:
-    """Quality assessment criteria"""
+    """
+Quality assessment criteria"""
     target_quality_level: QualityLevel = QualityLevel.PROFESSIONAL
     required_dimensions: List[QualityDimension] = field(default_factory=list)
     minimum_scores: Dict[str, float] = field(default_factory=dict)
@@ -172,7 +178,8 @@ class QualityCriteria:
 
 
 class QualityController:
-    """Enterprise content quality management and validation system"""
+    """
+Enterprise content quality management and validation system"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -1334,7 +1341,8 @@ class QualityController:
             return QualityLevel.DRAFT.value
     
     def _serialize_quality_metrics(self, metrics: QualityMetrics) -> Dict[str, Any]:
-        """Serialize quality metrics for API response"""
+        """
+Serialize quality metrics for API response"""
         
         return {
             "overall_score": round(metrics.overall_score, 3),

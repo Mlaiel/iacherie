@@ -5,15 +5,18 @@ Minimal recommendation system module for the Ainflue AI platform.
 This module provides basic content and creator recommendation functionality.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from enum import Enum
 
 
 class RecommendationType(Enum):
-    """Types of recommendations supported."""
+    """
+Types of recommendations supported."""
+
     CONTENT = "content"
     CREATOR = "creator" 
     COLLABORATION = "collaboration"
@@ -36,7 +39,8 @@ class RecommendationRequest:
 
 @dataclass 
 class RecommendationResult:
-    """Result of a recommendation request."""
+    """
+Result of a recommendation request."""
     request_id: str
     recommendations: List[Dict[str, Any]]
     confidence_scores: List[float]
@@ -48,19 +52,22 @@ class RecommendationResult:
 
 
 class BaseRecommendationEngine:
-    """Base class for recommendation engines."""
+    """
+Base class for recommendation engines."""
     
     def __init__(self, name: str):
         self.name = name
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the recommendation engine."""
+        """
+Initialize the recommendation engine."""
         self.is_initialized = True
         return True
     
     async def get_recommendations(self, request: RecommendationRequest) -> RecommendationResult:
-        """Get recommendations for a request."""
+        """
+Get recommendations for a request."""
         # Minimal implementation
         return RecommendationResult(
             request_id=request.user_id,

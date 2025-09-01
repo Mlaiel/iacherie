@@ -7,6 +7,7 @@ Handles video uploads, user data, analytics, and creator tools.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokVideo:
-    """TikTok video information"""
+    """
+TikTok video information"""
     video_id: str
     title: str
     description: str
@@ -47,7 +49,8 @@ class TikTokVideo:
 
 @dataclass
 class TikTokUser:
-    """TikTok user information"""
+    """
+TikTok user information"""
     open_id: str
     union_id: str
     username: str
@@ -65,7 +68,8 @@ class TikTokUser:
 
 @dataclass
 class TikTokAnalytics:
-    """TikTok analytics data"""
+    """
+TikTok analytics data"""
     date_range: Dict[str, str]  # {"start": "20240101", "end": "20240131"}
     profile_views: int = 0
     video_views: int = 0
@@ -91,7 +95,8 @@ class TikTokCreatorAPI:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -105,7 +110,8 @@ class TikTokCreatorAPI:
         data: Optional[Dict[str, Any]] = None,
         files: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("tiktok", endpoint)

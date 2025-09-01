@@ -2,8 +2,9 @@
 Advanced financial reporting and business intelligence for monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from .tax_calculator import TaxCalculator
 
 
 class ReportType(Enum):
-    """Types of financial reports"""
+    """
+Types of financial reports"""
+
     REVENUE_SUMMARY = "revenue_summary"
     PROFIT_LOSS = "profit_loss"
     CASH_FLOW = "cash_flow"
@@ -35,6 +38,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     PDF = "pdf"
     EXCEL = "excel"
@@ -43,6 +47,7 @@ class ReportFormat(Enum):
 
 class ReportPeriod(Enum):
     """Standard reporting periods"""
+
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUAL = "semi_annual"
@@ -73,7 +78,8 @@ class ReportConfiguration:
 
 @dataclass
 class FinancialMetrics:
-    """Key financial metrics"""
+    """
+Key financial metrics"""
     total_revenue: Decimal
     total_expenses: Decimal
     gross_profit: Decimal
@@ -85,7 +91,8 @@ class FinancialMetrics:
     tax_liability: Decimal
     
     def to_dict(self) -> Dict[str, float]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "total_revenue": float(self.total_revenue),
             "total_expenses": float(self.total_expenses),
@@ -115,7 +122,8 @@ class FinancialReport:
     compliance_notes: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary"""
+        """
+Convert report to dictionary"""
         return {
             "report_id": self.report_id,
             "user_id": self.user_id,
@@ -151,7 +159,8 @@ class FinancialReporter:
         config: ReportConfiguration,
         session: AsyncSession
     ) -> FinancialReport:
-        """Generate comprehensive financial report"""
+        """
+Generate comprehensive financial report"""
         try:
             # Validate configuration
             if not config.validate():
@@ -654,14 +663,16 @@ class FinancialReporter:
         return start_date, end_date
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""
+        """
+Generate unique report ID"""
         import uuid
         return str(uuid.uuid4())
     
     # Additional helper methods would be implemented here...
     
     async def _get_payment_processing_fees(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
-        """Get payment processing fees"""
+        """
+Get payment processing fees"""
         return Decimal("0")  # Placeholder
     
     async def _get_marketing_expenses(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
@@ -673,7 +684,8 @@ class FinancialReporter:
         return await self._get_total_revenue(user_id, start_date, end_date, session)  # Simplified
     
     async def _get_total_withdrawals(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
-        """Get total withdrawals"""
+        """
+Get total withdrawals"""
         result = await session.execute(
             select(func.sum(WithdrawalRequest.amount)).where(
                 WithdrawalRequest.user_id == user_id,
@@ -694,15 +706,18 @@ class FinancialReporter:
         return {}  # Placeholder
     
     async def _calculate_quarterly_kpis(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Dict[str, Any]:
-        """Calculate quarterly KPIs"""
+        """
+Calculate quarterly KPIs"""
         return {}  # Placeholder
     
     async def _generate_executive_summary(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Dict[str, Any]:
-        """Generate executive summary"""
+        """
+Generate executive summary"""
         return {}  # Placeholder
     
     async def _generate_tax_summary_report(self, user_id: int, period_start: datetime, period_end: datetime, config: ReportConfiguration, session: AsyncSession) -> FinancialReport:
-        """Generate tax summary report"""
+        """
+Generate tax summary report"""
         # Placeholder implementation
         financial_metrics = FinancialMetrics(
             total_revenue=Decimal("0"),
@@ -733,19 +748,22 @@ class FinancialReporter:
         return await self._generate_quarterly_report(user_id, period_start, period_end, config, session)
     
     async def _generate_comprehensive_report(self, user_id: int, period_start: datetime, period_end: datetime, config: ReportConfiguration, session: AsyncSession) -> FinancialReport:
-        """Generate comprehensive report"""
+        """
+Generate comprehensive report"""
         return await self._generate_revenue_summary(user_id, period_start, period_end, config, session)
 
 
 class ReportGenerator:
-    """High-level report generation interface"""
+    """
+High-level report generation interface"""
     
     def __init__(self, financial_reporter: FinancialReporter):
         self.financial_reporter = financial_reporter
         self.logger = logging.getLogger(__name__)
     
     async def generate_monthly_reports(self, user_id: int, session: AsyncSession) -> List[FinancialReport]:
-        """Generate all monthly reports for user"""
+        """
+Generate all monthly reports for user"""
         reports = []
         
         # Current month
@@ -782,7 +800,8 @@ class ReportGenerator:
         return reports
     
     async def schedule_automated_reporting(self) -> None:
-        """Schedule automated report generation"""
+        """
+Schedule automated report generation"""
         while True:
             try:
                 # This would generate reports for all users

@@ -8,6 +8,7 @@ Enterprise security scanning engine for multi-layer vulnerability detection.
 Integrates SAST, DAST, dependency scanning, and container security analysis.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 import asyncio
 import logging
@@ -24,7 +25,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ScanType(Enum):
-    """Security scan type enumeration"""
+    """
+Security scan type enumeration"""
+
     STATIC_ANALYSIS = "static_analysis"
     DEPENDENCY_SCAN = "dependency_scan"
     CONTAINER_SCAN = "container_scan"
@@ -34,6 +37,7 @@ class ScanType(Enum):
 
 class VulnerabilitySeverity(Enum):
     """Vulnerability severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -57,7 +61,8 @@ class Vulnerability:
 
 @dataclass
 class SecurityScanConfig:
-    """Security scan configuration"""
+    """
+Security scan configuration"""
     scan_types: List[ScanType]
     severity_threshold: VulnerabilitySeverity = VulnerabilitySeverity.MEDIUM
     fail_on_critical: bool = True
@@ -68,7 +73,8 @@ class SecurityScanConfig:
 
 @dataclass
 class SecurityScanResult:
-    """Security scan result"""
+    """
+Security scan result"""
     scan_id: str
     scan_timestamp: datetime
     config: SecurityScanConfig
@@ -85,7 +91,8 @@ class SecurityScanEngine:
     """Enterprise security scanning engine"""
     
     def __init__(self):
-        """Initialize security scan engine"""
+        """
+Initialize security scan engine"""
         self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.scan_history: List[SecurityScanResult] = []
@@ -590,7 +597,8 @@ class SecurityScanEngine:
         ]
     
     def _calculate_security_score(self, vulnerabilities: List[Vulnerability]) -> float:
-        """Calculate overall security score (0-100)"""
+        """
+Calculate overall security score (0-100)"""
         if not vulnerabilities:
             return 100.0
         
@@ -612,7 +620,8 @@ class SecurityScanEngine:
         return max(0.0, 100.0 - penalty)
     
     def _determine_risk_level(self, vulnerabilities: List[Vulnerability]) -> str:
-        """Determine overall risk level"""
+        """
+Determine overall risk level"""
         critical_count = sum(1 for v in vulnerabilities if v.severity == VulnerabilitySeverity.CRITICAL)
         high_count = sum(1 for v in vulnerabilities if v.severity == VulnerabilitySeverity.HIGH)
         
@@ -739,7 +748,8 @@ class SecurityScanEngine:
         cwd: Optional[str] = None,
         timeout: int = 1800
     ) -> subprocess.CompletedProcess:
-        """Run command asynchronously"""
+        """
+Run command asynchronously"""
         try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
@@ -770,7 +780,8 @@ class SecurityScanEngine:
         return self.scan_history[-limit:]
     
     def get_security_trends(self) -> Dict[str, Any]:
-        """Get security trends over time"""
+        """
+Get security trends over time"""
         if not self.scan_history:
             return {}
         

@@ -12,13 +12,14 @@ Team Specialties:
 - Social Media Engineer: Platform-specific optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This proprietary distribution technology and platform integration systems
 belong exclusively to Fahed Mlaiel. Any unauthorized use, reverse engineering,
 or competitive implementation will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -79,7 +80,9 @@ settings = get_settings()
 
 
 class DistributionStrategy(str, Enum):
-    """Content distribution strategies"""
+    """
+Content distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"      # Post to all platforms at once
     SEQUENTIAL = "sequential"          # Post with optimized delays
     PLATFORM_OPTIMIZED = "platform_optimized"  # Customize for each platform
@@ -90,6 +93,7 @@ class DistributionStrategy(str, Enum):
 
 class PlatformType(str, Enum):
     """Supported platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -103,6 +107,7 @@ class PlatformType(str, Enum):
 
 class ContentFormat(str, Enum):
     """Content format types"""
+
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
@@ -116,6 +121,7 @@ class ContentFormat(str, Enum):
 
 class OptimizationLevel(str, Enum):
     """Content optimization levels"""
+
     BASIC = "basic"           # Format conversion only
     STANDARD = "standard"     # Format + basic optimization
     ADVANCED = "advanced"     # AI-powered optimization
@@ -124,6 +130,7 @@ class OptimizationLevel(str, Enum):
 
 class DistributionStatus(str, Enum):
     """Distribution job status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     OPTIMIZING = "optimizing"
@@ -842,15 +849,18 @@ class MultiPlatformDistributor:
         pass
 
     async def _get_video_duration(self, file_path: str) -> float:
-        """Get video duration in seconds"""
+        """
+Get video duration in seconds"""
         pass
 
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes"""
+        """
+Get file size in bytes"""
         pass
 
     async def _get_video_resolution(self, file_path: str) -> Tuple[int, int]:
-        """Get video resolution (width, height)"""
+        """
+Get video resolution (width, height)"""
         pass
 
     # Continue with remaining distribution methods...
@@ -870,7 +880,9 @@ settings = get_settings()
 
 
 class DistributionStrategy(str, Enum):
-    """Content distribution strategies"""
+    """
+Content distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"      # All platforms at once
     SEQUENTIAL = "sequential"          # One after another
     OPTIMIZED_TIMING = "optimized_timing"  # Best time per platform
@@ -881,6 +893,7 @@ class DistributionStrategy(str, Enum):
 
 class PlatformPriority(str, Enum):
     """Platform priority levels"""
+
     PRIMARY = "primary"      # Main platform
     SECONDARY = "secondary"  # Important but not main
     TERTIARY = "tertiary"    # Nice to have
@@ -889,6 +902,7 @@ class PlatformPriority(str, Enum):
 
 class ContentOptimization(str, Enum):
     """Content optimization types"""
+
     FORMAT_ADAPTATION = "format_adaptation"     # Resize, crop, convert
     PLATFORM_SPECIFIC = "platform_specific"    # Platform requirements
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"  # Maximize engagement
@@ -1563,57 +1577,68 @@ class PlatformManager:
         pass
 
     async def _generate_video_thumbnail(self, video_path: str, thumbnail_reqs: Dict[str, Any]) -> str:
-        """Generate video thumbnail"""
+        """
+Generate video thumbnail"""
         # Implementation would extract frame and optimize
         pass
 
     async def _resize_image(self, image_path: str, aspect_ratio: str, image_reqs: Dict[str, Any]) -> str:
-        """Resize image to specific aspect ratio"""
+        """
+Resize image to specific aspect ratio"""
         # Implementation would use PIL
         pass
 
     async def _generate_instagram_hashtags(self, content: ContentModel) -> List[str]:
-        """Generate Instagram-optimized hashtags"""
+        """
+Generate Instagram-optimized hashtags"""
         # Implementation would use AI to generate relevant hashtags
         pass
 
     async def _generate_tiktok_hashtags(self, content: ContentModel) -> List[str]:
-        """Generate TikTok-optimized hashtags"""
+        """
+Generate TikTok-optimized hashtags"""
         # Implementation would generate trending hashtags
         pass
 
     async def _generate_twitter_hashtags(self, content: ContentModel) -> List[str]:
-        """Generate Twitter-optimized hashtags"""
+        """
+Generate Twitter-optimized hashtags"""
         # Implementation would generate concise hashtags
         pass
 
     async def _generate_engagement_question(self, content: ContentModel) -> str:
-        """Generate engagement question"""
+        """
+Generate engagement question"""
         # Implementation would use AI to generate questions
         pass
 
     async def _generate_seo_title(self, content: ContentModel, platform: str) -> str:
-        """Generate SEO-optimized title"""
+        """
+Generate SEO-optimized title"""
         # Implementation would optimize for search
         pass
 
     async def _generate_seo_description(self, content: ContentModel, platform: str) -> str:
-        """Generate SEO-optimized description"""
+        """
+Generate SEO-optimized description"""
         # Implementation would optimize for search
         pass
 
     async def _generate_seo_tags(self, content: ContentModel) -> List[str]:
-        """Generate SEO tags"""
+        """
+Generate SEO tags"""
         # Implementation would generate search-optimized tags
         pass
 
     async def _generate_alt_text(self, content: ContentModel) -> str:
-        """Generate alt text for images"""
+        """
+Generate alt text for images"""
         # Implementation would use AI image recognition
         pass
 
     async def _generate_video_captions(self, content: ContentModel) -> str:
-        """Generate video captions"""
+        """
+Generate video captions"""
         # Implementation would use speech recognition
         pass
 
@@ -1802,7 +1827,8 @@ class DistributionPipeline:
         pass
 
     def _calculate_platform_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate performance score for platform metrics"""
+        """
+Calculate performance score for platform metrics"""
         # Implementation would calculate weighted score
         views = metrics.get("views", 0)
         engagement = metrics.get("engagement", 0)

@@ -5,7 +5,7 @@ Comprehensive audit logging and compliance tracking system for digital rights
 management with advanced forensics and regulatory compliance features.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import json
@@ -40,7 +41,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class EventType(str, Enum):
-    """Types of auditable events."""
+    """
+Types of auditable events."""
+
     ACCESS_GRANTED = "access_granted"
     ACCESS_DENIED = "access_denied"
     LICENSE_ISSUED = "license_issued"
@@ -67,6 +70,7 @@ class EventType(str, Enum):
 
 class EventSeverity(str, Enum):
     """Event severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -75,6 +79,7 @@ class EventSeverity(str, Enum):
 
 class EventCategory(str, Enum):
     """Event categories for compliance."""
+
     SECURITY = "security"
     COMPLIANCE = "compliance"
     BUSINESS = "business"
@@ -84,6 +89,7 @@ class EventCategory(str, Enum):
 
 class ComplianceStandard(str, Enum):
     """Compliance standards."""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -132,10 +138,12 @@ class ComplianceReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class AuditTrail:
-    """Advanced audit trail and compliance logging system."""
+    """
+Advanced audit trail and compliance logging system."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize audit trail system."""
+        """
+Initialize audit trail system."""
         self.config = config
         self.events: List[AuditEvent] = []
         self.retention_policy = config.get("retention_policy", {})
@@ -231,7 +239,8 @@ class AuditTrail:
         event_data: Optional[Dict[str, Any]] = None,
         compliance_tags: Optional[Set[ComplianceStandard]] = None
     ) -> str:
-        """Log an audit event."""
+        """
+Log an audit event."""
         try:
             # Generate event ID
             event_id = str(uuid.uuid4())
@@ -312,7 +321,8 @@ class AuditTrail:
         }
     
     async def _encrypt_event(self, event: AuditEvent) -> None:
-        """Encrypt sensitive event data."""
+        """
+Encrypt sensitive event data."""
         try:
             if self.encryption_enabled and hasattr(self, 'cipher'):
                 # Encrypt event data
@@ -701,7 +711,8 @@ class AuditTrail:
         return Fernet.generate_key()
     
     async def _send_security_notification(self, event: AuditEvent) -> None:
-        """Send security notification for critical events."""
+        """
+Send security notification for critical events."""
         # This would integrate with notification system
         logger.critical(f"Security alert: {event.event_type.value} - {event.event_data}")
     
@@ -936,7 +947,8 @@ class AuditTrail:
             return 'terms_violations'
     
     async def _persist_security_metrics(self):
-        """Persist security metrics to storage"""
+        """
+Persist security metrics to storage"""
         try:
             if hasattr(self, 'storage_client'):
                 await self.storage_client.store_metrics('security', self.security_metrics)

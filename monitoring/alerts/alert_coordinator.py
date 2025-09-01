@@ -7,6 +7,7 @@ comprehensive intelligent alert management system for the Ainflue platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class SystemHealthStatus(Enum):
-    """Overall system health status"""
+    """
+Overall system health status"""
+
     HEALTHY = "healthy"
     WARNING = "warning" 
     CRITICAL = "critical"
@@ -60,7 +63,8 @@ class AlertCoordinator:
     """
     
     def __init__(self):
-        """Initialize the unified alert coordinator"""
+        """
+Initialize the unified alert coordinator"""
         # Initialize core alert manager
         self.alert_manager = IntelligentAlertManager()
         

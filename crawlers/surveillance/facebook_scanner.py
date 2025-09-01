@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Sophisticated Facebook scanning system for comprehensive content monitoring.
 Provides advanced analysis of Facebook posts, pages, groups, and user activities.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FacebookPost:
-    """Facebook post data."""
+    """
+Facebook post data."""
     post_id: str
     user_id: str
     user_name: str
@@ -178,7 +180,8 @@ class FacebookScanner:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Facebook scanner."""
+        """
+Initialize Facebook scanner."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -903,7 +906,8 @@ class FacebookScanner:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_scanner_status(self) -> Dict[str, Any]:
-        """Get current scanner status."""
+        """
+Get current scanner status."""
         return {
             'scanning_active': self._scanning_active,
             'monitored_targets': {
@@ -931,7 +935,8 @@ class FacebookScanner:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
+        """
+Get recent violations."""
         recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
@@ -955,7 +960,8 @@ class FacebookScanner:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Facebook scanner."""
+        """
+Shutdown the Facebook scanner."""
         try:
             self._logger.info("Shutting down Facebook scanner...")
             

@@ -11,6 +11,7 @@ Features:
 - Cross-cluster networking and service mesh
 - Disaster recovery and backup strategies
 """
+
 import asyncio
 import logging
 import json
@@ -30,9 +31,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize cluster metrics collector with infrastructure monitoring"""
+        """
+Initialize cluster metrics collector with infrastructure monitoring"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.cluster_metrics = ['node_count', 'pod_count', 'service_count', 'ingress_count']
         self.infrastructure_metrics = ['cpu_usage', 'memory_usage', 'storage_usage', 'network_io']
@@ -46,6 +49,7 @@ from .kubernetes_manager import KubernetesManager
 
 class ClusterType(Enum):
     """Cluster deployment types."""
+
     PRODUCTION = "production"
     STAGING = "staging"
     DEVELOPMENT = "development"
@@ -55,6 +59,7 @@ class ClusterType(Enum):
 
 class ClusterStatus(Enum):
     """Cluster status."""
+
     CREATING = "creating"
     ACTIVE = "active"
     UPDATING = "updating"
@@ -65,6 +70,7 @@ class ClusterStatus(Enum):
 
 class NodeRole(Enum):
     """Node roles in cluster."""
+
     MASTER = "master"
     WORKER = "worker"
     ETCD = "etcd"
@@ -88,7 +94,8 @@ class ClusterNode:
 
 @dataclass
 class ClusterConfig:
-    """Cluster configuration."""
+    """
+Cluster configuration."""
     name: str
     cluster_type: ClusterType
     version: str
@@ -102,7 +109,8 @@ class ClusterConfig:
 
 @dataclass
 class ClusterInfo:
-    """Cluster information."""
+    """
+Cluster information."""
     name: str
     cluster_type: ClusterType
     status: ClusterStatus
@@ -685,7 +693,8 @@ class ClusterManager(BaseDeploymentManager):
         return new_version > current_version
 
     async def _update_control_plane(self, cluster_name: str, new_version: str) -> bool:
-        """Update cluster control plane."""
+        """
+Update cluster control plane."""
         self.logger.info(f"Updating control plane for cluster '{cluster_name}' to version {new_version}")
         await asyncio.sleep(2)  # Simulate update time
         return True
@@ -769,7 +778,8 @@ class ClusterManager(BaseDeploymentManager):
         return clusters
 
     async def _start_cluster_monitoring(self, cluster_name: str) -> bool:
-        """Start monitoring for cluster."""
+        """
+Start monitoring for cluster."""
         try:
             # Create Kubernetes manager for the cluster
             k8s_manager = KubernetesManager(

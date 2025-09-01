@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import logging
 import asyncio
 import json
@@ -40,7 +41,9 @@ from .database import DatabaseStorageProvider
 logger = logging.getLogger(__name__)
 
 class CollaborationStatus(Enum):
-    """Collaboration status levels."""
+    """
+Collaboration status levels."""
+
     PROPOSED = "proposed"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -84,7 +87,8 @@ class CollaborationRecommendation:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking."""
+    """
+Project milestone tracking."""
     id: str
     collaboration_id: str
     title: str
@@ -105,18 +109,21 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
     """
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
-        """Initialize database collaboration storage provider."""
+        """
+Initialize database collaboration storage provider."""
         super().__init__(provider_id, config)
         self.ai_models = {}
         
     async def connect(self) -> None:
-        """Connect to database and initialize collaboration tables."""
+        """
+Connect to database and initialize collaboration tables."""
         await super().connect()
         await self._create_collaboration_tables()
         await self._initialize_ai_models()
         
     async def _create_collaboration_tables(self) -> None:
-        """Create collaboration-specific database tables."""
+        """
+Create collaboration-specific database tables."""
         collaboration_table_sql = """
         CREATE TABLE IF NOT EXISTS collaboration_records (
             id VARCHAR(36) PRIMARY KEY,
@@ -580,7 +587,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         )
     
     def _calculate_content_type_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate content type overlap score."""
+        """
+Calculate content type overlap score."""
         if not profile_a.content_types or not profile_b.content_types:
             return 0.0
         
@@ -590,7 +598,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return len(overlap) / len(total) if total else 0.0
     
     def _calculate_platform_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate platform overlap score."""
+        """
+Calculate platform overlap score."""
         if not profile_a.platforms or not profile_b.platforms:
             return 0.0
         
@@ -598,7 +607,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return len(overlap) / max(len(profile_a.platforms), len(profile_b.platforms))
     
     def _calculate_audience_size_compatibility(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate audience size compatibility."""
+        """
+Calculate audience size compatibility."""
         # Get total followers for each profile
         total_a = sum(profile_a.follower_counts.values()) if profile_a.follower_counts else 0
         total_b = sum(profile_b.follower_counts.values()) if profile_b.follower_counts else 0
@@ -615,7 +625,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return ratio * 0.8 + size_bonus * 0.2
     
     def _calculate_engagement_compatibility(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate engagement rate compatibility."""
+        """
+Calculate engagement rate compatibility."""
         if not profile_a.engagement_rates or not profile_b.engagement_rates:
             return 0.0
         
@@ -630,7 +641,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return min(1.0, similarity * 0.7 + quality_bonus * 0.3)
     
     def _calculate_genre_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate genre overlap score."""
+        """
+Calculate genre overlap score."""
         if not profile_a.genres or not profile_b.genres:
             return 0.0
         
@@ -640,7 +652,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return len(overlap) / len(union) if union else 0.0
     
     def _calculate_language_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate language overlap score."""
+        """
+Calculate language overlap score."""
         if not profile_a.languages or not profile_b.languages:
             return 0.0
         
@@ -648,7 +661,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return len(overlap) / max(len(profile_a.languages), len(profile_b.languages))
     
     def _calculate_location_proximity(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate location proximity score."""
+        """
+Calculate location proximity score."""
         if not profile_a.location or not profile_b.location:
             return 0.5  # Neutral score for unknown locations
         
@@ -667,7 +681,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return 0.3  # Different locations
     
     def _calculate_skill_complementarity(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate skill complementarity score."""
+        """
+Calculate skill complementarity score."""
         if not profile_a.skills or not profile_b.skills:
             return 0.0
         
@@ -694,7 +709,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return complementarity_score / total_checks if total_checks > 0 else 0.0
     
     async def _analyze_audience_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Analyze audience overlap between collaborators."""
+        """
+Analyze audience overlap between collaborators."""
         # In a real implementation, this would analyze actual audience data
         # For now, use platform and genre overlap as proxy
         
@@ -706,7 +722,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return platform_overlap * 0.5 + genre_overlap * 0.3 + language_overlap * 0.2
     
     async def _match_complementary_skills(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> List[str]:
-        """Find complementary skills between collaborators."""
+        """
+Find complementary skills between collaborators."""
         if not profile_a.skills or not profile_b.skills:
             return []
         
@@ -762,7 +779,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         collaborator_profile: CollaboratorProfile,
         compatibility_score: float
     ) -> List[str]:
-        """Generate reasons for collaboration recommendation."""
+        """
+Generate reasons for collaboration recommendation."""
         reasons = []
         
         if compatibility_score > 0.8:

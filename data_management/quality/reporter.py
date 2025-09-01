@@ -15,6 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Quality data aggregation → Analytics processing → Report generation → 
 Trend analysis → Performance insights → Business intelligence → Strategic recommendations
 """
+
 import logging
 import json
 import pandas as pd
@@ -46,7 +47,9 @@ from ..models.quality_models import QualityAssessment, QualityMetrics, QualityTr
 
 
 class ReportType(Enum):
-    """Types of quality reports"""
+    """
+Types of quality reports"""
+
     SUMMARY = "summary"
     DETAILED = "detailed"
     TRENDS = "trends"
@@ -58,6 +61,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     PDF = "pdf"
     HTML = "html"
@@ -68,6 +72,7 @@ class ReportFormat(Enum):
 
 class TimeRange(Enum):
     """Time range options for reports"""
+
     LAST_24H = "24h"
     LAST_7D = "7d"
     LAST_30D = "30d"
@@ -94,7 +99,8 @@ class ReportRequest:
 
 @dataclass
 class QualityReport:
-    """Quality report structure"""
+    """
+Quality report structure"""
     report_id: str
     report_type: ReportType
     generated_at: datetime
@@ -283,7 +289,8 @@ class QualityReporter:
         content_type: Optional[str],
         filters: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Fetch quality assessment data from database."""
+        """
+Fetch quality assessment data from database."""
         try:
             # Build query
             query = session.query(QualityAssessment).filter(
@@ -401,7 +408,8 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate detailed quality report."""
+        """
+Generate detailed quality report."""
         summary_report = await self._generate_summary_report(quality_data, request)
         
         # Add detailed analysis
@@ -428,7 +436,8 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate quality trends report."""
+        """
+Generate quality trends report."""
         if not quality_data:
             return {'trends': {}, 'summary': {}, 'recommendations': []}
         
@@ -526,7 +535,8 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate performance-focused quality report."""
+        """
+Generate performance-focused quality report."""
         processing_times = [item['processing_time'] for item in quality_data if item['processing_time']]
         
         if not processing_times:
@@ -582,7 +592,8 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate business intelligence quality report."""
+        """
+Generate business intelligence quality report."""
         # Business metrics
         bi_metrics = {
             'quality_impact': self._analyze_quality_business_impact(quality_data),
@@ -625,7 +636,8 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate executive summary quality report."""
+        """
+Generate executive summary quality report."""
         # High-level metrics
         total_assessments = len(quality_data)
         avg_score = np.mean([item['overall_score'] for item in quality_data]) if quality_data else 0
@@ -677,7 +689,8 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> List[str]:
-        """Generate visualizations for the report."""
+        """
+Generate visualizations for the report."""
         if not HAS_VIZ_LIBS or not quality_data:
             return []
         
@@ -761,12 +774,14 @@ class QualityReporter:
         }
     
     def _analyze_quality_dimensions(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze quality dimensions in detail."""
+        """
+Analyze quality dimensions in detail."""
         # Implementation would analyze each quality dimension
         return {'dimension_analysis': 'detailed_analysis_here'}
     
     def _analyze_by_content_type(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze quality metrics by content type."""
+        """
+Analyze quality metrics by content type."""
         type_analysis = {}
         
         for content_type in set(item['content_type'] for item in quality_data):
@@ -782,7 +797,8 @@ class QualityReporter:
         return type_analysis
     
     def _analyze_temporal_patterns(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze temporal patterns in quality data."""
+        """
+Analyze temporal patterns in quality data."""
         if not quality_data:
             return {}
         
@@ -804,7 +820,8 @@ class QualityReporter:
         }
     
     def _analyze_user_patterns(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user-specific quality patterns."""
+        """
+Analyze user-specific quality patterns."""
         user_analysis = defaultdict(list)
         
         for item in quality_data:
@@ -821,7 +838,8 @@ class QualityReporter:
         }
     
     def _analyze_correlations(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze correlations between different metrics."""
+        """
+Analyze correlations between different metrics."""
         # Implementation would analyze correlations between dimensions, content types, etc.
         return {'correlations': 'correlation_analysis_here'}
     
@@ -830,7 +848,8 @@ class QualityReporter:
         summary: Dict[str, Any],
         quality_data: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate recommendations based on summary analysis."""
+        """
+Generate recommendations based on summary analysis."""
         recommendations = []
         
         avg_score = summary.get('average_quality_score', 0)
@@ -885,7 +904,8 @@ class QualityReporter:
         }
     
     def _calculate_volume_trend(self, sorted_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate assessment volume trend."""
+        """
+Calculate assessment volume trend."""
         # Group by day
         daily_counts = defaultdict(int)
         for item in sorted_data:
@@ -918,7 +938,8 @@ class QualityReporter:
         timeframe: Optional[timedelta] = None,
         session: Optional[AsyncSession] = None
     ) -> Dict[str, Any]:
-        """Generate quality profile for a specific user."""
+        """
+Generate quality profile for a specific user."""
         if timeframe is None:
             timeframe = timedelta(days=30)
         
@@ -991,7 +1012,8 @@ class QualityReporter:
             return 'significant_decline'
     
     def _identify_user_strengths(self, quality_data: List[Dict[str, Any]]) -> List[str]:
-        """Identify user's quality strengths."""
+        """
+Identify user's quality strengths."""
         strengths = []
         
         # Analyze dimension scores

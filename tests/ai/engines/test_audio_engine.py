@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Audio Engine Testing Module
+"""
+Audio Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all audio processing engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -61,11 +64,13 @@ from . import (
 )
 
 class TestAudioProcessingEngine:
-    """Comprehensive tests for AudioProcessingEngine"""
+    """
+Comprehensive tests for AudioProcessingEngine"""
     
     @pytest.fixture
     def audio_engine(self):
-        """Create and initialize audio processing engine"""
+        """
+Create and initialize audio processing engine"""
         # Utilise un mock qui hérite des vraies classes mais avec des implémentations de test
         from ai.engines.audio_engine import AudioProcessingEngine, AudioFormat, AudioQuality
         from ai.engines import EngineStatus, EngineMetrics
@@ -130,7 +135,8 @@ class TestAudioProcessingEngine:
                 }
                 
             async def protect_content(self, content):
-                """Mock implementation of protect_content"""
+                """
+Mock implementation of protect_content"""
                 return {
                     'audio_watermarked': True,
                     'fingerprint_generated': True,
@@ -174,7 +180,8 @@ class TestAudioProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, audio_engine):
-        """Test audio engine initialization"""
+        """
+Test audio engine initialization"""
         validator = TestEngineValidator()
         
         # Initialise le moteur
@@ -230,7 +237,8 @@ class TestAudioProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_audio_format_conversion(self, audio_engine, sample_audio_data):
-        """Test audio format conversion capabilities"""
+        """
+Test audio format conversion capabilities"""
         # Test conversion between different formats
         format_conversions = [
             (AudioFormat.WAV, AudioFormat.MP3),
@@ -258,7 +266,8 @@ class TestAudioProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_audio_quality_enhancement(self, audio_engine, sample_audio_data):
-        """Test audio quality enhancement features"""
+        """
+Test audio quality enhancement features"""
         enhancement_levels = ['basic', 'standard', 'professional', 'studio']
         
         for level in enhancement_levels:
@@ -287,7 +296,8 @@ class TestAudioProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_audio_effects_processing(self, audio_engine, sample_audio_data):
-        """Test audio effects and processing chains"""
+        """
+Test audio effects and processing chains"""
         effects_chains = [
             ['equalizer', 'compressor'],
             ['reverb', 'chorus', 'delay'],
@@ -313,7 +323,8 @@ class TestAudioProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_audio_seo_optimization(self, audio_engine, sample_audio_data):
-        """Test audio SEO optimization features"""
+        """
+Test audio SEO optimization features"""
         target_keywords = ['music', 'audio', 'professional', 'high-quality']
         
         result = await audio_engine.optimize_for_seo(
@@ -329,7 +340,8 @@ class TestAudioProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_audio_protection(self, audio_engine, sample_audio_data):
-        """Test audio content protection features"""
+        """
+Test audio content protection features"""
         result = await audio_engine.protect_content(sample_audio_data['raw_audio'])
         
         assert result['audio_watermarked'] is True
@@ -340,18 +352,21 @@ class TestAudioProcessingEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestMusicGenerationEngine:
-    """Comprehensive tests for MusicGenerationEngine"""
+    """
+Comprehensive tests for MusicGenerationEngine"""
     
     @pytest.fixture
     async def music_engine(self):
-        """Create and initialize music generation engine"""
+        """
+Create and initialize music generation engine"""
         engine = MusicGenerationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def music_generation_options(self):
-        """Provide music generation options"""
+        """
+Provide music generation options"""
         return {
             'content_id': 'music_gen_test_123',
             'style': 'electronic',
@@ -366,7 +381,8 @@ class TestMusicGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_music_generation_engine_initialization(self, music_engine):
-        """Test music generation engine initialization"""
+        """
+Test music generation engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(music_engine)
@@ -497,14 +513,16 @@ class TestVoiceEngine:
     
     @pytest.fixture
     async def voice_engine(self):
-        """Create and initialize voice synthesis engine"""
+        """
+Create and initialize voice synthesis engine"""
         engine = VoiceEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def voice_synthesis_options(self):
-        """Provide voice synthesis options"""
+        """
+Provide voice synthesis options"""
         return {
             'content_id': 'voice_test_123',
             'voice_type': 'professional_male',
@@ -519,7 +537,8 @@ class TestVoiceEngine:
     
     @pytest.mark.asyncio
     async def test_voice_engine_initialization(self, voice_engine):
-        """Test voice engine initialization"""
+        """
+Test voice engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(voice_engine)
@@ -676,7 +695,8 @@ class TestAudioEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_audio_processing_pipeline(self, sample_content):
-        """Test complete audio processing pipeline"""
+        """
+Test complete audio processing pipeline"""
         # Initialize all audio engines
         audio_engine = AudioProcessingEngine()
         music_engine = MusicGenerationEngine()

@@ -22,6 +22,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 import time
 import threading
@@ -42,7 +43,9 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class TimePartitionStrategy(Enum):
-    """Time-based partitioning strategies"""
+    """
+Time-based partitioning strategies"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -54,6 +57,7 @@ class TimePartitionStrategy(Enum):
 
 class TimeInterval(Enum):
     """Time interval definitions"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -63,6 +67,7 @@ class TimeInterval(Enum):
 
 class RetentionPolicy(Enum):
     """Data retention policies"""
+
     TIME_BASED = "time_based"
     SIZE_BASED = "size_based"
     COUNT_BASED = "count_based"
@@ -72,6 +77,7 @@ class RetentionPolicy(Enum):
 
 class PurgePolicy(Enum):
     """Data purge policies"""
+
     IMMEDIATE = "immediate"
     BATCH_PURGE = "batch_purge"
     GRADUAL_PURGE = "gradual_purge"
@@ -137,7 +143,8 @@ class CompressionScheduler:
         self.compression_schedule: Dict[str, datetime] = {}
         
     def schedule_compression(self, partition: PartitionWindow) -> bool:
-        """Schedule compression for partition"""
+        """
+Schedule compression for partition"""
         try:
             # Check if partition is eligible for compression
             age_days = (datetime.utcnow() - partition.start_time).days
@@ -174,7 +181,8 @@ class CompressionScheduler:
         return target_time
     
     def execute_compression(self, partition_name: str) -> bool:
-        """Execute compression for partition"""
+        """
+Execute compression for partition"""
         try:
             with self.session_factory() as session:
                 # PostgreSQL table compression (simplified)
@@ -586,7 +594,8 @@ class TemporalPartitionManager:
         self.maintenance_schedule[table_name] = next_maintenance
     
     def start_monitoring(self):
-        """Start monitoring and maintenance"""
+        """
+Start monitoring and maintenance"""
         def monitoring_loop():
             while self.monitoring_enabled:
                 try:

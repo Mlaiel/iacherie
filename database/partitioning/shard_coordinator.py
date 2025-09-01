@@ -22,6 +22,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 import asyncio
 import threading
@@ -46,7 +47,9 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class ShardStatus(Enum):
-    """Shard operational status"""
+    """
+Shard operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -58,6 +61,7 @@ class ShardStatus(Enum):
 
 class ShardHealthStatus(Enum):
     """Shard health indicators"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -66,6 +70,7 @@ class ShardHealthStatus(Enum):
 
 class LoadBalancingStrategy(Enum):
     """Load balancing strategies"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -76,6 +81,7 @@ class LoadBalancingStrategy(Enum):
 
 class ReplicationStrategy(Enum):
     """Data replication strategies"""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     SEMI_SYNCHRONOUS = "semi_synchronous"
@@ -85,6 +91,7 @@ class ReplicationStrategy(Enum):
 
 class ConsistencyLevel(Enum):
     """Data consistency levels"""
+
     STRONG = "strong"
     EVENTUAL = "eventual"
     WEAK = "weak"
@@ -94,6 +101,7 @@ class ConsistencyLevel(Enum):
 
 class FailoverStrategy(Enum):
     """Failover strategies"""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     HYBRID = "hybrid"
@@ -130,7 +138,8 @@ class ShardMetrics:
 
 @dataclass
 class ShardNode:
-    """Represents a database shard node"""
+    """
+Represents a database shard node"""
     shard_id: str
     config: ShardConfiguration
     status: ShardStatus = ShardStatus.INACTIVE
@@ -577,7 +586,8 @@ class ShardCoordinator:
         return time_since_last_check >= backoff_time
 
     def _update_query_metrics(self, shard_id: str, start_time: float, success: bool):
-        """Update query performance metrics"""
+        """
+Update query performance metrics"""
         try:
             execution_time = time.time() - start_time
             
@@ -1041,7 +1051,8 @@ class ShardCoordinator:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.shutdown()
     """
     Ultra-industrial shard coordination system
@@ -1294,7 +1305,8 @@ class ShardCoordinator:
         return self.shards[shard_id]
 
     def _get_shard_least_connections(self) -> Optional[ShardNode]:
-        """Get shard with least active connections"""
+        """
+Get shard with least active connections"""
         if not self.active_shards:
             return None
         
@@ -1310,7 +1322,8 @@ class ShardCoordinator:
         return selected_shard
 
     def _get_shard_least_response_time(self) -> Optional[ShardNode]:
-        """Get shard with lowest average response time"""
+        """
+Get shard with lowest average response time"""
         if not self.active_shards:
             return None
         
@@ -1328,7 +1341,8 @@ class ShardCoordinator:
         return selected_shard or self._get_shard_round_robin()
 
     def _get_shard_resource_based(self) -> Optional[ShardNode]:
-        """Get shard based on resource utilization"""
+        """
+Get shard based on resource utilization"""
         if not self.active_shards:
             return None
         
@@ -1674,22 +1688,26 @@ class ShardCoordinator:
         return {}
 
     def _identify_imbalanced_shards(self, stats: Dict[str, Any]) -> List[str]:
-        """Identify shards that need rebalancing"""
+        """
+Identify shards that need rebalancing"""
         # Implementation would analyze statistics and identify imbalanced shards
         return []
 
     def _create_rebalance_plan(self, imbalanced_shards: List[str]) -> Dict[str, Any]:
-        """Create plan for rebalancing operations"""
+        """
+Create plan for rebalancing operations"""
         # Implementation would create detailed rebalancing plan
         return {}
 
     def _execute_rebalance_plan(self, plan: Dict[str, Any]) -> bool:
-        """Execute rebalancing plan"""
+        """
+Execute rebalancing plan"""
         # Implementation would execute actual data movement
         return True
 
     def shutdown(self):
-        """Shutdown shard coordinator gracefully"""
+        """
+Shutdown shard coordinator gracefully"""
         try:
             logger.info("Shutting down shard coordinator...")
             
@@ -1733,11 +1751,13 @@ class ConsistentHashRing:
         self.nodes: Set[str] = set()
     
     def _hash(self, key: str) -> int:
-        """Generate hash for key"""
+        """
+Generate hash for key"""
         return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def add_node(self, node: str, weight: float = 1.0):
-        """Add node to hash ring"""
+        """
+Add node to hash ring"""
         if node in self.nodes:
             return
         
@@ -1767,7 +1787,8 @@ class ConsistentHashRing:
             self.sorted_keys.remove(key)
     
     def get_node(self, key: str) -> Optional[str]:
-        """Get node responsible for key"""
+        """
+Get node responsible for key"""
         if not self.ring:
             return None
         

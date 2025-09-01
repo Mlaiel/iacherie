@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import numpy as np
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ from ..utils.ai_optimization import AIOptimizationEngine
 
 
 class LicenseType(Enum):
-    """Types of licenses available in marketplace"""
+    """
+Types of licenses available in marketplace"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -56,6 +59,7 @@ class LicenseType(Enum):
 
 class MarketplaceStatus(Enum):
     """Marketplace listing status"""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     ACTIVE = "active"
@@ -70,6 +74,7 @@ class MarketplaceStatus(Enum):
 
 class TradingMode(Enum):
     """Trading modes for marketplace"""
+
     FIXED_PRICE = "fixed_price"
     AUCTION = "auction"
     BEST_OFFER = "best_offer"
@@ -84,6 +89,7 @@ class TradingMode(Enum):
 
 class PaymentMethod(Enum):
     """Payment methods supported"""
+
     CREDIT_CARD = "credit_card"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
@@ -98,6 +104,7 @@ class PaymentMethod(Enum):
 
 class DistributionChannel(Enum):
     """Distribution channels for licensed content"""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING_PLATFORMS = "streaming_platforms"
     BROADCAST_TV = "broadcast_tv"
@@ -182,7 +189,8 @@ class LicenseListing:
 
 @dataclass
 class TradingTransaction:
-    """Marketplace trading transaction"""
+    """
+Marketplace trading transaction"""
     transaction_id: str
     listing_id: str
     buyer_id: str
@@ -249,7 +257,8 @@ class TradingTransaction:
 
 @dataclass
 class MarketplaceAnalytics:
-    """Marketplace performance analytics"""
+    """
+Marketplace performance analytics"""
     analytics_id: str
     analysis_period: Tuple[datetime, datetime]
     analysis_timestamp: datetime
@@ -308,7 +317,8 @@ class MarketplaceAnalytics:
 
 @dataclass
 class SmartContract:
-    """Smart contract for automated licensing"""
+    """
+Smart contract for automated licensing"""
     contract_id: str
     contract_address: str
     blockchain_network: str
@@ -401,7 +411,8 @@ class LicensingMarketplaceEngine:
         self.category_taxonomy: Dict[str, Any] = {}
         
     async def initialize_marketplace(self, config: Dict[str, Any]):
-        """Initialize licensing marketplace"""
+        """
+Initialize licensing marketplace"""
         try:
             # Initialize blockchain connection
             await self._initialize_blockchain_connection(config.get('blockchain_config', {}))
@@ -901,36 +912,43 @@ class LicensingMarketplaceEngine:
         pass
     
     async def _initialize_ai_models(self, config: Dict[str, Any]):
-        """Initialize AI models for recommendations and optimization"""
+        """
+Initialize AI models for recommendations and optimization"""
         # Implementation would initialize ML models
         pass
     
     async def _setup_search_infrastructure(self, config: Dict[str, Any]):
-        """Setup search and discovery infrastructure"""
+        """
+Setup search and discovery infrastructure"""
         # Implementation would setup search indices
         pass
     
     async def _validate_seller_permissions(self, seller_id: str, content_id: str):
-        """Validate seller has permission to list content"""
+        """
+Validate seller has permission to list content"""
         # Implementation would check permissions
         pass
     
     async def _validate_content_eligibility(self, content_id: str):
-        """Validate content is eligible for marketplace listing"""
+        """
+Validate content is eligible for marketplace listing"""
         # Implementation would check content eligibility
         pass
     
     async def _save_license_listing(self, listing: LicenseListing):
-        """Save license listing to database"""
+        """
+Save license listing to database"""
         # Implementation would save to database
         pass
     
     async def _save_trading_transaction(self, transaction: TradingTransaction):
-        """Save trading transaction to database"""
+        """
+Save trading transaction to database"""
         # Implementation would save to database
         pass
     
     async def _save_marketplace_analytics(self, analytics: MarketplaceAnalytics):
-        """Save marketplace analytics to database"""
+        """
+Save marketplace analytics to database"""
         # Implementation would save to database
         pass

@@ -2,7 +2,7 @@
 Enterprise-Grade Revenue Tracking & Recovery Pipeline Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive revenue recovery and monetization pipeline management for the 
 IA Influencer Agent platform, enabling automated revenue tracking, claim processing, and 
@@ -19,6 +19,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -34,7 +35,9 @@ from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 from .pipeline_manager import PipelineStep, PipelineExecution, AdvancedPipelineManager
 
 class RevenueSource(Enum):
-    """Revenue source platform enumeration"""
+    """
+Revenue source platform enumeration"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -48,6 +51,7 @@ class RevenueSource(Enum):
 
 class RevenueType(Enum):
     """Revenue type classifications"""
+
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATION = "donation"
@@ -59,6 +63,7 @@ class RevenueType(Enum):
 
 class ClaimStatus(Enum):
     """Revenue claim status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     APPROVED = "approved"
@@ -83,7 +88,8 @@ class RevenueStream:
 
 @dataclass
 class RevenueClaim:
-    """Revenue claim data structure"""
+    """
+Revenue claim data structure"""
     claim_id: str
     content_id: str
     owner_id: str
@@ -98,7 +104,8 @@ class RevenueClaim:
 
 @dataclass
 class PaymentInstruction:
-    """Payment instruction data structure"""
+    """
+Payment instruction data structure"""
     payment_id: str
     recipient_id: str
     amount: Decimal

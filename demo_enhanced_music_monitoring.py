@@ -28,7 +28,8 @@ from typing import List, Dict
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 async def demo_enhanced_monitoring():
-    """Demonstrate the enhanced music platform monitoring capabilities"""
+    """
+Demonstrate the enhanced music platform monitoring capabilities"""
     
     print("🎵 Enhanced Music Platform Copyright Monitoring Demo")
     print("=" * 60)

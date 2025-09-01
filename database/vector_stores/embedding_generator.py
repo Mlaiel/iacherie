@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -52,7 +53,8 @@ settings = get_settings()
 
 
 class EmbeddingModel(Enum):
-    """Supported embedding models"""
+    """
+Supported embedding models"""
     # Text models
     BERT_BASE = "bert-base-uncased"
     BERT_LARGE = "bert-large-uncased"
@@ -78,6 +80,7 @@ class EmbeddingModel(Enum):
 
 class ContentType(Enum):
     """Content types for embedding generation"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -86,6 +89,7 @@ class ContentType(Enum):
 
 class EmbeddingStrategy(Enum):
     """Embedding generation strategies"""
+
     SINGLE_MODEL = "single_model"
     ENSEMBLE = "ensemble"
     HIERARCHICAL = "hierarchical"
@@ -109,7 +113,8 @@ class EmbeddingConfig:
 
 @dataclass
 class EmbeddingResult:
-    """Embedding generation result"""
+    """
+Embedding generation result"""
     content_id: str
     embedding: np.ndarray
     model_used: str
@@ -122,7 +127,8 @@ class EmbeddingResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics"""
+    """
+Model performance metrics"""
     model_name: str
     content_type: str
     total_generations: int
@@ -574,7 +580,8 @@ class EmbeddingGenerator:
         return self.model_performance.copy()
     
     async def get_generation_statistics(self) -> Dict[str, Any]:
-        """Get embedding generation statistics"""
+        """
+Get embedding generation statistics"""
         stats = self.generation_stats.copy()
         
         # Add cache efficiency
@@ -1022,7 +1029,8 @@ class EmbeddingGenerator:
             return 0.0
     
     def _calculate_kurtosis(self, embedding: np.ndarray) -> float:
-        """Calculate kurtosis of embedding values"""
+        """
+Calculate kurtosis of embedding values"""
         try:
             mean = np.mean(embedding)
             std = np.std(embedding)
@@ -1034,7 +1042,8 @@ class EmbeddingGenerator:
             return 0.0
     
     def _calculate_skewness(self, embedding: np.ndarray) -> float:
-        """Calculate skewness of embedding values"""
+        """
+Calculate skewness of embedding values"""
         try:
             mean = np.mean(embedding)
             std = np.std(embedding)
@@ -1048,7 +1057,8 @@ class EmbeddingGenerator:
     async def _select_adaptive_model(
         self, content: Any, content_type: ContentType
     ) -> EmbeddingModel:
-        """Select best model adaptively based on content and performance"""
+        """
+Select best model adaptively based on content and performance"""
         try:
             available_models = self._get_available_models(content_type)
             
@@ -1110,7 +1120,8 @@ class EmbeddingGenerator:
             return []
     
     def _initialize_content_configs(self) -> Dict[ContentType, EmbeddingConfig]:
-        """Initialize default configurations for each content type"""
+        """
+Initialize default configurations for each content type"""
         return {
             ContentType.TEXT: EmbeddingConfig(
                 model_name=EmbeddingModel.SENTENCE_TRANSFORMER,

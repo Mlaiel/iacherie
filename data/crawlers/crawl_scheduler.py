@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -37,7 +38,9 @@ from croniter import croniter
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
+    """
+Task execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -49,6 +52,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -57,7 +61,9 @@ class TaskPriority(Enum):
 
 
 class ScheduleType(Enum):
-    """Schedule type definitions"""
+    """
+Schedule type definitions"""
+
     ONCE = "once"
     INTERVAL = "interval" 
     CRON = "cron"
@@ -90,7 +96,8 @@ class TaskConfiguration:
 
 @dataclass
 class TaskExecution:
-    """Task execution instance"""
+    """
+Task execution instance"""
     execution_id: str
     task_id: str
     status: TaskStatus
@@ -106,7 +113,8 @@ class TaskExecution:
 
 @dataclass
 class SchedulerMetrics:
-    """Scheduler performance metrics"""
+    """
+Scheduler performance metrics"""
     total_tasks_scheduled: int = 0
     tasks_completed: int = 0
     tasks_failed: int = 0
@@ -119,35 +127,41 @@ class SchedulerMetrics:
 
 
 class PriorityQueue:
-    """Priority queue for task scheduling"""
+    """
+Priority queue for task scheduling"""
     
     def __init__(self):
         self._queue = []
         self._index = 0
     
     def push(self, item, priority: float):
-        """Add item with priority (lower values = higher priority)"""
+        """
+Add item with priority (lower values = higher priority)"""
         heapq.heappush(self._queue, (priority, self._index, item))
         self._index += 1
     
     def pop(self):
-        """Get highest priority item"""
+        """
+Get highest priority item"""
         if self._queue:
             return heapq.heappop(self._queue)[2]
         return None
     
     def peek(self):
-        """Look at highest priority item without removing"""
+        """
+Look at highest priority item without removing"""
         if self._queue:
             return self._queue[0][2]
         return None
     
     def size(self):
-        """Get queue size"""
+        """
+Get queue size"""
         return len(self._queue)
     
     def clear(self):
-        """Clear the queue"""
+        """
+Clear the queue"""
         self._queue.clear()
         self._index = 0
 
@@ -222,7 +236,8 @@ class CrawlScheduler:
         self._monitor_task: Optional[asyncio.Task] = None
     
     async def start(self):
-        """Start the scheduler"""
+        """
+Start the scheduler"""
         try:
             if self.is_running:
                 self.logger.warning("Scheduler is already running")
@@ -534,7 +549,8 @@ class CrawlScheduler:
             self.task_callbacks[event].remove(callback)
     
     def update_resource_limits(self, limits: Dict[str, Union[int, float]]):
-        """Update resource limits"""
+        """
+Update resource limits"""
         try:
             for key, value in limits.items():
                 if key in self.resource_limits:
@@ -660,7 +676,8 @@ class CrawlScheduler:
         self.task_queue.push(task_config.task_id, priority)
     
     def _schedule_interval_task(self, task_config: TaskConfiguration):
-        """Schedule interval-based task"""
+        """
+Schedule interval-based task"""
         try:
             interval_seconds = int(task_config.schedule_expression)
             
@@ -759,7 +776,8 @@ class CrawlScheduler:
         return base_priority + priority_adjustment
     
     async def _can_execute_task(self, task_config: TaskConfiguration) -> bool:
-        """Check if task can be executed based on constraints"""
+        """
+Check if task can be executed based on constraints"""
         try:
             # Check if scheduler is running
             if not self.is_running:

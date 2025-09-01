@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Système IA collaboratif ultra-avancé pour remixes en temps réel
 TECHNOLOGIES: Real-time collaboration, Conflict resolution, Version control, AI coordination
 LOGIQUE MÉTIER: Multi-users → Real-time editing → AI suggestions → Conflict resolution → Synchronized output
 """
+
 import asyncio
 import logging
 import json
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class WebSocketCollaborationServer:
-    """Real-time WebSocket server for collaborative remix editing"""
+    """
+Real-time WebSocket server for collaborative remix editing"""
     
     def __init__(self, host: str = "localhost", port: int = 8765, 
                  redis_url: str = "redis://localhost:6379"):
@@ -326,7 +328,8 @@ class WebSocketCollaborationServer:
             await self._cleanup_client_connection(client_id)
     
     async def _send_message(self, websocket: websockets.WebSocketServerProtocol, message: Dict[str, Any]):
-        """Send message to a specific WebSocket connection"""
+        """
+Send message to a specific WebSocket connection"""
         try:
             await websocket.send(json.dumps(message))
         except (websockets.exceptions.ConnectionClosed, ConnectionResetError):
@@ -462,6 +465,7 @@ class WebSocketCollaborationServer:
 
 class CollaborationAction(Enum):
     """Types of collaboration actions"""
+
     JOIN_SESSION = "join_session"
     LEAVE_SESSION = "leave_session"
     EDIT_AUDIO = "edit_audio"
@@ -476,6 +480,7 @@ class CollaborationAction(Enum):
 
 class CollaborationRole(Enum):
     """User roles in collaboration"""
+
     OWNER = "owner"
     COLLABORATOR = "collaborator"
     REVIEWER = "reviewer"
@@ -483,6 +488,7 @@ class CollaborationRole(Enum):
 
 class ConflictResolutionMode(Enum):
     """Conflict resolution strategies"""
+
     DEMOCRACY = "democracy"  # Majority vote
     HIERARCHY = "hierarchy"  # Role-based priority
     AI_MEDIATED = "ai_mediated"  # AI decides
@@ -503,7 +509,8 @@ class CollaborationUser:
 
 @dataclass
 class CollaborationEdit:
-    """Single edit action in collaboration"""
+    """
+Single edit action in collaboration"""
     edit_id: str
     user_id: str
     action: CollaborationAction
@@ -977,7 +984,8 @@ class ConflictDetector:
     
     async def _edits_conflict(self, edit1: CollaborationEdit, 
                             edit2: CollaborationEdit) -> bool:
-        """Check if two edits conflict"""
+        """
+Check if two edits conflict"""
         # Same audio segment
         if edit1.audio_segment_id == edit2.audio_segment_id:
             # Temporal overlap check
@@ -992,14 +1000,16 @@ class ConflictDetector:
     
     async def _temporal_overlap(self, edit1: CollaborationEdit, 
                               edit2: CollaborationEdit) -> bool:
-        """Check for temporal overlap between edits"""
+        """
+Check for temporal overlap between edits"""
         # Simplified temporal overlap check
         time_diff = abs((edit1.timestamp - edit2.timestamp).total_seconds())
         return time_diff < 30  # 30 second overlap threshold
     
     async def _action_conflict(self, edit1: CollaborationEdit, 
                              edit2: CollaborationEdit) -> bool:
-        """Check for action-based conflicts"""
+        """
+Check for action-based conflicts"""
         conflicting_actions = {
             (CollaborationAction.REMOVE_TRACK, CollaborationAction.EDIT_AUDIO),
             (CollaborationAction.CHANGE_TEMPO, CollaborationAction.ADJUST_TIMING),

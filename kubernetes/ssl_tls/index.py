@@ -13,6 +13,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import logging
 import sys
 from pathlib import Path
@@ -173,19 +174,22 @@ class SSLTLSManager:
         return self.cert_manager
     
     def init_letsencrypt_manager(self, le_config: Dict[str, Any]) -> LetsEncryptManager:
-        """Initialize Let's Encrypt manager"""
+        """
+Initialize Let's Encrypt manager"""
         from .letsencrypt_manager import LetsEncryptConfig
         config_obj = LetsEncryptConfig(**le_config)
         self.letsencrypt_manager = LetsEncryptManager(config_obj)
         return self.letsencrypt_manager
     
     def init_tls_config_manager(self, config_path: Optional[Path] = None) -> TLSConfigManager:
-        """Initialize TLS configuration manager"""
+        """
+Initialize TLS configuration manager"""
         self.tls_config_manager = create_tls_config_manager(config_path)
         return self.tls_config_manager
     
     def init_monitor(self, monitor_config_path: Optional[Path] = None) -> CertificateMonitor:
-        """Initialize certificate monitor"""
+        """
+Initialize certificate monitor"""
         self.monitor = create_certificate_monitor(monitor_config_path)
         return self.monitor
     
@@ -195,11 +199,13 @@ class SSLTLSManager:
         key_path: Path, 
         key_password: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Validate SSL configuration"""
+        """
+Validate SSL configuration"""
         return validate_ssl_configuration(cert_path, key_path, key_password)
     
     def get_status(self) -> Dict[str, Any]:
-        """Get overall SSL/TLS management status"""
+        """
+Get overall SSL/TLS management status"""
         return {
             'certificate_manager': self.cert_manager is not None,
             'letsencrypt_manager': self.letsencrypt_manager is not None,

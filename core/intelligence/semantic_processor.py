@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -49,7 +50,9 @@ from ..storage.semantic_storage import SemanticStorage
 
 
 class LanguageCode(Enum):
-    """Supported language codes"""
+    """
+Supported language codes"""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -61,6 +64,7 @@ class LanguageCode(Enum):
 
 class SemanticTask(Enum):
     """Available semantic processing tasks"""
+
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     EMOTION_DETECTION = "emotion_detection"
     ENTITY_EXTRACTION = "entity_extraction"
@@ -83,7 +87,8 @@ class SentimentResult:
 
 @dataclass
 class EntityResult:
-    """Named entity recognition result"""
+    """
+Named entity recognition result"""
     entities: List[Dict[str, Any]]
     entity_types: List[str]
     entity_links: Dict[str, str]
@@ -92,7 +97,8 @@ class EntityResult:
 
 @dataclass
 class ClassificationResult:
-    """Content classification result"""
+    """
+Content classification result"""
     primary_category: str
     categories: Dict[str, float]
     confidence: float
@@ -101,7 +107,8 @@ class ClassificationResult:
 
 @dataclass
 class SimilarityResult:
-    """Similarity analysis result"""
+    """
+Similarity analysis result"""
     similarity_score: float
     semantic_distance: float
     common_themes: List[str]
@@ -110,7 +117,8 @@ class SimilarityResult:
 
 @dataclass
 class SemanticAnalysisResult:
-    """Comprehensive semantic analysis result"""
+    """
+Comprehensive semantic analysis result"""
     analysis_id: str
     input_text: str
     language: LanguageCode
@@ -243,7 +251,8 @@ class SemanticProcessor:
         self.nlp_engine = NLPEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize semantic storage"""
+        """
+Initialize semantic storage"""
         self.semantic_storage = SemanticStorage(self.config)
     
     async def analyze_text(
@@ -364,7 +373,8 @@ class SemanticProcessor:
             return LanguageCode.ENGLISH
     
     async def _analyze_sentiment(self, text: str, language: LanguageCode) -> SentimentResult:
-        """Analyze sentiment and emotional tone"""
+        """
+Analyze sentiment and emotional tone"""
         try:
             # VADER sentiment analysis (works well for social media text)
             vader_scores = self.vader_analyzer.polarity_scores(text)
@@ -608,7 +618,8 @@ class SemanticProcessor:
         return entity_topic_mapping.get(entity_label, 'general')
     
     async def _generate_embeddings(self, text: str) -> np.ndarray:
-        """Generate semantic embeddings for text"""
+        """
+Generate semantic embeddings for text"""
         try:
             # Use sentence transformer for embeddings
             embedding = self.sentence_transformer.encode(text)
@@ -902,7 +913,8 @@ class SemanticProcessor:
         return self.performance_metrics.copy()
     
     async def clear_cache(self) -> None:
-        """Clear analysis cache"""
+        """
+Clear analysis cache"""
         self.analysis_cache.clear()
         self.logger.info("Semantic analysis cache cleared")
     

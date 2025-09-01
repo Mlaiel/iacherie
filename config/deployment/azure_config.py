@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import json
@@ -23,7 +24,8 @@ from pathlib import Path
 
 @dataclass
 class AzureResourceConfig:
-    """Azure resource configuration"""
+    """
+Azure resource configuration"""
     resource_type: str
     name: str
     location: str

@@ -24,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class FairnessMetric(str, Enum):
-    """Fairness metrics enumeration"""
+    """
+Fairness metrics enumeration"""
+
     DEMOGRAPHIC_PARITY = "demographic_parity"
     EQUALIZED_ODDS = "equalized_odds"
     EQUAL_OPPORTUNITY = "equal_opportunity"
@@ -34,6 +36,7 @@ class FairnessMetric(str, Enum):
 
 class BiasType(str, Enum):
     """Types of bias to detect"""
+
     DEMOGRAPHIC = "demographic"
     REPRESENTATION = "representation"
     MEASUREMENT = "measurement"
@@ -44,6 +47,7 @@ class BiasType(str, Enum):
 
 class FairnessThreshold(str, Enum):
     """Fairness thresholds for different environments"""
+
     STRICT = "0.95"      # 95% fairness threshold
     MODERATE = "0.90"    # 90% fairness threshold
     LENIENT = "0.85"     # 85% fairness threshold
@@ -68,7 +72,8 @@ class BiasMetrics:
 
 @dataclass
 class FairnessTest:
-    """Single fairness test configuration and results"""
+    """
+Single fairness test configuration and results"""
     test_id: str
     test_name: str
     metric_type: FairnessMetric
@@ -81,7 +86,8 @@ class FairnessTest:
 
 @dataclass
 class BiasValidationResult:
-    """Complete bias validation result"""
+    """
+Complete bias validation result"""
     model_id: str
     validation_id: str
     metrics: BiasMetrics
@@ -95,7 +101,8 @@ class BiasValidationResult:
 
 
 class FairnessValidator:
-    """Comprehensive fairness and bias validator for AI/ML models"""
+    """
+Comprehensive fairness and bias validator for AI/ML models"""
     
     def __init__(self, fairness_threshold: float = 0.90):
         """
@@ -310,7 +317,8 @@ class FairnessValidator:
         )
     
     def _calculate_demographic_parity(self, predictions: np.ndarray, sensitive_attr: np.ndarray) -> float:
-        """Calculate demographic parity (statistical parity)"""
+        """
+Calculate demographic parity (statistical parity)"""
         unique_groups = np.unique(sensitive_attr)
         if len(unique_groups) < 2:
             return 1.0
@@ -331,7 +339,8 @@ class FairnessValidator:
     def _calculate_equalized_odds(
         self, predictions: np.ndarray, ground_truth: np.ndarray, sensitive_attr: np.ndarray
     ) -> float:
-        """Calculate equalized odds fairness metric"""
+        """
+Calculate equalized odds fairness metric"""
         unique_groups = np.unique(sensitive_attr)
         if len(unique_groups) < 2:
             return 1.0
@@ -367,7 +376,8 @@ class FairnessValidator:
     def _calculate_equal_opportunity(
         self, predictions: np.ndarray, ground_truth: np.ndarray, sensitive_attr: np.ndarray
     ) -> float:
-        """Calculate equal opportunity fairness metric"""
+        """
+Calculate equal opportunity fairness metric"""
         unique_groups = np.unique(sensitive_attr)
         if len(unique_groups) < 2:
             return 1.0
@@ -395,7 +405,8 @@ class FairnessValidator:
     def _calculate_calibration_score(
         self, probabilities: np.ndarray, ground_truth: np.ndarray, sensitive_attributes: Dict[str, np.ndarray]
     ) -> float:
-        """Calculate calibration fairness score"""
+        """
+Calculate calibration fairness score"""
         # Simplified calibration check - in practice, you'd use more sophisticated methods
         calibration_scores = []
         
@@ -428,7 +439,8 @@ class FairnessValidator:
         return np.mean(calibration_scores) if calibration_scores else 1.0
     
     def _calculate_disparate_impact(self, predictions: np.ndarray, sensitive_attributes: Dict[str, np.ndarray]) -> float:
-        """Calculate disparate impact ratio"""
+        """
+Calculate disparate impact ratio"""
         disparate_impacts = []
         
         for attr_name, attr_values in sensitive_attributes.items():
@@ -457,7 +469,8 @@ class FairnessValidator:
         sensitive_attributes: Dict[str, np.ndarray],
         model_probabilities: Optional[np.ndarray] = None
     ) -> List[FairnessTest]:
-        """Run individual fairness tests"""
+        """
+Run individual fairness tests"""
         tests = []
         
         # Demographic Parity Test
@@ -499,7 +512,8 @@ class FairnessValidator:
         return metric_score + test_score
     
     def _identify_critical_issues(self, metrics: BiasMetrics, tests: List[FairnessTest]) -> List[str]:
-        """Identify critical fairness issues"""
+        """
+Identify critical fairness issues"""
         issues = []
         
         if metrics.bias_detected:
@@ -545,7 +559,8 @@ class FairnessValidator:
         model_id: str,
         monitoring_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup continuous fairness monitoring"""
+        """
+Setup continuous fairness monitoring"""
         config = {
             "model_id": model_id,
             "fairness_threshold": monitoring_config.get("threshold", self.fairness_threshold),

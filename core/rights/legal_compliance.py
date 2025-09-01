@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Legal Compliance Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -41,7 +42,9 @@ settings = get_settings()
 
 
 class LegalJurisdiction(str, Enum):
-    """Legal jurisdictions for compliance."""
+    """
+Legal jurisdictions for compliance."""
+
     US = "united_states"
     EU = "european_union"
     UK = "united_kingdom"
@@ -55,6 +58,7 @@ class LegalJurisdiction(str, Enum):
 
 class ComplianceType(str, Enum):
     """Types of legal compliance."""
+
     DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
@@ -66,6 +70,7 @@ class ComplianceType(str, Enum):
 
 class NoticeType(str, Enum):
     """Types of legal notices."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -76,6 +81,7 @@ class NoticeType(str, Enum):
 
 class NoticeStatus(str, Enum):
     """Status of legal notices."""
+
     DRAFT = "draft"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
@@ -88,6 +94,7 @@ class NoticeStatus(str, Enum):
 
 class PlatformContact(str, Enum):
     """Platform DMCA contact information."""
+
     YOUTUBE = "copyright@youtube.com"
     FACEBOOK = "ip@fb.com"
     INSTAGRAM = "ip@fb.com"
@@ -119,7 +126,8 @@ class DMCANoticeData:
 
 @dataclass
 class LegalCaseData:
-    """Legal case tracking data."""
+    """
+Legal case tracking data."""
     case_id: str
     content_id: str
     case_type: ComplianceType
@@ -151,8 +159,10 @@ class DMCATemplateManager:
         }
     
     def _create_dmca_takedown_template(self) -> str:
-        """Create DMCA takedown notice template."""
-        return """Subject: DMCA Takedown Notice - Copyright Infringement
+        """
+Create DMCA takedown notice template."""
+        return """
+Subject: DMCA Takedown Notice - Copyright Infringement
 
 To Whom It May Concern:
 
@@ -191,8 +201,10 @@ Sincerely,
 """
     
     def _create_cease_desist_template(self) -> str:
-        """Create cease and desist letter template."""
-        return """Subject: Cease and Desist - Copyright Infringement
+        """
+Create cease and desist letter template."""
+        return """
+Subject: Cease and Desist - Copyright Infringement
 
 Dear {{ recipient_name }},
 
@@ -221,8 +233,10 @@ Date: {{ date }}
 """
     
     def _create_counter_notice_template(self) -> str:
-        """Create DMCA counter-notice template."""
-        return """Subject: DMCA Counter-Notice
+        """
+Create DMCA counter-notice template."""
+        return """
+Subject: DMCA Counter-Notice
 
 To Whom It May Concern:
 
@@ -252,7 +266,8 @@ Date: {{ date }}
 """
     
     def render_template(self, template_name: str, **kwargs) -> str:
-        """Render a legal template with provided data."""
+        """
+Render a legal template with provided data."""
         if template_name not in self.templates:
             raise ValueError(f"Template {template_name} not found")
         
@@ -269,7 +284,8 @@ class PlatformDMCAHandler:
         self.smtp_settings = self._get_smtp_settings()
     
     def _get_platform_contact(self, platform: str) -> str:
-        """Get DMCA contact email for platform."""
+        """
+Get DMCA contact email for platform."""
         contact_map = {
             'youtube': PlatformContact.YOUTUBE,
             'facebook': PlatformContact.FACEBOOK,
@@ -293,7 +309,8 @@ class PlatformDMCAHandler:
         }
     
     async def send_dmca_notice(self, notice_data: DMCANoticeData) -> bool:
-        """Send DMCA takedown notice to platform."""
+        """
+Send DMCA takedown notice to platform."""
         try:
             template_manager = DMCATemplateManager()
             
@@ -380,7 +397,8 @@ class PlatformDMCAHandler:
 
 
 class LegalComplianceEngine:
-    """Central legal compliance and automation engine."""
+    """
+Central legal compliance and automation engine."""
     
     def __init__(self):
         self.template_manager = DMCATemplateManager()
@@ -398,7 +416,8 @@ class LegalComplianceEngine:
         original_work_description: str,
         platform: str
     ) -> DMCANoticeData:
-        """Generate DMCA takedown notice."""
+        """
+Generate DMCA takedown notice."""
         
         notice_id = hashlib.sha256(
             f"{content_id}_{infringing_url}_{datetime.utcnow()}".encode()
@@ -458,7 +477,8 @@ class LegalComplianceEngine:
         return self.platform_handlers[platform]
     
     async def _schedule_followup(self, notice_data: DMCANoticeData):
-        """Schedule follow-up for DMCA notice."""
+        """
+Schedule follow-up for DMCA notice."""
         # Schedule automatic follow-up in 7 days
         followup_date = datetime.utcnow() + timedelta(days=7)
         
@@ -614,7 +634,8 @@ class LegalComplianceEngine:
         return report
     
     def _generate_compliance_recommendations(self, report: Dict[str, Any]) -> List[str]:
-        """Generate compliance improvement recommendations."""
+        """
+Generate compliance improvement recommendations."""
         recommendations = []
         
         if report['compliance_rate'] < 0.7:

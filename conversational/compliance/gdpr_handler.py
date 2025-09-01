@@ -5,8 +5,9 @@ including data privacy protection, consent management, and right to be forgotten
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 import hashlib
@@ -21,7 +22,9 @@ from ..ml.pii_detector import PIIDetector
 
 
 class DataProcessingPurpose(Enum):
-    """GDPR data processing purposes"""
+    """
+GDPR data processing purposes"""
+
     CONVERSATIONAL_AI = "conversational_ai"
     USER_ANALYTICS = "user_analytics"
     PERSONALIZATION = "personalization"
@@ -33,6 +36,7 @@ class DataProcessingPurpose(Enum):
 
 class PIICategory(Enum):
     """Categories of Personally Identifiable Information"""
+
     NAME = "name"
     EMAIL = "email"
     PHONE = "phone"
@@ -48,6 +52,7 @@ class PIICategory(Enum):
 
 class ConsentStatus(Enum):
     """Consent status for data processing"""
+
     GRANTED = "granted"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
@@ -57,6 +62,7 @@ class ConsentStatus(Enum):
 
 class DataSubjectRights(Enum):
     """GDPR data subject rights"""
+
     ACCESS = "access"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
@@ -81,7 +87,8 @@ class PIIDetection:
 
 @dataclass
 class ConsentRecord:
-    """Consent record structure"""
+    """
+Consent record structure"""
     user_id: int
     purpose: DataProcessingPurpose
     status: ConsentStatus
@@ -96,7 +103,8 @@ class ConsentRecord:
 
 @dataclass
 class GDPRComplianceResult:
-    """GDPR compliance assessment result"""
+    """
+GDPR compliance assessment result"""
     is_compliant: bool
     pii_detected: List[PIIDetection]
     consent_requirements: List[ConsentRecord]
@@ -497,7 +505,8 @@ class GDPRHandler:
         pii_detections: List[PIIDetection],
         conversation_data: Dict[str, Any]
     ) -> List[ConsentRecord]:
-        """Check consent requirements for detected PII"""
+        """
+Check consent requirements for detected PII"""
         consent_requirements = []
         
         # Load user's current consent status
@@ -653,7 +662,8 @@ class GDPRHandler:
         pii_detections: List[PIIDetection],
         conversation_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess data retention requirements"""
+        """
+Assess data retention requirements"""
         retention_assessment = {
             "recommended_retention_days": 365,
             "automatic_deletion_recommended": True,

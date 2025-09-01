@@ -5,6 +5,7 @@ Quick validation script for the secrets management module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import sys
 import os
 import traceback
@@ -14,7 +15,8 @@ from typing import Dict, Any
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def test_module_imports() -> Dict[str, Any]:
-    """Test importing all module components."""
+    """
+Test importing all module components."""
     test_results = {
         'imports': {},
         'errors': [],

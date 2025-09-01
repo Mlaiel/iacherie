@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class SEOStrategy(Enum):
-    """SEO optimization strategies"""
+    """
+SEO optimization strategies"""
+
     ORGANIC_GROWTH = "organic_growth"
     VIRAL_OPTIMIZATION = "viral_optimization"
     NICHE_TARGETING = "niche_targeting"
@@ -50,6 +53,7 @@ class SEOStrategy(Enum):
 
 class PlatformType(Enum):
     """Platform types for SEO optimization"""
+
     SEARCH_ENGINE = "search_engine"  # Google, Bing, etc.
     SOCIAL_MEDIA = "social_media"    # Instagram, TikTok, etc.
     VIDEO_PLATFORM = "video_platform"  # YouTube, Vimeo, etc.
@@ -60,6 +64,7 @@ class PlatformType(Enum):
 
 class OptimizationLevel(Enum):
     """SEO optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -85,7 +90,8 @@ class KeywordProfile:
 
 @dataclass
 class SEOMetadata:
-    """SEO metadata structure"""
+    """
+SEO metadata structure"""
     metadata_id: str
     content_id: str
     optimized_title: str
@@ -102,7 +108,8 @@ class SEOMetadata:
 
 @dataclass
 class PlatformOptimization:
-    """Platform-specific optimization"""
+    """
+Platform-specific optimization"""
     optimization_id: str
     content_id: str
     platform_name: str
@@ -118,7 +125,8 @@ class PlatformOptimization:
 
 @dataclass
 class SEOPerformance:
-    """SEO performance metrics"""
+    """
+SEO performance metrics"""
     performance_id: str
     content_id: str
     platform: str
@@ -134,7 +142,8 @@ class SEOPerformance:
 
 @dataclass
 class TrendingTopics:
-    """Trending topics data"""
+    """
+Trending topics data"""
     topic_id: str
     platform: str
     trending_keywords: List[str]
@@ -816,7 +825,8 @@ class SEOOptimizationEngine:
         return []
     
     async def _consolidate_trending_topics(self, trending_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Consolidate trending topics across platforms"""
+        """
+Consolidate trending topics across platforms"""
         # Implementation for trending topics consolidation
         return {"keywords": [], "hashtags": []}
     

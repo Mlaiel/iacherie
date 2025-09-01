@@ -7,8 +7,9 @@ This module processes content analysis events following the business logic:
 Content Upload → Validation → Analysis → Protection → SEO → Collaboration → Distribution
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
@@ -37,7 +38,9 @@ from ...ai.metadata.extractor import MetadataExtractor
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration for multi-format support"""
+    """
+Content type enumeration for multi-format support"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -46,6 +49,7 @@ class ContentType(Enum):
 
 class AnalysisStage(Enum):
     """Content analysis processing stages"""
+
     VALIDATION = "validation"
     METADATA_EXTRACTION = "metadata_extraction"
     QUALITY_ASSESSMENT = "quality_assessment"
@@ -65,7 +69,8 @@ class ContentAnalysisMetrics:
     analysis_timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary format"""
+        """
+Convert metrics to dictionary format"""
         return {
             'processing_time': self.processing_time,
             'quality_score': self.quality_score,
@@ -78,7 +83,8 @@ class ContentAnalysisMetrics:
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis results"""
+    """
+Comprehensive content analysis results"""
     content_id: str
     content_type: ContentType
     analysis_stage: AnalysisStage
@@ -89,7 +95,8 @@ class ContentAnalysisResult:
     next_stages: List[str]
     
     def get_business_insights(self) -> Dict[str, Any]:
-        """Extract business insights from analysis results"""
+        """
+Extract business insights from analysis results"""
         return {
             'monetization_potential': self._calculate_monetization_potential(),
             'collaboration_opportunities': self._identify_collaboration_opportunities(),
@@ -98,14 +105,16 @@ class ContentAnalysisResult:
         }
     
     def _calculate_monetization_potential(self) -> float:
-        """Calculate monetization potential based on content quality and features"""
+        """
+Calculate monetization potential based on content quality and features"""
         base_score = self.quality_metrics.quality_score * 0.4
         engagement_score = self.features.get('engagement_potential', 0.5) * 0.3
         uniqueness_score = self.features.get('uniqueness_score', 0.5) * 0.3
         return min(1.0, base_score + engagement_score + uniqueness_score)
     
     def _identify_collaboration_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""
+        """
+Identify potential collaboration opportunities"""
         opportunities = []
         
         # Analyze content characteristics for collaboration matching
@@ -129,14 +138,16 @@ class ContentAnalysisResult:
         return opportunities
     
     def _calculate_seo_score(self) -> float:
-        """Calculate SEO optimization score"""
+        """
+Calculate SEO optimization score"""
         metadata_score = self.quality_metrics.metadata_completeness * 0.4
         content_quality = self.quality_metrics.quality_score * 0.3
         keyword_relevance = self.features.get('keyword_relevance', 0.5) * 0.3
         return metadata_score + content_quality + keyword_relevance
     
     def _generate_distribution_recommendations(self) -> List[Dict[str, str]]:
-        """Generate platform-specific distribution recommendations"""
+        """
+Generate platform-specific distribution recommendations"""
         recommendations = []
         
         if self.content_type == ContentType.AUDIO:
@@ -184,7 +195,8 @@ class ContentAnalysisHandler(BaseEventHandler):
         self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""
+        """
+Initialize AI models for content analysis"""
         try:
             # Text analysis models
             self.sentiment_analyzer = pipeline(
@@ -380,7 +392,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             return validation_result
     
     async def _validate_audio_content(self, content_path: str) -> Dict[str, Any]:
-        """Validate audio content using librosa and AI analysis"""
+        """
+Validate audio content using librosa and AI analysis"""
         try:
             # Load audio file
             audio_data, sample_rate = librosa.load(content_path, sr=None)
@@ -570,7 +583,8 @@ class ContentAnalysisHandler(BaseEventHandler):
         return present_fields / len(required_fields)
     
     def _generate_initial_recommendations(self, content_type: ContentType, metadata: Dict[str, Any]) -> List[str]:
-        """Generate initial recommendations based on content type and metadata"""
+        """
+Generate initial recommendations based on content type and metadata"""
         recommendations = []
         
         if content_type == ContentType.AUDIO:
@@ -605,23 +619,28 @@ class ContentAnalysisHandler(BaseEventHandler):
         return await self.metadata_extractor.extract_metadata(content_path, content_type.value)
     
     async def _extract_comprehensive_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Extract comprehensive metadata with AI enhancement"""
+        """
+Extract comprehensive metadata with AI enhancement"""
         return await self.metadata_extractor.extract_comprehensive_metadata(content_path, content_type.value)
     
     async def _enhance_metadata_with_ai(self, metadata: Dict[str, Any], content_type: ContentType) -> Dict[str, Any]:
-        """Enhance metadata using AI analysis"""
+        """
+Enhance metadata using AI analysis"""
         return await self.metadata_extractor.enhance_with_ai(metadata, content_type.value)
     
     async def _extract_content_features(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Extract detailed content features for business intelligence"""
+        """
+Extract detailed content features for business intelligence"""
         return await self.content_processor.extract_features(content_path, content_type.value)
     
     async def _assess_content_quality(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Perform comprehensive content quality assessment"""
+        """
+Perform comprehensive content quality assessment"""
         return await self.quality_analyzer.assess_quality(content_path, content_type.value)
     
     def _generate_metadata_recommendations(self, metadata: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on metadata analysis"""
+        """
+Generate recommendations based on metadata analysis"""
         recommendations = []
         
         if not metadata.get('title'):

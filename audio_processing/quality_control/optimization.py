@@ -5,7 +5,7 @@ quality improvement, and adaptive audio processing based on quality analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Audio optimization types"""
+    """
+Audio optimization types"""
+
     NOISE_REDUCTION = "noise_reduction"
     DYNAMIC_RANGE = "dynamic_range"
     FREQUENCY_BALANCE = "frequency_balance"
@@ -47,6 +50,7 @@ class OptimizationType(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization intensity levels"""
+
     MINIMAL = "minimal"       # Light processing
     MODERATE = "moderate"     # Standard processing
     AGGRESSIVE = "aggressive" # Heavy processing
@@ -102,7 +106,8 @@ class AudioOptimizer:
         level: OptimizationLevel = OptimizationLevel.MODERATE,
         target_metrics: Optional[Dict[str, float]] = None
     ) -> Tuple[np.ndarray, OptimizationResult]:
-        """Optimize audio data"""
+        """
+Optimize audio data"""
         start_time = datetime.now()
         
         try:
@@ -214,7 +219,8 @@ class AudioOptimizer:
         before_metrics: Dict[str, float],
         after_metrics: Dict[str, float]
     ) -> float:
-        """Calculate overall quality improvement"""
+        """
+Calculate overall quality improvement"""
         # Simple improvement calculation based on key metrics
         improvements = []
         
@@ -237,7 +243,8 @@ class AudioOptimizer:
         return sum(improvements) / len(improvements) if improvements else 0.0
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get optimizer statistics"""
+        """
+Get optimizer statistics"""
         return {
             'optimization_type': self.optimization_type.value,
             'processing_count': self.processing_count,
@@ -249,7 +256,8 @@ class AudioOptimizer:
 
 
 class NoiseReductionOptimizer(AudioOptimizer):
-    """Noise reduction optimizer"""
+    """
+Noise reduction optimizer"""
     
     def __init__(self):
         super().__init__(OptimizationType.NOISE_REDUCTION)
@@ -261,7 +269,8 @@ class NoiseReductionOptimizer(AudioOptimizer):
         level: OptimizationLevel,
         target_metrics: Optional[Dict[str, float]]
     ) -> np.ndarray:
-        """Apply noise reduction"""
+        """
+Apply noise reduction"""
         
         # Spectral subtraction-based noise reduction
         
@@ -316,7 +325,8 @@ class NoiseReductionOptimizer(AudioOptimizer):
 
 
 class DynamicRangeOptimizer(AudioOptimizer):
-    """Dynamic range optimizer"""
+    """
+Dynamic range optimizer"""
     
     def __init__(self):
         super().__init__(OptimizationType.DYNAMIC_RANGE)
@@ -328,7 +338,8 @@ class DynamicRangeOptimizer(AudioOptimizer):
         level: OptimizationLevel,
         target_metrics: Optional[Dict[str, float]]
     ) -> np.ndarray:
-        """Apply dynamic range optimization"""
+        """
+Apply dynamic range optimization"""
         
         # Multi-band compressor/expander
         
@@ -370,7 +381,8 @@ class DynamicRangeOptimizer(AudioOptimizer):
         attack: float,
         release: float
     ) -> np.ndarray:
-        """Apply dynamic range compression"""
+        """
+Apply dynamic range compression"""
         
         # Convert threshold to linear
         threshold_linear = 10 ** (threshold / 20)
@@ -411,7 +423,8 @@ class DynamicRangeOptimizer(AudioOptimizer):
 
 
 class FrequencyBalanceOptimizer(AudioOptimizer):
-    """Frequency balance optimizer"""
+    """
+Frequency balance optimizer"""
     
     def __init__(self):
         super().__init__(OptimizationType.FREQUENCY_BALANCE)
@@ -423,7 +436,8 @@ class FrequencyBalanceOptimizer(AudioOptimizer):
         level: OptimizationLevel,
         target_metrics: Optional[Dict[str, float]]
     ) -> np.ndarray:
-        """Apply frequency balance optimization"""
+        """
+Apply frequency balance optimization"""
         
         # Multi-band EQ optimization
         
@@ -481,7 +495,8 @@ class FrequencyBalanceOptimizer(AudioOptimizer):
         target_balance: Dict[str, float],
         level: OptimizationLevel
     ) -> np.ndarray:
-        """Design EQ curve to balance frequencies"""
+        """
+Design EQ curve to balance frequencies"""
         
         # Calculate adjustment factors
         adjustments = {}
@@ -524,7 +539,8 @@ class FrequencyBalanceOptimizer(AudioOptimizer):
         eq_curve: np.ndarray,
         freqs: np.ndarray
     ) -> np.ndarray:
-        """Apply frequency domain EQ"""
+        """
+Apply frequency domain EQ"""
         
         # FFT
         n_fft = len(eq_curve) * 2
@@ -542,7 +558,8 @@ class FrequencyBalanceOptimizer(AudioOptimizer):
 
 
 class LoudnessNormalizationOptimizer(AudioOptimizer):
-    """Loudness normalization optimizer"""
+    """
+Loudness normalization optimizer"""
     
     def __init__(self):
         super().__init__(OptimizationType.LOUDNESS_NORMALIZATION)
@@ -554,7 +571,8 @@ class LoudnessNormalizationOptimizer(AudioOptimizer):
         level: OptimizationLevel,
         target_metrics: Optional[Dict[str, float]]
     ) -> np.ndarray:
-        """Apply loudness normalization"""
+        """
+Apply loudness normalization"""
         
         # Target loudness based on level or metrics
         if target_metrics and 'target_lufs' in target_metrics:
@@ -592,7 +610,8 @@ class LoudnessNormalizationOptimizer(AudioOptimizer):
             return self._rms_normalize(audio_data, target_lufs)
     
     def _rms_normalize(self, audio_data: np.ndarray, target_lufs: float) -> np.ndarray:
-        """RMS-based loudness normalization fallback"""
+        """
+RMS-based loudness normalization fallback"""
         
         # Convert LUFS to approximate RMS (rough conversion)
         target_rms_db = target_lufs + 6  # Approximate conversion
@@ -651,7 +670,8 @@ class QualityOptimizer:
         quality_profile: QualityProfile,
         quality_report: QualityReport
     ) -> np.ndarray:
-        """Optimize audio based on quality assessment"""
+        """
+Optimize audio based on quality assessment"""
         
         start_time = datetime.now()
         
@@ -746,7 +766,8 @@ class QualityOptimizer:
         )
     
     def _analyze_quality_issues(self, quality_report: QualityReport) -> Dict[str, float]:
-        """Analyze quality issues from report"""
+        """
+Analyze quality issues from report"""
         issues = {}
         
         # Check validation results
@@ -770,7 +791,8 @@ class QualityOptimizer:
         return issues
     
     def _map_issue_to_optimization(self, issue: str) -> Optional[OptimizationType]:
-        """Map quality issue to optimization type"""
+        """
+Map quality issue to optimization type"""
         
         issue_mapping = {
             'snr': OptimizationType.NOISE_REDUCTION,
@@ -790,7 +812,8 @@ class QualityOptimizer:
         severity: float,
         quality_profile: QualityProfile
     ) -> OptimizationLevel:
-        """Determine optimization level based on issue severity"""
+        """
+Determine optimization level based on issue severity"""
         
         # Base level on quality profile
         base_level = {
@@ -816,7 +839,8 @@ class QualityOptimizer:
         optimizations: List[OptimizationType],
         issues: Dict[str, float]
     ) -> List[OptimizationType]:
-        """Prioritize optimizations based on impact and dependencies"""
+        """
+Prioritize optimizations based on impact and dependencies"""
         
         # Priority order based on typical processing pipeline
         priority_map = {
@@ -843,7 +867,8 @@ class QualityOptimizer:
         return sorted(optimizations, key=priority_key)
     
     def _extract_target_metrics(self, quality_profile: QualityProfile) -> Dict[str, float]:
-        """Extract target metrics from quality profile"""
+        """
+Extract target metrics from quality profile"""
         target_metrics = {}
         
         requirements = quality_profile.requirements
@@ -864,7 +889,8 @@ class QualityOptimizer:
         optimizations: List[OptimizationType],
         levels: Dict[OptimizationType, OptimizationLevel]
     ) -> float:
-        """Estimate quality improvement from optimizations"""
+        """
+Estimate quality improvement from optimizations"""
         
         # Base improvement estimates per optimization type
         base_improvements = {
@@ -898,7 +924,8 @@ class QualityOptimizer:
         optimizations: List[OptimizationType],
         levels: Dict[OptimizationType, OptimizationLevel]
     ) -> float:
-        """Estimate total processing time"""
+        """
+Estimate total processing time"""
         
         # Base processing times (seconds per minute of audio)
         base_times = {
@@ -927,7 +954,8 @@ class QualityOptimizer:
         return total_time
     
     def get_optimization_statistics(self) -> Dict[str, Any]:
-        """Get optimization performance statistics"""
+        """
+Get optimization performance statistics"""
         
         if not self.optimization_history:
             return {'no_data': True}
@@ -953,7 +981,8 @@ class QualityOptimizer:
         }
     
     def add_custom_optimizer(self, optimizer: AudioOptimizer):
-        """Add custom optimizer"""
+        """
+Add custom optimizer"""
         self.optimizers[optimizer.optimization_type] = optimizer
         logger.info(f"Added custom optimizer: {optimizer.optimization_type.value}")
     

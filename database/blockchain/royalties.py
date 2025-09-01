@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -42,7 +43,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 class RoyaltyType(Enum):
-    """Types of royalty payments."""
+    """
+Types of royalty payments."""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
@@ -54,6 +57,7 @@ class RoyaltyType(Enum):
 
 class PaymentCurrency(Enum):
     """Supported payment currencies."""
+
     ETH = "ETH"
     MATIC = "MATIC"
     BNB = "BNB"
@@ -63,6 +67,7 @@ class PaymentCurrency(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -102,7 +107,8 @@ class RoyaltyContract:
 
 @dataclass
 class RoyaltyPayment:
-    """Individual royalty payment record."""
+    """
+Individual royalty payment record."""
     payment_id: str
     contract_id: str
     recipient_id: str
@@ -119,7 +125,8 @@ class RoyaltyPayment:
 
 @dataclass
 class RevenueReport:
-    """Revenue and royalty distribution report."""
+    """
+Revenue and royalty distribution report."""
     report_id: str
     contract_id: str
     period_start: datetime
@@ -152,7 +159,8 @@ class RoyaltyDistributor:
         self._initialize_blockchain_connections()
     
     def _initialize_blockchain_connections(self) -> None:
-        """Initialize connections to supported blockchain networks."""
+        """
+Initialize connections to supported blockchain networks."""
         networks = self.config.get("supported_networks", [])
         
         for network in networks:
@@ -462,7 +470,8 @@ class RoyaltyDistributor:
         return groups
     
     def _get_best_network_for_currency(self, currency: PaymentCurrency) -> str:
-        """Determine the best blockchain network for a specific currency."""
+        """
+Determine the best blockchain network for a specific currency."""
         currency_networks = {
             PaymentCurrency.ETH: "ethereum_mainnet",
             PaymentCurrency.MATIC: "polygon_mainnet",

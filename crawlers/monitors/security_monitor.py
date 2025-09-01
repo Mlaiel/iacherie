@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import hashlib
@@ -40,7 +41,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class SecurityEventType(Enum):
-    """Security event types."""
+    """
+Security event types."""
+
     AUTHENTICATION_FAILURE = "authentication_failure"
     AUTHORIZATION_VIOLATION = "authorization_violation"
     SUSPICIOUS_LOGIN = "suspicious_login"
@@ -57,6 +60,7 @@ class SecurityEventType(Enum):
 
 class SecuritySeverity(Enum):
     """Security event severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -65,6 +69,7 @@ class SecuritySeverity(Enum):
 
 class IntrusionType(Enum):
     """Intrusion detection types."""
+
     NETWORK_SCAN = "network_scan"
     PORT_SCAN = "port_scan"
     VULNERABILITY_SCAN = "vulnerability_scan"
@@ -125,7 +130,8 @@ class IntrusionDetector:
         self._initialize_attack_patterns()
     
     def _initialize_attack_patterns(self) -> None:
-        """Initialize known attack patterns for detection."""
+        """
+Initialize known attack patterns for detection."""
         self.malicious_patterns = {
             "sql_injection": [
                 r"(?i)(union|select|insert|update|delete|drop|create|alter)\s+",
@@ -357,7 +363,8 @@ class SecurityMonitor(MonitorEngine):
         self._initialize_security_rules()
     
     def _initialize_security_rules(self) -> None:
-        """Initialize security monitoring rules."""
+        """
+Initialize security monitoring rules."""
         self.security_rules = {
             "authentication_failure_threshold": {
                 "threshold": 5,
@@ -470,7 +477,8 @@ class SecurityMonitor(MonitorEngine):
             await self._process_security_event(event)
     
     async def _process_security_event(self, event: Dict[str, Any]) -> None:
-        """Process individual security event."""
+        """
+Process individual security event."""
         try:
             # Detect intrusions
             security_events = await self.intrusion_detector.detect_intrusion(event)
@@ -727,12 +735,14 @@ class SecurityMonitor(MonitorEngine):
         pass
     
     async def _initialize_security_baseline(self) -> None:
-        """Initialize security monitoring baseline."""
+        """
+Initialize security monitoring baseline."""
         # Implementation would establish normal behavior patterns
         pass
     
     async def _monitor_authentication_events(self) -> None:
-        """Monitor authentication-related events."""
+        """
+Monitor authentication-related events."""
         while True:
             try:
                 # Monitor authentication events

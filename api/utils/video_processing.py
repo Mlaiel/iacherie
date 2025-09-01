@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import cv2
 import numpy as np
 import subprocess
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoMetadata:
-    """Video metadata container"""
+    """
+Video metadata container"""
     filename: str
     duration: float
     fps: float
@@ -57,7 +59,8 @@ class VideoMetadata:
     creation_date: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'filename': self.filename,
             'duration': self.duration,
@@ -90,7 +93,8 @@ class VideoFingerprint:
     color_palette: List[Tuple[int, int, int]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'video_hash': self.video_hash,
             'frame_hashes': self.frame_hashes,
@@ -106,7 +110,8 @@ class VideoFingerprint:
 
 @dataclass
 class VideoAnalysisResult:
-    """Video analysis results"""
+    """
+Video analysis results"""
     metadata: VideoMetadata
     fingerprint: VideoFingerprint
     quality_score: float
@@ -121,7 +126,8 @@ class VideoAnalysisResult:
     face_detection: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'metadata': self.metadata.to_dict(),
             'fingerprint': self.fingerprint.to_dict(),
@@ -140,7 +146,8 @@ class VideoAnalysisResult:
 
 @dataclass
 class VideoOptimizationResult:
-    """Video optimization results"""
+    """
+Video optimization results"""
     original_size: int
     optimized_size: int
     compression_ratio: float
@@ -150,7 +157,8 @@ class VideoOptimizationResult:
     optimization_settings: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'original_size': self.original_size,
             'optimized_size': self.optimized_size,
@@ -164,13 +172,15 @@ class VideoOptimizationResult:
 
 
 class VideoMetadataExtractor:
-    """Extract comprehensive video metadata"""
+    """
+Extract comprehensive video metadata"""
     
     def __init__(self):
         self.supported_formats = ['.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv', '.webm', '.m4v']
     
     def extract_metadata(self, video_path: str) -> VideoMetadata:
-        """Extract video metadata"""
+        """
+Extract video metadata"""
         if not os.path.exists(video_path):
             raise FileNotFoundError(f"Video file not found: {video_path}")
         
@@ -265,7 +275,8 @@ class VideoFrameExtractor:
                       output_dir: Optional[str] = None,
                       frame_format: str = 'jpg',
                       max_frames: Optional[int] = None) -> List[str]:
-        """Extract frames from video"""
+        """
+Extract frames from video"""
         cap = cv2.VideoCapture(video_path)
         
         if not cap.isOpened():
@@ -408,7 +419,8 @@ class VideoFingerprinter:
         self.frame_extractor = VideoFrameExtractor()
     
     def generate_fingerprint(self, video_path: str) -> VideoFingerprint:
-        """Generate comprehensive video fingerprint"""
+        """
+Generate comprehensive video fingerprint"""
         # Generate video hash
         video_hash = self._generate_video_hash(video_path)
         
@@ -448,7 +460,8 @@ class VideoFingerprinter:
         )
     
     def _generate_video_hash(self, video_path: str) -> str:
-        """Generate hash of entire video file"""
+        """
+Generate hash of entire video file"""
         hash_algo = hashlib.sha256()
         
         with open(video_path, 'rb') as f:
@@ -459,7 +472,8 @@ class VideoFingerprinter:
         return hash_algo.hexdigest()
     
     def _generate_frame_hash(self, frame: np.ndarray) -> str:
-        """Generate perceptual hash for a frame"""
+        """
+Generate perceptual hash for a frame"""
         # Convert to PIL Image
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         pil_image = Image.fromarray(frame_rgb)
@@ -469,7 +483,8 @@ class VideoFingerprinter:
         return str(phash)
     
     def _extract_histogram_features(self, frames: List[np.ndarray]) -> List[float]:
-        """Extract color histogram features"""
+        """
+Extract color histogram features"""
         if not frames:
             return []
         
@@ -488,7 +503,8 @@ class VideoFingerprinter:
         return averaged_features.tolist()
     
     def _extract_motion_features(self, video_path: str) -> List[float]:
-        """Extract motion-based features"""
+        """
+Extract motion-based features"""
         cap = cv2.VideoCapture(video_path)
         
         if not cap.isOpened():
@@ -544,7 +560,8 @@ class VideoFingerprinter:
         return [0.0, 0.0, 0.0, 0.0]
     
     def _extract_temporal_features(self, video_path: str) -> List[float]:
-        """Extract temporal features like scene transitions"""
+        """
+Extract temporal features like scene transitions"""
         cap = cv2.VideoCapture(video_path)
         
         if not cap.isOpened():
@@ -583,7 +600,8 @@ class VideoFingerprinter:
         return [0.0, 0.0, 0.0, 0.0]
     
     def _detect_scene_changes(self, video_path: str, threshold: float = 30.0) -> List[int]:
-        """Detect scene change frame indices"""
+        """
+Detect scene change frame indices"""
         cap = cv2.VideoCapture(video_path)
         
         if not cap.isOpened():
@@ -619,7 +637,8 @@ class VideoFingerprinter:
     
     def _extract_color_palette(self, frames: List[np.ndarray], 
                              num_colors: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant color palette from frames"""
+        """
+Extract dominant color palette from frames"""
         if not frames:
             return []
         
@@ -652,7 +671,8 @@ class VideoFingerprinter:
         return colors
     
     def _extract_audio_fingerprint(self, video_path: str) -> Optional[str]:
-        """Extract audio fingerprint if audio track exists"""
+        """
+Extract audio fingerprint if audio track exists"""
         try:
             with VideoFileClip(video_path) as clip:
                 if clip.audio is None:
@@ -694,7 +714,8 @@ class VideoAnalyzer:
     def analyze_video(self, video_path: str, 
                      include_object_detection: bool = False,
                      include_face_detection: bool = False) -> VideoAnalysisResult:
-        """Comprehensive video analysis"""
+        """
+Comprehensive video analysis"""
         # Extract metadata
         metadata = self.metadata_extractor.extract_metadata(video_path)
         
@@ -746,7 +767,8 @@ class VideoAnalyzer:
         )
     
     def _calculate_quality_score(self, video_path: str, metadata: VideoMetadata) -> float:
-        """Calculate video quality score"""
+        """
+Calculate video quality score"""
         score = 0.0
         
         # Resolution score (0-30 points)
@@ -804,7 +826,8 @@ class VideoAnalyzer:
         return min(100.0, score)
     
     def _calculate_complexity_score(self, fingerprint: VideoFingerprint) -> float:
-        """Calculate video complexity score"""
+        """
+Calculate video complexity score"""
         score = 0.0
         
         # Scene changes complexity (0-30 points)
@@ -851,7 +874,8 @@ class VideoAnalyzer:
         return min(100.0, score)
     
     def _calculate_motion_intensity(self, motion_features: List[float]) -> float:
-        """Calculate motion intensity"""
+        """
+Calculate motion intensity"""
         if not motion_features or len(motion_features) < 2:
             return 0.0
         
@@ -863,7 +887,8 @@ class VideoAnalyzer:
         return intensity
     
     def _calculate_visual_statistics(self, video_path: str) -> Tuple[Dict[str, float], Dict[str, float]]:
-        """Calculate brightness and contrast statistics"""
+        """
+Calculate brightness and contrast statistics"""
         cap = cv2.VideoCapture(video_path)
         
         if not cap.isOpened():
@@ -922,7 +947,8 @@ class VideoAnalyzer:
         return brightness_stats, contrast_stats
     
     def _analyze_audio(self, video_path: str) -> Optional[Dict[str, Any]]:
-        """Analyze audio track"""
+        """
+Analyze audio track"""
         try:
             with VideoFileClip(video_path) as clip:
                 if clip.audio is None:
@@ -1024,7 +1050,8 @@ class VideoOptimizer:
                       target_size_mb: Optional[int] = None,
                       quality: str = 'medium',
                       platform: str = 'general') -> VideoOptimizationResult:
-        """Optimize video for size and quality"""
+        """
+Optimize video for size and quality"""
         start_time = time.time()
         original_size = os.path.getsize(input_path)
         
@@ -1067,7 +1094,8 @@ class VideoOptimizer:
     
     def _get_optimization_settings(self, quality: str, platform: str, 
                                  target_size_mb: Optional[int]) -> Dict[str, Any]:
-        """Get optimization settings based on parameters"""
+        """
+Get optimization settings based on parameters"""
         base_settings = {
             'codec': 'libx264',
             'preset': 'medium',
@@ -1219,7 +1247,8 @@ class VideoOptimizer:
 
 
 class VideoDuplicateDetector:
-    """Detect duplicate and similar videos"""
+    """
+Detect duplicate and similar videos"""
     
     def __init__(self, database_path: Optional[str] = None):
         self.database_path = database_path or os.path.join(tempfile.gettempdir(), 'video_fingerprints.db')
@@ -1227,7 +1256,8 @@ class VideoDuplicateDetector:
         self._init_database()
     
     def _init_database(self):
-        """Initialize fingerprint database"""
+        """
+Initialize fingerprint database"""
         with sqlite3.connect(self.database_path) as conn:
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS video_fingerprints (
@@ -1241,7 +1271,8 @@ class VideoDuplicateDetector:
             conn.commit()
     
     def add_video(self, video_path: str) -> str:
-        """Add video fingerprint to database"""
+        """
+Add video fingerprint to database"""
         fingerprint = self.fingerprinter.generate_fingerprint(video_path)
         fingerprint_json = json.dumps(fingerprint.to_dict())
         
@@ -1257,7 +1288,8 @@ class VideoDuplicateDetector:
     
     def find_duplicates(self, video_path: str, 
                        similarity_threshold: float = 0.9) -> List[Dict[str, Any]]:
-        """Find duplicate or similar videos"""
+        """
+Find duplicate or similar videos"""
         target_fingerprint = self.fingerprinter.generate_fingerprint(video_path)
         
         duplicates = []
@@ -1288,7 +1320,8 @@ class VideoDuplicateDetector:
         return sorted(duplicates, key=lambda x: x['similarity_score'], reverse=True)
     
     def _calculate_similarity(self, fp1: VideoFingerprint, fp2: VideoFingerprint) -> float:
-        """Calculate similarity between two video fingerprints"""
+        """
+Calculate similarity between two video fingerprints"""
         similarity_scores = []
         
         # Exact hash match
@@ -1342,7 +1375,8 @@ class VideoDuplicateDetector:
 
 
 class VideoProcessor:
-    """Main video processing coordinator"""
+    """
+Main video processing coordinator"""
     
     def __init__(self):
         self.analyzer = VideoAnalyzer()
@@ -1354,7 +1388,8 @@ class VideoProcessor:
                                         optimize: bool = False,
                                         check_duplicates: bool = False,
                                         optimization_settings: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Comprehensive video processing"""
+        """
+Comprehensive video processing"""
         if not os.path.exists(video_path):
             return {'error': 'Video file not found'}
         
@@ -1460,7 +1495,8 @@ class VideoProcessor:
         return results
     
     def generate_video_report(self, video_path: str) -> Dict[str, Any]:
-        """Generate comprehensive video report"""
+        """
+Generate comprehensive video report"""
         analysis = self.analyzer.analyze_video(video_path, 
                                              include_face_detection=True)
         
@@ -1491,7 +1527,8 @@ class VideoProcessor:
         return report
     
     def _assess_visual_quality(self, analysis: VideoAnalysisResult) -> str:
-        """Assess visual quality"""
+        """
+Assess visual quality"""
         score = analysis.quality_score
         
         if score >= 80:
@@ -1504,7 +1541,8 @@ class VideoProcessor:
             return 'Poor'
     
     def _assess_audio_quality(self, audio_analysis: Optional[Dict[str, Any]]) -> str:
-        """Assess audio quality"""
+        """
+Assess audio quality"""
         if not audio_analysis:
             return 'No Audio'
         
@@ -1520,7 +1558,8 @@ class VideoProcessor:
             return 'Poor'
     
     def _generate_recommendations(self, analysis: VideoAnalysisResult) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         # Resolution recommendations

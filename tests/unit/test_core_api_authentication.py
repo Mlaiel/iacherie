@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Critical API Endpoints
+"""
+Unit Tests for Critical API Endpoints
 =====================================
 
 Critical unit tests for the main API endpoints including
@@ -21,6 +23,7 @@ authentication, content upload, monetization, and core platform APIs.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
 """
+
 import pytest
 import sys
 import os
@@ -36,7 +39,8 @@ import hashlib
 
 
 class MockAuthenticationAPI:
-    """Mock implementation of authentication API for testing"""
+    """
+Mock implementation of authentication API for testing"""
     
     def __init__(self):
         self.users = {}
@@ -45,7 +49,8 @@ class MockAuthenticationAPI:
         self.password_reset_tokens = {}
         
     async def register_user(self, user_data: Dict) -> Dict[str, Any]:
-        """Register a new user"""
+        """
+Register a new user"""
         required_fields = ["email", "password", "username"]
         for field in required_fields:
             if field not in user_data:
@@ -201,12 +206,14 @@ class TestCriticalAPIEndpoints:
     
     @pytest.fixture
     def auth_api(self):
-        """Create authentication API fixture"""
+        """
+Create authentication API fixture"""
         return MockAuthenticationAPI()
     
     @pytest.fixture
     def sample_user_data(self):
-        """Sample user registration data"""
+        """
+Sample user registration data"""
         return {
             "email": "test@example.com",
             "password": "SecurePassword123!",

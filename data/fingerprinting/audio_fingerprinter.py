@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -71,7 +72,8 @@ class AudioFeatures:
 
 @dataclass
 class AudioFingerprint:
-    """Complete audio fingerprint"""
+    """
+Complete audio fingerprint"""
     content_id: str
     file_path: str
     duration: float
@@ -122,7 +124,8 @@ class AudioFingerprinter:
         self._initialize_essentia()
     
     def _initialize_essentia(self):
-        """Initialize Essentia audio analysis algorithms"""
+        """
+Initialize Essentia audio analysis algorithms"""
         try:
             # Tempo and rhythm analysis
             self.tempo_estimator = RhythmExtractor2013()
@@ -600,7 +603,8 @@ class AudioFingerprinter:
     
     async def _calculate_detailed_similarity(self, fp1: AudioFingerprint, 
                                            fp2: AudioFingerprint) -> Dict[str, float]:
-        """Calculate detailed similarity metrics between two fingerprints"""
+        """
+Calculate detailed similarity metrics between two fingerprints"""
         try:
             similarities = {}
             
@@ -660,7 +664,8 @@ class AudioFingerprinter:
             return 0.0
     
     async def _compare_audio_segments(self, segment1: np.ndarray, segment2: np.ndarray) -> float:
-        """Compare two audio segments for similarity"""
+        """
+Compare two audio segments for similarity"""
         try:
             # Extract features for both segments
             features1 = await self._extract_segment_features(segment1)

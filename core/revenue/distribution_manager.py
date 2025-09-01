@@ -1,7 +1,7 @@
 """Revenue Distribution Management System - Multi-Platform Distribution Engine
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStrategy(Enum):
-    """Revenue distribution strategies"""
+    """
+Revenue distribution strategies"""
+
     EQUAL_SPLIT = "equal_split"
     PERFORMANCE_BASED = "performance_based"
     WEIGHTED_CONTRIBUTION = "weighted_contribution"
@@ -59,6 +62,7 @@ class DistributionStrategy(Enum):
 
 class DistributionType(Enum):
     """Types of revenue distribution"""
+
     ARTIST_SPLITS = "artist_splits"
     PLATFORM_SHARES = "platform_shares"
     LABEL_ROYALTIES = "label_royalties"
@@ -71,6 +75,7 @@ class DistributionType(Enum):
 
 class PaymentMethod(Enum):
     """Payment methods for distribution"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -82,6 +87,7 @@ class PaymentMethod(Enum):
 
 class DistributionStatus(Enum):
     """Distribution processing status"""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     APPROVED = "approved"
@@ -128,18 +134,21 @@ class DistributionRule:
     
     @property
     def total_percentage(self) -> Decimal:
-        """Calculate total percentage allocation"""
+        """
+Calculate total percentage allocation"""
         return sum(b.percentage for b in self.beneficiaries if b.is_active)
     
     @property
     def is_valid(self) -> bool:
-        """Check if rule configuration is valid"""
+        """
+Check if rule configuration is valid"""
         return self.total_percentage <= Decimal('100') and len(self.beneficiaries) > 0
 
 
 @dataclass
 class DistributionTransaction:
-    """Revenue distribution transaction"""
+    """
+Revenue distribution transaction"""
     transaction_id: str
     rule_id: str
     source_revenue: Decimal
@@ -161,7 +170,8 @@ class DistributionTransaction:
 
 
 class DistributionCalculator:
-    """Advanced revenue distribution calculation engine"""
+    """
+Advanced revenue distribution calculation engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -282,7 +292,8 @@ class DistributionCalculator:
         rule: DistributionRule, 
         revenue_amount: Decimal
     ) -> List[Dict[str, Any]]:
-        """Calculate performance-based distribution"""
+        """
+Calculate performance-based distribution"""
         # This would integrate with performance metrics
         # For now, implement basic performance weighting
         distributions = []
@@ -331,7 +342,8 @@ class DistributionCalculator:
         rule: DistributionRule, 
         revenue_amount: Decimal
     ) -> List[Dict[str, Any]]:
-        """Calculate AI-optimized distribution"""
+        """
+Calculate AI-optimized distribution"""
         # Advanced AI optimization considering multiple factors
         distributions = []
         
@@ -378,7 +390,8 @@ class DistributionCalculator:
         rule: DistributionRule, 
         currency: str
     ) -> List[Dict[str, Any]]:
-        """Apply fees and tax withholdings"""
+        """
+Apply fees and tax withholdings"""
         for distribution in distributions:
             beneficiary = next(
                 b for b in rule.beneficiaries 
@@ -410,7 +423,8 @@ class DistributionCalculator:
         amount: Decimal, 
         payment_method: PaymentMethod
     ) -> Decimal:
-        """Calculate processing fees based on payment method"""
+        """
+Calculate processing fees based on payment method"""
         fee = Decimal('0')
         
         if payment_method == PaymentMethod.BANK_TRANSFER:
@@ -432,7 +446,8 @@ class DistributionCalculator:
         beneficiary: Beneficiary, 
         currency: str
     ) -> Decimal:
-        """Calculate tax withholding based on beneficiary tax information"""
+        """
+Calculate tax withholding based on beneficiary tax information"""
         tax_info = beneficiary.tax_information
         
         # Get applicable tax rate
@@ -456,7 +471,8 @@ class DistributionCalculator:
         distributions: List[Dict[str, Any]], 
         rule: DistributionRule
     ) -> List[Dict[str, Any]]:
-        """Validate and handle minimum payout requirements"""
+        """
+Validate and handle minimum payout requirements"""
         validated_distributions = []
         accumulated_amount = Decimal('0')
         
@@ -487,7 +503,8 @@ class DistributionCalculator:
         source_amount: Decimal, 
         currency: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive distribution summary"""
+        """
+Generate comprehensive distribution summary"""
         total_gross = sum(d['gross_amount'] for d in distributions)
         total_fees = sum(d['processing_fee'] for d in distributions)
         total_taxes = sum(d['tax_withholding'] for d in distributions)
@@ -513,7 +530,8 @@ class DistributionCalculator:
     
     # Placeholder methods for advanced features
     async def _get_performance_metrics(self, beneficiaries: List[Beneficiary]) -> Dict[str, Any]:
-        """Get performance metrics for beneficiaries"""
+        """
+Get performance metrics for beneficiaries"""
         # In production, this would query actual performance data
         return {
             beneficiary.beneficiary_id: {'score': 100}  # Default score
@@ -521,25 +539,29 @@ class DistributionCalculator:
         }
     
     async def _get_historical_performance(self, beneficiaries: List[Beneficiary]) -> Dict[str, Any]:
-        """Get historical performance data"""
+        """
+Get historical performance data"""
         return {
             beneficiary.beneficiary_id: 0.8  # Default performance score
             for beneficiary in beneficiaries
         }
     
     async def _get_market_conditions(self) -> Dict[str, Any]:
-        """Get current market conditions"""
+        """
+Get current market conditions"""
         return {'market_score': 0.75}
     
     async def _assess_beneficiary_risks(self, beneficiaries: List[Beneficiary]) -> Dict[str, Any]:
-        """Assess risk factors for each beneficiary"""
+        """
+Assess risk factors for each beneficiary"""
         return {
             beneficiary.beneficiary_id: 0.1  # Low risk default
             for beneficiary in beneficiaries
         }
     
     async def _assess_growth_potential(self, beneficiaries: List[Beneficiary]) -> Dict[str, Any]:
-        """Assess growth potential for each beneficiary"""
+        """
+Assess growth potential for each beneficiary"""
         return {
             beneficiary.beneficiary_id: 0.6  # Medium growth potential
             for beneficiary in beneficiaries
@@ -551,7 +573,8 @@ class DistributionCalculator:
         factors: Dict[str, Any], 
         revenue_amount: Decimal
     ) -> Dict[str, float]:
-        """Optimize distribution weights using AI algorithms"""
+        """
+Optimize distribution weights using AI algorithms"""
         # Simplified optimization algorithm
         weights = {}
         total_weight = 0
@@ -578,7 +601,8 @@ class DistributionCalculator:
 
 
 class RevenueDistributionManager:
-    """Comprehensive revenue distribution management system"""
+    """
+Comprehensive revenue distribution management system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -589,7 +613,8 @@ class RevenueDistributionManager:
         self.encryption_manager = EncryptionManager()
     
     async def initialize(self) -> None:
-        """Initialize distribution manager"""
+        """
+Initialize distribution manager"""
         try:
             await self._load_distribution_rules()
             await self._setup_payment_processors()
@@ -882,12 +907,14 @@ class RevenueDistributionManager:
         pass
     
     async def _setup_payment_processors(self) -> None:
-        """Setup payment processor connections"""
+        """
+Setup payment processor connections"""
         # Initialize payment processor APIs
         pass
     
     async def _initialize_monitoring(self) -> None:
-        """Initialize monitoring and alerting"""
+        """
+Initialize monitoring and alerting"""
         pass
     
     async def _record_distribution_metrics(
@@ -895,7 +922,8 @@ class RevenueDistributionManager:
         transaction: DistributionTransaction,
         distribution_result: Dict[str, Any]
     ) -> None:
-        """Record distribution metrics for monitoring"""
+        """
+Record distribution metrics for monitoring"""
         metrics = {
             'transaction_id': transaction.transaction_id,
             'rule_id': transaction.rule_id,
@@ -910,5 +938,6 @@ class RevenueDistributionManager:
 
 
 def create_distribution_manager(config: Optional[Dict[str, Any]] = None) -> RevenueDistributionManager:
-    """Factory function to create revenue distribution manager"""
+    """
+Factory function to create revenue distribution manager"""
     return RevenueDistributionManager(config)

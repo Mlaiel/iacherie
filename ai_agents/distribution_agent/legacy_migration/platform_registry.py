@@ -18,6 +18,7 @@ Violators will be prosecuted to the full extent of the law.
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
 """
+
 import logging
 from typing import Dict, List, Optional, Type, Any, Set
 from dataclasses import dataclass, field
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformAdapter:
-    """Base platform adapter interface"""
+    """
+Base platform adapter interface"""
     platform_type: PlatformType
     capabilities: PlatformCapabilities
     adapter_class: Type
@@ -48,7 +50,8 @@ class PlatformAdapter:
 
 
 class PlatformRegistryManager:
-    """Professional platform registry manager for all distribution platforms"""
+    """
+Professional platform registry manager for all distribution platforms"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -59,7 +62,8 @@ class PlatformRegistryManager:
         self._initialize_platform_registry()
     
     def _initialize_platform_registry(self):
-        """Initialize all platform adapters with their capabilities"""
+        """
+Initialize all platform adapters with their capabilities"""
         
         # YouTube Platform
         self._register_platform(
@@ -210,18 +214,21 @@ class PlatformRegistryManager:
         return list(self._adapters.keys())
     
     def get_active_platforms(self) -> List[PlatformType]:
-        """Get list of active platforms"""
+        """
+Get list of active platforms"""
         return [
             platform for platform, adapter in self._adapters.items()
             if adapter.is_active and adapter.adapter_class is not None
         ]
     
     def get_platform_capabilities(self, platform: PlatformType) -> Optional[PlatformCapabilities]:
-        """Get capabilities for a specific platform"""
+        """
+Get capabilities for a specific platform"""
         return self._capabilities_cache.get(platform)
     
     def is_content_supported(self, platform: PlatformType, content_metadata: ContentMetadata) -> bool:
-        """Check if content is supported by platform"""
+        """
+Check if content is supported by platform"""
         capabilities = self.get_platform_capabilities(platform)
         if not capabilities:
             return False
@@ -242,7 +249,8 @@ class PlatformRegistryManager:
         return True
     
     def get_compatible_platforms(self, content_metadata: ContentMetadata) -> List[PlatformType]:
-        """Get list of platforms compatible with content"""
+        """
+Get list of platforms compatible with content"""
         return [
             platform for platform in self.get_active_platforms()
             if self.is_content_supported(platform, content_metadata)
@@ -272,7 +280,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformConfig:
-    """Configuration for a platform adapter."""
+    """
+Configuration for a platform adapter."""
     name: str
     adapter_class: Type[BasePlatformAdapter]
     category: str
@@ -299,7 +308,8 @@ class PlatformRegistry:
         self._register_all_platforms()
     
     def _register_all_platforms(self):
-        """Register all available platform adapters."""
+        """
+Register all available platform adapters."""
         
         # Social Media Platforms
         self.register_platform(PlatformConfig(
@@ -451,18 +461,21 @@ class PlatformRegistry:
         return self._platforms.get(platform_name)
     
     def get_all_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get all registered platforms."""
+        """
+Get all registered platforms."""
         return self._platforms.copy()
     
     def get_platforms_by_category(self, category: str) -> Dict[str, PlatformConfig]:
-        """Get all platforms in a specific category."""
+        """
+Get all platforms in a specific category."""
         return {
             name: config for name, config in self._platforms.items()
             if config.category == category
         }
     
     def get_platforms_by_content_type(self, content_type: str) -> Dict[str, PlatformConfig]:
-        """Get platforms that support specific content type."""
+        """
+Get platforms that support specific content type."""
         content_type_mapping = {
             "video": "supports_video",
             "audio": "supports_audio", 
@@ -487,14 +500,16 @@ class PlatformRegistry:
         }
     
     def get_high_priority_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get high business priority platforms."""
+        """
+Get high business priority platforms."""
         return {
             name: config for name, config in self._platforms.items()
             if config.business_priority <= 2 and config.is_active
         }
     
     def get_free_tier_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get platforms with free API tier."""
+        """
+Get platforms with free API tier."""
         return {
             name: config for name, config in self._platforms.items()
             if config.api_cost_tier == "free" and config.is_active
@@ -532,7 +547,8 @@ class PlatformRegistry:
         return self._initialized_adapters.get(platform_name)
     
     def get_platform_recommendations(self, content_metadata: Any) -> List[str]:
-        """Get recommended platforms based on content metadata."""
+        """
+Get recommended platforms based on content metadata."""
         recommendations = []
         
         # Analyze content type

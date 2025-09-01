@@ -11,8 +11,9 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de)
 is strictly prohibited and may result in legal action.
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -47,7 +48,8 @@ class AIProcessingEventsManager:
     """
     
     def __init__(self, ai_engine: Any):
-        """Initialize the events manager with AI engine"""
+        """
+Initialize the events manager with AI engine"""
         self.ai_engine = ai_engine
         self.handlers = {}
         self.pipeline = None
@@ -206,7 +208,8 @@ class AIProcessingEventsManager:
         self.processing_stats['average_processing_time'] = new_avg
     
     def _extract_business_metrics(self, pipeline_result: Any) -> Dict[str, Any]:
-        """Extract business-relevant metrics from pipeline result"""
+        """
+Extract business-relevant metrics from pipeline result"""
         if not pipeline_result or not hasattr(pipeline_result, 'final_quality_score'):
             return {}
         
@@ -219,7 +222,8 @@ class AIProcessingEventsManager:
         }
     
     async def analyze_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content using ContentAnalysisHandler"""
+        """
+Analyze content using ContentAnalysisHandler"""
         handler = self.handlers.get('content_analysis')
         if handler:
             return await handler.handle_event({'content_data': content_data})
@@ -286,7 +290,8 @@ class AIProcessingEventsManager:
         }
     
     def get_handler_statistics(self) -> Dict[str, Any]:
-        """Get detailed statistics from all handlers"""
+        """
+Get detailed statistics from all handlers"""
         stats = {}
         
         for name, handler in self.handlers.items():
@@ -306,7 +311,8 @@ class AIProcessingEventsManager:
         return stats
     
     async def cleanup(self):
-        """Cleanup all handlers and resources"""
+        """
+Cleanup all handlers and resources"""
         logger.info("Starting cleanup of AI Processing Events Manager")
         
         # Cleanup all handlers

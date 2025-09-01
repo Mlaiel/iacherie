@@ -5,12 +5,13 @@ including YouTube, TikTok, Instagram, Spotify, and other social media platforms.
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ from ..models.platform_models import PlatformCompliance, ContentSubmission, Plat
 
 
 class Platform(Enum):
-    """Supported platforms"""
+    """
+Supported platforms"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -46,6 +49,7 @@ class Platform(Enum):
 
 class ComplianceStatus(Enum):
     """Platform compliance status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -55,6 +59,7 @@ class ComplianceStatus(Enum):
 
 class ContentRating(Enum):
     """Content rating classifications"""
+
     GENERAL = "general"
     TEEN = "teen"
     MATURE = "mature"
@@ -64,6 +69,7 @@ class ContentRating(Enum):
 
 class PolicyViolationType(Enum):
     """Types of policy violations"""
+
     COPYRIGHT = "copyright"
     CONTENT_GUIDELINES = "content_guidelines"
     COMMUNITY_STANDARDS = "community_standards"
@@ -89,7 +95,8 @@ class PlatformRequirements:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
+    """
+Compliance assessment result"""
     platform: Platform
     content_id: str
     compliance_status: ComplianceStatus
@@ -102,7 +109,8 @@ class ComplianceAssessment:
 
 @dataclass
 class ContentSubmissionResult:
-    """Content submission result"""
+    """
+Content submission result"""
     submission_id: str
     platform: Platform
     content_id: str

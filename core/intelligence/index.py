@@ -8,10 +8,11 @@ the coordination between different intelligence engines.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,8 @@ from ..config.intelligence_config import IntelligenceConfig
 
 @dataclass
 class IntelligenceRequest:
-    """Intelligence processing request"""
+    """
+Intelligence processing request"""
     request_id: str
     creator_id: str
     content_data: Dict[str, Any]
@@ -65,7 +67,8 @@ class IntelligenceResponse:
 
 @dataclass
 class IntelligenceMetrics:
-    """Intelligence system metrics"""
+    """
+Intelligence system metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -93,7 +96,8 @@ class IntelligenceOrchestrator:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize intelligence orchestrator"""
+        """
+Initialize intelligence orchestrator"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -122,7 +126,8 @@ class IntelligenceOrchestrator:
         self._start_monitoring()
     
     def _initialize_engines(self):
-        """Initialize all intelligence engines"""
+        """
+Initialize all intelligence engines"""
         try:
             self.logger.info("Initializing intelligence engines...")
             
@@ -174,7 +179,8 @@ class IntelligenceOrchestrator:
         asyncio.create_task(self._process_request_queue())
     
     async def _monitor_system_health(self):
-        """Monitor system health and performance"""
+        """
+Monitor system health and performance"""
         while True:
             try:
                 # Update system metrics
@@ -634,7 +640,8 @@ class IntelligenceOrchestrator:
                 summary['collaboration_matches'].extend(col_data['collaborations'][:3])
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status and health metrics"""
+        """
+Get current system status and health metrics"""
         return {
             'status': 'operational' if self.metrics.system_health == 'healthy' else 'degraded',
             'metrics': self.metrics.__dict__,
@@ -646,7 +653,8 @@ class IntelligenceOrchestrator:
         }
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID"""
+        """
+Generate unique request ID"""
         return f"intel_{int(time.time())}_{hashlib.md5(str(hash(self)).encode()).hexdigest()[:8]}"
     
     def _is_cache_valid(self, cached_data: Dict[str, Any]) -> bool:
@@ -658,12 +666,14 @@ class IntelligenceOrchestrator:
         return datetime.now() - created_at < timedelta(seconds=self.cache_ttl)
     
     async def _update_system_metrics(self):
-        """Update system performance metrics"""
+        """
+Update system performance metrics"""
         # This would update various system metrics
         self.metrics.last_updated = datetime.now()
     
     async def _check_engine_health(self):
-        """Check health of all intelligence engines"""
+        """
+Check health of all intelligence engines"""
         for engine_name in self.engines:
             try:
                 # Perform health check on each engine

@@ -25,6 +25,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -53,7 +54,9 @@ from ..core.exceptions import RightsException, ProtectionException
 
 
 class RightType(Enum):
-    """Types of intellectual property rights."""
+    """
+Types of intellectual property rights."""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -68,6 +71,7 @@ class RightType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels."""
+
     PUBLIC = "public"
     PROTECTED = "protected"
     RESTRICTED = "restricted"
@@ -78,6 +82,7 @@ class ProtectionLevel(Enum):
 
 class UsageType(Enum):
     """Types of content usage."""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     REPRODUCTION = "reproduction"
@@ -92,6 +97,7 @@ class UsageType(Enum):
 
 class EnforcementAction(Enum):
     """Types of enforcement actions."""
+
     TAKEDOWN_NOTICE = "takedown_notice"
     DMCA_CLAIM = "dmca_claim"
     CEASE_DESIST = "cease_desist"
@@ -144,7 +150,8 @@ class UsagePermission:
 
 @dataclass
 class InfringementCase:
-    """Copyright infringement case tracking."""
+    """
+Copyright infringement case tracking."""
     case_id: str
     ip_id: str
     reported_by: str

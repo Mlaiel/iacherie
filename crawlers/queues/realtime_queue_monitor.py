@@ -8,7 +8,7 @@ Technologies: WebSocket streams, Real-time analytics, Predictive alerts, Auto-sc
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Queue metrics collection → Real-time analysis → Anomaly detection → 
 Alert generation → Auto-recovery → Performance optimization → Predictive scaling
 """
+
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable, AsyncGenerator
 import logging
 import asyncio
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring detail levels"""
+    """
+Monitoring detail levels"""
+
     BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
@@ -48,6 +51,7 @@ class MonitoringLevel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -56,6 +60,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Types of metrics to monitor"""
+
     QUEUE_SIZE = "queue_size"
     PROCESSING_RATE = "processing_rate"
     RESPONSE_TIME = "response_time"
@@ -70,6 +75,7 @@ class MetricType(Enum):
 
 class AlertCondition(Enum):
     """Alert trigger conditions"""
+
     THRESHOLD_EXCEEDED = "threshold_exceeded"
     THRESHOLD_BELOW = "threshold_below"
     RATE_OF_CHANGE = "rate_of_change"
@@ -91,7 +97,8 @@ class MetricDataPoint:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
+    """
+Alert rule configuration"""
     rule_id: str
     name: str
     metric_type: MetricType
@@ -108,7 +115,8 @@ class AlertRule:
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert instance"""
+    """
+Monitoring alert instance"""
     alert_id: str
     rule_id: str
     severity: AlertSeverity
@@ -139,7 +147,8 @@ class PerformanceSnapshot:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring system configuration"""
+    """
+Monitoring system configuration"""
     monitoring_level: MonitoringLevel = MonitoringLevel.DETAILED
     collection_interval_seconds: int = 30
     alert_evaluation_interval_seconds: int = 60
@@ -153,7 +162,8 @@ class MonitoringConfig:
 
 
 class AnomalyDetector:
-    """Statistical anomaly detection for metrics"""
+    """
+Statistical anomaly detection for metrics"""
     
     def __init__(self, window_size: int = 100, sensitivity: float = 2.0):
         self.window_size = window_size
@@ -162,7 +172,8 @@ class AnomalyDetector:
         self.baseline_stats: Dict[str, Dict] = {}
         
     async def add_metric(self, metric_key: str, value: float):
-        """Add metric value for anomaly detection"""
+        """
+Add metric value for anomaly detection"""
         
         self.metric_history[metric_key].append(value)
         
@@ -178,7 +189,8 @@ class AnomalyDetector:
             }
     
     async def detect_anomaly(self, metric_key: str, value: float) -> Tuple[bool, float]:
-        """Detect if value is anomalous"""
+        """
+Detect if value is anomalous"""
         
         if metric_key not in self.baseline_stats:
             return False, 0.0
@@ -196,7 +208,8 @@ class AnomalyDetector:
         return is_anomaly, z_score
     
     async def get_anomaly_score(self, metric_key: str) -> float:
-        """Get current anomaly score for metric"""
+        """
+Get current anomaly score for metric"""
         
         if metric_key not in self.metric_history or len(self.metric_history[metric_key]) < 2:
             return 0.0
@@ -221,14 +234,16 @@ class AnomalyDetector:
 
 
 class PredictiveAnalyzer:
-    """Predictive analysis for queue performance"""
+    """
+Predictive analysis for queue performance"""
     
     def __init__(self, history_size: int = 1000):
         self.history_size = history_size
         self.metric_trends: Dict[str, deque] = defaultdict(lambda: deque(maxlen=history_size))
         
     async def add_metric_trend(self, metric_key: str, timestamp: datetime, value: float):
-        """Add metric for trend analysis"""
+        """
+Add metric for trend analysis"""
         
         self.metric_trends[metric_key].append({
             'timestamp': timestamp,
@@ -236,7 +251,8 @@ class PredictiveAnalyzer:
         })
     
     async def predict_future_value(self, metric_key: str, minutes_ahead: int = 15) -> Optional[float]:
-        """Predict future metric value using simple linear regression"""
+        """
+Predict future metric value using simple linear regression"""
         
         if metric_key not in self.metric_trends or len(self.metric_trends[metric_key]) < 10:
             return None
@@ -271,7 +287,8 @@ class PredictiveAnalyzer:
         return max(0.0, predicted_value)  # Ensure non-negative
     
     async def detect_trend_direction(self, metric_key: str) -> Optional[str]:
-        """Detect if metric is trending up, down, or stable"""
+        """
+Detect if metric is trending up, down, or stable"""
         
         if metric_key not in self.metric_trends or len(self.metric_trends[metric_key]) < 5:
             return None
@@ -362,7 +379,8 @@ class RealtimeQueueMonitor:
         }
     
     async def initialize(self):
-        """Initialize monitoring system"""
+        """
+Initialize monitoring system"""
         
         # Setup Redis connection if enabled
         if self.config.redis_enabled:
@@ -1020,7 +1038,8 @@ class RealtimeQueueMonitor:
         await self._broadcast_performance_update(snapshot)
     
     async def _calculate_health_score(self) -> float:
-        """Calculate overall system health score"""
+        """
+Calculate overall system health score"""
         
         health_factors = []
         
@@ -1219,7 +1238,8 @@ class RealtimeQueueMonitor:
         """WebSocket server for real-time updates"""
         
         async def handle_client(websocket, path):
-            """Handle WebSocket client connection"""
+            """
+Handle WebSocket client connection"""
             
             logger.info(f"WebSocket client connected: {websocket.remote_address}")
             self.websocket_connections.add(websocket)
@@ -1314,7 +1334,8 @@ class RealtimeQueueMonitor:
                 await websocket.send(json.dumps(snapshot_data))
     
     async def _get_current_metrics_summary(self) -> Dict[str, Any]:
-        """Get summary of current metrics"""
+        """
+Get summary of current metrics"""
         
         summary = {}
         
@@ -1330,7 +1351,8 @@ class RealtimeQueueMonitor:
         return summary
     
     async def _cleanup_old_data_loop(self):
-        """Background task for cleaning up old data"""
+        """
+Background task for cleaning up old data"""
         
         while self.is_monitoring:
             try:
@@ -1418,7 +1440,8 @@ def create_realtime_queue_monitor(
     queue_manager: Optional[IntelligentQueueManager] = None,
     distribution_engine: Optional[TaskDistributionEngine] = None
 ) -> RealtimeQueueMonitor:
-    """Create and configure real-time queue monitor"""
+    """
+Create and configure real-time queue monitor"""
     
     if config is None:
         config = MonitoringConfig()

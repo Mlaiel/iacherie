@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class CompressorType(Enum):
-    """Types of audio compressors"""
+    """
+Types of audio compressors"""
+
     VCA = "vca"                                # Voltage Controlled Amplifier
     FET = "fet"                                # Field Effect Transistor
     OPTICAL = "optical"                        # Optical/Opto compressor
@@ -42,6 +45,7 @@ class CompressorType(Enum):
 
 class CompressorKneeType(Enum):
     """Compressor knee characteristics"""
+
     HARD = "hard"                              # Hard knee
     SOFT = "soft"                              # Soft knee
     ADAPTIVE = "adaptive"                      # Adaptive knee
@@ -50,6 +54,7 @@ class CompressorKneeType(Enum):
 
 class DetectionMode(Enum):
     """Signal detection modes"""
+
     PEAK = "peak"                              # Peak detection
     RMS = "rms"                                # RMS detection
     PROGRAM = "program"                        # Program dependent
@@ -59,6 +64,7 @@ class DetectionMode(Enum):
 
 class SideChainSource(Enum):
     """Side-chain signal sources"""
+
     INTERNAL = "internal"                      # Internal signal
     EXTERNAL = "external"                      # External sidechain input
     MID = "mid"                               # Mid channel for M/S processing
@@ -68,6 +74,7 @@ class SideChainSource(Enum):
 
 class CompressionStyle(Enum):
     """Compression style characteristics"""
+
     TRANSPARENT = "transparent"                # Transparent/clean compression
     VINTAGE = "vintage"                        # Vintage hardware emulation
     AGGRESSIVE = "aggressive"                  # Aggressive/pumping style
@@ -78,6 +85,7 @@ class CompressionStyle(Enum):
 
 class LimiterType(Enum):
     """Types of audio limiters"""
+
     PEAK_LIMITER = "peak_limiter"              # Peak limiting
     TRUE_PEAK_LIMITER = "true_peak_limiter"    # True peak limiting
     LOUDNESS_LIMITER = "loudness_limiter"      # Loudness-based limiting
@@ -104,7 +112,8 @@ class CompressorBand:
 
 @dataclass
 class CompressorConfig:
-    """Main compressor configuration"""
+    """
+Main compressor configuration"""
     enabled: bool = True
     compressor_type: CompressorType = CompressorType.DIGITAL
     compression_style: CompressionStyle = CompressionStyle.TRANSPARENT
@@ -148,7 +157,8 @@ class CompressorConfig:
 
 @dataclass
 class LimiterConfig:
-    """Audio limiter configuration"""
+    """
+Audio limiter configuration"""
     enabled: bool = True
     limiter_type: LimiterType = LimiterType.PEAK_LIMITER
     
@@ -179,7 +189,8 @@ class LimiterConfig:
 
 @dataclass
 class GateConfig:
-    """Noise gate/expander configuration"""
+    """
+Noise gate/expander configuration"""
     enabled: bool = False
     
     # Core parameters
@@ -204,7 +215,8 @@ class GateConfig:
 
 @dataclass
 class DeEsserConfig:
-    """De-esser configuration"""
+    """
+De-esser configuration"""
     enabled: bool = False
     
     # Core parameters
@@ -232,7 +244,8 @@ class AudioCompressionConfig:
     """
     
     def __init__(self):
-        """Initialize audio compression configuration"""
+        """
+Initialize audio compression configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core processors

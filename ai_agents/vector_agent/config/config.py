@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import os
 import json
 from dataclasses import dataclass, field, asdict
@@ -341,7 +342,8 @@ class VectorConfig:
         return asdict(self)
     
     def save_to_file(self, filepath: str) -> None:
-        """Save configuration to JSON file"""
+        """
+Save configuration to JSON file"""
         try:
             config_dict = self.to_dict()
             with open(filepath, 'w') as f:
@@ -458,7 +460,8 @@ def create_development_config() -> VectorConfig:
 
 
 def create_production_config() -> VectorConfig:
-    """Create configuration optimized for production"""
+    """
+Create configuration optimized for production"""
     return VectorConfig(
         batch_size=64,
         max_worker_threads=16,
@@ -473,7 +476,8 @@ def create_production_config() -> VectorConfig:
 
 
 def create_testing_config() -> VectorConfig:
-    """Create configuration optimized for testing"""
+    """
+Create configuration optimized for testing"""
     return VectorConfig(
         batch_size=8,
         max_worker_threads=2,

@@ -28,6 +28,7 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
+
 import asyncio
 import json
 import hashlib
@@ -52,7 +53,9 @@ settings = get_settings()
 
 
 class ThreatSeverity(Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -63,6 +66,7 @@ class ThreatSeverity(Enum):
 
 class ThreatCategory(Enum):
     """Threat categories"""
+
     PIRACY = "content_piracy"
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_VIOLATION = "copyright_violation"
@@ -77,6 +81,7 @@ class ThreatCategory(Enum):
 
 class ThreatSource(Enum):
     """Threat source types"""
+
     WEB_CRAWLER = "web_crawler"
     API_MONITORING = "api_monitoring"
     USER_REPORT = "user_report"
@@ -88,6 +93,7 @@ class ThreatSource(Enum):
 
 class ActionStatus(Enum):
     """Mitigation action status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -145,7 +151,8 @@ class SecurityThreat:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "threat_id": self.threat_id,
             "threat_type": self.threat_type.value,
@@ -207,7 +214,8 @@ class ThreatIntelligenceReport:
 
 
 class ThreatIntelligenceEngine:
-    """Advanced threat intelligence and detection engine"""
+    """
+Advanced threat intelligence and detection engine"""
     
     def __init__(self):
         self.cache = CacheManager()
@@ -219,7 +227,8 @@ class ThreatIntelligenceEngine:
         self._setup_monitoring_systems()
     
     def _setup_threat_patterns(self):
-        """Initialize threat detection patterns"""
+        """
+Initialize threat detection patterns"""
         self.threat_patterns = {
             ThreatCategory.PIRACY: [
                 r'pirate.*download',
@@ -250,7 +259,8 @@ class ThreatIntelligenceEngine:
         }
     
     def _setup_monitoring_systems(self):
-        """Initialize monitoring and detection systems"""
+        """
+Initialize monitoring and detection systems"""
         self.monitoring_platforms = [
             'youtube.com', 'instagram.com', 'tiktok.com', 'twitter.com',
             'facebook.com', 'spotify.com', 'soundcloud.com', 'reddit.com'
@@ -274,7 +284,8 @@ class ThreatIntelligenceEngine:
         content_data: Optional[bytes] = None,
         context: Dict[str, Any] = None
     ) -> SecurityThreat:
-        """Analyze potential security threat"""
+        """
+Analyze potential security threat"""
         try:
             context = context or {}
             
@@ -573,7 +584,8 @@ class ThreatIntelligenceEngine:
         url: str,
         evidence: Dict[str, Any]
     ) -> List[ThreatIndicator]:
-        """Extract threat indicators from analysis"""
+        """
+Extract threat indicators from analysis"""
         try:
             indicators = []
             
@@ -880,9 +892,11 @@ async def monitor_content_platforms(
     content_fingerprints: List[str],
     duration: int = 3600
 ) -> List[SecurityThreat]:
-    """Monitor platforms for content threats"""
+    """
+Monitor platforms for content threats"""
     return await threat_intelligence.monitor_platforms(content_fingerprints, duration)
 
 async def generate_threat_report(period_days: int = 7) -> ThreatIntelligenceReport:
-    """Generate threat intelligence report"""
+    """
+Generate threat intelligence report"""
     return await threat_intelligence.generate_intelligence_report(period_days)

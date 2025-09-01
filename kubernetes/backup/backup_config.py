@@ -11,6 +11,7 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
+
 import os
 import yaml
 import json
@@ -26,7 +27,9 @@ from ...core.exceptions import ConfigurationError
 
 
 class StorageBackend(Enum):
-    """Storage backend types."""
+    """
+Storage backend types."""
+
     LOCAL_FILESYSTEM = "local_filesystem"
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
@@ -37,6 +40,7 @@ class StorageBackend(Enum):
 
 class CompressionAlgorithm(Enum):
     """Compression algorithm types."""
+
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -102,7 +106,8 @@ class MonitoringConfig:
 
 @dataclass
 class ValidationConfig:
-    """Backup validation configuration."""
+    """
+Backup validation configuration."""
     enabled: bool = True
     integrity_checks: bool = True
     checksum_algorithm: str = "SHA-256"
@@ -126,7 +131,8 @@ class RecoveryConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
+    """
+Performance optimization configuration."""
     parallel_backups: bool = True
     max_parallel_operations: int = 3
     chunk_size_mb: int = 64
@@ -168,7 +174,8 @@ class BackupConfig(BaseConfig):
         self._load_configuration()
 
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path."""
+        """
+Get default configuration file path."""
         return os.path.join(
             os.path.dirname(__file__),
             "..",
@@ -530,7 +537,8 @@ def get_backup_config() -> BackupConfig:
 
 
 def reload_backup_config(config_path: Optional[str] = None) -> BackupConfig:
-    """Reload backup configuration from file."""
+    """
+Reload backup configuration from file."""
     global backup_config
     backup_config = BackupConfig(config_path)
     return backup_config

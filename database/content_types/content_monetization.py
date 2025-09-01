@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueSource(Enum):
-    """Sources of revenue generation"""
+    """
+Sources of revenue generation"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -55,6 +58,7 @@ class RevenueSource(Enum):
 
 class PaymentMethod(Enum):
     """Available payment methods for payouts"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -66,6 +70,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Status of payment transactions"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -77,6 +82,7 @@ class PaymentStatus(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -95,6 +101,7 @@ class Currency(Enum):
 
 class TaxCategory(Enum):
     """Tax categories for revenue classification"""
+
     ROYALTIES = "royalties"
     BUSINESS_INCOME = "business_income"
     FREELANCE_INCOME = "freelance_income"
@@ -315,7 +322,8 @@ class RevenueProjection:
     projection_date: datetime
     
 class MonetizationEngine:
-    """Core monetization processing engine"""
+    """
+Core monetization processing engine"""
     
     def __init__(self):
         self.revenue_processors = {}
@@ -328,7 +336,8 @@ class MonetizationEngine:
         platform: str,
         revenue_data: Dict[str, Any]
     ) -> str:
-        """Process incoming revenue data from platforms"""
+        """
+Process incoming revenue data from platforms"""
         try:
             # Validate revenue data
             self._validate_revenue_data(revenue_data)
@@ -637,7 +646,8 @@ class MonetizationEngine:
         jurisdiction: str,
         tax_category: TaxCategory
     ) -> Dict[str, Any]:
-        """Calculate applicable taxes"""
+        """
+Calculate applicable taxes"""
         tax_rates = {
             'DE': {'royalties': 0.19, 'business_income': 0.25},
             'US': {'royalties': 0.30, 'business_income': 0.21},
@@ -655,12 +665,14 @@ class MonetizationEngine:
         }
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> Decimal:
-        """Get current exchange rate"""
+        """
+Get current exchange rate"""
         # Implementation would use real exchange rate API
         return Decimal('1.0')  # Placeholder
     
     async def _get_content_ownership(self, content_id: str) -> Dict[str, Any]:
-        """Get content ownership and rights information"""
+        """
+Get content ownership and rights information"""
         # Implementation would query database for ownership data
         return {
             'stakeholders': [
@@ -670,7 +682,8 @@ class MonetizationEngine:
         }
     
     async def _get_applicable_contracts(self, content_id: str) -> List[Dict[str, Any]]:
-        """Get applicable contracts and agreements for content"""
+        """
+Get applicable contracts and agreements for content"""
         # Implementation would query contract database
         return []
     
@@ -680,7 +693,8 @@ class MonetizationEngine:
         content_id: str,
         net_amount: Decimal
     ):
-        """Process revenue allocations to stakeholders"""
+        """
+Process revenue allocations to stakeholders"""
         await self.allocate_revenue(revenue_stream_id, content_id, net_amount)
     
     # Additional helper methods would be implemented here...

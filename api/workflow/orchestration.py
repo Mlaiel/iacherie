@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime
@@ -22,7 +23,9 @@ from ..services.distribution.publisher import MultiPlatformPublisher
 
 
 class WorkflowStage(Enum):
-    """Content processing workflow stages."""
+    """
+Content processing workflow stages."""
+
     INGESTION = "ingestion"
     ANALYSIS = "analysis"
     PROTECTION = "protection"
@@ -34,6 +37,7 @@ class WorkflowStage(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status."""
+
     QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -56,16 +60,19 @@ class WorkflowContext:
         self.updated_at = datetime.utcnow()
     
     def set_stage_result(self, stage: WorkflowStage, result: Dict[str, Any]) -> None:
-        """Set result for a workflow stage."""
+        """
+Set result for a workflow stage."""
         self.stage_results[stage.value] = result
         self.updated_at = datetime.utcnow()
     
     def get_stage_result(self, stage: WorkflowStage) -> Optional[Dict[str, Any]]:
-        """Get result from a workflow stage."""
+        """
+Get result from a workflow stage."""
         return self.stage_results.get(stage.value)
     
     def add_error(self, stage: WorkflowStage, error: str) -> None:
-        """Add error to workflow context."""
+        """
+Add error to workflow context."""
         self.errors.append({
             "stage": stage.value,
             "error": error,
@@ -382,7 +389,8 @@ class IngestionStageHandler(WorkflowStageHandler):
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content ingestion stage."""
+        """
+Process content ingestion stage."""
         try:
             # Validate content format and quality
             validation_result = await self.content_analyzer.validate_content(
@@ -450,7 +458,8 @@ class AnalysisStageHandler(WorkflowStageHandler):
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content analysis stage."""
+        """
+Process content analysis stage."""
         try:
             # Perform comprehensive AI analysis
             analysis_result = await self.content_analyzer.analyze_comprehensive(
@@ -533,7 +542,8 @@ class ProtectionStageHandler(WorkflowStageHandler):
         self.fingerprint_service = FingerprintService()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content protection stage."""
+        """
+Process content protection stage."""
         try:
             # Generate content fingerprints
             fingerprints = await self.fingerprint_service.generate_fingerprints(
@@ -623,7 +633,8 @@ class SEOOptimizationStageHandler(WorkflowStageHandler):
         self.seo_optimizer = SEOOptimizer()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process SEO optimization stage."""
+        """
+Process SEO optimization stage."""
         try:
             analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
             if not analysis_result:
@@ -712,7 +723,8 @@ class CollaborationMatchingStageHandler(WorkflowStageHandler):
         self.collaboration_matcher = CollaborationMatcher()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process collaboration matching stage."""
+        """
+Process collaboration matching stage."""
         try:
             analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
             if not analysis_result:
@@ -842,7 +854,8 @@ class DistributionStageHandler(WorkflowStageHandler):
         self.multi_platform_publisher = MultiPlatformPublisher()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content distribution stage."""
+        """
+Process content distribution stage."""
         try:
             # Get optimized content from previous stages
             seo_result = context.get_stage_result(WorkflowStage.SEO_OPTIMIZATION)
@@ -948,7 +961,8 @@ class MonitoringStageHandler(WorkflowStageHandler):
         super().__init__(WorkflowStage.MONITORING)
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process monitoring setup stage."""
+        """
+Process monitoring setup stage."""
         try:
             # Set up comprehensive monitoring
             monitoring_config = await self._setup_comprehensive_monitoring(context)

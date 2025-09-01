@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -48,7 +49,9 @@ settings = get_settings()
 
 
 class QualityMetric(Enum):
-    """Vector quality assessment metrics"""
+    """
+Vector quality assessment metrics"""
+
     INTRINSIC_DIMENSIONALITY = "intrinsic_dimensionality"
     CLUSTERING_QUALITY = "clustering_quality"
     SEPARABILITY = "separability"
@@ -61,6 +64,7 @@ class QualityMetric(Enum):
 
 class DimensionalityMethod(Enum):
     """Dimensionality reduction methods"""
+
     PCA = "pca"
     TSNE = "tsne"
     UMAP = "umap"
@@ -96,7 +100,8 @@ class DimensionalityAnalysis:
 
 @dataclass
 class ClusteringAnalysis:
-    """Results of clustering analysis"""
+    """
+Results of clustering analysis"""
     algorithm: str
     n_clusters: int
     silhouette_score: float
@@ -110,7 +115,8 @@ class ClusteringAnalysis:
 
 @dataclass
 class SeparabilityAnalysis:
-    """Results of separability analysis"""
+    """
+Results of separability analysis"""
     inter_cluster_distance: float
     intra_cluster_distance: float
     separability_index: float
@@ -121,7 +127,8 @@ class SeparabilityAnalysis:
 
 @dataclass
 class OutlierAnalysis:
-    """Results of outlier analysis"""
+    """
+Results of outlier analysis"""
     outlier_indices: List[int]
     outlier_scores: np.ndarray
     isolation_scores: np.ndarray
@@ -132,7 +139,8 @@ class OutlierAnalysis:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality assessment report"""
+    """
+Comprehensive quality assessment report"""
     content_type: str
     total_vectors: int
     assessment_timestamp: datetime
@@ -168,7 +176,8 @@ class VectorQualityAssessment:
     """
     
     def __init__(self):
-        """Initialize quality assessment engine"""
+        """
+Initialize quality assessment engine"""
         self.metrics_collector = MetricsCollector()
         self.visualizer = VectorVisualizer()
         
@@ -1131,7 +1140,8 @@ class VectorQualityAssessment:
             return 0.0
     
     def _calculate_trustworthiness(self, original: np.ndarray, reduced: np.ndarray) -> float:
-        """Calculate trustworthiness of dimensionality reduction"""
+        """
+Calculate trustworthiness of dimensionality reduction"""
         try:
             from sklearn.manifold import trustworthiness
             return trustworthiness(original, reduced)
@@ -1139,7 +1149,8 @@ class VectorQualityAssessment:
             return 0.0
     
     def _calculate_independence_score(self, components: np.ndarray) -> float:
-        """Calculate independence score for ICA components"""
+        """
+Calculate independence score for ICA components"""
         try:
             # Measure statistical independence using mutual information
             correlations = np.corrcoef(components.T)
@@ -1150,7 +1161,8 @@ class VectorQualityAssessment:
             return 0.0
     
     def _calculate_k_distances(self, vectors: np.ndarray, k: int = 4) -> np.ndarray:
-        """Calculate k-distances for DBSCAN epsilon estimation"""
+        """
+Calculate k-distances for DBSCAN epsilon estimation"""
         try:
             nn = NearestNeighbors(n_neighbors=k + 1)
             nn.fit(vectors)
@@ -1160,7 +1172,8 @@ class VectorQualityAssessment:
             return np.array([])
     
     def _calculate_overlap_coefficient(self, vectors: np.ndarray, labels: np.ndarray) -> float:
-        """Calculate overlap coefficient between clusters"""
+        """
+Calculate overlap coefficient between clusters"""
         try:
             unique_labels = np.unique(labels)
             if len(unique_labels) < 2:
@@ -1191,7 +1204,8 @@ class VectorQualityAssessment:
             return 0.0
     
     async def close(self) -> None:
-        """Close quality assessment system"""
+        """
+Close quality assessment system"""
         try:
             # Clear caches
             self.analysis_cache.clear()

@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -48,7 +49,9 @@ from ..storage.model_storage import ModelStorage
 
 
 class PredictionType(Enum):
-    """Types of predictions available"""
+    """
+Types of predictions available"""
+
     REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     VIRALITY = "virality"
@@ -60,6 +63,7 @@ class PredictionType(Enum):
 
 class TimeHorizon(Enum):
     """Prediction time horizons"""
+
     SHORT_TERM = "1_week"
     MEDIUM_TERM = "1_month"
     LONG_TERM = "3_months"
@@ -68,6 +72,7 @@ class TimeHorizon(Enum):
 
 class ModelType(Enum):
     """Available model types"""
+
     LINEAR = "linear"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -90,7 +95,8 @@ class PredictionInput:
 
 @dataclass
 class PredictionResult:
-    """Result of a prediction"""
+    """
+Result of a prediction"""
     prediction_id: str
     prediction_type: PredictionType
     predicted_value: float
@@ -106,7 +112,8 @@ class PredictionResult:
 
 
 class NeuralPredictionModel(nn.Module):
-    """Neural network model for predictions"""
+    """
+Neural network model for predictions"""
     
     def __init__(self, input_size: int, hidden_sizes: List[int], output_size: int = 1):
         super(NeuralPredictionModel, self).__init__()
@@ -158,7 +165,8 @@ class PredictionModels:
         self.feature_definitions = self._define_features()
     
     def _initialize_models(self) -> None:
-        """Initialize ML models"""
+        """
+Initialize ML models"""
         try:
             # Revenue prediction models
             self.revenue_models = {
@@ -222,11 +230,13 @@ class PredictionModels:
         self.training_engine = TrainingEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize model storage"""
+        """
+Initialize model storage"""
         self.model_storage = ModelStorage(self.config)
     
     def _load_pretrained_models(self) -> None:
-        """Load pre-trained models from storage"""
+        """
+Load pre-trained models from storage"""
         try:
             # This would load actual models in production
             # For now, train with synthetic data
@@ -562,7 +572,8 @@ class PredictionModels:
         return np.array(features).reshape(1, -1)
     
     def _calculate_historical_features(self, historical_data: List[Dict[str, Any]]) -> List[float]:
-        """Calculate features from historical data"""
+        """
+Calculate features from historical data"""
         if not historical_data:
             return [0.5, 0.5, 0.5]
         
@@ -582,7 +593,8 @@ class PredictionModels:
         ]
     
     def _calculate_trend(self, values: List[float]) -> float:
-        """Calculate trend from time series values"""
+        """
+Calculate trend from time series values"""
         if len(values) < 2:
             return 0.0
         
@@ -597,7 +609,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict revenue using revenue models"""
+        """
+Predict revenue using revenue models"""
         
         # Scale features
         features_scaled = self.scalers['standard'].transform(features)
@@ -1049,7 +1062,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate revenue-specific recommendations"""
+        """
+Generate revenue-specific recommendations"""
         recommendations = []
         
         if predicted_value < 500:
@@ -1290,7 +1304,8 @@ class PredictionModels:
         })
     
     def _generate_prediction_id(self, prediction_type: PredictionType) -> str:
-        """Generate unique prediction ID"""
+        """
+Generate unique prediction ID"""
         import hashlib
         timestamp = str(datetime.now().timestamp())
         content = f"{prediction_type.value}_{timestamp}"

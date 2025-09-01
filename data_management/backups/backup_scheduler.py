@@ -8,10 +8,11 @@ Responsibility: Planification intelligente et automatisation des sauvegardes
 ===============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, time
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(str, Enum):
-    """Types de planification disponibles"""
+    """
+Types de planification disponibles"""
+
     IMMEDIATE = "immediate"         # Exécution immédiate
     INTERVAL = "interval"          # Intervalle fixe
     CRON = "cron"                 # Expression cron
@@ -47,6 +50,7 @@ class ScheduleType(str, Enum):
 
 class Priority(str, Enum):
     """Niveaux de priorité pour les sauvegardes"""
+
     CRITICAL = "critical"         # Critique (revenus, contenu premium)
     HIGH = "high"                # Haute (contenu populaire)
     MEDIUM = "medium"            # Moyenne (contenu standard)
@@ -288,7 +292,8 @@ class BackupScheduler:
         return None
     
     async def _add_to_scheduler(self, schedule_job: BackupScheduleJob):
-        """Ajoute un job au scheduler APScheduler"""
+        """
+Ajoute un job au scheduler APScheduler"""
         config = schedule_job.schedule_config
         
         # Sélection du trigger selon le type
@@ -505,7 +510,8 @@ class BackupScheduler:
             return now + timedelta(days=7)
     
     def _has_active_overlap(self, schedule_job: BackupScheduleJob) -> bool:
-        """Vérifie s'il y a un overlap avec une exécution précédente"""
+        """
+Vérifie s'il y a un overlap avec une exécution précédente"""
         for active_job in self.active_backups.values():
             if (active_job.user_id == schedule_job.user_id and 
                 active_job.status in [BackupStatus.PENDING, BackupStatus.RUNNING]):
@@ -520,7 +526,8 @@ class BackupScheduler:
         return False
     
     async def _queue_job_execution(self, schedule_job: BackupScheduleJob):
-        """Met en queue un job en cas d'overlap"""
+        """
+Met en queue un job en cas d'overlap"""
         # Ajouter à une queue Redis pour exécution différée
         queue_data = {
             "job_id": schedule_job.job_id,
@@ -1034,14 +1041,16 @@ class ConditionalScheduler(BackupScheduler):
 
 
 class UsagePatternAnalyzer:
-    """Analyseur de patterns d'usage pour optimisation automatique"""
+    """
+Analyseur de patterns d'usage pour optimisation automatique"""
     
     async def analyze_content_usage(
         self,
         source_paths: List[Path],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyse les patterns d'usage du contenu"""
+        """
+Analyse les patterns d'usage du contenu"""
         # Implémentation analyse patterns
         return {
             "high_activity_hours": [9, 10, 11, 14, 15, 16],
@@ -1054,7 +1063,8 @@ class PerformancePredictor:
     """Prédicteur de performance pour optimisation"""
     
     async def predict_optimal_backup_times(self, priority: Priority) -> List[int]:
-        """Prédit les heures optimales pour les sauvegardes"""
+        """
+Prédit les heures optimales pour les sauvegardes"""
         # Logique prédictive basée sur historique
         if priority == Priority.CRITICAL:
             return [2, 3, 4]  # Heures creuses

@@ -6,13 +6,16 @@ This module configures analytics and business intelligence APIs including
 Google Analytics, Mixpanel, Segment, and other tracking services for
 comprehensive user behavior and business metrics analysis.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class AnalyticsServiceType(Enum):
-    """Analytics service types"""
+    """
+Analytics service types"""
+
     WEB_ANALYTICS = "web_analytics"
     EVENT_TRACKING = "event_tracking"
     USER_ANALYTICS = "user_analytics"
@@ -22,6 +25,7 @@ class AnalyticsServiceType(Enum):
 
 class DataRetentionPeriod(Enum):
     """Data retention periods"""
+
     DAYS_30 = "30_days"
     DAYS_90 = "90_days"
     MONTHS_6 = "6_months"
@@ -376,21 +380,25 @@ def get_analytics_config(service: str) -> Optional[AnalyticsAPIConfig]:
     return ANALYTICS_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: AnalyticsServiceType) -> List[AnalyticsAPIConfig]:
-    """Get all analytics services of specific type"""
+    """
+Get all analytics services of specific type"""
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_real_time_services() -> List[AnalyticsAPIConfig]:
-    """Get services that support real-time analytics"""
+    """
+Get services that support real-time analytics"""
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.real_time_enabled]
 
 def get_custom_event_services() -> List[AnalyticsAPIConfig]:
-    """Get services that support custom events"""
+    """
+Get services that support custom events"""
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.custom_events_enabled]
 
 def get_ecommerce_services() -> List[AnalyticsAPIConfig]:
-    """Get services that support ecommerce tracking"""
+    """
+Get services that support ecommerce tracking"""
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.supports_ecommerce]

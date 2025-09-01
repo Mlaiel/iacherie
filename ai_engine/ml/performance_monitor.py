@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import time
 import logging
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     ACCURACY = "accuracy"
@@ -62,6 +65,7 @@ class MetricType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -96,7 +100,8 @@ class Alert:
 
 @dataclass
 class ModelPerformanceReport:
-    """Comprehensive model performance report"""
+    """
+Comprehensive model performance report"""
     model_id: str
     model_name: str
     report_period_start: datetime
@@ -190,7 +195,8 @@ class MLPerformanceMonitor:
         self.alert_callbacks: List[Callable[[Alert], None]] = []
     
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics if available"""
+        """
+Setup Prometheus metrics if available"""
         if not PROMETHEUS_AVAILABLE:
             return
         
@@ -225,7 +231,8 @@ class MLPerformanceMonitor:
         )
     
     async def start_monitoring(self, models: List[Dict[str, Any]]):
-        """Start performance monitoring for specified models"""
+        """
+Start performance monitoring for specified models"""
         self.monitoring_active = True
         
         # Start background monitoring thread
@@ -534,7 +541,8 @@ class MLPerformanceMonitor:
     
     async def _check_thresholds(self, model_id: str, model_name: str,
                                latency_ms: float, success: bool):
-        """Check performance thresholds and create alerts"""
+        """
+Check performance thresholds and create alerts"""
         if latency_ms > self.thresholds['max_latency_ms']:
             await self._create_alert(
                 model_id, model_name,
@@ -590,20 +598,24 @@ class MLPerformanceMonitor:
             return 'unknown'
     
     def _get_model_name(self, model_id: str) -> str:
-        """Get model name from model ID (simplified)"""
+        """
+Get model name from model ID (simplified)"""
         # This would normally lookup model name from registry
         return model_id.replace('_', ' ').title()
     
     def add_alert_callback(self, callback: Callable[[Alert], None]):
-        """Add callback function for alerts"""
+        """
+Add callback function for alerts"""
         self.alert_callbacks.append(callback)
     
     def get_active_alerts(self) -> List[Alert]:
-        """Get all active (unresolved) alerts"""
+        """
+Get all active (unresolved) alerts"""
         return [alert for alert in self.alerts if not alert.resolved]
     
     def resolve_alert(self, alert_id: str):
-        """Mark alert as resolved"""
+        """
+Mark alert as resolved"""
         for alert in self.alerts:
             if alert.id == alert_id:
                 alert.resolved = True
@@ -622,7 +634,8 @@ class InferenceProfiler:
     
     async def profile_inference(self, model_id: str, model: torch.nn.Module,
                                input_data: torch.Tensor) -> Dict[str, Any]:
-        """Profile model inference with detailed timing"""
+        """
+Profile model inference with detailed timing"""
         if not self.profiling_enabled:
             return {}
         
@@ -679,7 +692,8 @@ class InferenceProfiler:
         return profile_result
     
     def enable_profiling(self):
-        """Enable inference profiling"""
+        """
+Enable inference profiling"""
         self.profiling_enabled = True
         logger.info("Inference profiling enabled")
     
@@ -728,7 +742,8 @@ class ResourceMonitor:
         self.resource_data: List[Dict[str, Any]] = []
     
     async def start_resource_monitoring(self, interval: int = 30):
-        """Start continuous resource monitoring"""
+        """
+Start continuous resource monitoring"""
         if not PSUTIL_AVAILABLE:
             logger.warning("psutil not available - resource monitoring disabled")
             return
@@ -790,7 +805,8 @@ class ResourceMonitor:
         self.monitoring_active = False
     
     def get_resource_summary(self, hours_back: int = 1) -> Dict[str, Any]:
-        """Get resource usage summary for specified time period"""
+        """
+Get resource usage summary for specified time period"""
         if not self.resource_data:
             return {}
         

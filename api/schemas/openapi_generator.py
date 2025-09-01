@@ -6,6 +6,7 @@ and comprehensive endpoint descriptions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
@@ -14,7 +15,8 @@ import json
 
 
 class ApiDocumentationGenerator:
-    """Generate comprehensive OpenAPI specification."""
+    """
+Generate comprehensive OpenAPI specification."""
     
     def __init__(self):
         self.spec_version = "3.0.3"
@@ -48,7 +50,8 @@ class ApiDocumentationGenerator:
         """
     
     def generate_openapi_spec(self) -> Dict[str, Any]:
-        """Generate complete OpenAPI specification."""
+        """
+Generate complete OpenAPI specification."""
         return {
             "openapi": self.spec_version,
             "info": self._generate_info(),
@@ -752,7 +755,8 @@ class ApiDocumentationGenerator:
         return {}
     
     def _generate_examples(self) -> Dict[str, Any]:
-        """Generate examples."""
+        """
+Generate examples."""
         return {}
 
 

@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -33,7 +34,9 @@ from skimage import feature, filters, measure
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Supported image formats with technical specifications"""
+    """
+Supported image formats with technical specifications"""
+
     JPEG = {"ext": ".jpg", "compression": "lossy", "quality": "good", "transparency": False}
     PNG = {"ext": ".png", "compression": "lossless", "quality": "excellent", "transparency": True}
     TIFF = {"ext": ".tiff", "compression": "lossless", "quality": "excellent", "transparency": True}
@@ -45,6 +48,7 @@ class ImageFormat(Enum):
 
 class ImageContentType(Enum):
     """Image content classification types"""
+
     PHOTOGRAPH = "photograph"
     ARTWORK = "artwork"
     DIAGRAM = "diagram"
@@ -63,6 +67,7 @@ class ImageContentType(Enum):
 
 class ImageQuality(Enum):
     """Image quality classifications"""
+
     LOW = {"max_pixels": 307200, "description": "480p and below"}  # 640x480
     MEDIUM = {"max_pixels": 921600, "description": "720p"}  # 1280x720
     HIGH = {"max_pixels": 2073600, "description": "1080p"}  # 1920x1080
@@ -150,7 +155,8 @@ class ImageMetadata:
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint for content identification and protection"""
+    """
+Image fingerprint for content identification and protection"""
     content_id: str
     primary_hash: str
     perceptual_hash: str

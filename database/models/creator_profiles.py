@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class CreatorType(Enum):
-    """Creator type enumeration"""
+    """
+Creator type enumeration"""
+
     MUSICIAN = "musician"
     PODCASTER = "podcaster"
     BLOGGER = "blogger"
@@ -62,6 +65,7 @@ class CreatorType(Enum):
 
 class CareerLevel(Enum):
     """Career level enumeration"""
+
     BEGINNER = "beginner"
     EMERGING = "emerging"
     INTERMEDIATE = "intermediate"
@@ -74,6 +78,7 @@ class CareerLevel(Enum):
 
 class VerificationStatus(Enum):
     """Account verification status"""
+
     UNVERIFIED = "unverified"
     PENDING = "pending"
     VERIFIED = "verified"
@@ -86,6 +91,7 @@ class VerificationStatus(Enum):
 
 class CollaborationStyle(Enum):
     """Collaboration preferences"""
+
     OPEN_TO_ALL = "open_to_all"
     SELECTIVE = "selective"
     INVITATION_ONLY = "invitation_only"
@@ -98,6 +104,7 @@ class CollaborationStyle(Enum):
 
 class ContentStyle(Enum):
     """Content creation style"""
+
     ORIGINAL = "original"
     COVERS = "covers"
     REMIXES = "remixes"
@@ -114,6 +121,7 @@ class ContentStyle(Enum):
 
 class AudienceSize(Enum):
     """Audience size categories"""
+
     NANO = "nano"          # 1-1K
     MICRO = "micro"        # 1K-10K
     MID_TIER = "mid_tier"  # 10K-100K
@@ -346,7 +354,8 @@ class CreatorProfile(Base):
         return self.profile_completeness
     
     def update_audience_metrics(self, platform_data: Dict[str, Dict[str, Any]]) -> None:
-        """Update audience metrics from platform data"""
+        """
+Update audience metrics from platform data"""
         total_followers = 0
         total_subscribers = 0
         
@@ -374,7 +383,8 @@ class CreatorProfile(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def add_achievement(self, achievement_type: str, title: str, description: str, date_achieved: datetime = None) -> None:
-        """Add achievement to profile"""
+        """
+Add achievement to profile"""
         if self.achievements is None:
             self.achievements = []
         
@@ -391,7 +401,8 @@ class CreatorProfile(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def update_skill_proficiency(self, skill: str, proficiency: float) -> None:
-        """Update skill proficiency level (0-100)"""
+        """
+Update skill proficiency level (0-100)"""
         if self.technical_skills is None:
             self.technical_skills = {}
         
@@ -402,7 +413,8 @@ class CreatorProfile(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def get_collaboration_score(self, other_creator: 'CreatorProfile') -> float:
-        """Calculate collaboration compatibility score with another creator"""
+        """
+Calculate collaboration compatibility score with another creator"""
         score = 0.0
         
         # Genre compatibility
@@ -430,7 +442,8 @@ class CreatorProfile(Base):
         return min(100, score)
     
     def get_profile_summary(self) -> Dict[str, Any]:
-        """Get comprehensive profile summary"""
+        """
+Get comprehensive profile summary"""
         return {
             'basic_info': {
                 'stage_name': self.stage_name,
@@ -475,7 +488,8 @@ class CreatorProfile(Base):
         )
     
     def update_activity_score(self) -> None:
-        """Update activity score based on recent activity"""
+        """
+Update activity score based on recent activity"""
         now = datetime.now(timezone.utc)
         
         # Days since last activity

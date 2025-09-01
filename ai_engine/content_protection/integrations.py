@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import uuid
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Types of integrated platforms"""
+    """
+Types of integrated platforms"""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MUSIC_PLATFORM = "music_platform"
@@ -44,6 +47,7 @@ class PlatformType(Enum):
 
 class IntegrationType(Enum):
     """Types of integrations"""
+
     API_INTEGRATION = "api_integration"
     WEBHOOK_INTEGRATION = "webhook_integration"
     STREAMING_INTEGRATION = "streaming_integration"
@@ -53,6 +57,7 @@ class IntegrationType(Enum):
 
 class AuthType(Enum):
     """Authentication types for integrations"""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT_TOKEN = "jwt_token"
@@ -74,7 +79,8 @@ class PlatformCredentials:
 
 @dataclass
 class IntegrationConfig:
-    """Integration configuration"""
+    """
+Integration configuration"""
     integration_id: str
     platform_type: PlatformType
     integration_type: IntegrationType
@@ -89,7 +95,8 @@ class IntegrationConfig:
 
 @dataclass
 class IntegrationEvent:
-    """Integration event data"""
+    """
+Integration event data"""
     event_id: str
     integration_id: str
     event_type: str
@@ -102,7 +109,8 @@ class IntegrationEvent:
 
 @dataclass
 class ContentSubmission:
-    """Content submission for protection"""
+    """
+Content submission for protection"""
     submission_id: str
     content_id: str
     platform_id: str
@@ -123,7 +131,8 @@ class PlatformIntegrationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize integration manager"""
+        """
+Initialize integration manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -145,7 +154,8 @@ class PlatformIntegrationManager:
         self,
         integration_config: IntegrationConfig
     ) -> bool:
-        """Register a new platform integration"""
+        """
+Register a new platform integration"""
         try:
             self.logger.info(f"Registering integration: {integration_config.integration_id}")
             
@@ -462,7 +472,8 @@ class PlatformIntegrationManager:
         }
     
     async def _validate_integration_config(self, config: IntegrationConfig):
-        """Validate integration configuration"""
+        """
+Validate integration configuration"""
         required_fields = ['integration_id', 'platform_type', 'integration_type', 'endpoint_base_url']
         
         for field in required_fields:
@@ -527,7 +538,8 @@ class PlatformIntegrationManager:
         self._http_sessions[config.integration_id] = session
     
     async def _prepare_auth_headers(self, credentials: PlatformCredentials) -> Dict[str, str]:
-        """Prepare authentication headers"""
+        """
+Prepare authentication headers"""
         headers = {}
         
         if credentials.auth_type == AuthType.API_KEY:
@@ -582,7 +594,8 @@ class PlatformIntegrationManager:
         return dict(platform_urls)
     
     async def _process_webhook_event(self, event: IntegrationEvent):
-        """Process webhook event"""
+        """
+Process webhook event"""
         try:
             handler = self._integration_handlers[event.integration_id]
             result = await handler.process_webhook_event(event)
@@ -612,7 +625,8 @@ class BasePlatformHandler:
         self.logger = logging.getLogger(__name__)
     
     async def submit_protection_request(self, submission: ContentSubmission) -> Dict[str, Any]:
-        """Submit content protection request"""
+        """
+Submit content protection request"""
         try:
             self.logger.info(f"Submitting protection request: {submission.submission_id}")
             
@@ -800,7 +814,8 @@ class BasePlatformHandler:
         return max(0.0, min(1.0, similarity))
     
     def _get_matched_segments(self, content: Dict[str, Any], signature: str) -> List[Dict[str, Any]]:
-        """Get matched segments for signature verification"""
+        """
+Get matched segments for signature verification"""
         duration = content.get('duration', 180)
         segments = []
         
@@ -1043,7 +1058,8 @@ class BasePlatformHandler:
         }
     
     async def _process_copyright_claim_event(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process copyright claim webhook event"""
+        """
+Process copyright claim webhook event"""
         claim_id = event_data.get('claim_id')
         content_id = event_data.get('content_id')
         status = event_data.get('status', 'pending')
@@ -1057,7 +1073,8 @@ class BasePlatformHandler:
         }
     
     async def _process_takedown_completion_event(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process takedown completion webhook event"""
+        """
+Process takedown completion webhook event"""
         takedown_id = event_data.get('takedown_id')
         success = event_data.get('success', False)
         urls_removed = event_data.get('urls_removed', [])
@@ -1071,7 +1088,8 @@ class BasePlatformHandler:
         }
     
     async def _process_content_removal_event(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process content removal webhook event"""
+        """
+Process content removal webhook event"""
         content_id = event_data.get('content_id')
         removal_reason = event_data.get('reason', 'copyright')
         
@@ -1083,7 +1101,8 @@ class BasePlatformHandler:
         }
     
     async def _process_analytics_update_event(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process analytics update webhook event"""
+        """
+Process analytics update webhook event"""
         metrics = event_data.get('metrics', {})
         time_period = event_data.get('time_period', '24h')
         
@@ -1096,10 +1115,12 @@ class BasePlatformHandler:
 
 
 class SocialMediaHandler(BasePlatformHandler):
-    """Handler for social media platforms"""
+    """
+Handler for social media platforms"""
     
     async def submit_protection_request(self, submission: ContentSubmission) -> Dict[str, Any]:
-        """Submit content protection request to social media platform"""
+        """
+Submit content protection request to social media platform"""
         try:
             # Implementation for social media protection
             return {'success': True, 'submission_id': submission.submission_id}
@@ -1107,16 +1128,19 @@ class SocialMediaHandler(BasePlatformHandler):
             return {'success': False, 'error': str(e)}
     
     async def search_content(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Search social media content"""
+        """
+Search social media content"""
         # Implementation for social media search
         return []
 
 
 class VideoPlatformHandler(BasePlatformHandler):
-    """Handler for video platforms like YouTube"""
+    """
+Handler for video platforms like YouTube"""
     
     async def submit_protection_request(self, submission: ContentSubmission) -> Dict[str, Any]:
-        """Submit video protection request"""
+        """
+Submit video protection request"""
         try:
             # Use Content ID or manual copyright claims
             return {'success': True, 'claim_id': f"claim_{submission.submission_id}"}
@@ -1128,7 +1152,8 @@ class MusicPlatformHandler(BasePlatformHandler):
     """Handler for music platforms"""
     
     async def submit_protection_request(self, submission: ContentSubmission) -> Dict[str, Any]:
-        """Submit music protection request"""
+        """
+Submit music protection request"""
         try:
             # Music-specific protection logic
             return {'success': True, 'track_id': f"track_{submission.submission_id}"}
@@ -1140,7 +1165,8 @@ class StreamingServiceHandler(BasePlatformHandler):
     """Handler for streaming services"""
     
     async def submit_protection_request(self, submission: ContentSubmission) -> Dict[str, Any]:
-        """Submit streaming content protection"""
+        """
+Submit streaming content protection"""
         try:
             # Streaming service protection logic
             return {'success': True, 'stream_id': f"stream_{submission.submission_id}"}
@@ -1152,7 +1178,8 @@ class BlockchainHandler(BasePlatformHandler):
     """Handler for blockchain networks"""
     
     async def sync_records(self, content_records: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Sync records to blockchain"""
+        """
+Sync records to blockchain"""
         try:
             # Blockchain synchronization logic
             return {
@@ -1168,7 +1195,8 @@ class LegalServiceHandler(BasePlatformHandler):
     """Handler for legal service integrations"""
     
     async def submit_takedown_request(self, submission: ContentSubmission) -> Dict[str, Any]:
-        """Submit legal takedown request"""
+        """
+Submit legal takedown request"""
         try:
             # Legal service integration logic
             return {
@@ -1184,7 +1212,8 @@ class CloudStorageHandler(BasePlatformHandler):
     """Handler for cloud storage services"""
     
     async def store_evidence(self, evidence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Store evidence in cloud storage"""
+        """
+Store evidence in cloud storage"""
         try:
             # Cloud storage logic
             return {
@@ -1200,7 +1229,8 @@ class CDNServiceHandler(BasePlatformHandler):
     """Handler for CDN services"""
     
     async def configure_protection(self, content_id: str, rules: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure CDN protection rules"""
+        """
+Configure CDN protection rules"""
         try:
             # CDN protection configuration
             return {
@@ -1216,7 +1246,8 @@ class PaymentProcessorHandler(BasePlatformHandler):
     """Handler for payment processors"""
     
     async def process_royalty_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process royalty payment"""
+        """
+Process royalty payment"""
         try:
             # Payment processing logic
             return {
@@ -1237,7 +1268,8 @@ class PlatformIntegrator:
         self.logger = logging.getLogger(__name__)
     
     async def process_concurrent_requests(self, requests: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Process multiple requests concurrently"""
+        """
+Process multiple requests concurrently"""
         try:
             results = []
             for i, request in enumerate(requests):

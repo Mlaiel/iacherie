@@ -6,7 +6,7 @@ structures, revenue sharing, affiliate programs, and performance-based
 compensation for creators and collaborators.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Commission Management
 ==============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class CommissionType(Enum):
-    """Commission types"""
+    """
+Commission types"""
+
     FLAT_RATE = "flat_rate"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
@@ -45,6 +48,7 @@ class CommissionType(Enum):
 
 class CommissionStatus(Enum):
     """Commission calculation status"""
+
     PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -97,7 +101,8 @@ class CommissionEngine:
         self._performance_cache = {}
         
     async def initialize(self):
-        """Initialize commission engine"""
+        """
+Initialize commission engine"""
         try:
             # Load commission rules
             await self._load_commission_rules()

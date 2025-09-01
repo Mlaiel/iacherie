@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SessionState:
-    """Session state information."""
+    """
+Session state information."""
     session_id: str
     user_agent: str
     proxy: Optional[Dict] = None
@@ -48,7 +50,8 @@ class SessionState:
 
 @dataclass
 class SessionMetrics:
-    """Session performance metrics."""
+    """
+Session performance metrics."""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -81,7 +84,8 @@ class SessionManager:
         user_agent_rotator: Optional[UserAgentRotator] = None,
         rate_limiter: Optional[RateLimiter] = None
     ):
-        """Initialize session manager."""
+        """
+Initialize session manager."""
         self.proxy_manager = proxy_manager or ProxyManager()
         self.user_agent_rotator = user_agent_rotator or UserAgentRotator()
         self.rate_limiter = rate_limiter
@@ -300,7 +304,8 @@ class SessionManager:
         }
     
     def _dict_to_proxy(self, proxy_dict: Dict) -> ProxyInfo:
-        """Convert dictionary to ProxyInfo."""
+        """
+Convert dictionary to ProxyInfo."""
         return ProxyInfo(
             host=proxy_dict['host'],
             port=proxy_dict['port'],
@@ -310,7 +315,8 @@ class SessionManager:
         )
     
     def _build_proxy_url(self, proxy_dict: Dict) -> str:
-        """Build proxy URL for aiohttp."""
+        """
+Build proxy URL for aiohttp."""
         username = proxy_dict.get('username')
         password = proxy_dict.get('password')
         protocol = proxy_dict.get('protocol', 'http')
@@ -373,7 +379,8 @@ class SessionManager:
         session_id: str,
         session: aiohttp.ClientSession
     ) -> None:
-        """Update session cookies."""
+        """
+Update session cookies."""
         state = self.session_states[session_id]
         
         # Extract cookies
@@ -395,7 +402,8 @@ class SessionManager:
         metrics.cookies_collected = len(cookies)
     
     def _is_session_expired(self, session_state: SessionState) -> bool:
-        """Check if session is expired."""
+        """
+Check if session is expired."""
         if not session_state.last_used:
             return True
         
@@ -412,7 +420,8 @@ class SessionManager:
         return False
     
     async def close_session(self, session_id: str) -> None:
-        """Close and cleanup session."""
+        """
+Close and cleanup session."""
         if session_id in self.sessions:
             session = self.sessions[session_id]
             await session.close()
@@ -439,7 +448,8 @@ class SessionManager:
         await self.close_session(oldest_session_id)
     
     async def _session_cleanup_task(self) -> None:
-        """Background task to cleanup expired sessions."""
+        """
+Background task to cleanup expired sessions."""
         while True:
             try:
                 await asyncio.sleep(self.session_cleanup_interval)
@@ -549,7 +559,8 @@ class SessionManager:
         return stats
     
     async def rotate_session_proxy(self, session_id: str, country: Optional[str] = None) -> bool:
-        """Rotate proxy for existing session."""
+        """
+Rotate proxy for existing session."""
         if session_id not in self.session_states:
             return False
         
@@ -611,7 +622,8 @@ class SessionManager:
         return state.cookies if state else None
     
     def set_session_cookies(self, session_id: str, cookies: Dict) -> bool:
-        """Set cookies for a session."""
+        """
+Set cookies for a session."""
         if session_id not in self.session_states:
             return False
         

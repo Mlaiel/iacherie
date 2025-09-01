@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track information"""
+    """
+Spotify track information"""
     id: str
     name: str
     artists: List[str]
@@ -35,7 +36,8 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyPlaylist:
-    """Spotify playlist information"""
+    """
+Spotify playlist information"""
     id: str
     name: str
     description: str
@@ -48,7 +50,8 @@ class SpotifyPlaylist:
 
 @dataclass
 class SpotifyAnalytics:
-    """Spotify streaming analytics"""
+    """
+Spotify streaming analytics"""
     track_id: str
     streams: int
     listeners: int
@@ -184,7 +187,8 @@ class CompleteSpotifyAgent:
                 await self._get_client_credentials_token()
     
     async def _refresh_access_token(self):
-        """Refresh the access token"""
+        """
+Refresh the access token"""
         try:
             auth_header = base64.b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()
             

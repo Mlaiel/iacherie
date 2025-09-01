@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import json
 
 
 class MessageBrokerType(str, Enum):
-    """Message broker types."""
+    """
+Message broker types."""
+
     RABBITMQ = "rabbitmq"
     APACHE_KAFKA = "kafka"
     REDIS = "redis"
@@ -35,6 +38,7 @@ class MessageBrokerType(str, Enum):
 
 class ExchangeType(str, Enum):
     """RabbitMQ exchange types."""
+
     DIRECT = "direct"
     TOPIC = "topic"
     FANOUT = "fanout"
@@ -43,13 +47,15 @@ class ExchangeType(str, Enum):
 
 class DeliveryMode(int, Enum):
     """Message delivery modes."""
+
     NON_PERSISTENT = 1
     PERSISTENT = 2
 
 
 @dataclass
 class QueueConfig:
-    """Queue configuration."""
+    """
+Queue configuration."""
     name: str
     durable: bool = True
     exclusive: bool = False
@@ -66,7 +72,8 @@ class QueueConfig:
 
 @dataclass
 class ExchangeConfig:
-    """Exchange configuration."""
+    """
+Exchange configuration."""
     name: str
     type: ExchangeType = ExchangeType.DIRECT
     durable: bool = True
@@ -77,7 +84,8 @@ class ExchangeConfig:
 
 @dataclass
 class BindingConfig:
-    """Binding configuration."""
+    """
+Binding configuration."""
     queue: str
     exchange: str
     routing_key: str = ""

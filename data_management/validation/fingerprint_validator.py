@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE VALIDATION D'EMPREINTES NUMÉRIQUES IA
@@ -15,6 +15,7 @@ Validation avancée des empreintes numériques pour protection du contenu
 - Analyse de similarité avec base existante
 - Intégration avec système de protection des droits
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -56,7 +57,9 @@ from scipy.spatial.distance import cosine
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types d'empreintes numériques"""
+    """
+Types d'empreintes numériques"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -82,7 +85,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Résultat de correspondance de similarité"""
+    """
+Résultat de correspondance de similarité"""
     matched_fingerprint_id: str
     similarity_score: float
     fingerprint_type: FingerprintType
@@ -92,7 +96,8 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintValidationResult:
-    """Résultat de validation d'empreinte"""
+    """
+Résultat de validation d'empreinte"""
     is_unique: bool
     is_valid: bool
     fingerprint_quality: float  # 0.0 - 1.0
@@ -104,7 +109,8 @@ class FingerprintValidationResult:
     metadata: Dict[str, Any]
 
 class AudioFingerprintGenerator:
-    """Générateur d'empreintes audio avancées"""
+    """
+Générateur d'empreintes audio avancées"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioFingerprintGenerator")
@@ -378,7 +384,8 @@ class VideoFingerprintGenerator:
         return format(hash_int, 'x')[:16]  # Limiter à 16 caractères hex
 
 class ImageFingerprintGenerator:
-    """Générateur d'empreintes image avancées"""
+    """
+Générateur d'empreintes image avancées"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ImageFingerprintGenerator")
@@ -749,7 +756,8 @@ class SimilarityMatcher:
         return np.mean(similarities) if similarities else 0.0
     
     def _add_to_faiss_index(self, fingerprint_id: str, fingerprint_result: FingerprintResult):
-        """Ajoute un vecteur à l'index FAISS"""
+        """
+Ajoute un vecteur à l'index FAISS"""
         try:
             fingerprint_type = fingerprint_result.fingerprint_type
             vector = fingerprint_result.fingerprint_data.astype(np.float32)
@@ -886,7 +894,8 @@ class FingerprintValidator:
         return results
     
     def _generate_video_fingerprints(self, file_path: str) -> List[FingerprintResult]:
-        """Génère toutes les empreintes vidéo"""
+        """
+Génère toutes les empreintes vidéo"""
         results = []
         
         # Perceptual
@@ -897,7 +906,8 @@ class FingerprintValidator:
         return results
     
     def _generate_image_fingerprints(self, file_path: str) -> List[FingerprintResult]:
-        """Génère toutes les empreintes image"""
+        """
+Génère toutes les empreintes image"""
         results = []
         
         # Perceptual
@@ -908,7 +918,8 @@ class FingerprintValidator:
         return results
     
     def _generate_text_fingerprints(self, file_path: str) -> List[FingerprintResult]:
-        """Génère toutes les empreintes texte"""
+        """
+Génère toutes les empreintes texte"""
         results = []
         
         # TF-IDF
@@ -924,7 +935,8 @@ class FingerprintValidator:
         return results
     
     def _calculate_fingerprint_quality(self, fingerprint_results: List[FingerprintResult]) -> float:
-        """Calcule la qualité globale des empreintes"""
+        """
+Calcule la qualité globale des empreintes"""
         if not fingerprint_results:
             return 0.0
         
@@ -933,7 +945,8 @@ class FingerprintValidator:
         return total_score / len(fingerprint_results)
     
     def _create_error_result(self, errors: List[str]) -> FingerprintValidationResult:
-        """Crée un résultat d'erreur"""
+        """
+Crée un résultat d'erreur"""
         return FingerprintValidationResult(
             is_unique=False,
             is_valid=False,
@@ -947,7 +960,8 @@ class FingerprintValidator:
         )
     
     def register_fingerprint(self, fingerprint_id: str, validation_result: FingerprintValidationResult, file_path: str):
-        """Enregistre une empreinte validée dans la base"""
+        """
+Enregistre une empreinte validée dans la base"""
         try:
             for fingerprint_result in validation_result.fingerprint_results:
                 if fingerprint_result.confidence_score > 0.5:
@@ -983,7 +997,8 @@ class AsyncFingerprintValidator:
         return result
     
     async def validate_batch_fingerprints(self, files: List[Tuple[str, str]]) -> Dict[str, FingerprintValidationResult]:
-        """Valide un lot d'empreintes de manière asynchrone"""
+        """
+Valide un lot d'empreintes de manière asynchrone"""
         tasks = []
         
         for file_path, content_type in files:

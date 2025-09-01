@@ -11,6 +11,7 @@ Features:
 - Repository management and chart distribution
 - Values templating and environment configuration
 """
+
 import asyncio
 import logging
 import os
@@ -29,9 +30,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize Helm metrics collector with chart monitoring capabilities"""
+        """
+Initialize Helm metrics collector with chart monitoring capabilities"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.helm_metrics = ['chart_deployments', 'release_status', 'upgrade_success_rate']
         self.chart_repositories = ['stable', 'bitnami', 'prometheus-community']
@@ -44,6 +47,7 @@ class MetricsCollector:
 
 class ReleaseStatus(Enum):
     """Helm release status."""
+
     DEPLOYED = "deployed"
     FAILED = "failed"
     PENDING_INSTALL = "pending-install"
@@ -55,6 +59,7 @@ class ReleaseStatus(Enum):
 
 class ChartType(Enum):
     """Helm chart types."""
+
     APPLICATION = "application"
     LIBRARY = "library"
 
@@ -74,7 +79,8 @@ class HelmChart:
 
 @dataclass
 class HelmRelease:
-    """Helm release information."""
+    """
+Helm release information."""
     name: str
     namespace: str
     chart: str
@@ -88,7 +94,8 @@ class HelmRelease:
 
 @dataclass
 class HelmRepository:
-    """Helm repository configuration."""
+    """
+Helm repository configuration."""
     name: str
     url: str
     username: Optional[str] = None

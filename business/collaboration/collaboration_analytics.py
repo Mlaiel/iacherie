@@ -4,6 +4,7 @@ Professional analytics and insights for collaboration performance
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 import asyncio
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     FINANCIAL = "financial"
@@ -63,7 +66,8 @@ class CollaborationTrendData:
 
 
 class CollaborationAnalyticsEngine:
-    """Advanced analytics engine for collaboration data"""
+    """
+Advanced analytics engine for collaboration data"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -75,7 +79,8 @@ class CollaborationAnalyticsEngine:
         collaboration_data: List[Dict[str, Any]],
         time_period: Dict[str, datetime] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance analytics"""
+        """
+Generate comprehensive performance analytics"""
         try:
             if not collaboration_data:
                 return self._empty_analytics_response("No collaboration data available")
@@ -339,7 +344,8 @@ class CollaborationAnalyticsEngine:
         }
     
     def _calculate_quality_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration quality metrics"""
+        """
+Calculate collaboration quality metrics"""
         if not data:
             return {}
         
@@ -371,7 +377,8 @@ class CollaborationAnalyticsEngine:
         }
     
     def _calculate_efficiency_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration efficiency metrics"""
+        """
+Calculate collaboration efficiency metrics"""
         if not data:
             return {}
         
@@ -420,7 +427,8 @@ class CollaborationAnalyticsEngine:
         }
     
     def _calculate_satisfaction_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration satisfaction metrics"""
+        """
+Calculate collaboration satisfaction metrics"""
         if not data:
             return {}
         
@@ -458,7 +466,8 @@ class CollaborationAnalyticsEngine:
         }
     
     async def _analyze_performance_trends(self, data: List[Dict[str, Any]]) -> List[CollaborationTrendData]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         if not data:
             return []
         
@@ -488,7 +497,8 @@ class CollaborationAnalyticsEngine:
         return trends
     
     def _generate_performance_insights(self, *metrics_groups) -> List[AnalyticsInsight]:
-        """Generate performance insights from metrics"""
+        """
+Generate performance insights from metrics"""
         insights = []
         
         completion_metrics, quality_metrics, efficiency_metrics, satisfaction_metrics, trends = metrics_groups

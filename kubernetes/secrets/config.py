@@ -4,6 +4,7 @@ Enterprise configuration for secrets deployment and management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -15,7 +16,9 @@ from enum import Enum
 
 
 class Environment(Enum):
-    """Deployment environments."""
+    """
+Deployment environments."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -24,6 +27,7 @@ class Environment(Enum):
 
 class SecretProvider(Enum):
     """Secret provider types."""
+
     HASHICORP_VAULT = "hashicorp_vault"
     KUBERNETES_SECRETS = "kubernetes_secrets"
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
@@ -33,6 +37,7 @@ class SecretProvider(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Encryption algorithms."""
+
     AES_256_GCM = "aes_256_gcm"
     FERNET = "fernet"
     RSA_OAEP = "rsa_oaep"
@@ -398,7 +403,8 @@ class SecretsConfig:
             self.ip_whitelist = config_dict['ip_whitelist']
     
     def _update_dataclass(self, instance: Any, data: Dict[str, Any]) -> None:
-        """Update dataclass instance with dictionary data."""
+        """
+Update dataclass instance with dictionary data."""
         for key, value in data.items():
             if hasattr(instance, key):
                 # Handle enum fields
@@ -409,7 +415,8 @@ class SecretsConfig:
                 setattr(instance, key, value)
     
     def _load_env_variables(self) -> None:
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         # Vault configuration
         if os.getenv('VAULT_ADDR'):
             self.vault.url = os.getenv('VAULT_ADDR')
@@ -461,7 +468,8 @@ class SecretsConfig:
             self.debug_mode = os.getenv('SECRET_DEBUG_MODE').lower() == 'true'
     
     def _validate_config(self) -> None:
-        """Validate configuration settings."""
+        """
+Validate configuration settings."""
         logger = logging.getLogger(__name__)
         
         # Validate primary provider configuration
@@ -515,7 +523,8 @@ class SecretsConfig:
         return provider_configs.get(provider)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
+        """
+Convert configuration to dictionary."""
         return {
             'environment': self.environment.value,
             'service_account': self.service_account,
@@ -539,7 +548,8 @@ class SecretsConfig:
         }
     
     def _dataclass_to_dict(self, instance: Any) -> Dict[str, Any]:
-        """Convert dataclass instance to dictionary."""
+        """
+Convert dataclass instance to dictionary."""
         result = {}
         for field_name in instance.__dataclass_fields__:
             value = getattr(instance, field_name)
@@ -595,37 +605,44 @@ class SecretsConfig:
     
     @property
     def vault_token(self) -> Optional[str]:
-        """Get Vault token."""
+        """
+Get Vault token."""
         return self.vault.token
     
     @property
     def vault_namespace(self) -> Optional[str]:
-        """Get Vault namespace."""
+        """
+Get Vault namespace."""
         return self.vault.namespace
     
     @property
     def vault_auth_method(self) -> str:
-        """Get Vault auth method."""
+        """
+Get Vault auth method."""
         return self.vault.auth_method
     
     @property
     def vault_role(self) -> str:
-        """Get Vault role."""
+        """
+Get Vault role."""
         return self.vault.role
     
     @property
     def vault_kv_version(self) -> int:
-        """Get Vault KV version."""
+        """
+Get Vault KV version."""
         return self.vault.kv_version
     
     @property
     def kubernetes_namespace(self) -> str:
-        """Get Kubernetes namespace."""
+        """
+Get Kubernetes namespace."""
         return self.kubernetes.namespace
     
     @property
     def kubernetes_token(self) -> str:
-        """Get Kubernetes service account token."""
+        """
+Get Kubernetes service account token."""
         try:
             with open(self.kubernetes.token_path, 'r') as f:
                 return f.read().strip()
@@ -639,27 +656,32 @@ class SecretsConfig:
     
     @property
     def ldap_password(self) -> Optional[str]:
-        """Get LDAP password from environment."""
+        """
+Get LDAP password from environment."""
         return os.getenv('LDAP_PASSWORD')
     
     @property
     def rotation_jobs_file(self) -> str:
-        """Get rotation jobs file path."""
+        """
+Get rotation jobs file path."""
         return self.rotation.jobs_file
     
     @property
     def audit_webhook_url(self) -> Optional[str]:
-        """Get audit webhook URL."""
+        """
+Get audit webhook URL."""
         return self.compliance.audit_webhook_url
     
     @property
     def is_production(self) -> bool:
-        """Check if running in production."""
+        """
+Check if running in production."""
         return self.environment == Environment.PRODUCTION
     
     @property
     def is_development(self) -> bool:
-        """Check if running in development."""
+        """
+Check if running in development."""
         return self.environment == Environment.DEVELOPMENT
 
 
@@ -668,7 +690,8 @@ _config_instance: Optional[SecretsConfig] = None
 
 
 def get_config() -> SecretsConfig:
-    """Get global configuration instance."""
+    """
+Get global configuration instance."""
     global _config_instance
     if _config_instance is None:
         _config_instance = SecretsConfig()
@@ -676,27 +699,32 @@ def get_config() -> SecretsConfig:
 
 
 def set_config(config: SecretsConfig) -> None:
-    """Set global configuration instance."""
+    """
+Set global configuration instance."""
     global _config_instance
     _config_instance = config
 
 
 # Environment-specific configuration helpers
 def load_development_config() -> SecretsConfig:
-    """Load development configuration."""
+    """
+Load development configuration."""
     return SecretsConfig(environment=Environment.DEVELOPMENT)
 
 
 def load_staging_config() -> SecretsConfig:
-    """Load staging configuration."""
+    """
+Load staging configuration."""
     return SecretsConfig(environment=Environment.STAGING)
 
 
 def load_production_config() -> SecretsConfig:
-    """Load production configuration."""
+    """
+Load production configuration."""
     return SecretsConfig(environment=Environment.PRODUCTION)
 
 
 def load_testing_config() -> SecretsConfig:
-    """Load testing configuration."""
+    """
+Load testing configuration."""
     return SecretsConfig(environment=Environment.TESTING)

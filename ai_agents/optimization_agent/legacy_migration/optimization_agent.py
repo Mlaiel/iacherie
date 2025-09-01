@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -60,7 +61,9 @@ from ...data.optimization_repository import OptimizationRepository
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization strategies"""
+    """
+Types of optimization strategies"""
+
     PERFORMANCE = "performance"
     RESOURCE = "resource"
     COST = "cost"
@@ -74,6 +77,7 @@ class OptimizationType(Enum):
 
 class OptimizationStrategy(Enum):
     """Optimization execution strategies"""
+
     AGGRESSIVE = "aggressive"
     BALANCED = "balanced"
     CONSERVATIVE = "conservative"
@@ -82,6 +86,7 @@ class OptimizationStrategy(Enum):
 
 class ResourceState(Enum):
     """Resource utilization states"""
+
     OPTIMAL = "optimal"
     UNDERUTILIZED = "underutilized"
     OVERUTILIZED = "overutilized"
@@ -105,7 +110,8 @@ class OptimizationMetrics:
     
 @dataclass
 class ResourceProfile:
-    """System resource utilization profile"""
+    """
+System resource utilization profile"""
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
@@ -119,7 +125,8 @@ class ResourceProfile:
 
 @dataclass
 class OptimizationRule:
-    """Dynamic optimization rule configuration"""
+    """
+Dynamic optimization rule configuration"""
     rule_id: str
     name: str
     condition: str
@@ -607,7 +614,8 @@ class OptimizationAgentManager:
         self.coordination_engine = CoordinationEngine()
         
     async def create_agent(self, agent_id: str = None, config: Dict = None) -> OptimizationAgent:
-        """Create and register new optimization agent"""
+        """
+Create and register new optimization agent"""
         if agent_id is None:
             agent_id = f"opt_agent_{len(self.agents)}"
             
@@ -624,5 +632,6 @@ class OptimizationAgentManager:
         return await self.load_balancer.get_optimal_agent(request)
     
     async def coordinate_optimization(self, requests: List[AgentRequest]) -> Dict[str, Any]:
-        """Coordinate multiple optimization requests across agents"""
+        """
+Coordinate multiple optimization requests across agents"""
         return await self.coordination_engine.coordinate(requests, self.agents)

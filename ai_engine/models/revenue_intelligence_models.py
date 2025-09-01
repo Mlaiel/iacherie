@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -34,7 +35,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     SUBSCRIPTION = "subscription"
     AD_REVENUE = "ad_revenue"
     SPONSORED_CONTENT = "sponsored_content"
@@ -51,6 +54,7 @@ class RevenueStream(Enum):
 
 class MarketSegment(Enum):
     """Market segment classifications"""
+
     MUSIC_CREATORS = "music_creators"
     VIDEO_CONTENT = "video_content"
     PHOTOGRAPHY = "photography"
@@ -65,6 +69,7 @@ class MarketSegment(Enum):
 
 class OptimizationGoal(Enum):
     """Revenue optimization goals"""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     INCREASE_ENGAGEMENT = "increase_engagement"
     EXPAND_AUDIENCE = "expand_audience"
@@ -94,7 +99,8 @@ class RevenueIntelligenceConfig:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
+    """
+Revenue performance metrics"""
     total_revenue: float
     revenue_by_stream: Dict[RevenueStream, float]
     growth_rate: float
@@ -110,7 +116,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueOptimizationResult:
-    """Revenue optimization result"""
+    """
+Revenue optimization result"""
     predicted_revenue: float
     confidence_interval: Tuple[float, float]
     optimization_recommendations: List[Dict[str, Any]]
@@ -149,7 +156,8 @@ class AdvancedRevenuePredictor(BaseAIModel):
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize all prediction models"""
+        """
+Initialize all prediction models"""
         try:
             # Revenue stream predictors
             for stream in self.revenue_config.enabled_revenue_streams:
@@ -675,7 +683,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         self.user_clusterer = KMeans(n_clusters=10, random_state=42)
         
     def _create_content_embedder(self) -> nn.Module:
-        """Create content embedding network"""
+        """
+Create content embedding network"""
         class ContentEmbedder(nn.Module):
             def __init__(self, input_dim=100, embedding_dim=128):
                 super().__init__()
@@ -695,7 +704,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         return ContentEmbedder()
     
     def _create_user_embedder(self) -> nn.Module:
-        """Create user embedding network"""
+        """
+Create user embedding network"""
         class UserEmbedder(nn.Module):
             def __init__(self, input_dim=50, embedding_dim=128):
                 super().__init__()
@@ -713,7 +723,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         return UserEmbedder()
     
     def _create_recommendation_network(self) -> nn.Module:
-        """Create recommendation scoring network"""
+        """
+Create recommendation scoring network"""
         class RecommendationNet(nn.Module):
             def __init__(self, embedding_dim=128):
                 super().__init__()
@@ -736,7 +747,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         return RecommendationNet()
     
     def _create_trend_analyzer(self) -> Any:
-        """Create trend analysis model"""
+        """
+Create trend analysis model"""
         return GradientBoostingRegressor(
             n_estimators=100,
             learning_rate=0.1,
@@ -745,7 +757,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         )
     
     def _create_viral_predictor(self) -> Any:
-        """Create viral content prediction model"""
+        """
+Create viral content prediction model"""
         return RandomForestClassifier(
             n_estimators=150,
             max_depth=8,
@@ -1014,7 +1027,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return np.random.randn(128) * 0.1
     
     def _get_content_embedding(self, content_features: np.ndarray) -> np.ndarray:
-        """Get content embedding from features"""
+        """
+Get content embedding from features"""
         try:
             with torch.no_grad():
                 feature_tensor = torch.FloatTensor(content_features).unsqueeze(0)
@@ -1029,7 +1043,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         content_item: Dict[str, Any], 
         optimize_for: str
     ) -> float:
-        """Adjust recommendation score based on optimization target"""
+        """
+Adjust recommendation score based on optimization target"""
         try:
             if optimize_for == "revenue":
                 revenue_potential = content_item.get("revenue_metrics", {}).get("revenue_potential", 0.3)
@@ -1068,7 +1083,8 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return 0.2  # Default viral score
     
     def _estimate_content_revenue_potential(self, content_item: Dict[str, Any]) -> float:
-        """Estimate revenue potential of content"""
+        """
+Estimate revenue potential of content"""
         try:
             # Base revenue potential from content type
             type_multipliers = {

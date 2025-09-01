@@ -4,6 +4,7 @@ Content performance analysis and optimization recommendations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentPerformance:
-    """Content performance metrics"""
+    """
+Content performance metrics"""
     content_id: str
     platform: str
     views: int
@@ -32,7 +34,8 @@ class ContentPerformance:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight recommendation"""
+    """
+Performance insight recommendation"""
     insight_type: str
     title: str
     description: str
@@ -42,7 +45,8 @@ class PerformanceInsight:
 
 
 class PerformanceAnalyzer:
-    """Content performance analysis and optimization engine"""
+    """
+Content performance analysis and optimization engine"""
     
     def __init__(self):
         self.performance_data = {}
@@ -53,7 +57,8 @@ class PerformanceAnalyzer:
         content_id: str,
         platform_metrics: Dict[str, Dict]
     ) -> Dict[str, Any]:
-        """Analyze content performance across platforms"""
+        """
+Analyze content performance across platforms"""
         try:
             performance_records = []
             

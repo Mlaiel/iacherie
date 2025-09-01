@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Union, Callable, AsyncGenerator
@@ -52,7 +53,9 @@ from ...utils.circuit_breaker import CircuitBreaker
 
 
 class AuthType(Enum):
-    """Authentication types supported by platforms"""
+    """
+Authentication types supported by platforms"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -63,6 +66,7 @@ class AuthType(Enum):
 
 class APIMethod(Enum):
     """HTTP methods for API calls"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -87,7 +91,8 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """Standardized API response structure"""
+    """
+Standardized API response structure"""
     status_code: int
     data: Any
     headers: Dict[str, str]
@@ -100,7 +105,8 @@ class APIResponse:
 
 
 class BasePlatformConnector(ABC):
-    """Abstract base class for platform-specific connectors"""
+    """
+Abstract base class for platform-specific connectors"""
     
     def __init__(self, platform_type: PlatformType, config: PlatformConfig):
         self.platform_type = platform_type
@@ -124,21 +130,25 @@ class BasePlatformConnector(ABC):
 
     @abstractmethod
     async def upload_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to the platform"""
+        """
+Upload content to the platform"""
         pass
 
     @abstractmethod
     async def get_analytics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get analytics data from the platform"""
+        """
+Get analytics data from the platform"""
         pass
 
     @abstractmethod
     async def get_user_profile(self) -> Dict[str, Any]:
-        """Get user profile information"""
+        """
+Get user profile information"""
         pass
 
     async def initialize(self) -> bool:
-        """Initialize the connector"""
+        """
+Initialize the connector"""
         try:
             # Create HTTP session with optimized settings
             connector = aiohttp.TCPConnector(
@@ -270,11 +280,13 @@ class BasePlatformConnector(ABC):
         }
 
     def _get_auth_headers(self) -> Dict[str, str]:
-        """Get authentication headers (to be overridden by subclasses)"""
+        """
+Get authentication headers (to be overridden by subclasses)"""
         return {}
 
     def _build_url(self, endpoint: str) -> str:
-        """Build complete URL for API endpoint"""
+        """
+Build complete URL for API endpoint"""
         base_url = self.config.base_url.rstrip('/')
         endpoint = endpoint.lstrip('/')
         return f"{base_url}/{endpoint}"
@@ -291,7 +303,8 @@ class BasePlatformConnector(ABC):
             return await response.read()
 
     async def _parse_error_response(self, response: aiohttp.ClientResponse) -> Dict[str, Any]:
-        """Parse error response"""
+        """
+Parse error response"""
         try:
             if 'application/json' in response.headers.get('Content-Type', ''):
                 return await response.json()
@@ -302,7 +315,8 @@ class BasePlatformConnector(ABC):
             return {'message': 'Unknown error', 'status_code': response.status}
 
     def _parse_rate_limit_remaining(self, headers: Dict[str, str]) -> Optional[int]:
-        """Parse rate limit remaining from headers"""
+        """
+Parse rate limit remaining from headers"""
         # Common header names for rate limit remaining
         header_names = [
             'X-RateLimit-Remaining',
@@ -321,7 +335,8 @@ class BasePlatformConnector(ABC):
         return None
 
     def _parse_rate_limit_reset(self, headers: Dict[str, str]) -> Optional[datetime]:
-        """Parse rate limit reset time from headers"""
+        """
+Parse rate limit reset time from headers"""
         header_names = [
             'X-RateLimit-Reset',
             'X-Rate-Limit-Reset',
@@ -339,7 +354,8 @@ class BasePlatformConnector(ABC):
         return None
 
     async def close(self):
-        """Close the connector and cleanup resources"""
+        """
+Close the connector and cleanup resources"""
         if self.session:
             await self.session.close()
             self.session = None
@@ -357,7 +373,8 @@ class SpotifyConnector(BasePlatformConnector):
         self.token_expires_at: Optional[datetime] = None
 
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with Spotify using OAuth2"""
+        """
+Authenticate with Spotify using OAuth2"""
         try:
             # Implement Spotify OAuth2 flow
             auth_url = "https://accounts.spotify.com/api/token"
@@ -403,7 +420,8 @@ class SpotifyConnector(BasePlatformConnector):
         pass
 
     async def get_analytics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get Spotify analytics data"""
+        """
+Get Spotify analytics data"""
         try:
             endpoint = f"v1/me/player/recently-played"
             if content_id:
@@ -444,7 +462,8 @@ class SpotifyConnector(BasePlatformConnector):
 
 
 class YouTubeConnector(BasePlatformConnector):
-    """YouTube Data/Creator API connector with advanced video features"""
+    """
+YouTube Data/Creator API connector with advanced video features"""
     
     def __init__(self, config: PlatformConfig):
         super().__init__(PlatformType.YOUTUBE, config)
@@ -452,7 +471,8 @@ class YouTubeConnector(BasePlatformConnector):
         self.oauth_token: Optional[str] = None
 
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with YouTube API"""
+        """
+Authenticate with YouTube API"""
         try:
             self.api_key = credentials.api_key
             
@@ -563,7 +583,8 @@ class YouTubeConnector(BasePlatformConnector):
 
 
 class InstagramConnector(BasePlatformConnector):
-    """Instagram Graph API connector with advanced visual content features"""
+    """
+Instagram Graph API connector with advanced visual content features"""
     
     def __init__(self, config: PlatformConfig):
         super().__init__(PlatformType.INSTAGRAM, config)
@@ -571,7 +592,8 @@ class InstagramConnector(BasePlatformConnector):
         self.page_id: Optional[str] = None
 
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with Instagram Graph API"""
+        """
+Authenticate with Instagram Graph API"""
         try:
             self.access_token = credentials.access_token
             self.page_id = credentials.additional_data.get('page_id')
@@ -758,7 +780,8 @@ class PlatformConnector:
                 return GenericConnector(platform_type, platform_config)
 
     async def get_connector(self, platform_type: PlatformType) -> BasePlatformConnector:
-        """Get connector for specific platform"""
+        """
+Get connector for specific platform"""
         if platform_type not in self.connectors:
             raise ValueError(f"Connector for {platform_type.value} not initialized")
         
@@ -945,13 +968,15 @@ class UniversalAPI:
         platforms: List[PlatformType] = None,
         date_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """Universal analytics aggregation"""
+        """
+Universal analytics aggregation"""
         return await self.platform_connector.get_aggregated_analytics(
             user_id, platforms
         )
 
     async def get_user_profiles(self, user_id: str) -> Dict[str, Any]:
-        """Get user profiles from all connected platforms"""
+        """
+Get user profiles from all connected platforms"""
         profiles = {}
         
         for platform_type, connector in self.platform_connector.connectors.items():
@@ -985,7 +1010,8 @@ class UniversalAPI:
         schedule: Dict[str, datetime],
         user_id: str
     ) -> Dict[str, Any]:
-        """Schedule content for optimal posting times across platforms"""
+        """
+Schedule content for optimal posting times across platforms"""
         # Implementation for intelligent content scheduling
         # based on audience activity patterns and platform algorithms
         pass

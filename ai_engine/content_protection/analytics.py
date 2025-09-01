@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import uuid
@@ -27,12 +28,15 @@ logger = logging.getLogger(__name__)
 
 
 def utc_now() -> datetime:
-    """Get current UTC datetime using the modern timezone-aware approach"""
+    """
+Get current UTC datetime using the modern timezone-aware approach"""
     return datetime.now(timezone.utc)
 
 
 class MetricType(Enum):
-    """Types of protection metrics"""
+    """
+Types of protection metrics"""
+
     PROTECTION_COVERAGE = "protection_coverage"
     THREAT_DETECTION = "threat_detection"
     RESPONSE_TIME = "response_time"
@@ -44,6 +48,7 @@ class MetricType(Enum):
 
 class ReportType(Enum):
     """Types of analytics reports"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYSIS = "detailed_analysis"
     COMPLIANCE_REPORT = "compliance_report"
@@ -58,6 +63,7 @@ class ReportType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -81,7 +87,8 @@ class ProtectionMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Analytics report structure"""
+    """
+Analytics report structure"""
     report_id: str
     report_type: ReportType
     title: str
@@ -98,7 +105,8 @@ class AnalyticsReport:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data"""
+    """
+Threat intelligence data"""
     threat_id: str
     threat_type: str
     severity: str  # low, medium, high, critical
@@ -113,7 +121,8 @@ class ThreatIntelligence:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data"""
+    """
+Performance benchmark data"""
     benchmark_id: str
     metric_name: str
     current_value: float
@@ -125,14 +134,16 @@ class PerformanceBenchmark:
 
 
 class InfringementTracker:
-    """Advanced infringement tracking and analytics system"""
+    """
+Advanced infringement tracking and analytics system"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.infringements = []
         
     async def record_infringement(self, infringement_data: Dict[str, Any]):
-        """Record a new infringement with comprehensive data"""
+        """
+Record a new infringement with comprehensive data"""
         try:
             # Enhanced infringement record with analytics metadata
             enhanced_infringement = {
@@ -248,7 +259,8 @@ class InfringementTracker:
         return min(base_score, 1.0)
         
     def _extract_risk_indicators(self, infringement_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Extract risk indicators from infringement data"""
+        """
+Extract risk indicators from infringement data"""
         # Calculate metrics from the list of infringements
         total_infringements = len(infringement_data)
         
@@ -268,7 +280,8 @@ class InfringementTracker:
         }
         
     def _analyze_by_groups(self, infringements: List[Dict], group_by: List[str]) -> Dict[str, Any]:
-        """Analyze infringements grouped by specified fields"""
+        """
+Analyze infringements grouped by specified fields"""
         if not group_by:
             return {}
             
@@ -283,7 +296,8 @@ class InfringementTracker:
         return grouped_analysis
         
     def _calculate_regional_risk_level(self, infringements: List[Dict]) -> str:
-        """Calculate risk level for a geographic region"""
+        """
+Calculate risk level for a geographic region"""
         if not infringements:
             return 'low'
             
@@ -302,7 +316,8 @@ class InfringementTracker:
         time_window_days: int = 30,
         minimum_infringement_count: int = 5
     ) -> Dict[str, Any]:
-        """Identify geographic and platform hotspots for infringement activity"""
+        """
+Identify geographic and platform hotspots for infringement activity"""
         
         end_date = utc_now()
         start_date = end_date - timedelta(days=time_window_days)
@@ -698,7 +713,8 @@ class InfringementTracker:
         return min(base_score * financial_factor + platform_diversity, 100.0)
 
     def _categorize_infringer_risk(self, infringer_data: Dict[str, Any]) -> str:
-        """Categorize infringer risk level"""
+        """
+Categorize infringer risk level"""
         severity = self._calculate_repeat_infringer_severity(infringer_data)
         
         if severity >= 80:
@@ -711,7 +727,8 @@ class InfringementTracker:
             return 'low'
 
     def _analyze_infringer_risk_distribution(self, repeat_infringers: Dict[str, Any]) -> Dict[str, int]:
-        """Analyze distribution of infringer risk levels"""
+        """
+Analyze distribution of infringer risk levels"""
         distribution = {'critical': 0, 'high': 0, 'medium': 0, 'low': 0}
         for data in repeat_infringers.values():
             risk_level = data.get('risk_level', 'low')
@@ -719,7 +736,8 @@ class InfringementTracker:
         return distribution
 
     def _analyze_repeat_infringer_platforms(self, repeat_infringers: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze platform preferences of repeat infringers"""
+        """
+Analyze platform preferences of repeat infringers"""
         platform_counts = {}
         multi_platform_infringers = 0
         
@@ -738,7 +756,8 @@ class InfringementTracker:
         }
 
     def _analyze_repeat_infringer_temporal_patterns(self, repeat_infringers: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal patterns of repeat infringers"""
+        """
+Analyze temporal patterns of repeat infringers"""
         escalation_patterns = []
         average_time_between_infringements = []
         
@@ -775,7 +794,8 @@ class InfringementTracker:
         }
 
     def _generate_escalation_recommendations(self, repeat_infringers: Dict[str, Any], top_infringers: List) -> List[str]:
-        """Generate actionable escalation recommendations based on repeat infringer analysis"""
+        """
+Generate actionable escalation recommendations based on repeat infringer analysis"""
         recommendations = []
         
         # High-priority infringers
@@ -823,7 +843,8 @@ class ProtectionAnalytics:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize protection analytics"""
+        """
+Initialize protection analytics"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -842,7 +863,8 @@ class ProtectionAnalytics:
         self._performance_cache = {}
     
     async def record_protection_event(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Record a protection event for analytics"""
+        """
+Record a protection event for analytics"""
         try:
             event_id = str(uuid.uuid4())
             timestamp = utc_now()
@@ -1332,7 +1354,8 @@ class ProtectionAnalytics:
         return filtered
     
     async def analyze_real_time_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze real-time data and return comprehensive analytics results"""
+        """
+Analyze real-time data and return comprehensive analytics results"""
         try:
             self.logger.info("Analyzing real-time data")
             
@@ -1718,7 +1741,8 @@ class ProtectionAnalytics:
         self,
         metrics: List[ProtectionMetric]
     ) -> Dict[str, Any]:
-        """Calculate protection effectiveness metrics"""
+        """
+Calculate protection effectiveness metrics"""
         # Implementation for calculating protection effectiveness
         return {
             'overall_effectiveness': 0.95,
@@ -1731,7 +1755,8 @@ class ProtectionAnalytics:
         self,
         metrics: List[ProtectionMetric]
     ) -> Dict[str, Any]:
-        """Calculate threat analysis metrics"""
+        """
+Calculate threat analysis metrics"""
         threat_metrics = [m for m in metrics if m.metric_type == MetricType.THREAT_DETECTION]
         
         if not threat_metrics:
@@ -1753,7 +1778,8 @@ class ProtectionAnalytics:
         self,
         metrics: List[ProtectionMetric]
     ) -> Dict[str, Any]:
-        """Calculate system performance metrics"""
+        """
+Calculate system performance metrics"""
         performance_metrics = [m for m in metrics if m.metric_type == MetricType.PLATFORM_PERFORMANCE]
         
         if not performance_metrics:
@@ -1770,7 +1796,8 @@ class ProtectionAnalytics:
         self,
         metrics: List[ProtectionMetric]
     ) -> Dict[str, Any]:
-        """Calculate trend analysis for various metrics"""
+        """
+Calculate trend analysis for various metrics"""
         trends = {}
         
         # Group metrics by type and calculate trends
@@ -1786,7 +1813,8 @@ class ProtectionAnalytics:
         return trends
     
     async def _calculate_trend(self, metrics: List[ProtectionMetric]) -> str:
-        """Calculate trend direction for metrics"""
+        """
+Calculate trend direction for metrics"""
         if len(metrics) < 2:
             return "insufficient_data"
         
@@ -1832,7 +1860,8 @@ class ProtectionAnalytics:
         self,
         metrics: List[ProtectionMetric]
     ) -> List[str]:
-        """Generate recommendations for dashboard"""
+        """
+Generate recommendations for dashboard"""
         recommendations = []
         
         # Analyze metrics and generate recommendations
@@ -1876,11 +1905,13 @@ class ProtectionAnalytics:
     
     # Additional helper methods would be implemented here...
     async def _calculate_executive_metrics(self, metrics: List[ProtectionMetric]) -> List[ProtectionMetric]:
-        """Calculate executive-level metrics"""
+        """
+Calculate executive-level metrics"""
         return metrics[:10]  # Simplified
     
     async def _generate_executive_insights(self, metrics: List[ProtectionMetric]) -> List[str]:
-        """Generate executive insights"""
+        """
+Generate executive insights"""
         return ["Content protection effectiveness remains strong", "Threat detection accuracy improved by 15%"]
     
     async def _generate_executive_recommendations(self, metrics: List[ProtectionMetric]) -> List[str]:
@@ -1903,18 +1934,21 @@ class TimeSeriesAnalytics:
         self.logger = logging.getLogger(__name__)
     
     async def analyze_trends(self, metrics: List[ProtectionMetric]) -> Dict[str, Any]:
-        """Analyze time series trends"""
+        """
+Analyze time series trends"""
         # Implementation for time series analysis
         pass
     
     async def detect_anomalies(self, metrics: List[ProtectionMetric]) -> List[Dict[str, Any]]:
-        """Detect anomalies in time series data"""
+        """
+Detect anomalies in time series data"""
         # Implementation for anomaly detection
         pass
 
 
 class MLAnalyticsEngine:
-    """Machine learning analytics engine"""
+    """
+Machine learning analytics engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -1924,7 +1958,8 @@ class MLAnalyticsEngine:
         threat_metrics: List[ProtectionMetric],
         min_confidence: float
     ) -> List[Dict[str, Any]]:
-        """Detect threat patterns using ML"""
+        """
+Detect threat patterns using ML"""
         # Simplified implementation
         return [
             {
@@ -1945,7 +1980,8 @@ class MLAnalyticsEngine:
         prediction_days: int,
         confidence_threshold: float
     ) -> List[Dict[str, Any]]:
-        """Predict future threats"""
+        """
+Predict future threats"""
         # Simplified implementation
         return [
             {
@@ -1964,7 +2000,8 @@ class MLAnalyticsEngine:
 
 
 class ReportGenerator:
-    """Advanced report generation engine for comprehensive analytics"""
+    """
+Advanced report generation engine for comprehensive analytics"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -1973,7 +2010,8 @@ class ReportGenerator:
     async def generate_executive_summary(self, report_period_days: int = 30, 
                                        include_recommendations: bool = True,
                                        include_financial_analysis: bool = True) -> Dict[str, Any]:
-        """Generate executive summary report"""
+        """
+Generate executive summary report"""
         current_time = utc_now()
         start_date = current_time - timedelta(days=report_period_days)
         
@@ -2132,7 +2170,8 @@ class ReportGenerator:
     
     async def generate_compliance_report(self, compliance_frameworks: List[str],
                                        include_audit_trail: bool = False) -> Dict[str, Any]:
-        """Generate compliance report"""
+        """
+Generate compliance report"""
         
         compliance_status = {}
         for framework in compliance_frameworks:
@@ -2205,7 +2244,8 @@ class ReportGenerator:
         return result
     
     async def generate_custom_report(self, report_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate custom report based on configuration"""
+        """
+Generate custom report based on configuration"""
         
         title = report_config.get('title', 'Custom Analytics Report')
         metrics = report_config.get('metrics', [])
@@ -2312,20 +2352,23 @@ class ReportGenerator:
         pass
     
     async def generate_csv_export(self, metrics: List[ProtectionMetric]) -> str:
-        """Generate CSV export of metrics"""
+        """
+Generate CSV export of metrics"""
         # Implementation for CSV export
         pass
 
 
 class PerformanceMonitor:
-    """Advanced performance monitoring and analysis system"""
+    """
+Advanced performance monitoring and analysis system"""
     
     def __init__(self):
         self.performance_metrics = []
         self.logger = logging.getLogger(__name__)
     
     async def record_performance_metric(self, metric_data: Dict[str, Any]) -> str:
-        """Record a performance metric"""
+        """
+Record a performance metric"""
         metric_id = str(uuid.uuid4())
         metric = {
             'metric_id': metric_id,
@@ -2412,7 +2455,8 @@ class PerformanceMonitor:
         }
     
     async def calculate_sla_compliance(self, sla_targets: Dict[str, float]) -> Dict[str, Any]:
-        """Calculate SLA compliance metrics"""
+        """
+Calculate SLA compliance metrics"""
         if not self.performance_metrics:
             return {
                 'compliance_score': 0,
@@ -2465,7 +2509,8 @@ class PerformanceMonitor:
         }
     
     async def detect_performance_anomalies(self, sensitivity: float = 0.8, lookback_days: int = 7) -> Dict[str, Any]:
-        """Detect performance anomalies using statistical analysis"""
+        """
+Detect performance anomalies using statistical analysis"""
         cutoff_date = utc_now() - timedelta(days=lookback_days)
         recent_metrics = [
             m for m in self.performance_metrics
@@ -2512,7 +2557,8 @@ class TrendAnalyzer:
         self.logger = logging.getLogger(__name__)
     
     async def analyze_time_series_trends(self, data_points: List[Dict[str, Any]], metric_name: str) -> Dict[str, Any]:
-        """Analyze trends in time series data"""
+        """
+Analyze trends in time series data"""
         if len(data_points) < 2:
             return {
                 'trend_direction': 'insufficient_data',
@@ -2579,7 +2625,8 @@ class TrendAnalyzer:
         metric: str = 'value',
         pattern_types: List[str] = None
     ) -> Dict[str, Any]:
-        """Detect seasonal patterns in data"""
+        """
+Detect seasonal patterns in data"""
         if pattern_types is None:
             pattern_types = ['weekly']
             
@@ -2650,7 +2697,8 @@ class TrendAnalyzer:
         }
     
     async def calculate_forecast_accuracy(self, actual_values: List[float], predicted_values: List[float]) -> Dict[str, Any]:
-        """Calculate forecast accuracy metrics"""
+        """
+Calculate forecast accuracy metrics"""
         if len(actual_values) != len(predicted_values) or len(actual_values) == 0:
             return {
                 'accuracy_metrics': {},
@@ -3128,6 +3176,7 @@ class TrendAnalyzer:
 
 class AlertLevel(Enum):
     """Alert severity levels for the intelligent alert system"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -3149,7 +3198,8 @@ class AlertSystem:
         self.alert_history = []
         
     async def register_alert_rule(self, rule: Dict[str, Any]) -> Dict[str, Any]:
-        """Register a new alert rule"""
+        """
+Register a new alert rule"""
         try:
             rule_id = rule.get('rule_id')
             if not rule_id:
@@ -3339,7 +3389,8 @@ class AlertSystem:
         group_by_rule: bool = False,
         include_resolved: bool = True
     ) -> Dict[str, Any]:
-        """Generate a comprehensive alert summary"""
+        """
+Generate a comprehensive alert summary"""
         try:
             # Filter alerts by time window
             cutoff_time = datetime.now() - timedelta(hours=time_window_hours)
@@ -3404,7 +3455,8 @@ class AnalyticsQueryEngine:
         self.query_history = []
         
     async def execute_query(self, query: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a complex analytics query"""
+        """
+Execute a complex analytics query"""
         try:
             query_id = f"query_{uuid.uuid4().hex[:8]}"
             start_time = datetime.now()
@@ -3568,7 +3620,8 @@ class AnalyticsQueryEngine:
         return results
     
     async def _execute_select_query(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Execute a select query"""
+        """
+Execute a select query"""
         # Simulate select results
         limit = query.get('limit', 100)
         
@@ -3603,7 +3656,8 @@ class AnalyticsQueryEngine:
         return list(reversed(results))
     
     async def _execute_cohort_analysis_query(self, query: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a cohort analysis query"""
+        """
+Execute a cohort analysis query"""
         # Simulate cohort analysis data
         cohort_dimension = query.get('cohort_dimension', 'creator_id')
         time_dimension = query.get('time_dimension', 'timestamp')
@@ -3668,7 +3722,8 @@ class InsightGenerator:
         insight_types: List[str] = None,
         confidence_threshold: float = 0.7
     ) -> Dict[str, Any]:
-        """Generate comprehensive AI-powered insights from analytics data"""
+        """
+Generate comprehensive AI-powered insights from analytics data"""
         try:
             insight_types = insight_types or ['trends', 'anomalies', 'correlations', 'predictions']
             
@@ -3906,7 +3961,8 @@ class InsightGenerator:
         return sum(score_components) if score_components else 0.0
 
     async def _generate_creator_predictions(self, creator_id: str, analytics_summary: Dict[str, Any]) -> List[Dict]:
-        """Generate predictive insights for creator"""
+        """
+Generate predictive insights for creator"""
         predictions = []
         
         # Predict infringement risk
@@ -4212,7 +4268,8 @@ class DashboardManager:
         self.active_snapshots = {}
         
     async def initialize_dashboard(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize a new dashboard with the provided configuration"""
+        """
+Initialize a new dashboard with the provided configuration"""
         try:
             dashboard_id = f"dashboard_{uuid.uuid4().hex[:8]}"
             

@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive integration test suite validating cross-module functionality,
 end-to-end workflows, and system-wide consistency for all AI configuration components.
 """
+
 import pytest
 import sys
 import os
@@ -72,7 +73,8 @@ class TestCrossModuleIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.master_config = MasterConfig()
         self.ai_config = AIModelsConfig()
         self.protection_config = ProtectionConfig()
@@ -432,7 +434,8 @@ class TestEndToEndCreatorWorkflows:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.master_config = MasterConfig()
         self.ai_config = AIModelsConfig()
         self.protection_config = ProtectionConfig()

@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -52,7 +53,8 @@ settings = get_settings()
 
 @dataclass
 class TwitchStream:
-    """Twitch stream data structure."""
+    """
+Twitch stream data structure."""
     stream_id: str
     user_id: str
     user_login: str
@@ -71,7 +73,8 @@ class TwitchStream:
 
 @dataclass
 class TwitchClip:
-    """Twitch clip data structure."""
+    """
+Twitch clip data structure."""
     clip_id: str
     url: str
     embed_url: str
@@ -91,7 +94,8 @@ class TwitchClip:
 
 @dataclass
 class TwitchVideo:
-    """Twitch video/VOD data structure."""
+    """
+Twitch video/VOD data structure."""
     video_id: str
     stream_id: Optional[str]
     user_id: str
@@ -112,7 +116,8 @@ class TwitchVideo:
 
 @dataclass
 class TwitchUser:
-    """Twitch user/channel data structure."""
+    """
+Twitch user/channel data structure."""
     user_id: str
     login: str
     display_name: str
@@ -143,7 +148,8 @@ class TwitchCrawler:
     """
     
     def __init__(self):
-        """Initialize Twitch crawler."""
+        """
+Initialize Twitch crawler."""
         self.client_id = settings.TWITCH_CLIENT_ID
         self.client_secret = settings.TWITCH_CLIENT_SECRET
         self.access_token = None

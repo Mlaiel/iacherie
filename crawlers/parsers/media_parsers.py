@@ -5,13 +5,14 @@ Advanced media file parsers for audio, video, image, and document processing.
 Provides specialized parsing capabilities for content fingerprinting and analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import io
 import mimetypes
@@ -60,7 +61,8 @@ from .parser_config import ParserConfig, MediaFormat
 
 
 class BaseMediaParser(ABC):
-    """Abstract base class for media parsers"""
+    """
+Abstract base class for media parsers"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -68,16 +70,19 @@ class BaseMediaParser(ABC):
     
     @abstractmethod
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse media file and extract metadata/content"""
+        """
+Parse media file and extract metadata/content"""
         pass
     
     @abstractmethod
     def get_supported_formats(self) -> List[MediaFormat]:
-        """Get list of supported media formats"""
+        """
+Get list of supported media formats"""
         pass
     
     def _validate_file_size(self, file_path: Union[str, Path, BinaryIO]) -> bool:
-        """Validate file size against configuration limits"""
+        """
+Validate file size against configuration limits"""
         try:
             if isinstance(file_path, (str, Path)):
                 file_size = Path(file_path).stat().st_size
@@ -93,7 +98,8 @@ class BaseMediaParser(ABC):
             return False
     
     def _detect_format(self, file_path: Union[str, Path, BinaryIO]) -> Optional[str]:
-        """Detect file format from extension or MIME type"""
+        """
+Detect file format from extension or MIME type"""
         if isinstance(file_path, (str, Path)):
             mime_type, _ = mimetypes.guess_type(str(file_path))
             extension = Path(file_path).suffix.lower().lstrip('.')
@@ -103,7 +109,8 @@ class BaseMediaParser(ABC):
         return None
     
     def _extract_basic_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Extract basic file metadata"""
+        """
+Extract basic file metadata"""
         metadata = {
             'parsed_at': datetime.now(timezone.utc).isoformat(),
             'parser_type': self.__class__.__name__
@@ -125,7 +132,8 @@ class BaseMediaParser(ABC):
 
 
 class AudioParser(BaseMediaParser):
-    """Audio file parser with advanced analysis capabilities"""
+    """
+Audio file parser with advanced analysis capabilities"""
     
     def __init__(self, config: ParserConfig):
         super().__init__(config)
@@ -226,7 +234,8 @@ class AudioParser(BaseMediaParser):
             return {'metadata_error': str(e)}
     
     async def _analyze_audio_content(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Analyze audio content using librosa"""
+        """
+Analyze audio content using librosa"""
         try:
             # Load audio file
             if isinstance(file_path, (str, Path)):
@@ -274,7 +283,8 @@ class AudioParser(BaseMediaParser):
             return {'analysis_error': str(e)}
     
     async def _generate_audio_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Generate audio fingerprint for content identification"""
+        """
+Generate audio fingerprint for content identification"""
         try:
             # Load audio for fingerprinting
             if isinstance(file_path, (str, Path)):
@@ -304,7 +314,8 @@ class AudioParser(BaseMediaParser):
 
 
 class VideoParser(BaseMediaParser):
-    """Video file parser with frame analysis capabilities"""
+    """
+Video file parser with frame analysis capabilities"""
     
     def __init__(self, config: ParserConfig):
         super().__init__(config)
@@ -448,7 +459,8 @@ class VideoParser(BaseMediaParser):
             return {'analysis_error': str(e)}
     
     async def _generate_video_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Generate video fingerprint for content identification"""
+        """
+Generate video fingerprint for content identification"""
         try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
@@ -495,7 +507,8 @@ class VideoParser(BaseMediaParser):
 
 
 class ImageParser(BaseMediaParser):
-    """Image file parser with computer vision analysis"""
+    """
+Image file parser with computer vision analysis"""
     
     def __init__(self, config: ParserConfig):
         super().__init__(config)
@@ -567,7 +580,8 @@ class ImageParser(BaseMediaParser):
             return {'metadata_error': str(e)}
     
     async def _analyze_image_content(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Analyze image content for visual properties"""
+        """
+Analyze image content for visual properties"""
         try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
@@ -612,7 +626,8 @@ class ImageParser(BaseMediaParser):
             return {'analysis_error': str(e)}
     
     async def _generate_image_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Generate image fingerprint for content identification"""
+        """
+Generate image fingerprint for content identification"""
         try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
@@ -647,7 +662,8 @@ class ImageParser(BaseMediaParser):
 
 
 class TextParser(BaseMediaParser):
-    """Text file parser with content analysis"""
+    """
+Text file parser with content analysis"""
     
     def get_supported_formats(self) -> List[MediaFormat]:
         return [
@@ -656,7 +672,8 @@ class TextParser(BaseMediaParser):
         ]
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse text file and extract content"""
+        """
+Parse text file and extract content"""
         try:
             metadata = self._extract_basic_metadata(file_path)
             
@@ -702,7 +719,8 @@ class TextParser(BaseMediaParser):
         return {'text_analysis': analysis}
     
     async def _generate_text_fingerprint(self, content: str) -> Dict[str, Any]:
-        """Generate text fingerprint"""
+        """
+Generate text fingerprint"""
         # Simple hash-based fingerprint
         fingerprint_hash = hash(content)
         
@@ -722,7 +740,8 @@ class TextParser(BaseMediaParser):
 
 
 class DocumentParser(BaseMediaParser):
-    """Document file parser (PDF, DOCX, etc.)"""
+    """
+Document file parser (PDF, DOCX, etc.)"""
     
     def __init__(self, config: ParserConfig):
         super().__init__(config)
@@ -744,7 +763,8 @@ class DocumentParser(BaseMediaParser):
             raise UnsupportedFormatError(format_type, self.get_supported_formats())
     
     async def _parse_pdf(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Parse PDF document"""
+        """
+Parse PDF document"""
         try:
             if isinstance(file_path, (str, Path)):
                 with open(file_path, 'rb') as f:
@@ -806,7 +826,8 @@ class ArchiveParser(BaseMediaParser):
         return ['zip', 'tar', 'tar.gz', 'tar.bz2']
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse archive file"""
+        """
+Parse archive file"""
         format_type = self._detect_format(file_path)
         
         try:
@@ -840,7 +861,8 @@ class ArchiveParser(BaseMediaParser):
         }
     
     async def _parse_tar(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Parse TAR archive"""
+        """
+Parse TAR archive"""
         if isinstance(file_path, (str, Path)):
             with tarfile.open(file_path, 'r') as tar_file:
                 file_list = tar_file.getnames()
@@ -858,13 +880,15 @@ class ArchiveParser(BaseMediaParser):
 
 
 class StreamParser(BaseMediaParser):
-    """Stream parser for real-time content"""
+    """
+Stream parser for real-time content"""
     
     def get_supported_formats(self) -> List[str]:
         return ['m3u8', 'mpd', 'stream']
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse streaming manifest or live stream"""
+        """
+Parse streaming manifest or live stream"""
         # Implementation for streaming content parsing
         # This would handle HLS, DASH, and other streaming formats
         return {

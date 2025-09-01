@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import psutil
@@ -39,7 +40,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class ResourceType(Enum):
-    """System resource types."""
+    """
+System resource types."""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -51,6 +54,7 @@ class ResourceType(Enum):
 
 class PerformanceMetricType(Enum):
     """Performance metric categories."""
+
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -61,6 +65,7 @@ class PerformanceMetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -86,7 +91,8 @@ class ResourceMetrics:
 
 @dataclass
 class PerformanceMetrics:
-    """Application performance metrics."""
+    """
+Application performance metrics."""
     timestamp: datetime = field(default_factory=datetime.utcnow)
     average_response_time: float = 0.0
     requests_per_second: float = 0.0
@@ -100,7 +106,8 @@ class PerformanceMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert data structure."""
+    """
+Performance alert data structure."""
     alert_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     metric_name: str = ""
@@ -119,7 +126,8 @@ class ResourceMonitor:
         self.last_network_stats = None
         
     async def collect_system_metrics(self) -> ResourceMetrics:
-        """Collect comprehensive system metrics."""
+        """
+Collect comprehensive system metrics."""
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -232,7 +240,8 @@ class PerformanceMonitor(MonitorEngine):
         self._initialize_performance_thresholds()
     
     def _initialize_performance_thresholds(self) -> None:
-        """Initialize performance monitoring thresholds."""
+        """
+Initialize performance monitoring thresholds."""
         self.performance_thresholds = {
             "cpu_percent": {"warning": 70.0, "critical": 85.0, "emergency": 95.0},
             "memory_percent": {"warning": 75.0, "critical": 90.0, "emergency": 98.0},
@@ -334,7 +343,8 @@ class PerformanceMonitor(MonitorEngine):
             await self._process_performance_event(event)
     
     async def _process_performance_event(self, event: Dict[str, Any]) -> None:
-        """Process individual performance event."""
+        """
+Process individual performance event."""
         try:
             event_type = event.get("type", "")
             

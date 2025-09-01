@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import logging

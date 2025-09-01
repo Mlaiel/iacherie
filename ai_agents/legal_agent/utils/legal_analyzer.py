@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import json
@@ -52,7 +53,9 @@ from ...models.legal_models import LegalCase, LegalPrecedent, LegalCitation
 logger = logging.getLogger(__name__)
 
 class AnalysisType(Enum):
-    """Legal analysis categories"""
+    """
+Legal analysis categories"""
+
     CONTRACT_TERMS = "contract_terms"
     CASE_LAW_RESEARCH = "case_law_research"
     STATUTORY_ANALYSIS = "statutory_analysis"
@@ -67,6 +70,7 @@ class AnalysisType(Enum):
 
 class LegalEntityType(Enum):
     """Types of legal entities that can be analyzed"""
+
     PERSON = "person"
     ORGANIZATION = "organization"
     CONTRACT_PARTY = "contract_party"
@@ -293,7 +297,8 @@ class LegalAnalyzer:
         return handlers.get(analysis_type)
     
     async def _analyze_contract_terms(self, context: AnalysisContext) -> AnalysisResult:
-        """Analyze contract terms and clauses"""
+        """
+Analyze contract terms and clauses"""
         try:
             content = context.text_content
             findings = []
@@ -726,7 +731,8 @@ class ComplianceScanner:
         self._initialize_compliance_systems()
     
     def _initialize_compliance_systems(self):
-        """Initialize compliance scanning systems"""
+        """
+Initialize compliance scanning systems"""
         try:
             # Load regulatory frameworks
             self.regulatory_database = self._load_regulatory_frameworks()
@@ -890,7 +896,8 @@ class ComplianceScanner:
         return self.compliance_rules
     
     def _determine_compliance_status(self, violations: List[Dict[str, Any]]) -> str:
-        """Determine overall compliance status"""
+        """
+Determine overall compliance status"""
         if not violations:
             return "compliant"
         
@@ -909,6 +916,7 @@ class ComplianceScanner:
 
 class LegalDomain(Enum):
     """Legal practice areas"""
+
     INTELLECTUAL_PROPERTY = "intellectual_property"
     CONTRACT_LAW = "contract_law"
     ENTERTAINMENT_LAW = "entertainment_law"
@@ -1239,7 +1247,8 @@ class LegalAnalyzer:
         return cleaned_content
 
     async def _extract_legal_entities(self, content: str) -> Dict[str, Any]:
-        """Extract legal entities using NLP"""
+        """
+Extract legal entities using NLP"""
         doc = self.nlp_model(content)
         
         entities = {
@@ -1270,7 +1279,8 @@ class LegalAnalyzer:
         return entities
 
     async def _perform_domain_analysis(self, content: str, domain: LegalDomain) -> Dict[str, Any]:
-        """Perform domain-specific legal analysis"""
+        """
+Perform domain-specific legal analysis"""
         domain_analyzers = {
             LegalDomain.CONTRACT_LAW: self._analyze_contract_law_aspects,
             LegalDomain.INTELLECTUAL_PROPERTY: self._analyze_ip_aspects,
@@ -1283,7 +1293,8 @@ class LegalAnalyzer:
         return await analyzer(content)
 
     def _initialize_contract_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize contract term patterns"""
+        """
+Initialize contract term patterns"""
         return {
             'payment_terms': re.compile(r'pay[ment]*\s+(?:within|by|due)\s+\d+\s+days?', re.IGNORECASE),
             'termination': re.compile(r'terminat[e|ion]*\s+(?:clause|provision)', re.IGNORECASE),
@@ -1293,7 +1304,8 @@ class LegalAnalyzer:
         }
 
     def _initialize_citation_patterns(self) -> List[re.Pattern]:
-        """Initialize legal citation patterns"""
+        """
+Initialize legal citation patterns"""
         return [
             re.compile(r'\d+\s+[A-Z][a-z]+\s+\d+'),  # Case citations
             re.compile(r'\d+\s+U\.S\.C\.\s+§?\s*\d+'),  # USC citations
@@ -1302,7 +1314,8 @@ class LegalAnalyzer:
         ]
 
     def _categorize_compliance_level(self, score: float) -> str:
-        """Categorize compliance level based on score"""
+        """
+Categorize compliance level based on score"""
         if score >= 0.9:
             return "FULL_COMPLIANCE"
         elif score >= 0.7:
@@ -1329,7 +1342,8 @@ class ComplianceScanner:
         content: Dict[str, Any],
         compliance_frameworks: List[str]
     ) -> Dict[str, Any]:
-        """Scan content for compliance across multiple frameworks"""
+        """
+Scan content for compliance across multiple frameworks"""
         
         try:
             scan_results = {}

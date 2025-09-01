@@ -6,7 +6,7 @@ quality standards across the audio processing pipeline.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -14,6 +14,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ControllerMode(Enum):
-    """Quality controller operation modes"""
+    """
+Quality controller operation modes"""
+
     STRICT = "strict"           # Maximum quality enforcement
     STANDARD = "standard"       # Standard quality requirements
     LENIENT = "lenient"        # Relaxed quality requirements
@@ -44,6 +47,7 @@ class ControllerMode(Enum):
 
 class QualityAction(Enum):
     """Available quality control actions"""
+
     ACCEPT = "accept"          # Content passes quality checks
     REJECT = "reject"          # Content fails quality checks
     OPTIMIZE = "optimize"      # Content needs optimization
@@ -69,7 +73,8 @@ class QualityControlConfig:
 
 @dataclass
 class QualityDecision:
-    """Quality control decision result"""
+    """
+Quality control decision result"""
     action: QualityAction
     score: float
     confidence: float
@@ -513,7 +518,8 @@ class QualityController:
             self.stats['processing_times'] = self.stats['processing_times'][-1000:]
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get controller statistics"""
+        """
+Get controller statistics"""
         stats = self.stats.copy()
         
         if self.stats['processing_times']:
@@ -524,7 +530,8 @@ class QualityController:
         return stats
     
     def reset_statistics(self):
-        """Reset controller statistics"""
+        """
+Reset controller statistics"""
         self.stats = {
             'total_processed': 0,
             'accepted': 0,
@@ -536,7 +543,8 @@ class QualityController:
         }
     
     def configure_quality_gates(self, gates: List[QualityGate]):
-        """Configure custom quality gates"""
+        """
+Configure custom quality gates"""
         self.quality_gates = gates
         logger.info(f"Configured {len(gates)} quality gates")
     

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PaymentResult:
-    """Standard payment processing result structure."""
+    """
+Standard payment processing result structure."""
     success: bool
     transaction_id: Optional[str] = None
     external_id: Optional[str] = None
@@ -665,11 +667,13 @@ class BaseProcessor(ABC):
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         pass
     
     def __str__(self) -> str:
-        """String representation of processor."""
+        """
+String representation of processor."""
         return f"{self.name}Processor(environment={self.environment})"
     
     def __repr__(self) -> str:

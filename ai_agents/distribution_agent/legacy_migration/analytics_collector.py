@@ -14,6 +14,7 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -50,7 +51,9 @@ from ...models.analytics import (
 
 
 class MetricType(Enum):
-    """Analytics metric type enumeration"""
+    """
+Analytics metric type enumeration"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -62,6 +65,7 @@ class MetricType(Enum):
 
 class AnalyticsPeriod(Enum):
     """Analytics time period enumeration"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -73,6 +77,7 @@ class AnalyticsPeriod(Enum):
 
 class DataGranularity(Enum):
     """Data granularity enumeration"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -82,6 +87,7 @@ class DataGranularity(Enum):
 
 class TrendDirection(Enum):
     """Trend direction enumeration"""
+
     UP = "up"
     DOWN = "down"
     STABLE = "stable"
@@ -108,7 +114,8 @@ class AnalyticsQuery:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
+    """
+Trend analysis result"""
     metric_name: str
     platform: str
     direction: TrendDirection
@@ -122,7 +129,8 @@ class TrendAnalysis:
 
 @dataclass
 class CrossPlatformInsights:
-    """Cross-platform analytics insights"""
+    """
+Cross-platform analytics insights"""
     total_reach: int
     total_engagement: int
     platform_performance: Dict[str, Dict[str, float]]
@@ -581,7 +589,8 @@ class AnalyticsCollector(BaseAgent):
             }
     
     async def _collection_worker(self, worker_id: str) -> None:
-        """Background worker for data collection"""
+        """
+Background worker for data collection"""
         while True:
             try:
                 # Get collection task from queue

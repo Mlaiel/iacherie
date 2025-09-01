@@ -4,10 +4,11 @@ Comprehensive analytics and reporting engine for subscription metrics.
 Provides insights into subscriber behavior, revenue trends, churn analysis, and business intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List, Tuple
@@ -46,7 +47,8 @@ class SubscriptionAnalytics:
     """
     
     def __init__(self):
-        """Initialize subscription analytics engine."""
+        """
+Initialize subscription analytics engine."""
         self.logger = get_logger(__name__)
         self.cache = CacheManager()
     

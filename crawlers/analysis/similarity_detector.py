@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -46,7 +47,9 @@ from difflib import SequenceMatcher
 logger = logging.getLogger(__name__)
 
 class MatchingStrategy(Enum):
-    """Similarity matching strategy."""
+    """
+Similarity matching strategy."""
+
     EXACT_MATCH = "exact_match"
     SEMANTIC_SIMILARITY = "semantic_similarity"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -56,6 +59,7 @@ class MatchingStrategy(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity measurement metrics."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -65,6 +69,7 @@ class SimilarityMetric(Enum):
 
 class ContentDomain(Enum):
     """Content domain for specialized processing."""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -86,7 +91,8 @@ class SimilarityScore:
 
 @dataclass
 class MatchResult:
-    """Complete similarity match result."""
+    """
+Complete similarity match result."""
     query_id: str
     match_id: str
     similarity_score: SimilarityScore
@@ -275,7 +281,8 @@ class SimilarityDetector:
         content: Dict[str, Any],
         domain: ContentDomain
     ) -> Dict[str, Any]:
-        """Extract features for similarity comparison."""
+        """
+Extract features for similarity comparison."""
         features = {}
         
         if domain == ContentDomain.TEXT or domain == ContentDomain.MULTIMODAL:
@@ -293,7 +300,8 @@ class SimilarityDetector:
         return features
     
     async def _extract_text_similarity_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract text-specific similarity features."""
+        """
+Extract text-specific similarity features."""
         text_data = content.get('text', '')
         
         if not text_data and 'text_features' in content:
@@ -314,7 +322,8 @@ class SimilarityDetector:
         return features
     
     async def _extract_image_similarity_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract image-specific similarity features."""
+        """
+Extract image-specific similarity features."""
         if 'image_features' in content:
             return content['image_features']
         
@@ -525,7 +534,8 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate exact match similarity."""
+        """
+Calculate exact match similarity."""
         similarities = []
         breakdown = {}
         
@@ -570,7 +580,8 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate semantic similarity using embeddings."""
+        """
+Calculate semantic similarity using embeddings."""
         similarities = []
         breakdown = {}
         
@@ -614,7 +625,8 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate perceptual hash similarity."""
+        """
+Calculate perceptual hash similarity."""
         similarities = []
         breakdown = {}
         
@@ -651,7 +663,8 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate fingerprint-based similarity."""
+        """
+Calculate fingerprint-based similarity."""
         similarities = []
         breakdown = {}
         
@@ -696,7 +709,8 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate deep learning-based similarity."""
+        """
+Calculate deep learning-based similarity."""
         # Placeholder for advanced deep learning similarity
         # In production, this would use trained neural networks
         return await self._semantic_similarity(features1, features2, domain)
@@ -707,7 +721,8 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate hybrid similarity combining multiple strategies."""
+        """
+Calculate hybrid similarity combining multiple strategies."""
         strategies = [
             MatchingStrategy.EXACT_MATCH,
             MatchingStrategy.SEMANTIC_SIMILARITY,
@@ -755,7 +770,8 @@ class SimilarityDetector:
         )
     
     def _determine_match_type(self, similarity_score: float) -> str:
-        """Determine match type based on similarity score."""
+        """
+Determine match type based on similarity score."""
         if similarity_score >= 0.95:
             return "exact_match"
         elif similarity_score >= 0.85:
@@ -813,7 +829,8 @@ class SimilarityDetector:
         matches: List[MatchResult],
         threshold: float
     ) -> List[MatchResult]:
-        """Rank and filter matches based on comprehensive scoring."""
+        """
+Rank and filter matches based on comprehensive scoring."""
         # Sort by similarity score and confidence
         ranked_matches = sorted(
             matches,
@@ -839,7 +856,8 @@ class SimilarityDetector:
         return filtered_matches
     
     def _normalize_text(self, text: str) -> str:
-        """Normalize text for comparison."""
+        """
+Normalize text for comparison."""
         # Remove extra whitespace, convert to lowercase, remove special characters
         import re
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
@@ -847,17 +865,20 @@ class SimilarityDetector:
         return normalized
     
     def _extract_character_ngrams(self, text: str, n: int = 3) -> List[str]:
-        """Extract character n-grams from text."""
+        """
+Extract character n-grams from text."""
         normalized_text = self._normalize_text(text)
         return [normalized_text[i:i+n] for i in range(len(normalized_text)-n+1)]
     
     def _extract_word_ngrams(self, text: str, n: int = 2) -> List[str]:
-        """Extract word n-grams from text."""
+        """
+Extract word n-grams from text."""
         words = self._normalize_text(text).split()
         return [' '.join(words[i:i+n]) for i in range(len(words)-n+1)]
     
     def _extract_readability_features(self, text: str) -> Dict[str, float]:
-        """Extract readability features from text."""
+        """
+Extract readability features from text."""
         words = text.split()
         sentences = [s for s in text.split('.') if s.strip()]
         
@@ -870,7 +891,8 @@ class SimilarityDetector:
         }
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for the similarity detector."""
+        """
+Get performance metrics for the similarity detector."""
         cache_hit_rate = self.cache_hits / max(1, self.cache_hits + self.cache_misses)
         avg_search_time = np.mean(self.search_times) if self.search_times else 0
         

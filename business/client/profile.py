@@ -6,6 +6,7 @@ including portfolio showcase, social links, and creator verification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from uuid import UUID
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorTier(str, Enum):
-    """Creator tier levels based on followers and engagement."""
+    """
+Creator tier levels based on followers and engagement."""
+
     EMERGING = "emerging"  # < 1K followers
     RISING = "rising"  # 1K - 10K followers
     ESTABLISHED = "established"  # 10K - 100K followers
@@ -45,6 +48,7 @@ class CreatorTier(str, Enum):
 
 class ProfileVisibility(str, Enum):
     """Profile visibility settings."""
+
     PUBLIC = "public"
     FOLLOWERS_ONLY = "followers_only"
     PRIVATE = "private"
@@ -94,7 +98,8 @@ class ProfileUpdateData(BaseModel):
 
 
 class PortfolioItemData(BaseModel):
-    """Portfolio item creation/update data."""
+    """
+Portfolio item creation/update data."""
     title: str
     description: Optional[str] = None
     content_type: str  # audio, video, image, text
@@ -558,7 +563,8 @@ class ProfileManager:
         return False
         
     async def _update_profile_completion(self, profile: CreatorProfile) -> None:
-        """Calculate and update profile completion percentage."""
+        """
+Calculate and update profile completion percentage."""
         completion_fields = [
             profile.display_name,
             profile.bio,
@@ -581,7 +587,8 @@ class ProfileManager:
         include_private: bool = False,
         summary: bool = False
     ) -> Dict[str, Any]:
-        """Format profile data for API response."""
+        """
+Format profile data for API response."""
         data = {
             "id": str(profile.id),
             "client_id": str(profile.client_id),

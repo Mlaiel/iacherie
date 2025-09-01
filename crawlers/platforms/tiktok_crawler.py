@@ -21,6 +21,7 @@ Features:
 - Multi-region content discovery and monitoring
 - Comprehensive metadata extraction and analysis
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
@@ -62,7 +63,8 @@ settings = get_settings()
 
 @dataclass
 class TikTokVideo:
-    """Enhanced TikTok video data structure with fingerprinting."""
+    """
+Enhanced TikTok video data structure with fingerprinting."""
     video_id: str
     username: str
     user_id: str
@@ -107,7 +109,8 @@ class TikTokVideo:
 
 @dataclass
 class TikTokUser:
-    """Enhanced TikTok user data structure."""
+    """
+Enhanced TikTok user data structure."""
     user_id: str
     username: str
     display_name: str
@@ -136,7 +139,8 @@ class TikTokUser:
 
 @dataclass
 class TikTokHashtag:
-    """Enhanced TikTok hashtag data structure."""
+    """
+Enhanced TikTok hashtag data structure."""
     hashtag_id: str
     name: str
     view_count: int
@@ -155,7 +159,8 @@ class TikTokHashtag:
 
 @dataclass
 class TikTokSound:
-    """Enhanced TikTok sound/music data structure."""
+    """
+Enhanced TikTok sound/music data structure."""
     sound_id: str
     title: str
     author: str
@@ -180,7 +185,8 @@ class TikTokSound:
 
 @dataclass
 class TikTokTrend:
-    """TikTok trend analysis data structure."""
+    """
+TikTok trend analysis data structure."""
     trend_id: str
     trend_type: str  # hashtag, sound, effect, challenge
     name: str
@@ -199,7 +205,8 @@ class TikTokTrend:
 
 @dataclass
 class ContentViolation:
-    """Content violation detection result."""
+    """
+Content violation detection result."""
     violation_id: str
     video_id: str
     violation_type: str  # copyright, trademark, content_policy
@@ -228,7 +235,8 @@ class TikTokCrawler:
     """
     
     def __init__(self):
-        """Initialize TikTok crawler."""
+        """
+Initialize TikTok crawler."""
         self.api_key = settings.TIKTOK_API_KEY
         self.client_key = settings.TIKTOK_CLIENT_KEY
         self.client_secret = settings.TIKTOK_CLIENT_SECRET
@@ -263,7 +271,8 @@ class TikTokCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -759,7 +768,8 @@ class TikTokCrawler:
         hashtag: str,
         check_interval: int = 300
     ) -> AsyncGenerator[List[TikTokVideo], None]:
-        """Monitor hashtag for new videos."""
+        """
+Monitor hashtag for new videos."""
         last_check = datetime.now()
         seen_videos = set()
         
@@ -921,7 +931,8 @@ class TikTokCrawler:
         return similarity
     
     def _get_video_match_factors(self, video1: TikTokVideo, video2: TikTokVideo) -> List[str]:
-        """Get factors that contribute to video similarity."""
+        """
+Get factors that contribute to video similarity."""
         factors = []
         
         if video1.username == video2.username:

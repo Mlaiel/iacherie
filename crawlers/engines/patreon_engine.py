@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -27,7 +28,9 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class PatreonTier(Enum):
-    """Patreon subscription tiers"""
+    """
+Patreon subscription tiers"""
+
     FREE = "free"
     BRONZE = "bronze"
     SILVER = "silver"
@@ -38,6 +41,7 @@ class PatreonTier(Enum):
 
 class ContentAccessLevel(Enum):
     """Content access levels"""
+
     PUBLIC = "public"
     PATRON_ONLY = "patron_only"
     TIER_LOCKED = "tier_locked"
@@ -272,7 +276,8 @@ class PatreonEngine(BaseCrawlerEngine):
         return True
         
     def _determine_post_tier(self, post: Dict[str, Any]) -> PatreonTier:
-        """Determine the tier requirement for a post"""
+        """
+Determine the tier requirement for a post"""
         
         attributes = post.get('attributes', {})
         
@@ -284,7 +289,8 @@ class PatreonEngine(BaseCrawlerEngine):
             return PatreonTier.FREE
             
     def _determine_access_level(self, post: Dict[str, Any]) -> ContentAccessLevel:
-        """Determine the access level for a post"""
+        """
+Determine the access level for a post"""
         
         attributes = post.get('attributes', {})
         
@@ -298,7 +304,8 @@ class PatreonEngine(BaseCrawlerEngine):
         raw_post: Dict[str, Any],
         creator_info: Dict[str, Any]
     ) -> Optional[PatreonContent]:
-        """Process and protect content with advanced analysis"""
+        """
+Process and protect content with advanced analysis"""
         
         try:
             attributes = raw_post.get('attributes', {})
@@ -412,7 +419,8 @@ class PatreonEngine(BaseCrawlerEngine):
         return urls
         
     def _determine_content_type(self, post: Dict[str, Any]) -> str:
-        """Determine content type from post data"""
+        """
+Determine content type from post data"""
         
         attributes = post.get('attributes', {})
         
@@ -444,7 +452,8 @@ class PatreonEngine(BaseCrawlerEngine):
         post: Dict[str, Any],
         creator_info: Dict[str, Any]
     ) -> float:
-        """Calculate engagement rate for the post"""
+        """
+Calculate engagement rate for the post"""
         
         attributes = post.get('attributes', {})
         likes = attributes.get('like_count', 0)
@@ -464,7 +473,8 @@ class PatreonEngine(BaseCrawlerEngine):
         post: Dict[str, Any],
         creator_info: Dict[str, Any]
     ) -> float:
-        """Calculate revenue potential for the post"""
+        """
+Calculate revenue potential for the post"""
         
         # Factors: engagement rate, tier requirement, patron count
         engagement_rate = self._calculate_engagement_rate(post, creator_info)
@@ -488,7 +498,8 @@ class PatreonEngine(BaseCrawlerEngine):
         revenue_potential: float,
         tier_requirement: PatreonTier
     ) -> str:
-        """Determine monetization tier"""
+        """
+Determine monetization tier"""
         
         if revenue_potential > 0.7 and tier_requirement in [PatreonTier.PLATINUM, PatreonTier.DIAMOND]:
             return "premium"
@@ -654,7 +665,8 @@ class PatreonEngine(BaseCrawlerEngine):
         return distribution
         
     def _calculate_access_distribution(self, content_metrics: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate access level distribution"""
+        """
+Calculate access level distribution"""
         
         if not content_metrics:
             return {}
@@ -669,7 +681,8 @@ class PatreonEngine(BaseCrawlerEngine):
         return distribution
         
     def _calculate_monetization_effectiveness(self, content_metrics: List[Dict[str, Any]]) -> float:
-        """Calculate overall monetization effectiveness"""
+        """
+Calculate overall monetization effectiveness"""
         
         if not content_metrics:
             return 0.0
@@ -689,7 +702,8 @@ class PatreonEngine(BaseCrawlerEngine):
         creator_info: Dict[str, Any],
         content_metrics: List[Dict[str, Any]]
     ) -> float:
-        """Estimate subscription conversion potential"""
+        """
+Estimate subscription conversion potential"""
         
         # Factors: content quality, engagement rates, tier distribution
         if not content_metrics:
@@ -707,7 +721,8 @@ class PatreonEngine(BaseCrawlerEngine):
         return min(conversion_potential, 1.0)
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
+        """
+Get authenticated headers for API requests"""
         
         return {
             'User-Agent': 'Patreon/1.0',
@@ -732,7 +747,8 @@ class PatreonEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
+        """
+Apply rate limiting to prevent API abuse"""
         
         # Patreon has stricter rate limits
         await asyncio.sleep(60 / self.rate_limit_per_minute)

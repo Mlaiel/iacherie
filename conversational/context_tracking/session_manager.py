@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...utils.validation import validate_required_fields
 
 
 class SessionStatus(Enum):
-    """Session status types"""
+    """
+Session status types"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -38,6 +41,7 @@ class SessionStatus(Enum):
 
 class SessionType(Enum):
     """Session types for different interaction modes"""
+
     WEB = "web"
     MOBILE = "mobile"
     API = "api"
@@ -48,6 +52,7 @@ class SessionType(Enum):
 
 class PlatformType(Enum):
     """Supported platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -74,7 +79,8 @@ class SessionActivity:
     error_message: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "activity_id": self.activity_id,
             "session_id": self.session_id,
@@ -102,13 +108,15 @@ class SessionMetrics:
     engagement_score: float = 0.0
     
     def calculate_success_rate(self) -> float:
-        """Calculate success rate percentage"""
+        """
+Calculate success rate percentage"""
         if self.total_activities == 0:
             return 0.0
         return (self.successful_activities / self.total_activities) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "total_activities": self.total_activities,
             "successful_activities": self.successful_activities,
@@ -155,24 +163,28 @@ class UserSession:
     preferences: Dict[str, Any] = field(default_factory=dict)
     
     def is_active(self) -> bool:
-        """Check if session is currently active"""
+        """
+Check if session is currently active"""
         return (
             self.status == SessionStatus.ACTIVE and
             datetime.utcnow() < self.expires_at
         )
     
     def is_expired(self) -> bool:
-        """Check if session has expired"""
+        """
+Check if session has expired"""
         return datetime.utcnow() >= self.expires_at
     
     def update_activity(self):
-        """Update last activity timestamp"""
+        """
+Update last activity timestamp"""
         self.last_activity = datetime.utcnow()
         if self.status == SessionStatus.INACTIVE:
             self.status = SessionStatus.ACTIVE
     
     def add_activity(self, activity: SessionActivity):
-        """Add activity to session"""
+        """
+Add activity to session"""
         self.activities.append(activity)
         self.update_activity()
         
@@ -193,7 +205,8 @@ class UserSession:
             self.metrics.total_duration += activity.duration
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "session_id": self.session_id,
             "user_id": self.user_id,

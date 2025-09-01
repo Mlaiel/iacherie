@@ -6,6 +6,7 @@ technology for immutable proof of ownership and creation timestamps.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -22,7 +23,9 @@ from cryptography.hazmat.primitives import serialization
 logger = logging.getLogger(__name__)
 
 class RightsType(Enum):
-    """Types of digital rights that can be registered."""
+    """
+Types of digital rights that can be registered."""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -32,6 +35,7 @@ class RightsType(Enum):
 
 class ContentCategory(Enum):
     """Categories of content for rights registration."""
+
     MUSICAL_WORK = "musical_work"
     SOUND_RECORDING = "sound_recording"
     AUDIOVISUAL_WORK = "audiovisual_work"
@@ -43,6 +47,7 @@ class ContentCategory(Enum):
 
 class RightsStatus(Enum):
     """Status of rights registration."""
+
     PENDING = "pending"
     REGISTERED = "registered"
     DISPUTED = "disputed"
@@ -64,7 +69,8 @@ class CreatorInfo:
 
 @dataclass
 class RightsRegistration:
-    """Complete rights registration record."""
+    """
+Complete rights registration record."""
     registration_id: str
     content_hash: str
     content_fingerprint: str
@@ -86,7 +92,8 @@ class RightsRegistration:
 
 @dataclass
 class RightsTransfer:
-    """Rights transfer record."""
+    """
+Rights transfer record."""
     transfer_id: str
     registration_id: str
     from_owner: str
@@ -102,7 +109,8 @@ class DigitalSignatureManager:
     """Manager for digital signatures and cryptographic operations."""
     
     def __init__(self):
-        """Initialize digital signature manager."""
+        """
+Initialize digital signature manager."""
         self.key_pairs = {}
         
     def generate_key_pair(self, creator_id: str) -> Dict[str, bytes]:
@@ -346,7 +354,8 @@ class CopyrightRegistry:
         rights_type: RightsType,
         signature: bytes
     ) -> Dict[str, Any]:
-        """Submit rights registration to blockchain."""
+        """
+Submit rights registration to blockchain."""
         try:
             # Import here to avoid circular imports
             from .contracts import SmartContractManager, ContractType

@@ -5,12 +5,13 @@ Main entry point and factory functions for the surveillance system.
 Provides easy access to all surveillance components and utilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -360,7 +361,8 @@ async def initialize_surveillance_system(config: Dict[str, Any]) -> bool:
 
 
 async def shutdown_surveillance_system():
-    """Shutdown and cleanup the surveillance system."""
+    """
+Shutdown and cleanup the surveillance system."""
     global _surveillance_factory
     if _surveillance_factory:
         await _surveillance_factory.cleanup()
@@ -607,7 +609,8 @@ def get_surveillance_index() -> Optional[SurveillanceDatabaseIndex]:
 
 
 def initialize_surveillance_index(config: Dict[str, Any]) -> SurveillanceDatabaseIndex:
-    """Initialize global surveillance database index."""
+    """
+Initialize global surveillance database index."""
     global _surveillance_index
     _surveillance_index = SurveillanceDatabaseIndex(config)
     return _surveillance_index

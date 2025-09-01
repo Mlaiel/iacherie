@@ -7,6 +7,7 @@ modules to provide unified real-time insights and performance dashboards.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from .roi_calculator import ROICalculatorEngine
 logger = logging.getLogger(__name__)
 
 class DashboardType(Enum):
-    """Types of dashboards"""
+    """
+Types of dashboards"""
+
     OVERVIEW = "overview"
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
@@ -72,7 +75,8 @@ class DashboardAggregatorEngine:
         self.roi_calculator = ROICalculatorEngine(redis_client, db_pool)
         
     async def initialize(self) -> None:
-        """Initialize dashboard aggregator and all engines"""
+        """
+Initialize dashboard aggregator and all engines"""
         try:
             # Initialize all engines
             await asyncio.gather(
@@ -110,7 +114,8 @@ class DashboardAggregatorEngine:
             """)
 
     async def get_overview_dashboard(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive overview dashboard combining all modules"""
+        """
+Get comprehensive overview dashboard combining all modules"""
         try:
             cache_key = f"dashboard_overview_{creator_id}"
             cached_data = await self._get_cached_dashboard(cache_key)

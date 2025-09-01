@@ -4,7 +4,7 @@
 Advanced metrics collection and analytics for piracy detection system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - Real-time performance metrics collection
@@ -13,6 +13,7 @@ This module provides:
 - Performance optimization recommendations
 - Comprehensive dashboards and KPIs
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -25,7 +26,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of metrics collected."""
+    """
+Types of metrics collected."""
+
     DETECTION_PERFORMANCE = "detection_performance"
     SYSTEM_PERFORMANCE = "system_performance"
     ENFORCEMENT_METRICS = "enforcement_metrics"
@@ -35,6 +38,7 @@ class MetricType(Enum):
 
 class MetricAggregation(Enum):
     """Metric aggregation methods."""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -55,7 +59,8 @@ class MetricPoint:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result."""
+    """
+Aggregated metric result."""
     metric_name: str
     aggregation: MetricAggregation
     value: float
@@ -506,7 +511,8 @@ class DetectionMetrics:
         return dashboard
     
     async def _get_system_health_status(self) -> Dict[str, Any]:
-        """Get overall system health status."""
+        """
+Get overall system health status."""
         health_metrics = ['system_uptime', 'api_response_time', 'memory_usage', 'cpu_usage']
         health_scores = []
         
@@ -536,7 +542,8 @@ class DetectionMetrics:
         }
     
     async def _get_detection_performance_summary(self) -> Dict[str, Any]:
-        """Get detection performance summary."""
+        """
+Get detection performance summary."""
         detection_metrics = ['detection_accuracy', 'false_positive_rate', 'confidence_score_avg', 'detection_latency']
         
         summary = {}
@@ -551,7 +558,8 @@ class DetectionMetrics:
         return summary
     
     async def _get_enforcement_metrics_summary(self) -> Dict[str, Any]:
-        """Get enforcement metrics summary."""
+        """
+Get enforcement metrics summary."""
         enforcement_metrics = ['enforcement_success_rate', 'enforcement_response_time']
         
         summary = {}
@@ -566,7 +574,8 @@ class DetectionMetrics:
         return summary
     
     async def _get_platform_performance_breakdown(self) -> Dict[str, Any]:
-        """Get performance breakdown by platform."""
+        """
+Get performance breakdown by platform."""
         platforms = ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
         platform_data = {}
         
@@ -590,7 +599,8 @@ class DetectionMetrics:
         return platform_data
     
     async def _get_active_alerts_summary(self) -> Dict[str, Any]:
-        """Get summary of active alerts."""
+        """
+Get summary of active alerts."""
         # Check current metrics against thresholds
         active_alerts = []
         
@@ -624,7 +634,8 @@ class DetectionMetrics:
         }
     
     async def _get_key_trends(self) -> Dict[str, Any]:
-        """Get key performance trends."""
+        """
+Get key performance trends."""
         key_metrics = ['detection_accuracy', 'enforcement_success_rate', 'api_response_time']
         trends = {}
         
@@ -643,7 +654,8 @@ class DetectionMetrics:
         return trends
     
     async def _get_performance_recommendations(self) -> List[str]:
-        """Get performance optimization recommendations."""
+        """
+Get performance optimization recommendations."""
         recommendations = []
         
         # Check detection accuracy
@@ -689,7 +701,8 @@ class DetectionMetrics:
             return sorted_values[lower_index] * (1 - weight) + sorted_values[upper_index] * weight
     
     async def _calculate_trend(self, metrics: List[MetricPoint]) -> str:
-        """Calculate trend direction for metrics."""
+        """
+Calculate trend direction for metrics."""
         if len(metrics) < 2:
             return 'stable'
         
@@ -718,7 +731,8 @@ class DetectionMetrics:
             return 'decreasing'
     
     async def _compare_to_baseline(self, metric_name: str, current_value: float) -> Dict[str, Any]:
-        """Compare current value to baseline."""
+        """
+Compare current value to baseline."""
         baseline = self.performance_baselines.get(metric_name)
         if baseline is None:
             return {'status': 'no_baseline', 'difference': 0}
@@ -746,7 +760,8 @@ class DetectionMetrics:
         }
     
     async def _check_metric_alerts(self, metric_point: MetricPoint) -> None:
-        """Check if metric triggers any alerts."""
+        """
+Check if metric triggers any alerts."""
         metric_def = self.metric_definitions.get(metric_point.metric_name, {})
         alert_threshold = metric_def.get('alert_threshold')
         
@@ -765,7 +780,8 @@ class DetectionMetrics:
                 await self._send_metric_alert(metric_point, alert_threshold)
     
     async def _send_metric_alert(self, metric_point: MetricPoint, threshold: float) -> None:
-        """Send alert for metric threshold violation."""
+        """
+Send alert for metric threshold violation."""
         alert_data = {
             'metric_name': metric_point.metric_name,
             'current_value': metric_point.value,
@@ -890,7 +906,8 @@ class DetectionMetrics:
     
     async def _handle_anomaly(self, metric_name: str, anomalous_value: float, 
                             expected_value: float, threshold: float) -> None:
-        """Handle detected anomaly."""
+        """
+Handle detected anomaly."""
         anomaly_data = {
             'metric_name': metric_name,
             'anomalous_value': anomalous_value,
@@ -926,7 +943,8 @@ class DetectionMetrics:
                 del self.aggregated_metrics[key]
     
     async def _metrics_cleanup_task(self) -> None:
-        """Background task for periodic metrics cleanup."""
+        """
+Background task for periodic metrics cleanup."""
         while True:
             try:
                 await self._cleanup_old_metrics()
@@ -956,7 +974,8 @@ class DetectionMetrics:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the metrics system."""
+        """
+Gracefully shutdown the metrics system."""
         logger.info("Shutting down Detection Metrics system...")
         
         # Final metrics aggregation

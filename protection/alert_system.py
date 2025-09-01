@@ -4,6 +4,7 @@ Real-time alert management and notification system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, Any, List
 from datetime import datetime
@@ -14,7 +15,8 @@ from ..core.logging import logger
 
 
 class AlertSystem:
-    """Advanced alert system for content protection violations"""
+    """
+Advanced alert system for content protection violations"""
     
     def __init__(self):
         self.alert_channels = ["email", "push", "webhook"]

@@ -19,6 +19,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from ..legal.jurisdiction_database import JurisdictionDatabase
 
 
 class TerritoryType(Enum):
-    """Comprehensive territory classification types"""
+    """
+Comprehensive territory classification types"""
+
     COUNTRY = "country"
     REGION = "region"
     CONTINENT = "continent"
@@ -59,6 +62,7 @@ class TerritoryType(Enum):
 
 class JurisdictionLevel(Enum):
     """Levels of legal jurisdiction"""
+
     FEDERAL = "federal"
     NATIONAL = "national"
     STATE_PROVINCIAL = "state_provincial"
@@ -72,6 +76,7 @@ class JurisdictionLevel(Enum):
 
 class LegalFramework(Enum):
     """Legal framework systems"""
+
     COMMON_LAW = "common_law"
     CIVIL_LAW = "civil_law"
     RELIGIOUS_LAW = "religious_law"
@@ -84,6 +89,7 @@ class LegalFramework(Enum):
 
 class CopyrightLaw(Enum):
     """Copyright law systems"""
+
     BERNE_CONVENTION = "berne_convention"
     UNIVERSAL_COPYRIGHT = "universal_copyright"
     TRIPS_AGREEMENT = "trips_agreement"
@@ -779,7 +785,8 @@ class TerritoryInfo:
 
 @dataclass
 class LicensingRule:
-    """Territory-specific licensing rule"""
+    """
+Territory-specific licensing rule"""
     rule_id: str
     territory_id: str
     content_type: str
@@ -794,7 +801,8 @@ class LicensingRule:
 
 @dataclass
 class TerritoryValidation:
-    """Territory validation result"""
+    """
+Territory validation result"""
     territory: str
     valid: bool
     compliant: bool
@@ -843,7 +851,8 @@ class TerritoryManager:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize territory manager and jurisdiction database"""
+        """
+Initialize territory manager and jurisdiction database"""
         try:
             self.logger.info("Initializing TerritoryManager")
             
@@ -969,7 +978,8 @@ class TerritoryManager:
         territory: str,
         content_format: str = None
     ) -> Dict[str, Any]:
-        """Get comprehensive territory requirements for licensing"""
+        """
+Get comprehensive territory requirements for licensing"""
         if not self.is_initialized:
             raise TerritoryError("TerritoryManager not initialized")
         
@@ -1162,7 +1172,8 @@ class TerritoryManager:
         content_format: str,
         license_type: str
     ) -> List[LicensingRule]:
-        """Get licensing rules applicable to territory and content"""
+        """
+Get licensing rules applicable to territory and content"""
         applicable_rules = []
         
         for rule in self.licensing_rules.values():
@@ -1186,7 +1197,8 @@ class TerritoryManager:
         content_format: str,
         license_type: str
     ) -> Any:  # RuleValidationResult
-        """Validate licensing against territory rules"""
+        """
+Validate licensing against territory rules"""
         class RuleValidationResult:
             def __init__(self):
                 self.compliant = True
@@ -1251,7 +1263,8 @@ class TerritoryManager:
         territory: str,
         content_format: str
     ) -> List[LicensingRule]:
-        """Get all rules for specific territory and content format"""
+        """
+Get all rules for specific territory and content format"""
         rules = []
         
         for rule in self.licensing_rules.values():
@@ -1262,11 +1275,13 @@ class TerritoryManager:
         return rules
     
     async def _get_all_territory_rules(self, territory: str) -> List[LicensingRule]:
-        """Get all rules for specific territory"""
+        """
+Get all rules for specific territory"""
         return [rule for rule in self.licensing_rules.values() if rule.territory_id == territory]
     
     async def _get_tax_requirements(self, territory: str) -> List[str]:
-        """Get tax requirements for territory"""
+        """
+Get tax requirements for territory"""
         # Mock tax requirements - would integrate with tax database
         tax_reqs = {
             'US': ['Federal income tax withholding', 'State tax compliance', 'Form 1099-MISC reporting'],
@@ -1278,7 +1293,8 @@ class TerritoryManager:
         return tax_reqs.get(territory, tax_reqs['default'])
     
     async def _get_legal_requirements(self, territory: str) -> List[str]:
-        """Get legal documentation requirements for territory"""
+        """
+Get legal documentation requirements for territory"""
         # Mock legal requirements
         legal_reqs = {
             'US': ['Copyright registration with US Copyright Office', 'ASCAP/BMI registration'],
@@ -1293,7 +1309,8 @@ class TerritoryManager:
         self,
         territory_validations: Dict[str, TerritoryValidation]
     ) -> List[Dict[str, Any]]:
-        """Detect conflicts between territories"""
+        """
+Detect conflicts between territories"""
         conflicts = []
         
         # Check for exclusive licensing conflicts
@@ -1329,7 +1346,8 @@ class TerritoryManager:
         conflicts: List[Dict[str, Any]],
         validations: Dict[str, TerritoryValidation]
     ) -> List[Dict[str, Any]]:
-        """Generate conflict resolution strategies"""
+        """
+Generate conflict resolution strategies"""
         resolutions = []
         
         for conflict in conflicts:
@@ -1351,7 +1369,8 @@ class TerritoryManager:
         return resolutions
     
     def _get_cached_validation(self, cache_key: str) -> Optional[TerritoryValidation]:
-        """Get cached territory validation if still valid"""
+        """
+Get cached territory validation if still valid"""
         if cache_key in self.validation_cache:
             cached_data = self.validation_cache[cache_key]
             if datetime.now() - cached_data['timestamp'] < timedelta(seconds=self.cache_ttl):
@@ -1359,7 +1378,8 @@ class TerritoryManager:
         return None
     
     def _cache_validation(self, cache_key: str, result: TerritoryValidation) -> None:
-        """Cache territory validation result"""
+        """
+Cache territory validation result"""
         self.validation_cache[cache_key] = {
             'result': result,
             'timestamp': datetime.now()
@@ -1375,7 +1395,8 @@ class TerritoryManager:
                 del self.validation_cache[key]
     
     async def _load_territory_data(self) -> None:
-        """Load territory information database"""
+        """
+Load territory information database"""
         # Mock territory data - would load from database
         self.territories = {
             'US': TerritoryInfo(

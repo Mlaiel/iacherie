@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -41,7 +42,9 @@ logger = get_logger(__name__)
 
 
 class SupportedPlatform(Enum):
-    """Supported platforms for cross-platform analytics"""
+    """
+Supported platforms for cross-platform analytics"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -66,6 +69,7 @@ class SupportedPlatform(Enum):
 
 class PlatformCategory(Enum):
     """Categories of platforms"""
+
     SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
@@ -79,6 +83,7 @@ class PlatformCategory(Enum):
 
 class SyncAction(Enum):
     """Types of synchronization actions"""
+
     CONTENT_PUBLISH = "content_publish"
     METADATA_UPDATE = "metadata_update"
     CROSS_PROMOTE = "cross_promote"
@@ -91,6 +96,7 @@ class SyncAction(Enum):
 
 class UnificationStrategy(Enum):
     """Strategies for platform unification"""
+
     CONTENT_FIRST = "content_first"
     AUDIENCE_FIRST = "audience_first"
     ENGAGEMENT_FIRST = "engagement_first"
@@ -118,7 +124,8 @@ class CrossPlatformEvent(BaseEvent):
     optimization_recommendations: Optional[List[str]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert cross-platform event to dictionary"""
+        """
+Convert cross-platform event to dictionary"""
         return {
             **asdict(self),
             'platforms': [p.value for p in self.platforms],
@@ -131,7 +138,8 @@ class CrossPlatformEvent(BaseEvent):
 
 @dataclass
 class PlatformProfile:
-    """Profile of a creator's presence on a platform"""
+    """
+Profile of a creator's presence on a platform"""
     platform: SupportedPlatform
     creator_id: str
     platform_user_id: str
@@ -152,7 +160,8 @@ class PlatformProfile:
 
 @dataclass
 class UnificationResult:
-    """Result of platform unification process"""
+    """
+Result of platform unification process"""
     creator_id: str
     unified_metrics: Dict[str, Any]
     platform_correlations: Dict[str, float]
@@ -167,7 +176,8 @@ class UnificationResult:
 
 
 class CrossPlatformEventHandler(BaseEventHandler):
-    """Handles cross-platform events with advanced unification"""
+    """
+Handles cross-platform events with advanced unification"""
     
     def __init__(self):
         super().__init__()
@@ -179,7 +189,8 @@ class CrossPlatformEventHandler(BaseEventHandler):
         self.sync_engine = PlatformSyncEngine()
         
     async def handle(self, event: CrossPlatformEvent) -> Dict[str, Any]:
-        """Process cross-platform event with comprehensive analysis"""
+        """
+Process cross-platform event with comprehensive analysis"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -270,7 +281,8 @@ class CrossPlatformEventHandler(BaseEventHandler):
             )
     
     async def _calculate_platform_efficiency(self, event: CrossPlatformEvent) -> Dict[str, Any]:
-        """Calculate efficiency metrics across platforms"""
+        """
+Calculate efficiency metrics across platforms"""
         platform_metrics = event.platform_metrics
         
         efficiency_scores = {}
@@ -309,7 +321,8 @@ class CrossPlatformEventHandler(BaseEventHandler):
 
 
 class CrossPlatformTracker:
-    """Tracks performance and metrics across multiple platforms"""
+    """
+Tracks performance and metrics across multiple platforms"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -317,7 +330,8 @@ class CrossPlatformTracker:
         self.metrics_calculator = MetricsCalculator()
         
     async def track_platforms(self, event: CrossPlatformEvent) -> Dict[str, Any]:
-        """Track comprehensive platform metrics"""
+        """
+Track comprehensive platform metrics"""
         # Get platform profiles
         platform_profiles = await self._get_platform_profiles(event.creator_id)
         
@@ -347,7 +361,8 @@ class CrossPlatformTracker:
         }
     
     async def _get_platform_profiles(self, creator_id: str) -> Dict[str, PlatformProfile]:
-        """Get creator's profiles across all platforms"""
+        """
+Get creator's profiles across all platforms"""
         async with self.db_manager.get_session() as session:
             result = await session.execute(
                 """
@@ -386,7 +401,8 @@ class CrossPlatformTracker:
     
     async def _calculate_unified_metrics(self, event: CrossPlatformEvent, 
                                        profiles: Dict[str, PlatformProfile]) -> Dict[str, Any]:
-        """Calculate unified metrics across all platforms"""
+        """
+Calculate unified metrics across all platforms"""
         total_followers = sum(profile.follower_count for profile in profiles.values())
         total_content = sum(profile.content_count for profile in profiles.values())
         total_revenue = sum(profile.revenue for profile in profiles.values())
@@ -417,7 +433,8 @@ class CrossPlatformTracker:
         }
     
     def _calculate_shannon_diversity(self, profiles: Dict[str, PlatformProfile]) -> float:
-        """Calculate Shannon diversity index for platform distribution"""
+        """
+Calculate Shannon diversity index for platform distribution"""
         total_followers = sum(profile.follower_count for profile in profiles.values())
         
         if total_followers == 0:
@@ -433,7 +450,8 @@ class CrossPlatformTracker:
 
 
 class PlatformUnificationEngine:
-    """Unifies data and metrics across multiple platforms"""
+    """
+Unifies data and metrics across multiple platforms"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -441,7 +459,8 @@ class PlatformUnificationEngine:
         self.scaler = StandardScaler()
         
     async def unify_platforms(self, event: CrossPlatformEvent) -> UnificationResult:
-        """Unify data across all platforms for comprehensive analysis"""
+        """
+Unify data across all platforms for comprehensive analysis"""
         # Collect platform data
         platform_data = await self._collect_platform_data(event)
         
@@ -485,7 +504,8 @@ class PlatformUnificationEngine:
         )
     
     async def _collect_platform_data(self, event: CrossPlatformEvent) -> Dict[str, Dict[str, Any]]:
-        """Collect comprehensive data from all platforms"""
+        """
+Collect comprehensive data from all platforms"""
         platform_data = {}
         
         for platform in event.platforms:
@@ -539,7 +559,8 @@ class PlatformUnificationEngine:
                 }
     
     async def _unify_content_metrics(self, platform_data: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Unify content metrics across platforms"""
+        """
+Unify content metrics across platforms"""
         total_content = 0
         total_views = 0
         total_engagement = 0
@@ -568,13 +589,15 @@ class PlatformUnificationEngine:
 
 
 class CrossPlatformAnalyzer:
-    """Analyzes correlations and patterns across platforms"""
+    """
+Analyzes correlations and patterns across platforms"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
         
     async def analyze_correlations(self, event: CrossPlatformEvent) -> Dict[str, Any]:
-        """Analyze correlations between platform performances"""
+        """
+Analyze correlations between platform performances"""
         # Get historical platform data
         historical_data = await self._get_historical_platform_data(event.creator_id)
         
@@ -603,7 +626,8 @@ class CrossPlatformAnalyzer:
         }
     
     async def _get_historical_platform_data(self, creator_id: str) -> pd.DataFrame:
-        """Get historical data for correlation analysis"""
+        """
+Get historical data for correlation analysis"""
         async with self.db_manager.get_session() as session:
             result = await session.execute(
                 """
@@ -642,7 +666,8 @@ class PlatformSyncEngine:
         self.api_clients = {}  # Platform API clients
         
     async def sync_platforms(self, event: CrossPlatformEvent) -> Dict[str, Any]:
-        """Synchronize data and content across platforms"""
+        """
+Synchronize data and content across platforms"""
         sync_results = {}
         
         for platform in event.secondary_platforms:
@@ -698,7 +723,8 @@ class PlatformSyncEngine:
     
     async def _adapt_content_for_platform(self, content: Dict[str, Any], 
                                         platform: SupportedPlatform) -> Dict[str, Any]:
-        """Adapt content for specific platform requirements"""
+        """
+Adapt content for specific platform requirements"""
         adapted = content.copy()
         
         # Platform-specific adaptations

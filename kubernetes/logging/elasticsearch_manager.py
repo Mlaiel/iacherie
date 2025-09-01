@@ -9,6 +9,7 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import logging
@@ -26,7 +27,9 @@ from .log_aggregator import LogEntry, LogLevel
 
 
 class IndexStrategy(str, Enum):
-    """Elasticsearch index strategies"""
+    """
+Elasticsearch index strategies"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -51,7 +54,8 @@ class ElasticsearchConfig:
 
 
 class IndexTemplate:
-    """Elasticsearch index template management"""
+    """
+Elasticsearch index template management"""
     
     def __init__(self, template_name: str = "ia-influencer-logs"):
         self.template_name = template_name
@@ -234,7 +238,8 @@ class QueryBuilder:
 
 
 class ElasticsearchManager:
-    """Advanced Elasticsearch manager for IA Influencer Agent logging"""
+    """
+Advanced Elasticsearch manager for IA Influencer Agent logging"""
     
     def __init__(self, config: ElasticsearchConfig):
         self.config = config

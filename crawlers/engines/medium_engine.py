@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -48,7 +49,8 @@ settings = get_settings()
 
 @dataclass
 class MediumArticle:
-    """Medium article data structure"""
+    """
+Medium article data structure"""
     id: str
     title: str
     subtitle: Optional[str]
@@ -81,7 +83,8 @@ class MediumArticle:
 
 @dataclass
 class MediumAuthor:
-    """Medium author data structure"""
+    """
+Medium author data structure"""
     id: str
     username: str
     name: str
@@ -106,7 +109,8 @@ class MediumAuthor:
 
 @dataclass
 class MediumPublication:
-    """Medium publication data structure"""
+    """
+Medium publication data structure"""
     id: str
     name: str
     slug: str
@@ -125,7 +129,8 @@ class MediumPublication:
 
 @dataclass
 class MediumResponse:
-    """Medium response/comment data structure"""
+    """
+Medium response/comment data structure"""
     id: str
     content: str
     author_id: str
@@ -151,7 +156,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Medium crawler engine"""
+        """
+Initialize Medium crawler engine"""
         super().__init__(platform="medium", config=config)
         
         # Rate limiting (conservative due to anti-bot measures)
@@ -208,7 +214,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for dynamic content"""
+        """
+Setup Selenium WebDriver for dynamic content"""
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -559,13 +566,15 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         pass
     
     def _parse_author_profile(self) -> MediumAuthor:
-        """Parse author profile page"""
+        """
+Parse author profile page"""
         # Implementation for parsing author profile page
         # This would extract all available author data
         pass
     
     def _parse_publication_page(self) -> MediumPublication:
-        """Parse publication page"""
+        """
+Parse publication page"""
         # Implementation for parsing publication page
         # This would extract all available publication data
         pass
@@ -684,7 +693,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         return len(intersection) / len(union)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
+        """
+Clean up resources"""
         try:
             if self.session:
                 await self.session.close()

@@ -23,7 +23,7 @@ Advanced Features:
 - Machine Learning Helper Functions
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -42,6 +42,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable, Set, Generator
@@ -87,7 +88,9 @@ from .exceptions import PersonalizationError, ValidationError, PerformanceError,
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
+    """
+Validation strictness levels"""
+
     STRICT = "strict"
     MODERATE = "moderate"
     LENIENT = "lenient"
@@ -96,6 +99,7 @@ class ValidationLevel(Enum):
 
 class CacheStrategy(Enum):
     """Caching strategies for personalization data"""
+
     LRU = "lru"
     FIFO = "fifo"
     LIFO = "lifo"
@@ -482,7 +486,8 @@ class PersonalizationCache:
             return False
     
     def clear(self) -> None:
-        """Clear all cached data"""
+        """
+Clear all cached data"""
         with self.lock:
             self.cache.clear()
             self.access_times.clear()
@@ -490,7 +495,8 @@ class PersonalizationCache:
             self.ttl_times.clear()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""
+        """
+Get cache performance statistics"""
         with self.lock:
             total_requests = self.hits + self.misses
             hit_rate = self.hits / total_requests if total_requests > 0 else 0
@@ -506,18 +512,21 @@ class PersonalizationCache:
             }
     
     def _is_expired(self, key: str) -> bool:
-        """Check if cache entry is expired"""
+        """
+Check if cache entry is expired"""
         return time.time() > self.ttl_times.get(key, float('inf'))
     
     def _remove_key(self, key: str) -> None:
-        """Remove key and all associated metadata"""
+        """
+Remove key and all associated metadata"""
         self.cache.pop(key, None)
         self.access_times.pop(key, None)
         self.insertion_times.pop(key, None)
         self.ttl_times.pop(key, None)
     
     def _evict_one(self) -> None:
-        """Evict one entry based on strategy"""
+        """
+Evict one entry based on strategy"""
         if not self.cache:
             return
         
@@ -540,7 +549,8 @@ class PersonalizationCache:
         self.evictions += 1
     
     def _start_cleanup_thread(self) -> None:
-        """Start background cleanup thread"""
+        """
+Start background cleanup thread"""
         def cleanup_expired():
             while self.running:
                 try:
@@ -799,11 +809,13 @@ class DataConverter:
         return data
     
     def _handle_dict(self, data: Any, operation: str) -> Any:
-        """Handle dict format conversions"""
+        """
+Handle dict format conversions"""
         return data  # Already in dict format
     
     def _handle_pandas(self, data: Any, operation: str) -> Any:
-        """Handle pandas DataFrame conversions"""
+        """
+Handle pandas DataFrame conversions"""
         if operation == 'to_dict':
             return data.to_dict('records')[0] if len(data) > 0 else {}
         elif operation == 'from_dict':
@@ -811,7 +823,8 @@ class DataConverter:
         return data
     
     def _handle_numpy(self, data: Any, operation: str) -> Any:
-        """Handle numpy array conversions"""
+        """
+Handle numpy array conversions"""
         if operation == 'to_dict':
             return {'features': data.tolist()}
         elif operation == 'from_dict':
@@ -819,7 +832,8 @@ class DataConverter:
         return data
     
     def _handle_list(self, data: Any, operation: str) -> Any:
-        """Handle list format conversions"""
+        """
+Handle list format conversions"""
         if operation == 'to_dict':
             return {'items': data}
         elif operation == 'from_dict':
@@ -827,7 +841,8 @@ class DataConverter:
         return data
     
     def _generate_cache_key(self, data: Any, source_format: str, target_format: str) -> str:
-        """Generate cache key for conversion"""
+        """
+Generate cache key for conversion"""
         # Create hash of data structure (not content)
         data_signature = str(type(data)) + str(len(str(data))[:100])
         key_string = f"{source_format}_{target_format}_{data_signature}"
@@ -987,7 +1002,8 @@ class PerformanceMonitor:
             }
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get overall system performance overview"""
+        """
+Get overall system performance overview"""
         
         with self.lock:
             all_operations = list(self.performance_history.keys())
@@ -1033,13 +1049,15 @@ class PerformanceMonitor:
             }
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage (simplified)"""
+        """
+Get current memory usage (simplified)"""
         # In a real implementation, this would use psutil or similar
         # For now, return a placeholder value
         return 1024 * 1024 * 100  # 100MB placeholder
     
     def _check_performance_alerts(self, metrics: PerformanceMetrics) -> None:
-        """Check if metrics trigger any performance alerts"""
+        """
+Check if metrics trigger any performance alerts"""
         
         alerts = []
         
@@ -1688,7 +1706,8 @@ class ConfigurationManager:
         return result
     
     def get_config_summary(self) -> Dict[str, Any]:
-        """Get summary of current configuration"""
+        """
+Get summary of current configuration"""
         
         return {
             'total_keys': len(self._flatten_config(self.config)),
@@ -1729,14 +1748,16 @@ def get_global_cache() -> PersonalizationCache:
     return _global_cache
 
 def get_global_monitor() -> PerformanceMonitor:
-    """Get global performance monitor instance"""
+    """
+Get global performance monitor instance"""
     global _global_monitor
     if _global_monitor is None:
         _global_monitor = PerformanceMonitor()
     return _global_monitor
 
 def get_global_config() -> ConfigurationManager:
-    """Get global configuration manager instance"""
+    """
+Get global configuration manager instance"""
     global _global_config
     if _global_config is None:
         _global_config = ConfigurationManager()

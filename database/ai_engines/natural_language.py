@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
@@ -39,7 +40,9 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Auto
 logger = logging.getLogger(__name__)
 
 class NLPModelType(str, Enum):
-    """NLP model type enumeration."""
+    """
+NLP model type enumeration."""
+
     CLASSIFICATION = "classification"
     GENERATION = "generation"
     EMBEDDING = "embedding"
@@ -52,6 +55,7 @@ class NLPModelType(str, Enum):
 
 class LanguageModelFramework(str, Enum):
     """Language model framework enumeration."""
+
     TRANSFORMERS = "transformers"
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
@@ -73,7 +77,8 @@ class TextProcessingConfig:
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result."""
+    """
+Sentiment analysis result."""
     text_id: str
     sentiment: str
     score: float
@@ -83,7 +88,8 @@ class SentimentResult:
 
 @dataclass
 class ClassificationResult:
-    """Content classification result."""
+    """
+Content classification result."""
     text_id: str
     categories: List[str]
     scores: List[float]
@@ -91,7 +97,8 @@ class ClassificationResult:
     timestamp: datetime
 
 class NLPModelConfig(BaseModel):
-    """NLP model configuration."""
+    """
+NLP model configuration."""
     model_id: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1, max_length=255)
     model_type: NLPModelType

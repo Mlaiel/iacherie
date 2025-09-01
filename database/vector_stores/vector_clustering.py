@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -51,7 +52,9 @@ settings = get_settings()
 
 
 class ClusteringAlgorithm(Enum):
-    """Supported clustering algorithms"""
+    """
+Supported clustering algorithms"""
+
     KMEANS = "kmeans"
     DBSCAN = "dbscan"
     HIERARCHICAL = "hierarchical"
@@ -64,6 +67,7 @@ class ClusteringAlgorithm(Enum):
 
 class DimensionalityReduction(Enum):
     """Dimensionality reduction techniques"""
+
     PCA = "pca"
     UMAP = "umap"
     TSNE = "tsne"
@@ -73,6 +77,7 @@ class DimensionalityReduction(Enum):
 
 class ClusteringMode(Enum):
     """Clustering operation modes"""
+
     CONTENT_ANALYSIS = "content_analysis"
     DUPLICATE_DETECTION = "duplicate_detection"
     ANOMALY_DETECTION = "anomaly_detection"
@@ -98,7 +103,8 @@ class ClusteringConfig:
 
 @dataclass
 class ClusterInfo:
-    """Information about a single cluster"""
+    """
+Information about a single cluster"""
     cluster_id: int
     content_type: str
     size: int
@@ -115,7 +121,8 @@ class ClusterInfo:
 
 @dataclass
 class ClusteringResult:
-    """Complete clustering analysis result"""
+    """
+Complete clustering analysis result"""
     clustering_id: str
     content_type: str
     algorithm_used: str
@@ -132,7 +139,8 @@ class ClusteringResult:
 
 @dataclass
 class AnomalyReport:
-    """Anomaly detection report"""
+    """
+Anomaly detection report"""
     content_id: str
     anomaly_score: float
     anomaly_type: str
@@ -1601,7 +1609,8 @@ class VectorClusteringEngine:
         }
     
     def _generate_cache_key(self, content_type: str, config: ClusteringConfig) -> str:
-        """Generate cache key for clustering configuration"""
+        """
+Generate cache key for clustering configuration"""
         import hashlib
         
         config_str = (

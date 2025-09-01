@@ -4,6 +4,7 @@ Real-time content monitoring and violation detection endpoints.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
@@ -654,7 +655,8 @@ async def _execute_platform_scan(scan_id: str, scan_request: PlatformScanRequest
 
 
 async def _process_dmca_request(dmca_id: str, dmca_request: DMCARequest, user: dict):
-    """Process DMCA takedown request"""
+    """
+Process DMCA takedown request"""
     try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
@@ -707,21 +709,24 @@ async def _process_dmca_request(dmca_id: str, dmca_request: DMCARequest, user: d
 
 # Platform-specific scanning functions
 async def _scan_youtube(scan_request: PlatformScanRequest, user: dict) -> List[Dict[str, Any]]:
-    """Scan YouTube for violations"""
+    """
+Scan YouTube for violations"""
     # Implementation would use YouTube API to search for content
     # This is a placeholder implementation
     return []
 
 
 async def _scan_instagram(scan_request: PlatformScanRequest, user: dict) -> List[Dict[str, Any]]:
-    """Scan Instagram for violations"""
+    """
+Scan Instagram for violations"""
     # Implementation would use Instagram API to search for content
     # This is a placeholder implementation
     return []
 
 
 async def _scan_tiktok(scan_request: PlatformScanRequest, user: dict) -> List[Dict[str, Any]]:
-    """Scan TikTok for violations"""
+    """
+Scan TikTok for violations"""
     # Implementation would use TikTok API to search for content
     # This is a placeholder implementation
     return []

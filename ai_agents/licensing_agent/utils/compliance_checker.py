@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -46,7 +47,9 @@ from ...security.audit_logger import ComplianceAuditLogger
 logger = logging.getLogger(__name__)
 
 class ComplianceArea(Enum):
-    """Areas of compliance monitoring"""
+    """
+Areas of compliance monitoring"""
+
     COPYRIGHT_LAW = "copyright_law"
     DATA_PROTECTION = "data_protection"
     CONSUMER_PROTECTION = "consumer_protection"
@@ -58,6 +61,7 @@ class ComplianceArea(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -66,6 +70,7 @@ class ComplianceStatus(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -73,6 +78,7 @@ class RiskLevel(Enum):
 
 class JurisdictionType(Enum):
     """Types of legal jurisdictions"""
+
     NATIONAL = "national"
     REGIONAL = "regional"
     INTERNATIONAL = "international"
@@ -99,7 +105,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+Compliance violation record"""
     violation_id: str
     rule_id: str
     content_id: str
@@ -117,7 +124,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report"""
+    """
+Comprehensive compliance assessment report"""
     report_id: str
     assessment_period: Dict[str, datetime]
     overall_status: ComplianceStatus
@@ -612,7 +620,8 @@ class LegalValidator:
         strategy: Dict[str, Any],
         target_markets: List[str]
     ) -> Dict[str, Any]:
-        """Validate licensing strategy for legal soundness across multiple jurisdictions"""
+        """
+Validate licensing strategy for legal soundness across multiple jurisdictions"""
         try:
             validation_id = str(uuid.uuid4())
             logger.info(f"Validating licensing strategy {validation_id} for {len(target_markets)} markets")

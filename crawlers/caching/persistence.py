@@ -9,6 +9,7 @@ and distributed storage capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import pickle
@@ -29,7 +30,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class StorageFormat(Enum):
-    """Persistent storage formats."""
+    """
+Persistent storage formats."""
+
     PICKLE = "pickle"
     JSON = "json"
     COMPRESSED_PICKLE = "compressed_pickle"
@@ -37,6 +40,7 @@ class StorageFormat(Enum):
 
 class BackupStrategy(Enum):
     """Backup strategies."""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -52,7 +56,8 @@ class PersistentEntry:
     checksum: Optional[str] = None
     
     def calculate_checksum(self) -> str:
-        """Calculate entry checksum."""
+        """
+Calculate entry checksum."""
         data = json.dumps({
             'key': self.key,
             'timestamp': self.timestamp.isoformat(),
@@ -61,14 +66,16 @@ class PersistentEntry:
         return hashlib.sha256(data.encode()).hexdigest()
     
     def verify_checksum(self) -> bool:
-        """Verify entry integrity."""
+        """
+Verify entry integrity."""
         if not self.checksum:
             return True
         return self.checksum == self.calculate_checksum()
 
 @dataclass
 class BackupInfo:
-    """Backup information."""
+    """
+Backup information."""
     backup_id: str
     strategy: BackupStrategy
     format: StorageFormat
@@ -182,7 +189,8 @@ class CachePersistence:
     
     def _deserialize_entry(self, data: bytes, 
                           format: StorageFormat) -> PersistentEntry:
-        """Deserialize entry from bytes."""
+        """
+Deserialize entry from bytes."""
         if format in [StorageFormat.COMPRESSED_PICKLE, StorageFormat.COMPRESSED_JSON]:
             data = gzip.decompress(data)
         
@@ -500,7 +508,8 @@ class CachePersistence:
         return incremental_entries
     
     async def start_auto_backup(self) -> None:
-        """Start automatic backup process."""
+        """
+Start automatic backup process."""
         if self.auto_backup_task is not None:
             return
         
@@ -585,7 +594,8 @@ class BackupManager:
     """
     
     def __init__(self, persistence: CachePersistence):
-        """Initialize backup manager."""
+        """
+Initialize backup manager."""
         self.persistence = persistence
         self.logger = logging.getLogger(f"{__name__}.BackupManager")
         

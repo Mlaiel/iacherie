@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, status, Query, Body
@@ -40,7 +41,8 @@ class CollaborationSearchRequest(BaseModel):
     budget_range: Optional[Dict[str, float]] = None
 
 class PartnershipProposal(BaseModel):
-    """Model for partnership proposals"""
+    """
+Model for partnership proposals"""
     target_user_id: str
     project_description: str
     proposed_terms: Dict[str, Any]

@@ -6,8 +6,9 @@ including revenue tracking, payment processing, platform integrations, and
 automated licensing for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationTier(Enum):
-    """Monetization service tiers"""
+    """
+Monetization service tiers"""
+
     CREATOR = "creator"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -34,6 +37,7 @@ class MonetizationTier(Enum):
 
 class PaymentProvider(Enum):
     """Supported payment providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -43,6 +47,7 @@ class PaymentProvider(Enum):
 
 class RevenueModel(Enum):
     """Revenue models"""
+
     COMMISSION = "commission"
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"

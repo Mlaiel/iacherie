@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Advanced text fingerprinting processor for multi-format content protection
 """
+
 import hashlib
 import re
 from typing import Dict, List, Optional, Tuple, Any
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure"""
+    """
+Text fingerprint data structure"""
     content_hash: str
     semantic_hash: str
     style_features: np.ndarray
@@ -69,7 +71,8 @@ class TextFingerprintProcessor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize text fingerprinting processor"""
+        """
+Initialize text fingerprinting processor"""
         self.config = config or self._get_default_config()
         self.executor = ThreadPoolExecutor(max_workers=2)
         self.lemmatizer = WordNetLemmatizer()
@@ -82,7 +85,8 @@ class TextFingerprintProcessor:
         self._initialize_tools()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for text processing"""
+        """
+Get default configuration for text processing"""
         return {
             'similarity_threshold': 0.8,
             'max_text_length': 100000,
@@ -91,7 +95,8 @@ class TextFingerprintProcessor:
         }
     
     def _initialize_tools(self):
-        """Initialize language processing tools"""
+        """
+Initialize language processing tools"""
         try:
             self.grammar_tool = language_tool_python.LanguageTool('en-US')
         except Exception as e:
@@ -213,7 +218,8 @@ class TextFingerprintProcessor:
         return hashlib.sha256(text_bytes).hexdigest()
     
     async def _extract_semantic_hash(self, text_content: str) -> str:
-        """Extract semantic hash based on normalized content"""
+        """
+Extract semantic hash based on normalized content"""
         loop = asyncio.get_event_loop()
         
         def compute_semantic():
@@ -240,7 +246,8 @@ class TextFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_semantic)
     
     def _normalize_text(self, text: str) -> str:
-        """Normalize text for comparison"""
+        """
+Normalize text for comparison"""
         # Remove extra whitespace and newlines
         text = re.sub(r'\s+', ' ', text)
         
@@ -358,7 +365,8 @@ class TextFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_linguistic)
     
     async def _extract_tfidf_features(self, text_content: str) -> np.ndarray:
-        """Extract TF-IDF features from text"""
+        """
+Extract TF-IDF features from text"""
         loop = asyncio.get_event_loop()
         
         def compute_tfidf():
@@ -446,7 +454,8 @@ class TextFingerprintProcessor:
         return await loop.run_in_executor(self.executor, detect_lang)
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract file metadata"""
+        """
+Extract file metadata"""
         return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
@@ -548,7 +557,8 @@ class TextFingerprintProcessor:
             return 0.0
     
     def _readability_similarity(self, scores1: Dict[str, float], scores2: Dict[str, float]) -> float:
-        """Calculate similarity between readability scores"""
+        """
+Calculate similarity between readability scores"""
         try:
             similarities = []
             
@@ -569,22 +579,26 @@ class TextFingerprintProcessor:
             return 0.0
     
     def is_duplicate(self, fp1: TextFingerprint, fp2: TextFingerprint) -> bool:
-        """Check if two fingerprints represent duplicate content"""
+        """
+Check if two fingerprints represent duplicate content"""
         similarity = self.calculate_similarity(fp1, fp2)
         return similarity >= self.config['similarity_threshold']
     
     async def batch_process_files(self, file_paths: List[Path]) -> List[TextFingerprint]:
-        """Process multiple text files in parallel"""
+        """
+Process multiple text files in parallel"""
         tasks = [self.process_text_file(path) for path in file_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     async def batch_process_content(self, text_contents: List[str]) -> List[TextFingerprint]:
-        """Process multiple text contents in parallel"""
+        """
+Process multiple text contents in parallel"""
         tasks = [self.process_text_content(content) for content in text_contents]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)
         if hasattr(self, 'grammar_tool') and self.grammar_tool:

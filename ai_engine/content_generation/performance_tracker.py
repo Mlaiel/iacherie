@@ -4,11 +4,12 @@ Professional performance tracking system that monitors content effectiveness,
 engagement metrics, and provides actionable insights for optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Tuple
@@ -21,7 +22,8 @@ import statistics
 
 @dataclass
 class ContentMetrics:
-    """Data class for content performance metrics"""
+    """
+Data class for content performance metrics"""
     content_id: str
     content_type: str
     platform: str
@@ -43,7 +45,8 @@ class ContentMetrics:
 
 @dataclass
 class PerformanceInsight:
-    """Data class for performance insights"""
+    """
+Data class for performance insights"""
     insight_type: str
     title: str
     description: str
@@ -68,7 +71,8 @@ class PerformanceTracker:
     """
     
     def __init__(self):
-        """Initialize performance tracker"""
+        """
+Initialize performance tracker"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Metrics storage
@@ -241,7 +245,8 @@ class PerformanceTracker:
         })
     
     async def _calculate_engagement_rate(self, metrics: ContentMetrics) -> float:
-        """Calculate engagement rate based on platform"""
+        """
+Calculate engagement rate based on platform"""
         total_engagements = metrics.likes + metrics.shares + metrics.comments
         
         if metrics.platform in ['instagram', 'tiktok']:
@@ -254,13 +259,15 @@ class PerformanceTracker:
         return total_engagements / base
     
     async def _calculate_ctr(self, metrics: ContentMetrics) -> float:
-        """Calculate click-through rate"""
+        """
+Calculate click-through rate"""
         if metrics.impressions == 0:
             return 0.0
         return metrics.clicks / metrics.impressions
     
     async def _calculate_conversion_rate(self, metrics: ContentMetrics) -> float:
-        """Calculate conversion rate"""
+        """
+Calculate conversion rate"""
         if metrics.clicks == 0:
             return 0.0
         return metrics.conversions / metrics.clicks
@@ -335,7 +342,8 @@ class PerformanceTracker:
         return filtered
     
     async def _get_best_performing_content(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Identify best performing content"""
+        """
+Identify best performing content"""
         if not metrics_list:
             return {}
         
@@ -363,7 +371,8 @@ class PerformanceTracker:
         }
     
     async def _get_platform_breakdown(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Get performance breakdown by platform"""
+        """
+Get performance breakdown by platform"""
         platform_data = defaultdict(list)
         
         for metrics in metrics_list:
@@ -381,7 +390,8 @@ class PerformanceTracker:
         return breakdown
     
     async def _get_content_type_breakdown(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Get performance breakdown by content type"""
+        """
+Get performance breakdown by content type"""
         type_data = defaultdict(list)
         
         for metrics in metrics_list:
@@ -398,7 +408,8 @@ class PerformanceTracker:
         return breakdown
     
     async def _get_performance_trends(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         # Sort by date
         sorted_metrics = sorted(metrics_list, key=lambda m: m.created_at)
         
@@ -437,7 +448,8 @@ class PerformanceTracker:
         }
     
     async def _compare_to_benchmarks(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Compare performance to industry benchmarks"""
+        """
+Compare performance to industry benchmarks"""
         platform_performance = {}
         
         platform_data = defaultdict(list)
@@ -551,7 +563,8 @@ class PerformanceTracker:
         )
     
     async def _generate_aggregated_insights(self, metrics_list: List[ContentMetrics]) -> List[PerformanceInsight]:
-        """Generate insights from aggregated data"""
+        """
+Generate insights from aggregated data"""
         insights = []
         
         if len(metrics_list) < 3:
@@ -745,11 +758,13 @@ class MetricsCollector:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def register_platform(self, platform_name: str, collector_func: callable) -> None:
-        """Register a platform metrics collector"""
+        """
+Register a platform metrics collector"""
         self.platforms[platform_name] = collector_func
     
     def collect_metrics(self, platform: str, content_id: str) -> Dict[str, Any]:
-        """Collect metrics for specific content on a platform"""
+        """
+Collect metrics for specific content on a platform"""
         if platform not in self.platforms:
             return {}
         

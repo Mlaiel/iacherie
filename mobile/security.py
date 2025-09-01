@@ -4,6 +4,7 @@ Device authentication, biometric auth, and mobile-specific security
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Secure mobile access and content protection for creators
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -42,6 +43,7 @@ except ImportError:
 
 class SecurityLevel(Enum):
     """Mobile security levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -50,6 +52,7 @@ class SecurityLevel(Enum):
 
 class BiometricType(Enum):
     """Biometric authentication types."""
+
     FINGERPRINT = "fingerprint"
     FACE_ID = "face_id"
     VOICE_PRINT = "voice_print"
@@ -79,7 +82,8 @@ class DeviceSecurityProfile:
 
 @dataclass
 class BiometricData:
-    """Biometric authentication data."""
+    """
+Biometric authentication data."""
     biometric_id: str
     user_id: str
     device_id: str
@@ -97,7 +101,8 @@ class BiometricData:
 
 @dataclass
 class SecurityEvent:
-    """Security event logging."""
+    """
+Security event logging."""
     event_id: str
     device_id: str
     user_id: Optional[str]
@@ -114,7 +119,8 @@ class SecurityEvent:
 
 
 class MobileEncryptionManager:
-    """Professional mobile encryption management."""
+    """
+Professional mobile encryption management."""
     
     def __init__(self):
         self.logger = get_logger("mobile.encryption_manager")
@@ -156,7 +162,8 @@ class MobileEncryptionManager:
         return base64.urlsafe_b64encode(encrypted_data).decode('utf-8')
     
     def decrypt_mobile_data(self, encrypted_data: str, key: bytes) -> bytes:
-        """Decrypt mobile data."""
+        """
+Decrypt mobile data."""
         
         # Decode from base64
         encrypted_bytes = base64.urlsafe_b64decode(encrypted_data)
@@ -170,7 +177,8 @@ class MobileEncryptionManager:
         return decrypted_data
     
     def generate_secure_hash(self, data: str, salt: Optional[str] = None) -> str:
-        """Generate secure hash for mobile data."""
+        """
+Generate secure hash for mobile data."""
         
         if salt is None:
             salt = secrets.token_hex(16)
@@ -194,7 +202,8 @@ class MobileEncryptionManager:
 
 
 class BiometricAuthManager:
-    """Professional biometric authentication management."""
+    """
+Professional biometric authentication management."""
     
     def __init__(self, encryption_manager: MobileEncryptionManager):
         self.logger = get_logger("mobile.biometric_auth")
@@ -676,14 +685,16 @@ def get_mobile_security_manager() -> MobileSecurityManager:
 
 
 def get_encryption_manager() -> MobileEncryptionManager:
-    """Get encryption manager instance.""" 
+    """
+Get encryption manager instance.""" 
     return MobileEncryptionManager()
 
 
 def get_biometric_manager(
     encryption_manager: MobileEncryptionManager = None
 ) -> BiometricAuthManager:
-    """Get biometric auth manager instance."""
+    """
+Get biometric auth manager instance."""
     if encryption_manager is None:
         encryption_manager = get_encryption_manager()
     return BiometricAuthManager(encryption_manager)

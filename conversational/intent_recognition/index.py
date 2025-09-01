@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from datetime import datetime

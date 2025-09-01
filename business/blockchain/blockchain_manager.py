@@ -4,9 +4,10 @@ This is the central blockchain management system that orchestrates all blockchai
 operations including smart contracts, NFTs, consensus, payments, governance, and
 cross-chain functionality for content creators and rights protection.
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
+(c) 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BlockchainNetwork:
-    """Blockchain network configuration"""
+    """
+Blockchain network configuration"""
     name: str
     rpc_url: str
     chain_id: int
@@ -54,7 +56,8 @@ class BlockchainNetwork:
 
 @dataclass
 class TransactionResult:
-    """Result of blockchain transaction"""
+    """
+Result of blockchain transaction"""
     tx_hash: str
     block_number: int
     gas_used: int
@@ -671,7 +674,8 @@ class BlockchainManager:
         total_revenue: Decimal,
         rules: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Calculate royalty distributions based on rules"""
+        """
+Calculate royalty distributions based on rules"""
         # This would implement complex royalty calculation logic
         # For now, returning a simplified structure
         return [
@@ -725,12 +729,14 @@ class BlockchainManager:
         title: str,
         proposer_id: int
     ) -> None:
-        """Notify stakeholders about new governance proposal"""
+        """
+Notify stakeholders about new governance proposal"""
         # Implementation would send notifications to governance token holders
         pass
     
     async def _monitor_networks(self) -> None:
-        """Background task to monitor network health"""
+        """
+Background task to monitor network health"""
         while True:
             try:
                 for network_name in self.active_networks:

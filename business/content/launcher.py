@@ -13,6 +13,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import os
 import sys
 import asyncio
@@ -41,7 +42,8 @@ class ContentSystemLauncher:
         self.running = False
     
     def print_banner(self):
-        """Print system banner."""
+        """
+Print system banner."""
         print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                IA Influencer Agent - Content Management System              ║
 ║                                                                              ║
@@ -59,7 +61,8 @@ class ContentSystemLauncher:
         """)
     
     def print_menu(self):
-        """Print interactive menu."""
+        """
+Print interactive menu."""
         print("""┌─ Main Menu ──────────────────────────────────────────────────────────────────┐
 │                                                                              │
 │  1. 🚀 Quick Start - Initialize & Launch System                             │
@@ -77,7 +80,8 @@ class ContentSystemLauncher:
         """)
     
     async def quick_start(self):
-        """Quick start the system."""
+        """
+Quick start the system."""
         print("🚀 Starting Content Management System...")
         
         try:
@@ -292,7 +296,8 @@ class ContentSystemLauncher:
             """)
     
     def show_help(self):
-        """Show help information."""
+        """
+Show help information."""
         print("""╔─ Help & Documentation ───────────────────────────────────────────────────────╗
 ║                                                                              ║
 ║  📖 Documentation Files:                                                     ║
@@ -320,7 +325,8 @@ class ContentSystemLauncher:
         """)
     
     async def shutdown_system(self):
-        """Shutdown the system."""
+        """
+Shutdown the system."""
         if self.system and self.running:
             print("🛑 Shutting down Content Management System...")
             await shutdown_content_system()

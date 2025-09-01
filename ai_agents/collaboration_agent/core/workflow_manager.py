@@ -22,6 +22,7 @@ Team Specialties:
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,9 @@ from ...ai.workflow_optimizer import WorkflowOptimizer
 logger = logging.getLogger(__name__)
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -69,6 +72,7 @@ class WorkflowStatus(Enum):
 
 class TaskStatus(Enum):
     """Individual task status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     BLOCKED = "blocked"
@@ -78,6 +82,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -109,7 +114,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowPhase:
-    """Workflow phase containing related tasks"""
+    """
+Workflow phase containing related tasks"""
     phase_id: str
     name: str
     description: str
@@ -125,7 +131,8 @@ class WorkflowPhase:
 
 @dataclass
 class CollaborationWorkflowTemplate:
-    """Template for collaboration workflows"""
+    """
+Template for collaboration workflows"""
     template_id: str
     name: str
     description: str
@@ -461,7 +468,8 @@ class CollaborationWorkflow:
         self._build_dependency_graph()
     
     async def _create_phase_from_template(self, phase_data: Dict[str, Any]) -> WorkflowPhase:
-        """Create workflow phase from template data"""
+        """
+Create workflow phase from template data"""
         
         return WorkflowPhase(
             phase_id=str(uuid.uuid4()),
@@ -482,7 +490,8 @@ class CollaborationWorkflow:
         task_data: Dict[str, Any],
         phase_id: str
     ) -> WorkflowTask:
-        """Create workflow task from template data"""
+        """
+Create workflow task from template data"""
         
         return WorkflowTask(
             task_id=str(uuid.uuid4()),
@@ -639,7 +648,8 @@ class TaskCoordinator:
         self.communication_manager = CommunicationManager()
     
     async def coordinate_task_execution(self, task_id: str) -> Dict[str, Any]:
-        """Coordinate execution of a specific task"""
+        """
+Coordinate execution of a specific task"""
         try:
             task = self.workflow.tasks.get(task_id)
             if not task:
@@ -958,7 +968,8 @@ class ProjectManager:
     # Private helper methods
     
     async def _analyze_project_requirements(self, project_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze project requirements using AI"""
+        """
+Analyze project requirements using AI"""
         # Sophisticated requirements analysis
         complexity_score = self._calculate_complexity_score(project_data)
         resource_requirements = self._estimate_resource_requirements(project_data)
@@ -976,7 +987,8 @@ class ProjectManager:
         }
     
     def _calculate_complexity_score(self, project_data: Dict[str, Any]) -> float:
-        """Calculate project complexity score (0-1)"""
+        """
+Calculate project complexity score (0-1)"""
         factors = {
             'content_types': len(project_data.get('content_types', [])) * 0.1,
             'creators_count': len(project_data.get('creators', [])) * 0.15,
@@ -989,7 +1001,8 @@ class ProjectManager:
         return min(1.0, sum(factors.values()))
     
     def _define_success_metrics(self, project_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Define success metrics for project"""
+        """
+Define success metrics for project"""
         return {
             'completion_rate': 0.95,  # Target completion rate
             'quality_score': 0.85,   # Minimum quality score

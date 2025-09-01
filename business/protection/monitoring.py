@@ -14,6 +14,7 @@ Advanced real-time monitoring system for content protection.
 Provides comprehensive surveillance, alerting, and analytics
 for multi-platform content piracy detection.
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class MonitoringStatus(Enum):
-    """Monitoring service operational status"""
+    """
+Monitoring service operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MONITORING = "monitoring"
@@ -50,6 +53,7 @@ class MonitoringStatus(Enum):
 
 class AlertSeverity(IntEnum):
     """Alert severity levels"""
+
     INFO = 1
     LOW = 2
     MEDIUM = 3
@@ -58,7 +62,9 @@ class AlertSeverity(IntEnum):
     EMERGENCY = 6
 
 class AlertType(Enum):
-    """Types of alerts"""
+    """
+Types of alerts"""
+
     PIRACY_DETECTED = "piracy_detected"
     HIGH_SIMILARITY_MATCH = "high_similarity_match"
     MASSIVE_INFRINGEMENT = "massive_infringement"
@@ -72,6 +78,7 @@ class AlertType(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels"""
+
     EMAIL = "email"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -82,6 +89,7 @@ class NotificationChannel(Enum):
 
 class MetricType(Enum):
     """Types of monitoring metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -164,32 +172,38 @@ class MonitoringMetrics:
 # =============== CORE INTERFACES ===============
 
 class IMonitoringService(ABC):
-    """Interface for monitoring service"""
+    """
+Interface for monitoring service"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize monitoring service"""
+        """
+Initialize monitoring service"""
         pass
     
     @abstractmethod
     async def send_alert(self, alert: Alert) -> bool:
-        """Send alert through configured channels"""
+        """
+Send alert through configured channels"""
         pass
     
     @abstractmethod
     async def collect_metrics(self) -> MonitoringMetrics:
-        """Collect current system metrics"""
+        """
+Collect current system metrics"""
         pass
     
     @abstractmethod
     async def check_system_health(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
+        """
+Perform comprehensive system health check"""
         pass
 
 # =============== ALERT MANAGEMENT SYSTEM ===============
 
 class AlertManager:
-    """Advanced alert management and routing system"""
+    """
+Advanced alert management and routing system"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -357,7 +371,8 @@ class AlertManager:
         return channels
     
     def _generate_email_html(self, alert: Alert) -> str:
-        """Generate HTML email body for alert"""
+        """
+Generate HTML email body for alert"""
         severity_color = {
             AlertSeverity.INFO: "#17a2b8",
             AlertSeverity.LOW: "#28a745", 
@@ -415,7 +430,7 @@ class AlertManager:
                 
                 <div style="background-color: #f8f9fa; padding: 15px; border-radius: 0 0 8px 8px; text-align: center; color: #6c757d;">
                     <p style="margin: 0;">IA-Influencer-Agent Protection System</p>
-                    <p style="margin: 5px 0 0 0; font-size: 12px;">© 2025 Fahed Mlaiel - All Rights Reserved</p>
+                    <p style="margin: 5px 0 0 0; font-size: 12px;">(c) 2025 Fahed Mlaiel - All Rights Reserved</p>
                 </div>
             </div>
         </body>
@@ -427,7 +442,8 @@ class AlertManager:
 # =============== METRICS COLLECTION SYSTEM ===============
 
 class MetricsCollector:
-    """Advanced metrics collection and analysis system"""
+    """
+Advanced metrics collection and analysis system"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -558,7 +574,8 @@ class MetricsCollector:
             return 0.0
     
     async def _check_platform_response_time(self, platform: str) -> float:
-        """Check platform response time"""
+        """
+Check platform response time"""
         try:
             platform_urls = {
                 'youtube': 'https://www.youtube.com',
@@ -580,46 +597,56 @@ class MetricsCollector:
             return 0.0
     
     def _get_daily_scan_count(self) -> int:
-        """Get daily scan count (placeholder)"""
+        """
+Get daily scan count (placeholder)"""
         return 150  # Mock data
     
     def _get_successful_scan_count(self) -> int:
-        """Get successful scan count (placeholder)"""
+        """
+Get successful scan count (placeholder)"""
         return 142  # Mock data
     
     def _get_failed_scan_count(self) -> int:
-        """Get failed scan count (placeholder)"""
+        """
+Get failed scan count (placeholder)"""
         return 8  # Mock data
     
     def _calculate_average_scan_time(self) -> float:
-        """Calculate average scan time (placeholder)"""
+        """
+Calculate average scan time (placeholder)"""
         return 2500.0  # Mock data in milliseconds
     
     def _get_total_violations(self) -> int:
-        """Get total violations detected (placeholder)"""
+        """
+Get total violations detected (placeholder)"""
         return 23  # Mock data
     
     def _get_high_severity_violations(self) -> int:
-        """Get high severity violations (placeholder)"""
+        """
+Get high severity violations (placeholder)"""
         return 5  # Mock data
     
     def _get_new_violations_today(self) -> int:
-        """Get new violations today (placeholder)"""
+        """
+Get new violations today (placeholder)"""
         return 7  # Mock data
     
     def _get_resolved_violations_today(self) -> int:
-        """Get resolved violations today (placeholder)"""
+        """
+Get resolved violations today (placeholder)"""
         return 12  # Mock data
     
     def _cleanup_old_metrics(self) -> None:
-        """Remove old metrics beyond retention period"""
+        """
+Remove old metrics beyond retention period"""
         cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.config.retention_days)
         self.metrics_history = [m for m in self.metrics_history if m.timestamp > cutoff_date]
 
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class MonitoringService(IMonitoringService):
-    """Professional monitoring service implementation"""
+    """
+Professional monitoring service implementation"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -816,7 +843,8 @@ class MonitoringService(IMonitoringService):
         return health_info
     
     async def _check_alert_conditions(self, metrics: MonitoringMetrics) -> None:
-        """Check metrics for alert conditions"""
+        """
+Check metrics for alert conditions"""
         try:
             # Check system resource alerts
             if metrics.cpu_usage_percent > 90:
@@ -874,7 +902,8 @@ class MonitoringServiceFactory:
     
     @staticmethod
     def create_service(config: Optional[MonitoringConfig] = None) -> MonitoringService:
-        """Create configured monitoring service"""
+        """
+Create configured monitoring service"""
         if config is None:
             config = MonitoringConfig()
         
@@ -886,7 +915,8 @@ class MonitoringServiceFactory:
         email_enabled: bool = True,
         **kwargs
     ) -> MonitoringConfig:
-        """Create monitoring configuration"""
+        """
+Create monitoring configuration"""
         return MonitoringConfig(
             check_interval_seconds=check_interval_seconds,
             email_enabled=email_enabled,
@@ -895,7 +925,8 @@ class MonitoringServiceFactory:
 
 
 def format_alert_for_display(alert: Alert) -> str:
-    """Format alert for display purposes"""
+    """
+Format alert for display purposes"""
     return f"[{alert.severity.name}] {alert.title} - {alert.message}"
 
 

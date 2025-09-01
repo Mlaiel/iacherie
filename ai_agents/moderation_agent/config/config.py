@@ -10,12 +10,15 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This configuration and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 from typing import Dict, Any, List
 from enum import Enum
 import os
 
 class ModerationLevel(Enum):
-    """Content moderation strictness levels"""
+    """
+Content moderation strictness levels"""
+
     PERMISSIVE = "permissive"
     STANDARD = "standard"
     STRICT = "strict"
@@ -23,6 +26,7 @@ class ModerationLevel(Enum):
 
 class RegionalCompliance(Enum):
     """Regional compliance frameworks"""
+
     GDPR_EU = "gdpr_eu"
     COPPA_US = "coppa_us"
     PIPEDA_CA = "pipeda_ca"

@@ -13,6 +13,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     CREATIVE_PARTNERSHIP = "creative_partnership"
     SKILL_EXCHANGE = "skill_exchange"
     CROSS_PROMOTION = "cross_promotion"
@@ -57,6 +60,7 @@ class CollaborationType(Enum):
 
 class CreatorType(Enum):
     """Creator specializations"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -93,7 +97,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity representation"""
+    """
+Collaboration opportunity representation"""
     opportunity_id: str
     creator_id: str
     collaboration_type: CollaborationType
@@ -135,7 +140,8 @@ class CollaborationEngine:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize collaboration engine"""
+        """
+Initialize collaboration engine"""
         self.config = config or {}
         
         # Initialize collaboration graph if NetworkX is available
@@ -233,7 +239,8 @@ class CollaborationEngine:
         content_analysis: Dict[str, Any],
         content_type: str
     ) -> List[CollaborationMatch]:
-        """Generate collaboration recommendations for a creator"""
+        """
+Generate collaboration recommendations for a creator"""
         
         logger.info(f"Generating collaboration recommendations for creator {creator_id}")
         
@@ -389,7 +396,8 @@ class CollaborationEngine:
         quality_score: float,
         metadata: Dict[str, Any]
     ) -> str:
-        """Estimate experience level based on content quality and metadata"""
+        """
+Estimate experience level based on content quality and metadata"""
         
         # Check for experience indicators in metadata
         years_experience = metadata.get('years_experience', 0)
@@ -430,7 +438,8 @@ class CollaborationEngine:
         creator_type: CreatorType,
         opportunity: CollaborationOpportunity
     ) -> bool:
-        """Check if creator type is relevant for opportunity"""
+        """
+Check if creator type is relevant for opportunity"""
         
         # Define cross-type collaboration opportunities
         relevant_combinations = {
@@ -461,7 +470,8 @@ class CollaborationEngine:
         creator_profile: CreatorProfile,
         opportunity: CollaborationOpportunity
     ) -> Optional[CollaborationMatch]:
-        """Evaluate collaboration match compatibility"""
+        """
+Evaluate collaboration match compatibility"""
         
         try:
             # Calculate skill alignment
@@ -566,7 +576,8 @@ class CollaborationEngine:
         creator_skills: List[str],
         required_skills: List[str]
     ) -> Set[str]:
-        """Find semantically similar skills"""
+        """
+Find semantically similar skills"""
         
         # Simplified semantic matching - in production use word embeddings
         skill_synonyms = {
@@ -597,7 +608,8 @@ class CollaborationEngine:
         creator_interests: List[str],
         opportunity_description: str
     ) -> float:
-        """Calculate interest alignment based on description"""
+        """
+Calculate interest alignment based on description"""
         
         if not creator_interests:
             return 0.0
@@ -616,7 +628,8 @@ class CollaborationEngine:
         creator_experience: str,
         required_experience: str
     ) -> float:
-        """Calculate experience level compatibility"""
+        """
+Calculate experience level compatibility"""
         
         experience_levels = {
             'beginner': 1,
@@ -645,7 +658,8 @@ class CollaborationEngine:
         creator_location: str,
         required_location: str
     ) -> float:
-        """Calculate location compatibility"""
+        """
+Calculate location compatibility"""
         
         if required_location.lower() == 'remote' or creator_location.lower() == 'remote':
             return 1.0
@@ -666,7 +680,8 @@ class CollaborationEngine:
         experience_score: float,
         location_score: float
     ) -> List[str]:
-        """Generate human-readable match reasons"""
+        """
+Generate human-readable match reasons"""
         
         reasons = []
         
@@ -729,7 +744,8 @@ class CollaborationEngine:
         self,
         creator_profile: CreatorProfile
     ) -> List[CollaborationMatch]:
-        """Find matches based on skill complementarity"""
+        """
+Find matches based on skill complementarity"""
         
         matches = []
         
@@ -961,7 +977,8 @@ class CollaborationEngine:
         profile: CreatorProfile,
         content_analysis: Dict[str, Any]
     ):
-        """Update creator profile based on new content analysis"""
+        """
+Update creator profile based on new content analysis"""
         
         # Update skills
         new_skills = content_analysis.get('detected_skills', [])

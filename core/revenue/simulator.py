@@ -1,7 +1,7 @@
 """Revenue Simulator - Advanced scenario modeling and what-if analysis system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScenarioType(Enum):
-    """Types of revenue scenarios"""
+    """
+Types of revenue scenarios"""
+
     OPTIMISTIC = "optimistic"
     REALISTIC = "realistic"
     PESSIMISTIC = "pessimistic"
@@ -60,6 +63,7 @@ class ScenarioType(Enum):
 
 class SimulationMethod(Enum):
     """Simulation methodologies"""
+
     MONTE_CARLO = "monte_carlo"
     DETERMINISTIC = "deterministic"
     AGENT_BASED = "agent_based"
@@ -70,6 +74,7 @@ class SimulationMethod(Enum):
 
 class MarketCondition(Enum):
     """Market condition scenarios"""
+
     BULL_MARKET = "bull_market"
     BEAR_MARKET = "bear_market"
     STABLE_MARKET = "stable_market"
@@ -94,7 +99,8 @@ class SimulationParameter:
 
 @dataclass
 class ScenarioDefinition:
-    """Revenue scenario definition"""
+    """
+Revenue scenario definition"""
     scenario_id: str
     name: str
     description: str
@@ -109,7 +115,8 @@ class ScenarioDefinition:
 
 @dataclass
 class SimulationResult:
-    """Result of revenue simulation"""
+    """
+Result of revenue simulation"""
     simulation_id: str
     scenario_id: str
     method: SimulationMethod
@@ -126,7 +133,8 @@ class SimulationResult:
 
 @dataclass
 class WhatIfScenario:
-    """What-if analysis scenario"""
+    """
+What-if analysis scenario"""
     scenario_id: str
     description: str
     changed_parameters: Dict[str, Any]
@@ -136,7 +144,8 @@ class WhatIfScenario:
 
 
 class RevenueSimulator:
-    """Advanced revenue scenario modeling and simulation engine"""
+    """
+Advanced revenue scenario modeling and simulation engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -150,7 +159,8 @@ class RevenueSimulator:
         self.confidence_levels = [0.05, 0.25, 0.5, 0.75, 0.95]
         
     async def initialize(self) -> None:
-        """Initialize revenue simulator"""
+        """
+Initialize revenue simulator"""
         try:
             # Initialize ML models for forecasting
             await self._initialize_forecasting_models()
@@ -183,7 +193,8 @@ class RevenueSimulator:
         self.ml_models['trend_model'] = None  # Will be fitted on demand
     
     async def _setup_default_scenarios(self) -> None:
-        """Setup default revenue scenarios"""
+        """
+Setup default revenue scenarios"""
         # Base revenue parameters
         base_revenue = SimulationParameter(
             name="monthly_revenue",
@@ -346,7 +357,8 @@ class RevenueSimulator:
         market_condition: MarketCondition = MarketCondition.STABLE_MARKET,
         time_horizon_months: int = 12
     ) -> ScenarioDefinition:
-        """Create custom revenue scenario"""
+        """
+Create custom revenue scenario"""
         try:
             scenario_id = f"custom_{uuid.uuid4().hex[:8]}"
             
@@ -646,7 +658,8 @@ class RevenueSimulator:
         all_projections: np.ndarray,
         mean_projections: np.ndarray
     ) -> Dict[str, Any]:
-        """Calculate comprehensive risk metrics"""
+        """
+Calculate comprehensive risk metrics"""
         final_revenues = all_projections[:, -1]
         initial_revenues = all_projections[:, 0]
         
@@ -692,7 +705,8 @@ class RevenueSimulator:
         all_projections: np.ndarray,
         timeline: List[datetime]
     ) -> Dict[str, Any]:
-        """Calculate break-even analysis"""
+        """
+Calculate break-even analysis"""
         initial_revenues = all_projections[:, 0]
         
         # Find break-even time for each simulation
@@ -726,7 +740,8 @@ class RevenueSimulator:
         scenario: ScenarioDefinition,
         baseline_projections: np.ndarray
     ) -> Dict[str, Any]:
-        """Perform sensitivity analysis on key parameters"""
+        """
+Perform sensitivity analysis on key parameters"""
         sensitivity_results = {}
         
         # Test sensitivity to different parameters
@@ -1086,7 +1101,8 @@ class RevenueSimulator:
         }
     
     def _categorize_risk_level(self, var_values: List[float], volatility_values: List[float]) -> str:
-        """Categorize overall risk level"""
+        """
+Categorize overall risk level"""
         if not var_values or not volatility_values:
             return "unknown"
         
@@ -1162,7 +1178,8 @@ class RevenueSimulator:
 
 
 async def create_revenue_simulator(config: Optional[Dict[str, Any]] = None) -> RevenueSimulator:
-    """Factory function to create and initialize revenue simulator"""
+    """
+Factory function to create and initialize revenue simulator"""
     simulator = RevenueSimulator(config)
     await simulator.initialize()
     return simulator

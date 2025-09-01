@@ -12,8 +12,9 @@ This feature extraction system and methodologies are the exclusive intellectual 
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 """
+
 import asyncio
 import logging
 import time
@@ -121,7 +122,9 @@ from prometheus_client import Counter, Histogram, Gauge
 logger = logging.getLogger(__name__)
 
 class FeatureType(Enum):
-    """Feature extraction types"""
+    """
+Feature extraction types"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -133,6 +136,7 @@ class FeatureType(Enum):
 
 class ExtractionMethod(Enum):
     """Feature extraction methods"""
+
     STATISTICAL = "statistical"
     TRANSFORMER = "transformer"
     EMBEDDING = "embedding"
@@ -143,6 +147,7 @@ class ExtractionMethod(Enum):
 
 class FeaturePriority(Enum):
     """Feature priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -261,7 +266,8 @@ class FeatureMetrics:
 
 @dataclass
 class FeatureExtractionResult:
-    """Complete feature extraction result"""
+    """
+Complete feature extraction result"""
     extraction_id: str
     content_id: str
     feature_types: List[str]

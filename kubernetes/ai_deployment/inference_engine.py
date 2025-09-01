@@ -6,8 +6,9 @@ real-time model predictions with auto-scaling, caching,
 and optimization capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class InferenceType(Enum):
-    """Inference types"""
+    """
+Inference types"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -36,6 +39,7 @@ class InferenceType(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization levels"""
+
     SPEED = "speed"
     ACCURACY = "accuracy"
     BALANCED = "balanced"
@@ -45,6 +49,7 @@ class OptimizationLevel(Enum):
 
 class CachingStrategy(Enum):
     """Caching strategies"""
+
     LRU = "lru"
     LFU = "lfu"
     FIFO = "fifo"

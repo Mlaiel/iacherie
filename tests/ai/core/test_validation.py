@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Content Validation System Tests
+"""
+Comprehensive Content Validation System Tests
 
 Ultra-advanced enterprise-grade test suite for content validation and quality assurance.
 Tests multi-format validation, security, quality analysis, and creator-specific requirements.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
@@ -34,6 +36,7 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -79,7 +82,8 @@ class TestValidationLevel:
     """Test suite for ValidationLevel enumeration"""
     
     def test_validation_level_values(self):
-        """Test validation level enum values"""
+        """
+Test validation level enum values"""
         assert ValidationLevel.INFO.value == "info"
         assert ValidationLevel.WARNING.value == "warning"
         assert ValidationLevel.ERROR.value == "error"
@@ -103,7 +107,8 @@ class TestValidationLevel:
         assert len(set(level.value for level in levels)) == len(levels)
     
     def test_validation_level_string_representation(self):
-        """Test validation level string representation"""
+        """
+Test validation level string representation"""
         assert str(ValidationLevel.ERROR) == "ValidationLevel.ERROR"
         assert repr(ValidationLevel.CRITICAL) == "<ValidationLevel.CRITICAL: 'critical'>"
 
@@ -112,7 +117,8 @@ class TestValidationCategory:
     """Test suite for ValidationCategory enumeration"""
     
     def test_validation_category_values(self):
-        """Test validation category enum values"""
+        """
+Test validation category enum values"""
         assert ValidationCategory.CONTENT_SAFETY.value == "content_safety"
         assert ValidationCategory.COPYRIGHT_COMPLIANCE.value == "copyright_compliance"
         assert ValidationCategory.TECHNICAL_QUALITY.value == "technical_quality"
@@ -143,7 +149,8 @@ class TestContentType:
     """Test suite for ContentType enumeration"""
     
     def test_content_type_values(self):
-        """Test content type enum values"""
+        """
+Test content type enum values"""
         assert ContentType.TEXT.value == "text"
         assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"
@@ -170,10 +177,12 @@ class TestContentType:
 
 
 class TestValidationIssue:
-    """Test suite for ValidationIssue data class"""
+    """
+Test suite for ValidationIssue data class"""
     
     def test_validation_issue_creation(self):
-        """Test validation issue creation with all parameters"""
+        """
+Test validation issue creation with all parameters"""
         issue = ValidationIssue(
             level=ValidationLevel.ERROR,
             category=ValidationCategory.CONTENT_SAFETY,
@@ -241,7 +250,8 @@ class TestValidationResult:
     """Test suite for ValidationResult data class"""
     
     def test_validation_result_creation(self):
-        """Test validation result creation with all scores"""
+        """
+Test validation result creation with all scores"""
         result = ValidationResult(
             is_valid=True,
             overall_score=95.0,
@@ -265,7 +275,8 @@ class TestValidationResult:
         assert isinstance(result.validation_timestamp, datetime)
     
     def test_add_issue_functionality(self):
-        """Test adding issues to validation result"""
+        """
+Test adding issues to validation result"""
         result = ValidationResult(is_valid=True, overall_score=100.0, quality_score=100.0,
                                 safety_score=100.0, compliance_score=100.0, seo_score=100.0,
                                 monetization_readiness=100.0)
@@ -397,11 +408,13 @@ class TestContentSecurityValidator:
     """Test suite for ContentSecurityValidator class"""
     
     def setup_method(self):
-        """Setup security validator for testing"""
+        """
+Setup security validator for testing"""
         self.security_validator = ContentSecurityValidator()
     
     def test_security_validator_initialization(self):
-        """Test security validator initialization"""
+        """
+Test security validator initialization"""
         assert hasattr(self.security_validator, 'blocked_patterns')
         assert hasattr(self.security_validator, 'suspicious_patterns')
         assert hasattr(self.security_validator, 'malware_signatures')
@@ -409,7 +422,8 @@ class TestContentSecurityValidator:
         assert len(self.security_validator.suspicious_patterns) > 0
     
     def test_malicious_content_detection(self):
-        """Test detection of malicious content patterns"""
+        """
+Test detection of malicious content patterns"""
         result = ValidationResult(is_valid=True, overall_score=100.0, quality_score=100.0,
                                 safety_score=100.0, compliance_score=100.0, seo_score=100.0,
                                 monetization_readiness=100.0)
@@ -427,7 +441,8 @@ class TestContentSecurityValidator:
         assert any(issue.level == ValidationLevel.SECURITY for issue in security_issues)
     
     def test_suspicious_content_detection(self):
-        """Test detection of suspicious content"""
+        """
+Test detection of suspicious content"""
         result = ValidationResult(is_valid=True, overall_score=100.0, quality_score=100.0,
                                 safety_score=100.0, compliance_score=100.0, seo_score=100.0,
                                 monetization_readiness=100.0)
@@ -472,20 +487,24 @@ class TestContentSecurityValidator:
 
 
 class TestContentQualityAnalyzer:
-    """Test suite for ContentQualityAnalyzer class"""
+    """
+Test suite for ContentQualityAnalyzer class"""
     
     def setup_method(self):
-        """Setup quality analyzer for testing"""
+        """
+Setup quality analyzer for testing"""
         self.quality_analyzer = ContentQualityAnalyzer()
     
     def test_quality_analyzer_initialization(self):
-        """Test quality analyzer initialization"""
+        """
+Test quality analyzer initialization"""
         assert hasattr(self.quality_analyzer, 'quality_metrics')
         assert isinstance(self.quality_analyzer.quality_metrics, dict)
     
     @patch('backend.ai.core.validation.TRANSFORMERS_AVAILABLE', True)
     def test_ai_models_initialization(self):
-        """Test AI models initialization when available"""
+        """
+Test AI models initialization when available"""
         with patch('backend.ai.core.validation.AutoTokenizer.from_pretrained') as mock_tokenizer:
             mock_tokenizer.return_value = Mock()
             
@@ -495,7 +514,8 @@ class TestContentQualityAnalyzer:
             mock_tokenizer.assert_called_once()
     
     def test_text_quality_analysis_short_content(self):
-        """Test text quality analysis for short content"""
+        """
+Test text quality analysis for short content"""
         result = ValidationResult(is_valid=True, overall_score=100.0, quality_score=100.0,
                                 safety_score=100.0, compliance_score=100.0, seo_score=100.0,
                                 monetization_readiness=100.0)
@@ -568,14 +588,17 @@ class TestContentQualityAnalyzer:
 
 
 class TestAudioContentValidator:
-    """Test suite for AudioContentValidator class"""
+    """
+Test suite for AudioContentValidator class"""
     
     def setup_method(self):
-        """Setup audio validator for testing"""
+        """
+Setup audio validator for testing"""
         self.audio_validator = AudioContentValidator()
     
     def test_audio_validator_initialization(self):
-        """Test audio validator initialization"""
+        """
+Test audio validator initialization"""
         assert hasattr(self.audio_validator, 'audio_formats')
         assert hasattr(self.audio_validator, 'quality_thresholds')
         assert '.mp3' in self.audio_validator.audio_formats
@@ -583,14 +606,16 @@ class TestAudioContentValidator:
         assert 'min_sample_rate' in self.audio_validator.quality_thresholds
     
     def test_audio_formats_coverage(self):
-        """Test coverage of audio formats for musicians"""
+        """
+Test coverage of audio formats for musicians"""
         required_formats = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a']
         
         for format_ext in required_formats:
             assert format_ext in self.audio_validator.audio_formats
     
     def test_quality_thresholds_configuration(self):
-        """Test audio quality thresholds configuration"""
+        """
+Test audio quality thresholds configuration"""
         thresholds = self.audio_validator.quality_thresholds
         
         assert thresholds['min_sample_rate'] >= 44100  # CD quality minimum
@@ -601,7 +626,8 @@ class TestAudioContentValidator:
     
     @patch('backend.ai.core.validation.AUDIO_AVAILABLE', False)
     def test_audio_validation_library_unavailable(self):
-        """Test audio validation when library is unavailable"""
+        """
+Test audio validation when library is unavailable"""
         result = ValidationResult(is_valid=True, overall_score=100.0, quality_score=100.0,
                                 safety_score=100.0, compliance_score=100.0, seo_score=100.0,
                                 monetization_readiness=100.0)
@@ -684,7 +710,8 @@ class TestAudioContentValidator:
         assert 0.5 <= silence_ratio <= 0.7
     
     def test_audio_quality_score_calculation(self):
-        """Test audio quality score calculation"""
+        """
+Test audio quality score calculation"""
         # Test high quality audio
         score = self.audio_validator._calculate_audio_quality_score(48000, 180.0, 0.1)
         assert score >= 80.0
@@ -699,14 +726,17 @@ class TestAudioContentValidator:
 
 
 class TestImageContentValidator:
-    """Test suite for ImageContentValidator class"""
+    """
+Test suite for ImageContentValidator class"""
     
     def setup_method(self):
-        """Setup image validator for testing"""
+        """
+Setup image validator for testing"""
         self.image_validator = ImageContentValidator()
     
     def test_image_validator_initialization(self):
-        """Test image validator initialization"""
+        """
+Test image validator initialization"""
         assert hasattr(self.image_validator, 'image_formats')
         assert hasattr(self.image_validator, 'quality_thresholds')
         assert '.jpg' in self.image_validator.image_formats
@@ -714,14 +744,16 @@ class TestImageContentValidator:
         assert 'min_width' in self.image_validator.quality_thresholds
     
     def test_image_formats_coverage(self):
-        """Test coverage of image formats for photographers"""
+        """
+Test coverage of image formats for photographers"""
         required_formats = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp']
         
         for format_ext in required_formats:
             assert format_ext in self.image_validator.image_formats
     
     def test_quality_thresholds_configuration(self):
-        """Test image quality thresholds configuration"""
+        """
+Test image quality thresholds configuration"""
         thresholds = self.image_validator.quality_thresholds
         
         assert thresholds['min_width'] > 0
@@ -731,7 +763,8 @@ class TestImageContentValidator:
     
     @patch('backend.ai.core.validation.CV2_AVAILABLE', False)
     def test_image_validation_library_unavailable(self):
-        """Test image validation when library is unavailable"""
+        """
+Test image validation when library is unavailable"""
         result = ValidationResult(is_valid=True, overall_score=100.0, quality_score=100.0,
                                 safety_score=100.0, compliance_score=100.0, seo_score=100.0,
                                 monetization_readiness=100.0)
@@ -838,14 +871,17 @@ class TestImageContentValidator:
 
 
 class TestContentValidator:
-    """Test suite for main ContentValidator class"""
+    """
+Test suite for main ContentValidator class"""
     
     def setup_method(self):
-        """Setup content validator for testing"""
+        """
+Setup content validator for testing"""
         self.validator = ContentValidator()
     
     def test_content_validator_initialization(self):
-        """Test content validator initialization"""
+        """
+Test content validator initialization"""
         assert hasattr(self.validator, 'quality_thresholds')
         assert hasattr(self.validator, 'validation_rules')
         assert hasattr(self.validator, 'security_validator')
@@ -854,7 +890,8 @@ class TestContentValidator:
         assert hasattr(self.validator, 'image_validator')
     
     def test_text_content_validation(self):
-        """Test comprehensive text content validation"""
+        """
+Test comprehensive text content validation"""
         content = """
         This is a comprehensive test of text content validation.
         It includes multiple sentences and proper formatting.
@@ -1070,12 +1107,14 @@ class TestContentValidatorAsync:
     """Test suite for asynchronous content validation operations"""
     
     def setup_method(self):
-        """Setup async validator testing"""
+        """
+Setup async validator testing"""
         self.validator = ContentValidator()
     
     @pytest.mark.asyncio
     async def test_concurrent_validation(self):
-        """Test concurrent content validation"""
+        """
+Test concurrent content validation"""
         contents = [
             f"Test content number {i} for concurrent validation testing."
             for i in range(10)
@@ -1131,11 +1170,13 @@ class TestContentValidatorThreadSafety:
     """Test suite for content validator thread safety"""
     
     def setup_method(self):
-        """Setup thread safety testing"""
+        """
+Setup thread safety testing"""
         self.validator = ContentValidator()
     
     def test_thread_safe_validation(self):
-        """Test thread-safe concurrent validation"""
+        """
+Test thread-safe concurrent validation"""
         results = []
         errors = []
         
@@ -1200,11 +1241,13 @@ class TestContentValidatorIntegration:
     """Integration tests for content validator with real-world scenarios"""
     
     def setup_method(self):
-        """Setup integration testing"""
+        """
+Setup integration testing"""
         self.validator = ContentValidator()
     
     def test_musician_content_workflow(self):
-        """Test complete content validation workflow for musicians"""
+        """
+Test complete content validation workflow for musicians"""
         # Song description
         song_description = """
         🎵 New Single Release: "Digital Dreams" 🎵
@@ -1381,14 +1424,16 @@ class TestGlobalValidator:
     """Test suite for global content validator instance"""
     
     def test_global_validator_instance(self):
-        """Test global content validator instance"""
+        """
+Test global content validator instance"""
         from ai.core.validation import content_validator
         
         assert content_validator is not None
         assert isinstance(content_validator, ContentValidator)
     
     def test_global_validator_functionality(self):
-        """Test global validator functionality"""
+        """
+Test global validator functionality"""
         from ai.core.validation import content_validator
         
         test_content = "Testing global validator instance functionality."

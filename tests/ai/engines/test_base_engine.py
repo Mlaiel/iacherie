@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Base Engine Testing Module
+"""
+Base Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for BaseContentEngine and ContentEngineManager.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -57,11 +60,13 @@ from . import (
 )
 
 class TestBaseContentEngine:
-    """Comprehensive tests for BaseContentEngine"""
+    """
+Comprehensive tests for BaseContentEngine"""
     
     @pytest.fixture
     async def mock_engine(self):
-        """Create a mock engine for testing"""
+        """
+Create a mock engine for testing"""
         
         class MockContentEngine(BaseContentEngine):
             def __init__(self):
@@ -223,11 +228,13 @@ class TestBaseContentEngine:
         assert health_status['is_initialized'] is True
 
 class TestContentEngineManager:
-    """Comprehensive tests for ContentEngineManager"""
+    """
+Comprehensive tests for ContentEngineManager"""
     
     @pytest.fixture
     async def manager_with_engines(self):
-        """Create manager with registered engines"""
+        """
+Create manager with registered engines"""
         manager = ContentEngineManager()
         
         # Create and register mock engines
@@ -314,7 +321,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_intelligent_content_processing(self, manager_with_engines, sample_content):
-        """Test intelligent content routing and processing"""
+        """
+Test intelligent content routing and processing"""
         validator = TestEngineValidator()
         
         # Test audio content processing
@@ -357,7 +365,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_engine_selection_optimization(self, manager_with_engines):
-        """Test optimal engine selection based on load and performance"""
+        """
+Test optimal engine selection based on load and performance"""
         # Simulate load on engines
         content = "test content"
         
@@ -398,7 +407,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_error_handling_and_failover(self, manager_with_engines):
-        """Test error handling and failover mechanisms"""
+        """
+Test error handling and failover mechanisms"""
         # Test with unsupported content type
         with pytest.raises(ValueError, match="No engine available"):
             await manager_with_engines.process_content_intelligent(
@@ -425,11 +435,13 @@ class TestContentEngineManager:
         assert performance_tracker.validate_performance(threshold=2.0)
 
 class TestEngineIntegration:
-    """Integration tests for engine ecosystem"""
+    """
+Integration tests for engine ecosystem"""
     
     @pytest.mark.asyncio
     async def test_end_to_end_processing_pipeline(self, sample_content, test_options):
-        """Test complete end-to-end processing pipeline"""
+        """
+Test complete end-to-end processing pipeline"""
         validator = TestEngineValidator()
         
         # Create a comprehensive mock engine that handles all processing steps
@@ -619,7 +631,8 @@ class TestEnginePerformance:
     
     @pytest.mark.asyncio
     async def test_high_load_processing(self, sample_content):
-        """Test engine performance under high load"""
+        """
+Test engine performance under high load"""
         manager = ContentEngineManager()
         
         # Create a fast mock engine

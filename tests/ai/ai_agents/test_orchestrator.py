@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Orchestrator
+"""
+Comprehensive Tests for Orchestrator
 
 Industrial-grade testing for AI agent orchestration, coordination,
 system management, and multi-agent workflow execution.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -51,11 +54,13 @@ logger = logging.getLogger(__name__)
 
 
 class TestAgentRegistry:
-    """Test agent registry functionality"""
+    """
+Test agent registry functionality"""
     
     @pytest.fixture
     def agent_registry(self) -> AgentRegistry:
-        """Create agent registry for testing"""
+        """
+Create agent registry for testing"""
         config = OrchestratorConfig(
             max_agents=100,
             registration_timeout=30,
@@ -64,7 +69,8 @@ class TestAgentRegistry:
         return AgentRegistry(config)
     
     def test_registry_initialization(self):
-        """Test agent registry initialization"""
+        """
+Test agent registry initialization"""
         config = OrchestratorConfig()
         registry = AgentRegistry(config)
         
@@ -73,7 +79,8 @@ class TestAgentRegistry:
         assert registry.max_agents > 0
     
     def test_agent_registration(self, agent_registry):
-        """Test agent registration process"""
+        """
+Test agent registration process"""
         agent_info = {
             "agent_id": "test_content_creator",
             "agent_type": "ContentCreatorAgent",
@@ -228,7 +235,8 @@ class TestResourceManager:
     
     @pytest.fixture
     def resource_manager(self) -> ResourceManager:
-        """Create resource manager for testing"""
+        """
+Create resource manager for testing"""
         config = OrchestratorConfig(
             total_cpu_cores=16,
             total_memory_gb=64,
@@ -356,7 +364,8 @@ class TestLoadBalancer:
     
     @pytest.fixture
     def load_balancer(self) -> LoadBalancer:
-        """Create load balancer for testing"""
+        """
+Create load balancer for testing"""
         config = OrchestratorConfig(
             load_balancing_algorithm="weighted_round_robin",
             health_check_interval=30,
@@ -374,7 +383,8 @@ class TestLoadBalancer:
         assert len(balancer.get_agent_loads()) == 0
     
     def test_agent_load_tracking(self, load_balancer):
-        """Test agent load tracking"""
+        """
+Test agent load tracking"""
         # Add agents to load balancer
         agents = [
             {"agent_id": "load_agent_1", "capacity": 100, "current_load": 25},
@@ -499,7 +509,8 @@ class TestOrchestrator:
     
     @pytest.fixture
     async def orchestrator(self) -> Orchestrator:
-        """Create orchestrator for testing"""
+        """
+Create orchestrator for testing"""
         config = OrchestratorConfig(
             max_agents=50,
             max_concurrent_workflows=20,
@@ -516,7 +527,8 @@ class TestOrchestrator:
         await orch.shutdown()
     
     async def test_orchestrator_initialization(self):
-        """Test orchestrator initialization"""
+        """
+Test orchestrator initialization"""
         config = OrchestratorConfig()
         orch = Orchestrator(config)
         
@@ -532,7 +544,8 @@ class TestOrchestrator:
         assert orch.status == OrchestratorStatus.STOPPED
     
     async def test_agent_lifecycle_management(self, orchestrator):
-        """Test complete agent lifecycle management"""
+        """
+Test complete agent lifecycle management"""
         # Register multiple agents
         agents = [
             {

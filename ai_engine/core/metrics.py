@@ -4,10 +4,11 @@ Enterprise-grade metrics collection, analysis and monitoring for industrial AI c
 Supports multi-format content creators (musicians, bloggers, photographers, influencers, comedians).
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import time
 import threading
 import asyncio
@@ -30,7 +31,8 @@ except ImportError:
     psutil = None
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
+    """
+Get current UTC datetime in a timezone-aware manner"""
     return datetime.now(timezone.utc)
 
 logger = logging.getLogger(__name__)
@@ -39,7 +41,9 @@ T = TypeVar('T')
 
 
 class MetricType(Enum):
-    """Advanced metric types for comprehensive monitoring"""
+    """
+Advanced metric types for comprehensive monitoring"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -53,6 +57,7 @@ class MetricType(Enum):
 
 class MetricPriority(Enum):
     """Metric priority levels for alerting and monitoring"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -60,7 +65,9 @@ class MetricPriority(Enum):
 
 
 class AggregationType(Enum):
-    """Types of metric aggregation"""
+    """
+Types of metric aggregation"""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -87,7 +94,8 @@ class MetricEntry:
     session_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric entry to dictionary for serialization"""
+        """
+Convert metric entry to dictionary for serialization"""
         return {
             "name": self.name,
             "value": self.value,
@@ -113,7 +121,8 @@ class PerformanceSnapshot:
     
     @classmethod
     def capture(cls) -> 'PerformanceSnapshot':
-        """Capture current system performance"""
+        """
+Capture current system performance"""
         if psutil is None:
             # Return mock values when psutil is not available
             return cls(
@@ -197,7 +206,8 @@ class MetricsAggregator:
         self.data: Dict[str, deque] = defaultdict(lambda: deque(maxlen=window_size))
         
     def add_value(self, metric_name: str, value: float):
-        """Add value to aggregation window"""
+        """
+Add value to aggregation window"""
         self.data[metric_name].append(value)
         
     def get_aggregation(
@@ -205,7 +215,8 @@ class MetricsAggregator:
         metric_name: str,
         aggregation_type: AggregationType
     ) -> Optional[float]:
-        """Get aggregated value for metric"""
+        """
+Get aggregated value for metric"""
         values = list(self.data.get(metric_name, []))
         if not values:
             return None
@@ -232,7 +243,8 @@ class MetricsAggregator:
         return None
         
     def _percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile value"""
+        """
+Calculate percentile value"""
         if not values:
             return 0
         sorted_values = sorted(values)
@@ -241,7 +253,8 @@ class MetricsAggregator:
 
 
 class BusinessMetricsTracker:
-    """Specialized tracker for business-critical metrics"""
+    """
+Specialized tracker for business-critical metrics"""
     
     def __init__(self):
         self.user_engagement = MetricsAggregator()
@@ -256,7 +269,8 @@ class BusinessMetricsTracker:
         content_type: Optional[str] = None,
         value: float = 1.0
     ):
-        """Track user engagement actions"""
+        """
+Track user engagement actions"""
         metric_name = f"user_action_{action}"
         self.user_engagement.add_value(metric_name, value)
         
@@ -344,7 +358,8 @@ class MetricsCollector:
             self._start_system_monitoring()
             
     def _start_system_monitoring(self):
-        """Start background system monitoring"""
+        """
+Start background system monitoring"""
         if self._background_thread is None:
             self._background_thread = threading.Thread(
                 target=self._background_monitor,
@@ -353,7 +368,8 @@ class MetricsCollector:
             self._background_thread.start()
             
     def _background_monitor(self):
-        """Background thread for system monitoring"""
+        """
+Background thread for system monitoring"""
         while not self._stop_event.wait(30):  # Check every 30 seconds
             try:
                 # Capture system performance
@@ -402,7 +418,8 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         priority: MetricPriority = MetricPriority.MEDIUM
     ) -> None:
-        """Record a gauge metric"""
+        """
+Record a gauge metric"""
         with self._lock:
             self.gauges[name] = value
             
@@ -428,7 +445,8 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         bucket_size: int = 1000
     ) -> None:
-        """Record a histogram value"""
+        """
+Record a histogram value"""
         with self._lock:
             if len(self.histograms[name]) >= bucket_size:
                 self.histograms[name] = self.histograms[name][-bucket_size//2:]
@@ -450,7 +468,8 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         priority: MetricPriority = MetricPriority.MEDIUM
     ) -> None:
-        """Record a timer duration"""
+        """
+Record a timer duration"""
         with self._lock:
             self.timers[name].append(duration)
             
@@ -472,7 +491,8 @@ class MetricsCollector:
         events: int = 1,
         window_seconds: int = 60
     ) -> None:
-        """Record rate metrics (events per time window)"""
+        """
+Record rate metrics (events per time window)"""
         with self._lock:
             current_time = time.time()
             self.rates[name].append((current_time, events))
@@ -517,7 +537,8 @@ class MetricsCollector:
         warning_threshold: Optional[float] = None,
         critical_threshold: Optional[float] = None
     ):
-        """Set alert thresholds for a metric"""
+        """
+Set alert thresholds for a metric"""
         self.alert_thresholds[metric_name] = {
             "warning": warning_threshold,
             "critical": critical_threshold
@@ -528,7 +549,8 @@ class MetricsCollector:
         self.alert_callbacks.append(callback)
         
     def _check_alert_threshold(self, metric_name: str, value: float):
-        """Check if metric value exceeds alert thresholds"""
+        """
+Check if metric value exceeds alert thresholds"""
         thresholds = self.alert_thresholds.get(metric_name)
         if not thresholds:
             return
@@ -778,7 +800,8 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def record_histogram(self, name: str, value: float, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a histogram value"""
+        """
+Record a histogram value"""
         if name not in self.histograms:
             self.histograms[name] = []
         
@@ -793,7 +816,8 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def record_timer(self, name: str, duration: float, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a timer value"""
+        """
+Record a timer value"""
         if name not in self.timers:
             self.timers[name] = []
         
@@ -808,15 +832,18 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def get_counter(self, name: str) -> int:
-        """Get current counter value"""
+        """
+Get current counter value"""
         return self.counters.get(name, 0)
     
     def get_gauge(self, name: str) -> Optional[float]:
-        """Get current gauge value"""
+        """
+Get current gauge value"""
         return self.gauges.get(name)
     
     def get_histogram_stats(self, name: str) -> Optional[Dict[str, float]]:
-        """Get histogram statistics"""
+        """
+Get histogram statistics"""
         if name not in self.histograms or not self.histograms[name]:
             return None
         
@@ -837,7 +864,8 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         return self.get_histogram_stats(name)  # Same statistics as histogram
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all current metrics"""
+        """
+Get all current metrics"""
         return {
             "counters": dict(self.counters),
             "gauges": dict(self.gauges),
@@ -853,11 +881,13 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         return [m for m in self.metrics if m.timestamp >= cutoff_time]
     
     def get_metrics_by_type(self, metric_type: MetricType) -> List[MetricEntry]:
-        """Get metrics by type"""
+        """
+Get metrics by type"""
         return [m for m in self.metrics if m.metric_type == metric_type]
     
     def clear_metrics(self) -> None:
-        """Clear all metrics"""
+        """
+Clear all metrics"""
         self.metrics.clear()
         self.counters.clear()
         self.gauges.clear()

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
@@ -20,7 +21,8 @@ import yaml
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration settings"""
+    """
+Database configuration settings"""
     host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer"
@@ -136,7 +138,8 @@ class PerformanceConfig:
 
 @dataclass
 class PlatformConfig:
-    """Social media platform configurations"""
+    """
+Social media platform configurations"""
     # Instagram
     instagram_enabled: bool = True
     instagram_client_id: str = ""
@@ -203,7 +206,8 @@ class ConfigManager:
         self._config_files = []
     
     def load_config(self, config_path: Optional[str] = None) -> AIAgentsConfig:
-        """Load configuration from files and environment variables"""
+        """
+Load configuration from files and environment variables"""
         if config_path:
             self.config_path = config_path
         
@@ -226,7 +230,8 @@ class ConfigManager:
         return config
     
     def _find_config_files(self) -> list:
-        """Find configuration files in order of priority"""
+        """
+Find configuration files in order of priority"""
         config_files = []
         
         # Check specific path first
@@ -280,7 +285,8 @@ class ConfigManager:
         return base_config
     
     def _load_environment_variables(self, config: AIAgentsConfig) -> AIAgentsConfig:
-        """Load configuration from environment variables"""
+        """
+Load configuration from environment variables"""
         # Database
         if os.getenv('IA_DB_HOST'):
             config.database.host = os.getenv('IA_DB_HOST')
@@ -337,7 +343,8 @@ class ConfigManager:
         return config
     
     def _validate_config(self, config: AIAgentsConfig) -> None:
-        """Validate configuration values"""
+        """
+Validate configuration values"""
         errors = []
         
         # Required fields in production
@@ -366,7 +373,8 @@ class ConfigManager:
         return self._config
     
     def reload_config(self) -> AIAgentsConfig:
-        """Reload configuration from sources"""
+        """
+Reload configuration from sources"""
         self._config = None
         return self.load_config()
     
@@ -403,7 +411,8 @@ _config_manager: Optional[ConfigManager] = None
 
 
 def get_config_manager() -> ConfigManager:
-    """Get the global configuration manager"""
+    """
+Get the global configuration manager"""
     global _config_manager
     if _config_manager is None:
         _config_manager = ConfigManager()
@@ -411,18 +420,21 @@ def get_config_manager() -> ConfigManager:
 
 
 def get_config() -> AIAgentsConfig:
-    """Get the current configuration"""
+    """
+Get the current configuration"""
     return get_config_manager().get_config()
 
 
 def load_config(config_path: Optional[str] = None) -> AIAgentsConfig:
-    """Load configuration from files and environment"""
+    """
+Load configuration from files and environment"""
     return get_config_manager().load_config(config_path)
 
 
 # Default configuration for development
 def get_default_config() -> AIAgentsConfig:
-    """Get default configuration for development"""
+    """
+Get default configuration for development"""
     config = AIAgentsConfig()
     config.environment = "development"
     config.debug = True

@@ -4,10 +4,11 @@ Core subscription management service providing comprehensive subscription lifecy
 Handles plan subscriptions, upgrades, downgrades, cancellations, and feature access control.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List, Tuple
@@ -44,7 +45,8 @@ class SubscriptionService:
     """
     
     def __init__(self):
-        """Initialize subscription service."""
+        """
+Initialize subscription service."""
         self.logger = logging.getLogger(__name__)
     
     async def create_subscription_plan(
@@ -600,7 +602,8 @@ class SubscriptionService:
         pass
     
     def _generate_subscription_id(self) -> str:
-        """Generate unique subscription ID."""
+        """
+Generate unique subscription ID."""
         import uuid
         return f"sub_{uuid.uuid4().hex[:12]}"
     
@@ -644,7 +647,8 @@ class SubscriptionService:
         subscription: UserSubscription, 
         db: Session
     ) -> None:
-        """Update usage metrics when plan changes."""
+        """
+Update usage metrics when plan changes."""
         # Update quota limits based on new plan
         new_plan = subscription.plan
         
@@ -674,7 +678,8 @@ class SubscriptionService:
         triggered_by: str,
         db: Session
     ) -> None:
-        """Record subscription change in history."""
+        """
+Record subscription change in history."""
         history = SubscriptionHistory(
             user_id=user_id,
             subscription_id=subscription_id,
@@ -695,7 +700,8 @@ class SubscriptionService:
         new_plan: SubscriptionPlan, 
         db: Session
     ) -> Decimal:
-        """Calculate proration amount for plan change."""
+        """
+Calculate proration amount for plan change."""
         # Implementation would calculate pro-rated amount
         # based on remaining time in current billing cycle
         # and price difference between plans
@@ -707,7 +713,8 @@ class SubscriptionService:
         proration_amount: Decimal, 
         db: Session
     ) -> None:
-        """Create billing cycle entry for proration."""
+        """
+Create billing cycle entry for proration."""
         billing_cycle = BillingCycle(
             subscription_id=subscription.id,
             cycle_start=datetime.utcnow(),
@@ -722,7 +729,8 @@ class SubscriptionService:
 
 
 async def initialize_default_plans(db: Session = None) -> None:
-    """Initialize default subscription plans."""
+    """
+Initialize default subscription plans."""
     if not db:
         db = get_db_session()
     

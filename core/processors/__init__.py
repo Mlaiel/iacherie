@@ -168,6 +168,7 @@ except ImportError as e:
 
 class ProcessorType(str, Enum):
     """Types of content processors available"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -187,6 +188,7 @@ class ProcessorType(str, Enum):
 
 class ProcessingPriority(str, Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -272,7 +274,8 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResponse:
-    """Response from content processing"""
+    """
+Response from content processing"""
     request_id: str
     success: bool
     processor_type: ProcessorType
@@ -307,7 +310,8 @@ class ProcessorRegistry:
         self._initialized: bool = False
         
     def configure(self, config: Union[ProcessorConfig, Dict[str, Any]]) -> None:
-        """Configure the processor registry"""
+        """
+Configure the processor registry"""
         if isinstance(config, dict):
             self._config = ProcessorConfig(**config)
         else:
@@ -502,7 +506,8 @@ class ProcessorRegistry:
         return list(self._processors.keys())
     
     def is_initialized(self) -> bool:
-        """Check if registry is initialized"""
+        """
+Check if registry is initialized"""
         return self._initialized
     
     async def process_content(self, request: ProcessingRequest) -> ProcessingResponse:
@@ -665,22 +670,26 @@ async def initialize_processors(
 
 
 def get_processor(processor_type: ProcessorType) -> Any:
-    """Get an initialized processor"""
+    """
+Get an initialized processor"""
     return processor_registry.get_processor(processor_type)
 
 
 def list_processors() -> List[ProcessorType]:
-    """List all initialized processors"""
+    """
+List all initialized processors"""
     return processor_registry.list_processors()
 
 
 async def process_content(request: ProcessingRequest) -> ProcessingResponse:
-    """Process content using the appropriate processor"""
+    """
+Process content using the appropriate processor"""
     return await processor_registry.process_content(request)
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on all processors"""
+    """
+Perform health check on all processors"""
     return await processor_registry.health_check()
 
 

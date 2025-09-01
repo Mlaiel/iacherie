@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -23,7 +24,8 @@ from urllib.parse import urlparse
 
 @dataclass
 class ProxyInfo:
-    """Proxy server information."""
+    """
+Proxy server information."""
     host: str
     port: int
     protocol: str = 'http'  # http, https, socks4, socks5
@@ -66,17 +68,20 @@ class ProxyScraper:
         }
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
             
     async def _initialize_session(self):
-        """Initialize HTTP session."""
+        """
+Initialize HTTP session."""
         connector = aiohttp.TCPConnector(
             limit=50,
             limit_per_host=10,
@@ -89,7 +94,8 @@ class ProxyScraper:
         )
         
     def add_proxy(self, proxy: ProxyInfo):
-        """Add proxy to pool."""
+        """
+Add proxy to pool."""
         self.proxy_pool.append(proxy)
         self.stats['total_proxies'] = len(self.proxy_pool)
         self.logger.info(f"Added proxy: {proxy.host}:{proxy.port}")
@@ -191,7 +197,8 @@ class ProxyScraper:
         return best_proxy
         
     def get_random_proxy(self) -> Optional[ProxyInfo]:
-        """Get random working proxy."""
+        """
+Get random working proxy."""
         working_proxies = [p for p in self.proxy_pool if p.is_working]
         
         if not working_proxies:
@@ -200,7 +207,8 @@ class ProxyScraper:
         return random.choice(working_proxies)
         
     def _format_proxy_url(self, proxy: ProxyInfo) -> str:
-        """Format proxy URL for aiohttp."""
+        """
+Format proxy URL for aiohttp."""
         url = f"{proxy.protocol}://"
         
         if proxy.username and proxy.password:
@@ -274,6 +282,7 @@ class ProxyScraper:
         }
         
     def export_working_proxies(self) -> List[str]:
-        """Export working proxies as string list."""
+        """
+Export working proxies as string list."""
         working_proxies = [p for p in self.proxy_pool if p.is_working]
         return [f"{p.host}:{p.port}" for p in working_proxies]

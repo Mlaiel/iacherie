@@ -19,6 +19,7 @@ Integration Test for AI Agents Business Logic Core
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -37,17 +38,20 @@ from simple_agents import BaseAgent, AgentStatus
 
 # Create a simple workflow orchestrator for testing
 class BusinessWorkflowOrchestrator:
-    """Simple workflow orchestrator for testing"""
+    """
+Simple workflow orchestrator for testing"""
     
     def __init__(self):
         self.business_core = BusinessLogicCore()
         
     async def initialize(self):
-        """Initialize the orchestrator"""
+        """
+Initialize the orchestrator"""
         return await self.business_core.initialize()
         
     async def process_content(self, content_upload):
-        """Process content through workflow"""
+        """
+Process content through workflow"""
         return await self.business_core.process_creator_workflow(content_upload)
 
 # Define WorkflowConfig for compatibility
@@ -58,18 +62,21 @@ class WorkflowConfig:
 
 
 class TestBusinessLogicCore:
-    """Integration tests for the complete business logic core"""
+    """
+Integration tests for the complete business logic core"""
     
     @pytest.fixture
     async def workflow_orchestrator(self):
-        """Create and initialize workflow orchestrator"""
+        """
+Create and initialize workflow orchestrator"""
         orchestrator = BusinessWorkflowOrchestrator()
         await orchestrator.initialize()
         return orchestrator
     
     @pytest.fixture
     def sample_content_upload(self):
-        """Create sample content upload for testing"""
+        """
+Create sample content upload for testing"""
         # Create a temporary test file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("This is a test content file for AI processing.")
@@ -147,7 +154,8 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_individual_agent_processing(self, workflow_orchestrator, sample_content_upload):
-        """Test individual agent processing capabilities"""
+        """
+Test individual agent processing capabilities"""
         
         # Test content validation
         validation_result = await workflow_orchestrator._validate_content(sample_content_upload)

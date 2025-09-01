@@ -6,6 +6,7 @@ analysis and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -18,7 +19,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class KeywordDifficulty(Enum):
-    """Keyword difficulty levels"""
+    """
+Keyword difficulty levels"""
+
     VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
@@ -27,6 +30,7 @@ class KeywordDifficulty(Enum):
 
 class KeywordType(Enum):
     """Types of keywords"""
+
     SHORT_TAIL = "short_tail"
     LONG_TAIL = "long_tail"
     BRANDED = "branded"
@@ -37,6 +41,7 @@ class KeywordType(Enum):
 
 class SearchIntent(Enum):
     """Search intent categories"""
+
     INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     TRANSACTIONAL = "transactional"
@@ -73,7 +78,8 @@ class KeywordResult:
 
 @dataclass
 class KeywordData:
-    """Individual keyword data"""
+    """
+Individual keyword data"""
     keyword: str
     search_volume: int
     keyword_difficulty: KeywordDifficulty
@@ -270,7 +276,8 @@ class KeywordEngine:
             return KeywordType.LONG_TAIL.value
 
     def _classify_search_intent(self, keyword: str) -> str:
-        """Classify search intent based on keyword patterns"""
+        """
+Classify search intent based on keyword patterns"""
         keyword_lower = keyword.lower()
         
         # Transactional intent indicators
@@ -372,15 +379,18 @@ class KeywordEngine:
         return job.status if job else None
 
     async def get_job_result(self, job_id: str) -> Optional[KeywordResult]:
-        """Get the result of a completed keyword research job"""
+        """
+Get the result of a completed keyword research job"""
         return self.job_results.get(job_id)
 
     def get_active_jobs(self) -> Dict[str, KeywordJob]:
-        """Get all active jobs"""
+        """
+Get all active jobs"""
         return self.active_jobs.copy()
 
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a running job"""
+        """
+Cancel a running job"""
         job = self.active_jobs.get(job_id)
         if job and job.status == "running":
             job.status = "cancelled"

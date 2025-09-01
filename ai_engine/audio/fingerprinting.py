@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive audio fingerprinting capabilities for audio identification and matching.
 """
+
 import logging
 import numpy as np
 import time
@@ -17,7 +18,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of audio fingerprints"""
+    """
+Types of audio fingerprints"""
+
     SPECTRAL_HASH = "spectral_hash"
     CHROMA_VECTOR = "chroma_vector"
     MFCC_FEATURES = "mfcc_features"
@@ -27,6 +30,7 @@ class FingerprintType(Enum):
 
 class MatchQuality(Enum):
     """Quality levels for fingerprint matching"""
+
     EXACT = "exact"
     HIGH = "high"
     MEDIUM = "medium"
@@ -47,7 +51,8 @@ class AudioFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""
+    """
+Fingerprint match result"""
     query_fingerprint: AudioFingerprint
     matched_fingerprint: AudioFingerprint
     similarity_score: float  # 0.0 to 1.0
@@ -58,13 +63,15 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintDatabase:
-    """Simple fingerprint database"""
+    """
+Simple fingerprint database"""
     fingerprints: Dict[str, AudioFingerprint] = field(default_factory=dict)
     index_by_type: Dict[FingerprintType, List[str]] = field(default_factory=dict)
     total_fingerprints: int = 0
 
 class AudioFingerprinter:
-    """Advanced audio fingerprinting engine"""
+    """
+Advanced audio fingerprinting engine"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -316,7 +323,8 @@ class AudioFingerprinter:
         return filters
     
     def _generate_peak_landmarks(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate peak landmark fingerprint"""
+        """
+Generate peak landmark fingerprint"""
         try:
             # Spectral peak detection
             fft_data = np.fft.fft(audio_data[:self.frame_size * 4])
@@ -612,7 +620,8 @@ class AudioFingerprinter:
         return 0.0
     
     def _calculate_vector_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate similarity between vector fingerprints"""
+        """
+Calculate similarity between vector fingerprints"""
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -632,7 +641,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_landmark_similarity(self, landmarks1: Dict, landmarks2: Dict) -> float:
-        """Calculate similarity between landmark fingerprints"""
+        """
+Calculate similarity between landmark fingerprints"""
         try:
             peaks1 = landmarks1.get('landmarks', [])
             peaks2 = landmarks2.get('landmarks', [])
@@ -660,7 +670,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_tempo_similarity(self, tempo1: Dict, tempo2: Dict) -> float:
-        """Calculate similarity between tempo fingerprints"""
+        """
+Calculate similarity between tempo fingerprints"""
         try:
             t1 = tempo1.get('tempo', 120)
             t2 = tempo2.get('tempo', 120)
@@ -682,7 +693,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_harmonic_similarity(self, harmonic1: Dict, harmonic2: Dict) -> float:
-        """Calculate similarity between harmonic fingerprints"""
+        """
+Calculate similarity between harmonic fingerprints"""
         try:
             # Fundamental frequency similarity
             f1 = harmonic1.get('fundamental_frequency', 440)
@@ -713,7 +725,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _determine_match_quality(self, similarity_score: float) -> MatchQuality:
-        """Determine match quality from similarity score"""
+        """
+Determine match quality from similarity score"""
         if similarity_score >= self.match_thresholds[MatchQuality.EXACT]:
             return MatchQuality.EXACT
         elif similarity_score >= self.match_thresholds[MatchQuality.HIGH]:
@@ -726,7 +739,8 @@ class AudioFingerprinter:
             return MatchQuality.NO_MATCH
     
     def get_database_stats(self) -> Dict[str, Any]:
-        """Get database statistics"""
+        """
+Get database statistics"""
         return {
             'total_fingerprints': self.database.total_fingerprints,
             'fingerprints_by_type': {
@@ -737,7 +751,8 @@ class AudioFingerprinter:
         }
     
     def clear_database(self) -> bool:
-        """Clear fingerprint database"""
+        """
+Clear fingerprint database"""
         try:
             self.database = FingerprintDatabase()
             self.logger.info("Fingerprint database cleared")

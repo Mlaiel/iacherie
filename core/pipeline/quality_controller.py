@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Quality Definitions → Automated Testing → Performance Analysis → Compliance Verification → Optimization Recommendations
 """
+
 import asyncio
 import logging
 import time
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityLevel(Enum):
-    """Quality levels"""
+    """
+Quality levels"""
+
     POOR = 1
     BELOW_AVERAGE = 2
     AVERAGE = 3
@@ -37,7 +40,9 @@ class QualityLevel(Enum):
 
 
 class QualityMetric(Enum):
-    """Quality metrics"""
+    """
+Quality metrics"""
+
     ACCURACY = "accuracy"
     PERFORMANCE = "performance"
     RELIABILITY = "reliability"
@@ -61,6 +66,7 @@ class QualityMetric(Enum):
 
 class QualityCheckType(Enum):
     """Quality check types"""
+
     FUNCTIONAL = "functional"
     PERFORMANCE = "performance"
     SECURITY = "security"
@@ -82,6 +88,7 @@ class QualityCheckType(Enum):
 
 class QualityGateStatus(Enum):
     """Quality gate status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
@@ -95,6 +102,7 @@ class QualityGateStatus(Enum):
 
 class QualityAction(Enum):
     """Quality actions"""
+
     CONTINUE = "continue"
     BLOCK = "block"
     WARNING = "warning"
@@ -168,7 +176,8 @@ class QualityCheckDefinition:
 
 @dataclass
 class QualityCheckResult:
-    """Quality check result"""
+    """
+Quality check result"""
     check_id: str = ""
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     check_name: str = ""
@@ -240,7 +249,8 @@ class QualityGateDefinition:
 
 @dataclass
 class QualityMetrics:
-    """Quality metrics collection"""
+    """
+Quality metrics collection"""
     total_checks: int = 0
     passed_checks: int = 0
     failed_checks: int = 0
@@ -256,37 +266,44 @@ class QualityMetrics:
     compliance_score: float = 0.0
     
     def calculate_success_rate(self) -> float:
-        """Calculate success rate"""
+        """
+Calculate success rate"""
         if self.total_checks == 0:
             return 0.0
         return (self.passed_checks / self.total_checks) * 100
     
     def calculate_failure_rate(self) -> float:
-        """Calculate failure rate"""
+        """
+Calculate failure rate"""
         if self.total_checks == 0:
             return 0.0
         return (self.failed_checks / self.total_checks) * 100
 
 
 class QualityChecker(ABC):
-    """Abstract quality checker"""
+    """
+Abstract quality checker"""
     
     @abstractmethod
     async def check(self, context: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Execute quality check"""
+        """
+Execute quality check"""
         pass
     
     @abstractmethod
     def supports_metric(self, metric: QualityMetric) -> bool:
-        """Check if checker supports metric"""
+        """
+Check if checker supports metric"""
         pass
 
 
 class AccuracyChecker(QualityChecker):
-    """Accuracy quality checker"""
+    """
+Accuracy quality checker"""
     
     async def check(self, context: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check accuracy"""
+        """
+Check accuracy"""
         start_time = time.time()
         
         # Simulate accuracy check
@@ -322,7 +339,8 @@ class PerformanceChecker(QualityChecker):
     """Performance quality checker"""
     
     async def check(self, context: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check performance"""
+        """
+Check performance"""
         start_time = time.time()
         
         # Simulate performance check
@@ -371,7 +389,8 @@ class PerformanceChecker(QualityChecker):
         return (response_score * 0.3 + throughput_score * 0.3 + cpu_score * 0.2 + memory_score * 0.2)
     
     def _get_quality_level(self, score: float) -> QualityLevel:
-        """Get quality level from score"""
+        """
+Get quality level from score"""
         if score >= 0.95:
             return QualityLevel.OUTSTANDING
         elif score >= 0.85:
@@ -384,7 +403,8 @@ class PerformanceChecker(QualityChecker):
             return QualityLevel.POOR
     
     def _get_performance_recommendations(self, score: float, cpu_usage: float, memory_usage: float) -> List[str]:
-        """Get performance improvement recommendations"""
+        """
+Get performance improvement recommendations"""
         recommendations = []
         
         if score < 0.8:
@@ -405,7 +425,8 @@ class SecurityChecker(QualityChecker):
     """Security quality checker"""
     
     async def check(self, context: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check security"""
+        """
+Check security"""
         start_time = time.time()
         
         # Simulate security check
@@ -468,7 +489,8 @@ class SecurityChecker(QualityChecker):
             return QualityLevel.POOR
     
     def _get_security_remediation(self, issues: List[str]) -> List[str]:
-        """Get security remediation steps"""
+        """
+Get security remediation steps"""
         remediation = []
         
         for issue in issues:
@@ -491,7 +513,8 @@ class ComplianceChecker(QualityChecker):
     """Compliance quality checker"""
     
     async def check(self, context: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check compliance"""
+        """
+Check compliance"""
         start_time = time.time()
         
         # Simulate compliance check
@@ -545,7 +568,8 @@ class ComplianceChecker(QualityChecker):
 
 
 class QualityGate:
-    """Quality gate implementation"""
+    """
+Quality gate implementation"""
     
     def __init__(self, definition: QualityGateDefinition):
         self.definition = definition
@@ -565,7 +589,8 @@ class QualityGate:
         self.register_checker(QualityMetric.COMPLIANCE, ComplianceChecker())
     
     def register_checker(self, metric: QualityMetric, checker: QualityChecker):
-        """Register quality checker"""
+        """
+Register quality checker"""
         self.checkers[metric] = checker
         self.logger.info(f"Registered checker for metric: {metric.value}")
     
@@ -719,7 +744,8 @@ class QualityGate:
 
 
 class QualityValidator:
-    """Quality validation system"""
+    """
+Quality validation system"""
     
     def __init__(self):
         self.validation_rules: Dict[str, Callable] = {}
@@ -793,7 +819,8 @@ class ThresholdManager:
         })
     
     def calculate_adaptive_threshold(self, metric_name: str, percentile: float = 0.95) -> Optional[QualityThreshold]:
-        """Calculate adaptive threshold based on historical data"""
+        """
+Calculate adaptive threshold based on historical data"""
         data = self.historical_data.get(metric_name, [])
         if len(data) < 10:
             return None
@@ -938,7 +965,8 @@ class QualityReporter:
         return metrics
     
     def _generate_recommendations(self, results: List[QualityCheckResult]) -> List[str]:
-        """Generate recommendations from results"""
+        """
+Generate recommendations from results"""
         recommendations = []
         
         for result in results:
@@ -1094,7 +1122,8 @@ class QualityController:
             )
     
     def get_quality_report(self, gate_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get quality report"""
+        """
+Get quality report"""
         if gate_id and gate_id in self.quality_gates:
             gate = self.quality_gates[gate_id]
             return self.reporter.generate_report(gate.results)
@@ -1107,11 +1136,13 @@ class QualityController:
             return self.reporter.generate_report(all_results)
     
     def get_quality_metrics(self) -> QualityMetrics:
-        """Get overall quality metrics"""
+        """
+Get overall quality metrics"""
         return self.overall_metrics
     
     def get_quality_trends(self, window_hours: int = 24) -> Dict[str, Any]:
-        """Get quality trends"""
+        """
+Get quality trends"""
         cutoff_time = datetime.now() - timedelta(hours=window_hours)
         recent_history = [
             entry for entry in self.quality_history 
@@ -1281,7 +1312,8 @@ class QualityChecker:
     """Base quality checker interface"""
     
     async def check(self, data: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Execute quality check"""
+        """
+Execute quality check"""
         start_time = time.time()
         result = QualityCheckResult(
             check_id=f"base_quality_{uuid.uuid4().hex[:8]}",
@@ -1370,7 +1402,8 @@ class QualityChecker:
             return 0.5  # Default medium score if calculation fails
     
     def _check_data_completeness(self, data: Dict[str, Any]) -> float:
-        """Check how complete the data is"""
+        """
+Check how complete the data is"""
         if not data:
             return 0.0
         
@@ -1410,10 +1443,12 @@ class QualityChecker:
 
 
 class ContentQualityChecker(QualityChecker):
-    """Content quality checker"""
+    """
+Content quality checker"""
     
     async def check(self, data: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check content quality"""
+        """
+Check content quality"""
         start_time = time.time()
         result = QualityCheckResult(
             check_id="content_quality",
@@ -1477,7 +1512,8 @@ class PerformanceQualityChecker(QualityChecker):
     """Performance quality checker"""
     
     async def check(self, data: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check performance quality"""
+        """
+Check performance quality"""
         start_time = time.time()
         result = QualityCheckResult(
             check_id="performance_quality",
@@ -1540,7 +1576,8 @@ class SecurityQualityChecker(QualityChecker):
     """Security quality checker"""
     
     async def check(self, data: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check security quality"""
+        """
+Check security quality"""
         start_time = time.time()
         result = QualityCheckResult(
             check_id="security_quality",
@@ -1604,7 +1641,8 @@ class ComplianceQualityChecker(QualityChecker):
     """Compliance quality checker"""
     
     async def check(self, data: Dict[str, Any], config: Dict[str, Any]) -> QualityCheckResult:
-        """Check compliance quality"""
+        """
+Check compliance quality"""
         start_time = time.time()
         result = QualityCheckResult(
             check_id="compliance_quality",
@@ -2151,7 +2189,8 @@ class QualityController:
         context: Dict[str, Any],
         result: QualityGateResult
     ):
-        """Execute quality checks sequentially"""
+        """
+Execute quality checks sequentially"""
         for check in gate.checks:
             try:
                 check_result = await self._execute_single_check(check, data, context)
@@ -2334,7 +2373,8 @@ class QualityController:
         return await self.quality_analyzer.analyze_quality_trends(self.gate_results_history)
     
     async def optimize_quality(self, target_score: float = 0.9) -> Dict[str, Any]:
-        """Generate quality optimization recommendations"""
+        """
+Generate quality optimization recommendations"""
         if not self.gate_results_history:
             return {"message": "No quality data available for optimization"}
         

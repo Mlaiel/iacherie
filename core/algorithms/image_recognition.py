@@ -16,6 +16,7 @@ Professional image recognition engine for visual content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import cv2
 import numpy as np
 import torch
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFeatures:
-    """Comprehensive image feature representation"""
+    """
+Comprehensive image feature representation"""
     visual_features: Dict[str, np.ndarray]
     semantic_features: Dict[str, Any]
     quality_metrics: Dict[str, float]
@@ -47,7 +49,8 @@ class ImageFeatures:
 
 @dataclass
 class ObjectDetection:
-    """Object detection results"""
+    """
+Object detection results"""
     class_name: str
     confidence: float
     bbox: Tuple[int, int, int, int]
@@ -55,7 +58,8 @@ class ObjectDetection:
 
 @dataclass
 class FaceAnalysis:
-    """Face analysis results"""
+    """
+Face analysis results"""
     face_locations: List[Tuple[int, int, int, int]]
     face_encodings: List[np.ndarray]
     face_landmarks: List[Dict[str, List[Tuple[int, int]]]]
@@ -63,7 +67,8 @@ class FaceAnalysis:
     age_estimates: List[int]
     gender_predictions: List[str]
 class ObjectDetection:
-    """Object detection result"""
+    """
+Object detection result"""
     class_name: str
     confidence: float
     bbox: Tuple[int, int, int, int]
@@ -71,7 +76,8 @@ class ObjectDetection:
 
 @dataclass
 class FaceDetection:
-    """Face detection result"""
+    """
+Face detection result"""
     bbox: Tuple[int, int, int, int]
     landmarks: np.ndarray
     encoding: np.ndarray
@@ -323,7 +329,8 @@ class ImageRecognitionEngine:
         return features
     
     def _extract_color_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract color-based features"""
+        """
+Extract color-based features"""
         features = {}
         
         # RGB histogram
@@ -348,7 +355,8 @@ class ImageRecognitionEngine:
         return features
     
     def _extract_texture_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract texture-based features"""
+        """
+Extract texture-based features"""
         features = {}
         
         # Convert to grayscale for texture analysis
@@ -371,7 +379,8 @@ class ImageRecognitionEngine:
         return features
     
     def _extract_shape_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract shape-based features"""
+        """
+Extract shape-based features"""
         features = {}
         
         # Convert to grayscale and binary
@@ -412,7 +421,8 @@ class ImageRecognitionEngine:
         return features
     
     def _extract_edge_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract edge-based features"""
+        """
+Extract edge-based features"""
         features = {}
         
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -441,7 +451,8 @@ class ImageRecognitionEngine:
         return features
     
     def _extract_sift_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract SIFT features"""
+        """
+Extract SIFT features"""
         features = {}
         
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -460,7 +471,8 @@ class ImageRecognitionEngine:
         return features
     
     def _calculate_color_moments(self, image: np.ndarray) -> np.ndarray:
-        """Calculate color moments (mean, std, skewness)"""
+        """
+Calculate color moments (mean, std, skewness)"""
         moments = []
         
         for channel in range(image.shape[2]):
@@ -480,7 +492,8 @@ class ImageRecognitionEngine:
         return np.array(moments)
     
     def _extract_dominant_colors(self, image: np.ndarray, n_colors: int = 5) -> np.ndarray:
-        """Extract dominant colors using K-means clustering"""
+        """
+Extract dominant colors using K-means clustering"""
         # Reshape image to list of pixels
         pixels = image.reshape(-1, 3)
         
@@ -494,7 +507,8 @@ class ImageRecognitionEngine:
         return dominant_colors.flatten()
     
     def _extract_gabor_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract Gabor filter responses"""
+        """
+Extract Gabor filter responses"""
         features = []
         
         # Multiple orientations and frequencies
@@ -516,7 +530,8 @@ class ImageRecognitionEngine:
         return np.array(features)
     
     def _extract_haralick_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract Haralick texture features"""
+        """
+Extract Haralick texture features"""
         try:
             from skimage.feature import greycomatrix, greycoprops
             
@@ -542,7 +557,8 @@ class ImageRecognitionEngine:
             return np.zeros(48)  # 4 properties × 4 angles × 3 distances
     
     def _extract_wavelet_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract wavelet transform features"""
+        """
+Extract wavelet transform features"""
         try:
             import pywt
             
@@ -574,19 +590,22 @@ class ImageRecognitionEngine:
             return np.zeros(30)  # Estimated number of features
     
     def _calculate_aspect_ratio(self, contour: np.ndarray) -> float:
-        """Calculate aspect ratio of contour bounding box"""
+        """
+Calculate aspect ratio of contour bounding box"""
         x, y, w, h = cv2.boundingRect(contour)
         return w / h if h > 0 else 1.0
     
     def _calculate_extent(self, contour: np.ndarray, image_shape: Tuple[int, ...]) -> float:
-        """Calculate extent (contour area / bounding box area)"""
+        """
+Calculate extent (contour area / bounding box area)"""
         area = cv2.contourArea(contour)
         x, y, w, h = cv2.boundingRect(contour)
         bbox_area = w * h
         return area / bbox_area if bbox_area > 0 else 0.0
     
     def _calculate_solidity(self, contour: np.ndarray) -> float:
-        """Calculate solidity (contour area / convex hull area)"""
+        """
+Calculate solidity (contour area / convex hull area)"""
         area = cv2.contourArea(contour)
         hull = cv2.convexHull(contour)
         hull_area = cv2.contourArea(hull)
@@ -594,7 +613,8 @@ class ImageRecognitionEngine:
     
     def _extract_semantic_features(self, image: np.ndarray, 
                                   config: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract semantic features using AI models"""
+        """
+Extract semantic features using AI models"""
         features = {}
         
         # CLIP embeddings
@@ -612,7 +632,8 @@ class ImageRecognitionEngine:
         return features
     
     def _extract_clip_embedding(self, image: np.ndarray) -> np.ndarray:
-        """Extract CLIP embedding for image"""
+        """
+Extract CLIP embedding for image"""
         try:
             pil_image = Image.fromarray(image)
             inputs = self.clip_processor(images=pil_image, return_tensors="pt")
@@ -765,7 +786,8 @@ class ImageRecognitionEngine:
         return quality_metrics
     
     def _assess_detailed_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Assess detailed image quality metrics"""
+        """
+Assess detailed image quality metrics"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         metrics = {}
@@ -789,7 +811,8 @@ class ImageRecognitionEngine:
         return metrics
     
     def _assess_aesthetic_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Assess aesthetic quality of image"""
+        """
+Assess aesthetic quality of image"""
         metrics = {}
         
         # Rule of thirds
@@ -804,7 +827,8 @@ class ImageRecognitionEngine:
         return metrics
     
     def _assess_technical_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Assess technical quality metrics"""
+        """
+Assess technical quality metrics"""
         metrics = {}
         
         # Exposure assessment
@@ -820,14 +844,16 @@ class ImageRecognitionEngine:
         return metrics
     
     def _estimate_noise_level(self, gray_image: np.ndarray) -> float:
-        """Estimate noise level in image"""
+        """
+Estimate noise level in image"""
         # Use Laplacian to estimate noise
         laplacian = cv2.Laplacian(gray_image, cv2.CV_64F)
         noise_level = np.var(laplacian) / 10000.0  # Normalize
         return min(noise_level, 1.0)
     
     def _calculate_rule_of_thirds_score(self, image: np.ndarray) -> float:
-        """Calculate how well image follows rule of thirds"""
+        """
+Calculate how well image follows rule of thirds"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         height, width = gray.shape
         
@@ -851,7 +877,8 @@ class ImageRecognitionEngine:
         return min(score / (np.mean(gradient_magnitude) * 4 + 1e-10), 1.0)
     
     def _calculate_color_harmony(self, image: np.ndarray) -> float:
-        """Calculate color harmony score"""
+        """
+Calculate color harmony score"""
         # Convert to HSV for color analysis
         hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         hue = hsv[:, :, 0]
@@ -878,7 +905,8 @@ class ImageRecognitionEngine:
         return min(harmony_score, 1.0)
     
     def _calculate_composition_balance(self, image: np.ndarray) -> float:
-        """Calculate composition balance score"""
+        """
+Calculate composition balance score"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         height, width = gray.shape
         
@@ -901,7 +929,8 @@ class ImageRecognitionEngine:
         return max(0.0, min(balance_score, 1.0))
     
     def _assess_exposure(self, image: np.ndarray) -> float:
-        """Assess exposure quality"""
+        """
+Assess exposure quality"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Calculate histogram
@@ -923,7 +952,8 @@ class ImageRecognitionEngine:
         return max(0.0, min(exposure_score, 1.0))
     
     def _assess_white_balance(self, image: np.ndarray) -> float:
-        """Assess white balance quality"""
+        """
+Assess white balance quality"""
         # Calculate average of each color channel
         avg_r = np.mean(image[:, :, 0])
         avg_g = np.mean(image[:, :, 1])
@@ -938,7 +968,8 @@ class ImageRecognitionEngine:
         return max(0.0, white_balance_score)
     
     def _generate_fingerprints(self, image: np.ndarray) -> Dict[str, str]:
-        """Generate various image fingerprints"""
+        """
+Generate various image fingerprints"""
         pil_image = Image.fromarray(image)
         
         fingerprints = {
@@ -951,7 +982,8 @@ class ImageRecognitionEngine:
         return fingerprints
     
     def _generate_feature_fingerprint(self, image: np.ndarray) -> np.ndarray:
-        """Generate feature-based fingerprint"""
+        """
+Generate feature-based fingerprint"""
         # Resize to standard size
         resized = cv2.resize(image, (64, 64))
         gray = cv2.cvtColor(resized, cv2.COLOR_RGB2GRAY)
@@ -967,7 +999,8 @@ class ImageRecognitionEngine:
         return fingerprint.flatten()
     
     def _extract_text(self, image: np.ndarray, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract text from image using OCR"""
+        """
+Extract text from image using OCR"""
         try:
             if not config.get('extract_text', True):
                 return {'text': '', 'confidence': 0.0}
@@ -1007,7 +1040,8 @@ class ImageRecognitionEngine:
         return style_analysis
     
     def _analyze_color_palette(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze color palette characteristics"""
+        """
+Analyze color palette characteristics"""
         # Extract dominant colors
         dominant_colors = self._extract_dominant_colors(image, n_colors=8)
         
@@ -1027,7 +1061,8 @@ class ImageRecognitionEngine:
         }
     
     def _analyze_composition_style(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyze composition style characteristics"""
+        """
+Analyze composition style characteristics"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Symmetry analysis
@@ -1046,7 +1081,8 @@ class ImageRecognitionEngine:
         }
     
     def _classify_artistic_movement(self, image: np.ndarray) -> Dict[str, float]:
-        """Classify artistic movement/style using CLIP"""
+        """
+Classify artistic movement/style using CLIP"""
         try:
             pil_image = Image.fromarray(image)
             
@@ -1097,7 +1133,8 @@ class ImageRecognitionEngine:
         return min(complexity, 1.0)
     
     def _calculate_symmetry(self, gray_image: np.ndarray) -> float:
-        """Calculate symmetry score of image"""
+        """
+Calculate symmetry score of image"""
         height, width = gray_image.shape
         
         # Vertical symmetry
@@ -1125,7 +1162,8 @@ class ImageRecognitionEngine:
         return max(vertical_symmetry, horizontal_symmetry)
     
     def _detect_leading_lines(self, gray_image: np.ndarray) -> float:
-        """Detect leading lines in image"""
+        """
+Detect leading lines in image"""
         edges = cv2.Canny(gray_image, 50, 150)
         
         # Use Hough line transform
@@ -1141,7 +1179,8 @@ class ImageRecognitionEngine:
         return leading_lines_score
     
     def _estimate_depth_of_field(self, gray_image: np.ndarray) -> float:
-        """Estimate depth of field effect"""
+        """
+Estimate depth of field effect"""
         # Calculate local variance to detect focus areas
         kernel = np.ones((5, 5)) / 25
         mean_image = cv2.filter2D(gray_image.astype(np.float32), -1, kernel)
@@ -1164,7 +1203,8 @@ class ImageRecognitionEngine:
     
     def _extract_image_metadata(self, image: np.ndarray, 
                                image_data: Union[str, np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Extract image metadata"""
+        """
+Extract image metadata"""
         metadata = {
             'dimensions': image.shape[:2],
             'channels': image.shape[2] if len(image.shape) > 2 else 1,

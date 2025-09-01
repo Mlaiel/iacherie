@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import hashlib
 import logging
@@ -568,7 +569,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_histogram(self, data1: Dict, data2: Dict) -> float:
-        """Compare histogram features"""
+        """
+Compare histogram features"""
         try:
             hist1 = data1.get('average_histogram', {})
             hist2 = data2.get('average_histogram', {})
@@ -593,7 +595,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_optical_flow(self, data1: Dict, data2: Dict) -> float:
-        """Compare optical flow features"""
+        """
+Compare optical flow features"""
         try:
             mag1 = data1.get('average_magnitude', 0)
             mag2 = data2.get('average_magnitude', 0)
@@ -614,7 +617,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_edge_detection(self, data1: Dict, data2: Dict) -> float:
-        """Compare edge detection features"""
+        """
+Compare edge detection features"""
         try:
             density1 = data1.get('average_edge_density', 0)
             density2 = data2.get('average_edge_density', 0)

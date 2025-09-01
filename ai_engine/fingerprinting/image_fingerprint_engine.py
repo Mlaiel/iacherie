@@ -4,6 +4,7 @@ Image fingerprinting with CLIP embeddings, perceptual hashing, and SIFT features
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import numpy as np
 import hashlib
@@ -34,7 +35,8 @@ from ...config import settings
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
+    """
+Image fingerprint data structure"""
     file_id: str
     clip_embedding: List[float]
     perceptual_hashes: Dict[str, str]
@@ -372,7 +374,8 @@ class ImageFingerprintEngine:
         return np.mean(((image - mean) / std) ** 3)
     
     def _calculate_kurtosis(self, image: np.ndarray) -> float:
-        """Calculate kurtosis of pixel intensity distribution"""
+        """
+Calculate kurtosis of pixel intensity distribution"""
         mean = np.mean(image)
         std = np.std(image)
         if std == 0:
@@ -380,14 +383,16 @@ class ImageFingerprintEngine:
         return np.mean(((image - mean) / std) ** 4) - 3
     
     def _calculate_entropy(self, image: np.ndarray) -> float:
-        """Calculate entropy of pixel intensity distribution"""
+        """
+Calculate entropy of pixel intensity distribution"""
         hist, _ = np.histogram(image, bins=256, range=(0, 256))
         hist = hist / hist.sum()
         hist = hist[hist > 0]  # Remove zeros
         return -np.sum(hist * np.log2(hist))
     
     async def _extract_edge_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Extract edge detection features"""
+        """
+Extract edge detection features"""
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             

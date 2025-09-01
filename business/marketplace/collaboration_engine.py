@@ -14,6 +14,7 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaborations available"""
+    """
+Types of collaborations available"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     SKILL_EXCHANGE = "skill_exchange"
@@ -38,6 +41,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status states"""
+
     PROPOSED = "proposed"
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -112,7 +116,8 @@ class CollaborationEngine:
         }
     
     async def find_opportunities(self, content_metadata) -> List[CollaborationOpportunity]:
-        """Find collaboration opportunities for given content"""
+        """
+Find collaboration opportunities for given content"""
         try:
             opportunities = []
             
@@ -158,7 +163,8 @@ class CollaborationEngine:
         ]
     
     async def _generate_opportunity(self, content_metadata, match: Dict[str, Any]) -> CollaborationOpportunity:
-        """Generate specific collaboration opportunity from match data"""
+        """
+Generate specific collaboration opportunity from match data"""
         collaboration_type = match['collaboration_types'][0]  # Primary type
         template = self.collaboration_templates.get(collaboration_type, {})
         
@@ -214,7 +220,8 @@ class CollaborationEngine:
         }
     
     async def _generate_benefits(self, match: Dict[str, Any], collab_type: CollaborationType) -> Dict[str, Any]:
-        """Generate collaboration benefits"""
+        """
+Generate collaboration benefits"""
         return {
             'audience_expansion': f"+{int(match.get('audience_overlap', 0.2) * 10000)} potential new followers",
             'skill_development': match.get('complementary_skills', []),
@@ -244,7 +251,8 @@ class CollaborationEngine:
         ])
     
     async def _generate_ip_terms(self) -> Dict[str, Any]:
-        """Generate intellectual property terms"""
+        """
+Generate intellectual property terms"""
         return {
             'content_ownership': 'shared',
             'usage_rights': 'perpetual_non_exclusive',
@@ -256,7 +264,8 @@ class CollaborationEngine:
         }
     
     async def find_matches(self, creator_id: str, criteria: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Find collaboration matches for specific creator with criteria"""
+        """
+Find collaboration matches for specific creator with criteria"""
         try:
             # Get creator profile and preferences
             creator_profile = await self._get_creator_profile(creator_id)
@@ -297,7 +306,8 @@ class CollaborationEngine:
         }
     
     async def _find_compatible_creators(self, creator_profile: Dict[str, Any], criteria: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find creators compatible with given profile and criteria"""
+        """
+Find creators compatible with given profile and criteria"""
         # This would implement complex database queries with ML scoring
         return [
             {
@@ -311,7 +321,8 @@ class CollaborationEngine:
         ]
     
     async def _calculate_match_score(self, creator1: Dict[str, Any], creator2: Dict[str, Any]) -> float:
-        """Calculate compatibility score between two creators"""
+        """
+Calculate compatibility score between two creators"""
         scores = {}
         
         # Content compatibility
@@ -344,14 +355,16 @@ class CollaborationEngine:
         return min(total_score, 1.0)
     
     def _calculate_distance(self, location1: Dict[str, float], location2: Dict[str, float]) -> float:
-        """Calculate distance between two geographical points"""
+        """
+Calculate distance between two geographical points"""
         # Simplified distance calculation (would use proper geospatial algorithms)
         lat_diff = location1['lat'] - location2['lat']
         lng_diff = location1['lng'] - location2['lng']
         return ((lat_diff ** 2 + lng_diff ** 2) ** 0.5) * 111.32  # Rough km conversion
     
     async def _create_match_opportunity(self, creator_id: str, collaborator: Dict[str, Any], match_score: float, criteria: Dict[str, Any]) -> CollaborationOpportunity:
-        """Create opportunity from match data"""
+        """
+Create opportunity from match data"""
         return CollaborationOpportunity(
             opportunity_id=str(uuid.uuid4()),
             title=f"Collaboration with {collaborator['creator_id']}",
@@ -391,7 +404,8 @@ class CollaborationEngine:
         ]
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for collaboration engine"""
+        """
+Health check for collaboration engine"""
         return {
             "status": "healthy",
             "matching_algorithms": "active",

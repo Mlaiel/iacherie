@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WebhookEndpointModel(Base):
-    """Database model for webhook endpoints"""
+    """
+Database model for webhook endpoints"""
     __tablename__ = "webhook_endpoints"
     
     endpoint_id = Column(String, primary_key=True)
@@ -82,6 +84,7 @@ class WebhookConfigurationModel(Base):
 
 class WebhookStatus(Enum):
     """Webhook endpoint status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -533,7 +536,8 @@ class WebhookManager:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook manager"""
+        """
+Graceful shutdown of webhook manager"""
         try:
             logger.info("Shutting down WebhookManager")
             
@@ -571,7 +575,8 @@ class WebhookManager:
             }
 
     async def _test_endpoint_connectivity(self, config: WebhookConfiguration) -> Dict[str, Any]:
-        """Test basic connectivity to webhook endpoint"""
+        """
+Test basic connectivity to webhook endpoint"""
         start_time = time.time()
         
         try:
@@ -597,7 +602,8 @@ class WebhookManager:
             }
 
     async def _test_endpoint_with_payload(self, config: WebhookConfiguration) -> Dict[str, Any]:
-        """Test endpoint with sample payload"""
+        """
+Test endpoint with sample payload"""
         try:
             test_payload = {
                 'event_type': 'test',
@@ -631,7 +637,8 @@ class WebhookManager:
             }
 
     async def _store_configuration_in_db(self, config: WebhookConfiguration) -> None:
-        """Store configuration in database"""
+        """
+Store configuration in database"""
         try:
             # Encrypt secret if provided
             secret_encrypted = None
@@ -755,7 +762,8 @@ class WebhookManager:
         )
 
     async def _deactivate_configuration_in_db(self, config_id: str) -> None:
-        """Deactivate configuration in database"""
+        """
+Deactivate configuration in database"""
         try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config_id
@@ -853,7 +861,8 @@ class WebhookManager:
         self._monitoring_tasks.add(task)
 
     async def _health_monitoring_loop(self) -> None:
-        """Health monitoring background task"""
+        """
+Health monitoring background task"""
         while True:
             try:
                 await self._check_all_endpoints_health()
@@ -933,6 +942,7 @@ class WebhookManager:
         await self._check_endpoint_health(config)
 
     async def _stop_endpoint_monitoring(self, config_id: str) -> None:
-        """Stop monitoring for specific endpoint"""
+        """
+Stop monitoring for specific endpoint"""
         if config_id in self._health_status:
             del self._health_status[config_id]

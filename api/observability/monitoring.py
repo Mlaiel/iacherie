@@ -10,6 +10,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 import psutil
 import time
@@ -25,7 +26,8 @@ from pathlib import Path
 
 @dataclass
 class SystemSnapshot:
-    """System performance snapshot."""
+    """
+System performance snapshot."""
     timestamp: datetime
     cpu_percent: float
     memory_percent: float
@@ -39,7 +41,8 @@ class SystemSnapshot:
     uptime_seconds: int
     
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             'timestamp': self.timestamp.isoformat(),
             'cpu_percent': self.cpu_percent,
@@ -56,7 +59,8 @@ class SystemSnapshot:
 
 
 class SystemMonitor:
-    """Real-time system monitoring with predictive alerting."""
+    """
+Real-time system monitoring with predictive alerting."""
     
     def __init__(self, retention_hours: int = 24, collection_interval: int = 30):
         self.retention_hours = retention_hours
@@ -79,7 +83,8 @@ class SystemMonitor:
         }
     
     def start_monitoring(self):
-        """Start continuous system monitoring."""
+        """
+Start continuous system monitoring."""
         if not self.is_running:
             self.is_running = True
             self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
@@ -152,7 +157,8 @@ class SystemMonitor:
         )
     
     def _check_performance_anomalies(self, snapshot: SystemSnapshot):
-        """Check for performance anomalies and potential issues."""
+        """
+Check for performance anomalies and potential issues."""
         anomalies = []
         
         # CPU anomalies
@@ -225,7 +231,8 @@ class SystemMonitor:
             return self.snapshots[-1] if self.snapshots else None
     
     def get_metrics_history(self, hours: int = 1) -> List[SystemSnapshot]:
-        """Get system metrics history for specified hours."""
+        """
+Get system metrics history for specified hours."""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         with self._lock:
@@ -235,7 +242,8 @@ class SystemMonitor:
             ]
     
     def get_performance_summary(self) -> Dict:
-        """Get performance summary statistics."""
+        """
+Get performance summary statistics."""
         if not self.snapshots:
             return {"error": "No metrics available"}
         
@@ -292,7 +300,8 @@ class PerformanceMonitor:
         self.collaboration_match_times = deque(maxlen=1000)
     
     def record_content_processing_time(self, processing_type: str, duration_ms: float, success: bool = True):
-        """Record content processing performance."""
+        """
+Record content processing performance."""
         timestamp = datetime.utcnow()
         
         metric_data = {
@@ -458,7 +467,8 @@ class PerformanceMonitor:
         return sorted_values[min(index, len(sorted_values) - 1)]
     
     def get_overall_performance_summary(self) -> Dict:
-        """Get overall application performance summary."""
+        """
+Get overall application performance summary."""
         return {
             "content_processing": self.get_content_performance_metrics(),
             "ai_inference": self.get_ai_performance_metrics(),

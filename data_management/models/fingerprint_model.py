@@ -8,7 +8,7 @@ Responsibility: Advanced AI fingerprinting models for multi-modal content protec
 ===============================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC FINGERPRINT PIPELINE:
 Content Upload → Multi-Modal Feature Extraction → AI Hash Generation → Vector Embedding → 
 Similarity Indexing → Real-Time Protection → Violation Detection → Automated Response
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
@@ -26,7 +27,9 @@ import numpy as np
 from decimal import Decimal
 
 class FingerprintType(Enum):
-    """Advanced fingerprint types for multi-modal content"""
+    """
+Advanced fingerprint types for multi-modal content"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -75,6 +78,7 @@ class FingerprintAlgorithm(Enum):
 
 class FingerprintQuality(IntEnum):
     """Fingerprint quality levels"""
+
     POOR = 1
     FAIR = 2
     GOOD = 3
@@ -82,7 +86,9 @@ class FingerprintQuality(IntEnum):
     PERFECT = 5
 
 class SimilarityThreshold(Enum):
-    """Similarity detection thresholds"""
+    """
+Similarity detection thresholds"""
+
     EXACT_MATCH = "exact_match"  # 95-100%
     NEAR_DUPLICATE = "near_duplicate"  # 85-95%
     SIMILAR = "similar"  # 70-85%
@@ -433,7 +439,8 @@ class FingerPrintModel:
         return self.content_hash
     
     def calculate_uniqueness_score(self) -> float:
-        """Calcule un score d'unicité basé sur les features"""
+        """
+Calcule un score d'unicité basé sur les features"""
         score = 0.0
         
         # Facteurs de complexité
@@ -456,7 +463,8 @@ class FingerPrintModel:
         return self.uniqueness_score
     
     def update_match_statistics(self, is_match: bool, similarity_score: float):
-        """Met à jour les statistiques de matching"""
+        """
+Met à jour les statistiques de matching"""
         if is_match:
             self.match_count += 1
             self.last_match_date = datetime.now(timezone.utc)
@@ -468,7 +476,8 @@ class FingerPrintModel:
         self.updated_at = datetime.now(timezone.utc)
     
     def get_similarity_features(self) -> Dict[str, Any]:
-        """Retourne les features optimisées pour la recherche de similarité"""
+        """
+Retourne les features optimisées pour la recherche de similarité"""
         features = {}
         
         if self.primary_embedding:

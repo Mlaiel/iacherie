@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class AIModelType(Enum):
-    """Types of AI models for content analysis."""
+    """
+Types of AI models for content analysis."""
+
     CONTENT_CLASSIFIER = "content_classifier"
     FINGERPRINT_EXTRACTOR = "fingerprint_extractor"
     SIMILARITY_DETECTOR = "similarity_detector"
@@ -40,6 +43,7 @@ class AIModelType(Enum):
 
 class AIProvider(Enum):
     """AI service providers."""
+
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE_AI = "google_ai"
@@ -51,6 +55,7 @@ class AIProvider(Enum):
 
 class ProcessingMode(Enum):
     """Content processing modes."""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -59,6 +64,7 @@ class ProcessingMode(Enum):
 
 class ConfidenceLevel(Enum):
     """AI confidence levels."""
+
     VERY_LOW = "very_low"  # 0-20%
     LOW = "low"           # 20-40%
     MEDIUM = "medium"     # 40-60%
@@ -100,7 +106,8 @@ class ModelConfig:
 
 @dataclass
 class ContentAnalysisConfig:
-    """Configuration for content analysis workflows."""
+    """
+Configuration for content analysis workflows."""
     enabled: bool = True
     supported_formats: List[str] = field(default_factory=lambda: [
         "mp3", "wav", "flac", "aac", "mp4", "avi", "mov", "webm",
@@ -171,7 +178,8 @@ class SmartCrawlConfig:
 
 @dataclass
 class AIPerformanceConfig:
-    """Configuration for AI performance monitoring."""
+    """
+Configuration for AI performance monitoring."""
     monitoring_enabled: bool = True
     
     # Metrics tracking
@@ -201,7 +209,8 @@ class AIPerformanceConfig:
 
 @dataclass
 class ViolationDetectionConfig:
-    """Configuration for AI-powered violation detection."""
+    """
+Configuration for AI-powered violation detection."""
     enabled: bool = True
     
     # Detection methods
@@ -230,10 +239,12 @@ class ViolationDetectionConfig:
     licensing_verification: bool = True
 
 class AIConfigManager:
-    """Manager for AI crawler configurations."""
+    """
+Manager for AI crawler configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize AI configuration manager."""
+        """
+Initialize AI configuration manager."""
         self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.models: Dict[str, ModelConfig] = {}
         self.content_analysis = ContentAnalysisConfig()
@@ -243,7 +254,8 @@ class AIConfigManager:
         self._load_configurations()
     
     def _load_configurations(self) -> None:
-        """Load AI configurations from files."""
+        """
+Load AI configurations from files."""
         try:
             config_file = self.config_dir / "ai_models.json"
             if config_file.exists():
@@ -260,24 +272,29 @@ class AIConfigManager:
         self._save_configurations()
     
     def get_model(self, model_id: str) -> Optional[ModelConfig]:
-        """Get model configuration by ID."""
+        """
+Get model configuration by ID."""
         return self.models.get(model_id)
     
     def get_models_by_type(self, model_type: AIModelType) -> List[ModelConfig]:
-        """Get all models of a specific type."""
+        """
+Get all models of a specific type."""
         return [model for model in self.models.values() if model.model_type == model_type]
     
     def get_enabled_models(self) -> List[ModelConfig]:
-        """Get all enabled models."""
+        """
+Get all enabled models."""
         return [model for model in self.models.values() if model.enabled]
     
     def update_model_performance(self, model_id: str, response_time: float, accuracy: float) -> None:
-        """Update model performance metrics."""
+        """
+Update model performance metrics."""
         # Implementation for performance tracking
         pass
     
     def optimize_model_selection(self, content_type: str, priority: str) -> Optional[ModelConfig]:
-        """Select optimal model based on content type and priority."""
+        """
+Select optimal model based on content type and priority."""
         # Implementation for intelligent model selection
         available_models = self.get_enabled_models()
         

@@ -6,6 +6,7 @@ management and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class SubscriptionStatus(Enum):
-    """Subscription status types"""
+    """
+Subscription status types"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     CANCELLED = "cancelled"
@@ -26,6 +29,7 @@ class SubscriptionStatus(Enum):
 
 class SubscriptionTier(Enum):
     """Subscription tier types"""
+
     BASIC = "basic"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -42,7 +46,8 @@ class SubscriptionJob:
 
 @dataclass 
 class SubscriptionResult:
-    """Result of subscription operations"""
+    """
+Result of subscription operations"""
     job_id: str
     success: bool
     subscription_id: Optional[str] = None
@@ -52,7 +57,8 @@ class SubscriptionResult:
 
 @dataclass
 class Subscription:
-    """Subscription data model"""
+    """
+Subscription data model"""
     subscription_id: str
     user_id: str
     tier: SubscriptionTier
@@ -87,7 +93,8 @@ class SubscriptionEngine:
         self.user_subscriptions = {}  # user_id -> List[subscription_id]
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the subscription engine"""
+        """
+Initialize the subscription engine"""
         try:
             logger.info("Initializing Subscription Engine...")
             
@@ -188,7 +195,8 @@ class SubscriptionEngine:
         return self.subscriptions.get(subscription_id)
     
     async def get_user_subscriptions(self, user_id: str) -> List[Subscription]:
-        """Get all subscriptions for a user"""
+        """
+Get all subscriptions for a user"""
         subscription_ids = self.user_subscriptions.get(user_id, [])
         return [self.subscriptions[sub_id] for sub_id in subscription_ids if sub_id in self.subscriptions]
     
@@ -197,7 +205,8 @@ class SubscriptionEngine:
         subscription_id: str,
         updates: Dict[str, Any]
     ) -> SubscriptionResult:
-        """Update an existing subscription"""
+        """
+Update an existing subscription"""
         try:
             if subscription_id not in self.subscriptions:
                 raise ValueError(f"Subscription {subscription_id} not found")
@@ -367,7 +376,8 @@ class SubscriptionEngine:
             del self.active_jobs[job_id]
     
     async def _get_tier_pricing(self, tier: SubscriptionTier, billing_cycle: str) -> Dict[str, Any]:
-        """Get pricing for subscription tier"""
+        """
+Get pricing for subscription tier"""
         pricing_table = {
             SubscriptionTier.BASIC: {
                 "monthly": {"price": 9.99, "currency": "USD", "features": ["basic_features"]},

@@ -6,6 +6,7 @@ Provides comprehensive quality metrics, optimization algorithms, and quality ass
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QualityAnalysis:
-    """Comprehensive quality analysis results"""
+    """
+Comprehensive quality analysis results"""
     spectral_similarity: float
     dynamic_range_preservation: float
     frequency_response_accuracy: float
@@ -53,13 +55,15 @@ class QualityController:
     """
     
     def __init__(self, config: Optional[QualityConfig] = None):
-        """Initialize quality controller"""
+        """
+Initialize quality controller"""
         self.config = config or QualityConfig()
         self.quality_standards = self._load_quality_standards()
         self.analysis_cache: Dict[str, QualityAnalysis] = {}
         
     def _load_quality_standards(self) -> Dict[str, Dict[str, float]]:
-        """Load professional quality standards"""
+        """
+Load professional quality standards"""
         return {
             'broadcast': {
                 'min_snr': 60.0,  # dB
@@ -242,7 +246,8 @@ class QualityController:
     async def _calculate_dynamic_range_metrics(self,
                                              original: np.ndarray,
                                              converted: np.ndarray) -> Dict[str, float]:
-        """Calculate dynamic range preservation metrics"""
+        """
+Calculate dynamic range preservation metrics"""
         # Calculate RMS levels
         orig_rms = np.sqrt(np.mean(original**2))
         conv_rms = np.sqrt(np.mean(converted**2))
@@ -275,7 +280,8 @@ class QualityController:
                                                   original: np.ndarray,
                                                   converted: np.ndarray,
                                                   sample_rate: int) -> Dict[str, float]:
-        """Calculate frequency response accuracy metrics"""
+        """
+Calculate frequency response accuracy metrics"""
         # Calculate frequency responses
         orig_freqs, orig_response = signal.welch(original, fs=sample_rate, nperseg=2048)
         conv_freqs, conv_response = signal.welch(converted, fs=sample_rate, nperseg=2048)
@@ -321,7 +327,8 @@ class QualityController:
                                      original: np.ndarray,
                                      converted: np.ndarray,
                                      sample_rate: int) -> Dict[str, float]:
-        """Calculate noise and SNR metrics"""
+        """
+Calculate noise and SNR metrics"""
         # Calculate noise floor (bottom 10% of signal energy)
         orig_sorted = np.sort(np.abs(original))
         conv_sorted = np.sort(np.abs(converted))
@@ -355,7 +362,8 @@ class QualityController:
                                           original: np.ndarray,
                                           converted: np.ndarray,
                                           sample_rate: int) -> Dict[str, float]:
-        """Calculate harmonic and intermodulation distortion metrics"""
+        """
+Calculate harmonic and intermodulation distortion metrics"""
         # Calculate THD (Total Harmonic Distortion)
         thd = await self._calculate_thd(converted, sample_rate)
         
@@ -379,7 +387,8 @@ class QualityController:
     async def _calculate_stereo_metrics(self,
                                       original: np.ndarray,
                                       converted: np.ndarray) -> Dict[str, float]:
-        """Calculate stereo imaging and separation metrics"""
+        """
+Calculate stereo imaging and separation metrics"""
         if len(original.shape) < 2 or original.shape[1] < 2:
             return {}
         
@@ -411,7 +420,8 @@ class QualityController:
         }
     
     async def _calculate_thd(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate Total Harmonic Distortion"""
+        """
+Calculate Total Harmonic Distortion"""
         # This is a simplified THD calculation
         # In production, use specialized audio analysis libraries
         
@@ -446,7 +456,8 @@ class QualityController:
                            original: np.ndarray,
                            converted: np.ndarray,
                            sample_rate: int) -> float:
-        """Calculate Intermodulation Distortion"""
+        """
+Calculate Intermodulation Distortion"""
         # Simplified IMD calculation
         # Calculate the difference signal
         if len(original) == len(converted):
@@ -460,7 +471,8 @@ class QualityController:
                                               original: np.ndarray,
                                               converted: np.ndarray,
                                               sample_rate: int) -> float:
-        """Calculate spectral contrast similarity"""
+        """
+Calculate spectral contrast similarity"""
         orig_contrast = librosa.feature.spectral_contrast(y=original, sr=sample_rate)
         conv_contrast = librosa.feature.spectral_contrast(y=converted, sr=sample_rate)
         
@@ -482,7 +494,8 @@ class QualityController:
                                              noise: Dict[str, float],
                                              distortion: Dict[str, float],
                                              stereo: Dict[str, float]) -> float:
-        """Calculate weighted overall quality score"""
+        """
+Calculate weighted overall quality score"""
         # Define weights for different quality aspects
         weights = {
             'spectral': 0.25,
@@ -519,7 +532,8 @@ class QualityController:
     async def _assess_quality_compliance(self,
                                        metrics: Dict[str, float],
                                        quality_profile: Optional[QualityProfile]) -> str:
-        """Assess quality compliance with standards"""
+        """
+Assess quality compliance with standards"""
         if not quality_profile:
             return "No quality profile specified"
         
@@ -630,7 +644,8 @@ class QualityOptimizer:
     """
     
     def __init__(self, config: QualityConfig):
-        """Initialize quality optimizer"""
+        """
+Initialize quality optimizer"""
         self.config = config
         self.optimization_history: Dict[str, List[Dict]] = {}
         
@@ -676,7 +691,8 @@ class QualityOptimizer:
     async def _analyze_audio_characteristics(self,
                                            audio_data: np.ndarray,
                                            sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio characteristics for optimization"""
+        """
+Analyze audio characteristics for optimization"""
         analysis = {
             'sample_rate': sample_rate,
             'channels': 1 if len(audio_data.shape) == 1 else audio_data.shape[1],
@@ -690,7 +706,8 @@ class QualityOptimizer:
         return analysis
     
     def _estimate_bit_depth(self, audio_data: np.ndarray) -> int:
-        """Estimate effective bit depth of audio"""
+        """
+Estimate effective bit depth of audio"""
         # Calculate noise floor to estimate bit depth
         sorted_values = np.sort(np.abs(audio_data.flatten()))
         noise_floor = np.mean(sorted_values[:len(sorted_values)//100])  # Bottom 1%
@@ -705,7 +722,8 @@ class QualityOptimizer:
         return estimated_bits
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range in dB"""
+        """
+Calculate dynamic range in dB"""
         rms = np.sqrt(np.mean(audio_data**2))
         peak = np.max(np.abs(audio_data))
         
@@ -714,7 +732,8 @@ class QualityOptimizer:
     async def _analyze_frequency_content(self,
                                        audio_data: np.ndarray,
                                        sample_rate: int) -> Dict[str, float]:
-        """Analyze frequency content distribution"""
+        """
+Analyze frequency content distribution"""
         # Calculate spectrum
         freqs, psd = signal.welch(audio_data, fs=sample_rate, nperseg=2048)
         
@@ -751,7 +770,8 @@ class QualityOptimizer:
     async def _calculate_audio_complexity(self,
                                         audio_data: np.ndarray,
                                         sample_rate: int) -> float:
-        """Calculate audio complexity score for optimization"""
+        """
+Calculate audio complexity score for optimization"""
         # Calculate spectral complexity
         spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sample_rate)
         spectral_complexity = np.mean(np.var(spectral_contrast, axis=1))
@@ -773,7 +793,8 @@ class QualityOptimizer:
                                      target_format: str,
                                      audio_analysis: Dict[str, Any],
                                      quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Get format-specific optimization parameters"""
+        """
+Get format-specific optimization parameters"""
         format_optimizations = {
             'mp3': await self._optimize_mp3(audio_analysis, quality_profile),
             'aac': await self._optimize_aac(audio_analysis, quality_profile),
@@ -787,7 +808,8 @@ class QualityOptimizer:
     async def _optimize_mp3(self,
                           audio_analysis: Dict[str, Any],
                           quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Optimize MP3 encoding parameters"""
+        """
+Optimize MP3 encoding parameters"""
         # Base settings
         optimization = {
             'bitrate_mode': 'vbr',  # Variable bitrate for efficiency
@@ -820,7 +842,8 @@ class QualityOptimizer:
     async def _optimize_aac(self,
                           audio_analysis: Dict[str, Any],
                           quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Optimize AAC encoding parameters"""
+        """
+Optimize AAC encoding parameters"""
         optimization = {
             'bitrate': 256,
             'profile': 'aac_lc',
@@ -837,7 +860,8 @@ class QualityOptimizer:
     async def _optimize_ogg(self,
                           audio_analysis: Dict[str, Any],
                           quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Optimize OGG Vorbis encoding parameters"""
+        """
+Optimize OGG Vorbis encoding parameters"""
         optimization = {
             'quality': 6,  # High quality setting (0-10 scale)
             'managed_bitrate': False
@@ -857,7 +881,8 @@ class QualityOptimizer:
     async def _optimize_flac(self,
                            audio_analysis: Dict[str, Any],
                            quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Optimize FLAC encoding parameters"""
+        """
+Optimize FLAC encoding parameters"""
         optimization = {
             'compression_level': 5,  # Balanced compression
             'verify': True
@@ -875,7 +900,8 @@ class QualityOptimizer:
     async def _optimize_wav(self,
                           audio_analysis: Dict[str, Any],
                           quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Optimize WAV format parameters"""
+        """
+Optimize WAV format parameters"""
         estimated_bits = audio_analysis.get('bit_depth_estimate', 16)
         
         optimization = {
@@ -892,7 +918,8 @@ class QualityOptimizer:
                                                 quality_profile: QualityProfile,
                                                 audio_analysis: Dict[str, Any],
                                                 format_optimization: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply quality profile specific optimizations"""
+        """
+Apply quality profile specific optimizations"""
         profile_optimizations = {
             'streaming': {
                 'sample_rate_limit': 48000,
@@ -921,7 +948,8 @@ class QualityOptimizer:
     async def _combine_optimizations(self,
                                    format_optimization: Dict[str, Any],
                                    profile_optimization: Dict[str, Any]) -> Dict[str, Any]:
-        """Combine format and profile optimizations"""
+        """
+Combine format and profile optimizations"""
         combined = {**format_optimization, **profile_optimization}
         
         # Resolve conflicts with priority to profile optimization

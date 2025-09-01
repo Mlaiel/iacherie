@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import re
 import logging
 from decimal import Decimal, InvalidOperation
@@ -45,7 +46,8 @@ class PaymentValidator:
     and ensures data integrity for all payment operations.
     """
     def __init__(self, config: Optional[PaymentConfig] = None):
-        """Initialize validator with configuration"""
+        """
+Initialize validator with configuration"""
         self.config = config or PaymentConfig()
         
         # Validation patterns
@@ -555,7 +557,8 @@ class PaymentValidator:
             return False
 
     def _validate_paypal_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Validate PayPal webhook signature"""
+        """
+Validate PayPal webhook signature"""
         try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
@@ -569,7 +572,8 @@ class PaymentValidator:
             return False
 
     def _validate_generic_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Validate generic HMAC signature"""
+        """
+Validate generic HMAC signature"""
         try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
@@ -584,12 +588,14 @@ class PaymentValidator:
 
     # Helper methods (would integrate with database and external services)
     async def _check_duplicate_revenue(self, creator_id: str, content_id: str, amount: Decimal):
-        """Check for duplicate revenue entries"""
+        """
+Check for duplicate revenue entries"""
         # Would query database for recent matching entries
         pass
 
     async def _get_available_balance(self, creator_id: str, currency: str) -> Decimal:
-        """Get creator's available balance"""
+        """
+Get creator's available balance"""
         # Would calculate from database
         return Decimal("1000.00")  # Mock value
 
@@ -604,7 +610,8 @@ class PaymentValidator:
         pass
 
     async def _check_kyc_status(self, creator_id: str) -> Dict[str, Any]:
-        """Check KYC verification status"""
+        """
+Check KYC verification status"""
         # Would query KYC service/database
         return {"verified": True, "status": "approved"}
 
@@ -630,7 +637,8 @@ class PaymentValidator:
         return 0
 
     async def _get_average_transaction_amount(self, creator_id: str, currency: str) -> Decimal:
-        """Get average transaction amount"""
+        """
+Get average transaction amount"""
         return Decimal("100.00")
 
     async def _get_account_age_days(self, creator_id: str) -> int:

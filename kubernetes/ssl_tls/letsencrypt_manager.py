@@ -13,6 +13,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import os
 import json
 import time
@@ -44,6 +45,7 @@ except ImportError:
 
 class ChallengeType(Enum):
     """ACME challenge types"""
+
     HTTP_01 = "http-01"
     DNS_01 = "dns-01"
     TLS_ALPN_01 = "tls-alpn-01"
@@ -56,7 +58,8 @@ class CertificateError(Exception):
 
 @dataclass
 class LetsEncryptConfig:
-    """Let's Encrypt configuration"""
+    """
+Let's Encrypt configuration"""
     email: str
     staging: bool = True
     key_size: int = 2048
@@ -178,7 +181,8 @@ class LetsEncryptManager:
         return jose.JWKRSA(key=private_key)
     
     def _load_account_key(self, key_path: Path) -> jose.JWKRSA:
-        """Load account key from file"""
+        """
+Load account key from file"""
         with open(key_path, 'rb') as key_file:
             private_key = serialization.load_pem_private_key(
                 key_file.read(),
@@ -188,7 +192,8 @@ class LetsEncryptManager:
         return jose.JWKRSA(key=private_key)
     
     def _save_account_key(self, key_path: Path, account_key: jose.JWKRSA) -> None:
-        """Save account key to file"""
+        """
+Save account key to file"""
         key_data = account_key.key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.PKCS8,
@@ -201,7 +206,8 @@ class LetsEncryptManager:
         os.chmod(key_path, 0o600)
     
     def _register_account(self) -> None:
-        """Register account with Let's Encrypt"""
+        """
+Register account with Let's Encrypt"""
         try:
             # Check if account already exists
             account_file = self.account_path / "account.json"

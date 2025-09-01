@@ -12,6 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Kubernetes configuration and management for IA-Influencer-Agent platform.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -29,7 +30,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class KubernetesResourceType(Enum):
-    """Kubernetes resource types"""
+    """
+Kubernetes resource types"""
+
     DEPLOYMENT = "Deployment"
     SERVICE = "Service"
     CONFIGMAP = "ConfigMap"
@@ -74,7 +77,8 @@ class DeploymentSpec:
     progress_deadline_seconds: int = 600
 
 class KubernetesConfigManager:
-    """Professional Kubernetes configuration manager"""
+    """
+Professional Kubernetes configuration manager"""
     
     def __init__(self, config_path: str = "/app/config/kubernetes", namespace: str = "ia-influencer"):
         self.config_path = Path(config_path)

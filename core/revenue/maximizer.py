@@ -1,7 +1,7 @@
 """Revenue Maximizer - Advanced revenue maximization and optimization system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class MaximizationStrategy(Enum):
-    """Revenue maximization strategies"""
+    """
+Revenue maximization strategies"""
+
     PRICE_OPTIMIZATION = "price_optimization"
     VOLUME_MAXIMIZATION = "volume_maximization"
     MARGIN_MAXIMIZATION = "margin_maximization"
@@ -62,6 +65,7 @@ class MaximizationStrategy(Enum):
 
 class OptimizationObjective(Enum):
     """Optimization objectives"""
+
     MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
     MAXIMIZE_PROFIT = "maximize_profit"
     MAXIMIZE_ROI = "maximize_roi"
@@ -74,6 +78,7 @@ class OptimizationObjective(Enum):
 
 class MaximizationMethod(Enum):
     """Maximization methods"""
+
     GRADIENT_DESCENT = "gradient_descent"
     GENETIC_ALGORITHM = "genetic_algorithm"
     SIMULATED_ANNEALING = "simulated_annealing"
@@ -100,7 +105,8 @@ class MaximizationConstraints:
 
 @dataclass
 class MaximizationResults:
-    """Results from revenue maximization"""
+    """
+Results from revenue maximization"""
     optimization_id: str
     strategy: MaximizationStrategy
     objective: OptimizationObjective
@@ -118,12 +124,14 @@ class MaximizationResults:
     
     @property
     def revenue_lift(self) -> Decimal:
-        """Calculate revenue lift"""
+        """
+Calculate revenue lift"""
         return self.optimized_revenue - self.initial_revenue
     
     @property
     def improvement_factor(self) -> Decimal:
-        """Calculate improvement factor"""
+        """
+Calculate improvement factor"""
         if self.initial_revenue == 0:
             return Decimal('0')
         return self.optimized_revenue / self.initial_revenue
@@ -131,7 +139,8 @@ class MaximizationResults:
 
 @dataclass
 class OptimizationVariable:
-    """Variable for optimization"""
+    """
+Variable for optimization"""
     name: str
     current_value: Decimal
     min_value: Decimal
@@ -142,7 +151,8 @@ class OptimizationVariable:
 
 
 class RevenueMaximizer:
-    """Advanced revenue maximization and optimization engine"""
+    """
+Advanced revenue maximization and optimization engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -157,7 +167,8 @@ class RevenueMaximizer:
         self.population_size = self.config.get('population_size', 50)
         
     async def initialize(self) -> None:
-        """Initialize revenue maximizer"""
+        """
+Initialize revenue maximizer"""
         try:
             # Initialize ML models
             await self._initialize_ml_models()
@@ -198,7 +209,8 @@ class RevenueMaximizer:
         )
     
     async def _load_optimization_patterns(self) -> None:
-        """Load historical optimization patterns"""
+        """
+Load historical optimization patterns"""
         # Sample optimization patterns
         self.optimization_patterns = {
             'price_elasticity': {
@@ -222,7 +234,8 @@ class RevenueMaximizer:
         }
     
     async def _setup_optimization_engines(self) -> None:
-        """Setup optimization engines"""
+        """
+Setup optimization engines"""
         self.optimization_engines = {
             MaximizationMethod.GRADIENT_DESCENT: self._gradient_descent_optimization,
             MaximizationMethod.GENETIC_ALGORITHM: self._genetic_algorithm_optimization,
@@ -240,7 +253,8 @@ class RevenueMaximizer:
         constraints: Optional[MaximizationConstraints] = None,
         method: MaximizationMethod = MaximizationMethod.GRADIENT_DESCENT
     ) -> MaximizationResults:
-        """Maximize revenue using specified strategy and method"""
+        """
+Maximize revenue using specified strategy and method"""
         try:
             optimization_id = str(uuid.uuid4())
             
@@ -322,7 +336,8 @@ class RevenueMaximizer:
         variables: List[OptimizationVariable],
         constraints: Optional[MaximizationConstraints]
     ) -> Dict[str, Any]:
-        """Gradient descent optimization"""
+        """
+Gradient descent optimization"""
         try:
             # Initialize parameters
             learning_rate = 0.01
@@ -788,7 +803,8 @@ class RevenueMaximizer:
         base_revenue: Decimal,
         parameters: Dict[str, float]
     ) -> Decimal:
-        """Calculate revenue for price optimization strategy"""
+        """
+Calculate revenue for price optimization strategy"""
         price_multiplier = parameters.get('price_multiplier', 1.0)
         
         # Apply price elasticity
@@ -805,7 +821,8 @@ class RevenueMaximizer:
         base_revenue: Decimal,
         parameters: Dict[str, float]
     ) -> Decimal:
-        """Calculate revenue for volume maximization strategy"""
+        """
+Calculate revenue for volume maximization strategy"""
         volume_multiplier = parameters.get('volume_multiplier', 1.0)
         efficiency_factor = parameters.get('efficiency_factor', 1.0)
         
@@ -819,7 +836,8 @@ class RevenueMaximizer:
         base_revenue: Decimal,
         parameters: Dict[str, float]
     ) -> Decimal:
-        """Calculate revenue for multi-stream optimization"""
+        """
+Calculate revenue for multi-stream optimization"""
         stream_weights = {}
         total_weight = 0
         
@@ -844,7 +862,8 @@ class RevenueMaximizer:
         base_revenue: Decimal,
         parameters: Dict[str, float]
     ) -> Decimal:
-        """Calculate revenue for conversion optimization"""
+        """
+Calculate revenue for conversion optimization"""
         conversion_rate = parameters.get('conversion_rate', 0.02)
         traffic_multiplier = parameters.get('traffic_multiplier', 1.0)
         
@@ -858,7 +877,8 @@ class RevenueMaximizer:
         current_state: Dict[str, Any],
         parameters: Dict[str, float]
     ) -> Decimal:
-        """Calculate costs with given parameters"""
+        """
+Calculate costs with given parameters"""
         base_costs = Decimal(str(current_state.get('monthly_costs', 0)))
         
         # Variable costs based on parameters
@@ -879,7 +899,8 @@ class RevenueMaximizer:
         parameters: Dict[str, float],
         variables: List[OptimizationVariable]
     ) -> Dict[str, float]:
-        """Calculate gradients for gradient descent"""
+        """
+Calculate gradients for gradient descent"""
         gradients = {}
         epsilon = 1e-6
         
@@ -909,7 +930,8 @@ class RevenueMaximizer:
         variable: OptimizationVariable,
         current_params: Dict[str, float]
     ) -> float:
-        """Estimate marginal contribution of a variable"""
+        """
+Estimate marginal contribution of a variable"""
         # Calculate contribution by varying the variable slightly
         base_value = await self._evaluate_objective_function(
             strategy, objective, current_state, current_params
@@ -938,7 +960,8 @@ class RevenueMaximizer:
         sample_points: List[Dict[str, float]],
         sample_fitness: List[float]
     ) -> float:
-        """Simple acquisition function for Bayesian optimization"""
+        """
+Simple acquisition function for Bayesian optimization"""
         if not sample_fitness:
             return 0
         
@@ -975,7 +998,8 @@ class RevenueMaximizer:
         optimization_result: Dict[str, Any],
         current_state: Dict[str, Any]
     ) -> List[str]:
-        """Generate implementation recommendations"""
+        """
+Generate implementation recommendations"""
         recommendations = []
         
         optimized_params = optimization_result['optimized_parameters']
@@ -1139,7 +1163,8 @@ class RevenueMaximizer:
         constraints: Optional[MaximizationConstraints] = None,
         method: MaximizationMethod = MaximizationMethod.GENETIC_ALGORITHM
     ) -> Dict[str, Any]:
-        """Multi-objective optimization with weighted objectives"""
+        """
+Multi-objective optimization with weighted objectives"""
         try:
             if len(objectives) != len(weights):
                 raise ValueError("Number of objectives must match number of weights")
@@ -1282,7 +1307,8 @@ class RevenueMaximizer:
         population: List[Dict[str, float]],
         fitness_scores: List[float]
     ) -> Dict[str, float]:
-        """Tournament selection for genetic algorithm"""
+        """
+Tournament selection for genetic algorithm"""
         tournament_size = 3
         tournament_indices = np.random.choice(len(population), tournament_size, replace=False)
         tournament_fitness = [fitness_scores[i] for i in tournament_indices]
@@ -1295,7 +1321,8 @@ class RevenueMaximizer:
         parent2: Dict[str, float],
         variables: List[OptimizationVariable]
     ) -> Dict[str, float]:
-        """Crossover operation for genetic algorithm"""
+        """
+Crossover operation for genetic algorithm"""
         child = {}
         
         for var in variables:
@@ -1311,7 +1338,8 @@ class RevenueMaximizer:
         individual: Dict[str, float],
         variables: List[OptimizationVariable]
     ) -> Dict[str, float]:
-        """Mutation operation for genetic algorithm"""
+        """
+Mutation operation for genetic algorithm"""
         mutated = individual.copy()
         
         for var in variables:
@@ -1329,7 +1357,8 @@ class RevenueMaximizer:
         results: MaximizationResults,
         include_details: bool = True
     ) -> Dict[str, Any]:
-        """Export comprehensive maximization report"""
+        """
+Export comprehensive maximization report"""
         try:
             report = {
                 'optimization_info': {
@@ -1379,7 +1408,8 @@ class RevenueMaximizer:
         }
     
     async def _analyze_parameter_sensitivity(self, results: MaximizationResults) -> List[Dict[str, Any]]:
-        """Analyze sensitivity of parameters"""
+        """
+Analyze sensitivity of parameters"""
         # Simplified sensitivity analysis
         sensitivities = []
         
@@ -1405,7 +1435,8 @@ class RevenueMaximizer:
         return sensitivities
     
     async def _generate_implementation_roadmap(self, results: MaximizationResults) -> List[Dict[str, Any]]:
-        """Generate implementation roadmap"""
+        """
+Generate implementation roadmap"""
         timeline = results.expected_timeline
         phases = []
         
@@ -1448,7 +1479,8 @@ class RevenueMaximizer:
         return phases
     
     async def _identify_monitoring_metrics(self, results: MaximizationResults) -> List[str]:
-        """Identify key monitoring metrics"""
+        """
+Identify key monitoring metrics"""
         metrics = [
             'Revenue growth rate',
             'Customer acquisition cost',
@@ -1469,7 +1501,8 @@ class RevenueMaximizer:
         return metrics
     
     async def _define_success_indicators(self, results: MaximizationResults) -> Dict[str, Any]:
-        """Define success indicators for optimization"""
+        """
+Define success indicators for optimization"""
         return {
             'primary_kpi': 'Revenue growth percentage',
             'target_improvement': str(results.improvement_percentage),

@@ -7,9 +7,10 @@ and content platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class PlatformType(Enum):
-    """Supported social media and content platforms"""
+    """
+Supported social media and content platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -58,6 +61,7 @@ class PlatformType(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -69,6 +73,7 @@ class SyncStatus(Enum):
 
 class ContentOptimizationType(Enum):
     """Content optimization types for different platforms"""
+
     RESIZE_IMAGE = "resize_image"
     CONVERT_VIDEO = "convert_video"
     ADJUST_AUDIO_QUALITY = "adjust_audio_quality"
@@ -321,7 +326,8 @@ class SyncAnalytics(Base):
 
 @dataclass
 class SyncConfiguration:
-    """Configuration for cross-platform synchronization"""
+    """
+Configuration for cross-platform synchronization"""
     target_platforms: List[PlatformType]
     optimization_enabled: bool = True
     auto_schedule: bool = False

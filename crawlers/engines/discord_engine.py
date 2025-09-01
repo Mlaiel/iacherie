@@ -21,6 +21,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -57,7 +58,8 @@ settings = get_settings()
 
 @dataclass
 class DiscordMessageData:
-    """Discord message data structure"""
+    """
+Discord message data structure"""
     message_id: str
     channel_id: str
     guild_id: str
@@ -88,7 +90,8 @@ class DiscordMessageData:
 
 @dataclass
 class DiscordChannelData:
-    """Discord channel data structure"""
+    """
+Discord channel data structure"""
     channel_id: str
     guild_id: str
     name: str
@@ -116,7 +119,8 @@ class DiscordChannelData:
 
 @dataclass
 class DiscordServerData:
-    """Discord server (guild) data structure"""
+    """
+Discord server (guild) data structure"""
     guild_id: str
     name: str
     icon: Optional[str]
@@ -227,7 +231,8 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
         )
 
     async def authenticate(self) -> bool:
-        """Authenticate with Discord API"""
+        """
+Authenticate with Discord API"""
         try:
             if self.use_bot and self.bot_token:
                 self.bot = commands.Bot(
@@ -656,7 +661,8 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
             await self.client.close()
 
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.bot or self.client:
                 asyncio.create_task(self.close())

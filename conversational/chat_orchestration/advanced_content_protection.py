@@ -20,12 +20,13 @@ Technologies:
 - ML Detection: Advanced threat pattern recognition
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -56,7 +57,9 @@ from backend.conversational.chat_orchestration.content_fingerprinting import (
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -66,6 +69,7 @@ class ProtectionLevel(Enum):
 
 class ThreatSeverity(Enum):
     """Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -75,6 +79,7 @@ class ThreatSeverity(Enum):
 
 class ProtectionAction(Enum):
     """Protection actions available"""
+
     MONITOR = "monitor"
     NOTIFY = "notify"
     DMCA_TAKEDOWN = "dmca_takedown"
@@ -87,6 +92,7 @@ class ProtectionAction(Enum):
 
 class Platform(Enum):
     """Supported platforms for protection"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -106,6 +112,7 @@ class Platform(Enum):
 
 class LegalDocumentType(Enum):
     """Legal document types"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_NOTICE = "copyright_notice"
@@ -157,7 +164,8 @@ class ProtectionRule:
 
 @dataclass
 class LegalDocument:
-    """Legal document for protection actions"""
+    """
+Legal document for protection actions"""
     document_id: str
     threat_id: str
     creator_id: str
@@ -653,7 +661,8 @@ class EnterpriseContentProtection:
         original_fingerprint: ContentFingerprint,
         similarity_match: SimilarityMatch
     ) -> float:
-        """Estimate revenue impact of threat"""
+        """
+Estimate revenue impact of threat"""
         
         # Placeholder implementation
         # In real system, would analyze:
@@ -676,7 +685,8 @@ class EnterpriseContentProtection:
         return base_impact * impact_multiplier
     
     def _extract_platform_from_url(self, url: Optional[str]) -> Platform:
-        """Extract platform from URL"""
+        """
+Extract platform from URL"""
         
         if not url:
             return Platform.UNKNOWN
@@ -769,7 +779,8 @@ class EnterpriseContentProtection:
     ) -> str:
         """Generate DMCA takedown notice content"""
         
-        dmca_template = f"""DMCA TAKEDOWN NOTICE
+        dmca_template = f"""
+DMCA TAKEDOWN NOTICE
 
 To: {threat.platform.value.title()} Legal Department
 
@@ -808,7 +819,8 @@ This notice is submitted in good faith and with the reasonable belief that the i
         return dmca_template.strip()
     
     async def _collect_evidence(self, threat: ContentThreat) -> List[str]:
-        """Collect evidence for legal action"""
+        """
+Collect evidence for legal action"""
         
         evidence_files = []
         
@@ -869,7 +881,8 @@ This notice is submitted in good faith and with the reasonable belief that the i
         return action_map.get(protection_level, [ProtectionAction.MONITOR])
     
     def _get_threshold_for_level(self, protection_level: ProtectionLevel) -> float:
-        """Get similarity threshold for protection level"""
+        """
+Get similarity threshold for protection level"""
         
         threshold_map = {
             ProtectionLevel.BASIC: 0.85,
@@ -882,7 +895,8 @@ This notice is submitted in good faith and with the reasonable belief that the i
         return threshold_map.get(protection_level, 0.75)
     
     def _get_response_time_for_level(self, protection_level: ProtectionLevel) -> int:
-        """Get response time hours for protection level"""
+        """
+Get response time hours for protection level"""
         
         time_map = {
             ProtectionLevel.BASIC: 72,      # 3 days
@@ -896,33 +910,39 @@ This notice is submitted in good faith and with the reasonable belief that the i
     
     # Database operations
     async def _store_protection_rule(self, rule: ProtectionRule) -> None:
-        """Store protection rule in database"""
+        """
+Store protection rule in database"""
         # Implementation would insert into database
         pass
     
     async def _store_threat(self, threat: ContentThreat) -> None:
-        """Store threat in database"""
+        """
+Store threat in database"""
         # Implementation would insert into database
         pass
     
     async def _store_legal_document(self, document: LegalDocument) -> None:
-        """Store legal document in database"""
+        """
+Store legal document in database"""
         # Implementation would insert into database
         pass
     
     async def _update_legal_document(self, document: LegalDocument) -> None:
-        """Update legal document in database"""
+        """
+Update legal document in database"""
         # Implementation would update database
         pass
     
     async def _store_protection_report(self, report: ProtectionReport) -> None:
-        """Store protection report in database"""
+        """
+Store protection report in database"""
         # Implementation would insert into database
         pass
     
     # Platform integration methods
     async def _initialize_platform_clients(self) -> None:
-        """Initialize platform API clients"""
+        """
+Initialize platform API clients"""
         
         try:
             # Initialize clients for each platform
@@ -1022,7 +1042,8 @@ This notice is submitted in good faith and with the reasonable belief that the i
         start_date: datetime,
         end_date: datetime
     ) -> List[LegalDocument]:
-        """Get legal actions in time period"""
+        """
+Get legal actions in time period"""
         
         actions = []
         for doc in self.pending_legal_actions.values():
@@ -1033,12 +1054,14 @@ This notice is submitted in good faith and with the reasonable belief that the i
         return actions
     
     def _is_threat_resolved(self, threat: ContentThreat) -> bool:
-        """Check if threat is resolved"""
+        """
+Check if threat is resolved"""
         # Implementation would check if content was taken down or resolved
         return False  # Placeholder
     
     async def _calculate_response_times(self, threats: List[ContentThreat]) -> Dict[str, float]:
-        """Calculate response time metrics"""
+        """
+Calculate response time metrics"""
         
         return {
             "avg_detection_time": 15.5,     # minutes
@@ -1095,41 +1118,49 @@ This notice is submitted in good faith and with the reasonable belief that the i
         return []
     
     async def _capture_screenshot(self, url: str) -> Optional[str]:
-        """Capture screenshot of infringing content"""
+        """
+Capture screenshot of infringing content"""
         # Implementation would capture actual screenshot
         return None
     
     async def _generate_fingerprint_comparison(self, threat: ContentThreat) -> Optional[str]:
-        """Generate fingerprint comparison report"""
+        """
+Generate fingerprint comparison report"""
         # Implementation would create detailed comparison
         return None
     
     async def _generate_metadata_report(self, threat: ContentThreat) -> Optional[str]:
-        """Generate metadata report for evidence"""
+        """
+Generate metadata report for evidence"""
         # Implementation would create metadata analysis
         return None
     
     async def _submit_platform_report(self, threat: ContentThreat) -> None:
-        """Submit platform-specific report"""
+        """
+Submit platform-specific report"""
         # Implementation would submit to platform reporting system
         pass
     
     async def _send_threat_notification(self, threat: ContentThreat) -> None:
-        """Send threat notification to creator"""
+        """
+Send threat notification to creator"""
         # Implementation would send notification via email/SMS/push
         pass
     
     # Public interface methods
     def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get current protection metrics"""
+        """
+Get current protection metrics"""
         return self.protection_metrics.copy()
     
     def get_active_threats_count(self) -> int:
-        """Get count of active threats"""
+        """
+Get count of active threats"""
         return len(self.active_threats)
     
     def get_supported_platforms(self) -> List[Platform]:
-        """Get list of supported platforms"""
+        """
+Get list of supported platforms"""
         return [p for p in Platform if p != Platform.UNKNOWN]
 
 

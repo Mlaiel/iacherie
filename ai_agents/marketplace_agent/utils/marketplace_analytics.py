@@ -4,8 +4,9 @@ Provides comprehensive marketplace analytics, performance tracking,
 predictive insights, and AI-powered business intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,7 +21,9 @@ from .marketplace_agent import MarketplaceConfig
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options."""
+    """
+Analytics timeframe options."""
+
     REAL_TIME = "real_time"
     HOURLY = "1h"
     DAILY = "1d"
@@ -32,6 +35,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Available analytics metric types."""
+
     REVENUE = "revenue"
     TRANSACTIONS = "transactions"
     LISTINGS = "listings"
@@ -70,7 +74,8 @@ class AnalyticsDashboard:
 
 @dataclass
 class PredictiveModel:
-    """Predictive analytics model configuration."""
+    """
+Predictive analytics model configuration."""
     model_name: str = ""
     model_type: str = ""  # linear_regression, arima, lstm, prophet
     target_metric: str = ""

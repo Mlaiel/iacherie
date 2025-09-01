@@ -5,9 +5,10 @@ This module serves as the central entry point for the Intelligence Agent system,
 providing a unified interface to all intelligence capabilities including decision making,
 agent coordination, system optimization, learning, and predictive analytics.
 
-Copyright © 2024 Fahed Mlaiel. All Rights Reserved.
+Copyright (c) 2024 Fahed Mlaiel. All Rights Reserved.
 This software is proprietary and confidential.
 """
+
 import asyncio
 import logging
 import sys
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceAgentFactory:
-    """Factory class for creating and managing intelligence agent instances."""
+    """
+Factory class for creating and managing intelligence agent instances."""
     
     _instances: Dict[str, IntelligenceAgent] = {}
     _default_config: Dict[str, Any] = {
@@ -159,7 +161,8 @@ class IntelligenceAgentFactory:
     
     @classmethod
     async def destroy_instance(cls, agent_id: str) -> bool:
-        """Safely destroy an intelligence agent instance."""
+        """
+Safely destroy an intelligence agent instance."""
         if agent_id in cls._instances:
             try:
                 await cls._instances[agent_id].shutdown()
@@ -178,7 +181,8 @@ class IntelligenceAgentFactory:
 
 
 class IntelligenceServiceManager:
-    """High-level service manager for intelligence operations."""
+    """
+High-level service manager for intelligence operations."""
     
     def __init__(self, intelligence_agent: IntelligenceAgent):
         self.intelligence = intelligence_agent
@@ -311,19 +315,23 @@ class IntelligenceServiceManager:
         return await self.intelligence.decision_engine.get_decision_analytics()
     
     async def _get_coordination_analytics(self) -> Dict[str, Any]:
-        """Get agent coordination analytics."""
+        """
+Get agent coordination analytics."""
         return await self.intelligence.agent_coordinator.get_coordination_analytics()
     
     async def _get_optimization_analytics(self) -> Dict[str, Any]:
-        """Get system optimization analytics."""
+        """
+Get system optimization analytics."""
         return await self.intelligence.system_optimizer.get_optimization_analytics()
     
     async def _get_learning_analytics(self) -> Dict[str, Any]:
-        """Get learning engine analytics."""
+        """
+Get learning engine analytics."""
         return await self.intelligence.learning_engine.get_learning_analytics()
     
     async def _get_prediction_analytics(self) -> Dict[str, Any]:
-        """Get prediction engine analytics."""
+        """
+Get prediction engine analytics."""
         return await self.intelligence.prediction_engine.get_prediction_analytics()
 
 
@@ -515,7 +523,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "contact@fahed-mlaiel.com"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "Copyright © 2024 Fahed Mlaiel"
+__copyright__ = "Copyright (c) 2024 Fahed Mlaiel"
 
 # Module metadata
 __title__ = "Intelligence Agent System"

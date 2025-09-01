@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import uuid
@@ -55,7 +56,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MemoryConfiguration:
-    """Configuration for conversation memory system"""
+    """
+Configuration for conversation memory system"""
     max_short_term_entries: int = 1000
     max_long_term_entries: int = 10000
     vector_dimension: int = 384
@@ -617,7 +619,8 @@ class ConversationMemoryManager:
         results: List[ConversationRecord],
         query: str
     ) -> List[ConversationRecord]:
-        """Rank search results by relevance and recency"""
+        """
+Rank search results by relevance and recency"""
         
         # Simple ranking algorithm
         # In production, would use more sophisticated ranking
@@ -640,7 +643,8 @@ class ConversationMemoryManager:
         return results
     
     def _get_content_type(self, conversation: ConversationRecord) -> str:
-        """Get content type from conversation record"""
+        """
+Get content type from conversation record"""
         if conversation.context:
             if isinstance(conversation.context, ContentContext):
                 return conversation.context.content_type
@@ -927,16 +931,19 @@ class MemoryIndexer:
         pass
     
     async def _index_by_semantics(self, conversation: ConversationRecord, text: str):
-        """Index conversation by semantic meaning"""
+        """
+Index conversation by semantic meaning"""
         # Would implement semantic embedding indexing
         pass
     
     async def _index_by_content_type(self, conversation: ConversationRecord, text: str):
-        """Index conversation by content type"""
+        """
+Index conversation by content type"""
         # Would implement content type classification and indexing
         pass
     
     async def _index_by_time(self, conversation: ConversationRecord):
-        """Index conversation by temporal patterns"""
+        """
+Index conversation by temporal patterns"""
         # Would implement temporal indexing
         pass

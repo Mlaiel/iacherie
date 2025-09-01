@@ -8,7 +8,7 @@ Responsibility: Validation et assurance qualité multi-format avec IA et métriq
 =========================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -26,6 +26,7 @@ DIMENSIONS QUALITÉ:
 🛡️ Security Quality: Malware Scan, Privacy Check, Copyright Compliance
 🚀 Performance Quality: Load Time, Compression Ratio, Streaming Readiness
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -64,6 +65,7 @@ logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
     """Dimensions de qualité évaluées"""
+
     TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     AUDIO = "audio"
@@ -75,6 +77,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Niveaux de qualité"""
+
     POOR = 1
     BELOW_AVERAGE = 2
     AVERAGE = 3
@@ -82,7 +85,9 @@ class QualityLevel(Enum):
     EXCELLENT = 5
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
+    """
+Types de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -115,7 +120,8 @@ class QualityAssessment:
 
 @dataclass
 class QualityThresholds:
-    """Seuils de qualité par type de contenu"""
+    """
+Seuils de qualité par type de contenu"""
     content_type: ContentType
     minimum_scores: Dict[QualityDimension, float]
     warning_scores: Dict[QualityDimension, float]
@@ -150,7 +156,8 @@ class QualityAssuranceEngine:
         self.assessment_cache = {}
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialise les modèles IA pour l'évaluation qualité"""
+        """
+Initialise les modèles IA pour l'évaluation qualité"""
         models = {}
         
         try:
@@ -745,7 +752,8 @@ class QualityAssuranceEngine:
         return min(1.0, noise / 1000)  # Normalisation
     
     def _analyze_composition(self, gray_image: np.ndarray) -> float:
-        """Analyse la composition de l'image (règle des tiers)"""
+        """
+Analyse la composition de l'image (règle des tiers)"""
         h, w = gray_image.shape
         
         # Points d'intérêt selon la règle des tiers
@@ -901,7 +909,8 @@ class QualityAssuranceEngine:
         return errors
     
     def _analyze_grammar(self, text: str) -> float:
-        """Analyse grammaticale basique"""
+        """
+Analyse grammaticale basique"""
         # Implémentation simplifiée
         sentences = [s.strip() for s in text.split('.') if s.strip()]
         if not sentences:
@@ -932,7 +941,8 @@ class QualityAssuranceEngine:
         return grammar_score / len(sentences)
     
     def _analyze_text_structure(self, text: str) -> float:
-        """Analyse la structure du texte"""
+        """
+Analyse la structure du texte"""
         lines = text.split('\n')
         paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
         
@@ -1126,7 +1136,8 @@ class QualityAssuranceEngine:
         return efficiency
     
     def _estimate_loading_time(self, file_size: int) -> float:
-        """Estime le temps de chargement"""
+        """
+Estime le temps de chargement"""
         # Connexion moyenne : 5 Mbps
         connection_speed = 5 * 1024 * 1024 / 8  # bytes/sec
         return file_size / connection_speed
@@ -1193,7 +1204,8 @@ class QualityAssuranceEngine:
     
     def _check_platform_requirements(self, content_path: str, assessment: QualityAssessment,
                                    platform: str) -> List[Dict[str, Any]]:
-        """Vérifie les exigences spécifiques d'une plateforme"""
+        """
+Vérifie les exigences spécifiques d'une plateforme"""
         issues = []
         
         if platform == "youtube" and assessment.content_type == ContentType.VIDEO:
@@ -1253,7 +1265,8 @@ class QualityAssuranceEngine:
         return weighted_score / total_weight if total_weight > 0 else 0.0
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Détermine le niveau de qualité"""
+        """
+Détermine le niveau de qualité"""
         if overall_score >= 0.9:
             return QualityLevel.EXCELLENT
         elif overall_score >= 0.75:
@@ -1268,7 +1281,8 @@ class QualityAssuranceEngine:
     async def _generate_quality_recommendations(self, content_path: str,
                                               assessment: QualityAssessment,
                                               target_platforms: Optional[List[str]] = None) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'amélioration"""
+        """
+Génère des recommandations d'amélioration"""
         recommendations = []
         
         # Recommandations basées sur les scores

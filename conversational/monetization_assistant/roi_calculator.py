@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -32,7 +33,9 @@ settings = get_settings()
 
 
 class InvestmentType(Enum):
-    """Types of investments for ROI calculation."""
+    """
+Types of investments for ROI calculation."""
+
     CONTENT_CREATION = "content_creation"
     MARKETING_CAMPAIGN = "marketing_campaign"
     PLATFORM_EXPANSION = "platform_expansion"
@@ -46,6 +49,7 @@ class InvestmentType(Enum):
 
 class ROIMetric(Enum):
     """ROI calculation metrics."""
+
     SIMPLE_ROI = "simple_roi"
     ANNUALIZED_ROI = "annualized_roi"
     IRR = "irr"  # Internal Rate of Return
@@ -71,7 +75,8 @@ class Investment:
 
 @dataclass
 class CashFlow:
-    """Cash flow entry for investment."""
+    """
+Cash flow entry for investment."""
     date: datetime
     amount: Decimal
     description: str
@@ -81,7 +86,8 @@ class CashFlow:
 
 @dataclass
 class ROIAnalysis:
-    """Comprehensive ROI analysis result."""
+    """
+Comprehensive ROI analysis result."""
     analysis_id: str
     investment_id: str
     analysis_period: Tuple[datetime, datetime]
@@ -108,13 +114,15 @@ class ROICalculator:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the ROI calculator."""
+        """
+Initialize the ROI calculator."""
         self.config = config or MonetizationConfig()
         self._financial_modeling = FinancialModelingService()
         self._discount_rate = 0.10  # 10% default discount rate
         
     async def initialize(self) -> None:
-        """Initialize the ROI calculator."""
+        """
+Initialize the ROI calculator."""
         try:
             await self._financial_modeling.initialize()
             logger.info("ROI calculator initialized successfully")
@@ -494,22 +502,26 @@ class ROICalculator:
         pass
     
     async def _calculate_simple_roi(self, cash_flow_data: pd.DataFrame) -> float:
-        """Calculate simple ROI."""
+        """
+Calculate simple ROI."""
         # Implementation for simple ROI calculation
         pass
     
     async def _calculate_irr(self, cash_flow_data: pd.DataFrame) -> Optional[float]:
-        """Calculate Internal Rate of Return."""
+        """
+Calculate Internal Rate of Return."""
         # Implementation for IRR calculation
         pass
     
     async def _calculate_npv(
         self, cash_flow_data: pd.DataFrame, discount_rate: float
     ) -> Decimal:
-        """Calculate Net Present Value."""
+        """
+Calculate Net Present Value."""
         # Implementation for NPV calculation
         pass
     
     def _generate_analysis_id(self) -> str:
-        """Generate unique analysis ID."""
+        """
+Generate unique analysis ID."""
         return f"ROI_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(datetime.now().isoformat())}"

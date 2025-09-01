@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive distributed training capabilities including
 data parallelism, model parallelism, and distributed training orchestration.
 """
+
 import logging
 import json
 import os
@@ -40,7 +41,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""
+    """
+Distribution strategies"""
+
     DATA_PARALLEL = "data_parallel"
     MODEL_PARALLEL = "model_parallel"
     PIPELINE_PARALLEL = "pipeline_parallel"
@@ -48,6 +51,7 @@ class DistributionStrategy(Enum):
 
 class NodeRole(Enum):
     """Node roles in distributed training"""
+
     MASTER = "master"
     WORKER = "worker"
     PARAMETER_SERVER = "parameter_server"
@@ -55,6 +59,7 @@ class NodeRole(Enum):
 
 class TrainingStatus(Enum):
     """Training status"""
+
     INITIALIZING = "initializing"
     TRAINING = "training"
     VALIDATING = "validating"
@@ -76,7 +81,8 @@ class NodeInfo:
 
 @dataclass
 class TrainingConfig:
-    """Distributed training configuration"""
+    """
+Distributed training configuration"""
     strategy: DistributionStrategy
     world_size: int
     master_addr: str
@@ -271,7 +277,8 @@ class TrainingCoordinator:
         self.is_training = False
     
     def execute_training(self, training_job: 'DistributedTrainingJob') -> bool:
-        """Execute distributed training job"""
+        """
+Execute distributed training job"""
         try:
             self.logger.info(f"Executing training job: {training_job.job_id}")
             
@@ -570,7 +577,8 @@ def estimate_training_time(model_size: int, dataset_size: int,
     return max(estimated_hours, 0.1)  # Minimum 0.1 hours
 
 def optimize_batch_size(model_size: int, gpu_memory: int, world_size: int) -> int:
-    """Optimize batch size for distributed training"""
+    """
+Optimize batch size for distributed training"""
     # Simple optimization logic
     memory_per_gpu = gpu_memory // world_size if world_size > 0 else gpu_memory
     base_batch_size = max(memory_per_gpu // (model_size // 1000000), 1)

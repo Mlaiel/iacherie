@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -48,7 +49,8 @@ settings = get_settings()
 
 @dataclass
 class MastodonToot:
-    """Mastodon toot data structure"""
+    """
+Mastodon toot data structure"""
     id: str
     uri: str
     url: str
@@ -77,7 +79,8 @@ class MastodonToot:
 
 @dataclass
 class MastodonAccount:
-    """Mastodon account data structure"""
+    """
+Mastodon account data structure"""
     id: str
     username: str
     acct: str
@@ -104,7 +107,8 @@ class MastodonAccount:
 
 @dataclass
 class MastodonInstance:
-    """Mastodon instance data structure"""
+    """
+Mastodon instance data structure"""
     uri: str
     title: str
     short_description: str
@@ -135,7 +139,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Mastodon crawler engine"""
+        """
+Initialize Mastodon crawler engine"""
         super().__init__(platform="mastodon", config=config)
         
         # Rate limiting (varies by instance)

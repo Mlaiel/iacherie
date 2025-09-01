@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -61,7 +62,9 @@ from ...utils.pattern_matching import PatternMatcher
 logger = logging.getLogger(__name__)
 
 class InvestigationType(Enum):
-    """Forensic investigation type classification"""
+    """
+Forensic investigation type classification"""
+
     SECURITY_BREACH = "security_breach"
     DATA_EXFILTRATION = "data_exfiltration"
     INSIDER_THREAT = "insider_threat"
@@ -73,6 +76,7 @@ class InvestigationType(Enum):
 
 class EvidenceType(Enum):
     """Digital evidence type classification"""
+
     LOG_FILES = "log_files"
     DATABASE_RECORDS = "database_records"
     NETWORK_TRAFFIC = "network_traffic"
@@ -85,6 +89,7 @@ class EvidenceType(Enum):
 
 class AnalysisStatus(Enum):
     """Forensic analysis status"""
+
     INITIATED = "initiated"
     COLLECTING_EVIDENCE = "collecting_evidence"
     ANALYZING = "analyzing"
@@ -108,7 +113,8 @@ class ForensicConfiguration:
 
 @dataclass
 class ForensicMetrics:
-    """Comprehensive forensic analysis metrics"""
+    """
+Comprehensive forensic analysis metrics"""
     active_cases: int = 0
     evidence_items_collected: int = 0
     timeline_events_analyzed: int = 0
@@ -660,7 +666,8 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         correlation_depth: int
     ) -> List[Dict[str, Any]]:
-        """Perform advanced event correlation analysis"""
+        """
+Perform advanced event correlation analysis"""
         correlated_events = []
         
         # Group events by time windows
@@ -678,7 +685,8 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         window_size: int
     ) -> List[List[Dict[str, Any]]]:
-        """Group events into time windows for correlation analysis"""
+        """
+Group events into time windows for correlation analysis"""
         if not events:
             return []
         
@@ -709,7 +717,8 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         depth: int
     ) -> List[Dict[str, Any]]:
-        """Find correlations between events within a time window"""
+        """
+Find correlations between events within a time window"""
         correlations = []
         
         # Create correlation matrix

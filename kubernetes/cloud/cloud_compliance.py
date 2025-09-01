@@ -14,6 +14,7 @@ This module provides comprehensive compliance management for the IA Influencer
 Agent platform, including GDPR, SOC2, HIPAA, ISO27001, and industry-specific
 regulations with automated compliance monitoring and reporting.
 """
+
 import logging
 import asyncio
 import json
@@ -30,7 +31,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     SOC2 = "soc2"
     HIPAA = "hipaa"
@@ -44,6 +47,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -53,6 +57,7 @@ class ComplianceStatus(Enum):
 
 class ControlType(Enum):
     """Types of compliance controls"""
+
     PREVENTIVE = "preventive"
     DETECTIVE = "detective"
     CORRECTIVE = "corrective"
@@ -62,6 +67,7 @@ class ControlType(Enum):
 
 class Severity(Enum):
     """Compliance issue severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -86,7 +92,8 @@ class ComplianceControl:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment results"""
+    """
+Compliance assessment results"""
     assessment_id: str
     framework: ComplianceFramework
     scope: Dict[str, Any]
@@ -101,7 +108,8 @@ class ComplianceAssessment:
 
 @dataclass
 class ComplianceFinding:
-    """Individual compliance finding"""
+    """
+Individual compliance finding"""
     finding_id: str
     control_id: str
     framework: ComplianceFramework
@@ -119,7 +127,8 @@ class ComplianceFinding:
 
 @dataclass
 class CompliancePolicy:
-    """Compliance policy definition"""
+    """
+Compliance policy definition"""
     policy_id: str
     name: str
     frameworks: List[ComplianceFramework]
@@ -133,10 +142,12 @@ class CompliancePolicy:
     created_at: datetime = field(default_factory=datetime.now)
 
 class CloudComplianceManager:
-    """Enterprise cloud compliance and governance manager"""
+    """
+Enterprise cloud compliance and governance manager"""
     
     def __init__(self):
-        """Initialize cloud compliance manager"""
+        """
+Initialize cloud compliance manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Cloud clients for compliance monitoring
@@ -251,7 +262,8 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_soc2_controls(self):
-        """Load SOC2 compliance controls"""
+        """
+Load SOC2 compliance controls"""
         soc2_controls = [
             {
                 'control_id': 'SOC2-CC6.1',
@@ -303,7 +315,8 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_iso27001_controls(self):
-        """Load ISO27001 compliance controls"""
+        """
+Load ISO27001 compliance controls"""
         iso_controls = [
             {
                 'control_id': 'ISO-A.8.2.3',
@@ -355,7 +368,8 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_hipaa_controls(self):
-        """Load HIPAA compliance controls"""
+        """
+Load HIPAA compliance controls"""
         hipaa_controls = [
             {
                 'control_id': 'HIPAA-164.312(a)(1)',
@@ -407,7 +421,8 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_pci_dss_controls(self):
-        """Load PCI DSS compliance controls"""
+        """
+Load PCI DSS compliance controls"""
         pci_controls = [
             {
                 'control_id': 'PCI-3.4',
@@ -461,7 +476,8 @@ class CloudComplianceManager:
     async def perform_compliance_assessment(self, 
                                           framework: ComplianceFramework,
                                           scope: Dict[str, Any]) -> ComplianceAssessment:
-        """Perform comprehensive compliance assessment"""
+        """
+Perform comprehensive compliance assessment"""
         try:
             assessment_id = f"assessment_{framework.value}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             

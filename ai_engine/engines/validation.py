@@ -15,7 +15,7 @@ for the IA-Influencer platform AI content processing engines.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import json
@@ -50,7 +51,9 @@ import os
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
+    """
+Validation strictness levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -59,6 +62,7 @@ class ValidationLevel(Enum):
 
 class TestType(Enum):
     """Types of tests performed"""
+
     FUNCTIONALITY = "functionality"
     PERFORMANCE = "performance"
     SECURITY = "security"
@@ -71,6 +75,7 @@ class TestType(Enum):
 
 class ValidationStatus(Enum):
     """Validation result status"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -105,7 +110,8 @@ class ValidationResult:
 
 @dataclass
 class TestCase:
-    """Test case definition"""
+    """
+Test case definition"""
     name: str
     description: str
     test_type: TestType
@@ -119,7 +125,8 @@ class TestCase:
 
 @dataclass
 class TestResult:
-    """Result of a test execution"""
+    """
+Result of a test execution"""
     test_name: str
     status: ValidationStatus
     message: str
@@ -261,7 +268,8 @@ class ContentValidator:
         self.validation_rules[rule.name] = rule
         
     def _assign_rules_to_content_types(self):
-        """Assign validation rules to specific content types"""
+        """
+Assign validation rules to specific content types"""
         for rule_name, rule in self.validation_rules.items():
             # General rules apply to all content types
             if not rule.tags or "general" in rule.tags:
@@ -858,7 +866,8 @@ class EngineTestSuite:
         self._initialize_test_cases()
         
     def _initialize_test_cases(self):
-        """Initialize all test cases"""
+        """
+Initialize all test cases"""
         
         # Functionality tests
         self.add_test_case(TestCase(
@@ -913,7 +922,8 @@ class EngineTestSuite:
         self.test_cases[test_case.name] = test_case
         
     async def run_all_tests(self, engine: Any) -> List[TestResult]:
-        """Run all test cases for an engine"""
+        """
+Run all test cases for an engine"""
         results = []
         
         for test_name, test_case in self.test_cases.items():
@@ -924,7 +934,8 @@ class EngineTestSuite:
         return results
         
     async def run_test(self, test_name: str, engine: Any) -> TestResult:
-        """Run a specific test case"""
+        """
+Run a specific test case"""
         test_case = self.test_cases.get(test_name)
         if not test_case:
             return TestResult(
@@ -1362,12 +1373,14 @@ async def validate_content(content: Any, content_type: str, **kwargs) -> List[Va
 
 
 async def run_engine_tests(engine: Any) -> List[TestResult]:
-    """Run all tests for an engine"""
+    """
+Run all tests for an engine"""
     return await engine_test_suite.run_all_tests(engine)
 
 
 def generate_validation_report(results: List[ValidationResult]) -> Dict[str, Any]:
-    """Generate validation report"""
+    """
+Generate validation report"""
     total_validations = len(results)
     passed_validations = sum(1 for r in results if r.status == ValidationStatus.PASSED)
     failed_validations = sum(1 for r in results if r.status == ValidationStatus.FAILED)

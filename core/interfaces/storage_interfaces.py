@@ -4,8 +4,9 @@ Defines interfaces for data storage, database operations,
 caching, file system management and backup operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple, Generator
 from datetime import datetime
@@ -14,7 +15,9 @@ import asyncio
 
 
 class StorageType(Enum):
-    """Storage system types."""
+    """
+Storage system types."""
+
     RELATIONAL_DB = "relational_db"
     DOCUMENT_DB = "document_db"
     KEY_VALUE_STORE = "key_value_store"
@@ -26,6 +29,7 @@ class StorageType(Enum):
 
 class DatabaseType(Enum):
     """Database system types."""
+
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
@@ -37,6 +41,7 @@ class DatabaseType(Enum):
 
 class CacheStrategy(Enum):
     """Cache management strategies."""
+
     LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
@@ -47,6 +52,7 @@ class CacheStrategy(Enum):
 
 class BackupStrategy(Enum):
     """Backup strategies."""
+
     AUTOMATED = "automated"
     MANUAL = "manual"
     SCHEDULED = "scheduled"
@@ -56,6 +62,7 @@ class BackupStrategy(Enum):
 
 class BackupType(Enum):
     """Backup operation types."""
+
     FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     DIFFERENTIAL_BACKUP = "differential_backup"
@@ -93,7 +100,8 @@ class StorageInterface(ABC):
         storage_key: str,
         storage_type: StorageType
     ) -> Union[Dict[str, Any], bytes, str, None]:
-        """Retrieve data from storage system."""
+        """
+Retrieve data from storage system."""
         pass
     
     @abstractmethod
@@ -103,7 +111,8 @@ class StorageInterface(ABC):
         updated_data: Union[Dict[str, Any], bytes, str],
         storage_type: StorageType
     ) -> bool:
-        """Update existing data in storage system."""
+        """
+Update existing data in storage system."""
         pass
     
     @abstractmethod
@@ -113,7 +122,8 @@ class StorageInterface(ABC):
         storage_type: StorageType,
         hard_delete: bool = False
     ) -> bool:
-        """Delete data from storage system."""
+        """
+Delete data from storage system."""
         pass
     
     @abstractmethod
@@ -123,7 +133,8 @@ class StorageInterface(ABC):
         filter_criteria: Optional[Dict[str, Any]] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """List items in storage with optional filtering."""
+        """
+List items in storage with optional filtering."""
         pass
     
     @abstractmethod
@@ -131,12 +142,14 @@ class StorageInterface(ABC):
         self,
         storage_type: StorageType
     ) -> Dict[str, Any]:
-        """Get storage usage statistics and metrics."""
+        """
+Get storage usage statistics and metrics."""
         pass
 
 
 class DatabaseInterface(ABC):
-    """Interface for database operations."""
+    """
+Interface for database operations."""
     
     @abstractmethod
     async def execute_query(
@@ -164,7 +177,8 @@ class DatabaseInterface(ABC):
         operations: List[Dict[str, Any]],
         database_name: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Execute multiple operations as atomic transaction."""
+        """
+Execute multiple operations as atomic transaction."""
         pass
     
     @abstractmethod
@@ -174,7 +188,8 @@ class DatabaseInterface(ABC):
         index_definition: Dict[str, Any],
         database_name: Optional[str] = None
     ) -> bool:
-        """Create database index for performance optimization."""
+        """
+Create database index for performance optimization."""
         pass
     
     @abstractmethod
@@ -182,7 +197,8 @@ class DatabaseInterface(ABC):
         self,
         optimization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize database performance based on usage patterns."""
+        """
+Optimize database performance based on usage patterns."""
         pass
     
     @abstractmethod
@@ -190,7 +206,8 @@ class DatabaseInterface(ABC):
         self,
         backup_config: Dict[str, Any]
     ) -> str:
-        """Create database backup with specified configuration."""
+        """
+Create database backup with specified configuration."""
         pass
     
     @abstractmethod
@@ -199,12 +216,14 @@ class DatabaseInterface(ABC):
         backup_id: str,
         restore_config: Dict[str, Any]
     ) -> bool:
-        """Restore database from backup."""
+        """
+Restore database from backup."""
         pass
 
 
 class CacheInterface(ABC):
-    """Interface for caching operations."""
+    """
+Interface for caching operations."""
     
     @abstractmethod
     async def cache_data(
@@ -233,7 +252,8 @@ class CacheInterface(ABC):
         self,
         cache_key: str
     ) -> Optional[Any]:
-        """Retrieve data from cache."""
+        """
+Retrieve data from cache."""
         pass
     
     @abstractmethod
@@ -242,7 +262,8 @@ class CacheInterface(ABC):
         cache_key: Optional[str] = None,
         pattern: Optional[str] = None
     ) -> bool:
-        """Invalidate cache entries by key or pattern."""
+        """
+Invalidate cache entries by key or pattern."""
         pass
     
     @abstractmethod
@@ -252,14 +273,16 @@ class CacheInterface(ABC):
         updated_data: Any,
         extend_ttl: bool = False
     ) -> bool:
-        """Update cached data and optionally extend TTL."""
+        """
+Update cached data and optionally extend TTL."""
         pass
     
     @abstractmethod
     async def get_cache_statistics(
         self
     ) -> Dict[str, Any]:
-        """Get cache performance statistics."""
+        """
+Get cache performance statistics."""
         pass
     
     @abstractmethod
@@ -267,12 +290,14 @@ class CacheInterface(ABC):
         self,
         policy_config: Dict[str, Any]
     ) -> bool:
-        """Configure cache management policies."""
+        """
+Configure cache management policies."""
         pass
 
 
 class FileSystemInterface(ABC):
-    """Interface for file system operations."""
+    """
+Interface for file system operations."""
     
     @abstractmethod
     async def upload_file(
@@ -299,7 +324,8 @@ class FileSystemInterface(ABC):
         self,
         file_path: str
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Download file and metadata from storage."""
+        """
+Download file and metadata from storage."""
         pass
     
     @abstractmethod
@@ -308,7 +334,8 @@ class FileSystemInterface(ABC):
         file_path: str,
         permanent: bool = False
     ) -> bool:
-        """Delete file from storage system."""
+        """
+Delete file from storage system."""
         pass
     
     @abstractmethod
@@ -317,7 +344,8 @@ class FileSystemInterface(ABC):
         source_path: str,
         destination_path: str
     ) -> bool:
-        """Move file to new location."""
+        """
+Move file to new location."""
         pass
     
     @abstractmethod
@@ -325,7 +353,8 @@ class FileSystemInterface(ABC):
         self,
         file_path: str
     ) -> Dict[str, Any]:
-        """Get file metadata and properties."""
+        """
+Get file metadata and properties."""
         pass
     
     @abstractmethod
@@ -334,7 +363,8 @@ class FileSystemInterface(ABC):
         directory_path: str,
         recursive: bool = False
     ) -> List[Dict[str, Any]]:
-        """List files and subdirectories in directory."""
+        """
+List files and subdirectories in directory."""
         pass
     
     @abstractmethod
@@ -344,12 +374,14 @@ class FileSystemInterface(ABC):
         operation: str,
         expiration_seconds: int = 3600
     ) -> str:
-        """Create presigned URL for file access."""
+        """
+Create presigned URL for file access."""
         pass
 
 
 class BackupInterface(ABC):
-    """Interface for backup and recovery operations."""
+    """
+Interface for backup and recovery operations."""
     
     @abstractmethod
     async def create_backup(
@@ -378,7 +410,8 @@ class BackupInterface(ABC):
         restore_target: str,
         restore_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Restore data from backup."""
+        """
+Restore data from backup."""
         pass
     
     @abstractmethod
@@ -387,7 +420,8 @@ class BackupInterface(ABC):
         backup_schedule: Dict[str, Any],
         backup_targets: List[str]
     ) -> str:
-        """Schedule automated backup operations."""
+        """
+Schedule automated backup operations."""
         pass
     
     @abstractmethod
@@ -395,7 +429,8 @@ class BackupInterface(ABC):
         self,
         backup_id: str
     ) -> Dict[str, Any]:
-        """Verify backup data integrity and completeness."""
+        """
+Verify backup data integrity and completeness."""
         pass
     
     @abstractmethod
@@ -404,7 +439,8 @@ class BackupInterface(ABC):
         source_filter: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[Dict[str, Any]]:
-        """List available backups with optional filtering."""
+        """
+List available backups with optional filtering."""
         pass
     
     @abstractmethod
@@ -413,7 +449,8 @@ class BackupInterface(ABC):
         backup_id: str,
         confirmation_required: bool = True
     ) -> bool:
-        """Delete backup with optional confirmation."""
+        """
+Delete backup with optional confirmation."""
         pass
     
     @abstractmethod
@@ -421,5 +458,6 @@ class BackupInterface(ABC):
         self,
         time_period: str
     ) -> Dict[str, Any]:
-        """Get backup operation statistics and metrics."""
+        """
+Get backup operation statistics and metrics."""
         pass

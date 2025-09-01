@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -50,7 +51,9 @@ from .distribution_manager import DistributionManager
 
 
 class LicenseType(Enum):
-    """License types supported by the system"""
+    """
+License types supported by the system"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC_LICENSING = "sync_licensing"
@@ -70,6 +73,7 @@ class LicenseType(Enum):
 
 class ContentFormat(Enum):
     """Content formats supported"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -85,6 +89,7 @@ class ContentFormat(Enum):
 
 class LicenseStatus(Enum):
     """License lifecycle status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -99,6 +104,7 @@ class LicenseStatus(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -108,6 +114,7 @@ class ProcessingPriority(Enum):
 
 class RevenueModel(Enum):
     """Revenue sharing models"""
+
     PERCENTAGE = "percentage"
     FLAT_FEE = "flat_fee"
     TIERED = "tiered"
@@ -322,7 +329,8 @@ class LicensingEngine:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the licensing engine and all components"""
+        """
+Initialize the licensing engine and all components"""
         try:
             self.logger.info("Initializing LicensingEngine")
             
@@ -486,7 +494,8 @@ class LicensingEngine:
         license_id: str,
         updates: Dict[str, Any]
     ) -> License:
-        """Update existing license with validation"""
+        """
+Update existing license with validation"""
         if not self.is_initialized:
             raise LicensingError("LicensingEngine not initialized")
         
@@ -609,7 +618,8 @@ class LicensingEngine:
         license_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for a license"""
+        """
+Get comprehensive analytics for a license"""
         license = self.licenses_database.get(license_id)
         if not license:
             raise ValidationError(f"License not found: {license_id}")
@@ -694,7 +704,8 @@ class LicensingEngine:
         return False
     
     def _is_valid_status_transition(self, current: LicenseStatus, new: LicenseStatus) -> bool:
-        """Check if status transition is valid"""
+        """
+Check if status transition is valid"""
         valid_transitions = {
             LicenseStatus.DRAFT: [LicenseStatus.PENDING_APPROVAL, LicenseStatus.ACTIVE],
             LicenseStatus.PENDING_APPROVAL: [LicenseStatus.ACTIVE, LicenseStatus.TERMINATED],
@@ -713,7 +724,8 @@ class LicensingEngine:
         revenue_data: Dict[str, Any],
         compliance_data: Dict[str, Any]
     ) -> float:
-        """Calculate overall health score for license (0-100)"""
+        """
+Calculate overall health score for license (0-100)"""
         # Usage score (0-40 points)
         usage_score = min(40, usage_data.get('total_usage', 0) / 1000 * 40)
         
@@ -727,7 +739,8 @@ class LicensingEngine:
         return round(usage_score + revenue_score + compliance_score, 2)
     
     async def _activate_license(self, license: License) -> None:
-        """Activate license and start tracking"""
+        """
+Activate license and start tracking"""
         # Start revenue tracking
         await self.royalty_processor.initialize_license_revenue_tracking(license.license_id)
         

@@ -10,6 +10,7 @@ Ultra-advanced evidence collection engine with forensic-grade integrity,
 legal-compliant documentation, blockchain verification, and audit trails.
 Business Logic: Alert trigger → evidence collection → integrity verification → legal documentation → chain of custody
 """
+
 import asyncio
 import logging
 import hashlib
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Types of evidence that can be collected"""
+    """
+Types of evidence that can be collected"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_RECORDING = "audio_recording"
@@ -65,6 +68,7 @@ class EvidenceType(Enum):
 
 class EvidenceStatus(Enum):
     """Status of evidence collection process"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COLLECTED = "collected"
@@ -79,6 +83,7 @@ class EvidenceStatus(Enum):
 
 class EvidenceIntegrity(Enum):
     """Evidence integrity verification levels"""
+
     BASIC = "basic"
     CRYPTOGRAPHIC = "cryptographic"
     BLOCKCHAIN = "blockchain"
@@ -128,7 +133,8 @@ class EvidenceCollectionResult:
 
 @dataclass
 class ChainOfCustodyEntry:
-    """Individual chain of custody entry"""
+    """
+Individual chain of custody entry"""
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     actor: str = ""
     action: str = ""
@@ -171,7 +177,8 @@ class AdvancedEvidenceCollector:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize evidence collection engine"""
+        """
+Initialize evidence collection engine"""
         await self.forensic_analyzer.initialize()
         await self.blockchain_recorder.initialize()
         await self.encryption_manager.initialize()

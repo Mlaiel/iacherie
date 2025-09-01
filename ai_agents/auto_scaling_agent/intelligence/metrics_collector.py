@@ -5,8 +5,9 @@ capabilities for monitoring and scaling decisions in the IA Influencer Agent pla
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-© 2025 All Rights Reserved
+(c) 2025 All Rights Reserved
 """
+
 import asyncio
 import logging
 import time
@@ -38,7 +39,9 @@ from ...core.monitoring import get_metrics_client
 
 
 class MetricType(Enum):
-    """Types of metrics"""
+    """
+Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge" 
     HISTOGRAM = "histogram"
@@ -48,6 +51,7 @@ class MetricType(Enum):
 
 class AggregationType(Enum):
     """Types of metric aggregation"""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -72,7 +76,8 @@ class MetricPoint:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result"""
+    """
+Aggregated metric result"""
     name: str
     aggregation_type: AggregationType
     value: float
@@ -84,7 +89,8 @@ class AggregatedMetric:
 
 @dataclass
 class MetricDefinition:
-    """Metric definition and configuration"""
+    """
+Metric definition and configuration"""
     name: str
     metric_type: MetricType
     description: str

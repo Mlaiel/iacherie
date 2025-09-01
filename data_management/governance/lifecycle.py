@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class LifecycleStage(Enum):
-    """Data lifecycle stages"""
+    """
+Data lifecycle stages"""
+
     CREATED = "created"
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -43,6 +46,7 @@ class LifecycleStage(Enum):
 
 class RetentionAction(Enum):
     """Actions to take when retention period expires"""
+
     DELETE = "delete"
     ARCHIVE = "archive"
     ANONYMIZE = "anonymize"
@@ -53,6 +57,7 @@ class RetentionAction(Enum):
 
 class DataClassification(Enum):
     """Data classification levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -78,7 +83,8 @@ class RetentionRule:
 
 @dataclass
 class LifecycleEvent:
-    """Lifecycle event record"""
+    """
+Lifecycle event record"""
     event_id: str
     content_id: str
     stage_from: LifecycleStage
@@ -90,7 +96,8 @@ class LifecycleEvent:
 
 @dataclass
 class RetentionPolicy:
-    """Complete retention policy definition"""
+    """
+Complete retention policy definition"""
     policy_id: str
     name: str
     description: str
@@ -123,14 +130,16 @@ class LifecycleTransition:
         self.action = action
     
     def can_transition(self, metadata: Dict[str, Any]) -> bool:
-        """Check if transition condition is met"""
+        """
+Check if transition condition is met"""
         try:
             return self.condition(metadata)
         except Exception:
             return False
     
     async def execute_transition(self, content_id: str, metadata: Dict[str, Any]) -> None:
-        """Execute transition action"""
+        """
+Execute transition action"""
         if self.action:
             try:
                 await self.action(content_id, metadata)
@@ -147,7 +156,8 @@ class ArchivalStrategy(ABC):
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Archive content and return archive location - base implementation"""
+        """
+Archive content and return archive location - base implementation"""
         try:
             logger.info(f"Archiving content: {content_id}")
             
@@ -307,7 +317,8 @@ class LifecycleManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the lifecycle manager"""
+        """
+Initialize the lifecycle manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -728,7 +739,8 @@ class LifecycleManager(BaseManager):
             ))
     
     def _check_inactivity_threshold(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content meets inactivity threshold"""
+        """
+Check if content meets inactivity threshold"""
         last_access = metadata.get("last_access_at")
         if not last_access:
             return False
@@ -849,7 +861,8 @@ class LifecycleManager(BaseManager):
         self,
         metadata: Dict[str, Any]
     ) -> List[RetentionRule]:
-        """Get applicable retention rules for content metadata"""
+        """
+Get applicable retention rules for content metadata"""
         applicable_rules = []
         
         content_type = metadata.get("content_type", "")
@@ -898,7 +911,8 @@ class LifecycleManager(BaseManager):
         rule: RetentionRule,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Check if retention action should be applied"""
+        """
+Check if retention action should be applied"""
         created_at = metadata.get("created_at")
         if not created_at:
             return False
@@ -927,7 +941,8 @@ class LifecycleManager(BaseManager):
         # Additional actions can be implemented
     
     async def _can_delete_content(self, content_id: str) -> bool:
-        """Check if content can be deleted based on retention policies"""
+        """
+Check if content can be deleted based on retention policies"""
         metadata = await self._get_content_metadata(content_id)
         if not metadata:
             return True
@@ -942,7 +957,8 @@ class LifecycleManager(BaseManager):
         return True
     
     async def _check_retention_compliance(self) -> None:
-        """Check overall retention compliance"""
+        """
+Check overall retention compliance"""
         violations = 0
         
         for content_id in self.content_stages.keys():
@@ -971,7 +987,8 @@ class LifecycleManager(BaseManager):
         return pending
     
     async def _validate_retention_policy(self, policy: RetentionPolicy) -> None:
-        """Validate retention policy configuration"""
+        """
+Validate retention policy configuration"""
         if not policy.policy_id or not policy.name:
             raise ValidationError("Policy ID and name are required")
         
@@ -1087,7 +1104,8 @@ class LifecycleManager(BaseManager):
         return {}
     
     async def _get_content_data(self, content_id: str) -> Optional[bytes]:
-        """Get content data from storage"""
+        """
+Get content data from storage"""
         # Storage retrieval logic here
         return b""
     
@@ -1251,7 +1269,8 @@ class LifecycleManager(BaseManager):
         return text.encode('utf-8')
     
     async def _anonymize_media_content(self, content_data: bytes, content_type: str) -> bytes:
-        """Anonymize media content by removing metadata"""
+        """
+Anonymize media content by removing metadata"""
         # Basic implementation - would remove EXIF/metadata
         logger.debug(f"Anonymizing {content_type} content (removing metadata)")
         return content_data  # Simplified - real implementation would strip metadata

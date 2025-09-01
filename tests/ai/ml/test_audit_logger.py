@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Audit Logger Tests - Enterprise Grade Security & Compliance Test Suite
+"""
+Audit Logger Tests - Enterprise Grade Security & Compliance Test Suite
 
 Comprehensive tests for audit logging, compliance tracking, security event monitoring,
 forensic analysis, and regulatory compliance systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -56,10 +59,12 @@ from ai.ml.audit_logger import (
 
 
 class TestAuditLogger:
-    """Tests for core audit logging functionality"""
+    """
+Tests for core audit logging functionality"""
     
     def test_init_audit_logger(self):
-        """Test audit logger initialization"""
+        """
+Test audit logger initialization"""
         logger = AuditLogger(
             log_level="INFO",
             output_formats=["json", "csv", "database"],
@@ -291,7 +296,8 @@ class TestSecurityAuditLogger:
     """Tests for security-specific audit logging"""
     
     def test_init_security_audit_logger(self):
-        """Test security audit logger initialization"""
+        """
+Test security audit logger initialization"""
         security_logger = SecurityAuditLogger(
             security_events=["authentication", "authorization", "data_access", "configuration_change"],
             threat_intelligence_integration=True,
@@ -542,7 +548,8 @@ class TestComplianceLogger:
     """Tests for compliance-specific logging functionality"""
     
     def test_init_compliance_logger(self):
-        """Test compliance logger initialization"""
+        """
+Test compliance logger initialization"""
         compliance_logger = ComplianceLogger(
             compliance_frameworks=["GDPR", "SOX", "HIPAA", "PCI_DSS", "ISO27001"],
             automatic_compliance_checking=True,
@@ -815,7 +822,8 @@ class TestLogRetentionManager:
     """Tests for log retention and archival management"""
     
     def test_init_retention_manager(self):
-        """Test retention manager initialization"""
+        """
+Test retention manager initialization"""
         retention_manager = LogRetentionManager(
             default_retention_days=2555,  # 7 years
             retention_policies={
@@ -977,7 +985,8 @@ class TestAuditLoggerIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_audit_pipeline(self, temp_dir):
-        """Test complete audit logging pipeline from event to archive"""
+        """
+Test complete audit logging pipeline from event to archive"""
         # Initialize components
         audit_logger = AuditLogger(output_directory=str(temp_dir))
         security_logger = SecurityAuditLogger()

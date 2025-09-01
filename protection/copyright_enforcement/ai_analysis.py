@@ -24,6 +24,7 @@ ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModality(Enum):
-    """Content modality types for AI analysis"""
+    """
+Content modality types for AI analysis"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -72,6 +75,7 @@ class ContentModality(Enum):
 
 class AnalysisType(Enum):
     """Types of AI analysis"""
+
     SIMILARITY_DETECTION = "similarity_detection"
     LEGAL_STRENGTH_ASSESSMENT = "legal_strength_assessment"
     EVIDENCE_SCORING = "evidence_scoring"
@@ -83,6 +87,7 @@ class AnalysisType(Enum):
 
 class SimilarityMethod(Enum):
     """Similarity detection methods"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     FEATURE_MATCHING = "feature_matching"
     DEEP_LEARNING = "deep_learning"
@@ -108,7 +113,8 @@ class ContentFeatures:
 
 @dataclass
 class SimilarityAnalysisResult:
-    """Result of content similarity analysis"""
+    """
+Result of content similarity analysis"""
     original_content_id: str
     comparison_content_id: str
     overall_similarity: float
@@ -122,7 +128,8 @@ class SimilarityAnalysisResult:
 
 @dataclass
 class LegalAnalysisResult:
-    """Result of legal strength analysis"""
+    """
+Result of legal strength analysis"""
     case_id: str
     legal_strength_score: float
     copyright_validity: float
@@ -135,7 +142,8 @@ class LegalAnalysisResult:
 
 
 class ContentAnalysisEngine:
-    """Ultra-advanced AI-powered content analysis engine"""
+    """
+Ultra-advanced AI-powered content analysis engine"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -156,7 +164,8 @@ class ContentAnalysisEngine:
         self._initialize_models()
     
     def _initialize_models(self) -> None:
-        """Initialize all AI models"""
+        """
+Initialize all AI models"""
         try:
             # Text analysis models
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -908,7 +917,8 @@ class ContentAnalysisEngine:
         return base_prompt
     
     async def cleanup_models(self) -> None:
-        """Cleanup AI models and free memory"""
+        """
+Cleanup AI models and free memory"""
         try:
             del self.text_model
             del self.clip_model
@@ -937,7 +947,8 @@ class IntelligentEnforcementStrategy:
         similarity_analysis: SimilarityAnalysisResult,
         legal_analysis: LegalAnalysisResult
     ) -> Dict[str, Any]:
-        """Recommend optimal enforcement strategy using AI"""
+        """
+Recommend optimal enforcement strategy using AI"""
         try:
             # Analyze multiple factors
             urgency_score = self._calculate_urgency(violation_data, similarity_analysis)
@@ -1026,7 +1037,8 @@ class IntelligentEnforcementStrategy:
         return min(efficiency, 1.0)
     
     def _estimate_timeline(self, strategy: str) -> Dict[str, int]:
-        """Estimate timeline for enforcement strategy"""
+        """
+Estimate timeline for enforcement strategy"""
         timelines = {
             "aggressive_immediate": {"dmca": 1, "legal": 30, "resolution": 90},
             "dmca_focused": {"dmca": 3, "response": 14, "resolution": 45},

@@ -13,6 +13,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 import logging
 from datetime import datetime, timezone
@@ -299,7 +300,7 @@ def get_module_info() -> Dict[str, Any]:
         "author": __author__,
         "email": __email__,
         "license": __license__,
-        "copyright": f"© 2025 {__author__}. All rights reserved.",
+        "copyright": f"(c) 2025 {__author__}. All rights reserved.",
         "description": "Revolutionary enterprise audit logging system for IA Influencer Agent platform",
         "business_logic": {
             "multi_format_creators": "Musicians, Bloggers, Photographers, Influencers, Comedians",

@@ -5,7 +5,7 @@ AI-powered validation system for DMCA claims with legal compliance checking.
 Validates evidence strength, legal basis, and automated quality assurance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -31,6 +31,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
@@ -59,7 +60,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationResult(Enum):
-    """Validation outcome classifications"""
+    """
+Validation outcome classifications"""
+
     APPROVED = "approved"              # Strong case, proceed with confidence
     CONDITIONAL = "conditional"        # Good case, minor issues to address
     REVIEW_REQUIRED = "review_required"  # Manual review needed
@@ -69,6 +72,7 @@ class ValidationResult(Enum):
 
 class LegalRiskLevel(IntEnum):
     """Legal risk assessment levels"""
+
     MINIMAL = 1        # < 5% risk of counter-claim
     LOW = 2           # 5-15% risk
     MODERATE = 3      # 15-30% risk
@@ -78,7 +82,8 @@ class LegalRiskLevel(IntEnum):
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation assessment report"""
+    """
+Comprehensive validation assessment report"""
     validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.utcnow)
     result: ValidationResult = ValidationResult.REVIEW_REQUIRED
@@ -107,7 +112,8 @@ class ValidationReport:
 
 
 class DMCAAutomatedValidator:
-    """Enterprise-grade automated DMCA validation engine"""
+    """
+Enterprise-grade automated DMCA validation engine"""
     
     def __init__(self):
         self.text_vectorizer = TfidfVectorizer(
@@ -119,7 +125,8 @@ class DMCAAutomatedValidator:
         self.legal_precedents: Dict[str, Any] = self._load_legal_precedents()
         
     def _load_legal_precedents(self) -> Dict[str, Any]:
-        """Load legal precedents and guidelines for validation"""
+        """
+Load legal precedents and guidelines for validation"""
         return {
             'fair_use_keywords': [
                 'parody', 'criticism', 'review', 'comment', 'news reporting',
@@ -307,7 +314,8 @@ class DMCAAutomatedValidator:
         return similarities
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity using TF-IDF and cosine similarity"""
+        """
+Calculate text similarity using TF-IDF and cosine similarity"""
         try:
             corpus = [text1.lower(), text2.lower()]
             tfidf_matrix = self.text_vectorizer.fit_transform(corpus)
@@ -318,7 +326,8 @@ class DMCAAutomatedValidator:
     
     def _compare_metadata(self, original_meta: Dict[str, Any], 
                          infringement_meta: Dict[str, Any]) -> float:
-        """Compare metadata between original and infringing content"""
+        """
+Compare metadata between original and infringing content"""
         common_keys = set(original_meta.keys()) & set(infringement_meta.keys())
         if not common_keys:
             return 0.0
@@ -335,7 +344,8 @@ class DMCAAutomatedValidator:
                                       infringement: DMCAInfringement,
                                       jurisdiction: LegalJurisdiction
                                       ) -> float:
-        """Check legal compliance requirements"""
+        """
+Check legal compliance requirements"""
         compliance_score = 0.0
         total_checks = 0
         
@@ -363,7 +373,8 @@ class DMCAAutomatedValidator:
         return compliance_score
     
     def _check_platform_requirements(self, platform: PlatformType) -> bool:
-        """Check platform-specific DMCA requirements"""
+        """
+Check platform-specific DMCA requirements"""
         # Each platform has specific requirements
         platform_reqs = {
             PlatformType.YOUTUBE: True,  # Generally DMCA compliant
@@ -379,7 +390,8 @@ class DMCAAutomatedValidator:
                                     original: DMCAContentInfo,
                                     infringement: DMCAInfringement
                                     ) -> float:
-        """Assess risk of fair use defense"""
+        """
+Assess risk of fair use defense"""
         risk_factors = 0.0
         
         # Check for fair use keywords in title/description
@@ -455,7 +467,8 @@ class DMCAAutomatedValidator:
         return max(0.0, min(1.0, confidence))
     
     def _determine_validation_result(self, report: ValidationReport) -> ValidationResult:
-        """Determine final validation result based on scores"""
+        """
+Determine final validation result based on scores"""
         confidence = report.confidence_score
         
         if confidence >= 0.85 and report.fair_use_risk <= 0.2:
@@ -470,7 +483,8 @@ class DMCAAutomatedValidator:
             return ValidationResult.REJECTED
     
     def _assess_legal_risk(self, report: ValidationReport) -> LegalRiskLevel:
-        """Assess legal risk level"""
+        """
+Assess legal risk level"""
         risk_score = (
             (1 - report.confidence_score) * 0.4 +
             report.fair_use_risk * 0.3 +
@@ -491,7 +505,8 @@ class DMCAAutomatedValidator:
     async def _generate_recommendations(self, report: ValidationReport,
                                        original: DMCAContentInfo,
                                        infringement: DMCAInfringement):
-        """Generate actionable recommendations"""
+        """
+Generate actionable recommendations"""
         if report.evidence_strength < 0.7:
             report.recommendations.append(
                 "Gather additional evidence to strengthen the claim"
@@ -542,7 +557,8 @@ class DMCAAutomatedValidator:
     
     def _estimate_statutory_damages(self, report: ValidationReport,
                                    commercial_use: bool) -> Tuple[float, float]:
-        """Estimate potential statutory damages range"""
+        """
+Estimate potential statutory damages range"""
         base_min = 750.0
         base_max = 30000.0
         
@@ -565,7 +581,8 @@ class DMCAAutomatedValidator:
     
     def _generate_cache_key(self, original: DMCAContentInfo,
                            infringement: DMCAInfringement) -> str:
-        """Generate cache key for validation results"""
+        """
+Generate cache key for validation results"""
         content_hash = hashlib.md5(
             f"{original.content_id}{infringement.infringement_id}".encode()
         ).hexdigest()
@@ -583,7 +600,8 @@ class DMCAAutomatedValidator:
         return await asyncio.gather(*tasks)
     
     def get_validation_statistics(self) -> Dict[str, Any]:
-        """Get validation engine statistics"""
+        """
+Get validation engine statistics"""
         if not self.validation_cache:
             return {"total_validations": 0}
         

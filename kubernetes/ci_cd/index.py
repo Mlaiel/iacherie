@@ -15,6 +15,7 @@ prohibited and will result in legal action.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
 Security Expert + Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import sys
@@ -115,7 +116,8 @@ class IAInfluencerCICDOrchestrator:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize CI/CD orchestrator with creator platform configuration."""
+        """
+Initialize CI/CD orchestrator with creator platform configuration."""
         self.config_path = config_path or self._get_default_config_path()
         self.config = self._load_configuration()
         

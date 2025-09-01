@@ -8,7 +8,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -25,6 +25,7 @@ for content protection operations across all creator types and platforms.
 Features include AI-powered threat analysis, behavioral pattern recognition,
 automated threat classification, and real-time response coordination.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Tuple, Union, Callable
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels."""
+    """
+Threat severity levels."""
+
     INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
@@ -56,6 +59,7 @@ class ThreatLevel(Enum):
 
 class ThreatType(Enum):
     """Types of threats detected."""
+
     CONTENT_THEFT = "content_theft"
     BRAND_IMPERSONATION = "brand_impersonation"
     ACCOUNT_HIJACKING = "account_hijacking"
@@ -72,6 +76,7 @@ class ThreatType(Enum):
 
 class DetectionMethod(Enum):
     """Threat detection methods."""
+
     SIGNATURE_BASED = "signature_based"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
     ANOMALY_DETECTION = "anomaly_detection"
@@ -84,6 +89,7 @@ class DetectionMethod(Enum):
 
 class ThreatStatus(Enum):
     """Threat investigation status."""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -109,7 +115,8 @@ class ThreatSignature:
 
 @dataclass
 class BehavioralPattern:
-    """Behavioral pattern for anomaly detection."""
+    """
+Behavioral pattern for anomaly detection."""
     pattern_id: str
     actor_type: str
     features: Dict[str, float]
@@ -124,7 +131,8 @@ class BehavioralPattern:
 
 @dataclass
 class ThreatDetection:
-    """Comprehensive threat detection result."""
+    """
+Comprehensive threat detection result."""
     detection_id: str
     threat_type: ThreatType
     threat_level: ThreatLevel
@@ -145,7 +153,8 @@ class ThreatDetection:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data and analysis."""
+    """
+Threat intelligence data and analysis."""
     intel_id: str
     threat_landscape: Dict[str, Any] = field(default_factory=dict)
     active_campaigns: List[str] = field(default_factory=list)
@@ -474,7 +483,8 @@ class ThreatDetectionEngine:
         return validated
     
     def _is_duplicate_detection(self, detection: ThreatDetection) -> bool:
-        """Check if detection is a duplicate."""
+        """
+Check if detection is a duplicate."""
         # Simple duplicate check based on threat type and source data
         for existing_id, existing_detection in self.active_detections.items():
             if (existing_detection.threat_type == detection.threat_type and
@@ -484,12 +494,14 @@ class ThreatDetectionEngine:
         return False
     
     async def _validate_detection_logic(self, detection: ThreatDetection) -> bool:
-        """Validate detection using additional logic."""
+        """
+Validate detection using additional logic."""
         # Implement additional validation rules
         return True
     
     def _update_detection_metrics(self, detections: List[ThreatDetection]) -> None:
-        """Update detection performance metrics."""
+        """
+Update detection performance metrics."""
         self.detection_metrics['total_detections'] += len(detections)
         
         # Calculate detection rate
@@ -503,7 +515,8 @@ class ThreatDetectionEngine:
     
     # Analysis methods
     async def _analyze_threat_distribution(self, detections: List[ThreatDetection]) -> Dict[str, Any]:
-        """Analyze threat type distribution."""
+        """
+Analyze threat type distribution."""
         distribution = defaultdict(int)
         severity_distribution = defaultdict(int)
         
@@ -519,7 +532,8 @@ class ThreatDetectionEngine:
         }
     
     async def _identify_active_campaigns(self, detections: List[ThreatDetection]) -> List[str]:
-        """Identify active threat campaigns."""
+        """
+Identify active threat campaigns."""
         campaigns = []
         
         # Group detections by potential campaign indicators
@@ -538,7 +552,8 @@ class ThreatDetectionEngine:
         return campaigns
     
     async def _detect_emerging_threats(self, detections: List[ThreatDetection]) -> List[Dict[str, Any]]:
-        """Detect emerging threat patterns."""
+        """
+Detect emerging threat patterns."""
         emerging = []
         
         # Analyze recent threat patterns
@@ -599,7 +614,8 @@ class ThreatDetectionEngine:
         return result
     
     async def _analyze_attack_vectors(self, detections: List[ThreatDetection]) -> Dict[str, float]:
-        """Analyze attack vector distribution."""
+        """
+Analyze attack vector distribution."""
         vectors = defaultdict(int)
         
         for detection in detections:
@@ -610,7 +626,8 @@ class ThreatDetectionEngine:
         return {vector: count / total for vector, count in vectors.items()} if total > 0 else {}
     
     async def _analyze_platform_vulnerabilities(self, detections: List[ThreatDetection]) -> Dict[str, Any]:
-        """Analyze platform-specific vulnerabilities."""
+        """
+Analyze platform-specific vulnerabilities."""
         platforms = defaultdict(lambda: {
             'threat_count': 0,
             'threat_types': set(),
@@ -637,7 +654,8 @@ class ThreatDetectionEngine:
         return result
     
     async def _generate_predictive_indicators(self, detections: List[ThreatDetection]) -> List[Dict[str, Any]]:
-        """Generate predictive threat indicators."""
+        """
+Generate predictive threat indicators."""
         indicators = []
         
         # Analyze temporal patterns
@@ -663,7 +681,8 @@ class ThreatDetectionEngine:
         return indicators
     
     async def _analyze_escalation_patterns(self, detections: List[ThreatDetection]) -> List[Dict[str, Any]]:
-        """Analyze threat escalation patterns."""
+        """
+Analyze threat escalation patterns."""
         patterns = []
         
         # Group by threat type and analyze progression
@@ -698,7 +717,8 @@ class ThreatDetectionEngine:
         threat_landscape: Dict[str, Any], 
         emerging_threats: List[Dict[str, Any]]
     ) -> Dict[str, List[str]]:
-        """Recommend countermeasures based on threat analysis."""
+        """
+Recommend countermeasures based on threat analysis."""
         countermeasures = defaultdict(list)
         
         # General countermeasures based on threat landscape
@@ -735,7 +755,8 @@ class ThreatDetectionEngine:
     
     # Background task methods
     async def _start_background_tasks(self) -> None:
-        """Start background detection tasks."""
+        """
+Start background detection tasks."""
         if self._background_started:
             return
         
@@ -801,12 +822,14 @@ class ThreatDetectionEngine:
         pass
     
     async def _load_behavioral_patterns(self) -> None:
-        """Load behavioral patterns from storage."""
+        """
+Load behavioral patterns from storage."""
         # Implementation would load from storage backend
         pass
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models."""
+        """
+Initialize machine learning models."""
         # Initialize anomaly detection models
         self.anomaly_models['isolation_forest'] = IsolationForest(contamination=0.1, random_state=42)
         
@@ -817,47 +840,56 @@ class ThreatDetectionEngine:
         pass
     
     async def _retrain_models(self) -> None:
-        """Retrain ML models with new data."""
+        """
+Retrain ML models with new data."""
         # Implementation would retrain models with recent data
         pass
     
     async def _update_signature_effectiveness(self) -> None:
-        """Update signature effectiveness scores."""
+        """
+Update signature effectiveness scores."""
         # Implementation would update signature effectiveness
         pass
     
     # Public API methods
     def add_detection_callback(self, callback: Callable) -> None:
-        """Add detection callback."""
+        """
+Add detection callback."""
         self.detection_callbacks.append(callback)
     
     def add_escalation_callback(self, callback: Callable) -> None:
-        """Add escalation callback."""
+        """
+Add escalation callback."""
         self.escalation_callbacks.append(callback)
     
     def add_intelligence_callback(self, callback: Callable) -> None:
-        """Add intelligence callback."""
+        """
+Add intelligence callback."""
         self.intelligence_callbacks.append(callback)
     
     def get_active_detections(self, threat_type: Optional[ThreatType] = None) -> List[ThreatDetection]:
-        """Get active threat detections."""
+        """
+Get active threat detections."""
         detections = list(self.active_detections.values())
         if threat_type:
             detections = [d for d in detections if d.threat_type == threat_type]
         return sorted(detections, key=lambda x: x.detected_at, reverse=True)
     
     def get_detection_metrics(self) -> Dict[str, Any]:
-        """Get detection performance metrics."""
+        """
+Get detection performance metrics."""
         return self.detection_metrics.copy()
     
     def get_threat_intelligence(self, intel_id: Optional[str] = None) -> Union[ThreatIntelligence, List[ThreatIntelligence]]:
-        """Get threat intelligence."""
+        """
+Get threat intelligence."""
         if intel_id:
             return self.threat_intelligence.get(intel_id)
         return list(self.threat_intelligence.values())
     
     async def shutdown(self) -> None:
-        """Shutdown threat detection engine gracefully."""
+        """
+Shutdown threat detection engine gracefully."""
         self._logger.info("Shutting down Threat Detection Engine...")
         
         # Cancel background tasks
@@ -884,15 +916,18 @@ class SignatureBasedDetector:
     """Signature-based threat detection."""
     
     def __init__(self):
-        """Initialize signature detector."""
+        """
+Initialize signature detector."""
         self.signatures = {}
     
     async def initialize(self, signatures: Dict[str, ThreatSignature]) -> None:
-        """Initialize with threat signatures."""
+        """
+Initialize with threat signatures."""
         self.signatures = signatures
     
     async def detect(self, event_data: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> List[ThreatDetection]:
-        """Detect threats using signatures."""
+        """
+Detect threats using signatures."""
         detections = []
         
         for signature_id, signature in self.signatures.items():
@@ -927,7 +962,8 @@ class SignatureBasedDetector:
         return True
     
     def _determine_threat_level(self, signature: ThreatSignature) -> ThreatLevel:
-        """Determine threat level based on signature."""
+        """
+Determine threat level based on signature."""
         if signature.confidence_weight >= 0.9:
             return ThreatLevel.CRITICAL
         elif signature.confidence_weight >= 0.7:
@@ -938,23 +974,28 @@ class SignatureBasedDetector:
             return ThreatLevel.LOW
     
     async def shutdown(self) -> None:
-        """Shutdown signature detector."""
+        """
+Shutdown signature detector."""
         pass
 
 
 class BehavioralAnalyzer:
-    """Behavioral analysis for threat detection."""
+    """
+Behavioral analysis for threat detection."""
     
     def __init__(self):
-        """Initialize behavioral analyzer."""
+        """
+Initialize behavioral analyzer."""
         self.patterns = {}
     
     async def initialize(self, patterns: Dict[str, BehavioralPattern]) -> None:
-        """Initialize with behavioral patterns."""
+        """
+Initialize with behavioral patterns."""
         self.patterns = patterns
     
     async def analyze(self, event_data: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> List[ThreatDetection]:
-        """Analyze behavior for threats."""
+        """
+Analyze behavior for threats."""
         detections = []
         
         # Extract behavioral features
@@ -1003,7 +1044,8 @@ class BehavioralAnalyzer:
         return features
     
     def _calculate_pattern_similarity(self, features1: Dict[str, float], features2: Dict[str, float]) -> float:
-        """Calculate similarity between feature sets."""
+        """
+Calculate similarity between feature sets."""
         common_keys = set(features1.keys()) & set(features2.keys())
         if not common_keys:
             return 0.0
@@ -1019,23 +1061,28 @@ class BehavioralAnalyzer:
         return max(0.0, similarity)
     
     async def shutdown(self) -> None:
-        """Shutdown behavioral analyzer."""
+        """
+Shutdown behavioral analyzer."""
         pass
 
 
 class AnomalyDetector:
-    """Anomaly detection for threat identification."""
+    """
+Anomaly detection for threat identification."""
     
     def __init__(self):
-        """Initialize anomaly detector."""
+        """
+Initialize anomaly detector."""
         self.models = {}
     
     async def initialize(self, models: Dict[str, Any]) -> None:
-        """Initialize with ML models."""
+        """
+Initialize with ML models."""
         self.models = models
     
     async def detect_anomalies(self, event_data: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> List[ThreatDetection]:
-        """Detect anomalies in event data."""
+        """
+Detect anomalies in event data."""
         detections = []
         
         # Extract features for anomaly detection
@@ -1099,23 +1146,28 @@ class AnomalyDetector:
         return features
     
     async def shutdown(self) -> None:
-        """Shutdown anomaly detector."""
+        """
+Shutdown anomaly detector."""
         pass
 
 
 class ThreatCorrelationEngine:
-    """Engine for correlating threats and detecting campaigns."""
+    """
+Engine for correlating threats and detecting campaigns."""
     
     def __init__(self):
-        """Initialize correlation engine."""
+        """
+Initialize correlation engine."""
         pass
     
     async def initialize(self) -> None:
-        """Initialize correlation engine."""
+        """
+Initialize correlation engine."""
         pass
     
     async def correlate_detections(self, detections: List[ThreatDetection]) -> List[ThreatDetection]:
-        """Correlate detections to identify campaigns."""
+        """
+Correlate detections to identify campaigns."""
         correlated_detections = []
         
         # Simple correlation based on timing and source similarity
@@ -1163,23 +1215,28 @@ class ThreatCorrelationEngine:
         return score
     
     async def shutdown(self) -> None:
-        """Shutdown correlation engine."""
+        """
+Shutdown correlation engine."""
         pass
 
 
 class ThreatAttributionEngine:
-    """Engine for threat attribution and actor identification."""
+    """
+Engine for threat attribution and actor identification."""
     
     def __init__(self):
-        """Initialize attribution engine."""
+        """
+Initialize attribution engine."""
         pass
     
     async def initialize(self) -> None:
-        """Initialize attribution engine."""
+        """
+Initialize attribution engine."""
         pass
     
     async def attribute_threat(self, detection: ThreatDetection) -> Dict[str, Any]:
-        """Attribute threat to actor or campaign."""
+        """
+Attribute threat to actor or campaign."""
         attribution = {
             'actor_id': 'unknown',
             'campaign_id': None,
@@ -1246,7 +1303,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels."""
+    """
+Threat severity levels."""
+
     MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
@@ -1258,6 +1317,7 @@ class ThreatLevel(Enum):
 
 class ThreatCategory(Enum):
     """Categories of threats."""
+
     CONTENT_THEFT = "content_theft"
     BRAND_IMPERSONATION = "brand_impersonation"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -1274,6 +1334,7 @@ class ThreatCategory(Enum):
 
 class AttackVector(Enum):
     """Attack vectors and methods."""
+
     DIRECT_COPY = "direct_copy"
     REMIX_MANIPULATION = "remix_manipulation"
     WATERMARK_REMOVAL = "watermark_removal"
@@ -1288,6 +1349,7 @@ class AttackVector(Enum):
 
 class ThreatSource(Enum):
     """Sources of threats."""
+
     INDIVIDUAL_USER = "individual_user"
     COMMERCIAL_ENTITY = "commercial_entity"
     COMPETITOR_BRAND = "competitor_brand"
@@ -1315,7 +1377,8 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatActor:
-    """Threat actor profile and behavior analysis."""
+    """
+Threat actor profile and behavior analysis."""
     actor_id: str
     actor_type: ThreatSource
     platforms: Set[str] = field(default_factory=set)
@@ -1709,7 +1772,8 @@ class ThreatDetectionEngine:
             return ThreatLevel.MINIMAL
     
     def _determine_attack_vector(self, violation: ViolationAlert) -> AttackVector:
-        """Determine attack vector from violation characteristics."""
+        """
+Determine attack vector from violation characteristics."""
         # Simple heuristics - would use ML classification in production
         if violation.confidence_score >= 0.98:
             return AttackVector.DIRECT_COPY
@@ -1719,7 +1783,8 @@ class ThreatDetectionEngine:
             return AttackVector.QUALITY_DEGRADATION
     
     async def _assess_threat_impact(self, threat: ThreatEvent, violation: ViolationAlert) -> Dict[str, Any]:
-        """Assess the impact of a detected threat."""
+        """
+Assess the impact of a detected threat."""
         impact = {
             'financial_impact': 0.0,
             'reputation_impact': 'low',
@@ -1744,7 +1809,8 @@ class ThreatDetectionEngine:
         return impact
     
     async def _generate_mitigation_recommendations(self, threat: ThreatEvent) -> List[str]:
-        """Generate mitigation recommendations for threat."""
+        """
+Generate mitigation recommendations for threat."""
         recommendations = []
         
         # Category-specific recommendations
@@ -1792,7 +1858,8 @@ class ThreatDetectionEngine:
         return False
     
     async def _get_impersonation_indicators(self, violation: ViolationAlert) -> List[str]:
-        """Get specific impersonation indicators."""
+        """
+Get specific impersonation indicators."""
         indicators = []
         
         # Analyze content for impersonation signals
@@ -1830,7 +1897,8 @@ class ThreatDetectionEngine:
         return False
     
     async def _detect_automated_scraping(self, recent_violations: List[Dict]) -> bool:
-        """Detect automated scraping patterns."""
+        """
+Detect automated scraping patterns."""
         if len(recent_violations) < 10:
             return False
         
@@ -1849,7 +1917,8 @@ class ThreatDetectionEngine:
     
     # Attribution methods
     async def _extract_attribution_indicators(self, violation: ViolationAlert) -> List[ThreatIndicator]:
-        """Extract attribution indicators from violation."""
+        """
+Extract attribution indicators from violation."""
         indicators = []
         
         try:
@@ -1940,7 +2009,8 @@ class ThreatDetectionEngine:
         return False
     
     async def _create_threat_actor(self, threat_event: ThreatEvent, indicators: List[ThreatIndicator]) -> ThreatActor:
-        """Create new threat actor profile."""
+        """
+Create new threat actor profile."""
         actor_id = f"actor_{uuid.uuid4().hex[:8]}"
         
         # Determine actor type based on indicators and threat characteristics
@@ -1977,7 +2047,8 @@ class ThreatDetectionEngine:
             return ThreatSource.INDIVIDUAL_USER
     
     async def _update_threat_actor(self, actor: ThreatActor, threat_event: ThreatEvent, violation: ViolationAlert) -> None:
-        """Update threat actor profile with new evidence."""
+        """
+Update threat actor profile with new evidence."""
         # Update activity
         actor.last_active = threat_event.detected_at
         actor.platforms.update(threat_event.affected_platforms)
@@ -1992,7 +2063,8 @@ class ThreatDetectionEngine:
         await self._update_activity_pattern(actor, threat_event)
     
     async def _update_activity_pattern(self, actor: ThreatActor, threat_event: ThreatEvent) -> None:
-        """Update threat actor activity pattern analysis."""
+        """
+Update threat actor activity pattern analysis."""
         if 'activity_timeline' not in actor.activity_pattern:
             actor.activity_pattern['activity_timeline'] = []
         
@@ -2012,7 +2084,8 @@ class ThreatDetectionEngine:
     
     # Campaign correlation methods
     async def _find_matching_campaigns(self, threat_event: ThreatEvent) -> List[ThreatCampaign]:
-        """Find campaigns that match the threat event."""
+        """
+Find campaigns that match the threat event."""
         matches = []
         
         for campaign in self.threat_campaigns.values():
@@ -2044,7 +2117,8 @@ class ThreatDetectionEngine:
         return matches
     
     async def _should_create_campaign(self, threat_event: ThreatEvent) -> bool:
-        """Determine if threat event warrants new campaign creation."""
+        """
+Determine if threat event warrants new campaign creation."""
         # Create campaign for coordinated threats
         if threat_event.threat_category == ThreatCategory.COORDINATED_CAMPAIGN:
             return True
@@ -2057,7 +2131,8 @@ class ThreatDetectionEngine:
         return False
     
     async def _create_threat_campaign(self, threat_event: ThreatEvent) -> ThreatCampaign:
-        """Create new threat campaign."""
+        """
+Create new threat campaign."""
         campaign_id = f"campaign_{uuid.uuid4().hex[:8]}"
         
         campaign = ThreatCampaign(
@@ -2196,7 +2271,8 @@ class ThreatDetectionEngine:
         self.anomaly_detectors['behavior_anomaly'] = None
     
     async def _recalculate_threat_scores(self) -> None:
-        """Recalculate threat scores for all actors."""
+        """
+Recalculate threat scores for all actors."""
         for actor in self.threat_actors.values():
             # Simplified scoring - would use ML models in production
             score = len(actor.associated_violations) * 0.1
@@ -2205,14 +2281,16 @@ class ThreatDetectionEngine:
             actor.threat_score = min(score, 1.0)
     
     async def _update_attribution_graph(self) -> None:
-        """Update attribution relationship graph."""
+        """
+Update attribution relationship graph."""
         # Build relationships between actors, indicators, and events
         for actor in self.threat_actors.values():
             for indicator in actor.indicators:
                 self.attribution_graph[actor.actor_id].add(indicator.value)
     
     async def _cleanup_old_threat_data(self) -> None:
-        """Clean up old threat data."""
+        """
+Clean up old threat data."""
         cutoff_date = datetime.now() - timedelta(days=90)
         
         # Remove old events
@@ -2225,17 +2303,20 @@ class ThreatDetectionEngine:
             del self.threat_events[event_id]
     
     async def _detect_emerging_patterns(self) -> None:
-        """Detect emerging threat patterns."""
+        """
+Detect emerging threat patterns."""
         # Placeholder for pattern detection algorithms
         pass
     
     async def _update_pattern_cache(self) -> None:
-        """Update pattern analysis cache."""
+        """
+Update pattern analysis cache."""
         # Placeholder for pattern cache updates
         pass
     
     async def _assess_campaign_status(self, campaign: ThreatCampaign) -> None:
-        """Assess and update campaign status."""
+        """
+Assess and update campaign status."""
         # Check if campaign should be marked inactive
         if campaign.events:
             latest_event_id = campaign.events[-1]
@@ -2246,18 +2327,21 @@ class ThreatDetectionEngine:
                     campaign.end_date = latest_event.detected_at
     
     async def _detect_new_campaign_correlations(self) -> None:
-        """Detect new correlations between events that might form campaigns."""
+        """
+Detect new correlations between events that might form campaigns."""
         # Placeholder for correlation detection
         pass
     
     # Storage methods (would integrate with actual storage backend)
     async def _load_threat_intelligence(self) -> None:
-        """Load threat intelligence from storage."""
+        """
+Load threat intelligence from storage."""
         # Placeholder for loading from persistent storage
         pass
     
     async def _save_threat_data(self) -> None:
-        """Save threat data to storage."""
+        """
+Save threat data to storage."""
         # Placeholder for saving to persistent storage
         pass
     
@@ -2268,7 +2352,8 @@ class ThreatDetectionEngine:
         threat_level: Optional[ThreatLevel] = None,
         limit: int = 100
     ) -> List[ThreatEvent]:
-        """Get threat events with optional filtering."""
+        """
+Get threat events with optional filtering."""
         events = list(self.threat_events.values())
         
         if creator_id:
@@ -2283,7 +2368,8 @@ class ThreatDetectionEngine:
         return events[:limit]
     
     def get_threat_actors(self, actor_type: Optional[ThreatSource] = None) -> List[ThreatActor]:
-        """Get threat actors with optional filtering."""
+        """
+Get threat actors with optional filtering."""
         actors = list(self.threat_actors.values())
         
         if actor_type:
@@ -2295,7 +2381,8 @@ class ThreatDetectionEngine:
         return actors
     
     def get_threat_campaigns(self, active_only: bool = True) -> List[ThreatCampaign]:
-        """Get threat campaigns."""
+        """
+Get threat campaigns."""
         campaigns = list(self.threat_campaigns.values())
         
         if active_only:
@@ -2307,7 +2394,8 @@ class ThreatDetectionEngine:
         return campaigns
     
     def get_threat_summary(self) -> Dict[str, Any]:
-        """Get threat landscape summary."""
+        """
+Get threat landscape summary."""
         summary = {
             'total_events': len(self.threat_events),
             'active_campaigns': len([c for c in self.threat_campaigns.values() if c.is_active]),
@@ -2325,7 +2413,8 @@ class ThreatDetectionEngine:
         return dict(summary)
     
     async def investigate_threat(self, threat_id: str) -> Dict[str, Any]:
-        """Perform detailed investigation of a specific threat."""
+        """
+Perform detailed investigation of a specific threat."""
         if threat_id not in self.threat_events:
             raise ValueError(f"Threat event {threat_id} not found")
         

@@ -4,7 +4,7 @@
 Advanced AI-powered content piracy detection with multi-modal analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module implements the core piracy detection engine with support for:
 - Multi-modal content fingerprinting
@@ -13,6 +13,7 @@ This module implements the core piracy detection engine with support for:
 - Cross-platform content scanning
 - Automated confidence scoring
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of piracy violations."""
+    """
+Types of piracy violations."""
+
     EXACT_COPY = "exact_copy"
     MODIFIED_COPY = "modified_copy"
     PARTIAL_USE = "partial_use"
@@ -57,7 +60,8 @@ class DetectionResult:
     
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure."""
+    """
+Content fingerprint data structure."""
     fingerprint_id: str
     content_id: str
     fingerprint_type: str
@@ -80,7 +84,8 @@ class PiracyDetector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the piracy detection engine."""
+        """
+Initialize the piracy detection engine."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -349,7 +354,8 @@ class PiracyDetector:
         return True
     
     def _get_default_platforms(self) -> List[str]:
-        """Get default list of platforms to scan."""
+        """
+Get default list of platforms to scan."""
         return [
             'youtube',
             'instagram',

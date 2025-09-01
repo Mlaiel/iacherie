@@ -23,6 +23,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Scalable distributed systems and deployment
 - AI Prompt Engineer & Content Protection: Intelligent content optimization and rights protection
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -90,7 +91,9 @@ from ...security.content_protection import ContentFingerprinter
 logger = logging.getLogger(__name__)
 
 class ViralityCategory(Enum):
-    """Comprehensive virality categories with specific characteristics"""
+    """
+Comprehensive virality categories with specific characteristics"""
+
     EXPLOSIVE_VIRAL = "explosive_viral"          # >10M views in 24h
     HIGH_VIRAL = "high_viral"                    # 1-10M views in 24h  
     MODERATE_VIRAL = "moderate_viral"            # 100K-1M views in 24h
@@ -102,6 +105,7 @@ class ViralityCategory(Enum):
 
 class ViralPattern(Enum):
     """Advanced viral propagation patterns"""
+
     EXPONENTIAL_GROWTH = "exponential_growth"
     S_CURVE_ADOPTION = "s_curve_adoption"
     PLATEAU_SUSTAINED = "plateau_sustained"
@@ -113,6 +117,7 @@ class ViralPattern(Enum):
 
 class ContentViralityFactor(Enum):
     """Key factors contributing to viral potential"""
+
     EMOTIONAL_TRIGGER = "emotional_trigger"
     NOVELTY_FACTOR = "novelty_factor"
     RELATABILITY_INDEX = "relatability_index"
@@ -153,7 +158,8 @@ class AdvancedViralityScore:
 
 @dataclass
 class ViralContentProfile:
-    """Detailed profile of viral content characteristics"""
+    """
+Detailed profile of viral content characteristics"""
     content_id: str
     content_type: ContentType
     viral_dna: Dict[str, Any]
@@ -165,7 +171,8 @@ class ViralContentProfile:
     platform_optimization: Dict[str, Dict[str, Any]]
 
 class AdvancedViralNN(nn.Module):
-    """Sophisticated neural network for viral content prediction"""
+    """
+Sophisticated neural network for viral content prediction"""
     
     def __init__(
         self, 
@@ -809,6 +816,7 @@ logger = logging.getLogger(__name__)
 
 class ViralityLevel(Enum):
     """Virality level classifications"""
+
     LOW = "low"           # 0-20% virality score
     MODERATE = "moderate" # 21-50% virality score
     HIGH = "high"         # 51-80% virality score
@@ -817,6 +825,7 @@ class ViralityLevel(Enum):
 
 class ContentRankingCriteria(Enum):
     """Content ranking criteria"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     GROWTH_VELOCITY = "growth_velocity"
     REACH_POTENTIAL = "reach_potential"
@@ -838,7 +847,8 @@ class ViralDetectionConfig:
 
 @dataclass
 class ViralIndicators:
-    """Key viral content indicators"""
+    """
+Key viral content indicators"""
     engagement_acceleration: float
     share_velocity: float
     comment_sentiment: float
@@ -1295,7 +1305,8 @@ class ViralDetector(BaseMLModel):
             return ViralityLevel.LOW
 
     async def _background_viral_monitoring(self):
-        """Background task for continuous viral content monitoring"""
+        """
+Background task for continuous viral content monitoring"""
         while self.is_initialized:
             try:
                 # Monitor trending content across platforms

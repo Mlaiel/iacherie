@@ -285,7 +285,8 @@ def create_dialogue_manager(config: dict = None) -> DialogueFlowManager:
     return DialogueFlowManager(**config)
 
 def create_enterprise_system(config: dict = None) -> dict:
-    """Create a complete enterprise dialogue management system"""
+    """
+Create a complete enterprise dialogue management system"""
     config = config or ENTERPRISE_CONFIG
     
     return {
@@ -304,7 +305,8 @@ def get_component(component_name: str):
     return DIALOGUE_COMPONENTS.get(component_name)
 
 def list_available_components() -> list:
-    """List all available dialogue management components"""
+    """
+List all available dialogue management components"""
     return list(DIALOGUE_COMPONENTS.keys())
 
 # Version and Metadata

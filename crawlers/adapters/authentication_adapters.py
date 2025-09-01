@@ -31,12 +31,13 @@ Advanced Security Features:
 - Enterprise compliance (SOC2, GDPR, HIPAA)
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -122,7 +123,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AuthType(Enum):
-    """Supported authentication types."""
+    """
+Supported authentication types."""
+
     OAUTH2 = "oauth2"
     JWT = "jwt"
     API_KEY = "api_key"
@@ -135,6 +138,7 @@ class AuthType(Enum):
 
 class TokenType(Enum):
     """Token types."""
+
     BEARER = "Bearer"
     BASIC = "Basic"
     API_KEY = "ApiKey"
@@ -142,6 +146,7 @@ class TokenType(Enum):
 
 class MFAMethod(Enum):
     """Multi-factor authentication methods."""
+
     TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
@@ -162,7 +167,8 @@ class AuthMetrics:
     
 @dataclass
 class SecurityPolicy:
-    """Security policy configuration."""
+    """
+Security policy configuration."""
     max_failed_attempts: int = 5
     lockout_duration: int = 900  # 15 minutes
     token_max_age: int = 3600  # 1 hour
@@ -175,7 +181,8 @@ class SecurityPolicy:
 
 @dataclass
 class AuthConfig:
-    """Advanced configuration for authentication adapters."""
+    """
+Advanced configuration for authentication adapters."""
     # Basic auth settings
     auth_type: AuthType
     client_id: Optional[str] = None
@@ -256,14 +263,16 @@ class AuthToken:
     
     @property
     def is_expired(self) -> bool:
-        """Check if token is expired."""
+        """
+Check if token is expired."""
         if not self.expires_at:
             return False
         return datetime.now() >= self.expires_at
     
     @property
     def needs_refresh(self) -> bool:
-        """Check if token needs refresh."""
+        """
+Check if token needs refresh."""
         if not self.expires_at:
             return False
         threshold = datetime.now() + timedelta(seconds=300)  # 5 minutes before expiry
@@ -271,13 +280,15 @@ class AuthToken:
     
     @property
     def time_to_expiry(self) -> Optional[timedelta]:
-        """Get time until token expires."""
+        """
+Get time until token expires."""
         if not self.expires_at:
             return None
         return self.expires_at - datetime.now()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert token to dictionary."""
+        """
+Convert token to dictionary."""
         return {
             'access_token': self.access_token,
             'token_type': self.token_type.value,
@@ -293,7 +304,8 @@ class AuthToken:
 
 @dataclass
 class AuthResult:
-    """Enhanced authentication result container."""
+    """
+Enhanced authentication result container."""
     success: bool
     token: Optional[AuthToken] = None
     headers: Dict[str, str] = field(default_factory=dict)
@@ -315,10 +327,12 @@ class AuthResult:
     user_agent: Optional[str] = None
 
 class TokenManager:
-    """Advanced token management with encryption and caching."""
+    """
+Advanced token management with encryption and caching."""
     
     def __init__(self, encryption_key: Optional[str] = None):
-        """Initialize token manager."""
+        """
+Initialize token manager."""
         self.encryption_key = encryption_key
         self._cipher = None
         self._token_cache: Dict[str, AuthToken] = {}
@@ -330,7 +344,8 @@ class TokenManager:
             self._cipher = Fernet(key)
     
     def encrypt_token(self, token: str) -> str:
-        """Encrypt token for secure storage."""
+        """
+Encrypt token for secure storage."""
         if not self._cipher:
             return token
         
@@ -338,7 +353,8 @@ class TokenManager:
         return base64.urlsafe_b64encode(encrypted).decode()
     
     def decrypt_token(self, encrypted_token: str) -> str:
-        """Decrypt token from secure storage."""
+        """
+Decrypt token from secure storage."""
         if not self._cipher:
             return encrypted_token
         
@@ -361,7 +377,8 @@ class TokenManager:
         self._token_cache[key] = token
     
     def get_cached_token(self, key: str) -> Optional[AuthToken]:
-        """Retrieve cached token with decryption."""
+        """
+Retrieve cached token with decryption."""
         token = self._token_cache.get(key)
         if not token:
             return None
@@ -375,19 +392,23 @@ class TokenManager:
         return token
     
     def remove_token(self, key: str):
-        """Remove token from cache."""
+        """
+Remove token from cache."""
         self._token_cache.pop(key, None)
 
 class SessionManager:
-    """Session management for authentication."""
+    """
+Session management for authentication."""
     
     def __init__(self, session_timeout: int = 1800):
-        """Initialize session manager."""
+        """
+Initialize session manager."""
         self.session_timeout = session_timeout
         self._sessions: Dict[str, Dict[str, Any]] = {}
     
     def create_session(self, user_id: str, auth_data: Dict[str, Any]) -> str:
-        """Create new session."""
+        """
+Create new session."""
         session_id = str(uuid.uuid4())
         session_data = {
             'user_id': user_id,
@@ -400,7 +421,8 @@ class SessionManager:
         return session_id
     
     def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get session data."""
+        """
+Get session data."""
         session = self._sessions.get(session_id)
         if not session:
             return None
@@ -415,7 +437,8 @@ class SessionManager:
         return session
     
     def extend_session(self, session_id: str) -> bool:
-        """Extend session timeout."""
+        """
+Extend session timeout."""
         session = self._sessions.get(session_id)
         if not session:
             return False
@@ -424,11 +447,13 @@ class SessionManager:
         return True
     
     def remove_session(self, session_id: str):
-        """Remove session."""
+        """
+Remove session."""
         self._sessions.pop(session_id, None)
     
     def cleanup_expired_sessions(self):
-        """Clean up expired sessions."""
+        """
+Clean up expired sessions."""
         now = datetime.now()
         expired_sessions = [
             sid for sid, session in self._sessions.items()
@@ -438,15 +463,18 @@ class SessionManager:
             self.remove_session(sid)
 
 class SecurityValidator:
-    """Security validation utilities."""
+    """
+Security validation utilities."""
     
     def __init__(self, policy: Optional[SecurityPolicy] = None):
-        """Initialize security validator."""
+        """
+Initialize security validator."""
         self.policy = policy or SecurityPolicy()
         self._failed_attempts: Dict[str, List[datetime]] = {}
     
     def validate_password(self, password: str) -> Tuple[bool, List[str]]:
-        """Validate password against security policy."""
+        """
+Validate password against security policy."""
         errors = []
         
         if len(password) < self.policy.password_min_length:
@@ -473,13 +501,15 @@ class SecurityValidator:
         return len(recent_attempts) < self.policy.max_failed_attempts
     
     def record_failed_attempt(self, identifier: str):
-        """Record failed authentication attempt."""
+        """
+Record failed authentication attempt."""
         if identifier not in self._failed_attempts:
             self._failed_attempts[identifier] = []
         self._failed_attempts[identifier].append(datetime.now())
     
     def validate_domain(self, email: str) -> bool:
-        """Validate email domain against allowed domains."""
+        """
+Validate email domain against allowed domains."""
         if not self.policy.allowed_domains:
             return True
         
@@ -487,10 +517,12 @@ class SecurityValidator:
         return domain in [d.lower() for d in self.policy.allowed_domains]
 
 class AuthenticationAdapter(ABC):
-    """Enterprise base class for all authentication adapters."""
+    """
+Enterprise base class for all authentication adapters."""
     
     def __init__(self, config: AuthConfig):
-        """Initialize authentication adapter with enterprise features."""
+        """
+Initialize authentication adapter with enterprise features."""
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         self.current_token: Optional[AuthToken] = None
@@ -525,7 +557,8 @@ class AuthenticationAdapter(ABC):
         return len(recent_tokens) < self.config.max_requests_per_minute
     
     def _record_auth_attempt(self, success: bool, auth_time: float):
-        """Record authentication attempt metrics."""
+        """
+Record authentication attempt metrics."""
         self.metrics.total_attempts += 1
         if success:
             self.metrics.successful_auths += 1
@@ -540,26 +573,31 @@ class AuthenticationAdapter(ABC):
     
     @abstractmethod
     async def authenticate(self, **kwargs) -> AuthResult:
-        """Authenticate using the specific method."""
+        """
+Authenticate using the specific method."""
         pass
     
     @abstractmethod
     async def authenticate(self) -> AuthResult:
-        """Perform authentication."""
+        """
+Perform authentication."""
         pass
     
     @abstractmethod
     async def refresh_token(self) -> AuthResult:
-        """Refresh authentication token."""
+        """
+Refresh authentication token."""
         pass
     
     @abstractmethod
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get authentication headers."""
+        """
+Get authentication headers."""
         pass
     
     async def ensure_valid_token(self) -> bool:
-        """Ensure we have a valid token."""
+        """
+Ensure we have a valid token."""
         if not self.current_token:
             result = await self.authenticate()
             return result.success
@@ -571,15 +609,18 @@ class AuthenticationAdapter(ABC):
         return True
     
     def is_authenticated(self) -> bool:
-        """Check if currently authenticated."""
+        """
+Check if currently authenticated."""
         return (self.current_token is not None and 
                 not self.current_token.is_expired)
 
 class OAuth2Adapter(AuthenticationAdapter):
-    """Adapter for OAuth2 authentication."""
+    """
+Adapter for OAuth2 authentication."""
     
     def __init__(self, config: AuthConfig):
-        """Initialize OAuth2 adapter."""
+        """
+Initialize OAuth2 adapter."""
         super().__init__(config)
         self.auth_method = "OAuth2"
         
@@ -729,7 +770,8 @@ class OAuth2Adapter(AuthenticationAdapter):
         }
     
     def get_authorization_url(self, state: Optional[str] = None) -> str:
-        """Get OAuth2 authorization URL for web flows."""
+        """
+Get OAuth2 authorization URL for web flows."""
         if not self.config.authorize_url:
             raise ValueError("authorize_url required for authorization code flow")
         
@@ -750,7 +792,8 @@ class JWTAdapter(AuthenticationAdapter):
     """Adapter for JWT (JSON Web Token) authentication."""
     
     def __init__(self, config: AuthConfig):
-        """Initialize JWT adapter."""
+        """
+Initialize JWT adapter."""
         super().__init__(config)
         self.auth_method = "JWT"
         
@@ -808,7 +851,8 @@ class JWTAdapter(AuthenticationAdapter):
         return await self.authenticate()
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get JWT authentication headers."""
+        """
+Get JWT authentication headers."""
         if not self.current_token:
             return {}
         
@@ -818,7 +862,8 @@ class JWTAdapter(AuthenticationAdapter):
         }
     
     def verify_token(self, token: str) -> Dict[str, Any]:
-        """Verify and decode JWT token."""
+        """
+Verify and decode JWT token."""
         try:
             payload = jwt.decode(
                 token,
@@ -835,7 +880,8 @@ class APIKeyAdapter(AuthenticationAdapter):
     """Adapter for API Key authentication."""
     
     def __init__(self, config: AuthConfig):
-        """Initialize API Key adapter."""
+        """
+Initialize API Key adapter."""
         super().__init__(config)
         self.auth_method = "API_KEY"
         
@@ -872,7 +918,8 @@ class APIKeyAdapter(AuthenticationAdapter):
         return AuthResult(success=True, token=self.current_token)
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get API Key authentication headers."""
+        """
+Get API Key authentication headers."""
         headers = {**self.config.custom_headers}
         
         # Common API key header patterns
@@ -906,7 +953,8 @@ class BasicAuthAdapter(AuthenticationAdapter):
     """Adapter for Basic HTTP authentication."""
     
     def __init__(self, config: AuthConfig):
-        """Initialize Basic Auth adapter."""
+        """
+Initialize Basic Auth adapter."""
         super().__init__(config)
         self.auth_method = "BASIC_AUTH"
         
@@ -950,7 +998,8 @@ class BasicAuthAdapter(AuthenticationAdapter):
         return AuthResult(success=True, token=self.current_token)
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get Basic authentication headers."""
+        """
+Get Basic authentication headers."""
         if not self.current_token:
             return {}
         
@@ -960,10 +1009,12 @@ class BasicAuthAdapter(AuthenticationAdapter):
         }
 
 class CertificateAdapter(AuthenticationAdapter):
-    """Adapter for certificate-based authentication."""
+    """
+Adapter for certificate-based authentication."""
     
     def __init__(self, config: AuthConfig):
-        """Initialize Certificate adapter."""
+        """
+Initialize Certificate adapter."""
         super().__init__(config)
         self.auth_method = "CERTIFICATE"
         
@@ -1051,7 +1102,8 @@ class CertificateAdapter(AuthenticationAdapter):
         return headers
     
     def get_ssl_context(self) -> ssl.SSLContext:
-        """Get SSL context with client certificate."""
+        """
+Get SSL context with client certificate."""
         context = ssl.create_default_context()
         
         if self.config.certificate_path:
@@ -1063,7 +1115,8 @@ class CertificateAdapter(AuthenticationAdapter):
         return context
     
     def sign_data(self, data: bytes) -> bytes:
-        """Sign data with private key."""
+        """
+Sign data with private key."""
         if not self.private_key:
             raise ValueError("Private key not loaded")
         
@@ -1083,12 +1136,14 @@ class AuthenticationManager:
     """Manager for multiple authentication adapters."""
     
     def __init__(self):
-        """Initialize authentication manager."""
+        """
+Initialize authentication manager."""
         self.adapters: Dict[str, AuthenticationAdapter] = {}
         self.logger = logging.getLogger(__name__)
     
     def register_adapter(self, name: str, adapter: AuthenticationAdapter):
-        """Register an authentication adapter."""
+        """
+Register an authentication adapter."""
         self.adapters[name] = adapter
         self.logger.info(f"Registered authentication adapter: {name}")
     
@@ -1120,7 +1175,8 @@ class AuthenticationManager:
         return self.adapters.get(name)
     
     def get_auth_headers(self, adapter_name: str) -> Dict[str, str]:
-        """Get authentication headers for specific adapter."""
+        """
+Get authentication headers for specific adapter."""
         adapter = self.adapters.get(adapter_name)
         if adapter and adapter.is_authenticated():
             return adapter.get_auth_headers()

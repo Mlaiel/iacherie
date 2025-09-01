@@ -4,6 +4,7 @@ Runs all tests for the Ainflue platform including unit, integration, performance
 Author: AI Assistant
 Purpose: Run complete test suite and generate comprehensive reports
 """
+
 import subprocess
 import json
 import datetime
@@ -12,7 +13,8 @@ import os
 from typing import Dict, List, Any, Tuple
 
 def run_command(command: List[str], timeout: int = 300) -> Tuple[int, str, str]:
-    """Run a command and return exit code, stdout, stderr"""
+    """
+Run a command and return exit code, stdout, stderr"""
     try:
         result = subprocess.run(
             command,
@@ -352,7 +354,8 @@ This report covers the implementation of comprehensive testing and documentation
     return report
 
 def main():
-    """Main function to run comprehensive test suite"""
+    """
+Main function to run comprehensive test suite"""
     print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
     print("=" * 70)
     

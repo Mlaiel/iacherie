@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Distributed Systems Engineer + Synchronization Expert + State Management Specialist
 """
+
 import asyncio
 import json
 import uuid
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SyncStrategy(str, Enum):
-    """Cross-platform synchronization strategies"""
+    """
+Cross-platform synchronization strategies"""
+
     IMMEDIATE = "immediate"
     BATCH = "batch"
     SCHEDULED = "scheduled"
@@ -52,6 +55,7 @@ class SyncStrategy(str, Enum):
 
 class SyncDirection(str, Enum):
     """Synchronization direction"""
+
     UNIDIRECTIONAL = "unidirectional"
     BIDIRECTIONAL = "bidirectional"
     MASTER_SLAVE = "master_slave"
@@ -59,6 +63,7 @@ class SyncDirection(str, Enum):
 
 class SyncStatus(str, Enum):
     """Synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -69,6 +74,7 @@ class SyncStatus(str, Enum):
 
 class ConflictResolution(str, Enum):
     """Conflict resolution strategies"""
+
     LATEST_WINS = "latest_wins"
     MANUAL_REVIEW = "manual_review"
     PLATFORM_PRIORITY = "platform_priority"
@@ -78,6 +84,7 @@ class ConflictResolution(str, Enum):
 
 class SyncTrigger(str, Enum):
     """Synchronization triggers"""
+
     CONTENT_UPLOAD = "content_upload"
     METADATA_UPDATE = "metadata_update"
     ENGAGEMENT_CHANGE = "engagement_change"
@@ -103,7 +110,8 @@ class SyncConfiguration:
 
 @dataclass
 class PlatformState:
-    """Platform-specific state information"""
+    """
+Platform-specific state information"""
     platform_id: str
     content_id: str
     last_modified: datetime
@@ -343,7 +351,8 @@ class SyncConfigurationRequest(BaseModel):
     custom_rules: Optional[Dict[str, Any]] = None
 
 class SyncOperationRequest(BaseModel):
-    """Request model for sync operations"""
+    """
+Request model for sync operations"""
     sync_id: str
     source_platform: str
     target_platform: str
@@ -353,14 +362,16 @@ class SyncOperationRequest(BaseModel):
     force_sync: bool = False
 
 class ConflictResolutionRequest(BaseModel):
-    """Request model for conflict resolution"""
+    """
+Request model for conflict resolution"""
     conflict_id: str
     resolution_strategy: ConflictResolution
     resolved_value: Optional[Any] = None
     resolution_notes: Optional[str] = None
 
 class SyncResponse(BaseModel):
-    """Response model for sync operations"""
+    """
+Response model for sync operations"""
     sync_id: str
     operation_id: str
     status: str
@@ -372,7 +383,8 @@ class SyncResponse(BaseModel):
     next_scheduled_sync: Optional[datetime]
 
 class CrossPlatformSyncManager:
-    """Enterprise cross-platform synchronization management system"""
+    """
+Enterprise cross-platform synchronization management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -385,7 +397,8 @@ class CrossPlatformSyncManager:
         user_id: str,
         sync_request: SyncConfigurationRequest
     ) -> CrossPlatformSync:
-        """Create new cross-platform sync configuration"""
+        """
+Create new cross-platform sync configuration"""
         try:
             # Validate platforms and configuration
             await self._validate_sync_configuration(sync_request)

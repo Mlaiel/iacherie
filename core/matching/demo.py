@@ -11,6 +11,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This demonstration module contains proprietary algorithms and workflows
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
 """
+
 import asyncio
 import time
 import json
@@ -37,7 +38,8 @@ from . import (
 
 @dataclass
 class CreatorProfile:
-    """Mock creator profile for demonstration"""
+    """
+Mock creator profile for demonstration"""
     id: str
     name: str
     category: str
@@ -54,7 +56,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationScenario:
-    """Collaboration scenario for testing"""
+    """
+Collaboration scenario for testing"""
     name: str
     description: str
     primary_creator: CreatorProfile
@@ -66,7 +69,8 @@ class CollaborationScenario:
 
 
 class DemoDataGenerator:
-    """Generate realistic demo data"""
+    """
+Generate realistic demo data"""
     
     def __init__(self):
         self.categories = [
@@ -420,7 +424,8 @@ class ComprehensiveDemo:
         self.scenarios: List[CollaborationScenario] = []
     
     async def run_complete_demonstration(self, num_creators: int = 1000) -> Dict[str, Any]:
-        """Run complete system demonstration"""
+        """
+Run complete system demonstration"""
         print("🌟 Starting Enterprise Creator Matching System Demonstration")
         print("=" * 70)
         
@@ -580,7 +585,8 @@ class ComprehensiveDemo:
         return 1.0 / (1.0 + np.exp(-score * 5 + 2.5))
     
     def _generate_enhanced_reasoning(self, primary: CreatorProfile, candidate: CreatorProfile) -> List[str]:
-        """Generate enhanced reasoning with AI insights"""
+        """
+Generate enhanced reasoning with AI insights"""
         reasons = []
         
         if primary.category == candidate.category:

@@ -7,6 +7,7 @@ disaster recovery for failed deployments.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from ..infrastructure.resource_manager import ResourceManager
 
 
 class RollbackType(Enum):
-    """Rollback types"""
+    """
+Rollback types"""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     EMERGENCY = "emergency"
@@ -35,6 +38,7 @@ class RollbackType(Enum):
 
 class RollbackStatus(Enum):
     """Rollback status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -45,6 +49,7 @@ class RollbackStatus(Enum):
 
 class SnapshotType(Enum):
     """Snapshot types"""
+
     FULL_SYSTEM = "full_system"
     APPLICATION = "application"
     DATABASE = "database"
@@ -129,7 +134,8 @@ class RollbackManager(BaseComponent):
         self.service_dependencies = self._build_service_dependency_graph()
 
     def _build_service_dependency_graph(self) -> Dict[str, List[str]]:
-        """Build service dependency graph for rollback ordering"""
+        """
+Build service dependency graph for rollback ordering"""
         return {
             'api_gateway': [],  # No dependencies, can rollback first
             'ai_agent': ['database', 'cache'],
@@ -596,7 +602,8 @@ class RollbackManager(BaseComponent):
         rollback_point: RollbackPoint,
         context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Plan rollback steps in correct dependency order"""
+        """
+Plan rollback steps in correct dependency order"""
         
         steps = []
         
@@ -659,7 +666,8 @@ class RollbackManager(BaseComponent):
         return steps
 
     def _get_service_rollback_order(self, services: List[str]) -> List[str]:
-        """Get correct order for service rollback (considering dependencies)"""
+        """
+Get correct order for service rollback (considering dependencies)"""
         
         # Use topological sort to determine rollback order
         ordered_services = []
@@ -696,7 +704,8 @@ class RollbackManager(BaseComponent):
         rollback_point: RollbackPoint,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute a single rollback step"""
+        """
+Execute a single rollback step"""
         
         step_type = step['type']
         
@@ -764,7 +773,8 @@ class RollbackManager(BaseComponent):
         rollback_point: RollbackPoint,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Rollback database"""
+        """
+Rollback database"""
         
         snapshot_id = step['snapshot_id']
         snapshot_data = await self.snapshot_manager.get_snapshot(snapshot_id)
@@ -786,7 +796,8 @@ class RollbackManager(BaseComponent):
         rollback_point: RollbackPoint,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Rollback configurations"""
+        """
+Rollback configurations"""
         
         snapshot_id = step['snapshot_id']
         snapshot_data = await self.snapshot_manager.get_snapshot(snapshot_id)
@@ -884,7 +895,8 @@ class RollbackManager(BaseComponent):
         service: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check service health after rollback"""
+        """
+Check service health after rollback"""
         
         namespace = context.get('namespace', f"ia-influencer-{context.get('environment', 'default')}")
         
@@ -928,7 +940,8 @@ class RollbackManager(BaseComponent):
         rollback_execution: RollbackExecution,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate overall rollback success"""
+        """
+Validate overall rollback success"""
         
         validation_result = {
             'success': True,
@@ -977,7 +990,8 @@ class RollbackManager(BaseComponent):
         }
 
     def _calculate_rollback_point_checksum(self, rollback_point: RollbackPoint) -> str:
-        """Calculate checksum for rollback point integrity"""
+        """
+Calculate checksum for rollback point integrity"""
         
         data_to_hash = json.dumps({
             'rollback_id': rollback_point.rollback_id,
@@ -990,7 +1004,8 @@ class RollbackManager(BaseComponent):
         return hashlib.sha256(data_to_hash.encode()).hexdigest()
 
     async def _persist_rollback_point_metadata(self, rollback_point: RollbackPoint) -> None:
-        """Persist rollback point metadata"""
+        """
+Persist rollback point metadata"""
         
         metadata = {
             'rollback_id': rollback_point.rollback_id,
@@ -1039,7 +1054,8 @@ class RollbackManager(BaseComponent):
                 await self._delete_rollback_point(rollback_point.rollback_id)
 
     async def _delete_rollback_point(self, rollback_point_id: str) -> None:
-        """Delete a rollback point and its snapshots"""
+        """
+Delete a rollback point and its snapshots"""
         
         if rollback_point_id not in self.rollback_points:
             return
@@ -1095,7 +1111,8 @@ class RollbackManager(BaseComponent):
         ]
 
     async def get_rollback_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get rollback execution status"""
+        """
+Get rollback execution status"""
         
         if execution_id in self.active_rollbacks:
             return self._format_rollback_execution_result(self.active_rollbacks[execution_id])
@@ -1103,7 +1120,8 @@ class RollbackManager(BaseComponent):
         return None
 
     async def cancel_rollback_execution(self, execution_id: str) -> bool:
-        """Cancel an active rollback execution"""
+        """
+Cancel an active rollback execution"""
         
         if execution_id not in self.active_rollbacks:
             return False

@@ -8,7 +8,7 @@ Technologies: Python, NLP, Speech Recognition, Translation APIs, Language Detect
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Contenu multilingue → Détection langue → Traduction temps réel → 
 Reconnaissance vocale → Synthèse vocale → Optimisation culturelle → Distribution ciblée
 """
+
 from typing import Any, Dict, List, Optional, Union, Tuple, Set
 import logging
 import asyncio
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class LanguageFamily(Enum):
-    """Familles de langues"""
+    """
+Familles de langues"""
+
     INDO_EUROPEAN = "indo_european"
     SINO_TIBETAN = "sino_tibetan"
     NIGER_CONGO = "niger_congo"
@@ -51,6 +54,7 @@ class LanguageFamily(Enum):
 
 class ContentType(Enum):
     """Types de contenu multilingue"""
+
     TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
@@ -65,6 +69,7 @@ class ContentType(Enum):
 
 class TranslationQuality(Enum):
     """Niveaux de qualité de traduction"""
+
     AUTOMATIC = "automatic"
     REVIEWED = "reviewed"
     PROFESSIONAL = "professional"
@@ -74,6 +79,7 @@ class TranslationQuality(Enum):
 
 class VoiceGender(Enum):
     """Genres de voix pour synthèse"""
+
     MALE = "male"
     FEMALE = "female"
     NEUTRAL = "neutral"
@@ -81,6 +87,7 @@ class VoiceGender(Enum):
 
 class SpeechSpeed(Enum):
     """Vitesses de parole"""
+
     VERY_SLOW = "very_slow"
     SLOW = "slow"
     NORMAL = "normal"
@@ -847,7 +854,8 @@ class MultilingualManager(ABC):
         return content
     
     async def _adapt_numbers(self, content: Dict[str, Any], number_format: str) -> Dict[str, Any]:
-        """Adapt number formats in content"""
+        """
+Adapt number formats in content"""
         # Simplified number adaptation
         return content
     
@@ -856,7 +864,8 @@ class MultilingualManager(ABC):
         content: Dict[str, Any],
         references: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Adapt cultural references in content"""
+        """
+Adapt cultural references in content"""
         # Simplified cultural reference adaptation
         return content
     
@@ -865,7 +874,8 @@ class MultilingualManager(ABC):
         content: Dict[str, Any],
         replacements: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Replace culturally sensitive content"""
+        """
+Replace culturally sensitive content"""
         # Simplified sensitive content replacement
         return content
     
@@ -874,12 +884,14 @@ class MultilingualManager(ABC):
         content: Dict[str, Any],
         color_preferences: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Adapt colors based on cultural preferences"""
+        """
+Adapt colors based on cultural preferences"""
         # Simplified color adaptation
         return content
     
     def _is_cache_entry_relevant(self, key: str, value: Dict[str, Any]) -> bool:
-        """Check if cache entry is still relevant"""
+        """
+Check if cache entry is still relevant"""
         # Check cache TTL
         created_at = value.get("created_at")
         if created_at:

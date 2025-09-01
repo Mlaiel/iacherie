@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -48,7 +49,8 @@ settings = get_settings()
 
 @dataclass
 class BandcampTrack:
-    """Bandcamp track data structure"""
+    """
+Bandcamp track data structure"""
     id: str
     title: str
     artist_name: str
@@ -71,7 +73,8 @@ class BandcampTrack:
 
 @dataclass
 class BandcampAlbum:
-    """Bandcamp album data structure"""
+    """
+Bandcamp album data structure"""
     id: str
     title: str
     artist_name: str
@@ -94,7 +97,8 @@ class BandcampAlbum:
 
 @dataclass
 class BandcampArtist:
-    """Bandcamp artist data structure"""
+    """
+Bandcamp artist data structure"""
     id: str
     name: str
     url: str
@@ -125,7 +129,8 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Bandcamp crawler engine"""
+        """
+Initialize Bandcamp crawler engine"""
         super().__init__(platform="bandcamp", config=config)
         
         # Rate limiting (more conservative for web scraping)
@@ -180,7 +185,8 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for dynamic content"""
+        """
+Setup Selenium WebDriver for dynamic content"""
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -596,12 +602,14 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         return artist_elem.get_text(strip=True) if artist_elem else ''
     
     def _extract_location(self, element) -> Optional[str]:
-        """Extract location from search result"""
+        """
+Extract location from search result"""
         location_elem = element.find('div', class_='geo')
         return location_elem.get_text(strip=True) if location_elem else None
     
     def _extract_tags(self, element) -> List[str]:
-        """Extract tags from search result"""
+        """
+Extract tags from search result"""
         tags = []
         tag_elements = element.find_all('div', class_='tag')
         for tag in tag_elements:
@@ -609,7 +617,8 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         return tags
     
     def _extract_page_tags(self, soup: BeautifulSoup) -> List[str]:
-        """Extract tags from page"""
+        """
+Extract tags from page"""
         tags = []
         tag_elements = soup.find_all('a', class_='tag')
         for tag in tag_elements:
@@ -617,7 +626,8 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         return tags
     
     def _extract_social_links(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract social media links"""
+        """
+Extract social media links"""
         social_links = {}
         social_section = soup.find('div', id='bio-links')
         if social_section:
@@ -630,7 +640,8 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         return social_links
     
     def _extract_price(self, price_elem) -> Optional[float]:
-        """Extract price from price element"""
+        """
+Extract price from price element"""
         if not price_elem:
             return None
         

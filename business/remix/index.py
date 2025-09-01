@@ -10,14 +10,15 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
 MISSION: Index central du système business remix IA-Influencer-Agent
 LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → SEO pro → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel → Monétisation
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
@@ -33,6 +34,7 @@ logger = logging.getLogger(__name__)
 
 class BusinessRemixStage(Enum):
     """Business remix processing stages."""
+
     ONBOARDING = "onboarding"
     CONTENT_PROCESSING = "content_processing"
     PROTECTION_RIGHTS = "protection_rights"
@@ -44,6 +46,7 @@ class BusinessRemixStage(Enum):
 
 class CreatorType(Enum):
     """Types of content creators supported."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -63,7 +66,8 @@ class BusinessRemixIndex:
     """
     
     def __init__(self):
-        """Initialize business remix index."""
+        """
+Initialize business remix index."""
         self.business_workflows = {}
         self.creator_journeys = {}
         self.collaboration_sessions = {}

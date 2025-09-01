@@ -7,6 +7,7 @@ real-time metrics, AI-powered insights, and automated optimization recommendatio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for performance analysis"""
+    """
+Supported content types for performance analysis"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -34,6 +37,7 @@ class ContentType(Enum):
 
 class PerformanceMetric(Enum):
     """Key performance indicators for content analysis"""
+
     VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
@@ -60,7 +64,8 @@ class PerformanceSnapshot:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insight with recommendations"""
+    """
+AI-generated performance insight with recommendations"""
     insight_id: str
     content_id: str
     insight_type: str
@@ -85,7 +90,8 @@ class PerformanceAnalyticsEngine:
         self.clustering_model = KMeansCluster(n_clusters=5, random_state=42)
         
     async def initialize(self) -> None:
-        """Initialize analytics engine with database connections and models"""
+        """
+Initialize analytics engine with database connections and models"""
         try:
             await self._setup_database_tables()
             await self._load_historical_data()
@@ -130,7 +136,8 @@ class PerformanceAnalyticsEngine:
             """)
 
     async def _load_historical_data(self) -> None:
-        """Load historical performance data for model training"""
+        """
+Load historical performance data for model training"""
         async with self.db_pool.acquire() as conn:
             historical_data = await conn.fetch("""
                 SELECT content_id, metrics, score, trending_probability 
@@ -144,7 +151,8 @@ class PerformanceAnalyticsEngine:
                 self._train_performance_models(df)
 
     def _train_performance_models(self, df: pd.DataFrame) -> None:
-        """Train ML models with historical performance data"""
+        """
+Train ML models with historical performance data"""
         try:
             # Extract features from metrics
             metrics_features = []
@@ -175,7 +183,8 @@ class PerformanceAnalyticsEngine:
         pass
 
     async def track_performance_real_time(self, content_id: str, platform: str) -> PerformanceSnapshot:
-        """Track real-time performance metrics for content"""
+        """
+Track real-time performance metrics for content"""
         try:
             # Get current metrics from platform APIs
             current_metrics = await self._fetch_platform_metrics(content_id, platform)
@@ -642,7 +651,8 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _optimize_platform_strategy(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize platform allocation strategy"""
+        """
+Optimize platform allocation strategy"""
         # Implementation for platform strategy optimization
         return {
             'primary_platforms': ['YouTube', 'Instagram'],
@@ -652,7 +662,8 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _optimize_content_format(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize content format strategy"""
+        """
+Optimize content format strategy"""
         return {
             'high_performing_formats': ['Short-form video', 'Carousel posts', 'Stories'],
             'underperforming_formats': ['Long-form text', 'Static images'],
@@ -665,7 +676,8 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _optimize_engagement_strategy(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize audience engagement tactics"""
+        """
+Optimize audience engagement tactics"""
         return {
             'engagement_tactics': [
                 'Use interactive stickers in stories',
@@ -679,7 +691,8 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _set_performance_targets(self, creator_id: str) -> Dict[str, Any]:
-        """Set realistic performance targets based on historical data"""
+        """
+Set realistic performance targets based on historical data"""
         return {
             'monthly_targets': {
                 'engagement_rate': 4.5,

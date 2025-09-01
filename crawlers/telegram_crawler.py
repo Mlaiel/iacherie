@@ -22,6 +22,7 @@ Features:
 - Comprehensive chat analytics and member behavior analysis
 - Content fingerprinting for copyright protection
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
@@ -58,7 +59,8 @@ settings = get_settings()
 
 @dataclass
 class TelegramMessage:
-    """Telegram message data structure with enhanced analysis."""
+    """
+Telegram message data structure with enhanced analysis."""
     message_id: int
     text: Optional[str]
     date: datetime
@@ -96,7 +98,8 @@ class TelegramMessage:
 
 @dataclass
 class TelegramChat:
-    """Telegram chat (channel/group) data structure."""
+    """
+Telegram chat (channel/group) data structure."""
     chat_id: int
     title: str
     username: Optional[str]
@@ -125,7 +128,8 @@ class TelegramChat:
 
 @dataclass
 class TelegramUser:
-    """Telegram user data structure."""
+    """
+Telegram user data structure."""
     user_id: int
     username: Optional[str]
     first_name: Optional[str]
@@ -211,11 +215,13 @@ class TelegramCrawler:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close()
         
     async def initialize(self):
-        """Initialize the crawler and Telegram client."""
+        """
+Initialize the crawler and Telegram client."""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
@@ -246,7 +252,8 @@ class TelegramCrawler:
         return None
         
     def _setup_event_handlers(self):
-        """Setup Telegram event handlers."""
+        """
+Setup Telegram event handlers."""
         
         @self.client.on(events.NewMessage)
         async def handle_new_message(event):
@@ -559,7 +566,8 @@ class TelegramCrawler:
         )
     
     async def _parse_chat_data(self, chat) -> TelegramChat:
-        """Parse Telegram chat into structured data."""
+        """
+Parse Telegram chat into structured data."""
         return TelegramChat(
             chat_id=chat.id,
             title=getattr(chat, 'title', ''),
@@ -577,7 +585,8 @@ class TelegramCrawler:
         )
     
     async def _analyze_chat(self, chat) -> TelegramChat:
-        """Perform comprehensive chat analysis."""
+        """
+Perform comprehensive chat analysis."""
         chat_data = await self._parse_chat_data(chat)
         
         # Calculate activity score based on recent messages
@@ -595,7 +604,8 @@ class TelegramCrawler:
         return chat_data
     
     def _get_chat_type(self, chat) -> str:
-        """Determine chat type."""
+        """
+Determine chat type."""
         if hasattr(chat, 'broadcast') and chat.broadcast:
             return 'channel'
         elif hasattr(chat, 'megagroup') and chat.megagroup:
@@ -608,7 +618,8 @@ class TelegramCrawler:
             return 'private'
     
     def _get_media_type(self, message) -> Optional[str]:
-        """Get media type from message."""
+        """
+Get media type from message."""
         if message.photo:
             return 'photo'
         elif message.video:
@@ -626,7 +637,8 @@ class TelegramCrawler:
         return None
     
     def _get_forward_info(self, message) -> Optional[Dict]:
-        """Extract forward information from message."""
+        """
+Extract forward information from message."""
         if message.forward:
             return {
                 'from_id': getattr(message.forward.from_id, 'user_id', None),
@@ -637,11 +649,13 @@ class TelegramCrawler:
         return None
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between content fingerprints."""
+        """
+Calculate similarity between content fingerprints."""
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
-        """Get crawler statistics and status."""
+        """
+Get crawler statistics and status."""
         return {
             'platform': 'telegram',
             'client_connected': self.client.is_connected(),
@@ -934,7 +948,8 @@ class TelegramCrawler(BaseCrawler):
             await self.client.disconnect()
     
     async def get_chat_details(self, chat_identifier: str) -> Optional[TelegramChat]:
-        """Get detailed information about a chat/group/channel"""
+        """
+Get detailed information about a chat/group/channel"""
         await self.rate_limiter.wait()
         
         try:
@@ -1612,7 +1627,8 @@ class TelegramCrawler(BaseCrawler):
         protected_content: Dict,
         message: TelegramMessage
     ) -> float:
-        """Calculate similarity between protected content and Telegram message"""
+        """
+Calculate similarity between protected content and Telegram message"""
         from difflib import SequenceMatcher
         
         similarity_scores = []
@@ -1635,7 +1651,8 @@ class TelegramCrawler(BaseCrawler):
     
     # Analysis helper methods
     def _calculate_activity_score(self, messages_24h: int, messages_week: int) -> float:
-        """Calculate activity score based on message frequency"""
+        """
+Calculate activity score based on message frequency"""
         daily_average = messages_week / 7
         if daily_average == 0:
             return 0.0
@@ -1644,7 +1661,8 @@ class TelegramCrawler(BaseCrawler):
         return min(activity_ratio, 2.0) / 2.0  # Normalize to 0-1
     
     def _calculate_content_diversity(self, messages: List[TelegramMessage]) -> float:
-        """Calculate content diversity score"""
+        """
+Calculate content diversity score"""
         if not messages:
             return 0.0
         
@@ -1666,7 +1684,8 @@ class TelegramCrawler(BaseCrawler):
         return diversity_score
     
     def _analyze_activity_trend(self, messages: List[TelegramMessage]) -> str:
-        """Analyze activity trend from recent messages"""
+        """
+Analyze activity trend from recent messages"""
         if len(messages) < 10:
             return "insufficient_data"
         
@@ -1727,7 +1746,8 @@ class TelegramCrawler(BaseCrawler):
         return length_score + media_score + engagement_score
     
     def _analyze_posting_hours(self, messages: List[TelegramMessage]) -> Dict[str, Any]:
-        """Analyze posting hours distribution"""
+        """
+Analyze posting hours distribution"""
         if not messages:
             return {}
         
@@ -1745,13 +1765,15 @@ class TelegramCrawler(BaseCrawler):
         }
     
     async def _analyze_content_languages(self, messages: List[TelegramMessage]) -> Dict[str, int]:
-        """Analyze content language distribution"""
+        """
+Analyze content language distribution"""
         # This would require language detection
         # Placeholder implementation
         return {'en': len(messages)}
     
     def _analyze_hashtags(self, messages: List[TelegramMessage]) -> Dict[str, Any]:
-        """Analyze hashtag usage"""
+        """
+Analyze hashtag usage"""
         all_hashtags = []
         for message in messages:
             all_hashtags.extend(message.hashtags)
@@ -1768,7 +1790,8 @@ class TelegramCrawler(BaseCrawler):
     
     # Additional placeholder methods for comprehensive analysis
     def _calculate_user_posting_frequency(self, messages: List[TelegramMessage]) -> float:
-        """Calculate user posting frequency"""
+        """
+Calculate user posting frequency"""
         if len(messages) < 2:
             return 0.0
         
@@ -1776,11 +1799,13 @@ class TelegramCrawler(BaseCrawler):
         return len(messages) / max(time_span, 1)
     
     def _analyze_user_active_hours(self, messages: List[TelegramMessage]) -> Dict:
-        """Analyze user's active hours"""
+        """
+Analyze user's active hours"""
         return self._analyze_posting_hours(messages)
     
     def _analyze_user_message_types(self, messages: List[TelegramMessage]) -> Dict:
-        """Analyze user's message types"""
+        """
+Analyze user's message types"""
         text_only = len([msg for msg in messages if not msg.media_type])
         with_media = len([msg for msg in messages if msg.media_type])
         forwarded = len([msg for msg in messages if msg.forward_from_chat_id])
@@ -1793,7 +1818,8 @@ class TelegramCrawler(BaseCrawler):
         }
     
     def _analyze_user_hashtag_usage(self, messages: List[TelegramMessage]) -> Dict:
-        """Analyze user's hashtag usage patterns"""
+        """
+Analyze user's hashtag usage patterns"""
         messages_with_hashtags = [msg for msg in messages if msg.hashtags]
         
         return {

@@ -8,7 +8,7 @@ Responsibility: Extraction et traitement avancé des métadonnées pour tous typ
 =======================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER METADATA PROCESSOR:
 Content Input → Format Detection → Technical Metadata → Content Metadata → 
 AI-Enhanced Metadata → Privacy Analysis → Enrichment → Standardization
 """
+
 import os
 import json
 import hashlib
@@ -52,7 +53,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class MetadataProcessor(BaseProcessor):
-    """Processeur avancé de métadonnées - Production Enterprise"""
+    """
+Processeur avancé de métadonnées - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -79,7 +81,8 @@ class MetadataProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_extractors(self):
-        """Initialize metadata extraction tools"""
+        """
+Initialize metadata extraction tools"""
         try:
             # AI models for content analysis
             self.content_classifier = pipeline(
@@ -117,7 +120,8 @@ class MetadataProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite et extrait toutes les métadonnées"""
+        """
+Traite et extrait toutes les métadonnées"""
         try:
             # Determine content type
             content_type = self._detect_content_type(input_data)
@@ -218,7 +222,8 @@ class MetadataProcessor(BaseProcessor):
         return 'unknown'
     
     def _extract_technical_metadata(self, input_data: Any, content_type: str) -> Dict[str, Any]:
-        """Extrait les métadonnées techniques de base"""
+        """
+Extrait les métadonnées techniques de base"""
         metadata = {
             "content_type": content_type,
             "extraction_timestamp": datetime.now(timezone.utc).isoformat()
@@ -267,7 +272,8 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_audio_metadata(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait les métadonnées audio avec Mutagen"""
+        """
+Extrait les métadonnées audio avec Mutagen"""
         if not isinstance(input_data, str):
             return {}
         
@@ -612,7 +618,8 @@ class MetadataProcessor(BaseProcessor):
         return []
     
     def _analyze_privacy(self, format_metadata: Dict, content_metadata: Dict) -> Dict[str, Any]:
-        """Analyse les risques de confidentialité"""
+        """
+Analyse les risques de confidentialité"""
         privacy_risks = []
         risk_score = 0.0
         
@@ -806,7 +813,8 @@ class MetadataProcessor(BaseProcessor):
         return None
     
     def _enrich_temporal_data(self, creation_time: str) -> Dict[str, Any]:
-        """Enrichit les données temporelles"""
+        """
+Enrichit les données temporelles"""
         try:
             # Parse creation time
             if 'T' in creation_time:
@@ -1003,11 +1011,13 @@ class MetadataProcessor(BaseProcessor):
         return dimensions
     
     def _extract_duration(self, format_specific: Dict) -> Optional[float]:
-        """Extrait la durée"""
+        """
+Extrait la durée"""
         return format_specific.get('length_seconds') or format_specific.get('duration_seconds')
     
     def _extract_quality_metrics(self, format_specific: Dict) -> Dict[str, Any]:
-        """Extrait les métriques de qualité"""
+        """
+Extrait les métriques de qualité"""
         metrics = {}
         
         if format_specific.get('bitrate'):
@@ -1020,7 +1030,8 @@ class MetadataProcessor(BaseProcessor):
         return metrics
     
     def _get_season(self, month: int) -> str:
-        """Détermine la saison"""
+        """
+Détermine la saison"""
         if month in [12, 1, 2]:
             return "winter"
         elif month in [3, 4, 5]:
@@ -1064,7 +1075,8 @@ class AsyncMetadataProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
+        """
+Version asynchrone de la validation"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1073,7 +1085,8 @@ class AsyncMetadataProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
+        """
+Version asynchrone du traitement"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1082,6 +1095,7 @@ class AsyncMetadataProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
+        """
+Traitement en lot asynchrone"""
         tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)

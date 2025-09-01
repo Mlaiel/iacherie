@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive audio enhancement capabilities.
 """
+
 import logging
 import numpy as np
 import time
@@ -16,7 +17,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class EnhancementType(Enum):
-    """Types of audio enhancement"""
+    """
+Types of audio enhancement"""
+
     NOISE_REDUCTION = "noise_reduction"
     DYNAMIC_RANGE = "dynamic_range"
     SPECTRAL_ENHANCE = "spectral_enhance"
@@ -30,6 +33,7 @@ class EnhancementType(Enum):
 
 class QualityLevel(Enum):
     """Enhancement quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -47,7 +51,8 @@ class EnhancementSettings:
 
 @dataclass
 class EnhancementResult:
-    """Audio enhancement result"""
+    """
+Audio enhancement result"""
     enhanced_audio: np.ndarray
     original_audio: np.ndarray
     settings_used: EnhancementSettings
@@ -60,7 +65,8 @@ class EnhancementResult:
     error_message: Optional[str] = None
 
 class AudioEnhancer:
-    """Advanced audio enhancement engine"""
+    """
+Advanced audio enhancement engine"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -484,7 +490,8 @@ class AudioEnhancer:
             return audio_data
     
     def _calculate_quality_metrics(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
-        """Calculate enhancement quality metrics"""
+        """
+Calculate enhancement quality metrics"""
         try:
             metrics = {}
             
@@ -545,7 +552,8 @@ class AudioEnhancer:
             return 0.0
     
     def _calculate_enhancement_gain(self, original: np.ndarray, enhanced: np.ndarray) -> float:
-        """Calculate overall enhancement gain in dB"""
+        """
+Calculate overall enhancement gain in dB"""
         try:
             original_rms = np.sqrt(np.mean(original ** 2))
             enhanced_rms = np.sqrt(np.mean(enhanced ** 2))
@@ -560,7 +568,8 @@ class AudioEnhancer:
             return 0.0
     
     def _analyze_frequency_response(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
-        """Analyze frequency response changes"""
+        """
+Analyze frequency response changes"""
         try:
             # Calculate frequency response in different bands
             bands = {

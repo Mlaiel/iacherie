@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Évaluateur de qualité de remix IA ultra-avancé avec analyse multidim
 TECHNOLOGIES: Deep Learning, Audio Quality Metrics, Perceptual Analysis, Neural Assessment
 LOGIQUE MÉTIER: Audio input → Multi-modal analysis → Quality scoring → Recommendations → Assessment report
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ import pyloudnorm as pyln
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     AUDIO_FIDELITY = "audio_fidelity"
     MUSICAL_COHERENCE = "musical_coherence"
     CREATIVE_ENHANCEMENT = "creative_enhancement"
@@ -52,6 +55,7 @@ class QualityDimension(Enum):
 
 class AssessmentLevel(Enum):
     """Quality assessment detail levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -59,6 +63,7 @@ class AssessmentLevel(Enum):
 
 class QualityGrade(Enum):
     """Quality grade classifications"""
+
     POOR = "poor"           # 0.0 - 0.4
     FAIR = "fair"           # 0.4 - 0.6
     GOOD = "good"           # 0.6 - 0.8
@@ -77,7 +82,8 @@ class QualityMetrics:
 
 @dataclass
 class QualityRecommendation:
-    """Quality improvement recommendation"""
+    """
+Quality improvement recommendation"""
     category: str
     priority: str  # high, medium, low
     description: str
@@ -87,7 +93,8 @@ class QualityRecommendation:
 
 @dataclass
 class QualityAssessment:
-    """Complete quality assessment result"""
+    """
+Complete quality assessment result"""
     assessment_id: str
     audio_analyzed: bool
     overall_quality_score: float
@@ -104,7 +111,8 @@ class QualityAssessment:
     success: bool
 
 class AudioQualityNetwork(nn.Module):
-    """Neural network for audio quality assessment"""
+    """
+Neural network for audio quality assessment"""
     
     def __init__(self, input_features: int = 512, hidden_dim: int = 256):
         super(AudioQualityNetwork, self).__init__()
@@ -197,14 +205,16 @@ class AudioQualityNetwork(nn.Module):
         }
 
 class PerceptualQualityAnalyzer:
-    """Perceptual audio quality analysis"""
+    """
+Perceptual audio quality analysis"""
     
     def __init__(self):
         self.loudness_meter = pyln.Meter(44100)
         self.perceptual_models = self._initialize_perceptual_models()
     
     def _initialize_perceptual_models(self) -> Dict[str, Any]:
-        """Initialize perceptual quality models"""
+        """
+Initialize perceptual quality models"""
         return {
             "loudness_standards": {
                 "streaming": -14.0,  # LUFS

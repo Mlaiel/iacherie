@@ -4,8 +4,9 @@ Industrial-grade neural conversation processing with transformer architecture,
 multi-modal understanding, and real-time business intelligence for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationMode(Enum):
-    """Advanced conversation modes for content creators"""
+    """
+Advanced conversation modes for content creators"""
+
     STRATEGIC_CONSULTATION = "strategic_consultation"
     CONTENT_OPTIMIZATION = "content_optimization"
     COLLABORATION_MATCHING = "collaboration_matching"
@@ -53,6 +56,7 @@ class ConversationMode(Enum):
 
 class ModelArchitecture(Enum):
     """Neural architecture configurations"""
+
     TRANSFORMER_BASED = "transformer_based"
     RETRIEVAL_AUGMENTED = "retrieval_augmented"
     MULTI_MODAL_FUSION = "multi_modal_fusion"
@@ -84,7 +88,8 @@ class ConversationContext:
 
 @dataclass
 class NeuralResponse:
-    """Advanced neural response with multi-dimensional intelligence"""
+    """
+Advanced neural response with multi-dimensional intelligence"""
     response_text: str
     confidence_score: float
     reasoning_chain: List[str]
@@ -415,7 +420,8 @@ class NeuralConversationEngine:
         context: ConversationContext,
         business_analysis: Dict[str, Any]
     ) -> NeuralResponse:
-        """Enhance response with business intelligence"""
+        """
+Enhance response with business intelligence"""
         # Generate business insights
         response.business_insights = await self._generate_business_insights(
             context, business_analysis
@@ -463,7 +469,8 @@ class NeuralConversationEngine:
         response: NeuralResponse,
         context: ConversationContext
     ) -> NeuralResponse:
-        """Apply advanced personalization to response"""
+        """
+Apply advanced personalization to response"""
         # Calculate personalization score
         response.personalization_score = await self._calculate_personalization_score(
             response, context
@@ -553,7 +560,8 @@ class NeuralConversationEngine:
         message: str, 
         context: ConversationContext
     ) -> str:
-        """Calculate conversation priority level"""
+        """
+Calculate conversation priority level"""
         # Implement priority calculation logic
         return "high"
     
@@ -572,7 +580,8 @@ class NeuralConversationEngine:
         context: ConversationContext,
         mode: ConversationMode
     ) -> str:
-        """Prepare conversation input with context"""
+        """
+Prepare conversation input with context"""
         # Create contextual prompt
         context_prompt = (
             f"Mode: {mode.value}\n"
@@ -606,7 +615,8 @@ class NeuralConversationEngine:
         context: ConversationContext, 
         response: str
     ) -> List[str]:
-        """Generate reasoning chain for transparency"""
+        """
+Generate reasoning chain for transparency"""
         return [
             "Analyzed user message for business intent",
             "Considered creator profile and objectives",
@@ -734,7 +744,8 @@ class NeuralConversationEngine:
         response: NeuralResponse, 
         context: ConversationContext
     ) -> float:
-        """Calculate contextual relevance score"""
+        """
+Calculate contextual relevance score"""
         return 0.92
     
     async def _calculate_business_value_score(
@@ -742,7 +753,8 @@ class NeuralConversationEngine:
         response: NeuralResponse, 
         context: ConversationContext
     ) -> float:
-        """Calculate business value score"""
+        """
+Calculate business value score"""
         return 0.85
     
     async def _optimize_for_personalization(
@@ -750,7 +762,8 @@ class NeuralConversationEngine:
         response_text: str, 
         context: ConversationContext
     ) -> str:
-        """Optimize response for personalization"""
+        """
+Optimize response for personalization"""
         # Apply personalization optimization
         return response_text
     
@@ -759,7 +772,8 @@ class NeuralConversationEngine:
         message: str, 
         context: ConversationContext
     ) -> NeuralResponse:
-        """Generate fallback response in case of errors"""
+        """
+Generate fallback response in case of errors"""
         return NeuralResponse(
             response_text="I apologize, but I'm experiencing technical difficulties. Please try again shortly.",
             confidence_score=0.5,

@@ -6,9 +6,10 @@ Provides advanced personalized guidance, strategic consulting, content optimizat
 and comprehensive business intelligence for digital entrepreneurs.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import json
@@ -48,7 +49,9 @@ ASSISTANT_SATISFACTION = Histogram('ai_assistant_satisfaction_score', 'User sati
 
 
 class AssistantMode(Enum):
-    """Advanced AI Assistant operation modes"""
+    """
+Advanced AI Assistant operation modes"""
+
     CREATIVE_CONSULTANT = "creative_consultant"
     BUSINESS_STRATEGIST = "business_strategist"
     TECHNICAL_ADVISOR = "technical_advisor"
@@ -63,6 +66,7 @@ class AssistantMode(Enum):
 
 class ExpertiseLevel(Enum):
     """Assistant expertise levels"""
+
     NOVICE_GUIDE = "novice_guide"
     EXPERIENCED_MENTOR = "experienced_mentor"
     INDUSTRY_EXPERT = "industry_expert"
@@ -72,6 +76,7 @@ class ExpertiseLevel(Enum):
 
 class CommunicationStyle(Enum):
     """Communication style preferences"""
+
     EXECUTIVE_BRIEF = "executive_brief"
     DETAILED_ANALYSIS = "detailed_analysis"
     CONVERSATIONAL_GUIDE = "conversational_guide"
@@ -82,6 +87,7 @@ class CommunicationStyle(Enum):
 
 class CreatorType(Enum):
     """Comprehensive creator types"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -132,7 +138,8 @@ class UserProfile:
 
 @dataclass
 class AssistantContext:
-    """Rich context for AI Assistant interactions"""
+    """
+Rich context for AI Assistant interactions"""
     session_id: str
     user_profile: UserProfile
     current_mode: AssistantMode
@@ -150,7 +157,8 @@ class AssistantContext:
 
 @dataclass
 class StrategicInsight:
-    """Strategic business insights"""
+    """
+Strategic business insights"""
     insight_id: str
     category: str
     title: str
@@ -168,7 +176,8 @@ class StrategicInsight:
 
 @dataclass
 class ActionableRecommendation:
-    """Detailed actionable recommendations"""
+    """
+Detailed actionable recommendations"""
     recommendation_id: str
     title: str
     description: str
@@ -187,7 +196,8 @@ class ActionableRecommendation:
 
 @dataclass
 class AssistantResponse:
-    """Comprehensive AI Assistant response"""
+    """
+Comprehensive AI Assistant response"""
     response_id: str
     primary_message: str
     response_type: str
@@ -264,7 +274,8 @@ class AIAssistant:
         }
         
     async def initialize(self) -> None:
-        """Initialize the AI Assistant with all dependencies"""
+        """
+Initialize the AI Assistant with all dependencies"""
         try:
             # Initialize Redis connection
             self.redis_client = redis.from_url(
@@ -957,7 +968,8 @@ class AIAssistant:
         creator_type = context.user_profile.creator_type.value
         user_name = context.user_profile.user_id  # Could be enhanced with actual name
         
-        return f"""I understand you're looking for guidance as a {creator_type}. Based on your profile and current situation, I'm here to provide you with strategic insights and actionable recommendations.
+        return f"""
+I understand you're looking for guidance as a {creator_type}. Based on your profile and current situation, I'm here to provide you with strategic insights and actionable recommendations.
 
 Let me analyze your request more thoroughly and provide you with personalized advice that aligns with your business goals and current challenges. 
 
@@ -971,7 +983,8 @@ Would you like me to focus on a specific area such as:
 I'm committed to helping you achieve your goals and overcome any challenges you're facing."""
     
     async def cleanup_session(self, session_id: str) -> None:
-        """Clean up session resources"""
+        """
+Clean up session resources"""
         try:
             if session_id in self._active_sessions:
                 # Store session summary
@@ -999,7 +1012,8 @@ async def create_ai_assistant() -> AIAssistant:
 
 
 def validate_user_profile(user_profile: UserProfile) -> bool:
-    """Validate user profile data"""
+    """
+Validate user profile data"""
     try:
         required_fields = ['user_id', 'creator_type', 'experience_level']
         for field in required_fields:
@@ -1008,7 +1022,8 @@ def validate_user_profile(user_profile: UserProfile) -> bool:
         return True
     except Exception:
         return False
-        """Initialize the AI Assistant"""
+        """
+Initialize the AI Assistant"""
         try:
             await self.ai_models.load_assistant_models()
             await self.recommendation_engine.initialize()
@@ -1594,7 +1609,8 @@ def validate_user_profile(user_profile: UserProfile) -> bool:
         session: AssistantSession,
         context: Optional[Dict]
     ) -> List[Dict[str, Any]]:
-        """Generate next action recommendations"""
+        """
+Generate next action recommendations"""
         return [
             {
                 "action": "analyze_content",

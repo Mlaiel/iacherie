@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 import re
 import json
@@ -28,7 +29,9 @@ from ...ai.models import ContentClassifier, SentimentAnalyzer, TopicExtractor
 
 
 class ClassificationLevel(Enum):
-    """Data classification levels"""
+    """
+Data classification levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -38,6 +41,7 @@ class ClassificationLevel(Enum):
 
 class ContentCategory(Enum):
     """Content category types"""
+
     PERSONAL_DATA = "personal_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
@@ -52,6 +56,7 @@ class ContentCategory(Enum):
 
 class SensitivityLabel(Enum):
     """Sensitivity labels for content"""
+
     NON_SENSITIVE = "non_sensitive"
     LOW_SENSITIVITY = "low_sensitivity"
     MEDIUM_SENSITIVITY = "medium_sensitivity"
@@ -61,6 +66,7 @@ class SensitivityLabel(Enum):
 
 class ComplianceTag(Enum):
     """Compliance requirement tags"""
+
     GDPR_APPLICABLE = "gdpr_applicable"
     CCPA_APPLICABLE = "ccpa_applicable"
     HIPAA_APPLICABLE = "hipaa_applicable"
@@ -92,7 +98,8 @@ class ClassificationRule:
 
 @dataclass
 class ClassificationResult:
-    """Result of data classification"""
+    """
+Result of data classification"""
     content_id: str
     classification_level: ClassificationLevel
     content_category: ContentCategory
@@ -122,7 +129,8 @@ class ContentFeatures:
 
 
 class BaseClassifier(ABC):
-    """Base class for content classifiers"""
+    """
+Base class for content classifiers"""
     
     @abstractmethod
     async def classify(
@@ -131,7 +139,8 @@ class BaseClassifier(ABC):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Classify content and return predictions"""
+        """
+Classify content and return predictions"""
         try:
             self.logger.info(f"Starting classification for content type: {content_type}")
             
@@ -250,7 +259,8 @@ class BaseClassifier(ABC):
 
 
 class PatternClassifier(BaseClassifier):
-    """Pattern-based content classifier"""
+    """
+Pattern-based content classifier"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -301,7 +311,8 @@ class PatternClassifier(BaseClassifier):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Classify content using pattern matching"""
+        """
+Classify content using pattern matching"""
         try:
             if content_type != "text":
                 return {"error": "Pattern classifier only supports text content"}
@@ -378,7 +389,8 @@ class AIClassifier(BaseClassifier):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Classify content using AI models"""
+        """
+Classify content using AI models"""
         try:
             predictions = {
                 "content_categories": {},
@@ -984,7 +996,8 @@ class DataClassificationManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the data classification manager"""
+        """
+Initialize the data classification manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -1067,15 +1080,18 @@ class DataClassificationManager(BaseManager):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ClassificationResult:
-        """Reclassify existing content"""
+        """
+Reclassify existing content"""
         return await self.classify_content(content_id, content, content_type, metadata)
     
     async def add_classification_rule(self, rule: ClassificationRule) -> None:
-        """Add a new classification rule"""
+        """
+Add a new classification rule"""
         await self.classification_engine.add_classification_rule(rule)
     
     async def get_classification_statistics(self) -> Dict[str, Any]:
-        """Get classification statistics"""
+        """
+Get classification statistics"""
         total_results = len(self.classification_results)
         
         # Calculate statistics
@@ -1165,7 +1181,8 @@ class DataClassificationManager(BaseManager):
         return results
     
     def _update_metrics(self, result: ClassificationResult) -> None:
-        """Update performance metrics"""
+        """
+Update performance metrics"""
         self.metrics["total_classifications"] += 1
         self.metrics["successful_classifications"] += 1
         

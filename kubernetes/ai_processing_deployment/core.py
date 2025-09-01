@@ -12,6 +12,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import os
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingStatus(Enum):
-    """Processing task status enumeration."""
+    """
+Processing task status enumeration."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -51,6 +54,7 @@ class ProcessingStatus(Enum):
 
 class AIModelType(Enum):
     """AI model types for content processing."""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -97,7 +101,8 @@ class AIProcessingDeployment:
     """
     
     def __init__(self, config: ProcessingConfig):
-        """Initialize AI processing deployment."""
+        """
+Initialize AI processing deployment."""
         self.config = config
         self.redis_client = None
         self.db_engine = None
@@ -109,7 +114,8 @@ class AIProcessingDeployment:
         self._initialize_infrastructure()
     
     def _initialize_infrastructure(self):
-        """Initialize infrastructure components."""
+        """
+Initialize infrastructure components."""
         try:
             # Redis connection for caching and queuing
             self.redis_client = redis.Redis(
@@ -208,7 +214,8 @@ class AIProcessingDeployment:
         }
     
     def _load_video_model(self, model_path: str, config: Dict[str, Any]):
-        """Load video fingerprinting model."""
+        """
+Load video fingerprinting model."""
         import cv2
         import numpy as np
         
@@ -221,7 +228,8 @@ class AIProcessingDeployment:
         }
     
     def _load_image_model(self, model_path: str, config: Dict[str, Any]):
-        """Load image fingerprinting model."""
+        """
+Load image fingerprinting model."""
         from transformers import CLIPProcessor, CLIPModel
         import imagehash
         from PIL import Image

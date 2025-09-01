@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class PlanTier(Enum):
-    """Subscription plan tier enumeration"""
+    """
+Subscription plan tier enumeration"""
+
     FREE = "free"
     BASIC = "basic"
     STANDARD = "standard"
@@ -50,6 +53,7 @@ class PlanTier(Enum):
 
 class BillingCycle(Enum):
     """Billing cycle enumeration"""
+
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -63,6 +67,7 @@ class BillingCycle(Enum):
 
 class PlanStatus(Enum):
     """Plan status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     DEPRECATED = "deprecated"
@@ -74,6 +79,7 @@ class PlanStatus(Enum):
 
 class Currency(Enum):
     """Currency enumeration"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -95,6 +101,7 @@ class Currency(Enum):
 
 class DiscountType(Enum):
     """Discount type enumeration"""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     FREE_TRIAL = "free_trial"
@@ -377,7 +384,8 @@ class SubscriptionPlan(Base):
             return self.price
     
     def calculate_annual_savings(self, monthly_plan: 'SubscriptionPlan') -> Decimal:
-        """Calculate annual savings compared to monthly billing"""
+        """
+Calculate annual savings compared to monthly billing"""
         if self.billing_cycle != BillingCycle.ANNUALLY:
             return Decimal('0.00')
         
@@ -386,7 +394,8 @@ class SubscriptionPlan(Base):
         return monthly_annual_cost - annual_cost
     
     def get_effective_price(self, apply_promotion: bool = True) -> Decimal:
-        """Get effective price considering promotions"""
+        """
+Get effective price considering promotions"""
         base_price = self.price
         
         if apply_promotion and self.promotional_price and self.promotion_end_date:
@@ -396,7 +405,8 @@ class SubscriptionPlan(Base):
         return base_price
     
     def is_trial_available(self) -> bool:
-        """Check if free trial is available"""
+        """
+Check if free trial is available"""
         return (
             self.has_free_trial and
             self.trial_period_days and
@@ -405,7 +415,8 @@ class SubscriptionPlan(Base):
         )
     
     def get_feature_list(self) -> List[str]:
-        """Get comprehensive list of included features"""
+        """
+Get comprehensive list of included features"""
         features = []
         
         # Storage and limits
@@ -491,7 +502,8 @@ class SubscriptionPlan(Base):
         return comparison
     
     def get_pricing_summary(self) -> Dict[str, Any]:
-        """Get comprehensive pricing summary"""
+        """
+Get comprehensive pricing summary"""
         return {
             'base_pricing': {
                 'price': float(self.price),
@@ -516,7 +528,8 @@ class SubscriptionPlan(Base):
         }
     
     def update_metrics(self, new_subscribers: int = 0, churned_subscribers: int = 0) -> None:
-        """Update plan metrics"""
+        """
+Update plan metrics"""
         self.subscribers_count = max(0, self.subscribers_count + new_subscribers - churned_subscribers)
         
         # Calculate MRR
@@ -526,7 +539,8 @@ class SubscriptionPlan(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def is_available_for_user(self, user_location: str = None, user_type: str = None) -> bool:
-        """Check if plan is available for a specific user"""
+        """
+Check if plan is available for a specific user"""
         if self.status != PlanStatus.ACTIVE:
             return False
         

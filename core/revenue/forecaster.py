@@ -1,7 +1,7 @@
 """Revenue Forecasting Engine - Advanced AI-powered revenue prediction and forecasting
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -10,6 +10,7 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ForecastModel(Enum):
-    """Revenue forecasting model types"""
+    """
+Revenue forecasting model types"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -56,6 +59,7 @@ class ForecastModel(Enum):
 
 class ForecastHorizon(Enum):
     """Forecast time horizons"""
+
     SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-12 months
@@ -64,6 +68,7 @@ class ForecastHorizon(Enum):
 
 class ForecastConfidence(Enum):
     """Forecast confidence levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -84,13 +89,15 @@ class PredictionAccuracy:
     
     @property
     def accuracy_percentage(self) -> float:
-        """Get accuracy as percentage"""
+        """
+Get accuracy as percentage"""
         return max(0, (1 - self.mape / 100) * 100)
 
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast result"""
+    """
+Revenue forecast result"""
     predicted_revenue: Decimal
     confidence_level: ForecastConfidence
     accuracy_metrics: PredictionAccuracy
@@ -105,7 +112,8 @@ class RevenueForecast:
 
 @dataclass
 class ForecastScenario:
-    """Revenue forecast scenario"""
+    """
+Revenue forecast scenario"""
     scenario_name: str
     assumptions: Dict[str, Any]
     predicted_revenue: Decimal
@@ -115,26 +123,31 @@ class ForecastScenario:
 
 
 class BaseForecastModel(ABC):
-    """Abstract base class for forecast models"""
+    """
+Abstract base class for forecast models"""
     
     @abstractmethod
     async def train(self, data: pd.DataFrame) -> None:
-        """Train the forecast model"""
+        """
+Train the forecast model"""
         pass
     
     @abstractmethod
     async def predict(self, horizon: int) -> np.ndarray:
-        """Make revenue predictions"""
+        """
+Make revenue predictions"""
         pass
     
     @abstractmethod
     def get_accuracy_metrics(self, y_true: np.ndarray, y_pred: np.ndarray) -> PredictionAccuracy:
-        """Calculate accuracy metrics"""
+        """
+Calculate accuracy metrics"""
         pass
 
 
 class LSTMForecastModel(BaseForecastModel):
-    """LSTM Neural Network forecast model"""
+    """
+LSTM Neural Network forecast model"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -144,7 +157,8 @@ class LSTMForecastModel(BaseForecastModel):
         self.sequence_length = self.config.get('sequence_length', 30)
         
     async def train(self, data: pd.DataFrame) -> None:
-        """Train LSTM model"""
+        """
+Train LSTM model"""
         try:
             # Prepare data
             revenue_data = data['revenue'].values.reshape(-1, 1)
@@ -191,7 +205,8 @@ class LSTMForecastModel(BaseForecastModel):
         return np.array(X), np.array(y)
     
     async def predict(self, horizon: int) -> np.ndarray:
-        """Make LSTM predictions"""
+        """
+Make LSTM predictions"""
         if not self.is_trained:
             raise RevenueForecastError("LSTM model not trained")
         
@@ -228,7 +243,8 @@ class LSTMForecastModel(BaseForecastModel):
 
 
 class EnsembleForecastModel(BaseForecastModel):
-    """Ensemble forecast model combining multiple algorithms"""
+    """
+Ensemble forecast model combining multiple algorithms"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -237,7 +253,8 @@ class EnsembleForecastModel(BaseForecastModel):
         self.is_trained = False
         
     async def train(self, data: pd.DataFrame) -> None:
-        """Train ensemble of models"""
+        """
+Train ensemble of models"""
         try:
             # Initialize models
             self.models = {
@@ -290,7 +307,8 @@ class EnsembleForecastModel(BaseForecastModel):
         return data[feature_columns].fillna(0).values
     
     async def predict(self, horizon: int) -> np.ndarray:
-        """Make ensemble predictions"""
+        """
+Make ensemble predictions"""
         if not self.is_trained:
             raise RevenueForecastError("Ensemble model not trained")
         
@@ -335,7 +353,8 @@ class EnsembleForecastModel(BaseForecastModel):
 
 
 class RevenueForecastEngine:
-    """Advanced revenue forecasting engine"""
+    """
+Advanced revenue forecasting engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -346,7 +365,8 @@ class RevenueForecastEngine:
         self.forecast_history = []
         
     async def initialize(self) -> None:
-        """Initialize the forecast engine"""
+        """
+Initialize the forecast engine"""
         try:
             # Initialize models
             self.models = {
@@ -451,7 +471,8 @@ class RevenueForecastEngine:
         historical_data: pd.DataFrame,
         model: BaseForecastModel
     ) -> PredictionAccuracy:
-        """Calculate forecast accuracy using historical data"""
+        """
+Calculate forecast accuracy using historical data"""
         try:
             # Split data for validation
             split_point = int(len(historical_data) * 0.8)
@@ -494,7 +515,8 @@ class RevenueForecastEngine:
             return ForecastConfidence.LOW
     
     async def _analyze_contributing_factors(self, data: pd.DataFrame) -> Dict[str, float]:
-        """Analyze factors contributing to revenue"""
+        """
+Analyze factors contributing to revenue"""
         factors = {}
         
         # Calculate correlations with revenue
@@ -513,7 +535,8 @@ class RevenueForecastEngine:
         return factors
     
     async def _identify_risk_factors(self, data: pd.DataFrame, predictions: np.ndarray) -> List[str]:
-        """Identify potential risk factors"""
+        """
+Identify potential risk factors"""
         risks = []
         
         # Volatility risk
@@ -625,7 +648,8 @@ class RevenueForecastEngine:
         return data
     
     async def get_forecast_accuracy_history(self) -> List[Dict[str, Any]]:
-        """Get historical forecast accuracy"""
+        """
+Get historical forecast accuracy"""
         accuracy_history = []
         
         for forecast_record in self.forecast_history:
@@ -643,7 +667,8 @@ class RevenueForecastEngine:
         return accuracy_history
     
     async def export_forecast_report(self, format: str = 'json') -> Dict[str, Any]:
-        """Export comprehensive forecast report"""
+        """
+Export comprehensive forecast report"""
         try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -677,7 +702,8 @@ class RevenueForecastEngine:
         }
     
     async def _analyze_model_performance(self) -> Dict[str, Dict[str, float]]:
-        """Analyze performance of different models"""
+        """
+Analyze performance of different models"""
         model_performance = {}
         
         for model_type in self.models.keys():

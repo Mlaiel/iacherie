@@ -3,8 +3,9 @@
 Outil d'audit professionnel pour classifier et prioriser le code par impact métier
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import re
 import json
@@ -15,7 +16,9 @@ from enum import Enum
 import datetime
 
 class BusinessImpact(Enum):
-    """Classification d'impact métier"""
+    """
+Classification d'impact métier"""
+
     CRITICAL = "CRITIQUE"           # Impact direct sur revenus/core business
     HIGH = "ÉLEVÉ"                 # Important pour fonctionnalités principales
     MEDIUM = "MOYEN"               # Support aux fonctionnalités business
@@ -24,6 +27,7 @@ class BusinessImpact(Enum):
 
 class CodeType(Enum):
     """Type de code identifié"""
+
     BUSINESS_LOGIC = "LOGIQUE_MÉTIER"
     AI_AGENT = "AGENT_IA"
     MONETIZATION = "MONÉTISATION"
@@ -45,7 +49,8 @@ class CodeIssue:
 
 @dataclass
 class FileAnalysis:
-    """Analyse d'un fichier"""
+    """
+Analyse d'un fichier"""
     file_path: str
     business_impact: BusinessImpact
     code_type: CodeType
@@ -56,7 +61,8 @@ class FileAnalysis:
     revenue_impact: str        # Description impact revenus
 
 class CodeAuditor:
-    """Auditeur de code professionnel"""
+    """
+Auditeur de code professionnel"""
     
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
@@ -104,7 +110,8 @@ class CodeAuditor:
         }
         
     def classify_file(self, file_path: str) -> Tuple[BusinessImpact, CodeType]:
-        """Classifie un fichier selon son impact métier"""
+        """
+Classifie un fichier selon son impact métier"""
         relative_path = file_path.replace(str(self.repo_path), '')
         
         for pattern, (impact, code_type) in self.business_patterns.items():
@@ -115,7 +122,8 @@ class CodeAuditor:
     
     def calculate_business_value_score(self, file_path: str, impact: BusinessImpact, 
                                      code_type: CodeType, content: str) -> int:
-        """Calcule un score de valeur métier (1-100)"""
+        """
+Calcule un score de valeur métier (1-100)"""
         base_scores = {
             BusinessImpact.CRITICAL: 90,
             BusinessImpact.HIGH: 70,
@@ -146,7 +154,8 @@ class CodeAuditor:
         return min(100, score)
     
     def analyze_file_content(self, file_path: str) -> Tuple[str, List[CodeIssue], int]:
-        """Analyse le contenu d'un fichier"""
+        """
+Analyse le contenu d'un fichier"""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
@@ -190,7 +199,8 @@ class CodeAuditor:
         return complexity
     
     def get_revenue_impact_description(self, impact: BusinessImpact, code_type: CodeType) -> str:
-        """Génère une description de l'impact sur les revenus"""
+        """
+Génère une description de l'impact sur les revenus"""
         descriptions = {
             (BusinessImpact.CRITICAL, CodeType.MONETIZATION): "Impact direct: gestion paiements/revenus créateurs",
             (BusinessImpact.CRITICAL, CodeType.AI_AGENT): "Différenciateur métier: IA unique pour créateurs",

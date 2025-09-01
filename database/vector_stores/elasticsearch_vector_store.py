@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -36,7 +37,8 @@ settings = get_settings()
 
 @dataclass
 class HybridSearchResult:
-    """Hybrid search result combining vector and text search"""
+    """
+Hybrid search result combining vector and text search"""
     content_id: str
     fingerprint_id: int
     vector_score: float
@@ -49,7 +51,8 @@ class HybridSearchResult:
 
 @dataclass
 class ElasticsearchStats:
-    """Elasticsearch cluster and index statistics"""
+    """
+Elasticsearch cluster and index statistics"""
     cluster_health: str
     total_documents: int
     index_size_bytes: int
@@ -845,7 +848,8 @@ class ElasticsearchVectorStore:
         return min(1.0, score / 10.0)
     
     def _update_search_stats(self, response_time: float) -> None:
-        """Update search performance statistics"""
+        """
+Update search performance statistics"""
         total_searches = self.search_stats["total_searches"]
         current_avg = self.search_stats["avg_response_time"]
         

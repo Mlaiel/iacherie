@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -54,7 +55,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class SpotifyFeature(Enum):
-    """Available Spotify features for activation"""
+    """
+Available Spotify features for activation"""
+
     ANALYTICS = "analytics"
     PLAYLISTS = "playlists"
     RECOMMENDATIONS = "recommendations"
@@ -66,6 +69,7 @@ class SpotifyFeature(Enum):
 
 class MarketRegion(Enum):
     """Supported market regions for analytics"""
+
     GLOBAL = "global"
     US = "US"
     UK = "GB"
@@ -98,7 +102,8 @@ class SpotifyArtistProfile:
 
 @dataclass
 class StreamingMetrics:
-    """Advanced streaming performance metrics"""
+    """
+Advanced streaming performance metrics"""
     track_id: str
     streams_total: int = 0
     streams_daily: int = 0
@@ -124,7 +129,8 @@ class SpotifyAgent(BaseAgent):
     machine learning-powered recommendations, and automated music marketing capabilities.
     """
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Spotify Agent with advanced configuration"""
+        """
+Initialize Spotify Agent with advanced configuration"""
         super().__init__(
             agent_type="spotify_agent",
             version="2.1.0",
@@ -744,6 +750,7 @@ class SpotifyAgentManager:
         return self.agents[tenant_id]
     
     async def _get_tenant_config(self, tenant_id: str) -> Dict[str, Any]:
-        """Get tenant-specific configuration"""
+        """
+Get tenant-specific configuration"""
         # Implementation would fetch from database
         return self.config

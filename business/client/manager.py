@@ -6,6 +6,7 @@ for multi-format content creators on the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ClientType(str, Enum):
-    """Client creator types supported by the platform."""
+    """
+Client creator types supported by the platform."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -48,6 +51,7 @@ class ClientType(str, Enum):
 
 class OnboardingStage(str, Enum):
     """Client onboarding stages."""
+
     REGISTRATION = "registration"
     EMAIL_VERIFICATION = "email_verification"
     PROFILE_SETUP = "profile_setup"

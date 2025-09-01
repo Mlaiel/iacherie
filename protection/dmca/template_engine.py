@@ -4,7 +4,7 @@
 Enterprise-grade template system for automated DMCA notice generation with multi-language support.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -30,6 +30,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TemplateContext:
-    """Template rendering context for DMCA notices"""
+    """
+Template rendering context for DMCA notices"""
     case_id: str
     notice_id: str
     current_date: str
@@ -68,7 +70,8 @@ class TemplateContext:
 
 
 class DMCATemplateEngine:
-    """Professional DMCA template engine with multi-language support"""
+    """
+Professional DMCA template engine with multi-language support"""
     
     def __init__(self):
         self.templates = self._initialize_templates()
@@ -79,7 +82,8 @@ class DMCATemplateEngine:
         )
         
     def _initialize_templates(self) -> Dict[str, str]:
-        """Initialize all professional DMCA templates"""
+        """
+Initialize all professional DMCA templates"""
         return {
             # English Templates
             'takedown_urgent_en': self._get_urgent_takedown_template_en(),
@@ -105,7 +109,8 @@ class DMCATemplateEngine:
         context: TemplateContext,
         language: str = 'en'
     ) -> Dict[str, str]:
-        """Generate professional DMCA notice"""
+        """
+Generate professional DMCA notice"""
         template_key = self._get_template_key(context.notification_type, context.priority_level, language)
         
         try:
@@ -197,7 +202,8 @@ class DMCATemplateEngine:
             return f'takedown_standard_{language}'
     
     def _generate_subject_line(self, context: TemplateContext, language: str) -> str:
-        """Generate appropriate subject line"""
+        """
+Generate appropriate subject line"""
         if language == 'de':
             if context.priority_level >= DMCAPriority.URGENT:
                 return f"🚨 DRINGEND: DMCA Löschungsantrag - Fall {context.case_id}"
@@ -226,7 +232,8 @@ class DMCATemplateEngine:
             return 14  # 2 weeks
     
     def _format_number(self, number: Optional[int]) -> str:
-        """Format large numbers for display"""
+        """
+Format large numbers for display"""
         if not number:
             return "Unknown"
         if number >= 1_000_000:

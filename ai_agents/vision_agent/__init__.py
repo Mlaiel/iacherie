@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from .vision_orchestrator import VisionOrchestrator
 from .image_processor import ImageProcessor
 from .video_analyzer import VideoAnalyzer
@@ -94,11 +95,13 @@ def get_module_info():
     return MODULE_INFO.copy()
 
 def get_version():
-    """Get module version"""
+    """
+Get module version"""
     return __version__
 
 def get_available_components():
-    """Get list of available vision processing components"""
+    """
+Get list of available vision processing components"""
     return [
         {
             'name': 'VisionOrchestrator',
@@ -211,12 +214,14 @@ Unauthorized use may result in:
 
 By accessing this code, you acknowledge that you have read, understood, and agree to 
 be bound by these terms.
-"""def print_legal_notice():
+"""
+def print_legal_notice():
     """Print the legal notice and licensing information"""
     print(LEGAL_NOTICE)
 
 def get_legal_notice():
-    """Get the legal notice text"""
+    """
+Get the legal notice text"""
     return LEGAL_NOTICE
 
 # Module initialization

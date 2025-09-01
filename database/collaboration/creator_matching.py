@@ -6,6 +6,7 @@ Utilizes machine learning, vector embeddings, and behavioral analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MatchingCriteria(Enum):
-    """Creator matching criteria enumeration"""
+    """
+Creator matching criteria enumeration"""
+
     CONTENT_TYPE = "content_type"
     SKILL_COMPLEMENT = "skill_complement"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -46,6 +49,7 @@ class MatchingCriteria(Enum):
 
 class MatchingStatus(Enum):
     """Matching status enumeration"""
+
     PENDING = "pending"
     SUGGESTED = "suggested"
     CONTACTED = "contacted"
@@ -202,7 +206,8 @@ class MatchingSuggestion(Base):
 
 @dataclass
 class MatchingRequest:
-    """Data class for creator matching requests"""
+    """
+Data class for creator matching requests"""
     requester_id: str
     project_id: Optional[str] = None
     content_types: List[str] = None
@@ -216,7 +221,8 @@ class MatchingRequest:
 
 @dataclass
 class MatchingFilter:
-    """Data class for filtering criteria"""
+    """
+Data class for filtering criteria"""
     content_types: List[str] = None
     experience_min: int = None
     location_radius_km: int = None
@@ -664,7 +670,8 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate skill complementarity score"""
+        """
+Calculate skill complementarity score"""
         requester_skills = requester.skills or {}
         candidate_skills = candidate.skills or {}
         
@@ -703,7 +710,8 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate audience overlap and synergy score"""
+        """
+Calculate audience overlap and synergy score"""
         req_demographics = requester.audience_demographics or {}
         cand_demographics = candidate.audience_demographics or {}
         
@@ -733,7 +741,8 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate collaboration style compatibility"""
+        """
+Calculate collaboration style compatibility"""
         req_style = requester.working_style or {}
         cand_style = candidate.working_style or {}
         
@@ -762,7 +771,8 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate location proximity score"""
+        """
+Calculate location proximity score"""
         if requester.remote_work_preference and candidate.remote_work_preference:
             return 1.0
         
@@ -806,7 +816,8 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate availability synchronization score"""
+        """
+Calculate availability synchronization score"""
         req_schedule = requester.availability_schedule or {}
         cand_schedule = candidate.availability_schedule or {}
         
@@ -837,7 +848,8 @@ class CreatorMatchingEngine:
         candidate: CreatorProfile, 
         request: MatchingRequest
     ) -> float:
-        """Calculate budget compatibility score"""
+        """
+Calculate budget compatibility score"""
         cand_rates = candidate.rate_ranges or {}
         
         if not cand_rates:
@@ -872,7 +884,8 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate style similarity score"""
+        """
+Calculate style similarity score"""
         if requester.style_vector and candidate.style_vector:
             similarity = cosine_similarity(
                 [requester.style_vector], 
@@ -901,7 +914,8 @@ class CreatorMatchingEngine:
         reasoning: Dict[str, Any],
         request: MatchingRequest
     ) -> MatchingSuggestion:
-        """Create a matching suggestion record"""
+        """
+Create a matching suggestion record"""
         suggestion_id = f"MATCH-{datetime.utcnow().strftime('%Y%m%d%H%M')}-{str(uuid.uuid4())[:8]}"
         
         # Generate AI insights
@@ -971,7 +985,8 @@ class CreatorMatchingEngine:
                 self.profile_vectors = {i: str(p.id) for i, p in enumerate(profiles)}
     
     def _calculate_profile_completeness(self, profile: CreatorProfile) -> float:
-        """Calculate profile completeness percentage"""
+        """
+Calculate profile completeness percentage"""
         total_fields = 20
         completed_fields = 0
         
@@ -1001,7 +1016,8 @@ class CreatorMatchingEngine:
     
     # Cache and utility methods
     async def _cache_creator_profile(self, profile: CreatorProfile):
-        """Cache creator profile data"""
+        """
+Cache creator profile data"""
         try:
             profile_data = {
                 'id': str(profile.id),

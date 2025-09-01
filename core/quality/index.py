@@ -4,7 +4,7 @@ Central access point for all quality management components in the IA-Influencer 
 This module provides convenient access to all quality analyzers, validators, and monitoring tools.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -13,6 +13,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional
 import logging
 

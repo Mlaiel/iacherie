@@ -12,7 +12,7 @@ This pipeline orchestration system and methodologies are the exclusive intellect
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 🎯 BUSINESS LOGIC INTEGRATION:
 Data Ingestion → Feature Engineering → Model Training → Validation
@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -88,7 +89,9 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
+
     CREATED = "created"
     QUEUED = "queued"
     RUNNING = "running"
@@ -100,6 +103,7 @@ class PipelineStatus(Enum):
 
 class StepStatus(Enum):
     """Individual step execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed" 
@@ -109,6 +113,7 @@ class StepStatus(Enum):
 
 class DependencyType(Enum):
     """Step dependency types"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -127,7 +132,8 @@ class StepMetrics:
 
 @dataclass
 class PipelineStep:
-    """Individual pipeline step definition"""
+    """
+Individual pipeline step definition"""
     step_id: str
     name: str
     function: Callable
@@ -145,7 +151,8 @@ class PipelineStep:
 
 @dataclass
 class PipelineDefinition:
-    """Complete ML pipeline definition"""
+    """
+Complete ML pipeline definition"""
     pipeline_id: str
     name: str
     description: str
@@ -160,7 +167,8 @@ class PipelineDefinition:
 
 @dataclass
 class PipelineExecution:
-    """Pipeline execution tracking"""
+    """
+Pipeline execution tracking"""
     execution_id: str
     pipeline_id: str
     status: PipelineStatus = PipelineStatus.CREATED
@@ -174,7 +182,8 @@ class PipelineExecution:
     error_message: Optional[str] = None
 
 class AbstractPipelineStep(ABC):
-    """Abstract base class for pipeline steps"""
+    """
+Abstract base class for pipeline steps"""
     
     def __init__(self, step_id: str, name: str, parameters: Dict[str, Any] = None):
         self.step_id = step_id
@@ -184,22 +193,27 @@ class AbstractPipelineStep(ABC):
         
     @abstractmethod
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute the pipeline step"""
+        """
+Execute the pipeline step"""
         pass
         
     async def validate_inputs(self, context: Dict[str, Any]) -> bool:
-        """Validate step inputs"""
+        """
+Validate step inputs"""
         return True
         
     async def cleanup(self, context: Dict[str, Any]):
-        """Clean up step resources"""
+        """
+Clean up step resources"""
         pass
 
 class DataIngestionStep(AbstractPipelineStep):
-    """Data ingestion pipeline step"""
+    """
+Data ingestion pipeline step"""
     
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute data ingestion"""
+        """
+Execute data ingestion"""
         start_time = time.time()
         
         try:
@@ -230,12 +244,14 @@ class DataIngestionStep(AbstractPipelineStep):
         pass
     
     async def _load_from_database(self, db_url: str) -> pd.DataFrame:
-        """Load data from database"""
+        """
+Load data from database"""
         # Implementation would use SQLAlchemy to load from database
         pass
     
     async def _load_from_file(self, file_path: str) -> pd.DataFrame:
-        """Load data from local file"""
+        """
+Load data from local file"""
         path = Path(file_path)
         if path.suffix == '.parquet':
             return pd.read_parquet(file_path)
@@ -248,7 +264,8 @@ class FeatureEngineeringStep(AbstractPipelineStep):
     """Feature engineering pipeline step"""
     
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute feature engineering"""
+        """
+Execute feature engineering"""
         start_time = time.time()
         
         try:
@@ -301,7 +318,8 @@ class FeatureEngineeringStep(AbstractPipelineStep):
         return data
     
     async def _select_features(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Apply feature selection"""
+        """
+Apply feature selection"""
         selection_config = self.parameters['feature_selection']
         method = selection_config.get('method', 'variance')
         
@@ -315,10 +333,12 @@ class FeatureEngineeringStep(AbstractPipelineStep):
         return data
 
 class ModelTrainingStep(AbstractPipelineStep):
-    """Model training pipeline step"""
+    """
+Model training pipeline step"""
     
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute model training"""
+        """
+Execute model training"""
         start_time = time.time()
         
         try:
@@ -406,11 +426,13 @@ class MLPipelineManager:
         self.cache_manager = CacheManager()
         
     def register_step_type(self, step_type: str, step_class: type):
-        """Register a custom step type"""
+        """
+Register a custom step type"""
         self.step_registry[step_type] = step_class
         
     async def create_pipeline(self, pipeline_def: Dict[str, Any]) -> str:
-        """Create a new ML pipeline"""
+        """
+Create a new ML pipeline"""
         try:
             pipeline_id = str(uuid.uuid4())
             
@@ -601,7 +623,8 @@ class MLPipelineManager:
             raise
     
     async def get_execution_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get pipeline execution status"""
+        """
+Get pipeline execution status"""
         if execution_id not in self.executions:
             raise ValueError(f"Execution not found: {execution_id}")
         

@@ -11,6 +11,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BaseMetadata:
-    """Base metadata structure for all content types"""
+    """
+Base metadata structure for all content types"""
     content_id: str
     file_path: Optional[Path] = None
     filename: Optional[str] = None
@@ -56,7 +58,8 @@ class BaseMetadata:
 
 @dataclass
 class AudioMetadata(BaseMetadata):
-    """Comprehensive audio metadata"""
+    """
+Comprehensive audio metadata"""
     duration: Optional[float] = None
     sample_rate: Optional[int] = None
     bit_depth: Optional[int] = None
@@ -103,7 +106,8 @@ class AudioMetadata(BaseMetadata):
 
 @dataclass
 class VideoMetadata(BaseMetadata):
-    """Comprehensive video metadata"""
+    """
+Comprehensive video metadata"""
     duration: Optional[float] = None
     width: Optional[int] = None
     height: Optional[int] = None
@@ -153,7 +157,8 @@ class VideoMetadata(BaseMetadata):
 
 @dataclass
 class ImageMetadata(BaseMetadata):
-    """Comprehensive image metadata"""
+    """
+Comprehensive image metadata"""
     width: Optional[int] = None
     height: Optional[int] = None
     color_mode: Optional[str] = None
@@ -212,7 +217,8 @@ class ImageMetadata(BaseMetadata):
 
 @dataclass
 class MultimediaMetadata:
-    """Combined metadata for multimodal content"""
+    """
+Combined metadata for multimodal content"""
     content_id: str
     primary_format: ContentFormat
     audio_metadata: Optional[AudioMetadata] = None
@@ -233,20 +239,24 @@ class MultimediaMetadata:
 
 
 class MetadataExtractor(ABC):
-    """Abstract base class for metadata extractors"""
+    """
+Abstract base class for metadata extractors"""
     
     @abstractmethod
     async def extract(self, content_path: Path) -> BaseMetadata:
-        """Extract metadata from content"""
+        """
+Extract metadata from content"""
         pass
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports format"""
+        """
+Check if extractor supports format"""
         pass
     
     def _calculate_file_hashes(self, file_path: Path) -> Tuple[str, str]:
-        """Calculate MD5 and SHA256 hashes"""
+        """
+Calculate MD5 and SHA256 hashes"""
         md5_hash = hashlib.md5()
         sha256_hash = hashlib.sha256()
         
@@ -272,16 +282,19 @@ class MetadataExtractor(ABC):
 
 
 class AudioMetadataExtractor(MetadataExtractor):
-    """Professional audio metadata extractor"""
+    """
+Professional audio metadata extractor"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports audio format"""
+        """
+Check if extractor supports audio format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.AUDIO
         return SupportedFormats.is_audio_format(format_type)
     
     async def extract(self, content_path: Path) -> AudioMetadata:
-        """Extract comprehensive audio metadata"""
+        """
+Extract comprehensive audio metadata"""
         content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
         
         # Basic file metadata
@@ -480,13 +493,15 @@ class VideoMetadataExtractor(MetadataExtractor):
     """Professional video metadata extractor"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports video format"""
+        """
+Check if extractor supports video format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.VIDEO
         return SupportedFormats.is_video_format(format_type)
     
     async def extract(self, content_path: Path) -> VideoMetadata:
-        """Extract comprehensive video metadata"""
+        """
+Extract comprehensive video metadata"""
         content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
         
         # Basic file metadata
@@ -785,13 +800,15 @@ class ImageMetadataExtractor(MetadataExtractor):
     """Professional image metadata extractor"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports image format"""
+        """
+Check if extractor supports image format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.IMAGE
         return SupportedFormats.is_image_format(format_type)
     
     async def extract(self, content_path: Path) -> ImageMetadata:
-        """Extract comprehensive image metadata"""
+        """
+Extract comprehensive image metadata"""
         content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
         
         # Basic file metadata
@@ -899,7 +916,8 @@ class ImageMetadataExtractor(MetadataExtractor):
         """Extract GPS coordinates from EXIF"""
         try:
             def convert_to_degrees(value):
-                """Convert GPS coordinates to decimal degrees"""
+                """
+Convert GPS coordinates to decimal degrees"""
                 if isinstance(value, tuple) and len(value) == 3:
                     degrees = float(value[0])
                     minutes = float(value[1])
@@ -1023,7 +1041,8 @@ class ImageMetadataExtractor(MetadataExtractor):
             return None
     
     async def _assess_image_quality(self, metadata: ImageMetadata, image: Image.Image):
-        """Assess overall image quality"""
+        """
+Assess overall image quality"""
         try:
             img_array = np.array(image.convert('RGB'))
             
@@ -1126,7 +1145,8 @@ class UniversalMetadataExtractor:
     
     async def extract(self, content_path: Path, 
                      content_type: Optional[Union[str, ContentFormat]] = None) -> BaseMetadata:
-        """Extract metadata from any supported multimedia format"""
+        """
+Extract metadata from any supported multimedia format"""
         
         # Auto-detect content type if not provided
         if content_type is None:
@@ -1167,7 +1187,8 @@ class UniversalMetadataExtractor:
         }
     
     async def extract_multimodal(self, content_paths: Dict[ContentFormat, Path]) -> MultimediaMetadata:
-        """Extract metadata from multimodal content"""
+        """
+Extract metadata from multimodal content"""
         
         # Generate combined content ID
         path_strings = [str(path) for path in content_paths.values()]

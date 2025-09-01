@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Union, Tuple
 import asyncio
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GasEstimate:
-    """Gas estimation data structure."""
+    """
+Gas estimation data structure."""
     
     gas_limit: int
     gas_price: int
@@ -35,7 +37,8 @@ class GasEstimate:
 
 @dataclass
 class TransactionBatch:
-    """Batch transaction data structure."""
+    """
+Batch transaction data structure."""
     
     transactions: List[Dict]
     total_gas_limit: int
@@ -45,10 +48,12 @@ class TransactionBatch:
     
 
 class GasOptimizer:
-    """Professional gas optimization and fee management system."""
+    """
+Professional gas optimization and fee management system."""
     
     def __init__(self, web3: Web3, network: str):
-        """Initialize gas optimizer.
+        """
+Initialize gas optimizer.
         
         Args:
             web3: Web3 instance for blockchain interaction
@@ -304,7 +309,8 @@ class GasOptimizer:
         return (second_half - first_half) / first_half
     
     async def _calculate_usd_cost(self, cost_wei: int) -> Optional[float]:
-        """Calculate USD cost of transaction."""
+        """
+Calculate USD cost of transaction."""
         try:
             # This would typically fetch from a price oracle
             # For now, return None - implement price oracle integration
@@ -331,7 +337,8 @@ class GasOptimizer:
         return True
     
     async def _fallback_gas_estimate(self, transaction: Dict) -> GasEstimate:
-        """Provide fallback gas estimate when optimization fails."""
+        """
+Provide fallback gas estimate when optimization fails."""
         try:
             gas_limit = await self._estimate_gas_limit(transaction)
             gas_price = self.web3.eth.gas_price
@@ -417,7 +424,8 @@ class GasOptimizer:
         return [tx for tx, _ in transaction_estimates]
     
     async def _create_transaction_batch(self, transactions: List[Dict]) -> TransactionBatch:
-        """Create optimized transaction batch."""
+        """
+Create optimized transaction batch."""
         total_gas = 0
         total_cost = 0
         

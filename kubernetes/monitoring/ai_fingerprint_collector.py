@@ -20,6 +20,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import time
 import logging
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprinting"""
+    """
+Types of content fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -49,6 +52,7 @@ class FingerprintType(Enum):
 
 class ModelType(Enum):
     """AI model types for fingerprinting"""
+
     CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     NEURAL_FINGERPRINT = "neural_fingerprint"
@@ -59,6 +63,7 @@ class ModelType(Enum):
 
 class MetricCategory(Enum):
     """Categories of fingerprinting metrics"""
+
     PERFORMANCE = "performance"
     ACCURACY = "accuracy"
     EFFICIENCY = "efficiency"
@@ -104,7 +109,8 @@ class ModelPerformanceMetrics:
 
 @dataclass
 class ContentProtectionMetrics:
-    """Content protection effectiveness metrics"""
+    """
+Content protection effectiveness metrics"""
     protection_id: str
     content_type: FingerprintType
     detection_accuracy: float
@@ -120,7 +126,8 @@ class ContentProtectionMetrics:
 
 @dataclass
 class FingerpringingBatchMetrics:
-    """Batch processing metrics for fingerprinting operations"""
+    """
+Batch processing metrics for fingerprinting operations"""
     batch_id: str
     batch_size: int
     processing_time_seconds: float
@@ -645,14 +652,16 @@ class AIFingerprintMetricsCollector:
             await self._process_buffered_metrics()
     
     async def get_fingerprint_stats(self, fingerprint_type: FingerprintType = None) -> Dict[str, Any]:
-        """Get fingerprinting statistics"""
+        """
+Get fingerprinting statistics"""
         if fingerprint_type:
             return self._fingerprint_stats.get(fingerprint_type, {})
         else:
             return dict(self._fingerprint_stats)
     
     async def get_model_performance(self, model_id: str = None) -> Dict[str, Any]:
-        """Get model performance metrics"""
+        """
+Get model performance metrics"""
         if model_id:
             metrics = self._model_metrics.get(model_id)
             return metrics.__dict__ if metrics else {}
@@ -663,11 +672,13 @@ class AIFingerprintMetricsCollector:
             }
     
     async def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Get current optimization recommendations"""
+        """
+Get current optimization recommendations"""
         return self._optimization_recommendations.copy()
     
     async def get_protection_effectiveness(self) -> Dict[str, Any]:
-        """Get content protection effectiveness summary"""
+        """
+Get content protection effectiveness summary"""
         if not self._protection_metrics:
             return {}
         

@@ -8,12 +8,13 @@ This module provides comprehensive revenue tracking and monetization features:
 - Platform API integrations for revenue data
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Tuple
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class RevenuePlatform(Enum):
-    """Supported revenue platforms"""
+    """
+Supported revenue platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -58,6 +61,7 @@ class RevenuePlatform(Enum):
 
 class RevenueType(Enum):
     """Types of revenue streams"""
+
     AD_REVENUE = "ad_revenue"           # Platform advertising revenue
     LICENSING = "licensing"             # Content licensing fees
     TAKEDOWN_FEES = "takedown_fees"     # Fees for violation takedowns
@@ -69,6 +73,7 @@ class RevenueType(Enum):
 
 class PaymentMethod(Enum):
     """Payment processing methods"""
+
     STRIPE = "stripe"
     WISE = "wise"
     PAYPAL = "paypal"
@@ -109,7 +114,8 @@ class PlatformRevenueData:
 
 @dataclass
 class LicensingTransaction:
-    """Licensing fee transaction"""
+    """
+Licensing fee transaction"""
     content_id: str
     licensee_info: Dict[str, str]
     license_type: str
@@ -430,43 +436,51 @@ class RevenueTracker:
         return build('youtubeAnalytics', 'v2', credentials=credentials)
     
     async def _get_instagram_token(self, user_id: str) -> str:
-        """Get Instagram access token for user"""
+        """
+Get Instagram access token for user"""
         # Implementation for getting stored Instagram token
         pass
     
     async def _get_spotify_token(self, user_id: str) -> str:
-        """Get Spotify access token for user"""
+        """
+Get Spotify access token for user"""
         # Implementation for getting stored Spotify token
         pass
     
     def _calculate_instagram_revenue_estimate(self, insights_data: Dict[str, Any]) -> Decimal:
-        """Calculate estimated Instagram revenue from insights"""
+        """
+Calculate estimated Instagram revenue from insights"""
         # Implementation for revenue estimation based on engagement
         # This is an estimate as Instagram doesn't provide direct revenue data
         return Decimal('0.00')
     
     def _calculate_spotify_revenue_estimate(self, tracks_data: Dict[str, Any]) -> Decimal:
-        """Calculate estimated Spotify revenue"""
+        """
+Calculate estimated Spotify revenue"""
         # Implementation for revenue estimation based on streams
         return Decimal('0.00')
     
     async def _get_content_fingerprint(self, content_id: str) -> Optional[ContentFingerprint]:
-        """Get content fingerprint from database"""
+        """
+Get content fingerprint from database"""
         # Implementation for database query
         pass
     
     def _calculate_base_licensing_fee(self, fingerprint: ContentFingerprint, usage_info: Dict[str, Any]) -> Decimal:
-        """Calculate base licensing fee"""
+        """
+Calculate base licensing fee"""
         # Implementation for fee calculation based on content type and usage
         return Decimal('100.00')
     
     def _get_penalty_multiplier(self, platform: str, usage_info: Dict[str, Any]) -> Decimal:
-        """Get penalty multiplier for unauthorized usage"""
+        """
+Get penalty multiplier for unauthorized usage"""
         # Implementation for penalty calculation
         return Decimal('2.0')  # 2x penalty for unauthorized usage
     
     async def _convert_currency(self, amount: Decimal, from_currency: str, to_currency: str) -> Decimal:
-        """Convert currency using real-time rates"""
+        """
+Convert currency using real-time rates"""
         if from_currency == to_currency:
             return amount
         
@@ -475,16 +489,19 @@ class RevenueTracker:
         return amount  # Placeholder
     
     async def _get_user_payout_info(self, user_id: str) -> Dict[str, str]:
-        """Get user payout preferences"""
+        """
+Get user payout preferences"""
         # Implementation for getting user payout info from database
         return {}
     
     async def _get_licensing_fees(self, user_id: str, start_date: date, end_date: date) -> List[LicensingTransaction]:
-        """Get licensing fees for date range"""
+        """
+Get licensing fees for date range"""
         # Implementation for database query
         return []
     
     async def _get_youtube_credentials(self, user_id: str) -> Credentials:
-        """Get YouTube API credentials for user"""
+        """
+Get YouTube API credentials for user"""
         # Implementation for getting stored credentials
         pass

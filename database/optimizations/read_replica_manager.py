@@ -6,6 +6,7 @@ and performance optimization for high-availability database operations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import random
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class ReplicaStatus(Enum):
-    """Read replica status states"""
+    """
+Read replica status states"""
+
     ACTIVE = "active"
     SYNCING = "syncing"
     LAGGING = "lagging"
@@ -37,6 +40,7 @@ class ReplicaStatus(Enum):
 
 class LoadBalancingStrategy(Enum):
     """Load balancing strategies for read replicas"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     RESPONSE_TIME = "response_time"
@@ -47,6 +51,7 @@ class LoadBalancingStrategy(Enum):
 
 class FailoverMode(Enum):
     """Failover modes"""
+
     MANUAL = "manual"
     AUTOMATIC = "automatic"
     SEMI_AUTOMATIC = "semi_automatic"
@@ -84,7 +89,8 @@ class ReplicaMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
     
     def health_score(self) -> float:
-        """Calculate overall health score (0-100)"""
+        """
+Calculate overall health score (0-100)"""
         score = 100.0
         
         # Penalize lag
@@ -108,7 +114,8 @@ class ReplicaMetrics:
 
 
 class IntelligentLoadBalancer:
-    """Intelligent load balancer for read replicas"""
+    """
+Intelligent load balancer for read replicas"""
     
     def __init__(self, strategy: LoadBalancingStrategy):
         self.strategy = strategy
@@ -151,7 +158,8 @@ class IntelligentLoadBalancer:
                 return healthy_replicas[0]
     
     def _filter_healthy_replicas(self, replicas: List[str]) -> List[str]:
-        """Filter out unhealthy replicas"""
+        """
+Filter out unhealthy replicas"""
         healthy = []
         
         for replica_id in replicas:
@@ -162,17 +170,20 @@ class IntelligentLoadBalancer:
         return healthy if healthy else replicas  # Return all if none healthy
     
     def _round_robin_select(self, replicas: List[str]) -> str:
-        """Round-robin selection"""
+        """
+Round-robin selection"""
         selected = replicas[self.round_robin_index % len(replicas)]
         self.round_robin_index += 1
         return selected
     
     def _least_connections_select(self, replicas: List[str]) -> str:
-        """Select replica with least connections"""
+        """
+Select replica with least connections"""
         return min(replicas, key=lambda r: self.connection_counts.get(r, 0))
     
     def _response_time_select(self, replicas: List[str]) -> str:
-        """Select replica with best response time"""
+        """
+Select replica with best response time"""
         def get_response_time(replica_id):
             metrics = self.replica_metrics.get(replica_id)
             return metrics.avg_response_time if metrics else float('inf')
@@ -180,7 +191,8 @@ class IntelligentLoadBalancer:
         return min(replicas, key=get_response_time)
     
     def _geographic_select(self, replicas: List[str], client_region: Optional[str]) -> str:
-        """Select replica based on geographic proximity"""
+        """
+Select replica based on geographic proximity"""
         if not client_region:
             return self._round_robin_select(replicas)
         
@@ -196,7 +208,8 @@ class IntelligentLoadBalancer:
             return self._response_time_select(replicas)
     
     def _capacity_based_select(self, replicas: List[str]) -> str:
-        """Select replica based on current capacity"""
+        """
+Select replica based on current capacity"""
         def get_capacity_score(replica_id):
             metrics = self.replica_metrics.get(replica_id)
             if not metrics:
@@ -214,7 +227,8 @@ class IntelligentLoadBalancer:
     
     def _intelligent_select(self, replicas: List[str], client_region: Optional[str], 
                           query_type: str) -> str:
-        """Intelligent selection combining multiple factors"""
+        """
+Intelligent selection combining multiple factors"""
         scores = {}
         
         for replica_id in replicas:
@@ -252,16 +266,19 @@ class IntelligentLoadBalancer:
         self.replica_metrics[replica_id] = metrics
     
     def update_connection_count(self, replica_id: str, delta: int):
-        """Update connection count for replica"""
+        """
+Update connection count for replica"""
         self.connection_counts[replica_id] = max(0, self.connection_counts[replica_id] + delta)
     
     def set_geographic_preferences(self, preferences: Dict[str, List[str]]):
-        """Set geographic preferences for regions"""
+        """
+Set geographic preferences for regions"""
         self.geographic_preferences = preferences
 
 
 class ReadReplicaMonitor:
-    """Monitor for read replica health and performance"""
+    """
+Monitor for read replica health and performance"""
     
     def __init__(self, replica_configs: Dict[str, ReplicaConfig]):
         self.replica_configs = replica_configs
@@ -271,7 +288,8 @@ class ReadReplicaMonitor:
         self.is_monitoring = False
         
     async def start_monitoring(self):
-        """Start replica monitoring"""
+        """
+Start replica monitoring"""
         if self.is_monitoring:
             return
         
@@ -399,11 +417,13 @@ class ReadReplicaMonitor:
         return self.replica_metrics.get(replica_id)
     
     def get_all_metrics(self) -> Dict[str, ReplicaMetrics]:
-        """Get metrics for all replicas"""
+        """
+Get metrics for all replicas"""
         return self.replica_metrics.copy()
     
     async def test_replica_connectivity(self, replica_id: str) -> bool:
-        """Test connectivity to specific replica"""
+        """
+Test connectivity to specific replica"""
         try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
@@ -443,7 +463,8 @@ class ReadReplicaManager:
         self.failover_history: List[Dict[str, Any]] = []
     
     async def initialize(self) -> bool:
-        """Initialize read replica manager"""
+        """
+Initialize read replica manager"""
         try:
             logger.info("Initializing read replica manager")
             
@@ -612,7 +633,8 @@ class ReadReplicaManager:
             return result.fetchall()
     
     async def _handle_replica_error(self, replica_id: str, error: Exception):
-        """Handle replica error"""
+        """
+Handle replica error"""
         try:
             # Update replica status based on error
             if "connection" in str(error).lower():

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Text Engine Testing Module
+"""
+Text Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all text processing engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -73,10 +76,12 @@ from ai.engines.base_engine import (
 from ai.engines.text_engine import TextFormat
 
 class TestableTextGenerationEngine(TextGenerationEngine):
-    """Concrete implementation for testing"""
+    """
+Concrete implementation for testing"""
     
     async def analyze_monetization_potential(self, content: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock implementation for testing"""
+        """
+Mock implementation for testing"""
         return {
             'revenue_potential': 0.8,
             'monetization_strategies': ['ads', 'subscription'],
@@ -84,7 +89,8 @@ class TestableTextGenerationEngine(TextGenerationEngine):
         }
     
     async def find_collaboration_opportunities(self, content: str, options: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Mock implementation for testing"""
+        """
+Mock implementation for testing"""
         return [
             {
                 'partner_type': 'influencer',
@@ -94,24 +100,28 @@ class TestableTextGenerationEngine(TextGenerationEngine):
         ]
 
 class TestTextGenerationEngine:
-    """Comprehensive tests for TextGenerationEngine"""
+    """
+Comprehensive tests for TextGenerationEngine"""
     
     @pytest_asyncio.fixture
     async def text_engine(self):
-        """Create and initialize text generation engine"""
+        """
+Create and initialize text generation engine"""
         engine = TestableTextGenerationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_text_data(self):
-        """Provide sample text data for testing"""
+        """
+Provide sample text data for testing"""
         return {
             'short_text': "This is a short sample text for testing purposes.",
             'medium_text': """This is a medium-length text sample that contains multiple sentences. 
                               It includes various punctuation marks, different sentence structures, 
                               and should be sufficient for comprehensive testing of text processing capabilities.""",
-            'long_text': """This is a comprehensive long-form text sample designed to test advanced text processing capabilities.
+            'long_text': """
+This is a comprehensive long-form text sample designed to test advanced text processing capabilities.
                            The text includes multiple paragraphs, complex sentence structures, various punctuation marks,
                            and diverse vocabulary to ensure thorough testing of all text processing features.
                            
@@ -148,7 +158,8 @@ class TestTextGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, text_engine):
-        """Test text engine initialization"""
+        """
+Test text engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(text_engine)
@@ -209,7 +220,8 @@ class TestTextGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_text_format_conversion(self, text_engine, sample_text_data):
-        """Test text format conversion capabilities"""
+        """
+Test text format conversion capabilities"""
         # Test conversion between different formats
         format_conversions = [
             (TextFormat.PLAIN, TextFormat.MARKDOWN),
@@ -238,7 +250,8 @@ class TestTextGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_grammar_and_style_correction(self, text_engine):
-        """Test grammar and style correction capabilities"""
+        """
+Test grammar and style correction capabilities"""
         # Text samples with intentional errors
         test_texts = [
             "This are a test with grammar error's and wrong punctuation",
@@ -343,7 +356,8 @@ class TestTextGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_text_analysis_features(self, text_engine, sample_text_data):
-        """Test text analysis and insights features"""
+        """
+Test text analysis and insights features"""
         analysis_options = {
             'content_id': 'text_analysis_test',
             'sentiment_analysis': True,
@@ -373,7 +387,8 @@ class TestTextGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_text_seo_optimization(self, text_engine, sample_text_data):
-        """Test text SEO optimization features"""
+        """
+Test text SEO optimization features"""
         target_keywords = ['content creation', 'AI technology', 'professional writing', 'text optimization']
         
         result = await text_engine.optimize_for_seo(
@@ -391,7 +406,8 @@ class TestTextGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_text_protection(self, text_engine, sample_text_data):
-        """Test text content protection features"""
+        """
+Test text content protection features"""
         result = await text_engine.protect_content(sample_text_data['long_text'])
         
         assert result['text_fingerprinted'] is True
@@ -401,18 +417,21 @@ class TestTextGenerationEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestContentGenerationEngine:
-    """Comprehensive tests for ContentGenerationEngine"""
+    """
+Comprehensive tests for ContentGenerationEngine"""
     
     @pytest.fixture
     async def content_generation_engine(self):
-        """Create and initialize content generation engine"""
+        """
+Create and initialize content generation engine"""
         engine = ContentGenerationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def content_generation_options(self):
-        """Provide content generation options"""
+        """
+Provide content generation options"""
         return {
             'content_id': 'content_gen_test_123',
             'content_type': 'blog_post',
@@ -428,7 +447,8 @@ class TestContentGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_content_generation_engine_initialization(self, content_generation_engine):
-        """Test content generation engine initialization"""
+        """
+Test content generation engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(content_generation_engine)
@@ -688,14 +708,16 @@ class TestLanguageModelEngine:
     
     @pytest.fixture
     async def language_model_engine(self):
-        """Create and initialize language model engine"""
+        """
+Create and initialize language model engine"""
         engine = LanguageModelEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def language_model_options(self):
-        """Provide language model options"""
+        """
+Provide language model options"""
         return {
             'content_id': 'lm_test_123',
             'model_type': 'gpt_advanced',
@@ -710,7 +732,8 @@ class TestLanguageModelEngine:
     
     @pytest.mark.asyncio
     async def test_language_model_engine_initialization(self, language_model_engine):
-        """Test language model engine initialization"""
+        """
+Test language model engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(language_model_engine)
@@ -930,7 +953,8 @@ class TestTextEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_content_creation_pipeline(self, sample_content):
-        """Test complete content creation pipeline"""
+        """
+Test complete content creation pipeline"""
         # Initialize all text engines
         text_engine = TextProcessingEngine()
         content_generation_engine = ContentGenerationEngine()

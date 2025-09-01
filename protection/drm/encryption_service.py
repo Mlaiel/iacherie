@@ -5,7 +5,7 @@ Military-grade encryption and decryption service for digital content protection
 with quantum-resistant algorithms and advanced key management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import secrets
@@ -49,7 +50,9 @@ import jwt
 logger = logging.getLogger(__name__)
 
 class EncryptionAlgorithm(str, Enum):
-    """Supported encryption algorithms."""
+    """
+Supported encryption algorithms."""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -59,6 +62,7 @@ class EncryptionAlgorithm(str, Enum):
 
 class KeyType(str, Enum):
     """Types of encryption keys."""
+
     SYMMETRIC = "symmetric"
     ASYMMETRIC_PUBLIC = "asymmetric_public"
     ASYMMETRIC_PRIVATE = "asymmetric_private"
@@ -68,6 +72,7 @@ class KeyType(str, Enum):
 
 class SecurityLevel(str, Enum):
     """Security level classifications."""
+
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
@@ -91,7 +96,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionContext:
-    """Context for encryption/decryption operations."""
+    """
+Context for encryption/decryption operations."""
     content_id: str
     user_id: int
     security_level: SecurityLevel
@@ -102,7 +108,8 @@ class EncryptionContext:
 
 @dataclass
 class EncryptedData:
-    """Encrypted data package."""
+    """
+Encrypted data package."""
     encrypted_content: bytes
     key_id: str
     algorithm: EncryptionAlgorithm
@@ -129,7 +136,8 @@ class EncryptionService:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Encryption Service."""
+        """
+Initialize the Encryption Service."""
         self.config = config
         self._initialized = False
         
@@ -665,7 +673,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using AES-256-CBC."""
+        """
+Decrypt content using AES-256-CBC."""
         # Create cipher
         cipher = Cipher(
             algorithms.AES(encryption_key.key_data),
@@ -688,7 +697,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using ChaCha20-Poly1305."""
+        """
+Decrypt content using ChaCha20-Poly1305."""
         # Create cipher
         cipher = Cipher(
             algorithms.ChaCha20(encryption_key.key_data, encrypted_data.iv_or_nonce),
@@ -708,7 +718,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using Fernet."""
+        """
+Decrypt content using Fernet."""
         fernet = Fernet(encryption_key.key_data)
         decrypted_content = fernet.decrypt(encrypted_data.encrypted_content)
         
@@ -720,7 +731,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using quantum-resistant algorithms."""
+        """
+Decrypt content using quantum-resistant algorithms."""
         # Reverse the multi-layer encryption
         metadata = encrypted_data.metadata
         
@@ -897,7 +909,8 @@ class EncryptionService:
         return keys
 
     async def cleanup_expired_keys(self) -> int:
-        """Clean up expired keys."""
+        """
+Clean up expired keys."""
         current_time = datetime.utcnow()
         expired_count = 0
         

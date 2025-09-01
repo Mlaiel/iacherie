@@ -12,6 +12,7 @@ Email: mlaiel@live.de
 This module provides advanced content protection capabilities including
 digital rights management, piracy detection, and automated copyright enforcement.
 """
+
 import logging
 import hashlib
 import uuid
@@ -31,7 +32,9 @@ from .signal_processing import AudioData
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
@@ -40,6 +43,7 @@ class ProtectionLevel(Enum):
 
 class ProtectionMethod(Enum):
     """Content protection methods"""
+
     DIGITAL_WATERMARK = "digital_watermark"
     BLOCKCHAIN_HASH = "blockchain_hash"
     ENCRYPTED_FINGERPRINT = "encrypted_fingerprint"
@@ -49,6 +53,7 @@ class ProtectionMethod(Enum):
 
 class InfringementType(Enum):
     """Types of content infringement"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     MODIFIED_COPY = "modified_copy"
@@ -60,6 +65,7 @@ class InfringementType(Enum):
 
 class EnforcementAction(Enum):
     """Copyright enforcement actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     REVENUE_CLAIM = "revenue_claim"
@@ -83,7 +89,8 @@ class ProtectionSettings:
 
 @dataclass
 class ProtectionResult:
-    """Content protection result"""
+    """
+Content protection result"""
     protection_id: str
     original_fingerprint: AudioFingerprint
     protected_fingerprint: AudioFingerprint
@@ -336,7 +343,8 @@ class ContentProtector:
         self,
         fingerprint: AudioFingerprint
     ) -> AudioFingerprint:
-        """Encrypt fingerprint data"""
+        """
+Encrypt fingerprint data"""
         if isinstance(fingerprint.fingerprint_data, str):
             encrypted_data = self.cipher_suite.encrypt(fingerprint.fingerprint_data.encode())
         else:
@@ -363,7 +371,8 @@ class ContentProtector:
         user_id: str,
         protection_id: str
     ) -> str:
-        """Register content on blockchain"""
+        """
+Register content on blockchain"""
         # Prepare blockchain registration data
         registration_data = {
             'fingerprint_id': fingerprint.fingerprint_id,
@@ -379,7 +388,8 @@ class ContentProtector:
         return blockchain_hash
     
     async def _start_content_monitoring(self, protection_result: ProtectionResult):
-        """Start monitoring for content infringement"""
+        """
+Start monitoring for content infringement"""
         monitoring_task = asyncio.create_task(
             self._monitor_content_infringement(protection_result)
         )
@@ -480,7 +490,8 @@ class ContentProtector:
         self,
         protection_id: str
     ) -> List[InfringementDetection]:
-        """Get infringement detections for protected content"""
+        """
+Get infringement detections for protected content"""
         return [
             detection for detection in self.infringement_detections.values()
             if detection.original_protection_id == protection_id
@@ -490,7 +501,8 @@ class ContentProtector:
         self,
         user_id: str
     ) -> List[EnforcementResult]:
-        """Get enforcement history for user"""
+        """
+Get enforcement history for user"""
         user_protections = [
             pid for pid, result in self.protected_content.items()
             if result.owner_id == user_id
@@ -511,7 +523,8 @@ class ContentProtector:
         detection_id: str,
         actions: List[EnforcementAction]
     ) -> EnforcementResult:
-        """Manually trigger enforcement actions"""
+        """
+Manually trigger enforcement actions"""
         detection = self.infringement_detections.get(detection_id)
         if not detection:
             raise ValueError(f"Detection not found: {detection_id}")
@@ -563,7 +576,8 @@ class DigitalWatermarkGenerator:
         strength: float = 0.1,
         method: str = 'spread_spectrum'
     ) -> np.ndarray:
-        """Embed digital watermark in audio"""
+        """
+Embed digital watermark in audio"""
         # Implementation of spread spectrum watermarking
         # This is a simplified version - real implementation would be more complex
         watermarked = audio.copy()
@@ -583,7 +597,8 @@ class DigitalWatermarkGenerator:
 
 
 class SteganographyEngine:
-    """Advanced steganography for audio content"""
+    """
+Advanced steganography for audio content"""
     
     def embed_data(
         self,
@@ -591,7 +606,8 @@ class SteganographyEngine:
         data: bytes,
         method: str = 'frequency_lsb'
     ) -> np.ndarray:
-        """Embed data using steganography"""
+        """
+Embed data using steganography"""
         # Implementation of frequency domain LSB steganography
         # This is simplified - real implementation would use FFT
         steg_audio = audio.copy()
@@ -611,14 +627,16 @@ class SteganographyEngine:
 
 
 class BlockchainInterface:
-    """Interface for blockchain content registration"""
+    """
+Interface for blockchain content registration"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def register_content(self, data: Dict[str, Any]) -> str:
-        """Register content on blockchain"""
+        """
+Register content on blockchain"""
         # Mock implementation - replace with actual blockchain integration
         content_hash = hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
         
@@ -639,7 +657,8 @@ class ContentMonitoringCrawler:
         fingerprint: AudioFingerprint,
         protection_id: str
     ) -> List[InfringementDetection]:
-        """Scan platform for potential infringements"""
+        """
+Scan platform for potential infringements"""
         # Mock implementation - replace with actual platform APIs
         detections = []
         
@@ -667,7 +686,8 @@ class AutomatedEnforcementEngine:
         content_url: str,
         evidence: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Send DMCA takedown request"""
+        """
+Send DMCA takedown request"""
         # Mock implementation
         return {
             "success": True,

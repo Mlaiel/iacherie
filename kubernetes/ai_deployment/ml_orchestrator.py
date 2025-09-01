@@ -6,8 +6,9 @@ including model serving, training pipelines, feature stores, and
 inference engines for content analysis and recommendation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIWorkloadType(Enum):
-    """AI workload types"""
+    """
+AI workload types"""
+
     TRAINING = "training"
     INFERENCE = "inference"
     BATCH_PROCESSING = "batch_processing"
@@ -35,6 +38,7 @@ class AIWorkloadType(Enum):
 
 class ModelFramework(Enum):
     """Supported ML frameworks"""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     HUGGINGFACE = "huggingface"
@@ -45,6 +49,7 @@ class ModelFramework(Enum):
 
 class ComputeType(Enum):
     """Compute resource types"""
+
     CPU = "cpu"
     GPU_V100 = "gpu_v100"
     GPU_A100 = "gpu_a100"

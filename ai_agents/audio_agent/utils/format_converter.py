@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversionConfig:
-    """Configuration for audio format conversion"""
+    """
+Configuration for audio format conversion"""
     # Target format settings
     target_format: str = "wav"
     target_sample_rate: int = 44100
@@ -550,7 +552,8 @@ class AudioFormatConverter:
                                   audio_data: np.ndarray,
                                   sample_rate: int,
                                   config: ConversionConfig) -> np.ndarray:
-        """Apply custom filtering based on configuration"""
+        """
+Apply custom filtering based on configuration"""
         filtered = audio_data.copy()
         
         try:
@@ -667,7 +670,8 @@ class AudioFormatConverter:
         return audio_2d
     
     def _apply_dithering(self, audio_data: np.ndarray, target_bit_depth: int) -> np.ndarray:
-        """Apply dithering for bit depth reduction"""
+        """
+Apply dithering for bit depth reduction"""
         if target_bit_depth >= 32:
             return audio_data
         
@@ -685,7 +689,8 @@ class AudioFormatConverter:
         return audio_data + dither
     
     def _apply_antialias_filter(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply anti-aliasing filter"""
+        """
+Apply anti-aliasing filter"""
         try:
             # Design anti-aliasing filter
             nyquist = sample_rate / 2
@@ -857,7 +862,7 @@ class AudioFormatConverter:
                 "original_sample_rate": original_specs.get("sample_rate", 0),
                 "target_sample_rate": config.target_sample_rate,
                 "quality_level": config.quality_level,
-                "copyright": "© 2025 Fahed Mlaiel - Converted Content"
+                "copyright": "(c) 2025 Fahed Mlaiel - Converted Content"
             }
             
             # Log metadata (in production, write to file)

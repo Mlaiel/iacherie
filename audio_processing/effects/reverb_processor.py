@@ -14,7 +14,7 @@ Features:
 - Professional presets for all acoustic spaces
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 =============================================================================
 CONFIDENTIAL - IA INFLUENCER AGENT PLATFORM
@@ -35,6 +35,7 @@ Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited under international copyright law.
 =============================================================================
 """
+
 import numpy as np
 import logging
 from typing import Optional, Dict, List, Tuple, Any, Union
@@ -48,7 +49,9 @@ import random
 
 
 class ReverbType(Enum):
-    """Professional reverb algorithm types"""
+    """
+Professional reverb algorithm types"""
+
     HALL = "hall"
     ROOM = "room"
     PLATE = "plate"
@@ -66,6 +69,7 @@ class ReverbType(Enum):
 
 class RoomSize(Enum):
     """Room size presets"""
+
     INTIMATE = "intimate"        # Small room, booth
     SMALL = "small"             # Living room, office
     MEDIUM = "medium"           # Large room, studio
@@ -76,6 +80,7 @@ class RoomSize(Enum):
 
 class EarlyReflectionPattern(Enum):
     """Early reflection patterns"""
+
     RECTANGULAR = "rectangular"
     TRIANGULAR = "triangular"
     CIRCULAR = "circular"
@@ -119,7 +124,8 @@ class ReverbParameters:
 
 @dataclass
 class EarlyReflection:
-    """Early reflection definition"""
+    """
+Early reflection definition"""
     delay: float           # seconds
     amplitude: float       # 0.0 - 1.0
     pan: float            # -1.0 to 1.0
@@ -127,7 +133,8 @@ class EarlyReflection:
 
 
 class DelayLine:
-    """Professional delay line with interpolation"""
+    """
+Professional delay line with interpolation"""
     
     def __init__(self, max_delay_samples: int, sample_rate: int):
         self.buffer = np.zeros(max_delay_samples)
@@ -136,7 +143,8 @@ class DelayLine:
         self.sample_rate = sample_rate
         
     def process(self, input_sample: float, delay_samples: float, feedback: float = 0.0) -> float:
-        """Process single sample through delay line"""
+        """
+Process single sample through delay line"""
         # Linear interpolation for fractional delays
         delay_int = int(delay_samples)
         delay_frac = delay_samples - delay_int
@@ -160,7 +168,8 @@ class DelayLine:
 
 
 class AllPassFilter:
-    """All-pass filter for reverb diffusion"""
+    """
+All-pass filter for reverb diffusion"""
     
     def __init__(self, delay_samples: int, gain: float = 0.7):
         self.delay_line = np.zeros(delay_samples)
@@ -169,7 +178,8 @@ class AllPassFilter:
         self.index = 0
     
     def process(self, input_sample: float) -> float:
-        """Process sample through all-pass filter"""
+        """
+Process sample through all-pass filter"""
         delayed_sample = self.delay_line[self.index]
         
         # All-pass equation: y[n] = -g*x[n] + x[n-M] + g*y[n-M]
@@ -181,7 +191,8 @@ class AllPassFilter:
 
 
 class CombFilter:
-    """Comb filter for reverb resonance"""
+    """
+Comb filter for reverb resonance"""
     
     def __init__(self, delay_samples: int, feedback: float = 0.5, damping: float = 0.2):
         self.delay_line = np.zeros(delay_samples)
@@ -192,7 +203,8 @@ class CombFilter:
         self.index = 0
     
     def process(self, input_sample: float) -> float:
-        """Process sample through comb filter"""
+        """
+Process sample through comb filter"""
         delayed_sample = self.delay_line[self.index]
         
         # Apply damping (simple lowpass)
@@ -206,7 +218,8 @@ class CombFilter:
 
 
 class EarlyReflectionsProcessor:
-    """Early reflections modeling"""
+    """
+Early reflections modeling"""
     
     def __init__(self, sample_rate: int, room_size: RoomSize = RoomSize.MEDIUM):
         self.sample_rate = sample_rate
@@ -215,7 +228,8 @@ class EarlyReflectionsProcessor:
         self.delay_lines = [DelayLine(int(0.1 * sample_rate), sample_rate) for _ in self.reflections]
     
     def _generate_early_reflections(self) -> List[EarlyReflection]:
-        """Generate early reflection pattern based on room characteristics"""
+        """
+Generate early reflection pattern based on room characteristics"""
         reflections = []
         
         # Room-dependent reflection parameters
@@ -239,7 +253,8 @@ class EarlyReflectionsProcessor:
         return sorted(reflections, key=lambda r: r.delay)
     
     def process(self, input_audio: np.ndarray, pre_delay: float, level: float) -> np.ndarray:
-        """Process early reflections"""
+        """
+Process early reflections"""
         output = np.zeros_like(input_audio)
         pre_delay_samples = int(pre_delay * self.sample_rate)
         
@@ -255,7 +270,8 @@ class EarlyReflectionsProcessor:
 
 
 class ConvolutionReverb:
-    """Convolution reverb processor"""
+    """
+Convolution reverb processor"""
     
     def __init__(self, sample_rate: int, impulse_response: Optional[np.ndarray] = None):
         self.sample_rate = sample_rate
@@ -270,7 +286,8 @@ class ConvolutionReverb:
             self._prepare_impulse_response()
     
     def _prepare_impulse_response(self):
-        """Prepare impulse response for convolution"""
+        """
+Prepare impulse response for convolution"""
         if len(self.impulse_response) > self.fft_size:
             # Split long impulse responses (partitioned convolution)
             self.ir_partitions = []
@@ -285,7 +302,8 @@ class ConvolutionReverb:
             self.ir_fft = np.fft.fft(padded_ir)
     
     def process(self, input_audio: np.ndarray, wet_level: float) -> np.ndarray:
-        """Process audio through convolution"""
+        """
+Process audio through convolution"""
         if self.impulse_response is None:
             return input_audio
         
@@ -311,7 +329,8 @@ class ConvolutionReverb:
 
 
 class ReverbProcessor:
-    """Professional reverb processor with multiple algorithms"""
+    """
+Professional reverb processor with multiple algorithms"""
     
     def __init__(self, sample_rate: int = 44100, reverb_type: ReverbType = ReverbType.HALL):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -364,7 +383,8 @@ class ReverbProcessor:
         self.high_shelf = self._design_shelf_filter(self.params.high_shelf_freq, self.params.high_shelf_gain, 'high')
     
     def _design_shelf_filter(self, frequency: float, gain_db: float, shelf_type: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Design shelving EQ filter"""
+        """
+Design shelving EQ filter"""
         nyquist = self.sample_rate / 2
         normalized_freq = frequency / nyquist
         
@@ -383,7 +403,8 @@ class ReverbProcessor:
         return b * gain_linear, a
     
     def _load_professional_presets(self) -> Dict[str, ReverbParameters]:
-        """Load professional reverb presets"""
+        """
+Load professional reverb presets"""
         presets = {}
         
         # Concert Hall
@@ -437,7 +458,8 @@ class ReverbProcessor:
         return presets
     
     def process(self, audio_data: np.ndarray, stereo: bool = True) -> np.ndarray:
-        """Process audio through professional reverb"""
+        """
+Process audio through professional reverb"""
         try:
             if audio_data.size == 0:
                 return audio_data
@@ -478,7 +500,8 @@ class ReverbProcessor:
         return output
     
     def _process_algorithmic_reverb(self, input_audio: np.ndarray) -> np.ndarray:
-        """Process through algorithmic reverb"""
+        """
+Process through algorithmic reverb"""
         # Early reflections
         early_output = self.early_reflections.process(
             input_audio, 
@@ -496,7 +519,8 @@ class ReverbProcessor:
         return wet_output
     
     def _process_late_reverb(self, input_audio: np.ndarray) -> np.ndarray:
-        """Process late reverb (diffuse tail)"""
+        """
+Process late reverb (diffuse tail)"""
         output = np.zeros_like(input_audio)
         
         for i, sample in enumerate(input_audio):
@@ -542,7 +566,8 @@ class ReverbProcessor:
         return output
     
     def _calculate_feedback(self, comb_index: int) -> float:
-        """Calculate feedback amount based on decay time and room size"""
+        """
+Calculate feedback amount based on decay time and room size"""
         # Calculate feedback for desired decay time
         delay_ms = [29.7, 37.1, 41.1, 43.7, 47.8, 51.3, 57.0, 61.7][comb_index]
         delay_samples = delay_ms * self.sample_rate / 1000.0
@@ -557,13 +582,15 @@ class ReverbProcessor:
         return min(0.95, feedback)  # Prevent instability
     
     def _apply_eq(self, sample: float, sample_index: int) -> float:
-        """Apply EQ filtering (simplified single-sample processing)"""
+        """
+Apply EQ filtering (simplified single-sample processing)"""
         # This is a simplified implementation
         # In production, you'd use proper filter states
         return sample
     
     def set_impulse_response(self, impulse_response: np.ndarray):
-        """Set impulse response for convolution reverb"""
+        """
+Set impulse response for convolution reverb"""
         self.convolution_reverb.impulse_response = impulse_response
         self.convolution_reverb._prepare_impulse_response()
         self.reverb_type = ReverbType.CONVOLUTION
@@ -583,7 +610,8 @@ class ReverbProcessor:
         self.modulation_phase_increment = (2 * np.pi * self.params.modulation_rate) / self.sample_rate
     
     def set_parameter(self, param_name: str, value: float):
-        """Set individual reverb parameter"""
+        """
+Set individual reverb parameter"""
         if hasattr(self.params, param_name):
             setattr(self.params, param_name, value)
             
@@ -680,7 +708,8 @@ class ReverbProcessor:
         }
     
     def reset(self):
-        """Reset reverb state"""
+        """
+Reset reverb state"""
         # Reset all filters
         for comb_filter in self.comb_filters:
             comb_filter.delay_line.fill(0.0)
@@ -725,7 +754,8 @@ class ReverbProcessor:
             self.allpass_lines.append(allpass_line)
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply reverb processing"""
+        """
+Apply reverb processing"""
         try:
             processed_audio = np.zeros_like(audio_data)
             
@@ -779,7 +809,8 @@ class ReverbProcessor:
     
     def set_parameters(self, room_size: float = None, decay_time: float = None,
                       damping: float = None, wet_level: float = None):
-        """Set reverb parameters"""
+        """
+Set reverb parameters"""
         if room_size is not None:
             self.room_size = np.clip(room_size, 0.0, 1.0)
         if decay_time is not None:

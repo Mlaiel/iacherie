@@ -4,8 +4,9 @@ Advanced ML models for user profiling, content recommendation, and personalizati
 Implements deep learning, collaborative filtering, and hybrid approaches.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -37,7 +38,9 @@ from .exceptions import ModelTrainingError, ModelNotLoadedError
 
 
 class ModelType(Enum):
-    """Types of ML models for personalization"""
+    """
+Types of ML models for personalization"""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -50,6 +53,7 @@ class ModelType(Enum):
 
 class TrainingStatus(Enum):
     """Model training status"""
+
     UNTRAINED = "untrained"
     TRAINING = "training"
     TRAINED = "trained"
@@ -82,7 +86,8 @@ class ModelMetrics:
 
 @dataclass
 class ModelConfig:
-    """Configuration for ML models"""
+    """
+Configuration for ML models"""
     
     model_type: ModelType
     
@@ -143,26 +148,31 @@ class BasePersonalizationModel(ABC):
     
     @abstractmethod
     async def predict(self, input_data: Dict[str, Any]) -> np.ndarray:
-        """Make predictions using the trained model"""
+        """
+Make predictions using the trained model"""
         pass
     
     @abstractmethod
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:
-        """Update model with new data (online learning)"""
+        """
+Update model with new data (online learning)"""
         pass
     
     @abstractmethod
     def save_model(self, filepath: str) -> bool:
-        """Save model to file"""
+        """
+Save model to file"""
         pass
     
     @abstractmethod
     def load_model(self, filepath: str) -> bool:
-        """Load model from file"""
+        """
+Load model from file"""
         pass
     
     async def evaluate(self, test_data: Dict[str, Any]) -> ModelMetrics:
-        """Evaluate model performance"""
+        """
+Evaluate model performance"""
         try:
             if self.status != TrainingStatus.TRAINED:
                 raise ModelNotLoadedError("evaluate", self.config.model_type.value)
@@ -205,7 +215,8 @@ class BasePersonalizationModel(ABC):
         return len(unique_values) <= 10 and all(v in [0, 1] or 0 <= v <= 1 for v in unique_values)
     
     def _calculate_ndcg(self, true_values: List[float], predictions: List[float], k: int = 10) -> float:
-        """Calculate Normalized Discounted Cumulative Gain"""
+        """
+Calculate Normalized Discounted Cumulative Gain"""
         # Simplified NDCG calculation
         if len(true_values) == 0:
             return 0.0
@@ -236,7 +247,8 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
         self.global_mean = 0.0
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
-        """Train collaborative filtering model"""
+        """
+Train collaborative filtering model"""
         try:
             self.status = TrainingStatus.TRAINING
             start_time = datetime.utcnow()
@@ -336,7 +348,8 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
         self.metrics.training_loss = rmse
     
     async def _build_neighborhood_models(self, matrix: np.ndarray):
-        """Build user and item neighborhood models"""
+        """
+Build user and item neighborhood models"""
         
         # User-based collaborative filtering
         user_similarity = np.corrcoef(matrix)
@@ -359,7 +372,8 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
         self.item_neighbors.fit(matrix.T)
     
     async def predict(self, input_data: Dict[str, Any]) -> np.ndarray:
-        """Predict ratings using collaborative filtering"""
+        """
+Predict ratings using collaborative filtering"""
         
         if self.status != TrainingStatus.TRAINED:
             raise ModelNotLoadedError("predict", self.config.model_type.value)
@@ -419,14 +433,16 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
             return self.global_mean
     
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:
-        """Update model with new data"""
+        """
+Update model with new data"""
         
         # For collaborative filtering, we typically retrain
         # In practice, you might implement incremental updates
         return await self.train(new_data)
     
     def save_model(self, filepath: str) -> bool:
-        """Save collaborative filtering model"""
+        """
+Save collaborative filtering model"""
         try:
             model_data = {
                 'config': self.config.__dict__,
@@ -497,7 +513,8 @@ class ContentBasedModel(BasePersonalizationModel):
         self.tfidf_vectorizer = None
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
-        """Train content-based model"""
+        """
+Train content-based model"""
         try:
             self.status = TrainingStatus.TRAINING
             start_time = datetime.utcnow()
@@ -601,7 +618,8 @@ class ContentBasedModel(BasePersonalizationModel):
         self.user_profiles = user_profiles
     
     async def _calculate_user_preferences(self, interactions: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate user preference vector from interactions"""
+        """
+Calculate user preference vector from interactions"""
         
         preferences = {}
         
@@ -630,7 +648,8 @@ class ContentBasedModel(BasePersonalizationModel):
         return preferences
     
     async def _train_similarity_models(self):
-        """Train content similarity models"""
+        """
+Train content similarity models"""
         
         # For content-based filtering, the "training" is mainly feature extraction
         # The similarity calculation happens at prediction time
@@ -685,7 +704,8 @@ class ContentBasedModel(BasePersonalizationModel):
             return 0.5
     
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:
-        """Update model with new data"""
+        """
+Update model with new data"""
         
         # Update user profiles with new interactions
         new_interactions = new_data.get('user_interactions', [])
@@ -707,7 +727,8 @@ class ContentBasedModel(BasePersonalizationModel):
         return self.metrics
     
     def save_model(self, filepath: str) -> bool:
-        """Save content-based model"""
+        """
+Save content-based model"""
         try:
             # Save main model data
             model_data = {
@@ -798,7 +819,8 @@ class HybridRecommenderModel(BasePersonalizationModel):
         self.weight_optimizer = None
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
-        """Train hybrid model"""
+        """
+Train hybrid model"""
         try:
             self.status = TrainingStatus.TRAINING
             start_time = datetime.utcnow()
@@ -902,7 +924,8 @@ class HybridRecommenderModel(BasePersonalizationModel):
         return self.metrics
     
     def save_model(self, filepath: str) -> bool:
-        """Save hybrid model"""
+        """
+Save hybrid model"""
         try:
             # Save component models
             cf_saved = self.collaborative_model.save_model(f"{filepath}_cf.json")
@@ -989,7 +1012,8 @@ class PersonalizationMLModel:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize available models"""
+        """
+Initialize available models"""
         
         model_config = ModelConfig(
             model_type=ModelType.HYBRID,
@@ -1012,7 +1036,8 @@ class PersonalizationMLModel:
         model_type: str,
         training_data: Dict[str, Any]
     ) -> ModelMetrics:
-        """Train a specific model"""
+        """
+Train a specific model"""
         
         if model_type not in self.models:
             raise ValueError(f"Unknown model type: {model_type}")
@@ -1160,28 +1185,33 @@ class DeepPersonalizationModel(BasePersonalizationModel):
         self.scheduler = None
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
-        """Train deep learning model"""
+        """
+Train deep learning model"""
         # Implementation would include PyTorch neural network training
         # This is a placeholder for the full implementation
         pass
     
     async def predict(self, input_data: Dict[str, Any]) -> np.ndarray:
-        """Predict using deep learning model"""
+        """
+Predict using deep learning model"""
         # Implementation would include forward pass through neural network
         pass
     
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:
-        """Update deep learning model"""
+        """
+Update deep learning model"""
         # Implementation would include incremental training
         pass
     
     def save_model(self, filepath: str) -> bool:
-        """Save PyTorch model"""
+        """
+Save PyTorch model"""
         # Implementation would save model state dict
         pass
     
     def load_model(self, filepath: str) -> bool:
-        """Load PyTorch model"""
+        """
+Load PyTorch model"""
         # Implementation would load model state dict
         pass
 
@@ -1198,31 +1228,38 @@ class UserEmbeddingModel(BasePersonalizationModel):
         self.content_embeddings = {}
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
-        """Train user embedding model"""
+        """
+Train user embedding model"""
         # Implementation would train embeddings using interaction data
         pass
     
     async def predict(self, input_data: Dict[str, Any]) -> np.ndarray:
-        """Generate user embeddings"""
+        """
+Generate user embeddings"""
         # Implementation would generate embeddings for users
         pass
     
     async def get_user_embedding(self, user_id: str) -> Optional[np.ndarray]:
-        """Get embedding for specific user"""
+        """
+Get embedding for specific user"""
         return self.user_embeddings.get(user_id)
     
     async def get_content_embedding(self, content_id: str) -> Optional[np.ndarray]:
-        """Get embedding for specific content"""
+        """
+Get embedding for specific content"""
         return self.content_embeddings.get(content_id)
     
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:
-        """Update embeddings with new data"""
+        """
+Update embeddings with new data"""
         pass
     
     def save_model(self, filepath: str) -> bool:
-        """Save embedding model"""
+        """
+Save embedding model"""
         pass
     
     def load_model(self, filepath: str) -> bool:
-        """Load embedding model"""
+        """
+Load embedding model"""
         pass

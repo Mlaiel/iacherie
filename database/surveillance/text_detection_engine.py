@@ -5,12 +5,13 @@ Advanced text fingerprinting and detection engine for textual content surveillan
 Implements sophisticated NLP and text analysis algorithms for plagiarism detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure."""
+    """
+Text fingerprint data structure."""
     fingerprint_id: str
     user_id: str
     title: str
@@ -53,7 +55,8 @@ class TextFingerprint:
 
 @dataclass
 class TextMatch:
-    """Text match result structure."""
+    """
+Text match result structure."""
     original_fingerprint_id: str
     detected_url: str
     similarity_score: float
@@ -67,7 +70,8 @@ class TextMatch:
 
 
 class TextFeatureExtractor:
-    """Advanced text feature extraction for fingerprinting."""
+    """
+Advanced text feature extraction for fingerprinting."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -846,7 +850,8 @@ class TextDetectionEngine:
         input_features: Dict[str, Any],
         stored_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence level for match."""
+        """
+Calculate confidence level for match."""
         try:
             # Base confidence from overall similarity
             confidence = similarity_score

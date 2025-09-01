@@ -7,6 +7,7 @@ content management, and intelligent audio operations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ from urllib.parse import urlparse, parse_qs
 logger = logging.getLogger(__name__)
 
 class SoundCloudEndpoint(Enum):
-    """SoundCloud API endpoints"""
+    """
+SoundCloud API endpoints"""
+
     TRACKS = "tracks"
     USERS = "users"
     PLAYLISTS = "playlists"
@@ -53,7 +56,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist data structure"""
+    """
+SoundCloud playlist data structure"""
     id: int
     title: str
     user: str
@@ -556,7 +560,8 @@ class SoundCloudEngine:
         self.request_count += 1
     
     async def _resolve_url(self, url: str) -> int:
-        """Resolve SoundCloud URL to track/playlist ID"""
+        """
+Resolve SoundCloud URL to track/playlist ID"""
         try:
             resolve_url = f"{self.base_url}/resolve"
             params = {
@@ -661,7 +666,8 @@ class SoundCloudEngine:
         return {'collection': []}
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> SoundCloudTrack:
-        """Parse track data from SoundCloud API response"""
+        """
+Parse track data from SoundCloud API response"""
         try:
             user_data = track_data.get('user', {})
             
@@ -724,7 +730,8 @@ class SoundCloudEngine:
             return None
     
     def _is_positive_comment(self, comment: Dict[str, Any]) -> bool:
-        """Simple sentiment analysis for comments"""
+        """
+Simple sentiment analysis for comments"""
         body = comment.get('body', '').lower()
         positive_words = ['great', 'awesome', 'love', 'amazing', 'good', 'nice', 'excellent', 'fantastic']
         negative_words = ['bad', 'awful', 'hate', 'terrible', 'horrible', 'sucks']
@@ -735,7 +742,8 @@ class SoundCloudEngine:
         return positive_count > negative_count
     
     def _calculate_popularity_tier(self, track: SoundCloudTrack) -> str:
-        """Calculate popularity tier based on play count"""
+        """
+Calculate popularity tier based on play count"""
         plays = track.play_count
         
         if plays > 1000000:
@@ -748,7 +756,8 @@ class SoundCloudEngine:
             return 'niche'
     
     def _assess_viral_potential(self, track: SoundCloudTrack) -> float:
-        """Assess viral potential based on engagement metrics"""
+        """
+Assess viral potential based on engagement metrics"""
         if track.play_count == 0:
             return 0.0
         
@@ -760,7 +769,8 @@ class SoundCloudEngine:
         return min(1.0, viral_score)
     
     def _analyze_growth_indicators(self, track: SoundCloudTrack) -> Dict[str, Any]:
-        """Analyze growth indicators for a track"""
+        """
+Analyze growth indicators for a track"""
         return {
             'engagement_velocity': track.like_count + track.comment_count,
             'discovery_potential': 'high' if track.play_count > 1000 else 'medium',
@@ -772,7 +782,8 @@ class SoundCloudEngine:
         }
     
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get engine statistics and status"""
+        """
+Get engine statistics and status"""
         return {
             'initialized': self.session is not None,
             'has_client_id': bool(self.client_id),

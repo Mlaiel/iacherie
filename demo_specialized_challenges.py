@@ -6,7 +6,7 @@ This demo showcases the implementation of the requirements:
 - Compétitions Globales - Événements spéciaux
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio

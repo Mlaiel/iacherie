@@ -6,6 +6,7 @@ with voice fingerprinting, authentication, and spoofing detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -20,7 +21,8 @@ from .models import VoiceFingerprint, FingerprintType
 logger = logging.getLogger(__name__)
 
 class VoiceProtectionManager:
-    """Advanced voice security and protection system"""
+    """
+Advanced voice security and protection system"""
     
     def __init__(self, config: ProtectionConfig):
         self.config = config

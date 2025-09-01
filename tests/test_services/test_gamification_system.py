@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Gamification System module.
+"""
+Test suite for Gamification System module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -26,9 +29,11 @@ import json
 
 
 class TestGamificationSystem(unittest.TestCase):
-    """Test suite for GamificationSystem class"""
+    """
+Test suite for GamificationSystem class"""
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.gamification = None  # Will be mocked
         self.sample_user_profile = {
             "user_id": "user_123",
@@ -128,7 +133,8 @@ class TestGamificationSystem(unittest.TestCase):
             self.assertEqual(user_level, expected_levels[i])
 
     def test_achievement_unlock_system(self):
-        """Test achievement unlock system"""
+        """
+Test achievement unlock system"""
         achievements_config = {
             "first_upload": {
                 "condition": "content_uploads >= 1",

@@ -9,6 +9,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     INTERMEDIATE = "intermediate" 
     PROFESSIONAL = "professional"
@@ -30,6 +33,7 @@ class ProtectionLevel(Enum):
 
 class ContentType(Enum):
     """Content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -40,6 +44,7 @@ class ContentType(Enum):
 
 class FingerprintingMethod(Enum):
     """Fingerprinting methods available"""
+
     SPECTRAL = "spectral"
     PERCEPTUAL = "perceptual"
     CHROMAPRINT = "chromaprint"
@@ -49,6 +54,7 @@ class FingerprintingMethod(Enum):
 
 class MonitoringPlatform(Enum):
     """Platforms to monitor for content theft"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
@@ -69,17 +75,20 @@ class ProtectionContext:
     technical_specs: Dict[str, Any]
 
 class AIProtectionPrompts:
-    """Professional AI Protection Prompts System"""
+    """
+Professional AI Protection Prompts System"""
     
     def __init__(self):
-        """Initialize the AI protection prompts system"""
+        """
+Initialize the AI protection prompts system"""
         self.protection_templates = {}
         self.fingerprinting_algorithms = {}
         self.legal_templates = {}
         self._load_protection_templates()
     
     def _load_protection_templates(self) -> None:
-        """Load and initialize protection prompt templates"""
+        """
+Load and initialize protection prompt templates"""
         self.protection_templates = {
             ContentType.AUDIO: {
                 ProtectionLevel.BASIC: {
@@ -582,12 +591,14 @@ class BlockchainProtectionPrompts:
     """Blockchain-based content protection prompts"""
     
     def __init__(self):
-        """Initialize blockchain protection system"""
+        """
+Initialize blockchain protection system"""
         self.blockchain_templates = {}
         self._load_blockchain_templates()
     
     def _load_blockchain_templates(self) -> None:
-        """Load blockchain protection templates"""
+        """
+Load blockchain protection templates"""
         self.blockchain_templates = {
             "content_registration": {
                 "template": """
@@ -669,7 +680,8 @@ def create_protection_context(
     legal_requirements: Optional[Dict] = None,
     technical_specs: Optional[Dict] = None
 ) -> ProtectionContext:
-    """Create a protection context for content protection"""
+    """
+Create a protection context for content protection"""
     return ProtectionContext(
         content_type=ContentType(content_type),
         protection_level=ProtectionLevel(protection_level),

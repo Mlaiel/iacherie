@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -33,6 +33,7 @@ COMPLETE IMPLEMENTATION FEATURES:
 - WebSocket real-time notifications
 - Scalable enterprise architecture
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable
@@ -125,7 +126,8 @@ class SurveillanceSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the surveillance system."""
+        """
+Initialize the surveillance system."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -250,7 +252,8 @@ class SurveillanceSystem:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the surveillance system gracefully."""
+        """
+Shutdown the surveillance system gracefully."""
         try:
             self._logger.info("Shutting down Professional Surveillance System...")
             
@@ -276,7 +279,7 @@ class SurveillanceSystem:
 # Module version and metadata
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2024 IA Influencer Agent Development Team. All rights reserved."
+__copyright__ = "(c) 2024 IA Influencer Agent Development Team. All rights reserved."
 __license__ = "Proprietary"
 
 # Import new surveillance modules
@@ -442,6 +445,7 @@ __all__ = [
 
 class SurveillanceStatus(Enum):
     """Surveillance task status."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -451,6 +455,7 @@ class SurveillanceStatus(Enum):
 
 class SurveillancePriority(Enum):
     """Surveillance priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -459,7 +464,8 @@ class SurveillancePriority(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Surveillance target definition."""
+    """
+Surveillance target definition."""
     target_id: str
     platform: str
     target_type: str  # channel, user, hashtag, keyword, url
@@ -474,7 +480,8 @@ class SurveillanceTarget:
 
 @dataclass
 class SurveillanceTask:
-    """Surveillance task execution unit."""
+    """
+Surveillance task execution unit."""
     task_id: str
     target: SurveillanceTarget
     status: SurveillanceStatus = SurveillanceStatus.PENDING
@@ -488,7 +495,8 @@ class SurveillanceTask:
 
 @dataclass
 class SurveillanceMetrics:
-    """Surveillance system metrics."""
+    """
+Surveillance system metrics."""
     total_targets: int = 0
     active_targets: int = 0
     pending_tasks: int = 0
@@ -518,7 +526,8 @@ class SurveillanceEngine:
     """
     
     def __init__(self):
-        """Initialize surveillance engine."""
+        """
+Initialize surveillance engine."""
         # Core managers
         self.rate_limiter = RateLimiter()
         self.proxy_manager = ProxyManager()
@@ -562,7 +571,8 @@ class SurveillanceEngine:
         self._start_background_tasks()
     
     def _start_background_tasks(self) -> None:
-        """Start background monitoring tasks."""
+        """
+Start background monitoring tasks."""
         asyncio.create_task(self._task_scheduler())
         asyncio.create_task(self._task_executor())
         asyncio.create_task(self._metrics_updater())
@@ -1002,19 +1012,23 @@ class SurveillanceEngine:
         self.violation_callbacks.append(callback)
     
     def add_completion_callback(self, callback: Callable) -> None:
-        """Add task completion callback."""
+        """
+Add task completion callback."""
         self.completion_callbacks.append(callback)
     
     def add_error_callback(self, callback: Callable) -> None:
-        """Add error callback."""
+        """
+Add error callback."""
         self.error_callbacks.append(callback)
     
     def get_metrics(self) -> SurveillanceMetrics:
-        """Get current surveillance metrics."""
+        """
+Get current surveillance metrics."""
         return self.metrics
     
     def get_target_status(self, target_id: str) -> Optional[Dict]:
-        """Get status for specific target."""
+        """
+Get status for specific target."""
         target = self.targets.get(target_id)
         if not target:
             return None
@@ -1047,11 +1061,13 @@ class SurveillanceEngine:
         }
     
     def get_all_targets_status(self) -> List[Dict]:
-        """Get status for all targets."""
+        """
+Get status for all targets."""
         return [self.get_target_status(target_id) for target_id in self.targets.keys()]
     
     async def force_target_check(self, target_id: str) -> bool:
-        """Force immediate check for target."""
+        """
+Force immediate check for target."""
         target = self.targets.get(target_id)
         if not target or not target.enabled:
             return False

@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class AlertSeverityEnum(str, Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -28,6 +31,7 @@ class AlertSeverityEnum(str, Enum):
 
 class AlertStatusEnum(str, Enum):
     """Alert processing status"""
+
     PENDING = "pending"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -39,6 +43,7 @@ class AlertStatusEnum(str, Enum):
 
 class ThreatTypeEnum(str, Enum):
     """Types of detected threats"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -53,6 +58,7 @@ class ThreatTypeEnum(str, Enum):
 
 class PlatformEnum(str, Enum):
     """Supported platforms for monitoring"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -72,6 +78,7 @@ class PlatformEnum(str, Enum):
 
 class ActionTypeEnum(str, Enum):
     """Actions that can be taken on threats"""
+
     TAKEDOWN_REQUEST = "takedown_request"
     DMCA_NOTICE = "dmca_notice"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -86,6 +93,7 @@ class ActionTypeEnum(str, Enum):
 
 class EvidenceTypeEnum(str, Enum):
     """Types of evidence collected"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     METADATA_CAPTURE = "metadata_capture"
@@ -98,6 +106,7 @@ class EvidenceTypeEnum(str, Enum):
 
 class ProtectionLevelEnum(str, Enum):
     """Protection monitoring levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"

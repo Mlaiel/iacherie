@@ -34,6 +34,7 @@ Features:
 - Interactive Notifications with Actions
 - Notification Analytics & Performance Metrics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -72,7 +73,8 @@ import openai
 logger = logging.getLogger(__name__)
 
 class NotificationType(Enum):
-    """Comprehensive notification type enumeration"""
+    """
+Comprehensive notification type enumeration"""
     # Collaboration notifications
     COLLABORATION_INVITE = "collaboration_invite"
     COLLABORATION_ACCEPTED = "collaboration_accepted"
@@ -131,6 +133,7 @@ class NotificationType(Enum):
 
 class NotificationChannel(Enum):
     """Notification channel enumeration"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -146,6 +149,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority enumeration"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -154,6 +158,7 @@ class NotificationPriority(Enum):
 
 class DeliveryStatus(Enum):
     """Delivery status enumeration"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -166,6 +171,7 @@ class DeliveryStatus(Enum):
 
 class TemplateType(Enum):
     """Template type enumeration"""
+
     EMAIL_HTML = "email_html"
     EMAIL_TEXT = "email_text"
     SMS_TEXT = "sms_text"
@@ -271,7 +277,8 @@ class DeliveryResult:
     metrics: Dict[str, Any] = field(default_factory=dict)
 
 class NotificationHandler:
-    """Advanced notification management system"""
+    """
+Advanced notification management system"""
     
     def __init__(
         self,
@@ -317,7 +324,8 @@ class NotificationHandler:
         notification: NotificationPayload,
         immediate: bool = False
     ) -> Dict[str, DeliveryResult]:
-        """Send notification through multiple channels"""
+        """
+Send notification through multiple channels"""
         try:
             logger.info(f"Sending notification {notification.id} to user {notification.recipient_id}")
             
@@ -666,7 +674,8 @@ class NotificationHandler:
         return effective_channels
         
     async def _check_rate_limits(self, user_id: str, notification_type: NotificationType) -> bool:
-        """Check rate limits for user and notification type"""
+        """
+Check rate limits for user and notification type"""
         # Implement rate limiting logic
         return True  # Placeholder
         
@@ -675,12 +684,14 @@ class NotificationHandler:
         user_id: str,
         preferences: UserPreferences
     ) -> datetime:
-        """Calculate optimal delivery time based on user behavior"""
+        """
+Calculate optimal delivery time based on user behavior"""
         # Implement smart delivery timing
         return datetime.utcnow()  # Placeholder
         
     async def _schedule_notification(self, notification: NotificationPayload) -> None:
-        """Schedule notification for future delivery"""
+        """
+Schedule notification for future delivery"""
         # Store in scheduled notifications queue
         await self.redis_client.zadd(
             "scheduled_notifications",
@@ -723,7 +734,8 @@ class NotificationHandler:
         )
         
     async def _deliver_sms(self, notification: NotificationPayload, preferences: UserPreferences) -> DeliveryResult:
-        """Deliver SMS notification"""
+        """
+Deliver SMS notification"""
         # Placeholder implementation
         return DeliveryResult(
             notification_id=notification.id,
@@ -734,7 +746,8 @@ class NotificationHandler:
         )
         
     async def _deliver_push(self, notification: NotificationPayload, preferences: UserPreferences) -> DeliveryResult:
-        """Deliver push notification"""
+        """
+Deliver push notification"""
         # Placeholder implementation
         return DeliveryResult(
             notification_id=notification.id,
@@ -745,7 +758,8 @@ class NotificationHandler:
         )
         
     async def _deliver_in_app(self, notification: NotificationPayload, preferences: UserPreferences) -> DeliveryResult:
-        """Deliver in-app notification"""
+        """
+Deliver in-app notification"""
         # Placeholder implementation
         return DeliveryResult(
             notification_id=notification.id,
@@ -756,7 +770,8 @@ class NotificationHandler:
         )
         
     async def _deliver_slack(self, notification: NotificationPayload, preferences: UserPreferences) -> DeliveryResult:
-        """Deliver Slack notification"""
+        """
+Deliver Slack notification"""
         # Placeholder implementation
         return DeliveryResult(
             notification_id=notification.id,
@@ -767,7 +782,8 @@ class NotificationHandler:
         )
         
     async def _deliver_discord(self, notification: NotificationPayload, preferences: UserPreferences) -> DeliveryResult:
-        """Deliver Discord notification"""
+        """
+Deliver Discord notification"""
         # Placeholder implementation
         return DeliveryResult(
             notification_id=notification.id,
@@ -778,7 +794,8 @@ class NotificationHandler:
         )
         
     async def _deliver_voice(self, notification: NotificationPayload, preferences: UserPreferences) -> DeliveryResult:
-        """Deliver voice notification"""
+        """
+Deliver voice notification"""
         # Placeholder implementation
         return DeliveryResult(
             notification_id=notification.id,
@@ -789,12 +806,14 @@ class NotificationHandler:
         )
         
     async def _store_delivery_results(self, notification_id: str, results: Dict[str, DeliveryResult]) -> None:
-        """Store delivery results in database"""
+        """
+Store delivery results in database"""
         # Placeholder implementation
         pass
         
     async def _validate_template(self, template: NotificationTemplate) -> None:
-        """Validate notification template"""
+        """
+Validate notification template"""
         if not template.name:
             raise ValueError("Template name is required")
         if not template.content:
@@ -805,11 +824,13 @@ class NotificationHandler:
         return {}  # Placeholder
         
     async def _calculate_optimal_send_times(self, user_id: Optional[str]) -> Dict[str, Any]:
-        """Calculate optimal send times"""
+        """
+Calculate optimal send times"""
         return {}  # Placeholder
         
     async def _get_preferences_summary(self) -> Dict[str, Any]:
-        """Get summary of user preferences"""
+        """
+Get summary of user preferences"""
         return {}  # Placeholder
     MILESTONE_COMPLETED = "milestone_completed"
     PAYMENT_RECEIVED = "payment_received"
@@ -823,6 +844,7 @@ class NotificationHandler:
 
 class NotificationChannel(Enum):
     """Notification delivery channel"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -833,6 +855,7 @@ class NotificationChannel(Enum):
 
 class Priority(Enum):
     """Notification priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -840,7 +863,9 @@ class Priority(Enum):
     CRITICAL = 5
 
 class DeliveryStatus(Enum):
-    """Delivery status enumeration"""
+    """
+Delivery status enumeration"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -897,7 +922,8 @@ class NotificationPayload:
 
 @dataclass
 class DeliveryReport:
-    """Notification delivery report"""
+    """
+Notification delivery report"""
     notification_id: str
     recipient_id: str
     channel: NotificationChannel
@@ -911,7 +937,8 @@ class DeliveryReport:
     retry_count: int = 0
 
 class NotificationHandler:
-    """Enterprise notification management system"""
+    """
+Enterprise notification management system"""
     
     def __init__(self, db_session, email_config, sms_config, push_config, template_config):
         self.db_session = db_session
@@ -941,7 +968,8 @@ class NotificationHandler:
         payload: NotificationPayload,
         template_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Send notification through appropriate channels"""
+        """
+Send notification through appropriate channels"""
         try:
             logger.info(f"Sending notification to {payload.recipient_id}: {payload.notification_type}")
             
@@ -1296,7 +1324,8 @@ class NotificationHandler:
         payload: NotificationPayload,
         preferences: NotificationPreferences
     ) -> List[NotificationChannel]:
-        """Determine which channels to use for notification"""
+        """
+Determine which channels to use for notification"""
         if payload.channels:
             return payload.channels
             
@@ -1317,7 +1346,8 @@ class NotificationHandler:
         preferences: NotificationPreferences,
         channels: List[NotificationChannel]
     ) -> bool:
-        """Check if notification should be sent based on preferences"""
+        """
+Check if notification should be sent based on preferences"""
         # Check priority threshold
         if payload.priority.value < preferences.priority_threshold.value:
             return False
@@ -1335,7 +1365,8 @@ class NotificationHandler:
         payload: NotificationPayload,
         preferences: NotificationPreferences
     ) -> Dict[str, str]:
-        """Render notification content from template"""
+        """
+Render notification content from template"""
         # Get template
         template = await self._get_template(template_id, preferences.languages[0])
         
@@ -1361,7 +1392,8 @@ class NotificationHandler:
         payload: NotificationPayload,
         preferences: NotificationPreferences
     ) -> Dict[str, str]:
-        """Generate notification content without template"""
+        """
+Generate notification content without template"""
         return {
             'subject': payload.title,
             'body': payload.message,
@@ -1375,7 +1407,8 @@ class NotificationHandler:
         content: Dict[str, str],
         notification_id: str
     ) -> Dict[str, Any]:
-        """Send notification via specific channel"""
+        """
+Send notification via specific channel"""
         if channel == NotificationChannel.EMAIL:
             recipient_email = await self._get_user_email(payload.recipient_id)
             return await self._send_email(

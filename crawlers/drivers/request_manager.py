@@ -19,6 +19,7 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ from aiohttp.client_exceptions import ClientError, ClientTimeout as AioTimeoutEr
 
 
 class RequestMethod(Enum):
-    """HTTP request methods"""
+    """
+HTTP request methods"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -48,6 +51,7 @@ class RequestMethod(Enum):
 
 class RetryStrategy(Enum):
     """Request retry strategies"""
+
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     FIXED_DELAY = "fixed_delay"
@@ -56,6 +60,7 @@ class RetryStrategy(Enum):
 
 class RequestPriority(Enum):
     """Request priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -65,7 +70,8 @@ class RequestPriority(Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration"""
+    """
+Rate limiting configuration"""
     requests_per_second: float = 1.0
     requests_per_minute: int = 60
     requests_per_hour: int = 3600
@@ -76,7 +82,8 @@ class RateLimitConfig:
 
 @dataclass
 class RetryConfig:
-    """Retry configuration"""
+    """
+Retry configuration"""
     max_attempts: int = 3
     strategy: RetryStrategy = RetryStrategy.EXPONENTIAL_BACKOFF
     base_delay: float = 1.0
@@ -88,7 +95,8 @@ class RetryConfig:
 
 @dataclass
 class RequestConfig:
-    """Request configuration"""
+    """
+Request configuration"""
     timeout: int = 30
     max_redirects: int = 10
     verify_ssl: bool = True
@@ -102,7 +110,8 @@ class RequestConfig:
 
 @dataclass
 class RequestMetrics:
-    """Request performance metrics"""
+    """
+Request performance metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -118,7 +127,8 @@ class RequestMetrics:
 
 @dataclass
 class RequestRecord:
-    """Individual request record"""
+    """
+Individual request record"""
     request_id: str
     method: RequestMethod
     url: str
@@ -188,7 +198,8 @@ class RequestManager:
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize request manager"""
+        """
+Initialize request manager"""
         try:
             self.logger.info("Initializing request manager...")
             
@@ -324,7 +335,8 @@ class RequestManager:
         return None
     
     async def process_queue(self):
-        """Process the request queue"""
+        """
+Process the request queue"""
         while self.request_queue:
             request = self.request_queue.pop(0)
             try:
@@ -388,7 +400,8 @@ class RequestManager:
         return self.metrics
     
     async def _execute_with_retries(self, request: RequestRecord) -> Dict[str, Any]:
-        """Execute request with retry logic"""
+        """
+Execute request with retry logic"""
         last_exception = None
         
         for attempt in range(request.retry_config.max_attempts):
@@ -485,7 +498,8 @@ class RequestManager:
             return result
     
     async def _apply_rate_limiting(self, url: str):
-        """Apply rate limiting for the given URL"""
+        """
+Apply rate limiting for the given URL"""
         domain = urlparse(url).netloc
         
         if domain not in self.rate_limiters:
@@ -515,7 +529,8 @@ class RequestManager:
         limiter['requests'].append(current_time)
     
     def _calculate_retry_delay(self, retry_config: RetryConfig, attempt: int) -> float:
-        """Calculate delay for retry attempt"""
+        """
+Calculate delay for retry attempt"""
         if retry_config.strategy == RetryStrategy.EXPONENTIAL_BACKOFF:
             delay = retry_config.base_delay * (retry_config.backoff_factor ** attempt)
         elif retry_config.strategy == RetryStrategy.LINEAR_BACKOFF:
@@ -536,7 +551,8 @@ class RequestManager:
         return delay
     
     def _generate_request_id(self, method: RequestMethod, url: str) -> str:
-        """Generate unique request ID"""
+        """
+Generate unique request ID"""
         timestamp = int(time.time() * 1000)
         content = f"{method.value}:{url}:{timestamp}"
         hash_obj = hashlib.md5(content.encode())
@@ -558,7 +574,8 @@ class RequestManager:
         self.request_queue.append(request)
     
     def _update_response_time_metrics(self, response_time: float):
-        """Update response time metrics"""
+        """
+Update response time metrics"""
         if response_time < self.metrics.min_response_time:
             self.metrics.min_response_time = response_time
         
@@ -573,7 +590,8 @@ class RequestManager:
         self.metrics.average_response_time = total_time / (self.metrics.successful_requests + 1)
     
     async def _monitoring_loop(self):
-        """Monitoring loop for metrics and cleanup"""
+        """
+Monitoring loop for metrics and cleanup"""
         while True:
             try:
                 # Clean up old completed requests
@@ -609,7 +627,8 @@ def create_rate_limit_config(
     requests_per_minute: int = 60,
     burst_limit: int = 10
 ) -> RateLimitConfig:
-    """Create rate limiting configuration"""
+    """
+Create rate limiting configuration"""
     return RateLimitConfig(
         requests_per_minute=requests_per_minute,
         burst_limit=burst_limit
@@ -620,7 +639,8 @@ def create_retry_config(
     max_attempts: int = 3,
     strategy: RetryStrategy = RetryStrategy.EXPONENTIAL_BACKOFF
 ) -> RetryConfig:
-    """Create retry configuration"""
+    """
+Create retry configuration"""
     return RetryConfig(
         max_attempts=max_attempts,
         strategy=strategy

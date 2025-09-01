@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -51,7 +52,8 @@ settings = get_settings()
 
 @dataclass
 class LinkedInPost:
-    """LinkedIn post data structure."""
+    """
+LinkedIn post data structure."""
     post_id: str
     author_id: str
     author_name: str
@@ -71,7 +73,8 @@ class LinkedInPost:
 
 @dataclass
 class LinkedInProfile:
-    """LinkedIn profile data structure."""
+    """
+LinkedIn profile data structure."""
     profile_id: str
     name: str
     headline: str
@@ -89,7 +92,8 @@ class LinkedInProfile:
 
 @dataclass
 class LinkedInCompany:
-    """LinkedIn company data structure."""
+    """
+LinkedIn company data structure."""
     company_id: str
     name: str
     description: str
@@ -121,7 +125,8 @@ class LinkedInCrawler:
     """
     
     def __init__(self):
-        """Initialize LinkedIn crawler."""
+        """
+Initialize LinkedIn crawler."""
         self.client_id = settings.LINKEDIN_CLIENT_ID
         self.client_secret = settings.LINKEDIN_CLIENT_SECRET
         self.access_token = settings.LINKEDIN_ACCESS_TOKEN

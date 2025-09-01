@@ -21,6 +21,7 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
+
 import os
 import json
 import yaml
@@ -33,7 +34,9 @@ import logging
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
@@ -47,6 +50,7 @@ class ComplianceFramework(Enum):
 
 class SecurityLevel(Enum):
     """Security levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -56,6 +60,7 @@ class SecurityLevel(Enum):
 
 class DataClassification(Enum):
     """Data classification levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -65,6 +70,7 @@ class DataClassification(Enum):
 
 class EncryptionType(Enum):
     """Encryption types"""
+
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
@@ -99,7 +105,8 @@ class AuthenticationConfig:
 
 @dataclass
 class AuditConfig:
-    """Audit and logging configuration"""
+    """
+Audit and logging configuration"""
     audit_all_access: bool = True
     log_retention_days: int = 2555  # 7 years
     real_time_monitoring: bool = True
@@ -111,7 +118,8 @@ class AuditConfig:
 
 @dataclass
 class PrivacyConfig:
-    """Privacy and data protection configuration"""
+    """
+Privacy and data protection configuration"""
     data_minimization: bool = True
     consent_management: bool = True
     right_to_deletion: bool = True
@@ -210,7 +218,8 @@ class SecurityComplianceConfig:
         )
     
     def _initialize_privacy_config(self) -> PrivacyConfig:
-        """Initialize privacy configuration"""
+        """
+Initialize privacy configuration"""
         return PrivacyConfig(
             data_minimization=True,
             consent_management=True,
@@ -222,7 +231,8 @@ class SecurityComplianceConfig:
         )
     
     def _initialize_compliance_frameworks(self) -> Dict[ComplianceFramework, Dict[str, Any]]:
-        """Initialize compliance framework configurations"""
+        """
+Initialize compliance framework configurations"""
         frameworks = {}
         
         # GDPR Configuration
@@ -327,7 +337,8 @@ class SecurityComplianceConfig:
         return self.compliance_frameworks.get(framework)
     
     def generate_zero_trust_configuration(self) -> Dict[str, Any]:
-        """Generate zero trust network configuration"""
+        """
+Generate zero trust network configuration"""
         return {
             "principles": [
                 "verify_explicitly",

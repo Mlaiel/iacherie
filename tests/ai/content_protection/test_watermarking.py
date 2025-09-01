@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests Ultra-Industriels Avancés pour le Module Content Watermarking
+"""
+Tests Ultra-Industriels Avancés pour le Module Content Watermarking
 
 🚨 AVERTISSEMENT STRICT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie 
-au maximum de la loi. Tous droits réservés. Copyright © 2025 Fahed Mlaiel.
+au maximum de la loi. Tous droits réservés. Copyright (c) 2025 Fahed Mlaiel.
 
 ⚖️ INTERDICTION FORMELLE : Il est formellement interdit de copier, voler, utiliser ou s'inspirer de ce code/concept sans 
 autorisation personnelle écrite de Fahed Mlaiel. Violation = Poursuites légales immédiates.
@@ -34,6 +36,7 @@ IA Prompt Engineer
 
 Contact Officiel : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -132,7 +135,8 @@ class AudioWatermark:
         }
     
     def embed_echo_hiding(self, content_data, watermark_data):
-        """Embed watermark using echo hiding technique"""
+        """
+Embed watermark using echo hiding technique"""
         return {
             'success': True,
             'watermarked_content': content_data,
@@ -145,7 +149,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WatermarkingTestScenario:
-    """Watermarking test scenario for comprehensive testing"""
+    """
+Watermarking test scenario for comprehensive testing"""
     scenario_name: str
     content_type: str
     watermark_type: str
@@ -157,7 +162,8 @@ class WatermarkingTestScenario:
 
 @dataclass
 class WatermarkQualityMetrics:
-    """Quality metrics for watermark evaluation"""
+    """
+Quality metrics for watermark evaluation"""
     imperceptibility_score: float
     robustness_score: float
     capacity_bits: int
@@ -179,7 +185,8 @@ class TestUltraIndustrialContentWatermarking:
     """
     @pytest.fixture
     def enterprise_watermarking_config(self):
-        """Configuration ultra-avancée pour le watermarking"""
+        """
+Configuration ultra-avancée pour le watermarking"""
         return {
             'algorithms': {
                 'audio': {
@@ -280,7 +287,8 @@ class TestUltraIndustrialContentWatermarking:
 
     @pytest.fixture
     def industrial_config(self):
-        """Industrial-grade configuration for watermarking"""
+        """
+Industrial-grade configuration for watermarking"""
         return {
             'security_level': 'maximum',
             'performance_mode': 'enterprise',
@@ -292,7 +300,8 @@ class TestUltraIndustrialContentWatermarking:
 
     @pytest.fixture
     def advanced_attack_simulation_suite(self):
-        """Advanced attack simulation scenarios"""
+        """
+Advanced attack simulation scenarios"""
         return [
             {
                 'attack_name': 'compression_jpeg_95',
@@ -328,21 +337,25 @@ class TestUltraIndustrialContentWatermarking:
 
     @pytest.fixture
     def enterprise_watermark_engine(self, enterprise_watermarking_config):
-        """Create enterprise-grade watermarking engine"""
+        """
+Create enterprise-grade watermarking engine"""
         watermark_engine = WatermarkEngine(enterprise_watermarking_config)
         return watermark_engine
 
     @pytest.fixture
     def advanced_watermark_processor(self, enterprise_watermarking_config):
-        """Create advanced watermark processing system"""
+        """
+Create advanced watermark processing system"""
         processor = WatermarkEngine()
         return processor
 
     @pytest.fixture
     def comprehensive_watermarking_scenarios(self):
-        """Generate comprehensive watermarking test scenarios"""
+        """
+Generate comprehensive watermarking test scenarios"""
     async def test_advanced_attack_resistance_validation(self, enterprise_watermark_engine, advanced_attack_simulation_suite):
-        """Test watermark resistance against advanced attack scenarios"""
+        """
+Test watermark resistance against advanced attack scenarios"""
         logger.info("Testing advanced attack resistance validation")
         
         attack_resistance_results = []
@@ -836,7 +849,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_audio_data(self) -> Tuple[np.ndarray, int]:
-        """Generate sample audio data for testing"""
+        """
+Generate sample audio data for testing"""
         sample_rate = 44100
         duration = 5.0  # 5 seconds
         t = np.linspace(0, duration, int(sample_rate * duration))
@@ -860,7 +874,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_image_data(self) -> np.ndarray:
-        """Generate sample image data for testing"""
+        """
+Generate sample image data for testing"""
         # Create a complex test image
         height, width, channels = 1080, 1920, 3
         image = np.zeros((height, width, channels), dtype=np.uint8)
@@ -880,7 +895,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_video_frames(self) -> List[np.ndarray]:
-        """Generate sample video frames for testing"""
+        """
+Generate sample video frames for testing"""
         frames = []
         height, width, channels = 720, 1280, 3
         num_frames = 30  # 1 second at 30fps
@@ -901,7 +917,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_text_content(self) -> str:
-        """Generate sample text content for testing"""
+        """
+Generate sample text content for testing"""
         return """
         Advanced Artificial Intelligence Content Protection System
         
@@ -931,7 +948,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_watermark_engine_initialization_advanced(self, industrial_config):
-        """Test advanced watermark engine initialization"""
+        """
+Test advanced watermark engine initialization"""
         engine = WatermarkEngine(industrial_config)
         
         # Test initialization
@@ -950,7 +968,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_audio_watermarking_dct_spread_spectrum(self, industrial_config, sample_audio_data):
-        """Test DCT spread spectrum audio watermarking"""
+        """
+Test DCT spread spectrum audio watermarking"""
         engine = WatermarkEngine(industrial_config)
         await engine.initialize()
         
@@ -1419,7 +1438,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_image_data(self) -> bytes:
-        """Sample image data for testing"""
+        """
+Sample image data for testing"""
         # Create a simple test image
         img = Image.new('RGB', (512, 512), color='blue')
         img_bytes = io.BytesIO()
@@ -1428,7 +1448,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_audio_data(self) -> bytes:
-        """Sample audio data for testing"""
+        """
+Sample audio data for testing"""
         # Generate simple sine wave audio data
         duration = 5.0  # seconds
         sample_rate = 44100
@@ -1443,19 +1464,21 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.fixture
     def sample_watermark_data(self) -> Dict[str, Any]:
-        """Sample watermark data"""
+        """
+Sample watermark data"""
         return {
             'creator_id': 'creator_123',
             'content_id': 'content_456',
             'timestamp': datetime.now(timezone.utc).isoformat(),
-            'copyright_notice': '© 2025 Fahed Mlaiel',
+            'copyright_notice': '(c) 2025 Fahed Mlaiel',
             'license_info': 'All rights reserved',
             'contact_info': 'mlaiel@live.de'
         }
     
     @pytest.mark.asyncio
     async def test_watermark_engine_initialization(self, sample_config):
-        """Test WatermarkEngine initialization"""
+        """
+Test WatermarkEngine initialization"""
         engine = WatermarkEngine(sample_config)
         
         assert engine.config == sample_config
@@ -1466,7 +1489,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_embed_invisible_watermark_image(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test invisible watermark embedding in images"""
+        """
+Test invisible watermark embedding in images"""
         result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
             watermark_data=sample_watermark_data,
@@ -1488,7 +1512,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_embed_visible_watermark_image(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test visible watermark embedding in images"""
+        """
+Test visible watermark embedding in images"""
         result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
             watermark_data=sample_watermark_data,
@@ -1499,7 +1524,7 @@ class TestUltraIndustrialContentWatermarking:
             options={
                 'position': 'bottom_right',
                 'opacity': 0.7,
-                'text': '© Fahed Mlaiel 2025'
+                'text': '(c) Fahed Mlaiel 2025'
             }
         )
         
@@ -1511,7 +1536,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_embed_audio_watermark(self, watermark_engine, sample_audio_data, sample_watermark_data):
-        """Test audio watermark embedding"""
+        """
+Test audio watermark embedding"""
         result = await watermark_engine.embed_watermark(
             content_data=sample_audio_data,
             watermark_data=sample_watermark_data,
@@ -1529,7 +1555,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_detect_watermark_image(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test watermark detection in images"""
+        """
+Test watermark detection in images"""
         # First embed a watermark
         embed_result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
@@ -1557,7 +1584,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_detect_watermark_audio(self, watermark_engine, sample_audio_data, sample_watermark_data):
-        """Test watermark detection in audio"""
+        """
+Test watermark detection in audio"""
         # Embed watermark
         embed_result = await watermark_engine.embed_watermark(
             content_data=sample_audio_data,
@@ -1581,7 +1609,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_watermark_robustness_image_compression(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test watermark robustness against image compression"""
+        """
+Test watermark robustness against image compression"""
         # Embed watermark
         embed_result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
@@ -1612,7 +1641,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_watermark_robustness_cropping(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test watermark robustness against cropping"""
+        """
+Test watermark robustness against cropping"""
         # Embed watermark
         embed_result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
@@ -1642,7 +1672,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_batch_watermark_embedding(self, watermark_engine, sample_watermark_data):
-        """Test batch watermark embedding"""
+        """
+Test batch watermark embedding"""
         # Prepare multiple content items
         content_items = []
         for i in range(5):
@@ -1670,7 +1701,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_watermark_verification_chain(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test watermark verification chain"""
+        """
+Test watermark verification chain"""
         # Embed watermark
         embed_result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
@@ -1696,7 +1728,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_watermark_forensics(self, watermark_engine, sample_image_data, sample_watermark_data):
-        """Test watermark forensics capabilities"""
+        """
+Test watermark forensics capabilities"""
         # Embed watermark
         embed_result = await watermark_engine.embed_watermark(
             content_data=sample_image_data,
@@ -1723,7 +1756,8 @@ class TestUltraIndustrialContentWatermarking:
     
     @pytest.mark.asyncio
     async def test_adaptive_watermarking(self, watermark_engine, sample_watermark_data):
-        """Test adaptive watermarking based on content characteristics"""
+        """
+Test adaptive watermarking based on content characteristics"""
         # Test with different image types
         test_images = []
         
@@ -1761,10 +1795,12 @@ class TestUltraIndustrialContentWatermarking:
 
 
 class TestDigitalWatermark:
-    """Test suite for DigitalWatermark class"""
+    """
+Test suite for DigitalWatermark class"""
     
     def test_digital_watermark_creation(self):
-        """Test DigitalWatermark creation"""
+        """
+Test DigitalWatermark creation"""
         watermark_data = {
             'creator_id': 'creator_123',
             'content_id': 'content_456',
@@ -1816,7 +1852,8 @@ class TestInvisibleWatermark:
     
     @pytest.fixture
     def invisible_watermark(self):
-        """InvisibleWatermark instance for testing"""
+        """
+InvisibleWatermark instance for testing"""
         return InvisibleWatermark({
             'embedding_strength': 0.1,
             'frequency_domain': True,
@@ -1825,7 +1862,8 @@ class TestInvisibleWatermark:
     
     @pytest.mark.asyncio
     async def test_invisible_watermark_embedding(self, invisible_watermark):
-        """Test invisible watermark embedding"""
+        """
+Test invisible watermark embedding"""
         # Create test image
         img = Image.new('RGB', (256, 256), color='blue')
         img_bytes = io.BytesIO()
@@ -1847,7 +1885,8 @@ class TestInvisibleWatermark:
     
     @pytest.mark.asyncio
     async def test_invisible_watermark_detection(self, invisible_watermark):
-        """Test invisible watermark detection"""
+        """
+Test invisible watermark detection"""
         # Create and embed watermark first
         img = Image.new('RGB', (256, 256), color='green')
         img_bytes = io.BytesIO()
@@ -1874,11 +1913,13 @@ class TestInvisibleWatermark:
 
 
 class TestVisibleWatermark:
-    """Test suite for VisibleWatermark class"""
+    """
+Test suite for VisibleWatermark class"""
     
     @pytest.fixture
     def visible_watermark(self):
-        """VisibleWatermark instance for testing"""
+        """
+VisibleWatermark instance for testing"""
         return VisibleWatermark({
             'default_opacity': 0.7,
             'default_position': 'bottom_right',
@@ -1888,7 +1929,8 @@ class TestVisibleWatermark:
     
     @pytest.mark.asyncio
     async def test_visible_watermark_text_overlay(self, visible_watermark):
-        """Test visible text watermark overlay"""
+        """
+Test visible text watermark overlay"""
         # Create test image
         img = Image.new('RGB', (400, 300), color='black')
         img_bytes = io.BytesIO()
@@ -1897,7 +1939,7 @@ class TestVisibleWatermark:
         
         result = await visible_watermark.embed_text(
             content_data=image_data,
-            watermark_text='© 2025 Fahed Mlaiel',
+            watermark_text='(c) 2025 Fahed Mlaiel',
             position='center',
             opacity=0.8,
             font_size=20
@@ -1905,12 +1947,13 @@ class TestVisibleWatermark:
         
         assert result['success']
         assert result['watermarked_content'] is not None
-        assert result['watermark_info']['text'] == '© 2025 Fahed Mlaiel'
+        assert result['watermark_info']['text'] == '(c) 2025 Fahed Mlaiel'
         assert result['watermark_info']['position'] == 'center'
     
     @pytest.mark.asyncio
     async def test_visible_watermark_logo_overlay(self, visible_watermark):
-        """Test visible logo watermark overlay"""
+        """
+Test visible logo watermark overlay"""
         # Create base image
         base_img = Image.new('RGB', (500, 400), color='white')
         base_bytes = io.BytesIO()
@@ -1938,11 +1981,13 @@ class TestVisibleWatermark:
 
 
 class TestAudioWatermark:
-    """Test suite for AudioWatermark class"""
+    """
+Test suite for AudioWatermark class"""
     
     @pytest.fixture
     def audio_watermark(self):
-        """AudioWatermark instance for testing"""
+        """
+AudioWatermark instance for testing"""
         return AudioWatermark({
             'sample_rate': 44100,
             'embedding_strength': 0.01,
@@ -1952,7 +1997,8 @@ class TestAudioWatermark:
     
     @pytest.mark.asyncio
     async def test_audio_watermark_spread_spectrum(self, audio_watermark):
-        """Test audio watermark with spread spectrum technique"""
+        """
+Test audio watermark with spread spectrum technique"""
         # Generate test audio
         duration = 3.0
         sample_rate = 44100
@@ -1975,7 +2021,8 @@ class TestAudioWatermark:
     
     @pytest.mark.asyncio
     async def test_audio_watermark_echo_hiding(self, audio_watermark):
-        """Test audio watermark with echo hiding technique"""
+        """
+Test audio watermark with echo hiding technique"""
         # Generate test audio
         duration = 2.0
         sample_rate = 44100
@@ -1983,7 +2030,7 @@ class TestAudioWatermark:
         audio_data = np.sin(2 * np.pi * 880 * t)  # A5 note
         audio_bytes = (audio_data * 32767).astype(np.int16).tobytes()
         
-        watermark_data = {'copyright': '© 2025 Fahed Mlaiel'}
+        watermark_data = {'copyright': '(c) 2025 Fahed Mlaiel'}
         
         result = await audio_watermark.embed_echo_hiding(
             audio_data=audio_bytes,
@@ -2000,11 +2047,13 @@ class TestAudioWatermark:
 
 @pytest.mark.integration
 class TestWatermarkingIntegration:
-    """Integration tests for watermarking system"""
+    """
+Integration tests for watermarking system"""
     
     @pytest.mark.asyncio
     async def test_multi_format_watermarking_pipeline(self):
-        """Test complete watermarking pipeline for multiple formats"""
+        """
+Test complete watermarking pipeline for multiple formats"""
         config = {
             'default_strength': 0.8,
             'detection_threshold': 0.7,
@@ -2015,7 +2064,7 @@ class TestWatermarkingIntegration:
         
         watermark_data = {
             'creator_id': 'fahed_mlaiel',
-            'copyright': '© 2025 Fahed Mlaiel',
+            'copyright': '(c) 2025 Fahed Mlaiel',
             'contact': 'mlaiel@live.de',
             'timestamp': datetime.now(timezone.utc).isoformat()
         }

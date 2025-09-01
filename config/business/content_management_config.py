@@ -10,6 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -19,7 +20,9 @@ from datetime import datetime, timedelta
 
 
 class ContentType(Enum):
-    """Content types enumeration."""
+    """
+Content types enumeration."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -35,6 +38,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content lifecycle status."""
+
     DRAFT = "draft"
     PROCESSING = "processing"
     REVIEW = "review"
@@ -50,6 +54,7 @@ class ContentStatus(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels."""
+
     STANDARD = "standard"
     HIGH = "high"
     ULTRA = "ultra"
@@ -60,6 +65,7 @@ class QualityLevel(Enum):
 
 class ProcessingPriority(Enum):
     """Content processing priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -86,7 +92,8 @@ class ContentFormatConfig:
 
 @dataclass
 class ContentProcessingPipeline:
-    """Content processing pipeline configuration."""
+    """
+Content processing pipeline configuration."""
     pipeline_name: str
     content_types: List[ContentType]
     processing_steps: List[str]
@@ -103,7 +110,8 @@ class ContentProcessingPipeline:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure."""
+    """
+Content metadata structure."""
     title: str
     description: str
     tags: List[str]
@@ -124,10 +132,12 @@ class ContentMetadata:
 
 
 class ContentManagementConfig:
-    """Professional content management configuration."""
+    """
+Professional content management configuration."""
     
     def __init__(self):
-        """Initialize content management configuration."""
+        """
+Initialize content management configuration."""
         self.format_configs = self._get_format_configurations()
         self.processing_pipelines = self._get_processing_pipelines()
         self.storage_configs = self._get_storage_configurations()
@@ -138,7 +148,8 @@ class ContentManagementConfig:
         self.distribution_configs = self._get_distribution_configurations()
     
     def _get_format_configurations(self) -> Dict[ContentType, List[ContentFormatConfig]]:
-        """Get content format configurations."""
+        """
+Get content format configurations."""
         return {
             ContentType.AUDIO: [
                 ContentFormatConfig(
@@ -671,11 +682,13 @@ class ContentManagementConfig:
         return None
     
     def get_processing_pipeline(self, pipeline_name: str) -> Optional[ContentProcessingPipeline]:
-        """Get processing pipeline configuration."""
+        """
+Get processing pipeline configuration."""
         return self.processing_pipelines.get(pipeline_name)
     
     def validate_content_format(self, content_type: ContentType, file_extension: str, file_size: int) -> Dict[str, Any]:
-        """Validate content format against configuration."""
+        """
+Validate content format against configuration."""
         formats = self.format_configs.get(content_type, [])
         
         for fmt in formats:
@@ -712,10 +725,12 @@ def get_content_format_config(content_type: ContentType, format_name: str) -> Op
 
 
 def get_content_processing_pipeline(pipeline_name: str) -> Optional[ContentProcessingPipeline]:
-    """Get content processing pipeline."""
+    """
+Get content processing pipeline."""
     return content_management_config.get_processing_pipeline(pipeline_name)
 
 
 def validate_content_upload(content_type: ContentType, file_extension: str, file_size: int) -> Dict[str, Any]:
-    """Validate content upload against configuration."""
+    """
+Validate content upload against configuration."""
     return content_management_config.validate_content_format(content_type, file_extension, file_size)

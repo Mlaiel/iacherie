@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from datetime import datetime
@@ -32,7 +33,8 @@ from .models import (
 
 
 class IRecommendationEngine(ABC):
-    """Ultra-advanced recommendation engine interface for enterprise deployments"""
+    """
+Ultra-advanced recommendation engine interface for enterprise deployments"""
     
     @abstractmethod
     async def generate_recommendations(
@@ -52,7 +54,8 @@ class IRecommendationEngine(ABC):
         user_id: str,
         interactions: List[InteractionEvent]
     ) -> bool:
-        """Update user model with new interaction data"""
+        """
+Update user model with new interaction data"""
         pass
     
     @abstractmethod
@@ -62,7 +65,8 @@ class IRecommendationEngine(ABC):
         entity_b_id: str,
         similarity_type: str
     ) -> SimilarityScore:
-        """Calculate similarity between entities"""
+        """
+Calculate similarity between entities"""
         pass
     
     @abstractmethod
@@ -77,7 +81,8 @@ class IRecommendationEngine(ABC):
 
 
 class ICollaborationMatcher(ABC):
-    """Advanced collaboration matching interface"""
+    """
+Advanced collaboration matching interface"""
     
     @abstractmethod
     async def find_collaboration_matches(
@@ -85,7 +90,8 @@ class ICollaborationMatcher(ABC):
         request: CollaborationRequest,
         max_matches: int = 20
     ) -> List[Tuple[CreatorProfile, float]]:
-        """Find matching creators for collaboration request"""
+        """
+Find matching creators for collaboration request"""
         pass
     
     @abstractmethod
@@ -94,7 +100,8 @@ class ICollaborationMatcher(ABC):
         creator_id: str,
         collaboration_types: Optional[List[str]] = None
     ) -> List[CollaborationRequest]:
-        """Suggest collaboration opportunities for creator"""
+        """
+Suggest collaboration opportunities for creator"""
         pass
     
     @abstractmethod
@@ -103,19 +110,22 @@ class ICollaborationMatcher(ABC):
         creator_a_id: str,
         creator_b_id: str
     ) -> Dict[str, float]:
-        """Evaluate collaboration potential between creators"""
+        """
+Evaluate collaboration potential between creators"""
         pass
 
 
 class IContentAnalyzer(ABC):
-    """Advanced content analysis interface"""
+    """
+Advanced content analysis interface"""
     
     @abstractmethod
     async def analyze_content_features(
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """Extract and analyze content features"""
+        """
+Extract and analyze content features"""
         pass
     
     @abstractmethod
@@ -123,7 +133,8 @@ class IContentAnalyzer(ABC):
         self,
         content_id: str
     ) -> Dict[str, float]:
-        """Calculate comprehensive content quality metrics"""
+        """
+Calculate comprehensive content quality metrics"""
         pass
     
     @abstractmethod
@@ -140,12 +151,14 @@ class IContentAnalyzer(ABC):
         self,
         content_id: str
     ) -> np.ndarray:
-        """Generate content embeddings for similarity calculations"""
+        """
+Generate content embeddings for similarity calculations"""
         pass
 
 
 class IPersonalizationEngine(ABC):
-    """Advanced personalization engine interface"""
+    """
+Advanced personalization engine interface"""
     
     @abstractmethod
     async def build_user_profile(
@@ -153,7 +166,8 @@ class IPersonalizationEngine(ABC):
         user_id: str,
         interaction_history: List[InteractionEvent]
     ) -> UserProfile:
-        """Build comprehensive user profile from interactions"""
+        """
+Build comprehensive user profile from interactions"""
         pass
     
     @abstractmethod
@@ -162,7 +176,8 @@ class IPersonalizationEngine(ABC):
         user_id: str,
         new_interactions: List[InteractionEvent]
     ) -> PersonalizationVector:
-        """Update user personalization vector"""
+        """
+Update user personalization vector"""
         pass
     
     @abstractmethod
@@ -170,7 +185,8 @@ class IPersonalizationEngine(ABC):
         self,
         user_id: str
     ) -> Dict[str, float]:
-        """Calculate user preferences across dimensions"""
+        """
+Calculate user preferences across dimensions"""
         pass
     
     @abstractmethod
@@ -179,12 +195,14 @@ class IPersonalizationEngine(ABC):
         user_id: str,
         content_ids: List[str]
     ) -> Dict[str, float]:
-        """Predict user behavior for given content"""
+        """
+Predict user behavior for given content"""
         pass
 
 
 class IRevenueOptimizer(ABC):
-    """Revenue optimization interface for monetization strategies"""
+    """
+Revenue optimization interface for monetization strategies"""
     
     @abstractmethod
     async def optimize_content_monetization(
@@ -192,7 +210,8 @@ class IRevenueOptimizer(ABC):
         content_id: str,
         target_metrics: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Optimize content monetization strategy"""
+        """
+Optimize content monetization strategy"""
         pass
     
     @abstractmethod
@@ -210,7 +229,8 @@ class IRevenueOptimizer(ABC):
         creator_id: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Recommend optimal pricing strategy"""
+        """
+Recommend optimal pricing strategy"""
         pass
     
     @abstractmethod
@@ -219,12 +239,14 @@ class IRevenueOptimizer(ABC):
         category: str,
         creator_tier: str
     ) -> Dict[str, float]:
-        """Analyze competitor pricing in category"""
+        """
+Analyze competitor pricing in category"""
         pass
 
 
 class ITrendAnalyzer(ABC):
-    """Advanced trend analysis interface"""
+    """
+Advanced trend analysis interface"""
     
     @abstractmethod
     async def detect_emerging_trends(
@@ -240,7 +262,8 @@ class ITrendAnalyzer(ABC):
         self,
         trend_id: str
     ) -> Dict[str, float]:
-        """Predict trend duration and decay"""
+        """
+Predict trend duration and decay"""
         pass
     
     @abstractmethod
@@ -248,7 +271,8 @@ class ITrendAnalyzer(ABC):
         self,
         trend_id: str
     ) -> Dict[str, Any]:
-        """Analyze how trends spread across platforms"""
+        """
+Analyze how trends spread across platforms"""
         pass
     
     @abstractmethod
@@ -257,12 +281,14 @@ class ITrendAnalyzer(ABC):
         creator_id: str,
         content_type: str
     ) -> List[TrendData]:
-        """Get trend-based content recommendations"""
+        """
+Get trend-based content recommendations"""
         pass
 
 
 class IMultiModalProcessor(ABC):
-    """Multi-modal content processing interface"""
+    """
+Multi-modal content processing interface"""
     
     @abstractmethod
     async def process_audio_content(
@@ -270,7 +296,8 @@ class IMultiModalProcessor(ABC):
         content_id: str,
         audio_data: bytes
     ) -> Dict[str, Any]:
-        """Process and analyze audio content"""
+        """
+Process and analyze audio content"""
         pass
     
     @abstractmethod
@@ -279,7 +306,8 @@ class IMultiModalProcessor(ABC):
         content_id: str,
         video_data: bytes
     ) -> Dict[str, Any]:
-        """Process and analyze video content"""
+        """
+Process and analyze video content"""
         pass
     
     @abstractmethod
@@ -288,7 +316,8 @@ class IMultiModalProcessor(ABC):
         content_id: str,
         image_data: bytes
     ) -> Dict[str, Any]:
-        """Process and analyze image content"""
+        """
+Process and analyze image content"""
         pass
     
     @abstractmethod
@@ -297,7 +326,8 @@ class IMultiModalProcessor(ABC):
         content_id: str,
         text_data: str
     ) -> Dict[str, Any]:
-        """Process and analyze text content"""
+        """
+Process and analyze text content"""
         pass
     
     @abstractmethod
@@ -305,12 +335,14 @@ class IMultiModalProcessor(ABC):
         self,
         content_id: str
     ) -> Dict[str, np.ndarray]:
-        """Extract features across multiple modalities"""
+        """
+Extract features across multiple modalities"""
         pass
 
 
 class IRealtimeRecommendations(ABC):
-    """Real-time recommendation interface"""
+    """
+Real-time recommendation interface"""
     
     @abstractmethod
     async def stream_recommendations(
@@ -318,7 +350,8 @@ class IRealtimeRecommendations(ABC):
         user_id: str,
         context: RecommendationContext
     ) -> AsyncIterator[ContentItem]:
-        """Stream real-time recommendations"""
+        """
+Stream real-time recommendations"""
         pass
     
     @abstractmethod
@@ -326,7 +359,8 @@ class IRealtimeRecommendations(ABC):
         self,
         interaction: InteractionEvent
     ) -> List[ContentItem]:
-        """Handle real-time interaction and update recommendations"""
+        """
+Handle real-time interaction and update recommendations"""
         pass
     
     @abstractmethod
@@ -336,12 +370,14 @@ class IRealtimeRecommendations(ABC):
         current_content_id: str,
         context: RecommendationContext
     ) -> List[ContentItem]:
-        """Get contextually relevant recommendations"""
+        """
+Get contextually relevant recommendations"""
         pass
 
 
 class IRecommendationExplainer(ABC):
-    """Recommendation explanation interface"""
+    """
+Recommendation explanation interface"""
     
     @abstractmethod
     async def explain_recommendation(
@@ -350,7 +386,8 @@ class IRecommendationExplainer(ABC):
         content_id: str,
         recommendation_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate explanation for why content was recommended"""
+        """
+Generate explanation for why content was recommended"""
         pass
     
     @abstractmethod
@@ -367,19 +404,22 @@ class IRecommendationExplainer(ABC):
         self,
         decision_id: str
     ) -> Dict[str, Any]:
-        """Explain specific algorithmic decision"""
+        """
+Explain specific algorithmic decision"""
         pass
 
 
 class IRecommendationStorage(ABC):
-    """Recommendation data storage interface"""
+    """
+Recommendation data storage interface"""
     
     @abstractmethod
     async def store_user_profile(
         self,
         profile: UserProfile
     ) -> bool:
-        """Store user profile data"""
+        """
+Store user profile data"""
         pass
     
     @abstractmethod
@@ -388,7 +428,8 @@ class IRecommendationStorage(ABC):
         content_id: str,
         embeddings: Dict[str, np.ndarray]
     ) -> bool:
-        """Store content embeddings"""
+        """
+Store content embeddings"""
         pass
     
     @abstractmethod
@@ -396,7 +437,8 @@ class IRecommendationStorage(ABC):
         self,
         interaction: InteractionEvent
     ) -> bool:
-        """Store interaction event data"""
+        """
+Store interaction event data"""
         pass
     
     @abstractmethod
@@ -405,7 +447,8 @@ class IRecommendationStorage(ABC):
         user_id: str,
         result: RecommendationResult
     ) -> bool:
-        """Store recommendation result for analytics"""
+        """
+Store recommendation result for analytics"""
         pass
     
     @abstractmethod
@@ -415,12 +458,14 @@ class IRecommendationStorage(ABC):
         limit: int = 1000,
         time_range: Optional[str] = None
     ) -> List[InteractionEvent]:
-        """Retrieve user interaction history"""
+        """
+Retrieve user interaction history"""
         pass
 
 
 class IRecommendationMetrics(ABC):
-    """Recommendation system metrics interface"""
+    """
+Recommendation system metrics interface"""
     
     @abstractmethod
     async def calculate_recommendation_accuracy(
@@ -436,7 +481,8 @@ class IRecommendationMetrics(ABC):
         self,
         recommendations: List[ContentItem]
     ) -> float:
-        """Measure diversity in recommendations"""
+        """
+Measure diversity in recommendations"""
         pass
     
     @abstractmethod
@@ -445,7 +491,8 @@ class IRecommendationMetrics(ABC):
         user_id: str,
         recommendations: List[ContentItem]
     ) -> float:
-        """Calculate novelty score for recommendations"""
+        """
+Calculate novelty score for recommendations"""
         pass
     
     @abstractmethod
@@ -466,7 +513,8 @@ class IRecommendationMetrics(ABC):
 
 
 class IABTestingFramework(ABC):
-    """A/B testing framework interface"""
+    """
+A/B testing framework interface"""
     
     @abstractmethod
     async def create_experiment(
@@ -475,7 +523,8 @@ class IABTestingFramework(ABC):
         variants: Dict[str, Any],
         traffic_allocation: Dict[str, float]
     ) -> str:
-        """Create new A/B test experiment"""
+        """
+Create new A/B test experiment"""
         pass
     
     @abstractmethod
@@ -484,7 +533,8 @@ class IABTestingFramework(ABC):
         user_id: str,
         experiment_id: str
     ) -> str:
-        """Assign user to experiment variant"""
+        """
+Assign user to experiment variant"""
         pass
     
     @abstractmethod
@@ -494,7 +544,8 @@ class IABTestingFramework(ABC):
         user_id: str,
         metrics: Dict[str, float]
     ) -> bool:
-        """Track experiment performance metrics"""
+        """
+Track experiment performance metrics"""
         pass
     
     @abstractmethod
@@ -502,5 +553,6 @@ class IABTestingFramework(ABC):
         self,
         experiment_id: str
     ) -> Dict[str, Any]:
-        """Analyze A/B test experiment results"""
+        """
+Analyze A/B test experiment results"""
         pass

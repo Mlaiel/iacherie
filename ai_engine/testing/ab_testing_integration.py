@@ -41,6 +41,7 @@ logger = logging.getLogger(__name__)
 
 class ExperimentType(str, Enum):
     """Types of ML experiments"""
+
     MODEL_COMPARISON = "model_comparison"
     FEATURE_TESTING = "feature_testing"
     HYPERPARAMETER_TUNING = "hyperparameter_tuning"
@@ -51,6 +52,7 @@ class ExperimentType(str, Enum):
 
 class ExperimentStatus(str, Enum):
     """Experiment status enumeration"""
+
     DRAFT = "draft"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -61,6 +63,7 @@ class ExperimentStatus(str, Enum):
 
 class StatisticalSignificance(str, Enum):
     """Statistical significance levels"""
+
     HIGH = "high"        # p < 0.01
     MODERATE = "moderate"  # p < 0.05
     LOW = "low"          # p < 0.1
@@ -86,7 +89,8 @@ class ExperimentConfig:
 
 @dataclass
 class VariantResult:
-    """Results for a single experiment variant"""
+    """
+Results for a single experiment variant"""
     variant_id: str
     variant_name: str
     sample_size: int
@@ -98,7 +102,8 @@ class VariantResult:
 
 @dataclass
 class ExperimentResults:
-    """Complete experiment results"""
+    """
+Complete experiment results"""
     experiment_id: str
     experiment_name: str
     status: ExperimentStatus
@@ -114,7 +119,8 @@ class ExperimentResults:
 
 
 class MLExperimentFramework:
-    """ML-focused experiment framework extending A/B testing capabilities"""
+    """
+ML-focused experiment framework extending A/B testing capabilities"""
     
     def __init__(self, base_ab_framework: Optional[object] = None):
         """
@@ -130,7 +136,8 @@ class MLExperimentFramework:
         self.logger = logging.getLogger(__name__)
         
     def _create_base_framework(self):
-        """Create base A/B testing framework if not provided"""
+        """
+Create base A/B testing framework if not provided"""
         try:
             from conversational.response_generation.response_analytics import ABTestingFramework
             return ABTestingFramework()
@@ -491,12 +498,14 @@ class MLExperimentFramework:
         return (end_time - start_time) * 1000  # Convert to milliseconds
     
     def _estimate_memory_usage(self, model_func: Callable) -> float:
-        """Estimate model memory usage (placeholder)"""
+        """
+Estimate model memory usage (placeholder)"""
         # In practice, this would measure actual memory usage
         return float(np.random.uniform(100, 1000))  # MB
     
     def _measure_throughput(self, model_func: Callable, X_sample: np.ndarray) -> float:
-        """Measure model throughput (predictions per second)"""
+        """
+Measure model throughput (predictions per second)"""
         import time
         
         start_time = time.time()
@@ -514,7 +523,8 @@ class MLExperimentFramework:
         variant_results: List[VariantResult],
         config: ExperimentConfig
     ) -> Dict[str, Any]:
-        """Perform statistical analysis of experiment results"""
+        """
+Perform statistical analysis of experiment results"""
         
         if len(variant_results) < 2:
             return {"error": "Insufficient variants for statistical analysis"}

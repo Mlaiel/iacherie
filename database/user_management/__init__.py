@@ -24,6 +24,7 @@ Email: mlaiel@live.de pour autorisation d'utilisation.
 • Expert DevOps - Infrastructure & Déploiement
 • Expert IA Prompt Engineer - Personnalisation & Recommandations
 """
+
 from typing import List, Dict, Any, Optional
 import logging
 from datetime import datetime
@@ -215,7 +216,7 @@ def get_module_info() -> Dict[str, Any]:
         "enums": 15,
         "created_at": "2025-08-26",
         "last_updated": datetime.utcnow().isoformat(),
-        "copyright": "© 2025 Fahed Mlaiel. Tous droits réservés.",
+        "copyright": "(c) 2025 Fahed Mlaiel. Tous droits réservés.",
         "license": "Propriétaire - Autorisation écrite requise"
     }
 

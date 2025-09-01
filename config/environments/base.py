@@ -15,6 +15,7 @@ Configuration environnement de base pour toutes les plateformes.
 Gestion centralisée des variables d'environnement enterprise.
 ==================================================================
 """
+
 from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
@@ -27,7 +28,9 @@ import json
 
 
 class EnvironmentType(str, Enum):
-    """Types d'environnements supportés"""
+    """
+Types d'environnements supportés"""
+
     DEVELOPMENT = "development"
     STAGING = "staging" 
     TESTING = "testing"
@@ -64,7 +67,8 @@ class RedisConfig:
     
     @property
     def url(self) -> str:
-        """URL de connexion Redis"""
+        """
+URL de connexion Redis"""
         auth = f":{self.password}@" if self.password else ""
         return f"redis://{auth}{self.host}:{self.port}/{self.db}"
 
@@ -184,11 +188,13 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         
     @abstractmethod
     def validate_configuration(self) -> bool:
-        """Valide la configuration de l'environnement"""
+        """
+Valide la configuration de l'environnement"""
         pass
         
     def initialize_configuration(self) -> None:
-        """Initialise la configuration complète"""
+        """
+Initialise la configuration complète"""
         self.load_environment_specific_config()
         if not self.validate_configuration():
             raise RuntimeError(f"Configuration invalide pour l'environnement {self.environment}")
@@ -259,11 +265,13 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         
     @classmethod
     def from_env_file(cls, env_file_path: str):
-        """Charge la configuration depuis un fichier .env"""
+        """
+Charge la configuration depuis un fichier .env"""
         return cls(_env_file=env_file_path)
         
     def __str__(self) -> str:
-        """Représentation string de la configuration"""
+        """
+Représentation string de la configuration"""
         return f"{self.__class__.__name__}(environment={self.environment}, debug={self.debug})"
         
     def __repr__(self) -> str:
@@ -272,18 +280,21 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
 
 
 class EnvironmentConfigFactory:
-    """Factory pour créer les gestionnaires de configuration"""
+    """
+Factory pour créer les gestionnaires de configuration"""
     
     _config_managers = {}
     
     @classmethod
     def register_manager(cls, env_type: EnvironmentType, manager_class):
-        """Enregistre un gestionnaire pour un type d'environnement"""
+        """
+Enregistre un gestionnaire pour un type d'environnement"""
         cls._config_managers[env_type] = manager_class
         
     @classmethod
     def create_manager(cls, env_type: EnvironmentType) -> BaseEnvironmentConfigManager:
-        """Crée un gestionnaire pour le type d'environnement spécifié"""
+        """
+Crée un gestionnaire pour le type d'environnement spécifié"""
         if env_type not in cls._config_managers:
             raise ValueError(f"Gestionnaire non enregistré pour l'environnement {env_type}")
         
@@ -297,7 +308,8 @@ class EnvironmentConfigFactory:
 
 
 def get_current_environment() -> EnvironmentType:
-    """Détecte l'environnement actuel depuis les variables d'environnement"""
+    """
+Détecte l'environnement actuel depuis les variables d'environnement"""
     env_name = os.getenv("ENVIRONMENT", "development").lower()
     try:
         return EnvironmentType(env_name)
@@ -317,7 +329,8 @@ def load_config_for_environment(env_type: Optional[EnvironmentType] = None) -> B
 
 # Auto-enregistrement des gestionnaires d'environnement
 def _register_default_managers():
-    """Enregistre automatiquement les gestionnaires par défaut"""
+    """
+Enregistre automatiquement les gestionnaires par défaut"""
     try:
         # Import conditionnel pour éviter les imports circulaires
         from .development import DevelopmentConfigManager

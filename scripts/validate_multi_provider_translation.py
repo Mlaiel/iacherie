@@ -13,7 +13,8 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 def test_translation_provider_enum():
-    """Test that all required translation providers are defined"""
+    """
+Test that all required translation providers are defined"""
     try:
         # Import directly from the file
         sys.path.append(str(project_root / "conversational" / "multilingual_support"))

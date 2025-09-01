@@ -11,6 +11,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -723,7 +724,8 @@ async def run_replication_system(config_path: Optional[str] = None) -> None:
 
 # CLI entry point
 async def main():
-    """Main CLI entry point"""
+    """
+Main CLI entry point"""
     import argparse
     
     parser = argparse.ArgumentParser(description="IA Influencer Agent Database Replication System")

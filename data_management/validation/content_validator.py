@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE VALIDATION DE CONTENU MULTIMÉDIA
@@ -15,6 +15,7 @@ Validation avancée pour musiciens, influenceurs, photographes, blogueurs, comé
 - Validation métadonnées et structure
 - Support multi-format avec AI
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -57,7 +58,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentValidationResult:
-    """Résultat de validation de contenu"""
+    """
+Résultat de validation de contenu"""
     is_valid: bool
     quality_score: float  # 0.0 - 1.0
     content_type: str
@@ -68,7 +70,8 @@ class ContentValidationResult:
     analysis_data: Dict[str, Any]
 
 class AudioContentValidator:
-    """Validateur spécialisé pour contenu audio"""
+    """
+Validateur spécialisé pour contenu audio"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioContentValidator")
@@ -962,7 +965,8 @@ class AsyncContentValidator:
         return result
     
     async def validate_batch(self, file_paths: List[str], content_types: Optional[List[str]] = None) -> Dict[str, ContentValidationResult]:
-        """Valide un lot de fichiers de manière asynchrone"""
+        """
+Valide un lot de fichiers de manière asynchrone"""
         if content_types is None:
             content_types = [None] * len(file_paths)
         

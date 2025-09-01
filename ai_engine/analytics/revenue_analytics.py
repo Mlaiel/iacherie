@@ -10,6 +10,7 @@ prohibited and will result in severe legal consequences.
 This module provides comprehensive revenue analytics and monetization insights
 for content creators on the IA Influencer Agent platform.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -24,7 +25,9 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Types of revenue sources"""
+    """
+Types of revenue sources"""
+
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE = "affiliate"
@@ -43,6 +46,7 @@ class RevenueSource(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
@@ -53,6 +57,7 @@ class PaymentStatus(Enum):
 
 class RevenueCategory(Enum):
     """Revenue categorization for tax and reporting"""
+
     DIRECT_SALES = "direct_sales"
     PASSIVE_INCOME = "passive_income"
     ACTIVE_INCOME = "active_income"
@@ -62,6 +67,7 @@ class RevenueCategory(Enum):
 
 class CurrencyCode(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -96,7 +102,8 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueMetrics:
-    """Comprehensive revenue metrics"""
+    """
+Comprehensive revenue metrics"""
     creator_id: str
     analysis_period: Dict[str, datetime] = field(default_factory=dict)
     
@@ -150,7 +157,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueReport:
-    """Comprehensive revenue analysis report"""
+    """
+Comprehensive revenue analysis report"""
     report_id: str
     creator_id: str
     report_period: Dict[str, datetime]
@@ -180,7 +188,8 @@ class RevenueAnalyticsEngine:
     """Advanced revenue analytics engine for creator monetization"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize revenue analytics engine"""
+        """
+Initialize revenue analytics engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -254,7 +263,8 @@ class RevenueAnalyticsEngine:
         return True
     
     def _convert_to_usd(self, transaction: RevenueTransaction) -> RevenueTransaction:
-        """Convert transaction to USD"""
+        """
+Convert transaction to USD"""
         if transaction.currency == CurrencyCode.USD:
             return transaction
         
@@ -275,7 +285,8 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: Optional[timedelta] = None
     ) -> RevenueMetrics:
-        """Analyze comprehensive revenue metrics for a creator"""
+        """
+Analyze comprehensive revenue metrics for a creator"""
         start_time = datetime.utcnow()
         
         try:
@@ -347,7 +358,8 @@ class RevenueAnalyticsEngine:
         metrics: RevenueMetrics,
         transactions: List[RevenueTransaction]
     ):
-        """Calculate primary revenue metrics"""
+        """
+Calculate primary revenue metrics"""
         if not transactions:
             return
         
@@ -375,7 +387,8 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: timedelta
     ):
-        """Calculate revenue growth metrics"""
+        """
+Calculate revenue growth metrics"""
         try:
             # Get previous period for comparison
             previous_period_transactions = self._get_transactions_for_period(
@@ -444,7 +457,8 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: timedelta
     ):
-        """Calculate performance-related revenue metrics"""
+        """
+Calculate performance-related revenue metrics"""
         try:
             # Simulate getting engagement and view data
             total_views = await self._get_creator_views(creator_id, timeframe)
@@ -894,12 +908,14 @@ class RevenueAnalyticsEngine:
         return hash(creator_id) % 50000 + 10000
     
     async def _get_creator_engagements(self, creator_id: str, timeframe: timedelta) -> int:
-        """Simulate getting creator's total engagements"""
+        """
+Simulate getting creator's total engagements"""
         views = await self._get_creator_views(creator_id, timeframe)
         return int(views * 0.05)  # 5% engagement rate
     
     async def _analyze_creator_content(self, creator_id: str) -> List[str]:
-        """Simulate analyzing creator's content types"""
+        """
+Simulate analyzing creator's content types"""
         content_types = ['music', 'video', 'photo', 'blog']
         # Simulate based on creator_id hash
         selected_types = []
@@ -910,15 +926,18 @@ class RevenueAnalyticsEngine:
         return selected_types if selected_types else ['video']  # Default to video
     
     async def _get_creator_audience_size(self, creator_id: str) -> int:
-        """Simulate getting creator's audience size"""
+        """
+Simulate getting creator's audience size"""
         return hash(creator_id + 'audience') % 100000 + 5000
     
     async def _get_creator_engagement_rate(self, creator_id: str) -> float:
-        """Simulate getting creator's engagement rate"""
+        """
+Simulate getting creator's engagement rate"""
         return (hash(creator_id + 'engagement') % 10) + 1  # 1-10%
     
     async def _get_industry_benchmarks(self, creator_id: str) -> Dict[str, float]:
-        """Simulate industry benchmarking data"""
+        """
+Simulate industry benchmarking data"""
         return {
             'average_revenue_per_creator': 1500.0,
             'median_engagement_rate': 3.2,
@@ -927,7 +946,8 @@ class RevenueAnalyticsEngine:
         }
     
     async def _get_peer_benchmarks(self, creator_id: str) -> Dict[str, float]:
-        """Simulate peer comparison data"""
+        """
+Simulate peer comparison data"""
         return {
             'peer_average_revenue': 1800.0,
             'peer_median_engagement': 4.1,
@@ -936,7 +956,8 @@ class RevenueAnalyticsEngine:
         }
     
     def _update_analytics_stats(self, processing_time: float):
-        """Update internal analytics performance statistics"""
+        """
+Update internal analytics performance statistics"""
         self.analytics_stats['analyses_performed'] += 1
         
         # Update rolling average processing time
@@ -947,7 +968,8 @@ class RevenueAnalyticsEngine:
         )
     
     def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get revenue analytics engine performance statistics"""
+        """
+Get revenue analytics engine performance statistics"""
         stats = self.analytics_stats.copy()
         stats['creators_analyzed'] = len(stats['creators_analyzed'])
         stats['revenue_tracked'] = str(stats['revenue_tracked'])

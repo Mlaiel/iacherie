@@ -17,13 +17,14 @@ Team Specialties:
 - DevOps Engineer: Infrastructure monitoring and automation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This comprehensive pipeline system and orchestration architecture belongs
 exclusively to Fahed Mlaiel. Any unauthorized access, copying, or competitive
 implementation will result in immediate legal prosecution under international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -62,7 +63,8 @@ class PipelineRegistry:
         self._initialize_pipelines()
         
     def _initialize_pipelines(self):
-        """Initialize all pipeline components"""
+        """
+Initialize all pipeline components"""
         try:
             # Core pipelines
             self._pipelines = {

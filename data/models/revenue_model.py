@@ -5,7 +5,7 @@ Professional revenue tracking and monetization data model.
 Comprehensive revenue analytics with multi-platform support.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
@@ -28,7 +29,9 @@ Base = declarative_base()
 
 
 class RevenueSource(Enum):
-    """Revenue source enumeration"""
+    """
+Revenue source enumeration"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -49,6 +52,7 @@ class RevenueSource(Enum):
 
 class RevenueStatus(Enum):
     """Revenue status enumeration"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
@@ -61,6 +65,7 @@ class RevenueStatus(Enum):
 
 class PaymentMethod(Enum):
     """Payment method enumeration"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -73,6 +78,7 @@ class PaymentMethod(Enum):
 
 class RevenuePeriod(Enum):
     """Revenue period enumeration"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -272,27 +278,32 @@ class RevenueModel(Base):
     
     @property
     def is_paid(self) -> bool:
-        """Check if revenue has been paid"""
+        """
+Check if revenue has been paid"""
         return self.status == RevenueStatus.PAID.value
     
     @property
     def is_pending(self) -> bool:
-        """Check if revenue is pending"""
+        """
+Check if revenue is pending"""
         return self.status == RevenueStatus.PENDING.value
     
     @property
     def is_streaming_revenue(self) -> bool:
-        """Check if revenue is from streaming"""
+        """
+Check if revenue is from streaming"""
         return self.revenue_source == RevenueSource.STREAMING.value
     
     @property
     def is_advertising_revenue(self) -> bool:
-        """Check if revenue is from advertising"""
+        """
+Check if revenue is from advertising"""
         return self.revenue_source == RevenueSource.ADVERTISING.value
     
     @property
     def amount_formatted(self) -> str:
-        """Get formatted amount with currency"""
+        """
+Get formatted amount with currency"""
         if self.amount:
             return f"{self.currency} {self.amount:,.2f}"
         return f"{self.currency} 0.00"
@@ -306,7 +317,8 @@ class RevenueModel(Base):
     
     @property
     def total_fees(self) -> Decimal:
-        """Calculate total fees"""
+        """
+Calculate total fees"""
         fees = Decimal('0')
         if self.platform_fee:
             fees += self.platform_fee
@@ -318,14 +330,16 @@ class RevenueModel(Base):
     
     @property
     def period_duration_days(self) -> int:
-        """Calculate period duration in days"""
+        """
+Calculate period duration in days"""
         if self.period_start and self.period_end:
             return (self.period_end - self.period_start).days + 1
         return 0
     
     @property
     def revenue_per_day(self) -> Optional[Decimal]:
-        """Calculate average revenue per day in period"""
+        """
+Calculate average revenue per day in period"""
         duration = self.period_duration_days
         if duration > 0 and self.amount:
             return self.amount / duration
@@ -333,14 +347,16 @@ class RevenueModel(Base):
     
     @property
     def is_overdue(self) -> bool:
-        """Check if payment is overdue"""
+        """
+Check if payment is overdue"""
         if self.payment_due_date and self.status != RevenueStatus.PAID.value:
             return date.today() > self.payment_due_date
         return False
     
     @property
     def performance_rating(self) -> str:
-        """Get performance rating based on metrics"""
+        """
+Get performance rating based on metrics"""
         if not self.revenue_per_view:
             return "No Data"
         
@@ -377,7 +393,8 @@ class RevenueModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_fees_from_percentage(self):
-        """Calculate fee amounts from percentages"""
+        """
+Calculate fee amounts from percentages"""
         if not self.gross_revenue:
             return
         
@@ -393,7 +410,8 @@ class RevenueModel(Base):
         self.calculate_net_revenue()
     
     def calculate_performance_metrics(self):
-        """Calculate performance metrics"""
+        """
+Calculate performance metrics"""
         if self.amount and self.amount > 0:
             # Revenue per metric calculations
             if self.views_count and self.views_count > 0:
@@ -423,14 +441,16 @@ class RevenueModel(Base):
         self.updated_at = datetime.utcnow()
     
     def convert_to_usd(self, exchange_rate: Decimal):
-        """Convert amount to USD"""
+        """
+Convert amount to USD"""
         if self.amount and exchange_rate:
             self.amount_usd = self.amount * exchange_rate
             self.exchange_rate = exchange_rate
             self.updated_at = datetime.utcnow()
     
     def mark_as_paid(self, payment_reference: str = None, payment_method: str = None):
-        """Mark revenue as paid"""
+        """
+Mark revenue as paid"""
         self.status = RevenueStatus.PAID.value
         self.payment_date = date.today()
         self.processed_at = datetime.utcnow()
@@ -443,7 +463,8 @@ class RevenueModel(Base):
         self.updated_at = datetime.utcnow()
     
     def dispute_revenue(self, reason: str = None):
-        """Mark revenue as disputed"""
+        """
+Mark revenue as disputed"""
         self.status = RevenueStatus.DISPUTED.value
         
         if reason:
@@ -491,7 +512,8 @@ class RevenueModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_recurring(self, frequency: str, next_date: date, amount: Decimal = None):
-        """Set revenue as recurring"""
+        """
+Set revenue as recurring"""
         self.is_recurring = True
         self.recurrence_frequency = frequency
         self.next_expected_date = next_date
@@ -499,7 +521,8 @@ class RevenueModel(Base):
         self.updated_at = datetime.utcnow()
     
     def add_collaborator_payment(self, collaborator_id: str, amount: Decimal, percentage: float):
-        """Add collaborator payment information"""
+        """
+Add collaborator payment information"""
         if not self.collaborator_payments:
             self.collaborator_payments = {}
         
@@ -514,13 +537,15 @@ class RevenueModel(Base):
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete revenue record"""
+        """
+Soft delete revenue record"""
         self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted revenue record"""
+        """
+Restore soft-deleted revenue record"""
         self.is_deleted = False
         self.deleted_at = None
         self.updated_at = datetime.utcnow()

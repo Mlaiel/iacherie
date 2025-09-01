@@ -8,7 +8,7 @@ Technologies: Python, Cultural AI, Anthropological Models, Regional Data
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Content analysis → Cultural context detection → Regional preferences → 
 Hofstede dimensions → Communication style adaptation → Cultural compliance
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class CommunicationStyle(Enum):
-    """Communication style preferences by culture"""
+    """
+Communication style preferences by culture"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     HIGH_CONTEXT = "high_context"
@@ -42,6 +45,7 @@ class CommunicationStyle(Enum):
 
 class CulturalDimension(Enum):
     """Hofstede cultural dimensions"""
+
     POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
@@ -52,6 +56,7 @@ class CulturalDimension(Enum):
 
 class ColorCulturalMeaning(Enum):
     """Cultural color meanings"""
+
     LUCK = "luck"
     DEATH = "death"
     CELEBRATION = "celebration"
@@ -104,7 +109,8 @@ class CulturalAdaptation:
 
 
 class CulturalLocalization:
-    """Advanced cultural localization and adaptation engine"""
+    """
+Advanced cultural localization and adaptation engine"""
     
     def __init__(self):
         self.cultural_contexts: Dict[str, CulturalContext] = {}
@@ -726,7 +732,8 @@ class CulturalLocalization:
         return recommended
     
     def _get_colors_to_avoid(self, context: CulturalContext) -> List[str]:
-        """Get colors to avoid culturally"""
+        """
+Get colors to avoid culturally"""
         avoid = []
         for color, meanings in context.color_meanings.items():
             if any(m in [ColorCulturalMeaning.DEATH, ColorCulturalMeaning.MOURNING, 
@@ -735,7 +742,8 @@ class CulturalLocalization:
         return avoid
     
     async def health_check(self) -> bool:
-        """Health check for cultural localization service"""
+        """
+Health check for cultural localization service"""
         try:
             # Check if cultural contexts are loaded
             if not self.cultural_contexts:

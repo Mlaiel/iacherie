@@ -48,6 +48,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -78,7 +79,9 @@ logger = logging.getLogger(__name__)
 
 
 class AdvancedReportType(Enum):
-    """Advanced report types for the IA Influencer Agent platform."""
+    """
+Advanced report types for the IA Influencer Agent platform."""
+
     CREATOR_SUCCESS_ANALYTICS = "creator_success_analytics"
     COLLABORATION_ROI_ANALYSIS = "collaboration_roi_analysis"
     AI_PROTECTION_EFFECTIVENESS = "ai_protection_effectiveness"
@@ -93,6 +96,7 @@ class AdvancedReportType(Enum):
 
 class CreatorTier(Enum):
     """Creator performance tiers."""
+
     EMERGING = "emerging"
     RISING = "rising"
     ESTABLISHED = "established"
@@ -102,6 +106,7 @@ class CreatorTier(Enum):
 
 class ContentCategory(Enum):
     """Content categories supported by the platform."""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTOGRAPHY = "photography"
@@ -150,7 +155,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
     """
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate comprehensive creator success analytics report."""
+        """
+Generate comprehensive creator success analytics report."""
         try:
             await self.validate_configuration()
             
@@ -1092,6 +1098,7 @@ __all__ = [
 
 class ReportType(Enum):
     """Report type enumeration."""
+
     PERFORMANCE = "performance"
     CONTENT = "content"
     PROTECTION = "protection"
@@ -1104,6 +1111,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report format enumeration."""
+
     PDF = "pdf"
     EXCEL = "excel"
     JSON = "json"
@@ -1114,6 +1122,7 @@ class ReportFormat(Enum):
 
 class ReportPriority(Enum):
     """Report priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -1174,11 +1183,13 @@ class ReportGenerator(ABC):
     
     @abstractmethod
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect data for report generation."""
+        """
+Collect data for report generation."""
         pass
     
     async def validate_configuration(self) -> bool:
-        """Validate report configuration."""
+        """
+Validate report configuration."""
         try:
             if not self.config.title:
                 raise ValueError("Report title is required")
@@ -1327,7 +1338,8 @@ class PerformanceReportGenerator(ReportGenerator):
     """
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate performance report."""
+        """
+Generate performance report."""
         try:
             await self.validate_configuration()
             
@@ -1618,7 +1630,8 @@ class ContentReportGenerator(ReportGenerator):
     """
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate content report."""
+        """
+Generate content report."""
         try:
             await self.validate_configuration()
             
@@ -1843,7 +1856,8 @@ class ProtectionReportGenerator(ReportGenerator):
     """
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate protection report."""
+        """
+Generate protection report."""
         try:
             await self.validate_configuration()
             
@@ -2092,7 +2106,8 @@ class RevenueReportGenerator(ReportGenerator):
     """
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate revenue report."""
+        """
+Generate revenue report."""
         try:
             await self.validate_configuration()
             
@@ -2362,7 +2377,8 @@ class ComplianceReportGenerator(ReportGenerator):
     """
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate compliance report."""
+        """
+Generate compliance report."""
         try:
             await self.validate_configuration()
             

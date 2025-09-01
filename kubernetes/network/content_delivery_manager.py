@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for CDN delivery"""
+    """
+Supported content types for CDN delivery"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -50,6 +53,7 @@ class ContentType(Enum):
 
 class CacheStrategy(Enum):
     """CDN caching strategies"""
+
     AGGRESSIVE = "aggressive"      # Long TTL, high hit rate
     MODERATE = "moderate"          # Balanced TTL and freshness
     CONSERVATIVE = "conservative"  # Short TTL, fresh content
@@ -59,6 +63,7 @@ class CacheStrategy(Enum):
 
 class CDNProvider(Enum):
     """Supported CDN providers"""
+
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
     GCP_CDN = "gcp_cdn"
@@ -69,6 +74,7 @@ class CDNProvider(Enum):
 
 class GeographicRegion(Enum):
     """Geographic regions for content optimization"""
+
     NORTH_AMERICA = "na"
     EUROPE = "eu"
     ASIA_PACIFIC = "ap"
@@ -95,7 +101,8 @@ class ContentMetadata:
 
 @dataclass
 class CDNConfiguration:
-    """CDN configuration for content delivery"""
+    """
+CDN configuration for content delivery"""
     name: str
     provider: CDNProvider
     regions: List[GeographicRegion]
@@ -111,7 +118,8 @@ class CDNConfiguration:
 
 @dataclass
 class EdgeCache:
-    """Edge cache configuration"""
+    """
+Edge cache configuration"""
     region: GeographicRegion
     cache_size_gb: int
     hit_ratio_target: float
@@ -583,12 +591,14 @@ class AudioCDNManager(ContentDeliveryManager):
         audio_metadata: Dict[str, Any],
         quality_variants: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, str]:
-        """Upload audio content with quality variants"""
+        """
+Upload audio content with quality variants"""
         # Implementation for audio-specific CDN optimization
         pass
 
 class VideoCDNManager(ContentDeliveryManager):
-    """Specialized CDN manager for video content"""
+    """
+Specialized CDN manager for video content"""
     
     async def upload_video_content(
         self,
@@ -596,18 +606,21 @@ class VideoCDNManager(ContentDeliveryManager):
         video_metadata: Dict[str, Any],
         resolution_variants: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, str]:
-        """Upload video content with resolution variants"""
+        """
+Upload video content with resolution variants"""
         # Implementation for video-specific CDN optimization
         pass
 
 class FingerprintCDNManager(ContentDeliveryManager):
-    """Specialized CDN manager for fingerprint data"""
+    """
+Specialized CDN manager for fingerprint data"""
     
     async def upload_fingerprint_data(
         self,
         fingerprint_data: Dict[str, Any],
         metadata: ContentMetadata
     ) -> Dict[str, str]:
-        """Upload fingerprint data with high security"""
+        """
+Upload fingerprint data with high security"""
         # Implementation for fingerprint-specific CDN handling
         pass

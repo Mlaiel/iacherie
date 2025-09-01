@@ -17,12 +17,13 @@ Features:
 - Monetization opportunity routing and revenue optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -46,7 +47,9 @@ from backend.ai.ml.routing_optimizer import RoutingMLOptimizer
 
 
 class RoutingStrategy(Enum):
-    """Advanced conversation routing strategies"""
+    """
+Advanced conversation routing strategies"""
+
     CREATOR_SPECIALIZED = "creator_specialized"
     CONTENT_ANALYSIS = "content_analysis"
     MONETIZATION_ADVICE = "monetization_advice"
@@ -61,6 +64,7 @@ class RoutingStrategy(Enum):
 
 class EngineType(Enum):
     """AI engine types for specialized processing"""
+
     GENERAL_CONVERSATIONAL = "general_conversational"
     MUSIC_SPECIALIST = "music_specialist"
     CONTENT_SPECIALIST = "content_specialist"
@@ -435,7 +439,8 @@ class ConversationRouter:
         return RoutingStrategy.GENERAL_CHAT
     
     def _determine_response_tone(self, strategy: RoutingStrategy, expertise_level: str) -> str:
-        """Determine appropriate response tone"""
+        """
+Determine appropriate response tone"""
         if strategy in [RoutingStrategy.TECHNICAL_SUPPORT, RoutingStrategy.PROTECTION_GUIDANCE]:
             return "professional"
         elif strategy == RoutingStrategy.CREATIVE_ASSISTANCE:
@@ -597,7 +602,8 @@ class ConversationRouter:
         return self.creator_mappings.get(creator_str, {})
     
     async def _cache_routing_decision(self, session_id: str, decision: RoutingDecision):
-        """Cache routing decision for performance"""
+        """
+Cache routing decision for performance"""
         cache_key = f"routing_decision:{session_id}"
         cache_data = {
             "strategy": decision.strategy.value,

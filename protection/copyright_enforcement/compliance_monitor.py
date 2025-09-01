@@ -7,6 +7,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(str, Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
@@ -43,6 +46,7 @@ class ComplianceFramework(str, Enum):
 
 class ComplianceStatus(str, Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -53,6 +57,7 @@ class ComplianceStatus(str, Enum):
 
 class AuditLevel(str, Enum):
     """Audit logging levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -62,6 +67,7 @@ class AuditLevel(str, Enum):
 
 class PolicySeverity(str, Enum):
     """Policy violation severity"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -87,7 +93,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceCheckResult:
-    """Result of compliance check"""
+    """
+Result of compliance check"""
     rule_id: str
     status: ComplianceStatus
     score: float  # 0-100
@@ -99,7 +106,8 @@ class ComplianceCheckResult:
 
 
 class ComplianceMonitor:
-    """Advanced compliance monitoring system"""
+    """
+Advanced compliance monitoring system"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -108,7 +116,8 @@ class ComplianceMonitor:
         self.compliance_rules = self._load_compliance_rules()
     
     def _load_compliance_rules(self) -> Dict[str, ComplianceRule]:
-        """Load compliance rules for all frameworks"""
+        """
+Load compliance rules for all frameworks"""
         rules = {}
         
         # DMCA Compliance Rules
@@ -415,7 +424,8 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> ComplianceCheckResult:
-        """Execute individual compliance check"""
+        """
+Execute individual compliance check"""
         try:
             # Get the check function
             check_function = getattr(self, rule.check_function)
@@ -734,7 +744,8 @@ class ComplianceMonitor:
         check_results: List[ComplianceCheckResult],
         session: AsyncSession
     ) -> str:
-        """Store compliance record in database"""
+        """
+Store compliance record in database"""
         try:
             compliance_record = ComplianceRecord(
                 framework=framework.value if framework else "all",
@@ -805,7 +816,8 @@ class ComplianceMonitor:
         return unique_recommendations[:10]  # Top 10 recommendations
     
     async def _identify_trending_violations(self, session: AsyncSession) -> List[Dict[str, Any]]:
-        """Identify trending compliance violations"""
+        """
+Identify trending compliance violations"""
         # This would implement actual trending analysis
         return [
             {
@@ -864,7 +876,8 @@ class ComplianceMonitor:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calculate compliance metrics for period"""
+        """
+Calculate compliance metrics for period"""
         if not records:
             return {
                 "overall_compliance": 0.0,
@@ -988,7 +1001,8 @@ class PolicyEnforcer:
         policy_framework: ComplianceFramework,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Enforce policy compliance for specific entity"""
+        """
+Enforce policy compliance for specific entity"""
         try:
             # Check current compliance status
             compliance_check = await self.compliance_monitor.run_compliance_check(
@@ -1190,7 +1204,8 @@ class AuditTracker:
         session: AsyncSession,
         level: AuditLevel = AuditLevel.INFO
     ) -> str:
-        """Log audit event with full details"""
+        """
+Log audit event with full details"""
         try:
             audit_log = AuditLog(
                 event_type=event_type,

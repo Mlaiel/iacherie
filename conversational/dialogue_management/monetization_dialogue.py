@@ -65,6 +65,7 @@ For licensing inquiries or authorized usage: mlaiel@live.de
 Financial compliance verification and business license validation required before access.
 All financial transactions and revenue operations are monitored for compliance and security.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -88,7 +89,9 @@ from .content_creator_flows import CreatorProfile, BusinessObjective, Platform
 logger = logging.getLogger(__name__)
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams for creators"""
+    """
+Types of revenue streams for creators"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     MERCHANDISE_SALES = "merchandise_sales"
     SPONSORSHIP_DEALS = "sponsorship_deals"
@@ -104,6 +107,7 @@ class RevenueStreamType(Enum):
 
 class MonetizationGoal(Enum):
     """Monetization goals for creators"""
+
     INCREASE_MONTHLY_REVENUE = "increase_monthly_revenue"
     DIVERSIFY_INCOME_STREAMS = "diversify_income_streams"
     OPTIMIZE_EXISTING_REVENUE = "optimize_existing_revenue"
@@ -115,6 +119,7 @@ class MonetizationGoal(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -167,7 +172,8 @@ class MonetizationStrategy:
     roi_estimates: Dict[str, float] = field(default_factory=dict)
 
 class MonetizationDialogueHandler:
-    """Specialized dialogue handler for monetization conversations"""
+    """
+Specialized dialogue handler for monetization conversations"""
     
     def __init__(
         self,
@@ -187,7 +193,8 @@ class MonetizationDialogueHandler:
         self.monetization_flows = self._initialize_monetization_flows()
         
     def _initialize_monetization_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize monetization conversation flows"""
+        """
+Initialize monetization conversation flows"""
         return {
             "revenue_assessment_flow": {
                 "name": "Comprehensive Revenue Assessment",

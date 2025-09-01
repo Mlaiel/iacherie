@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -25,7 +26,8 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 
 # Production-ready engines for content optimization
 class ContentAnalysisEngine:
-    """Advanced content analysis engine with NLP capabilities"""
+    """
+Advanced content analysis engine with NLP capabilities"""
     
     def __init__(self):
         self.initialized = False
@@ -176,7 +178,8 @@ class SEOOptimizationEngine:
             return max(0.3, 1.0 - (length - rules['max']) / rules['max'])
     
     def _score_content_length(self, length: int) -> float:
-        """Score content length"""
+        """
+Score content length"""
         min_length = self.seo_rules['content_length']['min']
         if length >= min_length:
             return 1.0
@@ -184,7 +187,8 @@ class SEOOptimizationEngine:
             return length / min_length
     
     def _score_keyword_density(self, text: str, keywords: List[str]) -> float:
-        """Calculate keyword density score"""
+        """
+Calculate keyword density score"""
         if not keywords or not text:
             return 0.0
         
@@ -203,7 +207,8 @@ class SEOOptimizationEngine:
             return max(0.2, 1.0 - (density - rules['max']) / rules['max'])
     
     def _score_headings(self, text: str) -> float:
-        """Score heading structure"""
+        """
+Score heading structure"""
         h1_count = len(re.findall(r'<h1[^>]*>.*?</h1>', text, re.IGNORECASE))
         h2_count = len(re.findall(r'<h2[^>]*>.*?</h2>', text, re.IGNORECASE))
         h3_count = len(re.findall(r'<h3[^>]*>.*?</h3>', text, re.IGNORECASE))
@@ -220,7 +225,8 @@ class SEOOptimizationEngine:
             return 0.0
     
     def _generate_seo_recommendations(self, factors: Dict[str, float]) -> List[str]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         recommendations = []
         
         if factors.get('title_score', 0) < 0.8:
@@ -369,7 +375,8 @@ class EngagementPredictionEngine:
             return max(0.3, 1.0 - (length - max_length) / max_length)
     
     def _score_visual_elements(self, content: Dict[str, Any]) -> float:
-        """Score visual elements in content"""
+        """
+Score visual elements in content"""
         score = 0.0
         
         if content.get('images'):
@@ -390,7 +397,8 @@ class EngagementPredictionEngine:
         return min(1.0, score)
     
     def _score_emotional_tone(self, text: str) -> float:
-        """Score emotional tone of content"""
+        """
+Score emotional tone of content"""
         # Emotional words that drive engagement
         positive_emotional_words = [
             'amazing', 'incredible', 'fantastic', 'exciting', 'thrilling',
@@ -417,7 +425,8 @@ class EngagementPredictionEngine:
         return min(1.0, emotional_density * 10)  # Scale up the score
     
     def _score_call_to_action(self, text: str) -> float:
-        """Score call-to-action elements"""
+        """
+Score call-to-action elements"""
         cta_patterns = [
             r'\bclick\b', r'\bshare\b', r'\blike\b', r'\bcomment\b',
             r'\bsubscribe\b', r'\bfollow\b', r'\bjoin\b', r'\bsign up\b',
@@ -437,7 +446,8 @@ class EngagementPredictionEngine:
             return max(0.3, 1.0 - (cta_count - 2) * 0.2)
     
     def _generate_engagement_recommendations(self, factors: Dict[str, float]) -> List[str]:
-        """Generate engagement improvement recommendations"""
+        """
+Generate engagement improvement recommendations"""
         recommendations = []
         
         if factors.get('length_score', 0) < 0.8:
@@ -569,6 +579,7 @@ logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
     """Content optimization types"""
+
     SEO = "seo"
     ENGAGEMENT = "engagement"
     VIRALITY = "virality"
@@ -583,6 +594,7 @@ class OptimizationType(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -591,6 +603,7 @@ class OptimizationPriority(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -600,6 +613,7 @@ class ContentFormat(Enum):
 
 class PlatformTarget(Enum):
     """Platform optimization targets"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -638,7 +652,8 @@ class OptimizationResult:
 
 @dataclass
 class OptimizationRequest:
-    """Optimization request structure"""
+    """
+Optimization request structure"""
     request_id: str
     content: Dict[str, Any]
     optimization_types: List[OptimizationType]
@@ -653,7 +668,8 @@ class OptimizationRequest:
 
 @dataclass
 class BatchOptimizationResult:
-    """Batch optimization results"""
+    """
+Batch optimization results"""
     batch_id: str
     total_items: int
     successful_optimizations: int
@@ -1092,7 +1108,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         return analysis
 
     async def _optimize_for_seo(self, content: Dict[str, Any], params: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for SEO"""
+        """
+Optimize content for SEO"""
         
         # Use SEO optimization engine
         seo_optimization = await self.seo_optimization_engine.optimize_content_seo(
@@ -1142,7 +1159,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         platforms: List[PlatformTarget],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for engagement"""
+        """
+Optimize content for engagement"""
         
         changes = []
         optimized_content = content.copy()
@@ -1177,7 +1195,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         }
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle content optimization task"""
+        """
+Check if agent can handle content optimization task"""
         supported_tasks = [
             "optimize_content",
             "batch_optimize_content",

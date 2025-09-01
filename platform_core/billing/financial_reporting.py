@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 RAPPORTS FINANCIERS ET ANALYTICS
@@ -15,6 +15,7 @@ Système de reporting financier enterprise avec analytics avancées
 - Export comptable (SAP, QuickBooks, Sage)
 - Conformité GAAP/IFRS et audit trails
 """
+
 import asyncio
 import json
 import logging
@@ -36,7 +37,9 @@ from dateutil.relativedelta import relativedelta
 logger = logging.getLogger(__name__)
 
 class ReportPeriod(Enum):
-    """Périodes de rapport"""
+    """
+Périodes de rapport"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -46,6 +49,7 @@ class ReportPeriod(Enum):
 
 class ReportType(Enum):
     """Types de rapports"""
+
     REVENUE = "revenue"
     PROFIT_LOSS = "profit_loss"
     CASH_FLOW = "cash_flow"
@@ -57,6 +61,7 @@ class ReportType(Enum):
 
 class RevenueMetric(Enum):
     """Métriques de revenus"""
+
     MRR = "mrr"  # Monthly Recurring Revenue
     ARR = "arr"  # Annual Recurring Revenue
     ARPU = "arpu"  # Average Revenue Per User
@@ -127,7 +132,8 @@ class CohortData:
     retention_data: Dict[int, float] = field(default_factory=dict)  # mois -> taux rétention
 
 class FinancialReporting:
-    """Système de rapports financiers"""
+    """
+Système de rapports financiers"""
     
     def __init__(self, database_client: Optional[Any] = None):
         self.database_client = database_client
@@ -137,7 +143,8 @@ class FinancialReporting:
     async def generate_revenue_report(self, 
                                     filters: ReportFilter,
                                     period: ReportPeriod = ReportPeriod.MONTHLY) -> Dict[str, Any]:
-        """Génère un rapport de revenus"""
+        """
+Génère un rapport de revenus"""
         
         cache_key = f"revenue_{period.value}_{hash(str(filters.to_dict()))}"
         if cache_key in self.cache:
@@ -354,7 +361,8 @@ class FinancialReporting:
         return periods
         
     def _format_period_label(self, date: datetime, period: ReportPeriod) -> str:
-        """Formate le libellé d'une période"""
+        """
+Formate le libellé d'une période"""
         if period == ReportPeriod.DAILY:
             return date.strftime("%Y-%m-%d")
         elif period == ReportPeriod.WEEKLY:
@@ -395,7 +403,8 @@ class RevenueAnalytics:
         self.database_client = database_client
         
     async def calculate_mrr(self, as_of_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Calcule le Monthly Recurring Revenue"""
+        """
+Calcule le Monthly Recurring Revenue"""
         target_date = as_of_date or datetime.utcnow()
         
         # Dans un vrai système, on calculerait le MRR réel

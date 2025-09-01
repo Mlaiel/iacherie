@@ -8,6 +8,7 @@ Addresses the requirement: "Monitoring Grafana/Prometheus - vérifier configurat
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import yaml
 import json
 import os
@@ -30,7 +31,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class MonitoringConfigValidator:
-    """Validates Prometheus and Grafana monitoring configurations"""
+    """
+Validates Prometheus and Grafana monitoring configurations"""
     
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
@@ -429,7 +431,8 @@ echo "   AlertManager: http://localhost:9093"
         return script_content
     
     def run_validation(self) -> Dict[str, Any]:
-        """Run complete monitoring configuration validation"""
+        """
+Run complete monitoring configuration validation"""
         logger.info("📊 Starting Monitoring Configuration Validation")
         
         # Check dependencies

@@ -8,12 +8,13 @@ This module provides comprehensive legal automation capabilities:
 - Digital signatures and chain of custody
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import hashlib
@@ -60,7 +61,9 @@ settings = get_settings()
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions for copyright enforcement"""
+    """
+Legal jurisdictions for copyright enforcement"""
+
     US_DMCA = "us_dmca"                    # US Digital Millennium Copyright Act
     EU_COPYRIGHT = "eu_copyright"          # EU Copyright Directive
     UK_COPYRIGHT = "uk_copyright"          # UK Copyright, Designs and Patents Act
@@ -71,6 +74,7 @@ class LegalJurisdiction(Enum):
 
 class LegalDocumentType(Enum):
     """Types of legal documents"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -82,6 +86,7 @@ class LegalDocumentType(Enum):
 
 class LegalActionType(Enum):
     """Types of legal actions"""
+
     TAKEDOWN_REQUEST = "takedown_request"
     MONETIZATION_CLAIM = "monetization_claim"
     LICENSING_DEMAND = "licensing_demand"
@@ -107,7 +112,8 @@ class LegalEntity:
 
 @dataclass
 class CopyrightInformation:
-    """Copyright ownership information"""
+    """
+Copyright ownership information"""
     owner: LegalEntity
     registration_number: Optional[str] = None
     registration_date: Optional[datetime] = None
@@ -640,7 +646,8 @@ class LegalAutomation:
         return platform_contacts.get(platform.lower())
     
     async def _send_dmca_email(self, takedown_data: Dict[str, Any], contact_info: Dict[str, str]) -> bool:
-        """Send DMCA notice via email"""
+        """
+Send DMCA notice via email"""
         try:
             msg = MIMEMultipart()
             msg['From'] = settings.SMTP_USER

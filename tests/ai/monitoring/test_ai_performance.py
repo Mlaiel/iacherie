@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced AI Performance Monitoring Tests - Industrial Grade
+"""
+Advanced AI Performance Monitoring Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for AI performance monitoring system.
 Tests all aspects of AI model performance tracking, optimization, and alerting with real data scenarios.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -68,11 +71,13 @@ from .fixtures import (
 
 
 class TestAIPerformanceMonitorCore:
-    """Core functionality tests for AI Performance Monitor."""
+    """
+Core functionality tests for AI Performance Monitor."""
     
     @pytest.fixture
     async def performance_monitor(self):
-        """Create and initialize AI Performance Monitor instance."""
+        """
+Create and initialize AI Performance Monitor instance."""
         monitor = AIPerformanceMonitor(
             config={
                 "max_models": 100,
@@ -382,7 +387,8 @@ class TestAIPerformancePipelineMonitoring:
     
     @pytest.fixture
     async def pipeline_monitor(self):
-        """Create pipeline-focused performance monitor."""
+        """
+Create pipeline-focused performance monitor."""
         monitor = AIPerformanceMonitor(
             config={
                 "pipeline_tracking": True,
@@ -501,7 +507,8 @@ class TestAIPerformanceOptimization:
     
     @pytest.fixture
     async def optimizer(self):
-        """Create performance optimizer instance."""
+        """
+Create performance optimizer instance."""
         optimizer = PerformanceOptimizer(
             config={
                 "auto_optimization": True,
@@ -597,7 +604,8 @@ class TestAIPerformanceAlerts:
     
     @pytest.fixture
     async def alert_monitor(self):
-        """Create performance monitor with alerting enabled."""
+        """
+Create performance monitor with alerting enabled."""
         monitor = AIPerformanceMonitor(
             config={
                 "alerting_enabled": True,
@@ -715,7 +723,8 @@ class TestAIPerformanceReporting:
     
     @pytest.fixture
     async def reporting_monitor(self):
-        """Create monitor with advanced reporting capabilities."""
+        """
+Create monitor with advanced reporting capabilities."""
         monitor = AIPerformanceMonitor(
             config={
                 "reporting_enabled": True,
@@ -840,7 +849,8 @@ class TestAIPerformanceLoadTesting:
     
     @pytest.fixture
     async def load_test_monitor(self):
-        """Create monitor optimized for load testing."""
+        """
+Create monitor optimized for load testing."""
         monitor = AIPerformanceMonitor(
             config={
                 "max_models": 1000,

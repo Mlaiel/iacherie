@@ -21,6 +21,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -44,7 +45,9 @@ logger = get_logger(__name__)
 
 
 class StrategyType(str, Enum):
-    """Comprehensive protection strategy types with enterprise focus."""
+    """
+Comprehensive protection strategy types with enterprise focus."""
+
     PREVENTIVE = "preventive"           # Proactive threat prevention
     DETECTIVE = "detective"             # Threat detection and monitoring
     RESPONSIVE = "responsive"           # Active threat response
@@ -59,6 +62,7 @@ class StrategyType(str, Enum):
 
 class ProtectionLevel(str, Enum):
     """Protection intensity levels with enterprise gradations."""
+
     MINIMAL = "minimal"               # Basic protection (cost-optimized)
     BASIC = "basic"                  # Standard protection
     STANDARD = "standard"            # Enhanced protection
@@ -70,6 +74,7 @@ class ProtectionLevel(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for specialized strategy selection."""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CONTENT = "video_content"
     DIGITAL_PHOTOGRAPHY = "digital_photography"
@@ -89,6 +94,7 @@ class ContentCategory(str, Enum):
 
 class ImplementationPhase(str, Enum):
     """Strategy implementation phases."""
+
     PLANNING = "planning"
     DESIGN = "design"
     DEVELOPMENT = "development"
@@ -101,6 +107,7 @@ class ImplementationPhase(str, Enum):
 
 class StrategyEffectiveness(str, Enum):
     """Strategy effectiveness ratings."""
+
     POOR = "poor"                    # <40% effectiveness
     FAIR = "fair"                    # 40-60% effectiveness
     GOOD = "good"                    # 60-80% effectiveness
@@ -125,7 +132,8 @@ class StrategyMetrics:
 
 @dataclass
 class ResourceRequirements:
-    """Strategy resource requirements specification."""
+    """
+Strategy resource requirements specification."""
     budget_allocation: Dict[str, Decimal]  # Budget by category
     technical_staff: Dict[str, int]        # Staff requirements by role
     infrastructure_needs: List[str]        # Infrastructure requirements
@@ -140,7 +148,8 @@ class ResourceRequirements:
 
 @dataclass
 class StrategyComponent:
-    """Individual strategy component with detailed specifications."""
+    """
+Individual strategy component with detailed specifications."""
     component_id: str
     component_type: str
     name: str
@@ -161,7 +170,8 @@ class StrategyComponent:
 
 @dataclass
 class ProtectionStrategy:
-    """Comprehensive protection strategy with enterprise features."""
+    """
+Comprehensive protection strategy with enterprise features."""
     strategy_id: str
     strategy_name: str
     strategy_type: StrategyType
@@ -229,7 +239,8 @@ class ProtectionStrategies:
     - Advanced analytics and strategy effectiveness tracking
     """
     def __init__(self):
-        """Initialize the Protection Strategies with enterprise components."""
+        """
+Initialize the Protection Strategies with enterprise components."""
         self.ai_models = AIModelManager()
         self.metrics_collector = MetricsCollector()
         
@@ -384,7 +395,8 @@ class ProtectionStrategies:
         return strategies
 
     async def _develop_standard_strategies(self, context: Dict[str, Any]) -> List[ProtectionStrategy]:
-        """Develop standard protection strategies balancing comprehensiveness and efficiency."""
+        """
+Develop standard protection strategies balancing comprehensiveness and efficiency."""
         
         strategies = []
         
@@ -403,7 +415,8 @@ class ProtectionStrategies:
         return strategies
 
     async def _develop_basic_strategies(self, context: Dict[str, Any]) -> List[ProtectionStrategy]:
-        """Develop basic protection strategies for quick implementation."""
+        """
+Develop basic protection strategies for quick implementation."""
         
         strategies = []
         
@@ -418,7 +431,8 @@ class ProtectionStrategies:
         return strategies
 
     async def _create_multi_layered_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create comprehensive multi-layered protection strategy."""
+        """
+Create comprehensive multi-layered protection strategy."""
         
         strategy_id = str(uuid.uuid4())
         
@@ -644,7 +658,8 @@ class ProtectionStrategies:
         business_context: Dict[str, Any],
         budget_constraints: Dict[str, Decimal]
     ) -> Dict[str, Any]:
-        """Extract strategy requirements from analysis results."""
+        """
+Extract strategy requirements from analysis results."""
         
         requirements = {
             'protection_level': self._determine_protection_level(
@@ -667,7 +682,8 @@ class ProtectionStrategies:
         risk_assessment: Dict[str, Any],
         budget_constraints: Dict[str, Decimal]
     ) -> ProtectionLevel:
-        """Determine appropriate protection level based on analysis."""
+        """
+Determine appropriate protection level based on analysis."""
         
         total_value = portfolio_analysis.get('total_value', Decimal('0'))
         risk_score = risk_assessment.get('overall_risk_score', 50.0)
@@ -684,7 +700,8 @@ class ProtectionStrategies:
             return ProtectionLevel.BASIC
 
     def _identify_priority_content_types(self, portfolio_analysis: Dict[str, Any]) -> List[str]:
-        """Identify priority content types for protection."""
+        """
+Identify priority content types for protection."""
         
         content_types = portfolio_analysis.get('content_types', {})
         # Sort by count and return top content types
@@ -692,13 +709,15 @@ class ProtectionStrategies:
         return [content_type for content_type, count in sorted_types[:3]]
 
     def _extract_threat_focus(self, risk_assessment: Dict[str, Any]) -> List[str]:
-        """Extract primary threats to focus protection on."""
+        """
+Extract primary threats to focus protection on."""
         
         threats = risk_assessment.get('primary_threats', [])
         return threats[:5]  # Top 5 threats
 
     def _calculate_budget_allocation(self, budget_constraints: Dict[str, Decimal]) -> Dict[str, Decimal]:
-        """Calculate optimal budget allocation for strategy implementation."""
+        """
+Calculate optimal budget allocation for strategy implementation."""
         
         total_budget = sum(budget_constraints.values())
         
@@ -720,7 +739,8 @@ class ProtectionStrategies:
         business_context: Dict[str, Any],
         budget_constraints: Dict[str, Decimal]
     ) -> None:
-        """Validate inputs for strategy development."""
+        """
+Validate inputs for strategy development."""
         
         if not content_portfolio:
             raise ValueError("Content portfolio is required for strategy development")
@@ -760,7 +780,8 @@ class ProtectionStrategies:
         strategies: List[ProtectionStrategy],
         context: Dict[str, Any]
     ) -> List[ProtectionStrategy]:
-        """Validate strategies and prioritize by effectiveness and feasibility."""
+        """
+Validate strategies and prioritize by effectiveness and feasibility."""
         
         validated_strategies = []
         
@@ -783,7 +804,8 @@ class ProtectionStrategies:
         strategy_count: int,
         success: bool = True
     ) -> None:
-        """Update strategy development performance metrics."""
+        """
+Update strategy development performance metrics."""
         
         try:
             self.strategy_metrics['strategies_generated'] += strategy_count
@@ -808,7 +830,8 @@ class ProtectionStrategies:
         }
 
     def _load_best_practices(self) -> Dict[str, Any]:
-        """Load industry best practices."""
+        """
+Load industry best practices."""
         return {
             'content_protection': {},
             'threat_mitigation': {},
@@ -816,7 +839,8 @@ class ProtectionStrategies:
         }
 
     def _load_compliance_frameworks(self) -> Dict[str, Any]:
-        """Load compliance frameworks and requirements."""
+        """
+Load compliance frameworks and requirements."""
         return {
             'DMCA': {},
             'GDPR': {},
@@ -825,7 +849,8 @@ class ProtectionStrategies:
         }
 
     def _load_industry_benchmarks(self) -> Dict[str, Any]:
-        """Load industry benchmarks for comparison."""
+        """
+Load industry benchmarks for comparison."""
         return {
             'effectiveness_benchmarks': {},
             'cost_benchmarks': {},
@@ -833,7 +858,8 @@ class ProtectionStrategies:
         }
 
     def _load_effectiveness_standards(self) -> Dict[str, Any]:
-        """Load effectiveness standards and thresholds."""
+        """
+Load effectiveness standards and thresholds."""
         return {
             'minimum_effectiveness': 60.0,
             'target_effectiveness': 80.0,
@@ -842,7 +868,8 @@ class ProtectionStrategies:
 
     # Placeholder methods for strategy optimization
     async def _optimize_strategy_components(self, strategy: ProtectionStrategy) -> ProtectionStrategy:
-        """Optimize strategy components for better effectiveness."""
+        """
+Optimize strategy components for better effectiveness."""
         return strategy
 
     async def _optimize_resource_allocation(
@@ -850,11 +877,13 @@ class ProtectionStrategies:
         strategy: ProtectionStrategy,
         context: Dict[str, Any]
     ) -> ProtectionStrategy:
-        """Optimize resource allocation within strategy."""
+        """
+Optimize resource allocation within strategy."""
         return strategy
 
     async def _optimize_implementation_timeline(self, strategy: ProtectionStrategy) -> ProtectionStrategy:
-        """Optimize implementation timeline for faster deployment."""
+        """
+Optimize implementation timeline for faster deployment."""
         return strategy
 
     async def _validate_strategy_feasibility(
@@ -862,7 +891,8 @@ class ProtectionStrategies:
         strategy: ProtectionStrategy,
         context: Dict[str, Any]
     ) -> bool:
-        """Validate strategy feasibility given constraints."""
+        """
+Validate strategy feasibility given constraints."""
         # Basic feasibility check
         budget_constraints = context.get('budget_constraints', {})
         total_budget = sum(budget_constraints.values())
@@ -875,53 +905,65 @@ class ProtectionStrategies:
 
     # Placeholder methods for additional strategy types
     async def _create_content_specific_strategies(self, context: Dict[str, Any]) -> List[ProtectionStrategy]:
-        """Create content-specific protection strategies."""
+        """
+Create content-specific protection strategies."""
         return []
 
     async def _create_adaptive_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create adaptive protection strategy."""
+        """
+Create adaptive protection strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_compliance_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create compliance-focused strategy."""
+        """
+Create compliance-focused strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_financial_optimization_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create financial optimization strategy."""
+        """
+Create financial optimization strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_technology_modernization_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create technology modernization strategy."""
+        """
+Create technology modernization strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_core_protection_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create core protection strategy."""
+        """
+Create core protection strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_risk_mitigation_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create risk mitigation strategy."""
+        """
+Create risk mitigation strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_basic_compliance_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create basic compliance strategy."""
+        """
+Create basic compliance strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_essential_protection_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create essential protection strategy."""
+        """
+Create essential protection strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
     async def _create_quick_wins_strategy(self, context: Dict[str, Any]) -> ProtectionStrategy:
-        """Create quick wins strategy."""
+        """
+Create quick wins strategy."""
         return await self._create_multi_layered_strategy(context)  # Simplified
 
 
 class StrategyDevelopmentError(Exception):
-    """Strategy development specific error."""
+    """
+Strategy development specific error."""
     pass
 
 
 def create_protection_strategies() -> ProtectionStrategies:
-    """Factory function to create protection strategies instance."""
+    """
+Factory function to create protection strategies instance."""
     return ProtectionStrategies()
 
 

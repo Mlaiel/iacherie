@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import os
 import ssl
 import logging
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SSLCertificate:
-    """SSL certificate information"""
+    """
+SSL certificate information"""
     domain: str
     cert_path: str
     key_path: str
@@ -625,7 +627,8 @@ class SSLTerminator:
         return expiring_certificates
     
     def renew_certificates(self) -> Dict[str, bool]:
-        """Renew expiring certificates"""
+        """
+Renew expiring certificates"""
         renewal_results = {}
         expiring_certs = self.check_certificate_renewals()
         

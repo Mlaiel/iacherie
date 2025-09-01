@@ -16,7 +16,7 @@ Features:
 - Integrated quality control and analysis tools
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 =============================================================================
 CONFIDENTIAL - IA INFLUENCER AGENT PLATFORM
@@ -37,6 +37,7 @@ Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited under international copyright law.
 =============================================================================
 """
+
 import numpy as np
 import logging
 from typing import Optional, Dict, List, Tuple, Any, Union
@@ -50,7 +51,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class MasteringMode(Enum):
-    """Professional mastering modes"""
+    """
+Professional mastering modes"""
+
     TRANSPARENT = "transparent"        # Clean, uncolored processing
     WARM = "warm"                     # Tube-style warmth and compression
     BRIGHT = "bright"                 # Enhanced presence and clarity
@@ -65,6 +68,7 @@ class MasteringMode(Enum):
 
 class LimiterType(Enum):
     """Professional limiter algorithms"""
+
     BRICK_WALL = "brick_wall"         # Hard limiting, no overshoot
     SOFT = "soft"                     # Gentle soft-knee limiting
     VINTAGE = "vintage"               # Vintage limiter emulation
@@ -77,6 +81,7 @@ class LimiterType(Enum):
 
 class StereoMode(Enum):
     """Stereo processing modes"""
+
     STEREO = "stereo"                # Standard stereo
     MONO = "mono"                    # Mono compatibility
     WIDE = "wide"                    # Enhanced width
@@ -86,6 +91,7 @@ class StereoMode(Enum):
 
 class DistributionFormat(Enum):
     """Target distribution formats"""
+
     SPOTIFY = "spotify"              # -14 LUFS integrated
     APPLE_MUSIC = "apple_music"      # -16 LUFS integrated
     YOUTUBE = "youtube"              # -13 LUFS integrated
@@ -113,7 +119,8 @@ class LoudnessMetrics:
 
 @dataclass
 class MasteringParameters:
-    """Complete mastering parameter set"""
+    """
+Complete mastering parameter set"""
     # Input/Output
     input_gain: float = 0.0          # dB
     output_gain: float = 0.0         # dB
@@ -163,7 +170,8 @@ class LUFSMeter:
         self._init_gating_blocks()
         
     def _design_k_weighting_filter(self):
-        """Design K-weighting filter for LUFS measurement"""
+        """
+Design K-weighting filter for LUFS measurement"""
         # Pre-filter (shelving filter at 1681 Hz)
         shelf_freq = 1681.0
         shelf_gain = 3.99  # dB
@@ -194,13 +202,15 @@ class LUFSMeter:
         self.rlb_b, self.rlb_a = scipy.signal.butter(1, omega_hp, btype='high', analog=False)
         
     def _init_gating_blocks(self):
-        """Initialize gating block storage"""
+        """
+Initialize gating block storage"""
         self.momentary_blocks = []  # 400ms blocks
         self.short_term_blocks = []  # 3s blocks
         self.integrated_blocks = []  # All blocks for integrated measurement
         
     def measure_lufs(self, audio_data: np.ndarray, channels: int = 2) -> LoudnessMetrics:
-        """Measure LUFS according to EBU R128"""
+        """
+Measure LUFS according to EBU R128"""
         try:
             # Apply K-weighting filters
             filtered_audio = self._apply_k_weighting(audio_data, channels)
@@ -277,7 +287,8 @@ class LUFSMeter:
 
 
 class StereoProcessor:
-    """Professional stereo enhancement and M/S processing"""
+    """
+Professional stereo enhancement and M/S processing"""
     
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
@@ -285,7 +296,8 @@ class StereoProcessor:
         self._design_bass_mono_filter()
     
     def _design_bass_mono_filter(self):
-        """Design bass mono crossover filter"""
+        """
+Design bass mono crossover filter"""
         nyquist = self.sample_rate / 2
         normalized_freq = self.bass_mono_freq / nyquist
         
@@ -296,7 +308,8 @@ class StereoProcessor:
             self.bass_a = np.array([1.0])
     
     def process_stereo(self, audio_data: np.ndarray, width: float, enhancement: float) -> np.ndarray:
-        """Process stereo field with width control"""
+        """
+Process stereo field with width control"""
         if len(audio_data.shape) != 2:
             return audio_data
         
@@ -330,7 +343,8 @@ class StereoProcessor:
 
 
 class MultibandLimiter:
-    """Professional multiband limiter"""
+    """
+Professional multiband limiter"""
     
     def __init__(self, sample_rate: int, crossover_frequencies: List[float] = None):
         self.sample_rate = sample_rate
@@ -348,7 +362,8 @@ class MultibandLimiter:
             })
     
     def _design_crossover_filters(self):
-        """Design Linkwitz-Riley crossover filters"""
+        """
+Design Linkwitz-Riley crossover filters"""
         self.crossover_filters = []
         nyquist = self.sample_rate / 2
         
@@ -360,7 +375,8 @@ class MultibandLimiter:
                 self.crossover_filters.append((b_low, a_low, b_high, a_high))
     
     def process(self, audio_data: np.ndarray, ceiling_db: float) -> np.ndarray:
-        """Process through multiband limiter"""
+        """
+Process through multiband limiter"""
         # Split into bands
         bands = self._split_bands(audio_data)
         
@@ -374,7 +390,8 @@ class MultibandLimiter:
         return self._recombine_bands(processed_bands)
     
     def _split_bands(self, audio_data: np.ndarray) -> List[np.ndarray]:
-        """Split audio into frequency bands"""
+        """
+Split audio into frequency bands"""
         bands = []
         current_signal = audio_data.copy()
         
@@ -400,7 +417,8 @@ class MultibandLimiter:
         return bands
     
     def _limit_band(self, band_audio: np.ndarray, ceiling_db: float, band_index: int) -> np.ndarray:
-        """Limit individual frequency band"""
+        """
+Limit individual frequency band"""
         threshold_linear = 10 ** (ceiling_db / 20.0)
         
         if len(band_audio.shape) == 2:
@@ -414,7 +432,8 @@ class MultibandLimiter:
             return self._apply_limiting(band_audio, threshold_linear, band_index)
     
     def _apply_limiting(self, audio: np.ndarray, threshold: float, band_index: int) -> np.ndarray:
-        """Apply limiting to single channel"""
+        """
+Apply limiting to single channel"""
         limiter = self.band_limiters[band_index]
         output = np.zeros_like(audio)
         
@@ -431,7 +450,8 @@ class MultibandLimiter:
         return output
     
     def _recombine_bands(self, bands: List[np.ndarray]) -> np.ndarray:
-        """Recombine processed frequency bands"""
+        """
+Recombine processed frequency bands"""
         output = np.zeros_like(bands[0])
         for band in bands:
             output += band
@@ -439,7 +459,8 @@ class MultibandLimiter:
 
 
 class MasteringProcessor:
-    """Professional mastering processor suite"""
+    """
+Professional mastering processor suite"""
     
     def __init__(self, sample_rate: int = 44100, mode: MasteringMode = MasteringMode.TRANSPARENT):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -514,7 +535,8 @@ class MasteringProcessor:
         return presets
     
     def _load_format_targets(self) -> Dict[DistributionFormat, Dict[str, float]]:
-        """Load distribution format targets"""
+        """
+Load distribution format targets"""
         return {
             DistributionFormat.SPOTIFY: {'lufs': -14.0, 'ceiling': -1.0, 'lra_max': 7.0},
             DistributionFormat.APPLE_MUSIC: {'lufs': -16.0, 'ceiling': -1.0, 'lra_max': 8.0},
@@ -528,7 +550,8 @@ class MasteringProcessor:
         }
     
     def process(self, audio_data: np.ndarray, target_format: Optional[DistributionFormat] = None) -> np.ndarray:
-        """Complete mastering processing chain"""
+        """
+Complete mastering processing chain"""
         try:
             if audio_data.size == 0:
                 return audio_data
@@ -617,7 +640,8 @@ class MasteringProcessor:
         return processed_audio
     
     def _design_shelf_filter(self, normalized_freq: float, gain_db: float, shelf_type: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Design shelving filter"""
+        """
+Design shelving filter"""
         gain_linear = 10 ** (gain_db / 20.0)
         
         if shelf_type == 'low':
@@ -628,7 +652,8 @@ class MasteringProcessor:
         return b * gain_linear, a
     
     def _apply_multiband_compression(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply multiband compression"""
+        """
+Apply multiband compression"""
         # Simplified multiband compression using crossover filters
         crossover_freq1 = 200.0  # Low-Mid crossover
         crossover_freq2 = 2000.0  # Mid-High crossover
@@ -668,7 +693,8 @@ class MasteringProcessor:
         return low_compressed + mid_compressed + high_compressed
     
     def _apply_band_compression(self, band_audio: np.ndarray, threshold_db: float, ratio: float) -> np.ndarray:
-        """Apply compression to frequency band"""
+        """
+Apply compression to frequency band"""
         threshold_linear = 10 ** (threshold_db / 20.0)
         compressed_audio = band_audio.copy()
         
@@ -696,7 +722,8 @@ class MasteringProcessor:
         return compressed_audio
     
     def _apply_harmonic_enhancement(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply harmonic enhancement/saturation"""
+        """
+Apply harmonic enhancement/saturation"""
         drive = self.params.harmonic_drive
         enhanced_audio = audio_data.copy()
         
@@ -720,7 +747,8 @@ class MasteringProcessor:
             return self._apply_single_band_limiting(audio_data)
     
     def _apply_single_band_limiting(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply single-band limiting"""
+        """
+Apply single-band limiting"""
         ceiling_linear = 10 ** (self.params.ceiling_dbfs / 20.0)
         limited_audio = audio_data.copy()
         
@@ -768,12 +796,14 @@ class MasteringProcessor:
         return limited_audio
     
     def _apply_safety_limiting(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply final safety limiting to prevent clipping"""
+        """
+Apply final safety limiting to prevent clipping"""
         safety_ceiling = 0.99  # -0.09 dB
         return np.clip(audio_data, -safety_ceiling, safety_ceiling)
     
     def analyze_for_mastering(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """AI-powered mastering analysis and recommendations"""
+        """
+AI-powered mastering analysis and recommendations"""
         try:
             # Measure loudness
             channels = 2 if len(audio_data.shape) == 2 else 1
@@ -873,7 +903,8 @@ class MasteringProcessor:
         return compliance
     
     def apply_preset(self, preset_name: str):
-        """Apply professional mastering preset"""
+        """
+Apply professional mastering preset"""
         if preset_name in self.presets:
             self.params = self.presets[preset_name]
             self.logger.info(f"Applied mastering preset: {preset_name}")
@@ -904,7 +935,8 @@ class MasteringProcessor:
         return self.process(audio_data, target_format)
     
     def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing performance metrics"""
+        """
+Get processing performance metrics"""
         return {
             'mode': self.mode.value,
             'sample_rate': self.sample_rate,
@@ -921,7 +953,8 @@ class MasteringProcessor:
         }
     
     def reset(self):
-        """Reset mastering processor state"""
+        """
+Reset mastering processor state"""
         self.params = MasteringParameters()
         
         # Reset component states
@@ -981,7 +1014,8 @@ class MasteringProcessor:
         self._init_metering()
     
     def _init_crossover_filters(self):
-        """Initialize crossover filter bank"""
+        """
+Initialize crossover filter bank"""
         self.crossover_filters = []
         
         for i, freq in enumerate(self.crossover_freqs):
@@ -1004,7 +1038,8 @@ class MasteringProcessor:
                 self.crossover_filters.append((b, a))
     
     def _init_band_compressors(self):
-        """Initialize multi-band compressor"""
+        """
+Initialize multi-band compressor"""
         from .compressor_processor import CompressorProcessor, CompressorType
         
         self.band_compressors = []
@@ -1030,7 +1065,8 @@ class MasteringProcessor:
             self.band_compressors.append(compressor)
     
     def _init_stereo_processor(self):
-        """Initialize stereo width processor"""
+        """
+Initialize stereo width processor"""
         # Mid-side processing matrices
         self.ms_encode_matrix = np.array([[0.5, 0.5], [0.5, -0.5]])
         self.ms_decode_matrix = np.array([[1.0, 1.0], [1.0, -1.0]])
@@ -1044,7 +1080,8 @@ class MasteringProcessor:
             self.bass_mono_b, self.bass_mono_a = None, None
     
     def _init_limiter(self):
-        """Initialize peak limiter"""
+        """
+Initialize peak limiter"""
         self.limiter_gain_reduction = 0.0
         self.limiter_envelope = 0.0
         
@@ -1056,7 +1093,8 @@ class MasteringProcessor:
         self.limiter_release_coeff = np.exp(-1.0 / (self.limiter_release * self.sample_rate))
     
     def _init_metering(self):
-        """Initialize metering components"""
+        """
+Initialize metering components"""
         # LUFS measurement (K-weighting filter)
         self.lufs_buffer = np.zeros(int(3 * self.sample_rate))  # 3 second buffer
         self.lufs_buffer_index = 0
@@ -1067,7 +1105,8 @@ class MasteringProcessor:
         )
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply mastering processing"""
+        """
+Apply mastering processing"""
         try:
             if len(audio_data.shape) == 1:
                 # Convert mono to stereo
@@ -1138,12 +1177,14 @@ class MasteringProcessor:
         return processed
     
     def _add_harmonic_warmth(self, audio_data: np.ndarray, amount: float) -> np.ndarray:
-        """Add harmonic warmth"""
+        """
+Add harmonic warmth"""
         # Subtle tape-style saturation
         return np.tanh(audio_data * (1 + amount)) * (1 / (1 + amount))
     
     def _apply_brightness_eq(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply brightening EQ"""
+        """
+Apply brightening EQ"""
         # High-shelf filter at 3kHz
         if 3000 < self.sample_rate / 2:
             b, a = scipy.signal.butter(2, 3000 / (self.sample_rate / 2), 'highpass')
@@ -1152,7 +1193,8 @@ class MasteringProcessor:
         return audio_data
     
     def _enhance_transients(self, audio_data: np.ndarray) -> np.ndarray:
-        """Enhance transients for punchiness"""
+        """
+Enhance transients for punchiness"""
         # Simple transient enhancement using difference
         delayed = np.roll(audio_data, 1, axis=0)
         delayed[0] = 0
@@ -1160,7 +1202,8 @@ class MasteringProcessor:
         return audio_data + transients * 0.05
     
     def _apply_vintage_processing(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply vintage-style processing"""
+        """
+Apply vintage-style processing"""
         # Combine harmonic warmth with gentle high-cut
         warmed = self._add_harmonic_warmth(audio_data, 0.03)
         
@@ -1172,7 +1215,8 @@ class MasteringProcessor:
         return warmed
     
     def _apply_modern_processing(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply modern digital processing"""
+        """
+Apply modern digital processing"""
         # Subtle high-frequency air
         if 8000 < self.sample_rate / 2:
             b, a = scipy.signal.butter(1, 8000 / (self.sample_rate / 2), 'highpass')
@@ -1181,7 +1225,8 @@ class MasteringProcessor:
         return audio_data
     
     def _apply_multiband_compression(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply multi-band compression"""
+        """
+Apply multi-band compression"""
         if len(self.crossover_filters) == 0 or len(self.band_compressors) == 0:
             return audio_data
         
@@ -1213,7 +1258,8 @@ class MasteringProcessor:
             return audio_data
     
     def _apply_stereo_enhancement(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply stereo width and enhancement"""
+        """
+Apply stereo width and enhancement"""
         if len(audio_data.shape) != 2 or audio_data.shape[1] != 2:
             return audio_data
         
@@ -1245,7 +1291,8 @@ class MasteringProcessor:
         return processed
     
     def _apply_harmonic_enhancement(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply harmonic enhancement and saturation"""
+        """
+Apply harmonic enhancement and saturation"""
         processed = audio_data.copy()
         
         if self.harmonic_enhancement > 0:
@@ -1261,7 +1308,8 @@ class MasteringProcessor:
         return processed
     
     def _apply_limiting(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply peak limiting"""
+        """
+Apply peak limiting"""
         processed = audio_data.copy()
         ceiling_linear = 10**(self.ceiling_db / 20)
         
@@ -1297,7 +1345,8 @@ class MasteringProcessor:
         return processed
     
     def _update_meters(self, audio_data: np.ndarray):
-        """Update metering"""
+        """
+Update metering"""
         if len(audio_data) == 0:
             return
         
@@ -1330,7 +1379,8 @@ class MasteringProcessor:
     def set_parameters(self, mode: MasteringMode = None, input_gain: float = None,
                       output_gain: float = None, target_lufs: float = None,
                       stereo_width: float = None, harmonic_enhancement: float = None):
-        """Set mastering parameters"""
+        """
+Set mastering parameters"""
         if mode is not None:
             self.mode = mode
         if input_gain is not None:

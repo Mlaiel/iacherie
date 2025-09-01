@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Generative Models
+"""
+Comprehensive Test Suite for Generative Models
 
 Ultra-advanced industrial-grade tests for generative neural networks,
 covering content generation, audio synthesis, image creation, and all
@@ -39,6 +41,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -66,7 +69,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def generative_config():
-    """Configuration for generative models"""
+    """
+Configuration for generative models"""
     return TransformerConfig(
         input_dim=768,
         hidden_dims=[768, 512, 256],
@@ -82,7 +86,8 @@ def generative_config():
 
 @pytest.fixture
 def generation_config():
-    """Generation configuration for testing"""
+    """
+Generation configuration for testing"""
     return GenerationConfig(
         task=GenerationTask.TEXT_COMPLETION,
         quality=GenerationQuality.STANDARD,
@@ -99,7 +104,8 @@ def generation_config():
 
 @pytest.fixture
 def sample_prompts():
-    """Sample prompts for generation testing"""
+    """
+Sample prompts for generation testing"""
     return {
         "text": {
             "short": "Once upon a time",
@@ -148,7 +154,8 @@ class TestGenerationTask:
     """Test GenerationTask enum functionality"""
     
     def test_generation_task_values(self):
-        """Test GenerationTask enum values"""
+        """
+Test GenerationTask enum values"""
         assert GenerationTask.TEXT_COMPLETION.value == "text_completion"
         assert GenerationTask.AUDIO_SYNTHESIS.value == "audio_synthesis"
         assert GenerationTask.IMAGE_GENERATION.value == "image_generation"
@@ -179,7 +186,8 @@ class TestGenerationQuality:
     """Test GenerationQuality enum functionality"""
     
     def test_quality_levels(self):
-        """Test GenerationQuality enum values"""
+        """
+Test GenerationQuality enum values"""
         assert GenerationQuality.DRAFT.value == "draft"
         assert GenerationQuality.STANDARD.value == "standard"
         assert GenerationQuality.PROFESSIONAL.value == "professional"
@@ -204,7 +212,8 @@ class TestGenerationConfig:
     """Test GenerationConfig functionality"""
     
     def test_config_creation(self):
-        """Test GenerationConfig creation with defaults"""
+        """
+Test GenerationConfig creation with defaults"""
         config = GenerationConfig(
             task=GenerationTask.TEXT_COMPLETION
         )
@@ -218,7 +227,8 @@ class TestGenerationConfig:
         assert config.repetition_penalty == 1.1
     
     def test_config_customization(self):
-        """Test custom GenerationConfig parameters"""
+        """
+Test custom GenerationConfig parameters"""
         creator_style = {"professional": 0.8, "creative": 0.6}
         audience_prefs = {"educational": 0.9, "entertainment": 0.3}
         
@@ -270,10 +280,12 @@ class TestGenerationConfig:
 
 
 class TestContentGeneratorNetwork:
-    """Test main ContentGeneratorNetwork functionality"""
+    """
+Test main ContentGeneratorNetwork functionality"""
     
     def test_network_initialization(self, generative_config):
-        """Test ContentGeneratorNetwork initialization"""
+        """
+Test ContentGeneratorNetwork initialization"""
         network = ContentGeneratorNetwork(generative_config)
         
         assert network.config == generative_config
@@ -434,10 +446,12 @@ class TestContentGeneratorNetwork:
 
 
 class TestAudioGeneratorNetwork:
-    """Test AudioGeneratorNetwork functionality"""
+    """
+Test AudioGeneratorNetwork functionality"""
     
     def test_audio_generator_initialization(self, generative_config):
-        """Test AudioGeneratorNetwork initialization"""
+        """
+Test AudioGeneratorNetwork initialization"""
         network = AudioGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'audio_encoder')
@@ -446,7 +460,8 @@ class TestAudioGeneratorNetwork:
         assert hasattr(network, 'duration_controller')
     
     def test_music_generation(self, generative_config, sample_prompts):
-        """Test music generation functionality"""
+        """
+Test music generation functionality"""
         network = AudioGeneratorNetwork(generative_config)
         network.eval()
         
@@ -528,7 +543,8 @@ class TestTextGeneratorNetwork:
     """Test TextGeneratorNetwork functionality"""
     
     def test_text_generator_initialization(self, generative_config):
-        """Test TextGeneratorNetwork initialization"""
+        """
+Test TextGeneratorNetwork initialization"""
         network = TextGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'language_model')
@@ -537,7 +553,8 @@ class TestTextGeneratorNetwork:
         assert hasattr(network, 'length_predictor')
     
     def test_text_completion(self, generative_config, sample_prompts, generation_config):
-        """Test text completion functionality"""
+        """
+Test text completion functionality"""
         network = TextGeneratorNetwork(generative_config)
         network.eval()
         
@@ -626,7 +643,8 @@ class TestImageGenerationNetworks:
     """Test image generation networks"""
     
     def test_thumbnail_generator_initialization(self, generative_config):
-        """Test ThumbnailGeneratorNetwork initialization"""
+        """
+Test ThumbnailGeneratorNetwork initialization"""
         network = ThumbnailGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'image_generator')
@@ -635,7 +653,8 @@ class TestImageGenerationNetworks:
         assert hasattr(network, 'thumbnail_styles')
     
     def test_thumbnail_generation(self, generative_config, sample_prompts):
-        """Test thumbnail generation"""
+        """
+Test thumbnail generation"""
         network = ThumbnailGeneratorNetwork(generative_config)
         network.eval()
         
@@ -664,7 +683,8 @@ class TestImageGenerationNetworks:
         assert hasattr(network, 'composition_optimizer')
     
     def test_cover_art_generation(self, generative_config, sample_prompts):
-        """Test cover art generation"""
+        """
+Test cover art generation"""
         network = CoverArtGeneratorNetwork(generative_config)
         network.eval()
         
@@ -710,7 +730,8 @@ class TestGenerativeModelPerformance:
     """Performance tests for generative models"""
     
     def test_generation_speed(self, generative_config, sample_prompts, generation_config):
-        """Test generation speed across different tasks"""
+        """
+Test generation speed across different tasks"""
         network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
@@ -805,7 +826,8 @@ class TestGenerativeModelRobustness:
     """Robustness tests for generative models"""
     
     def test_invalid_input_handling(self, generative_config):
-        """Test handling of invalid inputs"""
+        """
+Test handling of invalid inputs"""
         network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
@@ -899,7 +921,8 @@ class TestGenerativeModelIntegration:
     """Integration tests for generative models"""
     
     def test_multimodal_content_creation_pipeline(self, generative_config, sample_prompts, style_embeddings, generation_config):
-        """Test complete multimodal content creation pipeline"""
+        """
+Test complete multimodal content creation pipeline"""
         # Initialize networks
         content_generator = ContentGeneratorNetwork(generative_config)
         audio_generator = AudioGeneratorNetwork(generative_config)

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import uuid
@@ -52,7 +53,9 @@ from ...security.data_protection import DataProtection
 logger = logging.getLogger(__name__)
 
 class MarketAnalysisType(Enum):
-    """Market analysis operation types"""
+    """
+Market analysis operation types"""
+
     COMPETITIVE_ANALYSIS = "competitive_analysis"
     TREND_FORECASTING = "trend_forecasting" 
     MARKET_SURVEILLANCE = "market_surveillance"
@@ -66,6 +69,7 @@ class MarketAnalysisType(Enum):
 
 class MarketSegment(Enum):
     """Market segment classifications"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_CONTENT = "video_content"
     SOCIAL_MEDIA = "social_media"
@@ -79,6 +83,7 @@ class MarketSegment(Enum):
 
 class CompetitiveAdvantage(Enum):
     """Types of competitive advantages"""
+
     TECHNOLOGY_LEADERSHIP = "technology_leadership"
     CONTENT_QUALITY = "content_quality"
     AUDIENCE_SIZE = "audience_size"
@@ -129,7 +134,8 @@ class CompetitorAnalysis:
 
 @dataclass  
 class TrendForecast:
-    """Market trend forecasting results"""
+    """
+Market trend forecasting results"""
     trend_id: str
     trend_name: str
     trend_type: str
@@ -149,7 +155,8 @@ class TrendForecast:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification results"""
+    """
+Market opportunity identification results"""
     opportunity_id: str
     opportunity_type: str
     market_size: float
@@ -168,7 +175,8 @@ class MarketOpportunity:
 
 @dataclass
 class MarketIntelligenceResult:
-    """Comprehensive market intelligence analysis results"""
+    """
+Comprehensive market intelligence analysis results"""
     request_id: str
     analysis_type: MarketAnalysisType
     target_market: MarketSegment
@@ -446,7 +454,8 @@ class MarketIntelligenceAgent(BaseAgent):
         return results
     
     async def _analyze_competitors(self, request: MarketIntelligenceRequest) -> List[CompetitorAnalysis]:
-        """Analyze competitors in the target market"""
+        """
+Analyze competitors in the target market"""
         if not self.competitive_engine:
             return []
         
@@ -635,30 +644,36 @@ class MarketIntelligenceAgent(BaseAgent):
         }
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for market intelligence"""
+        """
+Initialize machine learning models for market intelligence"""
         # Load pre-trained models for market analysis
         pass
     
     async def _setup_data_sources(self) -> None:
-        """Setup external data sources for market intelligence"""
+        """
+Setup external data sources for market intelligence"""
         # Configure data source connections
         pass
     
     async def _load_market_segments(self) -> None:
-        """Load market segment definitions and characteristics"""
+        """
+Load market segment definitions and characteristics"""
         # Load market segment data
         pass
     
     async def _assess_data_quality(self, results: Dict[str, Any]) -> float:
-        """Assess the quality of analysis data"""
+        """
+Assess the quality of analysis data"""
         return 0.85  # Placeholder score
     
     async def _cache_results(self, request_id: str, result: MarketIntelligenceResult) -> None:
-        """Cache analysis results for performance"""
+        """
+Cache analysis results for performance"""
         self.intelligence_cache[request_id] = result
     
     async def _log_analysis(self, result: MarketIntelligenceResult) -> None:
-        """Log market intelligence analysis for audit trail"""
+        """
+Log market intelligence analysis for audit trail"""
         self.analysis_history.append({
             'request_id': result.request_id,
             'analysis_type': result.analysis_type.value,
@@ -668,7 +683,8 @@ class MarketIntelligenceAgent(BaseAgent):
         })
     
     def _validate_request(self, request: MarketIntelligenceRequest) -> None:
-        """Validate market intelligence request parameters"""
+        """
+Validate market intelligence request parameters"""
         if not request.creator_id:
             raise ValueError("Creator ID is required")
         

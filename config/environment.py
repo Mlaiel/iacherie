@@ -7,6 +7,7 @@ environment validation, and security features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import json
 import logging
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Environment types"""
+    """
+Environment types"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -37,6 +40,7 @@ class Environment(Enum):
 
 class SecretSource(Enum):
     """Secret source types"""
+
     ENVIRONMENT = "environment"
     FILE = "file"
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
@@ -57,7 +61,8 @@ class SecretConfig:
     
 @dataclass 
 class EnvironmentConfig:
-    """Environment configuration"""
+    """
+Environment configuration"""
     name: str
     environment: Environment
     debug: bool = False
@@ -66,7 +71,8 @@ class EnvironmentConfig:
 
 
 class SecretManager:
-    """Secure secret management with multiple backends"""
+    """
+Secure secret management with multiple backends"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -75,7 +81,8 @@ class SecretManager:
         self.logger = logging.getLogger(__name__)
         
     async def get_secret(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from configured source"""
+        """
+Get secret from configured source"""
         try:
             cache_key = f"{secret_config.source.value}:{secret_config.key}"
             
@@ -124,7 +131,8 @@ class SecretManager:
         return os.getenv(env_key)
     
     async def _get_from_file(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from file"""
+        """
+Get secret from file"""
         file_path = secret_config.source_config.get('file_path')
         if not file_path:
             raise ValueError("file_path required for FILE secret source")
@@ -200,7 +208,8 @@ class EnvironmentManager:
         self.logger = logging.getLogger(__name__)
         
     def _detect_environment(self) -> Environment:
-        """Auto-detect current environment"""
+        """
+Auto-detect current environment"""
         env_name = os.getenv('ENVIRONMENT', os.getenv('ENV', 'development')).lower()
         
         # Map common environment names
@@ -218,7 +227,8 @@ class EnvironmentManager:
         return env_mapping.get(env_name, Environment.DEVELOPMENT)
     
     async def load_configuration(self) -> Dict[str, Any]:
-        """Load complete environment configuration"""
+        """
+Load complete environment configuration"""
         try:
             self.logger.info(f"Loading configuration for environment: {self.environment.value}")
             
@@ -328,7 +338,8 @@ class EnvironmentManager:
         return base_config
     
     def _load_environment_config(self) -> Dict[str, Any]:
-        """Load environment-specific configuration overrides"""
+        """
+Load environment-specific configuration overrides"""
         env_config = {}
         
         # Load from environment-specific config file if exists
@@ -433,11 +444,13 @@ class EnvironmentManager:
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _generate_encryption_key(self) -> str:
-        """Generate a secure encryption key"""
+        """
+Generate a secure encryption key"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     async def _validate_configuration(self, config: Dict[str, Any]):
-        """Validate configuration completeness and security"""
+        """
+Validate configuration completeness and security"""
         
         # Required fields validation
         required_fields = [
@@ -492,7 +505,8 @@ class EnvironmentManager:
         return datetime.utcnow().isoformat()
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value"""
+        """
+Get configuration value"""
         keys = key.split('.')
         current = self.config
         
@@ -504,7 +518,8 @@ class EnvironmentManager:
             return default
     
     def get_database_url(self) -> str:
-        """Get complete database URL"""
+        """
+Get complete database URL"""
         database_url = self.get('database_url')
         if database_url:
             return database_url
@@ -528,7 +543,8 @@ class EnvironmentManager:
         return self.environment == Environment.PRODUCTION
     
     def is_development(self) -> bool:
-        """Check if running in development environment"""
+        """
+Check if running in development environment"""
         return self.environment == Environment.DEVELOPMENT
 
 
@@ -537,25 +553,30 @@ env_manager = EnvironmentManager()
 
 
 async def load_configuration() -> Dict[str, Any]:
-    """Load application configuration"""
+    """
+Load application configuration"""
     return await env_manager.load_configuration()
 
 
 def get_config(key: str, default: Any = None) -> Any:
-    """Get configuration value"""
+    """
+Get configuration value"""
     return env_manager.get(key, default)
 
 
 def get_environment() -> Environment:
-    """Get current environment"""
+    """
+Get current environment"""
     return env_manager.environment
 
 
 def is_production() -> bool:
-    """Check if running in production"""
+    """
+Check if running in production"""
     return env_manager.is_production()
 
 
 def is_development() -> bool:
-    """Check if running in development"""
+    """
+Check if running in development"""
     return env_manager.is_development()

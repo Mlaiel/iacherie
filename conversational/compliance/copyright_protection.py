@@ -5,12 +5,13 @@ automated rights verification, license management, and infringement detection fo
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ from ..models.copyright_models import CopyrightClaim, ProtectedContent, LicenseA
 
 
 class ContentType(Enum):
-    """Types of protected content"""
+    """
+Types of protected content"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -46,6 +49,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -54,6 +58,7 @@ class ProtectionLevel(Enum):
 
 class LicenseType(Enum):
     """Copyright license types"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -64,6 +69,7 @@ class LicenseType(Enum):
 
 class InfringementSeverity(Enum):
     """Infringement severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -88,7 +94,8 @@ class CopyrightMetadata:
 
 @dataclass
 class InfringementReport:
-    """Copyright infringement report structure"""
+    """
+Copyright infringement report structure"""
     report_id: str
     original_content_id: str
     infringing_content_id: str
@@ -104,7 +111,8 @@ class InfringementReport:
 
 @dataclass
 class LicenseVerification:
-    """License verification result"""
+    """
+License verification result"""
     content_id: str
     user_id: int
     license_valid: bool

@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import os
 import asyncio
 import json
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class PersistenceStrategy(Enum):
-    """Persistence strategy options"""
+    """
+Persistence strategy options"""
+
     MEMORY_ONLY = "MEMORY_ONLY"           # No persistence (testing only)
     FILE_BASED = "FILE_BASED"             # File-based persistence
     DATABASE = "DATABASE"                 # Database persistence
@@ -64,6 +67,7 @@ class PersistenceStrategy(Enum):
 
 class RecoveryMode(Enum):
     """Recovery mode options"""
+
     NONE = "NONE"                         # No recovery
     CHECKPOINT = "CHECKPOINT"             # Checkpoint-based recovery
     LOG_REPLAY = "LOG_REPLAY"             # Transaction log replay
@@ -85,12 +89,14 @@ class TransactionLogEntry:
     content_metadata: Optional[Dict[str, Any]] = None
     
     def __post_init__(self):
-        """Calculate checksum after initialization"""
+        """
+Calculate checksum after initialization"""
         if self.checksum is None:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate SHA-256 checksum of entry data"""
+        """
+Calculate SHA-256 checksum of entry data"""
         data_str = json.dumps({
             'transaction_id': self.transaction_id,
             'operation_type': self.operation_type,
@@ -104,12 +110,14 @@ class TransactionLogEntry:
         return hashlib.sha256(data_str.encode('utf-8')).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify entry integrity using checksum"""
+        """
+Verify entry integrity using checksum"""
         expected_checksum = self._calculate_checksum()
         return self.checksum == expected_checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'transaction_id': self.transaction_id,
             'operation_type': self.operation_type,
@@ -123,7 +131,8 @@ class TransactionLogEntry:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TransactionLogEntry':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         return cls(
             transaction_id=data['transaction_id'],
             operation_type=data['operation_type'],
@@ -138,7 +147,8 @@ class TransactionLogEntry:
 
 @dataclass
 class Checkpoint:
-    """System checkpoint for recovery"""
+    """
+System checkpoint for recovery"""
     checkpoint_id: str
     timestamp: datetime
     sequence_number: int
@@ -149,12 +159,14 @@ class Checkpoint:
     checksum: Optional[str] = None
     
     def __post_init__(self):
-        """Calculate checksum after initialization"""
+        """
+Calculate checksum after initialization"""
         if self.checksum is None:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate checkpoint checksum"""
+        """
+Calculate checkpoint checksum"""
         data_str = json.dumps({
             'checkpoint_id': self.checkpoint_id,
             'timestamp': self.timestamp.isoformat(),
@@ -168,13 +180,15 @@ class Checkpoint:
         return hashlib.sha256(data_str.encode('utf-8')).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify checkpoint integrity"""
+        """
+Verify checkpoint integrity"""
         expected_checksum = self._calculate_checksum()
         return self.checksum == expected_checksum
 
 
 class TransactionLog:
-    """High-performance transaction log with integrity guarantees"""
+    """
+High-performance transaction log with integrity guarantees"""
     
     def __init__(self, log_dir: str, max_file_size: int = 100 * 1024 * 1024):  # 100MB
         self.log_dir = Path(log_dir)
@@ -210,7 +224,8 @@ class TransactionLog:
                 self._flush_buffer()
     
     def _flush_buffer(self) -> None:
-        """Flush write buffer to disk"""
+        """
+Flush write buffer to disk"""
         if not self.write_buffer:
             return
         
@@ -306,7 +321,8 @@ class TransactionLog:
             return self.sequence_number - 1
     
     def close(self) -> None:
-        """Close transaction log"""
+        """
+Close transaction log"""
         self._flushing = False
         if self.flush_thread and self.flush_thread.is_alive():
             self.flush_thread.join(timeout=5)
@@ -827,7 +843,8 @@ class DurabilityManager:
         return filtered_entries[:limit]
     
     async def get_durability_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive durability metrics"""
+        """
+Get comprehensive durability metrics"""
         
         metrics = self.metrics.copy()
         
@@ -850,7 +867,8 @@ class DurabilityManager:
         return metrics
     
     async def _persist_entry(self, entry: TransactionLogEntry) -> None:
-        """Persist log entry based on strategy"""
+        """
+Persist log entry based on strategy"""
         
         if self.strategy == PersistenceStrategy.MEMORY_ONLY:
             return
@@ -885,7 +903,8 @@ class DurabilityManager:
                 self.transaction_log._flush_buffer()
     
     def _should_create_checkpoint(self) -> bool:
-        """Check if checkpoint should be created"""
+        """
+Check if checkpoint should be created"""
         
         if not self.checkpoint_manager:
             return False
@@ -897,7 +916,8 @@ class DurabilityManager:
         return (current_sequence - self.last_checkpoint_sequence) >= self.checkpoint_interval
     
     async def _create_checkpoint(self) -> None:
-        """Create system checkpoint"""
+        """
+Create system checkpoint"""
         
         if not self.checkpoint_manager:
             return

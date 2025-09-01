@@ -132,77 +132,92 @@ from .optimization import (
 
 
 def get_database_connection():
-    """Get the main database connection"""
+    """
+Get the main database connection"""
     return DatabaseConnection.get_instance()
 
 
 def get_session_manager():
-    """Get the database session manager"""
+    """
+Get the database session manager"""
     return SessionManager()
 
 
 def get_transaction_manager():
-    """Get the database transaction manager"""
+    """
+Get the database transaction manager"""
     return TransactionManager()
 
 
 def get_transaction_manager():
-    """Get the database transaction manager"""
+    """
+Get the database transaction manager"""
     return TransactionManager()
 
 
 def get_database_security():
-    """Get the database security manager"""
+    """
+Get the database security manager"""
     return DatabaseSecurity()
 
 
 def get_database_optimizer():
-    """Get the database optimizer"""
+    """
+Get the database optimizer"""
     return DatabaseOptimizer()
 
 
 def get_query_analyzer():
-    """Get the query analyzer"""
+    """
+Get the query analyzer"""
     return QueryAnalyzer()
 
 
 def get_index_optimizer():
-    """Get the index optimizer"""
+    """
+Get the index optimizer"""
     return IndexOptimizer()
 
 
 def get_database_cache():
-    """Get the database cache manager"""
+    """
+Get the database cache manager"""
     return DatabaseCache()
 
 
 def get_database_monitor():
-    """Get the database monitor"""
+    """
+Get the database monitor"""
     return DatabaseMonitor()
 
 
 def get_performance_monitor():
-    """Get the performance monitor"""
+    """
+Get the performance monitor"""
     return PerformanceMonitor()
 
 
 def get_health_checker():
-    """Get the health checker"""
+    """
+Get the health checker"""
     return HealthChecker()
 
 
 def get_database_auditor():
-    """Get the database auditor"""
+    """
+Get the database auditor"""
     return DatabaseAuditor()
 
 
 def get_access_control_manager():
-    """Get the access control manager"""
+    """
+Get the access control manager"""
     return AccessControlManager()
 
 
 async def initialize_database_services():
-    """Initialize all database services"""
+    """
+Initialize all database services"""
     logger.info("Initializing database services...")
     
     try:
@@ -298,57 +313,68 @@ def get_creator_repository():
 
 
 def get_content_repository():
-    """Get the content repository"""
+    """
+Get the content repository"""
     return ContentRepository()
 
 
 def get_media_repository():
-    """Get the media repository"""
+    """
+Get the media repository"""
     return MediaRepository()
 
 
 def get_copyright_repository():
-    """Get the copyright repository"""
+    """
+Get the copyright repository"""
     return CopyrightRepository()
 
 
 def get_license_repository():
-    """Get the license repository"""
+    """
+Get the license repository"""
     return LicenseRepository()
 
 
 def get_collaboration_repository():
-    """Get the collaboration repository"""
+    """
+Get the collaboration repository"""
     return CollaborationRepository()
 
 
 def get_project_repository():
-    """Get the project repository"""
+    """
+Get the project repository"""
     return ProjectRepository()
 
 
 def get_revenue_repository():
-    """Get the revenue repository"""
+    """
+Get the revenue repository"""
     return RevenueRepository()
 
 
 def get_distribution_repository():
-    """Get the distribution repository"""
+    """
+Get the distribution repository"""
     return DistributionRepository()
 
 
 def get_analytics_repository():
-    """Get the analytics repository"""
+    """
+Get the analytics repository"""
     return AnalyticsRepository()
 
 
 def get_notification_repository():
-    """Get the notification repository"""
+    """
+Get the notification repository"""
     return NotificationRepository()
 
 
 def get_all_repositories():
-    """Get all repository instances"""
+    """
+Get all repository instances"""
     return {
         'user': get_user_repository(),
         'creator': get_creator_repository(),
@@ -366,37 +392,44 @@ def get_all_repositories():
 
 
 def get_migration_manager():
-    """Get the database migration manager"""
+    """
+Get the database migration manager"""
     return MigrationManager()
 
 
 def get_schema_manager():
-    """Get the database schema manager"""
+    """
+Get the database schema manager"""
     return SchemaManager()
 
 
 def get_backup_manager():
-    """Get the database backup manager"""
+    """
+Get the database backup manager"""
     return BackupManager()
 
 
 def get_query_builder():
-    """Get the standard query builder"""
+    """
+Get the standard query builder"""
     return QueryBuilder()
 
 
 def get_advanced_query_builder():
-    """Get the advanced query builder"""
+    """
+Get the advanced query builder"""
     return AdvancedQueryBuilder()
 
 
 def get_database_cache():
-    """Get the database cache manager"""
+    """
+Get the database cache manager"""
     return DatabaseCache()
 
 
 def get_database_monitor():
-    """Get the database monitoring service"""
+    """
+Get the database monitoring service"""
     return DatabaseMonitor()
 
 

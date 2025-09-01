@@ -5,6 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 import hashlib
 import numpy as np
 import cv2
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Advanced fingerprint structure for multi-format content"""
+    """
+Advanced fingerprint structure for multi-format content"""
     content_id: str
     content_type: str
     hash_sha256: str
@@ -141,7 +143,8 @@ class AdvancedContentAnalyzer:
         return features
         
     def _generate_audio_hash(self, features: Dict) -> str:
-        """Generate perceptual hash from audio features"""
+        """
+Generate perceptual hash from audio features"""
         # Create feature vector
         feature_vector = []
         for key, value in features.items():
@@ -156,7 +159,8 @@ class AdvancedContentAnalyzer:
         return hashlib.sha256(normalized.tobytes()).hexdigest()
         
     def _calculate_audio_confidence(self, features: Dict) -> float:
-        """Calculate confidence score for audio fingerprint"""
+        """
+Calculate confidence score for audio fingerprint"""
         confidence = 0.8  # Base confidence
         
         # Adjust based on feature quality
@@ -170,7 +174,8 @@ class AdvancedContentAnalyzer:
         return min(confidence, 1.0)
         
     def _analyze_video_content(self, video_data: bytes, fingerprint: ContentFingerprint):
-        """Advanced video content analysis"""
+        """
+Advanced video content analysis"""
         try:
             # Extract video frames and audio
             frames, audio_track = self._extract_video_components(video_data)
@@ -200,7 +205,8 @@ class AdvancedContentAnalyzer:
         return frames, audio_track
         
     def _extract_video_features(self, frames: List[np.ndarray]) -> Dict:
-        """Extract visual features from video frames"""
+        """
+Extract visual features from video frames"""
         features = {
             'frame_count': len(frames),
             'average_brightness': [],
@@ -225,13 +231,15 @@ class AdvancedContentAnalyzer:
         return features
         
     def _generate_video_hash(self, visual_features: Dict) -> str:
-        """Generate perceptual hash for video content"""
+        """
+Generate perceptual hash for video content"""
         # Combine visual features into hash
         feature_string = str(visual_features)
         return hashlib.sha256(feature_string.encode()).hexdigest()
         
     def _calculate_video_confidence(self, visual_features: Dict) -> float:
-        """Calculate confidence score for video fingerprint"""
+        """
+Calculate confidence score for video fingerprint"""
         confidence = 0.7
         
         frame_count = visual_features.get('frame_count', 0)
@@ -243,7 +251,8 @@ class AdvancedContentAnalyzer:
         return min(confidence, 1.0)
         
     def _analyze_image_content(self, image_data: bytes, fingerprint: ContentFingerprint):
-        """Advanced image content analysis"""
+        """
+Advanced image content analysis"""
         try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
@@ -299,7 +308,8 @@ class AdvancedContentAnalyzer:
         return features
         
     def _calculate_image_confidence(self, visual_features: Dict) -> float:
-        """Calculate confidence score for image fingerprint"""
+        """
+Calculate confidence score for image fingerprint"""
         confidence = 0.85
         
         # Adjust based on image quality indicators
@@ -310,7 +320,8 @@ class AdvancedContentAnalyzer:
         return min(confidence, 1.0)
         
     def _analyze_text_content(self, text_data: bytes, fingerprint: ContentFingerprint):
-        """Advanced text content analysis"""
+        """
+Advanced text content analysis"""
         try:
             text = text_data.decode('utf-8')
             
@@ -358,7 +369,8 @@ class AdvancedContentAnalyzer:
         return hashlib.sha256(normalized.encode()).hexdigest()
         
     def _calculate_text_confidence(self, text_features: Dict) -> float:
-        """Calculate confidence score for text fingerprint"""
+        """
+Calculate confidence score for text fingerprint"""
         confidence = 0.8
         
         word_count = text_features.get('word_count', 0)
@@ -371,7 +383,8 @@ class AdvancedContentAnalyzer:
 
 
 class ContentMatchingEngine:
-    """Advanced content matching and similarity detection engine"""
+    """
+Advanced content matching and similarity detection engine"""
     
     def __init__(self):
         self.similarity_threshold = 0.85
@@ -413,7 +426,8 @@ class ContentMatchingEngine:
         return matches
         
     def _calculate_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate comprehensive similarity score between fingerprints"""
+        """
+Calculate comprehensive similarity score between fingerprints"""
         if fp1.content_type != fp2.content_type:
             return 0.0
             
@@ -431,7 +445,8 @@ class ContentMatchingEngine:
             return 1.0 if fp1.hash_sha256 == fp2.hash_sha256 else 0.0
             
     def _calculate_audio_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate audio content similarity"""
+        """
+Calculate audio content similarity"""
         if not (fp1.audio_fingerprint and fp2.audio_fingerprint):
             return 0.0
             
@@ -470,7 +485,8 @@ class ContentMatchingEngine:
         return sum(similarities) if similarities else 0.0
         
     def _calculate_image_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate image content similarity"""
+        """
+Calculate image content similarity"""
         if not (fp1.perceptual_hash and fp2.perceptual_hash):
             return 0.0
             
@@ -492,7 +508,8 @@ class ContentMatchingEngine:
         return sum(similarities) / len(similarities)
         
     def _calculate_text_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate text content similarity"""
+        """
+Calculate text content similarity"""
         if not (fp1.text_features and fp2.text_features):
             return 0.0
             
@@ -517,7 +534,8 @@ class ContentMatchingEngine:
         return sum(similarities) if similarities else 0.0
         
     def _calculate_video_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate video content similarity"""
+        """
+Calculate video content similarity"""
         similarities = []
         
         # Visual similarity
@@ -534,7 +552,8 @@ class ContentMatchingEngine:
         return sum(similarities) if similarities else 0.0
         
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between two vectors"""
+        """
+Calculate cosine similarity between two vectors"""
         if vec1.size == 0 or vec2.size == 0:
             return 0.0
             
@@ -553,7 +572,8 @@ class ContentMatchingEngine:
         return dot_product / (norm1 * norm2)
         
     def _calculate_frequency_similarity(self, freq1: Dict, freq2: Dict) -> float:
-        """Calculate similarity between character frequency distributions"""
+        """
+Calculate similarity between character frequency distributions"""
         all_chars = set(freq1.keys()) | set(freq2.keys())
         
         if not all_chars:
@@ -565,7 +585,8 @@ class ContentMatchingEngine:
         return self._cosine_similarity(vec1, vec2)
         
     def _calculate_visual_features_similarity(self, features1: Dict, features2: Dict) -> float:
-        """Calculate similarity between visual features"""
+        """
+Calculate similarity between visual features"""
         similarities = []
         
         # Frame count similarity
@@ -596,7 +617,8 @@ class ContentMatchingEngine:
         return sum(similarities) if similarities else 0.0
         
     def _calculate_histogram_similarity(self, hist1: List, hist2: List) -> float:
-        """Calculate similarity between color histograms"""
+        """
+Calculate similarity between color histograms"""
         h1 = np.array(hist1)
         h2 = np.array(hist2)
         
@@ -609,7 +631,8 @@ class ContentMatchingEngine:
         return np.sum(intersection)
         
     def _determine_match_type(self, similarity_score: float) -> str:
-        """Determine the type of match based on similarity score"""
+        """
+Determine the type of match based on similarity score"""
         if similarity_score >= 0.95:
             return "EXACT_MATCH"
         elif similarity_score >= 0.90:
@@ -642,7 +665,8 @@ class ContentMatchingEngine:
         return analysis
         
     def _analyze_audio_match(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> Dict:
-        """Detailed audio match analysis"""
+        """
+Detailed audio match analysis"""
         if not (fp1.audio_fingerprint and fp2.audio_fingerprint):
             return {}
             
@@ -661,7 +685,8 @@ class ContentMatchingEngine:
         return analysis
         
     def _analyze_image_match(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> Dict:
-        """Detailed image match analysis"""
+        """
+Detailed image match analysis"""
         if not (fp1.visual_features and fp2.visual_features):
             return {}
             
@@ -676,7 +701,8 @@ class ContentMatchingEngine:
         return analysis
         
     def _analyze_text_match(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> Dict:
-        """Detailed text match analysis"""
+        """
+Detailed text match analysis"""
         if not (fp1.text_features and fp2.text_features):
             return {}
             

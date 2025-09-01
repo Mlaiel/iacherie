@@ -31,6 +31,7 @@ Any violation will result in IMMEDIATE LEGAL ACTION under:
 
 WE MONITOR FOR UNAUTHORIZED USE - YOU WILL BE CAUGHT AND PROSECUTED
 """
+
 import asyncio
 import argparse
 import json
@@ -64,7 +65,8 @@ class CrawlerCLI:
         self.api: Optional[CrawlerServiceAPI] = None
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration."""
+        """
+Setup logging configuration."""
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

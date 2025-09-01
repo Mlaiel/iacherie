@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -32,7 +33,9 @@ settings = get_settings()
 
 
 class MarketplaceType(Enum):
-    """Types of supported marketplaces."""
+    """
+Types of supported marketplaces."""
+
     STOCK_PHOTO = "stock_photo"
     STOCK_VIDEO = "stock_video"
     MUSIC_LICENSING = "music_licensing"
@@ -47,6 +50,7 @@ class MarketplaceType(Enum):
 
 class ListingStatus(Enum):
     """Content listing status."""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     ACTIVE = "active"
@@ -74,7 +78,8 @@ class MarketplaceAccount:
 
 @dataclass
 class ContentListing:
-    """Content listing on marketplace."""
+    """
+Content listing on marketplace."""
     listing_id: str
     marketplace_account_id: str
     content_id: str
@@ -94,7 +99,8 @@ class ContentListing:
 
 @dataclass
 class MarketplaceOpportunity:
-    """Marketplace opportunity identification."""
+    """
+Marketplace opportunity identification."""
     opportunity_id: str
     marketplace: str
     content_type: str
@@ -115,14 +121,16 @@ class MarketplaceConnector:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the marketplace connector."""
+        """
+Initialize the marketplace connector."""
         self.config = config or MonetizationConfig()
         self._api_manager = MarketplaceAPIManager()
         self._connected_accounts = {}
         self._sync_status = {}
         
     async def initialize(self) -> None:
-        """Initialize the marketplace connector."""
+        """
+Initialize the marketplace connector."""
         try:
             await self._api_manager.initialize()
             await self._load_marketplace_accounts()
@@ -516,24 +524,28 @@ class MarketplaceConnector:
     async def _validate_marketplace_credentials(
         self, marketplace: str, credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate marketplace credentials."""
+        """
+Validate marketplace credentials."""
         # Implementation for credential validation
         pass
     
     async def _fetch_account_info(
         self, marketplace: str, credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Fetch account information from marketplace."""
+        """
+Fetch account information from marketplace."""
         # Implementation for account info fetching
         pass
     
     async def _encrypt_credentials(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt marketplace credentials."""
+        """
+Encrypt marketplace credentials."""
         # Implementation for credential encryption
         pass
     
     def _generate_account_id(self) -> str:
-        """Generate unique account ID."""
+        """
+Generate unique account ID."""
         return f"MKT_{datetime.now().strftime('%Y%m%d')}_{hash(datetime.now().isoformat())}"
     
     def _generate_opportunity_id(self) -> str:

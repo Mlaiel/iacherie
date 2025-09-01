@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Universal web crawler for comprehensive website monitoring and content extraction.
 Provides advanced crawling capabilities for any website with intelligent content detection.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebPage:
-    """Web page data structure."""
+    """
+Web page data structure."""
     url: str
     title: str
     content: str
@@ -92,7 +94,8 @@ class CrawlResult:
 
 @dataclass
 class WebViolation:
-    """Web content violation detection result."""
+    """
+Web content violation detection result."""
     violation_id: str
     url: str
     violation_type: str
@@ -136,7 +139,8 @@ class UniversalWebCrawler:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize universal web crawler."""
+        """
+Initialize universal web crawler."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -556,7 +560,8 @@ class UniversalWebCrawler:
             await self._crawl_url(job_id, url, depth)
     
     async def _crawl_url(self, job_id: str, url: str, depth: int) -> None:
-        """Crawl a single URL."""
+        """
+Crawl a single URL."""
         try:
             job = self.crawl_jobs[job_id]
             result = self.crawl_results[job_id]
@@ -765,7 +770,8 @@ class UniversalWebCrawler:
         }
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific crawl job."""
+        """
+Get status of a specific crawl job."""
         if job_id not in self.crawl_jobs:
             return None
         
@@ -789,7 +795,8 @@ class UniversalWebCrawler:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
+        """
+Get recent violations."""
         recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
@@ -813,7 +820,8 @@ class UniversalWebCrawler:
         ]
     
     def get_crawled_pages(self, domain: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get crawled pages."""
+        """
+Get crawled pages."""
         pages = list(self.pages.values())
         
         # Filter by domain if specified
@@ -841,7 +849,8 @@ class UniversalWebCrawler:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the universal web crawler."""
+        """
+Shutdown the universal web crawler."""
         try:
             self._logger.info("Shutting down universal web crawler...")
             

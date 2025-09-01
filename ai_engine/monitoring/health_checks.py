@@ -4,10 +4,11 @@ Enterprise-grade health monitoring and system status verification for IA Influen
 Provides comprehensive health checks for all system components and dependencies.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import json
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health check status levels"""
+    """
+Health check status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     DEGRADED = "degraded"
@@ -41,6 +44,7 @@ class HealthStatus(Enum):
 
 class ComponentType(Enum):
     """Types of system components"""
+
     DATABASE = "database"
     CACHE = "cache"
     API = "api"
@@ -139,7 +143,8 @@ class HealthChecks:
         self._register_default_components()
         
     async def start_monitoring(self) -> None:
-        """Start health check monitoring"""
+        """
+Start health check monitoring"""
         if self.is_monitoring:
             logger.warning("Health check monitoring is already running")
             return
@@ -871,7 +876,8 @@ class HealthChecks:
         return await self._check_api(name, config)  # Same as API check
         
     async def _check_network(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check network connectivity"""
+        """
+Check network connectivity"""
         endpoint = config.get("endpoint", "8.8.8.8:53")
         
         try:
@@ -1062,7 +1068,8 @@ class HealthChecks:
         return (total_score / summary.total_components) * 100
         
     async def _collect_health_metrics(self, result: HealthCheckResult) -> None:
-        """Collect health check metrics"""
+        """
+Collect health check metrics"""
         # Collect component health metric
         await self.metrics_collector.collect_metric(
             MetricEntry(

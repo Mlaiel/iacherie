@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from ...utils.vector_search import VectorSearchEngine
 
 
 class MemoryType(Enum):
-    """Types of memory stored in the system"""
+    """
+Types of memory stored in the system"""
+
     EPISODIC = "episodic"        # Specific conversation episodes
     SEMANTIC = "semantic"        # General knowledge and concepts
     PROCEDURAL = "procedural"    # How-to knowledge and workflows
@@ -41,6 +44,7 @@ class MemoryType(Enum):
 
 class MemoryPersistence(Enum):
     """Memory persistence levels"""
+
     TRANSIENT = "transient"      # Session-only memory
     SHORT_TERM = "short_term"    # Days to weeks
     MEDIUM_TERM = "medium_term"  # Weeks to months
@@ -66,7 +70,8 @@ class MemoryNode:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def update_access(self):
-        """Update access statistics"""
+        """
+Update access statistics"""
         self.last_accessed = datetime.utcnow()
         self.access_count += 1
         
@@ -76,7 +81,8 @@ class MemoryNode:
         self.importance_score = (recency_factor * 0.3 + frequency_factor * 0.7)
     
     def is_expired(self) -> bool:
-        """Check if memory should expire"""
+        """
+Check if memory should expire"""
         if self.persistence == MemoryPersistence.PERMANENT:
             return False
         
@@ -94,7 +100,8 @@ class MemoryNode:
         return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "memory_id": self.memory_id,
             "content": self.content,
@@ -122,7 +129,8 @@ class MemoryCluster:
     last_updated: datetime
     
     def update_centroid(self):
-        """Update cluster centroid based on member embeddings"""
+        """
+Update cluster centroid based on member embeddings"""
         if not self.memories or not any(m.embedding is not None for m in self.memories):
             return
         
@@ -134,7 +142,8 @@ class MemoryCluster:
 
 @dataclass
 class MemorySearchResult:
-    """Result from memory search operation"""
+    """
+Result from memory search operation"""
     memory_node: MemoryNode
     relevance_score: float
     reasoning: str
@@ -733,7 +742,8 @@ class ContextualMemory:
         query: str,
         similarity_score: float
     ) -> str:
-        """Generate reasoning for search result"""
+        """
+Generate reasoning for search result"""
         reasons = []
         
         if similarity_score > 0.8:
@@ -780,7 +790,8 @@ class ContextualMemory:
         user_id: str,
         new_memory: MemoryNode
     ):
-        """Auto-detect related memories using similarity"""
+        """
+Auto-detect related memories using similarity"""
         if new_memory.embedding is None:
             return
         
@@ -805,7 +816,8 @@ class ContextualMemory:
         user_id: str,
         new_memory: MemoryNode
     ):
-        """Update memory clusters with new memory"""
+        """
+Update memory clusters with new memory"""
         if new_memory.embedding is None:
             return
         
@@ -855,7 +867,8 @@ class ContextualMemory:
                 cluster.update_centroid()
     
     async def _enforce_memory_limits(self, user_id: str):
-        """Enforce memory limits per user"""
+        """
+Enforce memory limits per user"""
         user_memories = self.user_memories.get(user_id, {})
         
         if len(user_memories) > self.max_memories_per_user:
@@ -871,7 +884,8 @@ class ContextualMemory:
                 await self.delete_memory(user_id, memory.memory_id)
     
     async def _background_maintenance(self):
-        """Background task for memory maintenance"""
+        """
+Background task for memory maintenance"""
         while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
@@ -907,7 +921,8 @@ class ContextualMemory:
                 memory.importance_score = (age_factor * 0.3 + access_factor * 0.7)
     
     async def _optimize_clusters(self):
-        """Optimize memory clusters"""
+        """
+Optimize memory clusters"""
         for user_id, clusters in self.memory_clusters.items():
             # Merge similar clusters
             merged_clusters = []
@@ -934,7 +949,8 @@ class ContextualMemory:
             self.memory_clusters[user_id] = merged_clusters
     
     async def _load_memories(self):
-        """Load memories from persistent storage"""
+        """
+Load memories from persistent storage"""
         try:
             # Load from cache or database
             memories_data = await self.cache_manager.get("user_memories")

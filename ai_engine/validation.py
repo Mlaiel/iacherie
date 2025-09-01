@@ -3,13 +3,14 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Complete validation and health check system for all AI components.
 
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This validation system is proprietary and confidential.
 Unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -28,7 +29,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ValidationStatus(Enum):
-    """Validation status enumeration"""
+    """
+Validation status enumeration"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -53,7 +56,8 @@ class AIModuleValidator:
     """
     
     def __init__(self):
-        """Initialize the validation system"""
+        """
+Initialize the validation system"""
         self.results: List[ValidationResult] = []
         self.ai_root_path = Path(__file__).parent
         self.required_modules = [

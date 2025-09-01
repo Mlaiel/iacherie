@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
+    """
+Types of metrics tracked"""
+
     TRANSLATION_COUNT = "translation_count"
     TRANSLATION_LATENCY = "translation_latency"
     TRANSLATION_QUALITY = "translation_quality"
@@ -53,6 +56,7 @@ class MetricType(Enum):
 
 class QualityThreshold(Enum):
     """Quality thresholds for different use cases"""
+
     CRITICAL = 0.95  # Rights protection, legal content
     HIGH = 0.90      # Brand collaboration, monetization
     STANDARD = 0.85  # General communication
@@ -61,7 +65,8 @@ class QualityThreshold(Enum):
 
 @dataclass
 class TranslationMetrics:
-    """Comprehensive translation performance metrics"""
+    """
+Comprehensive translation performance metrics"""
     translation_id: str
     timestamp: datetime
     source_language: SupportedLanguage
@@ -98,7 +103,8 @@ class TranslationMetrics:
 
 @dataclass
 class LanguagePerformanceReport:
-    """Performance report for specific language pairs"""
+    """
+Performance report for specific language pairs"""
     source_language: SupportedLanguage
     target_language: SupportedLanguage
     period_start: datetime
@@ -131,7 +137,8 @@ class LanguagePerformanceReport:
 
 @dataclass
 class CreatorTypeReport:
-    """Performance report for specific creator types"""
+    """
+Performance report for specific creator types"""
     creator_type: CreatorType
     period_start: datetime
     period_end: datetime
@@ -181,7 +188,8 @@ class MultilingualMetricsCollector:
         self.error_alerts: List[Dict[str, Any]] = []
     
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics for monitoring"""
+        """
+Setup Prometheus metrics for monitoring"""
         
         self.translation_counter = PrometheusCounter(
             'multilingual_translations_total',
@@ -228,7 +236,8 @@ class MultilingualMetricsCollector:
         )
     
     async def record_translation_metrics(self, metrics: TranslationMetrics):
-        """Record comprehensive translation metrics"""
+        """
+Record comprehensive translation metrics"""
         
         # Update Prometheus metrics
         self.translation_counter.labels(
@@ -524,7 +533,8 @@ class MultilingualMetricsCollector:
         )
     
     async def detect_quality_anomalies(self) -> List[Dict[str, Any]]:
-        """Detect quality anomalies and potential issues"""
+        """
+Detect quality anomalies and potential issues"""
         
         anomalies = []
         recent_metrics = [
@@ -655,6 +665,7 @@ class MultilingualMetricsCollector:
         self.active_sessions[session_id] = datetime.now(timezone.utc)
     
     def end_session(self, session_id: str):
-        """End a multilingual session"""
+        """
+End a multilingual session"""
         if session_id in self.active_sessions:
             del self.active_sessions[session_id]

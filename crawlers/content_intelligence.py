@@ -12,6 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class ContentType(Enum):
-    """Content type enumeration."""
+    """
+Content type enumeration."""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -57,6 +60,7 @@ class ContentType(Enum):
 
 class ContentCategory(Enum):
     """Content category classification."""
+
     MUSIC = "music"
     PODCAST = "podcast"
     EDUCATIONAL = "educational"
@@ -82,7 +86,8 @@ class ContentFeatures:
 
 @dataclass
 class ContentInsights:
-    """Content intelligence insights."""
+    """
+Content intelligence insights."""
     content_id: str
     category: ContentCategory
     sentiment_score: float
@@ -113,7 +118,8 @@ class ContentIntelligenceEngine:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize AI models for content analysis."""
+        """
+Initialize AI models for content analysis."""
         try:
             # Text analysis models
             self.text_tokenizer = AutoTokenizer.from_pretrained(
@@ -366,7 +372,8 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def _analyze_video_content(self, video_data: Union[str, Path]) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Analyze video content and extract features."""
+        """
+Analyze video content and extract features."""
         features = {}
         
         # Open video
@@ -445,7 +452,8 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def generate_insights(self, content_features: ContentFeatures) -> ContentInsights:
-        """Generate intelligent insights from content features."""
+        """
+Generate intelligent insights from content features."""
         try:
             # Classify content category
             category = self._classify_content_category(content_features)
@@ -495,7 +503,8 @@ class ContentIntelligenceEngine:
         return hashlib.sha256(content_str.encode()).hexdigest()[:16]
     
     def _calculate_confidence(self, features: Dict[str, Any]) -> float:
-        """Calculate confidence score for analysis."""
+        """
+Calculate confidence score for analysis."""
         # Simple confidence calculation based on feature completeness
         total_features = len(features)
         non_empty_features = sum(1 for v in features.values() if v is not None and v != "" and v != [])
@@ -510,7 +519,8 @@ class ContentIntelligenceEngine:
         return (avg_word_length * 0.3 + vocabulary_diversity * 0.7) * 10
     
     def _classify_content_category(self, content_features: ContentFeatures) -> ContentCategory:
-        """Classify content into categories using AI."""
+        """
+Classify content into categories using AI."""
         # Simplified classification logic
         features = content_features.features
         
@@ -535,13 +545,15 @@ class ContentIntelligenceEngine:
         return ContentCategory.ENTERTAINMENT  # Default
     
     def _extract_sentiment_score(self, content_features: ContentFeatures) -> float:
-        """Extract sentiment score from content features."""
+        """
+Extract sentiment score from content features."""
         if 'text' in content_features.features:
             return content_features.features['text'].get('sentiment_score', 0.5)
         return 0.5  # Neutral default
     
     def _predict_engagement(self, content_features: ContentFeatures) -> float:
-        """Predict engagement score using ML."""
+        """
+Predict engagement score using ML."""
         # Simplified engagement prediction
         score = 0.5
         
@@ -559,7 +571,8 @@ class ContentIntelligenceEngine:
         return min(1.0, score)
     
     def _calculate_viral_potential(self, content_features: ContentFeatures) -> float:
-        """Calculate viral potential score."""
+        """
+Calculate viral potential score."""
         # Simplified viral potential calculation
         potential = 0.3
         
@@ -578,13 +591,15 @@ class ContentIntelligenceEngine:
         return min(1.0, potential)
     
     def _extract_trending_topics(self, content_features: ContentFeatures) -> List[str]:
-        """Extract trending topics from content."""
+        """
+Extract trending topics from content."""
         if 'text' in content_features.features:
             return content_features.features['text'].get('top_topics', [])[:5]
         return []
     
     def _identify_audience_segments(self, content_features: ContentFeatures) -> List[str]:
-        """Identify target audience segments."""
+        """
+Identify target audience segments."""
         segments = []
         
         category = self._classify_content_category(content_features)
@@ -599,7 +614,8 @@ class ContentIntelligenceEngine:
         return segments
     
     def _generate_optimization_suggestions(self, content_features: ContentFeatures) -> List[str]:
-        """Generate content optimization suggestions."""
+        """
+Generate content optimization suggestions."""
         suggestions = []
         
         if content_features.content_type == ContentType.TEXT:
@@ -665,5 +681,6 @@ class ContentIntelligenceEngine:
 
 # Factory function
 def create_content_intelligence_engine() -> ContentIntelligenceEngine:
-    """Create and return a content intelligence engine instance."""
+    """
+Create and return a content intelligence engine instance."""
     return ContentIntelligenceEngine()

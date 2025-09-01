@@ -8,7 +8,7 @@ Responsibility: Advanced analytics and performance metrics with AI insights
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ ANALYTICS REPOSITORY ARCHITECTURE:
 Data Collection → Metrics Calculation → Trend Analysis → 
 Predictive Modeling → Insight Generation → Visualization → Recommendations
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -39,7 +40,9 @@ except ImportError:
     AnalyticsModel = object
 
 class MetricType(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     GROWTH = "growth"
@@ -49,6 +52,7 @@ class MetricType(Enum):
 
 class TimeRange(Enum):
     """Time ranges for analytics"""
+
     LAST_24H = "24h"
     LAST_7D = "7d"
     LAST_30D = "30d"
@@ -58,6 +62,7 @@ class TimeRange(Enum):
 
 class AnalyticsGranularity(Enum):
     """Data granularity for analytics"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -78,7 +83,8 @@ class EngagementMetrics:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance analytics metrics"""
+    """
+Performance analytics metrics"""
     content_count: int
     total_reach: int
     impression_count: int
@@ -90,7 +96,8 @@ class PerformanceMetrics:
 
 @dataclass
 class GrowthMetrics:
-    """Growth analytics metrics"""
+    """
+Growth analytics metrics"""
     follower_growth_rate: float
     content_growth_rate: float
     engagement_growth_rate: float
@@ -102,7 +109,8 @@ class GrowthMetrics:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analytics metrics"""
+    """
+Revenue analytics metrics"""
     total_revenue: float
     revenue_per_content: float
     revenue_per_follower: float
@@ -113,7 +121,8 @@ class RevenueMetrics:
 
 @dataclass
 class PredictiveAnalytics:
-    """AI-powered predictive analytics"""
+    """
+AI-powered predictive analytics"""
     growth_forecast: Dict[str, float]
     revenue_projection: Dict[str, float]
     optimal_posting_times: List[str]
@@ -123,7 +132,8 @@ class PredictiveAnalytics:
 
 @dataclass
 class CompetitiveAnalytics:
-    """Competitive analysis metrics"""
+    """
+Competitive analysis metrics"""
     market_position: str
     competitor_performance: Dict[str, Any]
     market_share: float
@@ -459,7 +469,8 @@ class AnalyticsRepository(BaseRepository):
                                performance: PerformanceMetrics,
                                growth: GrowthMetrics,
                                revenue: RevenueMetrics) -> float:
-        """Calculate overall performance score"""
+        """
+Calculate overall performance score"""
         scores = {
             MetricType.ENGAGEMENT: engagement.engagement_rate,
             MetricType.PERFORMANCE: performance.quality_score,
@@ -480,7 +491,8 @@ class AnalyticsRepository(BaseRepository):
                          performance: PerformanceMetrics,
                          growth: GrowthMetrics,
                          revenue: RevenueMetrics) -> List[str]:
-        """Generate actionable insights"""
+        """
+Generate actionable insights"""
         insights = []
         
         # Engagement insights
@@ -522,24 +534,29 @@ class AnalyticsRepository(BaseRepository):
         return {}
     
     def _get_performance_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch performance data from database"""
+        """
+Fetch performance data from database"""
         return {}
     
     def _get_growth_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch growth data from database"""
+        """
+Fetch growth data from database"""
         return {}
     
     def _get_revenue_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch revenue data from database"""
+        """
+Fetch revenue data from database"""
         return {}
     
     def _get_historical_data(self, creator_id: str) -> Dict[str, Any]:
-        """Fetch historical data for predictions"""
+        """
+Fetch historical data for predictions"""
         return {}
 
 
 class AsyncAnalyticsRepository(AsyncBaseRepository):
-    """Asynchronous analytics repository for high-performance analytics"""
+    """
+Asynchronous analytics repository for high-performance analytics"""
     
     def __init__(self, db_connection=None, cache_manager=None, 
                  ai_processor=None, prediction_service=None):
@@ -557,6 +574,7 @@ class AsyncAnalyticsRepository(AsyncBaseRepository):
     
     async def generate_comprehensive_report_async(self, creator_id: str,
                                                 time_range: TimeRange = TimeRange.LAST_30D) -> Dict[str, Any]:
-        """Generate comprehensive report asynchronously"""
+        """
+Generate comprehensive report asynchronously"""
         # Async implementation would go here
         pass

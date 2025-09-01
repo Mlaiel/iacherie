@@ -2,7 +2,7 @@
 ========================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 Unauthorized use, copying or distribution prohibited.
@@ -11,6 +11,7 @@ Professional scheduling system for automated content monitoring.
 Manages periodic crawling tasks, priority scheduling, load balancing,
 and intelligent resource allocation across multiple platforms.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ import redis
 logger = logging.getLogger(__name__)
 
 class ScheduleType(Enum):
-    """Types of scheduling supported."""
+    """
+Types of scheduling supported."""
+
     IMMEDIATE = "immediate"
     PERIODIC = "periodic"
     CRON = "cron"
@@ -33,6 +36,7 @@ class ScheduleType(Enum):
 
 class Priority(Enum):
     """Task priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -41,7 +45,8 @@ class Priority(Enum):
 
 @dataclass
 class ScheduledTask:
-    """Represents a scheduled crawling task."""
+    """
+Represents a scheduled crawling task."""
     
     schedule_id: str
     name: str
@@ -72,7 +77,8 @@ class ScheduledTask:
     conditions: Dict[str, Any] = field(default_factory=dict)
     
     def is_due(self) -> bool:
-        """Check if task is due for execution."""
+        """
+Check if task is due for execution."""
         if not self.enabled:
             return False
         
@@ -82,7 +88,8 @@ class ScheduledTask:
         return datetime.utcnow() >= self.next_execution
     
     def calculate_next_execution(self) -> Optional[datetime]:
-        """Calculate next execution time based on schedule type."""
+        """
+Calculate next execution time based on schedule type."""
         
         now = datetime.utcnow()
         
@@ -103,7 +110,8 @@ class ScheduledTask:
         return None
     
     def mark_executed(self, success: bool = True):
-        """Mark task as executed and update counters."""
+        """
+Mark task as executed and update counters."""
         
         self.last_execution = datetime.utcnow()
         self.execution_count += 1
@@ -395,7 +403,8 @@ class CrawlingScheduler:
         }
     
     async def _scheduler_loop(self):
-        """Main scheduler loop that processes due tasks."""
+        """
+Main scheduler loop that processes due tasks."""
         
         while self.is_running:
             try:
@@ -528,7 +537,8 @@ class CrawlingScheduler:
         return True
     
     def _is_platform_overloaded(self, platform: str) -> bool:
-        """Check if platform is currently overloaded."""
+        """
+Check if platform is currently overloaded."""
         
         current_load = self.platform_load.get(platform, 0)
         
@@ -545,7 +555,8 @@ class CrawlingScheduler:
         return current_load >= threshold
     
     async def _update_platform_load(self):
-        """Update platform load tracking based on running tasks."""
+        """
+Update platform load tracking based on running tasks."""
         
         # Reset load counters
         self.platform_load = {}
@@ -556,7 +567,8 @@ class CrawlingScheduler:
             self.platform_load[platform] = self.platform_load.get(platform, 0) + 1
     
     async def _cleanup_execution_history(self):
-        """Clean up old execution history records."""
+        """
+Clean up old execution history records."""
         
         cutoff_date = datetime.utcnow() - timedelta(days=30)
         
@@ -568,7 +580,8 @@ class CrawlingScheduler:
             ]
     
     async def _persist_task(self, task: ScheduledTask):
-        """Persist scheduled task to Redis."""
+        """
+Persist scheduled task to Redis."""
         
         try:
             task_data = {
@@ -609,7 +622,8 @@ class CrawlingScheduler:
             await self._persist_task(task)
     
     async def _load_persisted_schedules(self):
-        """Load scheduled tasks from Redis."""
+        """
+Load scheduled tasks from Redis."""
         
         try:
             # Find all scheduled task keys

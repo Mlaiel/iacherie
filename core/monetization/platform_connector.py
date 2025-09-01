@@ -2,8 +2,9 @@
 Multi-platform API integration and data synchronization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from ...core.exceptions import PlatformConnectionError, APIRateLimitError
 
 
 class PlatformStatus(Enum):
-    """Platform connection status"""
+    """
+Platform connection status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
@@ -34,6 +37,7 @@ class PlatformStatus(Enum):
 
 class DataSyncStatus(Enum):
     """Data synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -53,7 +57,8 @@ class PlatformCredentials:
     scopes: List[str] = None
     
     def is_expired(self) -> bool:
-        """Check if credentials are expired"""
+        """
+Check if credentials are expired"""
         if not self.expires_at:
             return False
         return datetime.now() >= self.expires_at
@@ -61,7 +66,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
+    """
+Platform performance metrics"""
     platform: str
     user_id: int
     followers_count: int
@@ -76,7 +82,8 @@ class PlatformMetrics:
 
 @dataclass
 class SyncResult:
-    """Data synchronization result"""
+    """
+Data synchronization result"""
     platform: str
     status: DataSyncStatus
     records_synced: int
@@ -86,7 +93,8 @@ class SyncResult:
 
 
 class PlatformConnector:
-    """Individual platform API connector"""
+    """
+Individual platform API connector"""
     
     def __init__(self, platform: str, credentials: PlatformCredentials):
         self.platform = platform
@@ -137,7 +145,8 @@ class PlatformConnector:
         self.status = PlatformStatus.DISCONNECTED
     
     async def refresh_credentials(self) -> bool:
-        """Refresh expired credentials"""
+        """
+Refresh expired credentials"""
         try:
             if not self.credentials.refresh_token:
                 raise PlatformConnectionError("No refresh token available")
@@ -325,7 +334,8 @@ class PlatformManager:
         platform: str, 
         credentials: PlatformCredentials
     ) -> bool:
-        """Add platform connection for user"""
+        """
+Add platform connection for user"""
         try:
             # Store credentials securely
             await self.api_key_manager.store_credentials(

@@ -7,6 +7,7 @@ Handles license creation, validation, tracking, and royalty distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Union
@@ -36,18 +37,22 @@ except ImportError:
     # Fallback for testing - create mock classes
     class LicenseRepository:
         def __init__(self):
-            """Initialize license repository with basic functionality"""
+            """
+Initialize license repository with basic functionality"""
             self.licenses = {}
             
     class ContentRepository:
         def __init__(self):
-            """Initialize content repository with basic functionality"""
+            """
+Initialize content repository with basic functionality"""
             self.content = {}
 
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """License type enumeration."""
+    """
+License type enumeration."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -58,6 +63,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status enumeration."""
+
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -67,6 +73,7 @@ class LicenseStatus(Enum):
 
 class UsageType(Enum):
     """Usage type enumeration."""
+
     STREAM = "stream"
     DOWNLOAD = "download"
     SYNC = "sync"
@@ -96,7 +103,8 @@ class ContentLicense:
 
 @dataclass
 class LicenseUsage:
-    """License usage record."""
+    """
+License usage record."""
     id: int
     license_id: int
     usage_type: UsageType
@@ -106,7 +114,8 @@ class LicenseUsage:
     timestamp: datetime
 
 class LicensingError(Exception):
-    """Exception for licensing-related errors"""
+    """
+Exception for licensing-related errors"""
     def __init__(self, message: str, error_code: str = None, details: dict = None):
         self.message = message
         self.error_code = error_code or "LICENSING_ERROR"
@@ -130,7 +139,8 @@ class LicensingManager:
     """
     
     def __init__(self):
-        """Initialize licensing manager."""
+        """
+Initialize licensing manager."""
         self.royalty_engine = RoyaltyEngine()
         self.usage_tracker = UsageTracker()
         self.contract_generator = ContractGenerator()
@@ -676,7 +686,8 @@ class LicensingManager:
         )
     
     async def _start_license_monitoring(self, license_id: int):
-        """Start monitoring for license compliance and expiration."""
+        """
+Start monitoring for license compliance and expiration."""
         if license_id not in self.monitoring_tasks:
             task = asyncio.create_task(
                 self._license_monitoring_loop(license_id)
@@ -684,7 +695,8 @@ class LicensingManager:
             self.monitoring_tasks[license_id] = task
     
     async def _license_monitoring_loop(self, license_id: int):
-        """Monitor license for expiration and compliance."""
+        """
+Monitor license for expiration and compliance."""
         try:
             while True:
                 license = await self.license_repo.get_license(license_id)

@@ -8,10 +8,11 @@ Responsibility: Orchestration intelligente des sauvegardes multi-format
 ===========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BackupConfiguration:
-    """Configuration avancée pour les sauvegardes"""
+    """
+Configuration avancée pour les sauvegardes"""
     backup_type: str = "incremental"
     compression_enabled: bool = True
     encryption_enabled: bool = True

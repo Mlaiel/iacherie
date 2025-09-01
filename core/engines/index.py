@@ -15,6 +15,7 @@ redistribution without explicit written permission from Fahed Mlaiel is
 strictly prohibited and will result in legal action.
 ================================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union
@@ -135,6 +136,7 @@ class EngineIndexService:
                 "step_1": {
                     "title": "Configure Engine Registry",
                     "code": """
+
 from backend.core.engines import EngineConfig, engine_registry
 
 config = EngineConfig(
@@ -150,6 +152,7 @@ engine_registry.configure(config)
                 "step_2": {
                     "title": "Initialize Engines", 
                     "code": """
+
 import asyncio
 from backend.core.engines import initialize_engines
 
@@ -174,6 +177,7 @@ results = asyncio.run(setup())
                 "step_3": {
                     "title": "Use Engines",
                     "code": """
+
 from backend.core.engines import get_engine
 
 # Get protection engine
@@ -228,6 +232,7 @@ result = await protection_engine.protect_content({
                 "revenue_analytics": {
                     "description": "Comprehensive revenue analytics and forecasting",
                     "example": """
+
 from datetime import datetime, timedelta
 
 # Get revenue analytics
@@ -249,6 +254,7 @@ analytics = await monetization_engine.get_revenue_analytics(
             },
             "monitoring": {
                 "health_checks": """
+
 from backend.core.engines import health_check
 
 # Check engine health
@@ -475,7 +481,8 @@ recommendations = await ai_engine.get_recommendations({
     # Private helper methods
     
     def _get_category_description(self, category: str) -> str:
-        """Get description for engine category"""
+        """
+Get description for engine category"""
         descriptions = {
             "ai_processing": "Advanced AI engines for content analysis, recommendations, and intelligent processing",
             "content_processing": "Content manipulation engines for audio, video, and multimedia processing",
@@ -554,17 +561,20 @@ def get_engine_catalog() -> Dict[str, Any]:
 
 
 def get_quick_start_guide() -> Dict[str, Any]:
-    """Get quick start guide"""
+    """
+Get quick start guide"""
     return index_service.get_quick_start_guide()
 
 
 def get_configuration_reference() -> Dict[str, Any]:
-    """Get configuration reference"""
+    """
+Get configuration reference"""
     return index_service.get_configuration_reference()
 
 
 def get_api_examples() -> Dict[str, Any]:
-    """Get API examples"""
+    """
+Get API examples"""
     return index_service.get_api_examples()
 
 

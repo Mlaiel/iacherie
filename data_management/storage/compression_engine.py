@@ -8,7 +8,7 @@ Enterprise compression engine for multi-format content optimization
 with intelligent algorithm selection and performance monitoring.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
 import logging
 import asyncio
@@ -54,7 +55,9 @@ import io
 logger = logging.getLogger(__name__)
 
 class CompressionAlgorithm(Enum):
-    """Supported compression algorithms"""
+    """
+Supported compression algorithms"""
+
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -81,7 +84,8 @@ class CompressionResult:
 
 @dataclass
 class CompressionConfig:
-    """Configuration for compression operations"""
+    """
+Configuration for compression operations"""
     algorithm: CompressionAlgorithm
     quality_level: int = 85  # 1-100 for lossy compression
     compression_level: int = 6  # 1-9 for lossless compression
@@ -90,7 +94,8 @@ class CompressionConfig:
     target_size_mb: Optional[float] = None
 
 class ContentTypeAnalyzer:
-    """Analyzes content to determine optimal compression strategy"""
+    """
+Analyzes content to determine optimal compression strategy"""
     
     @staticmethod
     def analyze_content(
@@ -98,7 +103,8 @@ class ContentTypeAnalyzer:
         filename: str, 
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze content to determine compression strategy"""
+        """
+Analyze content to determine compression strategy"""
         
         if not content_type:
             content_type = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
@@ -172,7 +178,8 @@ class ContentTypeAnalyzer:
     
     @staticmethod
     def _calculate_entropy(data: bytes, sample_size: int = 10000) -> float:
-        """Calculate Shannon entropy of data sample"""
+        """
+Calculate Shannon entropy of data sample"""
         if len(data) == 0:
             return 0.0
         
@@ -211,7 +218,8 @@ class CompressionEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize compression engine"""
+        """
+Initialize compression engine"""
         self.config = config or {}
         self.content_analyzer = ContentTypeAnalyzer()
         
@@ -255,7 +263,8 @@ class CompressionEngine:
             return False
     
     def _check_imagemagick(self) -> bool:
-        """Check if ImageMagick is available"""
+        """
+Check if ImageMagick is available"""
         try:
             subprocess.run(['convert', '-version'], 
                          capture_output=True, check=True)
@@ -377,7 +386,8 @@ class CompressionEngine:
         ]
     
     def _select_optimal_algorithm(self, analysis: Dict[str, Any]) -> CompressionAlgorithm:
-        """Select optimal compression algorithm based on content analysis"""
+        """
+Select optimal compression algorithm based on content analysis"""
         recommended = analysis.get('recommended_algorithms', [])
         
         if not recommended:
@@ -392,7 +402,8 @@ class CompressionEngine:
         return CompressionAlgorithm.GZIP
     
     def _is_algorithm_available(self, algorithm: CompressionAlgorithm) -> bool:
-        """Check if compression algorithm is available"""
+        """
+Check if compression algorithm is available"""
         if algorithm in [CompressionAlgorithm.MP3_OPTIMIZED, CompressionAlgorithm.MP4_COMPRESSED, CompressionAlgorithm.FLAC_COMPRESSED]:
             return self.available_tools['ffmpeg']
         elif algorithm in [CompressionAlgorithm.JPEG_OPTIMIZED, CompressionAlgorithm.PNG_OPTIMIZED, CompressionAlgorithm.WEBP]:
@@ -407,7 +418,8 @@ class CompressionEngine:
         analysis: Dict[str, Any],
         config: Optional[CompressionConfig]
     ) -> CompressionResult:
-        """Apply specific compression algorithm"""
+        """
+Apply specific compression algorithm"""
         start_time = time.time()
         original_size = len(data)
         
@@ -472,22 +484,26 @@ class CompressionEngine:
         return gzip.compress(data, compresslevel=level)
     
     async def _compress_bzip2(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """BZIP2 compression"""
+        """
+BZIP2 compression"""
         level = config.compression_level if config else 6
         return bz2.compress(data, compresslevel=level)
     
     async def _compress_lzma(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """LZMA compression"""
+        """
+LZMA compression"""
         level = config.compression_level if config else 6
         return lzma.compress(data, preset=level)
     
     async def _compress_zlib(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """ZLIB compression"""
+        """
+ZLIB compression"""
         level = config.compression_level if config else 6
         return zlib.compress(data, level)
     
     async def _compress_jpeg(self, data: bytes, filename: str, config: Optional[CompressionConfig]) -> bytes:
-        """JPEG optimization"""
+        """
+JPEG optimization"""
         try:
             image = Image.open(io.BytesIO(data))
             
@@ -688,7 +704,8 @@ class CompressionEngine:
         return round(final_score, 3)
     
     def _update_metrics(self, result: CompressionResult) -> None:
-        """Update compression metrics"""
+        """
+Update compression metrics"""
         if result.success:
             self.metrics['total_compressions'] += 1
             self.metrics['total_original_size'] += result.original_size
@@ -719,7 +736,8 @@ class CompressionEngine:
                 self.metrics['quality_scores'] = self.metrics['quality_scores'][-1000:]
     
     def get_compression_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive compression statistics"""
+        """
+Get comprehensive compression statistics"""
         avg_quality = 0.0
         if self.metrics['quality_scores']:
             avg_quality = sum(self.metrics['quality_scores']) / len(self.metrics['quality_scores'])

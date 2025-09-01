@@ -15,6 +15,7 @@ Performance environment configuration for optimization and tuning.
 Handles caching strategies, database optimization, and resource management.
 =====================================================
 """
+
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceProfile(Enum):
-    """Performance optimization profiles"""
+    """
+Performance optimization profiles"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -104,7 +107,8 @@ class AIPerformanceConfig:
 
 @dataclass
 class ContentProcessingPerformanceConfig:
-    """Content processing performance configuration"""
+    """
+Content processing performance configuration"""
     max_file_size_mb: int = int(os.getenv('MAX_FILE_SIZE_MB', '500'))
     concurrent_processing_limit: int = int(os.getenv('CONCURRENT_PROCESSING_LIMIT', '10'))
     processing_timeout: int = int(os.getenv('PROCESSING_TIMEOUT', '300'))
@@ -121,7 +125,8 @@ class ContentProcessingPerformanceConfig:
 
 @dataclass
 class NetworkPerformanceConfig:
-    """Network performance optimization configuration"""
+    """
+Network performance optimization configuration"""
     connection_timeout: int = int(os.getenv('CONNECTION_TIMEOUT', '30'))
     read_timeout: int = int(os.getenv('READ_TIMEOUT', '30'))
     max_retries: int = int(os.getenv('MAX_RETRIES', '3'))
@@ -138,7 +143,8 @@ class NetworkPerformanceConfig:
 
 @dataclass
 class MonitoringPerformanceConfig:
-    """Monitoring and observability performance configuration"""
+    """
+Monitoring and observability performance configuration"""
     metrics_collection_interval: int = int(os.getenv('METRICS_INTERVAL', '15'))
     log_buffer_size: int = int(os.getenv('LOG_BUFFER_SIZE', '1000'))
     trace_sampling_rate: float = float(os.getenv('TRACE_SAMPLING_RATE', '0.1'))
@@ -544,7 +550,8 @@ class PerformanceEnvironmentManager:
     
     # Private helper methods
     def _apply_profile_optimizations(self):
-        """Apply profile-specific performance optimizations"""
+        """
+Apply profile-specific performance optimizations"""
         if self.profile == PerformanceProfile.HIGH_PERFORMANCE:
             self.database.connection_pool_size = 50
             self.cache.redis_max_connections = 200
@@ -560,7 +567,8 @@ class PerformanceEnvironmentManager:
             self.ai.model_quantization = True
     
     def _get_optimization_level(self) -> str:
-        """Get optimization level based on profile"""
+        """
+Get optimization level based on profile"""
         optimization_levels = {
             PerformanceProfile.DEVELOPMENT: "basic",
             PerformanceProfile.TESTING: "basic",

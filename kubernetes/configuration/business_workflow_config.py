@@ -17,6 +17,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → IA protection & rights → SEO pro → Collaboration matching → Multi-platform distribution.
 ================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -32,7 +33,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
+    """
+Types of content creators supported"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -46,6 +49,7 @@ class CreatorType(Enum):
 
 class ContentFormat(Enum):
     """Multi-format content types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,6 +63,7 @@ class ContentFormat(Enum):
 
 class WorkflowStage(Enum):
     """Workflow stages in content creator journey"""
+
     UPLOAD = "upload"
     AI_PROCESSING = "ai_processing"
     PROTECTION_ANALYSIS = "protection_analysis"
@@ -72,6 +77,7 @@ class WorkflowStage(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -82,6 +88,7 @@ class WorkflowStatus(Enum):
 
 class OptimizationLevel(Enum):
     """SEO and optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -90,6 +97,7 @@ class OptimizationLevel(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations"""
+
     FEATURED_ARTIST = "featured_artist"
     REMIX = "remix"
     DUET = "duet"
@@ -170,7 +178,8 @@ class AIProcessingConfiguration:
 
 @dataclass
 class ProtectionConfiguration:
-    """Configuration for content protection stage"""
+    """
+Configuration for content protection stage"""
     enabled: bool = True
     
     # Protection mechanisms
@@ -199,7 +208,8 @@ class ProtectionConfiguration:
 
 @dataclass
 class SEOOptimizationConfiguration:
-    """Configuration for SEO optimization stage"""
+    """
+Configuration for SEO optimization stage"""
     enabled: bool = True
     
     # SEO features
@@ -229,7 +239,8 @@ class SEOOptimizationConfiguration:
 
 @dataclass
 class CollaborationConfiguration:
-    """Configuration for collaboration matching stage"""
+    """
+Configuration for collaboration matching stage"""
     enabled: bool = True
     
     # Matching algorithms
@@ -260,7 +271,8 @@ class CollaborationConfiguration:
 
 @dataclass
 class DistributionConfiguration:
-    """Configuration for multi-platform distribution stage"""
+    """
+Configuration for multi-platform distribution stage"""
     enabled: bool = True
     
     # Distribution features
@@ -289,7 +301,8 @@ class DistributionConfiguration:
 
 @dataclass
 class WorkflowConfiguration:
-    """Master workflow configuration"""
+    """
+Master workflow configuration"""
     # Stage configurations
     upload_config: UploadConfiguration = field(default_factory=UploadConfiguration)
     ai_processing_config: AIProcessingConfiguration = field(default_factory=AIProcessingConfiguration)
@@ -348,7 +361,8 @@ class BusinessWorkflowConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize business workflow configuration manager"""
+        """
+Initialize business workflow configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -512,7 +526,8 @@ class BusinessWorkflowConfigManager:
         self.last_updated = datetime.now()
     
     def get_workflow_for_creator(self, creator_type: CreatorType) -> Dict[str, Any]:
-        """Get optimized workflow configuration for specific creator type"""
+        """
+Get optimized workflow configuration for specific creator type"""
         
         base_workflow = {
             "stages": [stage.value for stage in WorkflowStage],

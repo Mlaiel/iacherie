@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -27,7 +28,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Text content types"""
+    """
+Text content types"""
+
     SOCIAL_MEDIA_POST = "social_media_post"
     BLOG_ARTICLE = "blog_article"
     VIDEO_SCRIPT = "video_script"
@@ -41,6 +44,7 @@ class ContentType(Enum):
 
 class WritingStyle(Enum):
     """Writing style categories"""
+
     CONVERSATIONAL = "conversational"
     PROFESSIONAL = "professional"
     CASUAL = "casual"
@@ -54,6 +58,7 @@ class WritingStyle(Enum):
 
 class ToneOfVoice(Enum):
     """Tone of voice options"""
+
     FRIENDLY = "friendly"
     AUTHORITATIVE = "authoritative"
     EMPATHETIC = "empathetic"
@@ -94,7 +99,8 @@ class ContentRequirements:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization suggestions"""
+    """
+Content optimization suggestions"""
     readability_score: float
     seo_score: float
     engagement_score: float
@@ -390,13 +396,15 @@ class TextSpecialistAgent(BaseAIAgent):
         return min(1.0, readability)
     
     async def _calculate_seo_score(self, content: str, platform: str) -> float:
-        """Calculate SEO optimization score"""
+        """
+Calculate SEO optimization score"""
         # Simulate SEO score calculation
         import random
         return random.uniform(0.6, 0.95)
     
     async def _predict_engagement(self, content: str, platform: str) -> float:
-        """Predict engagement potential"""
+        """
+Predict engagement potential"""
         # Simple engagement prediction based on content features
         score = 0.5
         

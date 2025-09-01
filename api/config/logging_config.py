@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 import logging
 import logging.handlers
@@ -16,7 +17,9 @@ from pathlib import Path
 
 
 class LogLevel(Enum):
-    """Supported logging levels"""
+    """
+Supported logging levels"""
+
     CRITICAL = "CRITICAL"
     ERROR = "ERROR"
     WARNING = "WARNING"
@@ -27,6 +30,7 @@ class LogLevel(Enum):
 
 class LogFormat(Enum):
     """Supported log formats"""
+
     STANDARD = "standard"
     DETAILED = "detailed"
     JSON = "json"
@@ -36,6 +40,7 @@ class LogFormat(Enum):
 
 class LogHandler(Enum):
     """Supported log handlers"""
+
     CONSOLE = "console"
     FILE = "file"
     ROTATING_FILE = "rotating_file"
@@ -132,7 +137,8 @@ class FileHandlerConfig:
 
 @dataclass
 class SyslogHandlerConfig:
-    """Configuration for syslog handler"""
+    """
+Configuration for syslog handler"""
     
     enabled: bool = field(default_factory=lambda: 
         os.getenv("SYSLOG_ENABLED", "false").lower() == "true")
@@ -149,7 +155,8 @@ class SyslogHandlerConfig:
 
 @dataclass
 class ElasticsearchHandlerConfig:
-    """Configuration for Elasticsearch log handler"""
+    """
+Configuration for Elasticsearch log handler"""
     
     enabled: bool = field(default_factory=lambda: 
         os.getenv("ELASTICSEARCH_LOGGING_ENABLED", "false").lower() == "true")
@@ -272,7 +279,8 @@ class LoggingConfig:
             self.webhook_handler.headers[self.webhook_handler.auth_header] = self.webhook_handler.auth_token
     
     def _validate_configuration(self):
-        """Validate logging configuration"""
+        """
+Validate logging configuration"""
         if not any([self.console_enabled, self.file_enabled, 
                    self.syslog_handler.enabled, self.elasticsearch_handler.enabled,
                    self.webhook_handler.enabled]):
@@ -290,7 +298,8 @@ class LoggingConfig:
         return getattr(logging, self.root_level.value)
     
     def get_format_string(self, handler_type: LogHandler = LogHandler.CONSOLE) -> str:
-        """Get format string based on log format type"""
+        """
+Get format string based on log format type"""
         if self.log_format == LogFormat.JSON:
             return "%(message)s"  # JSON formatter will handle structure
         elif self.log_format == LogFormat.DETAILED:
@@ -441,7 +450,8 @@ class LoggingConfig:
             self._setup_sampling()
     
     def _setup_sampling(self):
-        """Set up log sampling for high-volume loggers"""
+        """
+Set up log sampling for high-volume loggers"""
         import random
         
         class SamplingFilter(logging.Filter):
@@ -474,7 +484,8 @@ class LoggingConfig:
         return logger
     
     def create_request_logger(self, request_id: str, user_id: Optional[str] = None) -> logging.Logger:
-        """Create logger with request context"""
+        """
+Create logger with request context"""
         logger = self.get_logger("ia_influencer_agent.request")
         
         if self.structured.enabled:

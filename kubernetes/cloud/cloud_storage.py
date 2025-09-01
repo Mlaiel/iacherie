@@ -14,6 +14,7 @@ This module provides comprehensive storage management for the IA Influencer
 Agent platform across multiple cloud providers, including object storage,
 block storage, file systems, and data lifecycle management.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -32,7 +33,9 @@ from google.cloud import storage as gcs
 logger = logging.getLogger(__name__)
 
 class StorageType(Enum):
-    """Storage types"""
+    """
+Storage types"""
+
     OBJECT_STORAGE = "object_storage"
     BLOCK_STORAGE = "block_storage"
     FILE_STORAGE = "file_storage"
@@ -41,6 +44,7 @@ class StorageType(Enum):
 
 class StorageClass(Enum):
     """Storage classes for different use cases"""
+
     STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"
     ARCHIVE = "archive"
@@ -49,6 +53,7 @@ class StorageClass(Enum):
 
 class ReplicationStrategy(Enum):
     """Data replication strategies"""
+
     NONE = "none"
     LOCAL_REDUNDANCY = "local_redundancy"
     ZONE_REDUNDANCY = "zone_redundancy"
@@ -57,6 +62,7 @@ class ReplicationStrategy(Enum):
 
 class EncryptionType(Enum):
     """Encryption types"""
+
     NONE = "none"
     SERVER_SIDE = "server_side"
     CLIENT_SIDE = "client_side"
@@ -81,7 +87,8 @@ class StorageConfiguration:
 
 @dataclass
 class StorageObject:
-    """Storage object metadata"""
+    """
+Storage object metadata"""
     object_id: str
     bucket_name: str
     object_key: str
@@ -96,7 +103,8 @@ class StorageObject:
 
 @dataclass
 class StorageMetrics:
-    """Storage metrics"""
+    """
+Storage metrics"""
     storage_id: str
     total_size: int
     object_count: int
@@ -109,7 +117,8 @@ class StorageMetrics:
 
 @dataclass
 class BackupConfiguration:
-    """Backup configuration"""
+    """
+Backup configuration"""
     backup_id: str
     source_storage: str
     destination_storage: str
@@ -121,10 +130,12 @@ class BackupConfiguration:
     backup_type: str
 
 class CloudStorageManager:
-    """Enterprise cloud storage management system"""
+    """
+Enterprise cloud storage management system"""
     
     def __init__(self):
-        """Initialize cloud storage manager"""
+        """
+Initialize cloud storage manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.storage_configs: Dict[str, StorageConfiguration] = {}
         self.storage_providers: Dict[str, Any] = {}
@@ -141,7 +152,8 @@ class CloudStorageManager:
         self.cdn_configs: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize storage manager"""
+        """
+Initialize storage manager"""
         try:
             self.logger.info("Initializing cloud storage manager")
             
@@ -599,14 +611,16 @@ class CloudStorageManager:
         return True
     
     async def _create_file_storage(self, client: Any, config: StorageConfiguration) -> bool:
-        """Create file storage system"""
+        """
+Create file storage system"""
         # Implementation for file storage creation
         return True
     
     async def _upload_to_s3(self, client: Any, config: StorageConfiguration, 
                            object_key: str, data: bytes, content_type: str, 
                            metadata: Dict[str, str], tags: Dict[str, str]) -> bool:
-        """Upload to AWS S3"""
+        """
+Upload to AWS S3"""
         try:
             upload_args = {
                 'Bucket': config.name,
@@ -846,7 +860,8 @@ class CloudStorageManager:
         return True
     
     async def _execute_backup(self, config: BackupConfiguration) -> bool:
-        """Execute backup"""
+        """
+Execute backup"""
         try:
             # Sync from source to destination
             return await self.sync_storage(
@@ -866,7 +881,8 @@ class CloudStorageManager:
         return any(dest_obj.object_key == obj.object_key for dest_obj in dest_objects)
     
     async def _validate_cdn_config(self, cdn_config: Dict[str, Any]) -> bool:
-        """Validate CDN configuration"""
+        """
+Validate CDN configuration"""
         required_fields = ["distribution_name", "origins", "behaviors"]
         return all(field in cdn_config for field in required_fields)
     
@@ -878,18 +894,21 @@ class CloudStorageManager:
     
     async def _setup_azure_cdn(self, storage_config: StorageConfiguration, 
                               cdn_config: Dict[str, Any]) -> bool:
-        """Setup Azure CDN"""
+        """
+Setup Azure CDN"""
         # Implementation for Azure CDN setup
         return True
     
     async def _setup_cloud_cdn(self, storage_config: StorageConfiguration, 
                               cdn_config: Dict[str, Any]) -> bool:
-        """Setup Google Cloud CDN"""
+        """
+Setup Google Cloud CDN"""
         # Implementation for Cloud CDN setup
         return True
     
     async def _update_storage_metrics(self, storage_id: str, operation: str, data_size: int) -> None:
-        """Update storage metrics"""
+        """
+Update storage metrics"""
         if storage_id not in self.storage_metrics:
             self.storage_metrics[storage_id] = []
         
@@ -897,7 +916,8 @@ class CloudStorageManager:
         # For now, we'll maintain basic counters
     
     async def _analyze_access_patterns(self, storage_id: str, objects: List[StorageObject]) -> List[Dict[str, Any]]:
-        """Analyze object access patterns"""
+        """
+Analyze object access patterns"""
         patterns = []
         
         for obj in objects:
@@ -915,23 +935,27 @@ class CloudStorageManager:
         return patterns
     
     async def _apply_lifecycle_policies(self, config: StorageConfiguration) -> None:
-        """Apply lifecycle policies to storage"""
+        """
+Apply lifecycle policies to storage"""
         for policy in config.lifecycle_policies:
             # Implementation would apply lifecycle rules to cloud provider
             pass
     
     async def _setup_storage_monitoring(self, config: StorageConfiguration) -> None:
-        """Setup storage monitoring"""
+        """
+Setup storage monitoring"""
         # Implementation would setup monitoring with cloud provider
         pass
     
     async def _load_storage_configurations(self) -> None:
-        """Load existing storage configurations"""
+        """
+Load existing storage configurations"""
         # Implementation would load from persistent storage
         pass
     
     async def _storage_monitoring_loop(self) -> None:
-        """Storage monitoring loop"""
+        """
+Storage monitoring loop"""
         while True:
             try:
                 # Collect storage metrics
@@ -976,11 +1000,13 @@ class CloudStorageManager:
         pass
     
     async def _process_lifecycle_policies(self, storage_id: str, config: StorageConfiguration) -> None:
-        """Process lifecycle policies"""
+        """
+Process lifecycle policies"""
         # Implementation would process lifecycle transitions
         pass
     
     async def _should_execute_backup(self, config: BackupConfiguration) -> bool:
-        """Check if backup should be executed"""
+        """
+Check if backup should be executed"""
         # Implementation would check cron schedule
         return False

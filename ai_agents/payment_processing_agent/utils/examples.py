@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from decimal import Decimal
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 async def example_basic_payment_processing():
-    """Example: Basic payment processing workflow"""
+    """
+Example: Basic payment processing workflow"""
     print("=== Basic Payment Processing Example ===")
     
     # Get payment agent

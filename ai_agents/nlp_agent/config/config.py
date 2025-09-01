@@ -7,6 +7,7 @@ processing parameters, and system settings.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 from typing import Dict, List, Optional, Union
 from dataclasses import dataclass, field
@@ -15,7 +16,9 @@ import yaml
 import json
 
 class ModelType(Enum):
-    """Supported NLP model types"""
+    """
+Supported NLP model types"""
+
     BERT = "bert"
     ROBERTA = "roberta"
     DISTILBERT = "distilbert"
@@ -28,6 +31,7 @@ class ModelType(Enum):
 
 class LanguageCode(Enum):
     """Supported language codes"""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -44,6 +48,7 @@ class LanguageCode(Enum):
 
 class ProcessingMode(Enum):
     """Text processing modes"""
+
     FAST = "fast"
     BALANCED = "balanced"
     ACCURATE = "accurate"
@@ -153,7 +158,8 @@ class ProcessingConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""
+    """
+Performance optimization configuration"""
     max_workers: int = 4
     use_multiprocessing: bool = True
     enable_gpu: bool = True

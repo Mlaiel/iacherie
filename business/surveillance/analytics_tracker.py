@@ -9,7 +9,7 @@ Module: backend/business/surveillance/analytics_tracker.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -27,6 +27,7 @@ Surveillance Operations → Data Collection → Analytics Processing →
 KPI Calculation → Trend Analysis → Performance Metrics → 
 Business Intelligence → Decision Support → ROI Optimization
 """
+
 import asyncio
 import logging
 import json
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     DETECTION_RATE = "detection_rate"
     FALSE_POSITIVE_RATE = "false_positive_rate"
     TAKEDOWN_SUCCESS_RATE = "takedown_success_rate"
@@ -64,6 +67,7 @@ class MetricType(Enum):
 
 class TimeRange(Enum):
     """Time range for analytics"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -74,6 +78,7 @@ class TimeRange(Enum):
 
 class PlatformMetric(Enum):
     """Platform-specific metrics"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -106,7 +111,8 @@ class SurveillanceMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     generation_timestamp: datetime
     time_range: TimeRange
@@ -121,7 +127,8 @@ class AnalyticsReport:
 
 @dataclass
 class PerformanceKPI:
-    """Key Performance Indicators"""
+    """
+Key Performance Indicators"""
     kpi_name: str
     current_value: float
     target_value: float
@@ -147,7 +154,8 @@ class SurveillanceAnalytics:
         database_url: Optional[str] = None,
         storage_path: Optional[Path] = None
     ):
-        """Initialize surveillance analytics tracker"""
+        """
+Initialize surveillance analytics tracker"""
         self.redis_client = redis_client or redis.Redis(decode_responses=True)
         self.database_url = database_url
         self.storage_path = storage_path or Path("surveillance_analytics")
@@ -235,7 +243,8 @@ class SurveillanceAnalytics:
                 conn.execute(text(tables_sql))
     
     def _setup_metrics_collection(self):
-        """Setup metrics collection infrastructure"""
+        """
+Setup metrics collection infrastructure"""
         # Redis keys for different metric types
         self.redis_keys = {
             'metrics': 'surveillance:metrics',
@@ -263,7 +272,8 @@ class SurveillanceAnalytics:
         content_type: str,
         metrics_data: Dict[str, Any]
     ) -> str:
-        """Record surveillance operation metrics"""
+        """
+Record surveillance operation metrics"""
         try:
             metrics = SurveillanceMetrics(
                 timestamp=datetime.now(timezone.utc),
@@ -748,7 +758,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_accuracy_score(self, df: pd.DataFrame) -> float:
-        """Calculate accuracy score based on detection rates"""
+        """
+Calculate accuracy score based on detection rates"""
         try:
             total_detections = df['detection_count'].sum()
             total_false_positives = df['false_positive_count'].sum()
@@ -762,7 +773,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_coverage_score(self, df: pd.DataFrame) -> float:
-        """Calculate coverage score based on platform and content type diversity"""
+        """
+Calculate coverage score based on platform and content type diversity"""
         try:
             platform_count = df['platform'].nunique()
             content_type_count = df['content_type'].nunique()
@@ -776,7 +788,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_impact_score(self, df: pd.DataFrame) -> float:
-        """Calculate impact score based on revenue recovered and infringements stopped"""
+        """
+Calculate impact score based on revenue recovered and infringements stopped"""
         try:
             total_revenue = df['revenue_recovered'].sum()
             total_infringements = df['infringement_count'].sum()
@@ -790,7 +803,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_quality_score(self, df: pd.DataFrame) -> float:
-        """Calculate overall quality score"""
+        """
+Calculate overall quality score"""
         try:
             success_rate = df['successful_takedowns'].sum() / max(1, df['takedown_requests'].sum())
             detection_rate = df['detection_count'].sum() / max(1, df['detection_count'].sum() + df['false_positive_count'].sum())
@@ -804,7 +818,8 @@ class SurveillanceAnalytics:
         metrics_summary: Dict[str, Any],
         performance_indicators: Dict[str, float]
     ) -> List[str]:
-        """Generate actionable recommendations"""
+        """
+Generate actionable recommendations"""
         recommendations = []
         
         try:

@@ -7,10 +7,11 @@ market opportunities, and predictive analytics for content creators.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -45,7 +46,9 @@ from ..cache.redis_cache import RedisCache
 
 
 class TrendType(Enum):
-    """Types of trends"""
+    """
+Types of trends"""
+
     VIRAL_CONTENT = "viral_content"
     HASHTAG_TREND = "hashtag_trend"
     TOPIC_TREND = "topic_trend"
@@ -58,6 +61,7 @@ class TrendType(Enum):
 
 class TrendStage(Enum):
     """Trend lifecycle stages"""
+
     EMERGING = "emerging"
     GROWING = "growing"
     PEAK = "peak"
@@ -67,6 +71,7 @@ class TrendStage(Enum):
 
 class TrendScope(Enum):
     """Trend geographical scope"""
+
     LOCAL = "local"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -107,7 +112,8 @@ class TrendData:
 
 @dataclass
 class ViralPrediction:
-    """Viral content prediction"""
+    """
+Viral content prediction"""
     prediction_id: str
     content_id: str
     viral_probability: float
@@ -125,7 +131,8 @@ class ViralPrediction:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data"""
+    """
+Market intelligence data"""
     intelligence_id: str
     market_segment: str
     market_size: int
@@ -157,7 +164,8 @@ class TrendAnalyzer:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize trend analyzer"""
+        """
+Initialize trend analyzer"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -193,7 +201,8 @@ class TrendAnalyzer:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for trend analysis"""
+        """
+Initialize ML models for trend analysis"""
         try:
             # Trend detection model
             class TrendDetector(nn.Module):
@@ -1155,14 +1164,16 @@ class TrendAnalyzer:
         return 0.8 if hour in peak_hours else 0.4
     
     def _get_optimal_weekday_score(self, weekday: int) -> float:
-        """Get optimal weekday score"""
+        """
+Get optimal weekday score"""
         # Monday=0, Sunday=6
         # Generally Tuesday-Thursday and Sunday are good
         good_days = [1, 2, 3, 6]  # Tue, Wed, Thu, Sun
         return 0.8 if weekday in good_days else 0.6
     
     def _get_platform_timing_score(self, platform: str, hour: int, weekday: int) -> float:
-        """Get platform-specific timing score"""
+        """
+Get platform-specific timing score"""
         platform_optimal_times = {
             'instagram': {
                 'hours': [6, 7, 8, 12, 17, 18, 19, 20],
@@ -1195,7 +1206,8 @@ class TrendAnalyzer:
         engagement_features: List[float],
         temporal_features: List[float]
     ) -> float:
-        """Predict viral probability using ML model"""
+        """
+Predict viral probability using ML model"""
         try:
             if self.viral_predictor:
                 with torch.no_grad():
@@ -1274,7 +1286,8 @@ class ViralPredictionEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize viral prediction engine"""
+        """
+Initialize viral prediction engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -1285,7 +1298,8 @@ class ViralPredictionEngine:
         self._initialize_ensemble_models()
     
     def _initialize_ensemble_models(self):
-        """Initialize ensemble of prediction models"""
+        """
+Initialize ensemble of prediction models"""
         try:
             # Model 1: Neural network
             self.prediction_models.append(self._create_neural_model())
@@ -1693,7 +1707,8 @@ class MarketIntelligence:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize market intelligence engine"""
+        """
+Initialize market intelligence engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

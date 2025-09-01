@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Enhanced Multilingual Support Test Suite
+"""
+Enhanced Multilingual Support Test Suite
 
 Tests for the improved multilingual support features including:
 - Enhanced dialect detection with 15+ regional variants
@@ -23,6 +25,7 @@ Tests for the improved multilingual support features including:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -34,10 +37,12 @@ from typing import Dict, Any
 
 # Test data for enhanced dialect detection
 class TestEnhancedDialectDetection:
-    """Test suite for enhanced dialect detection capabilities."""
+    """
+Test suite for enhanced dialect detection capabilities."""
     
     def test_english_dialect_patterns(self):
-        """Test that English dialect detection includes comprehensive variants."""
+        """
+Test that English dialect detection includes comprehensive variants."""
         # Simulate the enhanced dialect patterns that we added
         dialect_patterns = {
             'en': {
@@ -105,7 +110,8 @@ class TestEnhancedUITranslations:
     """Test suite for enhanced UI translation coverage."""
     
     def test_ui_translation_files_exist(self):
-        """Test that all expected UI translation files exist."""
+        """
+Test that all expected UI translation files exist."""
         locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
         expected_files = ['en.json', 'fr.json', 'de.json', 'ar.json', 'ber.json']
         
@@ -165,7 +171,8 @@ class TestEnhancedCulturalAdaptation:
     """Test suite for enhanced cultural adaptation features."""
     
     def test_cultural_context_coverage(self):
-        """Test that cultural contexts cover major world regions."""
+        """
+Test that cultural contexts cover major world regions."""
         # Simulate the enhanced cultural contexts we added
         expected_contexts = [
             ('german', 'DE'), ('french', 'FR'), ('english', 'US'),
@@ -225,7 +232,8 @@ class TestMultilingualSystemIntegration:
     """Test suite for overall multilingual system integration."""
     
     def test_conformity_improvement_calculation(self):
-        """Test that the enhancements improve conformity significantly."""
+        """
+Test that the enhancements improve conformity significantly."""
         # Original conformity was 40%
         original_conformity = 0.40
         

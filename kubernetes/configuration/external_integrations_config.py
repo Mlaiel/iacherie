@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade external integrations configuration for unified platform management.
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -32,7 +33,9 @@ from urllib.parse import urlparse
 logger = logging.getLogger(__name__)
 
 class IntegrationType(Enum):
-    """Types of external integrations"""
+    """
+Types of external integrations"""
+
     SOCIAL_PLATFORM = "social_platform"
     STREAMING_SERVICE = "streaming_service"
     PAYMENT_GATEWAY = "payment_gateway"
@@ -48,6 +51,7 @@ class IntegrationType(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods for integrations"""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
@@ -59,6 +63,7 @@ class AuthenticationMethod(Enum):
 
 class IntegrationStatus(Enum):
     """Integration connection status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     CONNECTING = "connecting"
@@ -343,7 +348,8 @@ class ExternalIntegrationsConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize external integrations configuration manager"""
+        """
+Initialize external integrations configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -397,7 +403,8 @@ class ExternalIntegrationsConfigManager:
         self.last_updated = datetime.now()
     
     async def test_integration(self, platform_name: str) -> Dict[str, Any]:
-        """Test connectivity to a specific platform integration"""
+        """
+Test connectivity to a specific platform integration"""
         try:
             integration_config = self.get_integration_config(platform_name)
             if not integration_config:
@@ -609,7 +616,8 @@ class ExternalIntegrationsConfigManager:
         return [name for name, config in all_configs.items() if config.enabled]
     
     def add_custom_integration(self, platform_name: str, config: PlatformIntegrationConfig) -> bool:
-        """Add custom integration configuration"""
+        """
+Add custom integration configuration"""
         try:
             self._config.custom_integrations[platform_name] = config
             self._config.updated_at = datetime.now()

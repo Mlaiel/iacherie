@@ -10,6 +10,7 @@ Ultra-advanced escalation engine with intelligent routing, predictive escalation
 automated decision-making, and enterprise-grade workflow orchestration.
 Business Logic: Alert assessment → escalation criteria → intelligent routing → action execution → feedback loop
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -34,7 +35,9 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class EscalationTrigger(str, Enum):
-    """Advanced escalation trigger types for enterprise systems"""
+    """
+Advanced escalation trigger types for enterprise systems"""
+
     TIME_BASED = "time_based"
     SEVERITY_CHANGE = "severity_change"
     FAILURE_COUNT = "failure_count"
@@ -51,6 +54,7 @@ class EscalationTrigger(str, Enum):
 
 class EscalationOutcome(str, Enum):
     """Comprehensive escalation outcome tracking"""
+
     ESCALATED = "escalated"
     RESOLVED = "resolved"
     DEFERRED = "deferred"
@@ -64,6 +68,7 @@ class EscalationOutcome(str, Enum):
 
 class EscalationUrgency(str, Enum):
     """Escalation urgency levels for prioritization"""
+
     IMMEDIATE = "immediate"
     HIGH = "high"
     NORMAL = "normal"
@@ -73,6 +78,7 @@ class EscalationUrgency(str, Enum):
 
 class EscalationChannel(str, Enum):
     """Available escalation channels"""
+
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -95,7 +101,8 @@ class EscalationConfig:
 
 @dataclass
 class EscalationContext:
-    """Context for escalation decisions."""
+    """
+Context for escalation decisions."""
     alert: Alert
     current_level: int = 0
     trigger_reason: str = ""
@@ -636,7 +643,8 @@ class EscalationEngine:
         return context
 
     async def _get_escalation_policy(self, alert: Alert) -> Optional[EscalationPolicy]:
-        """Get applicable escalation policy for alert."""
+        """
+Get applicable escalation policy for alert."""
         try:
             # Check cache first
             cache_key = f"escalation_policy:{alert.type}:{alert.severity}"
@@ -810,14 +818,16 @@ class EscalationEngine:
         return time_since_escalation > timedelta(minutes=self.config.default_escalation_timeout_minutes)
 
     async def _check_failure_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on failure count."""
+        """
+Check if alert should be escalated based on failure count."""
         # Count recent failures (would need failure tracking)
         failure_count = 0  # Placeholder
         
         return failure_count >= 3  # Escalate after 3 failures
 
     async def _check_pattern_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on patterns."""
+        """
+Check if alert should be escalated based on patterns."""
         # Check for recurring patterns
         pattern_key = f"{alert.user_id}:{alert.platform}:{alert.violation_type}"
         

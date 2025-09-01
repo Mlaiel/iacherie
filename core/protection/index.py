@@ -4,12 +4,13 @@ This file provides a centralized access point to all protection system component
 and serves as the main entry point for the content protection module.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -47,7 +48,8 @@ class ContentProtectionSystem:
     """
     
     def __init__(self):
-        """Initialize the complete protection system"""
+        """
+Initialize the complete protection system"""
         # Core components
         self.fingerprint_engine = FingerprintEngine()
         self.protection_manager = ProtectionManager()
@@ -372,22 +374,26 @@ class ContentProtectionSystem:
         pass
     
     async def _convert_violation_to_legal_format(self, violation: Dict[str, Any]):
-        """Convert violation data to legal document format"""
+        """
+Convert violation data to legal document format"""
         # This would convert the violation data structure
         pass
     
     async def _create_protection_config(self, user_id: str, protection_level: ProtectionLevel) -> ProtectionConfiguration:
-        """Create protection configuration based on user and level"""
+        """
+Create protection configuration based on user and level"""
         # This would create appropriate configuration
         pass
     
     async def _setup_crawlers_for_user(self, user_id: str, config: ProtectionConfiguration):
-        """Set up crawlers for user based on configuration"""
+        """
+Set up crawlers for user based on configuration"""
         # This would configure and start crawlers
         pass
     
     async def _get_enabled_features(self, protection_level: ProtectionLevel) -> List[str]:
-        """Get list of enabled features for protection level"""
+        """
+Get list of enabled features for protection level"""
         features_map = {
             ProtectionLevel.BASIC: ["fingerprinting", "basic_monitoring"],
             ProtectionLevel.STANDARD: ["fingerprinting", "monitoring", "alerts"],
@@ -407,13 +413,15 @@ async def protect_content(user_id: str, content_path: str,
 
 
 async def detect_violations(user_id: str, content_id: str) -> List[Dict[str, Any]]:
-    """Convenience function to detect violations"""
+    """
+Convenience function to detect violations"""
     system = ContentProtectionSystem()
     return await system.detect_violations(user_id, content_id)
 
 
 async def generate_report(user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-    """Convenience function to generate protection report"""
+    """
+Convenience function to generate protection report"""
     system = ContentProtectionSystem()
     return await system.generate_protection_report(user_id, start_date, end_date)
 

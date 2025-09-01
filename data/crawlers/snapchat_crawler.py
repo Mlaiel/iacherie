@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class SnapchatStory:
-    """Snapchat story information"""
+    """
+Snapchat story information"""
     story_id: str
     username: str
     display_name: str
@@ -68,7 +70,8 @@ class SnapchatStory:
 
 @dataclass
 class SnapchatUser:
-    """Snapchat user information"""
+    """
+Snapchat user information"""
     user_id: str
     username: str
     display_name: str
@@ -99,7 +102,8 @@ class SnapchatUser:
 
 @dataclass
 class SnapchatDiscover:
-    """Snapchat Discover content information"""
+    """
+Snapchat Discover content information"""
     discover_id: str
     publisher: str
     publisher_id: str
@@ -127,7 +131,8 @@ class SnapchatDiscover:
 
 @dataclass
 class SnapchatSnapMap:
-    """Snapchat Snap Map location data"""
+    """
+Snapchat Snap Map location data"""
     snap_id: str
     location: Dict[str, float]  # lat, lng
     address: Optional[str]
@@ -624,7 +629,8 @@ class SnapchatCrawler(PlatformCrawler):
         return stories
     
     async def _get_mock_discover(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock Discover data"""
+        """
+Generate mock Discover data"""
         publishers = ['CNN', 'BuzzFeed', 'ESPN', 'Cosmopolitan', 'National Geographic']
         discover_content = []
         
@@ -645,7 +651,8 @@ class SnapchatCrawler(PlatformCrawler):
         return discover_content
     
     async def _get_mock_snapmap(self, location: Dict[str, float], max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock Snap Map data"""
+        """
+Generate mock Snap Map data"""
         snaps = []
         base_lat = location['lat']
         base_lng = location['lng']
@@ -671,7 +678,8 @@ class SnapchatCrawler(PlatformCrawler):
         return snaps
     
     async def _get_mock_users(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock user data"""
+        """
+Generate mock user data"""
         users = []
         for i in range(min(max_results, 10)):
             users.append({
@@ -687,11 +695,13 @@ class SnapchatCrawler(PlatformCrawler):
         return users
     
     async def _get_trending_discover(self, max_results: int) -> List[Dict[str, Any]]:
-        """Get trending Discover content"""
+        """
+Get trending Discover content"""
         return await self._get_mock_discover('trending', max_results)
     
     async def _get_mock_publishers(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock publisher data"""
+        """
+Generate mock publisher data"""
         publishers = []
         publisher_names = ['CNN', 'BBC', 'ESPN', 'BuzzFeed', 'Vogue', 'NatGeo']
         
@@ -711,7 +721,8 @@ class SnapchatCrawler(PlatformCrawler):
         return publishers
     
     async def _get_mock_events(self, location: Dict[str, float], max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock event data"""
+        """
+Generate mock event data"""
         events = []
         event_names = ['Music Festival', 'Sports Game', 'Art Exhibition', 'Food Fair', 'Tech Conference']
         
@@ -735,7 +746,8 @@ class SnapchatCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_story_data(self, story_data: Dict[str, Any]) -> Optional[SnapchatStory]:
-        """Parse story data"""
+        """
+Parse story data"""
         try:
             timestamp = story_data.get('timestamp')
             if isinstance(timestamp, str):
@@ -923,7 +935,8 @@ class SnapchatCrawler(PlatformCrawler):
             return 'GLOBAL'
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
+        """
+Check and enforce rate limiting"""
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time

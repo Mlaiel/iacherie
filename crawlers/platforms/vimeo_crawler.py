@@ -3,6 +3,7 @@ Advanced industrial-grade Vimeo crawler for video content protection and analyti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
+
 import asyncio
 import json
 import re
@@ -26,7 +27,8 @@ settings = get_settings()
 
 
 class VimeoVideo(BaseModel):
-    """Vimeo Video data model"""
+    """
+Vimeo Video data model"""
     video_id: str
     title: str
     description: str
@@ -626,7 +628,8 @@ class VimeoCrawler(BaseCrawler):
         protected_content: Dict,
         video: VimeoVideo
     ) -> float:
-        """Calculate similarity between protected content and Vimeo video"""
+        """
+Calculate similarity between protected content and Vimeo video"""
         from difflib import SequenceMatcher
         
         similarity_scores = []
@@ -661,7 +664,8 @@ class VimeoCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _calculate_virality_score(self, video: VimeoVideo) -> float:
-        """Calculate video virality score"""
+        """
+Calculate video virality score"""
         days_since_upload = (datetime.utcnow() - video.created_at).days
         if days_since_upload == 0:
             days_since_upload = 1
@@ -672,7 +676,8 @@ class VimeoCrawler(BaseCrawler):
         return min(views_per_day * engagement_ratio * 100, 1000)
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize video duration"""
+        """
+Categorize video duration"""
         if duration < 60:
             return "short"
         elif duration < 300:
@@ -711,7 +716,8 @@ class VimeoCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality score"""
+        """
+Analyze description quality score"""
         if not description:
             return 0.0
         
@@ -738,7 +744,8 @@ class VimeoCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _categorize_performance(self, video: VimeoVideo) -> str:
-        """Categorize video performance level"""
+        """
+Categorize video performance level"""
         views = video.view_count
         engagement = video.like_count + video.comment_count
         

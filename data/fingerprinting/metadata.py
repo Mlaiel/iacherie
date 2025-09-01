@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import hashlib
 import mimetypes
 from datetime import datetime, timezone
@@ -58,7 +59,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -68,6 +71,7 @@ class ContentType(Enum):
 
 class QualityLevel(Enum):
     """Content quality assessment levels"""
+
     ULTRA_LOW = "ultra_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -87,7 +91,8 @@ class GeolocationData:
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata for content"""
+    """
+Technical metadata for content"""
     # File information
     file_size: int = 0
     file_format: Optional[str] = None
@@ -111,7 +116,8 @@ class TechnicalMetadata:
 
 @dataclass
 class AudioMetadata:
-    """Audio-specific metadata"""
+    """
+Audio-specific metadata"""
     # Basic properties
     duration: Optional[float] = None
     sample_rate: Optional[int] = None
@@ -148,7 +154,8 @@ class AudioMetadata:
 
 @dataclass
 class VideoMetadata:
-    """Video-specific metadata"""
+    """
+Video-specific metadata"""
     # Basic properties
     duration: Optional[float] = None
     width: Optional[int] = None
@@ -182,7 +189,8 @@ class VideoMetadata:
 
 @dataclass
 class ImageMetadata:
-    """Image-specific metadata"""
+    """
+Image-specific metadata"""
     # Basic properties
     width: Optional[int] = None
     height: Optional[int] = None
@@ -221,7 +229,8 @@ class ImageMetadata:
 
 @dataclass
 class TextMetadata:
-    """Text-specific metadata"""
+    """
+Text-specific metadata"""
     # Basic properties
     character_count: int = 0
     word_count: int = 0
@@ -255,7 +264,8 @@ class TextMetadata:
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata container"""
+    """
+Comprehensive content metadata container"""
     # Identification
     content_id: str = ""
     source_url: Optional[str] = None
@@ -298,7 +308,8 @@ class MetadataExtractor:
         self._validate_dependencies()
     
     def _validate_dependencies(self):
-        """Validate optional dependencies"""
+        """
+Validate optional dependencies"""
         missing_deps = []
         
         if not PIL_AVAILABLE:
@@ -401,7 +412,8 @@ class MetadataExtractor:
     def _extract_technical_metadata(self, 
                                    file_path: Path, 
                                    content_data: Optional[bytes] = None) -> TechnicalMetadata:
-        """Extract technical file metadata"""
+        """
+Extract technical file metadata"""
         try:
             metadata = TechnicalMetadata()
             
@@ -504,7 +516,8 @@ class MetadataExtractor:
         return None
     
     def _extract_video_metadata(self, file_path: Path) -> Optional[VideoMetadata]:
-        """Extract video-specific metadata"""
+        """
+Extract video-specific metadata"""
         if not CV2_AVAILABLE:
             return None
         
@@ -783,7 +796,8 @@ class MetadataManager:
         return asdict(metadata)
     
     def _dict_to_metadata(self, metadata_dict: Dict[str, Any]) -> ContentMetadata:
-        """Convert dictionary to metadata object"""
+        """
+Convert dictionary to metadata object"""
         # This is a simplified conversion - in production, you'd want more robust deserialization
         metadata = ContentMetadata()
         
@@ -805,5 +819,6 @@ metadata_manager = MetadataManager()
 
 def extract_content_metadata(file_path: Union[str, Path], 
                            content_data: Optional[bytes] = None) -> ContentMetadata:
-    """Extract metadata from content (convenience function)"""
+    """
+Extract metadata from content (convenience function)"""
     return metadata_manager.process_content(file_path, content_data)

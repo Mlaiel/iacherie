@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue source types for partnerships"""
+    """
+Revenue source types for partnerships"""
+
     CONTENT_MONETIZATION = "content_monetization"
     BRAND_SPONSORSHIP = "brand_sponsorship"
     PRODUCT_PLACEMENT = "product_placement"
@@ -51,6 +54,7 @@ class RevenueSource(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequency options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -74,7 +78,8 @@ class RevenueDistributionService:
         partnership: Partnership,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate comprehensive revenue split for partnership"""
+        """
+Calculate comprehensive revenue split for partnership"""
         try:
             revenue_breakdown = {
                 'gross_revenue': Decimal('0'),
@@ -390,7 +395,8 @@ class RevenueDistributionService:
         }
 
     def _load_platform_fees(self) -> Dict[str, Decimal]:
-        """Load platform fee structures"""
+        """
+Load platform fee structures"""
         return {
             'standard_rate': Decimal('0.029'),  # 2.9%
             'premium_rate': Decimal('0.025'),   # 2.5%
@@ -400,7 +406,8 @@ class RevenueDistributionService:
         }
 
     def _load_currency_rates(self) -> Dict[str, Decimal]:
-        """Load current currency exchange rates"""
+        """
+Load current currency exchange rates"""
         return {
             'USD_EUR': Decimal('0.85'),
             'USD_GBP': Decimal('0.75'),
@@ -413,7 +420,8 @@ class RevenueDistributionService:
         revenue_data: Dict[str, Any],
         partnership_id: str
     ) -> Decimal:
-        """Calculate total gross revenue from all sources"""
+        """
+Calculate total gross revenue from all sources"""
         total_revenue = Decimal('0')
         
         for source, amount in revenue_data.get('revenue_sources', {}).items():
@@ -427,7 +435,8 @@ class RevenueDistributionService:
         partnership: Partnership,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate platform and processing fees"""
+        """
+Calculate platform and processing fees"""
         # Determine fee tier based on partnership type and revenue volume
         if partnership.partner_type == PartnershipType.STRATEGIC_ALLIANCE:
             platform_rate = self.platform_fees['enterprise_rate']
@@ -460,7 +469,8 @@ class RevenueDistributionService:
         partnership: Partnership,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate tax withholdings based on jurisdiction"""
+        """
+Calculate tax withholdings based on jurisdiction"""
         jurisdiction = revenue_data.get('tax_jurisdiction', 'US')
         tax_rates = self.tax_rates.get(jurisdiction, self.tax_rates['US'])
         
@@ -483,7 +493,8 @@ class RevenueDistributionService:
         platform_fees: Decimal,
         tax_withholdings: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate partner commission based on revenue model"""
+        """
+Calculate partner commission based on revenue model"""
         commission_base = gross_revenue - platform_fees - tax_withholdings
         
         if partnership.revenue_model == RevenueModel.PERCENTAGE_SPLIT:
@@ -506,7 +517,8 @@ class RevenueDistributionService:
         commission_base: Decimal,
         partnership: Partnership
     ) -> Decimal:
-        """Calculate tiered commission structure"""
+        """
+Calculate tiered commission structure"""
         # Example tiered structure
         tiers = [
             {'threshold': Decimal('1000'), 'rate': Decimal('0.10')},
@@ -534,7 +546,8 @@ class RevenueDistributionService:
         revenue_data: Dict[str, Any],
         revenue_breakdown: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Break down revenue calculations by source"""
+        """
+Break down revenue calculations by source"""
         sources = {}
         
         for source, amount in revenue_data.get('revenue_sources', {}).items():
@@ -554,7 +567,8 @@ class RevenueDistributionService:
         partnership: Partnership,
         payout_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate if revenue distribution is eligible"""
+        """
+Validate if revenue distribution is eligible"""
         validation = {'eligible': True, 'reason': '', 'warnings': []}
         
         # Check minimum payout threshold
@@ -638,7 +652,8 @@ class RevenueDistributionService:
         partnership: Partnership,
         historical_data: List[PartnershipRevenue]
     ) -> Dict[str, Any]:
-        """Analyze current revenue performance"""
+        """
+Analyze current revenue performance"""
         if not historical_data:
             return {'message': 'Insufficient historical data'}
             
@@ -658,7 +673,8 @@ class RevenueDistributionService:
         historical_data: List[PartnershipRevenue],
         market_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify revenue optimization opportunities"""
+        """
+Identify revenue optimization opportunities"""
         opportunities = []
         
         # Commission rate optimization
@@ -688,7 +704,8 @@ class RevenueDistributionService:
         historical_data: List[PartnershipRevenue],
         market_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate revenue projections"""
+        """
+Generate revenue projections"""
         if not historical_data:
             return {'message': 'Insufficient data for projections'}
             
@@ -709,7 +726,8 @@ class RevenueDistributionService:
         month: int,
         trend_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Project revenue for specific month"""
+        """
+Project revenue for specific month"""
         if not historical_data:
             base_revenue = Decimal('1000')  # Default assumption
         else:
@@ -732,7 +750,8 @@ class RevenueDistributionService:
         self,
         historical_data: List[PartnershipRevenue]
     ) -> Dict[str, Any]:
-        """Analyze historical revenue trends"""
+        """
+Analyze historical revenue trends"""
         if len(historical_data) < 2:
             return {'trend': 'insufficient_data'}
             

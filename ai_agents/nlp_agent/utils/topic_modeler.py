@@ -7,6 +7,7 @@ themes, and subject matter in text content with high accuracy and interpretabili
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -62,6 +63,7 @@ logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
     """Topic modeling algorithm types"""
+
     LDA = "lda"  # Latent Dirichlet Allocation
     NMF = "nmf"  # Non-negative Matrix Factorization
     LSA = "lsa"  # Latent Semantic Analysis
@@ -70,6 +72,7 @@ class ModelType(Enum):
 
 class VectorizerType(Enum):
     """Text vectorization types"""
+
     TFIDF = "tfidf"
     COUNT = "count"
     TRANSFORMER_EMBEDDINGS = "transformer_embeddings"
@@ -122,7 +125,8 @@ class TopicModeler:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Topic Modeler"""
+        """
+Initialize Topic Modeler"""
         self.config = config or default_config
         self.models = {}
         self.vectorizers = {}
@@ -163,7 +167,8 @@ class TopicModeler:
         return stop_words
     
     def _initialize_models(self):
-        """Initialize topic modeling components"""
+        """
+Initialize topic modeling components"""
         try:
             # Initialize scikit-learn models if available
             if SKLEARN_AVAILABLE:
@@ -246,7 +251,8 @@ class TopicModeler:
         return -1  # Use CPU
     
     def _preprocess_texts(self, texts: List[str]) -> List[str]:
-        """Preprocess texts for topic modeling"""
+        """
+Preprocess texts for topic modeling"""
         processed_texts = []
         
         for text in texts:
@@ -665,7 +671,8 @@ class TopicModeler:
         return min(coherence_score, 1.0)
     
     async def _post_process_results(self, result: TopicModelResult, min_topic_size: int):
-        """Post-process topic modeling results"""
+        """
+Post-process topic modeling results"""
         try:
             # Filter topics by size
             if min_topic_size > 0:
@@ -724,7 +731,8 @@ class TopicModeler:
         result: TopicModelResult,
         min_probability: float = 0.1
     ) -> List[Tuple[int, str, float]]:
-        """Get documents assigned to a specific topic"""
+        """
+Get documents assigned to a specific topic"""
         documents = []
         
         for doc_idx, doc_topics in enumerate(result.document_topics):
@@ -747,7 +755,8 @@ class TopicModeler:
         result: TopicModelResult,
         similarity_threshold: float = 0.3
     ) -> List[Tuple[int, int, float]]:
-        """Find similar topics based on keyword overlap"""
+        """
+Find similar topics based on keyword overlap"""
         similar_pairs = []
         
         for i, topic1 in enumerate(result.topics):
@@ -771,7 +780,8 @@ class TopicModeler:
         text_batches: List[List[str]],
         num_topics: int = 10
     ) -> List[TopicModelResult]:
-        """Track topic evolution over time periods"""
+        """
+Track topic evolution over time periods"""
         results = []
         
         for i, batch in enumerate(text_batches):
@@ -844,7 +854,8 @@ def calculate_topic_similarity(topic1: Topic, topic2: Topic) -> float:
     return intersection / union if union > 0 else 0.0
 
 def merge_topic_results(results: List[TopicModelResult]) -> TopicModelResult:
-    """Merge multiple topic modeling results"""
+    """
+Merge multiple topic modeling results"""
     if not results:
         return TopicModelResult(texts=[])
     

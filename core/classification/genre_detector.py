@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -44,7 +45,8 @@ class GenreDetector:
     """
     
     def __init__(self):
-        """Initialize genre detector."""
+        """
+Initialize genre detector."""
         self.settings = get_settings()
         
         # Initialize genre knowledge base
@@ -61,7 +63,8 @@ class GenreDetector:
         }
 
     def _init_genre_database(self):
-        """Initialize comprehensive genre database."""
+        """
+Initialize comprehensive genre database."""
         
         # Main music genre hierarchy
         self.music_genres = {
@@ -567,7 +570,8 @@ class GenreDetector:
         return scores
 
     def _score_genres_by_characteristics(self, indicators: Dict[str, Any]) -> Dict[str, float]:
-        """Score genres based on musical/content characteristics."""
+        """
+Score genres based on musical/content characteristics."""
         scores = {}
         
         for genre, genre_data in self.music_genres.items():
@@ -625,7 +629,8 @@ class GenreDetector:
         return scores
 
     def _score_genres_by_tempo(self, tempo: float) -> Dict[str, float]:
-        """Score genres based on tempo (BPM)."""
+        """
+Score genres based on tempo (BPM)."""
         scores = {}
         
         for genre, genre_data in self.music_genres.items():
@@ -659,7 +664,8 @@ class GenreDetector:
         return scores
 
     def _score_genres_by_mood(self, mood: str) -> Dict[str, float]:
-        """Score genres based on mood/emotion."""
+        """
+Score genres based on mood/emotion."""
         mood_genre_mapping = {
             'aggressive': {'rock': 0.8, 'hip_hop': 0.7, 'electronic': 0.5},
             'energetic': {'rock': 0.7, 'electronic': 0.8, 'pop': 0.6, 'hip_hop': 0.5},
@@ -680,7 +686,8 @@ class GenreDetector:
         indicators: Dict[str, Any], 
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Detect subgenres within the primary genre."""
+        """
+Detect subgenres within the primary genre."""
         try:
             subgenres = []
             
@@ -1002,13 +1009,15 @@ class GenreDetector:
         return None
 
     def _get_genre_characteristics(self, genre: str) -> List[str]:
-        """Get characteristics for a genre."""
+        """
+Get characteristics for a genre."""
         if genre in self.music_genres:
             return self.music_genres[genre].get('characteristics', [])
         return []
 
     def _analyze_color_scheme_for_genre(self, colors: List[str]) -> Optional[str]:
-        """Analyze color scheme for genre indicators."""
+        """
+Analyze color scheme for genre indicators."""
         try:
             # Simple color-genre associations
             color_genre_mapping = {
@@ -1031,12 +1040,14 @@ class GenreDetector:
             return None
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
+        """
+Get current timestamp."""
         from datetime import datetime
         return datetime.now().isoformat()
 
     def get_genre_info(self, genre: str) -> Dict[str, Any]:
-        """Get detailed information about a specific genre."""
+        """
+Get detailed information about a specific genre."""
         try:
             genre = genre.lower()
             

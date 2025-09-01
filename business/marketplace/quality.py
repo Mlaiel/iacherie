@@ -9,6 +9,7 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from ...security.protection import SecurityScanner
 
 
 class QualityScore(Enum):
-    """Quality score levels."""
+    """
+Quality score levels."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -37,6 +40,7 @@ class QualityScore(Enum):
 
 class ValidationStatus(Enum):
     """Validation status enumeration."""
+
     PENDING = "pending"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
@@ -58,7 +62,8 @@ class QualityMetrics:
 
 @dataclass
 class ValidationCriteria:
-    """Content validation criteria."""
+    """
+Content validation criteria."""
     min_technical_quality: float
     min_content_quality: float
     min_originality: float
@@ -357,7 +362,8 @@ class ContentValidator:
         self, 
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess overall content quality and value."""
+        """
+Assess overall content quality and value."""
         content_quality = await self.analyzer.assess_content_quality(content_data)
         
         # Additional quality factors
@@ -376,7 +382,8 @@ class ContentValidator:
         self, 
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check content originality and detect potential plagiarism."""
+        """
+Check content originality and detect potential plagiarism."""
         originality_check = await self.analyzer.check_originality(content_data)
         
         # Additional originality checks
@@ -390,7 +397,8 @@ class ContentValidator:
         content_data: Dict[str, Any],
         moderation_result: Dict[str, Any]
     ) -> float:
-        """Assess brand safety score based on content and moderation results."""
+        """
+Assess brand safety score based on content and moderation results."""
         base_score = 1.0
         
         # Deduct points for moderation flags
@@ -415,7 +423,8 @@ class ContentValidator:
         content_data: Dict[str, Any],
         security_scan: Dict[str, Any]
     ) -> float:
-        """Assess compliance with platform policies and legal requirements."""
+        """
+Assess compliance with platform policies and legal requirements."""
         compliance_score = 1.0
         
         # Check security scan results

@@ -15,8 +15,9 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de)
 is strictly prohibited and may result in legal action.
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import re
@@ -56,7 +57,9 @@ from ...ai.seo.competitor_analyzer import CompetitorAnalyzer
 logger = logging.getLogger(__name__)
 
 class SEOOptimizationType(Enum):
-    """SEO optimization types for different content formats"""
+    """
+SEO optimization types for different content formats"""
+
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     META_ENHANCEMENT = "meta_enhancement"
     TITLE_OPTIMIZATION = "title_optimization"
@@ -68,6 +71,7 @@ class SEOOptimizationType(Enum):
 
 class PlatformType(Enum):
     """Target platforms for SEO optimization"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -93,7 +97,8 @@ class SEOMetrics:
     analysis_timestamp: datetime = field(default_factory=datetime.now)
     
     def calculate_overall_score(self) -> float:
-        """Calculate overall SEO optimization score"""
+        """
+Calculate overall SEO optimization score"""
         scores = [
             self.readability_score * 0.15,
             abs(self.sentiment_score) * 0.10,
@@ -104,7 +109,8 @@ class SEOMetrics:
         return min(100.0, sum(scores))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary format"""
+        """
+Convert metrics to dictionary format"""
         return {
             'keyword_density': self.keyword_density,
             'readability_score': self.readability_score,
@@ -120,7 +126,8 @@ class SEOMetrics:
 
 @dataclass
 class SEOOptimizationResult:
-    """Comprehensive SEO optimization results"""
+    """
+Comprehensive SEO optimization results"""
     content_id: str
     optimization_type: SEOOptimizationType
     target_platforms: List[PlatformType]
@@ -133,7 +140,8 @@ class SEOOptimizationResult:
     trend_data: Dict[str, Any]
     
     def get_platform_specific_optimization(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get platform-specific optimization recommendations"""
+        """
+Get platform-specific optimization recommendations"""
         platform_configs = {
             PlatformType.YOUTUBE: {
                 'title_length': 60,
@@ -171,7 +179,8 @@ class SEOOptimizationResult:
         }
     
     def _optimize_title_for_platform(self, platform: PlatformType, config: Dict[str, Any]) -> str:
-        """Optimize title for specific platform"""
+        """
+Optimize title for specific platform"""
         original_title = self.original_content.get('title', '')
         max_length = config.get('title_length', 60)
         focus_keywords = config.get('focus_keywords', 2)
@@ -193,7 +202,8 @@ class SEOOptimizationResult:
         return original_title[:max_length]
     
     def _optimize_description_for_platform(self, platform: PlatformType, config: Dict[str, Any]) -> str:
-        """Optimize description for specific platform"""
+        """
+Optimize description for specific platform"""
         original_desc = self.original_content.get('description', '')
         max_length = config.get('description_length', 125)
         
@@ -202,7 +212,8 @@ class SEOOptimizationResult:
         return optimized_desc[:max_length]
     
     def _optimize_tags_for_platform(self, platform: PlatformType, config: Dict[str, Any]) -> List[str]:
-        """Optimize tags/hashtags for specific platform"""
+        """
+Optimize tags/hashtags for specific platform"""
         max_tags = config.get('tags_count', 10)
         tags = list(self.keywords.keys())[:max_tags]
         
@@ -228,7 +239,8 @@ class SEOOptimizationResult:
         return title[:max_length]
     
     def _create_instagram_title(self, title: str, keywords: List[str], max_length: int) -> str:
-        """Create Instagram-optimized title"""
+        """
+Create Instagram-optimized title"""
         if keywords:
             title = f"✨ {title} ✨"
         return title[:max_length]
@@ -248,7 +260,8 @@ class SEOOptimizationHandler(BaseEventHandler):
     """
     
     def __init__(self, ai_engine: Any):
-        """Initialize SEO optimization handler"""
+        """
+Initialize SEO optimization handler"""
         super().__init__()
         self.ai_engine = ai_engine
         self.keyword_analyzer = KeywordAnalyzer()
@@ -266,7 +279,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         self.performance_metrics = defaultdict(list)
     
     def _initialize_nlp_models(self):
-        """Initialize NLP models for text analysis"""
+        """
+Initialize NLP models for text analysis"""
         try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
@@ -401,7 +415,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         }
     
     async def _extract_keywords(self, content_data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract and score keywords from content"""
+        """
+Extract and score keywords from content"""
         try:
             text_content = self._extract_text_content(content_data)
             
@@ -448,7 +463,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         return ' '.join(text_parts)
     
     def _clean_text(self, text: str) -> str:
-        """Clean and preprocess text for analysis"""
+        """
+Clean and preprocess text for analysis"""
         # Remove URLs, mentions, hashtags
         text = re.sub(r'http\S+|www\S+|@\w+|#\w+', '', text)
         
@@ -459,7 +475,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         return text.strip().lower()
     
     def _extract_tfidf_keywords(self, text: str) -> Dict[str, float]:
-        """Extract keywords using TF-IDF"""
+        """
+Extract keywords using TF-IDF"""
         try:
             # Tokenize and remove stopwords
             stop_words = set(stopwords.words('english'))
@@ -529,7 +546,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         return scored_keywords
     
     async def _analyze_readability(self, content_data: Dict[str, Any]) -> float:
-        """Analyze content readability"""
+        """
+Analyze content readability"""
         try:
             text_content = self._extract_text_content(content_data)
             
@@ -665,7 +683,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         return (length_score + keyword_score) / 2
     
     def _calculate_description_score(self, content_data: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate description optimization score for platform"""
+        """
+Calculate description optimization score for platform"""
         description = content_data.get('description', '')
         max_length = config.get('description_length', 125)
         
@@ -681,7 +700,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         return (length_score + quality_score) / 2
     
     def _calculate_keyword_score(self, content_data: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate keyword optimization score for platform"""
+        """
+Calculate keyword optimization score for platform"""
         # Simplified keyword scoring
         tags = content_data.get('tags', [])
         max_tags = config.get('tags_count', 10)
@@ -700,7 +720,8 @@ class SEOOptimizationHandler(BaseEventHandler):
     async def _generate_optimization_result(self, content_id: str, optimization_type: SEOOptimizationType,
                                           target_platforms: List[PlatformType], content_data: Dict[str, Any],
                                           seo_analysis: Dict[str, Any]) -> SEOOptimizationResult:
-        """Generate comprehensive optimization result"""
+        """
+Generate comprehensive optimization result"""
         
         # Create SEO metrics
         seo_metrics = SEOMetrics(
@@ -737,7 +758,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         )
     
     def _calculate_keyword_densities(self, keywords: Dict[str, float], content_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate keyword density percentages"""
+        """
+Calculate keyword density percentages"""
         text_content = self._extract_text_content(content_data)
         word_count = len(text_content.split()) if text_content else 1
         
@@ -752,7 +774,8 @@ class SEOOptimizationHandler(BaseEventHandler):
     async def _generate_optimized_content(self, original_content: Dict[str, Any], 
                                          seo_analysis: Dict[str, Any], 
                                          target_platforms: List[PlatformType]) -> Dict[str, Any]:
-        """Generate optimized content based on SEO analysis"""
+        """
+Generate optimized content based on SEO analysis"""
         optimized = original_content.copy()
         keywords = seo_analysis['keywords']
         trends = seo_analysis['trends'].get('matched_trends', [])
@@ -844,7 +867,8 @@ class SEOOptimizationHandler(BaseEventHandler):
         }
     
     async def cleanup(self):
-        """Cleanup handler resources"""
+        """
+Cleanup handler resources"""
         logger.info("Cleaning up SEO optimization handler resources")
         self.optimization_stats.clear()
         self.performance_metrics.clear()

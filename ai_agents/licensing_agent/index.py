@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -79,7 +80,8 @@ class LicensingAgentFactory:
     
     @classmethod
     async def initialize(cls, config: Optional[Dict[str, Any]] = None) -> None:
-        """Initialize the licensing agent factory with configuration"""
+        """
+Initialize the licensing agent factory with configuration"""
         if cls._initialized:
             logger.warning("LicensingAgentFactory already initialized")
             return
@@ -149,7 +151,8 @@ class LicensingAgentFactory:
         cls,
         suite_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create a complete licensing suite with all components"""
+        """
+Create a complete licensing suite with all components"""
         if not cls._initialized:
             await cls.initialize()
             
@@ -190,12 +193,14 @@ class LicensingAgentFactory:
     
     @classmethod
     def list_instances(cls) -> List[str]:
-        """List all created instances"""
+        """
+List all created instances"""
         return list(cls._instances.keys())
     
     @classmethod
     async def cleanup_instance(cls, instance_id: str) -> bool:
-        """Cleanup and remove an instance"""
+        """
+Cleanup and remove an instance"""
         if instance_id in cls._instances:
             instance = cls._instances[instance_id]
             
@@ -247,7 +252,8 @@ async def quick_license_generation(
     license_type: Union[str, LicenseType],
     terms: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Quick function for simple license generation"""
+    """
+Quick function for simple license generation"""
     async with licensing_context() as suite:
         agent = suite['licensing_agent']
         
@@ -264,7 +270,8 @@ async def quick_rights_verification(
     content_id: str,
     owner_id: str
 ) -> Dict[str, Any]:
-    """Quick function for rights verification"""
+    """
+Quick function for rights verification"""
     async with licensing_context() as suite:
         rights_manager = suite['rights_manager']
         return await rights_manager.verify_ownership(content_id, owner_id)
@@ -273,7 +280,8 @@ async def quick_compliance_check(
     contract_data: Dict[str, Any],
     jurisdiction: str
 ) -> Dict[str, Any]:
-    """Quick function for compliance checking"""
+    """
+Quick function for compliance checking"""
     async with licensing_context() as suite:
         compliance_checker = suite['compliance_checker']
         return await compliance_checker.check_contract_compliance(contract_data, jurisdiction)

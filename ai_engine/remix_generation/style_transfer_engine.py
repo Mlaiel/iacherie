@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Engine de transfert de style neural ultra-avancé pour remixes professi
 TECHNOLOGIES: Neural Style Transfer, Deep Learning, Audio Style Analysis
 LOGIQUE MÉTIER: Source audio → Style analysis → Neural transfer → Quality optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -48,7 +49,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class StyleTransferMode(Enum):
-    """Style transfer operation modes"""
+    """
+Style transfer operation modes"""
+
     FULL_TRANSFER = "full_transfer"
     PARTIAL_BLEND = "partial_blend"
     FEATURE_EXTRACTION = "feature_extraction"
@@ -57,6 +60,7 @@ class StyleTransferMode(Enum):
 
 class StyleFeature(Enum):
     """Musical style features for analysis"""
+
     RHYTHM = "rhythm"
     MELODY = "melody"
     HARMONY = "harmony"
@@ -79,7 +83,8 @@ class StyleAnalysisResult:
 
 @dataclass
 class StyleTransferRequest:
-    """Request for style transfer operation"""
+    """
+Request for style transfer operation"""
     source_audio_path: str
     target_style_path: Optional[str] = None
     target_style_description: Optional[str] = None
@@ -134,7 +139,8 @@ class StyleAnalyzer:
         self._initialize_analyzers()
     
     def _initialize_analyzers(self):
-        """Initialize analysis models and parameters"""
+        """
+Initialize analysis models and parameters"""
         try:
             self.logger.info("🎯 Initializing style analyzers...")
             
@@ -176,7 +182,8 @@ class StyleAnalyzer:
         return StyleClassifier()
     
     def _create_genre_classifier(self) -> torch_nn.Module:
-        """Create neural network for genre classification"""
+        """
+Create neural network for genre classification"""
         class GenreClassifier(torch_nn.Module):
             def __init__(self, input_dim=128, num_genres=50):
                 super().__init__()
@@ -479,7 +486,8 @@ class NeuralStyleTransfer:
         return ContentEncoder().to(self.device)
     
     def _create_style_encoder(self) -> torch_nn.Module:
-        """Create style encoding network"""
+        """
+Create style encoding network"""
         class StyleEncoder(torch_nn.Module):
             def __init__(self):
                 super().__init__()
@@ -499,7 +507,8 @@ class NeuralStyleTransfer:
         return StyleEncoder().to(self.device)
     
     def _create_decoder(self) -> torch_nn.Module:
-        """Create decoder network"""
+        """
+Create decoder network"""
         class Decoder(torch_nn.Module):
             def __init__(self):
                 super().__init__()
@@ -518,7 +527,8 @@ class NeuralStyleTransfer:
         return Decoder().to(self.device)
     
     def _create_loss_network(self) -> torch_nn.Module:
-        """Create network for loss calculation"""
+        """
+Create network for loss calculation"""
         class LossNetwork(torch_nn.Module):
             def __init__(self):
                 super().__init__()

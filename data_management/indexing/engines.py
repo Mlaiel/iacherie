@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import logging
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexingConfig:
-    """Configuration for indexing engines"""
+    """
+Configuration for indexing engines"""
     vector_dimension: int = 768
     similarity_threshold: float = 0.85
     batch_size: int = 100
@@ -60,26 +62,31 @@ class BaseIndexEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> None:
-        """Initialize the indexing engine"""
+        """
+Initialize the indexing engine"""
         pass
     
     @abstractmethod
     async def index_content(self, content_id: str, data: Any) -> Dict[str, Any]:
-        """Index content and return indexing result"""
+        """
+Index content and return indexing result"""
         pass
     
     @abstractmethod
     async def search(self, query: Any, filters: Dict = None) -> List[Dict[str, Any]]:
-        """Search indexed content"""
+        """
+Search indexed content"""
         pass
     
     @abstractmethod
     async def delete_index(self, content_id: str) -> bool:
-        """Delete indexed content"""
+        """
+Delete indexed content"""
         pass
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check engine health status"""
+        """
+Check engine health status"""
         return {
             "engine": self.__class__.__name__,
             "status": "healthy" if self._initialized else "not_initialized",
@@ -99,7 +106,8 @@ class VectorSearchEngine(BaseIndexEngine):
         self.tokenizer = None
         
     async def initialize(self) -> None:
-        """Initialize FAISS index and embedding models"""
+        """
+Initialize FAISS index and embedding models"""
         try:
             # Initialize Redis connection
             self.redis_client = Redis.from_url(self.config.redis_url)
@@ -279,7 +287,8 @@ class ContentIndexEngine(BaseIndexEngine):
         self.es_client = None
         
     async def initialize(self) -> None:
-        """Initialize Elasticsearch connection"""
+        """
+Initialize Elasticsearch connection"""
         try:
             hosts = self.config.elasticsearch_hosts or ["http://localhost:9200"]
             self.es_client = AsyncElasticsearch(hosts=hosts)
@@ -442,7 +451,8 @@ class FingerprintIndexEngine(BaseIndexEngine):
         self.fingerprint_store = {}
         
     async def initialize(self) -> None:
-        """Initialize fingerprint storage"""
+        """
+Initialize fingerprint storage"""
         try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
@@ -707,7 +717,8 @@ class MetadataIndexEngine(BaseIndexEngine):
         self.metadata_store = {}
         
     async def initialize(self) -> None:
-        """Initialize metadata storage"""
+        """
+Initialize metadata storage"""
         try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()

@@ -5,6 +5,7 @@ Core engine for quality assurance operations with automated QA capabilities with
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QualityAssuranceJob:
-    """Quality Assurance operation job"""
+    """
+Quality Assurance operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class QualityAssuranceJob:
 
 @dataclass
 class QualityAssuranceResult:
-    """Quality Assurance operation result"""
+    """
+Quality Assurance operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class QualityAssuranceResult:
     completed_at: datetime = None
 
 class QualityAssuranceEngine:
-    """Core quality assurance processing engine"""
+    """
+Core quality assurance processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

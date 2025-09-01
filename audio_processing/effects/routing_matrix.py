@@ -4,8 +4,9 @@ Industrial-grade audio routing system with flexible signal flow,
 bus management, and professional console routing capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Set, Any, Tuple
@@ -15,7 +16,9 @@ from abc import ABC, abstractmethod
 
 
 class BusType(Enum):
-    """Audio bus types"""
+    """
+Audio bus types"""
+
     MAIN_MIX = "main_mix"           # Main stereo mix
     GROUP = "group"                 # Group/subgroup bus
     AUX_SEND = "aux_send"          # Auxiliary send bus
@@ -27,6 +30,7 @@ class BusType(Enum):
 
 class RoutingMode(Enum):
     """Routing operation modes"""
+
     NORMAL = "normal"              # Normal operation
     PFL = "pfl"                    # Pre-fader listen
     AFL = "afl"                    # After-fader listen
@@ -48,7 +52,8 @@ class BusConfiguration:
 
 
 class AudioRoutingMatrix:
-    """Professional audio routing matrix"""
+    """
+Professional audio routing matrix"""
     
     def __init__(self, sample_rate: int):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -196,7 +201,8 @@ class AudioRoutingMatrix:
                 self.disconnect(source_id, bus_id)
     
     def set_routing_gain(self, source_id: str, destination_id: str, gain_db: float):
-        """Set routing gain for connection"""
+        """
+Set routing gain for connection"""
         if (source_id, destination_id) in self.routing_gains:
             self.routing_gains[(source_id, destination_id)] = gain_db
             self.logger.debug(f"Set routing gain '{source_id}' -> '{destination_id}': {gain_db}dB")
@@ -374,7 +380,8 @@ class AudioRoutingMatrix:
         return monitor_audio
     
     def activate_talkback(self, active: bool):
-        """Activate/deactivate talkback"""
+        """
+Activate/deactivate talkback"""
         self.talkback_active = active
         self.logger.info(f"Talkback {'activated' if active else 'deactivated'}")
     
@@ -398,7 +405,8 @@ class AudioRoutingMatrix:
         return routed_talkback
     
     def get_routing_info(self) -> Dict[str, Any]:
-        """Get complete routing information"""
+        """
+Get complete routing information"""
         return {
             'buses': {bus_id: {
                 'type': bus_config.bus_type.value,

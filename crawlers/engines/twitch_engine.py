@@ -21,6 +21,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -60,7 +61,8 @@ settings = get_settings()
 
 @dataclass
 class TwitchStreamData:
-    """Twitch stream data structure"""
+    """
+Twitch stream data structure"""
     stream_id: str
     user_id: str
     user_login: str
@@ -90,7 +92,8 @@ class TwitchStreamData:
 
 @dataclass
 class TwitchChannelData:
-    """Twitch channel data structure"""
+    """
+Twitch channel data structure"""
     user_id: str
     user_login: str
     user_name: str
@@ -151,7 +154,8 @@ class TwitchClipData:
 
 @dataclass
 class TwitchAnalyticsData:
-    """Twitch analytics data structure"""
+    """
+Twitch analytics data structure"""
     channel_id: str
     date_range: Dict[str, datetime]
     total_view_time: int
@@ -242,7 +246,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
             self.proxy_manager = None
 
     async def authenticate(self) -> bool:
-        """Authenticate with Twitch API"""
+        """
+Authenticate with Twitch API"""
         try:
             # Initialize Twitch API client
             self.twitch = await Twitch(self.client_id, self.client_secret)
@@ -764,7 +769,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
             await self.twitch.close()
 
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.twitch or self.chat:
                 asyncio.create_task(self.close())

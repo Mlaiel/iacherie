@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive music generation capabilities using deep learning
 for MIDI composition, audio synthesis, and multi-instrumental arrangements.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -18,7 +19,9 @@ import random
 logger = logging.getLogger(__name__)
 
 class MusicGenre(Enum):
-    """Music genres for generation"""
+    """
+Music genres for generation"""
+
     CLASSICAL = "classical"
     JAZZ = "jazz"
     ROCK = "rock"
@@ -32,6 +35,7 @@ class MusicGenre(Enum):
 
 class Instrument(Enum):
     """Available instruments"""
+
     PIANO = "piano"
     GUITAR = "guitar"
     VIOLIN = "violin"
@@ -45,6 +49,7 @@ class Instrument(Enum):
 
 class CompositionStyle(Enum):
     """Composition styles"""
+
     MELODIC = "melodic"
     RHYTHMIC = "rhythmic"
     HARMONIC = "harmonic"
@@ -79,7 +84,8 @@ class GeneratedMusic:
     generated_at: datetime = None
 
 class MusicGenerationEngine:
-    """Main music generation engine"""
+    """
+Main music generation engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -550,7 +556,8 @@ class MusicGenerationEngine:
         return score.strip()
     
     def _calculate_quality_metrics(self, arrangement: Dict[str, Any], config: MusicGenerationConfig) -> Dict[str, float]:
-        """Calculate quality metrics for generated music"""
+        """
+Calculate quality metrics for generated music"""
         metrics = {
             "melodic_coherence": random.uniform(0.7, 0.95),
             "harmonic_consistency": random.uniform(0.75, 0.9),

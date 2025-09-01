@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 import json
 import csv
@@ -33,7 +34,9 @@ from .monitoring import GovernanceMonitor, GovernanceAlert, MetricType
 
 
 class ReportType(Enum):
-    """Types of governance reports"""
+    """
+Types of governance reports"""
+
     COMPLIANCE_SUMMARY = "compliance_summary"
     POLICY_VIOLATIONS = "policy_violations"
     PRIVACY_ASSESSMENT = "privacy_assessment"
@@ -47,6 +50,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     CSV = "csv"
     HTML = "html"
@@ -56,6 +60,7 @@ class ReportFormat(Enum):
 
 class TimeAggregation(Enum):
     """Time aggregation periods"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -91,7 +96,8 @@ class ReportMetadata:
 
 @dataclass
 class GovernanceMetrics:
-    """Aggregated governance metrics"""
+    """
+Aggregated governance metrics"""
     period_start: datetime
     period_end: datetime
     total_policies: int
@@ -107,7 +113,8 @@ class GovernanceMetrics:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
+    """
+Compliance assessment report"""
     assessment_period: Tuple[datetime, datetime]
     overall_score: float
     framework_scores: Dict[str, float]
@@ -118,7 +125,8 @@ class ComplianceReport:
 
 
 class BaseReportGenerator(ABC):
-    """Base class for report generators"""
+    """
+Base class for report generators"""
     
     @abstractmethod
     async def generate(
@@ -126,7 +134,8 @@ class BaseReportGenerator(ABC):
         request: ReportRequest,
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
-        """Generate report based on request"""
+        """
+Generate report based on request"""
         logger.warning(f"generate method not implemented in {self.__class__.__name__}")
         
         # Create basic report content
@@ -166,7 +175,8 @@ class ComplianceReportGenerator(BaseReportGenerator):
         request: ReportRequest,
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
-        """Generate compliance report"""
+        """
+Generate compliance report"""
         try:
             compliance_manager = data_sources.get("compliance_manager")
             if not compliance_manager:
@@ -225,7 +235,8 @@ class ComplianceReportGenerator(BaseReportGenerator):
         request: ReportRequest,
         assessments: List[ComplianceAssessment]
     ) -> Tuple[bytes, ReportMetadata]:
-        """Generate JSON format compliance report"""
+        """
+Generate JSON format compliance report"""
         # Calculate summary metrics
         total_assessments = len(assessments)
         if total_assessments == 0:
@@ -428,7 +439,8 @@ class PolicyViolationReportGenerator(BaseReportGenerator):
         request: ReportRequest,
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
-        """Generate policy violation report"""
+        """
+Generate policy violation report"""
         try:
             policy_manager = data_sources.get("policy_manager")
             if not policy_manager:
@@ -481,7 +493,8 @@ class PolicyViolationReportGenerator(BaseReportGenerator):
         request: ReportRequest,
         violations: List[PolicyViolation]
     ) -> Tuple[bytes, ReportMetadata]:
-        """Generate JSON format violation report"""
+        """
+Generate JSON format violation report"""
         # Calculate summary metrics
         total_violations = len(violations)
         resolved_violations = len([v for v in violations if v.resolved])
@@ -593,7 +606,8 @@ class ExecutiveSummaryGenerator(BaseReportGenerator):
         request: ReportRequest,
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
-        """Generate executive summary report"""
+        """
+Generate executive summary report"""
         try:
             # Collect data from all sources
             summary_data = await self._collect_summary_data(data_sources, request.time_range)
@@ -920,7 +934,8 @@ class GovernanceReportManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the governance report manager"""
+        """
+Initialize the governance report manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -943,7 +958,8 @@ class GovernanceReportManager(BaseManager):
         self.governance_monitor: Optional[GovernanceMonitor] = None
     
     async def initialize(self) -> None:
-        """Initialize the report manager"""
+        """
+Initialize the report manager"""
         try:
             self.logger.info("Governance report manager initialized successfully")
             
@@ -1037,7 +1053,8 @@ class GovernanceReportManager(BaseManager):
         return list(self.generators.keys())
     
     async def get_supported_formats(self, report_type: ReportType) -> List[ReportFormat]:
-        """Get supported formats for a report type"""
+        """
+Get supported formats for a report type"""
         generator = self.generators.get(report_type)
         if generator:
             return generator.get_supported_formats()
@@ -1048,7 +1065,8 @@ class GovernanceReportManager(BaseManager):
         report_type: Optional[ReportType] = None,
         requested_by: Optional[str] = None
     ) -> List[ReportRequest]:
-        """Get report generation history"""
+        """
+Get report generation history"""
         requests = list(self.report_requests.values())
         
         if report_type:
@@ -1063,7 +1081,8 @@ class GovernanceReportManager(BaseManager):
         self,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Get aggregated governance metrics for time period"""
+        """
+Get aggregated governance metrics for time period"""
         try:
             summary = {}
             

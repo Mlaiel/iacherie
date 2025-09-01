@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -57,6 +58,7 @@ except ImportError:
 
 class DataType(Enum):
     """Types of observability data"""
+
     LOGS = "logs"
     METRICS = "metrics"
     TRACES = "traces"
@@ -69,6 +71,7 @@ class DataType(Enum):
 
 class StorageTier(Enum):
     """Storage tiers for data lifecycle"""
+
     HOT = "hot"          # Recent data, fast access
     WARM = "warm"        # Older data, medium access speed
     COLD = "cold"        # Archived data, slow access
@@ -78,6 +81,7 @@ class StorageTier(Enum):
 
 class CompressionType(Enum):
     """Data compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -87,6 +91,7 @@ class CompressionType(Enum):
 
 class DataStatus(Enum):
     """Status of data records"""
+
     ACTIVE = "active"
     ARCHIVED = "archived"
     COMPRESSED = "compressed"
@@ -128,15 +133,18 @@ class DataRecord:
         return result
     
     def get_age_days(self) -> int:
-        """Get age of record in days"""
+        """
+Get age of record in days"""
         return (datetime.utcnow() - self.created_at).days
     
     def is_compressed(self) -> bool:
-        """Check if record is compressed"""
+        """
+Check if record is compressed"""
         return self.compression != CompressionType.NONE
     
     def compression_ratio(self) -> float:
-        """Calculate compression ratio"""
+        """
+Calculate compression ratio"""
         if self.compressed_size_bytes > 0 and self.size_bytes > 0:
             return self.compressed_size_bytes / self.size_bytes
         return 1.0
@@ -144,7 +152,8 @@ class DataRecord:
 
 @dataclass
 class RetentionPolicy:
-    """Data retention policy configuration"""
+    """
+Data retention policy configuration"""
     policy_id: str
     name: str
     description: str
@@ -161,7 +170,8 @@ class RetentionPolicy:
     enabled: bool = True
     
     def applies_to_record(self, record: DataRecord) -> bool:
-        """Check if policy applies to a data record"""
+        """
+Check if policy applies to a data record"""
         if not self.enabled:
             return False
         
@@ -182,7 +192,8 @@ class RetentionPolicy:
         return True
     
     def get_target_tier(self, record: DataRecord) -> StorageTier:
-        """Determine target storage tier for record"""
+        """
+Determine target storage tier for record"""
         age_days = record.get_age_days()
         
         if age_days >= self.purge_after_days:
@@ -197,13 +208,15 @@ class RetentionPolicy:
             return StorageTier.HOT
     
     def should_compress(self, record: DataRecord) -> bool:
-        """Check if record should be compressed"""
+        """
+Check if record should be compressed"""
         return (record.get_age_days() >= self.compression_after_days and 
                 record.compression == CompressionType.NONE)
 
 
 class BaseStorageBackend(ABC):
-    """Abstract base class for storage backends"""
+    """
+Abstract base class for storage backends"""
     
     def __init__(self, name: str, config: Dict[str, Any]):
         self.name = name
@@ -217,12 +230,14 @@ class BaseStorageBackend(ABC):
     
     @abstractmethod
     async def retrieve_data(self, file_path: str) -> bytes:
-        """Retrieve data from storage"""
+        """
+Retrieve data from storage"""
         pass
     
     @abstractmethod
     async def delete_data(self, file_path: str) -> bool:
-        """Delete data from storage"""
+        """
+Delete data from storage"""
         pass
     
     @abstractmethod
@@ -232,12 +247,14 @@ class BaseStorageBackend(ABC):
     
     @abstractmethod
     async def get_file_info(self, file_path: str) -> Dict[str, Any]:
-        """Get file information"""
+        """
+Get file information"""
         pass
 
 
 class FileSystemStorageBackend(BaseStorageBackend):
-    """File system storage backend"""
+    """
+File system storage backend"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__("filesystem", config)
@@ -344,7 +361,8 @@ class CompressionManager:
         return supported
     
     async def compress_data(self, data: bytes, algorithm: CompressionType) -> bytes:
-        """Compress data using specified algorithm"""
+        """
+Compress data using specified algorithm"""
         if algorithm == CompressionType.NONE:
             return data
         
@@ -441,7 +459,8 @@ class CompressionManager:
 
 
 class DataLifecycleManager:
-    """Manages data lifecycle policies and operations"""
+    """
+Manages data lifecycle policies and operations"""
     
     def __init__(self, storage_backend: BaseStorageBackend, 
                  compression_manager: CompressionManager,
@@ -509,7 +528,8 @@ class DataLifecycleManager:
             conn.commit()
     
     def register_retention_policy(self, policy: RetentionPolicy):
-        """Register a retention policy"""
+        """
+Register a retention policy"""
         self.retention_policies[policy.policy_id] = policy
         self.logger.info(f"Registered retention policy: {policy.policy_id}")
     
@@ -676,7 +696,8 @@ class DataLifecycleManager:
         return data
     
     async def delete_data(self, record_id: str) -> bool:
-        """Delete data by record ID"""
+        """
+Delete data by record ID"""
         record = await self._get_record_metadata(record_id)
         if not record:
             return False
@@ -724,7 +745,8 @@ class DataLifecycleManager:
             conn.commit()
     
     async def _get_record_metadata(self, record_id: str) -> Optional[DataRecord]:
-        """Get record metadata from database"""
+        """
+Get record metadata from database"""
         with sqlite3.connect(self.metadata_db_path) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.execute("""
@@ -754,7 +776,8 @@ class DataLifecycleManager:
             )
     
     async def start_lifecycle_management(self, interval_hours: int = 1):
-        """Start background lifecycle management"""
+        """
+Start background lifecycle management"""
         if self._running:
             return
         
@@ -859,7 +882,8 @@ class DataLifecycleManager:
             await self._compress_record(record, policy.preferred_compression)
     
     async def _transition_storage_tier(self, record: DataRecord, target_tier: StorageTier):
-        """Transition record to different storage tier"""
+        """
+Transition record to different storage tier"""
         if target_tier == record.storage_tier:
             return
         
@@ -1185,7 +1209,8 @@ class DataManager:
 
 # Factory function
 def create_data_manager(config: Dict[str, Any] = None) -> DataManager:
-    """Factory function to create data manager"""
+    """
+Factory function to create data manager"""
     return DataManager(config)
 
 

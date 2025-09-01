@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 GESTIONNAIRE DE DÉPLOIEMENT DE MODÈLES
@@ -15,6 +15,7 @@ Déploiement automatisé et monitoring des modèles ML
 - Auto-scaling et load balancing
 - Health checks et rollback automatique
 """
+
 import asyncio
 import logging
 import time
@@ -34,7 +35,9 @@ import tempfile
 logger = logging.getLogger(__name__)
 
 class DeploymentType(Enum):
-    """Types de déploiement"""
+    """
+Types de déploiement"""
+
     DOCKER = "docker"
     KUBERNETES = "kubernetes"
     SERVERLESS = "serverless"
@@ -42,6 +45,7 @@ class DeploymentType(Enum):
 
 class DeploymentStrategy(Enum):
     """Stratégies de déploiement"""
+
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING_UPDATE = "rolling_update"
@@ -49,6 +53,7 @@ class DeploymentStrategy(Enum):
 
 class DeploymentStatus(Enum):
     """Statuts de déploiement"""
+
     PENDING = "pending"
     BUILDING = "building"
     DEPLOYING = "deploying"
@@ -103,7 +108,8 @@ class PerformanceMetrics:
     timestamp: datetime
 
 class ModelDeploymentManager:
-    """Gestionnaire de déploiement de modèles"""
+    """
+Gestionnaire de déploiement de modèles"""
     
     def __init__(self, k8s_namespace: str = "ml-models"):
         self.k8s_namespace = k8s_namespace
@@ -188,7 +194,8 @@ class ModelDeploymentManager:
     def _generate_dockerfile(self, deployment_info: DeploymentInfo) -> str:
         """Génère un Dockerfile pour le modèle"""
         
-        dockerfile = f"""FROM python:3.9-slim
+        dockerfile = f"""
+FROM python:3.9-slim
 
 # Installation des dépendances système
 RUN apt-get update && apt-get install -y \\
@@ -230,9 +237,11 @@ CMD ["python", "server.py"]
         return dockerfile.strip()
     
     def _generate_model_server(self, deployment_info: DeploymentInfo) -> str:
-        """Génère le code du serveur pour le modèle"""
+        """
+Génère le code du serveur pour le modèle"""
         
         server_code = f"""
+
 import asyncio
 import logging
 import time
@@ -296,7 +305,8 @@ if __name__ == "__main__":
         return server_code.strip()
     
     def _generate_k8s_deployment(self, deployment_info: DeploymentInfo) -> Dict[str, Any]:
-        """Génère le manifest de déploiement Kubernetes"""
+        """
+Génère le manifest de déploiement Kubernetes"""
         
         return {
             "apiVersion": "apps/v1",
@@ -376,7 +386,8 @@ if __name__ == "__main__":
         return self.deployments.get(deployment_id)
     
     async def list_deployments(self, model_name: Optional[str] = None) -> List[DeploymentInfo]:
-        """Liste les déploiements"""
+        """
+Liste les déploiements"""
         deployments = list(self.deployments.values())
         
         if model_name:
@@ -385,7 +396,8 @@ if __name__ == "__main__":
         return deployments
     
     async def stop_deployment(self, deployment_id: str) -> bool:
-        """Arrête un déploiement"""
+        """
+Arrête un déploiement"""
         
         deployment_info = self.deployments.get(deployment_id)
         if not deployment_info:
@@ -613,7 +625,8 @@ class DeploymentManagerFactory:
     
     @staticmethod
     def create_local_manager() -> ModelDeploymentManager:
-        """Gestionnaire pour développement local"""
+        """
+Gestionnaire pour développement local"""
         return ModelDeploymentManager()
     
     @staticmethod
@@ -624,7 +637,8 @@ class DeploymentManagerFactory:
 
 # Exemple d'utilisation
 async def example_usage():
-    """Exemple d'utilisation du gestionnaire de déploiement"""
+    """
+Exemple d'utilisation du gestionnaire de déploiement"""
     
     # Créer le gestionnaire
     manager = DeploymentManagerFactory.create_local_manager()

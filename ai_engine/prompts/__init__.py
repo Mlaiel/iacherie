@@ -9,6 +9,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import logging
@@ -130,17 +131,20 @@ class PromptSystemManager:
     """Main manager for all prompt systems"""
     
     def __init__(self):
-        """Initialize the prompt system manager"""
+        """
+Initialize the prompt system manager"""
         self.systems = get_all_prompt_systems()
         self.logger = logging.getLogger(__name__)
     
     def get_system(self, system_name: str) -> Any:
-        """Get a specific prompt system"""
+        """
+Get a specific prompt system"""
         return self.systems.get(system_name)
     
     def generate_content_creator_prompt(self, creator_type: str, content_format: str, 
                                       category: str, **kwargs) -> Dict[str, Any]:
-        """Generate content creator prompt"""
+        """
+Generate content creator prompt"""
         context = create_prompt_context(
             creator_type=creator_type,
             content_format=content_format,
@@ -471,15 +475,18 @@ def get_prompt_categories() -> dict:
     return PROMPT_CATEGORIES.copy()
 
 def get_content_formats() -> dict:
-    """Get content format specifications"""
+    """
+Get content format specifications"""
     return CONTENT_FORMATS.copy()
 
 def get_tone_styles() -> dict:
-    """Get available tone and style options"""
+    """
+Get available tone and style options"""
     return TONE_STYLES.copy()
 
 def get_platform_optimizations() -> dict:
-    """Get platform-specific optimization settings"""
+    """
+Get platform-specific optimization settings"""
     return PLATFORM_OPTIMIZATIONS.copy()
 
 def create_prompt_template(

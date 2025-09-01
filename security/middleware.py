@@ -7,6 +7,7 @@ and comprehensive security controls.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import json
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security level classifications"""
+    """
+Security level classifications"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -41,6 +44,7 @@ class SecurityLevel(Enum):
 
 class AttackType(Enum):
     """Types of security attacks"""
+
     SQL_INJECTION = "sql_injection"
     XSS = "xss"
     CSRF = "csrf"
@@ -55,6 +59,7 @@ class AttackType(Enum):
 
 class RateLimitType(Enum):
     """Rate limiting strategies"""
+
     FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
@@ -76,7 +81,8 @@ class SecurityRule:
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule"""
+    """
+Rate limiting rule"""
     name: str
     requests_per_window: int
     window_size_seconds: int
@@ -88,7 +94,8 @@ class RateLimitRule:
 
 @dataclass
 class SecurityEvent:
-    """Security event log"""
+    """
+Security event log"""
     event_id: str
     timestamp: datetime
     client_ip: str
@@ -102,7 +109,8 @@ class SecurityEvent:
 
 
 class WAFEngine:
-    """Web Application Firewall engine"""
+    """
+Web Application Firewall engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -114,7 +122,8 @@ class WAFEngine:
         self._initialize_default_rules()
         
     async def initialize(self):
-        """Initialize WAF engine"""
+        """
+Initialize WAF engine"""
         try:
             # Initialize Redis for caching and rate limiting
             redis_config = self.config.get('redis', {})
@@ -416,7 +425,8 @@ class RateLimiter:
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialize default rate limiting rules"""
+        """
+Initialize default rate limiting rules"""
         default_rules = [
             RateLimitRule(
                 name="api_global",
@@ -572,7 +582,8 @@ class RateLimiter:
 
 
 class OAuth2Provider:
-    """OAuth2 authentication and authorization provider"""
+    """
+OAuth2 authentication and authorization provider"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -582,7 +593,8 @@ class OAuth2Provider:
         self.logger = logging.getLogger(__name__)
     
     async def create_access_token(self, user_data: Dict[str, Any], scopes: List[str] = None) -> str:
-        """Create JWT access token"""
+        """
+Create JWT access token"""
         try:
             now = datetime.utcnow()
             payload = {
@@ -697,7 +709,8 @@ class SecurityMiddleware:
         self.logger = logging.getLogger(__name__)
         
     async def initialize(self):
-        """Initialize security middleware"""
+        """
+Initialize security middleware"""
         try:
             # Initialize WAF
             await self.waf.initialize()
@@ -822,5 +835,6 @@ async def initialize_security(config: Dict[str, Any] = None) -> SecurityMiddlewa
 
 
 def get_security_middleware() -> Optional[SecurityMiddleware]:
-    """Get global security middleware instance"""
+    """
+Get global security middleware instance"""
     return security_middleware

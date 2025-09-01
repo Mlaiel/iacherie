@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Monetization Agent
+"""
+Unit Tests for Monetization Agent
 =================================
 
 Critical unit tests for the AI-powered monetization agent module.
@@ -22,6 +24,7 @@ and monetization strategy optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
 """
+
 import pytest
 import sys
 import os
@@ -35,7 +38,8 @@ import uuid
 
 
 class MockMonetizationEngine:
-    """Mock implementation of monetization engine for testing"""
+    """
+Mock implementation of monetization engine for testing"""
     
     def __init__(self):
         self.revenue_history = []
@@ -268,12 +272,14 @@ class TestMonetizationAgent:
     
     @pytest.fixture
     def monetization_engine(self):
-        """Create monetization engine fixture"""
+        """
+Create monetization engine fixture"""
         return MockMonetizationEngine()
     
     @pytest.fixture
     def sample_content_metrics(self):
-        """Sample content performance metrics"""
+        """
+Sample content performance metrics"""
         return {
             "views": 10000,
             "likes": 500,

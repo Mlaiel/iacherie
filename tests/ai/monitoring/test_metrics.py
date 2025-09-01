@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Metrics Tests - Industrial Grade
+"""
+Advanced Metrics Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for monitoring metrics system.
 Tests metrics collection, aggregation, analysis, and real-time processing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -66,11 +69,13 @@ from .fixtures import (
 
 
 class TestMetricsCore:
-    """Core functionality tests for metrics system."""
+    """
+Core functionality tests for metrics system."""
     
     @pytest.fixture
     async def metrics_collector(self):
-        """Create and initialize metrics collector."""
+        """
+Create and initialize metrics collector."""
         collector = MetricsCollector(
             config={
                 "collection_enabled": True,
@@ -800,7 +805,8 @@ class TestMetricsPerformance:
     
     @pytest.fixture
     async def high_performance_metrics_collector(self):
-        """Create high-performance metrics collector."""
+        """
+Create high-performance metrics collector."""
         collector = MetricsCollector(
             config={
                 "high_performance_mode": True,
@@ -860,7 +866,8 @@ class TestMetricsPerformance:
         metrics_per_task = 10000
         
         async def process_metrics_task(task_id: int):
-            """Process metrics for a single task."""
+            """
+Process metrics for a single task."""
             task_metrics = []
             for i in range(metrics_per_task):
                 metric = Metric(

@@ -4,7 +4,7 @@
 Advanced blockchain-based content verification and authenticity tracking.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - Cross-chain verification for maximum security
 - Integration with IPFS for decentralized storage
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -48,7 +49,9 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 logger = logging.getLogger(__name__)
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks."""
+    """
+Supported blockchain networks."""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "bsc"
@@ -58,6 +61,7 @@ class BlockchainNetwork(Enum):
 
 class VerificationStatus(Enum):
     """Content verification status."""
+
     VERIFIED = "verified"
     PENDING = "pending"
     FAILED = "failed"
@@ -78,7 +82,8 @@ class ContentFingerprint:
 
 @dataclass
 class BlockchainRecord:
-    """Blockchain registration record."""
+    """
+Blockchain registration record."""
     transaction_hash: str
     block_number: int
     network: BlockchainNetwork
@@ -90,7 +95,8 @@ class BlockchainRecord:
 
 @dataclass
 class OwnershipProof:
-    """Proof of content ownership."""
+    """
+Proof of content ownership."""
     content_id: str
     owner_address: str
     creation_timestamp: datetime
@@ -102,7 +108,8 @@ class OwnershipProof:
     verification_score: float
 
 class SmartContractManager:
-    """Manages smart contract interactions for content verification."""
+    """
+Manages smart contract interactions for content verification."""
     
     def __init__(self, network_configs: Dict[str, Dict[str, Any]]):
         self.network_configs = network_configs
@@ -111,7 +118,8 @@ class SmartContractManager:
         self._initialize_connections()
     
     def _initialize_connections(self):
-        """Initialize blockchain connections."""
+        """
+Initialize blockchain connections."""
         for network, config in self.network_configs.items():
             try:
                 w3 = Web3(Web3.HTTPProvider(config['rpc_url']))
@@ -189,7 +197,8 @@ class IPFSManager:
         self._initialize_client()
     
     def _initialize_client(self):
-        """Initialize IPFS client."""
+        """
+Initialize IPFS client."""
         try:
             self.client = ipfshttpclient.connect(
                 addr=self.config.get('api_address', '/ip4/127.0.0.1/tcp/5001'),
@@ -243,13 +252,15 @@ class CryptographicProcessor:
         self.public_key = self.private_key.public_key()
     
     def generate_content_hash(self, content_data: bytes) -> str:
-        """Generate cryptographic hash of content."""
+        """
+Generate cryptographic hash of content."""
         sha256_hash = hashlib.sha256()
         sha256_hash.update(content_data)
         return sha256_hash.hexdigest()
     
     def generate_perceptual_hash(self, content_data: bytes, content_type: str) -> str:
-        """Generate perceptual hash for similarity detection."""
+        """
+Generate perceptual hash for similarity detection."""
         # Implementation would depend on content type
         # For audio: chromaprint or similar
         # For images: pHash or similar
@@ -266,22 +277,26 @@ class CryptographicProcessor:
             return self.generate_content_hash(content_data)
     
     def _generate_audio_perceptual_hash(self, audio_data: bytes) -> str:
-        """Generate perceptual hash for audio content."""
+        """
+Generate perceptual hash for audio content."""
         # Placeholder - would use actual audio fingerprinting
         return hashlib.md5(audio_data[:1024]).hexdigest()
     
     def _generate_image_perceptual_hash(self, image_data: bytes) -> str:
-        """Generate perceptual hash for image content."""
+        """
+Generate perceptual hash for image content."""
         # Placeholder - would use actual image hashing like pHash
         return hashlib.md5(image_data[:1024]).hexdigest()
     
     def _generate_video_perceptual_hash(self, video_data: bytes) -> str:
-        """Generate perceptual hash for video content."""
+        """
+Generate perceptual hash for video content."""
         # Placeholder - would use actual video fingerprinting
         return hashlib.md5(video_data[:1024]).hexdigest()
     
     def sign_content(self, content_hash: str) -> str:
-        """Create digital signature for content."""
+        """
+Create digital signature for content."""
         message = content_hash.encode('utf-8')
         signature = self.private_key.sign(
             message,
@@ -294,7 +309,8 @@ class CryptographicProcessor:
         return signature.hex()
     
     def verify_signature(self, content_hash: str, signature: str, public_key_pem: str) -> bool:
-        """Verify digital signature."""
+        """
+Verify digital signature."""
         try:
             public_key = serialization.load_pem_public_key(public_key_pem.encode())
             message = content_hash.encode('utf-8')
@@ -603,24 +619,28 @@ class BlockchainContentVerifier:
         return None
     
     async def _verify_blockchain_signatures(self, ownership_proof: OwnershipProof) -> bool:
-        """Verify blockchain transaction signatures."""
+        """
+Verify blockchain transaction signatures."""
         # Placeholder implementation
         # Would verify actual blockchain signatures
         return True
     
     async def _query_by_hash(self, content_hash: str, exact: bool = True) -> List[OwnershipProof]:
-        """Query blockchain records by content hash."""
+        """
+Query blockchain records by content hash."""
         # Placeholder implementation
         # Would perform actual blockchain queries
         return []
     
     async def _get_stored_hash(self, content_id: str) -> Optional[str]:
-        """Get stored content hash from blockchain."""
+        """
+Get stored content hash from blockchain."""
         # Placeholder implementation
         return None
     
     def get_verification_statistics(self) -> Dict[str, Any]:
-        """Get verification statistics."""
+        """
+Get verification statistics."""
         return {
             **self.verification_stats,
             'cache_size': len(self.verification_cache),

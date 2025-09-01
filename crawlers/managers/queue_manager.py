@@ -7,6 +7,7 @@ load balancing, retry logic, and distributed processing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -31,7 +32,9 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class TaskPriority(Enum):
-    """Task priority levels for queue management."""
+    """
+Task priority levels for queue management."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -40,7 +43,9 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status."""
+    """
+Task execution status."""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -53,6 +58,7 @@ class TaskStatus(Enum):
 
 class QueueType(Enum):
     """Queue type enumeration."""
+
     PRIORITY = "priority"
     FIFO = "fifo"
     LIFO = "lifo"
@@ -87,7 +93,8 @@ class CrawlerTask:
 
 @dataclass
 class QueueMetrics:
-    """Queue performance metrics."""
+    """
+Queue performance metrics."""
     queue_name: str
     total_tasks: int = 0
     pending_tasks: int = 0
@@ -103,7 +110,8 @@ class QueueMetrics:
 
 @dataclass
 class WorkerMetrics:
-    """Worker performance metrics."""
+    """
+Worker performance metrics."""
     worker_id: str
     tasks_processed: int = 0
     tasks_completed: int = 0
@@ -119,7 +127,8 @@ class TaskQueue:
     """
     
     def __init__(self, name: str, queue_type: QueueType = QueueType.PRIORITY):
-        """Initialize task queue."""
+        """
+Initialize task queue."""
         self.name = name
         self.queue_type = queue_type
         self.logger = get_logger(f"Queue-{name}")
@@ -226,7 +235,8 @@ class TaskQueue:
             await asyncio.sleep(0.01)
             
     async def _process_scheduled_tasks(self):
-        """Move scheduled tasks to main queue if ready."""
+        """
+Move scheduled tasks to main queue if ready."""
         current_time = datetime.utcnow()
         ready_tasks = []
         
@@ -248,7 +258,8 @@ class TaskQueue:
             self.metrics.pending_tasks += 1
             
     async def complete_task(self, task_id: str, result: Optional[Dict[str, Any]] = None) -> bool:
-        """Mark task as completed."""
+        """
+Mark task as completed."""
         async with self._lock:
             if task_id not in self._processing_tasks:
                 return False
@@ -331,7 +342,8 @@ class TaskQueue:
             return False
             
     async def pause(self):
-        """Pause queue processing."""
+        """
+Pause queue processing."""
         self._paused = True
         self.logger.info(f"Queue {self.name} paused")
         
@@ -366,7 +378,8 @@ class TaskQueue:
                 len(self._scheduled_tasks) + len(self._processing_tasks))
                 
     def get_metrics(self) -> QueueMetrics:
-        """Get queue metrics."""
+        """
+Get queue metrics."""
         # Update average times
         if self._processing_times:
             self.metrics.average_processing_time = sum(self._processing_times) / len(self._processing_times)
@@ -398,7 +411,8 @@ class QueueManager:
     """
     
     def __init__(self, config: Optional[QueueConfig] = None):
-        """Initialize queue manager."""
+        """
+Initialize queue manager."""
         self.config = config or QueueConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
@@ -432,7 +446,8 @@ class QueueManager:
         }
         
     def _initialize_redis(self):
-        """Initialize Redis connection for distributed queues."""
+        """
+Initialize Redis connection for distributed queues."""
         try:
             self.redis_client = redis.Redis(
                 host=self.config.REDIS_HOST,
@@ -720,7 +735,8 @@ class QueueManager:
         return True
         
     async def resume_queue(self, queue_name: str) -> bool:
-        """Resume a queue."""
+        """
+Resume a queue."""
         if queue_name not in self.queues:
             return False
             
@@ -728,7 +744,8 @@ class QueueManager:
         return True
         
     async def clear_queue(self, queue_name: str) -> bool:
-        """Clear a queue."""
+        """
+Clear a queue."""
         if queue_name not in self.queues:
             return False
             
@@ -736,33 +753,39 @@ class QueueManager:
         return True
         
     async def get_queue_metrics(self, queue_name: str) -> Optional[QueueMetrics]:
-        """Get metrics for a specific queue."""
+        """
+Get metrics for a specific queue."""
         if queue_name not in self.queues:
             return None
             
         return self.queues[queue_name].get_metrics()
         
     async def get_all_queue_metrics(self) -> Dict[str, QueueMetrics]:
-        """Get metrics for all queues."""
+        """
+Get metrics for all queues."""
         metrics = {}
         for name, queue in self.queues.items():
             metrics[name] = queue.get_metrics()
         return metrics
         
     async def get_worker_metrics(self, worker_id: str) -> Optional[WorkerMetrics]:
-        """Get metrics for a specific worker."""
+        """
+Get metrics for a specific worker."""
         return self.workers.get(worker_id)
         
     async def get_all_worker_metrics(self) -> Dict[str, WorkerMetrics]:
-        """Get metrics for all workers."""
+        """
+Get metrics for all workers."""
         return self.workers.copy()
         
     async def get_global_stats(self) -> Dict[str, Any]:
-        """Get global queue manager statistics."""
+        """
+Get global queue manager statistics."""
         return self.global_stats.copy()
         
     async def _monitoring_loop(self):
-        """Background monitoring loop."""
+        """
+Background monitoring loop."""
         while self.monitoring_active:
             try:
                 # Update global statistics
@@ -798,7 +821,8 @@ class QueueManager:
             self.global_stats['average_response_time'] = total_processing_time / total_processed
             
     async def _cleanup_inactive_workers(self):
-        """Clean up inactive workers."""
+        """
+Clean up inactive workers."""
         current_time = datetime.utcnow()
         inactive_threshold = timedelta(seconds=self.config.WORKER_TIMEOUT)
         
@@ -877,7 +901,8 @@ async def submit_batch_tasks(manager: QueueManager, tasks: List[CrawlerTask], qu
 
 
 async def create_crawler_task(task_type: str, url: str, priority: TaskPriority = TaskPriority.NORMAL, **kwargs) -> CrawlerTask:
-    """Create a crawler task with generated ID."""
+    """
+Create a crawler task with generated ID."""
     task_id = f"{task_type}_{uuid.uuid4().hex[:8]}"
     
     return CrawlerTask(

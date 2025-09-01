@@ -11,7 +11,7 @@ State-of-the-art AI-powered threat detection and security intelligence engine pr
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + Backend Senior + Security Engineer + ML Engineer + Cybersecurity Expert + Threat Intelligence
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 This proprietary threat detection system contains advanced security algorithms, threat intelligence techniques,
@@ -26,6 +26,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -455,7 +456,8 @@ class ThreatDetectionEngine:
         return threats
     
     def _calculate_threat_risk(self, threats: List[Dict[str, Any]]) -> str:
-        """Calculate overall threat risk level"""
+        """
+Calculate overall threat risk level"""
         if not threats:
             return 'low'
         
@@ -472,7 +474,8 @@ class ThreatDetectionEngine:
             return 'low'
     
     def _calculate_confidence(self, threats: List[Dict[str, Any]]) -> float:
-        """Calculate overall confidence score"""
+        """
+Calculate overall confidence score"""
         if not threats:
             return 0.0
         
@@ -480,7 +483,8 @@ class ThreatDetectionEngine:
         return np.mean(confidences)
     
     async def update_model(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update threat detection models based on feedback"""
+        """
+Update threat detection models based on feedback"""
         try:
             update_results = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -537,49 +541,61 @@ class ThreatDetectionEngine:
         return False  # Placeholder
     
     async def _scan_metadata_threats(self, metadata: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Scan metadata for threats"""
+        """
+Scan metadata for threats"""
         return []  # Placeholder
     
     async def _assess_classification_threats(self, classification: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Assess threats based on content classification"""
+        """
+Assess threats based on content classification"""
         return []  # Placeholder
     
     async def _analyze_upload_patterns(self, user_id: str) -> List[Dict[str, Any]]:
-        """Analyze user upload patterns for threats"""
+        """
+Analyze user upload patterns for threats"""
         return []  # Placeholder
     
     async def _analyze_access_patterns(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze access patterns for threats"""
+        """
+Analyze access patterns for threats"""
         return []  # Placeholder
     
     async def _detect_temporal_anomalies(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect temporal anomalies"""
+        """
+Detect temporal anomalies"""
         return []  # Placeholder
     
     async def _check_ip_reputation(self, ip_address: str) -> List[Dict[str, Any]]:
-        """Check IP reputation"""
+        """
+Check IP reputation"""
         return []  # Placeholder
     
     async def _check_domain_reputation(self, domains: List[str]) -> List[Dict[str, Any]]:
-        """Check domain reputation"""
+        """
+Check domain reputation"""
         return []  # Placeholder
     
     async def _detect_geo_threats(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect geography-based threats"""
+        """
+Detect geography-based threats"""
         return []  # Placeholder
     
     async def _check_url_blacklist(self, url: str) -> bool:
-        """Check if URL is in blacklist"""
+        """
+Check if URL is in blacklist"""
         return False  # Placeholder
     
     def _is_suspicious_url(self, url: str) -> bool:
-        """Check if URL has suspicious patterns"""
+        """
+Check if URL has suspicious patterns"""
         return False  # Placeholder
     
     def _extract_features_from_feedback(self, feedback_data: List[Dict[str, Any]]) -> Optional[np.ndarray]:
-        """Extract features from feedback data for model training"""
+        """
+Extract features from feedback data for model training"""
         return None  # Placeholder
     
     async def _process_threat_feed(self, feed_url: str):
-        """Process a threat intelligence feed"""
+        """
+Process a threat intelligence feed"""
         pass  # Placeholder

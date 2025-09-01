@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import json
@@ -30,14 +31,17 @@ import aiohttp
 import random
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
+    """
+Get current UTC datetime in a timezone-aware manner"""
     return datetime.now(timezone.utc)
 
 logger = logging.getLogger(__name__)
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "bsc"
@@ -49,6 +53,7 @@ class BlockchainNetwork(Enum):
 
 class ProofType(Enum):
     """Types of blockchain proofs"""
+
     OWNERSHIP = "ownership"
     TIMESTAMP = "timestamp"
     INTEGRITY = "integrity"
@@ -59,6 +64,7 @@ class ProofType(Enum):
 
 class TransactionStatus(Enum):
     """Blockchain transaction status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -79,7 +85,8 @@ class CryptographicSignature:
 
 @dataclass
 class ProofOfOwnership:
-    """Blockchain proof of ownership record"""
+    """
+Blockchain proof of ownership record"""
     proof_id: str
     content_id: str
     owner_id: str
@@ -96,7 +103,8 @@ class ProofOfOwnership:
 
 @dataclass
 class BlockchainTimestamp:
-    """Immutable timestamp proof on blockchain"""
+    """
+Immutable timestamp proof on blockchain"""
     timestamp_id: str
     content_id: str
     content_hash: str
@@ -110,7 +118,8 @@ class BlockchainTimestamp:
 
 @dataclass
 class SmartContractConfig:
-    """Smart contract configuration"""
+    """
+Smart contract configuration"""
     contract_id: str
     network: BlockchainNetwork
     contract_address: str
@@ -122,7 +131,8 @@ class SmartContractConfig:
 
 @dataclass
 class RoyaltyRecord:
-    """Blockchain-based royalty tracking record"""
+    """
+Blockchain-based royalty tracking record"""
     record_id: str
     content_id: str
     license_id: str
@@ -137,7 +147,8 @@ class RoyaltyRecord:
 
 class BlockchainVerifier:
     async def deploy_content_protection_contract(self, contract_type: str, config: dict = None, network: str = None, **kwargs) -> dict:
-        """Deploy content protection smart contract (mock implementation)"""
+        """
+Deploy content protection smart contract (mock implementation)"""
         await asyncio.sleep(0.1)
         config = config or {}
         actual_network = network or config.get('network', 'ethereum')
@@ -151,7 +162,8 @@ class BlockchainVerifier:
         }
 
     async def store_blockchain_record(self, record_id: str, content_id: str, owner_id: str, content_hash: str, metadata: dict = None) -> dict:
-        """Store a blockchain record (mock implementation)"""
+        """
+Store a blockchain record (mock implementation)"""
         await asyncio.sleep(0.05)
         return {
             'success': True,
@@ -166,7 +178,8 @@ class BlockchainVerifier:
         }
 
     async def create_timestamped_record(self, content_version: str, owner_id: str, content_hash: str, timestamp, metadata: dict = None) -> dict:
-        """Create timestamped record on blockchain (mock implementation)"""
+        """
+Create timestamped record on blockchain (mock implementation)"""
         await asyncio.sleep(0.05)
         return {
             'success': True,
@@ -183,7 +196,8 @@ class BlockchainVerifier:
         }
 
     async def _estimate_gas_costs(self, operation_type: str, data_size: int) -> dict:
-        """Estimate gas costs for blockchain operations (mock implementation)"""
+        """
+Estimate gas costs for blockchain operations (mock implementation)"""
         base_costs = {
             'registration': 150000,
             'verification': 50000,
@@ -204,7 +218,8 @@ class BlockchainVerifier:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize blockchain verifier"""
+        """
+Initialize blockchain verifier"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -237,7 +252,8 @@ class BlockchainVerifier:
         metadata: Optional[Dict[str, Any]] = None,
         blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> ProofOfOwnership:
-        """Create immutable proof of ownership on blockchain"""
+        """
+Create immutable proof of ownership on blockchain"""
         try:
             self.logger.info(f"Creating proof of ownership for content: {content_id}")
             
@@ -683,7 +699,8 @@ class BlockchainVerifier:
         blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM,
         transfer_metadata: Optional[Dict[str, Any]] = None
     ) -> ProofOfOwnership:
-        """Transfer ownership on blockchain"""
+        """
+Transfer ownership on blockchain"""
         try:
             self.logger.info(f"Transferring ownership for content: {content_id}")
             
@@ -956,7 +973,8 @@ class BlockchainVerifier:
         }
     
     def _initialize_cryptographic_keys(self):
-        """Initialize cryptographic key pair for signing"""
+        """
+Initialize cryptographic key pair for signing"""
         if not self._private_key:
             # Generate new key pair (in production, load from secure storage)
             self._private_key = rsa.generate_private_key(
@@ -971,7 +989,8 @@ class BlockchainVerifier:
         content_hash: str,
         metadata: Dict[str, Any]
     ) -> CryptographicSignature:
-        """Create cryptographic signature for content"""
+        """
+Create cryptographic signature for content"""
         signature_id = str(uuid.uuid4())
         
         # Prepare data to sign
@@ -1015,7 +1034,8 @@ class BlockchainVerifier:
         network: BlockchainNetwork,
         transaction_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit ownership transaction to blockchain"""
+        """
+Submit ownership transaction to blockchain"""
         # This would integrate with actual blockchain networks
         # Simplified implementation for example
         
@@ -1122,7 +1142,8 @@ class BlockchainVerifier:
             }
 
     async def _deploy_smart_contract(self, contract_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy smart contract for content protection"""
+        """
+Deploy smart contract for content protection"""
         try:
             # Simulate smart contract deployment
             contract_address = f"0x{''.join([str(i) for i in range(40)])}"
@@ -1305,7 +1326,8 @@ class BlockchainVerifier:
         proof_of_ownership,
         networks: List[str]
     ) -> Dict[str, Any]:
-        """Register proof of ownership on multiple blockchain networks"""
+        """
+Register proof of ownership on multiple blockchain networks"""
         try:
             self.logger.info(f"Registering on multiple networks: {networks}")
             
@@ -1811,7 +1833,8 @@ class BlockchainVerifier:
         }
     
     async def analyze_registration_costs(self, proof_of_ownership, networks: List[str]) -> Dict[str, Any]:
-        """Analyze registration costs across networks
+        """
+Analyze registration costs across networks
         
         Args:
             proof_of_ownership: Proof of ownership instance

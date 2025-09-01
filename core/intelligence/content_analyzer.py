@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -40,7 +41,9 @@ from ..storage.vector_storage import VectorStorage
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -50,6 +53,7 @@ class ContentType(Enum):
 
 class QualityScore(Enum):
     """Quality scoring levels"""
+
     EXCELLENT = 90
     GOOD = 75
     AVERAGE = 60
@@ -59,7 +63,8 @@ class QualityScore(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content analysis metrics"""
+    """
+Content analysis metrics"""
     quality_score: float
     engagement_potential: float
     monetization_score: float
@@ -72,7 +77,8 @@ class ContentMetrics:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result"""
+    """
+Comprehensive analysis result"""
     content_id: str
     metrics: ContentMetrics
     recommendations: List[str]
@@ -149,7 +155,8 @@ class ContentAnalyzer:
         self.ai_engine = AIEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize vector storage for similarity matching"""
+        """
+Initialize vector storage for similarity matching"""
         self.vector_storage = VectorStorage(self.config)
     
     async def analyze_content(
@@ -1086,7 +1093,8 @@ class ContentAnalyzer:
         features: Dict[str, Any], 
         content_type: ContentType
     ) -> List[str]:
-        """Find similar content using vector similarity"""
+        """
+Find similar content using vector similarity"""
         try:
             # Extract feature vector for similarity search
             if content_type == ContentType.AUDIO:
@@ -1126,7 +1134,8 @@ class ContentAnalyzer:
             return image_data
     
     def _calculate_motion_intensity(self, frames: List[np.ndarray]) -> float:
-        """Calculate motion intensity in video frames"""
+        """
+Calculate motion intensity in video frames"""
         if len(frames) < 2:
             return 0.0
         
@@ -1140,7 +1149,8 @@ class ContentAnalyzer:
         return np.mean(motion_scores)
     
     def _calculate_color_diversity(self, frames: List[np.ndarray]) -> float:
-        """Calculate color diversity in video frames"""
+        """
+Calculate color diversity in video frames"""
         color_scores = []
         
         for frame in frames:
@@ -1155,7 +1165,8 @@ class ContentAnalyzer:
         return np.mean(color_scores) / 5.0  # Normalize to 0-1 range
     
     def _detect_faces_in_frames(self, frames: List[np.ndarray]) -> int:
-        """Detect faces in video frames"""
+        """
+Detect faces in video frames"""
         try:
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             total_faces = 0
@@ -1170,7 +1181,8 @@ class ContentAnalyzer:
             return 0
     
     def _generate_content_id(self, content_data: Any, content_type: ContentType) -> str:
-        """Generate unique content ID"""
+        """
+Generate unique content ID"""
         import hashlib
         
         # Create hash from content data and timestamp
@@ -1199,7 +1211,8 @@ class ContentAnalyzer:
         return self.performance_metrics.copy()
     
     async def clear_cache(self) -> None:
-        """Clear analysis cache"""
+        """
+Clear analysis cache"""
         self.analysis_cache.clear()
         self.logger.info("Analysis cache cleared")
     

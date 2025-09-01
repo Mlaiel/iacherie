@@ -55,6 +55,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -89,7 +90,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for multi-format support."""
+    """
+Content type enumeration for multi-format support."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -104,6 +107,7 @@ class ContentType(Enum):
 
 class PlatformType(Enum):
     """Platform type enumeration for multi-platform support."""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -118,6 +122,7 @@ class PlatformType(Enum):
 
 class CreatorCategory(Enum):
     """Creator category enumeration according to business logic."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -144,7 +149,8 @@ class MetricResult:
 
 @dataclass
 class BusinessKPI:
-    """Business KPI definition and calculation parameters."""
+    """
+Business KPI definition and calculation parameters."""
     kpi_id: str
     name: str
     category: str
@@ -161,7 +167,8 @@ class BaseMetricsCalculator(ABC):
     """Base class for all metrics calculators."""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the metrics calculator."""
+        """
+Initialize the metrics calculator."""
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
         self._cache = {}
@@ -174,21 +181,25 @@ class BaseMetricsCalculator(ABC):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate metrics from the provided data."""
+        """
+Calculate metrics from the provided data."""
         pass
     
     def _normalize_score(self, value: float, min_val: float = 0.0, max_val: float = 100.0) -> float:
-        """Normalize a score to a 0-100 range."""
+        """
+Normalize a score to a 0-100 range."""
         return max(0.0, min(100.0, ((value - min_val) / (max_val - min_val)) * 100))
     
     def _calculate_growth_rate(self, current: float, previous: float) -> float:
-        """Calculate growth rate percentage."""
+        """
+Calculate growth rate percentage."""
         if previous == 0:
             return 0.0 if current == 0 else 100.0
         return ((current - previous) / previous) * 100
     
     def _detect_trend(self, values: List[float]) -> str:
-        """Detect trend direction from a series of values."""
+        """
+Detect trend direction from a series of values."""
         if len(values) < 2:
             return "insufficient_data"
         
@@ -217,7 +228,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize creator success metrics calculator."""
+        """
+Initialize creator success metrics calculator."""
         super().__init__(config)
         
         # Creator success benchmarks
@@ -234,7 +246,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate comprehensive creator success metrics."""
+        """
+Calculate comprehensive creator success metrics."""
         try:
             metrics = []
             
@@ -510,7 +523,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return (total_engagements / total_reach) * 100
     
     def _benchmark_engagement_rate(self, engagement_rate: float) -> Dict[str, Any]:
-        """Benchmark engagement rate against industry standards."""
+        """
+Benchmark engagement rate against industry standards."""
         benchmarks = self.success_benchmarks['engagement_rate']
         
         if engagement_rate >= benchmarks['excellent']:
@@ -546,7 +560,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return consistency_score
     
     def _calculate_follower_growth_rate(self, follower_history: List[Dict[str, Any]]) -> float:
-        """Calculate follower growth rate over time."""
+        """
+Calculate follower growth rate over time."""
         if len(follower_history) < 2:
             return 0.0
         
@@ -556,14 +571,16 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return self._calculate_growth_rate(end_count, start_count)
     
     def _calculate_reach_growth(self, reach_data: Dict[str, Any]) -> float:
-        """Calculate reach expansion rate."""
+        """
+Calculate reach expansion rate."""
         current_reach = reach_data.get('current', 0)
         previous_reach = reach_data.get('previous', 0)
         
         return self._calculate_growth_rate(current_reach, previous_reach)
     
     async def _predict_growth_trajectory(self, historical_metrics: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Predict growth trajectory using time series analysis."""
+        """
+Predict growth trajectory using time series analysis."""
         try:
             # Extract follower count time series
             dates = [datetime.fromisoformat(m['date']) for m in historical_metrics]
@@ -619,7 +636,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return total_score / len(partnerships)
     
     def _calculate_platform_diversity(self, platform_data: Dict[str, Any]) -> float:
-        """Calculate platform diversity score (0-100)."""
+        """
+Calculate platform diversity score (0-100)."""
         active_platforms = len([p for p in platform_data.values() if p.get('active', False)])
         max_platforms = len(PlatformType)
         
@@ -635,7 +653,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return min(100, diversity_score)
     
     def _calculate_platform_synergy(self, platform_metrics: Dict[str, Any]) -> float:
-        """Calculate cross-platform synergy score."""
+        """
+Calculate cross-platform synergy score."""
         # Analyze correlation between platform performances
         platform_scores = []
         for platform, metrics in platform_metrics.items():
@@ -658,7 +677,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return max(0, min(100, synergy_score))
     
     def _calculate_percentile(self, value: float, benchmarks: Dict[str, float]) -> float:
-        """Calculate percentile ranking against benchmarks."""
+        """
+Calculate percentile ranking against benchmarks."""
         # Simple percentile calculation based on benchmarks
         if value >= benchmarks['excellent']:
             return 95.0
@@ -670,7 +690,8 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
             return 25.0
     
     def _get_engagement_recommendation(self, tier: str) -> str:
-        """Get engagement improvement recommendation based on tier."""
+        """
+Get engagement improvement recommendation based on tier."""
         recommendations = {
             'excellent': "Maintain current strategy and explore advanced growth tactics",
             'good': "Focus on consistency and explore new content formats",
@@ -694,7 +715,8 @@ class ContentProtectionMetrics(BaseMetricsCalculator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate content protection metrics."""
+        """
+Calculate content protection metrics."""
         metrics = []
         
         try:
@@ -767,7 +789,8 @@ class MonetizationMetrics(BaseMetricsCalculator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate monetization metrics."""
+        """
+Calculate monetization metrics."""
         metrics = []
         
         try:

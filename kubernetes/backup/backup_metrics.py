@@ -11,6 +11,7 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -34,7 +35,9 @@ from ...core.exceptions import MetricsError
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""
+    """
+Metric type enumeration."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -43,6 +46,7 @@ class MetricType(Enum):
 
 class BackupOperationType(Enum):
     """Backup operation type enumeration."""
+
     FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     CONTENT_BACKUP = "content_backup"
@@ -116,7 +120,8 @@ class BackupMetrics:
         self._start_metrics_collection()
 
     def _init_prometheus_metrics(self) -> None:
-        """Initialize Prometheus metrics."""
+        """
+Initialize Prometheus metrics."""
         if not PROMETHEUS_AVAILABLE:
             self.logger.warning("Prometheus client not available")
             return
@@ -631,7 +636,8 @@ class BackupMetrics:
         return megabytes / duration_seconds
 
     def _update_prometheus_metrics(self, metrics: OperationMetrics) -> None:
-        """Update Prometheus metrics with operation data."""
+        """
+Update Prometheus metrics with operation data."""
         if not self.enable_prometheus:
             return
         
@@ -735,7 +741,8 @@ class BackupMetrics:
             self._metrics_task.start()
 
     def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop."""
+        """
+Background metrics collection loop."""
         while True:
             try:
                 # Perform periodic metrics collection
@@ -762,7 +769,8 @@ backup_metrics = BackupMetrics()
 
 
 def get_backup_metrics() -> BackupMetrics:
-    """Get global backup metrics instance."""
+    """
+Get global backup metrics instance."""
     return backup_metrics
 
 
@@ -773,7 +781,8 @@ def record_operation_metrics(
     bytes_processed: int,
     success: bool
 ) -> None:
-    """Convenience function to record operation metrics."""
+    """
+Convenience function to record operation metrics."""
     backup_metrics.record_backup_operation(
         operation_id=operation_id,
         operation_type=BackupOperationType(operation_type),

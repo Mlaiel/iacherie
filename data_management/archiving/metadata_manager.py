@@ -15,6 +15,7 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataType(Enum):
-    """Types of metadata"""
+    """
+Types of metadata"""
+
     TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
@@ -45,6 +48,7 @@ class MetadataType(Enum):
 
 class IndexingStrategy(Enum):
     """Metadata indexing strategies"""
+
     FULL_TEXT = "full_text"
     KEYWORD = "keyword"
     SEMANTIC = "semantic"
@@ -55,6 +59,7 @@ class IndexingStrategy(Enum):
 
 class SearchOperator(Enum):
     """Search operators for metadata queries"""
+
     EQUALS = "eq"
     NOT_EQUALS = "ne"
     CONTAINS = "contains"
@@ -105,7 +110,8 @@ class MetadataField:
 
 @dataclass
 class MetadataSchema:
-    """Schema definition for metadata"""
+    """
+Schema definition for metadata"""
     schema_id: str
     name: str
     description: str
@@ -447,7 +453,8 @@ class MetadataIndexer:
         field_def: MetadataField,
         entry_id: str
     ):
-        """Index individual field"""
+        """
+Index individual field"""
         if not field_def.indexed:
             return
         
@@ -468,7 +475,8 @@ class MetadataIndexer:
             await self._add_to_semantic_index(field_name, index_value, entry_id)
     
     async def _index_full_text(self, entry: MetadataEntry):
-        """Index for full-text search"""
+        """
+Index for full-text search"""
         # Combine all string values for full-text indexing
         text_content = []
         
@@ -494,7 +502,8 @@ class MetadataIndexer:
             self.full_text_index[word].add(entry_id)
     
     async def _add_to_semantic_index(self, field_name: str, value: str, entry_id: str):
-        """Add to semantic index (simplified)"""
+        """
+Add to semantic index (simplified)"""
         # In a real implementation, this would use embeddings
         if field_name not in self.semantic_index:
             self.semantic_index[field_name] = []
@@ -504,7 +513,8 @@ class MetadataIndexer:
         self.semantic_index[field_name].append((entry_id, similarity_score))
     
     async def _search_keywords(self, keywords: str) -> Set[str]:
-        """Search using keywords"""
+        """
+Search using keywords"""
         words = re.findall(r'\b\w+\b', keywords.lower())
         matching_entries = set()
         
@@ -518,7 +528,8 @@ class MetadataIndexer:
         return matching_entries
     
     async def _search_field(self, field_name: str, filter_config: Dict[str, Any]) -> Set[str]:
-        """Search specific field with filters"""
+        """
+Search specific field with filters"""
         operator = filter_config.get("operator", SearchOperator.EQUALS)
         value = filter_config.get("value")
         
@@ -738,22 +749,26 @@ class ArchivalMetadataManager:
         return self.metadata_entries.get(entry_id)
     
     async def get_metadata_by_archive(self, archive_id: str) -> List[MetadataEntry]:
-        """Get all metadata entries for an archive"""
+        """
+Get all metadata entries for an archive"""
         return [
             entry for entry in self.metadata_entries.values()
             if entry.archive_id == archive_id
         ]
     
     async def get_schema(self, schema_id: str) -> Optional[MetadataSchema]:
-        """Get schema by ID"""
+        """
+Get schema by ID"""
         return self.schemas.get(schema_id)
     
     async def list_schemas(self) -> List[MetadataSchema]:
-        """List all available schemas"""
+        """
+List all available schemas"""
         return list(self.schemas.values())
     
     async def get_metadata_stats(self) -> Dict[str, Any]:
-        """Get comprehensive metadata statistics"""
+        """
+Get comprehensive metadata statistics"""
         try:
             # Schema statistics
             active_schemas = sum(1 for s in self.schemas.values() if s.active)

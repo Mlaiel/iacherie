@@ -21,6 +21,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -47,7 +48,9 @@ logger = get_logger(__name__)
 
 
 class RecommendationType(str, Enum):
-    """Comprehensive types of protection recommendations with industry standards."""
+    """
+Comprehensive types of protection recommendations with industry standards."""
+
     IMMEDIATE_ACTION = "immediate_action"
     PREVENTIVE_MEASURE = "preventive_measure"
     OPTIMIZATION = "optimization"
@@ -67,6 +70,7 @@ class RecommendationType(str, Enum):
 
 class Priority(str, Enum):
     """Enhanced recommendation priority levels with urgency indicators."""
+
     CRITICAL = "critical"        # Immediate action required (0-24h)
     HIGH = "high"               # Action needed within 72h
     MEDIUM = "medium"           # Action needed within 1-2 weeks
@@ -76,6 +80,7 @@ class Priority(str, Enum):
 
 class ImplementationComplexity(str, Enum):
     """Implementation complexity levels with resource requirements."""
+
     MINIMAL = "minimal"         # <4 hours, basic technical skills
     SIMPLE = "simple"          # 1-2 days, basic technical skills
     MODERATE = "moderate"      # 1-2 weeks, intermediate skills
@@ -85,6 +90,7 @@ class ImplementationComplexity(str, Enum):
 
 class ROICategory(str, Enum):
     """Return on Investment categories for recommendations."""
+
     IMMEDIATE_SAVINGS = "immediate_savings"     # ROI within 30 days
     SHORT_TERM_ROI = "short_term_roi"          # ROI within 3-6 months
     MEDIUM_TERM_ROI = "medium_term_roi"        # ROI within 6-12 months
@@ -95,6 +101,7 @@ class ROICategory(str, Enum):
 
 class IndustrySegment(str, Enum):
     """Industry segments for specialized recommendations."""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CONTENT = "video_content"
     DIGITAL_ART = "digital_art"
@@ -125,7 +132,8 @@ class CostBenefitAnalysis:
 
 @dataclass
 class ImplementationPlan:
-    """Detailed implementation plan for recommendations."""
+    """
+Detailed implementation plan for recommendations."""
     phase_breakdown: List[Dict[str, Any]]
     timeline_weeks: int
     resource_requirements: Dict[str, Any]
@@ -140,7 +148,8 @@ class ImplementationPlan:
 
 @dataclass
 class RecommendationMetrics:
-    """Advanced metrics for recommendation tracking and optimization."""
+    """
+Advanced metrics for recommendation tracking and optimization."""
     effectiveness_score: float
     adoption_rate: float
     user_satisfaction: float
@@ -155,7 +164,8 @@ class RecommendationMetrics:
 
 @dataclass
 class PersonalizationFactors:
-    """Personalization factors for tailored recommendations."""
+    """
+Personalization factors for tailored recommendations."""
     user_risk_tolerance: float
     technical_expertise: str
     budget_constraints: Dict[str, Decimal]
@@ -170,7 +180,8 @@ class PersonalizationFactors:
 
 @dataclass
 class Recommendation:
-    """Enhanced comprehensive recommendation with enterprise features."""
+    """
+Enhanced comprehensive recommendation with enterprise features."""
     recommendation_id: str
     type: RecommendationType
     priority: Priority
@@ -236,7 +247,8 @@ class RecommendationEngine:
     - Continuous learning and recommendation model improvement
     """
     def __init__(self):
-        """Initialize the Recommendation Engine with enterprise components."""
+        """
+Initialize the Recommendation Engine with enterprise components."""
         self.ai_models = AIModelManager()
         self.metrics_collector = MetricsCollector()
         
@@ -435,7 +447,8 @@ class RecommendationEngine:
         content_portfolio: List[Dict[str, Any]],
         recommendation_context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate standard recommendations optimized for speed and relevance."""
+        """
+Generate standard recommendations optimized for speed and relevance."""
         
         recommendations = []
         
@@ -465,7 +478,8 @@ class RecommendationEngine:
         content_portfolio: List[Dict[str, Any]],
         recommendation_context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate basic recommendations for quick implementation."""
+        """
+Generate basic recommendations for quick implementation."""
         
         recommendations = []
         
@@ -488,7 +502,8 @@ class RecommendationEngine:
         risk_assessment: Dict[str, Any],
         recommendation_context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate recommendations based on identified risks."""
+        """
+Generate recommendations based on identified risks."""
         
         recommendations = []
         overall_risk_score = risk_assessment.get('overall_risk_score', 50.0)
@@ -625,7 +640,8 @@ class RecommendationEngine:
         complexity: ImplementationComplexity,
         context: Dict[str, Any]
     ) -> CostBenefitAnalysis:
-        """Calculate comprehensive cost-benefit analysis for recommendation."""
+        """
+Calculate comprehensive cost-benefit analysis for recommendation."""
         
         # Simplified cost-benefit calculation (would be more sophisticated in production)
         base_cost = self._get_base_cost_by_complexity(complexity)
@@ -651,7 +667,8 @@ class RecommendationEngine:
         complexity: ImplementationComplexity,
         context: Dict[str, Any]
     ) -> ImplementationPlan:
-        """Create detailed implementation plan for recommendation."""
+        """
+Create detailed implementation plan for recommendation."""
         
         return ImplementationPlan(
             phase_breakdown=[
@@ -681,7 +698,8 @@ class RecommendationEngine:
 
     # Utility methods
     def _get_base_cost_by_complexity(self, complexity: ImplementationComplexity) -> Decimal:
-        """Get base cost based on implementation complexity."""
+        """
+Get base cost based on implementation complexity."""
         cost_mapping = {
             ImplementationComplexity.MINIMAL: Decimal('500'),
             ImplementationComplexity.SIMPLE: Decimal('2000'),
@@ -692,7 +710,8 @@ class RecommendationEngine:
         return cost_mapping.get(complexity, Decimal('5000'))
 
     def _get_base_benefit_by_type(self, recommendation_type: RecommendationType) -> Decimal:
-        """Get base benefit based on recommendation type."""
+        """
+Get base benefit based on recommendation type."""
         benefit_mapping = {
             RecommendationType.IMMEDIATE_ACTION: Decimal('10000'),
             RecommendationType.PREVENTIVE_MEASURE: Decimal('7500'),
@@ -704,7 +723,8 @@ class RecommendationEngine:
         return benefit_mapping.get(recommendation_type, Decimal('7500'))
 
     def _estimate_implementation_time(self, complexity: ImplementationComplexity) -> int:
-        """Estimate implementation time in hours based on complexity."""
+        """
+Estimate implementation time in hours based on complexity."""
         time_mapping = {
             ImplementationComplexity.MINIMAL: 4,
             ImplementationComplexity.SIMPLE: 16,
@@ -716,28 +736,34 @@ class RecommendationEngine:
 
     # Placeholder methods for additional recommendation types
     async def _generate_portfolio_recommendations(self, content_portfolio, context):
-        """Generate portfolio-specific recommendations."""
+        """
+Generate portfolio-specific recommendations."""
         return []
 
     async def _generate_compliance_recommendations(self, risk_assessment, context):
-        """Generate compliance-focused recommendations."""
+        """
+Generate compliance-focused recommendations."""
         return []
 
     async def _generate_technology_recommendations(self, risk_assessment, content_portfolio, context):
-        """Generate technology upgrade recommendations."""
+        """
+Generate technology upgrade recommendations."""
         return []
 
     async def _generate_financial_recommendations(self, risk_assessment, content_portfolio, context):
-        """Generate financial optimization recommendations."""
+        """
+Generate financial optimization recommendations."""
         return []
 
     async def _generate_strategic_recommendations(self, risk_assessment, content_portfolio, context):
-        """Generate strategic recommendations."""
+        """
+Generate strategic recommendations."""
         return []
 
     # Additional helper methods
     async def _validate_recommendation_inputs(self, user_id, risk_assessment, user_context):
-        """Validate inputs for recommendation generation."""
+        """
+Validate inputs for recommendation generation."""
         if not user_id:
             raise ValueError("User ID is required")
         if not risk_assessment:
@@ -748,63 +774,77 @@ class RecommendationEngine:
         return None  # Simplified for now
 
     async def _cache_recommendation_results(self, user_id, risk_assessment, recommendations, scope):
-        """Cache recommendation results."""
+        """
+Cache recommendation results."""
         pass  # Simplified for now
 
     async def _apply_personalization(self, recommendations, personalization_factors):
-        """Apply personalization to recommendations."""
+        """
+Apply personalization to recommendations."""
         return recommendations  # Simplified for now
 
     async def _prioritize_and_filter_recommendations(self, recommendations, user_context):
-        """Prioritize and filter recommendations."""
+        """
+Prioritize and filter recommendations."""
         return recommendations[:self.max_recommendations]  # Simplified for now
 
     async def _update_engine_metrics(self, processing_time, recommendation_count, success=True):
-        """Update engine performance metrics."""
+        """
+Update engine performance metrics."""
         self.engine_metrics['recommendations_generated'] += recommendation_count
         # Additional metrics updates would go here
 
     def _load_recommendation_templates(self):
-        """Load recommendation templates."""
+        """
+Load recommendation templates."""
         return {}
 
     def _load_industry_best_practices(self):
-        """Load industry best practices."""
+        """
+Load industry best practices."""
         return {}
 
     def _load_compliance_mappings(self):
-        """Load compliance requirement mappings."""
+        """
+Load compliance requirement mappings."""
         return {}
 
     # Placeholder methods for standard and basic recommendation generation
     async def _generate_core_risk_recommendations(self, risk_assessment, context):
-        """Generate core risk mitigation recommendations for standard scope."""
+        """
+Generate core risk mitigation recommendations for standard scope."""
         return []
 
     async def _generate_essential_compliance_recommendations(self, risk_assessment, context):
-        """Generate essential compliance recommendations for standard scope."""
+        """
+Generate essential compliance recommendations for standard scope."""
         return []
 
     async def _generate_basic_tech_recommendations(self, content_portfolio, context):
-        """Generate basic technology recommendations for standard scope."""
+        """
+Generate basic technology recommendations for standard scope."""
         return []
 
     async def _generate_quick_win_recommendations(self, risk_assessment, context):
-        """Generate quick win recommendations for basic scope."""
+        """
+Generate quick win recommendations for basic scope."""
         return []
 
     async def _generate_security_basics_recommendations(self, risk_assessment, context):
-        """Generate security basics recommendations for basic scope."""
+        """
+Generate security basics recommendations for basic scope."""
         return []
 
 
 class RecommendationError(Exception):
-    """Recommendation engine specific error."""
+    """
+Recommendation engine specific error."""
     pass
 
 
 def create_recommendation_engine() -> RecommendationEngine:
-    """Factory function to create recommendation engine instance."""
+    """
+Factory function to create recommendation engine instance."""
     return RecommendationEngine()
 
 

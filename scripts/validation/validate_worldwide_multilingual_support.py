@@ -9,13 +9,15 @@ tous les langues et dialecte locale du monde entier"
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import sys
 import re
 from typing import List, Dict, Set
 
 def extract_languages_from_file(file_path: str) -> List[str]:
-    """Extract language entries from language_manager.py."""
+    """
+Extract language entries from language_manager.py."""
     
     print("🌍 VALIDATION: Enhanced Worldwide Multilingual Support")
     print("=" * 60)

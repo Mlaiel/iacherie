@@ -6,6 +6,7 @@ optimized for different creator types and their specific needs.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,7 +20,9 @@ from backend.ai.models import ConversationalAI
 
 
 class PrimaryIntent(Enum):
-    """Primary user intent categories"""
+    """
+Primary user intent categories"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_ANALYSIS = "content_analysis"
     MONETIZATION_QUESTION = "monetization_question"
@@ -39,6 +42,7 @@ class PrimaryIntent(Enum):
 
 class IntentConfidence(Enum):
     """Intent classification confidence levels"""
+
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -745,7 +749,8 @@ class IntentClassifier:
         }
     
     def _setup_ml_features(self):
-        """Setup ML feature extraction (placeholder)"""
+        """
+Setup ML feature extraction (placeholder)"""
         self.ml_features = {
             "text_embeddings": False,  # Future: BERT/RoBERTa embeddings
             "sequence_modeling": False,  # Future: LSTM/Transformer models
@@ -762,7 +767,8 @@ class IntentClassifier:
         return key_phrases[:10]
     
     async def _analyze_grammar_indicators(self, message: str) -> Dict[str, bool]:
-        """Analyze grammatical indicators"""
+        """
+Analyze grammatical indicators"""
         return {
             "has_questions": '?' in message,
             "has_imperatives": any(word in message.lower() for word in ['help', 'show', 'tell']),

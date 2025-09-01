@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -36,7 +37,9 @@ settings = get_settings()
 
 
 class ContentGuidanceServiceType(Enum):
-    """Types of content guidance services."""
+    """
+Types of content guidance services."""
+
     OPTIMIZATION = "optimization"
     PLATFORM_STRATEGY = "platform_strategy"
     MONETIZATION = "monetization"
@@ -68,7 +71,8 @@ class ContentGuidanceRequest:
 
 @dataclass
 class ContentGuidanceResponse:
-    """Unified response structure for content guidance services."""
+    """
+Unified response structure for content guidance services."""
     request_id: str
     creator_id: str
     service_type: ContentGuidanceServiceType
@@ -90,7 +94,8 @@ class ContentGuidanceOrchestrator:
     """
     
     def __init__(self):
-        """Initialize the content guidance orchestrator."""
+        """
+Initialize the content guidance orchestrator."""
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize all service engines
@@ -744,7 +749,8 @@ class ContentGuidanceOrchestrator:
         self,
         results: Dict[ContentGuidanceServiceType, ContentGuidanceResponse]
     ) -> List[Dict[str, Any]]:
-        """Identify conflicting recommendations across services."""
+        """
+Identify conflicting recommendations across services."""
         
         conflicts = []
         
@@ -850,7 +856,8 @@ class ContentGuidanceOrchestrator:
         return [step for step, score in prioritized]
     
     def _extract_posting_times(self, recommendations: List[Dict[str, Any]]) -> List[str]:
-        """Extract posting times from recommendations."""
+        """
+Extract posting times from recommendations."""
         times = []
         for rec in recommendations:
             if rec.get("type") == "posting_schedule" and "data" in rec:
@@ -964,7 +971,8 @@ async def get_specific_content_guidance(
     creator_id: str,
     **kwargs
 ) -> ContentGuidanceResponse:
-    """Get guidance for a specific service type."""
+    """
+Get guidance for a specific service type."""
     
     request = ContentGuidanceRequest(
         creator_id=creator_id,

@@ -11,6 +11,7 @@ This trend analysis system and its algorithms are the exclusive intellectual pro
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -41,7 +42,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Categories of trends"""
+    """
+Categories of trends"""
+
     CONTENT_FORMAT = "content_format"
     TOPIC_TREND = "topic_trend" 
     PLATFORM_ALGORITHM = "platform_algorithm"
@@ -53,6 +56,7 @@ class TrendCategory(Enum):
 
 class TrendStage(Enum):
     """Stages of trend lifecycle"""
+
     EMERGING = "emerging"
     GROWING = "growing" 
     MAINSTREAM = "mainstream"
@@ -61,6 +65,7 @@ class TrendStage(Enum):
 
 class ViralityScore(Enum):
     """Virality scoring levels"""
+
     LOW = "low"          # 0.0-0.3
     MODERATE = "moderate" # 0.3-0.6
     HIGH = "high"        # 0.6-0.8
@@ -81,7 +86,8 @@ class TrendSignal:
 
 @dataclass
 class DetectedTrend:
-    """Detected trend structure"""
+    """
+Detected trend structure"""
     trend_id: str = field(default_factory=lambda: f"trend_{int(datetime.now().timestamp())}")
     name: str = ""
     category: TrendCategory = TrendCategory.TOPIC_TREND
@@ -168,7 +174,8 @@ class TrendAnalyzer:
     """
     
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the trend analyzer"""
+        """
+Initialize the trend analyzer"""
         self.cache_manager = cache_manager or CacheManager("trend_analyzer")
         
         # Trend detection configuration
@@ -602,7 +609,8 @@ class TrendAnalyzer:
         return trend
 
     async def _extract_viral_features(self, content_data: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Extract features relevant to viral potential"""
+        """
+Extract features relevant to viral potential"""
         features = {
             'platform': platform,
             'content_type': content_data.get('type', 'unknown'),
@@ -621,7 +629,8 @@ class TrendAnalyzer:
         return features
 
     async def _calculate_viral_score(self, features: Dict[str, Any], platform: str) -> float:
-        """Calculate viral score using weighted viral factors"""
+        """
+Calculate viral score using weighted viral factors"""
         platform_config = self.platform_configs.get(platform, {})
         
         # Base viral factors
@@ -654,7 +663,8 @@ class TrendAnalyzer:
         return min(max(viral_score, 0.0), 1.0)
 
     async def _predict_peak_performance_timing(self, features: Dict[str, Any], platform: str) -> datetime:
-        """Predict when content will reach peak performance"""
+        """
+Predict when content will reach peak performance"""
         # Platform-specific timing patterns
         platform_peak_delays = {
             'youtube': 2,      # 2 days
@@ -675,7 +685,8 @@ class TrendAnalyzer:
         return datetime.utcnow() + timedelta(days=base_delay)
 
     async def _calculate_expected_reach(self, viral_score: float, features: Dict[str, Any], platform: str) -> int:
-        """Calculate expected reach based on viral score and features"""
+        """
+Calculate expected reach based on viral score and features"""
         platform_base_reach = {
             'youtube': 10000,
             'tiktok': 50000,
@@ -714,7 +725,8 @@ class TrendAnalyzer:
     # - And many more specialized functions
 
     async def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract key terms from text content"""
+        """
+Extract key terms from text content"""
         # Simple keyword extraction (in production, use more sophisticated NLP)
         words = re.findall(r'\b\w+\b', text.lower())
         # Remove common stopwords
@@ -726,7 +738,8 @@ class TrendAnalyzer:
         return [word for word, count in word_counts.most_common(max_keywords)]
 
     async def _classify_trend_category(self, keywords: List[str], signals: List[TrendSignal]) -> TrendCategory:
-        """Classify trend into appropriate category"""
+        """
+Classify trend into appropriate category"""
         # Simple classification based on keywords (in production, use ML classification)
         tech_keywords = {'ai', 'technology', 'tech', 'digital', 'app', 'software'}
         content_keywords = {'video', 'music', 'podcast', 'blog', 'content', 'format'}
@@ -744,7 +757,8 @@ class TrendAnalyzer:
             return TrendCategory.TOPIC_TREND
 
     async def _calculate_trend_confidence(self, signals: List[TrendSignal], avg_strength: float) -> float:
-        """Calculate confidence score for trend detection"""
+        """
+Calculate confidence score for trend detection"""
         # Factors contributing to confidence
         signal_count_score = min(len(signals) / 10, 1.0)  # More signals = higher confidence
         strength_score = avg_strength
@@ -761,7 +775,8 @@ class TrendAnalyzer:
         return min(max(confidence, 0.0), 1.0)
 
     async def _estimate_trend_stage(self, signals: List[TrendSignal]) -> TrendStage:
-        """Estimate what stage the trend is in"""
+        """
+Estimate what stage the trend is in"""
         # Simple heuristic based on signal strength growth
         if not signals:
             return TrendStage.EMERGING
@@ -784,7 +799,8 @@ class TrendAnalyzer:
             return TrendStage.DECLINING
 
     async def _calculate_trend_growth_rate(self, signals: List[TrendSignal]) -> float:
-        """Calculate daily growth rate of the trend"""
+        """
+Calculate daily growth rate of the trend"""
         if len(signals) < 2:
             return 0.0
         
@@ -803,24 +819,28 @@ class TrendAnalyzer:
 
 
 class MarketTrendDetector:
-    """Specialized market trend detection component"""
+    """
+Specialized market trend detection component"""
     
     def __init__(self, trend_analyzer: TrendAnalyzer):
         self.analyzer = trend_analyzer
     
     async def detect_industry_trends(self, industry: str, time_frame_days: int = 30) -> List[DetectedTrend]:
-        """Detect trends specific to an industry"""
+        """
+Detect trends specific to an industry"""
         # Implementation would include industry-specific signal collection and analysis
         return []
 
 class ViralContentPredictor:
-    """Specialized viral content prediction component"""
+    """
+Specialized viral content prediction component"""
     
     def __init__(self, trend_analyzer: TrendAnalyzer):
         self.analyzer = trend_analyzer
     
     async def predict_viral_timing(self, content_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict optimal timing for viral content"""
+        """
+Predict optimal timing for viral content"""
         return {
             'optimal_posting_time': datetime.utcnow() + timedelta(hours=2),
             'peak_performance_window': '24-48 hours',
@@ -832,13 +852,15 @@ class ViralContentPredictor:
         }
 
 class SeasonalPatternAnalyzer:
-    """Specialized seasonal pattern analysis component"""
+    """
+Specialized seasonal pattern analysis component"""
     
     def __init__(self, trend_analyzer: TrendAnalyzer):
         self.analyzer = trend_analyzer
     
     async def predict_seasonal_opportunities(self, historical_data: List[Tuple[datetime, float]]) -> List[Dict[str, Any]]:
-        """Predict upcoming seasonal opportunities"""
+        """
+Predict upcoming seasonal opportunities"""
         return [
             {
                 'opportunity': 'Holiday Season Boost',
@@ -849,13 +871,15 @@ class SeasonalPatternAnalyzer:
         ]
 
 class CompetitorAnalyzer:
-    """Specialized competitor analysis component"""
+    """
+Specialized competitor analysis component"""
     
     def __init__(self, trend_analyzer: TrendAnalyzer):
         self.analyzer = trend_analyzer
     
     async def analyze_competitor_trends(self, competitor_ids: List[str]) -> Dict[str, Any]:
-        """Analyze trends among competitors"""
+        """
+Analyze trends among competitors"""
         return {
             'common_trends': ['AI content creation', 'Short-form video focus'],
             'competitive_gaps': ['Podcast format underutilized', 'B2B content opportunity'],

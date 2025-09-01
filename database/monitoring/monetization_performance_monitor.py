@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -34,7 +35,9 @@ from ...ai.analysis.monetization_ai import MonetizationAnalyzer
 
 
 class RevenueSource(Enum):
-    """Revenue sources for content creators"""
+    """
+Revenue sources for content creators"""
+
     PLATFORM_STREAMING = "platform_streaming"        # Spotify, YouTube Music, etc.
     CONTENT_LICENSING = "content_licensing"           # Licensing fees for content use
     COLLABORATION_FEES = "collaboration_fees"        # Creator collaboration revenue
@@ -49,6 +52,7 @@ class RevenueSource(Enum):
 
 class MonetizationStage(Enum):
     """Monetization pipeline stages"""
+
     CONTENT_ANALYSIS = "content_analysis"           # AI content value analysis
     PRICING_OPTIMIZATION = "pricing_optimization"   # Dynamic pricing optimization
     PLATFORM_MATCHING = "platform_matching"        # Best platform selection
@@ -103,7 +107,8 @@ class MonetizationMetrics:
 
 @dataclass
 class MonetizationPerformanceSnapshot:
-    """Monetization performance snapshot"""
+    """
+Monetization performance snapshot"""
     timestamp: datetime
     total_active_creators: int
     total_revenue_24h: Decimal
@@ -117,7 +122,8 @@ class MonetizationPerformanceSnapshot:
     ai_optimization_impact: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'timestamp': self.timestamp.isoformat(),
             'total_active_creators': self.total_active_creators,

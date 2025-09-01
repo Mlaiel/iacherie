@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive authentication management for external APIs
 including OAuth2 flows, API key management, JWT tokens, and refresh mechanisms.
 """
+
 import asyncio
 import aiohttp
 import base64
@@ -24,7 +25,9 @@ import jwt as jwt_lib
 logger = logging.getLogger(__name__)
 
 class AuthenticationType(Enum):
-    """Authentication types"""
+    """
+Authentication types"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -35,6 +38,7 @@ class AuthenticationType(Enum):
 
 class OAuth2GrantType(Enum):
     """OAuth2 grant types"""
+
     AUTHORIZATION_CODE = "authorization_code"
     CLIENT_CREDENTIALS = "client_credentials"
     REFRESH_TOKEN = "refresh_token"
@@ -60,19 +64,22 @@ class AuthToken:
     
     @property
     def is_expired(self) -> bool:
-        """Check if token is expired"""
+        """
+Check if token is expired"""
         if self.expires_at:
             return datetime.utcnow() >= self.expires_at - timedelta(minutes=5)  # 5 min buffer
         return False
     
     @property
     def is_valid(self) -> bool:
-        """Check if token is valid"""
+        """
+Check if token is valid"""
         return bool(self.access_token) and not self.is_expired
 
 @dataclass
 class AuthConfig:
-    """Authentication configuration"""
+    """
+Authentication configuration"""
     auth_type: AuthenticationType
     api_name: str
     
@@ -157,7 +164,8 @@ class OAuth2Manager:
         return state_id
     
     def verify_state(self, state: str) -> Optional[Dict[str, Any]]:
-        """Verify and retrieve state data"""
+        """
+Verify and retrieve state data"""
         if state not in self.state_storage:
             return None
         
@@ -316,23 +324,27 @@ class APIKeyManager:
         self.config = config
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get headers with API key authentication"""
+        """
+Get headers with API key authentication"""
         return {
             self.config.api_key_header: self.config.api_key
         }
     
     def validate_api_key(self) -> bool:
-        """Validate API key is present"""
+        """
+Validate API key is present"""
         return bool(self.config.api_key)
 
 class JWTManager:
-    """JWT token manager"""
+    """
+JWT token manager"""
     
     def __init__(self, config: AuthConfig):
         self.config = config
     
     def generate_jwt(self, payload: Dict[str, Any]) -> str:
-        """Generate JWT token"""
+        """
+Generate JWT token"""
         payload.update({
             'iat': int(time.time()),
             'exp': int(time.time()) + (self.config.jwt_expiry_hours * 3600),
@@ -342,7 +354,8 @@ class JWTManager:
         return jwt_lib.encode(payload, self.config.jwt_secret, algorithm=self.config.jwt_algorithm)
     
     def verify_jwt(self, token: str) -> Optional[Dict[str, Any]]:
-        """Verify JWT token"""
+        """
+Verify JWT token"""
         try:
             payload = jwt_lib.decode(
                 token, 
@@ -412,7 +425,8 @@ class APIAuthenticationManager:
         self.signature_managers: Dict[str, SignatureManager] = {}
     
     def register_auth_config(self, api_name: str, config: AuthConfig):
-        """Register authentication configuration for an API"""
+        """
+Register authentication configuration for an API"""
         if config.auth_type == AuthenticationType.OAUTH2:
             self.oauth2_managers[api_name] = OAuth2Manager(config)
         elif config.auth_type == AuthenticationType.API_KEY:
@@ -522,13 +536,15 @@ class APIAuthenticationManager:
     
     def generate_oauth2_auth_url(self, api_name: str, user_id: str, 
                                 state_data: Optional[Dict[str, Any]] = None) -> Optional[str]:
-        """Generate OAuth2 authorization URL"""
+        """
+Generate OAuth2 authorization URL"""
         if api_name in self.oauth2_managers:
             return self.oauth2_managers[api_name].generate_auth_url(user_id, state_data)
         return None
     
     async def handle_oauth2_callback(self, api_name: str, code: str, state: str) -> Optional[AuthToken]:
-        """Handle OAuth2 callback and exchange code for token"""
+        """
+Handle OAuth2 callback and exchange code for token"""
         if api_name in self.oauth2_managers:
             manager = self.oauth2_managers[api_name]
             token = await manager.exchange_code_for_token(code, state)
@@ -544,7 +560,8 @@ class APIAuthenticationManager:
         return None
     
     def revoke_user_token(self, api_name: str, user_id: str):
-        """Revoke user-specific token"""
+        """
+Revoke user-specific token"""
         cache_key = f"{api_name}:{user_id}"
         if cache_key in self.token_cache:
             del self.token_cache[cache_key]

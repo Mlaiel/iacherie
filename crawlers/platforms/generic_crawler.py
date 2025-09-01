@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -42,7 +43,8 @@ settings = get_settings()
 
 @dataclass
 class WebContent:
-    """Generic web content data structure."""
+    """
+Generic web content data structure."""
     url: str
     title: str
     content: str
@@ -62,7 +64,8 @@ class WebContent:
 
 @dataclass
 class SiteMap:
-    """Website sitemap structure."""
+    """
+Website sitemap structure."""
     domain: str
     pages: List[str]
     last_crawled: datetime
@@ -88,7 +91,8 @@ class GenericWebCrawler:
     """
     
     def __init__(self):
-        """Initialize generic web crawler."""
+        """
+Initialize generic web crawler."""
         self.rate_limiter = GenericRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -154,7 +158,8 @@ class GenericWebCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -382,7 +387,8 @@ class GenericWebCrawler:
         return None
     
     def _extract_metadata(self, soup: BeautifulSoup) -> Dict:
-        """Extract various metadata from page."""
+        """
+Extract various metadata from page."""
         metadata = {}
         
         # Meta tags
@@ -408,7 +414,8 @@ class GenericWebCrawler:
         return metadata
     
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[Dict]:
-        """Extract image information."""
+        """
+Extract image information."""
         images = []
         
         for img in soup.find_all('img'):
@@ -429,7 +436,8 @@ class GenericWebCrawler:
         return images
     
     def _extract_videos(self, soup: BeautifulSoup, base_url: str) -> List[Dict]:
-        """Extract video information."""
+        """
+Extract video information."""
         videos = []
         
         # Video tags
@@ -482,7 +490,8 @@ class GenericWebCrawler:
             return 'unknown'
     
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> List[Dict]:
-        """Extract internal and external links."""
+        """
+Extract internal and external links."""
         links = []
         domain = urlparse(base_url).netloc
         
@@ -503,7 +512,8 @@ class GenericWebCrawler:
         return links
     
     def _extract_tags(self, soup: BeautifulSoup) -> List[str]:
-        """Extract tags and keywords."""
+        """
+Extract tags and keywords."""
         tags = []
         
         # Meta keywords
@@ -526,7 +536,8 @@ class GenericWebCrawler:
         return list(set(tags))  # Remove duplicates
     
     def _detect_language(self, soup: BeautifulSoup, content: str) -> str:
-        """Detect content language."""
+        """
+Detect content language."""
         # Check HTML lang attribute
         html_tag = soup.find('html')
         if html_tag and html_tag.get('lang'):
@@ -542,7 +553,8 @@ class GenericWebCrawler:
         return 'en'  # Default to English
     
     def _extract_social_shares(self, soup: BeautifulSoup) -> Dict:
-        """Extract social media share counts."""
+        """
+Extract social media share counts."""
         shares = {}
         
         # Look for social share widgets
@@ -595,7 +607,8 @@ class GenericWebCrawler:
             return 'webpage'
     
     async def _determine_best_method(self, url: str) -> str:
-        """Determine the best crawling method for a URL."""
+        """
+Determine the best crawling method for a URL."""
         try:
             # Quick check with HEAD request
             async with self.session.head(url) as response:
@@ -611,7 +624,8 @@ class GenericWebCrawler:
             return 'selenium'  # Default fallback
     
     async def _check_robots_allowed(self, url: str) -> bool:
-        """Check if URL is allowed by robots.txt."""
+        """
+Check if URL is allowed by robots.txt."""
         try:
             domain = urlparse(url).netloc
             robots_url = f"https://{domain}/robots.txt"

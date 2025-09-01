@@ -20,7 +20,9 @@ from enum import Enum
 
 
 class MonitoringProfile(Enum):
-    """Monitoring profiles for different deployment environments"""
+    """
+Monitoring profiles for different deployment environments"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"

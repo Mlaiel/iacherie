@@ -1112,4 +1112,3 @@ __all__ = [
     "IndustrialMLFeatureExtractor",
     "IndustrialFAISSManager"
 ]
-]

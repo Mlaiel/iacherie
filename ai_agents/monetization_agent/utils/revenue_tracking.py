@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Infrastructure automation and deployment pipelines
 - AI Prompt Engineer: Advanced AI interaction and optimization systems
 """
+
 import asyncio
 import logging
 import time
@@ -61,7 +62,9 @@ from ...utils.data_validator import DataValidator
 logger = logging.getLogger(__name__)
 
 class RevenueMetricType(Enum):
-    """Types of revenue metrics"""
+    """
+Types of revenue metrics"""
+
     TOTAL_EARNINGS = "total_earnings"
     AVERAGE_DAILY = "average_daily"
     AVERAGE_MONTHLY = "average_monthly"
@@ -75,6 +78,7 @@ class RevenueMetricType(Enum):
 
 class AnalyticsTimeframe(Enum):
     """Analytics timeframes"""
+
     REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -98,7 +102,8 @@ class RevenueDataPoint:
 
 @dataclass
 class RevenueAnalytics:
-    """Comprehensive revenue analytics"""
+    """
+Comprehensive revenue analytics"""
     user_id: str
     timeframe: AnalyticsTimeframe
     start_date: datetime
@@ -116,7 +121,8 @@ class RevenueAnalytics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance metrics"""
+    """
+Platform-specific performance metrics"""
     platform_name: str
     total_revenue: Decimal
     revenue_share_percentage: float
@@ -171,7 +177,8 @@ class RevenueTracker:
         self.background_tasks: Set[asyncio.Task] = set()
     
     async def initialize(self):
-        """Initialize the revenue tracking system"""
+        """
+Initialize the revenue tracking system"""
         try:
             # Initialize repositories and components
             await self.revenue_repository.initialize()
@@ -565,7 +572,8 @@ class RevenueTracker:
         )
     
     async def _start_background_tasks(self):
-        """Start background tracking and analysis tasks"""
+        """
+Start background tracking and analysis tasks"""
         
         # Real-time data collection
         task1 = asyncio.create_task(self._realtime_data_collection())
@@ -584,7 +592,8 @@ class RevenueTracker:
         self.background_tasks.add(task4)
     
     async def cleanup(self):
-        """Cleanup resources and stop background tasks"""
+        """
+Cleanup resources and stop background tasks"""
         
         # Cancel all background tasks
         for task in self.background_tasks:
@@ -607,7 +616,8 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Create daily revenue breakdown"""
+        """
+Create daily revenue breakdown"""
         
         daily_data = defaultdict(Decimal)
         
@@ -642,7 +652,8 @@ class PlatformAnalyzer:
         self.is_initialized = False
         
     async def initialize(self):
-        """Initialize platform analyzer"""
+        """
+Initialize platform analyzer"""
         self.is_initialized = True
         logger.info("Platform Analyzer initialized")
     
@@ -680,7 +691,8 @@ class EarningsCalculator:
         self.is_initialized = False
         
     async def initialize(self):
-        """Initialize earnings calculator"""
+        """
+Initialize earnings calculator"""
         self.is_initialized = True
         logger.info("Earnings Calculator initialized")
     

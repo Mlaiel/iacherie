@@ -3,6 +3,7 @@ Advanced industrial-grade Rumble crawler for video content protection and analyt
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
+
 import asyncio
 import json
 import re
@@ -27,7 +28,8 @@ settings = get_settings()
 
 
 class RumbleVideo(BaseModel):
-    """Rumble Video data model"""
+    """
+Rumble Video data model"""
     video_id: str
     title: str
     description: str
@@ -71,7 +73,8 @@ class RumbleVideo(BaseModel):
 
 
 class RumbleChannel(BaseModel):
-    """Rumble Channel data model"""
+    """
+Rumble Channel data model"""
     channel_id: str
     name: str
     username: str
@@ -100,7 +103,8 @@ class RumbleChannel(BaseModel):
 
 
 class RumblePlaylist(BaseModel):
-    """Rumble Playlist data model"""
+    """
+Rumble Playlist data model"""
     playlist_id: str
     title: str
     description: Optional[str] = None
@@ -118,7 +122,8 @@ class RumblePlaylist(BaseModel):
 
 
 class RumbleLiveStream(BaseModel):
-    """Rumble Live Stream data model"""
+    """
+Rumble Live Stream data model"""
     stream_id: str
     title: str
     description: Optional[str] = None
@@ -1041,7 +1046,8 @@ class RumbleCrawler(BaseCrawler):
         return queries[:3]
     
     async def _calculate_content_similarity(self, protected_content: Dict, video: RumbleVideo) -> float:
-        """Calculate similarity between protected content and Rumble video"""
+        """
+Calculate similarity between protected content and Rumble video"""
         from difflib import SequenceMatcher
         
         similarity_scores = []
@@ -1076,7 +1082,8 @@ class RumbleCrawler(BaseCrawler):
     
     # Helper methods for analysis
     def _calculate_viral_coefficient(self, video: RumbleVideo) -> float:
-        """Calculate viral coefficient for video"""
+        """
+Calculate viral coefficient for video"""
         if video.view_count < 1000:
             return 0.0
         
@@ -1090,7 +1097,8 @@ class RumbleCrawler(BaseCrawler):
         return min(views_per_day * engagement_score / 10000, 10.0)
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize video duration"""
+        """
+Categorize video duration"""
         if duration < 60:
             return "very_short"
         elif duration < 300:
@@ -1116,7 +1124,8 @@ class RumbleCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _calculate_content_safety_score(self, video: RumbleVideo) -> float:
-        """Calculate content safety score"""
+        """
+Calculate content safety score"""
         score = 1.0
         
         if video.age_restricted:
@@ -1128,56 +1137,69 @@ class RumbleCrawler(BaseCrawler):
     
     # Placeholder methods for complex analysis (would need more data/API access)
     async def _parse_channel_page(self, html_content: str, channel_id: str) -> Dict:
-        """Parse channel page HTML"""
+        """
+Parse channel page HTML"""
         return {'channel_id': channel_id}
     
     async def _create_channel_model(self, channel_data: Dict) -> Optional[RumbleChannel]:
-        """Create RumbleChannel model"""
+        """
+Create RumbleChannel model"""
         return None
     
     async def _parse_channel_videos_page(self, html_content: str) -> List[Dict]:
-        """Parse channel videos page"""
+        """
+Parse channel videos page"""
         return []
     
     async def _parse_trending_page(self, html_content: str) -> List[Dict]:
-        """Parse trending page"""
+        """
+Parse trending page"""
         return []
     
     async def _parse_live_streams_page(self, html_content: str) -> List[Dict]:
-        """Parse live streams page"""
+        """
+Parse live streams page"""
         return []
     
     async def _create_live_stream_model(self, stream_data: Dict) -> Optional[RumbleLiveStream]:
-        """Create RumbleLiveStream model"""
+        """
+Create RumbleLiveStream model"""
         return None
     
     # Additional placeholder methods for comprehensive analysis
     def _calculate_growth_velocity(self, video: RumbleVideo) -> float:
-        """Calculate growth velocity"""
+        """
+Calculate growth velocity"""
         return 0.0
     
     def _estimate_revenue_potential(self, video: RumbleVideo) -> float:
-        """Estimate revenue potential"""
+        """
+Estimate revenue potential"""
         return 0.0
     
     def _assess_advertiser_friendliness(self, video: RumbleVideo) -> float:
-        """Assess advertiser friendliness"""
+        """
+Assess advertiser friendliness"""
         return 0.5
     
     async def _analyze_demographic_appeal(self, video: RumbleVideo) -> Dict:
-        """Analyze demographic appeal"""
+        """
+Analyze demographic appeal"""
         return {}
     
     async def _analyze_geographic_performance(self, video: RumbleVideo) -> Dict:
-        """Analyze geographic performance"""
+        """
+Analyze geographic performance"""
         return {}
     
     async def _analyze_discovery_sources(self, video: RumbleVideo) -> Dict:
-        """Analyze discovery sources"""
+        """
+Analyze discovery sources"""
         return {}
     
     def _generate_video_optimization_recommendations(self, video: RumbleVideo) -> List[str]:
-        """Generate video optimization recommendations"""
+        """
+Generate video optimization recommendations"""
         recommendations = []
         
         if len(video.title) < 40:

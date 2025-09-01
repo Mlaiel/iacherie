@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -45,7 +46,9 @@ from ...security.rights_encryption import RightsEncryption
 logger = logging.getLogger(__name__)
 
 class RightsType(Enum):
-    """Types of content rights"""
+    """
+Types of content rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PERFORMANCE = "performance"
@@ -62,6 +65,7 @@ class RightsType(Enum):
 
 class OwnershipType(Enum):
     """Types of ownership structures"""
+
     SOLE = "sole"
     JOINT = "joint"
     COLLECTIVE = "collective"
@@ -72,6 +76,7 @@ class OwnershipType(Enum):
 
 class RightsStatus(Enum):
     """Rights registration status"""
+
     PENDING = "pending"
     REGISTERED = "registered"
     RENEWED = "renewed"
@@ -82,6 +87,7 @@ class RightsStatus(Enum):
 
 class TerritoryScope(Enum):
     """Territory scope definitions"""
+
     WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -126,7 +132,8 @@ class RightsRecord:
 
 @dataclass
 class RightsTransfer:
-    """Rights transfer record"""
+    """
+Rights transfer record"""
     transfer_id: str
     rights_id: str
     from_owner: RightsOwner
@@ -565,7 +572,8 @@ class RightsManager:
         return updated_owners
 
     def _calculate_confidence_score(self, verification_results: List[Dict[str, Any]]) -> float:
-        """Calculate confidence score for ownership verification"""
+        """
+Calculate confidence score for ownership verification"""
         if not verification_results:
             return 0.0
         
@@ -802,6 +810,7 @@ class CopyrightProtector:
 
 class RightsStatus(Enum):
     """Status of rights"""
+
     ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -826,7 +835,8 @@ class RightsOwnership:
 
 @dataclass
 class RightsRecord:
-    """Complete rights record for content"""
+    """
+Complete rights record for content"""
     content_id: str
     content_type: str
     rights_id: str
@@ -1294,7 +1304,8 @@ class RightsManager:
         return territorial_rights
 
     async def _register_copyright(self, rights_record: RightsRecord) -> Dict[str, Any]:
-        """Register copyright with relevant authorities"""
+        """
+Register copyright with relevant authorities"""
         registration_data = {
             "title": rights_record.title,
             "creators": rights_record.creators,
@@ -1362,7 +1373,8 @@ class CopyrightProtector:
         content_id: str,
         monitoring_platforms: List[str]
     ) -> Dict[str, Any]:
-        """Detect copyright violations across platforms using AI-powered detection"""
+        """
+Detect copyright violations across platforms using AI-powered detection"""
         try:
             violations_found = []
             platform_results = {}

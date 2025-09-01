@@ -2,8 +2,9 @@
 Multi-platform revenue tracking and analysis with AI-powered predictions
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from ..analytics.metrics_calculator import MetricsCalculator
 
 
 class RevenueSource(Enum):
-    """Revenue sources"""
+    """
+Revenue sources"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -38,6 +41,7 @@ class RevenueSource(Enum):
 
 class PlatformType(Enum):
     """Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -52,6 +56,7 @@ class PlatformType(Enum):
 
 class RevenuePeriod(Enum):
     """Revenue calculation periods"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -115,7 +120,9 @@ class RevenueMetrics:
 
 
 class RevenueCalculationRules:
-    """Platform-specific revenue calculation rules"""
+    """
+Platform-specific revenue calculation rules"""
+
     
     PLATFORM_RULES = {
         PlatformType.SPOTIFY: {
@@ -161,7 +168,8 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics for user"""
+        """
+Calculate comprehensive revenue metrics for user"""
         try:
             metrics = RevenueMetrics(
                 user_id=user_id,
@@ -229,7 +237,8 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[PlatformType, PlatformRevenue]:
-        """Calculate revenue for content across platforms"""
+        """
+Calculate revenue for content across platforms"""
         platform_revenues = {}
         
         # Get platform performance data
@@ -254,7 +263,8 @@ class RevenueCalculator:
         platform: PlatformType,
         platform_data: Any
     ) -> PlatformRevenue:
-        """Calculate revenue for single platform"""
+        """
+Calculate revenue for single platform"""
         rules = self.rules.PLATFORM_RULES.get(platform, {})
         
         if platform == PlatformType.SPOTIFY:
@@ -273,7 +283,8 @@ class RevenueCalculator:
         platform_data: Any, 
         rules: Dict[str, Any]
     ) -> PlatformRevenue:
-        """Calculate Spotify revenue based on streams"""
+        """
+Calculate Spotify revenue based on streams"""
         payout_per_stream = rules.get("payout_per_stream", Decimal("0.003"))
         platform_fee_rate = rules.get("platform_fee_rate", Decimal("0.30"))
         
@@ -456,7 +467,8 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[RevenueSource, Decimal]:
-        """Calculate revenue breakdown by source"""
+        """
+Calculate revenue breakdown by source"""
         # Get revenue records by source
         result = await session.execute(
             select(
@@ -483,7 +495,8 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Optional[Decimal]:
-        """Calculate revenue growth rate compared to previous period"""
+        """
+Calculate revenue growth rate compared to previous period"""
         try:
             period_length = period_end - period_start
             previous_period_start = period_start - period_length
@@ -600,14 +613,16 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> List[Any]:
-        """Get platform performance data for content"""
+        """
+Get platform performance data for content"""
         # This would typically query platform-specific analytics tables
         # For now, return mock data structure
         return []
 
 
 class RevenueReportGenerator:
-    """Generate comprehensive revenue reports"""
+    """
+Generate comprehensive revenue reports"""
     
     def __init__(self, revenue_calculator: RevenueCalculator):
         self.revenue_calculator = revenue_calculator
@@ -620,7 +635,8 @@ class RevenueReportGenerator:
         month: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate detailed monthly revenue report"""
+        """
+Generate detailed monthly revenue report"""
         period_start = datetime(year, month, 1)
         if month == 12:
             period_end = datetime(year + 1, 1, 1) - timedelta(days=1)

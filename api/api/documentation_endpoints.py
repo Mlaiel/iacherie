@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 from datetime import datetime
 from typing import Dict, Any, List
 import json
@@ -354,6 +355,7 @@ const response = await fetch('https://api.ia-influencer-agent.com/v1/fingerprint
                 },
                 "python": {
                     "authentication": """
+
 import requests
 
 response = requests.post('https://api.ia-influencer-agent.com/v1/auth/login', 
@@ -365,6 +367,7 @@ response = requests.post('https://api.ia-influencer-agent.com/v1/auth/login',
 access_token = response.json()['access_token']
                     """,
                     "upload_content": """
+
 import requests
 
 files = {'content_file': open('audio_track.mp3', 'rb')}

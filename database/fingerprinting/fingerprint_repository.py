@@ -6,6 +6,7 @@ querying, analytics, and enterprise-grade data management capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintStatus(Enum):
-    """Fingerprint status types"""
+    """
+Fingerprint status types"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -47,6 +50,7 @@ class FingerprintStatus(Enum):
 
 class SortField(Enum):
     """Available sort fields"""
+
     CREATED_AT = "created_at"
     UPDATED_AT = "updated_at"
     CONFIDENCE_SCORE = "confidence_score"
@@ -97,7 +101,8 @@ class FingerprintQuery:
 
 @dataclass
 class FingerprintStatistics:
-    """Comprehensive fingerprint statistics"""
+    """
+Comprehensive fingerprint statistics"""
     total_count: int
     active_count: int
     content_type_distribution: Dict[str, int]
@@ -110,7 +115,8 @@ class FingerprintStatistics:
 
 @dataclass
 class MatchStatistics:
-    """Match operation statistics"""
+    """
+Match operation statistics"""
     total_matches: int
     exact_matches: int
     similar_matches: int
@@ -877,7 +883,8 @@ class FingerprintRepository:
         fingerprint: ContentFingerprint,
         include_vectors: bool = False
     ) -> Dict[str, Any]:
-        """Convert fingerprint to dictionary for export"""
+        """
+Convert fingerprint to dictionary for export"""
         data = {
             'fingerprint_id': fingerprint.fingerprint_id,
             'content_id': fingerprint.content_id,

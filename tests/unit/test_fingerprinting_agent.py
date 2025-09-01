@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Fingerprinting Agent
+"""
+Unit Tests for Fingerprinting Agent
 ==================================
 
 Critical unit tests for the AI-powered fingerprinting agent module.
@@ -22,6 +24,7 @@ and content identification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
 """
+
 import pytest
 import sys
 import os
@@ -68,7 +71,8 @@ except ImportError:
 
 
 class MockFingerprintingEngine:
-    """Mock implementation of fingerprinting engine for testing"""
+    """
+Mock implementation of fingerprinting engine for testing"""
     
     def __init__(self):
         self.processed_files = []
@@ -76,7 +80,8 @@ class MockFingerprintingEngine:
         self.similarity_threshold = 0.85
         
     async def generate_audio_fingerprint(self, audio_data: bytes, metadata: Dict) -> Dict[str, Any]:
-        """Generate audio fingerprint with spectral analysis simulation"""
+        """
+Generate audio fingerprint with spectral analysis simulation"""
         # Simulate audio processing
         file_hash = hashlib.md5(audio_data).hexdigest()
         
@@ -190,12 +195,14 @@ class TestFingerprintingAgent:
     
     @pytest.fixture
     def fingerprinting_engine(self):
-        """Create fingerprinting engine fixture"""
+        """
+Create fingerprinting engine fixture"""
         return MockFingerprintingEngine()
     
     @pytest.fixture
     def sample_audio_data(self):
-        """Sample audio data for testing"""
+        """
+Sample audio data for testing"""
         return b"fake_audio_data_for_testing" * 1000
     
     @pytest.fixture
@@ -406,7 +413,8 @@ class TestFingerprintingAgent:
         
     @pytest.mark.asyncio
     async def test_concurrent_processing(self, fingerprinting_engine):
-        """Test concurrent fingerprint processing"""
+        """
+Test concurrent fingerprint processing"""
         test_data = [
             (b"concurrent_file_1" * 50, {"duration": 60}),
             (b"concurrent_file_2" * 50, {"duration": 90}),

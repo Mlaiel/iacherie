@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import uuid
 import os
 import shutil
@@ -606,13 +607,15 @@ class ContentService:
         return False
     
     async def _toggle_user_like(self, content_id: str, user_id: str, db: Session) -> bool:
-        """Toggle user like status (simplified implementation)"""
+        """
+Toggle user like status (simplified implementation)"""
         # In production, use a separate ContentLike table
         # For now, return a simple toggle based on some logic
         return True  # Simplified
     
     async def _update_search_index(self, content_id: str) -> None:
-        """Update external search index"""
+        """
+Update external search index"""
         try:
             # This would integrate with Elasticsearch or similar
             # Simplified for now
@@ -629,7 +632,8 @@ class ContentService:
         return round(engagement * 100, 2)
     
     def _calculate_performance_score(self, content: Content) -> int:
-        """Calculate overall content performance score"""
+        """
+Calculate overall content performance score"""
         base_score = content.view_count + (content.like_count * 2) + (content.download_count * 3)
         
         # Age factor (newer content gets bonus)

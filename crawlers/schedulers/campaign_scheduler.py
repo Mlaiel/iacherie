@@ -28,6 +28,7 @@ Timing optimization → AI-driven distribution → Performance monitoring →
 Revenue tracking → Collaboration synchronization → User engagement → 
 Business growth → Market dominance
 """
+
 import asyncio
 import logging
 import time
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class CampaignType(Enum):
-    """Types of campaign strategies."""
+    """
+Types of campaign strategies."""
+
     CONTENT_LAUNCH = "content_launch"           # Single content multi-platform launch
     SERIES_ROLLOUT = "series_rollout"          # Sequential content series
     COLLABORATION = "collaboration"            # Multi-creator collaboration
@@ -63,6 +66,7 @@ class CampaignType(Enum):
 
 class CampaignStatus(Enum):
     """Campaign execution status."""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     ACTIVE = "active"
@@ -74,6 +78,7 @@ class CampaignStatus(Enum):
 
 class CampaignPriority(Enum):
     """Campaign priority levels."""
+
     CRITICAL = "critical"      # Revenue-critical, time-sensitive
     HIGH = "high"             # Important business campaigns
     NORMAL = "normal"         # Regular content campaigns
@@ -82,6 +87,7 @@ class CampaignPriority(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for campaign distribution."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -96,6 +102,7 @@ class PlatformType(Enum):
 
 class ContentPhase(Enum):
     """Content delivery phases."""
+
     TEASER = "teaser"              # Pre-launch teasing
     LAUNCH = "launch"              # Main content launch
     AMPLIFICATION = "amplification" # Engagement boost phase
@@ -105,6 +112,7 @@ class ContentPhase(Enum):
 
 class TimingStrategy(Enum):
     """Campaign timing optimization strategies."""
+
     GLOBAL_OPTIMAL = "global_optimal"         # Best global timing
     AUDIENCE_OPTIMIZED = "audience_optimized" # Audience-specific timing
     PLATFORM_NATIVE = "platform_native"      # Platform-optimal timing
@@ -130,7 +138,8 @@ class PlatformConfiguration:
 
 @dataclass
 class CampaignContent:
-    """Content item within a campaign."""
+    """
+Content item within a campaign."""
     content_id: str
     title: str
     content_type: str  # audio, video, image, text, mixed
@@ -148,7 +157,8 @@ class CampaignContent:
 
 @dataclass
 class CampaignSchedule:
-    """Campaign scheduling configuration."""
+    """
+Campaign scheduling configuration."""
     start_date: datetime
     end_date: Optional[datetime] = None
     timezone: str = "UTC"
@@ -183,7 +193,8 @@ class CampaignConfiguration:
 
 @dataclass
 class Campaign:
-    """Main campaign definition."""
+    """
+Main campaign definition."""
     campaign_id: str
     name: str
     description: str
@@ -259,7 +270,8 @@ class CampaignExecution:
 
 @dataclass
 class CampaignMetrics:
-    """Campaign scheduler performance metrics."""
+    """
+Campaign scheduler performance metrics."""
     total_campaigns: int = 0
     active_campaigns: int = 0
     successful_campaigns: int = 0
@@ -290,7 +302,8 @@ class CampaignMetrics:
 
 
 class CampaignOrchestrator(ABC):
-    """Abstract base class for campaign orchestrators."""
+    """
+Abstract base class for campaign orchestrators."""
     
     @abstractmethod
     async def execute_campaign_phase(
@@ -299,7 +312,8 @@ class CampaignOrchestrator(ABC):
         phase: ContentPhase,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute a specific campaign phase."""
+        """
+Execute a specific campaign phase."""
         pass
     
     @abstractmethod
@@ -309,7 +323,8 @@ class CampaignOrchestrator(ABC):
         content_item: CampaignContent,
         platforms: List[PlatformType]
     ) -> Dict[str, Any]:
-        """Coordinate content delivery across platforms."""
+        """
+Coordinate content delivery across platforms."""
         pass
     
     @abstractmethod
@@ -318,12 +333,14 @@ class CampaignOrchestrator(ABC):
         campaign: Campaign,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize campaign timing based on real-time data."""
+        """
+Optimize campaign timing based on real-time data."""
         pass
 
 
 class ContentProtectionOrchestrator(CampaignOrchestrator):
-    """Orchestrator for content protection during campaigns."""
+    """
+Orchestrator for content protection during campaigns."""
     
     async def execute_campaign_phase(
         self,
@@ -331,7 +348,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         phase: ContentPhase,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute protection phase for campaign."""
+        """
+Execute protection phase for campaign."""
         try:
             if phase == ContentPhase.TEASER:
                 return await self._setup_protection_monitoring(campaign, context)
@@ -394,7 +412,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize protection timing."""
+        """
+Optimize protection timing."""
         try:
             # Analyze threat landscape
             threat_level = real_time_data.get('threat_level', 'normal')
@@ -423,7 +442,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup protection monitoring for campaign."""
+        """
+Setup protection monitoring for campaign."""
         await asyncio.sleep(0.1)
         
         return {
@@ -437,7 +457,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Activate launch protection."""
+        """
+Activate launch protection."""
         await asyncio.sleep(0.05)
         
         return {
@@ -451,7 +472,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Enhance protection during amplification."""
+        """
+Enhance protection during amplification."""
         await asyncio.sleep(0.05)
         
         return {
@@ -465,7 +487,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Maintain baseline protection."""
+        """
+Maintain baseline protection."""
         await asyncio.sleep(0.02)
         
         return {
@@ -479,7 +502,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze protection effectiveness."""
+        """
+Analyze protection effectiveness."""
         await asyncio.sleep(0.15)
         
         return {
@@ -491,7 +515,8 @@ class ContentProtectionOrchestrator(CampaignOrchestrator):
 
 
 class RevenueOptimizationOrchestrator(CampaignOrchestrator):
-    """Orchestrator for revenue optimization during campaigns."""
+    """
+Orchestrator for revenue optimization during campaigns."""
     
     async def execute_campaign_phase(
         self,
@@ -499,7 +524,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         phase: ContentPhase,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute revenue optimization phase."""
+        """
+Execute revenue optimization phase."""
         try:
             if phase == ContentPhase.TEASER:
                 return await self._setup_revenue_tracking(campaign, context)
@@ -565,7 +591,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize revenue timing."""
+        """
+Optimize revenue timing."""
         try:
             # Analyze market conditions
             market_sentiment = real_time_data.get('market_sentiment', 'neutral')
@@ -591,7 +618,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
             }
     
     def _calculate_optimal_times(self, engagement_trends: Dict[str, Any]) -> List[str]:
-        """Calculate optimal posting times for revenue."""
+        """
+Calculate optimal posting times for revenue."""
         # Simplified calculation - in reality would use ML models
         base_times = ["09:00", "12:00", "18:00", "21:00"]
         return base_times
@@ -613,7 +641,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup revenue tracking."""
+        """
+Setup revenue tracking."""
         await asyncio.sleep(0.1)
         
         return {
@@ -627,7 +656,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize launch monetization."""
+        """
+Optimize launch monetization."""
         await asyncio.sleep(0.1)
         
         return {
@@ -641,7 +671,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Maximize revenue during amplification."""
+        """
+Maximize revenue during amplification."""
         await asyncio.sleep(0.1)
         
         return {
@@ -655,7 +686,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Maintain revenue streams."""
+        """
+Maintain revenue streams."""
         await asyncio.sleep(0.05)
         
         return {
@@ -669,7 +701,8 @@ class RevenueOptimizationOrchestrator(CampaignOrchestrator):
         campaign: Campaign,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze revenue performance."""
+        """
+Analyze revenue performance."""
         await asyncio.sleep(0.15)
         
         return {
@@ -689,7 +722,8 @@ class CampaignScheduler:
     """
     
     def __init__(self, configuration: Optional[CampaignConfiguration] = None):
-        """Initialize campaign scheduler."""
+        """
+Initialize campaign scheduler."""
         self.config = configuration or CampaignConfiguration()
         self.is_running = False
         
@@ -921,7 +955,8 @@ class CampaignScheduler:
             return self.metrics
     
     async def _execution_loop(self) -> None:
-        """Main campaign execution loop."""
+        """
+Main campaign execution loop."""
         while self.is_running:
             try:
                 # Check for queued campaigns
@@ -1311,7 +1346,8 @@ class CampaignScheduler:
             return False
     
     async def _optimize_campaign_configuration(self, campaign: Campaign) -> None:
-        """Optimize campaign configuration."""
+        """
+Optimize campaign configuration."""
         try:
             # Optimize timing strategy based on campaign type
             if campaign.schedule:
@@ -1507,7 +1543,8 @@ class CampaignScheduler:
             return False
     
     async def stop(self) -> None:
-        """Stop the campaign scheduler."""
+        """
+Stop the campaign scheduler."""
         logger.info("Stopping campaign scheduler...")
         
         self.is_running = False

@@ -21,6 +21,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -59,7 +60,8 @@ settings = get_settings()
 
 @dataclass
 class RedditPostData:
-    """Reddit post data structure"""
+    """
+Reddit post data structure"""
     post_id: str
     subreddit: str
     title: str
@@ -102,7 +104,8 @@ class RedditPostData:
 
 @dataclass
 class RedditCommentData:
-    """Reddit comment data structure"""
+    """
+Reddit comment data structure"""
     comment_id: str
     post_id: str
     subreddit: str
@@ -133,7 +136,8 @@ class RedditCommentData:
 
 @dataclass
 class RedditSubredditData:
-    """Reddit subreddit data structure"""
+    """
+Reddit subreddit data structure"""
     subreddit_name: str
     display_name: str
     title: str
@@ -174,7 +178,8 @@ class RedditSubredditData:
 
 @dataclass
 class RedditUserData:
-    """Reddit user data structure"""
+    """
+Reddit user data structure"""
     username: str
     user_id: str
     created_utc: datetime
@@ -915,7 +920,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             await self.async_reddit.close()
 
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.async_reddit:
                 asyncio.create_task(self.close())

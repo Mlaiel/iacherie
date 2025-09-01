@@ -77,6 +77,7 @@ DOCUMENTATION = {
 # Usage Examples Index
 EXAMPLES = {
     "basic_separation": """
+
 from backend.audio.separation import SeparationService, SeparationRequest
 
 service = SeparationService()
@@ -88,6 +89,7 @@ response = await service.separate_audio(request)
 """,
     
     "batch_processing": """
+
 from backend.audio.separation import BatchProcessor
 
 processor = BatchProcessor()
@@ -98,6 +100,7 @@ results = await processor.process_directory(
 """,
     
     "realtime_streaming": """
+
 from backend.audio.separation import RealtimeProcessor
 
 realtime = RealtimeProcessor()
@@ -126,7 +129,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 VIOLATIONS: Will be prosecuted under applicable copyright, 
 trade secret, and intellectual property laws.
-"""def get_module_overview():
+"""
+def get_module_overview():
     """Get comprehensive module overview."""
     return {
         "info": MODULE_INFO,

@@ -11,6 +11,7 @@ This module provides comprehensive multi-cloud synchronization:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ from backend.utils.metrics import MetricsCollector
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
@@ -46,6 +49,7 @@ class CloudProvider(Enum):
 
 class SyncStrategy(Enum):
     """Data synchronization strategies"""
+
     REAL_TIME = "real_time"        # Immediate sync
     NEAR_REAL_TIME = "near_real_time"  # Sub-second sync
     PERIODIC = "periodic"          # Scheduled sync
@@ -55,6 +59,7 @@ class SyncStrategy(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     LATEST_WINS = "latest_wins"
     SOURCE_WINS = "source_wins"
     MANUAL = "manual"
@@ -64,6 +69,7 @@ class ConflictResolution(Enum):
 
 class DataType(Enum):
     """Types of data being synchronized"""
+
     USER_DATA = "user_data"
     CONTENT_FINGERPRINTS = "content_fingerprints"
     MEDIA_FILES = "media_files"
@@ -89,7 +95,8 @@ class CloudEndpoint:
 
 @dataclass
 class SyncPolicy:
-    """Synchronization policy configuration"""
+    """
+Synchronization policy configuration"""
     policy_id: str
     name: str
     data_types: List[DataType]
@@ -106,7 +113,8 @@ class SyncPolicy:
 
 @dataclass
 class SyncOperation:
-    """Individual synchronization operation"""
+    """
+Individual synchronization operation"""
     operation_id: str
     timestamp: datetime
     policy_id: str
@@ -124,7 +132,8 @@ class SyncOperation:
 
 @dataclass
 class ConflictRecord:
-    """Data conflict record"""
+    """
+Data conflict record"""
     conflict_id: str
     timestamp: datetime
     file_path: str
@@ -135,14 +144,16 @@ class ConflictRecord:
 
 
 class CloudStorageAdapter:
-    """Abstract base class for cloud storage adapters"""
+    """
+Abstract base class for cloud storage adapters"""
     
     def __init__(self, endpoint: CloudEndpoint):
         self.endpoint = endpoint
         self.client = None
         
     async def initialize(self):
-        """Initialize cloud storage client"""
+        """
+Initialize cloud storage client"""
         # Default implementation for cloud storage without initialization
         logging.warning(f"Cloud storage initialization not implemented for {self.__class__.__name__}")
         pass
@@ -183,7 +194,8 @@ class AWSStorageAdapter(CloudStorageAdapter):
     """AWS S3 storage adapter"""
     
     async def initialize(self):
-        """Initialize AWS S3 client"""
+        """
+Initialize AWS S3 client"""
         try:
             session = boto3.Session(
                 aws_access_key_id=self.endpoint.credentials.get('access_key_id'),
@@ -271,7 +283,8 @@ class GCPStorageAdapter(CloudStorageAdapter):
     """Google Cloud Storage adapter"""
     
     async def initialize(self):
-        """Initialize GCP Storage client"""
+        """
+Initialize GCP Storage client"""
         try:
             # Initialize with service account or default credentials
             self.client = gcp_storage.Client()
@@ -308,7 +321,8 @@ class AzureStorageAdapter(CloudStorageAdapter):
     """Azure Blob Storage adapter"""
     
     async def initialize(self):
-        """Initialize Azure Blob Storage client"""
+        """
+Initialize Azure Blob Storage client"""
         try:
             credential = DefaultAzureCredential()
             account_url = f"https://{self.endpoint.credentials['account_name']}.blob.core.windows.net"
@@ -379,7 +393,8 @@ class MultiCloudSyncManager:
         self._initialize_default_policies()
 
     async def initialize(self):
-        """Initialize multi-cloud sync manager"""
+        """
+Initialize multi-cloud sync manager"""
         try:
             # Load cloud endpoint configurations
             await self._load_cloud_endpoints()
@@ -623,7 +638,8 @@ class MultiCloudSyncManager:
         return applicable_policies[0]
 
     async def _calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate SHA-256 checksum of file"""
+        """
+Calculate SHA-256 checksum of file"""
         try:
             hasher = hashlib.sha256()
             
@@ -890,7 +906,8 @@ class MultiCloudSyncManager:
     async def _verify_upload_integrity(self, operation: SyncOperation, 
                                      adapter: CloudStorageAdapter, 
                                      remote_path: str) -> bool:
-        """Verify upload integrity by checking metadata"""
+        """
+Verify upload integrity by checking metadata"""
         try:
             uploaded_metadata = await adapter.get_file_metadata(remote_path)
             if not uploaded_metadata:

@@ -4,6 +4,7 @@ Professional multi-format content sync and version management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content for synchronization"""
+    """
+Types of content for synchronization"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -32,6 +35,7 @@ class ContentType(Enum):
 
 class SyncAction(Enum):
     """Synchronization actions"""
+
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
@@ -43,6 +47,7 @@ class SyncAction(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -53,6 +58,7 @@ class SyncStatus(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     MANUAL = "manual"
     OVERWRITE_SOURCE = "overwrite_source"
     OVERWRITE_TARGET = "overwrite_target"
@@ -106,7 +112,8 @@ class SyncConflict:
 
 
 class ContentSyncRequest(BaseModel):
-    """Content synchronization request"""
+    """
+Content synchronization request"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     collaboration_id: Optional[str] = None
     
@@ -150,7 +157,8 @@ class ContentSyncRequest(BaseModel):
 
 @dataclass
 class SyncResult:
-    """Synchronization result"""
+    """
+Synchronization result"""
     sync_request_id: str
     content_id: str
     source_endpoint: str
@@ -186,7 +194,8 @@ class ContentSyncEngine:
         asyncio.create_task(self._initialize_engine())
     
     async def _initialize_engine(self):
-        """Initialize content synchronization engine"""
+        """
+Initialize content synchronization engine"""
         try:
             await self._setup_sync_endpoints()
             await self._initialize_version_tracking()
@@ -545,15 +554,18 @@ class ContentSyncEngine:
         }
     
     async def _initialize_version_tracking(self):
-        """Initialize version tracking system"""
+        """
+Initialize version tracking system"""
         self.content_versions = {}
     
     async def _setup_real_time_watchers(self):
-        """Setup real-time content watchers"""
+        """
+Setup real-time content watchers"""
         self.real_time_watchers = {}
     
     async def _start_sync_workers(self):
-        """Start background sync workers"""
+        """
+Start background sync workers"""
         # Start workers to process sync queue
         for i in range(3):  # 3 worker threads
             asyncio.create_task(self._sync_worker(f"worker_{i}"))
@@ -563,7 +575,8 @@ class ContentSyncEngine:
         pass
     
     async def _validate_sync_request(self, request: ContentSyncRequest) -> Dict[str, Any]:
-        """Validate sync request"""
+        """
+Validate sync request"""
         try:
             # Check source endpoint exists
             if request.source_endpoint not in self.sync_endpoints:
@@ -585,7 +598,8 @@ class ContentSyncEngine:
             return {'valid': False, 'error': str(e)}
     
     async def _check_for_conflicts(self, request: ContentSyncRequest) -> Dict[str, Any]:
-        """Check for synchronization conflicts"""
+        """
+Check for synchronization conflicts"""
         conflicts = []
         
         # Check if content exists in target endpoints with different versions
@@ -666,7 +680,8 @@ class ContentSyncEngine:
             }
     
     async def _execute_real_time_sync(self, request: ContentSyncRequest) -> Dict[str, Any]:
-        """Execute real-time synchronization"""
+        """
+Execute real-time synchronization"""
         results = []
         
         for target_endpoint in request.target_endpoints:
@@ -710,7 +725,8 @@ class ContentSyncEngine:
         }
     
     async def _sync_worker(self, worker_id: str):
-        """Background sync worker"""
+        """
+Background sync worker"""
         logger.info(f"Sync worker {worker_id} started")
         
         while True:
@@ -804,7 +820,8 @@ class ContentSyncEngine:
         content_data: Dict[str, Any], 
         creator_endpoint: str
     ) -> ContentVersion:
-        """Create new content version"""
+        """
+Create new content version"""
         # Calculate content hash
         content_str = json.dumps(content_data, sort_keys=True)
         content_hash = hashlib.sha256(content_str.encode()).hexdigest()
@@ -867,7 +884,8 @@ class ContentSyncEngine:
         strategy: ConflictResolution, 
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply conflict resolution strategy"""
+        """
+Apply conflict resolution strategy"""
         if strategy == ConflictResolution.OVERWRITE_SOURCE:
             return {
                 'action': 'overwrite_source',
@@ -897,7 +915,8 @@ class ContentSyncEngine:
         conflict: SyncConflict, 
         resolution: Dict[str, Any]
     ) -> ContentSyncRequest:
-        """Create sync request from conflict resolution"""
+        """
+Create sync request from conflict resolution"""
         return ContentSyncRequest(
             content_id=conflict.content_id,
             content_type=ContentType.MULTIMODAL,  # Default
@@ -934,7 +953,8 @@ class ContentSyncEngine:
         collaboration_id: str, 
         strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup conflict resolution rules for collaboration"""
+        """
+Setup conflict resolution rules for collaboration"""
         return {
             'default_strategy': strategy.get('conflict_resolution', 'create_version'),
             'auto_resolve_minor': strategy.get('auto_resolve_minor', True),

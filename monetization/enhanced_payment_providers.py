@@ -4,6 +4,7 @@ Complete payment processing integration for all supported providers.
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ COPYRIGHT WARNING: Proprietary code - unauthorized use prohibited.
 """
+
 import os
 import asyncio
 import logging
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class ExtendedPaymentProvider(Enum):
-    """Extended payment provider support."""
+    """
+Extended payment provider support."""
     # Traditional providers
     STRIPE = "stripe"
     PAYPAL = "paypal"
@@ -94,7 +96,8 @@ class EnhancedMultiProviderPaymentService:
         self._initialize_providers()
     
     def _initialize_providers(self):
-        """Initialize all payment providers with enhanced configurations."""
+        """
+Initialize all payment providers with enhanced configurations."""
         
         # Stripe configuration
         self.providers[ExtendedPaymentProvider.STRIPE] = PaymentProviderConfig(
@@ -321,7 +324,8 @@ class EnhancedMultiProviderPaymentService:
         currency: str, 
         region: str = None
     ) -> ExtendedPaymentProvider:
-        """Calculate the most cost-effective provider for a transaction."""
+        """
+Calculate the most cost-effective provider for a transaction."""
         available_providers = await self.get_available_providers(currency, region)
         
         best_provider = None

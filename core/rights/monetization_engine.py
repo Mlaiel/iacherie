@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Monetization Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class RevenueStreamType(str, Enum):
-    """Types of revenue streams."""
+    """
+Types of revenue streams."""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -54,6 +57,7 @@ class RevenueStreamType(str, Enum):
 
 class PlatformRevenue(str, Enum):
     """Supported revenue platforms."""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -71,6 +75,7 @@ class PlatformRevenue(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -80,6 +85,7 @@ class PaymentMethod(str, Enum):
 
 class RevenueStatus(str, Enum):
     """Revenue tracking status."""
+
     PENDING = "pending"
     DETECTED = "detected"
     CALCULATED = "calculated"
@@ -110,7 +116,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueLeak:
-    """Detected revenue leak structure."""
+    """
+Detected revenue leak structure."""
     leak_id: str
     content_id: str
     platform: str
@@ -131,7 +138,8 @@ class PlatformRevenueAPI:
         self.rate_limit_delay = 1.0
     
     async def setup_session(self):
-        """Setup HTTP session."""
+        """
+Setup HTTP session."""
         if not self.session:
             connector = aiohttp.TCPConnector(limit=50)
             timeout = aiohttp.ClientTimeout(total=30)
@@ -141,13 +149,15 @@ class PlatformRevenueAPI:
             )
     
     async def cleanup_session(self):
-        """Cleanup session."""
+        """
+Cleanup session."""
         if self.session:
             await self.session.close()
 
 
 class SpotifyRevenueAPI(PlatformRevenueAPI):
-    """Spotify Artists API for revenue tracking."""
+    """
+Spotify Artists API for revenue tracking."""
     
     def __init__(self):
         super().__init__(PlatformRevenue.SPOTIFY)
@@ -240,13 +250,15 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
             return popularity * 1000
     
     def _calculate_spotify_revenue(self, streams: int) -> Decimal:
-        """Calculate estimated Spotify revenue."""
+        """
+Calculate estimated Spotify revenue."""
         # Spotify pays approximately $0.003-$0.005 per stream
         rate_per_stream = Decimal('0.004')
         return Decimal(streams) * rate_per_stream
     
     async def _process_artist_data(self, albums_data: Dict, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Process artist albums data."""
+        """
+Process artist albums data."""
         total_revenue = Decimal('0.00')
         total_streams = 0
         
@@ -264,7 +276,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
         }
     
     async def _calculate_album_revenue(self, album_id: str) -> Dict[str, Any]:
-        """Calculate revenue for specific album."""
+        """
+Calculate revenue for specific album."""
         # Placeholder implementation
         return {
             'revenue': Decimal('0.00'),
@@ -273,7 +286,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
 
 
 class YouTubeRevenueAPI(PlatformRevenueAPI):
-    """YouTube Creator API for revenue tracking."""
+    """
+YouTube Creator API for revenue tracking."""
     
     def __init__(self):
         super().__init__(PlatformRevenue.YOUTUBE)
@@ -338,7 +352,8 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
         return {}
     
     def _calculate_video_revenue(self, video_data: Dict) -> Dict[str, Any]:
-        """Calculate estimated revenue for video."""
+        """
+Calculate estimated revenue for video."""
         statistics = video_data.get('statistics', {})
         view_count = int(statistics.get('viewCount', 0))
         
@@ -357,7 +372,8 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
 
 
 class MonetizationEngine:
-    """Central monetization and revenue tracking engine."""
+    """
+Central monetization and revenue tracking engine."""
     
     def __init__(self):
         self.platform_apis = self._initialize_platform_apis()
@@ -365,7 +381,8 @@ class MonetizationEngine:
         self.revenue_cache = {}
     
     def _initialize_platform_apis(self) -> Dict[str, PlatformRevenueAPI]:
-        """Initialize platform revenue APIs."""
+        """
+Initialize platform revenue APIs."""
         return {
             PlatformRevenue.SPOTIFY: SpotifyRevenueAPI(),
             PlatformRevenue.YOUTUBE: YouTubeRevenueAPI(),
@@ -373,7 +390,8 @@ class MonetizationEngine:
         }
     
     def _initialize_payment_processors(self) -> Dict[str, Any]:
-        """Initialize payment processors."""
+        """
+Initialize payment processors."""
         return {
             PaymentMethod.STRIPE: self._setup_stripe(),
             PaymentMethod.PAYPAL: self._setup_paypal(),
@@ -381,17 +399,20 @@ class MonetizationEngine:
         }
     
     def _setup_stripe(self):
-        """Setup Stripe payment processor."""
+        """
+Setup Stripe payment processor."""
         stripe.api_key = settings.STRIPE_SECRET_KEY
         return stripe
     
     def _setup_paypal(self):
-        """Setup PayPal payment processor."""
+        """
+Setup PayPal payment processor."""
         # PayPal SDK initialization
         return None  # Placeholder
     
     def _setup_wise(self):
-        """Setup Wise payment processor."""
+        """
+Setup Wise payment processor."""
         # Wise API initialization
         return None  # Placeholder
     
@@ -402,7 +423,8 @@ class MonetizationEngine:
         date_range: Tuple[datetime, datetime],
         platforms: List[str] = None
     ) -> RevenueMetrics:
-        """Calculate total revenue for content across platforms."""
+        """
+Calculate total revenue for content across platforms."""
         
         if platforms is None:
             platforms = list(self.platform_apis.keys())
@@ -533,7 +555,8 @@ class MonetizationEngine:
         total_revenue: Decimal,
         payment_method: PaymentMethod = PaymentMethod.STRIPE
     ) -> Dict[str, Any]:
-        """Process revenue distribution to content creator."""
+        """
+Process revenue distribution to content creator."""
         
         try:
             # Calculate platform fees and taxes
@@ -634,7 +657,8 @@ class MonetizationEngine:
             }
     
     async def _process_paypal_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process payment through PayPal."""
+        """
+Process payment through PayPal."""
         # PayPal payment implementation
         return {
             'success': False,
@@ -642,7 +666,8 @@ class MonetizationEngine:
         }
     
     async def _process_wise_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process payment through Wise."""
+        """
+Process payment through Wise."""
         # Wise payment implementation
         return {
             'success': False,
@@ -658,7 +683,8 @@ class MonetizationEngine:
         payment_method: PaymentMethod,
         transaction_id: str
     ):
-        """Record revenue transaction in database."""
+        """
+Record revenue transaction in database."""
         # Database transaction recording
         pass
     
@@ -668,7 +694,8 @@ class MonetizationEngine:
         user_id: str, 
         date_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics."""
+        """
+Get comprehensive revenue analytics."""
         
         analytics = {
             'total_revenue': Decimal('0.00'),
@@ -683,7 +710,8 @@ class MonetizationEngine:
         return analytics
     
     async def cleanup(self):
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         for api in self.platform_apis.values():
             if hasattr(api, 'cleanup_session'):
                 await api.cleanup_session()

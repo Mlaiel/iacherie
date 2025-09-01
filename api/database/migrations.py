@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import os
 import json
 import hashlib
@@ -34,7 +35,9 @@ settings = get_settings()
 
 
 class MigrationStatus(Enum):
-    """Migration status enumeration"""
+    """
+Migration status enumeration"""
+
     PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
@@ -44,6 +47,7 @@ class MigrationStatus(Enum):
 
 class MigrationType(Enum):
     """Migration type enumeration"""
+
     SCHEMA = "schema"
     DATA = "data"
     INDEX = "index"
@@ -71,7 +75,8 @@ class MigrationInfo:
 
 @dataclass
 class MigrationResult:
-    """Migration execution result"""
+    """
+Migration execution result"""
     success: bool
     migration_id: str
     execution_time: float
@@ -80,7 +85,8 @@ class MigrationResult:
 
 
 class Migration:
-    """Base migration class"""
+    """
+Base migration class"""
     
     def __init__(self, migration_id: str, name: str, description: str):
         self.id = migration_id
@@ -225,7 +231,8 @@ class Migration:
             raise e
     
     async def _rollback_data_migration(self, session: AsyncSession) -> None:
-        """Rollback data migration"""
+        """
+Rollback data migration"""
         try:
             # Example data rollback - remove migration log entries
             await session.execute(text(f"""
@@ -240,7 +247,8 @@ class Migration:
             raise e
     
     async def _rollback_generic_migration(self, session: AsyncSession) -> None:
-        """Rollback generic migration"""
+        """
+Rollback generic migration"""
         try:
             # Generic migration rollback
             logger.info(f"Rolling back generic migration {self.id}")
@@ -283,7 +291,8 @@ class MigrationManager:
         await self._load_migration_history()
     
     async def _ensure_migration_table(self):
-        """Create migration tracking table if it doesn't exist"""
+        """
+Create migration tracking table if it doesn't exist"""
         if self._migration_table_created:
             return
         
@@ -408,7 +417,8 @@ class MigrationManager:
         return self._resolve_dependencies(pending)
     
     def _resolve_dependencies(self, migration_ids: List[str]) -> List[str]:
-        """Resolve migration dependencies and return ordered list"""
+        """
+Resolve migration dependencies and return ordered list"""
         resolved = []
         unresolved = set(migration_ids)
         
@@ -591,7 +601,8 @@ class MigrationManager:
         await self._save_migration_record(migration_info)
     
     async def _record_migration_success(self, migration: Migration, execution_time: float):
-        """Record migration success"""
+        """
+Record migration success"""
         # Update existing record
         async with self.session_manager.get_async_session() as session:
             query = text("""
@@ -618,7 +629,8 @@ class MigrationManager:
                 break
     
     async def _record_migration_failure(self, migration: Migration, error_message: str, execution_time: float):
-        """Record migration failure"""
+        """
+Record migration failure"""
         async with self.session_manager.get_async_session() as session:
             query = text("""
                 UPDATE migration_history 
@@ -644,7 +656,8 @@ class MigrationManager:
                 break
     
     async def _record_migration_rollback(self, migration: Migration, execution_time: float):
-        """Record migration rollback"""
+        """
+Record migration rollback"""
         async with self.session_manager.get_async_session() as session:
             query = text("""
                 UPDATE migration_history 
@@ -669,7 +682,8 @@ class MigrationManager:
                 break
     
     async def _save_migration_record(self, migration_info: MigrationInfo):
-        """Save migration record to database"""
+        """
+Save migration record to database"""
         async with self.session_manager.get_async_session() as session:
             query = text("""
                 INSERT INTO migration_history 
@@ -715,7 +729,8 @@ class MigrationManager:
             self.migration_history.append(migration_info)
     
     def get_migration_status(self) -> Dict[str, Any]:
-        """Get comprehensive migration status"""
+        """
+Get comprehensive migration status"""
         total_migrations = len(self.migrations)
         executed_migrations = len([m for m in self.migration_history if m.status == MigrationStatus.SUCCESS])
         failed_migrations = len([m for m in self.migration_history if m.status == MigrationStatus.FAILED])
@@ -742,13 +757,15 @@ class SchemaManager:
         self.schema_versions: Dict[str, str] = {}
         
     async def initialize(self):
-        """Initialize schema manager"""
+        """
+Initialize schema manager"""
         self.db_connection = await DatabaseConnection.get_instance()
         await self.session_manager.initialize()
         await self._load_schema_versions()
     
     async def _load_schema_versions(self):
-        """Load current schema versions from database"""
+        """
+Load current schema versions from database"""
         try:
             async with self.session_manager.get_async_session() as session:
                 # Create schema_versions table if it doesn't exist
@@ -928,7 +945,8 @@ class DatabaseSeeder:
         await self.session_manager.initialize()
     
     async def seed_database(self, environment: Optional[str] = None) -> Dict[str, Any]:
-        """Seed database with environment-specific data"""
+        """
+Seed database with environment-specific data"""
         env = environment or self.environment
         seed_results = {}
         
@@ -995,7 +1013,8 @@ class DataMigrator:
         self.transaction_manager = TransactionManager()
         
     async def initialize(self):
-        """Initialize data migrator"""
+        """
+Initialize data migrator"""
         self.db_connection = await DatabaseConnection.get_instance()
         await self.session_manager.initialize()
     
@@ -1081,7 +1100,8 @@ class BackupManager:
         self.backup_retention_days = getattr(settings, 'BACKUP_RETENTION_DAYS', 30)
         
     async def initialize(self):
-        """Initialize backup manager"""
+        """
+Initialize backup manager"""
         self.db_connection = await DatabaseConnection.get_instance()
         self.backup_path.mkdir(exist_ok=True)
     

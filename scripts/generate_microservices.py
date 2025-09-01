@@ -9,7 +9,8 @@ import yaml
 from typing import Dict, List, Any
 
 class MicroservicesDeploymentGenerator:
-    """Generate production-ready Kubernetes manifests for microservices"""
+    """
+Generate production-ready Kubernetes manifests for microservices"""
     
     def __init__(self, base_path: str = "/home/runner/work/Ainflue/Ainflue/kubernetes/microservices"):
         self.base_path = base_path
@@ -342,7 +343,8 @@ class MicroservicesDeploymentGenerator:
             yaml.dump(manifest, f, default_flow_style=False, sort_keys=False)
     
     def generate_all_manifests(self):
-        """Generate all microservice manifests"""
+        """
+Generate all microservice manifests"""
         for service_name, service_config in self.services.items():
             service_dir = os.path.join(self.base_path, service_name)
             

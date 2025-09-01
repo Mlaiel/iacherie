@@ -4,7 +4,7 @@ Custom exception classes for quality assessment module error handling.
 Provides comprehensive error classification and debugging information.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 from typing import Dict, List, Optional, Any
 from enum import Enum
 import traceback
@@ -20,7 +21,9 @@ from datetime import datetime
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
+    """
+Error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -30,6 +33,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Error category classifications"""
+
     VALIDATION_ERROR = "validation_error"
     PROCESSING_ERROR = "processing_error"
     CONFIGURATION_ERROR = "configuration_error"
@@ -84,7 +88,8 @@ class QualityAssessmentBaseException(Exception):
         self.traceback = traceback.format_exc()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary format"""
+        """
+Convert exception to dictionary format"""
         return {
             'error_type': self.__class__.__name__,
             'message': self.message,
@@ -99,7 +104,8 @@ class QualityAssessmentBaseException(Exception):
         }
     
     def __str__(self) -> str:
-        """String representation of the exception"""
+        """
+String representation of the exception"""
         return f"[{self.error_code}] {self.message} (Severity: {self.severity.value})"
 
 

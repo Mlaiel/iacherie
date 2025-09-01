@@ -4,6 +4,7 @@ Mobile usage tracking, performance monitoring, and business insights
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Data-driven insights for mobile creator engagement and platform optimization
 """
+
 import asyncio
 import json
 import logging
@@ -52,7 +53,8 @@ class MobileEvent:
 
 @dataclass
 class PerformanceMetric:
-    """Mobile performance metric."""
+    """
+Mobile performance metric."""
     metric_id: str
     device_id: str
     session_id: str
@@ -69,7 +71,8 @@ class PerformanceMetric:
 
 @dataclass
 class UserSession:
-    """Mobile user session tracking."""
+    """
+Mobile user session tracking."""
     session_id: str
     user_id: str
     device_id: str
@@ -82,14 +85,16 @@ class UserSession:
     session_quality: Optional[str] = None  # high, medium, low
     
     def end_session(self):
-        """End the session and calculate duration."""
+        """
+End the session and calculate duration."""
         self.end_time = datetime.utcnow()
         self.is_active = False
         if self.start_time:
             self.duration_seconds = int((self.end_time - self.start_time).total_seconds())
     
     def calculate_quality(self) -> str:
-        """Calculate session quality based on engagement."""
+        """
+Calculate session quality based on engagement."""
         if self.duration_seconds is None:
             return "unknown"
         
@@ -467,7 +472,8 @@ class MobileAnalytics:
         return dict(sorted(event_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     def _get_platform_distribution(self, events: List[MobileEvent]) -> Dict[str, int]:
-        """Get platform distribution."""
+        """
+Get platform distribution."""
         
         platforms = defaultdict(int)
         for event in events:
@@ -752,14 +758,16 @@ def create_mobile_analytics() -> MobileAnalytics:
 
 
 def create_performance_tracker(analytics: MobileAnalytics = None) -> PerformanceTracker:
-    """Create performance tracker instance."""
+    """
+Create performance tracker instance."""
     if analytics is None:
         analytics = create_mobile_analytics()
     return PerformanceTracker(analytics)
 
 
 def create_usage_monitor(analytics: MobileAnalytics = None) -> UsageMonitor:
-    """Create usage monitor instance."""
+    """
+Create usage monitor instance."""
     if analytics is None:
         analytics = create_mobile_analytics()
     return UsageMonitor(analytics)

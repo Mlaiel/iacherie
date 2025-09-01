@@ -4,11 +4,12 @@ Advanced business workflow configuration for the IA Influencer Agent platform.
 Complete content creation pipeline from multi-format upload to monetization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
+    """
+Types of content creators supported"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -66,6 +69,7 @@ class ContentFormat(Enum):
 
 class WorkflowStage(Enum):
     """Business workflow stages"""
+
     UPLOAD = "upload"
     PROCESSING = "processing"
     AI_ANALYSIS = "ai_analysis"
@@ -162,7 +166,8 @@ class ContentProcessingPipeline:
 
 @dataclass
 class CollaborationMatchingConfig:
-    """Configuration for AI-powered collaboration matching"""
+    """
+Configuration for AI-powered collaboration matching"""
     enabled: bool = True
     
     # Matching algorithms
@@ -201,7 +206,8 @@ class CollaborationMatchingConfig:
 
 @dataclass
 class MonetizationWorkflowConfig:
-    """Advanced monetization workflow configuration"""
+    """
+Advanced monetization workflow configuration"""
     enabled: bool = True
     
     # Revenue tracking
@@ -275,7 +281,8 @@ class QualityAssessmentConfig:
 
 @dataclass
 class DistributionConfig:
-    """Multi-platform distribution configuration"""
+    """
+Multi-platform distribution configuration"""
     enabled: bool = True
     
     # Platform scheduling
@@ -310,7 +317,8 @@ class DistributionConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Advanced analytics and monitoring configuration"""
+    """
+Advanced analytics and monitoring configuration"""
     enabled: bool = True
     
     # Data collection
@@ -346,7 +354,8 @@ class AnalyticsConfig:
 
 @dataclass
 class BusinessLogicConfig:
-    """Master business logic configuration"""
+    """
+Master business logic configuration"""
     
     # Core settings
     enabled: bool = True
@@ -380,7 +389,8 @@ class BusinessLogicConfig:
     dmca_compliance: bool = True
     
     def get_workflow_for_creator(self, creator_type: CreatorType) -> Dict[str, Any]:
-        """Get optimized workflow configuration for specific creator type"""
+        """
+Get optimized workflow configuration for specific creator type"""
         
         workflows = {
             CreatorType.MUSICIAN: {

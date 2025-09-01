@@ -8,7 +8,7 @@ High-performance local storage provider with advanced file management,
 intelligent organization, and seamless integration with cloud backends.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -16,6 +16,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Union, BinaryIO, Generator
 import logging
 import asyncio
@@ -38,7 +39,9 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class LocalStorageTier(Enum):
-    """Local storage tiers for performance optimization"""
+    """
+Local storage tiers for performance optimization"""
+
     SSD_HOT = "ssd_hot"        # SSD for frequently accessed files
     SSD_WARM = "ssd_warm"      # SSD for moderate access
     HDD_COLD = "hdd_cold"      # HDD for infrequent access
@@ -82,7 +85,8 @@ class LocalStorageManager:
     """
     
     def __init__(self, config: LocalStorageConfig):
-        """Initialize local storage manager"""
+        """
+Initialize local storage manager"""
         self.config = config
         self.base_path = Path(config.base_path)
         self.executor = ThreadPoolExecutor(max_workers=config.max_concurrent_operations)
@@ -567,7 +571,8 @@ class LocalStorageManager:
         content_type: str,
         tier: LocalStorageTier
     ) -> Path:
-        """Generate organized storage path"""
+        """
+Generate organized storage path"""
         
         # Get tier base path
         tier_path = self.config.tier_paths.get(tier.value, self.config.tier_paths['ssd_warm'])
@@ -615,7 +620,8 @@ class LocalStorageManager:
         return processed_content
     
     async def _unprocess_content(self, content: bytes, metadata: Dict[str, Any]) -> bytes:
-        """Reverse processing (decompression, decryption)"""
+        """
+Reverse processing (decompression, decryption)"""
         processed_content = content
         
         # Decrypt if encrypted
@@ -632,7 +638,8 @@ class LocalStorageManager:
         return processed_content
     
     async def _update_file_index(self, file_id: str, metadata: Dict[str, Any]) -> None:
-        """Update file index with new entry"""
+        """
+Update file index with new entry"""
         with self.index_lock:
             self.file_index[file_id] = metadata
         
@@ -641,19 +648,22 @@ class LocalStorageManager:
             await self._save_file_index()
     
     async def _get_file_metadata(self, file_id: str) -> Optional[Dict[str, Any]]:
-        """Get file metadata from index"""
+        """
+Get file metadata from index"""
         with self.index_lock:
             return self.file_index.get(file_id)
     
     async def _update_access_stats(self, file_id: str) -> None:
-        """Update file access statistics"""
+        """
+Update file access statistics"""
         with self.index_lock:
             if file_id in self.file_index:
                 self.file_index[file_id]['last_accessed'] = datetime.now().isoformat()
                 self.file_index[file_id]['access_count'] = self.file_index[file_id].get('access_count', 0) + 1
     
     async def _remove_from_index(self, file_id: str) -> None:
-        """Remove file from index"""
+        """
+Remove file from index"""
         with self.index_lock:
             if file_id in self.file_index:
                 del self.file_index[file_id]
@@ -661,7 +671,8 @@ class LocalStorageManager:
         await self._save_file_index()
     
     async def _load_file_index(self) -> None:
-        """Load file index from disk"""
+        """
+Load file index from disk"""
         index_file = self.base_path / '.index' / 'file_index.json'
         
         try:
@@ -722,7 +733,8 @@ class LocalStorageManager:
         return score
     
     def _start_cleanup_scheduler(self) -> None:
-        """Start background cleanup scheduler"""
+        """
+Start background cleanup scheduler"""
         def cleanup_worker():
             while True:
                 try:
@@ -747,7 +759,8 @@ class AsyncLocalStorageManager:
         self,
         files: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Store multiple files concurrently"""
+        """
+Store multiple files concurrently"""
         
         async def store_single(file_info):
             async with self.semaphore:
@@ -771,7 +784,8 @@ class AsyncLocalStorageManager:
         self,
         file_ids: List[str]
     ) -> List[Dict[str, Any]]:
-        """Retrieve multiple files concurrently"""
+        """
+Retrieve multiple files concurrently"""
         
         async def retrieve_single(file_id):
             async with self.semaphore:

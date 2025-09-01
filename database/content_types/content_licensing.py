@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -32,7 +33,9 @@ from .content_models import Base, ContentType
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -46,6 +49,7 @@ class LicenseType(Enum):
 
 class UsageScope(Enum):
     """Scope of content usage rights"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -59,6 +63,7 @@ class UsageScope(Enum):
 
 class RevenueModel(Enum):
     """Revenue sharing models"""
+
     FIXED_FEE = "fixed_fee"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
@@ -70,6 +75,7 @@ class RevenueModel(Enum):
 
 class LicenseStatus(Enum):
     """License agreement status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -81,6 +87,7 @@ class LicenseStatus(Enum):
 
 class PaymentStatus(Enum):
     """Payment status for licenses"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
@@ -91,6 +98,7 @@ class PaymentStatus(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status for usage"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
@@ -125,7 +133,8 @@ class LicenseTerms:
     custom_clauses: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             'usage_scope': self.usage_scope.value,
             'duration_days': self.duration.days,
@@ -148,7 +157,8 @@ class LicenseTerms:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LicenseTerms':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         return cls(
             usage_scope=UsageScope(data['usage_scope']),
             duration=timedelta(days=data['duration_days']),
@@ -170,7 +180,8 @@ class LicenseTerms:
         )
 
 class ContentLicense(Base):
-    """Database model for content licenses"""
+    """
+Database model for content licenses"""
     __tablename__ = "content_licenses"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -239,11 +250,13 @@ class ContentLicense(Base):
         return LicenseTerms.from_dict(self.license_terms)
     
     def set_terms(self, terms: LicenseTerms):
-        """Set license terms from typed object"""
+        """
+Set license terms from typed object"""
         self.license_terms = terms.to_dict()
     
     def is_active(self) -> bool:
-        """Check if license is currently active"""
+        """
+Check if license is currently active"""
         now = datetime.utcnow().replace(tzinfo=timezone.utc)
         return (
             self.status == LicenseStatus.ACTIVE.value and
@@ -252,14 +265,16 @@ class ContentLicense(Base):
         )
     
     def is_expired(self) -> bool:
-        """Check if license has expired"""
+        """
+Check if license has expired"""
         if self.valid_until is None:
             return False
         now = datetime.utcnow().replace(tzinfo=timezone.utc)
         return self.valid_until < now
     
     def calculate_revenue(self, usage_count: int = 0, gross_revenue: Decimal = Decimal('0.00')) -> Decimal:
-        """Calculate revenue based on license terms"""
+        """
+Calculate revenue based on license terms"""
         if self.revenue_model == RevenueModel.FIXED_FEE.value:
             return self.base_price
         
@@ -277,7 +292,8 @@ class ContentLicense(Base):
             return Decimal('0.00')
 
 class LicenseUsage(Base):
-    """Database model for license usage tracking"""
+    """
+Database model for license usage tracking"""
     __tablename__ = "license_usage"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

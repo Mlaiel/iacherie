@@ -6,7 +6,7 @@ content protection, duplicate detection, and copyright validation for
 multi-format creator content including audio, video, images, and text.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -18,6 +18,7 @@ Features:
 - Real-time duplicate detection and copyright protection
 - Content monetization validation and tracking
 """
+
 import hashlib
 import numpy as np
 from enum import Enum
@@ -52,6 +53,7 @@ logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
     """Content fingerprint types"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_MFCC = "audio_mfcc"
     AUDIO_SPECTRAL = "audio_spectral"
@@ -68,6 +70,7 @@ class FingerprintType(Enum):
 
 class SimilarityMethod(Enum):
     """Similarity calculation methods"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     HAMMING = "hamming"
@@ -132,7 +135,8 @@ class FingerprintMetadata:
 
 @dataclass
 class Fingerprint:
-    """Content fingerprint representation"""
+    """
+Content fingerprint representation"""
     fingerprint_id: str
     fingerprint_type: FingerprintType
     content_format: ContentFormat
@@ -143,12 +147,14 @@ class Fingerprint:
     hash_value: Optional[str] = None
     
     def __post_init__(self):
-        """Generate hash value after initialization"""
+        """
+Generate hash value after initialization"""
         if self.hash_value is None:
             self.hash_value = self._generate_hash()
     
     def _generate_hash(self) -> str:
-        """Generate unique hash for fingerprint"""
+        """
+Generate unique hash for fingerprint"""
         data_str = f"{self.fingerprint_type.value}_{self.content_format.value}_{str(self.fingerprint_data)}"
         return hashlib.sha256(data_str.encode()).hexdigest()
 
@@ -171,7 +177,8 @@ class SimilarityResult:
 
 @dataclass
 class DuplicateDetectionResult:
-    """Duplicate detection result"""
+    """
+Duplicate detection result"""
     has_duplicates: bool
     duplicate_count: int
     similar_content: List[SimilarityResult] = field(default_factory=list)
@@ -185,7 +192,8 @@ class DuplicateDetectionResult:
 
 @dataclass
 class FingerprintValidationResult:
-    """Fingerprint validation result"""
+    """
+Fingerprint validation result"""
     is_valid: bool
     fingerprint: Optional[Fingerprint] = None
     duplicate_result: Optional[DuplicateDetectionResult] = None
@@ -985,7 +993,8 @@ class ContentFingerprintValidator:
         fingerprint_type: FingerprintType,
         method: SimilarityMethod
     ) -> float:
-        """Calculate similarity between two fingerprint data"""
+        """
+Calculate similarity between two fingerprint data"""
         
         if isinstance(data1, np.ndarray) and isinstance(data2, np.ndarray):
             if method == SimilarityMethod.COSINE:
@@ -1037,7 +1046,8 @@ class ContentFingerprintValidator:
         return 1.0 if data1 == data2 else 0.0
     
     def _store_vector_embedding(self, fingerprint: Fingerprint):
-        """Store vector embedding in FAISS index"""
+        """
+Store vector embedding in FAISS index"""
         if fingerprint.vector_embedding is not None and self.enable_ai_models:
             try:
                 # Ensure vector is the right dimension
@@ -1123,7 +1133,8 @@ class ContentFingerprintValidator:
         return min(1.0, quality_score)
     
     def _check_platform_compliance(self, fingerprint: Fingerprint, platform: str) -> bool:
-        """Check if fingerprint meets platform compliance requirements"""
+        """
+Check if fingerprint meets platform compliance requirements"""
         # Platform-specific compliance rules
         platform_rules = {
             'spotify': {
@@ -1162,7 +1173,8 @@ class ContentFingerprintValidator:
         quality_score: float,
         copyright_status: str
     ) -> List[str]:
-        """Generate recommendations based on fingerprint analysis"""
+        """
+Generate recommendations based on fingerprint analysis"""
         recommendations = []
         
         if quality_score < 0.7:
@@ -1246,7 +1258,8 @@ def generate_audio_fingerprint_comprehensive(
     check_duplicates: bool = True,
     store_fingerprint: bool = True
 ) -> FingerprintValidationResult:
-    """Generate comprehensive audio fingerprint with duplicate checking"""
+    """
+Generate comprehensive audio fingerprint with duplicate checking"""
     validator = create_content_fingerprint_validator()
     
     return validator.validate_content_fingerprint(
@@ -1262,7 +1275,8 @@ def validate_creator_content_fingerprint(
     creator_id: str,
     platform_targets: Optional[List[str]] = None
 ) -> FingerprintValidationResult:
-    """Validate creator content fingerprint with platform compliance"""
+    """
+Validate creator content fingerprint with platform compliance"""
     validator = create_content_fingerprint_validator()
     
     return validator.validate_content_fingerprint(

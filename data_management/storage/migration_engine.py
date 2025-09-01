@@ -8,7 +8,7 @@ Enterprise data migration system with legacy conversion,
 platform transitions, and schema evolution capabilities.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -17,6 +17,7 @@ Contact: mlaiel@live.de
 - Data Engineering: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable, Generator
 import logging
 import asyncio
@@ -39,7 +40,9 @@ import queue
 logger = logging.getLogger(__name__)
 
 class MigrationType(Enum):
-    """Types of migration operations"""
+    """
+Types of migration operations"""
+
     SCHEMA_EVOLUTION = "schema_evolution"
     PLATFORM_MIGRATION = "platform_migration"
     LEGACY_CONVERSION = "legacy_conversion"
@@ -51,6 +54,7 @@ class MigrationType(Enum):
 
 class MigrationStatus(Enum):
     """Migration execution status"""
+
     PENDING = "pending"
     PREPARING = "preparing"
     RUNNING = "running"
@@ -62,6 +66,7 @@ class MigrationStatus(Enum):
 
 class DataFormat(Enum):
     """Supported data formats"""
+
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -74,6 +79,7 @@ class DataFormat(Enum):
 
 class ValidationLevel(Enum):
     """Data validation levels"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -82,6 +88,7 @@ class ValidationLevel(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     OVERWRITE = "overwrite"
     SKIP = "skip"
     MERGE = "merge"
@@ -177,7 +184,8 @@ class MigrationExecution:
 
 @dataclass
 class SchemaDefinition:
-    """Represents a data schema"""
+    """
+Represents a data schema"""
     schema_id: str
     name: str
     version: str
@@ -221,7 +229,8 @@ class ValidationReport:
 
 @dataclass
 class MigrationConfig:
-    """Configuration for migration engine"""
+    """
+Configuration for migration engine"""
     storage_root_path: str
     migrations_directory: str
     plans_directory: str
@@ -281,7 +290,8 @@ class MigrationEngine:
     """
     
     def __init__(self, config: MigrationConfig):
-        """Initialize migration engine"""
+        """
+Initialize migration engine"""
         self.config = config
         self.migration_plans: Dict[str, MigrationPlan] = {}
         self.active_executions: Dict[str, MigrationExecution] = {}
@@ -915,7 +925,8 @@ class MigrationEngine:
             return {'accessible': False, 'error': str(e)}
     
     async def _check_destination_accessibility(self, dest_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check if destination is accessible"""
+        """
+Check if destination is accessible"""
         try:
             dest_type = dest_config.get('type', '')
             
@@ -941,7 +952,8 @@ class MigrationEngine:
             return {'accessible': False, 'error': str(e)}
     
     async def _estimate_migration_duration(self, plan: MigrationPlan) -> Optional[int]:
-        """Estimate migration duration in seconds"""
+        """
+Estimate migration duration in seconds"""
         try:
             # This would implement actual duration estimation
             # Based on data size, complexity, historical data, etc.
@@ -1204,7 +1216,8 @@ class MigrationEngine:
         }
     
     async def _load_initial_data(self) -> None:
-        """Load initial data from disk"""
+        """
+Load initial data from disk"""
         try:
             # Load migration plans
             plans_dir = Path(self.config.plans_directory)
@@ -1347,27 +1360,33 @@ class SchemaManager:
     """Manages data schemas and versioning"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize schema manager"""
+        """
+Initialize schema manager"""
         self.migration_engine = migration_engine
 
 
 class TransformationEngine:
-    """Handles data transformations during migration"""
+    """
+Handles data transformations during migration"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize transformation engine"""
+        """
+Initialize transformation engine"""
         self.migration_engine = migration_engine
 
 
 class ValidationEngine:
-    """Validates migrated data"""
+    """
+Validates migrated data"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize validation engine"""
+        """
+Initialize validation engine"""
         self.migration_engine = migration_engine
     
     async def validate_migration_data(self, execution_id: str, sample_size: Optional[int] = None) -> Dict[str, Any]:
-        """Validate migrated data"""
+        """
+Validate migrated data"""
         try:
             # This would implement actual data validation
             # For now, return a placeholder
@@ -1395,11 +1414,13 @@ class RollbackManager:
     """Manages migration rollbacks"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize rollback manager"""
+        """
+Initialize rollback manager"""
         self.migration_engine = migration_engine
     
     async def execute_rollback(self, execution_id: str) -> Dict[str, Any]:
-        """Execute migration rollback"""
+        """
+Execute migration rollback"""
         try:
             if execution_id not in self.migration_engine.active_executions:
                 return {
@@ -1441,11 +1462,13 @@ class DataProcessor:
     """Processes data during migration"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize data processor"""
+        """
+Initialize data processor"""
         self.migration_engine = migration_engine
     
     async def process_migration(self, execution: MigrationExecution, plan: MigrationPlan) -> None:
-        """Process migration data"""
+        """
+Process migration data"""
         try:
             # Estimate total items
             execution.total_items = await self.migration_engine._estimate_source_size(plan.source_config) or 0
@@ -1506,15 +1529,18 @@ class ProgressTracker:
     """Tracks migration progress"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize progress tracker"""
+        """
+Initialize progress tracker"""
         self.migration_engine = migration_engine
     
     async def initialize_tracking(self, execution: MigrationExecution, plan: MigrationPlan) -> None:
-        """Initialize progress tracking for execution"""
+        """
+Initialize progress tracking for execution"""
         execution.total_items = await self.migration_engine._estimate_source_size(plan.source_config) or 0
     
     async def update_progress(self, execution: MigrationExecution) -> None:
-        """Update progress metrics"""
+        """
+Update progress metrics"""
         try:
             # Calculate performance metrics
             if execution.started_at:
@@ -1540,7 +1566,8 @@ class ConflictResolver:
     """Resolves data conflicts during migration"""
     
     def __init__(self, migration_engine: MigrationEngine):
-        """Initialize conflict resolver"""
+        """
+Initialize conflict resolver"""
         self.migration_engine = migration_engine
 
 

@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Callable, Type
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStepType(Enum):
-    """Pipeline step types"""
+    """
+Pipeline step types"""
+
     PROCESSOR = "processor"
     VALIDATOR = "validator"
     TRANSFORMER = "transformer"
@@ -44,6 +47,7 @@ class PipelineStepType(Enum):
 
 class PipelineStatus(Enum):
     """Pipeline execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -55,6 +59,7 @@ class PipelineStatus(Enum):
 
 class ExecutionMode(Enum):
     """Pipeline execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -126,7 +131,8 @@ class PipelineContext:
 
 @dataclass
 class StepExecutionResult:
-    """Step execution result"""
+    """
+Step execution result"""
     step_id: str
     status: PipelineStatus
     output_data: Dict[str, Any] = field(default_factory=dict)
@@ -139,7 +145,8 @@ class StepExecutionResult:
 
 
 class MultimediaPipeline:
-    """Enterprise multimedia processing pipeline"""
+    """
+Enterprise multimedia processing pipeline"""
     
     def __init__(
         self, 
@@ -563,7 +570,8 @@ class MultimediaPipeline:
                     )
                     
     async def _execute_conditional_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute steps based on conditions"""
+        """
+Execute steps based on conditions"""
         for step in pipeline_def.steps:
             if not step.enabled:
                 continue
@@ -581,13 +589,15 @@ class MultimediaPipeline:
             context.step_results[step.step_id] = step_result
             
     async def _execute_dynamic_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute steps dynamically based on runtime conditions"""
+        """
+Execute steps dynamically based on runtime conditions"""
         # This is a simplified implementation
         # In practice, this would involve more complex routing logic
         await self._execute_sequential_steps(pipeline_def, context)
         
     async def _execute_step(self, step: PipelineStep, context: PipelineContext) -> StepExecutionResult:
-        """Execute individual pipeline step"""
+        """
+Execute individual pipeline step"""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -775,7 +785,8 @@ class MultimediaPipeline:
         return groups
         
     def _evaluate_conditions(self, conditions: Dict[str, Any], context: PipelineContext) -> bool:
-        """Evaluate step conditions"""
+        """
+Evaluate step conditions"""
         # This is a simplified implementation
         # In practice, you would implement a more sophisticated condition evaluator
         

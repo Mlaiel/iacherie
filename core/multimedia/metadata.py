@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -71,7 +72,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataFormat(Enum):
-    """Metadata formats"""
+    """
+Metadata formats"""
+
     EXIF = "exif"
     IPTC = "iptc"
     XMP = "xmp"
@@ -84,6 +87,7 @@ class MetadataFormat(Enum):
 
 class MetadataCategory(Enum):
     """Metadata categories"""
+
     TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
@@ -108,7 +112,8 @@ class GeolocationData:
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata"""
+    """
+Technical metadata"""
     # File information
     file_size: int = 0
     file_format: Optional[str] = None
@@ -147,7 +152,8 @@ class TechnicalMetadata:
     pixel_aspect_ratio: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         result = {}
         for key, value in asdict(self).items():
             if value is not None:
@@ -160,7 +166,8 @@ class TechnicalMetadata:
 
 @dataclass
 class DescriptiveMetadata:
-    """Descriptive metadata"""
+    """
+Descriptive metadata"""
     title: Optional[str] = None
     description: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
@@ -178,13 +185,15 @@ class DescriptiveMetadata:
     rating: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {k: v for k, v in asdict(self).items() if v is not None and v != []}
 
 
 @dataclass
 class AdministrativeMetadata:
-    """Administrative metadata"""
+    """
+Administrative metadata"""
     file_id: Optional[str] = None
     checksum: Optional[str] = None
     ingestion_date: Optional[datetime] = None
@@ -198,7 +207,8 @@ class AdministrativeMetadata:
     provenance: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         result = {}
         for key, value in asdict(self).items():
             if value is not None and value != {} and value != []:
@@ -211,7 +221,8 @@ class AdministrativeMetadata:
 
 @dataclass
 class MultimediaMetadataSet:
-    """Complete multimedia metadata set"""
+    """
+Complete multimedia metadata set"""
     file_path: str
     technical: TechnicalMetadata = field(default_factory=TechnicalMetadata)
     descriptive: DescriptiveMetadata = field(default_factory=DescriptiveMetadata)
@@ -231,7 +242,8 @@ class MultimediaMetadataSet:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "file_path": self.file_path,
             "technical": self.technical.to_dict(),
@@ -577,7 +589,8 @@ class MultimediaMetadata:
         pass
         
     async def _extract_file_info(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract basic file information"""
+        """
+Extract basic file information"""
         try:
             path_obj = Path(file_path)
             stat_info = path_obj.stat()
@@ -890,18 +903,21 @@ class MultimediaMetadata:
         updates: Dict[str, Any],
         category: MetadataCategory
     ):
-        """Write metadata to audio files"""
+        """
+Write metadata to audio files"""
         # This is a simplified implementation
         # In production, you would use mutagen to write tags
         pass
         
     def _convert_gps_coordinate(self, coord_tuple: Tuple) -> float:
-        """Convert GPS coordinate tuple to decimal degrees"""
+        """
+Convert GPS coordinate tuple to decimal degrees"""
         degrees, minutes, seconds = coord_tuple
         return float(degrees) + float(minutes)/60 + float(seconds)/3600
         
     def _generate_cache_key(self, file_path: str) -> str:
-        """Generate cache key for metadata"""
+        """
+Generate cache key for metadata"""
         try:
             stat_info = Path(file_path).stat()
             key_string = f"{file_path}_{stat_info.st_mtime}_{stat_info.st_size}"
@@ -914,7 +930,8 @@ class MultimediaMetadata:
         return hashlib.sha256(file_path.encode()).hexdigest()
         
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum"""
+        """
+Calculate file checksum"""
         hash_obj = hashlib.sha256()
         
         try:
@@ -936,7 +953,8 @@ class MultimediaMetadata:
         self.metadata_cache[cache_key] = metadata_set
         
     def _matches_query(self, metadata_set: MultimediaMetadataSet, query: Dict[str, Any]) -> bool:
-        """Check if metadata matches search query"""
+        """
+Check if metadata matches search query"""
         try:
             for key, value in query.items():
                 if key == 'format':
@@ -1034,7 +1052,8 @@ class MultimediaMetadata:
         return score / total_checks if total_checks > 0 else 0.0
         
     async def _export_to_xml(self, metadata_set: MultimediaMetadataSet, include_raw: bool) -> str:
-        """Export metadata to XML format"""
+        """
+Export metadata to XML format"""
         # This would implement XML export
         # For now, return empty string
         return ""

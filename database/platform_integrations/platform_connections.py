@@ -6,6 +6,7 @@ pour la plateforme IA Influencer Agent.
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, DevOps Engineer, Database Architect
 """
+
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -84,7 +85,8 @@ class PlatformConnection(BaseModel):
     
     @property
     def connection_health_score(self) -> float:
-        """Calcule un score de santé de la connexion (0-100)."""
+        """
+Calcule un score de santé de la connexion (0-100)."""
         if self.total_requests == 0:
             return 100.0
         
@@ -102,7 +104,8 @@ class PlatformConnection(BaseModel):
         return max(0.0, min(100.0, health_score))
     
     def update_sync_status(self, success: bool, error_message: str = None):
-        """Met à jour le statut de synchronisation."""
+        """
+Met à jour le statut de synchronisation."""
         self.total_requests += 1
         if success:
             self.last_success = datetime.utcnow()
@@ -113,7 +116,8 @@ class PlatformConnection(BaseModel):
                 self.last_error = error_message
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la connexion en dictionnaire."""
+        """
+Convertit la connexion en dictionnaire."""
         return {
             "id": str(self.id),
             "platform_name": self.platform_name,
@@ -275,7 +279,8 @@ class PlatformSyncLog(BaseModel):
         return min(100.0, max(0.0, health_score))
     
     def update_api_usage(self, success: bool = True, error_message: str = None):
-        """Met à jour les métriques d'utilisation de l'API."""
+        """
+Met à jour les métriques d'utilisation de l'API."""
         self.total_requests += 1
         
         if success:

@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive engagement metrics analysis, real-time tracking,
 and performance insights for social media content and user interactions.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -18,7 +19,9 @@ from collections import defaultdict, Counter
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of engagement metrics"""
+    """
+Types of engagement metrics"""
+
     IMPRESSION = "impression"
     VIEW = "view"
     LIKE = "like"
@@ -39,6 +42,7 @@ class MetricType(Enum):
 
 class PlatformType(Enum):
     """Social media platforms"""
+
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -57,6 +61,7 @@ class PlatformType(Enum):
 
 class EngagementLevel(Enum):
     """Engagement quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -65,6 +70,7 @@ class EngagementLevel(Enum):
 
 class TimeFrame(Enum):
     """Time frames for metrics analysis"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -91,7 +97,8 @@ class MetricEvent:
 
 @dataclass
 class EngagementSummary:
-    """Summary of engagement metrics"""
+    """
+Summary of engagement metrics"""
     content_id: str
     platform: PlatformType
     time_period: Dict[str, datetime] = field(default_factory=dict)
@@ -113,7 +120,8 @@ class EngagementSummary:
 
 @dataclass
 class RealTimeMetrics:
-    """Real-time engagement metrics"""
+    """
+Real-time engagement metrics"""
     timestamp: datetime = field(default_factory=datetime.utcnow)
     active_users: int = 0
     current_engagement_rate: float = 0.0
@@ -124,7 +132,8 @@ class RealTimeMetrics:
 
 @dataclass
 class EngagementTrend:
-    """Engagement trend analysis"""
+    """
+Engagement trend analysis"""
     metric_type: MetricType
     platform: PlatformType
     time_frame: TimeFrame
@@ -381,7 +390,8 @@ class EngagementMetricsAnalyzer:
     
     def analyze_performance_trends(self, platform: PlatformType, 
                                  days_back: int = 30) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=days_back)
@@ -517,7 +527,8 @@ class EngagementMetricsAnalyzer:
         return self.performance_benchmarks.get(platform.value, {})
     
     def analyze_audience_behavior(self, content_id: str, platform: PlatformType) -> Dict[str, Any]:
-        """Analyze audience behavior patterns"""
+        """
+Analyze audience behavior patterns"""
         try:
             relevant_events = [
                 e for e in self.metric_events

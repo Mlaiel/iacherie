@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class IndexType(Enum):
-    """Vector index types"""
+    """
+Vector index types"""
+
     FLAT = "flat"
     IVF = "ivf"
     HNSW = "hnsw"
@@ -50,6 +53,7 @@ class IndexType(Enum):
 
 class IndexStatus(Enum):
     """Index status states"""
+
     BUILDING = "building"
     READY = "ready"
     OPTIMIZING = "optimizing"
@@ -60,6 +64,7 @@ class IndexStatus(Enum):
 
 class MaintenanceType(Enum):
     """Index maintenance operations"""
+
     OPTIMIZATION = "optimization"
     REBALANCING = "rebalancing"
     CLEANUP = "cleanup"
@@ -105,7 +110,8 @@ class IndexStatistics:
 
 @dataclass
 class MaintenanceTask:
-    """Index maintenance task"""
+    """
+Index maintenance task"""
     task_id: str
     index_id: str
     task_type: MaintenanceType
@@ -119,7 +125,8 @@ class MaintenanceTask:
 
 @dataclass
 class IndexPartition:
-    """Index partition information"""
+    """
+Index partition information"""
     partition_id: str
     index_id: str
     start_range: int

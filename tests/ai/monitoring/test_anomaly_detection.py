@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Anomaly Detection Tests - Industrial Grade
+"""
+Advanced Anomaly Detection Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for ML-based anomaly detection system.
 Tests statistical analysis, machine learning detection, and real-time anomaly identification.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -69,11 +72,13 @@ from .fixtures import (
 
 
 class TestAnomalyDetectionCore:
-    """Core functionality tests for anomaly detection system."""
+    """
+Core functionality tests for anomaly detection system."""
     
     @pytest.fixture
     async def anomaly_detector(self):
-        """Create and initialize anomaly detection system."""
+        """
+Create and initialize anomaly detection system."""
         detector = AnomalyDetection(
             config={
                 "detection_methods": ["z_score", "iqr", "isolation_forest", "dbscan"],
@@ -445,7 +450,8 @@ class TestAnomalyCorrelationAndRootCause:
     
     @pytest.fixture
     async def correlation_engine(self):
-        """Create anomaly correlation engine."""
+        """
+Create anomaly correlation engine."""
         engine = AnomalyCorrelationEngine(
             config={
                 "correlation_window": 300,  # 5 minutes
@@ -722,7 +728,8 @@ class TestAnomalyDetectionIntegration:
     
     @pytest.fixture
     async def integrated_system(self):
-        """Create fully integrated anomaly detection system."""
+        """
+Create fully integrated anomaly detection system."""
         system = AnomalyDetection(
             config={
                 "integration_mode": True,
@@ -873,7 +880,8 @@ class TestAnomalyDetectionPerformance:
     
     @pytest.fixture
     async def performance_detector(self):
-        """Create high-performance anomaly detector."""
+        """
+Create high-performance anomaly detector."""
         detector = AnomalyDetection(
             config={
                 "high_performance_mode": True,
@@ -1021,7 +1029,8 @@ class TestAnomalyDetection:
     
     @pytest.fixture
     async def anomaly_detector(self):
-        """Create Anomaly Detection instance."""
+        """
+Create Anomaly Detection instance."""
         detector = AnomalyDetection()
         await detector.initialize()
         yield detector
@@ -1029,11 +1038,13 @@ class TestAnomalyDetection:
     
     @pytest.fixture
     def anomaly_test_data(self):
-        """Generate comprehensive anomaly test data."""
+        """
+Generate comprehensive anomaly test data."""
         return TestDataGenerator.generate_anomaly_scenarios()
     
     async def test_detector_initialization(self, anomaly_detector):
-        """Test proper initialization of anomaly detection system."""
+        """
+Test proper initialization of anomaly detection system."""
         assert anomaly_detector is not None
         assert anomaly_detector.is_initialized
         assert anomaly_detector.statistical_detector is not None
@@ -1042,7 +1053,8 @@ class TestAnomalyDetection:
         assert anomaly_detector.ml_detector is not None
     
     async def test_statistical_anomaly_detection(self, anomaly_detector, anomaly_test_data):
-        """Test statistical anomaly detection algorithms."""
+        """
+Test statistical anomaly detection algorithms."""
         # Test point anomalies using statistical methods
         point_data = anomaly_test_data["point_anomalies"]
         

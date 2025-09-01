@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -43,10 +44,12 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class MalwareDetector:
-    """Malware and virus detection system."""
+    """
+Malware and virus detection system."""
     
     def __init__(self):
-        """Initialize malware detector."""
+        """
+Initialize malware detector."""
         self.logger = logging.getLogger(__name__)
         
         # Known malicious file signatures (simplified for demo)
@@ -362,7 +365,8 @@ class PhishingDetector:
     """Phishing and social engineering detection."""
     
     def __init__(self):
-        """Initialize phishing detector."""
+        """
+Initialize phishing detector."""
         self.logger = logging.getLogger(__name__)
         
         # Common phishing keywords
@@ -383,7 +387,8 @@ class PhishingDetector:
         ]
     
     def detect_phishing(self, content: ContentItem) -> Dict[str, Any]:
-        """Detect phishing attempts in content."""
+        """
+Detect phishing attempts in content."""
         try:
             phishing_results = {
                 'is_phishing': False,
@@ -618,7 +623,8 @@ class SecurityContentFilter:
     """Enterprise-grade security content filter."""
     
     def __init__(self, config: SecurityFilterConfig):
-        """Initialize security content filter."""
+        """
+Initialize security content filter."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -645,7 +651,8 @@ class SecurityContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter content for security threats."""
+        """
+Filter content for security threats."""
         start_time = time.time()
         
         try:
@@ -787,7 +794,8 @@ class SecurityContentFilter:
         return mime_type.lower() in suspicious_types
     
     def _perform_hash_analysis(self, content: ContentItem) -> Dict[str, Any]:
-        """Perform hash-based security analysis."""
+        """
+Perform hash-based security analysis."""
         try:
             hash_results = {
                 'hashes': {},

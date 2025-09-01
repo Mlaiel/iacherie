@@ -1,4 +1,5 @@
 """Piracy Detection Manager - Deep Web Content Piracy Detection"""
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -100,7 +101,8 @@ class PiracyDetectionManager(BaseAgent):
         return ['monitored_networks', 'scan_interval']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
+        """
+Main request processing logic"""
         action = request.action.lower()
         
         try:
@@ -247,7 +249,8 @@ class PiracyDetectionManager(BaseAgent):
             yield tasks[i:i + batch_size]
     
     async def _scan_deep_web_networks(self, content_id: str, metadata: Dict) -> List[Dict]:
-        """Scan deep web networks (Tor, I2P, Freenet)"""
+        """
+Scan deep web networks (Tor, I2P, Freenet)"""
         try:
             # Use existing piracy detector
             detection_results = await self.piracy_detector.detect_piracy(content_id)
@@ -361,7 +364,8 @@ class PiracyDetectionManager(BaseAgent):
             return 'unknown'
     
     async def _process_piracy_results(self, content_id: str, results: List[Dict]):
-        """Process and analyze piracy detection results"""
+        """
+Process and analyze piracy detection results"""
         if not results:
             return
         
@@ -427,7 +431,8 @@ class PiracyDetectionManager(BaseAgent):
             return ThreatLevel.LOW
     
     async def _scan_deep_web(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Manual deep web scan"""
+        """
+Manual deep web scan"""
         content_id = data.get('content_id')
         networks = set(data.get('networks', ['tor', 'i2p', 'freenet']))
         
@@ -520,7 +525,8 @@ class PiracyDetectionManager(BaseAgent):
         }
     
     async def _collect_evidence(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect forensic evidence for piracy incident"""
+        """
+Collect forensic evidence for piracy incident"""
         incident_id = data.get('incident_id')
         
         if not incident_id:

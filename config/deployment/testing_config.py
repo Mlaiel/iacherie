@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import pytest
 import asyncio
@@ -43,7 +44,8 @@ import sqlalchemy
 
 @dataclass
 class TestEnvironment:
-    """Test environment configuration"""
+    """
+Test environment configuration"""
     name: str
     cloud_provider: str
     kubernetes_namespace: str = "testing"
@@ -619,9 +621,11 @@ class TestingConfig:
     
     def _get_conftest_content(self) -> str:
         """Generate conftest.py content"""
-        return '''"""Pytest configuration and fixtures for IA-Influencer Agent Platform
+        return '''"""
+Pytest configuration and fixtures for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import asyncio
 import os
@@ -717,7 +721,8 @@ def docker_client():
 
 @pytest.fixture(autouse=True)
 def setup_test_environment(monkeypatch):
-    """Setup test environment variables."""
+    """
+Setup test environment variables."""
     monkeypatch.setenv("TESTING", "true")
     monkeypatch.setenv("DATABASE_URL", "postgresql://test:test@localhost:5432/test_db")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/15")
@@ -725,9 +730,11 @@ def setup_test_environment(monkeypatch):
     
     def _get_test_fixtures_content(self) -> str:
         """Generate test_fixtures.py content"""
-        return '''"""Test fixtures and data for IA-Influencer Agent Platform
+        return '''"""
+Test fixtures and data for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 from typing import Dict, List, Any
 import json
@@ -738,7 +745,8 @@ from pathlib import Path
 
 @pytest.fixture
 def sample_audio_data() -> Dict[str, Any]:
-    """Sample audio data for testing."""
+    """
+Sample audio data for testing."""
     return {
         "title": "Test Audio Track",
         "artist": "Test Artist",
@@ -844,9 +852,11 @@ def mock_api_responses() -> Dict[str, Any]:
     
     def _get_test_data_factory_content(self) -> str:
         """Generate test_data_factory.py content"""
-        return '''"""Test data factory for IA-Influencer Agent Platform
+        return '''"""
+Test data factory for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import random
 import string
 import uuid
@@ -858,11 +868,13 @@ fake = Faker()
 
 
 class TestDataFactory:
-    """Factory for generating test data."""
+    """
+Factory for generating test data."""
     
     @staticmethod
     def create_user(override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create test user data."""
+        """
+Create test user data."""
         data = {
             "id": str(uuid.uuid4()),
             "username": fake.user_name(),
@@ -994,10 +1006,13 @@ class TestDataFactory:
 '''
     
     def _get_test_utils_content(self) -> str:
-        """Generate test_utils.py content"""
-        return '''"""Test utilities for IA-Influencer Agent Platform
+        """
+Generate test_utils.py content"""
+        return '''"""
+Test utilities for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import json
 import time
@@ -1009,7 +1024,8 @@ from contextlib import asynccontextmanager
 
 
 class TestUtils:
-    """Utilities for testing."""
+    """
+Utilities for testing."""
     
     @staticmethod
     async def wait_for_condition(
@@ -1017,7 +1033,8 @@ class TestUtils:
         timeout: float = 30.0,
         poll_interval: float = 0.5
     ) -> bool:
-        """Wait for a condition to be true."""
+        """
+Wait for a condition to be true."""
         start_time = time.time()
         while time.time() - start_time < timeout:
             if condition():
@@ -1032,7 +1049,8 @@ class TestUtils:
         url: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Make HTTP request and return response."""
+        """
+Make HTTP request and return response."""
         async with session.request(method, url, **kwargs) as response:
             return {
                 "status": response.status,
@@ -1059,7 +1077,8 @@ class TestUtils:
     
     @staticmethod
     def mock_redis_client():
-        """Mock Redis client."""
+        """
+Mock Redis client."""
         mock = MagicMock()
         mock.get.return_value = None
         mock.set.return_value = True
@@ -1070,7 +1089,8 @@ class TestUtils:
     @staticmethod
     @asynccontextmanager
     async def temporary_environment_vars(**kwargs):
-        """Temporarily set environment variables."""
+        """
+Temporarily set environment variables."""
         import os
         original_values = {}
         
@@ -1089,7 +1109,8 @@ class TestUtils:
     
     @staticmethod
     def performance_test(max_duration: float = 5.0, max_memory_mb: float = 512.0):
-        """Decorator for performance testing."""
+        """
+Decorator for performance testing."""
         def decorator(func):
             async def wrapper(*args, **kwargs):
                 import psutil
@@ -1139,11 +1160,13 @@ class TestUtils:
 
 
 class DatabaseTestUtils:
-    """Database testing utilities."""
+    """
+Database testing utilities."""
     
     @staticmethod
     async def create_test_data(session, model_class, **kwargs):
-        """Create test data in database."""
+        """
+Create test data in database."""
         instance = model_class(**kwargs)
         session.add(instance)
         await session.commit()
@@ -1152,7 +1175,8 @@ class DatabaseTestUtils:
     
     @staticmethod
     async def cleanup_test_data(session, model_class):
-        """Clean up test data from database."""
+        """
+Clean up test data from database."""
         await session.execute(f"DELETE FROM {model_class.__tablename__}")
         await session.commit()
 
@@ -1162,7 +1186,8 @@ class KubernetesTestUtils:
     
     @staticmethod
     def create_test_deployment(name: str, image: str, replicas: int = 1) -> Dict[str, Any]:
-        """Create test Kubernetes deployment manifest."""
+        """
+Create test Kubernetes deployment manifest."""
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -1205,7 +1230,8 @@ class KubernetesTestUtils:
     
     def create_docker_compose_test(self) -> str:
         """Create Docker Compose for testing"""
-        return f'''version: '3.8'
+        return f'''
+version: '3.8'
 
 services:
   postgres-test:

@@ -8,7 +8,7 @@ Responsibility: Traitement avancé des documents pour créateurs de contenu text
 ===================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER DOCUMENT PROCESSOR:
 Document Upload → Format Detection → Text Extraction → NLP Analysis → 
 Content Classification → Sentiment Analysis → SEO Analysis → Protection Fingerprinting
 """
+
 import os
 import re
 import hashlib
@@ -54,7 +55,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class DocumentProcessor(BaseProcessor):
-    """Processeur avancé pour documents - Production Enterprise"""
+    """
+Processeur avancé pour documents - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -80,7 +82,8 @@ class DocumentProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_nlp_models(self):
-        """Initialize NLP models and tools"""
+        """
+Initialize NLP models and tools"""
         try:
             # Load spaCy model for advanced NLP
             self.nlp = spacy.load("en_core_web_sm")
@@ -137,7 +140,8 @@ class DocumentProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite un document complètement"""
+        """
+Traite un document complètement"""
         try:
             # Extract text content
             text_content = self._extract_text(input_data)
@@ -216,7 +220,8 @@ class DocumentProcessor(BaseProcessor):
         return str(input_data)
     
     def _extract_text_from_file(self, file_path: str) -> str:
-        """Extrait le texte selon le format de fichier"""
+        """
+Extrait le texte selon le format de fichier"""
         path = Path(file_path)
         extension = path.suffix.upper()
         
@@ -638,7 +643,8 @@ class DocumentProcessor(BaseProcessor):
         return sum(complexities) / len(complexities)
     
     def _detect_passive_voice(self, doc) -> float:
-        """Détecte le pourcentage de voix passive"""
+        """
+Détecte le pourcentage de voix passive"""
         passive_count = 0
         total_sentences = 0
         
@@ -653,7 +659,8 @@ class DocumentProcessor(BaseProcessor):
         return (passive_count / total_sentences * 100) if total_sentences > 0 else 0
     
     def _determine_content_type(self, text: str) -> str:
-        """Détermine le type de contenu"""
+        """
+Détermine le type de contenu"""
         # Simple heuristics based on text characteristics
         if len(text.split()) < 100:
             return "short_form"
@@ -744,12 +751,14 @@ class DocumentProcessor(BaseProcessor):
         return densities
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calcule un score de lisibilité composite"""
+        """
+Calcule un score de lisibilité composite"""
         flesch_ease = self._calculate_flesch_reading_ease(text)
         return flesch_ease / 100  # Normalize to 0-1
     
     def _analyze_heading_structure(self, text: str) -> Dict[str, Any]:
-        """Analyse la structure des titres"""
+        """
+Analyse la structure des titres"""
         # Look for markdown or HTML headings
         h1_count = len(re.findall(r'^#\s+', text, re.MULTILINE))
         h2_count = len(re.findall(r'^##\s+', text, re.MULTILINE))
@@ -781,7 +790,8 @@ class DocumentProcessor(BaseProcessor):
         return length_score + diversity_score + readability_score
     
     def _generate_seo_recommendations(self, text: str) -> List[str]:
-        """Génère des recommandations SEO"""
+        """
+Génère des recommandations SEO"""
         recommendations = []
         
         word_count = len(text.split())
@@ -823,13 +833,15 @@ class DocumentProcessor(BaseProcessor):
         return 0.95  # Placeholder
     
     def _detect_profanity(self, text: str) -> bool:
-        """Détecte la profanité"""
+        """
+Détecte la profanité"""
         # Basic profanity detection
         # In production, use specialized libraries like better-profanity
         return False  # Placeholder
     
     def _generate_ngram_fingerprints(self, text: str) -> Dict[str, List[str]]:
-        """Génère des empreintes n-grammes"""
+        """
+Génère des empreintes n-grammes"""
         words = text.lower().split()
         
         # Generate 2-grams and 3-grams
@@ -855,7 +867,8 @@ class DocumentProcessor(BaseProcessor):
         return 0.39 * (len(words) / len(sentences)) + 11.8 * (syllables / len(words)) - 15.59
     
     def _calculate_flesch_reading_ease(self, text: str) -> float:
-        """Calcule la facilité de lecture Flesch"""
+        """
+Calcule la facilité de lecture Flesch"""
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
@@ -868,7 +881,8 @@ class DocumentProcessor(BaseProcessor):
         return 206.835 - 1.015 * (len(words) / len(sentences)) - 84.6 * (syllables / len(words))
     
     def _calculate_ari(self, text: str) -> float:
-        """Calcule l'Automated Readability Index"""
+        """
+Calcule l'Automated Readability Index"""
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
@@ -881,7 +895,8 @@ class DocumentProcessor(BaseProcessor):
         return 4.71 * (characters / len(words)) + 0.5 * (len(words) / len(sentences)) - 21.43
     
     def _calculate_gunning_fog(self, text: str) -> float:
-        """Calcule l'indice Gunning Fog"""
+        """
+Calcule l'indice Gunning Fog"""
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
@@ -894,7 +909,8 @@ class DocumentProcessor(BaseProcessor):
         return 0.4 * ((len(words) / len(sentences)) + 100 * (len(complex_words) / len(words)))
     
     def _get_readability_rating(self, text: str) -> str:
-        """Obtient une évaluation de lisibilité"""
+        """
+Obtient une évaluation de lisibilité"""
         flesch_ease = self._calculate_flesch_reading_ease(text)
         
         if flesch_ease >= 90:
@@ -1013,7 +1029,8 @@ class DocumentProcessor(BaseProcessor):
         return engagement_score
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating de qualité"""
+        """
+Convertit le score en rating de qualité"""
         if score >= 0.9:
             return "excellent"
         elif score >= 0.7:
@@ -1100,7 +1117,8 @@ class AsyncDocumentProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
+        """
+Version asynchrone de la validation"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1109,7 +1127,8 @@ class AsyncDocumentProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
+        """
+Version asynchrone du traitement"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1118,6 +1137,7 @@ class AsyncDocumentProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
+        """
+Traitement en lot asynchrone"""
         tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)

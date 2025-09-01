@@ -4,8 +4,9 @@ Intelligent notification routing and delivery system supporting multiple channel
 including email, SMS, push notifications, webhooks, and in-app notifications.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ from ...services.notification.webhook_service import WebhookService
 logger = get_logger(__name__)
 
 class NotificationType(Enum):
-    """Notification types"""
+    """
+Notification types"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_REQUEST = "collaboration_request"
@@ -43,6 +46,7 @@ class NotificationType(Enum):
 
 class NotificationChannel(Enum):
     """Notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -53,6 +57,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -61,7 +66,8 @@ class NotificationPriority(Enum):
 
 @dataclass
 class NotificationContent:
-    """Notification content structure"""
+    """
+Notification content structure"""
     title: str
     message: str
     action_url: Optional[str] = None
@@ -70,7 +76,8 @@ class NotificationContent:
 
 @dataclass
 class NotificationRequest:
-    """Notification request structure"""
+    """
+Notification request structure"""
     user_id: int
     notification_type: NotificationType
     priority: NotificationPriority
@@ -595,7 +602,8 @@ class NotificationDispatcher:
         request: NotificationRequest,
         user_preferences: Dict[str, Any]
     ) -> List[NotificationChannel]:
-        """Determine target channels based on type and preferences"""
+        """
+Determine target channels based on type and preferences"""
         if request.channels:
             # Use explicitly specified channels
             return request.channels
@@ -616,7 +624,8 @@ class NotificationDispatcher:
         return allowed_channels
     
     async def _check_rate_limit(self, user_id: int, channel: NotificationChannel) -> bool:
-        """Check rate limits for channel"""
+        """
+Check rate limits for channel"""
         # Implementation for rate limiting
         return True  # Placeholder
     
@@ -625,17 +634,20 @@ class NotificationDispatcher:
         notification: NotificationQueue,
         delivery_results: Dict[str, Any]
     ):
-        """Update notification status based on delivery results"""
+        """
+Update notification status based on delivery results"""
         # Implementation for status update
         pass
     
     async def _mark_notification_failed(self, notification: NotificationQueue, error: str):
-        """Mark notification as failed"""
+        """
+Mark notification as failed"""
         # Implementation for failure marking
         pass
     
     async def _process_scheduled_notifications(self):
-        """Process scheduled notifications"""
+        """
+Process scheduled notifications"""
         while True:
             try:
                 # Implementation for scheduled notification processing

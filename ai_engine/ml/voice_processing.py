@@ -19,6 +19,7 @@ Features:
 - Speaker verification
 - Voice biometric analysis
 """
+
 import logging
 import numpy as np
 import torch
@@ -59,6 +60,7 @@ except ImportError:
 
 class VoiceEmotion(Enum):
     """Voice emotional states"""
+
     NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
@@ -73,6 +75,7 @@ class VoiceEmotion(Enum):
 
 class VoiceGender(Enum):
     """Voice gender classification"""
+
     MALE = "male"
     FEMALE = "female"
     CHILD = "child"
@@ -81,6 +84,7 @@ class VoiceGender(Enum):
 
 class VoiceAccent(Enum):
     """Voice accent types"""
+
     AMERICAN = "american"
     BRITISH = "british"
     AUSTRALIAN = "australian"
@@ -95,6 +99,7 @@ class VoiceAccent(Enum):
 
 class SpeakerAge(Enum):
     """Speaker age groups"""
+
     CHILD = "child"      # 5-12
     TEENAGER = "teenager"  # 13-19
     YOUNG_ADULT = "young_adult"  # 20-35
@@ -119,7 +124,8 @@ class VoiceProfile:
 
 @dataclass
 class VoiceCloningResult:
-    """Result from voice cloning"""
+    """
+Result from voice cloning"""
     cloned_audio: np.ndarray
     sample_rate: int
     target_text: str
@@ -132,7 +138,8 @@ class VoiceCloningResult:
 
 @dataclass
 class SpeakerIdentificationResult:
-    """Result from speaker identification"""
+    """
+Result from speaker identification"""
     identified_speakers: List[Dict[str, Any]]
     confidence: float
     processing_time: float
@@ -143,7 +150,8 @@ class SpeakerIdentificationResult:
 
 @dataclass
 class EmotionalAnalysisResult:
-    """Result from emotional voice analysis"""
+    """
+Result from emotional voice analysis"""
     dominant_emotion: VoiceEmotion
     emotion_probabilities: Dict[VoiceEmotion, float]
     emotional_intensity: float
@@ -155,7 +163,8 @@ class EmotionalAnalysisResult:
 
 @dataclass
 class VoiceFeatures:
-    """Comprehensive voice features"""
+    """
+Comprehensive voice features"""
     fundamental_frequency: np.ndarray
     formants: np.ndarray
     spectral_features: Dict[str, np.ndarray]
@@ -166,7 +175,8 @@ class VoiceFeatures:
 
 
 class BaseVoiceProcessor(ABC):
-    """Base class for voice processors"""
+    """
+Base class for voice processors"""
     
     def __init__(self, processor_name: str = "base_voice"):
         self.processor_name = processor_name
@@ -181,7 +191,8 @@ class BaseVoiceProcessor(ABC):
         pass
         
     def load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
-        """Load audio file for voice processing"""
+        """
+Load audio file for voice processing"""
         try:
             if LIBROSA_AVAILABLE:
                 audio, sr = librosa.load(file_path, sr=self.sample_rate)
@@ -293,7 +304,8 @@ class VoiceCloner(BaseVoiceProcessor):
         return VoiceEncoder()
     
     def _create_voice_decoder(self):
-        """Create voice decoder model"""
+        """
+Create voice decoder model"""
         class VoiceDecoder(nn.Module):
             def __init__(self, text_embedding_size=256, speaker_embedding_size=256, mel_size=80):
                 super().__init__()
@@ -333,7 +345,8 @@ class VoiceCloner(BaseVoiceProcessor):
         return VoiceDecoder()
     
     def _create_vocoder(self):
-        """Create vocoder model"""
+        """
+Create vocoder model"""
         class SimpleVocoder(nn.Module):
             def __init__(self, mel_size=80, audio_size=1024):
                 super().__init__()
@@ -354,7 +367,8 @@ class VoiceCloner(BaseVoiceProcessor):
     
     def train_voice_profile(self, audio_samples: List[Union[str, np.ndarray]], 
                            speaker_id: str, sample_rate: int = None) -> VoiceProfile:
-        """Train a voice profile from audio samples"""
+        """
+Train a voice profile from audio samples"""
         try:
             if not self.is_loaded:
                 if not self.load_model():
@@ -605,7 +619,8 @@ class VoiceCloner(BaseVoiceProcessor):
     def _generate_mel_spectrogram(self, text_indices: List[int], 
                                  speaker_embedding: np.ndarray, 
                                  emotion: VoiceEmotion) -> np.ndarray:
-        """Generate mel spectrogram from text and speaker embedding"""
+        """
+Generate mel spectrogram from text and speaker embedding"""
         try:
             with torch.no_grad():
                 text_tensor = torch.LongTensor(text_indices).unsqueeze(0).to(self.device)
@@ -797,7 +812,8 @@ class SpeakerIdentification(BaseVoiceProcessor):
     
     def register_speaker(self, audio_samples: List[Union[str, np.ndarray]], 
                         speaker_id: str, sample_rate: int = None) -> bool:
-        """Register a new speaker in the database"""
+        """
+Register a new speaker in the database"""
         try:
             if not self.is_loaded:
                 if not self.load_model():
@@ -1006,7 +1022,8 @@ class SpeakerIdentification(BaseVoiceProcessor):
         return segments
     
     def _match_speaker(self, embedding: np.ndarray) -> Tuple[Optional[str], float]:
-        """Match embedding to registered speakers"""
+        """
+Match embedding to registered speakers"""
         if not self.speaker_database:
             return None, 0.0
         
@@ -1029,7 +1046,8 @@ class SpeakerIdentification(BaseVoiceProcessor):
 
 
 class EmotionalVoiceAnalysis(BaseVoiceProcessor):
-    """Emotional analysis of voice and speech"""
+    """
+Emotional analysis of voice and speech"""
     
     def __init__(self, model_name: str = "emotion_analyzer_v1"):
         super().__init__(f"emotion_{model_name}")
@@ -1092,7 +1110,8 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
     
     def analyze_emotion(self, audio: Union[str, np.ndarray], 
                        sample_rate: int = None) -> EmotionalAnalysisResult:
-        """Analyze emotional content in voice"""
+        """
+Analyze emotional content in voice"""
         start_time = time.time()
         
         try:
@@ -1262,7 +1281,8 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
         return features
     
     def _analyze_temporal_emotions(self, audio: np.ndarray, sample_rate: int) -> List[Dict[str, Any]]:
-        """Analyze emotions over time"""
+        """
+Analyze emotions over time"""
         window_duration = 2.0  # 2 seconds
         overlap = 0.5  # 50% overlap
         

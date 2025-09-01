@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Simple Pytest Validation Test
+"""
+Simple Pytest Validation Test
 =============================
 
 Basic pytest test to validate that pytest framework works 
 independently of conftest configuration issues.
 """
+
 import pytest
 import sys
 import os
@@ -30,7 +33,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 def test_basic_functionality():
-    """Test basic Python functionality"""
+    """
+Test basic Python functionality"""
     assert 1 + 1 == 2
     assert "test" in "testing"
     assert len([1, 2, 3]) == 3

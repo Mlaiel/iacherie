@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class VisionTask(str, Enum):
-    """Supported computer vision tasks."""
+    """
+Supported computer vision tasks."""
+
     
     IMAGE_CLASSIFICATION = "image_classification"
     OBJECT_DETECTION = "object_detection"
@@ -46,6 +49,7 @@ class VisionTask(str, Enum):
 
 class ImageFormat(str, Enum):
     """Supported image formats."""
+
     
     JPEG = "jpeg"
     PNG = "png"
@@ -58,6 +62,7 @@ class ImageFormat(str, Enum):
 
 class VideoFormat(str, Enum):
     """Supported video formats."""
+
     
     MP4 = "mp4"
     AVI = "avi"
@@ -476,7 +481,8 @@ class ComputerVisionConfig(BaseSettings):
         return [task for task in VisionTask]
     
     def get_models_by_gpu_requirement(self, gpu_available: bool) -> List[VisionModelSpec]:
-        """Get models based on GPU availability."""
+        """
+Get models based on GPU availability."""
         all_tasks = self.get_supported_tasks()
         models = []
         
@@ -488,7 +494,8 @@ class ComputerVisionConfig(BaseSettings):
         return models
     
     def estimate_processing_time(self, task: VisionTask, num_items: int) -> float:
-        """Estimate processing time in seconds for a batch of items."""
+        """
+Estimate processing time in seconds for a batch of items."""
         spec = self.get_vision_model_spec(task)
         batches = (num_items + spec.batch_size - 1) // spec.batch_size
         return batches * (spec.inference_time_ms / 1000.0)

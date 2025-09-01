@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Tests for Full Workflow
+"""
+Integration Tests for Full Workflow
 ===================================
 
 Integration tests that validate end-to-end workflows across multiple components.
@@ -21,6 +23,7 @@ Tests the complete content protection and monetization pipeline.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
 """
+
 import pytest
 import sys
 import os
@@ -33,7 +36,8 @@ import uuid
 
 
 class MockContentProtectionWorkflow:
-    """Mock implementation of complete content protection workflow"""
+    """
+Mock implementation of complete content protection workflow"""
     
     def __init__(self):
         self.content_database = {}
@@ -43,7 +47,8 @@ class MockContentProtectionWorkflow:
         self.user_profiles = {}
         
     async def register_content_creator(self, creator_data: Dict) -> Dict[str, Any]:
-        """Register a new content creator"""
+        """
+Register a new content creator"""
         creator_id = str(uuid.uuid4())
         
         creator_profile = {
@@ -343,12 +348,14 @@ class TestFullWorkflowIntegration:
     
     @pytest.fixture
     def workflow_engine(self):
-        """Create workflow engine fixture"""
+        """
+Create workflow engine fixture"""
         return MockContentProtectionWorkflow()
     
     @pytest.fixture
     def sample_creator_data(self):
-        """Sample creator registration data"""
+        """
+Sample creator registration data"""
         return {
             "name": "Test Creator",
             "email": "creator@example.com",

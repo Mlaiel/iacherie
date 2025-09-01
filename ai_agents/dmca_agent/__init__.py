@@ -325,5 +325,5 @@ MODULE_INFO = {
     ],
     "languages": ["en", "de", "fr", "es", "it", "pt", "ja", "zh"],
     "license": __license__,
-    "copyright": "© 2025 Fahed Mlaiel. All Rights Reserved."
+    "copyright": "(c) 2025 Fahed Mlaiel. All Rights Reserved."
 }

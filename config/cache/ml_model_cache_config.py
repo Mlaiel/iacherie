@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,7 +26,8 @@ from pydantic import BaseModel, validator
 
 
 class ModelType(str, Enum):
-    """Types of ML models used in the platform"""
+    """
+Types of ML models used in the platform"""
     # Audio processing models
     AUDIO_FINGERPRINT = "audio_fingerprint"
     MUSIC_GENRE_CLASSIFICATION = "music_genre_classification"
@@ -61,6 +63,7 @@ class ModelType(str, Enum):
 
 class ModelFormat(str, Enum):
     """Model serialization formats"""
+
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     ONNX = "onnx"
@@ -72,6 +75,7 @@ class ModelFormat(str, Enum):
 
 class CacheStrategy(str, Enum):
     """Model cache strategies"""
+
     LAZY_LOADING = "lazy_loading"        # Load on first use
     EAGER_LOADING = "eager_loading"      # Preload all models
     SCHEDULED_LOADING = "scheduled_loading"  # Load based on schedule
@@ -97,7 +101,8 @@ class ModelCacheSettings:
 
 @dataclass
 class MLModelCacheConfig:
-    """Complete configuration for ML model caching"""
+    """
+Complete configuration for ML model caching"""
     
     # Cache identification
     cache_name: str = "ml_models"
@@ -252,7 +257,8 @@ class MLModelCacheConfig:
         return all_models
     
     def get_high_priority_models(self) -> List[str]:
-        """Get list of high priority models (priority 1-2)"""
+        """
+Get list of high priority models (priority 1-2)"""
         high_priority = []
         for name, settings in self.get_all_models().items():
             if settings.priority <= 2:
@@ -261,7 +267,8 @@ class MLModelCacheConfig:
 
 
 class MLModelCacheManager:
-    """Manager for ML model cache operations"""
+    """
+Manager for ML model cache operations"""
     
     def __init__(self, config: MLModelCacheConfig):
         self.config = config
@@ -270,7 +277,8 @@ class MLModelCacheManager:
         self._performance_metrics = {}
     
     def calculate_memory_usage(self) -> Dict[str, float]:
-        """Calculate current memory usage of cached models"""
+        """
+Calculate current memory usage of cached models"""
         total_memory_mb = 0
         memory_by_type = {}
         
@@ -299,7 +307,8 @@ class MLModelCacheManager:
         return sorted(models, key=lambda x: (x[1], -x[2]))
     
     def generate_model_hash(self, model_path: str, model_version: str) -> str:
-        """Generate hash for model integrity verification"""
+        """
+Generate hash for model integrity verification"""
         hasher = hashlib.sha256()
         hasher.update(model_path.encode())
         hasher.update(model_version.encode())
@@ -307,7 +316,8 @@ class MLModelCacheManager:
         return hasher.hexdigest()
     
     def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
+        """
+Get comprehensive cache statistics"""
         memory_usage = self.calculate_memory_usage()
         
         return {
@@ -329,7 +339,8 @@ class MLModelCacheManager:
         return priority_counts
     
     def _count_gpu_models(self) -> int:
-        """Count models that require GPU"""
+        """
+Count models that require GPU"""
         return sum(1 for settings in self.config.get_all_models().values() 
                   if settings.gpu_required)
 

@@ -4,6 +4,7 @@ AI-Powered Content Compliance and Regulatory Monitoring System
 This module provides comprehensive compliance monitoring including
 content policy enforcement, regulatory compliance, risk assessment, and audit trails.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceType(str, Enum):
-    """Types of compliance monitoring"""
+    """
+Types of compliance monitoring"""
+
     CONTENT_POLICY = "content_policy"
     PRIVACY_REGULATION = "privacy_regulation"
     COPYRIGHT = "copyright"
@@ -47,6 +50,7 @@ class ComplianceType(str, Enum):
 
 class ViolationType(str, Enum):
     """Types of compliance violations"""
+
     MINOR = "minor"
     MODERATE = "moderate"
     MAJOR = "major"
@@ -59,6 +63,7 @@ class ViolationType(str, Enum):
 
 class RiskLevel(str, Enum):
     """Risk levels for compliance issues"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -68,6 +73,7 @@ class RiskLevel(str, Enum):
 
 class ComplianceStatus(str, Enum):
     """Status of compliance checks"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
@@ -79,6 +85,7 @@ class ComplianceStatus(str, Enum):
 
 class RegulationType(str, Enum):
     """Types of regulations"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -1107,7 +1114,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         pass
 
     async def _calculate_risk_value(self, violation: ComplianceViolation) -> float:
-        """Calculate numeric risk value for violation"""
+        """
+Calculate numeric risk value for violation"""
         risk_values = {
             RiskLevel.LOW: 0.2,
             RiskLevel.MEDIUM: 0.5,
@@ -1126,7 +1134,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         risk_assessment: Dict[str, Any],
         risk_factors: Counter
     ) -> List[str]:
-        """Generate risk mitigation recommendations"""
+        """
+Generate risk mitigation recommendations"""
         recommendations = []
         
         if risk_assessment['overall_risk_score'] > 0.7:
@@ -1202,7 +1211,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return trends
 
     async def _identify_emerging_risks(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Identify emerging compliance risks"""
+        """
+Identify emerging compliance risks"""
         risks = []
         
         # Analyze recent violation patterns
@@ -1277,7 +1287,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             return RiskLevel.LOW
 
     async def _identify_critical_issues(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Identify critical compliance issues"""
+        """
+Identify critical compliance issues"""
         issues = []
         
         # High-risk unresolved violations
@@ -1329,12 +1340,14 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return []
 
     async def _get_policy_updates(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Get policy updates during period"""
+        """
+Get policy updates during period"""
         # Simplified - would track internal policy changes
         return []
 
     async def _load_default_rules(self):
-        """Load default compliance rules"""
+        """
+Load default compliance rules"""
         try:
             # GDPR compliance rule
             await self.add_compliance_rule(
@@ -1354,7 +1367,7 @@ class AdvancedComplianceMonitor(BaseCrawler):
                 rule_name="Copyright Infringement Detection",
                 compliance_type=ComplianceType.COPYRIGHT,
                 description="Detect potential copyright infringement",
-                rule_pattern=r"©\s*\d{4}|copyright\s+\d{4}|all rights reserved",
+                rule_pattern=r"(c)\s*\d{4}|copyright\s+\d{4}|all rights reserved",
                 violation_type=ViolationType.MAJOR,
                 risk_level=RiskLevel.HIGH,
                 prohibited_terms=["copyrighted material", "unauthorized use"]

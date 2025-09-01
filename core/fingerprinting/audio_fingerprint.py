@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import hashlib
 import logging
@@ -353,7 +354,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_spectral(self, data1: Dict, data2: Dict) -> float:
-        """Compare spectral hash fingerprints"""
+        """
+Compare spectral hash fingerprints"""
         try:
             # Compare statistical features
             centroid_diff = abs(data1.get('centroid_mean', 0) - data2.get('centroid_mean', 0))
@@ -373,7 +375,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_mfcc(self, data1: Dict, data2: Dict) -> float:
-        """Compare MFCC fingerprints"""
+        """
+Compare MFCC fingerprints"""
         try:
             means1 = np.array(data1.get('mfcc_means', []))
             means2 = np.array(data2.get('mfcc_means', []))
@@ -394,7 +397,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_rhythm(self, data1: Dict, data2: Dict) -> float:
-        """Compare rhythm/tempo fingerprints"""
+        """
+Compare rhythm/tempo fingerprints"""
         try:
             tempo1 = data1.get('tempo', 0)
             tempo2 = data2.get('tempo', 0)

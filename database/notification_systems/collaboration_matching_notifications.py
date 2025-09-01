@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 import asyncio
 import logging
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types de collaboration disponibles"""
+    """
+Types de collaboration disponibles"""
+
     MUSIC_COLLAB = "music_collaboration"
     VIDEO_PRODUCTION = "video_production"
     CONTENT_CREATION = "content_creation"
@@ -52,6 +55,7 @@ class CollaborationType(Enum):
 
 class MatchingEventType(Enum):
     """Types d'événements de matching"""
+
     NEW_MATCH_FOUND = "new_match_found"
     COLLABORATION_PROPOSED = "collaboration_proposed"
     PROPOSAL_ACCEPTED = "proposal_accepted"
@@ -68,6 +72,7 @@ class MatchingEventType(Enum):
 
 class SkillCategory(Enum):
     """Catégories de compétences pour le matching"""
+
     MUSIC_PRODUCTION = "music_production"
     VOCAL_PERFORMANCE = "vocal_performance"
     INSTRUMENTAL = "instrumental"
@@ -84,6 +89,7 @@ class SkillCategory(Enum):
 
 class ProjectStatus(Enum):
     """Statut des projets collaboratifs"""
+
     PROPOSED = "proposed"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -113,7 +119,8 @@ class CollaboratorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Opportunité de collaboration"""
+    """
+Opportunité de collaboration"""
     opportunity_id: str
     initiator_id: str
     collaboration_type: CollaborationType
@@ -133,7 +140,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationNotificationData:
-    """Données de notification de collaboration"""
+    """
+Données de notification de collaboration"""
     user_id: str
     event_type: MatchingEventType
     collaboration_type: CollaborationType
@@ -721,7 +729,8 @@ class CollaborationMatchingManager:
         return 0.75  # Score exemple
 
     async def _get_user_profile(self, user_id: str) -> Optional[CollaboratorProfile]:
-        """Récupère le profil d'un utilisateur"""
+        """
+Récupère le profil d'un utilisateur"""
         # Stub - retourner un profil depuis la DB
         return None
 
@@ -730,15 +739,18 @@ class CollaborationMatchingManager:
         opportunity: CollaborationOpportunity, 
         exclude_user_id: str
     ) -> List[CollaboratorProfile]:
-        """Récupère les collaborateurs potentiels pour une opportunité"""
+        """
+Récupère les collaborateurs potentiels pour une opportunité"""
         return []
 
     async def _calculate_compatibility_score(self, data: CollaborationNotificationData) -> float:
-        """Calcule le score de compatibilité"""
+        """
+Calcule le score de compatibilité"""
         return data.match_score * 0.9
 
     async def _find_shared_genres(self, data: CollaborationNotificationData) -> List[str]:
-        """Trouve les genres musicaux partagés"""
+        """
+Trouve les genres musicaux partagés"""
         return ["Pop", "Electronic"]
 
     async def _compare_experience_levels(self, data: CollaborationNotificationData) -> str:
@@ -754,44 +766,54 @@ class CollaborationMatchingManager:
         return []
 
     async def _get_project_team(self, project_id: str) -> List[Dict[str, str]]:
-        """Récupère l'équipe d'un projet"""
+        """
+Récupère l'équipe d'un projet"""
         return []
 
     async def _get_personalized_recommendations(self, user_id: str) -> List[Dict[str, Any]]:
-        """Génère des recommandations personnalisées"""
+        """
+Génère des recommandations personnalisées"""
         return []
 
     def _calculate_completion_rate(self) -> float:
-        """Calcule le taux de completion des projets"""
+        """
+Calcule le taux de completion des projets"""
         return 0.85
 
     # Méthodes de traitement spécialisé (stubs)
     async def _process_new_match(self, data: CollaborationNotificationData):
-        """Traite un nouveau match"""
+        """
+Traite un nouveau match"""
         pass
 
     async def _track_proposal(self, data: CollaborationNotificationData):
-        """Suit une proposition"""
+        """
+Suit une proposition"""
         pass
 
     async def _initialize_project(self, data: CollaborationNotificationData):
-        """Initialise un projet"""
+        """
+Initialise un projet"""
         pass
 
     async def _setup_collaboration_environment(self, data: CollaborationNotificationData):
-        """Configure l'environnement de collaboration"""
+        """
+Configure l'environnement de collaboration"""
         pass
 
     async def _update_project_progress(self, data: CollaborationNotificationData):
-        """Met à jour le progrès du projet"""
+        """
+Met à jour le progrès du projet"""
         pass
 
     async def _finalize_project(self, data: CollaborationNotificationData):
-        """Finalise un projet"""
+        """
+Finalise un projet"""
         pass
 
     async def _register_skill_opportunity(self, data: CollaborationNotificationData):
-        """Enregistre une opportunité de compétence"""
+        """
+Enregistre une opportunité de compétence"""
         pass
 
     # Méthodes de cache et métriques
@@ -801,7 +823,8 @@ class CollaborationMatchingManager:
         message_data: Dict[str, Any],
         notification_data: CollaborationNotificationData
     ):
-        """Met en cache les données de collaboration"""
+        """
+Met en cache les données de collaboration"""
         
         cache_data = {
             "notification_id": notification_id,

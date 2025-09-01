@@ -20,6 +20,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -36,7 +37,9 @@ import math
 logger = logging.getLogger(__name__)
 
 class ScalingStrategy(Enum):
-    """Auto-scaling strategies"""
+    """
+Auto-scaling strategies"""
+
     REACTIVE = "reactive"  # React to current metrics
     PREDICTIVE = "predictive"  # Use ML to predict scaling needs
     SCHEDULED = "scheduled"  # Scale based on time patterns
@@ -44,6 +47,7 @@ class ScalingStrategy(Enum):
 
 class ScalingMetric(Enum):
     """Metrics for scaling decisions"""
+
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     NETWORK_IO = "network_io"
@@ -58,6 +62,7 @@ class ScalingMetric(Enum):
 
 class ResourceType(Enum):
     """Cloud resource types"""
+
     COMPUTE_INSTANCE = "compute_instance"
     CONTAINER_CLUSTER = "container_cluster"
     DATABASE_INSTANCE = "database_instance"
@@ -69,6 +74,7 @@ class ResourceType(Enum):
 
 class CostOptimizationLevel(Enum):
     """Cost optimization aggressiveness levels"""
+
     CONSERVATIVE = "conservative"  # Favor performance over cost
     BALANCED = "balanced"  # Balance performance and cost
     AGGRESSIVE = "aggressive"  # Favor cost over performance
@@ -95,7 +101,8 @@ class ScalingPolicy:
 
 @dataclass
 class ResourceLimit:
-    """Resource limits and quotas"""
+    """
+Resource limits and quotas"""
     cpu_cores: Optional[float] = None
     memory_gb: Optional[float] = None
     storage_gb: Optional[float] = None
@@ -105,7 +112,8 @@ class ResourceLimit:
 
 @dataclass
 class CostOptimizationRule:
-    """Cost optimization rule"""
+    """
+Cost optimization rule"""
     rule_id: str
     name: str
     description: str
@@ -117,7 +125,8 @@ class CostOptimizationRule:
 
 @dataclass
 class CloudResourceManagementSpec:
-    """Cloud resource management specification"""
+    """
+Cloud resource management specification"""
     namespace: str = "ia-influencer-resources"
     cloud_providers: List[str] = field(default_factory=lambda: ["aws", "gcp", "azure"])
     enable_auto_scaling: bool = True
@@ -151,7 +160,8 @@ class CloudResourceManager:
         self.scaling_history = []
         
     async def deploy_resource_management_infrastructure(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
-        """Deploy comprehensive cloud resource management infrastructure"""
+        """
+Deploy comprehensive cloud resource management infrastructure"""
         try:
             results = {}
             logger.info("Deploying cloud resource management infrastructure for IA Influencer platform")
@@ -771,11 +781,13 @@ def calculate_optimal_replica_count(current_replicas: int, current_utilization: 
     return max(min_replicas, min(max_replicas, desired_replicas))
 
 def estimate_cost_savings(current_cost: float, optimization_percentage: float) -> float:
-    """Estimate cost savings from optimization"""
+    """
+Estimate cost savings from optimization"""
     return current_cost * (optimization_percentage / 100)
 
 def generate_scaling_policy(resource_type: ResourceType, workload_pattern: str) -> ScalingPolicy:
-    """Generate appropriate scaling policy based on resource type and workload pattern"""
+    """
+Generate appropriate scaling policy based on resource type and workload pattern"""
     if workload_pattern == "content_processing":
         return ScalingPolicy(
             policy_id=str(uuid.uuid4()),

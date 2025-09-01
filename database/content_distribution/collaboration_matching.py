@@ -8,7 +8,7 @@ opportunities across multiple platforms and content types.
 Business Logic: Content Analysis → Creator Matching → Collaboration Proposals → Joint Distribution → Shared Revenue
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + ML Engineer + 
 Collaboration Systems Expert + Social Network Analyst + Creator Economy Specialist + 
@@ -27,6 +27,7 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Permanent injunction against unauthorized use
 - Full recovery of legal costs and fees
 """
+
 import asyncio
 import json
 import uuid
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations"""
+    """
+Types of creator collaborations"""
+
     CONTENT_COLLAB = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_CREATION = "joint_creation"
@@ -68,6 +71,7 @@ class CollaborationType(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Status of collaboration proposals and projects"""
+
     PROPOSED = "proposed"
     PENDING_REVIEW = "pending_review"
     ACCEPTED = "accepted"
@@ -79,6 +83,7 @@ class CollaborationStatus(str, Enum):
 
 class MatchingCriteria(str, Enum):
     """AI matching criteria for creator partnerships"""
+
     GENRE_COMPATIBILITY = "genre_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_SYNERGY = "engagement_synergy"
@@ -287,7 +292,8 @@ class MatchingRequest:
 
 @dataclass
 class MatchingResult:
-    """Result of AI creator matching"""
+    """
+Result of AI creator matching"""
     matched_creators: List[Dict[str, Any]]
     matching_scores: Dict[str, float]
     compatibility_analysis: Dict[str, Any]
@@ -304,7 +310,8 @@ class CollaborationMatchingManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the collaboration matching manager"""
+        """
+Initialize the collaboration matching manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
@@ -739,7 +746,8 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate content similarity score"""
+        """
+Calculate content similarity score"""
         # Mock implementation
         common_categories = set(creator1.content_categories) & set(creator2.content_categories)
         total_categories = set(creator1.content_categories) | set(creator2.content_categories)
@@ -754,7 +762,8 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Analyze audience compatibility"""
+        """
+Analyze audience compatibility"""
         # Mock implementation - would analyze demographic overlap
         return 0.75  # Mock score
     
@@ -763,7 +772,8 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Predict engagement synergy potential"""
+        """
+Predict engagement synergy potential"""
         # Mock implementation - would use ML models
         return 0.80  # Mock score
     
@@ -773,7 +783,8 @@ class CollaborationMatchingManager:
         creator2: CreatorProfile, 
         request: MatchingRequest
     ) -> float:
-        """Estimate collaboration revenue potential"""
+        """
+Estimate collaboration revenue potential"""
         # Mock implementation - would analyze revenue data
         return 0.70  # Mock score
     
@@ -782,7 +793,8 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Assess collaboration chemistry and working compatibility"""
+        """
+Assess collaboration chemistry and working compatibility"""
         # Mock implementation - would analyze communication styles, work preferences
         return 0.85  # Mock score
     

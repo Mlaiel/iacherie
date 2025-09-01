@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FinancialAnalyticsJob:
-    """Job configuration for financial_analytics operations"""
+    """
+Job configuration for financial_analytics operations"""
     job_id: str
     operation: str
     data: Dict[str, Any]
@@ -26,7 +28,8 @@ class FinancialAnalyticsJob:
 
 @dataclass 
 class FinancialAnalyticsResult:
-    """Result of financial_analytics operations"""
+    """
+Result of financial_analytics operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
@@ -52,7 +55,8 @@ class FinancialAnalyticsEngine:
         self.active_jobs = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the financial_analytics engine"""
+        """
+Initialize the financial_analytics engine"""
         try:
             logger.info("Initializing FinancialAnalytics Engine...")
             
@@ -150,7 +154,8 @@ class FinancialAnalyticsEngine:
             del self.active_jobs[job_id]
     
     async def _process_job(self, job: FinancialAnalyticsJob) -> Dict[str, Any]:
-        """Process a specific job"""
+        """
+Process a specific job"""
         # Implementation specific to financial_analytics operations
         return {
             "operation": job.operation,

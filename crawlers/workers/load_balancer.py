@@ -8,7 +8,7 @@ Technologies: ML-based Load Balancing, Real-time Analytics, Performance Optimiza
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Task analysis → Worker evaluation → Performance prediction → 
 Optimal selection → Load distribution → Real-time monitoring → Adaptive optimization
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class LoadMetric(Enum):
-    """Load balancing metrics"""
+    """
+Load balancing metrics"""
+
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     NETWORK_USAGE = "network_usage"
@@ -82,7 +85,8 @@ class SelectionCriteria:
 
 @dataclass
 class LoadBalancingResult:
-    """Load balancing decision result"""
+    """
+Load balancing decision result"""
     selected_worker: Optional[str]
     confidence_score: float
     selection_reason: str
@@ -146,7 +150,8 @@ class WorkerLoadBalancer:
         }
 
     async def initialize(self) -> None:
-        """Initialize the load balancer"""
+        """
+Initialize the load balancer"""
         try:
             logger.info("🚀 Initializing load balancer")
             

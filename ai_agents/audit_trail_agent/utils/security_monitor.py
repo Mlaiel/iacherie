@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -57,7 +58,9 @@ from ...utils.behavior_analyzer import BehaviorAnalyzer
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(IntEnum):
-    """Security threat level classification"""
+    """
+Security threat level classification"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -65,7 +68,9 @@ class ThreatLevel(IntEnum):
     EMERGENCY = 5
 
 class SecurityEventType(Enum):
-    """Security event type classification"""
+    """
+Security event type classification"""
+
     FAILED_LOGIN = "failed_login"
     BRUTE_FORCE = "brute_force_attack"
     SQL_INJECTION = "sql_injection_attempt"
@@ -84,6 +89,7 @@ class SecurityEventType(Enum):
 
 class ResponseAction(Enum):
     """Automated security response actions"""
+
     LOG_ONLY = "log_only"
     ALERT_ADMIN = "alert_admin"
     BLOCK_IP = "block_ip"
@@ -686,7 +692,8 @@ class SecurityAuditMonitor:
         return min(score, 1.0)
 
     def _determine_threat_level(self, threat_score: float) -> ThreatLevel:
-        """Determine threat level based on composite score"""
+        """
+Determine threat level based on composite score"""
         if threat_score >= 0.9:
             return ThreatLevel.EMERGENCY
         elif threat_score >= 0.7:
@@ -703,7 +710,8 @@ class SecurityAuditMonitor:
         threat_context: Dict[str, Any],
         threat_level: ThreatLevel
     ) -> List[ResponseAction]:
-        """Determine appropriate automated response actions"""
+        """
+Determine appropriate automated response actions"""
         actions = [ResponseAction.LOG_ONLY]
         
         if threat_level >= ThreatLevel.MEDIUM:
@@ -729,7 +737,8 @@ class SecurityAuditMonitor:
         actions: List[ResponseAction],
         threat_context: Dict[str, Any]
     ) -> List[str]:
-        """Execute automated security response actions"""
+        """
+Execute automated security response actions"""
         executed = []
         
         for action in actions:

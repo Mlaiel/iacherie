@@ -9,6 +9,7 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
+
 import asyncio
 import asyncpg
 import numpy as np
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintRecord:
-    """Database record for audio fingerprints."""
+    """
+Database record for audio fingerprints."""
     
     id: Optional[int] = None
     user_id: int = None
@@ -73,7 +75,8 @@ class MatchRecord:
 
 @dataclass
 class QueryPerformanceRecord:
-    """Database record for query performance tracking."""
+    """
+Database record for query performance tracking."""
     
     id: Optional[int] = None
     query_type: str = None
@@ -92,7 +95,8 @@ class FingerprintDatabaseManager:
     """
     
     def __init__(self, database_url: str, config: Optional[Dict] = None):
-        """Initialize the database manager."""
+        """
+Initialize the database manager."""
         self.database_url = database_url
         self.config = config or self._default_config()
         
@@ -127,7 +131,8 @@ class FingerprintDatabaseManager:
         }
     
     async def initialize(self):
-        """Initialize database connections and create tables if needed."""
+        """
+Initialize database connections and create tables if needed."""
         try:
             # Create async engine
             self.engine = create_async_engine(
@@ -667,7 +672,8 @@ class FingerprintDatabaseManager:
         )
     
     async def _update_user_stats(self, session: AsyncSession, user_id: int, action: str):
-        """Update user content statistics."""
+        """
+Update user content statistics."""
         try:
             if action == 'fingerprint_added':
                 stmt = """

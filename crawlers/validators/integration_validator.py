@@ -7,7 +7,7 @@ integration, performance validation, and quality assurance across all
 validation components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and
@@ -23,6 +23,7 @@ Features:
 - Production readiness assessment
 - Comprehensive test reporting and analytics
 """
+
 import re
 import json
 import hashlib
@@ -82,6 +83,7 @@ logger = logging.getLogger(__name__)
 
 class TestCategory(Enum):
     """Test categories for organized testing"""
+
     UNIT_TESTS = "unit_tests"
     INTEGRATION_TESTS = "integration_tests"
     PERFORMANCE_TESTS = "performance_tests"
@@ -95,6 +97,7 @@ class TestCategory(Enum):
 
 class TestSeverity(Enum):
     """Test result severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -104,6 +107,7 @@ class TestSeverity(Enum):
 
 class TestStatus(Enum):
     """Test execution status"""
+
     PASSED = "passed"
     FAILED = "failed"
     SKIPPED = "skipped"
@@ -113,6 +117,7 @@ class TestStatus(Enum):
 
 class ValidatorType(Enum):
     """Types of validators for testing"""
+
     CONTENT_VALIDATOR = "content_validator"
     SCHEMA_VALIDATOR = "schema_validator"
     QUALITY_VALIDATOR = "quality_validator"
@@ -161,7 +166,8 @@ class TestResult:
 
 @dataclass
 class IntegrationTestSuite:
-    """Integration test suite definition"""
+    """
+Integration test suite definition"""
     suite_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     suite_name: str = ""
     test_cases: List[TestCase] = field(default_factory=list)
@@ -716,7 +722,8 @@ class IntegrationTestValidator:
         return self._execute_tests_sequential(test_cases)
     
     def _execute_single_test(self, test_case: TestCase) -> TestResult:
-        """Execute a single test case"""
+        """
+Execute a single test case"""
         start_time = time.time()
         initial_memory = 0
         initial_cpu = 0
@@ -1092,7 +1099,8 @@ class IntegrationTestValidator:
         return report
     
     def _generate_performance_summary(self, test_results: List[TestResult]) -> Dict[str, Any]:
-        """Generate performance summary from test results"""
+        """
+Generate performance summary from test results"""
         summary = {
             "total_execution_time_ms": sum(r.execution_time_ms for r in test_results),
             "average_execution_time_ms": statistics.mean([r.execution_time_ms for r in test_results]) if test_results else 0,
@@ -1248,5 +1256,6 @@ def run_validator_integration_tests(
 
 # Custom exceptions
 class IntegrationTestException(ValidationException):
-    """Integration testing specific exception"""
+    """
+Integration testing specific exception"""
     pass

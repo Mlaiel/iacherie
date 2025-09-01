@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     TECHNICAL_QUALITY = "technical_quality"
     AUDIO_QUALITY = "audio_quality"
     VIDEO_QUALITY = "video_quality"
@@ -52,6 +55,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Quality level classifications"""
+
     UNACCEPTABLE = "unacceptable"
     POOR = "poor" 
     BELOW_AVERAGE = "below_average"
@@ -65,6 +69,7 @@ class QualityLevel(Enum):
 
 class AssessmentMethod(Enum):
     """Quality assessment methods"""
+
     AUTOMATED_AI = "automated_ai"
     MACHINE_LEARNING = "machine_learning"
     HUMAN_REVIEW = "human_review"
@@ -75,6 +80,7 @@ class AssessmentMethod(Enum):
 
 class EnhancementType(Enum):
     """Content enhancement types"""
+
     AUDIO_MASTERING = "audio_mastering"
     NOISE_REDUCTION = "noise_reduction"
     COLOR_CORRECTION = "color_correction"
@@ -119,7 +125,8 @@ class QualityMetrics:
     priority_improvements: List[str] = field(default_factory=list)
 
 class ContentQualityAssessment(Base):
-    """Content quality assessment database model"""
+    """
+Content quality assessment database model"""
     __tablename__ = "content_quality_assessments"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -264,7 +271,8 @@ class QualityEngine:
         self.quality_standards = self._initialize_quality_standards()
     
     def _initialize_quality_standards(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality standards for different content types and platforms"""
+        """
+Initialize quality standards for different content types and platforms"""
         return {
             "audio_streaming": {
                 "minimum_sample_rate": 44100,
@@ -581,7 +589,8 @@ class QualityEngine:
             return QualityLevel.UNACCEPTABLE.value
     
     def _calculate_audio_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate audio quality score from technical metrics"""
+        """
+Calculate audio quality score from technical metrics"""
         score = 10.0
         
         # Penalize clipping
@@ -603,19 +612,23 @@ class QualityEngine:
     # Additional helper methods would be implemented here...
     
     async def _get_content_metadata(self, content_id: str, content_path: str):
-        """Get content metadata"""
+        """
+Get content metadata"""
         pass
     
     async def _assess_commercial_potential(self, technical, content, metadata):
-        """Assess commercial and monetization potential"""
+        """
+Assess commercial and monetization potential"""
         pass
     
     async def _identify_quality_issues(self, scores, metrics):
-        """Identify specific quality issues"""
+        """
+Identify specific quality issues"""
         pass
     
     async def _generate_enhancement_recommendations(self, issues, scores):
-        """Generate enhancement recommendations"""
+        """
+Generate enhancement recommendations"""
         pass
 
 # Export classes and functions

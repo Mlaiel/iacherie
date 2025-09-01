@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -68,7 +69,9 @@ from .web_crawler import WebCrawler
 logger = logging.getLogger(__name__)
 
 class SurveillanceStatus(Enum):
-    """Surveillance operation status"""
+    """
+Surveillance operation status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -77,6 +80,7 @@ class SurveillanceStatus(Enum):
 
 class ThreatLevel(Enum):
     """Content threat levels"""
+
     NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
@@ -86,6 +90,7 @@ class ThreatLevel(Enum):
 
 class AlertType(Enum):
     """Alert notification types"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -96,6 +101,7 @@ class AlertType(Enum):
 
 class MonitoringMode(Enum):
     """Content monitoring modes"""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -140,7 +146,8 @@ class SurveillanceConfig:
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result"""
+    """
+Threat detection result"""
     threat_id: str
     target_id: str
     content_id: str
@@ -171,7 +178,8 @@ class ThreatDetection:
 
 @dataclass
 class AlertNotification:
-    """Alert notification structure"""
+    """
+Alert notification structure"""
     alert_id: str
     target_id: str
     threat_id: str
@@ -561,7 +569,8 @@ class SurveillanceEngine:
             return ThreatLevel.LOW
 
     def _get_recommended_actions(self, threat_level: ThreatLevel, similarity_score: float) -> List[str]:
-        """Get recommended actions based on threat level"""
+        """
+Get recommended actions based on threat level"""
         actions = []
         
         if threat_level in [ThreatLevel.CRITICAL, ThreatLevel.EMERGENCY]:
@@ -668,7 +677,8 @@ class SurveillanceEngine:
 
     def _generate_alert_message(self, threat: ThreatDetection) -> str:
         """Generate alert message for threat detection"""
-        return f"""CONTENT THREAT ALERT
+        return f"""
+CONTENT THREAT ALERT
 
 Threat Level: {threat.threat_level.value.upper()}
 Similarity Score: {threat.similarity_score:.2%}
@@ -684,7 +694,8 @@ Confidence: {threat.confidence_score:.2%}
 False Positive Probability: {threat.false_positive_probability:.2%}
 """
     async def _get_alert_recipient(self, user_id: str, alert_type: AlertType) -> str:
-        """Get alert recipient based on user preferences"""
+        """
+Get alert recipient based on user preferences"""
         # This would typically query user preferences from database
         # For now, return placeholder
         if alert_type == AlertType.EMAIL:
@@ -721,7 +732,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         self.websocket_connections -= disconnected
 
     def _get_platform_type(self, platform_name: str) -> Optional[Any]:
-        """Convert platform name to platform type enum"""
+        """
+Convert platform name to platform type enum"""
         platform_mapping = {
             'twitter': 'TWITTER',
             'instagram': 'INSTAGRAM',
@@ -741,7 +753,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         return None
 
     def _update_average_scan_time(self, scan_time_ms: float) -> None:
-        """Update average scan time statistics"""
+        """
+Update average scan time statistics"""
         total_scans = self.surveillance_stats['total_scans']
         current_avg = self.surveillance_stats['avg_scan_time_ms']
         
@@ -750,7 +763,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         )
 
     async def _alert_processor(self) -> None:
-        """Background alert processing service"""
+        """
+Background alert processing service"""
         logger.info("Alert processor started")
         
         while True:
@@ -909,7 +923,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         return colors.get(severity, '#d3d3d3')
 
     async def _statistics_updater(self) -> None:
-        """Update surveillance statistics periodically"""
+        """
+Update surveillance statistics periodically"""
         while True:
             try:
                 # Update uptime
@@ -981,7 +996,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         return health_status
 
     async def _load_surveillance_targets(self) -> None:
-        """Load surveillance targets from database"""
+        """
+Load surveillance targets from database"""
         try:
             # This would load from database
             # Placeholder implementation
@@ -1081,7 +1097,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         }
 
     def get_target_status(self, target_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific surveillance target"""
+        """
+Get status of specific surveillance target"""
         config = self.surveillance_targets.get(target_id)
         if not config:
             return None
@@ -1100,7 +1117,8 @@ False Positive Probability: {threat.false_positive_probability:.2%}
         }
 
     async def cleanup(self) -> None:
-        """Cleanup surveillance engine resources"""
+        """
+Cleanup surveillance engine resources"""
         logger.info("Shutting down Surveillance Engine...")
         
         # Stop all monitoring tasks
@@ -1134,7 +1152,8 @@ class AlertSystem:
         self.escalation_policies: Dict[str, Dict] = {}
         
     async def create_alert_rule(self, rule_config: Dict[str, Any]) -> str:
-        """Create custom alert rule"""
+        """
+Create custom alert rule"""
         rule_id = str(uuid.uuid4())
         self.alert_rules[rule_id] = {
             **rule_config,
@@ -1144,7 +1163,8 @@ class AlertSystem:
         return rule_id
     
     async def send_alert(self, alert_data: Dict[str, Any]) -> bool:
-        """Send alert through configured channels"""
+        """
+Send alert through configured channels"""
         try:
             alert = AlertNotification(
                 alert_id=str(uuid.uuid4()),
@@ -1173,7 +1193,8 @@ class AlertSystem:
         }
     
     def create_escalation_policy(self, policy_id: str, policy_config: Dict[str, Any]) -> None:
-        """Create escalation policy for alerts"""
+        """
+Create escalation policy for alerts"""
         self.escalation_policies[policy_id] = {
             **policy_config,
             'created_at': datetime.now(),

@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import pickle
@@ -45,7 +46,8 @@ from .exceptions import ClassificationError, ModelLoadError
 
 
 class IntentCategory(Enum):
-    """Primary intent categories for creative industry professionals"""
+    """
+Primary intent categories for creative industry professionals"""
     
     # Content Creation & Management
     CONTENT_UPLOAD = "content_upload"
@@ -112,7 +114,8 @@ class IntentConfidence:
 
 @dataclass
 class ClassificationResult:
-    """Complete intent classification result"""
+    """
+Complete intent classification result"""
     primary_intent: IntentCategory
     secondary_intent: Optional[IntentCategory] = None
     confidence: IntentConfidence = field(default_factory=IntentConfidence)
@@ -404,7 +407,8 @@ class IntentClassifier(BaseService):
         text: str, 
         features: Dict[str, Any]
     ) -> Tuple[IntentCategory, float]:
-        """Classify intent using transformer model"""
+        """
+Classify intent using transformer model"""
         try:
             if not self.transformer_model or not self.transformer_tokenizer:
                 raise ModelLoadError("Transformer model not loaded")
@@ -525,7 +529,8 @@ class IntentClassifier(BaseService):
         return result
     
     def _calibrate_confidence(self, confidence: float, intent: IntentCategory) -> float:
-        """Calibrate confidence score using historical data"""
+        """
+Calibrate confidence score using historical data"""
         try:
             if not self.calibration_data:
                 return confidence
@@ -574,7 +579,8 @@ class IntentClassifier(BaseService):
         user_id: Optional[str],
         session_id: Optional[str]
     ) -> Dict[str, float]:
-        """Analyze contextual factors that influence intent classification"""
+        """
+Analyze contextual factors that influence intent classification"""
         
         factors = {
             'text_clarity': self._calculate_text_clarity(text),
@@ -598,7 +604,8 @@ class IntentClassifier(BaseService):
         return factors
     
     def _calculate_text_clarity(self, text: str) -> float:
-        """Calculate clarity score for input text"""
+        """
+Calculate clarity score for input text"""
         try:
             # Simple heuristics for text clarity
             words = text.split()
@@ -628,7 +635,8 @@ class IntentClassifier(BaseService):
             return 0.5
     
     def _calculate_context_relevance(self, context: Dict[str, Any]) -> float:
-        """Calculate relevance of provided context"""
+        """
+Calculate relevance of provided context"""
         relevance = 0.5  # Base score
         
         # Check for relevant context fields
@@ -640,17 +648,20 @@ class IntentClassifier(BaseService):
         return min(1.0, relevance)
     
     async def _calculate_user_consistency(self, user_id: str, text: str) -> float:
-        """Calculate user intent consistency (placeholder for user history analysis)"""
+        """
+Calculate user intent consistency (placeholder for user history analysis)"""
         # In production, this would analyze user's historical intent patterns
         return 0.7  # Placeholder value
     
     async def _calculate_session_coherence(self, session_id: str, text: str) -> float:
-        """Calculate session coherence score (placeholder for session analysis)"""
+        """
+Calculate session coherence score (placeholder for session analysis)"""
         # In production, this would analyze session conversation flow
         return 0.6  # Placeholder value
     
     async def _update_metrics(self, result: ClassificationResult, processing_time: float) -> None:
-        """Update performance metrics"""
+        """
+Update performance metrics"""
         try:
             # Record classification metrics
             self.metrics.record_counter('classifications_total')

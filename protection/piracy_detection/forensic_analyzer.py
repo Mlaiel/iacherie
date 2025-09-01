@@ -4,7 +4,7 @@
 Advanced digital forensics and evidence collection for content piracy cases.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -32,6 +32,7 @@ This module provides:
 - Browser automation for evidence collection
 - Court-admissible evidence formatting
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -72,7 +73,9 @@ from reportlab.lib.units import inch
 logger = logging.getLogger(__name__)
 
 class EvidenceType(Enum):
-    """Types of digital evidence."""
+    """
+Types of digital evidence."""
+
     SCREENSHOT = "screenshot"
     WEBPAGE_CAPTURE = "webpage_capture"
     METADATA_ANALYSIS = "metadata_analysis"
@@ -86,6 +89,7 @@ class EvidenceType(Enum):
 
 class IntegrityLevel(Enum):
     """Evidence integrity levels."""
+
     PRISTINE = "pristine"
     VERIFIED = "verified"  
     AUTHENTICATED = "authenticated"
@@ -94,6 +98,7 @@ class IntegrityLevel(Enum):
 
 class ForensicStandard(Enum):
     """Forensic analysis standards."""
+
     ISO_27037 = "iso_27037"
     NIST_SP_800_86 = "nist_sp_800_86"
     RFC_3227 = "rfc_3227"
@@ -117,7 +122,8 @@ class ChainOfCustody:
 
 @dataclass
 class DigitalEvidence:
-    """Digital evidence container."""
+    """
+Digital evidence container."""
     evidence_id: str
     evidence_type: EvidenceType
     content_data: Union[bytes, str, Dict[str, Any]]
@@ -133,7 +139,8 @@ class DigitalEvidence:
 
 @dataclass
 class ForensicAnalysisResult:
-    """Result of forensic analysis."""
+    """
+Result of forensic analysis."""
     analysis_id: str
     content_id: str
     evidence_collection: List[DigitalEvidence]
@@ -158,7 +165,8 @@ class DigitalForensicAnalyzer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the digital forensic analyzer."""
+        """
+Initialize the digital forensic analyzer."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -215,7 +223,9 @@ import tempfile
 logger = logging.getLogger(__name__)
 
 class EvidenceType(Enum):
-    """Types of digital evidence."""
+    """
+Types of digital evidence."""
+
     METADATA = "metadata"
     EXIF_DATA = "exif_data"
     STEGANOGRAPHY = "steganography"
@@ -227,6 +237,7 @@ class EvidenceType(Enum):
 
 class ForensicConfidence(Enum):
     """Confidence levels for forensic findings."""
+
     VERY_HIGH = "very_high"  # 95-100%
     HIGH = "high"           # 85-94%
     MEDIUM = "medium"       # 70-84%
@@ -248,7 +259,8 @@ class DigitalEvidence:
 
 @dataclass
 class ForensicTimeline:
-    """Timeline of events in content creation and distribution."""
+    """
+Timeline of events in content creation and distribution."""
     content_id: str
     events: List[Dict[str, Any]]
     creation_time: Optional[datetime]
@@ -259,7 +271,8 @@ class ForensicTimeline:
 
 @dataclass
 class AttributionResult:
-    """Content attribution analysis result."""
+    """
+Content attribution analysis result."""
     content_id: str
     suspected_source: str
     attribution_confidence: float
@@ -269,7 +282,8 @@ class AttributionResult:
     geographic_indicators: Optional[Dict[str, Any]]
 
 class MetadataAnalyzer:
-    """Analyzes metadata from various file formats."""
+    """
+Analyzes metadata from various file formats."""
     
     def __init__(self):
         self.supported_formats = {
@@ -280,7 +294,8 @@ class MetadataAnalyzer:
         }
     
     async def extract_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from file."""
+        """
+Extract comprehensive metadata from file."""
         try:
             file_extension = Path(file_path).suffix.lower()
             file_type = self._determine_file_type(file_extension)
@@ -311,7 +326,8 @@ class MetadataAnalyzer:
         return 'unknown'
     
     async def _extract_basic_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic file metadata."""
+        """
+Extract basic file metadata."""
         try:
             file_stat = Path(file_path).stat()
             mime_type = magic.from_file(file_path, mime=True)
@@ -427,7 +443,8 @@ class SteganographyDetector:
         ]
     
     async def detect_hidden_data(self, file_path: str) -> Dict[str, Any]:
-        """Detect potential steganographic content."""
+        """
+Detect potential steganographic content."""
         try:
             results = {}
             
@@ -502,7 +519,8 @@ class SteganographyDetector:
         }
     
     async def _analyze_pixel_statistics(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze pixel value statistics for anomalies."""
+        """
+Analyze pixel value statistics for anomalies."""
         # Calculate pixel value distribution
         hist = cv2.calcHist([img], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
         
@@ -515,7 +533,8 @@ class SteganographyDetector:
         }
     
     async def _analyze_visual_anomalies(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze visual anomalies that might indicate hidden data."""
+        """
+Analyze visual anomalies that might indicate hidden data."""
         # Convert to grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         
@@ -533,7 +552,8 @@ class SteganographyDetector:
         }
     
     async def _analyze_frequency_anomalies(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze frequency domain for hidden data."""
+        """
+Analyze frequency domain for hidden data."""
         # FFT analysis
         fft = np.fft.fft(audio)
         magnitude = np.abs(fft)
@@ -547,7 +567,8 @@ class SteganographyDetector:
         }
     
     async def _analyze_audio_statistics(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Analyze audio statistical properties."""
+        """
+Analyze audio statistical properties."""
         # Calculate statistical measures
         mean_val = np.mean(audio)
         std_val = np.std(audio)
@@ -563,13 +584,15 @@ class SteganographyDetector:
         }
 
 class ChainOfCustodyManager:
-    """Manages legal chain of custody for digital evidence."""
+    """
+Manages legal chain of custody for digital evidence."""
     
     def __init__(self):
         self.custody_records = {}
     
     def create_custody_record(self, evidence_id: str, initial_custodian: str) -> Dict[str, Any]:
-        """Create initial chain of custody record."""
+        """
+Create initial chain of custody record."""
         record = {
             'evidence_id': evidence_id,
             'creation_timestamp': datetime.now(),
@@ -605,7 +628,8 @@ class ChainOfCustodyManager:
         return True
     
     def verify_custody_integrity(self, evidence_id: str) -> bool:
-        """Verify integrity of custody chain."""
+        """
+Verify integrity of custody chain."""
         if evidence_id not in self.custody_records:
             return False
         

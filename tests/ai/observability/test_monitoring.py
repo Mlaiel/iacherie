@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for System Monitoring Module
+"""
+Ultra-Industrial Test Suite for System Monitoring Module
 
 Comprehensive testing for real-time system monitoring, resource tracking,
 performance monitoring, health status assessment, and alert generation.
@@ -36,6 +38,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import pytest
@@ -62,10 +65,12 @@ from ai.observability.monitoring import (
 
 
 class TestSystemMonitoringComprehensive:
-    """Ultra-comprehensive test suite for System Monitoring"""
+    """
+Ultra-comprehensive test suite for System Monitoring"""
     @pytest.fixture
     def monitoring_config(self):
-        """Sample monitoring configuration"""
+        """
+Sample monitoring configuration"""
         return {
             'monitoring_level': MonitoringLevel.DETAILED,
             'collection_interval': 1,
@@ -85,32 +90,37 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.fixture
     async def system_monitor(self, monitoring_config):
-        """Create system monitor instance"""
+        """
+Create system monitor instance"""
         monitor = SystemMonitor(monitoring_config)
         await monitor.initialize()
         yield monitor
         await monitor.shutdown()
 
     def test_monitoring_level_enum(self):
-        """Test MonitoringLevel enum completeness"""
+        """
+Test MonitoringLevel enum completeness"""
         expected_levels = {'MINIMAL', 'STANDARD', 'DETAILED', 'DEBUG'}
         actual_levels = {member.name for member in MonitoringLevel}
         assert actual_levels == expected_levels
 
     def test_metric_type_enum(self):
-        """Test MetricType enum completeness"""
+        """
+Test MetricType enum completeness"""
         expected_types = {'COUNTER', 'GAUGE', 'HISTOGRAM', 'SUMMARY'}
         actual_types = {member.name for member in MetricType}
         assert actual_types == expected_types
 
     def test_health_status_enum(self):
-        """Test HealthStatus enum completeness"""
+        """
+Test HealthStatus enum completeness"""
         expected_statuses = {'HEALTHY', 'WARNING', 'CRITICAL', 'UNKNOWN', 'DEGRADED'}
         actual_statuses = {member.name for member in HealthStatus}
         assert actual_statuses == expected_statuses
 
     def test_metric_creation_and_validation(self):
-        """Test Metric dataclass creation and validation"""
+        """
+Test Metric dataclass creation and validation"""
         timestamp = datetime.now()
         
         metric = Metric(
@@ -196,7 +206,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_system_metrics_collection_comprehensive(self, system_monitor):
-        """Test comprehensive system metrics collection"""
+        """
+Test comprehensive system metrics collection"""
         monitor = system_monitor
         
         # Collect system metrics
@@ -346,7 +357,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_alert_threshold_monitoring(self, system_monitor):
-        """Test alert threshold monitoring and triggering"""
+        """
+Test alert threshold monitoring and triggering"""
         monitor = system_monitor
         
         # Set strict thresholds to trigger alerts
@@ -375,7 +387,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_historical_metrics_storage_and_retrieval(self, system_monitor):
-        """Test historical metrics storage and retrieval"""
+        """
+Test historical metrics storage and retrieval"""
         monitor = system_monitor
         
         # Enable historical storage
@@ -417,7 +430,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_component_health_checks_detailed(self, system_monitor):
-        """Test detailed component health checks"""
+        """
+Test detailed component health checks"""
         monitor = system_monitor
         
         # Test individual component checks
@@ -454,7 +468,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_performance_monitoring_and_analysis(self, system_monitor):
-        """Test performance monitoring and analysis"""
+        """
+Test performance monitoring and analysis"""
         monitor = system_monitor
         
         # Start performance monitoring session
@@ -494,7 +509,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_anomaly_detection_in_metrics(self, system_monitor):
-        """Test anomaly detection in system metrics"""
+        """
+Test anomaly detection in system metrics"""
         monitor = system_monitor
         
         # Enable anomaly detection
@@ -532,7 +548,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_real_time_monitoring_dashboard_data(self, system_monitor):
-        """Test real-time monitoring dashboard data preparation"""
+        """
+Test real-time monitoring dashboard data preparation"""
         monitor = system_monitor
         
         # Get dashboard data
@@ -594,7 +611,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_monitoring_data_export_and_import(self, system_monitor):
-        """Test monitoring data export and import functionality"""
+        """
+Test monitoring data export and import functionality"""
         monitor = system_monitor
         
         # Collect some metrics
@@ -627,7 +645,8 @@ class TestSystemMonitoringComprehensive:
 
     @pytest.mark.asyncio
     async def test_monitoring_service_discovery_and_health(self, system_monitor):
-        """Test service discovery and health monitoring"""
+        """
+Test service discovery and health monitoring"""
         monitor = system_monitor
         
         # Register services for monitoring
@@ -678,7 +697,8 @@ class TestSystemMonitoringComprehensive:
             assert 'response_time_ms' in health_result
 
     def test_thread_safety_monitoring_operations(self, monitoring_config):
-        """Test thread safety of monitoring operations"""
+        """
+Test thread safety of monitoring operations"""
         import concurrent.futures
         import threading
         
@@ -725,7 +745,8 @@ class TestSystemMonitoringComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_high_frequency_monitoring_performance(self, system_monitor):
-        """Test performance under high-frequency monitoring"""
+        """
+Test performance under high-frequency monitoring"""
         monitor = system_monitor
         
         # Test high-frequency collection
@@ -815,10 +836,12 @@ class TestSystemMonitoringComprehensive:
 # Specialized test classes
 
 class TestSystemMetricsCollection:
-    """Specialized tests for system metrics collection"""
+    """
+Specialized tests for system metrics collection"""
     
     def test_cpu_metrics_detailed(self):
-        """Test detailed CPU metrics collection"""
+        """
+Test detailed CPU metrics collection"""
         # Test various CPU metrics
         cpu_percent = psutil.cpu_percent(interval=0.1)
         assert 0 <= cpu_percent <= 100
@@ -836,7 +859,8 @@ class TestSystemMetricsCollection:
             assert 0 <= cpu_pct <= 100
 
     def test_memory_metrics_detailed(self):
-        """Test detailed memory metrics collection"""
+        """
+Test detailed memory metrics collection"""
         # Virtual memory
         vmem = psutil.virtual_memory()
         assert vmem.total > 0
@@ -853,7 +877,8 @@ class TestSystemMetricsCollection:
         assert swap.percent >= 0
 
     def test_disk_metrics_detailed(self):
-        """Test detailed disk metrics collection"""
+        """
+Test detailed disk metrics collection"""
         # Disk usage
         disk_usage = psutil.disk_usage('/')
         assert disk_usage.total > 0
@@ -869,11 +894,13 @@ class TestSystemMetricsCollection:
 
 
 class TestAlertingSystem:
-    """Specialized tests for the monitoring alerting system"""
+    """
+Specialized tests for the monitoring alerting system"""
     
     @pytest.fixture
     def alert_config(self):
-        """Alert configuration for testing"""
+        """
+Alert configuration for testing"""
         return {
             'thresholds': {
                 'cpu_percent': {'warning': 70, 'critical': 90},
@@ -889,7 +916,8 @@ class TestAlertingSystem:
         }
     
     def test_alert_threshold_evaluation(self, alert_config):
-        """Test alert threshold evaluation logic"""
+        """
+Test alert threshold evaluation logic"""
         thresholds = alert_config['thresholds']
         
         # Test normal values (no alerts)
@@ -933,10 +961,12 @@ class TestAlertingSystem:
 # Performance benchmarks
 @pytest.mark.benchmark
 class TestSystemMonitoringBenchmarks:
-    """Performance benchmarks for system monitoring"""
+    """
+Performance benchmarks for system monitoring"""
     
     def test_metrics_collection_benchmark(self, benchmark):
-        """Benchmark system metrics collection performance"""
+        """
+Benchmark system metrics collection performance"""
         def collect_metrics():
             return {
                 'cpu_percent': psutil.cpu_percent(),
@@ -953,7 +983,8 @@ class TestSystemMonitoringBenchmarks:
         assert 'network' in result
     
     def test_health_assessment_benchmark(self, benchmark):
-        """Benchmark health assessment performance"""
+        """
+Benchmark health assessment performance"""
         def assess_health():
             cpu_percent = psutil.cpu_percent()
             memory = psutil.virtual_memory()

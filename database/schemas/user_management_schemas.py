@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class UserRoleEnum(str, Enum):
-    """User roles in the platform"""
+    """
+User roles in the platform"""
+
     ARTIST = "artist"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
@@ -43,6 +46,7 @@ class UserRoleEnum(str, Enum):
 
 class AccountStatusEnum(str, Enum):
     """Account status"""
+
     ACTIVE = "active"
     PENDING_VERIFICATION = "pending_verification"
     SUSPENDED = "suspended"
@@ -54,6 +58,7 @@ class AccountStatusEnum(str, Enum):
 
 class SubscriptionTierEnum(str, Enum):
     """Subscription tiers"""
+
     FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
@@ -64,6 +69,7 @@ class SubscriptionTierEnum(str, Enum):
 
 class VerificationStatusEnum(str, Enum):
     """Verification status types"""
+
     UNVERIFIED = "unverified"
     PENDING = "pending"
     VERIFIED = "verified"
@@ -73,6 +79,7 @@ class VerificationStatusEnum(str, Enum):
 
 class NotificationTypeEnum(str, Enum):
     """Types of notifications"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -82,6 +89,7 @@ class NotificationTypeEnum(str, Enum):
 
 class PrivacyLevelEnum(str, Enum):
     """Privacy levels"""
+
     PUBLIC = "public"
     FRIENDS = "friends"
     PRIVATE = "private"

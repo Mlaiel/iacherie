@@ -24,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class AdversarialAttackType(str, Enum):
-    """Types of adversarial attacks"""
+    """
+Types of adversarial attacks"""
+
     FGSM = "fast_gradient_sign_method"
     PGD = "projected_gradient_descent"
     CW = "carlini_wagner"
@@ -38,6 +40,7 @@ class AdversarialAttackType(str, Enum):
 
 class SecurityThreatLevel(str, Enum):
     """Security threat severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -47,6 +50,7 @@ class SecurityThreatLevel(str, Enum):
 
 class DefenseType(str, Enum):
     """Types of adversarial defenses"""
+
     ADVERSARIAL_TRAINING = "adversarial_training"
     GRADIENT_MASKING = "gradient_masking"
     INPUT_TRANSFORMATION = "input_transformation"
@@ -72,7 +76,8 @@ class AdversarialAttack:
 
 @dataclass
 class SecurityMetrics:
-    """Comprehensive security metrics"""
+    """
+Comprehensive security metrics"""
     overall_robustness_score: float
     attack_success_rates: Dict[str, float]
     threat_assessment: SecurityThreatLevel
@@ -86,7 +91,8 @@ class SecurityMetrics:
 
 @dataclass
 class SecurityValidationResult:
-    """Complete security validation result"""
+    """
+Complete security validation result"""
     model_id: str
     validation_id: str
     security_metrics: SecurityMetrics
@@ -100,7 +106,8 @@ class SecurityValidationResult:
 
 
 class AdversarialSecurityTester:
-    """Comprehensive adversarial security tester for AI/ML models"""
+    """
+Comprehensive adversarial security tester for AI/ML models"""
     
     def __init__(self, security_threshold: float = 0.85):
         """
@@ -467,7 +474,8 @@ class AdversarialSecurityTester:
         baseline_accuracy: float,
         defense_configs: Optional[List[Dict[str, Any]]] = None
     ) -> SecurityMetrics:
-        """Calculate comprehensive security metrics"""
+        """
+Calculate comprehensive security metrics"""
         
         if not attacks:
             return SecurityMetrics(
@@ -573,13 +581,15 @@ class AdversarialSecurityTester:
     def _calculate_overall_security_score(
         self, security_metrics: SecurityMetrics, attacks: List[AdversarialAttack]
     ) -> float:
-        """Calculate overall security score"""
+        """
+Calculate overall security score"""
         return security_metrics.security_score
     
     def _identify_critical_vulnerabilities(
         self, security_metrics: SecurityMetrics, attacks: List[AdversarialAttack]
     ) -> List[str]:
-        """Identify critical security vulnerabilities"""
+        """
+Identify critical security vulnerabilities"""
         vulnerabilities = []
         
         if security_metrics.threat_assessment in [SecurityThreatLevel.CRITICAL, SecurityThreatLevel.HIGH]:
@@ -650,7 +660,8 @@ class AdversarialSecurityTester:
         model_id: str,
         monitoring_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup continuous security monitoring"""
+        """
+Setup continuous security monitoring"""
         config = {
             "model_id": model_id,
             "security_threshold": monitoring_config.get("threshold", self.security_threshold),

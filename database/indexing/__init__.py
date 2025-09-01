@@ -15,7 +15,7 @@ search capabilities, and query acceleration for the IA-Influencer multi-content 
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -45,7 +46,9 @@ from .vector_index import VectorIndexManager
 logger = logging.getLogger(__name__)
 
 class IndexType(Enum):
-    """Supported index types for platform optimization"""
+    """
+Supported index types for platform optimization"""
+
     BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
@@ -68,7 +71,8 @@ class IndexingManager:
     """
     
     def __init__(self):
-        """Initialize the indexing management system"""
+        """
+Initialize the indexing management system"""
         self.content_manager = ContentIndexManager()
         self.vector_manager = VectorIndexManager()
         self.faiss_manager = FAISSIndexManager()
@@ -134,11 +138,13 @@ class IndexingManager:
         return await self.optimization_engine.optimize_all_indexes()
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics for all indexes"""
+        """
+Get comprehensive performance metrics for all indexes"""
         return await self.performance_monitor.get_comprehensive_metrics()
     
     async def cleanup(self):
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         try:
             await asyncio.gather(
                 self.content_manager.cleanup(),

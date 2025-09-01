@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, Any, Optional
 import asyncio
@@ -10,13 +11,15 @@ logger = logging.getLogger(__name__)
 
 
 class RightsManager:
-    """Manages content rights and protections"""
+    """
+Manages content rights and protections"""
     
     def __init__(self):
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize rights management system"""
+        """
+Initialize rights management system"""
         self.is_initialized = True
         logger.info("Rights Manager initialized")
     
@@ -37,12 +40,14 @@ class ContentEncryption:
     
     @staticmethod
     def encrypt_content(content: bytes, key: str) -> bytes:
-        """Encrypt content data"""
+        """
+Encrypt content data"""
         # Placeholder implementation
         return content
     
     @staticmethod 
     def decrypt_content(encrypted_content: bytes, key: str) -> bytes:
-        """Decrypt content data"""
+        """
+Decrypt content data"""
         # Placeholder implementation
         return encrypted_content

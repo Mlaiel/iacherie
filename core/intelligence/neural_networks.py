@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
@@ -52,7 +53,9 @@ from ..storage.model_storage import ModelStorage
 
 
 class NetworkType(Enum):
-    """Neural network architecture types"""
+    """
+Neural network architecture types"""
+
     FEEDFORWARD = "feedforward"
     CONVOLUTIONAL = "convolutional"
     RECURRENT = "recurrent"
@@ -65,6 +68,7 @@ class NetworkType(Enum):
 
 class ModelTask(Enum):
     """Model task types"""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     GENERATION = "generation"
@@ -94,7 +98,8 @@ class ModelConfig:
 
 @dataclass
 class TrainingResult:
-    """Training process result"""
+    """
+Training process result"""
     model_id: str
     final_loss: float
     best_accuracy: float
@@ -106,7 +111,8 @@ class TrainingResult:
 
 
 class ContentEmbeddingNetwork(nn.Module):
-    """Neural network for content embedding generation"""
+    """
+Neural network for content embedding generation"""
     
     def __init__(self, input_dim: int, embedding_dim: int = 256):
         super(ContentEmbeddingNetwork, self).__init__()
@@ -140,7 +146,8 @@ class ContentEmbeddingNetwork(nn.Module):
 
 
 class MultiModalTransformer(nn.Module):
-    """Transformer architecture for multi-modal content"""
+    """
+Transformer architecture for multi-modal content"""
     
     def __init__(
         self,
@@ -204,7 +211,8 @@ class MultiModalTransformer(nn.Module):
 
 
 class AttentionMechanism(nn.Module):
-    """Multi-head attention mechanism"""
+    """
+Multi-head attention mechanism"""
     
     def __init__(self, embed_dim: int, num_heads: int = 8):
         super(AttentionMechanism, self).__init__()
@@ -218,7 +226,8 @@ class AttentionMechanism(nn.Module):
 
 
 class ContentClassifier(nn.Module):
-    """Deep neural network for content classification"""
+    """
+Deep neural network for content classification"""
     
     def __init__(self, input_dim: int, num_classes: int, hidden_dims: List[int] = [512, 256, 128]):
         super(ContentClassifier, self).__init__()
@@ -244,7 +253,8 @@ class ContentClassifier(nn.Module):
 
 
 class EngagementPredictor(nn.Module):
-    """Neural network for engagement prediction"""
+    """
+Neural network for engagement prediction"""
     
     def __init__(self, feature_dim: int):
         super(EngagementPredictor, self).__init__()
@@ -273,7 +283,8 @@ class EngagementPredictor(nn.Module):
 
 
 class AudioCNN(nn.Module):
-    """Convolutional network for audio analysis"""
+    """
+Convolutional network for audio analysis"""
     
     def __init__(self, input_channels: int = 1, num_classes: int = 10):
         super(AudioCNN, self).__init__()
@@ -401,11 +412,13 @@ class NeuralNetworks:
         self.training_engine = TrainingEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize model storage"""
+        """
+Initialize model storage"""
         self.model_storage = ModelStorage(self.config)
     
     def _load_pretrained_weights(self) -> None:
-        """Load pre-trained model weights if available"""
+        """
+Load pre-trained model weights if available"""
         try:
             models_dir = self.config.get("models_dir", "./models")
             if not os.path.exists(models_dir):
@@ -707,7 +720,8 @@ class NeuralNetworks:
         return improvement < 0.01  # Less than 1% improvement
     
     async def _save_model(self, model: nn.Module, model_name: str, epoch: int) -> None:
-        """Save model checkpoint"""
+        """
+Save model checkpoint"""
         try:
             models_dir = self.config.get("models_dir", "./models")
             os.makedirs(models_dir, exist_ok=True)
@@ -868,7 +882,8 @@ class NeuralNetworks:
         return self.performance_metrics.copy()
     
     async def optimize_model(self, model_name: str) -> bool:
-        """Optimize model for inference"""
+        """
+Optimize model for inference"""
         try:
             if model_name not in self.model_registry:
                 return False

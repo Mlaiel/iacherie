@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Trend Analysis System
+"""
+Comprehensive Tests for Trend Analysis System
 Testing trend detection, analysis, and prediction algorithms
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ from ai.recommendation.exceptions import TrendAnalysisError, ValidationError
 
 
 class TestTrendAnalyzer:
-    """Comprehensive tests for the main trend analyzer"""
+    """
+Comprehensive tests for the main trend analyzer"""
     
     @pytest.mark.asyncio
     async def test_analyzer_initialization(self):
-        """Test trend analyzer initialization"""
+        """
+Test trend analyzer initialization"""
         analyzer = TrendAnalyzer()
         
         # Test initial state
@@ -86,7 +91,8 @@ class TestTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_platform_specific_trends(self, trend_analyzer):
-        """Test platform-specific trend analysis"""
+        """
+Test platform-specific trend analysis"""
         # Test YouTube trends
         youtube_trends = await trend_analyzer.analyze_platform_trends(
             platform=Platform.YOUTUBE,
@@ -122,7 +128,8 @@ class TestTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_trending_hashtags(self, trend_analyzer):
-        """Test trending hashtag analysis"""
+        """
+Test trending hashtag analysis"""
         hashtags = await trend_analyzer.analyze_trending_hashtags(
             platforms=[Platform.INSTAGRAM, Platform.TIKTOK],
             time_period=timedelta(days=7),
@@ -145,7 +152,8 @@ class TestTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_trending_keywords(self, trend_analyzer):
-        """Test trending keyword analysis"""
+        """
+Test trending keyword analysis"""
         keywords = await trend_analyzer.analyze_trending_keywords(
             platforms=[Platform.YOUTUBE, Platform.TWITTER],
             category="Technology",
@@ -187,7 +195,8 @@ class TestTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_seasonal_trends(self, trend_analyzer):
-        """Test seasonal trend analysis"""
+        """
+Test seasonal trend analysis"""
         # Test summer trends
         summer_trends = await trend_analyzer.analyze_seasonal_trends(
             season="summer",
@@ -280,11 +289,13 @@ class TestTrendAnalyzer:
 
 
 class TestTrendDetector:
-    """Tests for trend detection algorithms"""
+    """
+Tests for trend detection algorithms"""
     
     @pytest.mark.asyncio
     async def test_detect_viral_content(self, trend_detector):
-        """Test viral content detection"""
+        """
+Test viral content detection"""
         viral_content = await trend_detector.detect_viral_content(
             platforms=[Platform.TIKTOK, Platform.YOUTUBE],
             time_period=timedelta(hours=24),
@@ -311,7 +322,8 @@ class TestTrendDetector:
     
     @pytest.mark.asyncio
     async def test_detect_rising_trends(self, trend_detector):
-        """Test rising trend detection"""
+        """
+Test rising trend detection"""
         rising_trends = await trend_detector.detect_rising_trends(
             platforms=[Platform.YOUTUBE, Platform.INSTAGRAM],
             detection_window=timedelta(days=3),
@@ -329,7 +341,8 @@ class TestTrendDetector:
     
     @pytest.mark.asyncio
     async def test_detect_breakout_creators(self, trend_detector):
-        """Test breakout creator detection"""
+        """
+Test breakout creator detection"""
         breakout_creators = await trend_detector.detect_breakout_creators(
             platforms=[Platform.TIKTOK, Platform.YOUTUBE],
             time_period=timedelta(days=30),
@@ -352,7 +365,8 @@ class TestTrendDetector:
     
     @pytest.mark.asyncio
     async def test_detect_content_patterns(self, trend_detector):
-        """Test content pattern detection"""
+        """
+Test content pattern detection"""
         patterns = await trend_detector.detect_content_patterns(
             platform=Platform.TIKTOK,
             content_type=ContentType.VIDEO,
@@ -376,7 +390,8 @@ class TestTrendDetector:
     
     @pytest.mark.asyncio
     async def test_detect_trend_signals(self, trend_detector):
-        """Test trend signal detection"""
+        """
+Test trend signal detection"""
         signals = await trend_detector.detect_trend_signals(
             platforms=[Platform.TWITTER, Platform.REDDIT],
             signal_types=["hashtag_surge", "keyword_spike", "engagement_anomaly"],
@@ -403,7 +418,8 @@ class TestTrendPredictor:
     
     @pytest.mark.asyncio
     async def test_predict_trend_evolution(self, trend_predictor):
-        """Test trend evolution prediction"""
+        """
+Test trend evolution prediction"""
         predictions = await trend_predictor.predict_trend_evolution(
             trend_keywords=["AI art", "sustainable living"],
             prediction_horizon=timedelta(days=60),
@@ -504,7 +520,8 @@ class TestViralPredictor:
     
     @pytest.mark.asyncio
     async def test_predict_viral_potential(self, viral_predictor, sample_video_content):
-        """Test viral potential prediction"""
+        """
+Test viral potential prediction"""
         video_data = sample_video_content
         
         prediction = await viral_predictor.predict_viral_potential(
@@ -521,7 +538,8 @@ class TestViralPredictor:
     
     @pytest.mark.asyncio
     async def test_predict_optimal_timing(self, viral_predictor, sample_video_content):
-        """Test optimal timing prediction for viral content"""
+        """
+Test optimal timing prediction for viral content"""
         video_data = sample_video_content
         
         timing_prediction = await viral_predictor.predict_optimal_timing(
@@ -602,7 +620,8 @@ class TestTrendAnalysisPerformance:
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_trend_analysis_performance(self, benchmark, trend_analyzer):
-        """Benchmark trend analysis performance"""
+        """
+Benchmark trend analysis performance"""
         async def analyze_trends():
             return await trend_analyzer.analyze_current_trends(
                 platforms=[Platform.YOUTUBE, Platform.TIKTOK],
@@ -614,7 +633,8 @@ class TestTrendAnalysisPerformance:
     
     @pytest.mark.asyncio
     async def test_real_time_trend_monitoring(self, trend_analyzer):
-        """Test real-time trend monitoring performance"""
+        """
+Test real-time trend monitoring performance"""
         start_time = datetime.now()
         
         # Simulate real-time monitoring
@@ -638,7 +658,8 @@ class TestTrendAnalysisPerformance:
     
     @pytest.mark.asyncio
     async def test_batch_trend_prediction(self, trend_predictor):
-        """Test batch trend prediction performance"""
+        """
+Test batch trend prediction performance"""
         trend_keywords = [
             "artificial intelligence", "sustainable fashion", "remote work",
             "electric vehicles", "cryptocurrency", "virtual reality",
@@ -668,7 +689,8 @@ class TestTrendAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_invalid_platform_handling(self, trend_analyzer):
-        """Test handling of invalid platforms"""
+        """
+Test handling of invalid platforms"""
         with pytest.raises(ValidationError):
             await trend_analyzer.analyze_current_trends(
                 platforms=["INVALID_PLATFORM"],  # Invalid platform
@@ -687,7 +709,8 @@ class TestTrendAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_invalid_time_period_handling(self, trend_detector):
-        """Test handling of invalid time periods"""
+        """
+Test handling of invalid time periods"""
         with pytest.raises(ValidationError):
             await trend_detector.detect_viral_content(
                 platforms=[Platform.TIKTOK],
@@ -697,7 +720,8 @@ class TestTrendAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_api_rate_limit_handling(self, trend_analyzer):
-        """Test handling of API rate limits"""
+        """
+Test handling of API rate limits"""
         # Mock rate limit scenario
         with patch.object(trend_analyzer, '_make_api_call') as mock_api:
             mock_api.side_effect = Exception("Rate limit exceeded")
@@ -739,7 +763,8 @@ class TestTrendDataValidation:
     
     @pytest.mark.asyncio
     async def test_trend_data_consistency(self, trend_analyzer):
-        """Test consistency of trend data across multiple calls"""
+        """
+Test consistency of trend data across multiple calls"""
         # Get trends multiple times
         trends_1 = await trend_analyzer.analyze_current_trends(
             platforms=[Platform.YOUTUBE],
@@ -771,7 +796,8 @@ class TestTrendDataValidation:
     
     @pytest.mark.asyncio
     async def test_trend_score_validation(self, trend_analyzer):
-        """Test validation of trend scores and metrics"""
+        """
+Test validation of trend scores and metrics"""
         trends = await trend_analyzer.analyze_current_trends(
             platforms=[Platform.TIKTOK, Platform.INSTAGRAM],
             limit=10
@@ -798,7 +824,8 @@ class TestTrendDataValidation:
     
     @pytest.mark.asyncio
     async def test_prediction_accuracy_validation(self, trend_predictor):
-        """Test validation of prediction accuracy metrics"""
+        """
+Test validation of prediction accuracy metrics"""
         predictions = await trend_predictor.predict_trend_evolution(
             trend_keywords=["machine learning", "sustainable energy"],
             prediction_horizon=timedelta(days=14),

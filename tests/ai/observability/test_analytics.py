@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Analytics Module
+"""
+Ultra-Industrial Test Suite for Analytics Module
 
 This module provides comprehensive testing for business analytics,
 predictive analytics, anomaly detection, and forecasting capabilities.
@@ -48,6 +50,7 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -78,11 +81,13 @@ from ai.observability.analytics import (
 
 
 class TestBusinessAnalytics:
-    """Ultra-industrial tests for RealTimeAnalytics class (acting as BusinessAnalytics)"""
+    """
+Ultra-industrial tests for RealTimeAnalytics class (acting as BusinessAnalytics)"""
     
     @pytest.fixture
     def business_analytics(self):
-        """Create RealTimeAnalytics instance for testing"""
+        """
+Create RealTimeAnalytics instance for testing"""
         config = {
             "data_sources": ["revenue", "user_engagement", "content_performance"],
             "update_interval": 300,  # 5 minutes
@@ -294,7 +299,8 @@ class TestPredictiveAnalytics:
     
     @pytest.fixture
     def predictive_analytics(self):
-        """Create PredictiveAnalytics instance for testing"""
+        """
+Create PredictiveAnalytics instance for testing"""
         config = {
             "models": ["revenue_forecast", "churn_prediction", "demand_forecast"],
             "prediction_horizon": 90,  # days
@@ -468,7 +474,8 @@ class TestAnomalyDetector:
     
     @pytest.fixture
     def anomaly_detector(self):
-        """Create AnomalyDetector instance for testing"""
+        """
+Create AnomalyDetector instance for testing"""
         config = {
             "detection_methods": ["statistical", "ml_based", "rule_based"],
             "sensitivity": "high",
@@ -728,7 +735,8 @@ class TestTrendAnalyzer:
     
     @pytest.fixture
     def trend_analyzer(self):
-        """Create TrendAnalyzer instance for testing"""
+        """
+Create TrendAnalyzer instance for testing"""
         config = {
             "analysis_methods": ["linear", "polynomial", "seasonal", "wavelet"],
             "confidence_level": 0.95,

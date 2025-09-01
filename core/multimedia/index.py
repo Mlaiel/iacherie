@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class IndexType(Enum):
-    """Index types"""
+    """
+Index types"""
+
     TEXT = "text"
     VECTOR = "vector"
     METADATA = "metadata"
@@ -63,6 +66,7 @@ class IndexType(Enum):
 
 class SearchMode(Enum):
     """Search modes"""
+
     EXACT = "exact"
     FUZZY = "fuzzy"
     SEMANTIC = "semantic"
@@ -125,7 +129,8 @@ class SearchResult:
 
 @dataclass
 class SearchResponse:
-    """Search response"""
+    """
+Search response"""
     query_id: str
     total_results: int
     results: List[SearchResult]
@@ -136,7 +141,8 @@ class SearchResponse:
 
 
 class MultimediaIndex:
-    """Enterprise multimedia content index"""
+    """
+Enterprise multimedia content index"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -386,7 +392,8 @@ class MultimediaIndex:
         content_id: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update indexed content"""
+        """
+Update indexed content"""
         try:
             content = self.indexed_content.get(content_id)
             if not content:
@@ -778,7 +785,8 @@ class MultimediaIndex:
         return list(combined_results.values())
         
     def _apply_filters(self, results: List[SearchResult], query: SearchQuery) -> List[SearchResult]:
-        """Apply filters to search results"""
+        """
+Apply filters to search results"""
         filtered_results = results
         
         # Content type filter
@@ -894,7 +902,8 @@ class MultimediaIndex:
         return np.mean(similarities) if similarities else 0.0
         
     def _generate_content_id(self, file_path: str) -> str:
-        """Generate unique content ID"""
+        """
+Generate unique content ID"""
         # Use file path and modification time for uniqueness
         file_stat = Path(file_path).stat()
         content_string = f"{file_path}_{file_stat.st_mtime}_{file_stat.st_size}"

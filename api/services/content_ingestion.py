@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import uuid
 import asyncio
@@ -42,6 +43,7 @@ class ContentIngestionService:
     Professional content ingestion service supporting multi-format uploads
     with enterprise-grade validation, storage, and AI processing pipeline
     """
+
     
     SUPPORTED_FORMATS = {
         'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'],

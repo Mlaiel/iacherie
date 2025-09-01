@@ -78,6 +78,7 @@ except ImportError as e:
 
 class EngineType(str, Enum):
     """Types of processing engines available"""
+
     AI_PROCESSING = "ai_processing"
     CONTENT_PROCESSING = "content_processing"
     PROTECTION_SECURITY = "protection_security"
@@ -118,7 +119,8 @@ class EngineRegistry:
         self._initialized: bool = False
         
     def configure(self, config: Union[EngineConfig, Dict[str, Any]]) -> None:
-        """Configure the engine registry"""
+        """
+Configure the engine registry"""
         if isinstance(config, dict):
             self._config = EngineConfig(**config)
         else:
@@ -244,11 +246,13 @@ class EngineRegistry:
         return list(self._engines.keys())
     
     def is_initialized(self) -> bool:
-        """Check if registry is initialized"""
+        """
+Check if registry is initialized"""
         return self._initialized
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all engines"""
+        """
+Perform health check on all engines"""
         health_status = {
             "registry_initialized": self._initialized,
             "total_engines": len(self._engines),
@@ -310,17 +314,20 @@ async def initialize_engines(
 
 
 def get_engine(engine_name: str) -> Any:
-    """Get an initialized engine"""
+    """
+Get an initialized engine"""
     return engine_registry.get_engine(engine_name)
 
 
 def list_engines() -> List[str]:
-    """List all initialized engines"""
+    """
+List all initialized engines"""
     return engine_registry.list_engines()
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on all engines"""
+    """
+Perform health check on all engines"""
     return await engine_registry.health_check()
 
 

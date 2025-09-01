@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -46,7 +47,9 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class ContentCategory(Enum):
-    """Content categories for filtering."""
+    """
+Content categories for filtering."""
+
     MUSIC = "music"
     PODCAST = "podcast"
     SPEECH = "speech"
@@ -62,6 +65,7 @@ class ContentCategory(Enum):
 
 class ContentComplexity(Enum):
     """Content complexity levels."""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -92,10 +96,12 @@ class ContentMetadata:
 
 
 class IntelligentContentAnalyzer:
-    """AI-powered content analysis system for advanced classification."""
+    """
+AI-powered content analysis system for advanced classification."""
     
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize intelligent content analyzer."""
+        """
+Initialize intelligent content analyzer."""
         self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         
@@ -631,13 +637,15 @@ class ContentFilterOrchestrator:
     """Orchestrates all content filtering operations."""
     
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize content filter orchestrator."""
+        """
+Initialize content filter orchestrator."""
         self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.analyzer = IntelligentContentAnalyzer(config_manager)
     
     async def process_content_comprehensive(self, content_item: ContentItem) -> FilterResponse:
-        """Process content through comprehensive filtering pipeline."""
+        """
+Process content through comprehensive filtering pipeline."""
         try:
             start_time = time.time()
             

@@ -5,12 +5,13 @@ Professional generic web crawling system using Scrapy framework.
 Advanced content discovery for any website with intelligent parsing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import re
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebPageInfo:
-    """Web page information structure."""
+    """
+Web page information structure."""
     url: str
     title: str
     description: str
@@ -59,7 +61,8 @@ class WebPageInfo:
 
 @dataclass
 class CrawlConfig:
-    """Crawling configuration structure."""
+    """
+Crawling configuration structure."""
     allowed_domains: List[str]
     start_urls: List[str]
     max_depth: int = 3
@@ -76,11 +79,13 @@ class CrawlConfig:
     file_extensions: List[str] = None  # File extensions to crawl
 
 class ContentAnalyzer:
-    """Intelligent content analysis and extraction."""
+    """
+Intelligent content analysis and extraction."""
     
     @staticmethod
     def extract_metadata(soup: BeautifulSoup, url: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from HTML."""
+        """
+Extract comprehensive metadata from HTML."""
         metadata = {}
         
         try:
@@ -195,7 +200,8 @@ class ContentAnalyzer:
     
     @staticmethod
     def extract_media_urls(soup: BeautifulSoup, base_url: str) -> Dict[str, List[str]]:
-        """Extract media URLs from HTML."""
+        """
+Extract media URLs from HTML."""
         media_urls = {
             'images': [],
             'videos': [],
@@ -327,7 +333,8 @@ class GenericSpider(scrapy.Spider):
         self.content_analyzer = ContentAnalyzer()
     
     def parse(self, response: Response):
-        """Parse web page response."""
+        """
+Parse web page response."""
         try:
             # Update statistics
             self.pages_crawled += 1
@@ -467,14 +474,16 @@ class GenericSpider(scrapy.Spider):
             return False
 
 class RobotsTxtChecker:
-    """Robots.txt compliance checker."""
+    """
+Robots.txt compliance checker."""
     
     def __init__(self):
         self.robots_cache = {}
         self.cache_timeout = timedelta(hours=24)
     
     def can_fetch(self, url: str, user_agent: str = '*') -> bool:
-        """Check if URL can be fetched according to robots.txt."""
+        """
+Check if URL can be fetched according to robots.txt."""
         try:
             parsed_url = urlparse(url)
             robots_url = f"{parsed_url.scheme}://{parsed_url.netloc}/robots.txt"
@@ -521,7 +530,8 @@ class GenericWebCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize generic web crawler."""
+        """
+Initialize generic web crawler."""
         super().__init__("web", config)
         
         # Crawling configuration
@@ -791,7 +801,8 @@ class GenericWebCrawler(BasePlatformCrawler):
         return True
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""
+        """
+Get crawler statistics."""
         return {
             "platform": "web",
             "crawled_urls": len(self.crawled_urls),

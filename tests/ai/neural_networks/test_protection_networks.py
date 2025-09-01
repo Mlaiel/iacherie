@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Protection Networks
+"""
+Comprehensive Test Suite for Protection Networks
 
 Ultra-advanced industrial-grade tests for content protection neural networks,
 covering fingerprinting, plagiarism detection, deepfake detection, 
@@ -39,6 +41,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -64,7 +67,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def protection_config():
-    """Configuration for protection networks"""
+    """
+Configuration for protection networks"""
     return TransformerConfig(
         input_dim=768,
         hidden_dims=[768, 512, 256, 128],
@@ -80,7 +84,8 @@ def protection_config():
 
 @pytest.fixture
 def content_samples():
-    """Sample content for protection testing"""
+    """
+Sample content for protection testing"""
     torch.manual_seed(42)
     np.random.seed(42)
     
@@ -165,7 +170,8 @@ class TestContentFingerprintingNetwork:
     """Test ContentFingerprintingNetwork functionality"""
     
     def test_fingerprinting_network_initialization(self, protection_config):
-        """Test ContentFingerprintingNetwork initialization"""
+        """
+Test ContentFingerprintingNetwork initialization"""
         network = ContentFingerprintingNetwork(protection_config)
         
         assert hasattr(network, 'content_encoder')
@@ -175,7 +181,8 @@ class TestContentFingerprintingNetwork:
         assert hasattr(network, 'similarity_comparator')
     
     def test_content_fingerprint_generation(self, protection_config, content_samples):
-        """Test content fingerprint generation"""
+        """
+Test content fingerprint generation"""
         network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
@@ -305,7 +312,8 @@ class TestPlagiarismDetectionNetwork:
     """Test PlagiarismDetectionNetwork functionality"""
     
     def test_plagiarism_network_initialization(self, protection_config):
-        """Test PlagiarismDetectionNetwork initialization"""
+        """
+Test PlagiarismDetectionNetwork initialization"""
         network = PlagiarismDetectionNetwork(protection_config)
         
         assert hasattr(network, 'text_encoder')
@@ -315,7 +323,8 @@ class TestPlagiarismDetectionNetwork:
         assert hasattr(network, 'citation_detector')
     
     def test_semantic_similarity_detection(self, protection_config, plagiarism_corpus):
-        """Test semantic similarity detection"""
+        """
+Test semantic similarity detection"""
         network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
@@ -453,7 +462,8 @@ class TestDeepfakeDetectionNetwork:
     """Test DeepfakeDetectionNetwork functionality"""
     
     def test_deepfake_network_initialization(self, protection_config):
-        """Test DeepfakeDetectionNetwork initialization"""
+        """
+Test DeepfakeDetectionNetwork initialization"""
         network = DeepfakeDetectionNetwork(protection_config)
         
         assert hasattr(network, 'authenticity_detector')
@@ -463,7 +473,8 @@ class TestDeepfakeDetectionNetwork:
         assert hasattr(network, 'confidence_estimator')
     
     def test_audio_deepfake_detection(self, protection_config, content_samples):
-        """Test audio deepfake detection"""
+        """
+Test audio deepfake detection"""
         network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
@@ -608,7 +619,8 @@ class TestCopyrightProtectionNetwork:
     """Test CopyrightProtectionNetwork functionality"""
     
     def test_copyright_network_initialization(self, protection_config):
-        """Test CopyrightProtectionNetwork initialization"""
+        """
+Test CopyrightProtectionNetwork initialization"""
         network = CopyrightProtectionNetwork(protection_config)
         
         assert hasattr(network, 'content_analyzer')
@@ -618,7 +630,8 @@ class TestCopyrightProtectionNetwork:
         assert hasattr(network, 'violation_classifier')
     
     def test_copyright_infringement_detection(self, protection_config, content_samples, copyright_database):
-        """Test copyright infringement detection"""
+        """
+Test copyright infringement detection"""
         network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
@@ -801,7 +814,8 @@ class TestProtectionNetworksPerformance:
     """Performance tests for protection networks"""
     
     def test_fingerprinting_speed(self, protection_config, content_samples):
-        """Test fingerprinting speed"""
+        """
+Test fingerprinting speed"""
         network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
@@ -902,7 +916,8 @@ class TestProtectionNetworksRobustness:
     """Robustness tests for protection networks"""
     
     def test_adversarial_attack_resistance(self, protection_config, content_samples):
-        """Test resistance to adversarial attacks"""
+        """
+Test resistance to adversarial attacks"""
         network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
@@ -985,7 +1000,8 @@ class TestProtectionNetworksIntegration:
     """Integration tests for protection networks"""
     
     def test_comprehensive_content_protection_pipeline(self, protection_config, content_samples, copyright_database, plagiarism_corpus):
-        """Test complete content protection pipeline"""
+        """
+Test complete content protection pipeline"""
         # Initialize all protection networks
         fingerprinting_net = ContentFingerprintingNetwork(protection_config)
         plagiarism_net = PlagiarismDetectionNetwork(protection_config)

@@ -6,8 +6,9 @@ including TensorFlow, PyTorch, ONNX, and custom model formats
 with auto-scaling, monitoring, and A/B testing support.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelFormat(Enum):
-    """Supported model formats"""
+    """
+Supported model formats"""
+
     TENSORFLOW_SAVEDMODEL = "tensorflow_savedmodel"
     TENSORFLOW_LITE = "tensorflow_lite"
     PYTORCH_TORCHSCRIPT = "pytorch_torchscript"
@@ -41,6 +44,7 @@ class ModelFormat(Enum):
 
 class ServingStrategy(Enum):
     """Model serving strategies"""
+
     BLUE_GREEN = "blue_green"
     ROLLING_UPDATE = "rolling_update"
     A_B_TESTING = "a_b_testing"
@@ -50,6 +54,7 @@ class ServingStrategy(Enum):
 
 class ServingMode(Enum):
     """Serving modes"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"

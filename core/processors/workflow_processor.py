@@ -23,6 +23,7 @@ Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(str, Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -78,6 +81,7 @@ class WorkflowStatus(str, Enum):
 
 class StepStatus(str, Enum):
     """Individual step status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -88,6 +92,7 @@ class StepStatus(str, Enum):
 
 class WorkflowTrigger(str, Enum):
     """Workflow trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -98,6 +103,7 @@ class WorkflowTrigger(str, Enum):
 
 class StepType(str, Enum):
     """Types of workflow steps"""
+
     PROCESSOR = "processor"
     CONDITION = "condition"
     PARALLEL = "parallel"
@@ -132,7 +138,8 @@ class WorkflowStep:
 
 @dataclass  
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     id: str
     name: str
     description: str
@@ -155,7 +162,8 @@ class WorkflowDefinition:
         return next((step for step in self.steps if step.id == step_id), None)
     
     def get_dependencies_graph(self) -> nx.DiGraph:
-        """Build dependency graph"""
+        """
+Build dependency graph"""
         graph = nx.DiGraph()
         
         for step in self.steps:
@@ -168,7 +176,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Runtime workflow execution instance"""
+    """
+Runtime workflow execution instance"""
     id: str
     workflow_id: str
     definition: WorkflowDefinition
@@ -891,7 +900,8 @@ class WorkflowProcessor:
         pass
     
     async def _persist_execution_result(self, execution: WorkflowExecution):
-        """Persist execution result to storage"""
+        """
+Persist execution result to storage"""
         # Implementation would depend on storage backend
         pass
     
@@ -949,7 +959,8 @@ class WorkflowProcessor:
         return None
     
     async def pause_workflow(self, execution_id: str) -> Dict[str, Any]:
-        """Pause workflow execution"""
+        """
+Pause workflow execution"""
         try:
             execution = self._active_workflows.get(execution_id)
             if not execution:

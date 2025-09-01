@@ -6,13 +6,14 @@ simplified access to all crawler functionality, orchestration, and
 monitoring capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -36,7 +37,8 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class CrawlerManagerSingleton:
-    """Singleton manager for the entire crawler system."""
+    """
+Singleton manager for the entire crawler system."""
     
     _instance = None
     _initialized = False
@@ -54,7 +56,8 @@ class CrawlerManagerSingleton:
             self._initialized = True
     
     def initialize(self, config: Dict[str, Any]):
-        """Initialize the crawler system with configuration."""
+        """
+Initialize the crawler system with configuration."""
         try:
             self.config = config
             self.orchestrator = CrawlerOrchestrator(config)
@@ -119,15 +122,18 @@ def initialize_crawler_system(config: Dict[str, Any]) -> bool:
     return crawler_manager.initialize(config)
 
 async def start_crawler_system():
-    """Start the complete crawler monitoring system."""
+    """
+Start the complete crawler monitoring system."""
     await crawler_manager.start_system()
 
 def stop_crawler_system():
-    """Stop the complete crawler monitoring system."""
+    """
+Stop the complete crawler monitoring system."""
     crawler_manager.stop_system()
 
 def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive system status and metrics."""
+    """
+Get comprehensive system status and metrics."""
     return crawler_manager.get_status()
 
 def create_monitoring_task(
@@ -170,7 +176,8 @@ def create_monitoring_task(
     )
 
 def add_monitoring_task(task: CrawlingTask) -> str:
-    """Add a monitoring task to the orchestrator."""
+    """
+Add a monitoring task to the orchestrator."""
     if not crawler_manager.orchestrator:
         raise RuntimeError("System not initialized")
     
@@ -191,14 +198,16 @@ def get_task_status(task_id: str) -> Optional[Dict[str, Any]]:
     return crawler_manager.orchestrator.get_task_status(task_id)
 
 def get_real_time_metrics() -> Dict[str, Any]:
-    """Get real-time system metrics and performance data."""
+    """
+Get real-time system metrics and performance data."""
     if not crawler_manager.monitor:
         return {}
     
     return crawler_manager.monitor.get_real_time_dashboard_data()
 
 def get_violation_analytics(time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-    """Get comprehensive violation analytics."""
+    """
+Get comprehensive violation analytics."""
     if not crawler_manager.monitor:
         return {}
     
@@ -208,7 +217,8 @@ def get_historical_metrics(
     crawler_type: Optional[CrawlerType] = None,
     time_range: timedelta = timedelta(hours=24)
 ) -> Dict[str, Any]:
-    """Get historical performance metrics."""
+    """
+Get historical performance metrics."""
     if not crawler_manager.monitor:
         return {}
     
@@ -216,23 +226,28 @@ def get_historical_metrics(
 
 # Convenience functions for quick crawler creation
 def create_youtube_crawler(config: Dict[str, Any]) -> YouTubeCrawler:
-    """Create and configure a YouTube crawler."""
+    """
+Create and configure a YouTube crawler."""
     return YouTubeCrawler(config)
 
 def create_tiktok_crawler(config: Dict[str, Any]) -> TikTokCrawler:
-    """Create and configure a TikTok crawler."""
+    """
+Create and configure a TikTok crawler."""
     return TikTokCrawler(config)
 
 def create_instagram_crawler(config: Dict[str, Any]) -> InstagramCrawler:
-    """Create and configure an Instagram crawler."""
+    """
+Create and configure an Instagram crawler."""
     return InstagramCrawler(config)
 
 def create_twitter_crawler(config: Dict[str, Any]) -> TwitterCrawler:
-    """Create and configure a Twitter crawler."""
+    """
+Create and configure a Twitter crawler."""
     return TwitterCrawler(config)
 
 def create_web_crawler(config: Dict[str, Any]) -> UniversalWebCrawler:
-    """Create and configure a universal web crawler."""
+    """
+Create and configure a universal web crawler."""
     return UniversalWebCrawler(config)
 
 # Quick setup functions

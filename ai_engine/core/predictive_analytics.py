@@ -4,7 +4,7 @@ Advanced AI-powered analytics system providing predictive insights, trend analys
 and business intelligence for content creators platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This cutting-edge predictive analytics system is protected intellectual property.
@@ -12,6 +12,7 @@ Any unauthorized copying, distribution, or use will result in immediate legal ac
 
 Business Logic: Data Collection → Pattern Recognition → Predictive Modeling → Trend Analysis → Business Insights → Decision Support
 """
+
 import asyncio
 import json
 import uuid
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class PredictionType(Enum):
-    """Types of predictions"""
+    """
+Types of predictions"""
+
     AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_RATE = "engagement_rate"
     REVENUE_FORECAST = "revenue_forecast"
@@ -68,6 +71,7 @@ class PredictionType(Enum):
 
 class TrendDirection(Enum):
     """Trend direction indicators"""
+
     STRONGLY_RISING = "strongly_rising"
     RISING = "rising"
     STABLE = "stable"
@@ -79,6 +83,7 @@ class TrendDirection(Enum):
 
 class AnalyticsTimeframe(Enum):
     """Analytics timeframes"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -90,6 +95,7 @@ class AnalyticsTimeframe(Enum):
 
 class BusinessMetric(Enum):
     """Business metrics to track"""
+
     TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING_REVENUE = "mrr"
     CUSTOMER_ACQUISITION_COST = "cac"
@@ -247,7 +253,8 @@ class TimeSeriesAnalyzer:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for time series analysis"""
+        """
+Initialize ML models for time series analysis"""
         if ML_AVAILABLE:
             try:
                 # Different models for different prediction tasks
@@ -328,7 +335,8 @@ class TimeSeriesAnalyzer:
         return df
     
     def _calculate_basic_statistics(self, df: pd.DataFrame) -> Dict[str, float]:
-        """Calculate basic statistical measures"""
+        """
+Calculate basic statistical measures"""
         try:
             if df.empty:
                 return {}
@@ -464,7 +472,8 @@ class TimeSeriesAnalyzer:
         return dominant_cycle
     
     def _detect_anomalies(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies in the time series"""
+        """
+Detect anomalies in the time series"""
         try:
             if len(df) < 3:
                 return []
@@ -725,7 +734,8 @@ class PredictiveModelEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize predictive models"""
+        """
+Initialize predictive models"""
         logger.info("Predictive model engine initialized")
     
     async def generate_prediction(self, 

@@ -35,6 +35,7 @@ and will be prosecuted to the full extent of the law. Legal action will be taken
 
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 """
+
 import logging
 import sys
 import os
@@ -582,11 +583,13 @@ class PartitioningSystem:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.shutdown()
 
 def main():
-    """Main entry point for testing and demonstration"""
+    """
+Main entry point for testing and demonstration"""
     import argparse
     
     parser = argparse.ArgumentParser(description='Database Partitioning System')

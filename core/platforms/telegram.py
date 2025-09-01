@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class TelegramPlatform(PlatformBase):
-    """Telegram platform integration"""
+    """
+Telegram platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Telegram platform"""
+        """
+Initialize Telegram platform"""
         super().__init__(config)
         self.bot_token = self.config.credentials.get('bot_token')
         self.api_base = f"https://api.telegram.org/bot{self.bot_token}" if self.bot_token else None
@@ -40,7 +43,8 @@ class TelegramPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Telegram Bot Token"""
+        """
+Authenticate with Telegram Bot Token"""
         try:
             if not self.bot_token:
                 logger.error("Telegram requires bot_token")
@@ -78,7 +82,8 @@ class TelegramPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make request to Telegram Bot API"""
+        """
+Make request to Telegram Bot API"""
         try:
             session = await self._get_session()
             
@@ -186,7 +191,8 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendMessage', json=data)
     
     async def _send_photo(self, chat_id: str, photo_path: str, metadata: ContentMetadata) -> Optional[Dict[str, Any]]:
-        """Send photo message"""
+        """
+Send photo message"""
         caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]  # Telegram caption limit
         
         data = {
@@ -221,7 +227,8 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendAudio', json=data)
     
     async def _send_document(self, chat_id: str, document_path: str, metadata: ContentMetadata) -> Optional[Dict[str, Any]]:
-        """Send document message"""
+        """
+Send document message"""
         caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]
         
         data = {

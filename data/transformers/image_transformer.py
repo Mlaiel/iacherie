@@ -5,9 +5,10 @@ Advanced image transformation, conversion, and enhancement capabilities
 for creators' image content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import os
@@ -35,6 +36,7 @@ logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
     """Supported image formats."""
+
     JPEG = "jpg"
     PNG = "png"
     WEBP = "webp"
@@ -47,6 +49,7 @@ class ImageFormat(Enum):
 
 class ImageQuality(Enum):
     """Image quality presets."""
+
     LOW = "low"          # Compressed, small file size
     MEDIUM = "medium"    # Balanced quality/size
     HIGH = "high"        # High quality, larger size
@@ -56,6 +59,7 @@ class ImageQuality(Enum):
 
 class ColorSpace(Enum):
     """Color space options."""
+
     RGB = "RGB"
     RGBA = "RGBA"
     GRAYSCALE = "L"
@@ -791,7 +795,8 @@ class ImageTransformer:
         settings: ImageSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
+        """
+Generate output file path."""
         if requested_output:
             return Path(requested_output)
         
@@ -831,7 +836,8 @@ class ImageConverter:
 
 
 class ImageEnhancer:
-    """Simplified image enhancer interface."""
+    """
+Simplified image enhancer interface."""
     
     def __init__(self, transformer: Optional[ImageTransformer] = None):
         self.transformer = transformer or ImageTransformer()
@@ -842,5 +848,6 @@ class ImageEnhancer:
         output_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Enhance image quality."""
+        """
+Enhance image quality."""
         return await self.transformer.enhance(input_path, output_path, options)

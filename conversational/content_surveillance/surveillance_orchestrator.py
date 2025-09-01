@@ -16,12 +16,13 @@ for the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This orchestration system is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution.
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaskPriority(Enum):
-    """Task priority levels"""
+    """
+Task priority levels"""
+
     CRITICAL = 1    # Immediate action required
     HIGH = 2        # Process within 1 hour
     NORMAL = 3      # Process within 24 hours
@@ -52,7 +55,9 @@ class TaskPriority(Enum):
 
 
 class OperationStatus(Enum):
-    """Operation status tracking"""
+    """
+Operation status tracking"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -81,7 +86,8 @@ class SurveillanceTask:
 
 @dataclass
 class WorkerNode:
-    """Surveillance worker node"""
+    """
+Surveillance worker node"""
     worker_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     hostname: str = None
     is_active: bool = True
@@ -94,7 +100,8 @@ class WorkerNode:
 
 @dataclass
 class OperationMetrics:
-    """Real-time operation metrics"""
+    """
+Real-time operation metrics"""
     total_tasks: int = 0
     pending_tasks: int = 0
     running_tasks: int = 0
@@ -221,7 +228,8 @@ class SurveillanceOrchestrator:
         return min(total_duration, timedelta(hours=4))  # Cap at 4 hours
     
     async def _task_scheduler_loop(self):
-        """Main task scheduling loop"""
+        """
+Main task scheduling loop"""
         while True:
             try:
                 await self._process_task_queue()
@@ -452,7 +460,8 @@ class SurveillanceOrchestrator:
             )
     
     async def _process_surveillance_results(self, task: SurveillanceTask, surveillance_status: Dict):
-        """Process surveillance results and update metrics"""
+        """
+Process surveillance results and update metrics"""
         try:
             report = surveillance_status.get('report')
             if not report:

@@ -12,8 +12,9 @@ This training system and methodologies are the exclusive intellectual property o
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 """
+
 import asyncio
 import logging
 import time
@@ -94,7 +95,9 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class TrainingStatus(Enum):
-    """Training job status enumeration"""
+    """
+Training job status enumeration"""
+
     QUEUED = "queued"
     PREPARING = "preparing"
     TRAINING = "training"
@@ -107,6 +110,7 @@ class TrainingStatus(Enum):
 
 class OptimizationMethod(Enum):
     """Hyperparameter optimization methods"""
+
     GRID_SEARCH = "grid_search"
     RANDOM_SEARCH = "random_search"
     BAYESIAN = "bayesian"
@@ -115,6 +119,7 @@ class OptimizationMethod(Enum):
 
 class ValidationStrategy(Enum):
     """Model validation strategies"""
+
     TRAIN_TEST_SPLIT = "train_test_split"
     K_FOLD_CV = "k_fold_cv"
     STRATIFIED_K_FOLD = "stratified_k_fold"
@@ -221,7 +226,8 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingResult:
-    """Complete training job result"""
+    """
+Complete training job result"""
     job_id: str
     status: TrainingStatus
     model_name: str
@@ -906,7 +912,8 @@ class ModelTrainer:
         return X, y
 
     async def _validate_training_config(self, config: TrainingConfig, data: pd.DataFrame) -> Dict[str, Any]:
-        """Validate training configuration"""
+        """
+Validate training configuration"""
         errors = []
         
         if not config.model_name:
@@ -957,7 +964,8 @@ class ModelTrainer:
         return grid_search.best_params_
 
     async def _random_search_optimization(self, X_train, X_val, y_train, y_val, config: TrainingConfig, n_iterations: int) -> Dict[str, Any]:
-        """Random search hyperparameter optimization"""
+        """
+Random search hyperparameter optimization"""
         algorithm = self._get_algorithm_instance(config)
         
         random_search = RandomizedSearchCV(
@@ -975,7 +983,8 @@ class ModelTrainer:
         return random_search.best_params_
 
     async def _optuna_optimization(self, X_train, X_val, y_train, y_val, config: TrainingConfig, n_trials: int) -> Dict[str, Any]:
-        """Optuna-based hyperparameter optimization"""
+        """
+Optuna-based hyperparameter optimization"""
         def objective(trial: Trial) -> float:
             # Define hyperparameter suggestions based on algorithm
             params = {}
@@ -1123,7 +1132,8 @@ class TrainingPipeline:
     async def run_pipeline(self, 
                          data_source: Union[str, pd.DataFrame],
                          pipeline_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute complete training pipeline"""
+        """
+Execute complete training pipeline"""
         try:
             logger.info(f"Starting training pipeline: {self.pipeline_id}")
             

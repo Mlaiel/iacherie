@@ -4,8 +4,9 @@ Defines interfaces for system monitoring, alerting, performance tracking,
 health monitoring and compliance monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
@@ -13,7 +14,9 @@ from enum import Enum
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -23,6 +26,7 @@ class AlertSeverity(Enum):
 
 class MonitoringType(Enum):
     """Types of monitoring operations."""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
@@ -32,6 +36,7 @@ class MonitoringType(Enum):
 
 class MonitoringMetric(Enum):
     """System monitoring metrics."""
+
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
@@ -45,6 +50,7 @@ class MonitoringMetric(Enum):
 
 class HealthStatus(Enum):
     """System health status levels."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -80,7 +86,8 @@ class MonitoringInterface(ABC):
         application_id: str,
         performance_thresholds: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Monitor application performance against thresholds."""
+        """
+Monitor application performance against thresholds."""
         pass
     
     @abstractmethod
@@ -89,7 +96,8 @@ class MonitoringInterface(ABC):
         tracking_scope: List[str],
         tracking_period: str
     ) -> Dict[str, Any]:
-        """Track user activity patterns and trends."""
+        """
+Track user activity patterns and trends."""
         pass
     
     @abstractmethod
@@ -98,7 +106,8 @@ class MonitoringInterface(ABC):
         processing_pipeline: str,
         monitoring_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Monitor content processing pipeline performance."""
+        """
+Monitor content processing pipeline performance."""
         pass
     
     @abstractmethod
@@ -107,7 +116,8 @@ class MonitoringInterface(ABC):
         metric_history: Dict[str, List[float]],
         analysis_period: str
     ) -> Dict[str, Any]:
-        """Analyze system performance trends and patterns."""
+        """
+Analyze system performance trends and patterns."""
         pass
     
     @abstractmethod
@@ -115,12 +125,14 @@ class MonitoringInterface(ABC):
         self,
         dashboard_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate real-time monitoring dashboard data."""
+        """
+Generate real-time monitoring dashboard data."""
         pass
 
 
 class AlertManagerInterface(ABC):
-    """Interface for alert management and notification."""
+    """
+Interface for alert management and notification."""
     
     @abstractmethod
     async def create_alert_rule(
@@ -149,7 +161,8 @@ class AlertManagerInterface(ABC):
         severity: AlertSeverity,
         alert_data: Dict[str, Any]
     ) -> str:
-        """Trigger alert based on detected condition."""
+        """
+Trigger alert based on detected condition."""
         pass
     
     @abstractmethod
@@ -158,7 +171,8 @@ class AlertManagerInterface(ABC):
         alert_id: str,
         escalation_policy: Dict[str, Any]
     ) -> bool:
-        """Manage alert escalation according to policy."""
+        """
+Manage alert escalation according to policy."""
         pass
     
     @abstractmethod
@@ -168,7 +182,8 @@ class AlertManagerInterface(ABC):
         acknowledger_id: str,
         acknowledgment_note: Optional[str] = None
     ) -> bool:
-        """Acknowledge alert and stop notifications."""
+        """
+Acknowledge alert and stop notifications."""
         pass
     
     @abstractmethod
@@ -178,7 +193,8 @@ class AlertManagerInterface(ABC):
         resolver_id: str,
         resolution_details: Dict[str, Any]
     ) -> bool:
-        """Mark alert as resolved with details."""
+        """
+Mark alert as resolved with details."""
         pass
     
     @abstractmethod
@@ -186,12 +202,14 @@ class AlertManagerInterface(ABC):
         self,
         channel_config: Dict[str, Any]
     ) -> List[str]:
-        """Configure alert notification channels."""
+        """
+Configure alert notification channels."""
         pass
 
 
 class PerformanceTrackerInterface(ABC):
-    """Interface for performance tracking and optimization."""
+    """
+Interface for performance tracking and optimization."""
     
     @abstractmethod
     async def track_api_performance(
@@ -219,7 +237,8 @@ class PerformanceTrackerInterface(ABC):
         system_component: str,
         analysis_period: str
     ) -> List[Dict[str, Any]]:
-        """Analyze and identify performance bottlenecks."""
+        """
+Analyze and identify performance bottlenecks."""
         pass
     
     @abstractmethod
@@ -228,7 +247,8 @@ class PerformanceTrackerInterface(ABC):
         performance_data: Dict[str, Any],
         optimization_goals: List[str]
     ) -> List[Dict[str, Any]]:
-        """Generate performance optimization recommendations."""
+        """
+Generate performance optimization recommendations."""
         pass
     
     @abstractmethod
@@ -237,7 +257,8 @@ class PerformanceTrackerInterface(ABC):
         resource_types: List[str],
         tracking_duration: int
     ) -> Dict[str, Any]:
-        """Track system resource utilization patterns."""
+        """
+Track system resource utilization patterns."""
         pass
     
     @abstractmethod
@@ -246,7 +267,8 @@ class PerformanceTrackerInterface(ABC):
         benchmark_suite: str,
         comparison_baseline: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Benchmark system performance against baseline."""
+        """
+Benchmark system performance against baseline."""
         pass
     
     @abstractmethod
@@ -255,12 +277,14 @@ class PerformanceTrackerInterface(ABC):
         cache_system: str,
         optimization_strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize cache performance and hit rates."""
+        """
+Optimize cache performance and hit rates."""
         pass
 
 
 class SystemHealthInterface(ABC):
-    """Interface for system health monitoring."""
+    """
+Interface for system health monitoring."""
     
     @abstractmethod
     async def check_system_health(
@@ -283,7 +307,8 @@ class SystemHealthInterface(ABC):
         self,
         service_map: Dict[str, List[str]]
     ) -> Dict[str, Any]:
-        """Monitor health of service dependencies."""
+        """
+Monitor health of service dependencies."""
         pass
     
     @abstractmethod
@@ -291,7 +316,8 @@ class SystemHealthInterface(ABC):
         self,
         anomaly_detection_config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Detect system anomalies using ML algorithms."""
+        """
+Detect system anomalies using ML algorithms."""
         pass
     
     @abstractmethod
@@ -300,7 +326,8 @@ class SystemHealthInterface(ABC):
         prediction_model: str,
         system_metrics: Dict[str, List[float]]
     ) -> Dict[str, Any]:
-        """Predict potential system failures."""
+        """
+Predict potential system failures."""
         pass
     
     @abstractmethod
@@ -309,7 +336,8 @@ class SystemHealthInterface(ABC):
         report_scope: List[str],
         report_period: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive system health report."""
+        """
+Generate comprehensive system health report."""
         pass
     
     @abstractmethod
@@ -318,12 +346,14 @@ class SystemHealthInterface(ABC):
         failure_scenario: str,
         recovery_procedures: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Implement automated system recovery procedures."""
+        """
+Implement automated system recovery procedures."""
         pass
 
 
 class ComplianceMonitorInterface(ABC):
-    """Interface for compliance monitoring and reporting."""
+    """
+Interface for compliance monitoring and reporting."""
     
     @abstractmethod
     async def monitor_data_privacy_compliance(
@@ -349,7 +379,8 @@ class ComplianceMonitorInterface(ABC):
         security_frameworks: List[str],
         audit_scope: List[str]
     ) -> Dict[str, Any]:
-        """Audit compliance with security frameworks."""
+        """
+Audit compliance with security frameworks."""
         pass
     
     @abstractmethod
@@ -357,7 +388,8 @@ class ComplianceMonitorInterface(ABC):
         self,
         content_usage_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Track compliance with content licensing terms."""
+        """
+Track compliance with content licensing terms."""
         pass
     
     @abstractmethod
@@ -366,7 +398,8 @@ class ComplianceMonitorInterface(ABC):
         financial_regulations: List[str],
         transaction_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Monitor compliance with financial regulations."""
+        """
+Monitor compliance with financial regulations."""
         pass
     
     @abstractmethod
@@ -375,7 +408,8 @@ class ComplianceMonitorInterface(ABC):
         compliance_framework: str,
         reporting_period: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Generate compliance report for specified framework."""
+        """
+Generate compliance report for specified framework."""
         pass
     
     @abstractmethod
@@ -383,5 +417,6 @@ class ComplianceMonitorInterface(ABC):
         self,
         control_requirements: List[Dict[str, Any]]
     ) -> Dict[str, bool]:
-        """Implement automated compliance controls."""
+        """
+Implement automated compliance controls."""
         pass

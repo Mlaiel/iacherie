@@ -19,6 +19,7 @@ Team Specializations:
 - AI Prompt Engineer & Content Protection Specialist
 - Audio Processing & Digital Rights Management Expert
 """
+
 from .web_scraper import WebScraper
 from .content_scraper import ContentScraper
 from .platform_scraper import PlatformScraper
@@ -97,7 +98,8 @@ class ScrapersManager:
         return scrapers.get(scraper_type.lower())
         
     def get_all_scrapers(self) -> Dict[str, Any]:
-        """Get all available scrapers."""
+        """
+Get all available scrapers."""
         return {
             'web': self.web_scraper,
             'content': self.content_scraper,
@@ -114,6 +116,7 @@ class ScrapersManager:
         }
         
     def list_available_scrapers(self) -> list:
-        """List all available scraper types."""
+        """
+List all available scraper types."""
         return ['web', 'content', 'platform', 'stealth', 'batch', 'realtime', 
                 'social', 'media', 'selenium', 'api', 'proxy', 'mobile']

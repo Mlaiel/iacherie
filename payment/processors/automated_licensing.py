@@ -5,8 +5,9 @@ Automated licensing and royalty payment processor with smart contracts,
 usage tracking, and multi-party revenue distribution for content licensing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Content license types"""
+    """
+Content license types"""
+
     SYNC_RIGHTS = "sync_rights"
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
@@ -38,6 +41,7 @@ class LicenseType(Enum):
 
 class UsageType(Enum):
     """Content usage types"""
+
     PLAY = "play"
     DOWNLOAD = "download"
     STREAM = "stream"
@@ -50,6 +54,7 @@ class UsageType(Enum):
 
 class LicenseStatus(Enum):
     """License status"""
+
     ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -60,6 +65,7 @@ class LicenseStatus(Enum):
 
 class RoyaltyType(Enum):
     """Royalty distribution types"""
+
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -92,7 +98,8 @@ class LicenseAgreement:
 
 @dataclass
 class UsageReport:
-    """Content usage reporting"""
+    """
+Content usage reporting"""
     id: str
     content_id: str
     license_id: str
@@ -108,7 +115,8 @@ class UsageReport:
 
 @dataclass
 class RoyaltyDistribution:
-    """Royalty payment distribution"""
+    """
+Royalty payment distribution"""
     id: str
     content_id: str
     license_id: str
@@ -145,7 +153,8 @@ class AutomatedLicensingProcessor:
         blockchain_config: Optional[Dict[str, Any]] = None,
         payment_processors: Optional[Dict[str, Any]] = None
     ):
-        """Initialize automated licensing processor"""
+        """
+Initialize automated licensing processor"""
         self.blockchain_config = blockchain_config or {}
         self.payment_processors = payment_processors or {}
         self.logger = logging.getLogger(__name__)

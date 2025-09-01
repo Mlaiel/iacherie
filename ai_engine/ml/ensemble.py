@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive ensemble learning capabilities including
 model blending, voting systems, stacking, and advanced ensemble techniques.
 """
+
 import logging
 import numpy as np
 import copy
@@ -18,7 +19,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class EnsembleStrategy(Enum):
-    """Ensemble learning strategies"""
+    """
+Ensemble learning strategies"""
+
     VOTING = "voting"
     BAGGING = "bagging"
     BOOSTING = "boosting"
@@ -28,12 +31,14 @@ class EnsembleStrategy(Enum):
 
 class VotingType(Enum):
     """Types of voting for ensemble"""
+
     HARD = "hard"
     SOFT = "soft"
     WEIGHTED = "weighted"
 
 class BlendingStrategy(Enum):
     """Model blending strategies"""
+
     SIMPLE_AVERAGE = "simple_average"
     WEIGHTED_AVERAGE = "weighted_average"
     RANK_AVERAGE = "rank_average"
@@ -52,7 +57,8 @@ class ModelInfo:
 
 @dataclass
 class EnsembleConfig:
-    """Configuration for ensemble learning"""
+    """
+Configuration for ensemble learning"""
     strategy: EnsembleStrategy
     voting_type: VotingType = VotingType.HARD
     blending_strategy: BlendingStrategy = BlendingStrategy.WEIGHTED_AVERAGE
@@ -166,7 +172,8 @@ class EnsembleManager:
         model_info.performance_score = np.random.uniform(0.7, 0.95)
     
     def _fit_meta_model(self, X: np.ndarray, y: np.ndarray):
-        """Fit meta-model for stacking ensemble"""
+        """
+Fit meta-model for stacking ensemble"""
         try:
             # Generate meta-features using cross-validation
             meta_features = self._generate_meta_features(X, y)
@@ -211,7 +218,8 @@ class EnsembleManager:
         return meta_features
     
     def _create_meta_model(self):
-        """Create meta-model for stacking"""
+        """
+Create meta-model for stacking"""
         # Simplified meta-model
         return {
             "type": self.config.meta_learner,
@@ -269,7 +277,8 @@ class EnsembleManager:
             }
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """Make ensemble predictions"""
+        """
+Make ensemble predictions"""
         try:
             if not self.is_fitted:
                 raise ValueError("Ensemble not fitted. Call fit() first.")
@@ -337,7 +346,8 @@ class EnsembleManager:
         return predictions
     
     def _blending_predict(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using blending"""
+        """
+Make predictions using blending"""
         all_predictions = []
         weights = []
         
@@ -370,17 +380,20 @@ class EnsembleManager:
         return predictions
     
     def _predict_with_model(self, model_info: ModelInfo, X: np.ndarray) -> np.ndarray:
-        """Make prediction with individual model"""
+        """
+Make prediction with individual model"""
         # Simulate model prediction
         # In production, this would call the actual model's predict method
         return np.random.random(len(X))
     
     def get_model_weights(self) -> Dict[str, float]:
-        """Get current ensemble weights for all models"""
+        """
+Get current ensemble weights for all models"""
         return self.ensemble_weights.copy()
     
     def get_ensemble_info(self) -> Dict[str, Any]:
-        """Get comprehensive ensemble information"""
+        """
+Get comprehensive ensemble information"""
         return {
             "num_models": len(self.models),
             "strategy": self.config.strategy.value,
@@ -484,7 +497,8 @@ class ModelBlender:
             self.blend_weights[model_id] = rank_weight
     
     def blend_predictions(self) -> np.ndarray:
-        """Generate blended predictions"""
+        """
+Generate blended predictions"""
         try:
             if not self.model_predictions:
                 raise ValueError("No model predictions available")
@@ -572,7 +586,8 @@ class VotingClassifier:
         pass
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using voting"""
+        """
+Make predictions using voting"""
         try:
             if not self.is_fitted:
                 raise ValueError("Voting classifier not fitted. Call fit() first.")
@@ -606,7 +621,8 @@ class VotingClassifier:
         return final_predictions
     
     def _soft_voting_predict(self, X: np.ndarray) -> np.ndarray:
-        """Soft voting predictions (average probabilities)"""
+        """
+Soft voting predictions (average probabilities)"""
         all_probabilities = []
         
         for classifier_id, classifier in self.classifiers.items():
@@ -620,7 +636,8 @@ class VotingClassifier:
         return final_predictions
     
     def _weighted_voting_predict(self, X: np.ndarray) -> np.ndarray:
-        """Weighted voting predictions"""
+        """
+Weighted voting predictions"""
         if self.voting_type == VotingType.HARD:
             # Weighted hard voting
             vote_counts = np.zeros((len(X), len(self.class_labels)))
@@ -651,18 +668,21 @@ class VotingClassifier:
         return final_predictions
     
     def _predict_with_classifier(self, classifier: Any, X: np.ndarray) -> np.ndarray:
-        """Make prediction with individual classifier"""
+        """
+Make prediction with individual classifier"""
         # Simulate classifier prediction
         return np.random.randint(0, len(self.class_labels), len(X))
     
     def _predict_proba_with_classifier(self, classifier: Any, X: np.ndarray) -> np.ndarray:
-        """Get prediction probabilities from individual classifier"""
+        """
+Get prediction probabilities from individual classifier"""
         # Simulate classifier probability prediction
         probabilities = np.random.dirichlet(np.ones(len(self.class_labels)), len(X))
         return probabilities
     
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        """Get ensemble prediction probabilities"""
+        """
+Get ensemble prediction probabilities"""
         try:
             if not self.is_fitted:
                 raise ValueError("Voting classifier not fitted. Call fit() first.")

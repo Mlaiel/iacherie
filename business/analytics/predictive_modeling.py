@@ -7,6 +7,7 @@ algorithms, trend forecasting, and performance prediction capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions supported"""
+    """
+Types of predictions supported"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     VIEWS = "views"
     REVENUE = "revenue"
@@ -64,7 +67,8 @@ class PredictiveModelingEngine:
         self.model_accuracy = {}
         
     async def initialize(self) -> None:
-        """Initialize predictive modeling engine"""
+        """
+Initialize predictive modeling engine"""
         try:
             await self._setup_database_tables()
             await self._train_prediction_models()
@@ -98,7 +102,8 @@ class PredictiveModelingEngine:
             """)
 
     async def _train_prediction_models(self) -> None:
-        """Train predictive models with historical data"""
+        """
+Train predictive models with historical data"""
         try:
             # Initialize models for different prediction types
             for pred_type in PredictionType:
@@ -172,12 +177,14 @@ class PredictiveModelingEngine:
         self.model_accuracy[PredictionType.REVENUE] = 0.75
 
     async def _train_growth_model(self) -> None:
-        """Train follower growth prediction model"""
+        """
+Train follower growth prediction model"""
         # Similar implementation for growth prediction
         self.model_accuracy[PredictionType.FOLLOWER_GROWTH] = 0.68
 
     async def predict_engagement(self, creator_id: str, content_data: Dict[str, Any]) -> PredictionResult:
-        """Predict engagement rate for content"""
+        """
+Predict engagement rate for content"""
         try:
             # Prepare features
             features = np.array([[

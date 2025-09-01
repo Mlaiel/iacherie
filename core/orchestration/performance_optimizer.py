@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import statistics
@@ -28,7 +29,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies."""
+    """
+Performance optimization strategies."""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -38,6 +41,7 @@ class OptimizationStrategy(Enum):
 
 class PerformanceMetric(Enum):
     """Performance metric types."""
+
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     RESOURCE_UTILIZATION = "resource_utilization"
@@ -52,6 +56,7 @@ class PerformanceMetric(Enum):
 
 class OptimizationAction(Enum):
     """Available optimization actions."""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
@@ -80,7 +85,8 @@ class PerformanceTarget:
 
 @dataclass
 class PerformanceMeasurement:
-    """Individual performance measurement."""
+    """
+Individual performance measurement."""
     measurement_id: str
     target_id: str
     component_id: str
@@ -93,7 +99,8 @@ class PerformanceMeasurement:
 
 @dataclass
 class BottleneckDetection:
-    """Bottleneck detection result."""
+    """
+Bottleneck detection result."""
     detection_id: str
     component_id: str
     bottleneck_type: str
@@ -108,7 +115,8 @@ class BottleneckDetection:
 
 @dataclass
 class OptimizationPlan:
-    """Performance optimization plan."""
+    """
+Performance optimization plan."""
     plan_id: str
     component_id: str
     strategy: OptimizationStrategy
@@ -123,7 +131,8 @@ class OptimizationPlan:
 
 @dataclass
 class OptimizationExecution:
-    """Optimization plan execution."""
+    """
+Optimization plan execution."""
     execution_id: str
     plan_id: str
     status: str = "pending"
@@ -658,7 +667,8 @@ class PerformanceOptimizer:
         component_id: str,
         metrics: Dict[str, Any]
     ) -> List[BottleneckDetection]:
-        """Detect bottlenecks for a specific component."""
+        """
+Detect bottlenecks for a specific component."""
         bottlenecks = []
         
         for metric_name, metric_data in metrics.items():
@@ -709,7 +719,8 @@ class PerformanceOptimizer:
         metric_name: str,
         metric_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations for bottleneck resolution."""
+        """
+Generate recommendations for bottleneck resolution."""
         recommendations = []
         
         if 'cpu' in metric_name.lower():
@@ -770,7 +781,8 @@ class PerformanceOptimizer:
         metric_data: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> Optional[Dict[str, Any]]:
-        """Create optimization action for specific metric."""
+        """
+Create optimization action for specific metric."""
         current_value = metric_data.get('current_value', 0)
         target_value = metric_data.get('target_value', 0)
         
@@ -803,7 +815,8 @@ class PerformanceOptimizer:
         component_id: str,
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate aggressive optimization actions."""
+        """
+Generate aggressive optimization actions."""
         return [
             {
                 'action_id': str(uuid.uuid4()),
@@ -824,7 +837,8 @@ class PerformanceOptimizer:
         component_id: str,
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate conservative optimization actions."""
+        """
+Generate conservative optimization actions."""
         return [
             {
                 'action_id': str(uuid.uuid4()),
@@ -839,7 +853,8 @@ class PerformanceOptimizer:
         component_id: str,
         actions: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Estimate expected performance improvement."""
+        """
+Estimate expected performance improvement."""
         # Simplified improvement estimation
         improvement = {}
         
@@ -862,7 +877,8 @@ class PerformanceOptimizer:
         component_id: str,
         actions: List[Dict[str, Any]]
     ) -> str:
-        """Assess optimization risks."""
+        """
+Assess optimization risks."""
         risk_score = 0
         
         for action in actions:
@@ -887,7 +903,8 @@ class PerformanceOptimizer:
         return [action['action_id'] for action in sorted_actions]
     
     async def _create_rollback_plan(self, actions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Create rollback plan for optimization actions."""
+        """
+Create rollback plan for optimization actions."""
         rollback_actions = []
         
         for action in actions:
@@ -909,7 +926,8 @@ class PerformanceOptimizer:
         return rollback_actions
     
     async def _capture_baseline_metrics(self, component_id: str) -> Dict[str, float]:
-        """Capture current baseline metrics."""
+        """
+Capture current baseline metrics."""
         baseline = {}
         
         for target_id, target in self.performance_targets.items():
@@ -925,7 +943,8 @@ class PerformanceOptimizer:
         return baseline
     
     async def _verify_improvement(self, component_id: str, baseline_metrics: Dict[str, float]) -> float:
-        """Verify performance improvement after optimization."""
+        """
+Verify performance improvement after optimization."""
         current_metrics = await self._capture_baseline_metrics(component_id)
         
         total_improvement = 0.0
@@ -952,7 +971,8 @@ class PerformanceOptimizer:
         baseline_metrics: Dict[str, float],
         final_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate performance impact of optimization."""
+        """
+Calculate performance impact of optimization."""
         impact = {}
         
         for metric in baseline_metrics:
@@ -967,7 +987,8 @@ class PerformanceOptimizer:
         return impact
     
     async def _update_learning_model(self, plan: OptimizationPlan, execution: OptimizationExecution) -> None:
-        """Update learning model based on optimization results."""
+        """
+Update learning model based on optimization results."""
         component_id = plan.component_id
         
         if component_id not in self.optimization_history:
@@ -1027,7 +1048,8 @@ class PerformanceOptimizer:
         component_id: str,
         analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate performance recommendations."""
+        """
+Generate performance recommendations."""
         recommendations = []
         
         # Check for trending issues
@@ -1175,7 +1197,8 @@ class PerformanceOptimizer:
         return bool(target.target_id and target.name and target.target_value >= 0)
     
     async def _validate_measurement(self, measurement: PerformanceMeasurement) -> bool:
-        """Validate performance measurement."""
+        """
+Validate performance measurement."""
         return bool(
             measurement.measurement_id and 
             measurement.target_id and 
@@ -1184,7 +1207,8 @@ class PerformanceOptimizer:
         )
     
     async def get_optimization_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get optimization execution status."""
+        """
+Get optimization execution status."""
         # Check active executions
         if execution_id in self.active_executions:
             execution = self.active_executions[execution_id]
@@ -1211,11 +1235,13 @@ class PerformanceOptimizer:
         }
     
     async def get_component_performance(self, component_id: str) -> Dict[str, Any]:
-        """Get current performance status for component."""
+        """
+Get current performance status for component."""
         return await self.analyze_performance(component_id, 3600)
     
     async def get_optimizer_stats(self) -> Dict[str, Any]:
-        """Get performance optimizer statistics."""
+        """
+Get performance optimizer statistics."""
         return {
             **self.optimizer_stats,
             'active_targets': len(self.performance_targets),

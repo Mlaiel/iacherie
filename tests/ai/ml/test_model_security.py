@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Model Security Tests - Enterprise Grade Test Suite
+"""
+Model Security Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for ML model security, adversarial defense, privacy protection,
 data protection, audit logging, and compliance validation systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -58,10 +61,12 @@ from ai.ml.model_security import (
 
 
 class TestModelSecurityManager:
-    """Tests for core model security management functionality"""
+    """
+Tests for core model security management functionality"""
     
     def test_init_security_manager(self):
-        """Test security manager initialization"""
+        """
+Test security manager initialization"""
         manager = ModelSecurityManager(
             security_policies=["encryption", "access_control", "audit_logging"],
             threat_detection_enabled=True,
@@ -228,7 +233,8 @@ class TestAdversarialDefense:
     """Tests for adversarial attack defense mechanisms"""
     
     def test_init_adversarial_defense(self):
-        """Test adversarial defense initialization"""
+        """
+Test adversarial defense initialization"""
         defense = AdversarialDefense(
             defense_methods=["adversarial_training", "input_preprocessing", "certified_defense"],
             detection_enabled=True,
@@ -408,7 +414,8 @@ class TestPrivacyPreserver:
     """Tests for privacy preservation mechanisms"""
     
     def test_init_privacy_preserver(self):
-        """Test privacy preserver initialization"""
+        """
+Test privacy preserver initialization"""
         preserver = PrivacyPreserver(
             privacy_techniques=["differential_privacy", "federated_learning", "homomorphic_encryption"],
             privacy_budget=1.0,
@@ -598,7 +605,8 @@ class TestModelEncryption:
     """Tests for model encryption and secure storage"""
     
     def test_init_model_encryption(self):
-        """Test model encryption initialization"""
+        """
+Test model encryption initialization"""
         encryption = ModelEncryption(
             encryption_algorithms=["AES-256", "RSA-2048", "ChaCha20"],
             key_management_system="vault",
@@ -752,7 +760,8 @@ class TestAccessController:
     """Tests for access control and authorization"""
     
     def test_init_access_controller(self):
-        """Test access controller initialization"""
+        """
+Test access controller initialization"""
         controller = AccessController(
             authentication_methods=["oauth2", "jwt", "api_key"],
             authorization_model="rbac",
@@ -912,7 +921,8 @@ class TestAuditLogger:
     """Tests for audit logging and compliance tracking"""
     
     def test_init_audit_logger(self):
-        """Test audit logger initialization"""
+        """
+Test audit logger initialization"""
         logger = AuditLogger(
             log_levels=["INFO", "WARN", "ERROR", "AUDIT"],
             storage_backend="elasticsearch",
@@ -1043,7 +1053,8 @@ class TestModelSecurityIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_security_pipeline(self, trained_model, temp_dir):
-        """Test complete security pipeline integration"""
+        """
+Test complete security pipeline integration"""
         # Initialize security components
         security_manager = ModelSecurityManager(
             security_policies=["encryption", "access_control", "audit_logging"],

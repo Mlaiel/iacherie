@@ -2,6 +2,7 @@
 """Platform Integration Deployment Manager
 Handles deployment of platform APIs integration for multi-platform content monitoring
 """
+
 import os
 import sys
 import time
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class SupportedPlatform(Enum):
-    """Supported platforms for integration"""
+    """
+Supported platforms for integration"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -50,6 +53,7 @@ class SupportedPlatform(Enum):
 
 class IntegrationType(Enum):
     """Type of platform integration"""
+
     API_OFFICIAL = "api_official"
     API_UNOFFICIAL = "api_unofficial"
     WEB_SCRAPING = "web_scraping"
@@ -59,6 +63,7 @@ class IntegrationType(Enum):
 
 class MonitoringMode(Enum):
     """Content monitoring mode"""
+
     PASSIVE_MONITORING = "passive_monitoring"
     ACTIVE_SCANNING = "active_scanning"
     REAL_TIME_ALERTS = "real_time_alerts"
@@ -67,6 +72,7 @@ class MonitoringMode(Enum):
 
 class DataCollectionScope(Enum):
     """Scope of data collection"""
+
     METADATA_ONLY = "metadata_only"
     FULL_CONTENT = "full_content"
     ANALYTICS_DATA = "analytics_data"
@@ -90,7 +96,8 @@ class PlatformIntegrationConfig:
 
 @dataclass
 class PlatformDeploymentConfig:
-    """Platform deployment configuration"""
+    """
+Platform deployment configuration"""
     platforms: List[PlatformIntegrationConfig]
     global_settings: Dict[str, Any]
     monitoring_config: Dict[str, Any]
@@ -101,7 +108,8 @@ class PlatformDeploymentConfig:
 
 @dataclass
 class PlatformStatus:
-    """Status of platform integration"""
+    """
+Status of platform integration"""
     platform: SupportedPlatform
     status: str
     last_sync: datetime
@@ -119,7 +127,8 @@ class PlatformIntegrationDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize platform integration deployment manager"""
+        """
+Initialize platform integration deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/platform-integration-deployment.yaml"
         self.config = self._load_configuration()
         self.docker_client = docker.from_env()
@@ -291,7 +300,8 @@ class PlatformIntegrationDeploymentManager:
         }
     
     def _initialize_platform_configurations(self) -> None:
-        """Initialize platform-specific configurations"""
+        """
+Initialize platform-specific configurations"""
         platforms_config = self.config.get('platforms', {})
         
         for platform, config in platforms_config.items():
@@ -583,7 +593,8 @@ class PlatformIntegrationDeploymentManager:
         }
     
     def _create_platform_orchestrator_manifest(self, config: PlatformDeploymentConfig) -> Dict[str, Any]:
-        """Create platform orchestrator deployment manifest"""
+        """
+Create platform orchestrator deployment manifest"""
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -636,7 +647,8 @@ class PlatformIntegrationDeploymentManager:
         }
     
     def get_platform_integration_status(self) -> Dict[str, Any]:
-        """Get comprehensive platform integration status"""
+        """
+Get comprehensive platform integration status"""
         status = {
             'timestamp': datetime.now().isoformat(),
             'platforms': self._get_platforms_status(),
@@ -658,7 +670,8 @@ class PlatformIntegrationDeploymentManager:
         return status
     
     def _get_platforms_status(self) -> Dict[str, Any]:
-        """Get status of all platform integrations"""
+        """
+Get status of all platform integrations"""
         platforms_status = {}
         
         for platform in SupportedPlatform:
@@ -706,7 +719,8 @@ class PlatformIntegrationDeploymentManager:
         return platforms_status
     
     def _get_platform_status(self, platform: SupportedPlatform) -> PlatformStatus:
-        """Get detailed status for specific platform"""
+        """
+Get detailed status for specific platform"""
         # In production, these would be real metrics from monitoring system
         return PlatformStatus(
             platform=platform,

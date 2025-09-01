@@ -8,7 +8,7 @@ Technologies: Python, HDFS, GlusterFS, Ceph, MinIO Cluster, Kubernetes CSI
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Multi-format content → Distributed storage allocation → Replication strategy → 
 Load balancing → Fault tolerance → Performance optimization → Data consistency
 """
+
 import logging
 import asyncio
 import json
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributedStorageType(Enum):
-    """Distributed storage system types"""
+    """
+Distributed storage system types"""
+
     HDFS = "hdfs"
     GLUSTERFS = "glusterfs" 
     CEPH = "ceph"
@@ -56,6 +59,7 @@ class DistributedStorageType(Enum):
 
 class ReplicationStrategy(Enum):
     """Data replication strategies"""
+
     SINGLE_COPY = "single-copy"  # No replication
     DUAL_REPLICA = "dual-replica"  # 2 copies
     TRIPLE_REPLICA = "triple-replica"  # 3 copies
@@ -65,6 +69,7 @@ class ReplicationStrategy(Enum):
 
 class ConsistencyLevel(Enum):
     """Data consistency levels"""
+
     EVENTUAL = "eventual"  # Eventually consistent
     STRONG = "strong"  # Strong consistency
     CAUSAL = "causal"  # Causal consistency
@@ -73,6 +78,7 @@ class ConsistencyLevel(Enum):
 
 class ShardingStrategy(Enum):
     """Data sharding strategies"""
+
     HASH_BASED = "hash-based"
     RANGE_BASED = "range-based"
     DIRECTORY_BASED = "directory-based"
@@ -202,7 +208,8 @@ class DistributedStorageManager:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self._session:
             await self._session.close()
         
@@ -213,7 +220,8 @@ class DistributedStorageManager:
         self.executor.shutdown(wait=True)
     
     async def initialize_cluster(self) -> Dict[str, Any]:
-        """Initialize distributed storage cluster"""
+        """
+Initialize distributed storage cluster"""
         try:
             logger.info(f"🚀 Initializing distributed storage cluster: {self.config.cluster_name}")
             
@@ -921,7 +929,8 @@ class DistributedStorageConfigurationManager:
         nodes: List[str],
         capacity_tb: float = 10.0
     ) -> DistributedStorageConfig:
-        """Create MinIO cluster configuration"""
+        """
+Create MinIO cluster configuration"""
         return DistributedStorageConfig(
             cluster_name=cluster_name,
             storage_type=DistributedStorageType.MINIO_CLUSTER,
@@ -939,7 +948,8 @@ class DistributedStorageConfigurationManager:
         nodes: List[str],
         capacity_tb: float = 50.0
     ) -> DistributedStorageConfig:
-        """Create Ceph cluster configuration"""
+        """
+Create Ceph cluster configuration"""
         return DistributedStorageConfig(
             cluster_name=cluster_name,
             storage_type=DistributedStorageType.CEPH,
@@ -959,7 +969,8 @@ def create_distributed_storage_manager(
     storage_type: DistributedStorageType,
     nodes: List[str]
 ) -> DistributedStorageManager:
-    """Factory function to create distributed storage manager"""
+    """
+Factory function to create distributed storage manager"""
     
     if storage_type == DistributedStorageType.MINIO_CLUSTER:
         config = DistributedStorageConfigurationManager.create_minio_cluster_config(
@@ -984,7 +995,8 @@ def create_distributed_storage_manager(
 
 # Usage Example
 async def main():
-    """Example usage of DistributedStorageManager"""
+    """
+Example usage of DistributedStorageManager"""
     try:
         nodes = ["storage-node-1:9000", "storage-node-2:9000", "storage-node-3:9000"]
         

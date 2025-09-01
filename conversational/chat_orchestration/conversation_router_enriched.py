@@ -14,12 +14,13 @@ Features:
 - Advanced load balancing and performance monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -40,7 +41,9 @@ from backend.utils.performance_monitor import PerformanceMonitor
 
 
 class RoutingStrategy(Enum):
-    """Different routing strategies"""
+    """
+Different routing strategies"""
+
     CREATOR_SPECIALIZED = "creator_specialized"
     WORKFLOW_OPTIMIZED = "workflow_optimized"
     MONETIZATION_FOCUSED = "monetization_focused"
@@ -53,6 +56,7 @@ class RoutingStrategy(Enum):
 
 class RoutingPriority(Enum):
     """Routing priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -62,6 +66,7 @@ class RoutingPriority(Enum):
 
 class RouterHealthStatus(Enum):
     """Router health status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     OVERLOADED = "overloaded"
@@ -90,7 +95,8 @@ class RoutingDestination:
 
 @dataclass
 class RoutingRule:
-    """Routing rule definition"""
+    """
+Routing rule definition"""
     rule_id: str
     name: str
     conditions: Dict[str, Any]
@@ -106,7 +112,8 @@ class RoutingRule:
 
 @dataclass
 class RoutingDecision:
-    """Routing decision result"""
+    """
+Routing decision result"""
     decision_id: str
     session_id: str
     destination: RoutingDestination
@@ -124,7 +131,8 @@ class RoutingDecision:
 
 @dataclass
 class RoutingAnalytics:
-    """Routing analytics and metrics"""
+    """
+Routing analytics and metrics"""
     total_routes: int = 0
     successful_routes: int = 0
     failed_routes: int = 0
@@ -535,7 +543,8 @@ class EnterpriseConversationRouter:
         content_analysis: Optional[Dict[str, Any]],
         routing_hints: Optional[Dict[str, Any]]
     ) -> List[RoutingDestination]:
-        """Route based on workflow stage optimization"""
+        """
+Route based on workflow stage optimization"""
         
         workflow_stage = getattr(context_analysis.conversation_state, 'creator_workflow_stage', 'planning')
         workflow_destinations = []
@@ -555,7 +564,8 @@ class EnterpriseConversationRouter:
         content_analysis: Optional[Dict[str, Any]],
         routing_hints: Optional[Dict[str, Any]]
     ) -> List[RoutingDestination]:
-        """Route based on monetization optimization"""
+        """
+Route based on monetization optimization"""
         
         monetization_destinations = []
         
@@ -636,7 +646,8 @@ class EnterpriseConversationRouter:
         content_analysis: Optional[Dict[str, Any]],
         routing_hints: Optional[Dict[str, Any]]
     ) -> List[RoutingDestination]:
-        """Route based on adaptive context analysis"""
+        """
+Route based on adaptive context analysis"""
         
         # Combine multiple routing strategies based on context
         creator_destinations = await self._route_by_creator_specialization(
@@ -671,7 +682,8 @@ class EnterpriseConversationRouter:
         content_analysis: Optional[Dict[str, Any]],
         routing_hints: Optional[Dict[str, Any]]
     ) -> List[RoutingDestination]:
-        """Emergency fallback routing strategy"""
+        """
+Emergency fallback routing strategy"""
         
         # Return any available healthy destination
         emergency_destinations = [
@@ -732,7 +744,8 @@ class EnterpriseConversationRouter:
         context_analysis: Any,
         priority: RoutingPriority
     ) -> RoutingDestination:
-        """Select the best destination from candidates"""
+        """
+Select the best destination from candidates"""
         
         if not candidates:
             # Create default destination
@@ -787,7 +800,8 @@ class EnterpriseConversationRouter:
         creator_profile: Any,
         context_analysis: Any
     ) -> List[str]:
-        """Generate human-readable routing reasoning"""
+        """
+Generate human-readable routing reasoning"""
         
         reasoning = []
         
@@ -903,7 +917,8 @@ class EnterpriseConversationRouter:
         creator_profile: Any,
         context_analysis: Any
     ) -> Dict[str, float]:
-        """Get scoring for all routing strategies"""
+        """
+Get scoring for all routing strategies"""
         
         # This would contain the same logic as _determine_optimal_strategy
         # but return all scores instead of just the best one
@@ -932,7 +947,8 @@ class EnterpriseConversationRouter:
         cached_decision: RoutingDecision,
         current_context: Any
     ) -> bool:
-        """Check if cached routing decision is still valid"""
+        """
+Check if cached routing decision is still valid"""
         
         # Cache is valid for 5 minutes
         cache_age = datetime.utcnow() - cached_decision.timestamp
@@ -953,7 +969,8 @@ class EnterpriseConversationRouter:
         decision: RoutingDecision,
         start_time: datetime
     ) -> None:
-        """Record routing analytics"""
+        """
+Record routing analytics"""
         
         decision_time = (datetime.utcnow() - start_time).total_seconds() * 1000
         
@@ -991,7 +1008,8 @@ class EnterpriseConversationRouter:
         creator_profile: Any,
         error: str
     ) -> RoutingDecision:
-        """Create emergency routing decision for errors"""
+        """
+Create emergency routing decision for errors"""
         
         emergency_destination = RoutingDestination(
             destination_id="emergency",
@@ -1162,7 +1180,8 @@ class EnterpriseConversationRouter:
                     rule.weight = max(0.1, rule.weight - 0.1)
     
     async def _cleanup_routing_cache(self) -> None:
-        """Cleanup expired routing cache entries"""
+        """
+Cleanup expired routing cache entries"""
         
         current_time = datetime.utcnow()
         expired_sessions = []
@@ -1175,11 +1194,13 @@ class EnterpriseConversationRouter:
             del self.session_routing_cache[session_id]
     
     def get_routing_analytics(self) -> RoutingAnalytics:
-        """Get current routing analytics"""
+        """
+Get current routing analytics"""
         return self.analytics
     
     def get_destination_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all destinations"""
+        """
+Get status of all destinations"""
         
         status = {}
         for dest_id, dest in self.destinations.items():

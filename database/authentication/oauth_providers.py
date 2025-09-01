@@ -4,7 +4,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready OAuth Provider Management
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -12,6 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Business Logic: OAuth Provider Registration → Authorization Flow → Token Exchange → 
 Account Linking → Profile Sync → Platform Integration
 """
+
 import asyncio
 import secrets
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OAuthProvider(Enum):
-    """OAuth provider types"""
+    """
+OAuth provider types"""
+
     GOOGLE = "google"
     FACEBOOK = "facebook"
     SPOTIFY = "spotify"
@@ -52,6 +55,7 @@ class OAuthProvider(Enum):
 
 class ConnectionStatus(Enum):
     """OAuth connection status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     EXPIRED = "expired"
@@ -61,6 +65,7 @@ class ConnectionStatus(Enum):
 
 class PermissionScope(Enum):
     """OAuth permission scopes"""
+
     PROFILE_READ = "profile:read"
     PROFILE_WRITE = "profile:write"
     EMAIL_READ = "email:read"
@@ -87,7 +92,8 @@ class OAuthConfig:
 
 @dataclass
 class UserProfile:
-    """External user profile data"""
+    """
+External user profile data"""
     provider_user_id: str
     email: str = ""
     name: str = ""
@@ -128,7 +134,8 @@ class OAuthConnections(Base):
     )
 
 class OAuthProviderConfigs(Base):
-    """Database model for OAuth provider configurations"""
+    """
+Database model for OAuth provider configurations"""
     __tablename__ = 'oauth_provider_configs'
     
     config_id = Column(String, primary_key=True)
@@ -147,7 +154,8 @@ class OAuthProviderConfigs(Base):
     configuration_metadata = Column(JSON, nullable=True)
 
 class OAuthTokens(Base):
-    """Database model for OAuth token management"""
+    """
+Database model for OAuth token management"""
     __tablename__ = 'oauth_tokens'
     
     token_id = Column(String, primary_key=True)
@@ -169,7 +177,8 @@ class OAuthTokens(Base):
     )
 
 class OAuthAuditLog(Base):
-    """Database model for OAuth audit logging"""
+    """
+Database model for OAuth audit logging"""
     __tablename__ = 'oauth_audit_log'
     
     audit_id = Column(String, primary_key=True)
@@ -704,7 +713,8 @@ class OAuthProvidersRepository:
         access_token: str,
         user_info_url: str
     ) -> UserProfile:
-        """Fetch user profile from OAuth provider"""
+        """
+Fetch user profile from OAuth provider"""
         headers = {'Authorization': f'Bearer {access_token}'}
         
         # Provider-specific API calls
@@ -763,7 +773,8 @@ class OAuthProvidersRepository:
         user_profile: UserProfile,
         scopes: List[str]
     ) -> str:
-        """Store OAuth connection in database"""
+        """
+Store OAuth connection in database"""
         connection_id = str(uuid4())
         
         # Encrypt tokens
@@ -807,7 +818,8 @@ class OAuthProvidersRepository:
         return connection_id
     
     async def _has_primary_connection(self, user_id: str, provider: OAuthProvider) -> bool:
-        """Check if user has a primary connection for provider"""
+        """
+Check if user has a primary connection for provider"""
         stmt = select(OAuthConnections).where(
             OAuthConnections.user_id == user_id,
             OAuthConnections.provider == provider.value,
@@ -818,7 +830,8 @@ class OAuthProvidersRepository:
         return result.scalar_one_or_none() is not None
     
     async def _revoke_provider_tokens(self, connection: OAuthConnections):
-        """Revoke tokens at OAuth provider"""
+        """
+Revoke tokens at OAuth provider"""
         try:
             provider = OAuthProvider(connection.provider)
             config = await self._get_provider_config(provider)

@@ -8,7 +8,7 @@ Technologies: Deep Learning, Reinforcement Learning, Real-time Analytics, Predic
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Task analysis → ML classification → Performance prediction → 
 Optimal worker selection → Real-time routing → Performance feedback → Model adaptation
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaskCategory(Enum):
-    """Task categories for ML classification"""
+    """
+Task categories for ML classification"""
+
     CONTENT_CRAWLING = "content_crawling"
     DATA_EXTRACTION = "data_extraction"
     MEDIA_PROCESSING = "media_processing"
@@ -64,6 +67,7 @@ class TaskCategory(Enum):
 
 class RoutingStrategy(Enum):
     """Routing strategies"""
+
     LOAD_BALANCED = "load_balanced"
     PERFORMANCE_OPTIMIZED = "performance_optimized"
     COST_OPTIMIZED = "cost_optimized"
@@ -74,6 +78,7 @@ class RoutingStrategy(Enum):
 
 class WorkerCapability(Enum):
     """Worker capability types"""
+
     CPU_INTENSIVE = "cpu_intensive"
     MEMORY_INTENSIVE = "memory_intensive"
     IO_INTENSIVE = "io_intensive"
@@ -101,7 +106,8 @@ class TaskFeatures:
 
 @dataclass
 class WorkerProfile:
-    """Worker capability and performance profile"""
+    """
+Worker capability and performance profile"""
     worker_id: str
     capabilities: Set[WorkerCapability]
     performance_metrics: Dict[str, float]
@@ -115,7 +121,8 @@ class WorkerProfile:
 
 @dataclass
 class RoutingDecision:
-    """ML routing decision with explanation"""
+    """
+ML routing decision with explanation"""
     task_id: str
     selected_worker_id: str
     confidence_score: float
@@ -128,7 +135,8 @@ class RoutingDecision:
 
 
 class TaskClassifierNN(nn.Module):
-    """Neural network for task classification"""
+    """
+Neural network for task classification"""
     
     def __init__(self, input_size: int, hidden_size: int = 128, num_classes: int = 8):
         super(TaskClassifierNN, self).__init__()
@@ -149,7 +157,8 @@ class TaskClassifierNN(nn.Module):
 
 
 class PerformancePredictorNN(nn.Module):
-    """Neural network for performance prediction"""
+    """
+Neural network for performance prediction"""
     
     def __init__(self, input_size: int, hidden_size: int = 64):
         super(PerformancePredictorNN, self).__init__()
@@ -173,7 +182,8 @@ class PerformancePredictorNN(nn.Module):
 
 
 class MLTaskRouter:
-    """Advanced ML-powered task router with intelligent optimization"""
+    """
+Advanced ML-powered task router with intelligent optimization"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -760,7 +770,8 @@ class MLTaskRouter:
         return priority_mapping.get(priority, 0.5)
     
     async def get_router_status(self) -> Dict[str, Any]:
-        """Get current router status"""
+        """
+Get current router status"""
         return {
             "router_id": self.router_id,
             "is_running": self.is_running,
@@ -785,7 +796,8 @@ class MLTaskRouter:
         return min(base_complexity, 1.0)
     
     async def _estimate_task_duration(self, task: CrawlerTask) -> float:
-        """Estimate task duration in seconds"""
+        """
+Estimate task duration in seconds"""
         # Simplified implementation
         base_duration = 120.0  # 2 minutes base
         if hasattr(task, 'target_urls'):
@@ -793,7 +805,8 @@ class MLTaskRouter:
         return base_duration
     
     async def _estimate_resource_requirements(self, task: CrawlerTask) -> Dict[str, float]:
-        """Estimate resource requirements"""
+        """
+Estimate resource requirements"""
         return {
             "cpu": 0.5,
             "memory": 512.0,  # MB
@@ -812,12 +825,14 @@ class MLTaskRouter:
             return TaskCategory.CONTENT_CRAWLING
     
     async def _requires_gpu_processing(self, task: CrawlerTask) -> bool:
-        """Check if task requires GPU processing"""
+        """
+Check if task requires GPU processing"""
         # Simplified implementation
         return hasattr(task, 'ai_processing') and task.ai_processing
     
     async def _generate_feature_vector(self, task_features: TaskFeatures) -> np.ndarray:
-        """Generate numerical feature vector from task features"""
+        """
+Generate numerical feature vector from task features"""
         # Simplified implementation
         feature_vector = np.array([
             task_features.complexity_score,
@@ -840,7 +855,8 @@ class MLTaskRouter:
         return feature_vector
     
     async def _create_combined_features(self, task_features: TaskFeatures, worker_profile: WorkerProfile) -> np.ndarray:
-        """Create combined feature vector for task and worker"""
+        """
+Create combined feature vector for task and worker"""
         task_vector = task_features.feature_vector
         
         # Worker feature vector
@@ -864,7 +880,8 @@ class MLTaskRouter:
         return np.concatenate([task_vector, worker_vector])
     
     async def _predict_performance(self, combined_features: np.ndarray) -> Tuple[float, float]:
-        """Predict task completion time and success probability"""
+        """
+Predict task completion time and success probability"""
         try:
             if self.performance_predictor is None:
                 # Fallback prediction
@@ -902,7 +919,8 @@ class MLTaskRouter:
         return overall_score
     
     async def _worker_can_handle_task(self, worker_profile: WorkerProfile, task_features: TaskFeatures) -> bool:
-        """Check if worker can handle the task"""
+        """
+Check if worker can handle the task"""
         # Basic capability checking
         if task_features.requires_gpu and WorkerCapability.GPU_ACCELERATED not in worker_profile.capabilities:
             return False
@@ -982,7 +1000,8 @@ async def get_ml_task_router() -> Optional[MLTaskRouter]:
 
 
 async def initialize_ml_task_router(config: Dict[str, Any] = None) -> bool:
-    """Initialize the ML task router"""
+    """
+Initialize the ML task router"""
     global _ml_task_router
     
     try:

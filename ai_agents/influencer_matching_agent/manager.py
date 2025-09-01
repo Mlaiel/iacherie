@@ -6,6 +6,7 @@ creator discovery workflows, brand alignment analysis, and collaboration optimiz
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -18,7 +19,9 @@ from .core.matching_engine import MatchingEngine, MatchingJob, MatchingResult, C
 logger = logging.getLogger(__name__)
 
 class InfluencerMatchingSystemStatus(Enum):
-    """System status levels"""
+    """
+System status levels"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -272,19 +275,23 @@ class InfluencerMatchingManager:
         return campaign.status if campaign else None
 
     async def get_campaign_results(self, campaign_id: str) -> Optional[Dict[str, Any]]:
-        """Get the results of a completed campaign"""
+        """
+Get the results of a completed campaign"""
         return self.campaign_results.get(campaign_id)
 
     async def get_system_metrics(self) -> MatchingMetrics:
-        """Get current system metrics"""
+        """
+Get current system metrics"""
         return self.system_metrics
 
     def get_active_campaigns(self) -> Dict[str, MatchingCampaign]:
-        """Get all active campaigns"""
+        """
+Get all active campaigns"""
         return self.active_campaigns.copy()
 
     async def get_creator_database_stats(self) -> Dict[str, Any]:
-        """Get statistics about the creator database"""
+        """
+Get statistics about the creator database"""
         # This would interface with the matching engine
         return {
             'total_creators': 50,  # Placeholder

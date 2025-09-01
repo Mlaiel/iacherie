@@ -51,6 +51,7 @@ Creator Upload → AI Content Analysis & Classification → Rights Verification 
 → Platform-Specific Enforcement → Revenue Recovery & Analytics
 → Compliance Reporting & Audit Trails
 """
+
 import logging
 import warnings
 from typing import Dict, List, Any, Optional
@@ -190,7 +191,7 @@ except ImportError as e:
 __version__ = "4.0.0-enterprise"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - All Rights Reserved"
 __status__ = "Production"
 __maintainer__ = "Fahed Mlaiel"
@@ -388,7 +389,8 @@ def get_system_info() -> Dict[str, Any]:
 
 
 def get_module_version() -> str:
-    """Get module version string
+    """
+Get module version string
     
     Returns:
         Version string
@@ -397,7 +399,8 @@ def get_module_version() -> str:
 
 
 def verify_installation() -> Dict[str, Any]:
-    """Verify module installation and dependencies
+    """
+Verify module installation and dependencies
     
     Returns:
         Installation verification results
@@ -472,7 +475,8 @@ For licensing inquiries, contact: {__email__}
 
 
 def print_system_banner():
-    """Print system startup banner with key information"""
+    """
+Print system startup banner with key information"""
     banner = f"""╔═══════════════════════════════════════════════════════════════════════════════╗
 ║                 ULTRA-INDUSTRIAL CONTENT PROTECTION SYSTEM                   ║
 ║                        Version: {__version__:<25}                        ║
@@ -489,7 +493,7 @@ def print_system_banner():
 ║  📊  Advanced Analytics & Reporting                                          ║
 ║  🌐  Multi-Platform Integration                                              ║
 ║                                                                               ║
-║  Copyright © 2025 Fahed Mlaiel. All rights reserved.                        ║
+║  Copyright (c) 2025 Fahed Mlaiel. All rights reserved.                        ║
 ║  Unauthorized use is strictly prohibited.                                    ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 """
@@ -498,7 +502,8 @@ def print_system_banner():
 
 # Initialize logging for the module
 def _init_module_logging():
-    """Initialize module-level logging"""
+    """
+Initialize module-level logging"""
     logger = logging.getLogger(__name__)
     
     if not logger.handlers:
@@ -564,7 +569,8 @@ class ContentProtectionSystem:
     """
     
     def __init__(self, config=None):
-        """Initialize the complete content protection system"""
+        """
+Initialize the complete content protection system"""
         self.config = config or {}
         
         # Initialize all subsystems
@@ -578,7 +584,8 @@ class ContentProtectionSystem:
         self.integrations = PlatformIntegrationManager(config.get('integrations', {}))
     
     async def protect_content(self, content_data, content_metadata):
-        """Complete content protection workflow"""
+        """
+Complete content protection workflow"""
         # Generate fingerprint
         fingerprint = await self.fingerprinter.generate_fingerprint(content_data, content_metadata)
         
@@ -617,5 +624,6 @@ class ContentProtectionSystem:
 
 # Convenience function for quick setup
 def create_protection_system(config=None):
-    """Create a configured content protection system"""
+    """
+Create a configured content protection system"""
     return ContentProtectionSystem(config)

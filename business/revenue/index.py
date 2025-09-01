@@ -5,7 +5,7 @@ Industrial-grade revenue management system index providing centralized
 access to all revenue management components and orchestration services.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -16,6 +16,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Operations
 ============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -89,7 +90,8 @@ class RevenueManagementOrchestrator:
         self._components_status = {}
         
     async def initialize(self):
-        """Initialize all revenue management components"""
+        """
+Initialize all revenue management components"""
         try:
             logger.info("Initializing revenue management orchestrator...")
             

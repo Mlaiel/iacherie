@@ -5,8 +5,9 @@ Automated revenue recovery system for failed payments, chargebacks,
 disputes, and dunning management with machine learning optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecoveryType(Enum):
-    """Revenue recovery types"""
+    """
+Revenue recovery types"""
+
     FAILED_PAYMENT = "failed_payment"
     CHARGEBACK = "chargeback"
     DISPUTE = "dispute"
@@ -33,6 +36,7 @@ class RecoveryType(Enum):
 
 class RecoveryStatus(Enum):
     """Recovery attempt status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
@@ -44,6 +48,7 @@ class RecoveryStatus(Enum):
 
 class RecoveryStrategy(Enum):
     """Recovery strategies"""
+
     AUTOMATIC_RETRY = "automatic_retry"
     EMAIL_CAMPAIGN = "email_campaign"
     SMS_REMINDER = "sms_reminder"
@@ -55,6 +60,7 @@ class RecoveryStrategy(Enum):
 
 class DunningLevel(Enum):
     """Dunning campaign levels"""
+
     SOFT_REMINDER = "soft_reminder"
     FIRM_REMINDER = "firm_reminder"
     FINAL_NOTICE = "final_notice"
@@ -85,7 +91,8 @@ class RecoveryCase:
 
 @dataclass
 class DunningCampaign:
-    """Subscription dunning campaign"""
+    """
+Subscription dunning campaign"""
     id: str
     customer_id: str
     subscription_id: str
@@ -101,7 +108,8 @@ class DunningCampaign:
 
 @dataclass
 class RecoveryAttempt:
-    """Individual recovery attempt"""
+    """
+Individual recovery attempt"""
     id: str
     case_id: str
     strategy: RecoveryStrategy
@@ -126,7 +134,8 @@ class RevenueRecoveryProcessor:
         config: Dict[str, Any],
         ml_model_endpoint: Optional[str] = None
     ):
-        """Initialize revenue recovery processor"""
+        """
+Initialize revenue recovery processor"""
         self.config = config
         self.ml_model_endpoint = ml_model_endpoint
         self.logger = logging.getLogger(__name__)
@@ -644,7 +653,8 @@ class RevenueRecoveryProcessor:
             return None
     
     def _calculate_next_attempt_date(self, level: DunningLevel) -> datetime:
-        """Calculate next dunning attempt date"""
+        """
+Calculate next dunning attempt date"""
         delays = {
             DunningLevel.SOFT_REMINDER: 3,
             DunningLevel.FIRM_REMINDER: 5,
@@ -661,7 +671,8 @@ class RevenueRecoveryProcessor:
         transaction_id: str,
         reason_code: str
     ) -> Dict[str, Any]:
-        """Gather evidence for chargeback dispute"""
+        """
+Gather evidence for chargeback dispute"""
         # Mock evidence gathering
         return {
             "transaction_id": transaction_id,

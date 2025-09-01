@@ -1,7 +1,7 @@
 """Revenue Payment Processing System - Multi-Payment Gateway Integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Payment Optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers"""
+    """
+Supported payment providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -65,6 +68,7 @@ class PaymentProvider(Enum):
 
 class PaymentType(Enum):
     """Types of payments"""
+
     REVENUE_PAYOUT = "revenue_payout"
     LICENSING_PAYMENT = "licensing_payment"
     ROYALTY_PAYMENT = "royalty_payment"
@@ -76,6 +80,7 @@ class PaymentType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -88,6 +93,7 @@ class PaymentStatus(Enum):
 
 class PaymentFrequency(Enum):
     """Payment frequency options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -99,6 +105,7 @@ class PaymentFrequency(Enum):
 
 class CurrencyCode(Enum):
     """Supported currency codes"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -137,7 +144,8 @@ class PaymentAccount:
     
     @property
     def masked_account_info(self) -> Dict[str, str]:
-        """Get masked account information for display"""
+        """
+Get masked account information for display"""
         masked = {}
         
         if self.provider == PaymentProvider.STRIPE:
@@ -171,7 +179,8 @@ class PaymentMethod:
 
 @dataclass
 class PaymentRequest:
-    """Payment request structure"""
+    """
+Payment request structure"""
     request_id: str
     user_id: str
     recipient_id: str
@@ -213,20 +222,23 @@ class PaymentTransaction:
     
     @property
     def net_amount(self) -> Decimal:
-        """Calculate net amount after fees"""
+        """
+Calculate net amount after fees"""
         total_fees = sum(self.fees.values())
         return self.amount - total_fees
     
     @property
     def processing_time(self) -> Optional[timedelta]:
-        """Calculate processing time"""
+        """
+Calculate processing time"""
         if self.processed_at and self.created_at:
             return self.processed_at - self.created_at
         return None
 
 
 class BasePaymentProcessor(ABC):
-    """Base class for payment processors"""
+    """
+Base class for payment processors"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -234,46 +246,55 @@ class BasePaymentProcessor(ABC):
         self.encryption_manager = EncryptionManager()
     
     async def initialize(self) -> None:
-        """Initialize payment processor"""
+        """
+Initialize payment processor"""
         self.session = aiohttp.ClientSession()
         await self._setup_authentication()
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if self.session:
             await self.session.close()
     
     @abstractmethod
     async def create_payment(self, request: PaymentRequest) -> PaymentTransaction:
-        """Create payment transaction"""
+        """
+Create payment transaction"""
         pass
     
     @abstractmethod
     async def process_payment(self, transaction: PaymentTransaction) -> PaymentTransaction:
-        """Process payment transaction"""
+        """
+Process payment transaction"""
         pass
     
     @abstractmethod
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
-        """Get transaction status"""
+        """
+Get transaction status"""
         pass
     
     @abstractmethod
     async def cancel_payment(self, transaction_id: str) -> bool:
-        """Cancel payment transaction"""
+        """
+Cancel payment transaction"""
         pass
     
     @abstractmethod
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentTransaction:
-        """Refund payment transaction"""
+        """
+Refund payment transaction"""
         pass
     
     async def _setup_authentication(self) -> None:
-        """Setup authentication for payment provider"""
+        """
+Setup authentication for payment provider"""
         pass
     
     def _calculate_fees(self, amount: Decimal, currency: CurrencyCode) -> Dict[str, Decimal]:
-        """Calculate processing fees"""
+        """
+Calculate processing fees"""
         fees = {}
         
         # Base processing fee (typically percentage + fixed fee)
@@ -292,10 +313,12 @@ class BasePaymentProcessor(ABC):
 
 
 class StripePaymentProcessor(BasePaymentProcessor):
-    """Stripe payment processor implementation"""
+    """
+Stripe payment processor implementation"""
     
     async def _setup_authentication(self) -> None:
-        """Setup Stripe authentication"""
+        """
+Setup Stripe authentication"""
         self.api_key = self.config.get('api_key')
         self.webhook_secret = self.config.get('webhook_secret')
         self.headers = {
@@ -304,7 +327,8 @@ class StripePaymentProcessor(BasePaymentProcessor):
         }
     
     async def create_payment(self, request: PaymentRequest) -> PaymentTransaction:
-        """Create Stripe payment"""
+        """
+Create Stripe payment"""
         try:
             transaction_id = str(uuid.uuid4())
             
@@ -482,7 +506,8 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
     """PayPal payment processor implementation"""
     
     async def _setup_authentication(self) -> None:
-        """Setup PayPal authentication"""
+        """
+Setup PayPal authentication"""
         self.client_id = self.config.get('client_id')
         self.client_secret = self.config.get('client_secret')
         self.base_url = self.config.get('base_url', 'https://api.paypal.com')
@@ -491,7 +516,8 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
         await self._get_access_token()
     
     async def _get_access_token(self) -> None:
-        """Get PayPal access token"""
+        """
+Get PayPal access token"""
         try:
             auth = aiohttp.BasicAuth(self.client_id, self.client_secret)
             headers = {
@@ -587,7 +613,8 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
         return transaction
     
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
-        """Get PayPal transaction status"""
+        """
+Get PayPal transaction status"""
         try:
             async with self.session.get(
                 f"{self.base_url}/v1/payments/payouts/{transaction_id}",
@@ -644,7 +671,8 @@ class PaymentProcessingManager:
         self._initialize_processors()
     
     async def initialize(self) -> None:
-        """Initialize payment processing manager"""
+        """
+Initialize payment processing manager"""
         try:
             # Initialize all processors
             for processor in self.processors.values():
@@ -1081,16 +1109,19 @@ class PaymentProcessingManager:
             return [CurrencyCode.USD, CurrencyCode.EUR]
     
     async def _load_payment_accounts(self) -> None:
-        """Load existing payment accounts"""
+        """
+Load existing payment accounts"""
         # In production, load from database
         pass
     
     async def _setup_monitoring(self) -> None:
-        """Setup payment monitoring"""
+        """
+Setup payment monitoring"""
         pass
     
     async def _record_payment_metrics(self, transaction: PaymentTransaction) -> None:
-        """Record payment metrics for monitoring"""
+        """
+Record payment metrics for monitoring"""
         metrics = {
             'transaction_id': transaction.transaction_id,
             'user_id': transaction.user_id,
@@ -1106,5 +1137,6 @@ class PaymentProcessingManager:
 
 
 def create_payment_processing_manager(config: Optional[Dict[str, Any]] = None) -> PaymentProcessingManager:
-    """Factory function to create payment processing manager"""
+    """
+Factory function to create payment processing manager"""
     return PaymentProcessingManager(config)

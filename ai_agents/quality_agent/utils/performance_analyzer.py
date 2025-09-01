@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -54,7 +55,9 @@ from ..quality_agent import ContentType
 logger = logging.getLogger(__name__)
 
 class PerformanceCategory(Enum):
-    """Performance analysis categories"""
+    """
+Performance analysis categories"""
+
     PROCESSING_SPEED = "processing_speed"
     MEMORY_USAGE = "memory_usage"
     STORAGE_EFFICIENCY = "storage_efficiency"
@@ -66,6 +69,7 @@ class PerformanceCategory(Enum):
 
 class MetricType(Enum):
     """Types of performance metrics"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     BANDWIDTH = "bandwidth"
@@ -79,6 +83,7 @@ class MetricType(Enum):
 
 class PerformanceLevel(Enum):
     """Performance quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -105,7 +110,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBottleneck:
-    """Identified performance bottleneck"""
+    """
+Identified performance bottleneck"""
     bottleneck_id: str
     category: PerformanceCategory
     severity: str  # critical, high, medium, low
@@ -123,7 +129,8 @@ class PerformanceBottleneck:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation"""
+    """
+Performance optimization recommendation"""
     recommendation_id: str
     category: PerformanceCategory
     title: str
@@ -140,7 +147,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class PerformanceAnalysisResult:
-    """Complete performance analysis result"""
+    """
+Complete performance analysis result"""
     analysis_id: str
     content_id: str
     content_type: ContentType
@@ -858,7 +866,8 @@ class PerformanceAnalyzer:
         metrics: List[PerformanceMetric],
         categories: List[PerformanceCategory]
     ) -> Dict[PerformanceCategory, float]:
-        """Calculate performance scores for each category"""
+        """
+Calculate performance scores for each category"""
         
         category_scores = {}
         
@@ -900,7 +909,8 @@ class PerformanceAnalyzer:
         category_scores: Dict[PerformanceCategory, float],
         content_type: ContentType
     ) -> float:
-        """Calculate weighted overall performance score"""
+        """
+Calculate weighted overall performance score"""
         
         # Category weights based on content type
         default_weights = {
@@ -940,7 +950,8 @@ class PerformanceAnalyzer:
         return weighted_sum / max(total_weight, 1.0) if total_weight > 0 else 50.0
 
     def _determine_performance_level(self, overall_score: float) -> PerformanceLevel:
-        """Determine performance level from overall score"""
+        """
+Determine performance level from overall score"""
         
         if overall_score >= 90:
             return PerformanceLevel.EXCELLENT
@@ -959,7 +970,8 @@ class PerformanceAnalyzer:
         category_scores: Dict[PerformanceCategory, float],
         content_type: ContentType
     ) -> List[PerformanceBottleneck]:
-        """Detect performance bottlenecks from metrics"""
+        """
+Detect performance bottlenecks from metrics"""
         
         bottlenecks = []
         

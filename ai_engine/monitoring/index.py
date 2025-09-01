@@ -4,10 +4,11 @@ Enterprise-grade service discovery and monitoring navigation for IA Influencer A
 Provides centralized access to all monitoring services and real-time status dashboard.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import json
 from typing import Dict, Any, List, Optional, Union, Callable
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Status of monitoring services"""
+    """
+Status of monitoring services"""
+
     RUNNING = "running"
     STOPPED = "stopped" 
     ERROR = "error"
@@ -44,6 +47,7 @@ class ServiceStatus(Enum):
 
 class MonitoringCategory(Enum):
     """Categories of monitoring services"""
+
     PERFORMANCE = "performance"
     CONTENT = "content"
     BUSINESS = "business"
@@ -90,7 +94,8 @@ class MonitoringDashboard:
 
 
 class MonitoringRequest(BaseModel):
-    """API request models"""
+    """
+API request models"""
     service_ids: Optional[List[str]] = None
     categories: Optional[List[MonitoringCategory]] = None
     time_range: Optional[Dict[str, str]] = None
@@ -98,7 +103,8 @@ class MonitoringRequest(BaseModel):
 
 
 class MonitoringResponse(BaseModel):
-    """API response models"""
+    """
+API response models"""
     success: bool
     data: Any
     message: Optional[str] = None
@@ -525,7 +531,7 @@ class MonitoringIndex:
             <div class="header">
                 <h1>🚀 IA Influencer Agent - Monitoring Dashboard</h1>
                 <div class="subtitle">Real-time system monitoring and analytics • Enterprise-grade AI platform</div>
-                <div class="subtitle">© 2025 Fahed Mlaiel (mlaiel@live.de) - All rights reserved</div>
+                <div class="subtitle">(c) 2025 Fahed Mlaiel (mlaiel@live.de) - All rights reserved</div>
             </div>
             
             <div class="stats-grid">
@@ -619,7 +625,7 @@ class MonitoringIndex:
             <div class="footer">
                 <strong>IA Influencer Agent Platform</strong><br>
                 Enterprise AI-powered content creation and protection<br>
-                <small>Created by Fahed Mlaiel (mlaiel@live.de) • © 2025 All rights reserved</small>
+                <small>Created by Fahed Mlaiel (mlaiel@live.de) • (c) 2025 All rights reserved</small>
             </div>
         </body>
         </html>
@@ -628,7 +634,8 @@ class MonitoringIndex:
         return html_template
         
     async def _get_system_load(self) -> float:
-        """Get current system load"""
+        """
+Get current system load"""
         try:
             import psutil
             return psutil.cpu_percent(interval=1) / 100.0
@@ -636,7 +643,8 @@ class MonitoringIndex:
             return 0.0
             
     async def _get_memory_usage(self) -> float:
-        """Get current memory usage"""
+        """
+Get current memory usage"""
         try:
             import psutil
             return psutil.virtual_memory().percent / 100.0
@@ -644,7 +652,8 @@ class MonitoringIndex:
             return 0.0
             
     async def _get_ai_metrics_summary(self) -> Dict[str, Any]:
-        """Get AI performance metrics summary"""
+        """
+Get AI performance metrics summary"""
         if not self.ai_monitor:
             return {}
             
@@ -697,5 +706,5 @@ async def root():
         "status": "running",
         "timestamp": datetime.utcnow(),
         "creator": "Fahed Mlaiel (mlaiel@live.de)",
-        "copyright": "© 2025 All rights reserved"
+        "copyright": "(c) 2025 All rights reserved"
     }

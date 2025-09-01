@@ -28,6 +28,7 @@ import os
 class PlatformType(str, Enum):
     """
 Supported social media and content platforms."""
+
     
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -48,6 +49,7 @@ Supported social media and content platforms."""
 
 class IntegrationType(str, Enum):
     """Types of platform integrations."""
+
     
     CONTENT_UPLOAD = "content_upload"
     ANALYTICS_API = "analytics_api"
@@ -61,6 +63,7 @@ class IntegrationType(str, Enum):
 
 class APIVersion(str, Enum):
     """API versions for different platforms."""
+
     
     V1 = "v1"
     V2 = "v2"

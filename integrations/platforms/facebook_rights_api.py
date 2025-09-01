@@ -7,6 +7,7 @@ Handles copyright claims, content monitoring, and rights administration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FacebookRightsClaim:
-    """Facebook rights claim information"""
+    """
+Facebook rights claim information"""
     claim_id: str
     content_id: str
     asset_id: str
@@ -62,7 +64,8 @@ class FacebookPage:
 
 
 class FacebookRightsAPI:
-    """Facebook Rights Manager API integration"""
+    """
+Facebook Rights Manager API integration"""
     
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
@@ -76,7 +79,8 @@ class FacebookRightsAPI:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -89,7 +93,8 @@ class FacebookRightsAPI:
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("facebook", endpoint)

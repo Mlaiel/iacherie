@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class InsightType(Enum):
-    """AI insight categories"""
+    """
+AI insight categories"""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     PERFORMANCE_PREDICTION = "performance_prediction"
     TREND_ANALYSIS = "trend_analysis"
@@ -56,6 +59,7 @@ class InsightType(Enum):
 
 class ContentIntelligenceLevel(Enum):
     """Content intelligence complexity levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -80,7 +84,8 @@ class AIInsight:
 
 @dataclass
 class ContentIntelligence:
-    """Advanced content intelligence analysis"""
+    """
+Advanced content intelligence analysis"""
     content_id: str
     intelligence_level: ContentIntelligenceLevel
     quality_score: float
@@ -96,7 +101,8 @@ class ContentIntelligence:
 
 @dataclass
 class AudiencePersona:
-    """AI-generated audience persona"""
+    """
+AI-generated audience persona"""
     persona_id: str
     name: str
     demographics: Dict[str, Any]
@@ -547,7 +553,8 @@ class AIInsightsAnalytics:
         return (length_score + sentiment_score + keyword_score) / 3
     
     async def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality"""
+        """
+Analyze description quality"""
         if not description:
             return 0.0
         
@@ -558,7 +565,8 @@ class AIInsightsAnalytics:
         return (length_score + sentiment_score + structure_score) / 3
     
     async def _analyze_sentiment_score(self, text: str) -> float:
-        """Analyze text sentiment"""
+        """
+Analyze text sentiment"""
         try:
             result = self.text_analyzer(text)[0]
             # Convert to positive score (higher is better)

@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...core.cache import CacheManager
 
 
 class LineageEventType(Enum):
-    """Types of lineage events"""
+    """
+Types of lineage events"""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -45,6 +48,7 @@ class LineageEventType(Enum):
 
 class LineageNodeType(Enum):
     """Types of lineage nodes"""
+
     SOURCE = "source"
     PROCESS = "process"
     DATASET = "dataset"
@@ -69,7 +73,8 @@ class LineageNode:
 
 @dataclass
 class LineageEdge:
-    """Edge in the data lineage graph"""
+    """
+Edge in the data lineage graph"""
     edge_id: str
     source_node_id: str
     target_node_id: str
@@ -81,7 +86,8 @@ class LineageEdge:
 
 @dataclass
 class LineageEvent:
-    """Data lineage event record"""
+    """
+Data lineage event record"""
     event_id: str
     content_id: str
     event_type: LineageEventType
@@ -95,7 +101,8 @@ class LineageEvent:
 
 @dataclass
 class DataLineage:
-    """Complete data lineage for a content item"""
+    """
+Complete data lineage for a content item"""
     content_id: str
     origin_node: LineageNode
     current_node: LineageNode
@@ -121,7 +128,8 @@ class LineageGraph:
         self.reverse_adjacency_list: Dict[str, Set[str]] = {}  # for upstream traversal
     
     def add_node(self, node: LineageNode) -> None:
-        """Add a node to the lineage graph"""
+        """
+Add a node to the lineage graph"""
         self.nodes[node.node_id] = node
         if node.node_id not in self.adjacency_list:
             self.adjacency_list[node.node_id] = set()
@@ -129,7 +137,8 @@ class LineageGraph:
             self.reverse_adjacency_list[node.node_id] = set()
     
     def add_edge(self, edge: LineageEdge) -> None:
-        """Add an edge to the lineage graph"""
+        """
+Add an edge to the lineage graph"""
         self.edges[edge.edge_id] = edge
         
         # Update adjacency lists
@@ -142,7 +151,8 @@ class LineageGraph:
         self.reverse_adjacency_list[edge.target_node_id].add(edge.source_node_id)
     
     def get_downstream_nodes(self, node_id: str, max_depth: Optional[int] = None) -> List[str]:
-        """Get all downstream nodes from a given node"""
+        """
+Get all downstream nodes from a given node"""
         visited = set()
         result = []
         
@@ -161,7 +171,8 @@ class LineageGraph:
         return result
     
     def get_upstream_nodes(self, node_id: str, max_depth: Optional[int] = None) -> List[str]:
-        """Get all upstream nodes for a given node"""
+        """
+Get all upstream nodes for a given node"""
         visited = set()
         result = []
         
@@ -180,7 +191,8 @@ class LineageGraph:
         return result
     
     def find_path(self, source_id: str, target_id: str) -> List[str]:
-        """Find path between two nodes"""
+        """
+Find path between two nodes"""
         if source_id not in self.nodes or target_id not in self.nodes:
             return []
         
@@ -209,7 +221,8 @@ class LineageGraph:
         return []
     
     def get_connected_components(self) -> List[List[str]]:
-        """Get all connected components in the graph"""
+        """
+Get all connected components in the graph"""
         visited = set()
         components = []
         
@@ -246,7 +259,8 @@ class LineageTracker(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the lineage tracker"""
+        """
+Initialize the lineage tracker"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -748,19 +762,22 @@ class LineageTracker(BaseManager):
         return None
     
     async def _find_edge(self, source_node_id: str, target_node_id: str) -> Optional[LineageEdge]:
-        """Find edge between two nodes"""
+        """
+Find edge between two nodes"""
         for edge in self.lineage_graph.edges.values():
             if edge.source_node_id == source_node_id and edge.target_node_id == target_node_id:
                 return edge
         return None
     
     async def _calculate_lineage_depth(self, content_id: str) -> int:
-        """Calculate lineage depth for content"""
+        """
+Calculate lineage depth for content"""
         upstream = await self.get_upstream_dependencies(content_id)
         return len(upstream)
     
     def _summarize_events(self, events: List[LineageEvent]) -> Dict[str, int]:
-        """Summarize events by type"""
+        """
+Summarize events by type"""
         summary = {}
         for event in events:
             event_type = event.event_type.value
@@ -768,7 +785,8 @@ class LineageTracker(BaseManager):
         return summary
     
     def _get_event_type_breakdown(self) -> Dict[str, int]:
-        """Get breakdown of events by type"""
+        """
+Get breakdown of events by type"""
         breakdown = {}
         for event in self.lineage_events:
             event_type = event.event_type.value
@@ -776,7 +794,8 @@ class LineageTracker(BaseManager):
         return breakdown
     
     async def _generate_visual_lineage(self, content_id: str) -> Dict[str, Any]:
-        """Generate visual representation of lineage"""
+        """
+Generate visual representation of lineage"""
         # This would generate graph visualization data
         # For now, return basic structure
         upstream = await self.get_upstream_dependencies(content_id)

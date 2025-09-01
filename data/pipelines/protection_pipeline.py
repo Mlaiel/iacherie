@@ -12,13 +12,14 @@ Team Specialties:
 - Legal Tech Engineer: Automated DMCA and takedown procedures
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This proprietary AI protection technology belongs exclusively to Fahed Mlaiel.
 Unauthorized use, reverse engineering, or intellectual property theft will
 result in immediate prosecution under international copyright and patent laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -63,7 +64,9 @@ settings = get_settings()
 
 
 class ViolationType(str, Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIXED = "remixed"
@@ -76,6 +79,7 @@ class ViolationType(str, Enum):
 
 class ProtectionLevel(str, Enum):
     """Protection sensitivity levels"""
+
     STRICT = "strict"      # 95%+ similarity threshold
     STANDARD = "standard"  # 85%+ similarity threshold
     RELAXED = "relaxed"    # 75%+ similarity threshold
@@ -1305,7 +1309,8 @@ class ProtectionPipeline:
         user: 'User', 
         original_content: 'ContentModel'
     ) -> str:
-        """Generate formal DMCA takedown notice"""
+        """
+Generate formal DMCA takedown notice"""
         return f"""
         DMCA TAKEDOWN NOTICE
         
@@ -1338,7 +1343,8 @@ class ProtectionPipeline:
         platform: str,
         takedown_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit takedown request to platform using official APIs/forms"""
+        """
+Submit takedown request to platform using official APIs/forms"""
         try:
             platform_handlers = {
                 "youtube": self._submit_youtube_takedown,

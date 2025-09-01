@@ -31,6 +31,7 @@ Features:
 - Predictive scaling with capacity planning
 - Performance forecasting with trend analysis
 """
+
 import logging
 import asyncio
 import time
@@ -65,7 +66,9 @@ settings = get_settings()
 
 
 class PerformanceMetricType(Enum):
-    """Performance metric categorization for advanced analysis"""
+    """
+Performance metric categorization for advanced analysis"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -78,6 +81,7 @@ class PerformanceMetricType(Enum):
 
 class PerformanceSeverity(Enum):
     """Performance issue severity levels"""
+
     OPTIMAL = "optimal"
     GOOD = "good"
     WARNING = "warning"
@@ -88,6 +92,7 @@ class PerformanceSeverity(Enum):
 
 class AnalysisWindow(Enum):
     """Time window for performance analysis"""
+
     REALTIME = "1m"
     SHORT_TERM = "1h"
     MEDIUM_TERM = "24h"
@@ -97,6 +102,7 @@ class AnalysisWindow(Enum):
 
 class OptimizationStrategy(Enum):
     """Performance optimization strategies"""
+
     SCALE_UP = "scale_up"
     SCALE_OUT = "scale_out"
     CACHE_OPTIMIZATION = "cache_optimization"
@@ -123,7 +129,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBaseline:
-    """Performance baseline with statistical analysis"""
+    """
+Performance baseline with statistical analysis"""
     metric_name: str
     mean: float
     std: float
@@ -137,7 +144,8 @@ class PerformanceBaseline:
 
 @dataclass
 class PerformanceAnomaly:
-    """Performance anomaly with detailed analysis"""
+    """
+Performance anomaly with detailed analysis"""
     id: str
     metric_name: str
     detected_at: datetime
@@ -155,7 +163,8 @@ class PerformanceAnomaly:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight with actionable recommendations"""
+    """
+Performance insight with actionable recommendations"""
     id: str
     title: str
     description: str
@@ -174,7 +183,8 @@ class PerformanceInsight:
 
 @dataclass
 class PerformanceForecast:
-    """Performance forecast with uncertainty bounds"""
+    """
+Performance forecast with uncertainty bounds"""
     metric_name: str
     forecast_values: List[float]
     timestamps: List[datetime]
@@ -242,7 +252,8 @@ class PerformanceAnalytics:
         self._initialize_ml_models()
     
     async def start(self) -> None:
-        """Start performance analytics engine"""
+        """
+Start performance analytics engine"""
         try:
             if self._running:
                 self.logger.warning("Performance analytics already running")
@@ -674,7 +685,8 @@ class PerformanceAnalytics:
         self,
         metrics_data: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Perform comprehensive statistical analysis"""
+        """
+Perform comprehensive statistical analysis"""
         values = [m.value for m in metrics_data]
         
         if not values:
@@ -760,7 +772,8 @@ class PerformanceAnalytics:
         metrics_data: List[PerformanceMetric],
         tenant_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Assess business impact of performance"""
+        """
+Assess business impact of performance"""
         # Placeholder implementation
         return {
             "impact_score": 7.5,
@@ -795,55 +808,68 @@ class PerformanceAnalytics:
     # Additional helper methods would be implemented here...
     
     def _initialize_correlation_analyzer(self):
-        """Initialize correlation analyzer"""
+        """
+Initialize correlation analyzer"""
         return None
     
     def _initialize_trend_analyzer(self):
-        """Initialize trend analyzer"""
+        """
+Initialize trend analyzer"""
         return None
     
     def _initialize_seasonal_analyzer(self):
-        """Initialize seasonal analyzer"""
+        """
+Initialize seasonal analyzer"""
         return None
     
     def _initialize_business_impact_calculator(self):
-        """Initialize business impact calculator"""
+        """
+Initialize business impact calculator"""
         return None
     
     def _initialize_default_baselines(self) -> None:
-        """Initialize default performance baselines"""
+        """
+Initialize default performance baselines"""
         pass
     
     def _initialize_ml_models(self) -> None:
-        """Initialize ML models"""
+        """
+Initialize ML models"""
         pass
     
     async def _analysis_loop(self, window: AnalysisWindow) -> None:
-        """Analysis loop for specific time window"""
+        """
+Analysis loop for specific time window"""
         pass
     
     async def _anomaly_detection_loop(self) -> None:
-        """Anomaly detection loop"""
+        """
+Anomaly detection loop"""
         pass
     
     async def _forecasting_loop(self) -> None:
-        """Forecasting loop"""
+        """
+Forecasting loop"""
         pass
     
     async def _optimization_loop(self) -> None:
-        """Optimization loop"""
+        """
+Optimization loop"""
         pass
     
     async def _business_intelligence_loop(self) -> None:
-        """Business intelligence loop"""
+        """
+Business intelligence loop"""
         pass
     
     async def _save_ml_models(self) -> None:
-        """Save ML models"""
+        """
+Save ML models"""
         pass
     
     async def _save_performance_insights(self) -> None:
-        """Save performance insights"""
+        """
+Save performance insights"""
         pass
     
     # Additional implementation methods would go here...
@@ -871,7 +897,9 @@ settings = get_settings()
 
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -882,6 +910,7 @@ class PerformanceMetricType(Enum):
 
 class TimeWindow(Enum):
     """Time window for analysis"""
+
     REALTIME = "realtime"  # Last 5 minutes
     HOURLY = "hourly"      # Last hour
     DAILY = "daily"        # Last 24 hours
@@ -902,7 +931,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAnalysis:
-    """Performance analysis result"""
+    """
+Performance analysis result"""
     metric_name: str
     time_window: TimeWindow
     tenant_id: Optional[str]
@@ -972,7 +1002,8 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str] = None
     ) -> PerformanceAnalysis:
-        """Analyze performance for specific metric and time window"""
+        """
+Analyze performance for specific metric and time window"""
         try:
             # Get metric data
             metrics = await self._get_metrics_data(metric_name, time_window, tenant_id)

@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import os
 import json
 import yaml
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EnvoyEndpoint:
-    """Envoy cluster endpoint configuration"""
+    """
+Envoy cluster endpoint configuration"""
     address: str
     port: int
     weight: int = 1
@@ -37,7 +39,8 @@ class EnvoyEndpoint:
 
 @dataclass
 class EnvoyCluster:
-    """Envoy cluster configuration"""
+    """
+Envoy cluster configuration"""
     name: str
     type: str = "STRICT_DNS"  # STATIC, STRICT_DNS, LOGICAL_DNS, EDS
     lb_policy: str = "ROUND_ROBIN"  # ROUND_ROBIN, LEAST_REQUEST, RING_HASH, RANDOM
@@ -61,7 +64,8 @@ class EnvoyRoute:
 
 @dataclass
 class EnvoyListener:
-    """Envoy listener configuration"""
+    """
+Envoy listener configuration"""
     name: str
     address: str
     port: int
@@ -70,7 +74,8 @@ class EnvoyListener:
 
 
 class EnvoyConfigGenerator:
-    """Generate Envoy Proxy configurations"""
+    """
+Generate Envoy Proxy configurations"""
     
     def __init__(self):
         self.admin_config = {

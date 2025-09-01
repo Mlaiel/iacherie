@@ -11,6 +11,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import os
 import subprocess
 import tempfile
@@ -91,7 +92,8 @@ PLATFORM_SERVICES = {
 
 @dataclass
 class UpstreamServer:
-    """Upstream server configuration for load balancing"""
+    """
+Upstream server configuration for load balancing"""
     host: str
     port: int
     weight: int = 1
@@ -650,7 +652,8 @@ http {{
         return config
     
     def _build_rate_limit_zones(self) -> str:
-        """Build rate limiting zones configuration"""
+        """
+Build rate limiting zones configuration"""
         zones = []
         for name, config in self.rate_limit_configs.items():
             zones.append(f"limit_req_zone $binary_remote_addr zone={config.zone_name}:{config.zone_size} rate={config.rate};")
@@ -671,7 +674,8 @@ http {{
     """
     
     async def _generate_upstream_configs(self) -> None:
-        """Generate upstream configuration files"""
+        """
+Generate upstream configuration files"""
         upstream_dir = self.config_path / "conf.d" / "upstreams"
         upstream_dir.mkdir(parents=True, exist_ok=True)
         
@@ -979,11 +983,13 @@ http {{
         self.metrics['upstream_health'] = health_results
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get current metrics"""
+        """
+Get current metrics"""
         return self.metrics.copy()
     
     async def stop_monitoring(self) -> None:
-        """Stop monitoring"""
+        """
+Stop monitoring"""
         self._monitoring_active = False
         if self._monitor_thread and self._monitor_thread.is_alive():
             self._monitor_thread.join(timeout=10)
@@ -992,7 +998,8 @@ http {{
     async def emergency_maintenance_mode(self, enable: bool = True) -> bool:
         """Enable/disable emergency maintenance mode"""
         try:
-            maintenance_config = f"""server {{
+            maintenance_config = f"""
+server {{
     listen 80 default_server;
     listen [::]:80 default_server;
     listen 443 ssl http2 default_server;

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     RUNNING = "running"
@@ -55,6 +58,7 @@ class WorkflowStatus(Enum):
 
 class TaskStatus(Enum):
     """Task execution status"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
@@ -68,6 +72,7 @@ class TaskStatus(Enum):
 
 class TriggerType(Enum):
     """Workflow trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
@@ -80,6 +85,7 @@ class TriggerType(Enum):
 
 class TaskType(Enum):
     """Task execution types"""
+
     CONTENT_PROCESSING = "content_processing"
     AI_ANALYSIS = "ai_analysis"
     PUBLISHING = "publishing"
@@ -357,7 +363,8 @@ class ProcessOrchestrator:
         task_type: TaskType,
         processor: Callable
     ):
-        """Register task processor for specific task type"""
+        """
+Register task processor for specific task type"""
         self.task_processors[task_type] = processor
         logger.info(f"Registered task processor for {task_type.value}")
     
@@ -803,7 +810,8 @@ class WorkflowEngine:
         self,
         execution_id: str
     ) -> Dict[str, Any]:
-        """Get detailed execution status and progress"""
+        """
+Get detailed execution status and progress"""
         execution = self.db_session.query(WorkflowExecution).filter(
             WorkflowExecution.id == execution_id
         ).first()
@@ -850,7 +858,8 @@ class WorkflowEngine:
         template_definition: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply parameters to template definition"""
+        """
+Apply parameters to template definition"""
         # This would implement template parameter substitution
         # For now, return basic customization
         definition = template_definition.copy()

@@ -4,7 +4,7 @@
 ============================================
 
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
-Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
+Copyright (c) 2025 Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This software and its source code are the exclusive property of Fahed Mlaiel.
@@ -33,6 +33,7 @@ User (musician/blogger/photographer/influencer/comedian)
 This index module provides centralized access to all configuration components
 with ultra-advanced initialization, validation, and management capabilities.
 """
+
 import os
 import asyncio
 import logging
@@ -65,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationIndexManager:
-    """Ultra-advanced configuration index manager with enterprise capabilities"""
+    """
+Ultra-advanced configuration index manager with enterprise capabilities"""
     
     def __init__(self):
         self._master_config = MasterConfigManager()
@@ -77,26 +79,31 @@ class ConfigurationIndexManager:
         
     @property
     def master_config(self) -> MasterConfigManager:
-        """Get master configuration manager"""
+        """
+Get master configuration manager"""
         return self._master_config
     
     @property
     def registry(self) -> ConfigurationRegistry:
-        """Get configuration registry"""
+        """
+Get configuration registry"""
         return self._registry
     
     @property
     def validator(self) -> ConfigValidator:
-        """Get configuration validator"""
+        """
+Get configuration validator"""
         return self._validator
     
     @property
     def cache(self) -> ConfigCache:
-        """Get configuration cache"""
+        """
+Get configuration cache"""
         return self._cache
     
     def get_all_configs(self) -> Dict[str, Any]:
-        """Get all configuration objects"""
+        """
+Get all configuration objects"""
         return {
             'ai_models': self._master_config.ai_models,
             'audio': self._master_config.audio,
@@ -110,12 +117,14 @@ class ConfigurationIndexManager:
         }
     
     def get_config_by_name(self, config_name: str) -> Optional[Any]:
-        """Get configuration by name"""
+        """
+Get configuration by name"""
         configs = self.get_all_configs()
         return configs.get(config_name)
     
     def validate_all_configs(self) -> Dict[str, bool]:
-        """Validate all configurations"""
+        """
+Validate all configurations"""
         validation_results = {}
         configs = self.get_all_configs()
         
@@ -137,11 +146,13 @@ class ConfigurationIndexManager:
         return self._master_config.health_check()
     
     def reload_all_configurations(self) -> bool:
-        """Reload all configurations"""
+        """
+Reload all configurations"""
         return self._master_config.reload_all_configs()
     
     def export_all_configurations(self, format: str = 'json') -> Dict[str, str]:
-        """Export all configurations"""
+        """
+Export all configurations"""
         exported_configs = {}
         configs = self.get_all_configs()
         
@@ -153,7 +164,8 @@ class ConfigurationIndexManager:
         return exported_configs
     
     def get_environment_info(self) -> Dict[str, Any]:
-        """Get environment information"""
+        """
+Get environment information"""
         return {
             'environment': self._master_config.get_environment(),
             'config_path': str(self._master_config._config_path),
@@ -162,7 +174,8 @@ class ConfigurationIndexManager:
         }
     
     async def async_initialize(self) -> bool:
-        """Asynchronously initialize all configurations"""
+        """
+Asynchronously initialize all configurations"""
         try:
             # This would contain async initialization logic
             # For now, we'll simulate async behavior
@@ -194,68 +207,84 @@ def get_master_config() -> MasterConfigManager:
     return config_index.master_config
 
 def get_ai_models_config() -> AIModelsConfig:
-    """Get AI models configuration"""
+    """
+Get AI models configuration"""
     return config_index.master_config.ai_models
 
 def get_audio_config() -> AudioConfig:
-    """Get audio configuration"""
+    """
+Get audio configuration"""
     return config_index.master_config.audio
 
 def get_business_logic_config() -> BusinessLogicConfig:
-    """Get business logic configuration"""
+    """
+Get business logic configuration"""
     return config_index.master_config.business_logic
 
 def get_integration_config() -> IntegrationConfig:
-    """Get integration configuration"""
+    """
+Get integration configuration"""
     return config_index.master_config.integration
 
 def get_monetization_config() -> MonetizationConfig:
-    """Get monetization configuration"""
+    """
+Get monetization configuration"""
     return config_index.master_config.monetization
 
 def get_performance_config() -> PerformanceConfig:
-    """Get performance configuration"""
+    """
+Get performance configuration"""
     return config_index.master_config.performance
 
 def get_protection_config() -> ProtectionConfig:
-    """Get protection configuration"""
+    """
+Get protection configuration"""
     return config_index.master_config.protection
 
 def get_security_config() -> SecurityConfig:
-    """Get security configuration"""
+    """
+Get security configuration"""
     return config_index.master_config.security
 
 def get_seo_config() -> SEOConfig:
-    """Get SEO configuration"""
+    """
+Get SEO configuration"""
     return config_index.master_config.seo
 
 def get_config(config_name: str) -> Optional[Any]:
-    """Get configuration by name"""
+    """
+Get configuration by name"""
     return config_index.get_config_by_name(config_name)
 
 def validate_all_configurations() -> Dict[str, bool]:
-    """Validate all configurations"""
+    """
+Validate all configurations"""
     return config_index.validate_all_configs()
 
 def health_check() -> Dict[str, Any]:
-    """Perform system-wide health check"""
+    """
+Perform system-wide health check"""
     return config_index.health_check_all()
 
 def reload_configurations() -> bool:
-    """Reload all configurations"""
+    """
+Reload all configurations"""
     return config_index.reload_all_configurations()
 
 def export_configurations(format: str = 'json') -> Dict[str, str]:
-    """Export all configurations"""
+    """
+Export all configurations"""
     return config_index.export_all_configurations(format)
 
 async def async_initialize() -> bool:
-    """Asynchronously initialize configuration system"""
+    """
+Asynchronously initialize configuration system"""
     return await config_index.async_initialize()
 
 @asynccontextmanager
 async def configuration_context():
-    """Async context manager for configuration lifecycle"""
+    """
+Async context manager for configuration lifecycle"""
     try:
         # Initialize configurations
         success = await async_initialize()
@@ -332,7 +361,8 @@ class ConfigurationManager:
     """
     
     def __init__(self):
-        """Initialize configuration manager"""
+        """
+Initialize configuration manager"""
         self.master = master_config
         self.ai_models = ai_models_config
         self.protection = protection_config
@@ -345,7 +375,8 @@ class ConfigurationManager:
         self._health_status = {}
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of all configurations"""
+        """
+Get comprehensive status of all configurations"""
         status = {
             "timestamp": datetime.now().isoformat(),
             "overall_status": "healthy",
@@ -678,6 +709,7 @@ class ConfigurationManager:
             ],
             "code_examples": {
                 "basic_setup": """
+
 from ai.config import ConfigurationManager
 
 # Initialize configuration manager
@@ -769,7 +801,8 @@ def quick_setup(content_type: str) -> Dict[str, Any]:
     return config_manager.get_quick_setup_for_content_type(content_type)
 
 def health_check() -> str:
-    """Quick health check"""
+    """
+Quick health check"""
     status = config_manager.get_configuration_status()
     return status["overall_status"]
 

@@ -4,6 +4,7 @@ Intelligent content analysis, SEO optimization, and platform recommendations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import re
 from typing import Dict, Any, List, Optional, Tuple
@@ -26,7 +27,8 @@ from ..core.logging import logger
 
 
 class SEOAnalyzer:
-    """Advanced SEO analysis and optimization"""
+    """
+Advanced SEO analysis and optimization"""
     
     def __init__(self):
         self.target_platforms = {
@@ -770,7 +772,8 @@ class ContentAnalyzer:
     async def analyze_content(self, content_data: Dict[str, Any], 
                             target_platforms: List[str] = None,
                             user_goals: List[str] = None) -> Dict[str, Any]:
-        """Comprehensive content analysis"""
+        """
+Comprehensive content analysis"""
         try:
             analysis_result = {
                 "content_id": content_data.get("content_id", "unknown"),

@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 from typing import Dict, List, Type, Optional
 import logging
 
@@ -85,11 +86,13 @@ PLATFORM_REGISTRY: Dict[PlatformType, Type[PlatformBase]] = {
 
 
 class PlatformFactory:
-    """Factory for creating platform instances"""
+    """
+Factory for creating platform instances"""
     
     @staticmethod
     def create_platform(platform_type: PlatformType, config: PlatformConfig) -> PlatformBase:
-        """Create platform instance by type"""
+        """
+Create platform instance by type"""
         platform_class = PLATFORM_REGISTRY.get(platform_type)
         
         if not platform_class:
@@ -104,7 +107,8 @@ class PlatformFactory:
     
     @staticmethod
     def get_platform_class(platform_type: PlatformType) -> Type[PlatformBase]:
-        """Get platform class by type"""
+        """
+Get platform class by type"""
         platform_class = PLATFORM_REGISTRY.get(platform_type)
         
         if not platform_class:
@@ -119,10 +123,12 @@ class PlatformFactory:
 
 
 class PlatformEcosystem:
-    """Complete platform ecosystem manager"""
+    """
+Complete platform ecosystem manager"""
     
     def __init__(self):
-        """Initialize platform ecosystem"""
+        """
+Initialize platform ecosystem"""
         self.factory = PlatformFactory()
         self.connector: Optional[PlatformConnector] = None
         self.distributor: Optional[PlatformDistributor] = None
@@ -130,7 +136,8 @@ class PlatformEcosystem:
         self.monitor: Optional[PlatformMonitor] = None
         
     async def initialize(self):
-        """Initialize all ecosystem components"""
+        """
+Initialize all ecosystem components"""
         try:
             # Initialize connector
             self.connector = await get_connector()
@@ -401,7 +408,8 @@ async def get_ecosystem() -> PlatformEcosystem:
 
 
 async def shutdown_ecosystem():
-    """Shutdown global ecosystem"""
+    """
+Shutdown global ecosystem"""
     global _global_ecosystem
     
     if _global_ecosystem:
@@ -411,17 +419,20 @@ async def shutdown_ecosystem():
 
 # Convenience functions
 def create_platform(platform_type: PlatformType, config: PlatformConfig) -> PlatformBase:
-    """Create platform instance"""
+    """
+Create platform instance"""
     return PlatformFactory.create_platform(platform_type, config)
 
 
 def get_available_platforms() -> List[PlatformType]:
-    """Get available platforms"""
+    """
+Get available platforms"""
     return PlatformFactory.get_available_platforms()
 
 
 def is_platform_supported(platform_type: PlatformType) -> bool:
-    """Check if platform is supported"""
+    """
+Check if platform is supported"""
     return PlatformFactory.is_platform_supported(platform_type)
 
 

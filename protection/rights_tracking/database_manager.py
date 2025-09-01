@@ -11,6 +11,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lo
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseManager:
-    """Gestionnaire de base de données enterprise pour le rights tracking"""
+    """
+Gestionnaire de base de données enterprise pour le rights tracking"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -62,7 +64,8 @@ class DatabaseManager:
         self.batch_size = config.get('batch_size', 1000)
         
     async def initialize(self) -> bool:
-        """Initialise le gestionnaire de base de données"""
+        """
+Initialise le gestionnaire de base de données"""
         try:
             # Configuration de l'engine async
             self.engine = create_async_engine(
@@ -1000,7 +1003,8 @@ class DatabaseManager:
         return matches / len(common_fields)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérifie la santé de la base de données"""
+        """
+Vérifie la santé de la base de données"""
         try:
             health_status = {
                 'database': 'unknown',

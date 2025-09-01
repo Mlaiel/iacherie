@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Performance Profiling → Bottleneck Detection → Optimization Strategy → Implementation → Continuous Monitoring
 """
+
 import asyncio
 import logging
 import time
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetric(Enum):
-    """Performance metrics"""
+    """
+Performance metrics"""
+
     EXECUTION_TIME = "execution_time"
     THROUGHPUT = "throughput"
     LATENCY = "latency"
@@ -41,6 +44,7 @@ class PerformanceMetric(Enum):
 
 class OptimizationType(Enum):
     """Optimization types"""
+
     ALGORITHM = "algorithm"
     RESOURCE = "resource"
     CACHING = "caching"
@@ -54,6 +58,7 @@ class OptimizationType(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priorities"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -61,7 +66,9 @@ class OptimizationPriority(Enum):
 
 
 class PerformanceStatus(Enum):
-    """Performance status"""
+    """
+Performance status"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -201,7 +208,8 @@ class PerformanceProfiler:
         self.system_monitor_task = asyncio.create_task(self._monitor_system_performance())
     
     async def _monitor_system_performance(self):
-        """Monitor system-wide performance"""
+        """
+Monitor system-wide performance"""
         while self.monitoring_active:
             try:
                 # Collect system metrics
@@ -593,11 +601,13 @@ class PerformanceProfiler:
                 self.completed_profiles.get(profile_id))
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time system metrics"""
+        """
+Get real-time system metrics"""
         return self.real_time_metrics.copy()
     
     def stop_monitoring(self):
-        """Stop performance monitoring"""
+        """
+Stop performance monitoring"""
         self.monitoring_active = False
         if self.system_monitor_task:
             self.system_monitor_task.cancel()
@@ -609,7 +619,8 @@ class PerformanceProfiler:
 
 
 class OptimizationEngine:
-    """AI-powered optimization engine"""
+    """
+AI-powered optimization engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -718,7 +729,8 @@ class OptimizationEngine:
         bottleneck: Dict[str, Any],
         profile: PerformanceProfile
     ) -> List[OptimizationRecommendation]:
-        """Generate recommendations for specific bottleneck"""
+        """
+Generate recommendations for specific bottleneck"""
         recommendations = []
         metric = bottleneck["metric"]
         severity = bottleneck["severity"]
@@ -1112,7 +1124,8 @@ class PerformanceOptimizer:
             self.auto_optimization_task = asyncio.create_task(self._auto_optimization_loop())
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         monitoring_interval = self.config["monitoring"]["monitoring_interval"]
         
         while self.monitoring_active:
@@ -1182,7 +1195,8 @@ class PerformanceOptimizer:
         }
     
     async def _check_performance_alerts(self):
-        """Check for performance alerts"""
+        """
+Check for performance alerts"""
         real_time_metrics = self.profiler.get_real_time_metrics()
         thresholds = self.config["thresholds"]
         
@@ -1276,11 +1290,13 @@ class PerformanceOptimizer:
         return await self.profiler.start_profiling(component_name, benchmarks)
     
     async def stop_performance_profiling(self, profile_id: str) -> PerformanceProfile:
-        """Stop performance profiling"""
+        """
+Stop performance profiling"""
         return await self.profiler.stop_profiling(profile_id)
     
     async def analyze_performance(self, profile_id: str) -> List[OptimizationRecommendation]:
-        """Analyze performance profile and get recommendations"""
+        """
+Analyze performance profile and get recommendations"""
         profile = self.profiler.get_profile(profile_id)
         if not profile:
             raise ValueError(f"Profile {profile_id} not found")
@@ -1357,15 +1373,18 @@ class PerformanceOptimizer:
         return self.optimization_metrics.copy()
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time system metrics"""
+        """
+Get real-time system metrics"""
         return self.profiler.get_real_time_metrics()
     
     def get_optimization_history(self) -> List[OptimizationResult]:
-        """Get optimization history"""
+        """
+Get optimization history"""
         return self.optimization_engine.get_optimization_history()
     
     def enable_auto_optimization(self):
-        """Enable automatic optimization"""
+        """
+Enable automatic optimization"""
         self.auto_optimization_enabled = True
         if self.monitoring_active and not self.auto_optimization_task:
             self.auto_optimization_task = asyncio.create_task(self._auto_optimization_loop())
@@ -1551,7 +1570,8 @@ class AdvancedPerformanceAnalyzer:
         return max(0.0, 1.0 - cv)  # Higher stability = lower CV
     
     def _calculate_volatility(self, values: List[float]) -> float:
-        """Calculate volatility metric"""
+        """
+Calculate volatility metric"""
         if len(values) < 2:
             return 0.0
             
@@ -1562,7 +1582,8 @@ class AdvancedPerformanceAnalyzer:
         return mean_change / (mean_value + 1e-6)  # Normalized volatility
     
     def _detect_anomalies(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
-        """Detect performance anomalies"""
+        """
+Detect performance anomalies"""
         anomalies = {
             "detected_anomalies": [],
             "anomaly_score": 0.0,
@@ -2173,7 +2194,8 @@ class RealTimePerformanceMonitor:
             self.analytics_engine.real_time_analytics = analysis
     
     def get_current_status(self) -> Dict[str, Any]:
-        """Get current performance status"""
+        """
+Get current performance status"""
         return {
             "monitoring_active": self.monitoring_active,
             "active_alerts": len(self.active_alerts),

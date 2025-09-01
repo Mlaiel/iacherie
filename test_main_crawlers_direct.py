@@ -12,7 +12,8 @@ import os
 sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
 
 async def test_crawlers():
-    """Test all platform crawlers."""
+    """
+Test all platform crawlers."""
     try:
         # Direct import to avoid dependency issues
         sys.path.append('/home/runner/work/Ainflue/Ainflue/crawlers')

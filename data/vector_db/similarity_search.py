@@ -5,11 +5,12 @@ High-performance similarity search with content-aware algorithms, ranking,
 and specialized detection for content protection and collaboration matching.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class SearchType(Enum):
-    """Types of similarity searches."""
+    """
+Types of similarity searches."""
+
     EXACT_MATCH = "exact_match"
     DUPLICATE_DETECTION = "duplicate_detection"
     SIMILAR_CONTENT = "similar_content"
@@ -41,6 +44,7 @@ class SearchType(Enum):
 
 class RankingStrategy(Enum):
     """Ranking strategies for search results."""
+
     SIMILARITY_ONLY = "similarity_only"
     METADATA_BOOST = "metadata_boost"
     TEMPORAL_DECAY = "temporal_decay"
@@ -65,7 +69,8 @@ class SearchConfig:
 
 @dataclass
 class DuplicateAnalysis:
-    """Analysis results for duplicate content detection."""
+    """
+Analysis results for duplicate content detection."""
     is_duplicate: bool
     confidence_score: float
     similarity_breakdown: Dict[str, float]
@@ -76,7 +81,8 @@ class DuplicateAnalysis:
 
 @dataclass
 class CollaborationMatch:
-    """Results for collaboration matching."""
+    """
+Results for collaboration matching."""
     creator_id: str
     compatibility_score: float
     shared_interests: List[str]
@@ -88,7 +94,8 @@ class CollaborationMatch:
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation result."""
+    """
+Content recommendation result."""
     content_id: str
     recommendation_score: float
     recommendation_type: str
@@ -137,7 +144,8 @@ class AdvancedSimilarityAnalyzer:
     
     def analyze_audio_similarity(self, result: VectorSearchResult, 
                                query_metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audio-specific similarity components."""
+        """
+Analyze audio-specific similarity components."""
         try:
             similarity_breakdown = {}
             
@@ -329,7 +337,8 @@ class DuplicateDetectionEngine:
     async def analyze_potential_duplicate(self, result: VectorSearchResult,
                                        content_type: str,
                                        query_metadata: Dict[str, Any]) -> DuplicateAnalysis:
-        """Analyze if a search result is a potential duplicate."""
+        """
+Analyze if a search result is a potential duplicate."""
         try:
             # Get content-specific similarity breakdown
             if content_type == 'audio':
@@ -565,7 +574,8 @@ class CollaborationMatchingEngine:
     async def find_collaboration_matches(self, creator_profile: Dict[str, Any],
                                        potential_matches: List[VectorSearchResult],
                                        content_type: str) -> List[CollaborationMatch]:
-        """Find potential collaboration matches from search results."""
+        """
+Find potential collaboration matches from search results."""
         try:
             matches = []
             
@@ -798,7 +808,8 @@ class CollaborationMatchingEngine:
     def _assess_collaboration_potential(self, compatibility_score: float,
                                       shared_interests: List[str],
                                       complementary_skills: List[str]) -> str:
-        """Assess overall collaboration potential."""
+        """
+Assess overall collaboration potential."""
         if compatibility_score > 0.8 and len(shared_interests) > 3 and len(complementary_skills) > 2:
             return "EXCELLENT - Highly recommended collaboration opportunity"
         elif compatibility_score > 0.7 and len(shared_interests) > 2:
@@ -872,7 +883,8 @@ class ContentRecommendationEngine:
     async def generate_recommendations(self, user_profile: Dict[str, Any],
                                      similar_content: List[VectorSearchResult],
                                      content_type: str) -> List[ContentRecommendation]:
-        """Generate content recommendations."""
+        """
+Generate content recommendations."""
         try:
             recommendations = []
             

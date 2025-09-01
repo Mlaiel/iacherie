@@ -5,7 +5,7 @@ with ML-powered insights, predictive modeling, and comprehensive reporting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -59,6 +62,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Types of protection metrics"""
+
     VIOLATION_COUNT = "violation_count"
     DETECTION_ACCURACY = "detection_accuracy"
     RESPONSE_TIME = "response_time"
@@ -819,7 +823,8 @@ class ProtectionAnalyticsEngine:
         return []
     
     async def _generate_pattern_recommendations(self, patterns: Dict) -> List[str]:
-        """Generate recommendations based on patterns"""
+        """
+Generate recommendations based on patterns"""
         # Implementation for recommendation generation
         return ["Recommendation 1", "Recommendation 2"]
     
@@ -834,7 +839,8 @@ class ProtectionAnalyticsEngine:
         return []
     
     async def _analyze_attack_vectors(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze attack vectors"""
+        """
+Analyze attack vectors"""
         return {"vectors": []}
     
     async def _profile_threat_actors(self, start_date: datetime) -> List[Dict[str, Any]]:
@@ -842,7 +848,8 @@ class ProtectionAnalyticsEngine:
         return []
     
     async def _analyze_threat_infrastructure(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze threat infrastructure"""
+        """
+Analyze threat infrastructure"""
         return {"infrastructure": []}
     
     async def _analyze_countermeasure_effectiveness(self, start_date: datetime) -> Dict[str, Any]:
@@ -892,5 +899,6 @@ class ProtectionAnalyticsEngine:
         pass
     
     async def _store_compliance_report(self, report: Dict[str, Any]) -> None:
-        """Store compliance report"""
+        """
+Store compliance report"""
         pass

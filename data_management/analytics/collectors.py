@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -34,7 +35,9 @@ from ...models.monetization import Revenue
 
 
 class MetricCategory(Enum):
-    """Business metric categories for organized tracking."""
+    """
+Business metric categories for organized tracking."""
+
     USER_ACQUISITION = "user_acquisition"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_CREATION = "content_creation"
@@ -133,7 +136,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect user acquisition and growth metrics."""
+        """
+Collect user acquisition and growth metrics."""
         
         async with get_database_session() as session:
             # New user registrations

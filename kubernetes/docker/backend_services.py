@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional backend services Docker configuration for high-performance
 multi-format content processing and real-time protection systems.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BackendServicesDockerConfig:
-    """Enterprise Backend Services Docker configuration"""
+    """
+Enterprise Backend Services Docker configuration"""
     
     # Container Configuration
     image_name: str = "ia-influencer/backend-services"
@@ -224,7 +226,8 @@ CMD ["gunicorn", \\
      "main:app"]
 """
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""
+        """
+Generate docker-compose service configuration"""
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -570,7 +573,8 @@ msgpack==1.0.7
 """
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
+        """
+Save all configuration files to output directory"""
         import os
         from pathlib import Path
         

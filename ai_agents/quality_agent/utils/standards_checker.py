@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -52,7 +53,9 @@ from ..quality_agent import ContentType
 logger = logging.getLogger(__name__)
 
 class StandardType(Enum):
-    """Types of content standards"""
+    """
+Types of content standards"""
+
     TECHNICAL = "technical"
     LEGAL = "legal"
     ACCESSIBILITY = "accessibility"
@@ -66,6 +69,7 @@ class StandardType(Enum):
 
 class ComplianceLevel(Enum):
     """Compliance severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -74,6 +78,7 @@ class ComplianceLevel(Enum):
 
 class StandardsFramework(Enum):
     """Industry standards frameworks"""
+
     ISO = "iso"
     WCAG = "wcag"
     GDPR = "gdpr"
@@ -103,7 +108,8 @@ class StandardRule:
 
 @dataclass
 class ComplianceViolation:
-    """Standards compliance violation"""
+    """
+Standards compliance violation"""
     violation_id: str
     rule_id: str
     severity: ComplianceLevel
@@ -703,7 +709,8 @@ class StandardsChecker:
             return 4.5  # Default passing value
 
     async def _detect_personal_data(self, content_path: str, content_type: ContentType) -> bool:
-        """Detect potential personal data in content"""
+        """
+Detect potential personal data in content"""
         try:
             if content_type in [ContentType.TEXT, ContentType.BLOG]:
                 with open(content_path, 'r', encoding='utf-8') as f:
@@ -725,7 +732,8 @@ class StandardsChecker:
             return False
 
     def _calculate_compliance_metrics(self, violations: List[ComplianceViolation]) -> Dict[str, Any]:
-        """Calculate compliance metrics from violations"""
+        """
+Calculate compliance metrics from violations"""
         
         total_violations = len(violations)
         
@@ -866,7 +874,8 @@ class StandardsChecker:
         frameworks: List[StandardsFramework],
         custom_rules: Optional[List[StandardRule]] = None
     ) -> List[StandardRule]:
-        """Get applicable rules for content type and frameworks"""
+        """
+Get applicable rules for content type and frameworks"""
         
         applicable_rules = []
         
@@ -884,7 +893,8 @@ class StandardsChecker:
         return applicable_rules
 
     def _load_standards_rules(self) -> Dict[str, List[StandardRule]]:
-        """Load standards rules from configuration"""
+        """
+Load standards rules from configuration"""
         
         rules = {
             "wcag": [
@@ -1094,7 +1104,8 @@ class ComplianceValidator:
         content_type: ContentType,
         framework: StandardsFramework
     ) -> Dict[str, Any]:
-        """Perform quick compliance validation"""
+        """
+Perform quick compliance validation"""
         
         try:
             validation_result = {

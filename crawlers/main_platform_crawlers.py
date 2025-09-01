@@ -41,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 # ================== YOUTUBE CRAWLER ==================
 class YouTubeCrawler(BaseCrawler):
-    """YouTube crawler with API v3 and copyright monitoring."""
+    """
+YouTube crawler with API v3 and copyright monitoring."""
     
     def __init__(self, api_key: Optional[str] = None):
         super().__init__("youtube", rate_limit=100)
@@ -227,7 +228,8 @@ class YouTubeCrawler(BaseCrawler):
 
 # ================== INSTAGRAM CRAWLER ==================
 class InstagramCrawler(BaseCrawler):
-    """Instagram crawler with Graph API and story monitoring."""
+    """
+Instagram crawler with Graph API and story monitoring."""
     
     def __init__(self, access_token: Optional[str] = None):
         super().__init__("instagram", rate_limit=200)
@@ -983,7 +985,8 @@ class CrawlerOrchestrator:
         }
     
     async def search_all_platforms(self, query: str, max_results: int = 10) -> Dict[str, List[CrawlerResult]]:
-        """Search across all platforms."""
+        """
+Search across all platforms."""
         results = {}
         
         for platform, crawler in self.crawlers.items():
@@ -1002,7 +1005,8 @@ class CrawlerOrchestrator:
         return self.crawlers.get(platform)
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms."""
+        """
+Get list of supported platforms."""
         return list(self.crawlers.keys())
 
 

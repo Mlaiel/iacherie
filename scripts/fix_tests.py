@@ -8,6 +8,7 @@ pour qu'ils fonctionnent avec la structure actuelle du projet.
 Author: GitHub Copilot
 Date: 2025-08-31
 """
+
 import os
 import re
 from pathlib import Path
@@ -24,7 +25,8 @@ class TestFixer:
         self.errors = []
     
     def find_missing_imports(self, file_path: Path) -> List[str]:
-        """Trouve les imports manquants dans un fichier"""
+        """
+Trouve les imports manquants dans un fichier"""
         missing = []
         
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -47,7 +49,8 @@ class TestFixer:
         return missing
     
     def check_module_exists(self, module_name: str) -> bool:
-        """Vérifie si un module existe dans le projet"""
+        """
+Vérifie si un module existe dans le projet"""
         module_path = module_name.replace('.', '/')
         
         # Vérifier dans le répertoire racine
@@ -88,21 +91,25 @@ Author: GitHub Copilot (auto-généré)
 Date: 2025-08-31
 """# Classes et fonctions de base pour les tests
 class BaseClass:
-    """Classe de base minimale"""
+    """
+Classe de base minimale"""
     pass
 
 class TestConfig:
-    """Configuration de test minimale"""
+    """
+Configuration de test minimale"""
     def __init__(self):
         self.test_mode = True
 
 # Fonctions utilitaires de base
 def get_default_config():
-    """Retourne une configuration par défaut"""
+    """
+Retourne une configuration par défaut"""
     return TestConfig()
 
 def initialize():
-    """Initialise le module"""
+    """
+Initialise le module"""
     pass
 
 # Exports minimaux
@@ -148,12 +155,14 @@ __all__ = [
             # Ajouter un en-tête de compatibilité si nécessaire
             if '# -*- coding: utf-8 -*-' not in content:
                 compatibility_header = '''# -*- coding: utf-8 -*-
-"""Test adapté automatiquement pour le projet Ainflue
+"""
+Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path

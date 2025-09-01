@@ -4,11 +4,12 @@ Advanced AI-powered collaboration matching system for content creators,
 influencers, musicians, and multi-format content collaboration opportunities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -27,7 +28,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
+    """
+Types of collaboration"""
+
     MUSIC_COLLAB = "music_collaboration"
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
@@ -39,6 +42,7 @@ class CollaborationType(Enum):
 
 class CreatorType(Enum):
     """Types of content creators"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
@@ -52,6 +56,7 @@ class CreatorType(Enum):
 
 class MatchingCriteria(Enum):
     """Criteria for collaboration matching"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -152,7 +157,8 @@ class CollaborativeMatchingEngine:
         self.trending_collaborations = []
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'min_match_score': 0.6,
             'max_matches_per_request': 10,
@@ -169,7 +175,8 @@ class CollaborativeMatchingEngine:
         }
     
     async def register_creator(self, profile: CreatorProfile) -> bool:
-        """Register a new creator profile"""
+        """
+Register a new creator profile"""
         try:
             # Validate profile completeness
             completeness_score = self._calculate_profile_completeness(profile)
@@ -399,7 +406,8 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate audience demographic overlap"""
+        """
+Calculate audience demographic overlap"""
         try:
             if not creator_1.audience_demographics or not creator_2.audience_demographics:
                 return 0.5  # Default score if demographics not available
@@ -734,7 +742,8 @@ class CollaborativeMatchingEngine:
         return completeness / len(required_fields)
     
     async def get_collaboration_insights(self, creator_id: str) -> Dict[str, Any]:
-        """Get collaboration insights and recommendations for a creator"""
+        """
+Get collaboration insights and recommendations for a creator"""
         try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")

@@ -3,11 +3,12 @@
 Specialized agents for revenue optimization, sponsorship management, and monetization strategies.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in monetization strategies,
 revenue optimization, sponsorship matching, and financial analytics for content creators.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -21,7 +22,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis results"""
+    """
+Revenue analysis results"""
     current_revenue: float
     projected_revenue: float
     revenue_sources: Dict[str, float]
@@ -33,7 +35,8 @@ class RevenueAnalysis:
 
 @dataclass
 class SponsorshipOpportunity:
-    """Sponsorship opportunity structure"""
+    """
+Sponsorship opportunity structure"""
     sponsor_name: str
     brand_category: str
     estimated_value: float

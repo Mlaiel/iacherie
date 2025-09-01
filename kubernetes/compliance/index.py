@@ -9,6 +9,7 @@ This module provides the main entry point for the compliance system,
 handling initialization, configuration, and orchestration of all
 compliance components.
 """
+
 import asyncio
 import json
 import logging
@@ -372,7 +373,8 @@ async def get_compliance_system() -> ComplianceSystemManager:
 
 
 async def main():
-    """Main entry point for compliance system"""
+    """
+Main entry point for compliance system"""
     try:
         print("🚀 Starting IA Influencer Agent Compliance System...")
         print(f"👨‍💻 Created by: Fahed Mlaiel <mlaiel@live.de>")

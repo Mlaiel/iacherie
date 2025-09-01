@@ -21,6 +21,7 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
+
 import os
 import json
 import yaml
@@ -33,7 +34,9 @@ import logging
 
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     SINGER = "singer"
     PRODUCER = "producer"
@@ -52,6 +55,7 @@ class CreatorType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations"""
+
     FEATURE = "feature"
     REMIX = "remix"
     COVER = "cover"
@@ -68,6 +72,7 @@ class CollaborationType(Enum):
 
 class SkillLevel(Enum):
     """Skill levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate" 
     ADVANCED = "advanced"
@@ -77,6 +82,7 @@ class SkillLevel(Enum):
 
 class MatchingCriteria(Enum):
     """Matching criteria types"""
+
     GENRE_SIMILARITY = "genre_similarity"
     SKILL_COMPATIBILITY = "skill_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -108,7 +114,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchingAlgorithmConfig:
-    """Matching algorithm configuration"""
+    """
+Matching algorithm configuration"""
     enabled_criteria: List[MatchingCriteria] = field(default_factory=list)
     criteria_weights: Dict[MatchingCriteria, float] = field(default_factory=dict)
     minimum_match_score: float = 0.7
@@ -121,7 +128,8 @@ class MatchingAlgorithmConfig:
 
 @dataclass
 class CollaborationWorkflow:
-    """Collaboration workflow configuration"""
+    """
+Collaboration workflow configuration"""
     workflow_type: CollaborationType
     steps: List[Dict[str, Any]] = field(default_factory=list)
     required_approvals: List[str] = field(default_factory=list)
@@ -133,7 +141,8 @@ class CollaborationWorkflow:
 
 @dataclass
 class RecommendationEngineConfig:
-    """AI recommendation engine configuration"""
+    """
+AI recommendation engine configuration"""
     model_type: str = "collaborative_filtering"
     embedding_dimension: int = 256
     training_data_sources: List[str] = field(default_factory=list)
@@ -206,7 +215,8 @@ class CollaborationMatchingConfig:
         )
     
     def _initialize_collaboration_workflows(self) -> Dict[CollaborationType, CollaborationWorkflow]:
-        """Initialize collaboration workflow configurations"""
+        """
+Initialize collaboration workflow configurations"""
         workflows = {}
         
         # Feature collaboration workflow

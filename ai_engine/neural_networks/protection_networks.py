@@ -6,6 +6,7 @@ and intellectual property safeguarding for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -20,7 +21,9 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig
 
 
 class ProtectionType(Enum):
-    """Types of content protection"""
+    """
+Types of content protection"""
+
     COPYRIGHT = "copyright"
     PLAGIARISM = "plagiarism"
     DEEPFAKE = "deepfake"
@@ -31,6 +34,7 @@ class ProtectionType(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -72,7 +76,8 @@ class ProtectionResult:
     processing_time: Optional[float] = None
     
     def __post_init__(self):
-        """Set analysis timestamp if not provided"""
+        """
+Set analysis timestamp if not provided"""
         if self.analysis_timestamp is None:
             self.analysis_timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -721,7 +726,8 @@ class CopyrightProtectionNetwork(BaseNeuralNetwork):
         reference_database: Optional[List[torch.Tensor]],
         content_id: str
     ) -> List[ProtectionResult]:
-        """Perform comprehensive protection analysis"""
+        """
+Perform comprehensive protection analysis"""
         
         results = []
         

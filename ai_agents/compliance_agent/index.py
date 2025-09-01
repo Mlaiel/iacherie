@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 from typing import Dict, List, Any, Optional
 
 # Core Compliance Management Components
@@ -126,7 +127,8 @@ class ComplianceModuleInterface:
     """
     
     def __init__(self):
-        """Initialize compliance module interface"""
+        """
+Initialize compliance module interface"""
         self.components = {
             'agent': ComplianceAgent,
             'manager': ComplianceAgentManager,
@@ -141,15 +143,18 @@ class ComplianceModuleInterface:
         }
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get compliance component by name"""
+        """
+Get compliance component by name"""
         return self.components.get(component_name)
     
     def list_components(self) -> List[str]:
-        """List all available compliance components"""
+        """
+List all available compliance components"""
         return list(self.components.keys())
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get module information"""
+        """
+Get module information"""
         return {
             'name': 'compliance_agent',
             'version': __version__,

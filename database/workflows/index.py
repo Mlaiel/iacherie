@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from sqlalchemy.orm import Session

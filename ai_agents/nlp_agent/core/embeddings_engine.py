@@ -7,6 +7,7 @@ on high-quality semantic embeddings using state-of-the-art models.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -54,6 +55,7 @@ logger = logging.getLogger(__name__)
 
 class EmbeddingModel(Enum):
     """Available embedding models"""
+
     SENTENCE_TRANSFORMERS = "sentence-transformers/all-MiniLM-L6-v2"
     MPNET = "sentence-transformers/all-mpnet-base-v2"
     DISTILBERT = "sentence-transformers/all-distilroberta-v1"
@@ -63,6 +65,7 @@ class EmbeddingModel(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity metrics for embeddings"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -71,6 +74,7 @@ class SimilarityMetric(Enum):
 
 class DimensionalityReduction(Enum):
     """Dimensionality reduction techniques"""
+
     PCA = "pca"
     TSNE = "tsne"
     UMAP = "umap"
@@ -89,7 +93,8 @@ class TextEmbedding:
 
 @dataclass
 class SimilarityResult:
-    """Result of similarity search"""
+    """
+Result of similarity search"""
     query_id: str
     similar_items: List[Tuple[str, float]] = field(default_factory=list)  # (text_id, similarity_score)
     search_time: float = 0.0
@@ -108,7 +113,8 @@ class ClusterResult:
 
 @dataclass
 class EmbeddingSpaceAnalysis:
-    """Analysis of embedding space"""
+    """
+Analysis of embedding space"""
     total_embeddings: int
     embedding_dimension: int
     average_similarity: float
@@ -125,7 +131,8 @@ class EmbeddingsEngine:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Embeddings Engine"""
+        """
+Initialize Embeddings Engine"""
         self.config = config or default_config
         self.models = {}
         self.tokenizers = {}
@@ -137,7 +144,8 @@ class EmbeddingsEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize embedding models"""
+        """
+Initialize embedding models"""
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Initialize sentence transformers pipeline
@@ -188,7 +196,8 @@ class EmbeddingsEngine:
         return -1  # Use CPU
     
     def _initialize_faiss(self):
-        """Initialize FAISS index for fast similarity search"""
+        """
+Initialize FAISS index for fast similarity search"""
         if FAISS_AVAILABLE:
             # Will be initialized when first embeddings are added
             self.faiss_index = None
@@ -940,7 +949,8 @@ class EmbeddingsEngine:
         return self.embedding_store.get(text_id)
     
     def remove_embedding(self, text_id: str) -> bool:
-        """Remove embedding by ID"""
+        """
+Remove embedding by ID"""
         if text_id in self.embedding_store:
             del self.embedding_store[text_id]
             if text_id in self.embeddings_cache:
@@ -954,7 +964,8 @@ class EmbeddingsEngine:
         return False
     
     def clear_cache(self):
-        """Clear embedding caches"""
+        """
+Clear embedding caches"""
         self.embeddings_cache.clear()
         logger.info("Embedding cache cleared")
     
@@ -1016,12 +1027,14 @@ def calculate_centroid(embeddings: List[np.ndarray]) -> np.ndarray:
     return np.mean(embeddings, axis=0)
 
 def normalize_embedding(embedding: np.ndarray) -> np.ndarray:
-    """Normalize embedding to unit vector"""
+    """
+Normalize embedding to unit vector"""
     norm = np.linalg.norm(embedding)
     return embedding / norm if norm > 0 else embedding
 
 def batch_cosine_similarity(matrix1: np.ndarray, matrix2: np.ndarray) -> np.ndarray:
-    """Calculate cosine similarity between two embedding matrices"""
+    """
+Calculate cosine similarity between two embedding matrices"""
     if SKLEARN_AVAILABLE:
         return cosine_similarity(matrix1, matrix2)
     

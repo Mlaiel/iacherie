@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Workflow Definition → Dynamic Execution → Real-time Adaptation → Performance Optimization → Result Delivery
 """
+
 import asyncio
 import logging
 import time
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowState(Enum):
-    """Workflow execution states"""
+    """
+Workflow execution states"""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -43,6 +46,7 @@ class WorkflowState(Enum):
 
 class TaskState(Enum):
     """Task execution states"""
+
     PENDING = "pending"
     READY = "ready"
     RUNNING = "running"
@@ -56,6 +60,7 @@ class TaskState(Enum):
 
 class TaskType(Enum):
     """Task types"""
+
     CONTENT_PROCESSING = "content_processing"
     AI_ANALYSIS = "ai_analysis"
     PROTECTION_SCAN = "protection_scan"
@@ -75,6 +80,7 @@ class TaskType(Enum):
 
 class ExecutionMode(Enum):
     """Execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -87,6 +93,7 @@ class ExecutionMode(Enum):
 
 class TaskPriority(Enum):
     """Task priorities"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -95,7 +102,9 @@ class TaskPriority(Enum):
 
 
 class ConditionOperator(Enum):
-    """Condition operators"""
+    """
+Condition operators"""
+
     EQUALS = "=="
     NOT_EQUALS = "!="
     GREATER_THAN = ">"
@@ -112,6 +121,7 @@ class ConditionOperator(Enum):
 
 class WorkflowTrigger(Enum):
     """Workflow triggers"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT = "event"
@@ -189,7 +199,8 @@ class TaskCondition:
 
 @dataclass
 class TaskMetrics:
-    """Task execution metrics"""
+    """
+Task execution metrics"""
     execution_count: int = 0
     success_count: int = 0
     failure_count: int = 0
@@ -207,7 +218,8 @@ class TaskMetrics:
 
 @dataclass
 class TaskResult:
-    """Task execution result"""
+    """
+Task execution result"""
     task_id: str = ""
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     success: bool = False
@@ -285,7 +297,8 @@ class WorkflowTask:
         return True
     
     def should_retry(self) -> bool:
-        """Check if task should be retried"""
+        """
+Check if task should be retried"""
         return (
             self.state == TaskState.FAILED and
             self.retry_attempts > 0 and
@@ -293,12 +306,14 @@ class WorkflowTask:
         )
     
     def get_next_retry_delay(self) -> float:
-        """Calculate next retry delay"""
+        """
+Calculate next retry delay"""
         retry_count = len([r for r in self.results if not r.success])
         return self.retry_delay * (self.retry_backoff_factor ** retry_count)
     
     def update_metrics(self, result: TaskResult):
-        """Update task metrics"""
+        """
+Update task metrics"""
         self.metrics.execution_count += 1
         
         if result.success:
@@ -330,7 +345,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition"""
+    """
+Workflow definition"""
     workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     workflow_name: str = ""
     description: str = ""
@@ -364,13 +380,15 @@ class WorkflowDefinition:
         self.updated_at = datetime.now()
     
     def remove_task(self, task_id: str):
-        """Remove task from workflow"""
+        """
+Remove task from workflow"""
         if task_id in self.tasks:
             del self.tasks[task_id]
             self.updated_at = datetime.now()
     
     def get_task_dependency_graph(self) -> nx.DiGraph:
-        """Build task dependency graph"""
+        """
+Build task dependency graph"""
         graph = nx.DiGraph()
         
         # Add nodes
@@ -386,7 +404,8 @@ class WorkflowDefinition:
         return graph
     
     def validate_dependencies(self) -> List[str]:
-        """Validate task dependencies"""
+        """
+Validate task dependencies"""
         errors = []
         
         try:
@@ -433,7 +452,8 @@ class WorkflowDefinition:
         return levels
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "workflow_id": self.workflow_id,
             "workflow_name": self.workflow_name,
@@ -514,17 +534,20 @@ class TaskExecutor(ABC):
     
     @abstractmethod
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute task"""
+        """
+Execute task"""
         pass
     
     @abstractmethod
     def supports_task_type(self, task_type: TaskType) -> bool:
-        """Check if executor supports task type"""
+        """
+Check if executor supports task type"""
         pass
 
 
 class BaseTaskExecutor(TaskExecutor):
-    """Base task executor implementation"""
+    """
+Base task executor implementation"""
     
     def __init__(self, name: str = "base"):
         self.name = name
@@ -585,7 +608,8 @@ class BaseTaskExecutor(TaskExecutor):
         return True  # Base executor supports all types
     
     def _validate_input(self, context: Dict[str, Any], schema: Dict[str, Any]) -> List[str]:
-        """Validate input against schema"""
+        """
+Validate input against schema"""
         # Simplified validation - in production use JSON Schema
         errors = []
         required_fields = schema.get("required", [])
@@ -699,7 +723,8 @@ class TaskManager:
         self.register_executor(TaskType.CUSTOM, BaseTaskExecutor())
     
     def register_executor(self, task_type: TaskType, executor: TaskExecutor):
-        """Register task executor"""
+        """
+Register task executor"""
         self.executors[task_type] = executor
         self.logger.info(f"Registered executor for task type: {task_type.value}")
     
@@ -775,7 +800,8 @@ class TaskManager:
 
 
 class DependencyResolver:
-    """Task dependency resolution"""
+    """
+Task dependency resolution"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -799,7 +825,8 @@ class DependencyResolver:
 
 
 class ParallelProcessor:
-    """Parallel task processing"""
+    """
+Parallel task processing"""
     
     def __init__(self, max_workers: int = 4):
         self.max_workers = max_workers
@@ -826,7 +853,8 @@ class ParallelProcessor:
 
 
 class StateManager:
-    """Workflow state management"""
+    """
+Workflow state management"""
     
     def __init__(self):
         self.workflow_states: Dict[str, WorkflowExecution] = {}
@@ -870,7 +898,8 @@ class StateManager:
                         ).total_seconds()
     
     def update_task_state(self, execution_id: str, task_id: str, state: TaskState, result: Optional[TaskResult] = None):
-        """Update task state"""
+        """
+Update task state"""
         with self.state_lock:
             if execution_id in self.workflow_states:
                 execution = self.workflow_states[execution_id]
@@ -894,7 +923,8 @@ class StateManager:
             return self.workflow_states.get(execution_id)
     
     def cleanup_execution(self, execution_id: str):
-        """Cleanup completed execution"""
+        """
+Cleanup completed execution"""
         with self.state_lock:
             if execution_id in self.workflow_states:
                 del self.workflow_states[execution_id]
@@ -1064,7 +1094,8 @@ class WorkflowEngine:
         input_data: Dict[str, Any],
         execution_mode: Optional[ExecutionMode] = None
     ) -> str:
-        """Execute workflow and return execution ID"""
+        """
+Execute workflow and return execution ID"""
         if workflow_id not in self.workflow_definitions:
             raise ValueError(f"Workflow not found: {workflow_id}")
         
@@ -1247,7 +1278,8 @@ class WorkflowEngine:
         return sum(quality_scores) / len(quality_scores) if quality_scores else 0.0
     
     def _calculate_performance_score(self, execution: WorkflowExecution) -> float:
-        """Calculate performance score based on execution efficiency"""
+        """
+Calculate performance score based on execution efficiency"""
         if not execution.total_execution_time:
             return 0.0
         
@@ -1258,7 +1290,8 @@ class WorkflowEngine:
         return efficiency
     
     def _calculate_business_value_score(self, execution: WorkflowExecution) -> float:
-        """Calculate business value score"""
+        """
+Calculate business value score"""
         # Simplified calculation - in production, use business metrics
         completed_tasks = len([s for s in execution.task_states.values() if s == TaskState.COMPLETED])
         total_tasks = len(execution.workflow_definition.tasks)
@@ -1270,18 +1303,21 @@ class WorkflowEngine:
         return (completion_ratio * 0.5 + quality_factor * 0.3 + performance_factor * 0.2)
     
     def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get execution status"""
+        """
+Get execution status"""
         execution = self.state_manager.get_execution(execution_id)
         if execution:
             return execution.get_execution_summary()
         return None
     
     def get_active_executions(self) -> List[Dict[str, Any]]:
-        """Get all active executions"""
+        """
+Get all active executions"""
         return [execution.get_execution_summary() for execution in self.active_executions.values()]
     
     def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel workflow execution"""
+        """
+Cancel workflow execution"""
         execution = self.state_manager.get_execution(execution_id)
         if execution and execution.state in [WorkflowState.PENDING, WorkflowState.RUNNING, WorkflowState.WAITING]:
             self.state_manager.update_execution_state(execution_id, WorkflowState.CANCELLED)
@@ -1354,32 +1390,38 @@ class WorkflowBuilder:
         return self
     
     def set_execution_mode(self, mode: ExecutionMode) -> 'WorkflowBuilder':
-        """Set execution mode"""
+        """
+Set execution mode"""
         self.workflow.execution_mode = mode
         return self
     
     def set_timeout(self, seconds: float) -> 'WorkflowBuilder':
-        """Set global timeout"""
+        """
+Set global timeout"""
         self.workflow.global_timeout_seconds = seconds
         return self
     
     def add_success_criterion(self, criterion: Dict[str, Any]) -> 'WorkflowBuilder':
-        """Add success criterion"""
+        """
+Add success criterion"""
         self.workflow.success_criteria.append(criterion)
         return self
     
     def build(self) -> WorkflowDefinition:
-        """Build and return workflow definition"""
+        """
+Build and return workflow definition"""
         return self.workflow
 
 
 # Factory for common workflow patterns
 class WorkflowFactory:
-    """Factory for creating common workflow patterns"""
+    """
+Factory for creating common workflow patterns"""
     
     @staticmethod
     def create_content_processing_workflow(content_type: str) -> WorkflowDefinition:
-        """Create content processing workflow"""
+        """
+Create content processing workflow"""
         builder = WorkflowBuilder(
             f"Content Processing - {content_type}",
             f"Complete content processing workflow for {content_type}"
@@ -1535,23 +1577,27 @@ class TaskHandler(ABC):
     
     @abstractmethod
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute task"""
+        """
+Execute task"""
         pass
     
     @abstractmethod
     def get_task_type(self) -> TaskType:
-        """Get supported task type"""
+        """
+Get supported task type"""
         pass
 
 
 class ContentProcessingTaskHandler(TaskHandler):
-    """Content processing task handler"""
+    """
+Content processing task handler"""
     
     def get_task_type(self) -> TaskType:
         return TaskType.CONTENT_PROCESSING
     
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute content processing task"""
+        """
+Execute content processing task"""
         start_time = time.time()
         
         try:
@@ -1597,7 +1643,8 @@ class AIAnalysisTaskHandler(TaskHandler):
         return TaskType.AI_ANALYSIS
     
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute AI analysis task"""
+        """
+Execute AI analysis task"""
         start_time = time.time()
         
         try:
@@ -1644,7 +1691,8 @@ class ProtectionScanTaskHandler(TaskHandler):
         return TaskType.PROTECTION_SCAN
     
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute protection scan task"""
+        """
+Execute protection scan task"""
         start_time = time.time()
         
         try:
@@ -1691,7 +1739,8 @@ class QualityCheckTaskHandler(TaskHandler):
         return TaskType.QUALITY_CHECK
     
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute quality check task"""
+        """
+Execute quality check task"""
         start_time = time.time()
         
         try:
@@ -1739,7 +1788,8 @@ class OptimizationTaskHandler(TaskHandler):
         return TaskType.OPTIMIZATION
     
     async def execute(self, task: WorkflowTask, context: Dict[str, Any]) -> TaskResult:
-        """Execute optimization task"""
+        """
+Execute optimization task"""
         start_time = time.time()
         
         try:
@@ -1894,7 +1944,8 @@ class WorkflowOptimizer:
         return [task_id for task_id, _ in sorted_tasks]
     
     async def _optimize_resource_allocation(self, execution: WorkflowExecution) -> Dict[str, Any]:
-        """Optimize resource allocation"""
+        """
+Optimize resource allocation"""
         return {
             "cpu_allocation": {
                 "current": "auto",
@@ -2112,7 +2163,8 @@ class WorkflowMonitor:
         return self.active_monitors.get(monitor_id)
     
     def stop_monitoring(self, monitor_id: str) -> bool:
-        """Stop monitoring"""
+        """
+Stop monitoring"""
         if monitor_id in self.active_monitors:
             self.active_monitors[monitor_id]["status"] = "stopped"
             self.active_monitors[monitor_id]["stopped_at"] = datetime.now()
@@ -2414,7 +2466,8 @@ class WorkflowEngine:
             await self._execute_sequential(execution)  # Default fallback
     
     async def _execute_sequential(self, execution: WorkflowExecution):
-        """Execute tasks sequentially"""
+        """
+Execute tasks sequentially"""
         tasks = self._sort_tasks_by_dependencies(execution.workflow_definition.tasks)
         
         for task in tasks:
@@ -2432,7 +2485,8 @@ class WorkflowEngine:
                         break
     
     async def _execute_parallel(self, execution: WorkflowExecution):
-        """Execute tasks in parallel"""
+        """
+Execute tasks in parallel"""
         tasks = execution.workflow_definition.tasks
         max_parallel = execution.workflow_definition.max_parallel_tasks
         
@@ -2493,7 +2547,8 @@ class WorkflowEngine:
             await self._execute_parallel_group(ready_tasks, execution)
     
     async def _execute_conditional(self, execution: WorkflowExecution):
-        """Execute tasks with conditional logic"""
+        """
+Execute tasks with conditional logic"""
         tasks = self._sort_tasks_by_dependencies(execution.workflow_definition.tasks)
         
         for task in tasks:
@@ -2522,7 +2577,8 @@ class WorkflowEngine:
         await self._execute_sequential_list(tasks, execution)
     
     async def _execute_parallel_group(self, tasks: List[WorkflowTask], execution: WorkflowExecution):
-        """Execute a group of tasks in parallel"""
+        """
+Execute a group of tasks in parallel"""
         max_parallel = execution.workflow_definition.max_parallel_tasks
         semaphore = asyncio.Semaphore(max_parallel)
         
@@ -2564,7 +2620,8 @@ class WorkflowEngine:
                         break
     
     async def _execute_task(self, task: WorkflowTask, execution: WorkflowExecution) -> TaskResult:
-        """Execute individual task"""
+        """
+Execute individual task"""
         task.state = WorkflowState.RUNNING
         task.attempts += 1
         task.last_attempt_at = datetime.now()
@@ -2625,7 +2682,8 @@ class WorkflowEngine:
         return True
     
     async def _evaluate_task_conditions(self, task: WorkflowTask, execution: WorkflowExecution) -> bool:
-        """Evaluate task execution conditions"""
+        """
+Evaluate task execution conditions"""
         if not task.conditions:
             return True
         
@@ -2636,7 +2694,8 @@ class WorkflowEngine:
         return True
     
     async def _evaluate_condition(self, condition: TaskCondition, execution: WorkflowExecution) -> bool:
-        """Evaluate individual condition"""
+        """
+Evaluate individual condition"""
         # Simple condition evaluation - can be extended
         if condition.condition_type == "task_result":
             for dep_task_id in condition.depends_on:
@@ -2663,7 +2722,8 @@ class WorkflowEngine:
         return True
     
     def _sort_tasks_by_dependencies(self, tasks: List[WorkflowTask]) -> List[WorkflowTask]:
-        """Sort tasks by dependencies (topological sort)"""
+        """
+Sort tasks by dependencies (topological sort)"""
         task_map = {task.task_id: task for task in tasks}
         visited = set()
         result = []
@@ -2688,7 +2748,8 @@ class WorkflowEngine:
         return result
     
     def _group_tasks_by_dependency_level(self, tasks: List[WorkflowTask]) -> List[List[WorkflowTask]]:
-        """Group tasks by dependency level"""
+        """
+Group tasks by dependency level"""
         task_map = {task.task_id: task for task in tasks}
         levels = []
         remaining_tasks = set(task.task_id for task in tasks)
@@ -2714,19 +2775,23 @@ class WorkflowEngine:
     
     # Public API Methods
     def get_execution_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get execution status"""
+        """
+Get execution status"""
         return self.active_executions.get(execution_id) or self.completed_executions.get(execution_id)
     
     def get_active_executions(self) -> Dict[str, WorkflowExecution]:
-        """Get all active executions"""
+        """
+Get all active executions"""
         return self.active_executions.copy()
     
     def get_workflow_definitions(self) -> Dict[str, WorkflowDefinition]:
-        """Get all workflow definitions"""
+        """
+Get all workflow definitions"""
         return self.workflow_definitions.copy()
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel workflow execution"""
+        """
+Cancel workflow execution"""
         if execution_id in self.active_executions:
             execution = self.active_executions[execution_id]
             execution.state = WorkflowState.CANCELLED

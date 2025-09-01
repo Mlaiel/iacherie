@@ -29,6 +29,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection security levels"""
+    """
+Content protection security levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -72,6 +75,7 @@ class ProtectionLevel(Enum):
 
 class ThreatType(Enum):
     """Types of content protection threats"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_PIRACY = "content_piracy"
@@ -84,6 +88,7 @@ class ThreatType(Enum):
 
 class ComplianceStatus(Enum):
     """IP compliance status levels"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -93,6 +98,7 @@ class ComplianceStatus(Enum):
 
 class ProtectionStrategy(Enum):
     """Content protection strategies"""
+
     PREVENTIVE = "preventive"
     REACTIVE = "reactive"
     AGGRESSIVE = "aggressive"
@@ -321,7 +327,8 @@ class CopyrightConversationAdvisor:
         self._initialize_conversation_templates()
     
     def _initialize_conversation_templates(self):
-        """Initialize copyright conversation templates"""
+        """
+Initialize copyright conversation templates"""
         self.conversation_templates = {
             "protection_setup": {
                 "greeting": "Let's set up comprehensive protection for your content. I'll guide you through the process.",

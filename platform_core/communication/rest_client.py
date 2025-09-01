@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 CLIENT REST & REGISTRE DE SERVICES
@@ -15,6 +15,7 @@ Client HTTP intelligent avec découverte de services automatique
 - Retry automatique avec backoff exponentiel
 - Authentification centralisée et cache des tokens
 """
+
 import asyncio
 import json
 import logging
@@ -38,6 +39,7 @@ logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
     """États des services"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -46,6 +48,7 @@ class ServiceStatus(Enum):
 
 class RequestMethod(Enum):
     """Méthodes HTTP supportées"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -105,7 +108,8 @@ class RequestStats:
         return self.total_response_time / self.successful_requests
 
 class ServiceRegistry:
-    """Registre de services avec découverte automatique"""
+    """
+Registre de services avec découverte automatique"""
     
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.services: Dict[str, List[ServiceEndpoint]] = {}
@@ -118,7 +122,8 @@ class ServiceRegistry:
         self._health_check_task: Optional[asyncio.Task] = None
         
     async def start(self):
-        """Démarre le registre de services"""
+        """
+Démarre le registre de services"""
         logger.info("Démarrage du registre de services")
         self._health_check_task = asyncio.create_task(self._health_check_loop())
         
@@ -207,7 +212,8 @@ class ServiceRegistry:
         return self._select_best_endpoint(candidates)
         
     def _select_best_endpoint(self, candidates: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Sélectionne le meilleur endpoint selon l'algorithme de load balancing"""
+        """
+Sélectionne le meilleur endpoint selon l'algorithme de load balancing"""
         if len(candidates) == 1:
             return candidates[0]
             
@@ -228,7 +234,8 @@ class ServiceRegistry:
         return scored_candidates[0][1]
         
     def _is_circuit_breaker_closed(self, circuit_breaker: CircuitBreakerState) -> bool:
-        """Vérifie si le circuit breaker permet les requêtes"""
+        """
+Vérifie si le circuit breaker permet les requêtes"""
         now = datetime.utcnow()
         
         if circuit_breaker.state == "CLOSED":
@@ -272,7 +279,8 @@ class ServiceRegistry:
             await asyncio.gather(*health_check_tasks, return_exceptions=True)
             
     async def _check_service_health(self, endpoint: ServiceEndpoint):
-        """Vérifie la santé d'un service spécifique"""
+        """
+Vérifie la santé d'un service spécifique"""
         try:
             start_time = time.time()
             
@@ -356,7 +364,8 @@ class RestClient:
         self.token_expiry: Dict[str, datetime] = {}
         
     async def start(self):
-        """Démarre le client REST"""
+        """
+Démarre le client REST"""
         connector = aiohttp.TCPConnector(
             limit=100,  # Pool de connexions
             limit_per_host=30,
@@ -437,23 +446,28 @@ class RestClient:
         return await self.request(service_name, RequestMethod.GET, path, **kwargs)
         
     async def post(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête POST"""
+        """
+Requête POST"""
         return await self.request(service_name, RequestMethod.POST, path, **kwargs)
         
     async def put(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête PUT"""
+        """
+Requête PUT"""
         return await self.request(service_name, RequestMethod.PUT, path, **kwargs)
         
     async def patch(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête PATCH"""
+        """
+Requête PATCH"""
         return await self.request(service_name, RequestMethod.PATCH, path, **kwargs)
         
     async def delete(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête DELETE"""
+        """
+Requête DELETE"""
         return await self.request(service_name, RequestMethod.DELETE, path, **kwargs)
         
     async def _execute_request_with_retry(self, endpoint: ServiceEndpoint, **request_kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Exécute une requête avec retry automatique"""
+        """
+Exécute une requête avec retry automatique"""
         circuit_breaker = self.service_registry.circuit_breakers.get(endpoint.service_id)
         stats = self.service_registry.stats.get(endpoint.service_id)
         

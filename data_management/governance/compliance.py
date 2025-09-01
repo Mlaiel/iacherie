@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from ...ai.models import PersonalDataDetector, ContentClassifier
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -45,6 +48,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance assessment status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -54,6 +58,7 @@ class ComplianceStatus(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -77,7 +82,8 @@ class ComplianceIssue:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
+    """
+Compliance assessment report"""
     report_id: str
     content_id: str
     framework: ComplianceFramework
@@ -90,7 +96,8 @@ class ComplianceReport:
 
 
 class BaseComplianceChecker(ABC):
-    """Base class for compliance framework checkers"""
+    """
+Base class for compliance framework checkers"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -102,7 +109,8 @@ class BaseComplianceChecker(ABC):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess compliance for given content - base implementation"""
+        """
+Assess compliance for given content - base implementation"""
         try:
             self.logger.info(f"Assessing compliance for content: {content_id}")
             
@@ -495,7 +503,8 @@ class GDPRCompliance(BaseComplianceChecker):
         return max(0.0, score)
     
     def _determine_status(self, score: float, issues: List[ComplianceIssue]) -> ComplianceStatus:
-        """Determine overall compliance status"""
+        """
+Determine overall compliance status"""
         critical_issues = [i for i in issues if i.risk_level == RiskLevel.CRITICAL]
         high_issues = [i for i in issues if i.risk_level == RiskLevel.HIGH]
         
@@ -509,7 +518,8 @@ class GDPRCompliance(BaseComplianceChecker):
             return ComplianceStatus.COMPLIANT
     
     def _generate_gdpr_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate GDPR compliance recommendations"""
+        """
+Generate GDPR compliance recommendations"""
         recommendations = []
         
         issue_types = {issue.issue_type for issue in issues}
@@ -539,7 +549,8 @@ class GDPRCompliance(BaseComplianceChecker):
         return list(self.requirements.values())
     
     def get_framework_info(self) -> Dict[str, Any]:
-        """Get GDPR framework information"""
+        """
+Get GDPR framework information"""
         return {
             "name": "General Data Protection Regulation",
             "jurisdiction": "European Union",
@@ -577,7 +588,8 @@ class CCPACompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess CCPA compliance for content"""
+        """
+Assess CCPA compliance for content"""
         issues = []
         score = 100.0
         
@@ -702,7 +714,8 @@ class CCPACompliance(BaseComplianceChecker):
         return max(0.0, score)
     
     def _generate_ccpa_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate CCPA recommendations"""
+        """
+Generate CCPA recommendations"""
         recommendations = []
         
         issue_types = {issue.issue_type for issue in issues}
@@ -762,7 +775,8 @@ class DMCACompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess DMCA compliance for content"""
+        """
+Assess DMCA compliance for content"""
         issues = []
         score = 100.0
         
@@ -884,7 +898,8 @@ class DMCACompliance(BaseComplianceChecker):
         return max(0.0, score)
     
     def _generate_dmca_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate DMCA recommendations"""
+        """
+Generate DMCA recommendations"""
         recommendations = []
         
         issue_types = {issue.issue_type for issue in issues}
@@ -941,7 +956,8 @@ class PIPEDACompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess PIPEDA compliance for content"""
+        """
+Assess PIPEDA compliance for content"""
         issues = []
         score = 100.0
         
@@ -1085,7 +1101,8 @@ class PIPEDACompliance(BaseComplianceChecker):
         return max(0, 100 - total_deduction)
     
     def _generate_pipeda_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate PIPEDA compliance recommendations"""
+        """
+Generate PIPEDA compliance recommendations"""
         recommendations = []
         
         if any(issue.issue_type == "consent_requirement" for issue in issues):
@@ -1142,7 +1159,8 @@ class LGPDCompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess LGPD compliance for content"""
+        """
+Assess LGPD compliance for content"""
         issues = []
         score = 100.0
         
@@ -1277,7 +1295,8 @@ class LGPDCompliance(BaseComplianceChecker):
         return max(0, 100 - total_deduction)
     
     def _generate_lgpd_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate LGPD compliance recommendations"""
+        """
+Generate LGPD compliance recommendations"""
         recommendations = []
         
         if any(issue.issue_type == "lawful_basis" for issue in issues):
@@ -1331,7 +1350,8 @@ class PDPACompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess PDPA compliance for content"""
+        """
+Assess PDPA compliance for content"""
         issues = []
         score = 100.0
         
@@ -1475,7 +1495,8 @@ class PDPACompliance(BaseComplianceChecker):
         return max(0, 100 - total_deduction)
     
     def _generate_pdpa_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate PDPA compliance recommendations"""
+        """
+Generate PDPA compliance recommendations"""
         recommendations = []
         
         if any(issue.issue_type == "consent_obligation" for issue in issues):
@@ -1525,7 +1546,8 @@ class ComplianceManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the compliance manager"""
+        """
+Initialize the compliance manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         

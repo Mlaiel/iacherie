@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from ...utils.cache import RedisCache
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
+    """
+Health status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -43,6 +46,7 @@ class HealthStatus(Enum):
 
 class CheckCategory(Enum):
     """Health check categories"""
+
     CONNECTIVITY = "connectivity"
     PERFORMANCE = "performance"
     RESOURCES = "resources"
@@ -70,7 +74,8 @@ class HealthCheck:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['category'] = self.category.value
         return data
@@ -78,7 +83,8 @@ class HealthCheck:
 
 @dataclass
 class HealthCheckResult:
-    """Result of a health check"""
+    """
+Result of a health check"""
     check_id: str
     status: HealthStatus
     value: Optional[float]
@@ -89,7 +95,8 @@ class HealthCheckResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['status'] = self.status.value
         data['timestamp'] = self.timestamp.isoformat()
@@ -98,7 +105,8 @@ class HealthCheckResult:
 
 @dataclass
 class HealthReport:
-    """Comprehensive health report"""
+    """
+Comprehensive health report"""
     overall_status: HealthStatus
     health_score: float
     timestamp: datetime
@@ -108,7 +116,8 @@ class HealthReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['overall_status'] = self.overall_status.value
         data['timestamp'] = self.timestamp.isoformat()
@@ -359,7 +368,8 @@ class DatabaseHealthChecker:
         ))
     
     def add_health_check(self, check: HealthCheck) -> None:
-        """Add health check definition"""
+        """
+Add health check definition"""
         self.health_checks[check.check_id] = check
         self.logger.debug(f"Added health check: {check.name}")
     
@@ -572,7 +582,8 @@ class DatabaseHealthChecker:
         value: Optional[float], 
         error: Optional[str]
     ) -> str:
-        """Generate human-readable message for check result"""
+        """
+Generate human-readable message for check result"""
         
         if error:
             return f"{check.name}: {error}"
@@ -768,7 +779,8 @@ class DatabaseHealthChecker:
         self, 
         check_results: List[HealthCheckResult]
     ) -> Dict[str, Dict[str, Any]]:
-        """Generate summary by check category"""
+        """
+Generate summary by check category"""
         
         category_results = {}
         for result in check_results:
@@ -795,7 +807,8 @@ class DatabaseHealthChecker:
         return category_results
     
     def _generate_recommendations(self, check_results: List[HealthCheckResult]) -> List[str]:
-        """Generate health improvement recommendations"""
+        """
+Generate health improvement recommendations"""
         recommendations = []
         
         for result in check_results:
@@ -883,7 +896,8 @@ class DatabaseHealthChecker:
         return [check.to_dict() for check in self.health_checks.values()]
     
     async def get_health_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get health report history"""
+        """
+Get health report history"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             

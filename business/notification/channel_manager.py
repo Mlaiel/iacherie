@@ -24,6 +24,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DeliveryResult:
-    """Result of notification delivery attempt."""
+    """
+Result of notification delivery attempt."""
     channel: str
     success: bool
     delivery_time: float
@@ -61,7 +63,8 @@ class DeliveryResult:
 
 
 class ChannelProvider(ABC):
-    """Abstract base class for channel providers."""
+    """
+Abstract base class for channel providers."""
     
     def __init__(self, config: ChannelConfig):
         self.config = config
@@ -88,11 +91,13 @@ class ChannelProvider(ABC):
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check provider health status."""
+        """
+Check provider health status."""
         pass
     
     async def update_metrics(self, result: DeliveryResult):
-        """Update provider performance metrics."""
+        """
+Update provider performance metrics."""
         self.performance_metrics["total_sent"] += 1
         
         if result.success:
@@ -122,7 +127,8 @@ class EmailProvider(ChannelProvider):
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send email notification."""
+        """
+Send email notification."""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -224,17 +230,20 @@ class EmailProvider(ChannelProvider):
         pass
     
     async def _send_via_aws_ses(self, content: Dict[str, Any]):
-        """Send via AWS SES."""
+        """
+Send via AWS SES."""
         # Implementation for AWS SES
         pass
     
     async def _send_via_smtp(self, content: Dict[str, Any]):
-        """Send via SMTP."""
+        """
+Send via SMTP."""
         # Implementation for SMTP
         pass
     
     async def health_check(self) -> bool:
-        """Check email provider health."""
+        """
+Check email provider health."""
         try:
             # Perform health check based on provider
             if self.config.provider == "sendgrid":
@@ -267,7 +276,8 @@ class SMSProvider(ChannelProvider):
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send SMS notification."""
+        """
+Send SMS notification."""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -357,12 +367,14 @@ class SMSProvider(ChannelProvider):
         pass
     
     async def _send_via_nexmo(self, content: Dict[str, Any]):
-        """Send via Nexmo/Vonage API."""
+        """
+Send via Nexmo/Vonage API."""
         # Implementation for Nexmo
         pass
     
     async def health_check(self) -> bool:
-        """Check SMS provider health."""
+        """
+Check SMS provider health."""
         try:
             if self.config.provider == "twilio":
                 # Check Twilio account status
@@ -401,7 +413,8 @@ class PushProvider(ChannelProvider):
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send push notification."""
+        """
+Send push notification."""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -540,7 +553,8 @@ class WebhookProvider(ChannelProvider):
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send webhook notification."""
+        """
+Send webhook notification."""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -1150,5 +1164,6 @@ class ChannelManager:
         return self.performance_metrics.copy()
     
     def get_channel_costs(self) -> Dict[str, float]:
-        """Get cost breakdown by channel."""
+        """
+Get cost breakdown by channel."""
         return self.performance_metrics.get("cost_tracking", {}).copy()

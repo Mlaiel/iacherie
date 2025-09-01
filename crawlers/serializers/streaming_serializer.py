@@ -29,6 +29,7 @@ Expertise combinée:
 - DevOps: Monitoring et scaling automatique des flux temps réel
 - IA Prompt Engineer: Streaming intelligent pour interactions IA en temps réel
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, AsyncGenerator, Callable
@@ -43,7 +44,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class StreamType(Enum):
-    """Types of streaming data."""
+    """
+Types of streaming data."""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     EVENT = "event"
@@ -54,6 +57,7 @@ class StreamType(Enum):
 
 class StreamPriority(Enum):
     """Stream message priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -61,7 +65,9 @@ class StreamPriority(Enum):
     EMERGENCY = 5
 
 class StreamFormat(Enum):
-    """Streaming data formats."""
+    """
+Streaming data formats."""
+
     JSON = "json"
     MSGPACK = "msgpack"
     PROTOBUF = "protobuf"
@@ -71,6 +77,7 @@ class StreamFormat(Enum):
 
 class CompressionMode(Enum):
     """Compression modes for streaming."""
+
     NONE = "none"
     REAL_TIME = "real_time"  # Fast compression
     BALANCED = "balanced"    # Balance speed/ratio
@@ -94,7 +101,8 @@ class StreamMetrics:
 
 @dataclass
 class StreamMessage:
-    """Individual streaming message."""
+    """
+Individual streaming message."""
     message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     stream_id: str = ""
     sequence_number: int = 0
@@ -189,7 +197,8 @@ class StreamingSerializer:
     """
     
     def __init__(self):
-        """Initialize streaming serializer."""
+        """
+Initialize streaming serializer."""
         self.active_streams: Dict[str, StreamData] = {}
         self.serialization_cache = {}
         self.compression_cache = {}
@@ -468,7 +477,8 @@ class StreamingSerializer:
         return StreamMessage(**data)
     
     def _serialize_stream_metrics(self, metrics: StreamMetrics) -> Dict[str, Any]:
-        """Serialize stream metrics."""
+        """
+Serialize stream metrics."""
         return {
             'messages_sent': metrics.messages_sent,
             'messages_received': metrics.messages_received,
@@ -485,11 +495,13 @@ class StreamingSerializer:
         }
     
     def _deserialize_stream_metrics(self, data: Dict[str, Any]) -> StreamMetrics:
-        """Deserialize stream metrics."""
+        """
+Deserialize stream metrics."""
         return StreamMetrics(**data)
     
     def _compress_message_content(self, content: Any) -> str:
-        """Compress message content for streaming."""
+        """
+Compress message content for streaming."""
         try:
             import gzip
             import pickle

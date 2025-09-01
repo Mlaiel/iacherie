@@ -28,12 +28,13 @@ Supported Monetization Platforms:
 - OnlyFans Revenue Tracking
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import json
@@ -53,7 +54,9 @@ from .platform_apis import PlatformAPIManager, APIResponse, PlatformType
 logger = logging.getLogger(__name__)
 
 class MonetizationType(str, Enum):
-    """Revenue monetization type classification."""
+    """
+Revenue monetization type classification."""
+
     AD_REVENUE = "ad_revenue"
     CREATOR_FUND = "creator_fund"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -69,6 +72,7 @@ class MonetizationType(str, Enum):
 
 class RevenueStatus(str, Enum):
     """Revenue tracking status enumeration."""
+
     ACTIVE_EARNING = "active_earning"
     POTENTIAL_LOSS = "potential_loss"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -100,7 +104,8 @@ class RevenueMetrics:
 
 @dataclass
 class UnauthorizedUsageAlert:
-    """Unauthorized content usage detection alert."""
+    """
+Unauthorized content usage detection alert."""
     original_content_id: str
     infringing_url: str
     platform: str
@@ -122,7 +127,8 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any], platform_apis: PlatformAPIManager):
-        """Initialize revenue monitoring crawler with advanced tracking capabilities."""
+        """
+Initialize revenue monitoring crawler with advanced tracking capabilities."""
         super().__init__(config)
         self.platform_apis = platform_apis
         self.supported_platforms = [
@@ -666,7 +672,8 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
         return alerts
     
     async def _scan_platforms_for_usage(self, fingerprint: str) -> List[UnauthorizedUsageAlert]:
-        """Scan all platforms for unauthorized usage of content fingerprint."""
+        """
+Scan all platforms for unauthorized usage of content fingerprint."""
         alerts = []
         
         for platform in self.supported_platforms:
@@ -696,7 +703,8 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
         return []
     
     async def calculate_revenue_impact(self, alert: UnauthorizedUsageAlert) -> Dict[str, Any]:
-        """Calculate comprehensive revenue impact analysis for unauthorized usage."""
+        """
+Calculate comprehensive revenue impact analysis for unauthorized usage."""
         impact_analysis = {
             "direct_loss": await self._calculate_direct_revenue_loss(alert),
             "indirect_impact": await self._calculate_indirect_impact(alert),
@@ -811,7 +819,8 @@ class RevenueCalculator:
         self.platform_rates = {}
         
     async def calculate_total_revenue(self, revenue_metrics: List[RevenueMetrics]) -> Dict[str, Any]:
-        """Calculate comprehensive revenue totals across all platforms."""
+        """
+Calculate comprehensive revenue totals across all platforms."""
         total_revenue = Decimal('0')
         platform_breakdown = {}
         currency_breakdown = {}
@@ -860,7 +869,8 @@ class UnauthorizedUsageDetector:
         self.similarity_threshold = 0.85
         
     async def detect_usage(self, content_fingerprint: str, platform_data: List[Dict]) -> List[UnauthorizedUsageAlert]:
-        """Detect unauthorized usage from platform crawl data."""
+        """
+Detect unauthorized usage from platform crawl data."""
         alerts = []
         
         for content in platform_data:
@@ -873,13 +883,15 @@ class UnauthorizedUsageDetector:
         return alerts
     
     async def _calculate_similarity(self, fingerprint: str, content: Dict) -> float:
-        """Calculate content similarity score."""
+        """
+Calculate content similarity score."""
         # Placeholder for advanced similarity calculation
         # Would integrate with ML models and perceptual hashing
         return 0.9  # Placeholder high similarity
     
     def _create_usage_alert(self, content: Dict, similarity: float) -> UnauthorizedUsageAlert:
-        """Create unauthorized usage alert from detected content."""
+        """
+Create unauthorized usage alert from detected content."""
         return UnauthorizedUsageAlert(
             original_content_id="original_123",
             infringing_url=content.get("url", ""),
@@ -901,7 +913,8 @@ class FinancialAnalyzer:
         self.analysis_models = []
         
     async def analyze_revenue_trends(self, revenue_data: List[RevenueMetrics]) -> Dict[str, Any]:
-        """Analyze revenue trends and patterns."""
+        """
+Analyze revenue trends and patterns."""
         if not revenue_data:
             return {"error": "No revenue data available"}
             
@@ -992,7 +1005,8 @@ class RevenueAlertManager:
         self.notification_channels = []
         
     async def process_revenue_alerts(self, revenue_metrics: List[RevenueMetrics]) -> List[Dict[str, Any]]:
-        """Process revenue metrics and generate appropriate alerts."""
+        """
+Process revenue metrics and generate appropriate alerts."""
         alerts = []
         
         for metric in revenue_metrics:
@@ -1007,17 +1021,20 @@ class RevenueAlertManager:
         return alerts
     
     async def _is_revenue_anomaly(self, metric: RevenueMetrics) -> bool:
-        """Detect revenue anomalies using statistical analysis."""
+        """
+Detect revenue anomalies using statistical analysis."""
         # Placeholder for anomaly detection algorithm
         return metric.revenue_amount > Decimal('1000.00')  # Simple threshold
     
     async def _check_threshold_breach(self, metric: RevenueMetrics) -> bool:
-        """Check if revenue metric breaches configured thresholds."""
+        """
+Check if revenue metric breaches configured thresholds."""
         platform_threshold = self.alert_thresholds.get(metric.platform, Decimal('100.00'))
         return metric.revenue_amount > platform_threshold
     
     async def _create_anomaly_alert(self, metric: RevenueMetrics) -> Dict[str, Any]:
-        """Create anomaly alert for unusual revenue pattern."""
+        """
+Create anomaly alert for unusual revenue pattern."""
         return {
             "type": "anomaly",
             "platform": metric.platform,

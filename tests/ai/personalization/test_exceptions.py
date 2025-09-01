@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,14 +13,16 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Exception Handling Tests
+"""
+Exception Handling Tests
 
 Comprehensive tests for custom exceptions, error handling, and recovery mechanisms.
 Tests all exception scenarios and error recovery strategies.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -58,11 +61,14 @@ from ai.personalization.exceptions import (
 
 
 class TestPersonalizationError(IsolatedAsyncioTestCase):
-    """Test base personalization exception classes"""
+    """
+Test base personalization exception classes"""
 class TestPersonalizationBaseExceptions(IsolatedAsyncioTestCase):
-    """Test base personalization exception classes"""
+    """
+Test base personalization exception classes"""
     async def test_personalization_error_base(self):
-        """Test base PersonalizationError exception"""
+        """
+Test base PersonalizationError exception"""
         error_message = "Base personalization error"
         error_code = "PERS_001"
         
@@ -121,7 +127,8 @@ class TestPersonalizationBaseExceptions(IsolatedAsyncioTestCase):
 class TestConfigurationExceptions(IsolatedAsyncioTestCase):
     """Test configuration-related exceptions"""
     async def test_config_error_scenarios(self):
-        """Test various configuration error scenarios"""
+        """
+Test various configuration error scenarios"""
         # Missing required configuration
         with self.assertRaises(PersonalizationConfigError) as context:
             raise PersonalizationConfigError(
@@ -171,7 +178,8 @@ class TestConfigurationExceptions(IsolatedAsyncioTestCase):
 class TestDataExceptions(IsolatedAsyncioTestCase):
     """Test data-related exceptions"""
     async def test_data_error_types(self):
-        """Test various data error types"""
+        """
+Test various data error types"""
         # Missing data
         with self.assertRaises(PersonalizationDataError):
             raise PersonalizationDataError(
@@ -250,7 +258,8 @@ class TestDataExceptions(IsolatedAsyncioTestCase):
 class TestModelExceptions(IsolatedAsyncioTestCase):
     """Test model-related exceptions"""
     async def test_model_not_trained_error(self):
-        """Test model not trained scenarios"""
+        """
+Test model not trained scenarios"""
         with self.assertRaises(ModelNotTrainedError) as context:
             raise ModelNotTrainedError(
                 "Model must be trained before making predictions",
@@ -293,7 +302,8 @@ class TestModelExceptions(IsolatedAsyncioTestCase):
                 )
 
     async def test_model_training_errors(self):
-        """Test model training error scenarios"""
+        """
+Test model training error scenarios"""
         # Convergence failure
         with self.assertRaises(PersonalizationModelError) as context:
             raise PersonalizationModelError(
@@ -328,7 +338,8 @@ class TestModelExceptions(IsolatedAsyncioTestCase):
 class TestServiceExceptions(IsolatedAsyncioTestCase):
     """Test service-related exceptions"""
     async def test_service_unavailable_error(self):
-        """Test service unavailable scenarios"""
+        """
+Test service unavailable scenarios"""
         with self.assertRaises(ServiceUnavailableError) as context:
             raise ServiceUnavailableError(
                 "Personalization service temporarily unavailable",
@@ -375,7 +386,8 @@ class TestServiceExceptions(IsolatedAsyncioTestCase):
                 )
 
     async def test_timeout_errors(self):
-        """Test timeout error scenarios"""
+        """
+Test timeout error scenarios"""
         with self.assertRaises(PersonalizationTimeoutError) as context:
             raise PersonalizationTimeoutError(
                 "Operation timed out",
@@ -393,7 +405,8 @@ class TestServiceExceptions(IsolatedAsyncioTestCase):
 class TestSecurityExceptions(IsolatedAsyncioTestCase):
     """Test security-related exceptions"""
     async def test_authentication_errors(self):
-        """Test authentication error scenarios"""
+        """
+Test authentication error scenarios"""
         auth_errors = [
             {
                 'error': 'Invalid credentials',
@@ -468,11 +481,13 @@ class TestSecurityExceptions(IsolatedAsyncioTestCase):
 class TestErrorHandler(IsolatedAsyncioTestCase):
     """Test ErrorHandler utility class"""
     async def asyncSetUp(self):
-        """Set up test environment"""
+        """
+Set up test environment"""
         self.error_handler = ErrorHandler()
 
     async def test_exception_handling_decorator(self):
-        """Test exception handling decorator"""
+        """
+Test exception handling decorator"""
         @self.error_handler.handle_exceptions
         async def function_that_raises():
             raise PersonalizationDataError("Test data error")
@@ -518,7 +533,8 @@ class TestErrorHandler(IsolatedAsyncioTestCase):
             await circuit_breaker.call(self._working_service)
 
     async def _failing_service(self):
-        """Mock failing service"""
+        """
+Mock failing service"""
         raise ExternalServiceError("Service failed")
 
     async def _working_service(self):
@@ -579,11 +595,13 @@ class TestErrorHandler(IsolatedAsyncioTestCase):
 class TestErrorRecovery(IsolatedAsyncioTestCase):
     """Test ErrorRecovery mechanisms"""
     async def asyncSetUp(self):
-        """Set up test environment"""
+        """
+Set up test environment"""
         self.error_recovery = ErrorRecovery()
 
     async def test_data_recovery_strategies(self):
-        """Test data recovery strategies"""
+        """
+Test data recovery strategies"""
         # Simulate corrupted data scenario
         corrupted_data = [
             {'user_id': 'user_1', 'rating': 4.5},
@@ -604,7 +622,8 @@ class TestErrorRecovery(IsolatedAsyncioTestCase):
             self.assertNotEqual(entry.get('user_id'), '')
 
     async def test_model_recovery_strategies(self):
-        """Test model recovery strategies"""
+        """
+Test model recovery strategies"""
         # Simulate model failure scenario
         async def failing_model_predict(user_id):
             raise ModelNotTrainedError("Model not available")
@@ -676,13 +695,16 @@ class TestErrorRecovery(IsolatedAsyncioTestCase):
 
 
 class TestErrorLogger(IsolatedAsyncioTestCase):
-    """Test ErrorLogger functionality"""
+    """
+Test ErrorLogger functionality"""
     async def asyncSetUp(self):
-        """Set up test environment"""
+        """
+Set up test environment"""
         self.error_logger = ErrorLogger()
 
     async def test_error_logging_formats(self):
-        """Test different error logging formats"""
+        """
+Test different error logging formats"""
         exception = PersonalizationError(
             "Test error for logging",
             error_code="TEST_001",
@@ -764,7 +786,8 @@ class TestErrorLogger(IsolatedAsyncioTestCase):
 class TestExceptionPerformanceAndIntegration(IsolatedAsyncioTestCase):
     """Performance and integration tests for exception handling"""
     async def test_exception_handling_performance(self):
-        """Test exception handling performance under load"""
+        """
+Test exception handling performance under load"""
         error_handler = ErrorHandler()
         
         # Measure exception handling overhead

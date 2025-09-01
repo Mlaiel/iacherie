@@ -8,8 +8,9 @@ Content analysis → SEO scoring → Keyword optimization → Meta tags validati
 Search readiness → SEO recommendations → Performance tracking
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from datetime import datetime, timezone
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class SEOMetricType(Enum):
-    """Types of SEO metrics"""
+    """
+Types of SEO metrics"""
+
     CONTENT_QUALITY = "content_quality"
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     TECHNICAL_SEO = "technical_seo"
@@ -41,6 +44,7 @@ class SEOMetricType(Enum):
 
 class SEOLevel(Enum):
     """SEO optimization levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -75,7 +79,8 @@ class SEOIssue:
 
 @dataclass
 class KeywordAnalysis:
-    """Keyword analysis results"""
+    """
+Keyword analysis results"""
     primary_keywords: List[str]
     secondary_keywords: List[str]
     keyword_density: Dict[str, float]
@@ -96,7 +101,8 @@ class KeywordAnalysis:
 
 @dataclass
 class ReadabilityMetrics:
-    """Content readability analysis"""
+    """
+Content readability analysis"""
     flesch_score: Optional[float] = None
     flesch_grade: Optional[float] = None
     avg_sentence_length: float = 0.0
@@ -146,15 +152,18 @@ class SEOAnalysisResult:
     processing_time_ms: float = 0.0
     
     def add_issue(self, issue: SEOIssue):
-        """Add an SEO issue"""
+        """
+Add an SEO issue"""
         self.issues.append(issue)
     
     def get_issues_by_category(self, category: SEOMetricType) -> List[SEOIssue]:
-        """Get issues by category"""
+        """
+Get issues by category"""
         return [issue for issue in self.issues if issue.category == category]
     
     def get_critical_issues(self) -> List[SEOIssue]:
-        """Get critical issues"""
+        """
+Get critical issues"""
         return [issue for issue in self.issues if issue.severity == 'critical']
     
     def to_dict(self) -> Dict[str, Any]:
@@ -181,7 +190,8 @@ class SEOAnalysisResult:
 
 
 class KeywordAnalyzer:
-    """Advanced keyword analysis and optimization"""
+    """
+Advanced keyword analysis and optimization"""
     
     def __init__(self):
         self.stop_words = {
@@ -251,7 +261,8 @@ class KeywordAnalyzer:
         return [word for word in words if word not in self.stop_words and len(word) > 2]
     
     def _calculate_word_frequency(self, words: List[str]) -> Dict[str, int]:
-        """Calculate word frequency"""
+        """
+Calculate word frequency"""
         freq = {}
         for word in words:
             freq[word] = freq.get(word, 0) + 1
@@ -259,7 +270,8 @@ class KeywordAnalyzer:
     
     def _identify_primary_keywords(self, word_freq: Dict[str, int], 
                                   words: List[str]) -> List[str]:
-        """Identify primary keywords"""
+        """
+Identify primary keywords"""
         # Sort by frequency and take top candidates
         sorted_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
         
@@ -275,7 +287,8 @@ class KeywordAnalyzer:
     
     def _identify_secondary_keywords(self, word_freq: Dict[str, int],
                                    primary_keywords: List[str]) -> List[str]:
-        """Identify secondary keywords"""
+        """
+Identify secondary keywords"""
         sorted_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
         
         secondary = []
@@ -291,7 +304,8 @@ class KeywordAnalyzer:
     
     def _analyze_keyword_placement(self, keywords: List[str], title: str,
                                   description: str, content: str) -> Dict[str, List[str]]:
-        """Analyze where keywords appear"""
+        """
+Analyze where keywords appear"""
         placement = {keyword: [] for keyword in keywords}
         
         for keyword in keywords:
@@ -320,7 +334,8 @@ class KeywordAnalyzer:
         return placement
     
     def _identify_long_tail_keywords(self, content: str) -> List[str]:
-        """Identify long-tail keyword phrases"""
+        """
+Identify long-tail keyword phrases"""
         # Extract 3-4 word phrases
         words = content.lower().split()
         long_tail = []
@@ -343,7 +358,8 @@ class KeywordAnalyzer:
         return list(set(long_tail))[:10]
     
     def _is_meaningful_phrase(self, phrase: str) -> bool:
-        """Check if phrase is meaningful (not just stop words)"""
+        """
+Check if phrase is meaningful (not just stop words)"""
         words = phrase.split()
         meaningful_words = [w for w in words if w not in self.stop_words]
         return len(meaningful_words) >= 2
@@ -351,7 +367,8 @@ class KeywordAnalyzer:
     def _calculate_keyword_score(self, primary: List[str], secondary: List[str],
                                density: Dict[str, float], 
                                placement: Dict[str, List[str]]) -> float:
-        """Calculate overall keyword score"""
+        """
+Calculate overall keyword score"""
         score = 0.0
         
         # Primary keyword score
@@ -388,10 +405,12 @@ class KeywordAnalyzer:
 
 
 class ReadabilityAnalyzer:
-    """Content readability analysis"""
+    """
+Content readability analysis"""
     
     def analyze_readability(self, content: str) -> ReadabilityMetrics:
-        """Analyze content readability"""
+        """
+Analyze content readability"""
         metrics = ReadabilityMetrics()
         
         # Basic text statistics
@@ -430,7 +449,8 @@ class ReadabilityAnalyzer:
         return len(sentence_endings)
     
     def _count_complex_words(self, text: str) -> int:
-        """Count complex words (3+ syllables)"""
+        """
+Count complex words (3+ syllables)"""
         words = re.findall(r'\b[a-zA-Z]+\b', text.lower())
         complex_count = 0
         
@@ -442,7 +462,8 @@ class ReadabilityAnalyzer:
         return complex_count
     
     def _count_syllables(self, word: str) -> int:
-        """Estimate syllable count in a word"""
+        """
+Estimate syllable count in a word"""
         vowels = 'aeiouy'
         syllable_count = 0
         previous_was_vowel = False
@@ -463,7 +484,8 @@ class ReadabilityAnalyzer:
         return max(1, syllable_count)
     
     def _assess_readability_level(self, metrics: ReadabilityMetrics) -> str:
-        """Assess readability level based on metrics"""
+        """
+Assess readability level based on metrics"""
         if metrics.flesch_score is not None:
             if metrics.flesch_score >= 90:
                 return "very_easy"
@@ -508,14 +530,16 @@ class ReadabilityAnalyzer:
 
 
 class SEOQualityAnalyzer:
-    """Enterprise SEO quality analysis system"""
+    """
+Enterprise SEO quality analysis system"""
     
     def __init__(self):
         self.keyword_analyzer = KeywordAnalyzer()
         self.readability_analyzer = ReadabilityAnalyzer()
     
     def analyze_seo_quality(self, content_data: Dict[str, Any]) -> SEOAnalysisResult:
-        """Perform comprehensive SEO analysis"""
+        """
+Perform comprehensive SEO analysis"""
         start_time = datetime.now(timezone.utc)
         
         # Extract content elements
@@ -890,7 +914,8 @@ class SEOQualityAnalyzer:
         return False
     
     def _has_current_information(self, content: str) -> bool:
-        """Check if content has current/timely information"""
+        """
+Check if content has current/timely information"""
         current_year = datetime.now().year
         
         # Look for current year or recent years
@@ -906,7 +931,8 @@ class SEOQualityAnalyzer:
         return any(word in content.lower() for word in current_words)
     
     def _has_seo_friendly_url(self, path: str) -> bool:
-        """Check if URL path is SEO-friendly"""
+        """
+Check if URL path is SEO-friendly"""
         if not path or path == '/':
             return True
         
@@ -915,7 +941,8 @@ class SEOQualityAnalyzer:
         return bool(re.match(seo_pattern, path))
     
     def _extract_headings(self, content: str) -> Dict[str, List[str]]:
-        """Extract headings from content"""
+        """
+Extract headings from content"""
         headings = {'h1': [], 'h2': [], 'h3': [], 'h4': [], 'h5': [], 'h6': []}
         
         # HTML headings
@@ -937,7 +964,8 @@ class SEOQualityAnalyzer:
         return headings
     
     def _calculate_overall_seo_score(self, result: SEOAnalysisResult) -> float:
-        """Calculate overall SEO score"""
+        """
+Calculate overall SEO score"""
         weights = {
             'content': 0.25,
             'keyword': 0.20,
@@ -961,7 +989,8 @@ class SEOQualityAnalyzer:
         return min(100.0, max(0.0, weighted_score))
     
     def _assess_seo_level(self, score: float) -> SEOLevel:
-        """Assess SEO level based on score"""
+        """
+Assess SEO level based on score"""
         if score >= 90:
             return SEOLevel.EXCELLENT
         elif score >= 75:
@@ -974,7 +1003,8 @@ class SEOQualityAnalyzer:
             return SEOLevel.CRITICAL
     
     def _generate_seo_recommendations(self, result: SEOAnalysisResult) -> List[str]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         recommendations = []
         
         # Score-based recommendations

@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Configuration environnement testing pour tests automatisés.
 ==================================================================
 """
+
 import os
 import tempfile
 from typing import Dict, Any, List, Optional
@@ -270,7 +271,8 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
                 shutil.rmtree(path, ignore_errors=True)
                 
     def get_test_urls(self) -> Dict[str, str]:
-        """URLs utiles pour tests"""
+        """
+URLs utiles pour tests"""
         return {
             "api_base": f"http://{self.host}:{self.port}",
             "health_check": f"http://{self.host}:{self.port}/health",
@@ -304,7 +306,8 @@ def create_testing_config() -> TestingConfigManager:
 
 # Context manager pour tests isolés
 class TestEnvironmentContext:
-    """Context manager pour environnement de test isolé"""
+    """
+Context manager pour environnement de test isolé"""
     
     def __init__(self):
         self.config = None

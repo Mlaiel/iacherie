@@ -2,6 +2,7 @@
 Module de registre de propriété des droits avec gestion avancée
 Système professionnel pour la gestion de la propriété intellectuelle
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class OwnershipType(Enum):
-    """Types de propriété"""
+    """
+Types de propriété"""
+
     SOLE = "sole"  # Propriété unique
     JOINT = "joint"  # Copropriété avec parts égales
     TENANTS_IN_COMMON = "tenants_in_common"  # Copropriété avec parts inégales
@@ -31,6 +34,7 @@ class OwnershipType(Enum):
 
 class OwnershipVerificationStatus(Enum):
     """Statut de vérification de propriété"""
+
     UNVERIFIED = "unverified"
     PENDING = "pending"
     VERIFIED = "verified"
@@ -109,7 +113,8 @@ class OwnershipRegistry:
         creation_evidence: List[CreatorshipEvidence],
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Enregistre une création originale avec preuves"""
+        """
+Enregistre une création originale avec preuves"""
         try:
             chain_id = self._generate_chain_id()
             

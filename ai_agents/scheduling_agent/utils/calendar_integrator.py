@@ -29,6 +29,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -63,7 +64,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CalendarEvent:
-    """Comprehensive calendar event structure"""
+    """
+Comprehensive calendar event structure"""
     event_id: str
     title: str
     description: str
@@ -86,7 +88,8 @@ class CalendarEvent:
 
 @dataclass
 class AvailabilitySlot:
-    """Time slot availability information"""
+    """
+Time slot availability information"""
     start_time: datetime
     end_time: datetime
     timezone: str
@@ -98,7 +101,8 @@ class AvailabilitySlot:
 
 @dataclass
 class CalendarIntegration:
-    """Calendar platform integration configuration"""
+    """
+Calendar platform integration configuration"""
     platform: str
     user_id: str
     calendar_id: str
@@ -115,7 +119,9 @@ class CalendarIntegration:
     webhook_url: Optional[str]
 
 class CalendarPlatform(Enum):
-    """Supported calendar platforms"""
+    """
+Supported calendar platforms"""
+
     GOOGLE = "google"
     OUTLOOK = "outlook"
     APPLE = "apple"
@@ -125,6 +131,7 @@ class CalendarPlatform(Enum):
 
 class EventType(Enum):
     """Calendar event types"""
+
     CONTENT_POSTING = "content_posting"
     MEETING = "meeting"
     PERSONAL = "personal"
@@ -136,6 +143,7 @@ class EventType(Enum):
 
 class AvailabilityType(Enum):
     """Availability status types"""
+
     FREE = "free"
     BUSY = "busy"
     TENTATIVE = "tentative"
@@ -144,6 +152,7 @@ class AvailabilityType(Enum):
 
 class ConflictResolutionStrategy(Enum):
     """Conflict resolution strategies"""
+
     RESCHEDULE_NEW = "reschedule_new"
     RESCHEDULE_EXISTING = "reschedule_existing"
     MERGE_EVENTS = "merge_events"
@@ -167,7 +176,8 @@ class CalendarIntegrator(BaseAgent):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize calendar integrator with configuration"""
+        """
+Initialize calendar integrator with configuration"""
         super().__init__(config or {})
         self.performance_monitor = PerformanceMonitor()
         
@@ -196,7 +206,8 @@ class CalendarIntegrator(BaseAgent):
         asyncio.create_task(self._start_background_sync())
     
     def _get_encryption_key(self) -> bytes:
-        """Get or generate encryption key for token storage"""
+        """
+Get or generate encryption key for token storage"""
         # In production, use secure key management
         key = getattr(settings, 'CALENDAR_ENCRYPTION_KEY', None)
         if not key:
@@ -204,7 +215,8 @@ class CalendarIntegrator(BaseAgent):
         return key if isinstance(key, bytes) else key.encode()
     
     async def _start_background_sync(self):
-        """Start background synchronization for all integrations"""
+        """
+Start background synchronization for all integrations"""
         try:
             while True:
                 for integration in self.integrations.values():
@@ -734,7 +746,8 @@ class CalendarIntegrator(BaseAgent):
         return EventType.PERSONAL.value
     
     def _determine_priority(self, event_data: Dict[str, Any]) -> str:
-        """Determine event priority based on event data"""
+        """
+Determine event priority based on event data"""
         # Check for explicit priority in different formats
         if 'importance' in event_data:
             outlook_priority = event_data['importance'].lower()
@@ -759,7 +772,8 @@ class CalendarIntegrator(BaseAgent):
         return 'medium'
     
     async def _update_availability_cache(self, user_id: str, events: List[CalendarEvent]):
-        """Update availability cache based on calendar events"""
+        """
+Update availability cache based on calendar events"""
         try:
             # Generate availability slots for the next 30 days
             start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -855,7 +869,8 @@ class EventSynchronizer:
     """
     
     def __init__(self, calendar_integrator: CalendarIntegrator):
-        """Initialize event synchronizer with calendar integrator"""
+        """
+Initialize event synchronizer with calendar integrator"""
         self.calendar_integrator = calendar_integrator
         self.sync_rules: Dict[str, Dict[str, Any]] = {}
         self.conflict_handlers: Dict[ConflictResolutionStrategy, callable] = {
@@ -1190,7 +1205,8 @@ class EventSynchronizer:
     
     async def _flag_for_manual_review(self, conflict: Dict[str, Any], 
                                     event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Flag conflict for manual review"""
+        """
+Flag conflict for manual review"""
         return {
             'action': 'manual_review',
             'conflict_id': conflict['conflict_id'],
@@ -1201,7 +1217,8 @@ class EventSynchronizer:
         }
     
     def _events_similar(self, event1: Dict[str, Any], event2: Dict[str, Any]) -> bool:
-        """Check if two events are similar enough to merge"""
+        """
+Check if two events are similar enough to merge"""
         try:
             # Compare titles (simple similarity check)
             title1 = event1.get('title', '').lower()

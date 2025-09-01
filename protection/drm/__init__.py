@@ -31,7 +31,7 @@ Advanced DRM Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM DRM TECHNOLOGY IP PROTECTION ⚠️
 ===========================================
@@ -51,6 +51,7 @@ UNAUTHORIZED ACCESS IS NATIONAL SECURITY THREAT:
 Contact mlaiel@live.de for MANDATORY national security authorization.
 Unauthorized access triggers automatic homeland security response.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -77,7 +78,9 @@ from .blockchain_integration import BlockchainIntegration, BlockchainNetwork, Tr
 logger = logging.getLogger(__name__)
 
 class AccessLevel(str, Enum):
-    """Content access levels."""
+    """
+Content access levels."""
+
     PUBLIC = "public"
     RESTRICTED = "restricted"
     PREMIUM = "premium"
@@ -85,6 +88,7 @@ class AccessLevel(str, Enum):
 
 class UsageType(str, Enum):
     """Types of content usage."""
+
     VIEW = "view"
     DOWNLOAD = "download"
     STREAM = "stream"
@@ -93,6 +97,7 @@ class UsageType(str, Enum):
 
 class LicenseType(str, Enum):
     """Content license types."""
+
     SINGLE_USE = "single_use"
     TIME_LIMITED = "time_limited"
     UNLIMITED = "unlimited"
@@ -111,7 +116,8 @@ class AccessPolicy:
     device_restrictions: Optional[List[str]] = None
 
 class ContentLicense(BaseModel):
-    """Digital content license."""
+    """
+Digital content license."""
     id: Optional[str] = None
     content_id: str
     user_id: int
@@ -127,7 +133,8 @@ class ContentLicense(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class UsageEvent(BaseModel):
-    """Content usage tracking event."""
+    """
+Content usage tracking event."""
     id: Optional[str] = None
     license_id: str
     content_id: str
@@ -154,7 +161,8 @@ class DRMService:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize DRM service."""
+        """
+Initialize DRM service."""
         self.config = config
         self._initialized = False
         
@@ -445,7 +453,8 @@ class DRMService:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get usage analytics for content."""
+        """
+Get usage analytics for content."""
         # Filter usage events
         content_events = [
             event for event in self.usage_events

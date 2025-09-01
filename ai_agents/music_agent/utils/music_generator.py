@@ -15,6 +15,7 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -45,7 +46,9 @@ settings = get_settings()
 
 
 class GenerationMode(Enum):
-    """Music generation modes"""
+    """
+Music generation modes"""
+
     COMPOSITION = "composition"
     ARRANGEMENT = "arrangement"
     ACCOMPANIMENT = "accompaniment"
@@ -55,6 +58,7 @@ class GenerationMode(Enum):
 
 class InstrumentType(Enum):
     """Instrument types for generation"""
+
     PIANO = "piano"
     GUITAR = "guitar"
     BASS = "bass"
@@ -69,6 +73,7 @@ class InstrumentType(Enum):
 
 class MusicStyle(Enum):
     """Musical styles for generation"""
+
     CLASSICAL = "classical"
     JAZZ = "jazz"
     ROCK = "rock"
@@ -85,6 +90,7 @@ class MusicStyle(Enum):
 
 class EmotionalArc(Enum):
     """Emotional arc patterns"""
+
     BUILDING = "building"
     DECLINING = "declining"
     STABLE = "stable"
@@ -128,7 +134,8 @@ class GenerationParameters:
 
 @dataclass
 class MusicSection:
-    """Generated music section"""
+    """
+Generated music section"""
     section_id: str
     section_type: str
     start_time: float
@@ -152,7 +159,8 @@ class MusicSection:
 
 @dataclass
 class GeneratedTrack:
-    """Complete generated music track"""
+    """
+Complete generated music track"""
     track_id: str
     title: Optional[str] = None
     
@@ -202,7 +210,8 @@ class MusicGenerator:
     arrangement, and production with AI-powered creative assistance.
     """
     def __init__(self):
-        """Initialize music generator with AI models"""
+        """
+Initialize music generator with AI models"""
         self.generation_engine = MusicGenerationEngine()
         self.audio_engine = AudioMusicEngine()
         
@@ -798,7 +807,8 @@ class MusicGenerator:
         }
 
     def _get_structure_template(self, style: MusicStyle, genre: MusicGenre) -> List[str]:
-        """Get structure template for style/genre"""
+        """
+Get structure template for style/genre"""
         template_key = style.value.lower()
         
         if template_key in self._template_cache:
@@ -808,7 +818,8 @@ class MusicGenerator:
         return ['intro', 'verse', 'chorus', 'verse', 'chorus', 'outro']
 
     def _get_section_weight(self, section_type: str) -> float:
-        """Get relative weight of section type for duration calculation"""
+        """
+Get relative weight of section type for duration calculation"""
         weights = {
             'intro': 0.5,
             'verse': 1.0,
@@ -834,7 +845,8 @@ class MusicGenerator:
         total_sections: int, 
         arc: EmotionalArc
     ) -> float:
-        """Calculate emotional intensity for section"""
+        """
+Calculate emotional intensity for section"""
         progress = index / max(total_sections - 1, 1)
         
         if arc == EmotionalArc.BUILDING:
@@ -851,7 +863,8 @@ class MusicGenerator:
             return 0.6
 
     def _get_default_structure(self, duration: int) -> List[Dict[str, Any]]:
-        """Get default structure if generation fails"""
+        """
+Get default structure if generation fails"""
         sections = ['intro', 'verse', 'chorus', 'outro']
         section_duration = duration / len(sections)
         
@@ -871,7 +884,8 @@ class MusicGenerator:
         section_def: Dict[str, Any], 
         parameters: GenerationParameters
     ) -> List[Dict[str, Any]]:
-        """Generate melody using procedural algorithms"""
+        """
+Generate melody using procedural algorithms"""
         melody = []
         
         # Simple procedural melody generation
@@ -903,7 +917,8 @@ class MusicGenerator:
         return melody
 
     def _generate_chord_progression(self, style: MusicStyle, key: MusicKey) -> List[str]:
-        """Generate chord progression for style and key"""
+        """
+Generate chord progression for style and key"""
         template_key = style.value.lower()
         
         if template_key in self._template_cache:
@@ -914,7 +929,8 @@ class MusicGenerator:
         return ['I', 'V', 'vi', 'IV']
 
     def _get_rhythm_pattern(self, style: MusicStyle, tempo: int) -> List[float]:
-        """Get rhythm pattern for style"""
+        """
+Get rhythm pattern for style"""
         patterns = {
             MusicStyle.ROCK: [1.0, 0.0, 0.7, 0.0, 1.0, 0.0, 0.7, 0.0],
             MusicStyle.POP: [1.0, 0.0, 0.8, 0.0, 1.0, 0.0, 0.8, 0.0],
@@ -930,7 +946,8 @@ class MusicGenerator:
         section_def: Dict[str, Any], 
         parameters: GenerationParameters
     ) -> List[InstrumentType]:
-        """Select active instruments for section"""
+        """
+Select active instruments for section"""
         # Start with base instruments
         active = parameters.instruments.copy()
         
@@ -953,7 +970,8 @@ class MusicGenerator:
         return active
 
     def _calculate_section_complexity(self, section: MusicSection) -> float:
-        """Calculate complexity score for section"""
+        """
+Calculate complexity score for section"""
         complexity = 0.0
         
         # Melody complexity
@@ -981,7 +999,8 @@ class MusicGenerator:
         intensity: float, 
         parameters: GenerationParameters
     ) -> float:
-        """Calculate section dynamics level"""
+        """
+Calculate section dynamics level"""
         base_dynamics = 0.5
         intensity_boost = intensity * 0.4
         return min(base_dynamics + intensity_boost, 1.0)
@@ -991,7 +1010,8 @@ class MusicGenerator:
         section_def: Dict[str, Any], 
         section_index: int
     ) -> MusicSection:
-        """Create empty section as fallback"""
+        """
+Create empty section as fallback"""
         return MusicSection(
             section_id=f"empty_{section_index}",
             section_type=section_def.get('type', 'unknown'),
@@ -1019,13 +1039,15 @@ class MusicGenerator:
         return melody
 
     def _calculate_chord_velocity(self, intensity: float) -> int:
-        """Calculate chord velocity based on intensity"""
+        """
+Calculate chord velocity based on intensity"""
         base_velocity = 40
         intensity_boost = int(intensity * 60)
         return min(base_velocity + intensity_boost, 127)
 
     def _get_scale_notes(self, key: MusicKey) -> List[int]:
-        """Get MIDI note numbers for scale"""
+        """
+Get MIDI note numbers for scale"""
         # Simplified major scale starting from C4 (60)
         major_scale = [0, 2, 4, 5, 7, 9, 11]
         
@@ -1041,7 +1063,8 @@ class MusicGenerator:
         return notes
 
     def _chord_to_midi_notes(self, chord_name: str) -> List[int]:
-        """Convert chord name to MIDI note numbers"""
+        """
+Convert chord name to MIDI note numbers"""
         # Very simplified chord mapping
         chord_mappings = {
             'I': [60, 64, 67],     # C major
@@ -1056,7 +1079,8 @@ class MusicGenerator:
         return chord_mappings.get(chord_name, [60, 64, 67])
 
     def _identify_structure_type(self, structure: List[Dict[str, Any]]) -> str:
-        """Identify overall structure type"""
+        """
+Identify overall structure type"""
         section_types = [s['type'] for s in structure]
         
         if 'verse' in section_types and 'chorus' in section_types:
@@ -1125,7 +1149,8 @@ class MusicGenerator:
         track: GeneratedTrack, 
         parameters: GenerationParameters
     ) -> float:
-        """Calculate commercial viability score"""
+        """
+Calculate commercial viability score"""
         viability = 0.0
         
         # Duration check
@@ -1156,7 +1181,8 @@ class MusicGenerator:
         return min(viability, 1.0)
 
     async def _analyze_lead_audio(self, audio_path: str) -> Dict[str, Any]:
-        """Analyze existing audio for accompaniment/remix generation"""
+        """
+Analyze existing audio for accompaniment/remix generation"""
         try:
             from ...ai.ml.audio_intelligence import MusicAnalyzer
             
@@ -1216,7 +1242,8 @@ class MusicGenerator:
         return list(set(instruments))  # Remove duplicates
 
     def _select_remix_instruments(self, style: MusicStyle) -> List[InstrumentType]:
-        """Select instruments for remix based on style"""
+        """
+Select instruments for remix based on style"""
         style_instruments = {
             MusicStyle.ELECTRONIC: [
                 InstrumentType.SYNTHESIZER, InstrumentType.DRUMS, 
@@ -1241,7 +1268,8 @@ class MusicGenerator:
         ])
 
     def _calculate_remix_tempo(self, original_tempo: int, remix_style: MusicStyle) -> int:
-        """Calculate appropriate tempo for remix"""
+        """
+Calculate appropriate tempo for remix"""
         style_tempo_ranges = {
             MusicStyle.ELECTRONIC: (128, 140),
             MusicStyle.HIP_HOP: (80, 100),
@@ -1265,7 +1293,8 @@ class MusicGenerator:
         track: GeneratedTrack, 
         parameters: GenerationParameters
     ) -> np.ndarray:
-        """Fallback audio synthesis"""
+        """
+Fallback audio synthesis"""
         # Simple sine wave synthesis as fallback
         sample_rate = track.sample_rate
         duration_samples = int(track.total_duration * sample_rate)
@@ -1308,7 +1337,8 @@ class MusicGenerator:
         output_path: str, 
         format: str
     ) -> str:
-        """Export audio to file"""
+        """
+Export audio to file"""
         try:
             import soundfile as sf
             
@@ -1413,7 +1443,8 @@ class MusicGenerator:
         return self._generation_cache.get(track_id)
 
     def clear_cache(self):
-        """Clear generation cache"""
+        """
+Clear generation cache"""
         self._generation_cache.clear()
         logger.info("Generation cache cleared")
 

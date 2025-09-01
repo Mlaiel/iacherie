@@ -11,6 +11,7 @@ This code is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -29,7 +30,8 @@ Base = declarative_base()
 
 
 class ForensicEventType(Enum):
-    """Types of forensic events and investigations."""
+    """
+Types of forensic events and investigations."""
     
     # Digital Evidence Collection
     EVIDENCE_ACQUISITION = "evidence_acquisition"
@@ -68,6 +70,7 @@ class ForensicEventType(Enum):
 
 class ForensicStatus(Enum):
     """Status of forensic investigations."""
+
     
     INITIATED = "initiated"
     IN_PROGRESS = "in_progress"
@@ -82,6 +85,7 @@ class ForensicStatus(Enum):
 
 class EvidenceType(Enum):
     """Types of digital evidence."""
+
     
     SYSTEM_LOGS = "system_logs"
     APPLICATION_LOGS = "application_logs"
@@ -102,6 +106,7 @@ class EvidenceType(Enum):
 
 class ForensicPriority(Enum):
     """Priority levels for forensic investigations."""
+
     
     CRITICAL = "critical"
     HIGH = "high"
@@ -125,7 +130,8 @@ class ForensicContext:
 
 
 class ForensicAnalysisLog(Base):
-    """Forensic analysis log model."""
+    """
+Forensic analysis log model."""
     
     __tablename__ = "forensic_analysis_logs"
     

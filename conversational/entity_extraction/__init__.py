@@ -133,7 +133,8 @@ def get_default_config() -> EntityExtractionConfig:
     return DEFAULT_CONFIG
 
 def set_default_config(config: EntityExtractionConfig):
-    """Set the default module configuration"""
+    """
+Set the default module configuration"""
     global DEFAULT_CONFIG
     DEFAULT_CONFIG = config
 
@@ -142,14 +143,16 @@ _service_instance = None
 _orchestrator_instance = None
 
 def get_extraction_service(config: EntityExtractionConfig = None) -> EntityExtractionService:
-    """Get a shared EntityExtractionService instance"""
+    """
+Get a shared EntityExtractionService instance"""
     global _service_instance
     if _service_instance is None or config is not None:
         _service_instance = EntityExtractionService(config or get_default_config())
     return _service_instance
 
 def get_extraction_orchestrator(config: EntityExtractionConfig = None) -> EntityExtractionOrchestrator:
-    """Get a shared EntityExtractionOrchestrator instance"""
+    """
+Get a shared EntityExtractionOrchestrator instance"""
     global _orchestrator_instance
     if _orchestrator_instance is None or config is not None:
         _orchestrator_instance = EntityExtractionOrchestrator(config or get_default_config())
@@ -221,7 +224,8 @@ async def analyze_business_entities(
 
 # Module initialization
 def initialize_module(config: EntityExtractionConfig = None):
-    """Initialize the entity extraction module with configuration"""
+    """
+Initialize the entity extraction module with configuration"""
     if config:
         set_default_config(config)
     
@@ -270,12 +274,14 @@ def get_feature_status() -> dict:
     return FEATURES.copy()
 
 def is_feature_enabled(feature_name: str) -> bool:
-    """Check if a specific feature is enabled"""
+    """
+Check if a specific feature is enabled"""
     return FEATURES.get(feature_name, False)
 
 # Module statistics
 def get_module_stats() -> dict:
-    """Get comprehensive module statistics"""
+    """
+Get comprehensive module statistics"""
     return {
         'version': __version__,
         'author': __author__,
@@ -294,7 +300,8 @@ try:
     import os
     if os.getenv('ENVIRONMENT') == 'development':
         def debug_entity_extraction(text: str, verbose: bool = True):
-            """Debug utility for entity extraction development"""
+            """
+Debug utility for entity extraction development"""
             import asyncio
             
             async def debug_extract():

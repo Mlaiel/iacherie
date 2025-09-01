@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform categories for integration"""
+    """
+Platform categories for integration"""
+
     MUSIC = "music"
     VIDEO = "video"
     SOCIAL = "social"
@@ -37,6 +40,7 @@ class PlatformType(Enum):
 
 class APIAuthType(Enum):
     """API authentication methods"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -374,13 +378,15 @@ class PlatformIntegrationOrchestrator:
     """Platform integration orchestrator"""
     
     def __init__(self, config: PlatformIntegrationConfig = None):
-        """Initialize orchestrator"""
+        """
+Initialize orchestrator"""
         self.config = config or PlatformIntegrationConfig()
         self.platform_clients = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_platforms(self) -> Dict[str, bool]:
-        """Initialize all platform integrations"""
+        """
+Initialize all platform integrations"""
         results = {}
         
         for platform_name, platform_config in self.config.platforms.items():
@@ -461,7 +467,8 @@ class PlatformIntegrationOrchestrator:
         ]
     
     async def get_integration_health(self) -> Dict[str, Any]:
-        """Get platform integration health status"""
+        """
+Get platform integration health status"""
         health_status = {
             "overall_status": "healthy",
             "platforms": {},
@@ -530,22 +537,26 @@ async def initialize_platform_integrations() -> Dict[str, bool]:
 
 
 async def get_platform_integration_health() -> Dict[str, Any]:
-    """Get platform integration health"""
+    """
+Get platform integration health"""
     return await platform_integration_orchestrator.get_integration_health()
 
 
 def get_platform_integration_summary() -> Dict[str, Any]:
-    """Get platform integration configuration summary"""
+    """
+Get platform integration configuration summary"""
     return platform_integration_orchestrator.get_configuration_summary()
 
 
 def get_platform_capabilities(platform_name: str) -> Dict[str, Any]:
-    """Get capabilities for specific platform"""
+    """
+Get capabilities for specific platform"""
     return platform_integration_orchestrator.get_platform_capabilities(platform_name)
 
 
 def get_platforms_by_type(platform_type: PlatformType) -> List[str]:
-    """Get platforms by type"""
+    """
+Get platforms by type"""
     return platform_integration_orchestrator.get_platforms_by_type(platform_type)
 
 

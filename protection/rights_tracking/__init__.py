@@ -33,7 +33,7 @@ Technical Excellence Architecture:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  SUPREME LEGAL TECHNOLOGY IP PROTECTION ⚠️
 ==============================================
@@ -53,6 +53,7 @@ UNAUTHORIZED ACCESS IS CONSTITUTIONAL VIOLATION:
 Contact mlaiel@live.de for MANDATORY constitutional authorization.
 Unauthorized access triggers automatic Supreme Court legal protocols.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -70,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 
 class RightType(Enum):
-    """Types de droits d'auteur"""
+    """
+Types de droits d'auteur"""
+
     COPYRIGHT = "copyright"
     PERFORMANCE_RIGHT = "performance_right"
     MECHANICAL_RIGHT = "mechanical_right"
@@ -86,6 +89,7 @@ class RightType(Enum):
 
 class RightStatus(Enum):
     """Statuts des droits"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
@@ -97,6 +101,7 @@ class RightStatus(Enum):
 
 class LicenseType(Enum):
     """Types de licences"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SOLE = "sole"
@@ -108,6 +113,7 @@ class LicenseType(Enum):
 
 class TerritorialScope(Enum):
     """Portée territoriale des droits"""
+
     WORLDWIDE = "worldwide"
     NATIONAL = "national"
     REGIONAL = "regional"
@@ -144,7 +150,8 @@ class RightsHolder:
 
 @dataclass
 class Territory:
-    """Territoire de droits"""
+    """
+Territoire de droits"""
     territory_id: str
     name: str
     iso_code: str
@@ -155,7 +162,8 @@ class Territory:
 
 
 class RightsRecord(BaseModel):
-    """Enregistrement de droits d'auteur"""
+    """
+Enregistrement de droits d'auteur"""
     record_id: str = Field(..., description="ID unique de l'enregistrement")
     content_id: str = Field(..., description="ID du contenu protégé")
     
@@ -341,7 +349,8 @@ class RightsTrackingService:
         self._setup_default_territories()
     
     def _setup_default_territories(self):
-        """Configure les territoires par défaut"""
+        """
+Configure les territoires par défaut"""
         default_territories = [
             Territory("WW", "Worldwide", "WW", TerritorialScope.WORLDWIDE),
             Territory("EU", "European Union", "EU", TerritorialScope.REGIONAL),

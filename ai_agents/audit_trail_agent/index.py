@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Type
 import logging
 

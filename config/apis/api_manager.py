@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides centralized management for all API configurations,
 validation, health checking, and dynamic configuration loading.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type, Union
@@ -24,7 +25,9 @@ from .communication_apis import CommunicationAPIConfig, COMMUNICATION_CONFIGS
 logger = logging.getLogger(__name__)
 
 class APIStatus(Enum):
-    """API status enumeration"""
+    """
+API status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     DEPRECATED = "deprecated"
@@ -33,6 +36,7 @@ class APIStatus(Enum):
 
 class ConfigurationSource(Enum):
     """Configuration source types"""
+
     ENVIRONMENT = "environment"
     FILE = "file"
     DATABASE = "database"
@@ -50,7 +54,8 @@ class APIHealthCheck:
 
 @dataclass
 class APIUsageMetrics:
-    """API usage metrics"""
+    """
+API usage metrics"""
     api_name: str
     requests_count: int
     success_rate: float
@@ -59,7 +64,8 @@ class APIUsageMetrics:
     last_reset: datetime
 
 class APIConfigValidator:
-    """Validates API configurations"""
+    """
+Validates API configurations"""
     
     def __init__(self):
         self.required_fields = {
@@ -125,7 +131,8 @@ class APIConfigValidator:
         return url_pattern.match(url) is not None
 
 class APIManager:
-    """Central API management system"""
+    """
+Central API management system"""
     
     def __init__(self, environment: str = "production"):
         self.environment = environment
@@ -213,11 +220,13 @@ class APIManager:
         return self.configs.get(api_name, {}).get('config')
     
     def get_all_configs(self) -> Dict[str, Any]:
-        """Get all API configurations"""
+        """
+Get all API configurations"""
         return {name: data['config'] for name, data in self.configs.items()}
     
     def get_configs_by_type(self, config_type: str) -> Dict[str, Any]:
-        """Get configurations by type"""
+        """
+Get configurations by type"""
         return {
             name: data['config'] 
             for name, data in self.configs.items() 
@@ -225,7 +234,8 @@ class APIManager:
         }
     
     def get_active_configs(self) -> Dict[str, Any]:
-        """Get only active configurations"""
+        """
+Get only active configurations"""
         return {
             name: data['config'] 
             for name, data in self.configs.items() 
@@ -348,7 +358,8 @@ class APIManager:
         return health_results
     
     def update_usage_metrics(self, api_name: str, success: bool, response_time: float):
-        """Update API usage metrics"""
+        """
+Update API usage metrics"""
         if api_name not in self.usage_metrics:
             return
         
@@ -368,15 +379,18 @@ class APIManager:
             metrics.average_response_time = (metrics.average_response_time + response_time) / 2
     
     def get_usage_metrics(self, api_name: str) -> Optional[APIUsageMetrics]:
-        """Get usage metrics for specific API"""
+        """
+Get usage metrics for specific API"""
         return self.usage_metrics.get(api_name)
     
     def get_all_usage_metrics(self) -> Dict[str, APIUsageMetrics]:
-        """Get usage metrics for all APIs"""
+        """
+Get usage metrics for all APIs"""
         return self.usage_metrics.copy()
     
     def reset_usage_metrics(self, api_name: Optional[str] = None):
-        """Reset usage metrics for specific API or all APIs"""
+        """
+Reset usage metrics for specific API or all APIs"""
         if api_name:
             if api_name in self.usage_metrics:
                 metrics = self.usage_metrics[api_name]
@@ -394,7 +408,8 @@ class APIManager:
                 metrics.last_reset = datetime.utcnow()
     
     def set_api_status(self, api_name: str, status: APIStatus):
-        """Set API status"""
+        """
+Set API status"""
         if api_name in self.configs:
             self.configs[api_name]['status'] = status
             logger.info(f"API {api_name} status changed to {status.value}")
@@ -404,7 +419,8 @@ class APIManager:
         return self.configs.get(api_name, {}).get('status')
     
     def export_configuration(self, file_path: str):
-        """Export current configuration to file"""
+        """
+Export current configuration to file"""
         try:
             export_data = {
                 'environment': self.environment,

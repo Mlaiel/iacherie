@@ -20,6 +20,7 @@ Enterprise container orchestration supporting:
 - Production-grade security and compliance
 - Microservices lifecycle management
 """
+
 import asyncio
 import logging
 import json
@@ -39,7 +40,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ContainerStatus(Enum):
-    """Container status enumeration"""
+    """
+Container status enumeration"""
+
     RUNNING = "running"
     STOPPED = "stopped"
     PAUSED = "paused"
@@ -51,6 +54,7 @@ class ContainerStatus(Enum):
 
 class ServiceType(Enum):
     """Service type enumeration"""
+
     API_GATEWAY = "api_gateway"
     BACKEND_SERVICE = "backend_service"
     AI_ENGINE = "ai_engine"
@@ -110,7 +114,8 @@ class DockerContainerManager:
     """
     
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize container manager with optional configuration"""
+        """
+Initialize container manager with optional configuration"""
         self.logger = logger
         self.config_path = config_path or Path(__file__).parent / "config"
         self.containers: Dict[str, ContainerConfig] = {}
@@ -440,7 +445,8 @@ class DockerContainerManager:
         return metrics
     
     async def scale_service(self, service_type: ServiceType, replicas: int) -> bool:
-        """Scale a service to specified number of replicas"""
+        """
+Scale a service to specified number of replicas"""
         try:
             # Find containers of specified service type
             service_containers = [
@@ -600,14 +606,16 @@ def get_container_manager() -> DockerContainerManager:
     return _container_manager
 
 async def initialize_container_manager(config_path: Optional[Path] = None) -> DockerContainerManager:
-    """Initialize container manager with configuration"""
+    """
+Initialize container manager with configuration"""
     global _container_manager
     _container_manager = DockerContainerManager(config_path)
     return _container_manager
 
 # Convenience functions for common operations
 async def start_service(service_type: ServiceType) -> bool:
-    """Start all containers of specified service type"""
+    """
+Start all containers of specified service type"""
     manager = get_container_manager()
     
     service_containers = [
@@ -623,7 +631,8 @@ async def start_service(service_type: ServiceType) -> bool:
     return success
 
 async def stop_service(service_type: ServiceType) -> bool:
-    """Stop all containers of specified service type"""
+    """
+Stop all containers of specified service type"""
     manager = get_container_manager()
     
     service_containers = [
@@ -639,7 +648,8 @@ async def stop_service(service_type: ServiceType) -> bool:
     return success
 
 async def restart_service(service_type: ServiceType) -> bool:
-    """Restart all containers of specified service type"""
+    """
+Restart all containers of specified service type"""
     manager = get_container_manager()
     
     service_containers = [

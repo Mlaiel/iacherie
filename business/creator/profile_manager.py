@@ -9,7 +9,7 @@ Preference Learning → Collaboration Matching → Performance Optimization → 
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -17,6 +17,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -52,7 +53,9 @@ logger = get_logger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators supported by the platform"""
+    """
+Types of content creators supported by the platform"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -72,6 +75,7 @@ class CreatorType(Enum):
 
 class VerificationLevel(Enum):
     """Creator verification levels for trust and monetization"""
+
     UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
@@ -83,6 +87,7 @@ class VerificationLevel(Enum):
 
 class ProfessionalTier(Enum):
     """Professional tiers for creators"""
+
     STARTER = "starter"
     CREATOR = "creator"
     PROFESSIONAL = "professional"
@@ -92,6 +97,7 @@ class ProfessionalTier(Enum):
 
 class ContentFocus(Enum):
     """Primary content focus areas"""
+
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     LIFESTYLE = "lifestyle"
@@ -106,6 +112,7 @@ class ContentFocus(Enum):
 
 class ProfileStatus(Enum):
     """Creator profile status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -172,7 +179,8 @@ class CreatorStats:
 
 @dataclass
 class SocialMediaProfile:
-    """Social media platform profile information"""
+    """
+Social media platform profile information"""
     platform: str
     username: str
     profile_url: str
@@ -809,21 +817,24 @@ class CreatorProfileManager:
         pass
     
     async def _get_profile_by_email(self, email: str) -> Optional[CreatorProfile]:
-        """Get profile by email"""
+        """
+Get profile by email"""
         result = await self.db.execute(
             select(CreatorProfile).where(CreatorProfile.email == email)
         )
         return result.scalar_one_or_none()
     
     async def _get_profile_by_username(self, username: str) -> Optional[CreatorProfile]:
-        """Get profile by username"""
+        """
+Get profile by username"""
         result = await self.db.execute(
             select(CreatorProfile).where(CreatorProfile.username == username)
         )
         return result.scalar_one_or_none()
     
     async def _cache_profile(self, profile: CreatorProfile) -> None:
-        """Cache profile data"""
+        """
+Cache profile data"""
         try:
             profile_dict = profile.to_dict()
             

@@ -7,10 +7,11 @@ brand perception, and content reception across multiple platforms.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -46,7 +47,9 @@ from ..cache.redis_cache import RedisCache
 
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity types"""
+    """
+Sentiment polarity types"""
+
     VERY_NEGATIVE = "very_negative"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -56,6 +59,7 @@ class SentimentPolarity(Enum):
 
 class EmotionType(Enum):
     """Emotion classification types"""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -68,6 +72,7 @@ class EmotionType(Enum):
 
 class ContentSentimentCategory(Enum):
     """Content-specific sentiment categories"""
+
     ENGAGEMENT_POSITIVE = "engagement_positive"
     ENGAGEMENT_NEGATIVE = "engagement_negative"
     BRAND_POSITIVE = "brand_positive"
@@ -91,7 +96,8 @@ class SentimentScore:
 
 @dataclass
 class SentimentAnalysis:
-    """Comprehensive sentiment analysis result"""
+    """
+Comprehensive sentiment analysis result"""
     analysis_id: str
     content_id: str
     platform: str
@@ -116,7 +122,8 @@ class SentimentAnalysis:
 
 @dataclass
 class AudienceInsight:
-    """Audience insight from sentiment analysis"""
+    """
+Audience insight from sentiment analysis"""
     insight_id: str
     insight_type: str
     title: str
@@ -144,7 +151,8 @@ class SentimentAnalyzer:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize sentiment analyzer"""
+        """
+Initialize sentiment analyzer"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -177,7 +185,8 @@ class SentimentAnalyzer:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize sentiment analysis models"""
+        """
+Initialize sentiment analysis models"""
         try:
             # Ensure NLTK data is available
             try:
@@ -719,7 +728,8 @@ class SentimentAnalyzer:
             }
     
     def _convert_textblob_sentiment(self, textblob_result: Dict[str, float]) -> Dict[str, float]:
-        """Convert TextBlob sentiment to standard format"""
+        """
+Convert TextBlob sentiment to standard format"""
         polarity = textblob_result['polarity']
         
         if polarity > 0:
@@ -741,7 +751,8 @@ class SentimentAnalyzer:
         }
     
     def _analyze_emoji_sentiment(self, text: str) -> Optional[Dict[str, float]]:
-        """Analyze sentiment based on emojis"""
+        """
+Analyze sentiment based on emojis"""
         try:
             # Extract emojis from text
             emojis = [char for char in text if char in emoji.EMOJI_DATA]
@@ -810,7 +821,8 @@ class SentimentAnalyzer:
         }
     
     def _determine_polarity(self, compound_score: float) -> SentimentPolarity:
-        """Determine sentiment polarity from compound score"""
+        """
+Determine sentiment polarity from compound score"""
         if compound_score >= 0.6:
             return SentimentPolarity.VERY_POSITIVE
         elif compound_score >= 0.2:
@@ -823,7 +835,8 @@ class SentimentAnalyzer:
             return SentimentPolarity.NEUTRAL
     
     def _create_neutral_sentiment(self) -> SentimentScore:
-        """Create neutral sentiment score"""
+        """
+Create neutral sentiment score"""
         return SentimentScore(
             polarity=SentimentPolarity.NEUTRAL,
             confidence=0.5,
@@ -834,7 +847,8 @@ class SentimentAnalyzer:
         )
     
     def _has_brand_mentions(self, text: str) -> bool:
-        """Check if text contains brand mentions"""
+        """
+Check if text contains brand mentions"""
         # Simple brand mention detection
         brand_patterns = [
             r'@\w+',  # Mentions
@@ -849,7 +863,8 @@ class SentimentAnalyzer:
         return False
     
     def _extract_brand_mentions(self, text: str) -> List[str]:
-        """Extract brand mentions from text"""
+        """
+Extract brand mentions from text"""
         mentions = []
         
         # Extract @ mentions
@@ -863,7 +878,8 @@ class SentimentAnalyzer:
         return list(set(mentions))  # Remove duplicates
     
     def _extract_brand_context(self, text: str, brand_mention: str) -> str:
-        """Extract context around brand mention"""
+        """
+Extract context around brand mention"""
         # Find the brand mention in text
         pattern = re.compile(re.escape(brand_mention), re.IGNORECASE)
         match = pattern.search(text)
@@ -898,7 +914,8 @@ class SentimentAnalyzer:
         }
     
     def _create_fallback_analysis(self, content_data: Dict[str, Any]) -> SentimentAnalysis:
-        """Create fallback analysis when main analysis fails"""
+        """
+Create fallback analysis when main analysis fails"""
         return SentimentAnalysis(
             analysis_id=self._generate_id(),
             content_id=content_data.get('content_id', 'unknown'),
@@ -934,7 +951,8 @@ class AudienceInsightEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize audience insight engine"""
+        """
+Initialize audience insight engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

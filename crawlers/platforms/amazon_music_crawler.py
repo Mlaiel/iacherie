@@ -22,6 +22,7 @@ Features:
 - Comprehensive music metadata extraction and analysis
 - Alexa Music Skills integration for voice-activated monitoring
 """
+
 import asyncio
 import json
 import re
@@ -59,7 +60,8 @@ settings = get_settings()
 
 @dataclass
 class AmazonMusicTrack:
-    """Enhanced Amazon Music track data structure with fingerprinting."""
+    """
+Enhanced Amazon Music track data structure with fingerprinting."""
     track_id: str
     title: str
     artist: str
@@ -149,7 +151,8 @@ class AmazonMusicArtist(BaseModel):
 
 
 class AmazonMusicAlbum(BaseModel):
-    """Amazon Music Album data model"""
+    """
+Amazon Music Album data model"""
     album_id: str
     title: str
     artist: str
@@ -204,7 +207,8 @@ class AmazonMusicPlaylist(BaseModel):
 
 
 class AmazonMusicStation(BaseModel):
-    """Amazon Music Station data model"""
+    """
+Amazon Music Station data model"""
     station_id: str
     name: str
     description: Optional[str] = None
@@ -1267,7 +1271,8 @@ class AmazonMusicCrawler(BaseCrawler):
         protected_content: Dict,
         track: AmazonMusicTrack
     ) -> float:
-        """Calculate similarity between protected content and Amazon Music track"""
+        """
+Calculate similarity between protected content and Amazon Music track"""
         from difflib import SequenceMatcher
         
         similarity_scores = []
@@ -1311,7 +1316,8 @@ class AmazonMusicCrawler(BaseCrawler):
     
     # Additional helper methods for analysis features
     def _calculate_quality_score(self, track: AmazonMusicTrack) -> float:
-        """Calculate audio quality score"""
+        """
+Calculate audio quality score"""
         score = 0.0
         if track.hd_available:
             score += 0.3
@@ -1322,7 +1328,8 @@ class AmazonMusicCrawler(BaseCrawler):
         return score
     
     def _calculate_artist_engagement(self, artist: AmazonMusicArtist) -> float:
-        """Calculate artist engagement score"""
+        """
+Calculate artist engagement score"""
         if artist.follower_count == 0:
             return 0.0
         
@@ -1330,34 +1337,41 @@ class AmazonMusicCrawler(BaseCrawler):
         return min(engagement_ratio, 10.0)  # Cap at 10x
     
     def _calculate_market_penetration(self, artist: AmazonMusicArtist) -> float:
-        """Calculate market penetration score"""
+        """
+Calculate market penetration score"""
         # Simplified calculation based on followers and monthly listeners
         base_score = (artist.follower_count + artist.monthly_listeners) / 2000000  # Normalize
         return min(base_score, 1.0)
     
     # Placeholder methods for complex analysis features
     async def _get_track_chart_performance(self, track_id: str) -> Dict:
-        """Get chart performance data for track"""
+        """
+Get chart performance data for track"""
         return {'current_position': None, 'peak_position': None, 'weeks_on_chart': 0}
     
     async def _analyze_geographic_availability(self, track_id: str) -> Dict:
-        """Analyze geographic availability of track"""
+        """
+Analyze geographic availability of track"""
         return {'available_countries': [], 'restricted_countries': []}
     
     async def _analyze_genre_competition(self, track: AmazonMusicTrack) -> Dict:
-        """Analyze competition within track's genre"""
+        """
+Analyze competition within track's genre"""
         return {'competitive_density': 'medium', 'market_saturation': 0.6}
     
     async def _find_similar_tracks(self, track: AmazonMusicTrack) -> List[str]:
-        """Find similar tracks on the platform"""
+        """
+Find similar tracks on the platform"""
         return []
     
     def _calculate_market_opportunity(self, track: AmazonMusicTrack) -> float:
-        """Calculate market opportunity score"""
+        """
+Calculate market opportunity score"""
         return 0.5  # Placeholder
     
     def _generate_track_optimization_recommendations(self, track: AmazonMusicTrack) -> List[str]:
-        """Generate optimization recommendations for track"""
+        """
+Generate optimization recommendations for track"""
         recommendations = []
         
         if not track.hd_available:

@@ -24,6 +24,7 @@ Advanced SEO Marketing System for content creators implementing:
 - Automated meta-data generation and optimization
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -59,7 +60,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class SEOPlatform(Enum):
-    """Plateformes SEO supportées"""
+    """
+Plateformes SEO supportées"""
+
     GOOGLE = "google"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -71,6 +74,7 @@ class SEOPlatform(Enum):
 
 class ContentType(Enum):
     """Types de contenu pour SEO"""
+
     BLOG_POST = "blog_post"
     VIDEO = "video"
     PODCAST = "podcast"
@@ -81,6 +85,7 @@ class ContentType(Enum):
 
 class KeywordDifficulty(Enum):
     """Difficulté des mots-clés"""
+
     VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
@@ -89,6 +94,7 @@ class KeywordDifficulty(Enum):
 
 class TrendStatus(Enum):
     """Statut des tendances"""
+
     RISING = "rising"
     PEAKED = "peaked"
     DECLINING = "declining"
@@ -97,6 +103,7 @@ class TrendStatus(Enum):
 
 class CompetitorPosition(Enum):
     """Position concurrentielle"""
+
     LEADER = "leader"
     CHALLENGER = "challenger"
     FOLLOWER = "follower"
@@ -204,7 +211,8 @@ class SEOMarketingConfig:
 # =============== SERVICE INTERFACES ===============
 
 class ISEOMarketingService(ABC):
-    """Interface pour le service SEO Marketing"""
+    """
+Interface pour le service SEO Marketing"""
     
     @abstractmethod
     async def research_keywords(
@@ -225,7 +233,8 @@ class ISEOMarketingService(ABC):
         target_keywords: List[str],
         platform: SEOPlatform
     ) -> ContentSEOAnalysis:
-        """Analyser le SEO du contenu"""
+        """
+Analyser le SEO du contenu"""
         pass
     
     @abstractmethod
@@ -235,7 +244,8 @@ class ISEOMarketingService(ABC):
         platforms: List[SEOPlatform],
         time_range_days: int = 30
     ) -> List[TrendAnalysis]:
-        """Analyser les tendances"""
+        """
+Analyser les tendances"""
         pass
     
     @abstractmethod
@@ -245,7 +255,8 @@ class ISEOMarketingService(ABC):
         platforms: List[SEOPlatform],
         focus_keywords: List[str]
     ) -> List[CompetitorAnalysis]:
-        """Analyser les concurrents"""
+        """
+Analyser les concurrents"""
         pass
     
     @abstractmethod
@@ -256,13 +267,15 @@ class ISEOMarketingService(ABC):
         target_audience: Dict[str, Any],
         platforms: List[SEOPlatform]
     ) -> SEOStrategy:
-        """Générer une stratégie SEO personnalisée"""
+        """
+Générer une stratégie SEO personnalisée"""
         pass
 
 # =============== CORE MANAGER ===============
 
 class SEOMarketingManager:
-    """Gestionnaire avancé SEO Marketing avec intégrations API ultra-avancées"""
+    """
+Gestionnaire avancé SEO Marketing avec intégrations API ultra-avancées"""
     
     def __init__(self, config: Optional[SEOMarketingConfig] = None):
         self.config = config or SEOMarketingConfig()
@@ -513,7 +526,8 @@ class SEOMarketingManager:
         return ranked_keywords
     
     async def _research_keywords_with_real_apis(self, seed_keywords: List[str], language: str) -> List[Keyword]:
-        """Rechercher des mots-clés avec les APIs réelles"""
+        """
+Rechercher des mots-clés avec les APIs réelles"""
         try:
             all_api_keywords = []
             
@@ -575,7 +589,8 @@ class SEOMarketingManager:
         return internal_keywords
     
     async def _enrich_keywords_with_real_time_trends(self, keywords: List[Keyword]) -> List[Keyword]:
-        """Enrichir avec des données de tendances en temps réel"""
+        """
+Enrichir avec des données de tendances en temps réel"""
         try:
             # Utiliser Google Trends API si disponible
             trends_connector = self.api_manager.get_connector(APIProvider.GOOGLE_TRENDS) if self.api_manager else None
@@ -713,7 +728,8 @@ class SEOMarketingManager:
         return trend
     
     async def _get_related_keywords(self, keyword: str) -> List[str]:
-        """Obtenir des mots-clés liés"""
+        """
+Obtenir des mots-clés liés"""
         # Simulation de mots-clés liés
         word_parts = keyword.split()
         related = []
@@ -829,7 +845,8 @@ class SEOMarketingManager:
         return min(100, score)
     
     async def _analyze_description_seo(self, description: str, keywords: List[str], platform: SEOPlatform) -> float:
-        """Analyser le SEO de la description"""
+        """
+Analyser le SEO de la description"""
         score = 0.0
         
         # Longueur optimale selon la plateforme
@@ -873,7 +890,8 @@ class SEOMarketingManager:
         return min(100, score)
     
     async def _calculate_keyword_density(self, content: str, keywords: List[str]) -> Dict[str, float]:
-        """Calculer la densité des mots-clés"""
+        """
+Calculer la densité des mots-clés"""
         content_lower = content.lower()
         word_count = len(content.split())
         
@@ -886,7 +904,8 @@ class SEOMarketingManager:
         return densities
     
     async def _calculate_readability_score(self, content: str) -> float:
-        """Calculer le score de lisibilité"""
+        """
+Calculer le score de lisibilité"""
         try:
             if len(content.strip()) == 0:
                 return 0.0
@@ -951,7 +970,8 @@ class SEOMarketingManager:
         keyword_density: Dict[str, float],
         readability_score: float
     ) -> List[str]:
-        """Générer des recommandations SEO"""
+        """
+Générer des recommandations SEO"""
         
         recommendations = []
         
@@ -1113,7 +1133,8 @@ class SEOMarketingManager:
         }
     
     async def _update_trending_keywords(self):
-        """Mettre à jour les mots-clés tendance (méthode de fallback)"""
+        """
+Mettre à jour les mots-clés tendance (méthode de fallback)"""
         try:
             # Simulation de récupération des tendances
             trending_topics = [
@@ -1227,7 +1248,8 @@ class SEOMarketingService(ISEOMarketingService):
         target_keywords: List[str],
         platform: SEOPlatform
     ) -> ContentSEOAnalysis:
-        """Analyser le SEO du contenu"""
+        """
+Analyser le SEO du contenu"""
         return await self.manager.analyze_content_seo(
             title, description, content_body, target_keywords, platform
         )
@@ -1238,7 +1260,8 @@ class SEOMarketingService(ISEOMarketingService):
         platforms: List[SEOPlatform],
         time_range_days: int = 30
     ) -> List[TrendAnalysis]:
-        """Analyser les tendances"""
+        """
+Analyser les tendances"""
         try:
             trend_analyses = []
             
@@ -1392,7 +1415,8 @@ def create_seo_marketing_service(config: Optional[SEOMarketingConfig] = None) ->
     return SEOMarketingService(config)
 
 def create_seo_marketing_manager(config: Optional[SEOMarketingConfig] = None) -> SEOMarketingManager:
-    """Factory pour créer un gestionnaire SEO Marketing"""
+    """
+Factory pour créer un gestionnaire SEO Marketing"""
     return SEOMarketingManager(config)
 
 # =============== MODULE EXPORTS ===============

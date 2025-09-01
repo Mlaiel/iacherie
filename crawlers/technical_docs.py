@@ -12,13 +12,15 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import json
 
 @dataclass
 class ModuleDocumentation:
-    """Documentation structure for modules."""
+    """
+Documentation structure for modules."""
     name: str
     description: str
     purpose: str
@@ -35,7 +37,8 @@ class CrawlerTechnicalDocs:
     
     @staticmethod
     def get_content_intelligence_docs() -> ModuleDocumentation:
-        """Get documentation for Content Intelligence Engine."""
+        """
+Get documentation for Content Intelligence Engine."""
         return ModuleDocumentation(
             name="Content Intelligence Engine",
             description="Advanced AI-powered content analysis and intelligence system",

@@ -5,8 +5,9 @@ The ContentTransformer handles format conversion, quality enhancement,
 and adaptive processing for cross-platform content distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -29,7 +30,8 @@ from ..image.processors.image_converter import ImageConverter
 
 @dataclass
 class TransformationTask:
-    """Content transformation task container"""
+    """
+Content transformation task container"""
     task_id: str
     content_id: str
     source_format: str
@@ -56,7 +58,8 @@ class TransformationResult:
 
 @dataclass
 class TransformationConfig:
-    """Content transformation configuration"""
+    """
+Content transformation configuration"""
     enable_quality_enhancement: bool = True
     enable_format_optimization: bool = True
     enable_compression: bool = True
@@ -659,7 +662,8 @@ class ContentTransformer:
             return img.resize(target_size, Image.Resampling.LANCZOS)
 
     async def _enhance_image_quality(self, img: Image.Image) -> Image.Image:
-        """Enhance image quality using various filters and adjustments"""
+        """
+Enhance image quality using various filters and adjustments"""
         try:
             # Enhance sharpness
             enhancer = ImageEnhance.Sharpness(img)
@@ -688,7 +692,8 @@ class ContentTransformer:
         return True
 
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content data from database"""
+        """
+Get content data from database"""
         # Mock implementation
         return {
             "id": content_id,
@@ -708,33 +713,41 @@ class ContentTransformer:
         return []
 
     async def _execute_transformations(self, tasks: List[TransformationTask]) -> List[TransformationResult]:
-        """Execute transformation tasks"""
+        """
+Execute transformation tasks"""
         return []
 
     async def _aggregate_transformation_results(self, results: List[TransformationResult]) -> Dict[str, Any]:
-        """Aggregate multiple transformation results"""
+        """
+Aggregate multiple transformation results"""
         return {}
 
     async def _save_platform_version(self, content_id: str, platform: str, result: Dict[str, Any]) -> None:
-        """Save platform-specific version to database"""
+        """
+Save platform-specific version to database"""
         pass
 
     async def _enhance_audio_quality(self, file_path: str, params: Dict[str, Any]) -> Optional[str]:
-        """Enhance audio quality"""
+        """
+Enhance audio quality"""
         return None
 
     async def _apply_platform_video_optimizations(self, file_path: str, platform: str, specs: Dict[str, Any]) -> Optional[str]:
-        """Apply platform-specific video optimizations"""
+        """
+Apply platform-specific video optimizations"""
         return None
 
     async def _calculate_audio_quality_metrics(self, source_path: str, output_path: str) -> Dict[str, Any]:
-        """Calculate audio quality metrics"""
+        """
+Calculate audio quality metrics"""
         return {}
 
     async def _calculate_video_quality_metrics(self, source_path: str, output_path: str) -> Dict[str, Any]:
-        """Calculate video quality metrics"""
+        """
+Calculate video quality metrics"""
         return {}
 
     async def _calculate_image_quality_metrics(self, source_path: str, output_path: str) -> Dict[str, Any]:
-        """Calculate image quality metrics"""
+        """
+Calculate image quality metrics"""
         return {}

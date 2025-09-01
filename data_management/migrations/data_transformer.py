@@ -10,12 +10,13 @@ Ultra-advanced data transformation system for IA Influencer Agent platform:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This data transformation engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class TransformationStrategy(Enum):
-    """Data transformation strategies"""
+    """
+Data transformation strategies"""
+
     BATCH = "batch"              # Process in batches
     STREAMING = "streaming"      # Real-time streaming
     INCREMENTAL = "incremental"  # Process only changes
@@ -49,6 +52,7 @@ class TransformationStrategy(Enum):
 
 class DataFormat(Enum):
     """Supported data formats"""
+
     JSON = "json"
     CSV = "csv"
     PARQUET = "parquet"
@@ -60,6 +64,7 @@ class DataFormat(Enum):
 
 class TransformationType(Enum):
     """Types of data transformations"""
+
     FORMAT_CONVERSION = "format_conversion"
     SCHEMA_MIGRATION = "schema_migration"
     DATA_ENRICHMENT = "data_enrichment"
@@ -89,7 +94,8 @@ class TransformationRule:
 
 @dataclass
 class TransformationResult:
-    """Data transformation execution result"""
+    """
+Data transformation execution result"""
     rule_id: str
     status: str
     processed_rows: int
@@ -128,7 +134,8 @@ class DataTransformer:
         self._register_builtin_functions()
         
     def register_transformation_rule(self, rule: TransformationRule) -> None:
-        """Register data transformation rule"""
+        """
+Register data transformation rule"""
         self.transformation_rules[rule.rule_id] = rule
         logger.info(f"Registered transformation rule: {rule.rule_id}")
         
@@ -394,7 +401,8 @@ class DataTransformer:
             return await self._apply_builtin_transformation(rule, row)
             
     async def _apply_builtin_transformation(self, rule: TransformationRule, row: Any) -> Dict[str, Any]:
-        """Apply built-in transformation function"""
+        """
+Apply built-in transformation function"""
         if rule.transformation_function == "migrate_fingerprint_schema":
             return await self._migrate_fingerprint_schema(row)
         elif rule.transformation_function == "aggregate_revenue_by_period":
@@ -456,7 +464,8 @@ class DataTransformer:
     async def _validate_transformation(self, 
                                      rule: TransformationRule, 
                                      result: TransformationResult) -> bool:
-        """Validate transformation result"""
+        """
+Validate transformation result"""
         if rule.validation_function in self.custom_functions:
             validation_func = self.custom_functions[rule.validation_function]
             return await validation_func(rule, result)
@@ -465,7 +474,8 @@ class DataTransformer:
             return result.processed_rows > 0
             
     def _register_builtin_functions(self) -> None:
-        """Register built-in transformation functions"""
+        """
+Register built-in transformation functions"""
         # Register common transformation functions
         self.custom_functions.update({
             "identity": lambda x, rule: x,
@@ -484,7 +494,8 @@ class DataTransformer:
         return data
         
     async def _encode_base64(self, data: Any, rule: TransformationRule) -> str:
-        """Encode data to base64"""
+        """
+Encode data to base64"""
         if isinstance(data, bytes):
             return base64.b64encode(data).decode('utf-8')
         elif isinstance(data, str):
@@ -492,23 +503,27 @@ class DataTransformer:
         return str(data)
         
     async def _decode_base64(self, data: Any, rule: TransformationRule) -> bytes:
-        """Decode base64 data"""
+        """
+Decode base64 data"""
         if isinstance(data, str):
             return base64.b64decode(data)
         return data
         
     async def _serialize_numpy(self, data: Any, rule: TransformationRule) -> bytes:
-        """Serialize numpy array"""
+        """
+Serialize numpy array"""
         if isinstance(data, np.ndarray):
             return pickle.dumps(data)
         return data
         
     async def _deserialize_numpy(self, data: Any, rule: TransformationRule) -> np.ndarray:
-        """Deserialize numpy array"""
+        """
+Deserialize numpy array"""
         if isinstance(data, bytes):
             return pickle.loads(data)
         return data
         
     async def _get_session(self) -> Session:
-        """Get database session"""
+        """
+Get database session"""
         return self.session_maker()

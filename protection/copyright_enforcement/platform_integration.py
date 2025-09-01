@@ -24,6 +24,7 @@ ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import aiohttp
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for content protection"""
+    """
+Supported platform types for content protection"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -77,6 +80,7 @@ class PlatformType(Enum):
 
 class APICapability(Enum):
     """API capabilities for each platform"""
+
     CONTENT_SEARCH = "content_search"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_DELETE = "content_delete"
@@ -91,6 +95,7 @@ class APICapability(Enum):
 
 class AuthMethod(Enum):
     """Authentication methods for platform APIs"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -115,7 +120,8 @@ class PlatformCredentials:
     quota_reset_time: Optional[datetime] = None
     
     def is_expired(self) -> bool:
-        """Check if token is expired"""
+        """
+Check if token is expired"""
         if not self.token_expires_at:
             return False
         return datetime.utcnow() >= self.token_expires_at
@@ -123,7 +129,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
+    """
+Platform-specific configuration"""
     platform: PlatformType
     base_url: str
     api_version: str
@@ -138,7 +145,8 @@ class PlatformConfig:
 
 
 class ContentSearchResult(BaseModel):
-    """Content search result structure"""
+    """
+Content search result structure"""
     platform: PlatformType
     content_id: str
     url: str
@@ -155,7 +163,8 @@ class ContentSearchResult(BaseModel):
 
 
 class RevenueData(BaseModel):
-    """Platform revenue data structure"""
+    """
+Platform revenue data structure"""
     platform: PlatformType
     content_id: str
     revenue_amount: float
@@ -167,7 +176,8 @@ class RevenueData(BaseModel):
 
 
 class PlatformAPIManager:
-    """Ultra-advanced multi-platform API management system"""
+    """
+Ultra-advanced multi-platform API management system"""
     
     def __init__(self):
         self.cache_manager = CacheManager()
@@ -179,7 +189,8 @@ class PlatformAPIManager:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific configurations"""
+        """
+Initialize platform-specific configurations"""
         
         # YouTube Configuration
         self.platform_configs[PlatformType.YOUTUBE] = PlatformConfig(
@@ -844,12 +855,14 @@ class PlatformAPIManager:
         self.session_pool.clear()
     
     def __del__(self):
-        """Cleanup on destruction"""
+        """
+Cleanup on destruction"""
         asyncio.create_task(self.cleanup_sessions())
 
 
 class MultiPlatformMonitor:
-    """Real-time multi-platform content monitoring system"""
+    """
+Real-time multi-platform content monitoring system"""
     
     def __init__(self):
         self.api_manager = PlatformAPIManager()
@@ -862,7 +875,8 @@ class MultiPlatformMonitor:
         keywords: List[str],
         callback: callable
     ) -> bool:
-        """Start real-time monitoring across multiple platforms"""
+        """
+Start real-time monitoring across multiple platforms"""
         try:
             self.is_monitoring = True
             
@@ -893,7 +907,8 @@ class MultiPlatformMonitor:
         keywords: List[str],
         callback: callable
     ) -> None:
-        """Monitor specific platform for content"""
+        """
+Monitor specific platform for content"""
         while self.is_monitoring:
             try:
                 for keyword in keywords:

@@ -4,6 +4,7 @@ High-performance user session management with Redis and JWT token caching
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class UserSession:
-    """User session data structure"""
+    """
+User session data structure"""
     user_id: str
     session_id: str
     tenant_id: Optional[str]
@@ -53,7 +55,8 @@ class UserSession:
     suspicious_activity: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert session to dictionary"""
+        """
+Convert session to dictionary"""
         data = asdict(self)
         # Convert datetime objects to ISO strings
         for key, value in data.items():
@@ -63,7 +66,8 @@ class UserSession:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'UserSession':
-        """Create session from dictionary"""
+        """
+Create session from dictionary"""
         # Convert ISO strings back to datetime objects
         datetime_fields = ['created_at', 'last_accessed', 'token_expires_at']
         for field in datetime_fields:
@@ -74,7 +78,8 @@ class UserSession:
 
 @dataclass
 class AuthToken:
-    """Authentication token data"""
+    """
+Authentication token data"""
     token: str
     token_type: str  # access, refresh, api_key
     user_id: str
@@ -140,15 +145,18 @@ class SessionCache:
         await self.redis_cache.connect()
     
     def _encrypt_data(self, data: str) -> str:
-        """Encrypt sensitive data"""
+        """
+Encrypt sensitive data"""
         return self.cipher.encrypt(data.encode()).decode()
     
     def _decrypt_data(self, encrypted_data: str) -> str:
-        """Decrypt sensitive data"""
+        """
+Decrypt sensitive data"""
         return self.cipher.decrypt(encrypted_data.encode()).decode()
     
     def _generate_session_id(self) -> str:
-        """Generate secure session ID"""
+        """
+Generate secure session ID"""
         return secrets.token_urlsafe(32)
     
     def _generate_token(self, user_id: str, session_id: str, token_type: str = "access") -> str:
@@ -172,7 +180,8 @@ class SessionCache:
                            user_agent: str,
                            tenant_id: Optional[str] = None,
                            profile_data: Optional[Dict[str, Any]] = None) -> UserSession:
-        """Create new user session"""
+        """
+Create new user session"""
         
         # Check for existing sessions and enforce limits
         await self._enforce_session_limits(user_id)
@@ -347,7 +356,8 @@ class SessionCache:
         return destroyed_count
     
     async def validate_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Validate JWT token"""
+        """
+Validate JWT token"""
         try:
             # Check if token is revoked
             token_key = f"{self.TOKEN_PREFIX}:{hashlib.sha256(token.encode()).hexdigest()}"
@@ -527,7 +537,8 @@ class SessionCache:
         }
     
     async def close(self):
-        """Close cache connections"""
+        """
+Close cache connections"""
         await self.redis_cache.close()
         self.memory_cache.close()
 
@@ -547,7 +558,8 @@ class AuthCache:
         await self.redis_cache.connect()
     
     async def store_api_key(self, api_key: str, user_id: str, permissions: List[str], ttl: int = 86400):
-        """Store API key with permissions"""
+        """
+Store API key with permissions"""
         api_key_data = {
             'user_id': user_id,
             'permissions': permissions,

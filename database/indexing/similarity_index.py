@@ -15,7 +15,7 @@ and duplicate detection with enterprise-grade performance optimization.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SimilarityResult:
-    """Data class for similarity search results"""
+    """
+Data class for similarity search results"""
     content_id: str
     matched_content_id: str
     similarity_score: float
@@ -52,7 +54,9 @@ class SimilarityResult:
     detected_at: datetime
 
 class SimilarityMatchType:
-    """Types of similarity matches"""
+    """
+Types of similarity matches"""
+
     EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     SIMILAR_CONTENT = "similar_content"
@@ -63,6 +67,7 @@ class SimilarityMatchType:
 
 class SimilarityAlgorithm:
     """Similarity computation algorithms"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     JACCARD = "jaccard"
@@ -85,7 +90,8 @@ class SimilarityIndexManager:
     """
     
     def __init__(self):
-        """Initialize similarity index manager"""
+        """
+Initialize similarity index manager"""
         self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
@@ -528,7 +534,8 @@ class SimilarityIndexManager:
     
     def _calculate_confidence_level(self, similarity_score: float, features1: np.ndarray,
                                   features2: np.ndarray, algorithm: str) -> float:
-        """Calculate confidence level for similarity score"""
+        """
+Calculate confidence level for similarity score"""
         # Base confidence from similarity score
         base_confidence = similarity_score
         
@@ -553,7 +560,8 @@ class SimilarityIndexManager:
         return float(np.clip(confidence, 0.0, 1.0))
     
     async def _store_similarity_mapping(self, result: SimilarityResult):
-        """Store similarity mapping in database"""
+        """
+Store similarity mapping in database"""
         try:
             conn = await self.db_manager.get_connection()
             
@@ -739,7 +747,8 @@ class SimilarityIndexManager:
     
     async def create_similarity_cluster(self, content_ids: List[str], cluster_type: str,
                                       content_type: str, cluster_name: Optional[str] = None) -> Optional[str]:
-        """Create a new similarity cluster"""
+        """
+Create a new similarity cluster"""
         try:
             conn = await self.db_manager.get_connection()
             
@@ -809,7 +818,8 @@ class SimilarityIndexManager:
         pass
     
     async def get_similarity_statistics(self, content_type: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive similarity statistics"""
+        """
+Get comprehensive similarity statistics"""
         try:
             if content_type:
                 # Filter statistics for specific content type

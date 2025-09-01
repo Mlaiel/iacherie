@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Index Module Testing Suite
+"""
+Index Module Testing Suite
 
 Comprehensive ultra-advanced testing suite for AI Engines Index Module.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -43,6 +45,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 """
+
 import pytest
 import sys
 import os
@@ -118,11 +121,13 @@ class TestEngineIndex:
     """Comprehensive test suite for AI Engines Index Module"""
     @pytest.fixture
     def engine_index(self):
-        """Create engine index instance"""
+        """
+Create engine index instance"""
         return EngineIndex()
 
     def test_module_imports(self):
-        """Test that all required modules are imported correctly"""
+        """
+Test that all required modules are imported correctly"""
         # Test base imports exist
         assert EngineIndex is not None
         assert EngineCategory is not None
@@ -133,25 +138,29 @@ class TestEngineIndex:
         assert callable(list_engines)
 
     def test_engine_index_initialization(self, engine_index):
-        """Test engine index initialization"""
+        """
+Test engine index initialization"""
         assert hasattr(engine_index, '_engines')
         assert hasattr(engine_index, '_categories')
         assert hasattr(engine_index, '_content_mappings')
 
     def test_get_engine_function(self):
-        """Test getting engine by name"""
+        """
+Test getting engine by name"""
         # Test function exists and is callable
         result = get_engine('audio_processing')
         # Function should return something (None or engine class)
         assert result is not None or result is None
 
     def test_list_engines_function(self):
-        """Test listing all engines"""
+        """
+Test listing all engines"""
         engines = list_engines()
         assert isinstance(engines, dict)
 
     def test_get_engines_for_content_function(self):
-        """Test getting engines for content type"""
+        """
+Test getting engines for content type"""
         try:
             # Import ContentType from base_engine
             from ai.engines.base_engine import ContentType
@@ -163,7 +172,8 @@ class TestEngineIndex:
             assert isinstance(engines, list)
 
     def test_engine_index_methods(self, engine_index):
-        """Test engine index core methods"""
+        """
+Test engine index core methods"""
         # Test that methods exist
         assert hasattr(engine_index, 'get_engine')
         assert hasattr(engine_index, 'list_all_engines')
@@ -175,25 +185,29 @@ class TestEngineIndex:
         assert callable(engine_index.health_check)
 
     def test_engine_categories(self):
-        """Test engine categories enumeration"""
+        """
+Test engine categories enumeration"""
         # Test that EngineCategory has expected values
         assert hasattr(EngineCategory, '__members__')
         assert len(EngineCategory.__members__) > 0
 
     def test_error_handling(self, engine_index):
-        """Test error handling in engine index"""
+        """
+Test error handling in engine index"""
         # Test with invalid engine name
         result = engine_index.get_engine('nonexistent_engine')
         assert result is None
 
     def test_engine_index_health_check(self, engine_index):
-        """Test engine index health check"""
+        """
+Test engine index health check"""
         health = engine_index.health_check()
         assert isinstance(health, dict)
         assert 'status' in health
 
     def test_list_all_engines(self, engine_index):
-        """Test listing all engines"""
+        """
+Test listing all engines"""
         engines = engine_index.list_all_engines()
         assert isinstance(engines, dict)
 

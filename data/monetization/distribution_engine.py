@@ -6,11 +6,12 @@ Handles multi-platform revenue aggregation, smart distribution,
 performance-based allocation, and automated partner payouts.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from .payment_processor import PaymentProcessor, PaymentRequest, PaymentGateway
 
 
 class DistributionType(Enum):
-    """Revenue distribution types"""
+    """
+Revenue distribution types"""
+
     EQUAL_SPLIT = "equal_split"
     PERFORMANCE_BASED = "performance_based"
     CUSTOM_PERCENTAGE = "custom_percentage"
@@ -43,6 +46,7 @@ class DistributionType(Enum):
 
 class StakeholderType(Enum):
     """Types of revenue stakeholders"""
+
     CREATOR = "creator"
     COLLABORATOR = "collaborator"
     PRODUCER = "producer"
@@ -55,6 +59,7 @@ class StakeholderType(Enum):
 
 class DistributionStatus(Enum):
     """Distribution processing status"""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     APPROVED = "approved"
@@ -78,7 +83,8 @@ class Stakeholder:
 
 @dataclass
 class DistributionRule:
-    """Revenue distribution rule"""
+    """
+Revenue distribution rule"""
     rule_id: str
     content_id: str
     distribution_type: DistributionType
@@ -92,7 +98,8 @@ class DistributionRule:
 
 @dataclass
 class DistributionCalculation:
-    """Revenue distribution calculation result"""
+    """
+Revenue distribution calculation result"""
     distribution_id: str
     content_id: str
     total_revenue: Decimal
@@ -107,7 +114,8 @@ class DistributionCalculation:
 
 @dataclass
 class DistributionResult:
-    """Distribution execution result"""
+    """
+Distribution execution result"""
     distribution_id: str
     status: DistributionStatus
     total_distributed: Decimal
@@ -610,7 +618,8 @@ class DistributionEngine:
     
     async def _get_performance_metrics(self, content_id: str, start_date: datetime,
                                      end_date: datetime) -> Dict[str, Any]:
-        """Get performance metrics for content"""
+        """
+Get performance metrics for content"""
         # Get performance data from analytics
         # Placeholder implementation
         return {
@@ -624,7 +633,8 @@ class DistributionEngine:
     async def _calculate_stakeholder_amounts(self, rule: DistributionRule, 
                                            total_revenue: Decimal,
                                            performance_metrics: Dict) -> Dict[str, Decimal]:
-        """Calculate distribution amounts for stakeholders"""
+        """
+Calculate distribution amounts for stakeholders"""
         amounts = {}
         
         if rule.distribution_type == DistributionType.EQUAL_SPLIT:
@@ -657,7 +667,8 @@ class DistributionEngine:
     async def _calculate_performance_based_distribution(self, rule: DistributionRule,
                                                       total_revenue: Decimal,
                                                       performance_metrics: Dict) -> Dict[str, Decimal]:
-        """Calculate performance-based distribution"""
+        """
+Calculate performance-based distribution"""
         amounts = {}
         
         # Calculate performance scores for each stakeholder
@@ -685,7 +696,8 @@ class DistributionEngine:
     
     async def _calculate_stakeholder_contribution(self, stakeholder: Stakeholder,
                                                 performance_metrics: Dict) -> Decimal:
-        """Calculate stakeholder contribution score"""
+        """
+Calculate stakeholder contribution score"""
         # Base contribution based on stakeholder type
         type_weights = {
             StakeholderType.CREATOR: Decimal('1.0'),
@@ -711,12 +723,14 @@ class DistributionEngine:
         return base_score * performance_multiplier
     
     async def _store_distribution_rule(self, rule: DistributionRule) -> str:
-        """Store distribution rule in database"""
+        """
+Store distribution rule in database"""
         # Implementation would store in database
         return rule.rule_id
     
     async def _cache_distribution_rule(self, rule_id: str, rule: DistributionRule):
-        """Cache distribution rule"""
+        """
+Cache distribution rule"""
         cache_key = f"distribution_rule:{rule.content_id}"
         await self._save_to_cache(cache_key, rule.__dict__)
     
@@ -729,7 +743,8 @@ class DistributionEngine:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
@@ -743,15 +758,18 @@ class DistributionEngine:
         pass
     
     async def _get_distribution_calculation(self, distribution_id: str) -> Optional[DistributionCalculation]:
-        """Get distribution calculation from database"""
+        """
+Get distribution calculation from database"""
         return None
     
     async def _update_distribution_status(self, distribution_id: str, status: DistributionStatus):
-        """Update distribution status"""
+        """
+Update distribution status"""
         pass
     
     async def _get_stakeholder_info(self, stakeholder_id: str) -> Stakeholder:
-        """Get stakeholder information"""
+        """
+Get stakeholder information"""
         # Placeholder implementation
         return Stakeholder(
             stakeholder_id=stakeholder_id,
@@ -768,13 +786,16 @@ class DistributionEngine:
         return {'average_amount': 500.0, 'distribution_count': 12}
     
     async def _calculate_performance_impact(self, content_id: str) -> Dict:
-        """Calculate potential performance impact"""
+        """
+Calculate potential performance impact"""
         return {'potential_increase': 0.15}
     
     async def _analyze_stakeholder_performance(self, content_id: str) -> Dict:
-        """Analyze stakeholder performance"""
+        """
+Analyze stakeholder performance"""
         return {'underperforming_count': 1}
     
     async def _analyze_distribution_frequency(self, content_id: str) -> Dict:
-        """Analyze optimal distribution frequency"""
+        """
+Analyze optimal distribution frequency"""
         return {'optimal_frequency': 'weekly'}

@@ -11,6 +11,7 @@ Manages distributed transactions across multiple database systems:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import uuid
@@ -23,7 +24,9 @@ import json
 
 
 class TransactionState(Enum):
-    """Transaction states in distributed system"""
+    """
+Transaction states in distributed system"""
+
     ACTIVE = "active"
     PREPARING = "preparing" 
     PREPARED = "prepared"
@@ -36,6 +39,7 @@ class TransactionState(Enum):
 
 class TransactionIsolation(Enum):
     """Transaction isolation levels"""
+
     READ_UNCOMMITTED = "read_uncommitted"
     READ_COMMITTED = "read_committed"
     REPEATABLE_READ = "repeatable_read"
@@ -56,7 +60,8 @@ class TransactionOperation:
 
 @dataclass
 class DistributedTransaction:
-    """Distributed transaction across multiple databases"""
+    """
+Distributed transaction across multiple databases"""
     transaction_id: str
     tenant_id: Optional[str]
     state: TransactionState = TransactionState.ACTIVE
@@ -67,7 +72,8 @@ class DistributedTransaction:
     timeout: timedelta = field(default_factory=lambda: timedelta(minutes=5))
     
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""
+        """
+Check if transaction has expired"""
         return datetime.utcnow() - self.started_at > self.timeout
 
 
@@ -395,7 +401,8 @@ class TransactionManager:
             return True
     
     async def _release_transaction_locks(self, tx_id: str) -> None:
-        """Release all locks held by transaction"""
+        """
+Release all locks held by transaction"""
         # Release owned locks
         resources_to_release = [
             resource_id for resource_id, owner_id in self.lock_owners.items()
@@ -415,7 +422,8 @@ class TransactionManager:
             waiting_txs.discard(tx_id)
     
     async def _deadlock_detection_loop(self) -> None:
-        """Background task for deadlock detection"""
+        """
+Background task for deadlock detection"""
         while True:
             try:
                 await asyncio.sleep(self.deadlock_detection_interval)
@@ -575,7 +583,8 @@ class TransactionContext:
                      table_collection: str,
                      data: Dict[str, Any],
                      compensation_data: Optional[Dict[str, Any]] = None) -> str:
-        """Execute operation within the transaction"""
+        """
+Execute operation within the transaction"""
         
         operation = TransactionOperation(
             operation_id=str(uuid.uuid4()),
@@ -595,7 +604,8 @@ class TransactionContext:
                     database_type: str,
                     table_collection: str,
                     data: Dict[str, Any]) -> str:
-        """Insert operation within transaction"""
+        """
+Insert operation within transaction"""
         # Compensation for insert is delete
         compensation = {
             "type": "delete",

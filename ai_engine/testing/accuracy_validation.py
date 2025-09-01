@@ -27,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AccuracyThreshold(str, Enum):
-    """Production accuracy thresholds"""
+    """
+Production accuracy thresholds"""
+
     PRODUCTION = "0.99"  # >99% requirement
     STAGING = "0.95"     # 95% for staging
     DEVELOPMENT = "0.90"  # 90% for development
@@ -35,6 +37,7 @@ class AccuracyThreshold(str, Enum):
 
 class ValidationStatus(str, Enum):
     """Validation status enumeration"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -58,7 +61,8 @@ class AccuracyMetrics:
 
 @dataclass
 class ValidationResult:
-    """Model validation result"""
+    """
+Model validation result"""
     model_id: str
     validation_id: str
     status: ValidationStatus
@@ -72,7 +76,8 @@ class ValidationResult:
 
 
 class ProductionAccuracyValidator:
-    """Production-grade accuracy validator for AI/ML models"""
+    """
+Production-grade accuracy validator for AI/ML models"""
     
     def __init__(self, min_accuracy_threshold: float = 0.99):
         """
@@ -294,7 +299,8 @@ class ProductionAccuracyValidator:
         return self.validation_history.get(model_id, [])
     
     def get_model_accuracy_trend(self, model_id: str) -> Dict[str, Any]:
-        """Get accuracy trend analysis for a model"""
+        """
+Get accuracy trend analysis for a model"""
         history = self.get_validation_history(model_id)
         
         if not history:

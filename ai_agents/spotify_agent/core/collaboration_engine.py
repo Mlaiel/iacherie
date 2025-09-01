@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -51,7 +52,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
@@ -69,6 +72,7 @@ class CreatorType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations"""
+
     MUSIC_PRODUCTION = "music_production"
     SONGWRITING = "songwriting"
     REMIX_PROJECT = "remix_project"
@@ -82,6 +86,7 @@ class CollaborationType(Enum):
 
 class ProjectStatus(Enum):
     """Status of collaboration projects"""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
@@ -93,6 +98,7 @@ class ProjectStatus(Enum):
 
 class MatchingCriteria(Enum):
     """Criteria for creator matching"""
+
     GENRE_COMPATIBILITY = "genre_compatibility"
     SKILL_COMPLEMENTARITY = "skill_complementarity"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -143,7 +149,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProject:
-    """Collaboration project management"""
+    """
+Collaboration project management"""
     project_id: str
     project_name: str
     description: str
@@ -165,7 +172,8 @@ class CollaborationProject:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class CollaborationEngine:
-    """Ultra-advanced creator collaboration and matching system"""
+    """
+Ultra-advanced creator collaboration and matching system"""
     
     def __init__(self):
         self.cache_manager = CacheManager(prefix="collaboration_engine")

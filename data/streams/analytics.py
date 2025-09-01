@@ -5,8 +5,9 @@ Advanced analytics engine for real-time stream performance analysis,
 trend detection, and predictive insights for content optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -32,7 +33,9 @@ settings = get_settings()
 
 
 class AnalyticsMetric(str, Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
@@ -45,6 +48,7 @@ class AnalyticsMetric(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction indicators"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -53,6 +57,7 @@ class TrendDirection(str, Enum):
 
 class AlertType(str, Enum):
     """Analytics alert types"""
+
     ANOMALY = "anomaly"
     THRESHOLD = "threshold"
     TREND = "trend"
@@ -69,7 +74,8 @@ class MetricValue:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
+    """
+Trend analysis result"""
     metric: AnalyticsMetric
     direction: TrendDirection
     slope: float
@@ -82,7 +88,8 @@ class TrendAnalysis:
 
 @dataclass
 class AnomalyDetection:
-    """Anomaly detection result"""
+    """
+Anomaly detection result"""
     timestamp: datetime
     metric: AnalyticsMetric
     value: float
@@ -93,7 +100,8 @@ class AnomalyDetection:
 
 
 class StreamMetrics(BaseModel):
-    """Stream performance metrics"""
+    """
+Stream performance metrics"""
     stream_id: str = Field(description="Stream identifier")
     total_events: int = Field(default=0, description="Total events processed")
     events_per_second: float = Field(default=0.0, description="Current throughput")
@@ -131,7 +139,8 @@ class StreamAnalytics:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream analytics engine"""
+        """
+Initialize stream analytics engine"""
         try:
             # Start background analytics tasks
             asyncio.create_task(self._trend_analyzer())
@@ -722,7 +731,8 @@ class StreamAnalytics:
         self.analytics_callbacks.append(callback)
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown analytics engine"""
+        """
+Gracefully shutdown analytics engine"""
         try:
             self._shutdown_event.set()
             logger.info("StreamAnalytics shutdown completed")

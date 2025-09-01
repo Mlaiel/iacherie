@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security levels for content protection"""
+    """
+Security levels for content protection"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -50,6 +53,7 @@ class SecurityLevel(Enum):
 
 class AccessType(Enum):
     """Types of access operations"""
+
     READ = "read"
     WRITE = "write"
     DELETE = "delete"
@@ -60,6 +64,7 @@ class AccessType(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -102,7 +107,8 @@ class UserCredentials:
 
 @dataclass
 class AccessToken:
-    """Access token structure"""
+    """
+Access token structure"""
     token_id: str
     user_id: str
     token_type: str  # "access", "refresh", "api"
@@ -143,7 +149,8 @@ class SecurityThreat:
 
 
 class EncryptionManager:
-    """Advanced encryption and decryption management"""
+    """
+Advanced encryption and decryption management"""
     
     def __init__(self, config: SecurityConfig):
         self.config = config
@@ -152,7 +159,8 @@ class EncryptionManager:
         self.cipher_suite = None
         
     async def initialize(self):
-        """Initialize encryption manager"""
+        """
+Initialize encryption manager"""
         try:
             # Generate or load master key
             self.master_key = self._generate_master_key()
@@ -295,7 +303,8 @@ class AccessControlManager:
         self._setup_default_roles()
         
     def _setup_default_roles(self):
-        """Setup default roles and permissions"""
+        """
+Setup default roles and permissions"""
         self.role_permissions = {
             "admin": [
                 AccessType.READ, AccessType.WRITE, AccessType.DELETE,
@@ -389,7 +398,8 @@ class AccessControlManager:
         ip_address: str = None,
         mfa_token: str = None
     ) -> Optional[str]:
-        """Authenticate user and return access token"""
+        """
+Authenticate user and return access token"""
         try:
             # Find user by username
             user_creds = None
@@ -457,7 +467,8 @@ class AccessControlManager:
             return False
     
     async def _generate_access_token(self, user_creds: UserCredentials) -> str:
-        """Generate JWT access token"""
+        """
+Generate JWT access token"""
         try:
             token_id = secrets.token_urlsafe(16)
             expires_at = datetime.now(timezone.utc) + timedelta(hours=self.config.jwt_expiration_hours)
@@ -588,7 +599,8 @@ class AuditLogger:
         details: Dict[str, Any] = None,
         security_level: SecurityLevel = SecurityLevel.INTERNAL
     ):
-        """Log user action for audit trail"""
+        """
+Log user action for audit trail"""
         try:
             log_entry = AuditLogEntry(
                 log_id=secrets.token_urlsafe(16),
@@ -682,7 +694,8 @@ class ThreatDetector:
         self._setup_threat_patterns()
         
     def _setup_threat_patterns(self):
-        """Setup threat detection patterns"""
+        """
+Setup threat detection patterns"""
         self.threat_patterns = {
             "brute_force": {
                 "pattern": "multiple_failed_logins",

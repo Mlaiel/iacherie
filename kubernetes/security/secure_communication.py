@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import asyncio
 import ssl
 import json
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SecureMessage:
-    """Secure message container"""
+    """
+Secure message container"""
     id: str
     sender: str
     recipient: str
@@ -48,7 +50,8 @@ class SecureMessage:
 
 @dataclass
 class ChannelConfig:
-    """Secure channel configuration"""
+    """
+Secure channel configuration"""
     channel_id: str
     encryption_key: bytes
     signing_key: bytes
@@ -301,6 +304,7 @@ class ProtocolValidator:
     """
     Protocol validation and security enforcement
     """
+
     
     ALLOWED_PROTOCOLS = ["https", "wss", "grpc", "amqp"]
     SECURE_CIPHER_SUITES = [
@@ -723,7 +727,8 @@ class SecureChannelManager:
         """
         try:
             async def handle_websocket(websocket, path):
-                """Handle WebSocket connection"""
+                """
+Handle WebSocket connection"""
                 try:
                     # Authenticate connection
                     auth_message = await websocket.recv()
@@ -775,7 +780,8 @@ class SecureChannelManager:
         return token is not None and len(token) > 10
     
     async def _handle_websocket_message(self, client_id: str, message: str):
-        """Handle incoming WebSocket message"""
+        """
+Handle incoming WebSocket message"""
         try:
             data = json.loads(message)
             message_type = data.get('type')

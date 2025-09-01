@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -31,7 +32,9 @@ from ..exceptions import ArchivalError
 
 
 class ArchivalJobStatus(Enum):
-    """Archival job status enumeration"""
+    """
+Archival job status enumeration"""
+
     QUEUED = "queued"
     PROCESSING = "processing"
     ANALYZING = "analyzing"
@@ -809,32 +812,38 @@ class ContentArchiver:
         return content_data
     
     async def _optimize_video_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Optimize video content for archival"""
+        """
+Optimize video content for archival"""
         # In a real implementation, this would apply video compression/optimization
         return content_data
     
     async def _optimize_image_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Optimize image content for archival"""
+        """
+Optimize image content for archival"""
         # In a real implementation, this would apply image compression/optimization
         return content_data
     
     async def _process_text_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Process text content for archival"""
+        """
+Process text content for archival"""
         # In a real implementation, this would apply text processing/normalization
         return content_data
     
     async def _process_document_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Process document content for archival"""
+        """
+Process document content for archival"""
         # In a real implementation, this would extract text and optimize document
         return content_data
     
     async def _process_composite_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Process composite content for archival"""
+        """
+Process composite content for archival"""
         # In a real implementation, this would handle multi-modal content
         return content_data
     
     def _update_metrics(self, content_category: str, processing_time: float, archival_result) -> None:
-        """Update processing metrics"""
+        """
+Update processing metrics"""
         self.metrics["jobs_processed"] += 1
         self.metrics["jobs_completed"] += 1
         self.metrics["total_content_archived"] += archival_result.original_size
@@ -870,7 +879,8 @@ class ContentArchiver:
         return self.active_jobs.get(job_id)
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel an active archival job"""
+        """
+Cancel an active archival job"""
         if job_id in self.active_jobs:
             job = self.active_jobs[job_id]
             job.job_status = ArchivalJobStatus.CANCELLED

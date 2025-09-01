@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import time
 import json
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics time frame options"""
+    """
+Analytics time frame options"""
+
     REAL_TIME = "real_time"           # Last few minutes
     HOURLY = "hourly"                 # Last hour
     DAILY = "daily"                   # Last 24 hours
@@ -42,6 +45,7 @@ class AnalyticsTimeframe(Enum):
 
 class AnalyticsMetricType(Enum):
     """Types of analytics metrics"""
+
     COUNT = "count"                   # Simple count
     RATE = "rate"                     # Rate over time
     PERCENTAGE = "percentage"         # Percentage value
@@ -53,6 +57,7 @@ class AnalyticsMetricType(Enum):
 
 class InsightSeverity(Enum):
     """Severity levels for insights"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -74,7 +79,8 @@ class AnalyticsDataPoint:
             self.timestamp = self.timestamp.replace(tzinfo=timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'timestamp': self.timestamp.isoformat(),
             'metric_name': self.metric_name,
@@ -86,7 +92,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class AnalyticsResult:
-    """Analytics calculation result"""
+    """
+Analytics calculation result"""
     metric_name: str
     timeframe: AnalyticsTimeframe
     metric_type: AnalyticsMetricType
@@ -97,7 +104,8 @@ class AnalyticsResult:
     trend: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'metric_name': self.metric_name,
             'timeframe': self.timeframe.value,
@@ -112,7 +120,8 @@ class AnalyticsResult:
 
 @dataclass
 class BusinessInsight:
-    """Business insight generated from analytics"""
+    """
+Business insight generated from analytics"""
     title: str
     description: str
     severity: InsightSeverity
@@ -124,7 +133,8 @@ class BusinessInsight:
     impact_score: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'title': self.title,
             'description': self.description,
@@ -153,7 +163,8 @@ class RealTimeAnalytics:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize real-time analytics"""
+        """
+Initialize real-time analytics"""
         self.config = config or {}
         
         # Configuration
@@ -183,7 +194,8 @@ class RealTimeAnalytics:
         self.last_cache_update = datetime.now(timezone.utc)
     
     async def start_processing(self):
-        """Start real-time processing"""
+        """
+Start real-time processing"""
         try:
             logger.info("Starting real-time analytics processing")
             self.is_processing = True
@@ -315,7 +327,8 @@ class RealTimeAnalytics:
     
     async def _process_time_window(self, time_window: datetime, 
                                  data_points: List[AnalyticsDataPoint]) -> List[AnalyticsResult]:
-        """Process data for a specific time window"""
+        """
+Process data for a specific time window"""
         results = []
         
         try:
@@ -512,11 +525,13 @@ class RealTimeAnalytics:
         self.event_callbacks[metric_name].append(callback)
     
     def get_live_metrics(self) -> Dict[str, Any]:
-        """Get current live metrics"""
+        """
+Get current live metrics"""
         return self.metrics_cache.copy()
     
     def get_metric_value(self, metric_name: str, dimensions: Optional[Dict[str, str]] = None) -> float:
-        """Get current value for a specific metric"""
+        """
+Get current value for a specific metric"""
         metric_key = metric_name
         if dimensions:
             dimension_str = "_".join(f"{k}:{v}" for k, v in dimensions.items())
@@ -606,7 +621,8 @@ class HistoricalAnalytics:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize historical analytics"""
+        """
+Initialize historical analytics"""
         self.config = config or {}
         
         # Storage configuration
@@ -625,7 +641,8 @@ class HistoricalAnalytics:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     def store_data_point(self, data_point: AnalyticsDataPoint):
-        """Store a data point for historical analysis"""
+        """
+Store a data point for historical analysis"""
         try:
             metric_key = data_point.metric_name
             self.historical_data[metric_key].append(data_point)
@@ -697,7 +714,8 @@ class HistoricalAnalytics:
     
     async def _perform_trend_analysis(self, data_points: List[AnalyticsDataPoint], 
                                     timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Perform detailed trend analysis"""
+        """
+Perform detailed trend analysis"""
         try:
             # Sort by timestamp
             sorted_data = sorted(data_points, key=lambda x: x.timestamp)
@@ -818,7 +836,8 @@ class HistoricalAnalytics:
         return numerator / denominator if denominator != 0 else 0
     
     def _calculate_moving_average(self, values: List[float], window: int) -> List[float]:
-        """Calculate moving average"""
+        """
+Calculate moving average"""
         if len(values) < window:
             return []
         
@@ -830,7 +849,8 @@ class HistoricalAnalytics:
         return moving_averages
     
     def _calculate_cagr(self, values: List[float], timestamps: List[datetime]) -> Optional[float]:
-        """Calculate Compound Annual Growth Rate"""
+        """
+Calculate Compound Annual Growth Rate"""
         if len(values) < 2 or values[0] == 0:
             return None
         
@@ -852,7 +872,8 @@ class HistoricalAnalytics:
     
     async def _detect_seasonal_patterns(self, values: List[float], 
                                       timestamps: List[datetime]) -> Dict[str, Any]:
-        """Detect seasonal patterns in data"""
+        """
+Detect seasonal patterns in data"""
         try:
             patterns = {
                 'hourly_pattern': {},
@@ -982,7 +1003,8 @@ class PredictiveAnalytics:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize predictive analytics"""
+        """
+Initialize predictive analytics"""
         self.config = config or {}
         
         # Prediction configuration
@@ -1000,7 +1022,8 @@ class PredictiveAnalytics:
     async def predict_metric_values(self, metric_name: str, 
                                    historical_data: List[AnalyticsDataPoint],
                                    hours_ahead: int = 24) -> Dict[str, Any]:
-        """Predict future values for a metric"""
+        """
+Predict future values for a metric"""
         try:
             if len(historical_data) < self.min_data_points:
                 return {'error': f'Insufficient data points. Need at least {self.min_data_points}'}
@@ -1080,7 +1103,8 @@ class PredictiveAnalytics:
     
     async def detect_anomaly_predictions(self, metric_name: str,
                                        historical_data: List[AnalyticsDataPoint]) -> Dict[str, Any]:
-        """Predict potential anomalies"""
+        """
+Predict potential anomalies"""
         try:
             if len(historical_data) < 20:
                 return {'error': 'Insufficient data for anomaly prediction'}
@@ -1146,7 +1170,8 @@ class ContentAnalytics(RealTimeAnalytics):
     """Specialized analytics for content performance"""
     
     async def analyze_content_engagement(self, content_id: str) -> Dict[str, Any]:
-        """Analyze engagement metrics for specific content"""
+        """
+Analyze engagement metrics for specific content"""
         engagement_metrics = [
             f"content_views_content_id:{content_id}",
             f"content_likes_content_id:{content_id}",
@@ -1189,10 +1214,12 @@ class ContentAnalytics(RealTimeAnalytics):
 
 
 class UserAnalytics(RealTimeAnalytics):
-    """Specialized analytics for user behavior"""
+    """
+Specialized analytics for user behavior"""
     
     async def analyze_user_journey(self, user_id: str) -> Dict[str, Any]:
-        """Analyze user journey and behavior patterns"""
+        """
+Analyze user journey and behavior patterns"""
         user_metrics = {
             k: v for k, v in self.live_counters.items()
             if f"user_id:{user_id}" in k
@@ -1223,7 +1250,8 @@ class PerformanceAnalytics(RealTimeAnalytics):
     """Specialized analytics for system performance"""
     
     async def analyze_system_health(self) -> Dict[str, Any]:
-        """Analyze overall system health"""
+        """
+Analyze overall system health"""
         performance_metrics = {
             k: v for k, v in self.live_counters.items()
             if any(perf_key in k.lower() for perf_key in ['response_time', 'latency', 'cpu', 'memory', 'error'])

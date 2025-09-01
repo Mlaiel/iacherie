@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,18 +13,22 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test helpers and mock classes for engines testing.
+"""
+Test helpers and mock classes for engines testing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Any, Dict, Optional, List
 from dataclasses import dataclass
 from enum import Enum
 from unittest.mock import Mock
 
 class AlertLevel(Enum):
-    """Mock enum pour AlertLevel"""
+    """
+Mock enum pour AlertLevel"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -35,21 +40,25 @@ class TestEngineValidator:
     """Mock test engine validator for testing purposes."""
     
     async def validate_engine_initialization(self, engine: Any) -> bool:
-        """Validate engine initialization."""
+        """
+Validate engine initialization."""
         return True
     
     async def validate_performance_metrics(self, metrics: Dict[str, Any]) -> bool:
-        """Validate performance metrics."""
+        """
+Validate performance metrics."""
         return True
     
     async def validate_content_processing(self, result: Any) -> bool:
-        """Validate content processing results."""
+        """
+Validate content processing results."""
         return True
 
 
 @dataclass
 class PerformanceTracker:
-    """Mock performance tracker for testing purposes."""
+    """
+Mock performance tracker for testing purposes."""
     
     def __init__(self):
         self.metrics = {}
@@ -57,22 +66,27 @@ class PerformanceTracker:
         self.end_time = None
     
     def start_tracking(self, operation: str):
-        """Start tracking an operation."""
+        """
+Start tracking an operation."""
         import time
         self.start_time = time.time()
     
     def stop_tracking(self, operation: str):
-        """Stop tracking an operation."""
+        """
+Stop tracking an operation."""
         import time
         self.end_time = time.time()
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get collected metrics."""
+        """
+Get collected metrics."""
         return self.metrics
 
 
 class ConfigSource:
-    """Mock configuration source."""
+    """
+Mock configuration source."""
+
     FILE = "file"
     ENV = "environment"
     REMOTE = "remote"
@@ -81,6 +95,7 @@ class ConfigSource:
 # Mock data types for multimodal testing
 class ModalityType:
     """Mock modality types."""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -90,6 +105,7 @@ class ModalityType:
 
 class SyncMode:
     """Mock sync modes."""
+
     SYNCHRONIZED = "synchronized"
     ASYNCHRONOUS = "asynchronous"
     ADAPTIVE = "adaptive"
@@ -97,6 +113,7 @@ class SyncMode:
 
 class FusionStrategy:
     """Mock fusion strategies."""
+
     EARLY_FUSION = "early_fusion"
     LATE_FUSION = "late_fusion"
     HYBRID_FUSION = "hybrid_fusion"
@@ -104,6 +121,7 @@ class FusionStrategy:
 
 class ContentAlignment:
     """Mock content alignment."""
+
     TEMPORAL = "temporal"
     SEMANTIC = "semantic"
     STRUCTURAL = "structural"
@@ -111,6 +129,7 @@ class ContentAlignment:
 
 class ImageFormat:
     """Mock image formats."""
+
     JPEG = "jpeg"
     PNG = "png"
     WebP = "webp"
@@ -119,6 +138,7 @@ class ImageFormat:
 
 class ImageQuality:
     """Mock image quality levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -127,6 +147,7 @@ class ImageQuality:
 
 class ColorSpace:
     """Mock color spaces."""
+
     RGB = "rgb"
     CMYK = "cmyk"
     HSV = "hsv"
@@ -134,6 +155,7 @@ class ColorSpace:
 
 class FilterType:
     """Mock filter types."""
+
     BLUR = "blur"
     SHARPEN = "sharpen"
     NOISE_REDUCTION = "noise_reduction"
@@ -157,7 +179,8 @@ class CacheStats:
 
 @dataclass
 class MetricAlert:
-    """Mock class pour MetricAlert"""
+    """
+Mock class pour MetricAlert"""
     metric_name: str
     current_value: float
     threshold: float
@@ -245,30 +268,35 @@ class CacheConfig:
 
 # Mock exceptions
 class ConfigValidationError(Exception):
-    """Mock configuration validation error."""
+    """
+Mock configuration validation error."""
     pass
 
 
 class ConfigLoadError(Exception):
-    """Mock configuration load error."""
+    """
+Mock configuration load error."""
     pass
 
 
 class ConfigSaveError(Exception):
-    """Mock configuration save error."""
+    """
+Mock configuration save error."""
     pass
 
 
 # Mock managers
 class SettingsValidator:
-    """Mock settings validator."""
+    """
+Mock settings validator."""
     
     def validate(self, config: Dict[str, Any]) -> bool:
         return True
 
 
 class EnvironmentManager:
-    """Mock environment manager."""
+    """
+Mock environment manager."""
     
     def get_environment(self) -> str:
         return "development"
@@ -292,7 +320,8 @@ class ConfigWatcher:
 
 
 class ConfigMerger:
-    """Mock configuration merger."""
+    """
+Mock configuration merger."""
     
     def merge_configs(self, *configs) -> Dict[str, Any]:
         return {}
@@ -301,7 +330,8 @@ class ConfigMerger:
 # Additional mock classes for optimization tests
 @dataclass
 class ResourceMetrics:
-    """Mock resource metrics."""
+    """
+Mock resource metrics."""
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
@@ -310,7 +340,8 @@ class ResourceMetrics:
 
 @dataclass
 class ResourceAlert:
-    """Mock resource alert."""
+    """
+Mock resource alert."""
     resource_type: str
     threshold: float
     current_value: float
@@ -326,7 +357,8 @@ class ProcessingOptimizer:
 
 @dataclass
 class OptimizationResult:
-    """Mock optimization result."""
+    """
+Mock optimization result."""
     success: bool = True
     improvement: float = 0.0
     metrics: Dict[str, Any] = None
@@ -337,63 +369,72 @@ class OptimizationResult:
 
 
 class MemoryOptimizer:
-    """Mock memory optimizer."""
+    """
+Mock memory optimizer."""
     
     def optimize_memory(self):
         pass
 
 
 class CPUOptimizer:
-    """Mock CPU optimizer."""
+    """
+Mock CPU optimizer."""
     
     def optimize_cpu(self):
         pass
 
 
 class IOOptimizer:
-    """Mock I/O optimizer."""
+    """
+Mock I/O optimizer."""
     
     def optimize_io(self):
         pass
 
 
 class NetworkOptimizer:
-    """Mock network optimizer."""
+    """
+Mock network optimizer."""
     
     def optimize_network(self):
         pass
 
 
 class DatabaseOptimizer:
-    """Mock database optimizer."""
+    """
+Mock database optimizer."""
     
     def optimize_queries(self):
         pass
 
 
 class QueryOptimizer:
-    """Mock query optimizer."""
+    """
+Mock query optimizer."""
     
     def optimize_query(self, query: str) -> str:
         return query
 
 
 class ConnectionPoolManager:
-    """Mock connection pool manager."""
+    """
+Mock connection pool manager."""
     
     def get_connection(self):
         return None
 
 
 class AsyncTaskOptimizer:
-    """Mock async task optimizer."""
+    """
+Mock async task optimizer."""
     
     async def optimize_task(self, task: Any) -> Any:
         return task
 
 
 class TaskQueue:
-    """Mock task queue."""
+    """
+Mock task queue."""
     
     def __init__(self):
         self.tasks = []
@@ -406,14 +447,17 @@ class TaskQueue:
 
 
 class TaskPriority:
-    """Mock task priority."""
+    """
+Mock task priority."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
 
 
 class ProfilerManager:
-    """Mock profiler manager."""
+    """
+Mock profiler manager."""
     
     def start_profiling(self):
         pass
@@ -423,14 +467,16 @@ class ProfilerManager:
 
 
 class PerformanceProfiler:
-    """Mock performance profiler."""
+    """
+Mock performance profiler."""
     
     def profile(self, func):
         return func
 
 
 class BenchmarkManager:
-    """Mock benchmark manager."""
+    """
+Mock benchmark manager."""
     
     def run_benchmark(self) -> Dict[str, Any]:
         return {"score": 100}
@@ -459,7 +505,8 @@ class SmartPreloader:
 
 
 class CompressionManager:
-    """Mock compression manager."""
+    """
+Mock compression manager."""
     
     def compress(self, data: Any) -> Any:
         return data
@@ -469,7 +516,8 @@ class CompressionManager:
 
 
 class BatchProcessor:
-    """Mock batch processor."""
+    """
+Mock batch processor."""
     
     def process_batch(self, items: List[Any]) -> List[Any]:
         return items
@@ -477,7 +525,9 @@ class BatchProcessor:
 
 # Mock protection engine enums and classes
 class ProtectionLevel:
-    """Mock protection levels."""
+    """
+Mock protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENTERPRISE = "enterprise"
@@ -486,6 +536,7 @@ class ProtectionLevel:
 
 class WatermarkType:
     """Mock watermark types."""
+
     INVISIBLE = "invisible"
     VISIBLE = "visible"
     ROBUST = "robust"
@@ -494,6 +545,7 @@ class WatermarkType:
 
 class DRMType:
     """Mock DRM types."""
+
     WIDEVINE = "widevine"
     PLAYREADY = "playready"
     FAIRPLAY = "fairplay"
@@ -502,6 +554,7 @@ class DRMType:
 
 class EncryptionStandard:
     """Mock encryption standards."""
+
     AES_128 = "aes_128"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
@@ -517,6 +570,7 @@ DRMEngine = None
 # Video engine mock classes
 class VideoCodec:
     """Mock video codecs."""
+
     H264 = "h264"
     H265 = "h265"
     VP9 = "vp9"
@@ -525,6 +579,7 @@ class VideoCodec:
 
 class ResolutionStandard:
     """Mock resolution standards."""
+
     HD_720P = "720p"
     FULL_HD_1080P = "1080p"
     QUAD_HD_1440P = "1440p"

@@ -5,8 +5,9 @@ Advanced legal compliance monitoring and validation system
 for licensing agreements and regulatory requirements.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, date, timedelta
 from uuid import UUID
@@ -28,7 +29,9 @@ settings = get_settings()
 
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""
+    """
+Compliance severity levels"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -37,6 +40,7 @@ class ComplianceLevel(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,7 +59,8 @@ class ComplianceEngine:
         legal_validator: LegalValidator = None,
         territory_validator: TerritoryValidator = None
     ):
-        """Initialize compliance engine with validators"""
+        """
+Initialize compliance engine with validators"""
         self.repository = repository or LicensingRepository()
         self.legal_validator = legal_validator or LegalValidator()
         self.territory_validator = territory_validator or TerritoryValidator()

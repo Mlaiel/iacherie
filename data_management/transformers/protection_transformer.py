@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import asyncio
 import logging
 import time
@@ -65,7 +66,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection du contenu"""
+    """
+Niveaux de protection du contenu"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -73,6 +76,7 @@ class ProtectionLevel(Enum):
 
 class WatermarkType(Enum):
     """Types de watermarks supportés"""
+
     VISIBLE_TEXT = "visible_text"
     VISIBLE_LOGO = "visible_logo"
     INVISIBLE_LSB = "invisible_lsb"
@@ -83,6 +87,7 @@ class WatermarkType(Enum):
 
 class EncryptionType(Enum):
     """Types de chiffrement supportés"""
+
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     HYBRID = "hybrid"
@@ -90,6 +95,7 @@ class EncryptionType(Enum):
 
 class LicenseType(Enum):
     """Types de licences de contenu"""
+
     COPYRIGHT = "copyright"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -111,7 +117,8 @@ class ProtectionConfig:
 
 @dataclass
 class WatermarkConfiguration:
-    """Configuration de watermark"""
+    """
+Configuration de watermark"""
     watermark_type: WatermarkType
     visibility: float = 0.3  # 0.0 = invisible, 1.0 = fully visible
     position: str = "bottom_right"  # top_left, top_right, bottom_left, bottom_right, center
@@ -134,7 +141,8 @@ class EncryptionConfiguration:
 
 @dataclass
 class LicenseConfiguration:
-    """Configuration de licence"""
+    """
+Configuration de licence"""
     license_type: LicenseType
     owner_name: str
     owner_email: str
@@ -147,7 +155,8 @@ class LicenseConfiguration:
 
 @dataclass
 class ContentProtectionResult:
-    """Résultat de protection de contenu"""
+    """
+Résultat de protection de contenu"""
     success: bool
     original_path: str
     protected_path: Optional[str]
@@ -163,7 +172,8 @@ class ContentProtectionResult:
     warnings: List[str]
 
 class AudioWatermarkTransformer:
-    """Transformateur de watermarks audio professionnel"""
+    """
+Transformateur de watermarks audio professionnel"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -175,7 +185,8 @@ class AudioWatermarkTransformer:
         watermark_config: WatermarkConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Applique un watermark inaudible dans l'audio"""
+        """
+Applique un watermark inaudible dans l'audio"""
         
         try:
             # Chargement audio
@@ -259,7 +270,8 @@ class AudioWatermarkTransformer:
         return watermark_signal * envelope
 
 class ImageWatermarkTransformer:
-    """Transformateur de watermarks image professionnel"""
+    """
+Transformateur de watermarks image professionnel"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -271,7 +283,8 @@ class ImageWatermarkTransformer:
         watermark_config: WatermarkConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Applique un watermark visible sur l'image"""
+        """
+Applique un watermark visible sur l'image"""
         
         try:
             # Chargement de l'image
@@ -374,7 +387,7 @@ class ImageWatermarkTransformer:
             font = ImageFont.load_default()
         
         # Texte du watermark
-        text = config.text or f"© {datetime.now().year}"
+        text = config.text or f"(c) {datetime.now().year}"
         
         # Calcul de la taille du texte
         bbox = draw.textbbox((0, 0), text, font=font)
@@ -555,7 +568,8 @@ class ImageWatermarkTransformer:
         return positions.get(position, positions['bottom_right'])
     
     def _parse_color(self, color_str: str, visibility: float) -> Tuple[int, int, int, int]:
-        """Parse une couleur et applique la visibilité"""
+        """
+Parse une couleur et applique la visibilité"""
         
         colors = {
             'white': (255, 255, 255),
@@ -574,7 +588,8 @@ class ImageWatermarkTransformer:
         return rgb + (alpha,)
     
     def _generate_watermark_pattern(self, text: str) -> List[float]:
-        """Génère un pattern de watermark basé sur le texte"""
+        """
+Génère un pattern de watermark basé sur le texte"""
         
         # Hash du texte pour générer un pattern reproductible
         text_hash = hashlib.sha256(text.encode()).hexdigest()
@@ -589,7 +604,8 @@ class ImageWatermarkTransformer:
         return pattern
 
 class ContentEncryptionTransformer:
-    """Transformateur de chiffrement de contenu professionnel"""
+    """
+Transformateur de chiffrement de contenu professionnel"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -601,7 +617,8 @@ class ContentEncryptionTransformer:
         encryption_config: EncryptionConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Chiffre le contenu selon la configuration"""
+        """
+Chiffre le contenu selon la configuration"""
         
         try:
             # Lecture du contenu
@@ -692,7 +709,8 @@ class ContentEncryptionTransformer:
         data: bytes,
         config: EncryptionConfiguration
     ) -> Dict[str, Any]:
-        """Chiffrement hybride (AES + RSA)"""
+        """
+Chiffrement hybride (AES + RSA)"""
         
         from cryptography.hazmat.primitives.asymmetric import rsa, padding
         from cryptography.hazmat.primitives import serialization
@@ -749,7 +767,8 @@ class ContentEncryptionTransformer:
         }
 
 class ContentLicenseTransformer:
-    """Transformateur de licences de contenu professionnel"""
+    """
+Transformateur de licences de contenu professionnel"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -760,7 +779,8 @@ class ContentLicenseTransformer:
         license_config: LicenseConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Intègre les informations de licence dans le contenu"""
+        """
+Intègre les informations de licence dans le contenu"""
         
         try:
             # Génération des métadonnées de licence
@@ -1039,7 +1059,8 @@ class ContentProtectionTransformer:
         protection_config: ProtectionConfig,
         output_path: Optional[str] = None
     ) -> ContentProtectionResult:
-        """Applique une protection complète au contenu"""
+        """
+Applique une protection complète au contenu"""
         
         start_time = time.time()
         protection_id = f"PROT_{uuid.uuid4().hex[:12].upper()}"
@@ -1256,7 +1277,8 @@ class ContentProtectionTransformer:
             return 'document'
     
     def _generate_output_path(self, content_path: str, protection_id: str) -> str:
-        """Génère le chemin de sortie protégé"""
+        """
+Génère le chemin de sortie protégé"""
         
         path = Path(content_path)
         return str(path.parent / f"{path.stem}_protected_{protection_id}{path.suffix}")
@@ -1298,7 +1320,8 @@ class ContentProtectionTransformer:
         content_path: str,
         custom_settings: Optional[Dict[str, Any]] = None
     ) -> ProtectionConfig:
-        """Génère une configuration de protection optimale pour le type de créateur"""
+        """
+Génère une configuration de protection optimale pour le type de créateur"""
         
         # Configuration de base par type de créateur
         preset = self.creator_protection_presets.get(creator_type, self.creator_protection_presets['influencer'])
@@ -1311,7 +1334,7 @@ class ContentProtectionTransformer:
             if content_type == 'image':
                 watermark_config = WatermarkConfiguration(
                     watermark_type=WatermarkType.VISIBLE_TEXT,
-                    text=f"© {creator_type.title()}",
+                    text=f"(c) {creator_type.title()}",
                     position="bottom_right",
                     visibility=0.7,
                     color="white"

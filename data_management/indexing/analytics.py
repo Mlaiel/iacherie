@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import pandas as pd
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentAnalytics:
-    """Content analytics structure"""
+    """
+Content analytics structure"""
     total_content_indexed: int
     content_by_type: Dict[str, int]
     content_by_creator: Dict[str, int]
@@ -52,7 +54,8 @@ class ContentAnalytics:
 
 @dataclass
 class SearchAnalytics:
-    """Search analytics structure"""
+    """
+Search analytics structure"""
     total_searches: int
     search_types: Dict[str, int]  # text, vector, hybrid
     popular_queries: List[Tuple[str, int]]
@@ -65,7 +68,8 @@ class SearchAnalytics:
 
 @dataclass
 class PerformanceAnalytics:
-    """Performance analytics structure"""
+    """
+Performance analytics structure"""
     processing_throughput: Dict[str, float]  # items per minute by type
     resource_utilization: Dict[str, float]  # CPU, memory, GPU, storage
     bottlenecks_identified: List[str]
@@ -76,7 +80,8 @@ class PerformanceAnalytics:
 
 @dataclass
 class BusinessInsights:
-    """Business intelligence insights"""
+    """
+Business intelligence insights"""
     creator_engagement: Dict[str, Any]
     content_performance: Dict[str, Any]
     revenue_potential: Dict[str, float]
@@ -86,7 +91,8 @@ class BusinessInsights:
 
 
 class ContentAnalyticsEngine:
-    """Analyzes content indexing patterns and trends"""
+    """
+Analyzes content indexing patterns and trends"""
     
     def __init__(self, redis_url: str):
         self.redis_url = redis_url
@@ -94,7 +100,8 @@ class ContentAnalyticsEngine:
         self.analytics_cache = {}
         
     async def initialize(self):
-        """Initialize analytics engine"""
+        """
+Initialize analytics engine"""
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -293,7 +300,8 @@ class ContentAnalyticsEngine:
     async def generate_trend_analysis(
         self, days_back: int = 30
     ) -> Dict[str, Any]:
-        """Generate trend analysis for content indexing"""
+        """
+Generate trend analysis for content indexing"""
         try:
             end_date = datetime.now(timezone.utc)
             start_date = end_date - timedelta(days=days_back)
@@ -399,7 +407,8 @@ class SearchAnalyticsEngine:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize search analytics engine"""
+        """
+Initialize search analytics engine"""
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()

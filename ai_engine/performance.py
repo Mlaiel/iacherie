@@ -3,13 +3,14 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Advanced performance monitoring, benchmarking, and optimization system.
 
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This performance system contains proprietary optimization algorithms.
 Unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -31,7 +32,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class PerformanceLevel(Enum):
-    """Performance level classification"""
+    """
+Performance level classification"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -40,6 +43,7 @@ class PerformanceLevel(Enum):
 
 class BenchmarkType(Enum):
     """Benchmark type enumeration"""
+
     CPU_INTENSIVE = "cpu_intensive"
     MEMORY_INTENSIVE = "memory_intensive"
     IO_INTENSIVE = "io_intensive"
@@ -66,7 +70,8 @@ class PerformanceMetrics:
 
 @dataclass
 class SystemResources:
-    """System resource monitoring"""
+    """
+System resource monitoring"""
     cpu_percent: float
     memory_percent: float
     disk_usage: float
@@ -84,7 +89,8 @@ class AIPerformanceMonitor:
     """
     
     def __init__(self):
-        """Initialize performance monitor"""
+        """
+Initialize performance monitor"""
         self.performance_history: List[PerformanceMetrics] = []
         self.system_resources: List[SystemResources] = []
         self.monitoring_active = False
@@ -127,7 +133,7 @@ class AIPerformanceMonitor:
             'benchmark_suite': 'IA-Influencer-Agent AI Performance Suite',
             'version': '1.0.0',
             'author': 'Fahed Mlaiel (mlaiel@live.de)',
-            'copyright': '© 2025 Fahed Mlaiel. All Rights Reserved.',
+            'copyright': '(c) 2025 Fahed Mlaiel. All Rights Reserved.',
             'execution_time': total_time,
             'timestamp': datetime.now().isoformat(),
             'system_info': await self._get_system_info(),
@@ -567,7 +573,8 @@ class AIPerformanceMonitor:
             _ = sum(j ** 2 for j in range(10))
     
     async def _simulate_ai_inference(self, count: int):
-        """Simulate AI inference operations"""
+        """
+Simulate AI inference operations"""
         for i in range(count):
             # Simulate model inference
             await asyncio.sleep(0.002)
@@ -576,7 +583,8 @@ class AIPerformanceMonitor:
             _ = sum(j ** 0.5 for j in range(50))
     
     async def _simulate_concurrent_task(self, task_id: int):
-        """Simulate a concurrent processing task"""
+        """
+Simulate a concurrent processing task"""
         await asyncio.sleep(0.01)  # Simulate processing time
         return f"task_{task_id}_completed"
     
@@ -617,7 +625,8 @@ class AIPerformanceMonitor:
             return PerformanceLevel.CRITICAL
     
     def _create_error_metrics(self, test_name: str, benchmark_type: BenchmarkType, start_time: float, error: str) -> PerformanceMetrics:
-        """Create error metrics for failed benchmarks"""
+        """
+Create error metrics for failed benchmarks"""
         return PerformanceMetrics(
             test_name=test_name,
             benchmark_type=benchmark_type,
@@ -635,7 +644,8 @@ class AIPerformanceMonitor:
         )
     
     async def _get_system_info(self) -> Dict[str, Any]:
-        """Get system information"""
+        """
+Get system information"""
         return {
             'cpu_count': psutil.cpu_count(),
             'cpu_freq': psutil.cpu_freq()._asdict() if psutil.cpu_freq() else None,
@@ -647,7 +657,8 @@ class AIPerformanceMonitor:
         }
     
     async def _calculate_overall_performance_score(self, benchmark_results: List[Any]) -> Dict[str, Any]:
-        """Calculate overall performance score"""
+        """
+Calculate overall performance score"""
         valid_results = [r for r in benchmark_results if isinstance(r, PerformanceMetrics)]
         
         if not valid_results:
@@ -688,7 +699,8 @@ class AIPerformanceMonitor:
         }
     
     async def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate performance optimization recommendations"""
+        """
+Generate performance optimization recommendations"""
         return [
             "Consider implementing caching for frequently accessed data",
             "Optimize database queries for better performance",
@@ -727,7 +739,8 @@ class AIPerformanceMonitor:
         return alerts
     
     async def start_continuous_monitoring(self):
-        """Start continuous performance monitoring"""
+        """
+Start continuous performance monitoring"""
         self.monitoring_active = True
         logger.info("Started continuous performance monitoring")
         
@@ -766,11 +779,13 @@ async def run_performance_benchmarks() -> Dict[str, Any]:
     return await ai_performance_monitor.run_comprehensive_benchmarks()
 
 async def start_performance_monitoring():
-    """Start continuous performance monitoring"""
+    """
+Start continuous performance monitoring"""
     await ai_performance_monitor.start_continuous_monitoring()
 
 def stop_performance_monitoring():
-    """Stop continuous performance monitoring"""
+    """
+Stop continuous performance monitoring"""
     ai_performance_monitor.stop_continuous_monitoring()
 
 # Export performance classes and functions

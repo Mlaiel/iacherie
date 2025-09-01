@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
@@ -46,7 +47,9 @@ from ...models.legal import LegalDocument, DocumentType, DocumentStatus
 logger = logging.getLogger(__name__)
 
 class DocumentFormat(Enum):
-    """Document output formats"""
+    """
+Document output formats"""
+
     HTML = "html"
     PDF = "pdf" 
     DOCX = "docx"
@@ -55,6 +58,7 @@ class DocumentFormat(Enum):
 
 class DocumentLanguage(Enum):
     """Supported document languages"""
+
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -66,6 +70,7 @@ class DocumentLanguage(Enum):
 
 class UrgencyLevel(Enum):
     """Document urgency levels"""
+
     STANDARD = "standard"
     EXPEDITED = "expedited"
     URGENT = "urgent"
@@ -88,7 +93,8 @@ class DocumentRequest:
     
 @dataclass
 class GeneratedDocument:
-    """Generated legal document result"""
+    """
+Generated legal document result"""
     document_id: str
     request_id: str
     document_type: DocumentType
@@ -105,7 +111,8 @@ class GeneratedDocument:
     
 @dataclass
 class DocumentTemplate:
-    """Legal document template definition"""
+    """
+Legal document template definition"""
     template_id: str
     name: str
     document_type: DocumentType
@@ -366,7 +373,8 @@ class LegalDocumentGenerator:
         """
     
     def _get_dmca_counter_notice_template(self) -> str:
-        """Get DMCA counter-notice template"""
+        """
+Get DMCA counter-notice template"""
         return """<!DOCTYPE html>
 <html>
 <head>
@@ -456,7 +464,8 @@ class LegalDocumentGenerator:
         """
     
     def _get_eu_copyright_template(self) -> str:
-        """Get EU Copyright Directive template"""
+        """
+Get EU Copyright Directive template"""
         return """<!DOCTYPE html>
 <html>
 <head>
@@ -574,7 +583,8 @@ class LegalDocumentGenerator:
         """
     
     def _get_cease_desist_template(self) -> str:
-        """Get cease and desist letter template"""
+        """
+Get cease and desist letter template"""
         return """<!DOCTYPE html>
 <html>
 <head>
@@ -709,7 +719,8 @@ class LegalDocumentGenerator:
         """
     
     def _load_translations(self) -> Dict[DocumentLanguage, Dict[str, str]]:
-        """Load document translations"""
+        """
+Load document translations"""
         return {
             DocumentLanguage.GERMAN: {
                 "takedown_notice": "Abmahnung",
@@ -850,7 +861,8 @@ class LegalDocumentGenerator:
         request: DocumentRequest,
         template: DocumentTemplate
     ) -> Dict[str, Any]:
-        """Validate request data against template requirements"""
+        """
+Validate request data against template requirements"""
         errors = []
         warnings = []
         
@@ -1046,7 +1058,8 @@ class LegalDocumentGenerator:
         return translated
     
     async def _clean_rendered_content(self, content: str) -> str:
-        """Clean up rendered template content"""
+        """
+Clean up rendered template content"""
         # Remove excessive whitespace
         content = re.sub(r'\n\s*\n\s*\n', '\n\n', content)
         
@@ -1056,7 +1069,8 @@ class LegalDocumentGenerator:
         return content.strip()
     
     async def _format_for_email(self, html_content: str) -> str:
-        """Format HTML content for email delivery"""
+        """
+Format HTML content for email delivery"""
         # Add email-specific styling
         email_styles = """
         <style>

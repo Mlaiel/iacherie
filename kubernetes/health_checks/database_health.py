@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -36,7 +37,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class DatabaseMetrics:
-    """Database performance metrics"""
+    """
+Database performance metrics"""
     active_connections: int
     max_connections: int
     connection_usage_percent: float
@@ -50,7 +52,8 @@ class DatabaseMetrics:
 
 @dataclass
 class RedisMetrics:
-    """Redis performance metrics"""
+    """
+Redis performance metrics"""
     connected_clients: int
     used_memory_mb: float
     used_memory_percent: float

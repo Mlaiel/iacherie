@@ -21,6 +21,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import json
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ from ..base import BaseAgent
 
 
 class TemplateType(Enum):
-    """Template type enumeration."""
+    """
+Template type enumeration."""
+
     CONTENT_CREATION = "content_creation"
     CONTENT_PROTECTION = "content_protection"
     SOCIAL_MEDIA_PUBLISHING = "social_media_publishing"
@@ -55,6 +58,7 @@ class TemplateType(Enum):
 
 class TemplateCategory(Enum):
     """Template category enumeration."""
+
     MUSICIAN = "musician"
     PODCASTER = "podcaster"
     PHOTOGRAPHER = "photographer"
@@ -102,7 +106,8 @@ class WorkflowTemplate:
 
 @dataclass
 class TemplateInstance:
-    """Template instance with user customizations."""
+    """
+Template instance with user customizations."""
     id: str
     template_id: str
     user_id: str
@@ -121,7 +126,8 @@ class WorkflowTemplateManager(BaseAgent):
     creation, customization, versioning, and optimization capabilities.
     """
     def __init__(self, template_directory: Optional[str] = None):
-        """Initialize the template manager."""
+        """
+Initialize the template manager."""
         super().__init__()
         self.logger = logging.getLogger(__name__)
         
@@ -629,7 +635,8 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_social_media_workflow(self) -> Dict[str, Any]:
-        """Create social media content workflow definition."""
+        """
+Create social media content workflow definition."""
         return {
             'id': 'social_media_workflow',
             'name': 'Social Media Content Pipeline',
@@ -672,7 +679,8 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_video_protection_workflow(self) -> Dict[str, Any]:
-        """Create video protection workflow definition."""
+        """
+Create video protection workflow definition."""
         return {
             'id': 'video_protection_workflow',
             'name': 'Video Content Protection',
@@ -714,7 +722,8 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_podcast_workflow(self) -> Dict[str, Any]:
-        """Create podcast workflow definition."""
+        """
+Create podcast workflow definition."""
         return {
             'id': 'podcast_workflow',
             'name': 'Podcast Production Workflow',
@@ -756,7 +765,8 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_seo_workflow(self) -> Dict[str, Any]:
-        """Create SEO optimization workflow definition."""
+        """
+Create SEO optimization workflow definition."""
         return {
             'id': 'seo_workflow',
             'name': 'SEO Content Optimization',
@@ -798,7 +808,8 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     async def _validate_workflow_definition(self, workflow_definition: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate workflow definition structure."""
+        """
+Validate workflow definition structure."""
         try:
             errors = []
             
@@ -1000,7 +1011,8 @@ class WorkflowTemplateManager(BaseAgent):
         return {}
 
     async def _save_template_to_disk(self, template: WorkflowTemplate):
-        """Save template to disk."""
+        """
+Save template to disk."""
         try:
             template_file = self.template_directory / f"{template.metadata.id}.json"
             

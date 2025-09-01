@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Recommendation Networks
+"""
+Comprehensive Test Suite for Recommendation Networks
 
 Ultra-advanced industrial-grade tests for recommendation neural networks,
 covering collaboration recommendations, content suggestions, audience targeting,
@@ -39,6 +41,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -62,7 +65,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def recommendation_config():
-    """Configuration for recommendation networks"""
+    """
+Configuration for recommendation networks"""
     return TransformerConfig(
         input_dim=512,
         hidden_dims=[512, 256, 128],
@@ -78,7 +82,8 @@ def recommendation_config():
 
 @pytest.fixture
 def creator_profiles():
-    """Sample creator profiles for testing"""
+    """
+Sample creator profiles for testing"""
     torch.manual_seed(42)
     return {
         "creators": torch.randn(20, 512),  # 20 creators, 512-dim embeddings
@@ -156,7 +161,8 @@ class TestCollaborationRecommendationNetwork:
     """Test CollaborationRecommendationNetwork functionality"""
     
     def test_collaboration_network_initialization(self, recommendation_config):
-        """Test CollaborationRecommendationNetwork initialization"""
+        """
+Test CollaborationRecommendationNetwork initialization"""
         network = CollaborationRecommendationNetwork(recommendation_config)
         
         assert hasattr(network, 'creator_encoder')
@@ -166,7 +172,8 @@ class TestCollaborationRecommendationNetwork:
         assert hasattr(network, 'success_predictor')
     
     def test_creator_compatibility_scoring(self, recommendation_config, creator_profiles):
-        """Test creator compatibility scoring"""
+        """
+Test creator compatibility scoring"""
         network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
@@ -273,7 +280,8 @@ class TestContentRecommendationNetwork:
     """Test ContentRecommendationNetwork functionality"""
     
     def test_content_network_initialization(self, recommendation_config):
-        """Test ContentRecommendationNetwork initialization"""
+        """
+Test ContentRecommendationNetwork initialization"""
         network = ContentRecommendationNetwork(recommendation_config)
         
         assert hasattr(network, 'content_encoder')
@@ -283,7 +291,8 @@ class TestContentRecommendationNetwork:
         assert hasattr(network, 'freshness_scorer')
     
     def test_personalized_content_recommendations(self, recommendation_config, creator_profiles, content_data):
-        """Test personalized content recommendations"""
+        """
+Test personalized content recommendations"""
         network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
@@ -406,7 +415,8 @@ class TestAudienceTargetingNetwork:
     """Test AudienceTargetingNetwork functionality"""
     
     def test_audience_network_initialization(self, recommendation_config):
-        """Test AudienceTargetingNetwork initialization"""
+        """
+Test AudienceTargetingNetwork initialization"""
         network = AudienceTargetingNetwork(recommendation_config)
         
         assert hasattr(network, 'audience_segmenter')
@@ -416,7 +426,8 @@ class TestAudienceTargetingNetwork:
         assert hasattr(network, 'personalization_engine')
     
     def test_audience_segmentation(self, recommendation_config, audience_data):
-        """Test audience segmentation"""
+        """
+Test audience segmentation"""
         network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
@@ -566,7 +577,8 @@ class TestTrendPredictionNetwork:
     """Test TrendPredictionNetwork functionality"""
     
     def test_trend_network_initialization(self, recommendation_config):
-        """Test TrendPredictionNetwork initialization"""
+        """
+Test TrendPredictionNetwork initialization"""
         network = TrendPredictionNetwork(recommendation_config)
         
         assert hasattr(network, 'trend_analyzer')
@@ -576,7 +588,8 @@ class TestTrendPredictionNetwork:
         assert hasattr(network, 'seasonality_detector')
     
     def test_trend_detection(self, recommendation_config, trend_data):
-        """Test trend detection in content"""
+        """
+Test trend detection in content"""
         network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
@@ -731,7 +744,8 @@ class TestRecommendationNetworksPerformance:
     """Performance tests for recommendation networks"""
     
     def test_recommendation_speed(self, recommendation_config, creator_profiles, content_data):
-        """Test recommendation generation speed"""
+        """
+Test recommendation generation speed"""
         network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
@@ -832,7 +846,8 @@ class TestRecommendationNetworksRobustness:
     """Robustness tests for recommendation networks"""
     
     def test_missing_data_handling(self, recommendation_config, creator_profiles):
-        """Test handling of missing data"""
+        """
+Test handling of missing data"""
         network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
@@ -928,7 +943,8 @@ class TestRecommendationNetworksIntegration:
     """Integration tests for recommendation networks"""
     
     def test_complete_recommendation_pipeline(self, recommendation_config, creator_profiles, content_data, audience_data, trend_data):
-        """Test complete recommendation pipeline"""
+        """
+Test complete recommendation pipeline"""
         # Initialize all networks
         collaboration_net = CollaborationRecommendationNetwork(recommendation_config)
         content_net = ContentRecommendationNetwork(recommendation_config)

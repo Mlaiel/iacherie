@@ -6,6 +6,7 @@ rich contextual understanding for optimal response generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,7 +20,9 @@ from backend.ai.models import ConversationalAI
 
 
 class ConversationStage(Enum):
-    """Stages of conversation progression"""
+    """
+Stages of conversation progression"""
+
     INITIAL = "initial"
     EXPLORATION = "exploration"
     DEEP_DIVE = "deep_dive"
@@ -30,6 +33,7 @@ class ConversationStage(Enum):
 
 class UserExpertiseLevel(Enum):
     """User expertise levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -38,6 +42,7 @@ class UserExpertiseLevel(Enum):
 
 class ContextDimension(Enum):
     """Different dimensions of context analysis"""
+
     EMOTIONAL = "emotional"
     TECHNICAL = "technical"
     BUSINESS = "business"
@@ -924,7 +929,8 @@ class ContextAnalyzer:
         creative_direction: Dict[str, Any],
         creator_type: Any
     ) -> Dict[str, Any]:
-        """Generate updated context for session state"""
+        """
+Generate updated context for session state"""
         updated_context = {
             "conversation_stage": stage.value,
             "user_expertise_level": expertise.value,

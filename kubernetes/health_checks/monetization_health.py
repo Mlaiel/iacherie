@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -34,7 +35,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class PaymentProcessorMetrics:
-    """Payment processor performance metrics"""
+    """
+Payment processor performance metrics"""
     processor_name: str
     api_status: str
     response_time_ms: float
@@ -47,7 +49,8 @@ class PaymentProcessorMetrics:
 
 @dataclass
 class PlatformAPIMetrics:
-    """Platform API integration metrics"""
+    """
+Platform API integration metrics"""
     platform_name: str
     api_version: str
     rate_limit_status: str

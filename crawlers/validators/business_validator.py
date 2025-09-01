@@ -5,7 +5,7 @@ Enterprise-grade business rule validation system for the IA Influencer Agent Pla
 providing comprehensive business logic enforcement and compliance validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -16,6 +16,7 @@ Features:
 - Monetization and licensing validation
 - Creator profile validation
 """
+
 import re
 from enum import Enum
 from typing import Dict, List, Any, Optional, Union, Callable, Type
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class RuleSeverity(Enum):
-    """Business rule severity levels"""
+    """
+Business rule severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -40,6 +43,7 @@ class RuleSeverity(Enum):
 
 class RuleCategory(Enum):
     """Business rule categories"""
+
     CREATOR_PROFILE = "creator_profile"
     CONTENT_LICENSING = "content_licensing"
     MONETIZATION = "monetization"
@@ -68,7 +72,8 @@ class BusinessRuleViolation:
 
 @dataclass
 class BusinessRuleResult:
-    """Business rule validation result"""
+    """
+Business rule validation result"""
     is_valid: bool
     violations: List[BusinessRuleViolation] = field(default_factory=list)
     warnings: List[BusinessRuleViolation] = field(default_factory=list)
@@ -80,13 +85,15 @@ class BusinessRuleResult:
     
     @property
     def has_critical_violations(self) -> bool:
-        """Check if there are critical or blocking violations"""
+        """
+Check if there are critical or blocking violations"""
         return any(v.severity in [RuleSeverity.CRITICAL, RuleSeverity.BLOCKING] 
                   for v in self.violations)
     
     @property
     def violation_count_by_severity(self) -> Dict[str, int]:
-        """Count violations by severity"""
+        """
+Count violations by severity"""
         counts = {}
         for violation in self.violations:
             severity = violation.severity.value
@@ -95,14 +102,16 @@ class BusinessRuleResult:
     
     @property
     def success_rate(self) -> float:
-        """Calculate rule success rate"""
+        """
+Calculate rule success rate"""
         if self.total_rules_executed == 0:
             return 0.0
         return len(self.passed_rules) / self.total_rules_executed
 
 
 class BusinessRule:
-    """Individual business rule definition"""
+    """
+Individual business rule definition"""
     
     def __init__(
         self,
@@ -134,7 +143,8 @@ class BusinessRule:
         self.last_executed = None
     
     def should_execute(self, data: Dict[str, Any]) -> bool:
-        """Check if rule should be executed based on conditions"""
+        """
+Check if rule should be executed based on conditions"""
         if not self.enabled:
             return False
         
@@ -144,7 +154,8 @@ class BusinessRule:
         return all(condition(data) for condition in self.conditions)
     
     def execute(self, data: Dict[str, Any]) -> Optional[BusinessRuleViolation]:
-        """Execute the business rule"""
+        """
+Execute the business rule"""
         self.execution_count += 1
         self.last_executed = datetime.utcnow()
         
@@ -287,12 +298,14 @@ class BusinessRuleValidator:
             self.rules[rule_name].enabled = True
     
     def disable_rule(self, rule_name: str) -> None:
-        """Disable a specific rule"""
+        """
+Disable a specific rule"""
         if rule_name in self.rules:
             self.rules[rule_name].enabled = False
     
     def add_rule_group(self, group_name: str, rule_names: List[str]) -> None:
-        """Add a group of related rules"""
+        """
+Add a group of related rules"""
         self.rule_groups[group_name] = rule_names
         logger.debug(f"Added rule group '{group_name}' with {len(rule_names)} rules")
     
@@ -304,14 +317,16 @@ class BusinessRuleValidator:
         )
     
     def validate_content_licensing(self, content_data: Dict[str, Any]) -> BusinessRuleResult:
-        """Validate content licensing data"""
+        """
+Validate content licensing data"""
         return self.validate(
             content_data,
             rule_categories=[RuleCategory.CONTENT_LICENSING]
         )
     
     def validate_monetization(self, monetization_data: Dict[str, Any]) -> BusinessRuleResult:
-        """Validate monetization data"""
+        """
+Validate monetization data"""
         return self.validate(
             monetization_data,
             rule_categories=[RuleCategory.MONETIZATION]
@@ -322,7 +337,8 @@ class BusinessRuleValidator:
         content_data: Dict[str, Any], 
         platform: str
     ) -> BusinessRuleResult:
-        """Validate platform-specific compliance"""
+        """
+Validate platform-specific compliance"""
         # Add platform context to data
         validation_data = {**content_data, '_platform': platform}
         return self.validate(
@@ -331,7 +347,8 @@ class BusinessRuleValidator:
         )
     
     def get_rule_statistics(self) -> Dict[str, Any]:
-        """Get rule execution statistics"""
+        """
+Get rule execution statistics"""
         rule_stats = {}
         for name, rule in self.rules.items():
             rule_stats[name] = {
@@ -356,7 +373,8 @@ class BusinessRuleValidator:
         rule_categories: Optional[List[RuleCategory]] = None,
         rule_names: Optional[List[str]] = None
     ) -> List[BusinessRule]:
-        """Select rules to execute based on criteria"""
+        """
+Select rules to execute based on criteria"""
         
         if rule_names:
             # Execute specific named rules
@@ -373,7 +391,8 @@ class BusinessRuleValidator:
         return [rule for rule in self.rules.values() if rule.enabled]
     
     def _update_statistics(self, result: BusinessRuleResult, processing_time: float) -> None:
-        """Update global validation statistics"""
+        """
+Update global validation statistics"""
         self.validation_stats['total_validations'] += 1
         self.validation_stats['total_violations'] += len(result.violations)
         
@@ -385,7 +404,8 @@ class BusinessRuleValidator:
         )
     
     def _load_predefined_rules(self) -> None:
-        """Load predefined business rules"""
+        """
+Load predefined business rules"""
         
         # Creator Profile Rules
         self._load_creator_profile_rules()
@@ -409,7 +429,8 @@ class BusinessRuleValidator:
         self._load_data_protection_rules()
     
     def _load_creator_profile_rules(self) -> None:
-        """Load creator profile validation rules"""
+        """
+Load creator profile validation rules"""
         
         # Profile completeness rule
         self.add_rule(BusinessRule(
@@ -761,14 +782,16 @@ class BusinessRuleValidator:
         return True
     
     def _check_geographic_restrictions(self, data: Dict[str, Any]) -> bool:
-        """Check geographic restrictions for monetization"""
+        """
+Check geographic restrictions for monetization"""
         user_country = data.get('user_country', '').upper()
         restricted_countries = data.get('monetization_restricted_countries', [])
         
         return user_country not in [country.upper() for country in restricted_countries]
     
     def _check_platform_content_length(self, data: Dict[str, Any]) -> bool:
-        """Check platform-specific content length requirements"""
+        """
+Check platform-specific content length requirements"""
         platform = data.get('_platform', '').lower()
         content = data.get('content', '')
         content_length = len(content)
@@ -788,7 +811,8 @@ class BusinessRuleValidator:
         return True
     
     def _check_platform_content_format(self, data: Dict[str, Any]) -> bool:
-        """Check platform-specific content format requirements"""
+        """
+Check platform-specific content format requirements"""
         platform = data.get('_platform', '').lower()
         content_type = data.get('content_type', '').lower()
         
@@ -807,7 +831,8 @@ class BusinessRuleValidator:
         return True
     
     def _check_community_guidelines(self, data: Dict[str, Any]) -> bool:
-        """Check community guidelines compliance"""
+        """
+Check community guidelines compliance"""
         content = data.get('content', '').lower()
         
         # Check for prohibited content patterns
@@ -825,14 +850,16 @@ class BusinessRuleValidator:
         return True
     
     def _check_api_rate_limits(self, data: Dict[str, Any]) -> bool:
-        """Check API rate limits compliance"""
+        """
+Check API rate limits compliance"""
         current_requests = data.get('api_requests_per_hour', 0)
         rate_limit = data.get('api_rate_limit', 1000)
         
         return current_requests < rate_limit * 0.8  # 80% threshold
     
     def _contains_sensitive_info(self, data: Dict[str, Any]) -> bool:
-        """Check if content contains sensitive information"""
+        """
+Check if content contains sensitive information"""
         content = str(data.get('content', ''))
         
         # Patterns for sensitive information
@@ -851,7 +878,8 @@ class BusinessRuleValidator:
         return False
     
     def _check_gdpr_compliance(self, data: Dict[str, Any]) -> bool:
-        """Check GDPR compliance"""
+        """
+Check GDPR compliance"""
         if not data.get('processes_eu_data', False):
             return True  # GDPR doesn't apply
         
@@ -865,7 +893,8 @@ class BusinessRuleValidator:
         return all(data.get(element, False) for element in required_elements)
     
     def _check_data_retention(self, data: Dict[str, Any]) -> bool:
-        """Check data retention policy compliance"""
+        """
+Check data retention policy compliance"""
         creation_date = data.get('created_at')
         retention_period_days = data.get('retention_period_days', 365)
         

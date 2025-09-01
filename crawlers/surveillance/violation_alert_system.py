@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Advanced violation alert system for real-time content protection notifications.
 Provides intelligent alerting, escalation, and automated response capabilities.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union, Callable
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -36,6 +39,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status types."""
+
     PENDING = "pending"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
@@ -47,6 +51,7 @@ class AlertStatus(Enum):
 
 class AlertChannel(Enum):
     """Alert delivery channels."""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -80,7 +85,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance."""
+    """
+Alert instance."""
     alert_id: str
     rule_id: str
     violation_id: str
@@ -125,7 +131,8 @@ class AlertTemplate:
 
 @dataclass
 class AlertMetrics:
-    """Alert system metrics."""
+    """
+Alert system metrics."""
     total_alerts: int = 0
     alerts_sent: int = 0
     alerts_failed: int = 0
@@ -155,7 +162,8 @@ class ViolationAlertSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize violation alert system."""
+        """
+Initialize violation alert system."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -861,7 +869,8 @@ class ViolationAlertSystem:
         platform: str,
         severity: AlertSeverity
     ) -> AlertTemplate:
-        """Get appropriate alert template."""
+        """
+Get appropriate alert template."""
         # Look for specific template first
         template_id = f"{violation_type}_{platform}"
         if template_id in self.alert_templates:
@@ -944,7 +953,8 @@ class ViolationAlertSystem:
                 return AlertSeverity.LOW
     
     def _update_channel_success_rate(self, channel: AlertChannel, success: bool) -> None:
-        """Update channel success rate metrics."""
+        """
+Update channel success rate metrics."""
         channel_name = channel.value
         
         if channel_name not in self.metrics.channel_success_rates:
@@ -955,7 +965,8 @@ class ViolationAlertSystem:
             self.metrics.channel_success_rates[channel_name] = (current_rate * 0.9) + (0.1 if success else 0.0)
     
     def _update_response_time_metrics(self, response_time_minutes: float) -> None:
-        """Update response time metrics."""
+        """
+Update response time metrics."""
         if self.metrics.average_response_time_minutes == 0:
             self.metrics.average_response_time_minutes = response_time_minutes
         else:
@@ -965,7 +976,8 @@ class ViolationAlertSystem:
             )
     
     def get_alert_system_status(self) -> Dict[str, Any]:
-        """Get alert system status."""
+        """
+Get alert system status."""
         uptime_seconds = (datetime.now() - self._start_time).total_seconds()
         self.metrics.system_uptime_seconds = uptime_seconds
         
@@ -991,7 +1003,8 @@ class ViolationAlertSystem:
         }
     
     def get_recent_alerts(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent alerts."""
+        """
+Get recent alerts."""
         recent_alerts = sorted(
             self.alerts.values(),
             key=lambda a: a.created_at,
@@ -1021,7 +1034,8 @@ class ViolationAlertSystem:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the violation alert system."""
+        """
+Shutdown the violation alert system."""
         try:
             self._logger.info("Shutting down violation alert system...")
             

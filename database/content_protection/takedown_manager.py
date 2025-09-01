@@ -5,7 +5,7 @@ processing, multi-jurisdiction support, and comprehensive tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps + Legal Tech
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class TakedownStatus(Enum):
-    """Takedown request status types"""
+    """
+Takedown request status types"""
+
     DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -59,6 +62,7 @@ class TakedownStatus(Enum):
 
 class TakedownType(Enum):
     """Types of takedown requests"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
@@ -70,6 +74,7 @@ class TakedownType(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions for takedown requests"""
+
     US_FEDERAL = "us_federal"
     EU_GDPR = "eu_gdpr"
     UK_COPYRIGHT = "uk_copyright"
@@ -735,7 +740,8 @@ class TakedownManagerRepository:
         infringing_content: Dict[str, Any],
         copyright_owner: Dict[str, Any]
     ) -> str:
-        """Generate legal document for takedown request"""
+        """
+Generate legal document for takedown request"""
         template_key = f"{takedown_type.value}_{jurisdiction.value}"
         
         # Get template from cache or load
@@ -805,7 +811,8 @@ class TakedownManagerRepository:
         pass
     
     async def _prepare_submission_data(self, takedown: TakedownRequest) -> Dict[str, Any]:
-        """Prepare data for takedown submission"""
+        """
+Prepare data for takedown submission"""
         return {
             "takedown_id": takedown.takedown_id,
             "legal_document": takedown.legal_document,
@@ -857,7 +864,8 @@ class TakedownManagerRepository:
         old_status: str,
         new_status: str
     ) -> None:
-        """Send notifications for status updates"""
+        """
+Send notifications for status updates"""
         try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,
@@ -922,7 +930,8 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         rejection_data: Optional[Dict[str, Any]]
     ) -> None:
-        """Handle takedown rejection"""
+        """
+Handle takedown rejection"""
         # Implementation for rejection handling (appeals, escalation, etc.)
         pass
     
@@ -931,7 +940,8 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         compliance_data: Dict[str, Any]
     ) -> ComplianceRecord:
-        """Create compliance record for successful takedown"""
+        """
+Create compliance record for successful takedown"""
         record = ComplianceRecord(
             id=uuid4(),
             takedown_id=takedown.id,
@@ -951,7 +961,8 @@ class TakedownManagerRepository:
         return takedown.status in [TakedownStatus.REJECTED.value, TakedownStatus.EXPIRED.value]
     
     async def _generate_case_number(self, takedown: TakedownRequest) -> str:
-        """Generate legal case number"""
+        """
+Generate legal case number"""
         timestamp = datetime.now().strftime("%Y%m%d")
         return f"LEGAL-{timestamp}-{takedown.takedown_id[-6:]}"
     
@@ -974,7 +985,8 @@ class TakedownManagerRepository:
         return 1
     
     async def _estimate_legal_costs(self, takedown: TakedownRequest) -> float:
-        """Estimate legal costs for escalation"""
+        """
+Estimate legal costs for escalation"""
         base_costs = {
             "civil_litigation": 5000.0,
             "cease_desist": 1000.0,

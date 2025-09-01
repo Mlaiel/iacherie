@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Content Understanding Networks
+"""
+Comprehensive Test Suite for Content Understanding Networks
 
 Ultra-advanced industrial-grade tests for content understanding neural networks,
 covering semantic analysis, emotion recognition, style analysis, quality assessment,
@@ -39,6 +41,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -66,7 +69,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def content_understanding_config():
-    """Configuration for content understanding networks"""
+    """
+Configuration for content understanding networks"""
     return TransformerConfig(
         input_dim=768,
         hidden_dims=[768, 512, 256],
@@ -181,7 +185,8 @@ class TestContentType:
     """Test ContentType enum functionality"""
     
     def test_content_type_values(self):
-        """Test ContentType enum values"""
+        """
+Test ContentType enum values"""
         assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"
         assert ContentType.IMAGE.value == "image"
@@ -199,10 +204,12 @@ class TestContentType:
 
 
 class TestAnalysisLevel:
-    """Test AnalysisLevel enum functionality"""
+    """
+Test AnalysisLevel enum functionality"""
     
     def test_analysis_level_values(self):
-        """Test AnalysisLevel enum values"""
+        """
+Test AnalysisLevel enum values"""
         assert AnalysisLevel.BASIC.value == "basic"
         assert AnalysisLevel.INTERMEDIATE.value == "intermediate"
         assert AnalysisLevel.ADVANCED.value == "advanced"
@@ -230,7 +237,8 @@ class TestContentAnalysisResult:
     """Test ContentAnalysisResult data structure"""
     
     def test_result_creation(self):
-        """Test creating ContentAnalysisResult"""
+        """
+Test creating ContentAnalysisResult"""
         result = ContentAnalysisResult(
             content_id="test_content_001",
             content_type=ContentType.AUDIO,
@@ -281,7 +289,8 @@ class TestContentUnderstandingNetwork:
     """Test main ContentUnderstandingNetwork functionality"""
     
     def test_network_initialization(self, content_understanding_config):
-        """Test ContentUnderstandingNetwork initialization"""
+        """
+Test ContentUnderstandingNetwork initialization"""
         network = ContentUnderstandingNetwork(content_understanding_config)
         
         assert network.config == content_understanding_config
@@ -294,7 +303,8 @@ class TestContentUnderstandingNetwork:
         assert hasattr(network, 'confidence_head')
     
     def test_network_forward_pass(self, content_understanding_config, sample_content_data):
-        """Test forward pass through ContentUnderstandingNetwork"""
+        """
+Test forward pass through ContentUnderstandingNetwork"""
         network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
@@ -394,7 +404,8 @@ class TestSemanticAnalysisNetwork:
     """Test SemanticAnalysisNetwork functionality"""
     
     def test_semantic_network_initialization(self, content_understanding_config):
-        """Test SemanticAnalysisNetwork initialization"""
+        """
+Test SemanticAnalysisNetwork initialization"""
         network = SemanticAnalysisNetwork(content_understanding_config)
         
         assert hasattr(network, 'topic_classifier')
@@ -403,7 +414,8 @@ class TestSemanticAnalysisNetwork:
         assert hasattr(network, 'semantic_embeddings')
     
     def test_topic_extraction(self, content_understanding_config, sample_content_data):
-        """Test topic extraction functionality"""
+        """
+Test topic extraction functionality"""
         network = SemanticAnalysisNetwork(content_understanding_config)
         network.eval()
         
@@ -452,7 +464,8 @@ class TestEmotionRecognitionNetwork:
     """Test EmotionRecognitionNetwork functionality"""
     
     def test_emotion_network_initialization(self, content_understanding_config):
-        """Test EmotionRecognitionNetwork initialization"""
+        """
+Test EmotionRecognitionNetwork initialization"""
         network = EmotionRecognitionNetwork(content_understanding_config)
         
         assert hasattr(network, 'emotion_classifier')
@@ -524,10 +537,12 @@ class TestEmotionRecognitionNetwork:
 
 
 class TestStyleAnalysisNetwork:
-    """Test StyleAnalysisNetwork functionality"""
+    """
+Test StyleAnalysisNetwork functionality"""
     
     def test_style_network_initialization(self, content_understanding_config):
-        """Test StyleAnalysisNetwork initialization"""
+        """
+Test StyleAnalysisNetwork initialization"""
         network = StyleAnalysisNetwork(content_understanding_config)
         
         assert hasattr(network, 'style_classifier')
@@ -626,10 +641,12 @@ class TestStyleAnalysisNetwork:
 
 
 class TestQualityAssessmentNetwork:
-    """Test QualityAssessmentNetwork functionality"""
+    """
+Test QualityAssessmentNetwork functionality"""
     
     def test_quality_network_initialization(self, content_understanding_config):
-        """Test QualityAssessmentNetwork initialization"""
+        """
+Test QualityAssessmentNetwork initialization"""
         network = QualityAssessmentNetwork(content_understanding_config)
         
         assert hasattr(network, 'overall_quality_head')
@@ -739,7 +756,8 @@ class TestContentUnderstandingPerformance:
     """Performance tests for content understanding networks"""
     
     def test_inference_speed(self, content_understanding_config, sample_content_data):
-        """Test inference speed across different content types"""
+        """
+Test inference speed across different content types"""
         network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
@@ -862,7 +880,8 @@ class TestContentUnderstandingRobustness:
     """Robustness tests for content understanding networks"""
     
     def test_missing_modality_handling(self, content_understanding_config, sample_content_data):
-        """Test handling of missing modalities in multimodal input"""
+        """
+Test handling of missing modalities in multimodal input"""
         network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
@@ -967,7 +986,8 @@ class TestContentUnderstandingIntegration:
     """Integration tests for content understanding components"""
     
     def test_end_to_end_content_analysis_pipeline(self, content_understanding_config, sample_content_data):
-        """Test complete content analysis pipeline"""
+        """
+Test complete content analysis pipeline"""
         # Initialize all networks
         main_network = ContentUnderstandingNetwork(content_understanding_config)
         semantic_network = SemanticAnalysisNetwork(content_understanding_config)

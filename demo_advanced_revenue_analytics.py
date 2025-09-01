@@ -11,7 +11,7 @@ Demonstration script showcasing all advanced revenue analytics features:
 - Unified analytics dashboard
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -32,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 # Import des modules analytics (simulés pour la démo)
 class MockRealtimeRevenueTracker:
-    """Mock du tracker temps réel pour la démo"""
+    """
+Mock du tracker temps réel pour la démo"""
     
     def __init__(self):
         self.revenue_data = {}
@@ -62,7 +63,8 @@ class MockAdvancedMLPrediction:
     """Mock du moteur de prédiction ML pour la démo"""
     
     async def generate_advanced_forecast(self, creator_id: str, revenue_history: List[Dict], horizon: str):
-        """Simule une prédiction avancée"""
+        """
+Simule une prédiction avancée"""
         current_revenue = sum([r.get("amount", 0) for r in revenue_history[-7:]]) / 7
         predicted_amount = current_revenue * random.uniform(1.05, 1.25)  # 5-25% de croissance
         

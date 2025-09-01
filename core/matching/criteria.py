@@ -39,6 +39,7 @@ This criteria management system contains proprietary algorithms and business log
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
 """
+
 import logging
 import json
 from typing import Dict, List, Optional, Any, Callable, Union, Set
@@ -53,7 +54,9 @@ from backend.core.analytics.metrics import MetricsCollector
 
 
 class CriteriaType(Enum):
-    """Types of matching criteria"""
+    """
+Types of matching criteria"""
+
     MANDATORY = "mandatory"  # Must be satisfied
     PREFERRED = "preferred"  # Increases match score
     EXCLUSION = "exclusion"  # Excludes matches
@@ -63,6 +66,7 @@ class CriteriaType(Enum):
 
 class OperatorType(Enum):
     """Logical operators for criteria"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -80,6 +84,7 @@ class OperatorType(Enum):
 
 class CriteriaCategory(Enum):
     """Categories of matching criteria"""
+
     CONTENT_ATTRIBUTES = "content_attributes"
     AUDIENCE_METRICS = "audience_metrics"
     QUALITY_STANDARDS = "quality_standards"
@@ -114,7 +119,8 @@ class MatchingCriterion:
 
 @dataclass
 class CriteriaSet:
-    """Set of related matching criteria"""
+    """
+Set of related matching criteria"""
     set_id: str
     name: str
     description: str
@@ -141,7 +147,8 @@ class CriteriaEvaluation:
 
 @dataclass
 class CriteriaSetEvaluation:
-    """Result of criteria set evaluation"""
+    """
+Result of criteria set evaluation"""
     set_id: str
     overall_passed: bool
     overall_score: float
@@ -179,7 +186,8 @@ class MatchingCriteriaManager:
         self._initialize_operators()
     
     def _initialize_default_criteria(self) -> None:
-        """Initialize default matching criteria sets"""
+        """
+Initialize default matching criteria sets"""
         self.default_criteria_sets = {
             "content_quality": self._create_content_quality_criteria(),
             "audience_compatibility": self._create_audience_compatibility_criteria(),
@@ -673,12 +681,14 @@ class MatchingCriteriaManager:
         return None
     
     def _create_platform_alignment_criteria(self) -> CriteriaSet:
-        """Create platform alignment criteria"""
+        """
+Create platform alignment criteria"""
         # Implementation would create platform alignment criteria
         return None
     
     def _create_brand_safety_criteria(self) -> CriteriaSet:
-        """Create brand safety criteria"""
+        """
+Create brand safety criteria"""
         # Implementation would create brand safety criteria
         return None
     
@@ -690,7 +700,8 @@ class MatchingCriteriaManager:
         creator_data: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> bool:
-        """Determine if criterion should be applied based on conditions"""
+        """
+Determine if criterion should be applied based on conditions"""
         if not criterion.conditions:
             return True
         
@@ -710,7 +721,8 @@ class MatchingCriteriaManager:
         return True
     
     def _extract_field_value(self, data: Dict[str, Any], field_path: str) -> Any:
-        """Extract field value using JSONPath-like syntax"""
+        """
+Extract field value using JSONPath-like syntax"""
         try:
             # Simple implementation for nested field access
             # In production, would use a proper JSONPath library
@@ -735,7 +747,8 @@ class MatchingCriteriaManager:
         actual_value: Any,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate score for criterion evaluation"""
+        """
+Calculate score for criterion evaluation"""
         if criterion.criteria_type == CriteriaType.MANDATORY:
             return 1.0 if passed else 0.0
         
@@ -760,7 +773,8 @@ class MatchingCriteriaManager:
         criterion: MatchingCriterion,
         actual_value: Any
     ) -> float:
-        """Calculate partial score for numeric criteria"""
+        """
+Calculate partial score for numeric criteria"""
         try:
             if criterion.operator in [OperatorType.GREATER_THAN, OperatorType.GREATER_EQUAL]:
                 if isinstance(actual_value, (int, float)) and isinstance(criterion.value, (int, float)):
@@ -782,7 +796,8 @@ class MatchingCriteriaManager:
         criteria_set: CriteriaSet,
         evaluations: List[CriteriaEvaluation]
     ) -> Tuple[bool, float]:
-        """Calculate overall result for criteria set"""
+        """
+Calculate overall result for criteria set"""
         if not evaluations:
             return False, 0.0
         
@@ -835,7 +850,8 @@ class MatchingCriteriaManager:
             return False
     
     def _similarity_threshold(self, actual: float, threshold: float) -> bool:
-        """Similarity threshold check"""
+        """
+Similarity threshold check"""
         try:
             return actual >= threshold
         except Exception:
@@ -844,74 +860,88 @@ class MatchingCriteriaManager:
     # Database and cache operations
     
     async def _store_criterion_in_db(self, criterion: MatchingCriterion) -> bool:
-        """Store criterion in database"""
+        """
+Store criterion in database"""
         # Implementation would store criterion in database
         return True
     
     async def _store_criteria_set_in_db(self, criteria_set: CriteriaSet) -> bool:
-        """Store criteria set in database"""
+        """
+Store criteria set in database"""
         # Implementation would store criteria set in database
         return True
     
     async def _fetch_criterion_from_db(self, criterion_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch criterion from database"""
+        """
+Fetch criterion from database"""
         # Implementation would fetch from database
         return None
     
     async def _fetch_criteria_set_from_db(self, set_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch criteria set from database"""
+        """
+Fetch criteria set from database"""
         # Implementation would fetch from database
         return None
     
     async def _fetch_criteria_sets_for_user_type(self, user_type: str) -> List[CriteriaSet]:
-        """Fetch criteria sets for user type"""
+        """
+Fetch criteria sets for user type"""
         # Implementation would query database
         return []
     
     async def _delete_criterion_from_db(self, criterion_id: str) -> bool:
-        """Delete criterion from database"""
+        """
+Delete criterion from database"""
         # Implementation would delete from database
         return True
     
     async def _clear_criteria_cache(self) -> None:
-        """Clear criteria-related caches"""
+        """
+Clear criteria-related caches"""
         # Implementation would clear relevant cache keys
         pass
     
     # Serialization methods
     
     def _serialize_criterion(self, criterion: MatchingCriterion) -> str:
-        """Serialize criterion for caching"""
+        """
+Serialize criterion for caching"""
         return json.dumps(asdict(criterion), default=str)
     
     def _deserialize_criterion(self, data: str) -> MatchingCriterion:
-        """Deserialize criterion from cache"""
+        """
+Deserialize criterion from cache"""
         # Implementation would deserialize JSON to MatchingCriterion
         return None
     
     def _serialize_criteria_set(self, criteria_set: CriteriaSet) -> str:
-        """Serialize criteria set for caching"""
+        """
+Serialize criteria set for caching"""
         return json.dumps(asdict(criteria_set), default=str)
     
     def _deserialize_criteria_set(self, data: str) -> CriteriaSet:
-        """Deserialize criteria set from cache"""
+        """
+Deserialize criteria set from cache"""
         # Implementation would deserialize JSON to CriteriaSet
         return None
     
     def _parse_criterion_data(self, data: Dict[str, Any]) -> MatchingCriterion:
-        """Parse criterion data from database format"""
+        """
+Parse criterion data from database format"""
         # Implementation would parse database format to MatchingCriterion
         return None
     
     def _parse_criteria_set_data(self, data: Dict[str, Any]) -> CriteriaSet:
-        """Parse criteria set data from database format"""
+        """
+Parse criteria set data from database format"""
         # Implementation would parse database format to CriteriaSet
         return None
     
     # Validation methods
     
     def _validate_criterion_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate criterion creation data"""
+        """
+Validate criterion creation data"""
         errors = []
         
         required_fields = ['criterion_id', 'name', 'category', 'criteria_type', 'field_path', 'operator', 'value']

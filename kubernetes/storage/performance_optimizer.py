@@ -8,7 +8,7 @@ Technologies: Python, Machine Learning, Storage Analytics, Performance Tuning
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Performance monitoring → AI analysis → Bottleneck detection → 
 Optimization recommendations → Automatic tuning → Capacity planning → ROI analysis
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     IOPS = "iops"
@@ -67,6 +70,7 @@ class PerformanceMetricType(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priority levels"""
+
     CRITICAL = "critical"  # Performance issues affecting SLA
     HIGH = "high"  # Significant performance impact
     MEDIUM = "medium"  # Moderate optimization potential
@@ -76,6 +80,7 @@ class OptimizationPriority(Enum):
 
 class OptimizationType(Enum):
     """Types of storage optimizations"""
+
     CACHE_TUNING = "cache_tuning"
     PREFETCH_OPTIMIZATION = "prefetch_optimization"
     COMPRESSION_TUNING = "compression_tuning"
@@ -107,7 +112,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBaseline:
-    """Performance baseline for comparison"""
+    """
+Performance baseline for comparison"""
     metric_type: PerformanceMetricType
     baseline_value: float
     acceptable_range: Tuple[float, float]
@@ -119,7 +125,8 @@ class PerformanceBaseline:
 
 @dataclass
 class OptimizationRecommendation:
-    """Storage optimization recommendation"""
+    """
+Storage optimization recommendation"""
     optimization_type: OptimizationType
     priority: OptimizationPriority
     description: str
@@ -1273,7 +1280,7 @@ class StoragePerformanceOptimizer:
                     report_lines.append("")
             
             report_lines.append("=" * 80)
-            report_lines.append("© 2025 Fahed Mlaiel - IA-Influencer-Agent Performance Optimizer")
+            report_lines.append("(c) 2025 Fahed Mlaiel - IA-Influencer-Agent Performance Optimizer")
             report_lines.append("=" * 80)
             
             return "\n".join(report_lines)
@@ -1295,7 +1302,8 @@ def create_performance_optimizer() -> StoragePerformanceOptimizer:
 
 # Usage Example
 async def main():
-    """Example usage of StoragePerformanceOptimizer"""
+    """
+Example usage of StoragePerformanceOptimizer"""
     try:
         optimizer = create_performance_optimizer()
         

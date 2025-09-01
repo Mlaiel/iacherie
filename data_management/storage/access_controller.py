@@ -8,7 +8,7 @@ Enterprise access control system with permission management,
 audit logging, and role-based security for storage resources.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -17,6 +17,7 @@ Contact: mlaiel@live.de
 - Security: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -37,7 +38,9 @@ from functools import wraps
 logger = logging.getLogger(__name__)
 
 class AccessLevel(Enum):
-    """Access levels for resources"""
+    """
+Access levels for resources"""
+
     NONE = "none"
     READ = "read"
     WRITE = "write"
@@ -46,6 +49,7 @@ class AccessLevel(Enum):
 
 class ResourceType(Enum):
     """Types of storage resources"""
+
     FILE = "file"
     DIRECTORY = "directory"
     BACKUP = "backup"
@@ -55,6 +59,7 @@ class ResourceType(Enum):
 
 class PermissionType(Enum):
     """Types of permissions"""
+
     READ = "read"
     WRITE = "write"
     DELETE = "delete"
@@ -66,6 +71,7 @@ class PermissionType(Enum):
 
 class UserRole(Enum):
     """User roles in the system"""
+
     GUEST = "guest"
     USER = "user"
     EDITOR = "editor"
@@ -76,6 +82,7 @@ class UserRole(Enum):
 
 class AuditAction(Enum):
     """Actions that can be audited"""
+
     LOGIN = "login"
     LOGOUT = "logout"
     ACCESS_GRANTED = "access_granted"
@@ -270,7 +277,8 @@ class AccessController:
     """
     
     def __init__(self, config: AccessConfig):
-        """Initialize access controller"""
+        """
+Initialize access controller"""
         self.config = config
         self.users: Dict[str, User] = {}
         self.policies: Dict[str, AccessPolicy] = {}
@@ -892,7 +900,8 @@ class AccessController:
         return {'valid': True}
     
     def _determine_resource_type(self, resource_path: str) -> ResourceType:
-        """Determine resource type from path"""
+        """
+Determine resource type from path"""
         path = Path(resource_path)
         
         if 'backup' in str(path):
@@ -907,7 +916,8 @@ class AccessController:
             return ResourceType.FILE
     
     async def _load_initial_data(self) -> None:
-        """Load initial data from disk"""
+        """
+Load initial data from disk"""
         try:
             # Load users
             users_dir = Path(self.config.users_directory)
@@ -1128,11 +1138,13 @@ class AuthenticationManager:
     """Manages user authentication"""
     
     def __init__(self, access_controller: AccessController):
-        """Initialize authentication manager"""
+        """
+Initialize authentication manager"""
         self.access_controller = access_controller
     
     async def generate_token(self, user: User) -> str:
-        """Generate JWT token for user"""
+        """
+Generate JWT token for user"""
         try:
             payload = {
                 'user_id': user.user_id,
@@ -1190,11 +1202,13 @@ class AuthorizationManager:
     """Manages authorization decisions"""
     
     def __init__(self, access_controller: AccessController):
-        """Initialize authorization manager"""
+        """
+Initialize authorization manager"""
         self.access_controller = access_controller
     
     async def make_decision(self, request: AccessRequest, user: User) -> AccessDecision:
-        """Make authorization decision"""
+        """
+Make authorization decision"""
         try:
             start_time = datetime.now()
             
@@ -1303,7 +1317,8 @@ class AuthorizationManager:
         return applicable_policies
     
     def _resource_matches_patterns(self, resource_path: str, patterns: List[str]) -> bool:
-        """Check if resource path matches any of the patterns"""
+        """
+Check if resource path matches any of the patterns"""
         for pattern in patterns:
             # Simple glob-like pattern matching
             if pattern == "*" or pattern in resource_path:
@@ -1343,7 +1358,8 @@ class AuthorizationManager:
         permission: PermissionType,
         applicable_policies: List[AccessPolicy]
     ) -> bool:
-        """Check if user has specific permission"""
+        """
+Check if user has specific permission"""
         # Check if any applicable policy grants the permission
         for policy in applicable_policies:
             if permission in policy.permissions:
@@ -1357,7 +1373,8 @@ class AuthorizationManager:
         return False
     
     def _get_role_permissions(self, role: UserRole) -> List[str]:
-        """Get default permissions for role"""
+        """
+Get default permissions for role"""
         role_permissions = {
             UserRole.GUEST: ['read'],
             UserRole.USER: ['read', 'write', 'download'],
@@ -1372,10 +1389,12 @@ class AuthorizationManager:
 
 
 class AuditManager:
-    """Manages audit logging"""
+    """
+Manages audit logging"""
     
     def __init__(self, access_controller: AccessController):
-        """Initialize audit manager"""
+        """
+Initialize audit manager"""
         self.access_controller = access_controller
     
     async def log_action(
@@ -1531,11 +1550,13 @@ class SessionManager:
     """Manages user sessions"""
     
     def __init__(self, access_controller: AccessController):
-        """Initialize session manager"""
+        """
+Initialize session manager"""
         self.access_controller = access_controller
     
     async def create_session(self, user: User, ip_address: str, user_agent: str) -> str:
-        """Create new user session"""
+        """
+Create new user session"""
         try:
             session_id = secrets.token_urlsafe(32)
             

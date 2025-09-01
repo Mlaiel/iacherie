@@ -6,7 +6,7 @@ and data analytics to maximize creator revenue across all platforms
 and revenue streams.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Optimization
 ===============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Revenue optimization types"""
+    """
+Revenue optimization types"""
+
     PLATFORM_DIVERSIFICATION = "platform_diversification"
     PRICING_OPTIMIZATION = "pricing_optimization"
     CONTENT_TIMING = "content_timing"
@@ -86,7 +89,8 @@ class RevenueOptimizer:
         self.optimization_engine = OptimizationEngine()
         
     async def initialize(self):
-        """Initialize revenue optimizer"""
+        """
+Initialize revenue optimizer"""
         try:
             await self.optimization_engine.initialize()
             logger.info("Revenue optimizer initialized successfully")

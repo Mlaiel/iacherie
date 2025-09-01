@@ -11,6 +11,7 @@ This module provides intelligent failover capabilities for content protection pl
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from backend.deployment.health_checks import HealthChecker
 
 
 class FailoverType(Enum):
-    """Types of failover operations"""
+    """
+Types of failover operations"""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     PLANNED = "planned"
@@ -40,6 +43,7 @@ class FailoverType(Enum):
 
 class FailoverStatus(Enum):
     """Failover operation status"""
+
     DETECTING = "detecting"
     PREPARING = "preparing"
     EXECUTING = "executing"
@@ -51,6 +55,7 @@ class FailoverStatus(Enum):
 
 class ServiceState(Enum):
     """Service operational states"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -78,7 +83,8 @@ class FailoverConfig:
 
 @dataclass
 class FailoverEvent:
-    """Failover event record"""
+    """
+Failover event record"""
     event_id: str
     service_name: str
     failover_type: FailoverType
@@ -435,7 +441,8 @@ class FailoverManager:
             }
 
     async def _validate_failover(self, config: FailoverConfig, target_endpoint: str) -> Dict[str, Any]:
-        """Validate that failover was successful"""
+        """
+Validate that failover was successful"""
         try:
             validation_checks = []
             
@@ -486,7 +493,8 @@ class FailoverManager:
             }
 
     async def get_failover_status(self, service_name: str) -> Dict[str, Any]:
-        """Get current failover status for a service"""
+        """
+Get current failover status for a service"""
         try:
             result = {
                 'service_name': service_name,
@@ -527,7 +535,8 @@ class FailoverManager:
             return {'error': str(e)}
 
     async def get_system_failover_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive failover metrics for the entire system"""
+        """
+Get comprehensive failover metrics for the entire system"""
         return {
             'metrics': self.failover_metrics.copy(),
             'registered_services': len(self.service_configs),
@@ -542,7 +551,8 @@ class FailoverManager:
         }
 
     def _generate_event_id(self) -> str:
-        """Generate unique failover event identifier"""
+        """
+Generate unique failover event identifier"""
         timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"failover_{timestamp}_{int(time.time() * 1000) % 10000}"
 
@@ -574,7 +584,8 @@ class FailoverManager:
         return max(0, base_score)
 
     def _update_average_failover_time(self, new_time: float):
-        """Update rolling average failover time"""
+        """
+Update rolling average failover time"""
         total_failovers = self.failover_metrics['total_failovers']
         current_avg = self.failover_metrics['average_failover_time']
         
@@ -586,7 +597,8 @@ class FailoverManager:
             )
 
     async def execute_emergency_failover(self) -> Dict[str, Any]:
-        """Execute emergency failover procedures"""
+        """
+Execute emergency failover procedures"""
         try:
             emergency_id = f"emergency_failover_{int(datetime.utcnow().timestamp())}"
             

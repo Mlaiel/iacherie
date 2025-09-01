@@ -1,4 +1,5 @@
 """Content Protection Manager - Multi-Platform Protection Orchestrator"""
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -94,7 +95,8 @@ class ContentProtectionManager(BaseAgent):
         return ['enabled_platforms', 'monitoring_interval']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
+        """
+Main request processing logic"""
         action = request.action.lower()
         
         try:
@@ -225,7 +227,8 @@ class ContentProtectionManager(BaseAgent):
             yield tasks[i:i + batch_size]
     
     async def _process_violations(self, content_id: str, violations: List[Dict]):
-        """Process detected violations"""
+        """
+Process detected violations"""
         for violation in violations:
             violation_record = {
                 'content_id': content_id,
@@ -352,7 +355,8 @@ class ContentProtectionManager(BaseAgent):
         }
     
     async def _stop_monitoring(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Stop monitoring for content"""
+        """
+Stop monitoring for content"""
         content_id = data.get('content_id')
         
         if content_id not in self.protected_content:

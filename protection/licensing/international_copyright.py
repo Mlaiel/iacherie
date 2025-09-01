@@ -11,7 +11,7 @@ Ultra-advanced international copyright and intellectual property management:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + International IP Lawyer + Music Business Expert + Cultural Analyst + Blockchain Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
@@ -21,6 +21,7 @@ applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -39,7 +40,9 @@ from babel.dates import format_datetime
 logger = logging.getLogger(__name__)
 
 class CopyrightTreaty(Enum):
-    """International copyright treaties"""
+    """
+International copyright treaties"""
+
     BERNE_CONVENTION = "berne_convention"
     WIPO_COPYRIGHT_TREATY = "wipo_copyright_treaty"
     WIPO_PERFORMANCES_TREATY = "wipo_performances_treaty"
@@ -50,6 +53,7 @@ class CopyrightTreaty(Enum):
 
 class CopyrightType(Enum):
     """Types of copyright protection"""
+
     MUSICAL_WORK = "musical_work"
     SOUND_RECORDING = "sound_recording"
     AUDIOVISUAL_WORK = "audiovisual_work"
@@ -63,6 +67,7 @@ class CopyrightType(Enum):
 
 class RegistrationStatus(Enum):
     """Copyright registration status"""
+
     PENDING = "pending"
     REGISTERED = "registered"
     REJECTED = "rejected"
@@ -73,6 +78,7 @@ class RegistrationStatus(Enum):
 
 class TerritorialScope(Enum):
     """Territorial scope of rights"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -98,7 +104,8 @@ class CopyrightWork:
 
 @dataclass
 class TerritorialRights:
-    """Territorial rights structure"""
+    """
+Territorial rights structure"""
     territory_id: str
     country_code: str
     country_name: str
@@ -113,7 +120,8 @@ class TerritorialRights:
 
 @dataclass
 class RegistrationRecord:
-    """Copyright registration record"""
+    """
+Copyright registration record"""
     registration_id: str
     work_id: str
     territory: str
@@ -135,7 +143,8 @@ class InternationalCopyrightManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize international copyright manager."""
+        """
+Initialize international copyright manager."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -222,7 +231,8 @@ class InternationalCopyrightManager:
             self.territorial_rights[territory.territory_id] = territory
 
     def _load_treaty_information(self):
-        """Load international treaty information."""
+        """
+Load international treaty information."""
         self.treaty_database = {
             CopyrightTreaty.BERNE_CONVENTION: {
                 'name': 'Berne Convention for the Protection of Literary and Artistic Works',
@@ -253,7 +263,8 @@ class InternationalCopyrightManager:
         }
 
     def _load_collective_societies(self):
-        """Load collective management organizations data."""
+        """
+Load collective management organizations data."""
         self.collective_societies = {
             'GEMA': {
                 'name': 'Gesellschaft für musikalische Aufführungs- und mechanische Vervielfältigungsrechte',
@@ -279,7 +290,8 @@ class InternationalCopyrightManager:
         }
 
     def _initialize_registration_apis(self):
-        """Initialize API connections for copyright registration services."""
+        """
+Initialize API connections for copyright registration services."""
         # Note: In production, these would be real API connections
         self.registration_apis = {
             'US_COPYRIGHT_OFFICE': {
@@ -511,7 +523,8 @@ class InternationalCopyrightManager:
         territory: str,
         application: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate registration fees for territory."""
+        """
+Calculate registration fees for territory."""
         base_fees = {
             'US': {'basic_registration': 65.0, 'electronic_filing': 45.0},
             'EU': {'basic_registration': 100.0, 'fast_track': 200.0},
@@ -538,7 +551,8 @@ class InternationalCopyrightManager:
         work: CopyrightWork,
         registration_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive registration summary."""
+        """
+Generate comprehensive registration summary."""
         successful_territories = [
             territory for territory, result in registration_results.items()
             if result['status'] in ['success', 'automatic']
@@ -569,7 +583,8 @@ class InternationalCopyrightManager:
         }
 
     def _calculate_protection_coverage(self, territories: List[str]) -> Dict[str, Any]:
-        """Calculate global protection coverage."""
+        """
+Calculate global protection coverage."""
         # Estimate population and market coverage
         coverage_data = {
             'US': {'population': 331000000, 'market_share': 25.0},
@@ -596,7 +611,8 @@ class InternationalCopyrightManager:
         }
 
     def _generate_next_steps(self, registration_results: Dict[str, Any]) -> List[str]:
-        """Generate next steps based on registration results."""
+        """
+Generate next steps based on registration results."""
         next_steps = []
         
         # Check for failed registrations
@@ -654,7 +670,8 @@ class InternationalCopyrightManager:
         work: CopyrightWork,
         territories: List[str]
     ) -> Dict[str, Any]:
-        """Check international treaty compliance for work protection."""
+        """
+Check international treaty compliance for work protection."""
         compliance_results = {}
         
         for territory in territories:
@@ -690,7 +707,8 @@ class InternationalCopyrightManager:
         treaty_info: Dict[str, Any],
         territory_info: TerritorialRights
     ) -> Dict[str, Any]:
-        """Check specific treaty requirements."""
+        """
+Check specific treaty requirements."""
         compliance = {
             'compliant': True,
             'requirements_met': [],
@@ -725,7 +743,8 @@ class InternationalCopyrightManager:
         self,
         treaty_compliance: Dict[str, Any]
     ) -> List[str]:
-        """Generate compliance recommendations."""
+        """
+Generate compliance recommendations."""
         recommendations = []
         
         for treaty, compliance in treaty_compliance.items():
@@ -753,7 +772,8 @@ class InternationalCopyrightManager:
         )
 
     async def get_territorial_requirements(self, territory: str) -> Dict[str, Any]:
-        """Get detailed territorial requirements for copyright registration."""
+        """
+Get detailed territorial requirements for copyright registration."""
         territory_info = self.territorial_rights.get(territory)
         
         if not territory_info:
@@ -818,7 +838,8 @@ class InternationalCopyrightManager:
         return process_steps
 
     def get_copyright_metrics(self) -> Dict[str, Any]:
-        """Get copyright management performance metrics."""
+        """
+Get copyright management performance metrics."""
         return {
             **self.copyright_metrics,
             'supported_territories': len(self.territorial_rights),

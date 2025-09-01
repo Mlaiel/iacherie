@@ -2,15 +2,17 @@
 Professional error hierarchy with comprehensive business logic coverage.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, Optional, Union
 from fastapi import HTTPException, status
 from enum import Enum
 
 
 class ErrorCode(str, Enum):
-    """Professional error codes for business logic categorization."""
+    """
+Professional error codes for business logic categorization."""
     
     # Authentication & Authorization
     AUTHENTICATION_FAILED = "AUTH_001"
@@ -63,7 +65,8 @@ class BaseApplicationException(Exception):
         super().__init__(self.message)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses."""
+        """
+Convert exception to dictionary for API responses."""
         return {
             "error": {
                 "code": self.error_code.value,
@@ -125,7 +128,8 @@ class BusinessLogicException(BaseApplicationException):
 
 
 class ContentNotFoundException(BusinessLogicException):
-    """Content not found error."""
+    """
+Content not found error."""
     
     def __init__(
         self,
@@ -175,7 +179,8 @@ class DatabaseException(BaseApplicationException):
 
 
 class ValidationException(BusinessLogicException):
-    """Input validation errors."""
+    """
+Input validation errors."""
     
     def __init__(
         self,

@@ -1,6 +1,7 @@
 """Configuration and Settings for Copyright Enforcement Module
 Professional configuration management with environment support
 """
+
 import os
 import logging
 from typing import Dict, List, Any, Optional, Set
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types"""
+    """
+Environment types"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -26,6 +29,7 @@ class EnvironmentType(Enum):
 
 class LogLevel(Enum):
     """Logging levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -35,6 +39,7 @@ class LogLevel(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -182,7 +187,8 @@ class PlatformConfig:
 
 @dataclass
 class NotificationConfig:
-    """Notification system configuration"""
+    """
+Notification system configuration"""
     # Email settings
     smtp_host: str = "localhost"
     smtp_port: int = 587
@@ -410,7 +416,8 @@ class EnforcementSettings(BaseSettings):
     
     @validator('platforms')
     def validate_platforms(cls, v):
-        """Validate platform configurations"""
+        """
+Validate platform configurations"""
         if not v:
             # Initialize with default platform configs
             default_platforms = {}
@@ -421,7 +428,8 @@ class EnforcementSettings(BaseSettings):
     
     @validator('security')
     def validate_security(cls, v, values):
-        """Validate security configuration"""
+        """
+Validate security configuration"""
         if values.get('environment') == EnvironmentType.PRODUCTION:
             if v.jwt_secret_key == "your-secret-key-change-in-production":
                 raise ValueError("JWT secret key must be changed in production")
@@ -432,27 +440,33 @@ class EnforcementSettings(BaseSettings):
         return self.platforms.get(platform_type.value)
     
     def update_platform_config(self, platform_type: PlatformType, config: PlatformConfig):
-        """Update configuration for specific platform"""
+        """
+Update configuration for specific platform"""
         self.platforms[platform_type.value] = config
     
     def is_production(self) -> bool:
-        """Check if running in production environment"""
+        """
+Check if running in production environment"""
         return self.environment == EnvironmentType.PRODUCTION
     
     def is_development(self) -> bool:
-        """Check if running in development environment"""
+        """
+Check if running in development environment"""
         return self.environment == EnvironmentType.DEVELOPMENT
     
     def get_log_level(self) -> str:
-        """Get logging level"""
+        """
+Get logging level"""
         return self.monitoring.log_level.value
     
     def get_database_url(self) -> str:
-        """Get database connection URL"""
+        """
+Get database connection URL"""
         return self.database.connection_string
     
     def get_redis_url(self) -> str:
-        """Get Redis connection URL"""
+        """
+Get Redis connection URL"""
         auth_part = f":{self.redis.password}@" if self.redis.password else ""
         return f"redis://{auth_part}{self.redis.host}:{self.redis.port}/{self.redis.database}"
     
@@ -468,7 +482,8 @@ class EnforcementSettings(BaseSettings):
         }
     
     def ensure_directories(self):
-        """Ensure all required directories exist"""
+        """
+Ensure all required directories exist"""
         paths = self.get_storage_paths()
         for path_name, path in paths.items():
             try:
@@ -503,7 +518,8 @@ class EnforcementSettings(BaseSettings):
     
     @classmethod
     def from_file(cls, config_path: str) -> 'EnforcementSettings':
-        """Load settings from configuration file"""
+        """
+Load settings from configuration file"""
         try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
@@ -546,14 +562,16 @@ def get_settings() -> EnforcementSettings:
 
 
 def reload_settings():
-    """Reload settings from environment"""
+    """
+Reload settings from environment"""
     global settings
     settings = EnforcementSettings()
     return settings
 
 
 def configure_logging():
-    """Configure logging based on settings"""
+    """
+Configure logging based on settings"""
     try:
         log_config = {
             'level': getattr(logging, settings.get_log_level()),

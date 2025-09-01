@@ -18,6 +18,7 @@ Enterprise Module Overview:
 - Multi-tenant analytics processing with enterprise security
 - Scalable microservices architecture with load balancing
 """
+
 import asyncio
 import logging
 import json
@@ -74,6 +75,7 @@ ml_predictions_total = Counter('ml_predictions_total', 'Total ML predictions gen
 
 class ServiceStatus(Enum):
     """Service status enumeration"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -96,7 +98,8 @@ class ServiceHealth:
     metrics: Dict[str, Any]
 
 class AnalyticsRequestModel(BaseModel):
-    """Analytics request API model"""
+    """
+Analytics request API model"""
     content_id: str = Field(..., description="Unique content identifier")
     analytics_type: str = Field(..., description="Type of analytics to perform")
     user_id: str = Field(..., description="User identifier")
@@ -139,7 +142,8 @@ class EnterpriseAnalyticsService:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize enterprise analytics service"""
+        """
+Initialize enterprise analytics service"""
         self.config = config
         self.service_id = f"analytics_service_{int(time.time())}"
         self.start_time = datetime.utcnow()
@@ -243,7 +247,8 @@ class EnterpriseAnalyticsService:
             return ServiceStatus.UNHEALTHY
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage in MB"""
+        """
+Get current memory usage in MB"""
         try:
             import psutil
             process = psutil.Process()
@@ -252,7 +257,8 @@ class EnterpriseAnalyticsService:
             return 0.0
     
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""
+        """
+Get current CPU usage percentage"""
         try:
             import psutil
             return psutil.cpu_percent(interval=1)
@@ -260,7 +266,8 @@ class EnterpriseAnalyticsService:
             return 0.0
     
     async def _get_cache_metrics(self) -> float:
-        """Get cache hit rate metrics"""
+        """
+Get cache hit rate metrics"""
         try:
             info = self.redis_client.info()
             hits = float(info.get('keyspace_hits', 0))
@@ -271,7 +278,8 @@ class EnterpriseAnalyticsService:
             return 0.0
     
     async def _get_performance_metrics(self) -> float:
-        """Get average response time metrics"""
+        """
+Get average response time metrics"""
         try:
             # Get metrics from Redis
             metrics_key = f"performance_metrics:{self.service_id}"

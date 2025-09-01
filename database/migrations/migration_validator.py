@@ -8,7 +8,7 @@ Responsibility: Comprehensive migration validation for content protection and mo
 ==============================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ VALIDATION LOGIC PIPELINE:
 Schema Analysis → Dependency Validation → Security Assessment → Performance Impact → 
 Data Integrity Check → Compatibility Verification → Risk Assessment → Approval Decision
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Set, Tuple, Any, Callable
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationCategory(Enum):
-    """Categories of validation checks"""
+    """
+Categories of validation checks"""
+
     SCHEMA_COMPATIBILITY = "schema_compatibility"
     DATA_INTEGRITY = "data_integrity"
     SECURITY_COMPLIANCE = "security_compliance"
@@ -62,6 +65,7 @@ class ValidationCategory(Enum):
 
 class ValidationPriority(Enum):
     """Priority levels for validation checks"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -84,7 +88,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationConfiguration:
-    """Comprehensive validation configuration"""
+    """
+Comprehensive validation configuration"""
     enabled_categories: Set[ValidationCategory] = field(default_factory=lambda: set(ValidationCategory))
     minimum_priority: ValidationPriority = ValidationPriority.MEDIUM
     fail_on_security_issues: bool = True
@@ -100,7 +105,8 @@ class ValidationConfiguration:
 
 @dataclass
 class ValidationContext:
-    """Context information for validation execution"""
+    """
+Context information for validation execution"""
     migration_id: str
     migration_content: str
     migration_type: MigrationType
@@ -483,7 +489,8 @@ class IndustrialMigrationValidator:
         context: ValidationContext,
         result: ValidationResult
     ) -> List[str]:
-        """Generate actionable recommendations based on validation results"""
+        """
+Generate actionable recommendations based on validation results"""
         
         recommendations = []
         
@@ -729,20 +736,24 @@ class IndustrialMigrationValidator:
         pass
     
     async def _ensure_validation_tables(self):
-        """Ensure validation tracking tables exist"""
+        """
+Ensure validation tracking tables exist"""
         pass
     
     async def _record_validation_result(self, result: ValidationResult):
-        """Record validation result in tracking tables"""
+        """
+Record validation result in tracking tables"""
         self.validation_history.append(result)
     
     async def _build_migration_dependency_graph(self, contexts: List[ValidationContext]) -> List[List[ValidationContext]]:
-        """Build dependency graph for batch validation"""
+        """
+Build dependency graph for batch validation"""
         # Simple implementation - would analyze actual dependencies
         return [contexts]
     
     async def _validate_cross_migration_dependencies(self, results: List[ValidationResult]) -> Dict[str, Any]:
-        """Validate dependencies across multiple migrations"""
+        """
+Validate dependencies across multiple migrations"""
         return {"passed": True, "warnings": [], "errors": []}
     
     async def _get_latest_validation(self, migration_id: str) -> Optional[ValidationResult]:
@@ -753,7 +764,8 @@ class IndustrialMigrationValidator:
         return None
     
     async def _get_validation_history(self, migration_id: str) -> List[Dict[str, Any]]:
-        """Get validation history for migration"""
+        """
+Get validation history for migration"""
         history = []
         for result in self.validation_history:
             if result.migration_id == migration_id:

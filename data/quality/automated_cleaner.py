@@ -5,8 +5,9 @@ Enterprise-grade automated data cleaning system with AI-powered content repair.
 Provides intelligent data fixing, optimization, and quality enhancement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
@@ -18,7 +19,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class CleaningOperation(Enum):
-    """Types of cleaning operations"""
+    """
+Types of cleaning operations"""
+
     FORMAT_CONVERSION = "format_conversion"
     METADATA_ENHANCEMENT = "metadata_enhancement"
     QUALITY_IMPROVEMENT = "quality_improvement"
@@ -29,6 +32,7 @@ class CleaningOperation(Enum):
 
 class CleaningPriority(Enum):
     """Cleaning operation priorities"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -209,7 +213,8 @@ class AutomatedDataCleaner:
         return operations[:self.max_cleaning_operations]
     
     def _priority_weight(self, priority: CleaningPriority) -> int:
-        """Get numeric weight for priority sorting"""
+        """
+Get numeric weight for priority sorting"""
         weights = {
             CleaningPriority.CRITICAL: 4,
             CleaningPriority.HIGH: 3,
@@ -219,7 +224,8 @@ class AutomatedDataCleaner:
         return weights.get(priority, 0)
     
     def _get_optimal_format(self, content_type: str) -> str:
-        """Get optimal format for content type"""
+        """
+Get optimal format for content type"""
         optimal_formats = {
             'audio': 'mp3',
             'video': 'mp4',
@@ -235,7 +241,8 @@ class AutomatedDataCleaner:
         cleaning_plan: List[Tuple[CleaningOperation, CleaningPriority, Dict[str, Any]]],
         metadata: Optional[Dict[str, Any]]
     ) -> Optional[Any]:
-        """Clean audio content"""
+        """
+Clean audio content"""
         
         cleaned_content = content_data
         result = CleaningResult()
@@ -447,7 +454,7 @@ class AutomatedDataCleaner:
             # Clean up encoding artifacts in text
             if isinstance(content_data, str):
                 # Fix common encoding issues
-                fixed_text = content_data.replace('â€™', "'")  # Fix smart quotes
+                fixed_text = content_data.replace('â€(TM)', "'")  # Fix smart quotes
                 fixed_text = fixed_text.replace('â€œ', '"')  # Fix smart quotes
                 fixed_text = fixed_text.replace('â€\x9d', '"')  # Fix smart quotes
                 return fixed_text
@@ -517,7 +524,8 @@ class AutomatedDataCleaner:
         return cleaned
     
     def _normalize_text_content(self, text: str) -> str:
-        """Normalize text content"""
+        """
+Normalize text content"""
         
         # Convert to lowercase for certain operations
         # Standardize line endings
@@ -534,7 +542,8 @@ class AutomatedDataCleaner:
         return normalized
     
     async def get_cleaning_statistics(self) -> Dict[str, Any]:
-        """Get cleaning operation statistics"""
+        """
+Get cleaning operation statistics"""
         
         # Placeholder implementation
         # Would track cleaning operations, success rates, etc.
@@ -548,7 +557,8 @@ class AutomatedDataCleaner:
         }
     
     def configure_cleaning_rules(self, rules: Dict[str, Any]):
-        """Configure custom cleaning rules"""
+        """
+Configure custom cleaning rules"""
         
         if 'auto_fix_enabled' in rules:
             self.auto_fix_enabled = rules['auto_fix_enabled']

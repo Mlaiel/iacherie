@@ -5,11 +5,12 @@ High-performance vector similarity search using Facebook AI Similarity Search (F
 Optimized for large-scale similarity matching and content fingerprinting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FAISSIndexConfig:
-    """Configuration for FAISS index creation."""
+    """
+Configuration for FAISS index creation."""
     name: str
     dimension: int
     metric: str = "cosine"
@@ -79,7 +81,8 @@ class FAISSIndexManager:
         self._create_index()
     
     def _initialize_gpu_resources(self):
-        """Initialize GPU resources for FAISS."""
+        """
+Initialize GPU resources for FAISS."""
         try:
             if self.config.gpu_ids:
                 # Multi-GPU setup

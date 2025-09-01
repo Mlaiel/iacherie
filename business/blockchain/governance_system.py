@@ -21,8 +21,9 @@ Integration Points:
 - Analytics for governance metrics
 
 Author: Expert Development Team
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -60,7 +61,9 @@ from backend.business.blockchain.smart_contracts import SmartContractManager
 logger = get_logger(__name__)
 
 class ProposalType(Enum):
-    """Types of governance proposals"""
+    """
+Types of governance proposals"""
+
     PLATFORM_UPGRADE = "platform_upgrade"
     TREASURY_ALLOCATION = "treasury_allocation"
     PARAMETER_CHANGE = "parameter_change"
@@ -72,6 +75,7 @@ class ProposalType(Enum):
 
 class ProposalStatus(Enum):
     """Status of governance proposals"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     SUCCEEDED = "succeeded"
@@ -83,6 +87,7 @@ class ProposalStatus(Enum):
 
 class VoteType(Enum):
     """Types of votes"""
+
     FOR = "for"
     AGAINST = "against"
     ABSTAIN = "abstain"
@@ -113,7 +118,8 @@ class VotingPower:
 
 @dataclass
 class TreasuryAllocation:
-    """Treasury fund allocation"""
+    """
+Treasury fund allocation"""
     recipient: str
     amount: Decimal
     currency: str
@@ -122,14 +128,16 @@ class TreasuryAllocation:
     release_schedule: List[Dict] = field(default_factory=list)
 
 class GovernanceTokenManager:
-    """Manages governance tokens and voting rights"""
+    """
+Manages governance tokens and voting rights"""
     
     def __init__(self, contract_manager: SmartContractManager):
         self.contract_manager = contract_manager
         self.redis: Optional[aioredis.Redis] = None
         
     async def initialize(self):
-        """Initialize token manager"""
+        """
+Initialize token manager"""
         try:
             self.redis = await aioredis.from_url(
                 f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
@@ -405,7 +413,8 @@ class ProposalManager:
         self.redis: Optional[aioredis.Redis] = None
         
     async def initialize(self):
-        """Initialize proposal manager"""
+        """
+Initialize proposal manager"""
         try:
             self.redis = await aioredis.from_url(
                 f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
@@ -686,7 +695,8 @@ class ProposalManager:
         proposal_id: int, 
         session: AsyncSession
     ) -> GovernanceProposal:
-        """Get proposal by ID"""
+        """
+Get proposal by ID"""
         # Implementation would query database
         # For now, return mock proposal
         return GovernanceProposal(
@@ -709,7 +719,8 @@ class ProposalManager:
         return mapping[vote_type]
     
     async def _cache_proposal_data(self, proposal_id: int, proposal: GovernanceProposal):
-        """Cache proposal data"""
+        """
+Cache proposal data"""
         cache_key = f"proposal:{proposal_id}"
         await self.redis.setex(
             cache_key,
@@ -727,7 +738,8 @@ class ProposalManager:
         proposal: GovernanceProposal, 
         session: AsyncSession
     ):
-        """Handle execution of specific proposal types"""
+        """
+Handle execution of specific proposal types"""
         if proposal.proposal_type == ProposalType.TREASURY_ALLOCATION.value:
             await self._handle_treasury_allocation(proposal, session)
         elif proposal.proposal_type == ProposalType.PARAMETER_CHANGE.value:
@@ -739,7 +751,8 @@ class ProposalManager:
         proposal: GovernanceProposal, 
         session: AsyncSession
     ):
-        """Handle treasury allocation proposal execution"""
+        """
+Handle treasury allocation proposal execution"""
         logger.info(f"Handling treasury allocation for proposal {proposal.proposal_id}")
         # Implementation would transfer funds from treasury
     
@@ -763,7 +776,8 @@ class TreasuryManager:
         allocation: TreasuryAllocation,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Allocate treasury funds"""
+        """
+Allocate treasury funds"""
         try:
             recipient_address = to_checksum_address(allocation.recipient)
             
@@ -839,7 +853,8 @@ class GovernanceSystem:
         self.initialized = False
         
     async def initialize(self):
-        """Initialize governance system"""
+        """
+Initialize governance system"""
         try:
             # Initialize contract manager
             self.contract_manager = SmartContractManager()
@@ -888,7 +903,8 @@ class GovernanceSystem:
         values: List[int] = None,
         calldatas: List[str] = None
     ) -> Dict[str, Any]:
-        """Create new governance proposal"""
+        """
+Create new governance proposal"""
         if not self.initialized:
             await self.initialize()
             
@@ -915,7 +931,8 @@ class GovernanceSystem:
         vote_type: VoteType,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Vote on governance proposal"""
+        """
+Vote on governance proposal"""
         if not self.initialized:
             await self.initialize()
             
@@ -929,7 +946,8 @@ class GovernanceSystem:
             )
     
     async def execute_proposal(self, proposal_id: int) -> Dict[str, Any]:
-        """Execute successful proposal"""
+        """
+Execute successful proposal"""
         if not self.initialized:
             await self.initialize()
             
@@ -941,7 +959,8 @@ class GovernanceSystem:
         user_address: str, 
         block_number: Optional[int] = None
     ) -> VotingPower:
-        """Get voting power for address"""
+        """
+Get voting power for address"""
         if not self.initialized:
             await self.initialize()
             
@@ -956,7 +975,8 @@ class GovernanceSystem:
         amount: Decimal,
         reason: str
     ) -> Dict[str, Any]:
-        """Mint new governance tokens"""
+        """
+Mint new governance tokens"""
         if not self.initialized:
             await self.initialize()
             
@@ -977,7 +997,8 @@ class GovernanceSystem:
         milestone_requirements: List[str] = None,
         release_schedule: List[Dict] = None
     ) -> Dict[str, Any]:
-        """Allocate treasury funds"""
+        """
+Allocate treasury funds"""
         if not self.initialized:
             await self.initialize()
             
@@ -1006,7 +1027,8 @@ async def create_governance_proposal(
     values: List[int] = None,
     calldatas: List[str] = None
 ) -> Dict[str, Any]:
-    """Create new governance proposal"""
+    """
+Create new governance proposal"""
     return await governance_system.create_proposal(
         proposer, title, description, proposal_type, targets, values, calldatas
     )
@@ -1017,16 +1039,19 @@ async def vote_on_governance_proposal(
     vote_type: VoteType,
     reason: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Vote on governance proposal"""
+    """
+Vote on governance proposal"""
     return await governance_system.vote_on_proposal(voter, proposal_id, vote_type, reason)
 
 async def get_user_voting_power(
     user_address: str, 
     block_number: Optional[int] = None
 ) -> VotingPower:
-    """Get voting power for user address"""
+    """
+Get voting power for user address"""
     return await governance_system.get_voting_power(user_address, block_number)
 
 async def execute_governance_proposal(proposal_id: int) -> Dict[str, Any]:
-    """Execute successful governance proposal"""
+    """
+Execute successful governance proposal"""
     return await governance_system.execute_proposal(proposal_id)

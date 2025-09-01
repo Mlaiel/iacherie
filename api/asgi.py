@@ -8,6 +8,7 @@ Authors & Roles:
 - Lead Dev, Architect IA, Backend Senior, ML Engineer, DBA/Data Engineer, Security Specialist, Microservices Architect
 - Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import sys
 from pathlib import Path

@@ -8,6 +8,7 @@ Enterprise quality gates validation system with comprehensive code analysis.
 Integrates linting, testing, security, and performance validation.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 import asyncio
 import logging
@@ -23,7 +24,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class QualityGateType(Enum):
-    """Quality gate type enumeration"""
+    """
+Quality gate type enumeration"""
+
     CODE_COVERAGE = "code_coverage"
     LINTING = "linting"
     TYPE_CHECKING = "type_checking"
@@ -35,6 +38,7 @@ class QualityGateType(Enum):
 
 class QualityStatus(Enum):
     """Quality status enumeration"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -52,7 +56,8 @@ class QualityGateConfig:
 
 @dataclass
 class QualityGateResult:
-    """Quality gate result"""
+    """
+Quality gate result"""
     gate_type: QualityGateType
     status: QualityStatus
     score: Optional[float] = None
@@ -75,10 +80,12 @@ class QualityValidationReport:
     recommendations: List[str] = None
 
 class QualityGateValidator:
-    """Enterprise quality gates validation engine"""
+    """
+Enterprise quality gates validation engine"""
     
     def __init__(self):
-        """Initialize quality gate validator"""
+        """
+Initialize quality gate validator"""
         self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.validation_history: List[QualityValidationReport] = []
@@ -781,7 +788,8 @@ class QualityGateValidator:
         return overall_status, overall_score
     
     def _generate_quality_summary(self, gate_results: List[QualityGateResult]) -> Dict[str, Any]:
-        """Generate quality validation summary"""
+        """
+Generate quality validation summary"""
         summary = {
             "total_gates": len(gate_results),
             "passed": sum(1 for r in gate_results if r.status == QualityStatus.PASSED),
@@ -853,7 +861,8 @@ class QualityGateValidator:
         return self.validation_history[-limit:]
     
     def get_quality_trends(self) -> Dict[str, Any]:
-        """Get quality trends over time"""
+        """
+Get quality trends over time"""
         if not self.validation_history:
             return {}
         

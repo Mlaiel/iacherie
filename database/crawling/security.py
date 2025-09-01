@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -36,7 +37,9 @@ from ..core.exceptions import (
 
 
 class ThreatLevel(Enum):
-    """Security threat levels."""
+    """
+Security threat levels."""
+
     CRITICAL = "critical"        # Immediate response required
     HIGH = "high"               # Response within 1 hour
     MEDIUM = "medium"           # Response within 4 hours  
@@ -46,6 +49,7 @@ class ThreatLevel(Enum):
 
 class SecurityEventType(Enum):
     """Types of security events."""
+
     UNAUTHORIZED_ACCESS = "unauthorized_access"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
     RATE_LIMIT_VIOLATION = "rate_limit_violation"
@@ -60,6 +64,7 @@ class SecurityEventType(Enum):
 
 class BlocklistType(Enum):
     """Types of blocklist entries."""
+
     IP_ADDRESS = "ip_address"
     DOMAIN = "domain"
     USER_AGENT = "user_agent"
@@ -70,6 +75,7 @@ class BlocklistType(Enum):
 
 class SecurityAction(Enum):
     """Security response actions."""
+
     BLOCK_REQUEST = "block_request"
     THROTTLE_REQUESTS = "throttle_requests"
     REQUIRE_AUTHENTICATION = "require_authentication"
@@ -94,7 +100,8 @@ class CrawlerSecurityManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize security manager."""
+        """
+Initialize security manager."""
         super().__init__(db_session)
         self.active_threats = {}
         self.security_rules = {}

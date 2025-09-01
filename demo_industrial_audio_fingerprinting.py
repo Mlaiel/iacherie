@@ -13,6 +13,7 @@ INDUSTRIAL REQUIREMENTS DEMONSTRATION:
 ✅ Matching temps réel <50ms
 ✅ Précision >99.5% sur datasets industriels
 """
+
 import asyncio
 import numpy as np
 import tempfile
@@ -33,12 +34,14 @@ from data_management.fingerprinting.industrial_audio_fingerprint import (
 )
 
 class AudioGenerator:
-    """Generate test audio for demonstration"""
+    """
+Generate test audio for demonstration"""
     
     @staticmethod
     def create_music_sample(frequency: float = 440.0, duration: float = 10.0, 
                           sample_rate: int = 22050) -> np.ndarray:
-        """Create a musical audio sample"""
+        """
+Create a musical audio sample"""
         t = np.linspace(0, duration, int(sample_rate * duration), False)
         
         # Create a chord (multiple frequencies)
@@ -64,7 +67,8 @@ class AudioGenerator:
     
     @staticmethod
     def apply_pitch_shift(audio: np.ndarray, semitones: float) -> np.ndarray:
-        """Apply pitch shift to audio"""
+        """
+Apply pitch shift to audio"""
         try:
             return librosa.effects.pitch_shift(audio, sr=22050, n_steps=semitones)
         except:
@@ -80,7 +84,8 @@ class AudioGenerator:
     
     @staticmethod
     def apply_tempo_change(audio: np.ndarray, factor: float) -> np.ndarray:
-        """Apply tempo change to audio"""
+        """
+Apply tempo change to audio"""
         try:
             return librosa.effects.time_stretch(audio, rate=factor)
         except:
@@ -98,17 +103,20 @@ class AudioGenerator:
     
     @staticmethod
     def add_noise(audio: np.ndarray, noise_level: float = 0.1) -> np.ndarray:
-        """Add noise to audio"""
+        """
+Add noise to audio"""
         noise = np.random.normal(0, noise_level, len(audio))
         return audio + noise
     
     @staticmethod
     def save_to_file(audio: np.ndarray, filename: str, sample_rate: int = 22050):
-        """Save audio to file"""
+        """
+Save audio to file"""
         sf.write(filename, audio, sample_rate)
 
 async def demonstrate_industrial_fingerprinting():
-    """Demonstrate the industrial audio fingerprinting system"""
+    """
+Demonstrate the industrial audio fingerprinting system"""
     print("🎵 Industrial Audio Fingerprinting System Demonstration")
     print("=" * 60)
     

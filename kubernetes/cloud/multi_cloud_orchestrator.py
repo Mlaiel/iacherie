@@ -14,6 +14,7 @@ This module provides comprehensive multi-cloud orchestration capabilities
 for the IA Influencer Agent platform, enabling seamless deployment and
 management across AWS, Azure, GCP, and other cloud providers.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -30,7 +31,9 @@ from .gcp_deployment import GCPDeploymentManager, GCPCredentials, GCPDeploymentC
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -39,6 +42,7 @@ class CloudProvider(Enum):
 
 class DeploymentStrategy(Enum):
     """Multi-cloud deployment strategies"""
+
     SINGLE_CLOUD = "single_cloud"
     MULTI_CLOUD_ACTIVE_ACTIVE = "multi_cloud_active_active"
     MULTI_CLOUD_ACTIVE_PASSIVE = "multi_cloud_active_passive"
@@ -47,6 +51,7 @@ class DeploymentStrategy(Enum):
 
 class ResourceDistribution(Enum):
     """Resource distribution patterns"""
+
     CENTRALIZED = "centralized"
     DISTRIBUTED = "distributed"
     REGION_BASED = "region_based"
@@ -72,7 +77,8 @@ class MultiCloudConfig:
 
 @dataclass
 class DeploymentTarget:
-    """Deployment target configuration"""
+    """
+Deployment target configuration"""
     provider: CloudProvider
     region: str
     priority: int
@@ -84,7 +90,8 @@ class DeploymentTarget:
 
 @dataclass
 class CrossCloudResource:
-    """Cross-cloud resource representation"""
+    """
+Cross-cloud resource representation"""
     resource_id: str
     resource_name: str
     resource_type: str
@@ -97,10 +104,12 @@ class CrossCloudResource:
     performance_metrics: Dict[str, float]
 
 class MultiCloudOrchestrator:
-    """Enterprise multi-cloud orchestration and management system"""
+    """
+Enterprise multi-cloud orchestration and management system"""
     
     def __init__(self):
-        """Initialize multi-cloud orchestrator"""
+        """
+Initialize multi-cloud orchestrator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.cloud_managers: Dict[CloudProvider, Any] = {}
         self.deployed_resources: Dict[str, CrossCloudResource] = {}
@@ -112,7 +121,8 @@ class MultiCloudOrchestrator:
         self.compliance_checker = MultiCloudComplianceChecker()
         
     async def initialize(self) -> bool:
-        """Initialize multi-cloud orchestrator"""
+        """
+Initialize multi-cloud orchestrator"""
         try:
             self.logger.info("Initializing multi-cloud orchestrator")
             # Initialize internal components
@@ -442,17 +452,20 @@ class MultiCloudOrchestrator:
         pass
     
     def _create_azure_deployment_config(self, target: DeploymentTarget) -> AzureDeploymentConfig:
-        """Create Azure-specific deployment configuration"""
+        """
+Create Azure-specific deployment configuration"""
         # Implementation would create Azure deployment config based on target
         pass
     
     def _create_gcp_deployment_config(self, target: DeploymentTarget) -> GCPDeploymentConfig:
-        """Create GCP-specific deployment configuration"""
+        """
+Create GCP-specific deployment configuration"""
         # Implementation would create GCP deployment config based on target
         pass
     
     async def _configure_cross_cloud_networking(self, deployment_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure networking between cloud providers"""
+        """
+Configure networking between cloud providers"""
         networking_config = {
             "vpn_connections": [],
             "peering_connections": [],
@@ -696,7 +709,8 @@ class MultiCloudOrchestrator:
         return [target.provider for target in targets]
     
     async def _rollback_multi_cloud_deployment(self, deployment_id: str) -> bool:
-        """Rollback multi-cloud deployment"""
+        """
+Rollback multi-cloud deployment"""
         self.logger.info(f"Rolling back multi-cloud deployment: {deployment_id}")
         # Implementation for rollback logic
         return True
@@ -813,26 +827,33 @@ class MultiCloudCostTracker:
     """Multi-cloud cost tracking and optimization"""
     
     async def initialize(self):
-        """Initialize cost tracker"""
+        """
+Initialize cost tracker"""
         pass
 
 class MultiCloudPerformanceMonitor:
-    """Multi-cloud performance monitoring"""
+    """
+Multi-cloud performance monitoring"""
     
     async def initialize(self):
-        """Initialize performance monitor"""
+        """
+Initialize performance monitor"""
         pass
 
 class MultiCloudSecurityManager:
-    """Multi-cloud security management"""
+    """
+Multi-cloud security management"""
     
     async def initialize(self):
-        """Initialize security manager"""
+        """
+Initialize security manager"""
         pass
 
 class MultiCloudComplianceChecker:
-    """Multi-cloud compliance checking"""
+    """
+Multi-cloud compliance checking"""
     
     async def initialize(self):
-        """Initialize compliance checker"""
+        """
+Initialize compliance checker"""
         pass

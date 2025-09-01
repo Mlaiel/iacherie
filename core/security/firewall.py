@@ -19,6 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 import asyncio
 import time
 import json
@@ -52,7 +53,9 @@ from backend.core.logging import SecurityLogger
 
 
 class RateLimitType(Enum):
-    """Types of rate limiting with priority levels"""
+    """
+Types of rate limiting with priority levels"""
+
     IP_BASED = "ip_based"
     USER_BASED = "user_based"
     ENDPOINT_BASED = "endpoint_based"
@@ -65,6 +68,7 @@ class RateLimitType(Enum):
 
 class BlockAction(Enum):
     """Actions to take when blocking requests"""
+
     DENY = "deny"
     DELAY = "delay"
     CAPTCHA = "captcha"
@@ -73,6 +77,7 @@ class BlockAction(Enum):
 
 class ThreatLevel(Enum):
     """Threat levels for requests"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -81,7 +86,8 @@ class ThreatLevel(Enum):
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule definition"""
+    """
+Rate limiting rule definition"""
     rule_id: str
     limit_type: RateLimitType
     requests_per_window: int
@@ -97,7 +103,8 @@ class RateLimitRule:
 
 @dataclass
 class SecurityRule:
-    """Security filtering rule"""
+    """
+Security filtering rule"""
     rule_id: str
     name: str
     description: str
@@ -112,7 +119,8 @@ class SecurityRule:
 
 @dataclass
 class RequestAnalysis:
-    """Request analysis result"""
+    """
+Request analysis result"""
     request_id: str
     source_ip: str
     endpoint: str
@@ -129,7 +137,8 @@ class RequestAnalysis:
 
 
 class RateLimiter:
-    """Advanced rate limiting implementation"""
+    """
+Advanced rate limiting implementation"""
     
     def __init__(self):
         self.logger = SecurityLogger("RateLimiter")
@@ -268,7 +277,8 @@ class RateLimiter:
         method: str,
         user_id: Optional[str]
     ) -> Tuple[bool, Optional[str]]:
-        """Check if specific rule is violated"""
+        """
+Check if specific rule is violated"""
         try:
             current_time = time.time()
             
@@ -492,7 +502,8 @@ class DDoSProtection:
 
 
 class RequestFilter:
-    """Advanced request filtering and validation"""
+    """
+Advanced request filtering and validation"""
     
     def __init__(self):
         self.logger = SecurityLogger("RequestFilter")
@@ -687,7 +698,8 @@ class RequestFilter:
             return False
     
     def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP from request"""
+        """
+Extract client IP from request"""
         forwarded_for = request.headers.get("x-forwarded-for")
         if forwarded_for:
             return forwarded_for.split(",")[0].strip()

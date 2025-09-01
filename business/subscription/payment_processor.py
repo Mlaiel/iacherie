@@ -4,10 +4,11 @@ Multi-provider payment processing engine supporting Stripe, PayPal, and Wise.
 Handles payment method management, charging, refunds, and webhook processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List
@@ -50,7 +51,8 @@ class PaymentProcessor:
     """
     
     def __init__(self):
-        """Initialize payment processor with provider configurations."""
+        """
+Initialize payment processor with provider configurations."""
         self.logger = get_logger(__name__)
         
         # Payment provider configurations
@@ -689,7 +691,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         signature: str
     ) -> bool:
-        """Verify Wise webhook signature."""
+        """
+Verify Wise webhook signature."""
         # Wise webhook verification logic
         return True  # Placeholder
     
@@ -698,7 +701,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         db: Session
     ) -> Dict[str, Any]:
-        """Process Stripe webhook."""
+        """
+Process Stripe webhook."""
         event_type = webhook_data.get("type")
         
         if event_type == "payment_intent.succeeded":
@@ -767,7 +771,8 @@ class PaymentProcessor:
         pass
     
     async def _delete_wise_payment_method(self, payment_method_id: str) -> None:
-        """Delete Wise payment method."""
+        """
+Delete Wise payment method."""
         # Wise payment method deletion logic
         pass
 

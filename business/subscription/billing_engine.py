@@ -4,10 +4,11 @@ Advanced billing and invoicing engine for subscription management.
 Handles automated billing cycles, prorations, tax calculations, and payment processing integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Optional, Dict, Any, List, Tuple
@@ -49,7 +50,8 @@ class BillingEngine:
     """
     
     def __init__(self):
-        """Initialize billing engine."""
+        """
+Initialize billing engine."""
         self.payment_processor = PaymentProcessor()
         self.logger = get_logger(__name__)
         
@@ -456,7 +458,8 @@ class BillingEngine:
         billing_date: datetime,
         db: Session
     ) -> Decimal:
-        """Calculate billing amount for subscription."""
+        """
+Calculate billing amount for subscription."""
         # Base amount from plan
         base_amount = self._get_plan_price_for_cycle(
             subscription.plan, subscription.billing_cycle
@@ -477,7 +480,8 @@ class BillingEngine:
         plan: SubscriptionPlan, 
         billing_cycle: str
     ) -> Decimal:
-        """Get plan price for specific billing cycle."""
+        """
+Get plan price for specific billing cycle."""
         if billing_cycle == BillingCycleType.MONTHLY.value:
             return plan.monthly_price
         elif billing_cycle == BillingCycleType.YEARLY.value:
@@ -488,7 +492,8 @@ class BillingEngine:
             return plan.monthly_price
     
     def _get_billing_period_days(self, billing_cycle: str) -> int:
-        """Get number of days in billing period."""
+        """
+Get number of days in billing period."""
         if billing_cycle == BillingCycleType.MONTHLY.value:
             return 30
         elif billing_cycle == BillingCycleType.YEARLY.value:
@@ -505,7 +510,8 @@ class BillingEngine:
         billing_date: datetime,
         db: Session
     ) -> BillingCycle:
-        """Create billing cycle record."""
+        """
+Create billing cycle record."""
         # Calculate cycle dates
         cycle_start = billing_date
         cycle_end = self._calculate_next_billing_date(subscription, billing_date)
@@ -530,7 +536,8 @@ class BillingEngine:
         subscription: UserSubscription, 
         current_date: datetime
     ) -> datetime:
-        """Calculate next billing date based on billing cycle."""
+        """
+Calculate next billing date based on billing cycle."""
         if subscription.billing_cycle == BillingCycleType.MONTHLY.value:
             # Add one month
             if current_date.month == 12:
@@ -565,7 +572,8 @@ class BillingEngine:
         billing_date: datetime,
         db: Session
     ) -> Invoice:
-        """Generate invoice for billing cycle."""
+        """
+Generate invoice for billing cycle."""
         return await self.generate_invoice(subscription.id, billing_cycle.id, db)
     
     async def _process_payment(
@@ -575,7 +583,8 @@ class BillingEngine:
         amount: Decimal,
         db: Session
     ) -> Dict[str, Any]:
-        """Process payment for invoice."""
+        """
+Process payment for invoice."""
         if not subscription.payment_method_id:
             return {
                 "success": False,
@@ -622,7 +631,8 @@ class BillingEngine:
         subscription: UserSubscription, 
         subtotal: Decimal
     ) -> Decimal:
-        """Calculate tax amount based on user location."""
+        """
+Calculate tax amount based on user location."""
         # This would integrate with tax service or use configured rates
         # For now, return 0 (implement based on business requirements)
         return Decimal('0.00')
@@ -632,7 +642,8 @@ class BillingEngine:
         subscription: UserSubscription,
         billing_cycle: BillingCycle
     ) -> List[Dict[str, Any]]:
-        """Create invoice line items."""
+        """
+Create invoice line items."""
         line_items = []
         
         # Main subscription line item
@@ -689,7 +700,8 @@ class BillingEngine:
         subscription: UserSubscription, 
         db: Session
     ) -> Decimal:
-        """Calculate applicable discounts."""
+        """
+Calculate applicable discounts."""
         # This would integrate with discount/coupon system
         # For now, return 0 (implement based on business requirements)
         return Decimal('0.00')

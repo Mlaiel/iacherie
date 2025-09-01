@@ -8,7 +8,7 @@ Responsibility: Advanced fingerprint analytics, metrics, and performance monitor
 ====================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC ANALYTICS:
 Fingerprint Data → Performance Analysis → Detection Metrics → Threat Intelligence → 
 Real-time Dashboards → Predictive Analytics → Security Insights → Business Reports
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -34,7 +35,9 @@ from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetricType(Enum):
-    """Types de métriques d'analytics"""
+    """
+Types de métriques d'analytics"""
+
     PERFORMANCE = "performance"
     DETECTION = "detection"
     THREAT = "threat"
@@ -44,6 +47,7 @@ class AnalyticsMetricType(Enum):
 
 class TimeGranularity(Enum):
     """Granularité temporelle pour les analyses"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -64,7 +68,8 @@ class AnalyticsQuery:
 
 @dataclass
 class PerformanceMetrics:
-    """Métriques de performance du fingerprinting"""
+    """
+Métriques de performance du fingerprinting"""
     
     # Processing metrics
     total_fingerprints_generated: int = 0
@@ -89,7 +94,8 @@ class PerformanceMetrics:
 
 @dataclass
 class DetectionMetrics:
-    """Métriques de détection de violations"""
+    """
+Métriques de détection de violations"""
     
     # Detection stats
     total_detections: int = 0
@@ -115,7 +121,8 @@ class DetectionMetrics:
 
 @dataclass
 class ThreatMetrics:
-    """Métriques d'analyse des menaces"""
+    """
+Métriques d'analyse des menaces"""
     
     # Threat landscape
     threat_sources: Dict[str, int] = field(default_factory=dict)
@@ -193,7 +200,8 @@ class FingerprintAnalytics:
     
     async def generate_performance_analytics(self, 
                                            query: AnalyticsQuery) -> PerformanceMetrics:
-        """Génère les analytics de performance"""
+        """
+Génère les analytics de performance"""
         try:
             cache_key = f"perf_analytics:{hash(str(query))}"
             cached_data = await self._get_cached_data(cache_key)
@@ -402,7 +410,8 @@ class FingerprintAnalytics:
         }
     
     async def _query_detection_metrics(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """Requête les métriques de détection depuis la DB"""
+        """
+Requête les métriques de détection depuis la DB"""
         return {
             'total_detections': 500,
             'true_positives': 450,
@@ -415,7 +424,8 @@ class FingerprintAnalytics:
         }
     
     async def _query_threat_metrics(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """Requête les métriques de menaces depuis la DB"""
+        """
+Requête les métriques de menaces depuis la DB"""
         return {
             'threat_sources': {'youtube': 150, 'tiktok': 100, 'unknown': 50},
             'severity_distribution': {'high': 50, 'medium': 200, 'low': 250},
@@ -425,44 +435,53 @@ class FingerprintAnalytics:
         }
     
     def _calculate_throughput(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le débit de traitement"""
+        """
+Calcule le débit de traitement"""
         total_fingerprints = metrics_data.get('total_fingerprints', 0)
         time_period = 3600  # 1 hour in seconds
         return total_fingerprints / time_period if time_period > 0 else 0.0
     
     def _calculate_error_rate(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le taux d'erreur"""
+        """
+Calcule le taux d'erreur"""
         total_fingerprints = metrics_data.get('total_fingerprints', 0)
         error_count = metrics_data.get('error_count', 0)
         return error_count / total_fingerprints if total_fingerprints > 0 else 0.0
     
     def _calculate_quality_score(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le score de qualité des empreintes"""
+        """
+Calcule le score de qualité des empreintes"""
         # Complex algorithm to calculate fingerprint quality
         return 0.92  # Placeholder
     
     def _calculate_uniqueness_score(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le score d'unicité des empreintes"""
+        """
+Calcule le score d'unicité des empreintes"""
         return 0.95  # Placeholder
     
     def _calculate_collision_rate(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le taux de collision des empreintes"""
+        """
+Calcule le taux de collision des empreintes"""
         return 0.001  # Placeholder
     
     def _calculate_storage_efficiency(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule l'efficacité de stockage"""
+        """
+Calcule l'efficacité de stockage"""
         return 0.85  # Placeholder
     
     def _calculate_compression_ratio(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le ratio de compression"""
+        """
+Calcule le ratio de compression"""
         return 0.3  # Placeholder
     
     def _calculate_search_accuracy(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule la précision de recherche"""
+        """
+Calcule la précision de recherche"""
         return 0.94  # Placeholder
     
     async def _analyze_threat_trends(self, threat_data: Dict[str, Any]) -> str:
-        """Analyse les tendances des menaces"""
+        """
+Analyse les tendances des menaces"""
         # Complex trend analysis would go here
         return "increasing"
     
@@ -478,7 +497,8 @@ class FingerprintAnalytics:
                                performance: PerformanceMetrics,
                                detection: DetectionMetrics,
                                threat: ThreatMetrics) -> List[str]:
-        """Génère des insights basés sur les métriques"""
+        """
+Génère des insights basés sur les métriques"""
         insights = []
         
         # Performance insights
@@ -586,7 +606,8 @@ class FingerprintAnalytics:
             return None
     
     async def _cache_data(self, cache_key: str, data: Dict[str, Any]):
-        """Met en cache les données"""
+        """
+Met en cache les données"""
         try:
             await self.redis_client.setex(
                 cache_key, 
@@ -611,15 +632,18 @@ class FingerprintAnalytics:
         return await self.redis_client.llen('fingerprint_queue')
     
     async def _get_hourly_activity(self) -> int:
-        """Récupère l'activité de la dernière heure"""
+        """
+Récupère l'activité de la dernière heure"""
         return 100  # Placeholder
     
     async def _get_active_detections(self) -> int:
-        """Récupère le nombre de détections actives"""
+        """
+Récupère le nombre de détections actives"""
         return 25  # Placeholder
     
     async def _get_system_health(self) -> str:
-        """Récupère l'état de santé du système"""
+        """
+Récupère l'état de santé du système"""
         return "healthy"  # Placeholder
     
     async def _get_active_alerts(self) -> List[Dict[str, Any]]:

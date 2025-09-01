@@ -6,6 +6,7 @@ Includes performance SLAs, business metrics monitoring, and comprehensive alerti
 
 Author: Performance Optimization Team
 """
+
 import json
 import logging
 from typing import Dict, List, Any, Optional
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -26,6 +29,7 @@ class AlertSeverity(Enum):
 
 class MonitoringCategory(Enum):
     """Monitoring categories"""
+
     PERFORMANCE = "performance"
     BUSINESS = "business"
     SECURITY = "security"
@@ -70,7 +74,8 @@ class CriticalBusinessMonitoring:
         self.notification_channels = self._define_notification_channels()
         
     def _define_sla_targets(self) -> Dict[str, List[SLATarget]]:
-        """Define SLA targets for critical business operations"""
+        """
+Define SLA targets for critical business operations"""
         return {
             "authentication": [
                 SLATarget("api_response_time_seconds", 0.2, "<=", "seconds", "Users cannot login - direct revenue impact"),

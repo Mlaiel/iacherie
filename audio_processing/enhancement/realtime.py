@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
+
 import numpy as np
 import threading
 import queue
@@ -34,7 +35,9 @@ from ..core.exceptions import AudioProcessingError
 
 
 class ProcessingMode(Enum):
-    """Real-time processing modes"""
+    """
+Real-time processing modes"""
+
     LOW_LATENCY = "low_latency"      # < 10ms
     BALANCED = "balanced"            # 10-50ms  
     HIGH_QUALITY = "high_quality"    # 50-100ms
@@ -56,7 +59,8 @@ class RealTimeConfig:
 
 @dataclass 
 class LatencyMetrics:
-    """Real-time latency performance metrics"""
+    """
+Real-time latency performance metrics"""
     input_latency_ms: float = 0.0
     processing_latency_ms: float = 0.0
     output_latency_ms: float = 0.0
@@ -67,7 +71,8 @@ class LatencyMetrics:
 
 
 class AudioBuffer:
-    """Thread-safe circular audio buffer for real-time processing"""
+    """
+Thread-safe circular audio buffer for real-time processing"""
     
     def __init__(self, size: int, channels: int = 2):
         self.size = size
@@ -79,7 +84,8 @@ class AudioBuffer:
         self.available_samples = 0
         
     def write(self, data: np.ndarray) -> bool:
-        """Write audio data to buffer"""
+        """
+Write audio data to buffer"""
         with self.lock:
             if len(data.shape) == 1:
                 data = data.reshape(-1, 1)
@@ -105,7 +111,8 @@ class AudioBuffer:
             return True
     
     def read(self, num_samples: int) -> Optional[np.ndarray]:
-        """Read audio data from buffer"""
+        """
+Read audio data from buffer"""
         with self.lock:
             if self.available_samples < num_samples:
                 return None  # Buffer underrun
@@ -127,17 +134,20 @@ class AudioBuffer:
             return data
     
     def get_available_samples(self) -> int:
-        """Get number of available samples in buffer"""
+        """
+Get number of available samples in buffer"""
         with self.lock:
             return self.available_samples
     
     def get_free_space(self) -> int:
-        """Get number of free samples in buffer"""
+        """
+Get number of free samples in buffer"""
         with self.lock:
             return self.size - self.available_samples
     
     def clear(self):
-        """Clear buffer contents"""
+        """
+Clear buffer contents"""
         with self.lock:
             self.buffer.fill(0.0)
             self.write_pos = 0
@@ -154,7 +164,8 @@ class RealTimeEnhancer:
     """
     
     def __init__(self, config: RealTimeConfig):
-        """Initialize real-time audio enhancer"""
+        """
+Initialize real-time audio enhancer"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -200,11 +211,13 @@ class RealTimeEnhancer:
         self.audio_callback = callback
     
     def set_error_callback(self, callback: Callable[[Exception], None]):
-        """Set callback for error handling"""
+        """
+Set callback for error handling"""
         self.error_callback = callback
     
     def start_processing(self) -> bool:
-        """Start real-time audio processing"""
+        """
+Start real-time audio processing"""
         if self.is_running:
             self.logger.warning("Real-time processing already running")
             return False
@@ -428,7 +441,8 @@ class RealTimeEnhancer:
         return processed
     
     def _apply_fast_enhancement(self, audio: np.ndarray) -> np.ndarray:
-        """Apply minimal enhancement for ultra-low latency"""
+        """
+Apply minimal enhancement for ultra-low latency"""
         # Simple gain normalization
         peak = np.max(np.abs(audio))
         if peak > 0.95:
@@ -446,7 +460,8 @@ class RealTimeEnhancer:
         return audio
     
     def _apply_balanced_enhancement(self, audio: np.ndarray) -> np.ndarray:
-        """Apply balanced enhancement for moderate latency"""
+        """
+Apply balanced enhancement for moderate latency"""
         # Noise gate
         gate_threshold = 0.01
         mask = np.abs(audio) > gate_threshold
@@ -468,7 +483,8 @@ class RealTimeEnhancer:
         return audio
     
     def _adapt_for_realtime(self, parameters: EnhancementParameters) -> EnhancementParameters:
-        """Adapt enhancement parameters for real-time constraints"""
+        """
+Adapt enhancement parameters for real-time constraints"""
         adapted = EnhancementParameters(**parameters.__dict__)
         
         # Reduce processing intensity based on mode
@@ -486,7 +502,8 @@ class RealTimeEnhancer:
         return adapted
     
     def _update_performance_metrics(self, processing_time_ms: float):
-        """Update performance monitoring metrics"""
+        """
+Update performance monitoring metrics"""
         # CPU usage estimation
         max_time_ms = (self.config.buffer_size / self.config.sample_rate) * 1000
         cpu_usage = min(100.0, (processing_time_ms / max_time_ms) * 100)
@@ -503,7 +520,8 @@ class RealTimeEnhancer:
         self.latency_history.append(self.latency_metrics.total_latency_ms)
     
     def _adjust_quality_for_performance(self):
-        """Adaptively adjust processing quality based on performance"""
+        """
+Adaptively adjust processing quality based on performance"""
         if len(self.cpu_usage_monitor) < 10:
             return
         
@@ -532,7 +550,8 @@ class RealTimeEnhancer:
         return self.latency_metrics
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""
+        """
+Get comprehensive performance summary"""
         if len(self.latency_history) == 0:
             return {}
         
@@ -563,14 +582,16 @@ class RealTimeEnhancer:
         }
     
     def reset_performance_metrics(self):
-        """Reset all performance metrics"""
+        """
+Reset all performance metrics"""
         self.latency_metrics = LatencyMetrics()
         self.latency_history.clear()
         self.cpu_usage_monitor.clear()
         self.buffer_status_monitor.clear()
     
     def get_buffer_status(self) -> Dict[str, Any]:
-        """Get detailed buffer status information"""
+        """
+Get detailed buffer status information"""
         return {
             'input_buffer': {
                 'size': self.input_buffer.size,
@@ -589,10 +610,12 @@ class RealTimeEnhancer:
         }
     
     def __enter__(self):
-        """Context manager entry"""
+        """
+Context manager entry"""
         self.start_processing()
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.stop_processing()

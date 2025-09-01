@@ -13,6 +13,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringMode(Enum):
-    """Monitoring operation modes"""
+    """
+Monitoring operation modes"""
+
     FULL = "full"
     ESSENTIAL = "essential"
     LIGHTWEIGHT = "lightweight"
@@ -190,7 +193,8 @@ class MonitoringOrchestrator:
         )
         
     async def _initialize_enhanced_components(self, redis_client=None, db_engine=None):
-        """Initialize enhanced monitoring components"""
+        """
+Initialize enhanced monitoring components"""
         
         # AI Analytics Engine
         if self.config.ai_analytics_enabled:
@@ -217,7 +221,8 @@ class MonitoringOrchestrator:
             )
             
     async def _setup_component_coordination(self):
-        """Setup coordination between monitoring components"""
+        """
+Setup coordination between monitoring components"""
         
         # Connect alert manager to health monitor
         if self.health_monitor and self.alert_manager:
@@ -244,7 +249,8 @@ class MonitoringOrchestrator:
             )
             
     def _register_business_rules(self):
-        """Register business-specific monitoring rules"""
+        """
+Register business-specific monitoring rules"""
         
         # Content protection monitoring rules
         self._business_rules.extend([
@@ -256,7 +262,8 @@ class MonitoringOrchestrator:
         ])
         
     def _register_optimization_rules(self):
-        """Register performance optimization rules"""
+        """
+Register performance optimization rules"""
         
         self._optimization_rules.extend([
             self._optimize_collection_intervals,
@@ -267,7 +274,8 @@ class MonitoringOrchestrator:
         ])
         
     async def start(self):
-        """Start the monitoring orchestrator and all components"""
+        """
+Start the monitoring orchestrator and all components"""
         if self._running:
             logger.warning("Monitoring orchestrator already running")
             return
@@ -604,31 +612,36 @@ class MonitoringOrchestrator:
                 )
                 
     async def _optimize_resource_allocation(self):
-        """Optimize resource allocation across components"""
+        """
+Optimize resource allocation across components"""
         
         # Implementation for resource optimization
         pass
         
     async def _optimize_alert_thresholds(self):
-        """Dynamically optimize alert thresholds"""
+        """
+Dynamically optimize alert thresholds"""
         
         # Implementation for threshold optimization
         pass
         
     async def _optimize_storage_efficiency(self):
-        """Optimize storage efficiency and cleanup"""
+        """
+Optimize storage efficiency and cleanup"""
         
         # Implementation for storage optimization
         pass
         
     async def _optimize_network_usage(self):
-        """Optimize network usage for external integrations"""
+        """
+Optimize network usage for external integrations"""
         
         # Implementation for network optimization
         pass
         
     def get_monitoring_health(self) -> MonitoringHealth:
-        """Get overall monitoring system health"""
+        """
+Get overall monitoring system health"""
         
         total_components = len(self._components_status)
         healthy_components = sum(
@@ -712,7 +725,8 @@ class ResourceMonitor:
     """Monitor system resources for optimization"""
     
     async def get_usage(self) -> Dict[str, float]:
-        """Get current resource usage"""
+        """
+Get current resource usage"""
         import psutil
         
         return {
@@ -727,7 +741,8 @@ class WorkloadBalancer:
     """Balance workload across monitoring components"""
     
     async def reduce_load(self):
-        """Reduce monitoring load"""
+        """
+Reduce monitoring load"""
         logger.info("Reducing monitoring workload due to high resource usage")
         
     async def increase_load(self):

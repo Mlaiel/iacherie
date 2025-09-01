@@ -14,6 +14,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsModel(Enum):
-    """AI analytics model types"""
+    """
+AI analytics model types"""
+
     ANOMALY_DETECTION = "anomaly_detection"
     PERFORMANCE_PREDICTION = "performance_prediction"
     REVENUE_FORECASTING = "revenue_forecasting"
@@ -63,7 +66,8 @@ class AnalyticsInsight:
 
 @dataclass
 class PredictionResult:
-    """Prediction result structure"""
+    """
+Prediction result structure"""
     model_type: AnalyticsModel
     predicted_values: List[float]
     confidence_intervals: List[Tuple[float, float]]
@@ -75,7 +79,8 @@ class PredictionResult:
 
 @dataclass
 class AnomalyDetection:
-    """Anomaly detection result"""
+    """
+Anomaly detection result"""
     metric_name: str
     anomaly_score: float
     is_anomaly: bool
@@ -222,7 +227,8 @@ class AIAnalyticsEngine:
         return model
         
     async def _analytics_loop(self):
-        """Main analytics processing loop"""
+        """
+Main analytics processing loop"""
         
         while self._running:
             try:
@@ -503,7 +509,8 @@ class AIAnalyticsEngine:
         return np.array(X), np.array(y)
         
     async def _predict_performance(self) -> Optional[PredictionResult]:
-        """Predict system performance metrics"""
+        """
+Predict system performance metrics"""
         
         try:
             # Collect performance features
@@ -792,7 +799,8 @@ class AIAnalyticsEngine:
         model.fit(X_scaled)
         
     async def _update_prediction_models(self):
-        """Update prediction models"""
+        """
+Update prediction models"""
         
         # Update performance prediction model
         features_data = []
@@ -892,18 +900,21 @@ class AIAnalyticsEngine:
         pass
         
     async def _save_trained_models(self):
-        """Save trained models to storage"""
+        """
+Save trained models to storage"""
         
         # Implementation for saving models to persistent storage
         pass
         
     async def get_recent_insights(self, limit: int = 10) -> List[AnalyticsInsight]:
-        """Get recent analytics insights"""
+        """
+Get recent analytics insights"""
         
         return list(self._insights_queue)[-limit:]
         
     async def get_predictions(self, model_type: AnalyticsModel) -> Optional[PredictionResult]:
-        """Get latest predictions for a model type"""
+        """
+Get latest predictions for a model type"""
         
         if not self.redis_client:
             return None
@@ -980,10 +991,12 @@ class AIAnalyticsEngine:
 
 # Business Intelligence Components
 class RevenueAnalyzer:
-    """Analyze revenue trends and patterns"""
+    """
+Analyze revenue trends and patterns"""
     
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze revenue data for insights"""
+        """
+Analyze revenue data for insights"""
         insights = []
         
         # Implementation for revenue analysis
@@ -991,10 +1004,12 @@ class RevenueAnalyzer:
 
 
 class ContentOptimizer:
-    """Optimize content protection and performance"""
+    """
+Optimize content protection and performance"""
     
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze content performance for optimization"""
+        """
+Analyze content performance for optimization"""
         insights = []
         
         # Implementation for content optimization analysis
@@ -1002,10 +1017,12 @@ class ContentOptimizer:
 
 
 class CollaborationMatcher:
-    """Analyze collaboration patterns and success"""
+    """
+Analyze collaboration patterns and success"""
     
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze collaboration data for insights"""
+        """
+Analyze collaboration data for insights"""
         insights = []
         
         # Implementation for collaboration analysis
@@ -1013,10 +1030,12 @@ class CollaborationMatcher:
 
 
 class PerformancePredictor:
-    """Predict system and application performance"""
+    """
+Predict system and application performance"""
     
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze performance data for predictions"""
+        """
+Analyze performance data for predictions"""
         insights = []
         
         # Implementation for performance analysis

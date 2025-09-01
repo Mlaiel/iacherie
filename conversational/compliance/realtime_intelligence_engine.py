@@ -28,7 +28,7 @@ Technical Excellence:
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM SECURITY AI IP WARNING: Unauthorized use, reproduction, reverse engineering, 
     or distribution of this AI compliance intelligence code is strictly prohibited. 
@@ -36,6 +36,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     and legal intelligence methodologies protected by international copyright laws, patents, 
     and trade secret legislation. Violations will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import json
@@ -153,6 +154,7 @@ from ..ml.models.compliance_models import ComplianceRiskModel, ViolationPredicto
 
 class IntelligenceLevel(Enum):
     """Intelligence processing levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -161,6 +163,7 @@ class IntelligenceLevel(Enum):
 
 class ThreatType(Enum):
     """Types of compliance threats"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PRIVACY_VIOLATION = "privacy_violation"
     CONTENT_SAFETY_RISK = "content_safety_risk"
@@ -173,6 +176,7 @@ class ThreatType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -182,6 +186,7 @@ class AlertSeverity(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions"""
+
     IMMEDIATE_BLOCK = "immediate_block"
     QUARANTINE_CONTENT = "quarantine_content"
     NOTIFY_USER = "notify_user"
@@ -217,7 +222,8 @@ class IntelligenceAlert:
 
 @dataclass
 class ComplianceIntelligence:
-    """Comprehensive compliance intelligence report"""
+    """
+Comprehensive compliance intelligence report"""
     intelligence_id: str
     user_id: int
     analysis_period: Tuple[datetime, datetime]
@@ -237,7 +243,8 @@ class ComplianceIntelligence:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data structure"""
+    """
+Threat intelligence data structure"""
     threat_id: str
     threat_type: ThreatType
     threat_source: str
@@ -307,7 +314,8 @@ class RealTimeComplianceIntelligence:
         self._register_response_handlers()
     
     def _initialize_streaming_infrastructure(self):
-        """Initialize real-time streaming infrastructure"""
+        """
+Initialize real-time streaming infrastructure"""
         try:
             # Kafka for event streaming
             self.kafka_producer = KafkaProducer(
@@ -1093,11 +1101,13 @@ class RealTimeComplianceIntelligence:
         return {}
     
     async def _detect_threats(self, event_data: Dict, features: Dict, risk_scores: Dict) -> List[Dict]:
-        """Detect threats from event data and risk scores"""
+        """
+Detect threats from event data and risk scores"""
         return []
     
     async def _calculate_alert_severity(self, threat_data: Dict) -> AlertSeverity:
-        """Calculate alert severity based on threat data"""
+        """
+Calculate alert severity based on threat data"""
         risk_score = threat_data.get('risk_score', 0)
         
         if risk_score >= 0.9:
@@ -1112,7 +1122,8 @@ class RealTimeComplianceIntelligence:
             return AlertSeverity.INFO
     
     async def _determine_recommended_actions(self, threat_data: Dict) -> List[ResponseAction]:
-        """Determine recommended response actions based on threat"""
+        """
+Determine recommended response actions based on threat"""
         actions = []
         
         threat_type = threat_data.get('threat_type')
@@ -1130,7 +1141,8 @@ class RealTimeComplianceIntelligence:
         return actions
     
     async def _assess_legal_implications(self, threat_data: Dict) -> Dict[str, Any]:
-        """Assess legal implications of detected threat"""
+        """
+Assess legal implications of detected threat"""
         return {
             'legal_risk_level': 'medium',
             'applicable_laws': [],
@@ -1139,7 +1151,8 @@ class RealTimeComplianceIntelligence:
         }
     
     async def _calculate_platform_impact(self, threat_data: Dict) -> Dict[str, Any]:
-        """Calculate impact on different platforms"""
+        """
+Calculate impact on different platforms"""
         return {
             'youtube': {'impact_score': 0.5, 'affected_content': []},
             'instagram': {'impact_score': 0.3, 'affected_content': []},
@@ -1147,11 +1160,13 @@ class RealTimeComplianceIntelligence:
         }
     
     async def _estimate_potential_damage(self, threat_data: Dict) -> float:
-        """Estimate potential financial damage from threat"""
+        """
+Estimate potential financial damage from threat"""
         return 0.0
     
     async def _generate_mitigation_strategies(self, threat_data: Dict) -> List[str]:
-        """Generate mitigation strategies for threat"""
+        """
+Generate mitigation strategies for threat"""
         return [
             "Implement additional content screening",
             "Enhance user education on compliance",
@@ -1223,7 +1238,8 @@ class RealTimeComplianceIntelligence:
     # Additional helper methods would be implemented here...
     
     def __del__(self):
-        """Cleanup resources on destruction"""
+        """
+Cleanup resources on destruction"""
         try:
             if hasattr(self, 'kafka_producer'):
                 self.kafka_producer.close()

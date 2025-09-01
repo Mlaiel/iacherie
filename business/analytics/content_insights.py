@@ -7,6 +7,7 @@ and optimization recommendations for multi-format content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from collections import Counter, defaultdict
 logger = logging.getLogger(__name__)
 
 class ContentFormat(Enum):
-    """Supported content formats for analysis"""
+    """
+Supported content formats for analysis"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -41,6 +44,7 @@ class ContentFormat(Enum):
 
 class ContentTheme(Enum):
     """Content theme categories"""
+
     EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
     INSPIRATIONAL = "inspirational"
@@ -52,6 +56,7 @@ class ContentTheme(Enum):
 
 class PerformanceMetric(Enum):
     """Content performance metrics"""
+
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -84,7 +89,8 @@ class ContentMetrics:
 
 @dataclass
 class ContentInsight:
-    """AI-generated content insight with actionable recommendations"""
+    """
+AI-generated content insight with actionable recommendations"""
     insight_id: str
     creator_id: str
     content_id: Optional[str]
@@ -100,7 +106,8 @@ class ContentInsight:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendation"""
+    """
+Content optimization recommendation"""
     optimization_id: str
     creator_id: str
     content_type: ContentFormat
@@ -127,7 +134,8 @@ class ContentInsightsAnalyzer:
         self.insights_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize content insights analyzer"""
+        """
+Initialize content insights analyzer"""
         try:
             await self._setup_database_tables()
             await self._load_content_models()
@@ -199,7 +207,8 @@ class ContentInsightsAnalyzer:
             """)
 
     async def _load_content_models(self) -> None:
-        """Load content analysis models and historical data"""
+        """
+Load content analysis models and historical data"""
         async with self.db_pool.acquire() as conn:
             # Load historical content data for model training
             content_data = await conn.fetch("""
@@ -214,7 +223,8 @@ class ContentInsightsAnalyzer:
                 await self._train_content_models(content_data)
 
     async def _train_content_models(self, content_data: List[Dict]) -> None:
-        """Train content analysis models with historical data"""
+        """
+Train content analysis models with historical data"""
         try:
             # Prepare text data for clustering
             texts = []
@@ -238,7 +248,8 @@ class ContentInsightsAnalyzer:
         pass
 
     async def analyze_content_comprehensive(self, content_id: str, platform: str) -> ContentMetrics:
-        """Perform comprehensive content analysis with AI insights"""
+        """
+Perform comprehensive content analysis with AI insights"""
         try:
             # Fetch content data
             content_data = await self._fetch_content_data(content_id, platform)
@@ -392,7 +403,8 @@ class ContentInsightsAnalyzer:
         return min(trending_score, 1.0)
 
     async def _calculate_quality_score(self, content_data: Dict, metrics: Dict[PerformanceMetric, float]) -> float:
-        """Calculate content quality score (0-100)"""
+        """
+Calculate content quality score (0-100)"""
         try:
             # Quality factors
             title = content_data.get('title', '')
@@ -448,7 +460,8 @@ class ContentInsightsAnalyzer:
         return quality_factors / total_factors
 
     def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality (0-1)"""
+        """
+Analyze description quality (0-1)"""
         if not description:
             return 0.3  # Basic score for having a description
         
@@ -475,7 +488,8 @@ class ContentInsightsAnalyzer:
         return quality_factors / total_factors
 
     def _analyze_content_length_quality(self, content_data: Dict) -> float:
-        """Analyze content length quality based on format"""
+        """
+Analyze content length quality based on format"""
         content_format = content_data.get('content_format', 'video')
         
         # This would integrate with actual duration/length data
@@ -491,7 +505,8 @@ class ContentInsightsAnalyzer:
         return optimal_lengths.get(content_format, 0.75)
 
     async def _calculate_optimization_potential(self, content_data: Dict, metrics: Dict[PerformanceMetric, float]) -> float:
-        """Calculate optimization potential score (0-100)"""
+        """
+Calculate optimization potential score (0-100)"""
         try:
             current_performance = metrics.get(PerformanceMetric.ENGAGEMENT_RATE, 0)
             views = metrics.get(PerformanceMetric.VIEWS, 0)

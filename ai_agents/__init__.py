@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 from abc import ABC, abstractmethod
@@ -201,7 +202,8 @@ MANAGER_REGISTRY = {
 }
 
 class AgentFactory:
-    """Factory for creating agent instances"""
+    """
+Factory for creating agent instances"""
     
     @staticmethod
     async def create_agent(
@@ -209,7 +211,8 @@ class AgentFactory:
         agent_id: str, 
         config: Optional[Dict[str, Any]] = None
     ) -> Optional[BaseAgent]:
-        """Create agent instance by type"""
+        """
+Create agent instance by type"""
         if agent_type not in AGENT_REGISTRY:
             logger.error(f"Unknown agent type: {agent_type}")
             return None
@@ -280,7 +283,8 @@ def get_available_agent_types() -> List[str]:
     return list(AGENT_REGISTRY.keys())
 
 def get_agent_info(agent_type: str) -> Optional[Dict[str, Any]]:
-    """Get information about a specific agent type"""
+    """
+Get information about a specific agent type"""
     if agent_type not in AGENT_REGISTRY:
         return None
     

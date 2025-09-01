@@ -6,7 +6,7 @@ advanced fingerprinting, blockchain verification, automated DMCA compliance,
 real-time piracy detection, and enterprise security systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 This code, architecture, and all associated concepts are the exclusive 
@@ -38,6 +38,7 @@ User Upload → AI Content Analysis → Rights Verification → Multi-Layer Wate
 → Real-time Monitoring → AI Violation Detection → Automated DMCA Processing
 → Legal Evidence Collection → Revenue Protection → Compliance Reporting
 """
+
 from typing import (
     Dict, List, Any, Optional, Union, Tuple, Callable, 
     AsyncGenerator, Set, Type, Protocol
@@ -651,7 +652,8 @@ class ContentProtectionAPI:
             return ContentType.MULTIMEDIA
     
     def _calculate_avg_response_time(self) -> float:
-        """Calculate average response time from metrics"""
+        """
+Calculate average response time from metrics"""
         if not self.performance_metrics:
             return 0.0
         
@@ -671,7 +673,8 @@ class ContentProtectionAPI:
         return 1.0 - self._calculate_success_rate()
     
     async def shutdown(self):
-        """Gracefully shutdown the API and all resources"""
+        """
+Gracefully shutdown the API and all resources"""
         self.logger.info("Shutting down ContentProtectionAPI")
         
         # Shutdown thread pool
@@ -947,6 +950,7 @@ __email__ = "mlaiel@live.de"
 # Content Protection Enums
 class ContentType(Enum):
     """Types of content that can be protected."""
+
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -960,6 +964,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Levels of content protection."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -969,6 +974,7 @@ class ProtectionLevel(Enum):
 
 class WatermarkType(Enum):
     """Types of watermarks."""
+
     VISIBLE = "visible"
     INVISIBLE = "invisible"
     SEMI_TRANSPARENT = "semi_transparent"
@@ -978,6 +984,7 @@ class WatermarkType(Enum):
 
 class ViolationType(Enum):
     """Types of content violations."""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -988,6 +995,7 @@ class ViolationType(Enum):
 
 class LicenseType(Enum):
     """Types of content licenses."""
+
     ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS = "creative_commons"
     COMMERCIAL = "commercial"
@@ -1193,7 +1201,8 @@ class ContentProtectionFrameworkManager:
         self.protection_system = ContentProtectionSystem()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize content protection capabilities."""
+        """
+Initialize content protection capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -1223,7 +1232,8 @@ class ContentProtectionFrameworkManager:
     async def protect_content_comprehensive(self, 
                                           content_path: Path,
                                           protection_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Protect content with comprehensive security measures."""
+        """
+Protect content with comprehensive security measures."""
         content_type = ContentType(protection_config['content_type'])
         protection_level = ProtectionLevel(protection_config.get('protection_level', 'standard'))
         
@@ -1308,7 +1318,8 @@ class ContentProtectionFrameworkManager:
     
     async def detect_violations_comprehensive(self, 
                                             content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect content violations with comprehensive analysis."""
+        """
+Detect content violations with comprehensive analysis."""
         # Initialize detection systems
         piracy_detector = PiracyDetector()
         violation_analyzer = ViolationAnalyzer()
@@ -1350,7 +1361,8 @@ class ContentProtectionFrameworkManager:
     
     async def process_dmca_takedown(self, 
                                   violation_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Process DMCA takedown with full legal compliance."""
+        """
+Process DMCA takedown with full legal compliance."""
         dmca_manager = DMCAManager()
         
         # Generate DMCA notice
@@ -1386,7 +1398,8 @@ class ContentProtectionFrameworkManager:
                                              content_path: Path,
                                              protection_results: Dict[str, Any],
                                              config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive protection certificate."""
+        """
+Generate comprehensive protection certificate."""
         import uuid
         
         protection_id = str(uuid.uuid4())
@@ -1460,15 +1473,18 @@ class ContentProtectionFrameworkManager:
         return recommendations
     
     def get_supported_content_types(self) -> List[str]:
-        """Get list of all supported content types."""
+        """
+Get list of all supported content types."""
         return [ct.value for ct in ContentType]
     
     def get_protection_levels(self) -> List[str]:
-        """Get list of all available protection levels."""
+        """
+Get list of all available protection levels."""
         return [pl.value for pl in ProtectionLevel]
     
     def get_protection_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive protection capabilities information."""
+        """
+Get comprehensive protection capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         enterprise_capabilities = sum(
             1 for category in self.architecture.values()
@@ -1537,7 +1553,8 @@ class ContentProtectionFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'comprehensive_content_protection_framework',
             'intelligent_rights_management_system',
@@ -1564,20 +1581,24 @@ protection_framework = ContentProtectionFrameworkManager()
 # Content Protection Utility Functions
 async def protect_content_enterprise(content_path: Path, 
                                     protection_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Protect content with enterprise-grade security measures."""
+    """
+Protect content with enterprise-grade security measures."""
     return await protection_framework.protect_content_comprehensive(content_path, protection_config)
 
 async def detect_content_violations(content_info: Dict[str, Any]) -> Dict[str, Any]:
-    """Detect content violations with AI-powered analysis."""
+    """
+Detect content violations with AI-powered analysis."""
     return await protection_framework.detect_violations_comprehensive(content_info)
 
 async def process_dmca_complaint(violation_info: Dict[str, Any]) -> Dict[str, Any]:
-    """Process DMCA takedown with full legal compliance."""
+    """
+Process DMCA takedown with full legal compliance."""
     return await protection_framework.process_dmca_takedown(violation_info)
 
 def generate_protection_config(content_type: str, 
                              protection_level: str = 'standard') -> Dict[str, Any]:
-    """Generate optimized protection configuration."""
+    """
+Generate optimized protection configuration."""
     config = {
         'content_type': content_type,
         'protection_level': protection_level,

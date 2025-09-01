@@ -6,6 +6,7 @@ preferences, content settings, and platform customization for creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from uuid import UUID
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(str, Enum):
-    """Available notification channels."""
+    """
+Available notification channels."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -45,6 +48,7 @@ class NotificationChannel(str, Enum):
 
 class PrivacyLevel(str, Enum):
     """Privacy levels for various settings."""
+
     PUBLIC = "public"
     FOLLOWERS = "followers"
     VERIFIED_ONLY = "verified_only"
@@ -53,6 +57,7 @@ class PrivacyLevel(str, Enum):
 
 class ContentVisibility(str, Enum):
     """Content visibility options."""
+
     PUBLIC = "public"
     UNLISTED = "unlisted"
     FOLLOWERS_ONLY = "followers_only"
@@ -118,7 +123,8 @@ class PrivacyPreferenceData(BaseModel):
 
 
 class ContentPreferenceData(BaseModel):
-    """Content preference settings."""
+    """
+Content preference settings."""
     default_language: str = "en"
     content_quality: str = "high"  # low, medium, high, ultra
     auto_generate_thumbnails: bool = True

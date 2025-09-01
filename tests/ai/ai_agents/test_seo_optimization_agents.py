@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for SEO Optimization AI Agents
+"""
+Test suite for SEO Optimization AI Agents
 
 Tests all functionalities of search engine optimization, keyword research,
 content optimization, and visibility enhancement agents.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -26,6 +28,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,16 +52,19 @@ from ai.ai_agents.seo_optimization_agents import (
 
 
 class TestSEOOptimizationAgent:
-    """Test SEOOptimizationAgent functionality"""
+    """
+Test SEOOptimizationAgent functionality"""
     
     @pytest.fixture
     def agent(self):
-        """Create SEOOptimizationAgent instance"""
+        """
+Create SEOOptimizationAgent instance"""
         return SEOOptimizationAgent()
     
     @pytest.fixture
     def sample_content_data(self):
-        """Sample content data for SEO optimization"""
+        """
+Sample content data for SEO optimization"""
         return {
             "content_id": "content_001",
             "title": "Complete Guide to Machine Learning for Beginners",
@@ -244,12 +250,14 @@ class TestKeywordResearchAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create KeywordResearchAgent instance"""
+        """
+Create KeywordResearchAgent instance"""
         return KeywordResearchAgent()
     
     @pytest.fixture
     def sample_research_context(self):
-        """Sample context for keyword research"""
+        """
+Sample context for keyword research"""
         return {
             "niche": "fitness_nutrition",
             "target_audience": "fitness_enthusiasts_25_40",
@@ -401,12 +409,14 @@ class TestContentOptimizationAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create ContentOptimizationAgent instance"""
+        """
+Create ContentOptimizationAgent instance"""
         return ContentOptimizationAgent()
     
     @pytest.fixture
     def sample_content_for_optimization(self):
-        """Sample content for optimization"""
+        """
+Sample content for optimization"""
         return {
             "content_id": "content_seo_001",
             "title": "Workout Tips",
@@ -548,12 +558,14 @@ class TestVisibilityAnalysisAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create VisibilityAnalysisAgent instance"""
+        """
+Create VisibilityAnalysisAgent instance"""
         return VisibilityAnalysisAgent()
     
     @pytest.fixture
     def sample_visibility_data(self):
-        """Sample visibility data for analysis"""
+        """
+Sample visibility data for analysis"""
         return {
             "creator_id": "creator_visibility_001",
             "platform": "youtube",
@@ -704,7 +716,8 @@ class TestIntegrationScenarios:
     
     @pytest.fixture
     def agents(self):
-        """Create all SEO optimization agents for integration testing"""
+        """
+Create all SEO optimization agents for integration testing"""
         return {
             "seo": SEOOptimizationAgent(),
             "keyword": KeywordResearchAgent(),
@@ -773,12 +786,14 @@ class TestErrorHandling:
     
     @pytest.fixture
     def agent(self):
-        """Create SEOOptimizationAgent for error testing"""
+        """
+Create SEOOptimizationAgent for error testing"""
         return SEOOptimizationAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_content_data(self, agent):
-        """Test handling of insufficient content data"""
+        """
+Test handling of insufficient content data"""
         minimal_data = {"content_id": "test"}
         
         with pytest.raises((ValueError, KeyError)):
@@ -828,12 +843,14 @@ class TestPerformanceAndScaling:
     
     @pytest.fixture
     def agent(self):
-        """Create SEOOptimizationAgent for performance testing"""
+        """
+Create SEOOptimizationAgent for performance testing"""
         return SEOOptimizationAgent()
     
     @pytest.mark.asyncio
     async def test_bulk_content_seo_analysis(self, agent):
-        """Test bulk SEO analysis performance"""
+        """
+Test bulk SEO analysis performance"""
         content_batch = [
             {
                 "content_id": f"bulk_content_{i}",

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -51,7 +52,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class SignatureMethod(Enum):
-    """Signature validation methods"""
+    """
+Signature validation methods"""
+
     HMAC_SHA256 = "hmac_sha256"
     HMAC_SHA512 = "hmac_sha512"
     RSA_SHA256 = "rsa_sha256"
@@ -63,6 +66,7 @@ class SignatureMethod(Enum):
 
 class ValidationResult(Enum):
     """Validation result status"""
+
     VALID = "valid"
     INVALID = "invalid"
     EXPIRED = "expired"
@@ -95,7 +99,8 @@ class ValidationContext:
 
 @dataclass
 class ValidationMetrics:
-    """Signature validation metrics"""
+    """
+Signature validation metrics"""
     total_validations: int = 0
     successful_validations: int = 0
     failed_validations: int = 0
@@ -465,7 +470,8 @@ class SignatureValidator:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of signature validator"""
+        """
+Graceful shutdown of signature validator"""
         try:
             logger.info("Shutting down SignatureValidator")
             
@@ -504,7 +510,8 @@ class SignatureValidator:
         )
 
     async def _get_platform_config(self, platform: str) -> Optional[SignatureConfig]:
-        """Get signature configuration for platform"""
+        """
+Get signature configuration for platform"""
         # Check cache first
         if platform in self._platform_configs:
             return self._platform_configs[platform]
@@ -521,7 +528,8 @@ class SignatureValidator:
         payload: Dict[str, Any],
         config: SignatureConfig
     ) -> bytes:
-        """Prepare payload bytes for signature validation"""
+        """
+Prepare payload bytes for signature validation"""
         if isinstance(payload, bytes):
             return payload
         
@@ -548,7 +556,8 @@ class SignatureValidator:
         config: SignatureConfig,
         context: Optional[ValidationContext]
     ) -> Dict[str, Any]:
-        """Validate timestamp if timestamp validation is enabled"""
+        """
+Validate timestamp if timestamp validation is enabled"""
         if not config.timestamp_header:
             return {'valid': True}
         
@@ -591,7 +600,8 @@ class SignatureValidator:
         signature: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Check for replay attacks"""
+        """
+Check for replay attacks"""
         if not self._redis_client:
             return {'valid': True}  # Skip if Redis not available
         
@@ -660,7 +670,8 @@ class SignatureValidator:
         config: SignatureConfig,
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Validate signature based on configured method"""
+        """
+Validate signature based on configured method"""
         try:
             if config.method == SignatureMethod.HMAC_SHA256:
                 return await self._validate_hmac_sha256(payload_bytes, signature, config)
@@ -732,7 +743,8 @@ class SignatureValidator:
         signature: str,
         config: SignatureConfig
     ) -> Dict[str, Any]:
-        """Validate HMAC SHA512 signature"""
+        """
+Validate HMAC SHA512 signature"""
         if not config.secret:
             return {
                 'valid': False,
@@ -762,7 +774,8 @@ class SignatureValidator:
         signature: str,
         config: SignatureConfig
     ) -> Dict[str, Any]:
-        """Validate GitHub webhook signature"""
+        """
+Validate GitHub webhook signature"""
         if not config.secret:
             return {
                 'valid': False,
@@ -797,7 +810,8 @@ class SignatureValidator:
         config: SignatureConfig,
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Validate Stripe webhook signature"""
+        """
+Validate Stripe webhook signature"""
         if not config.secret:
             return {
                 'valid': False,
@@ -899,7 +913,8 @@ class SignatureValidator:
         config: SignatureConfig,
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Validate custom signature using registered validator"""
+        """
+Validate custom signature using registered validator"""
         platform = config.platform
         
         if platform not in self._custom_validators:
@@ -930,7 +945,8 @@ class SignatureValidator:
         success: bool,
         validation_time: float
     ) -> None:
-        """Update validation metrics"""
+        """
+Update validation metrics"""
         self._metrics.total_validations += 1
         
         if success:
@@ -963,7 +979,8 @@ class SignatureValidator:
         success: bool,
         context: Optional[ValidationContext]
     ) -> None:
-        """Log validation attempt for auditing"""
+        """
+Log validation attempt for auditing"""
         log_data = {
             'validation_id': validation_id,
             'platform': platform,
@@ -1002,21 +1019,25 @@ class SignatureValidator:
         return {'valid': True}
 
     async def _store_platform_config(self, config: SignatureConfig) -> None:
-        """Store platform configuration in database"""
+        """
+Store platform configuration in database"""
         # Implementation would store configuration in database
         pass
 
     async def _load_platform_config(self, platform: str) -> Optional[SignatureConfig]:
-        """Load platform configuration from database"""
+        """
+Load platform configuration from database"""
         # Implementation would load configuration from database
         return None
 
     async def _load_platform_configurations(self) -> None:
-        """Load all platform configurations from database"""
+        """
+Load all platform configurations from database"""
         # Implementation would load all configurations from database
         pass
 
     async def _initialize_custom_validators(self) -> None:
-        """Initialize custom validators"""
+        """
+Initialize custom validators"""
         # Implementation would initialize custom validators
         pass

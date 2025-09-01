@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
@@ -42,7 +43,9 @@ from ...models.legal import LegalJurisdiction, ComplianceRule, LegalTemplate
 logger = logging.getLogger(__name__)
 
 class LegalFramework(Enum):
-    """Supported legal frameworks"""
+    """
+Supported legal frameworks"""
+
     DMCA_US = "dmca_us"
     EU_COPYRIGHT = "eu_copyright"
     UK_COPYRIGHT = "uk_copyright"
@@ -54,6 +57,7 @@ class LegalFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Legal compliance status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL_COMPLIANT = "partial_compliant"
@@ -74,7 +78,8 @@ class LegalRequirement:
     
 @dataclass
 class ComplianceResult:
-    """Legal compliance check result"""
+    """
+Legal compliance check result"""
     case_id: str
     framework: LegalFramework
     status: ComplianceStatus
@@ -601,7 +606,8 @@ Date: {date}
         return True  # Placeholder
     
     def _determine_compliance_status(self, compliance_score: float) -> ComplianceStatus:
-        """Determine compliance status based on score"""
+        """
+Determine compliance status based on score"""
         if compliance_score >= 95.0:
             return ComplianceStatus.COMPLIANT
         elif compliance_score >= 80.0:
@@ -617,7 +623,8 @@ Date: {date}
         case_data: Dict[str, Any],
         framework: LegalFramework
     ) -> float:
-        """Estimate legal success rate based on compliance and historical data"""
+        """
+Estimate legal success rate based on compliance and historical data"""
         base_rate = result.compliance_score
         
         # Adjust based on case factors
@@ -674,17 +681,20 @@ Date: {date}
         return True  # Placeholder
     
     async def _validate_eu_member_state(self, case_data: Dict[str, Any]) -> bool:
-        """Validate EU member state requirements"""
+        """
+Validate EU member state requirements"""
         # Implement EU member state validation
         return True  # Placeholder
     
     async def _check_proportionality(self, case_data: Dict[str, Any]) -> bool:
-        """Check proportionality of takedown request"""
+        """
+Check proportionality of takedown request"""
         # Implement proportionality assessment
         return True  # Placeholder
     
     async def _check_platform_cooperation_history(self, platform: str) -> bool:
-        """Check historical cooperation of platform"""
+        """
+Check historical cooperation of platform"""
         # Implement platform cooperation history check
         return True  # Placeholder
     
@@ -693,7 +703,8 @@ Date: {date}
         framework: LegalFramework,
         case_data: Dict[str, Any]
     ) -> bool:
-        """Check strength of legal precedent"""
+        """
+Check strength of legal precedent"""
         # Implement legal precedent analysis
         return True  # Placeholder
     
@@ -702,7 +713,8 @@ Date: {date}
         framework: LegalFramework,
         case_data: Dict[str, Any]
     ) -> str:
-        """Generate legal document from template"""
+        """
+Generate legal document from template"""
         try:
             template_key = f"{framework.value}_notice"
             if template_key.replace(f"_{framework.value.split('_')[1]}", "_takedown") in self.legal_templates:

@@ -12,7 +12,7 @@ Technical Specifications:
 - Cost-effectiveness optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 class OptimizationTarget(str, Enum):
-    """Performance optimization targets."""
+    """
+Performance optimization targets."""
+
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     RESOURCE_USAGE = "resource_usage"
@@ -52,6 +55,7 @@ class OptimizationTarget(str, Enum):
 
 class ResourceType(str, Enum):
     """System resource types."""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -62,6 +66,7 @@ class ResourceType(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Optimization strategies."""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced" 
     AGGRESSIVE = "aggressive"
@@ -81,7 +86,8 @@ class ResourceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation."""
+    """
+Performance optimization recommendation."""
     recommendation_id: str
     target: OptimizationTarget
     description: str
@@ -108,7 +114,8 @@ class OptimizationResult:
     side_effects: List[str] = field(default_factory=list)
 
 class SystemConfiguration(BaseModel):
-    """System configuration parameters."""
+    """
+System configuration parameters."""
     max_concurrent_sessions: int = Field(default=1000, ge=1, le=10000)
     cache_size_mb: int = Field(default=512, ge=64, le=8192)
     database_pool_size: int = Field(default=20, ge=5, le=100)
@@ -119,7 +126,8 @@ class SystemConfiguration(BaseModel):
     retry_attempts: int = Field(default=3, ge=1, le=10)
 
 class PerformanceProfile(BaseModel):
-    """Performance profile configuration."""
+    """
+Performance profile configuration."""
     profile_name: str
     optimization_targets: List[OptimizationTarget]
     resource_limits: Dict[ResourceType, float]
@@ -1441,7 +1449,8 @@ class PerformanceOptimizer:
         self,
         recommendations: List[OptimizationRecommendation]
     ) -> List[OptimizationRecommendation]:
-        """Rank recommendations using heuristic approach."""
+        """
+Rank recommendations using heuristic approach."""
         def recommendation_score(rec):
             priority_weight = {"critical": 4, "high": 3, "medium": 2, "low": 1}
             effort_weight = {"low": 3, "medium": 2, "high": 1}
@@ -1844,6 +1853,7 @@ class PerformanceOptimizer:
 
 class ResourceType(str, Enum):
     """System resource types."""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -1853,6 +1863,7 @@ class ResourceType(str, Enum):
 
 class OptimizationAction(str, Enum):
     """Available optimization actions."""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     TUNE_PARAMETERS = "tune_parameters"
@@ -1874,7 +1885,8 @@ class ResourceMetrics:
 
 @dataclass
 class PerformanceBottleneck:
-    """Identified performance bottleneck."""
+    """
+Identified performance bottleneck."""
     component: str
     severity: str  # low, medium, high, critical
     impact_score: float
@@ -1885,7 +1897,8 @@ class PerformanceBottleneck:
     cost_impact: float
 
 class OptimizationRecommendation(BaseModel):
-    """Performance optimization recommendation."""
+    """
+Performance optimization recommendation."""
     id: str
     target: OptimizationTarget
     action: OptimizationAction
@@ -1909,7 +1922,8 @@ class SystemConfiguration(BaseModel):
     optimization_targets: List[OptimizationTarget] = Field(default_factory=list)
 
 class PerformanceProfile(BaseModel):
-    """Performance profile for workload characterization."""
+    """
+Performance profile for workload characterization."""
     profile_id: str
     workload_type: str
     characteristics: Dict[str, float] = Field(default_factory=dict)
@@ -1936,7 +1950,8 @@ class PerformanceOptimizer:
         redis_client: Optional[aioredis.Redis] = None,
         db_session: Optional[AsyncSession] = None
     ):
-        """Initialize performance optimizer."""
+        """
+Initialize performance optimizer."""
         self.config = config
         self.redis_client = redis_client
         self.db_session = db_session
@@ -2059,7 +2074,8 @@ class PerformanceOptimizer:
         return current_metrics
 
     async def detect_performance_bottlenecks(self) -> List[PerformanceBottleneck]:
-        """Detect current performance bottlenecks."""
+        """
+Detect current performance bottlenecks."""
         bottlenecks = []
         current_metrics = await self.monitor_system_performance()
         
@@ -2153,7 +2169,8 @@ class PerformanceOptimizer:
         recommendation: OptimizationRecommendation,
         dry_run: bool = False
     ) -> Dict[str, Any]:
-        """Apply an optimization recommendation."""
+        """
+Apply an optimization recommendation."""
         result = {
             'success': False,
             'message': '',
@@ -2316,7 +2333,8 @@ class PerformanceOptimizer:
         return actions
 
     def _estimate_cost_impact(self, resource_type: ResourceType) -> float:
-        """Estimate cost impact of optimizing a resource."""
+        """
+Estimate cost impact of optimizing a resource."""
         cost_factors = {
             ResourceType.CPU: 0.5,
             ResourceType.MEMORY: 0.3,
@@ -2333,7 +2351,8 @@ class PerformanceOptimizer:
         action: OptimizationAction,
         targets: List[OptimizationTarget]
     ) -> Optional[OptimizationRecommendation]:
-        """Create an optimization recommendation from a bottleneck."""
+        """
+Create an optimization recommendation from a bottleneck."""
         try:
             recommendation_id = f"rec_{bottleneck.component}_{action.value}_{int(datetime.utcnow().timestamp())}"
             
@@ -2402,7 +2421,8 @@ class PerformanceOptimizer:
         return parameters
 
     def _estimate_completion_time(self, action: OptimizationAction) -> int:
-        """Estimate completion time for an optimization action in minutes."""
+        """
+Estimate completion time for an optimization action in minutes."""
         time_estimates = {
             OptimizationAction.SCALE_UP: 5,
             OptimizationAction.SCALE_DOWN: 3,
@@ -2417,7 +2437,8 @@ class PerformanceOptimizer:
         self,
         targets: List[OptimizationTarget]
     ) -> List[OptimizationRecommendation]:
-        """Generate proactive optimization recommendations."""
+        """
+Generate proactive optimization recommendations."""
         recommendations = []
         
         # Analyze trends for proactive optimization
@@ -2471,7 +2492,8 @@ class PerformanceOptimizer:
         recommendation: OptimizationRecommendation,
         scale_up: bool
     ) -> None:
-        """Apply scaling optimization."""
+        """
+Apply scaling optimization."""
         # This would integrate with actual scaling mechanisms
         # For now, update configuration
         if scale_up:
@@ -2489,7 +2511,8 @@ class PerformanceOptimizer:
         self,
         recommendation: OptimizationRecommendation
     ) -> None:
-        """Apply parameter tuning optimization."""
+        """
+Apply parameter tuning optimization."""
         # Update system parameters based on recommendation
         for param, value in recommendation.parameters.items():
             if param == 'queue_size_multiplier':
@@ -2505,7 +2528,8 @@ class PerformanceOptimizer:
         self,
         recommendation: OptimizationRecommendation
     ) -> None:
-        """Apply load redistribution optimization."""
+        """
+Apply load redistribution optimization."""
         # Implement load balancing logic
         # This would involve redistributing monitoring tasks
         pass
@@ -2514,7 +2538,8 @@ class PerformanceOptimizer:
         self,
         recommendation: OptimizationRecommendation
     ) -> None:
-        """Apply cache optimization."""
+        """
+Apply cache optimization."""
         # Update cache configuration
         if 'cache_size_increase' in recommendation.parameters:
             multiplier = recommendation.parameters['cache_size_increase']
@@ -2526,7 +2551,8 @@ class PerformanceOptimizer:
         self,
         recommendation: OptimizationRecommendation
     ) -> None:
-        """Apply rate limit adjustments."""
+        """
+Apply rate limit adjustments."""
         # Adjust API rate limits
         # This would modify rate limiting configuration
         await self._save_system_configuration()
@@ -2536,7 +2562,8 @@ class PerformanceOptimizer:
         optimization_id: str,
         recommendation: OptimizationRecommendation
     ) -> Dict[str, float]:
-        """Measure the impact of an applied optimization."""
+        """
+Measure the impact of an applied optimization."""
         # This would measure actual performance improvements
         # For now, return estimated impact
         return {
@@ -2546,7 +2573,8 @@ class PerformanceOptimizer:
         }
 
     async def _get_queue_depth(self) -> float:
-        """Get current queue depth from Redis."""
+        """
+Get current queue depth from Redis."""
         try:
             queue_length = await self.redis_client.llen("monitoring:event_queue")
             return float(queue_length or 0)
@@ -2562,7 +2590,8 @@ class PerformanceOptimizer:
             return 0.0
 
     async def _start_optimization_tasks(self) -> None:
-        """Start background optimization tasks."""
+        """
+Start background optimization tasks."""
         # Performance monitoring task
         monitor_task = asyncio.create_task(self._performance_monitoring_loop())
         self._optimizer_tasks.append(monitor_task)

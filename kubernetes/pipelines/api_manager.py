@@ -2,7 +2,7 @@
 Enterprise-Grade REST API for Pipeline Operations and Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive REST API endpoints for pipeline management, monitoring,
 and control, enabling integration with external systems and web interfaces.
@@ -17,6 +17,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import json
@@ -44,7 +45,8 @@ from .security_manager import PipelineSecurityManager
 
 # Pydantic models for API requests/responses
 class PipelineConfigRequest(BaseModel):
-    """Pipeline configuration request model"""
+    """
+Pipeline configuration request model"""
     name: str = Field(..., description="Pipeline name")
     environment: str = Field(..., description="Target environment")
     pipeline_type: str = Field(..., description="Pipeline type")
@@ -86,12 +88,14 @@ class PipelineStatusResponse(BaseModel):
     duration: Optional[str] = None
     
 class PipelineListResponse(BaseModel):
-    """Pipeline list response model"""
+    """
+Pipeline list response model"""
     pipelines: List[Dict[str, Any]]
     total_count: int
     
 class SecurityScanRequest(BaseModel):
-    """Security scan request model"""
+    """
+Security scan request model"""
     project_path: str = Field(..., description="Project path to scan")
     image_name: Optional[str] = Field(None, description="Container image name")
     policy_name: str = Field("development", description="Security policy name")

@@ -8,6 +8,7 @@ Couche de stockage optimisée avec pools de connexions et cache.
 Modèles détectés: 0
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -61,23 +62,27 @@ class IStorageAdapter(ABC):
     
     @abstractmethod
     async def connect(self) -> bool:
-        """Connexion au stockage"""
+        """
+Connexion au stockage"""
         pass
     
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Déconnexion du stockage"""
+        """
+Déconnexion du stockage"""
         pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Vérification de santé"""
+        """
+Vérification de santé"""
         pass
 
 # =============== ADAPTATEUR POSTGRESQL ===============
 
 class PostgreSQLAdapter(IStorageAdapter):
-    """Adaptateur PostgreSQL optimisé"""
+    """
+Adaptateur PostgreSQL optimisé"""
     
     def __init__(self, config: StorageConfig):
         self.config = config
@@ -86,7 +91,8 @@ class PostgreSQLAdapter(IStorageAdapter):
         self.session_factory = None
     
     async def connect(self) -> bool:
-        """Connexion PostgreSQL avec pool"""
+        """
+Connexion PostgreSQL avec pool"""
         try:
             # Pool de connexions asyncpg
             self.pool = await asyncpg.create_pool(
@@ -149,14 +155,16 @@ class PostgreSQLAdapter(IStorageAdapter):
 # =============== ADAPTATEUR REDIS ===============
 
 class RedisAdapter(IStorageAdapter):
-    """Adaptateur Redis optimisé"""
+    """
+Adaptateur Redis optimisé"""
     
     def __init__(self, config: StorageConfig):
         self.config = config
         self.redis = None
     
     async def connect(self) -> bool:
-        """Connexion Redis"""
+        """
+Connexion Redis"""
         try:
             self.redis = aioredis.Redis(
                 host=self.config.redis_host,
@@ -193,7 +201,8 @@ class RedisAdapter(IStorageAdapter):
             return False
     
     async def set_cache(self, key: str, value: Any, expire: int = 3600) -> bool:
-        """Cache avec expiration"""
+        """
+Cache avec expiration"""
         try:
             await self.redis.setex(key, expire, json.dumps(value))
             return True
@@ -222,7 +231,8 @@ class MongodbAdapterManager:
         self.connected = False
     
     async def initialize(self) -> bool:
-        """Initialisation complète du stockage"""
+        """
+Initialisation complète du stockage"""
         try:
             # Connexions parallèles
             postgres_ok, redis_ok = await asyncio.gather(

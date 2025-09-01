@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
+    """
+Types of collaboration"""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation"
     PODCAST_COLLABORATION = "podcast_collaboration"
@@ -52,6 +55,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration request status"""
+
     DRAFT = "draft"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
@@ -66,6 +70,7 @@ class CollaborationStatus(Enum):
 
 class TeamRole(Enum):
     """Team member roles"""
+
     LEAD_CREATOR = "lead_creator"
     CO_CREATOR = "co_creator"
     PRODUCER = "producer"
@@ -82,6 +87,7 @@ class TeamRole(Enum):
 
 class SkillLevel(Enum):
     """Skill proficiency levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -91,6 +97,7 @@ class SkillLevel(Enum):
 
 class MatchingCriteria(Enum):
     """AI matching criteria"""
+
     GENRE_COMPATIBILITY = "genre_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_SIMILARITY = "engagement_similarity"

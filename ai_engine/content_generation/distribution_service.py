@@ -4,11 +4,12 @@ Professional service for distributing and publishing content across
 multiple platforms with advanced scheduling and optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -27,7 +28,9 @@ from .content_models import (
 
 
 class PublishingStatus(str, Enum):
-    """Publishing status enumeration"""
+    """
+Publishing status enumeration"""
+
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -51,7 +54,8 @@ class PlatformConfig:
 
 @dataclass
 class PublishingTask:
-    """Publishing task definition"""
+    """
+Publishing task definition"""
     task_id: str
     content_id: str
     platform: Platform
@@ -449,7 +453,8 @@ class DistributionService:
         return '\n\n'.join(formatted_paragraphs)
     
     def _add_linkedin_formatting(self, content: str) -> str:
-        """Add LinkedIn-specific formatting"""
+        """
+Add LinkedIn-specific formatting"""
         # Professional formatting with proper spacing
         lines = content.split('\n')
         formatted_lines = []
@@ -465,7 +470,8 @@ class DistributionService:
     async def _validate_content_for_platform(
         self, content: str, platform: Platform
     ) -> Dict[str, Any]:
-        """Validate content for platform requirements"""
+        """
+Validate content for platform requirements"""
         config = self.platform_configs.get(platform)
         if not config:
             return {"valid": False, "errors": [f"Platform {platform} not configured"]}
@@ -543,7 +549,8 @@ class DistributionService:
     async def _call_platform_api(
         self, platform: Platform, content: str, metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Call platform API to publish content"""
+        """
+Call platform API to publish content"""
         # This is a mock implementation
         # In production, implement actual API calls for each platform
         

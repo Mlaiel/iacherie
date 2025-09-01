@@ -6,6 +6,7 @@ in the IA Influencer Agent content protection ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union
 import logging
 from datetime import datetime
@@ -426,7 +427,8 @@ class BlockchainIndex:
         return self.content_index.get(content_hash)
 
     def get_blockchain_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive blockchain operation statistics."""
+        """
+Get comprehensive blockchain operation statistics."""
         total_content = len(self.content_index)
         total_creators = len(self.owner_index)
         total_nfts = len(self.nft_index)

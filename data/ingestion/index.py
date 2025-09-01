@@ -5,13 +5,14 @@ Main index file for the data ingestion module providing centralized access
 to all ingestion capabilities and orchestration functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, BinaryIO
@@ -35,7 +36,8 @@ from ...core.config import get_settings
 
 @dataclass
 class IngestionCapabilities:
-    """Available ingestion capabilities and configuration"""
+    """
+Available ingestion capabilities and configuration"""
     supported_formats: Dict[str, List[str]]
     max_file_size: int
     max_batch_size: int
@@ -466,7 +468,8 @@ class DataIngestionOrchestrator:
             }
     
     async def _validate_ingestion_request(self, request: IngestionRequest):
-        """Validate ingestion request"""
+        """
+Validate ingestion request"""
         try:
             if not request.user_id:
                 raise ValueError("User ID is required")

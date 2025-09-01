@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -37,7 +38,8 @@ class CompetitorMonitoringSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the competitor monitoring system."""
+        """
+Initialize the competitor monitoring system."""
         self.logger = logging.getLogger(__name__)
         
         # Load configuration
@@ -319,7 +321,8 @@ async def create_competitor_monitoring_system(config: Optional[Dict[str, Any]] =
 
 
 def get_system_info() -> Dict[str, Any]:
-    """Get system information."""
+    """
+Get system information."""
     return {
         "name": "Competitor Monitoring Agent",
         "version": __version__,

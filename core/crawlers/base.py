@@ -2,7 +2,7 @@
 ===========================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 Unauthorized use, copying or distribution prohibited.
@@ -11,6 +11,7 @@ Abstract base class defining the common interface for all platform-specific
 crawlers. Provides standardized methods for content extraction, rate limiting,
 error handling, and result normalization across different platforms.
 """
+
 import asyncio
 import logging
 import time
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlResult:
-    """Standardized result structure for crawler operations."""
+    """
+Standardized result structure for crawler operations."""
     
     url: str
     platform: str
@@ -46,14 +48,16 @@ class CrawlResult:
     content_data: Optional[bytes] = None
     
     def __post_init__(self):
-        """Initialize default values."""
+        """
+Initialize default values."""
         if self.tags is None:
             self.tags = []
         if self.metadata is None:
             self.metadata = {}
 
 class RateLimiter:
-    """Rate limiting implementation for crawler requests."""
+    """
+Rate limiting implementation for crawler requests."""
     
     def __init__(self, requests_per_minute: int, requests_per_hour: int):
         self.requests_per_minute = requests_per_minute
@@ -64,7 +68,8 @@ class RateLimiter:
         self.hour_requests: List[float] = []
     
     async def acquire(self):
-        """Acquire permission to make a request, blocking if necessary."""
+        """
+Acquire permission to make a request, blocking if necessary."""
         
         now = time.time()
         
@@ -354,7 +359,8 @@ class BaseCrawler(ABC):
         return self.config.base_url if self.config.base_url else None
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get crawler performance metrics."""
+        """
+Get crawler performance metrics."""
         
         success_rate = self.successful_requests / self.total_requests if self.total_requests > 0 else 0
         
@@ -375,7 +381,8 @@ class BaseCrawler(ABC):
         }
     
     def _update_performance_metrics(self, response_time: float, success: bool):
-        """Update performance tracking metrics."""
+        """
+Update performance tracking metrics."""
         
         self.total_requests += 1
         
@@ -392,7 +399,8 @@ class BaseCrawler(ABC):
             self.failed_requests += 1
     
     def _record_error(self, error: Exception):
-        """Record error for monitoring and debugging."""
+        """
+Record error for monitoring and debugging."""
         
         self.error_count += 1
         self.last_error_time = datetime.utcnow()
@@ -428,7 +436,8 @@ class BaseCrawler(ABC):
         return None
     
     def _determine_content_type(self, metadata: Dict[str, Any]) -> ContentType:
-        """Determine content type from metadata."""
+        """
+Determine content type from metadata."""
         
         # Default implementation based on common patterns
         content_type_str = metadata.get('content_type', '').lower()
@@ -445,7 +454,8 @@ class BaseCrawler(ABC):
             return ContentType.MIXED
     
     async def close(self):
-        """Clean up crawler resources."""
+        """
+Clean up crawler resources."""
         
         # Override in specific crawlers if needed
         logger.info("Closing %s crawler", self.__class__.__name__)

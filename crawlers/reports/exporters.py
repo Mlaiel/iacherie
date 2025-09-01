@@ -52,6 +52,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import warnings
@@ -176,6 +177,7 @@ logger = logging.getLogger(__name__)
 
 class ExportFormat(Enum):
     """Export format enumeration."""
+
     PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
@@ -189,6 +191,7 @@ class ExportFormat(Enum):
 
 class ExportDestination(Enum):
     """Export destination enumeration."""
+
     EMAIL = "email"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
@@ -203,6 +206,7 @@ class ExportDestination(Enum):
 
 class ExportStatus(Enum):
     """Export status enumeration."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -213,6 +217,7 @@ class ExportStatus(Enum):
 
 class ExportPriority(Enum):
     """Export priority enumeration."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -222,7 +227,8 @@ class ExportPriority(Enum):
 
 @dataclass
 class ExportConfiguration:
-    """Export configuration dataclass."""
+    """
+Export configuration dataclass."""
     export_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
     name: str = ""
     description: str = ""
@@ -309,7 +315,8 @@ class ReportExporter(ABC):
         pass
     
     async def prepare_data(self, data: Union[pd.DataFrame, Dict[str, Any], bytes]) -> bytes:
-        """Prepare and format data for export."""
+        """
+Prepare and format data for export."""
         try:
             start_time = datetime.utcnow()
             
@@ -510,7 +517,8 @@ class EmailExporter(ReportExporter):
     """
     
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data via email."""
+        """
+Export data via email."""
         try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
@@ -641,7 +649,8 @@ class CloudStorageExporter(ReportExporter):
     """
     
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to cloud storage."""
+        """
+Export data to cloud storage."""
         try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
@@ -783,7 +792,8 @@ class APIExporter(ReportExporter):
     """
     
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data via API or webhook."""
+        """
+Export data via API or webhook."""
         try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
@@ -972,7 +982,8 @@ class DatabaseExporter(ReportExporter):
     """
     
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to database."""
+        """
+Export data to database."""
         try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
@@ -1099,7 +1110,8 @@ class FileSystemExporter(ReportExporter):
     """
     
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to file system."""
+        """
+Export data to file system."""
         try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
@@ -1457,7 +1469,8 @@ class ExportManager:
         return list(self._exporters.keys())
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get export queue status."""
+        """
+Get export queue status."""
         return {
             "queue_size": self._export_queue.qsize(),
             "active_exports": len(self._active_exports),

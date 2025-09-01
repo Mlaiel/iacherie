@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Unit Tests for Business Logic Core
+"""
+Comprehensive Unit Tests for Business Logic Core
 Tests all critical functionality of the business_logic_core module.
 
 Author: AI Assistant
 Purpose: Complete unit test coverage for business logic core
 """
+
 import pytest
 import sys
 import os
@@ -115,7 +118,8 @@ class TestCreatorType:
     
     @pytest.mark.unit
     def test_creator_type_values(self):
-        """Test that all creator types have correct values"""
+        """
+Test that all creator types have correct values"""
         assert CreatorType.MUSICIAN.value == "musician"
         assert CreatorType.BLOGGER.value == "blogger"
         assert CreatorType.PHOTOGRAPHER.value == "photographer"
@@ -133,17 +137,20 @@ class TestCreatorType:
     
     @pytest.mark.unit
     def test_creator_type_uniqueness(self):
-        """Test that all creator type values are unique"""
+        """
+Test that all creator type values are unique"""
         values = [ct.value for ct in CreatorType]
         assert len(values) == len(set(values))
 
 
 class TestWorkflowStage:
-    """Test WorkflowStage enum functionality"""
+    """
+Test WorkflowStage enum functionality"""
     
     @pytest.mark.unit
     def test_workflow_stage_values(self):
-        """Test that all workflow stages have correct values"""
+        """
+Test that all workflow stages have correct values"""
         assert WorkflowStage.CONTENT_UPLOAD.value == "content_upload"
         assert WorkflowStage.CONTENT_ANALYSIS.value == "content_analysis"
         assert WorkflowStage.RIGHTS_PROTECTION.value == "rights_protection"
@@ -160,7 +167,8 @@ class TestWorkflowStage:
     
     @pytest.mark.unit
     def test_workflow_stage_order(self):
-        """Test that workflow stages follow logical order"""
+        """
+Test that workflow stages follow logical order"""
         stages = list(WorkflowStage)
         # Verify upload comes first
         assert stages[0] == WorkflowStage.CONTENT_UPLOAD
@@ -169,11 +177,13 @@ class TestWorkflowStage:
 
 
 class TestContentUpload:
-    """Test ContentUpload data structure"""
+    """
+Test ContentUpload data structure"""
     
     @pytest.mark.unit
     def test_content_upload_creation(self):
-        """Test creating a ContentUpload instance"""
+        """
+Test creating a ContentUpload instance"""
         upload = ContentUpload(
             content_id="test_123",
             creator_id="creator_456",
@@ -207,7 +217,8 @@ class TestCreatorProfile:
     
     @pytest.mark.unit
     def test_creator_profile_creation(self):
-        """Test creating a CreatorProfile instance"""
+        """
+Test creating a CreatorProfile instance"""
         profile = CreatorProfile(
             creator_id="creator_123",
             creator_type=CreatorType.INFLUENCER,
@@ -230,7 +241,8 @@ class TestContentAnalysisResult:
     
     @pytest.mark.unit
     def test_content_analysis_result_creation(self):
-        """Test creating a ContentAnalysisResult instance"""
+        """
+Test creating a ContentAnalysisResult instance"""
         result = ContentAnalysisResult(
             content_id="content_123",
             analysis_score=0.87,
@@ -272,19 +284,22 @@ class TestBusinessWorkflowEngine:
     
     @pytest.fixture
     def workflow_engine(self):
-        """Create a BusinessWorkflowEngine instance for testing"""
+        """
+Create a BusinessWorkflowEngine instance for testing"""
         return BusinessWorkflowEngine()
     
     @pytest.mark.unit
     def test_workflow_engine_initialization(self, workflow_engine):
-        """Test that workflow engine initializes correctly"""
+        """
+Test that workflow engine initializes correctly"""
         assert hasattr(workflow_engine, 'active_workflows')
         assert isinstance(workflow_engine.active_workflows, dict)
     
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_process_content_upload(self, workflow_engine):
-        """Test content upload processing"""
+        """
+Test content upload processing"""
         upload = ContentUpload(
             content_id="test_upload_123",
             creator_id="creator_456",
@@ -362,7 +377,8 @@ class TestBusinessLogicIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_full_workflow_simulation(self):
-        """Test complete workflow from upload to analysis"""
+        """
+Test complete workflow from upload to analysis"""
         # Create workflow engine
         engine = BusinessWorkflowEngine()
         
@@ -420,7 +436,8 @@ class TestErrorHandling:
     
     @pytest.mark.unit
     def test_invalid_creator_type(self):
-        """Test handling of invalid creator types"""
+        """
+Test handling of invalid creator types"""
         # Since ContentUpload is a dataclass without validation,
         # it accepts any value. Test that we can create it but
         # it would fail in validation later
@@ -461,7 +478,8 @@ class TestPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_bulk_upload_processing_performance(self):
-        """Test performance of bulk upload processing"""
+        """
+Test performance of bulk upload processing"""
         import time
         
         engine = BusinessWorkflowEngine()

@@ -6,11 +6,12 @@ Provides intelligent optimization recommendations, A/B testing,
 performance analysis, and automated revenue enhancement strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ from .analytics_engine import AnalyticsEngine
 
 
 class OptimizationType(Enum):
-    """Types of optimization"""
+    """
+Types of optimization"""
+
     CONTENT_TIMING = "content_timing"
     PRICING_STRATEGY = "pricing_strategy"
     PLATFORM_ALLOCATION = "platform_allocation"
@@ -47,6 +50,7 @@ class OptimizationType(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,6 +59,7 @@ class OptimizationPriority(Enum):
 
 class OptimizationStatus(Enum):
     """Optimization implementation status"""
+
     PENDING = "pending"
     TESTING = "testing"
     IMPLEMENTED = "implemented"
@@ -83,7 +88,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ABTestConfiguration:
-    """A/B test configuration"""
+    """
+A/B test configuration"""
     test_id: str
     test_name: str
     optimization_type: OptimizationType
@@ -98,7 +104,8 @@ class ABTestConfiguration:
 
 @dataclass
 class ABTestResult:
-    """A/B test result"""
+    """
+A/B test result"""
     test_id: str
     status: str
     start_date: datetime
@@ -113,7 +120,8 @@ class ABTestResult:
 
 @dataclass
 class OptimizationStrategy:
-    """Complete optimization strategy"""
+    """
+Complete optimization strategy"""
     strategy_id: str
     user_id: str
     recommendations: List[OptimizationRecommendation]
@@ -555,7 +563,8 @@ class OptimizationEngine:
     
     async def _identify_optimization_opportunities(self, user_id: str,
                                                  performance_data: Dict) -> List[Dict]:
-        """Identify optimization opportunities"""
+        """
+Identify optimization opportunities"""
         opportunities = []
         
         # Analyze each optimization type
@@ -570,7 +579,8 @@ class OptimizationEngine:
     
     async def _create_optimization_recommendation(self, user_id: str,
                                                 opportunity: Dict) -> OptimizationRecommendation:
-        """Create specific optimization recommendation"""
+        """
+Create specific optimization recommendation"""
         opt_type = opportunity['optimization_type']
         
         if opt_type == OptimizationType.CONTENT_TIMING:
@@ -605,7 +615,8 @@ class OptimizationEngine:
         return sorted(recommendations, key=priority_score, reverse=True)
     
     async def _analyze_posting_times(self, user_id: str, content_id: str) -> List[Dict]:
-        """Analyze posting time performance"""
+        """
+Analyze posting time performance"""
         # Implementation would analyze historical posting time data
         # Placeholder implementation
         timing_data = []
@@ -623,7 +634,8 @@ class OptimizationEngine:
         return timing_data
     
     async def _find_optimal_posting_times(self, timing_data: List[Dict]) -> Dict[str, Any]:
-        """Find optimal posting times from timing data"""
+        """
+Find optimal posting times from timing data"""
         # Analyze by hour
         hourly_performance = {}
         for data in timing_data:
@@ -659,7 +671,8 @@ class OptimizationEngine:
         }
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
+        """
+Get data from cache"""
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -667,7 +680,8 @@ class OptimizationEngine:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

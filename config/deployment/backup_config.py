@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -25,7 +26,9 @@ import yaml
 
 
 class BackupType(Enum):
-    """Backup types"""
+    """
+Backup types"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -35,6 +38,7 @@ class BackupType(Enum):
 
 class BackupStorage(Enum):
     """Backup storage providers"""
+
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_STORAGE = "google_storage"
@@ -45,6 +49,7 @@ class BackupStorage(Enum):
 
 class RetentionPolicy(Enum):
     """Backup retention policies"""
+
     DAILY_30 = "daily_30"      # 30 daily backups
     WEEKLY_12 = "weekly_12"    # 12 weekly backups
     MONTHLY_12 = "monthly_12"  # 12 monthly backups
@@ -675,7 +680,8 @@ log "Backup process completed successfully"
         return script
     
     def _generate_cleanup_commands(self, schedule: BackupSchedule) -> str:
-        """Generate cleanup commands based on retention policy"""
+        """
+Generate cleanup commands based on retention policy"""
         storage_configs = self.get_storage_configs()
         primary_storage = storage_configs.get("primary")
         
@@ -700,7 +706,8 @@ aws s3 ls s3://{primary_storage.bucket_name}/{schedule.name}/ --recursive | \\
     done
 """
         else:
-            return f"""log "Cleaning up old local backups (retention: {schedule.retention_days} days)..."
+            return f"""
+log "Cleaning up old local backups (retention: {schedule.retention_days} days)..."
 find "{primary_storage.bucket_name}/{schedule.name}" -type f -mtime +{schedule.retention_days} -delete
 """
     
@@ -747,7 +754,8 @@ log "Starting restore process for {self.environment} environment"
 """
         
         if primary_storage and primary_storage.provider == BackupStorage.AWS_S3:
-            script += f"""log "Downloading backups from S3..."
+            script += f"""
+log "Downloading backups from S3..."
 if [[ "$BACKUP_DATE" == "latest" ]]; then
     BACKUP_PATH=$(aws s3 ls s3://{primary_storage.bucket_name}/ --recursive | sort | tail -n 1 | awk '{{print $4}}')
     BACKUP_PATH=$(dirname "$BACKUP_PATH")
@@ -847,7 +855,8 @@ fi
 """
         fs_configs = self.get_filesystem_backup_configs()
         for fs_config in fs_configs:
-            script += f"""if [[ -f "$RESTORE_DIR/{fs_config.name}_"*.tar.* ]]; then
+            script += f"""
+if [[ -f "$RESTORE_DIR/{fs_config.name}_"*.tar.* ]]; then
     BACKUP_FILE=$(ls "$RESTORE_DIR/{fs_config.name}_"*.tar.* | head -n 1)
     log "Restoring file system: {fs_config.name}"
     
@@ -916,7 +925,8 @@ If any issues are found, restore from the backup files created during this proce
         return script
     
     def generate_monitoring_script(self) -> str:
-        """Generate backup monitoring and alerting script"""
+        """
+Generate backup monitoring and alerting script"""
         return f"""#!/bin/bash
 # Backup Monitoring Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>

@@ -195,7 +195,8 @@ class BusinessIntelligenceAgent(BaseAIAgent):
         self,
         request: BusinessIntelligenceRequest
     ) -> List[KPIDashboard]:
-        """Generate business intelligence dashboards."""
+        """
+Generate business intelligence dashboards."""
         dashboards = []
         
         # Executive Dashboard
@@ -525,7 +526,8 @@ class BusinessIntelligenceAgent(BaseAIAgent):
         self,
         request: BusinessIntelligenceRequest
     ) -> Dict[str, Any]:
-        """Generate industry benchmarks."""
+        """
+Generate industry benchmarks."""
         return {
             'industry_averages': {
                 'user_retention_rate': 0.72,
@@ -553,7 +555,8 @@ class BusinessIntelligenceAgent(BaseAIAgent):
         forecasts: Dict[str, Any],
         benchmarks: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate strategic recommendations."""
+        """
+Generate strategic recommendations."""
         return [
             {
                 'category': 'Revenue Growth',
@@ -594,7 +597,8 @@ class BusinessIntelligenceAgent(BaseAIAgent):
         ]
     
     async def get_real_time_business_metrics(self) -> Dict[str, Any]:
-        """Get real-time business metrics."""
+        """
+Get real-time business metrics."""
         return {
             'current_revenue_rate': 247.83,  # USD per hour
             'active_users_now': 1247,

@@ -9,6 +9,7 @@ Comprehensive tests for the new enterprise security features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import json
 import pytest
@@ -20,7 +21,8 @@ import base64
 # Test enhanced JWT manager
 @pytest.fixture
 async def enhanced_jwt_manager():
-    """Create test JWT manager"""
+    """
+Create test JWT manager"""
     from security.enhanced_jwt import EnhancedJWTManager
     
     manager = EnhancedJWTManager(

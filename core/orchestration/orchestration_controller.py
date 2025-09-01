@@ -12,6 +12,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ from backend.core.orchestration.error_handler import ErrorHandler
 
 
 class OrchestrationMode(Enum):
-    """Orchestration operation modes."""
+    """
+Orchestration operation modes."""
+
     NORMAL = "normal"
     HIGH_PERFORMANCE = "high_performance"
     BATCH_PROCESSING = "batch_processing"
@@ -46,6 +49,7 @@ class OrchestrationMode(Enum):
 
 class Priority(Enum):
     """Workflow execution priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -55,7 +59,8 @@ class Priority(Enum):
 
 @dataclass
 class OrchestrationConfig:
-    """Orchestration system configuration."""
+    """
+Orchestration system configuration."""
     mode: OrchestrationMode = OrchestrationMode.NORMAL
     max_concurrent_workflows: int = 50
     max_concurrent_tasks: int = 200
@@ -101,7 +106,8 @@ class WorkflowRequest:
 
 @dataclass
 class OrchestrationMetrics:
-    """System orchestration metrics."""
+    """
+System orchestration metrics."""
     active_workflows: int
     completed_workflows: int
     failed_workflows: int
@@ -132,7 +138,8 @@ class OrchestrationController:
         config: Optional[OrchestrationConfig] = None,
         logger: Optional[logging.Logger] = None
     ):
-        """Initialize the orchestration controller."""
+        """
+Initialize the orchestration controller."""
         self.config = config or OrchestrationConfig()
         self.logger = logger or logging.getLogger(__name__)
         
@@ -162,7 +169,8 @@ class OrchestrationController:
         self._initialize_system()
 
     def _initialize_system(self):
-        """Initialize orchestration system components."""
+        """
+Initialize orchestration system components."""
         try:
             # Configure resource limits
             self.resource_manager.configure_limits(self.config.resource_limits)
@@ -192,7 +200,8 @@ class OrchestrationController:
         asyncio.create_task(self._metrics_collection_loop())
 
     def _load_pipeline_templates(self):
-        """Load default pipeline templates."""
+        """
+Load default pipeline templates."""
         # This would load predefined templates from configuration or database
         # For now, the PipelineBuilder handles template initialization
         pass
@@ -727,7 +736,8 @@ class OrchestrationController:
         return self.config
 
     async def update_configuration(self, new_config: OrchestrationConfig):
-        """Update orchestration configuration."""
+        """
+Update orchestration configuration."""
         try:
             old_config = self.config
             self.config = new_config

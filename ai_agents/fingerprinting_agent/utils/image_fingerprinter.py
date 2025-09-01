@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -52,7 +53,8 @@ except ImportError:
 from ...utils.image_utils import ImageProcessor
 from ...ml.image_models import ImageEmbeddingModel
 
-"""Image Fingerprinter - Advanced AI-Powered Image Content Identification
+"""
+Image Fingerprinter - Advanced AI-Powered Image Content Identification
 
 Ultra-sophisticated image fingerprinting system using computer vision, perceptual hashing,
 and deep learning for precise image content identification and similarity matching.
@@ -64,6 +66,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -110,7 +113,9 @@ from ...ml.image_models import ImageEmbeddingModel
 logger = logging.getLogger(__name__)
 
 class ImageFingerprintQuality(Enum):
-    """Image fingerprint quality levels"""
+    """
+Image fingerprint quality levels"""
+
     BASIC = "basic"          # Perceptual hashes only
     STANDARD = "standard"    # + Color histograms, basic features
     ADVANCED = "advanced"    # + SIFT/ORB, texture analysis
@@ -118,6 +123,7 @@ class ImageFingerprintQuality(Enum):
 
 class ImageFeatureType(Enum):
     """Types of image features extracted"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     COLOR_HISTOGRAM = "color_histogram"
     TEXTURE_FEATURES = "texture_features"
@@ -130,6 +136,7 @@ class ImageFeatureType(Enum):
 
 class HashType(Enum):
     """Types of perceptual hashes"""
+
     AVERAGE_HASH = "ahash"
     PERCEPTUAL_HASH = "phash"
     DIFFERENCE_HASH = "dhash"
@@ -148,7 +155,8 @@ class ImageFeatureVector:
 
 @dataclass
 class ImageFingerprint:
-    """Complete image fingerprint structure"""
+    """
+Complete image fingerprint structure"""
     fingerprint_id: str
     image_hash: str
     perceptual_hashes: Dict[str, str]
@@ -434,7 +442,8 @@ class ImageFingerprinter:
         return hashlib.sha256(hash_bytes).hexdigest()
     
     async def _extract_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Extract multiple types of perceptual hashes"""
+        """
+Extract multiple types of perceptual hashes"""
         try:
             hashes = {}
             
@@ -1071,7 +1080,9 @@ class ImageFingerprinter:
         ]
 
 class ImageFingerprintQuality(Enum):
-    """Image fingerprint quality levels"""
+    """
+Image fingerprint quality levels"""
+
     BASIC = "basic"          # Perceptual hashing only
     STANDARD = "standard"    # + Visual features
     ADVANCED = "advanced"    # + Deep learning features
@@ -1129,7 +1140,8 @@ class ImageFingerprinter:
         }
         
     async def initialize(self):
-        """Initialize image fingerprinting system"""
+        """
+Initialize image fingerprinting system"""
         try:
             # Initialize deep learning models
             await self._initialize_deep_models()

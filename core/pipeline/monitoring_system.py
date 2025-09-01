@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Data Collection → Metrics Processing → Alerting → Analytics → Insights → Optimization
 """
+
 import asyncio
 import logging
 import time
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric types"""
+    """
+Metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -38,6 +41,7 @@ class MetricType(Enum):
 
 class AlertLevel(Enum):
     """Alert levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -46,6 +50,7 @@ class AlertLevel(Enum):
 
 class AlertStatus(Enum):
     """Alert status"""
+
     ACTIVE = "active"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
@@ -54,6 +59,7 @@ class AlertStatus(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -445,7 +451,8 @@ class MetricCollector:
             return collector(timestamp)
     
     def _record_metric(self, metric: Metric):
-        """Record a metric"""
+        """
+Record a metric"""
         # Add to main storage
         self.metrics.append(metric)
         
@@ -466,52 +473,62 @@ class MetricCollector:
         return random.randint(1000, 5000)
     
     def _get_pipeline_success_rate(self) -> float:
-        """Get pipeline success rate"""
+        """
+Get pipeline success rate"""
         import random
         return random.uniform(85.0, 99.5)
     
     def _get_average_execution_duration(self) -> float:
-        """Get average execution duration"""
+        """
+Get average execution duration"""
         import random
         return random.uniform(15.0, 45.0)
     
     def _get_content_processed_count(self) -> int:
-        """Get content processed count"""
+        """
+Get content processed count"""
         import random
         return random.randint(500, 2000)
     
     def _get_processing_queue_size(self) -> int:
-        """Get processing queue size"""
+        """
+Get processing queue size"""
         import random
         return random.randint(0, 100)
     
     def _get_ai_analysis_requests(self) -> int:
-        """Get AI analysis requests"""
+        """
+Get AI analysis requests"""
         import random
         return random.randint(100, 500)
     
     def _get_ai_analysis_accuracy(self) -> float:
-        """Get AI analysis accuracy"""
+        """
+Get AI analysis accuracy"""
         import random
         return random.uniform(90.0, 98.5)
     
     def record_metric(self, metric: Metric):
-        """Public method to record a metric"""
+        """
+Public method to record a metric"""
         self._record_metric(metric)
     
     def get_metrics(self, metric_name: Optional[str] = None, limit: int = 1000) -> List[Metric]:
-        """Get metrics"""
+        """
+Get metrics"""
         if metric_name:
             return list(self.metric_buffer[metric_name])[-limit:]
         else:
             return list(self.metrics)[-limit:]
     
     def get_real_time_metrics(self) -> Dict[str, Metric]:
-        """Get real-time metrics"""
+        """
+Get real-time metrics"""
         return self.real_time_metrics.copy()
     
     def add_custom_collector(self, name: str, collector: Callable):
-        """Add custom metric collector"""
+        """
+Add custom metric collector"""
         self.custom_collectors[name] = collector
         self.logger.info(f"Added custom collector: {name}")
     
@@ -530,7 +547,8 @@ class MetricCollector:
 
 
 class AlertManager:
-    """Advanced alerting system"""
+    """
+Advanced alerting system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -616,7 +634,8 @@ class AlertManager:
         self.alert_processor_task = asyncio.create_task(self._process_alerts())
     
     async def _process_alerts(self):
-        """Process alert queue"""
+        """
+Process alert queue"""
         while self.processing_active:
             try:
                 # Get metric from queue
@@ -736,7 +755,8 @@ class AlertManager:
         await self.alert_queue.put(metric)
     
     def add_alert_rule(self, name: str, rule: Dict[str, Any]):
-        """Add alert rule"""
+        """
+Add alert rule"""
         self.alert_rules[name] = rule
         self.logger.info(f"Added alert rule: {name}")
     
@@ -772,18 +792,21 @@ class AlertManager:
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[Alert]:
-        """Get alert history"""
+        """
+Get alert history"""
         return list(self.alert_history)[-limit:]
     
     def stop_processing(self):
-        """Stop alert processing"""
+        """
+Stop alert processing"""
         self.processing_active = False
         if self.alert_processor_task:
             self.alert_processor_task.cancel()
 
 
 class HealthMonitor:
-    """Advanced health monitoring system"""
+    """
+Advanced health monitoring system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -825,7 +848,8 @@ class HealthMonitor:
             )
     
     async def _monitor_component_health(self, component: str, check_func: Callable):
-        """Monitor component health"""
+        """
+Monitor component health"""
         check_interval = self.config.get("check_interval", 60.0)
         
         while self.monitoring_active:
@@ -1014,7 +1038,8 @@ class HealthMonitor:
         return self.health_checks.copy()
     
     def get_overall_health(self) -> MonitoringStatus:
-        """Get overall system health"""
+        """
+Get overall system health"""
         if not self.health_checks:
             return MonitoringStatus.UNHEALTHY
         
@@ -1034,7 +1059,8 @@ class HealthMonitor:
             return MonitoringStatus.HEALTHY
     
     def stop_monitoring(self):
-        """Stop health monitoring"""
+        """
+Stop health monitoring"""
         self.monitoring_active = False
         for task in self.monitoring_tasks.values():
             task.cancel()
@@ -1421,23 +1447,28 @@ class MonitoringSystem:
         self.metric_collector.record_metric(metric)
     
     def add_custom_metric_collector(self, name: str, collector: Callable):
-        """Add custom metric collector"""
+        """
+Add custom metric collector"""
         self.metric_collector.add_custom_collector(name, collector)
     
     def add_health_check(self, component: str, check_func: Callable):
-        """Add custom health check"""
+        """
+Add custom health check"""
         self.health_monitor.add_health_check(component, check_func)
     
     def add_alert_rule(self, name: str, rule: Dict[str, Any]):
-        """Add custom alert rule"""
+        """
+Add custom alert rule"""
         self.alert_manager.add_alert_rule(name, rule)
     
     def add_notification_channel(self, name: str, channel: Callable):
-        """Add custom notification channel"""
+        """
+Add custom notification channel"""
         self.alert_manager.add_notification_channel(name, channel)
     
     def get_monitoring_dashboard_data(self) -> Dict[str, Any]:
-        """Get monitoring dashboard data"""
+        """
+Get monitoring dashboard data"""
         return {
             "real_time_metrics": {
                 name: metric.to_dict() 
@@ -1459,15 +1490,18 @@ class MonitoringSystem:
         return [metric.to_dict() for metric in metrics]
     
     def acknowledge_alert(self, alert_id: str):
-        """Acknowledge alert"""
+        """
+Acknowledge alert"""
         self.alert_manager.acknowledge_alert(alert_id)
     
     def silence_alert(self, alert_id: str, duration: int = 3600):
-        """Silence alert"""
+        """
+Silence alert"""
         self.alert_manager.silence_alert(alert_id, duration)
     
     async def shutdown(self):
-        """Shutdown monitoring system"""
+        """
+Shutdown monitoring system"""
         self.logger.info("Shutting down monitoring system")
         
         # Stop monitoring

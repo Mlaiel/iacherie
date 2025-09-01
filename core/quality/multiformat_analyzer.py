@@ -9,7 +9,7 @@ Content upload → Format detection → Quality analysis → Protection scoring 
 SEO optimization → Platform compatibility → Quality report generation
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -18,6 +18,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -56,7 +57,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
     # Audio formats
     AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
@@ -87,6 +89,7 @@ class ContentFormat(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     EXCELLENT = "excellent"  # 90-100
     GOOD = "good"           # 80-89
     FAIR = "fair"           # 60-79
@@ -96,6 +99,7 @@ class QualityLevel(Enum):
 
 class ProtectionReadiness(Enum):
     """Content protection readiness levels"""
+
     READY = "ready"              # 90-100 - Ready for protection
     MOSTLY_READY = "mostly_ready"  # 70-89 - Minor improvements needed
     NEEDS_WORK = "needs_work"    # 50-69 - Significant improvements needed
@@ -129,7 +133,8 @@ class TechnicalSpecs:
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics"""
+    """
+Comprehensive quality metrics"""
     technical_quality_score: float = 0.0
     content_quality_score: float = 0.0
     aesthetic_quality_score: float = 0.0
@@ -146,7 +151,8 @@ class QualityMetrics:
     text_quality: Optional[Dict[str, float]] = None
     
     def calculate_overall_score(self) -> float:
-        """Calculate weighted overall quality score"""
+        """
+Calculate weighted overall quality score"""
         weights = {
             'technical': 0.20,
             'content': 0.25,
@@ -191,7 +197,8 @@ class QualityMetrics:
 
 @dataclass
 class ContentIssue:
-    """Individual content quality issue"""
+    """
+Individual content quality issue"""
     issue_id: str
     category: str
     severity: str  # critical, high, medium, low
@@ -271,7 +278,8 @@ class MultiFormatQualityAnalysis:
     ai_insights: Dict[str, Any] = field(default_factory=dict)
     
     def determine_quality_level(self):
-        """Determine overall quality level based on score"""
+        """
+Determine overall quality level based on score"""
         overall_score = self.quality_metrics.calculate_overall_score()
         
         if overall_score >= 90:
@@ -286,7 +294,8 @@ class MultiFormatQualityAnalysis:
             self.overall_quality_level = QualityLevel.UNACCEPTABLE
     
     def determine_protection_readiness(self):
-        """Determine protection readiness based on score"""
+        """
+Determine protection readiness based on score"""
         protection_score = self.quality_metrics.protection_readiness_score
         
         if protection_score >= 90:
@@ -362,7 +371,8 @@ class MultiFormatContentQualityAnalyzer:
             self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""
+        """
+Initialize AI models for content analysis"""
         try:
             # Text analysis models
             self.ai_models['sentiment'] = pipeline("sentiment-analysis")
@@ -517,7 +527,8 @@ class MultiFormatContentQualityAnalyzer:
         content_path: Path,
         content_format: ContentFormat
     ) -> TechnicalSpecs:
-        """Extract technical specifications from content"""
+        """
+Extract technical specifications from content"""
         specs = TechnicalSpecs()
         
         try:
@@ -996,7 +1007,8 @@ class MultiFormatContentQualityAnalyzer:
         content_format: ContentFormat,
         technical_specs: TechnicalSpecs
     ) -> Dict[str, Any]:
-        """Check YouTube platform compatibility"""
+        """
+Check YouTube platform compatibility"""
         compat = {
             'compatible': False,
             'score': 0,

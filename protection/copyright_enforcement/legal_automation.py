@@ -7,6 +7,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class CaseStatus(str, Enum):
-    """Legal case status enumeration"""
+    """
+Legal case status enumeration"""
+
     INITIATED = "initiated"
     EVIDENCE_COLLECTION = "evidence_collection"
     LEGAL_REVIEW = "legal_review"
@@ -45,6 +48,7 @@ class CaseStatus(str, Enum):
 
 class CasePriority(str, Enum):
     """Case priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -54,6 +58,7 @@ class CasePriority(str, Enum):
 
 class EvidenceType(str, Enum):
     """Types of evidence for legal cases"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     WEBPAGE_ARCHIVE = "webpage_archive"
@@ -78,7 +83,8 @@ class EvidenceItem:
 
 @dataclass
 class LegalCaseRequest:
-    """Legal case creation request"""
+    """
+Legal case creation request"""
     content_id: str
     violation_url: str
     platform: str
@@ -378,7 +384,8 @@ class CaseTracker:
         request: LegalCaseRequest,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """Create new legal case"""
+        """
+Create new legal case"""
         try:
             # Generate case reference
             case_reference = generate_case_reference(
@@ -553,7 +560,8 @@ class CaseTracker:
 
 
 class LegalActionManager:
-    """Manages legal actions and workflows"""
+    """
+Manages legal actions and workflows"""
     
     def __init__(self):
         self.case_tracker = CaseTracker()
@@ -566,7 +574,8 @@ class LegalActionManager:
         case_request: LegalCaseRequest,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """Initiate complete legal action workflow"""
+        """
+Initiate complete legal action workflow"""
         try:
             # Create legal case
             success, message, case_id = await self.case_tracker.create_case(
@@ -734,7 +743,8 @@ class LegalActionManager:
         case_request: LegalCaseRequest,
         assessment: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Determine next actions based on assessment"""
+        """
+Determine next actions based on assessment"""
         actions = []
         
         # Always start with DMCA
@@ -789,7 +799,8 @@ class LegalActionManager:
         return result.scalar_one_or_none()
     
     async def _auto_file_dmca(self, case: LegalCase) -> Dict[str, Any]:
-        """Automatically file DMCA notice"""
+        """
+Automatically file DMCA notice"""
         return {
             "action": "dmca_filed",
             "success": True,

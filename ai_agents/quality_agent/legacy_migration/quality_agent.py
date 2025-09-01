@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -61,7 +62,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class QualityLevel(Enum):
-    """Content quality levels"""
+    """
+Content quality levels"""
+
     POOR = "poor"
     FAIR = "fair"
     GOOD = "good"
@@ -70,6 +73,7 @@ class QualityLevel(Enum):
 
 class ContentType(Enum):
     """Supported content types for quality assessment"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -98,7 +102,8 @@ class QualityScore:
 
 @dataclass  
 class QualityRecommendation:
-    """Quality improvement recommendation"""
+    """
+Quality improvement recommendation"""
     category: str
     priority: str  # high, medium, low
     description: str
@@ -111,7 +116,8 @@ class QualityRecommendation:
 
 @dataclass
 class QualityAnalysis:
-    """Complete quality analysis result"""
+    """
+Complete quality analysis result"""
     content_id: str
     content_type: ContentType
     quality_score: QualityScore
@@ -719,7 +725,8 @@ class QualityAgent(BaseAgent):
         technical_analysis: Dict[str, Any],
         content_analysis: Dict[str, Any]
     ) -> List[QualityRecommendation]:
-        """Generate AI-powered improvement recommendations"""
+        """
+Generate AI-powered improvement recommendations"""
         
         recommendations = []
         
@@ -1363,7 +1370,8 @@ class QualityAgentManager:
         self.logger = logging.getLogger(__name__)
         
     async def initialize(self) -> None:
-        """Initialize the agent pool"""
+        """
+Initialize the agent pool"""
         
         for i in range(self.max_agents):
             agent = QualityAgent(agent_id=f"quality_agent_pool_{i}")
@@ -1394,7 +1402,8 @@ class QualityAgentManager:
             await self.agent_pool.put(agent)
             
     async def shutdown(self) -> None:
-        """Shutdown all agents"""
+        """
+Shutdown all agents"""
         
         for agent in self.agents:
             await agent.shutdown()
@@ -1437,7 +1446,8 @@ class QualityAgentManager:
             return 0.6
             
     async def _analyze_frequency_balance(self, audio_data: np.ndarray, sr: int) -> float:
-        """Analyze frequency balance in audio"""
+        """
+Analyze frequency balance in audio"""
         try:
             # Calculate spectral centroid
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sr)
@@ -1476,7 +1486,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _detect_blocking_artifacts(self, frame: np.ndarray) -> float:
-        """Detect blocking artifacts in video frame"""
+        """
+Detect blocking artifacts in video frame"""
         try:
             # Apply gradient filters to detect block edges
             grad_x = cv2.Sobel(frame, cv2.CV_64F, 1, 0, ksize=3)
@@ -1516,7 +1527,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_ringing_artifacts(self, frame: np.ndarray) -> float:
-        """Detect ringing artifacts around edges"""
+        """
+Detect ringing artifacts around edges"""
         try:
             # Edge detection
             edges = cv2.Canny(frame, 50, 150)
@@ -1540,7 +1552,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_mosquito_noise(self, frame: np.ndarray) -> float:
-        """Detect mosquito noise artifacts"""
+        """
+Detect mosquito noise artifacts"""
         try:
             # Apply Gaussian blur and compare
             blurred = cv2.GaussianBlur(frame, (5, 5), 1.0)
@@ -1556,7 +1569,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_compression_blur(self, frame: np.ndarray) -> float:
-        """Detect blur from compression"""
+        """
+Detect blur from compression"""
         try:
             # Laplacian variance for sharpness measurement
             laplacian_var = cv2.Laplacian(frame, cv2.CV_64F).var()
@@ -1570,7 +1584,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_rule_of_thirds(self, image: np.ndarray) -> float:
-        """Analyze adherence to rule of thirds"""
+        """
+Analyze adherence to rule of thirds"""
         try:
             height, width = image.shape
             
@@ -1602,7 +1617,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _detect_leading_lines(self, image: np.ndarray) -> float:
-        """Detect leading lines in composition"""
+        """
+Detect leading lines in composition"""
         try:
             # Edge detection
             edges = cv2.Canny(image, 50, 150)
@@ -1622,7 +1638,8 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_visual_balance(self, image: np.ndarray) -> float:
-        """Analyze visual balance and weight distribution"""
+        """
+Analyze visual balance and weight distribution"""
         try:
             # Convert to grayscale if needed
             if len(image.shape) == 3:
@@ -1657,7 +1674,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_color_harmony(self, hsv_image: np.ndarray) -> float:
-        """Analyze color harmony in the image"""
+        """
+Analyze color harmony in the image"""
         try:
             # Extract hue channel
             hue = hsv_image[:, :, 0]
@@ -1704,7 +1722,8 @@ class QualityAgentManager:
         content_path: str,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Assess brand safety and content appropriateness"""
+        """
+Assess brand safety and content appropriateness"""
         try:
             brand_safety_metrics = {"score": 0.0}
             
@@ -1781,7 +1800,8 @@ class QualityAgentManager:
             return 0.8
 
     async def _check_controversial_topics(self, text_content: str) -> float:
-        """Check for controversial or sensitive topics"""
+        """
+Check for controversial or sensitive topics"""
         try:
             controversial_topics = [
                 'politics', 'religion', 'conspiracy', 'controversy',
@@ -1803,7 +1823,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _analyze_professional_tone(self, text_content: str) -> float:
-        """Analyze professional tone of content"""
+        """
+Analyze professional tone of content"""
         try:
             professional_indicators = [
                 'professional', 'expert', 'research', 'analysis',
@@ -1829,7 +1850,8 @@ class QualityAgentManager:
             return 0.6
 
     async def _assess_image_brand_safety(self, content_path: str) -> Dict[str, Any]:
-        """Assess brand safety for image content"""
+        """
+Assess brand safety for image content"""
         try:
             # Basic image safety assessment
             return {
@@ -1940,7 +1962,8 @@ class QualityAgentManager:
             return 0.6
 
     async def _check_accessibility_structure(self, text_content: str) -> float:
-        """Check structural accessibility elements"""
+        """
+Check structural accessibility elements"""
         try:
             structure_score = 0.0
             
@@ -1963,7 +1986,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _evaluate_image_accessibility(self, content_path: str) -> Dict[str, Any]:
-        """Evaluate image accessibility"""
+        """
+Evaluate image accessibility"""
         try:
             return {
                 "score": 0.7,  # Placeholder - would analyze contrast, text, etc.
@@ -2107,7 +2131,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_commercial_viability(self, content_path: str, content_type: ContentType) -> float:
-        """Analyze commercial viability of content"""
+        """
+Analyze commercial viability of content"""
         try:
             if content_type in [ContentType.TEXT, ContentType.BLOG]:
                 with open(content_path, 'r', encoding='utf-8') as f:
@@ -2137,7 +2162,8 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_audience_appeal(self, content_path: str, content_type: ContentType) -> float:
-        """Analyze general audience appeal"""
+        """
+Analyze general audience appeal"""
         try:
             if content_type in [ContentType.TEXT, ContentType.BLOG, ContentType.SOCIAL_POST]:
                 with open(content_path, 'r', encoding='utf-8') as f:
@@ -2175,7 +2201,8 @@ class QualityAgentManager:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Predict viral potential of content using advanced analysis"""
+        """
+Predict viral potential of content using advanced analysis"""
         try:
             viral_factors = {
                 "emotional_impact": 0.0,
@@ -2273,7 +2300,8 @@ class QualityAgentManager:
             return 0.3
 
     async def _analyze_shareability(self, text_content: str) -> float:
-        """Analyze how shareable content is"""
+        """
+Analyze how shareable content is"""
         try:
             shareability_score = 0.0
             
@@ -2306,7 +2334,8 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_trending_alignment(self, text_content: str) -> float:
-        """Analyze alignment with trending topics"""
+        """
+Analyze alignment with trending topics"""
         try:
             # Current trending topics (simplified - would use real API data)
             trending_topics = [
@@ -2337,7 +2366,8 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_novelty_factor(self, text_content: str) -> float:
-        """Analyze novelty and uniqueness factor"""
+        """
+Analyze novelty and uniqueness factor"""
         try:
             novelty_indicators = [
                 'new', 'first time', 'never before', 'breakthrough',
@@ -2368,7 +2398,8 @@ class QualityAgentManager:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze content relevance and trends alignment"""
+        """
+Analyze content relevance and trends alignment"""
         try:
             relevance_metrics = {
                 "trend_alignment": 0.0,
@@ -2426,7 +2457,8 @@ class QualityAgentManager:
 
     # Audio analysis helper methods
     async def _detect_blocking_artifacts(self, frame: np.ndarray) -> float:
-        """Detect blocking artifacts in video frame"""
+        """
+Detect blocking artifacts in video frame"""
         try:
             # Simplified blocking artifact detection
             # Would use more sophisticated algorithms in production
@@ -2451,7 +2483,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_ringing_artifacts(self, frame: np.ndarray) -> float:
-        """Detect ringing artifacts in video frame"""
+        """
+Detect ringing artifacts in video frame"""
         try:
             # Ringing artifacts appear as oscillations near edges
             # Use Laplacian to detect high-frequency oscillations
@@ -2469,7 +2502,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_mosquito_noise(self, frame: np.ndarray) -> float:
-        """Detect mosquito noise artifacts"""
+        """
+Detect mosquito noise artifacts"""
         try:
             # Mosquito noise appears as fluctuating noise around edges
             # Use Canny edge detection + noise analysis
@@ -2491,7 +2525,8 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_compression_blur(self, frame: np.ndarray) -> float:
-        """Detect compression-induced blur"""
+        """
+Detect compression-induced blur"""
         try:
             # Use Laplacian variance to measure sharpness
             laplacian_var = cv2.Laplacian(frame, cv2.CV_64F).var()
@@ -2514,7 +2549,8 @@ class QualityAgentManager:
 
     # Advanced image analysis methods
     async def _analyze_rule_of_thirds(self, gray_image: np.ndarray) -> float:
-        """Analyze composition using rule of thirds"""
+        """
+Analyze composition using rule of thirds"""
         try:
             height, width = gray_image.shape
             
@@ -2556,7 +2592,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _detect_leading_lines(self, gray_image: np.ndarray) -> float:
-        """Detect leading lines in composition"""
+        """
+Detect leading lines in composition"""
         try:
             # Use Hough line detection
             edges = cv2.Canny(gray_image, 50, 150, apertureSize=3)
@@ -2582,7 +2619,8 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_visual_balance(self, image: np.ndarray) -> float:
-        """Analyze visual balance in the image"""
+        """
+Analyze visual balance in the image"""
         try:
             # Convert to grayscale for analysis
             if len(image.shape) == 3:
@@ -2617,7 +2655,8 @@ class QualityAgentManager:
             return 0.6
 
     async def _analyze_focus_quality(self, gray_image: np.ndarray) -> float:
-        """Analyze focus and depth of field quality"""
+        """
+Analyze focus and depth of field quality"""
         try:
             # Use Laplacian variance to measure overall sharpness
             laplacian_var = cv2.Laplacian(gray_image, cv2.CV_64F).var()
@@ -2636,7 +2675,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_subject_prominence(self, image: np.ndarray) -> float:
-        """Analyze how prominent the main subject is"""
+        """
+Analyze how prominent the main subject is"""
         try:
             # Use edge detection and contour analysis
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
@@ -2672,7 +2712,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_golden_ratio(self, gray_image: np.ndarray) -> float:
-        """Analyze composition using golden ratio spiral"""
+        """
+Analyze composition using golden ratio spiral"""
         try:
             height, width = gray_image.shape
             
@@ -2707,7 +2748,8 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_negative_space(self, gray_image: np.ndarray) -> float:
-        """Analyze negative space utilization"""
+        """
+Analyze negative space utilization"""
         try:
             # Use thresholding to separate subjects from background
             _, binary = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
@@ -2732,7 +2774,8 @@ class QualityAgentManager:
 
     # SEO Analysis Helper Methods
     async def _analyze_keyword_density(self, text_content: str) -> float:
-        """Analyze keyword density for SEO optimization"""
+        """
+Analyze keyword density for SEO optimization"""
         try:
             # Simplified keyword density analysis
             # In production, would use actual target keywords
@@ -2766,7 +2809,8 @@ class QualityAgentManager:
             return 0.6
 
     async def _analyze_heading_structure(self, text_content: str) -> float:
-        """Analyze heading structure for SEO"""
+        """
+Analyze heading structure for SEO"""
         try:
             # Count different heading levels (markdown style)
             h1_count = text_content.count('\n# ')
@@ -2798,7 +2842,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_link_structure(self, text_content: str) -> float:
-        """Analyze internal/external link structure"""
+        """
+Analyze internal/external link structure"""
         try:
             # Count markdown links
             link_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
@@ -2834,7 +2879,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_meta_description_potential(self, text_content: str) -> float:
-        """Analyze potential for good meta description"""
+        """
+Analyze potential for good meta description"""
         try:
             # Use first paragraph or first few sentences
             sentences = text_content.split('.')
@@ -2859,7 +2905,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _calculate_seo_readability(self, text_content: str) -> float:
-        """Calculate readability score for SEO"""
+        """
+Calculate readability score for SEO"""
         try:
             # Simplified Flesch Reading Ease calculation
             sentences = len([s for s in text_content.split('.') if s.strip()])
@@ -2889,7 +2936,8 @@ class QualityAgentManager:
             return 0.6
 
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         try:
             word = word.lower()
             vowels = 'aeiouy'
@@ -2914,7 +2962,8 @@ class QualityAgentManager:
             return 1
 
     async def _analyze_semantic_richness(self, text_content: str) -> float:
-        """Analyze semantic richness of content"""
+        """
+Analyze semantic richness of content"""
         try:
             words = text_content.lower().split()
             unique_words = set(words)
@@ -2937,7 +2986,8 @@ class QualityAgentManager:
             return 0.6
 
     async def _analyze_content_freshness(self, text_content: str) -> float:
-        """Analyze content freshness indicators"""
+        """
+Analyze content freshness indicators"""
         try:
             # Look for freshness indicators
             fresh_terms = [
@@ -2960,7 +3010,8 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_schema_potential(self, text_content: str) -> float:
-        """Analyze potential for schema markup"""
+        """
+Analyze potential for schema markup"""
         try:
             # Look for structured data indicators
             schema_indicators = [

@@ -5,13 +5,16 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module configures cloud service APIs including storage (AWS S3, MinIO),
 CDN (CloudFlare, AWS CloudFront), and other infrastructure services.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class CloudServiceType(Enum):
-    """Cloud service types"""
+    """
+Cloud service types"""
+
     OBJECT_STORAGE = "object_storage"
     CDN = "cdn"
     DATABASE = "database"
@@ -22,6 +25,7 @@ class CloudServiceType(Enum):
 
 class StorageClass(Enum):
     """Storage class types"""
+
     STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"
     ARCHIVE = "archive"
@@ -359,23 +363,28 @@ def get_cloud_config(service: str) -> Optional[CloudAPIConfig]:
     return CLOUD_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: CloudServiceType) -> List[CloudAPIConfig]:
-    """Get all cloud services of specific type"""
+    """
+Get all cloud services of specific type"""
     return [config for config in CLOUD_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_services_by_provider(provider: str) -> List[CloudAPIConfig]:
-    """Get all services from specific cloud provider"""
+    """
+Get all services from specific cloud provider"""
     return [config for config in CLOUD_CONFIGS.values() 
             if config.provider.lower() == provider.lower()]
 
 def get_storage_services() -> List[CloudAPIConfig]:
-    """Get all object storage services"""
+    """
+Get all object storage services"""
     return get_services_by_type(CloudServiceType.OBJECT_STORAGE)
 
 def get_cdn_services() -> List[CloudAPIConfig]:
-    """Get all CDN services"""
+    """
+Get all CDN services"""
     return get_services_by_type(CloudServiceType.CDN)
 
 def get_monitoring_services() -> List[CloudAPIConfig]:
-    """Get all monitoring services"""
+    """
+Get all monitoring services"""
     return get_services_by_type(CloudServiceType.MONITORING)

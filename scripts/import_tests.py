@@ -8,6 +8,7 @@ de l'ancien projet IA-Influencer vers le nouveau projet Ainflue.
 Author: GitHub Copilot
 Date: 2025-08-31
 """
+
 import os
 import sys
 import shutil
@@ -45,7 +46,8 @@ class TestImporter:
         self.adaptation_log = []
     
     def download_and_extract_repo(self) -> bool:
-        """Télécharge et extrait l'ancien projet"""
+        """
+Télécharge et extrait l'ancien projet"""
         try:
             print("📥 Téléchargement de l'ancien projet...")
             
@@ -190,7 +192,8 @@ class TestImporter:
     
     def create_master_conftest(self) -> bool:
         """Crée un fichier conftest.py principal"""
-        conftest_content = '''"""Configuration pytest principale pour le projet Ainflue
+        conftest_content = '''"""
+Configuration pytest principale pour le projet Ainflue
 ====================================================
 
 Configuration centralisée pour tous les tests du projet,
@@ -199,6 +202,7 @@ importée et adaptée de l'ancien projet IA-Influencer.
 Author: GitHub Copilot (adapté du projet original)
 Date: 2025-08-31
 """
+
 import pytest
 import asyncio
 import logging
@@ -217,7 +221,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # Configuration pytest
 def pytest_configure(config):
-    """Configuration pytest principale"""
+    """
+Configuration pytest principale"""
     # Marqueurs de test
     config.addinivalue_line("markers", "unit: Tests unitaires")
     config.addinivalue_line("markers", "integration: Tests d'intégration") 
@@ -255,7 +260,8 @@ def temp_dir(tmp_path):
 
 # Hook pour modifier la collection de tests
 def pytest_collection_modifyitems(config, items):
-    """Modifie la collection de tests"""
+    """
+Modifie la collection de tests"""
     for item in items:
         # Ajouter des marqueurs automatiquement basés sur le nom
         if "performance" in item.name.lower():
@@ -382,7 +388,8 @@ pytest tests/ai/ -v
         return report
     
     def cleanup(self):
-        """Nettoie les fichiers temporaires"""
+        """
+Nettoie les fichiers temporaires"""
         if self.temp_dir and os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)
             print("🧹 Fichiers temporaires nettoyés")

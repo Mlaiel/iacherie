@@ -5,9 +5,10 @@ Comprehensive schema validation system with Pydantic models and JSON Schema
 support for data integrity and structure validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Type, Callable
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Schema validation levels."""
+    """
+Schema validation levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -34,6 +37,7 @@ class ValidationLevel(Enum):
 
 class SchemaType(Enum):
     """Supported schema types."""
+
     JSON_SCHEMA = "json_schema"
     PYDANTIC = "pydantic"
     OPENAPI = "openapi"
@@ -43,6 +47,7 @@ class SchemaType(Enum):
 
 class ValidationStatus(Enum):
     """Schema validation status."""
+
     VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
@@ -64,7 +69,8 @@ class SchemaError:
 
 @dataclass
 class SchemaValidationResult:
-    """Comprehensive schema validation result."""
+    """
+Comprehensive schema validation result."""
     is_valid: bool
     status: ValidationStatus
     validation_level: ValidationLevel
@@ -114,7 +120,8 @@ class BaseContentModel(BaseModel):
 
 
 class ContentMetadataModel(BaseContentModel):
-    """Pydantic model for content metadata."""
+    """
+Pydantic model for content metadata."""
     
     title: StrictStr = Field(..., min_length=1, max_length=200, description="Content title")
     description: Optional[StrictStr] = Field(None, max_length=2000, description="Content description")
@@ -155,7 +162,8 @@ class ContentMetadataModel(BaseContentModel):
     
     @validator('tags', 'categories')
     def validate_string_lists(cls, v):
-        """Validate string lists."""
+        """
+Validate string lists."""
         for item in v:
             if not isinstance(item, str) or len(item.strip()) == 0:
                 raise ValueError('List items must be non-empty strings')
@@ -163,7 +171,8 @@ class ContentMetadataModel(BaseContentModel):
 
 
 class AudioContentModel(ContentMetadataModel):
-    """Pydantic model for audio content."""
+    """
+Pydantic model for audio content."""
     
     content_type: StrictStr = Field("audio", const=True)
     sample_rate: Optional[StrictInt] = Field(None, gt=0, description="Sample rate in Hz")
@@ -179,7 +188,8 @@ class AudioContentModel(ContentMetadataModel):
 
 
 class VideoContentModel(ContentMetadataModel):
-    """Pydantic model for video content."""
+    """
+Pydantic model for video content."""
     
     content_type: StrictStr = Field("video", const=True)
     frame_rate: Optional[StrictFloat] = Field(None, gt=0, le=120, description="Frame rate in fps")
@@ -197,7 +207,8 @@ class VideoContentModel(ContentMetadataModel):
 
 
 class ImageContentModel(ContentMetadataModel):
-    """Pydantic model for image content."""
+    """
+Pydantic model for image content."""
     
     content_type: StrictStr = Field("image", const=True)
     color_space: Optional[StrictStr] = Field(None, description="Color space")
@@ -224,7 +235,8 @@ class TextContentModel(ContentMetadataModel):
 
 
 class PlatformRequirementsModel(BaseContentModel):
-    """Pydantic model for platform requirements."""
+    """
+Pydantic model for platform requirements."""
     
     platform_name: StrictStr = Field(..., description="Platform name")
     max_file_size: StrictInt = Field(..., gt=0, description="Maximum file size")
@@ -989,7 +1001,8 @@ class SchemaValidator:
     def _init_custom_validators(self) -> Dict[str, List[Callable]]:
         """Initialize custom validators."""
         async def validate_content_title(data):
-            """Custom validator for content titles."""
+            """
+Custom validator for content titles."""
             title = data.get("title", "")
             if len(title) < 5:
                 return {

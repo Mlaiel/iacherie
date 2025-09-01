@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 import json
 import logging
@@ -47,7 +48,9 @@ import scipy.sparse as sp
 logger = logging.getLogger(__name__)
 
 class RecommendationType(str, Enum):
-    """Types of recommendation algorithms."""
+    """
+Types of recommendation algorithms."""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -59,6 +62,7 @@ class RecommendationType(str, Enum):
 
 class ContentType(str, Enum):
     """Types of content for recommendations."""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -70,6 +74,7 @@ class ContentType(str, Enum):
 
 class SimilarityMetric(str, Enum):
     """Similarity metrics for recommendations."""
+
     COSINE = "cosine"
     PEARSON = "pearson"
     EUCLIDEAN = "euclidean"
@@ -93,7 +98,8 @@ class UserProfile:
 
 @dataclass
 class ContentItem:
-    """Content item for recommendations."""
+    """
+Content item for recommendations."""
     content_id: str
     content_type: ContentType
     title: str
@@ -110,7 +116,8 @@ class ContentItem:
 
 @dataclass
 class RecommendationResult:
-    """Recommendation result structure."""
+    """
+Recommendation result structure."""
     user_id: str
     recommendations: List[Tuple[str, float]]  # (content_id, score)
     algorithm_used: RecommendationType
@@ -124,7 +131,8 @@ class RecommendationResult:
 
 @dataclass
 class InteractionEvent:
-    """User interaction event."""
+    """
+User interaction event."""
     user_id: str
     content_id: str
     interaction_type: str  # view, like, share, comment, download, etc.
@@ -143,7 +151,8 @@ class RecommendationEngineRegistry:
     """
     
     def __init__(self, db_connection: Any, config: Dict[str, Any]):
-        """Initialize recommendation engine registry."""
+        """
+Initialize recommendation engine registry."""
         self.db = db_connection
         self.config = config
         self.models: Dict[str, Any] = {}
@@ -154,7 +163,8 @@ class RecommendationEngineRegistry:
         self._initialize_recommendation_models()
         
     def _initialize_recommendation_models(self) -> None:
-        """Initialize recommendation models."""
+        """
+Initialize recommendation models."""
         try:
             # Load collaborative filtering models
             self._load_collaborative_models()
@@ -207,7 +217,8 @@ class RecommendationEngineRegistry:
         }
     
     def _load_content_based_models(self) -> None:
-        """Load content-based recommendation models."""
+        """
+Load content-based recommendation models."""
         self.models['content_similarity'] = {
             'type': RecommendationType.CONTENT_BASED,
             'algorithm': 'feature_similarity',
@@ -237,7 +248,8 @@ class RecommendationEngineRegistry:
         }
     
     def _load_hybrid_models(self) -> None:
-        """Load hybrid recommendation models."""
+        """
+Load hybrid recommendation models."""
         self.models['weighted_hybrid'] = {
             'type': RecommendationType.HYBRID,
             'algorithm': 'weighted_combination',
@@ -268,7 +280,8 @@ class RecommendationEngineRegistry:
         }
     
     def _load_deep_learning_models(self) -> None:
-        """Load deep learning recommendation models."""
+        """
+Load deep learning recommendation models."""
         # Neural collaborative filtering
         self.models['neural_cf'] = {
             'type': RecommendationType.DEEP_LEARNING,
@@ -295,7 +308,8 @@ class RecommendationEngineRegistry:
         }
     
     async def register_model(self, model_data: Dict[str, Any]) -> str:
-        """Register a new recommendation model."""
+        """
+Register a new recommendation model."""
         try:
             model_id = str(uuid.uuid4())
             
@@ -324,7 +338,8 @@ class RecommendationEngineRegistry:
         pass
     
     async def get_model_performance(self, model_id: str) -> Dict[str, Any]:
-        """Get model performance metrics."""
+        """
+Get model performance metrics."""
         if model_id in self.performance_cache:
             return self.performance_cache[model_id]
         
@@ -335,7 +350,8 @@ class RecommendationEngineRegistry:
         return performance_data
     
     async def _load_performance_data(self, model_id: str) -> Dict[str, Any]:
-        """Load performance data from database."""
+        """
+Load performance data from database."""
         # Implementation depends on database schema
         return {
             'precision_at_k': 0.85,
@@ -356,7 +372,8 @@ class CollaborativeFilteringAI:
     """
     
     def __init__(self, model_registry: RecommendationEngineRegistry, config: Dict[str, Any]):
-        """Initialize collaborative filtering AI."""
+        """
+Initialize collaborative filtering AI."""
         self.registry = model_registry
         self.config = config
         self.user_item_matrix: Optional[sp.csr_matrix] = None
@@ -368,7 +385,8 @@ class CollaborativeFilteringAI:
         self.reverse_item_mapper: Dict[int, str] = {}
         
     async def build_user_item_matrix(self, interactions: List[InteractionEvent]) -> None:
-        """Build user-item interaction matrix from interaction data."""
+        """
+Build user-item interaction matrix from interaction data."""
         try:
             # Create user and item mappings
             users = set(interaction.user_id for interaction in interactions)
@@ -648,7 +666,8 @@ class ContentBasedRecommender:
     """
     
     def __init__(self, model_registry: RecommendationEngineRegistry, config: Dict[str, Any]):
-        """Initialize content-based recommender."""
+        """
+Initialize content-based recommender."""
         self.registry = model_registry
         self.config = config
         self.content_features: Dict[str, np.ndarray] = {}
@@ -660,7 +679,8 @@ class ContentBasedRecommender:
         self._initialize_feature_extractors()
     
     def _initialize_feature_extractors(self) -> None:
-        """Initialize feature extraction models."""
+        """
+Initialize feature extraction models."""
         # TF-IDF for text features
         self.feature_extractors['tfidf'] = TfidfVectorizer(
             max_features=5000,
@@ -738,7 +758,8 @@ class ContentBasedRecommender:
         return features
     
     def _extract_numerical_features(self, content_item: ContentItem) -> List[float]:
-        """Extract numerical features."""
+        """
+Extract numerical features."""
         features = []
         
         # Popularity and quality scores
@@ -761,7 +782,8 @@ class ContentBasedRecommender:
         return features
     
     async def _compute_content_similarity(self) -> None:
-        """Compute content similarity matrix."""
+        """
+Compute content similarity matrix."""
         try:
             if not self.content_features:
                 return
@@ -913,7 +935,8 @@ class HybridRecommendationEngine:
         content_engine: ContentBasedRecommender,
         config: Dict[str, Any]
     ):
-        """Initialize hybrid recommendation engine."""
+        """
+Initialize hybrid recommendation engine."""
         self.collaborative_engine = collaborative_engine
         self.content_engine = content_engine
         self.config = config
@@ -930,7 +953,8 @@ class HybridRecommendationEngine:
         user_profile: UserProfile,
         n_recommendations: int = 10
     ) -> RecommendationResult:
-        """Generate recommendations using weighted hybrid approach."""
+        """
+Generate recommendations using weighted hybrid approach."""
         try:
             # Get recommendations from different algorithms
             collaborative_recs = await self._get_collaborative_recommendations(user_id, n_recommendations * 2)
@@ -1119,7 +1143,8 @@ class HybridRecommendationEngine:
             return 'collaborative'
     
     def _assess_profile_completeness(self, user_profile: UserProfile) -> float:
-        """Assess how complete a user profile is."""
+        """
+Assess how complete a user profile is."""
         completeness_factors = [
             len(user_profile.preferences) > 0,
             len(user_profile.interaction_history) > 0,
@@ -1131,7 +1156,8 @@ class HybridRecommendationEngine:
         return sum(completeness_factors) / len(completeness_factors)
     
     async def _get_decision_factors(self, user_id: str, user_profile: UserProfile) -> Dict[str, Any]:
-        """Get factors that influenced algorithm choice."""
+        """
+Get factors that influenced algorithm choice."""
         return {
             'interaction_count': len(user_profile.interaction_history),
             'profile_completeness': self._assess_profile_completeness(user_profile),
@@ -1141,7 +1167,8 @@ class HybridRecommendationEngine:
         }
     
     async def _calculate_diversity_score(self, recommendations: List[Tuple[str, float]]) -> float:
-        """Calculate diversity score for recommendations."""
+        """
+Calculate diversity score for recommendations."""
         if not recommendations:
             return 0.0
         
@@ -1150,7 +1177,8 @@ class HybridRecommendationEngine:
         return min(1.0, len(set(rec[0] for rec in recommendations)) / len(recommendations))
     
     async def _calculate_novelty_score(self, recommendations: List[Tuple[str, float]], user_profile: UserProfile) -> float:
-        """Calculate novelty score for recommendations."""
+        """
+Calculate novelty score for recommendations."""
         if not recommendations:
             return 0.0
         
@@ -1161,7 +1189,8 @@ class HybridRecommendationEngine:
         return novel_count / len(recommendations)
     
     async def _calculate_confidence_score(self, recommendations: List[Tuple[str, float]]) -> float:
-        """Calculate confidence score for recommendations."""
+        """
+Calculate confidence score for recommendations."""
         if not recommendations:
             return 0.0
         
@@ -1178,7 +1207,8 @@ class PersonalizationAI:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize personalization AI."""
+        """
+Initialize personalization AI."""
         self.config = config
         self.user_models: Dict[str, Dict[str, Any]] = {}
         self.preference_evolution: Dict[str, List[Dict[str, Any]]] = {}
@@ -1189,7 +1219,8 @@ class PersonalizationAI:
         interactions: List[InteractionEvent],
         explicit_feedback: Dict[str, float] = None
     ) -> UserProfile:
-        """Learn and update user preferences from interactions."""
+        """
+Learn and update user preferences from interactions."""
         try:
             # Initialize or load existing user model
             if user_id not in self.user_models:
@@ -1252,7 +1283,8 @@ class PersonalizationAI:
         }
     
     async def _extract_preferences_from_interactions(self, interactions: List[InteractionEvent]) -> Dict[str, float]:
-        """Extract user preferences from interaction data."""
+        """
+Extract user preferences from interaction data."""
         preferences = {}
         
         # Analyze interaction patterns
@@ -1334,7 +1366,8 @@ class PersonalizationAI:
         return features
     
     async def _analyze_temporal_patterns(self, interactions: List[InteractionEvent]) -> Dict[str, Any]:
-        """Analyze temporal patterns in user behavior."""
+        """
+Analyze temporal patterns in user behavior."""
         patterns = {}
         
         if not interactions:
@@ -1384,7 +1417,8 @@ class PersonalizationAI:
         return patterns
     
     def _track_preference_evolution(self, user_id: str, current_preferences: Dict[str, float]) -> None:
-        """Track how user preferences evolve over time."""
+        """
+Track how user preferences evolve over time."""
         if user_id not in self.preference_evolution:
             self.preference_evolution[user_id] = []
         
@@ -1404,7 +1438,8 @@ class PersonalizationAI:
         user_id: str,
         content_items: List[ContentItem]
     ) -> Dict[str, float]:
-        """Predict user preferences for given content items."""
+        """
+Predict user preferences for given content items."""
         try:
             if user_id not in self.user_models:
                 # Return neutral predictions for new users
@@ -1535,7 +1570,8 @@ async def get_recommendation_engines_health() -> Dict[str, Any]:
     }
 
 def get_recommendation_module_info() -> Dict[str, Any]:
-    """Get recommendation systems module information."""
+    """
+Get recommendation systems module information."""
     return {
         'module': 'recommendation_systems',
         'version': '1.0.0',

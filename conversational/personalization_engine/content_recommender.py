@@ -9,11 +9,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(str, Enum):
-    """Types of recommendations"""
+    """
+Types of recommendations"""
+
     CONTENT_DISCOVERY = "content_discovery"
     COLLABORATION_MATCHING = "collaboration_matching"
     TRENDING_CONTENT = "trending_content"
@@ -53,6 +56,7 @@ class RecommendationType(str, Enum):
 
 class RecommendationStrategy(str, Enum):
     """Recommendation generation strategies"""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -64,6 +68,7 @@ class RecommendationStrategy(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for recommendations"""
+
     AUDIO_MUSIC = "audio_music"
     VIDEO_CONTENT = "video_content"
     IMAGE_PHOTOGRAPHY = "image_photography"
@@ -89,7 +94,8 @@ class RecommendationRequest:
 
 @dataclass
 class RecommendationItem:
-    """Individual recommendation item"""
+    """
+Individual recommendation item"""
     item_id: str
     item_type: str
     title: str
@@ -106,7 +112,8 @@ class RecommendationItem:
 
 @dataclass
 class RecommendationResponse:
-    """Response containing recommendations"""
+    """
+Response containing recommendations"""
     request_id: str
     user_id: str
     recommendation_type: RecommendationType
@@ -121,7 +128,8 @@ class RecommendationResponse:
 
 @dataclass
 class UserProfile:
-    """User profile for recommendations"""
+    """
+User profile for recommendations"""
     user_id: str
     content_preferences: Dict[str, float]
     creator_affinities: Dict[str, float]
@@ -713,7 +721,8 @@ def create_content_recommender(
 
 
 def validate_recommendation_request(request: RecommendationRequest) -> bool:
-    """Validate recommendation request"""
+    """
+Validate recommendation request"""
     if not request.user_id or not isinstance(request.user_id, str):
         return False
     

@@ -19,6 +19,7 @@ Features:
 - Educational content classification
 - Skill and topic trend analysis
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -43,7 +44,8 @@ settings = get_settings()
 
 @dataclass
 class EducationalCourse:
-    """Educational course data structure."""
+    """
+Educational course data structure."""
     course_id: str
     platform: str
     title: str
@@ -77,7 +79,8 @@ class EducationalCourse:
 
 @dataclass
 class EducationalInstructor:
-    """Educational instructor data structure."""
+    """
+Educational instructor data structure."""
     instructor_id: str
     platform: str
     name: str
@@ -96,7 +99,8 @@ class EducationalInstructor:
 
 @dataclass
 class EducationalContent:
-    """Educational content item data structure."""
+    """
+Educational content item data structure."""
     content_id: str
     course_id: str
     platform: str
@@ -123,7 +127,8 @@ class EducationalCrawler:
     """
     
     def __init__(self):
-        """Initialize educational crawler."""
+        """
+Initialize educational crawler."""
         self.rate_limiter = EducationalRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -198,7 +203,8 @@ class EducationalCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -824,12 +830,14 @@ class EducationalCrawler:
         return (title_similarity * 0.5) + (instructor_similarity * 0.2) + (description_similarity * 0.3)
     
     async def _get_course_content(self, course: EducationalCourse) -> List[EducationalContent]:
-        """Get detailed course content structure."""
+        """
+Get detailed course content structure."""
         # Placeholder implementation
         return []
     
     async def _analyze_content_duration(self, content_items: List[EducationalContent]) -> Dict:
-        """Analyze content duration patterns."""
+        """
+Analyze content duration patterns."""
         return {
             'total_duration': 0,
             'average_duration': 0,
@@ -837,7 +845,8 @@ class EducationalCrawler:
         }
     
     async def _assess_content_quality(self, content_items: List[EducationalContent]) -> Dict:
-        """Assess content quality metrics."""
+        """
+Assess content quality metrics."""
         return {
             'quality_score': 0.0,
             'content_depth': 'medium',
@@ -845,7 +854,8 @@ class EducationalCrawler:
         }
     
     async def _analyze_learning_progression(self, content_items: List[EducationalContent]) -> Dict:
-        """Analyze learning progression structure."""
+        """
+Analyze learning progression structure."""
         return {
             'progression_quality': 'good',
             'difficulty_curve': 'gradual',
@@ -857,7 +867,8 @@ class EducationalCrawler:
         course: EducationalCourse,
         content_items: List[EducationalContent]
     ) -> Dict:
-        """Analyze skill coverage of the course."""
+        """
+Analyze skill coverage of the course."""
         return {
             'covered_skills': course.skills_taught,
             'skill_depth': {},
@@ -865,7 +876,8 @@ class EducationalCrawler:
         }
     
     async def _check_content_originality(self, content_items: List[EducationalContent]) -> Dict:
-        """Check content originality and potential copying."""
+        """
+Check content originality and potential copying."""
         return {
             'originality_score': 0.8,
             'potential_copies': [],
@@ -877,7 +889,8 @@ class EducationalCrawler:
         course1: EducationalCourse,
         course2: EducationalCourse
     ) -> Dict:
-        """Analyze factors contributing to course similarity."""
+        """
+Analyze factors contributing to course similarity."""
         return {
             'title_similarity': 0.0,
             'content_similarity': 0.0,
@@ -891,7 +904,8 @@ class EducationalCrawler:
         categories: List[str],
         time_period: str
     ) -> Dict:
-        """Analyze trends for a specific platform."""
+        """
+Analyze trends for a specific platform."""
         return {
             'topics': [],
             'instructors': [],
@@ -901,7 +915,8 @@ class EducationalCrawler:
         }
     
     async def _analyze_cross_platform_trends(self, trends: Dict) -> Dict:
-        """Analyze trends across multiple platforms."""
+        """
+Analyze trends across multiple platforms."""
         return {
             'common_trends': [],
             'platform_differences': {},
@@ -910,19 +925,23 @@ class EducationalCrawler:
         }
     
     async def _monitor_coursera_course(self, url: str) -> Optional[EducationalCourse]:
-        """Monitor specific Coursera course."""
+        """
+Monitor specific Coursera course."""
         return None
     
     async def _monitor_udemy_course(self, url: str) -> Optional[EducationalCourse]:
-        """Monitor specific Udemy course."""
+        """
+Monitor specific Udemy course."""
         return None
     
     async def _monitor_khan_academy_course(self, url: str) -> Optional[EducationalCourse]:
-        """Monitor specific Khan Academy course."""
+        """
+Monitor specific Khan Academy course."""
         return None
     
     async def _monitor_edx_course(self, url: str) -> Optional[EducationalCourse]:
-        """Monitor specific edX course."""
+        """
+Monitor specific edX course."""
         return None
 
 # Example usage

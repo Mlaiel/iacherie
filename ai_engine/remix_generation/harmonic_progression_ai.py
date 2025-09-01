@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Analyseur et générateur de progressions harmoniques IA ultra-avancé
 TECHNOLOGIES: Deep Learning, Music Theory, Harmonic Analysis, Chord Progression Generation
 LOGIQUE MÉTIER: Musical context → Harmonic analysis → Progression generation → Voice leading → Quality validation
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ from scipy import signal
 logger = logging.getLogger(__name__)
 
 class HarmonicStyle(Enum):
-    """Harmonic progression styles"""
+    """
+Harmonic progression styles"""
+
     CLASSICAL = "classical"
     JAZZ = "jazz"
     POP = "pop"
@@ -54,6 +57,7 @@ class HarmonicStyle(Enum):
 
 class ChordQuality(Enum):
     """Chord quality types"""
+
     MAJOR = "major"
     MINOR = "minor"
     DIMINISHED = "diminished"
@@ -71,6 +75,7 @@ class ChordQuality(Enum):
 
 class HarmonicFunction(Enum):
     """Harmonic function analysis"""
+
     TONIC = "tonic"
     SUBDOMINANT = "subdominant"
     DOMINANT = "dominant"
@@ -82,6 +87,7 @@ class HarmonicFunction(Enum):
 
 class VoiceLeadingType(Enum):
     """Voice leading movement types"""
+
     STEPWISE = "stepwise"
     LEAP = "leap"
     STATIC = "static"
@@ -106,7 +112,8 @@ class ChordData:
 
 @dataclass
 class HarmonicProgression:
-    """Generated harmonic progression"""
+    """
+Generated harmonic progression"""
     progression_id: str
     chords: List[ChordData]
     key_center: str
@@ -123,7 +130,8 @@ class HarmonicProgression:
 
 @dataclass
 class HarmonicParameters:
-    """Parameters for harmonic progression generation"""
+    """
+Parameters for harmonic progression generation"""
     key_signature: str = "C"
     mode: str = "major"
     progression_length: int = 8
@@ -236,14 +244,16 @@ class HarmonicTransformerNetwork(nn.Module):
         return chord_logits, function_logits, tension_scores, voice_leading_scores
     
     def _generate_square_subsequent_mask(self, sz):
-        """Generate causal mask"""
+        """
+Generate causal mask"""
         mask = torch.triu(torch.ones(sz, sz)) == 1
         mask = mask.transpose(0, 1)
         mask = mask.float().masked_fill(mask == 0, float('-inf')).masked_fill(mask == 1, float(0.0))
         return mask
 
 class ChordVocabulary:
-    """Chord vocabulary for neural network"""
+    """
+Chord vocabulary for neural network"""
     
     def __init__(self):
         self.chord_to_token = {}
@@ -251,7 +261,8 @@ class ChordVocabulary:
         self._build_vocabulary()
     
     def _build_vocabulary(self):
-        """Build comprehensive chord vocabulary"""
+        """
+Build comprehensive chord vocabulary"""
         token_id = 0
         
         # Special tokens
@@ -305,7 +316,8 @@ class HarmonyAnalyzer:
         self.voice_leading_rules = self._initialize_voice_leading_rules()
     
     def _initialize_functional_rules(self) -> Dict[str, Any]:
-        """Initialize functional harmony rules"""
+        """
+Initialize functional harmony rules"""
         return {
             "major_key_functions": {
                 "I": HarmonicFunction.TONIC,

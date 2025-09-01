@@ -4,8 +4,9 @@ Central hub for managing all platform integrations, API connections,
 authentication flows, and data synchronization across multiple platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -31,7 +32,9 @@ from ...utils.encryption_utils import encrypt_sensitive_data, decrypt_sensitive_
 logger = get_logger(__name__)
 
 class IntegrationType(Enum):
-    """Integration types"""
+    """
+Integration types"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     WEBHOOK = "webhook"
@@ -40,6 +43,7 @@ class IntegrationType(Enum):
 
 class PlatformCategory(Enum):
     """Platform categories"""
+
     SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
@@ -64,7 +68,8 @@ class PlatformInfo:
 
 @dataclass
 class IntegrationResult:
-    """Integration operation result"""
+    """
+Integration operation result"""
     success: bool
     platform_id: str
     integration_id: Optional[str] = None
@@ -608,7 +613,8 @@ class IntegrationHub:
         }
     
     async def _initialize_http_clients(self):
-        """Initialize HTTP clients for different platforms"""
+        """
+Initialize HTTP clients for different platforms"""
         for platform_id, config in self.platform_configs.items():
             self.http_clients[platform_id] = httpx.AsyncClient(
                 base_url=config.base_url,
@@ -622,7 +628,8 @@ class IntegrationHub:
         platform_info: PlatformInfo,
         config: Dict[str, Any]
     ) -> IntegrationResult:
-        """Initiate OAuth2 integration"""
+        """
+Initiate OAuth2 integration"""
         oauth_url = await self.oauth_manager.generate_oauth_url(
             platform_id=platform_info.platform_id,
             user_id=user_id,
@@ -645,7 +652,8 @@ class IntegrationHub:
         platform_info: PlatformInfo,
         config: Dict[str, Any]
     ) -> IntegrationResult:
-        """Initiate API key integration"""
+        """
+Initiate API key integration"""
         api_key = config.get('api_key')
         if not api_key:
             return IntegrationResult(
@@ -677,7 +685,8 @@ class IntegrationHub:
         platform_info: PlatformInfo,
         config: Dict[str, Any]
     ) -> IntegrationResult:
-        """Initiate webhook integration"""
+        """
+Initiate webhook integration"""
         webhook_url = config.get('webhook_url')
         if not webhook_url:
             return IntegrationResult(
@@ -709,7 +718,8 @@ class IntegrationHub:
         platform_id: str, 
         session: AsyncSession
     ) -> Optional[PlatformIntegration]:
-        """Get existing integration from database"""
+        """
+Get existing integration from database"""
         result = await session.execute(
             select(PlatformIntegration).where(
                 and_(
@@ -726,7 +736,8 @@ class IntegrationHub:
         platform_id: str, 
         session: AsyncSession
     ) -> Optional[PlatformIntegration]:
-        """Get active integration from database"""
+        """
+Get active integration from database"""
         result = await session.execute(
             select(PlatformIntegration).where(
                 and_(
@@ -745,7 +756,8 @@ class IntegrationHub:
         result: IntegrationResult,
         session: AsyncSession
     ):
-        """Store integration in database"""
+        """
+Store integration in database"""
         integration = PlatformIntegration(
             user_id=user_id,
             platform_id=platform_id,
@@ -763,7 +775,8 @@ class IntegrationHub:
         await session.refresh(integration)
     
     async def _monitor_integrations(self):
-        """Monitor integration health"""
+        """
+Monitor integration health"""
         while True:
             try:
                 logger.info("Running integration health check")

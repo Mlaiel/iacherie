@@ -13,7 +13,7 @@ Features:
 - Live performance analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -34,7 +34,9 @@ from fastapi import WebSocket, WebSocketDisconnect
 logger = logging.getLogger(__name__)
 
 class RevenueStreamType(Enum):
-    """Types de flux de revenus en temps réel"""
+    """
+Types de flux de revenus en temps réel"""
+
     LIVE_EARNINGS = "live_earnings"
     PLATFORM_UPDATE = "platform_update"
     CONTENT_ATTRIBUTION = "content_attribution"
@@ -382,7 +384,8 @@ class ContentAttributionEngine:
     """Moteur d'attribution de revenus par contenu"""
     
     async def attribute_revenue(self, revenue_data: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Attribue les revenus à des contenus spécifiques"""
+        """
+Attribue les revenus à des contenus spécifiques"""
         try:
             attribution_method = self._get_attribution_method(platform)
             
@@ -457,7 +460,8 @@ class RevenueAnomalyDetector:
         self.anomaly_threshold = 3.0  # Écart-type
     
     async def detect_anomaly(self, event: RealtimeRevenueEvent) -> bool:
-        """Détecte si un événement de revenue est anormal"""
+        """
+Détecte si un événement de revenue est anormal"""
         try:
             revenue_amount = float(event.revenue_amount)
             

@@ -9,13 +9,15 @@ implemented and addresses the critical testing gap identified in the project.
 Author: Copilot Assistant
 Purpose: Resolve "Tests Manquants: Pas de tests unitaires centralisés"
 """
+
 import os
 import sys
 import asyncio
 from pathlib import Path
 
 def validate_test_structure():
-    """Validate that the centralized test structure exists and is comprehensive."""
+    """
+Validate that the centralized test structure exists and is comprehensive."""
     print("="*70)
     print("🧪 CENTRALIZED UNIT TESTS VALIDATION")
     print("="*70)

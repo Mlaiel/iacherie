@@ -51,6 +51,7 @@ This system transforms raw audio content into monetized intellectual property th
 - Multi-platform distribution with performance analytics
 - Revenue optimization through intelligent pricing and placement
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -77,7 +78,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioProcessingRequest(AgentRequest):
-    """Audio processing request with comprehensive parameters"""
+    """
+Audio processing request with comprehensive parameters"""
     audio_file_path: Optional[str] = None
     audio_data: Optional[np.ndarray] = None
     sample_rate: Optional[int] = None
@@ -104,7 +106,8 @@ class AudioProcessingResponse(AgentResponse):
     file_size_mb: float = 0.0
 
 class AudioProcessor:
-    """Advanced audio processing engine with ML capabilities"""
+    """
+Advanced audio processing engine with ML capabilities"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -114,7 +117,8 @@ class AudioProcessor:
         self.classifier = AudioClassifier()
         
     async def analyze_audio(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Comprehensive audio analysis with ML features"""
+        """
+Comprehensive audio analysis with ML features"""
         try:
             start_time = datetime.now()
             
@@ -194,7 +198,8 @@ class AudioProcessor:
         return (dr_score + snr_score + clipping_penalty) / 3
     
     def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract advanced spectral features"""
+        """
+Extract advanced spectral features"""
         # STFT for spectral analysis
         f, t, stft = signal.stft(audio_data, sample_rate, nperseg=2048)
         magnitude = np.abs(stft)
@@ -288,7 +293,8 @@ class AudioEnhancer:
     
     def _compress_dynamic_range(self, audio_data: np.ndarray, 
                                threshold: float = 0.7, ratio: float = 4.0) -> np.ndarray:
-        """Apply dynamic range compression"""
+        """
+Apply dynamic range compression"""
         audio_abs = np.abs(audio_data)
         compressed = np.where(
             audio_abs > threshold,
@@ -298,7 +304,8 @@ class AudioEnhancer:
         return compressed
     
     def _apply_eq_enhancement(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply EQ enhancement for better sound"""
+        """
+Apply EQ enhancement for better sound"""
         # Design a simple EQ filter (high-pass to remove low-frequency noise)
         nyquist = sample_rate // 2
         low_cutoff = 80 / nyquist  # 80 Hz high-pass
@@ -306,7 +313,8 @@ class AudioEnhancer:
         return signal.filtfilt(b, a, audio_data)
 
 class AIAudioGenerator:
-    """AI-powered audio generation system"""
+    """
+AI-powered audio generation system"""
     
     def __init__(self):
         self.generation_model = AudioGenerationModel()
@@ -314,7 +322,8 @@ class AIAudioGenerator:
     async def generate_audio(self, prompt: str, duration_seconds: float = 10.0, 
                            genre: Optional[str] = None, mood: Optional[str] = None,
                            sample_rate: int = 44100) -> np.ndarray:
-        """Generate audio using AI based on text prompt"""
+        """
+Generate audio using AI based on text prompt"""
         try:
             # Prepare generation parameters
             generation_params = {
@@ -511,7 +520,8 @@ class AudioAgentManager:
         self.settings = get_settings()
         
     async def create_agent(self, agent_id: str, config: Optional[Dict[str, Any]] = None) -> AudioAgent:
-        """Create and register new audio agent"""
+        """
+Create and register new audio agent"""
         agent = AudioAgent(agent_id, config)
         self.agents[agent_id] = agent
         await agent.initialize()
@@ -523,7 +533,8 @@ class AudioAgentManager:
         return self.agents.get(agent_id)
     
     async def process_audio_batch(self, requests: List[AudioProcessingRequest]) -> List[AudioProcessingResponse]:
-        """Process multiple audio requests in parallel"""
+        """
+Process multiple audio requests in parallel"""
         tasks = []
         for request in requests:
             agent = await self.get_agent(request.agent_id)
@@ -537,7 +548,8 @@ class AudioAgentManager:
         return []
     
     async def shutdown_all_agents(self):
-        """Shutdown all audio agents"""
+        """
+Shutdown all audio agents"""
         for agent_id, agent in self.agents.items():
             await agent.shutdown()
             logger.info(f"Shutdown audio agent: {agent_id}")

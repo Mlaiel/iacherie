@@ -28,6 +28,7 @@ Features:
 - Personalized Discovery Feed
 - Cross-platform Creator Integration
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -54,7 +55,9 @@ import speech_recognition as sr
 logger = logging.getLogger(__name__)
 
 class SearchType(Enum):
-    """Comprehensive search type enumeration"""
+    """
+Comprehensive search type enumeration"""
+
     CREATORS = "creators"
     CONTENT = "content" 
     SKILLS = "skills"
@@ -73,6 +76,7 @@ class SearchType(Enum):
 
 class SearchMode(Enum):
     """Search mode enumeration"""
+
     TEXT = "text"
     SEMANTIC = "semantic"
     VISUAL = "visual"
@@ -86,6 +90,7 @@ class SearchMode(Enum):
 
 class SortBy(Enum):
     """Sort options enumeration"""
+
     RELEVANCE = "relevance"
     POPULARITY = "popularity"
     RECENT = "recent"
@@ -101,6 +106,7 @@ class SortBy(Enum):
 
 class DiscoveryContext(Enum):
     """Discovery context enumeration"""
+
     COLLABORATION_SEARCH = "collaboration_search"
     INSPIRATION_SEEKING = "inspiration_seeking"
     SKILL_LEARNING = "skill_learning"
@@ -164,7 +170,8 @@ class DiscoveryFilters:
 
 @dataclass
 class SearchResults:
-    """Comprehensive search results"""
+    """
+Comprehensive search results"""
     results: List[Dict[str, Any]]
     total_count: int
     page: int
@@ -184,7 +191,8 @@ class SearchResults:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class DiscoveryService:
-    """Advanced creator discovery and search system"""
+    """
+Advanced creator discovery and search system"""
     
     def __init__(
         self,
@@ -535,7 +543,8 @@ class DiscoveryService:
         per_page: int,
         sort_by: SortBy
     ) -> List[Dict[str, Any]]:
-        """Semantic search using NLP models"""
+        """
+Semantic search using NLP models"""
         # Generate query embedding
         query_embedding = await self._generate_text_embedding(query)
         
@@ -557,7 +566,8 @@ class DiscoveryService:
         per_page: int,
         sort_by: SortBy
     ) -> List[Dict[str, Any]]:
-        """Traditional text-based search"""
+        """
+Traditional text-based search"""
         # Build Elasticsearch query
         es_query = await self._build_elasticsearch_query(query, filters, sort_by)
         
@@ -591,7 +601,8 @@ class DiscoveryService:
         per_page: int,
         sort_by: SortBy
     ) -> List[Dict[str, Any]]:
-        """Voice search implementation"""
+        """
+Voice search implementation"""
         voice_results = await self.search_by_voice(audio_query, filters)
         return voice_results.results[(page-1)*per_page:page*per_page]
         
@@ -604,7 +615,8 @@ class DiscoveryService:
         sort_by: SortBy,
         user_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """AI-powered search with machine learning"""
+        """
+AI-powered search with machine learning"""
         # Use ML models to understand search intent
         search_intent = await self._analyze_search_intent(query, user_id)
         
@@ -621,7 +633,8 @@ class DiscoveryService:
         
     # Helper methods (placeholder implementations)
     async def _generate_cache_key(self, query: str, filters: DiscoveryFilters, mode: SearchMode, page: int, per_page: int, sort_by: SortBy) -> str:
-        """Generate cache key for search results"""
+        """
+Generate cache key for search results"""
         return hashlib.md5(f"{query}_{mode.value}_{page}_{per_page}_{sort_by.value}".encode()).hexdigest()
         
     async def _personalize_results(self, results: List[Dict[str, Any]], user_id: str, context: DiscoveryContext) -> List[Dict[str, Any]]:
@@ -629,75 +642,93 @@ class DiscoveryService:
         return results  # Placeholder
         
     async def _enhance_search_results(self, results: List[Dict[str, Any]], query: str, filters: DiscoveryFilters) -> List[Dict[str, Any]]:
-        """Enhance search results with additional data"""
+        """
+Enhance search results with additional data"""
         return results  # Placeholder
         
     async def _generate_search_insights(self, results: List[Dict[str, Any]], query: str, filters: DiscoveryFilters, context: DiscoveryContext) -> Dict[str, Any]:
-        """Generate AI insights about search results"""
+        """
+Generate AI insights about search results"""
         return {}  # Placeholder
         
     async def _generate_search_suggestions(self, query: str, filters: DiscoveryFilters) -> List[str]:
-        """Generate search suggestions"""
+        """
+Generate search suggestions"""
         return []  # Placeholder
         
     async def _get_related_searches(self, query: str, user_id: Optional[str]) -> List[str]:
-        """Get related search queries"""
+        """
+Get related search queries"""
         return []  # Placeholder
         
     async def _get_trending_searches(self) -> List[str]:
-        """Get trending search queries"""
+        """
+Get trending search queries"""
         return []  # Placeholder
         
     async def _generate_search_facets(self, results: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
-        """Generate search facets for filtering"""
+        """
+Generate search facets for filtering"""
         return {}  # Placeholder
         
     async def _calculate_trending_metrics(self, creator_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate trending metrics for creator"""
+        """
+Calculate trending metrics for creator"""
         return {'trending_score': 0.8}  # Placeholder
         
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile for personalization"""
+        """
+Get user profile for personalization"""
         return {}  # Placeholder
         
     async def _get_user_search_history(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user search history"""
+        """
+Get user search history"""
         return []  # Placeholder
         
     async def _get_collaborative_recommendations(self, user_id: str, limit: int) -> List[Dict[str, Any]]:
-        """Get collaborative filtering recommendations"""
+        """
+Get collaborative filtering recommendations"""
         return []  # Placeholder
         
     async def _get_content_based_recommendations(self, user_profile: Dict[str, Any], limit: int) -> List[Dict[str, Any]]:
-        """Get content-based recommendations"""
+        """
+Get content-based recommendations"""
         return []  # Placeholder
         
     async def _get_trending_recommendations(self, user_profile: Dict[str, Any], limit: int) -> List[Dict[str, Any]]:
-        """Get trending-based recommendations"""
+        """
+Get trending-based recommendations"""
         return []  # Placeholder
         
     async def _deduplicate_and_rank_recommendations(self, recommendations: List[Dict[str, Any]], user_profile: Dict[str, Any], context: DiscoveryContext) -> List[Dict[str, Any]]:
-        """Remove duplicates and rank recommendations"""
+        """
+Remove duplicates and rank recommendations"""
         return recommendations  # Placeholder
         
     async def _enhance_recommendations(self, recommendations: List[Dict[str, Any]], user_id: str) -> List[Dict[str, Any]]:
-        """Enhance recommendations with additional data"""
+        """
+Enhance recommendations with additional data"""
         return recommendations  # Placeholder
         
     async def _extract_image_features(self, image_data: Any) -> np.ndarray:
-        """Extract features from image"""
+        """
+Extract features from image"""
         return np.random.rand(512)  # Placeholder
         
     async def _apply_filters_to_results(self, results: List[Dict[str, Any]], filters: DiscoveryFilters) -> List[Dict[str, Any]]:
-        """Apply filters to search results"""
+        """
+Apply filters to search results"""
         return results  # Placeholder
         
     async def _enhance_image_search_results(self, results: List[Dict[str, Any]], image_features: np.ndarray) -> List[Dict[str, Any]]:
-        """Enhance image search results"""
+        """
+Enhance image search results"""
         return results  # Placeholder
         
     async def _voice_to_text(self, audio_data: Any, language: str) -> str:
-        """Convert voice to text"""
+        """
+Convert voice to text"""
         return "example search query"  # Placeholder
         
     async def _merge_search_results(self, result_sets: List[List[Dict[str, Any]]], weights: List[float]) -> List[Dict[str, Any]]:
@@ -705,11 +736,13 @@ class DiscoveryService:
         return result_sets[0] if result_sets else []  # Placeholder
         
     async def _generate_text_embedding(self, text: str) -> np.ndarray:
-        """Generate text embedding"""
+        """
+Generate text embedding"""
         return np.random.rand(384)  # Placeholder
         
     async def _build_elasticsearch_query(self, query: str, filters: DiscoveryFilters, sort_by: SortBy) -> Dict[str, Any]:
-        """Build Elasticsearch query"""
+        """
+Build Elasticsearch query"""
         return {"query": {"match_all": {}}}  # Placeholder
         
     async def _analyze_search_intent(self, query: str, user_id: Optional[str]) -> Dict[str, Any]:
@@ -717,15 +750,19 @@ class DiscoveryService:
         return {'intent': 'collaboration_search'}  # Placeholder
         
     async def _enhance_query_with_ai(self, query: str, intent: Dict[str, Any], filters: DiscoveryFilters) -> str:
-        """Enhance query using AI"""
+        """
+Enhance query using AI"""
         return query  # Placeholder
         
     async def _apply_ml_ranking(self, results: List[Dict[str, Any]], query: str, user_id: Optional[str]) -> List[Dict[str, Any]]:
-        """Apply ML-based ranking to results"""
+        """
+Apply ML-based ranking to results"""
         return results  # Placeholder
 
 class SortOrder(Enum):
-    """Sort order options"""
+    """
+Sort order options"""
+
     RELEVANCE = "relevance"
     POPULARITY = "popularity"
     RECENT = "recent"
@@ -736,6 +773,7 @@ class SortOrder(Enum):
 
 class DiscoveryMethod(Enum):
     """Discovery method enumeration"""
+
     SEARCH_QUERY = "search_query"
     RECOMMENDATIONS = "recommendations"
     TRENDING = "trending"
@@ -767,7 +805,8 @@ class DiscoveryFilters:
 
 @dataclass
 class SearchResults:
-    """Search results container"""
+    """
+Search results container"""
     results: List[Dict[str, Any]]
     total_count: int
     page: int
@@ -780,7 +819,8 @@ class SearchResults:
     related_searches: List[str] = field(default_factory=list)
 
 class DiscoveryService:
-    """Advanced creator discovery and search service"""
+    """
+Advanced creator discovery and search service"""
     
     def __init__(self, db_session, elasticsearch_client, ml_models, geo_service, analytics_tracker):
         self.db_session = db_session
@@ -799,7 +839,8 @@ class DiscoveryService:
         page_size: int = 20,
         user_id: Optional[str] = None
     ) -> SearchResults:
-        """Search for creators with advanced filtering and ranking"""
+        """
+Search for creators with advanced filtering and ranking"""
         try:
             start_time = datetime.utcnow()
             logger.info(f"Searching creators with query: '{query}'")
@@ -1088,7 +1129,8 @@ class DiscoveryService:
         page: int,
         page_size: int
     ) -> List[Dict[str, Any]]:
-        """Execute search using Elasticsearch"""
+        """
+Execute search using Elasticsearch"""
         try:
             # Build Elasticsearch query
             es_query = {
@@ -1681,24 +1723,29 @@ class DiscoveryService:
         pass
         
     async def _find_nearby_creators(self, latitude: float, longitude: float, radius_km: float, creator_types: Optional[List[str]]) -> List[Dict[str, Any]]:
-        """Find creators within geographic radius"""
+        """
+Find creators within geographic radius"""
         return []
         
     async def _generate_content_embedding(self, content: str) -> np.ndarray:
-        """Generate content embedding for semantic search"""
+        """
+Generate content embedding for semantic search"""
         return np.random.rand(128)  # Placeholder
         
     async def _get_creator_content_embeddings(self, content_type: Optional[str]) -> Dict[str, np.ndarray]:
-        """Get content embeddings for all creators"""
+        """
+Get content embeddings for all creators"""
         return {}
         
     async def _get_creator_details(self, creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed creator information"""
+        """
+Get detailed creator information"""
         return {}
         
     # Advanced Analytics and Insights Methods
     async def _get_user_search_history(self, user_id: str, time_period: str) -> List[Dict[str, Any]]:
-        """Get comprehensive user search history with detailed analytics"""
+        """
+Get comprehensive user search history with detailed analytics"""
         try:
             # Calculate time range
             if time_period == "7_days":

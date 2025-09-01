@@ -8,7 +8,7 @@ Responsibility: Enterprise competition lifecycle and tournament management
 ==========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ COMPETITION ARCHITECTURE:
 Tournament Engine → Bracket Manager → Matchmaking System → 
 Live Score Tracker → Prize Pool Manager → Broadcasting System
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -32,7 +33,9 @@ import json
 from abc import ABC, abstractmethod
 
 class CompetitionType(Enum):
-    """Types of competitions supported"""
+    """
+Types of competitions supported"""
+
     TOURNAMENT = "tournament"
     LEAGUE = "league"
     BATTLE_ROYALE = "battle_royale"
@@ -46,6 +49,7 @@ class CompetitionType(Enum):
 
 class CompetitionStatus(Enum):
     """Competition lifecycle status"""
+
     DRAFT = "draft"
     REGISTRATION_OPEN = "registration_open"
     REGISTRATION_CLOSED = "registration_closed"
@@ -59,6 +63,7 @@ class CompetitionStatus(Enum):
 
 class CompetitionPhase(Enum):
     """Competition phases"""
+
     PREPARATION = "preparation"
     REGISTRATION = "registration"
     SEEDING = "seeding"
@@ -72,6 +77,7 @@ class CompetitionPhase(Enum):
 
 class ParticipationStatus(Enum):
     """Participant status in competition"""
+
     REGISTERED = "registered"
     CONFIRMED = "confirmed"
     ACTIVE = "active"
@@ -83,6 +89,7 @@ class ParticipationStatus(Enum):
 
 class MatchResult(Enum):
     """Match result outcomes"""
+
     WIN = "win"
     LOSS = "loss"
     DRAW = "draw"
@@ -183,7 +190,8 @@ class CompetitionManager:
                  reward_service=None,
                  streaming_service=None,
                  matchmaking_service=None):
-        """Initialize competition manager with dependencies"""
+        """
+Initialize competition manager with dependencies"""
         self.competition_repository = competition_repository
         self.challenge_repository = challenge_repository
         self.user_service = user_service
@@ -867,7 +875,8 @@ class CompetitionManager:
                                             competition_id: str,
                                             participant_id: str,
                                             config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Check if participant is eligible to register"""
+        """
+Check if participant is eligible to register"""
         now = datetime.now(timezone.utc)
         
         # Check registration window
@@ -1000,7 +1009,8 @@ class CompetitionManager:
         return None
     
     def _get_first_competitive_phase(self, phases: List[CompetitionPhase]) -> CompetitionPhase:
-        """Get first competitive phase from phases list"""
+        """
+Get first competitive phase from phases list"""
         competitive_phases = [
             CompetitionPhase.QUALIFIER,
             CompetitionPhase.PRELIMINARY,
@@ -1019,7 +1029,8 @@ class CompetitionManager:
                                         competition_id: str,
                                         current_phase: CompetitionPhase,
                                         config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Validate if phase can be advanced"""
+        """
+Validate if phase can be advanced"""
         # Check if all matches in current phase are complete
         active_matches = await self.competition_repository.get_active_matches(competition_id)
         
@@ -1110,7 +1121,8 @@ class CompetitionManager:
         return len(participants)
     
     def _estimate_participants(self, config: CompetitionConfiguration) -> int:
-        """Estimate expected number of participants"""
+        """
+Estimate expected number of participants"""
         base_estimate = {
             CompetitionType.TOURNAMENT: 64,
             CompetitionType.LEAGUE: 20,
@@ -1133,7 +1145,8 @@ class CompetitionManager:
         return base_estimate
     
     async def _simple_seeding(self, participants: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Simple random seeding for participants"""
+        """
+Simple random seeding for participants"""
         import random
         
         participant_ids = [p["participant_id"] for p in participants]
@@ -1157,7 +1170,8 @@ class CompetitionManager:
         )
     
     async def _get_active_participants(self, competition_id: str) -> List[Dict[str, Any]]:
-        """Get list of active participants"""
+        """
+Get list of active participants"""
         all_participants = await self.competition_repository.get_competition_participants(
             competition_id
         )

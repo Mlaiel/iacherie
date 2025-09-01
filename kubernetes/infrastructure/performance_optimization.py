@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -27,7 +28,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class PerformanceTier(Enum):
-    """Performance optimization tiers"""
+    """
+Performance optimization tiers"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -36,6 +39,7 @@ class PerformanceTier(Enum):
 
 class CacheStrategy(Enum):
     """Caching strategies"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
@@ -45,6 +49,7 @@ class CacheStrategy(Enum):
 
 class OptimizationTarget(Enum):
     """Optimization targets"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     COST = "cost"
@@ -53,6 +58,7 @@ class OptimizationTarget(Enum):
 
 class StorageTier(Enum):
     """Storage performance tiers"""
+
     NVME_SSD = "nvme_ssd"      # Ultra-fast NVMe SSD
     SSD = "ssd"                # Standard SSD
     HDD = "hdd"                # Traditional HDD
@@ -85,7 +91,8 @@ class CDNConfiguration:
 
 @dataclass
 class DatabaseOptimizationConfig:
-    """Database optimization configuration"""
+    """
+Database optimization configuration"""
     connection_pooling: Dict[str, Any]
     query_optimization: Dict[str, Any]
     indexing_strategy: Dict[str, Any]
@@ -96,7 +103,8 @@ class DatabaseOptimizationConfig:
 
 @dataclass
 class AIModelOptimizationConfig:
-    """AI model optimization configuration"""
+    """
+AI model optimization configuration"""
     model_quantization: bool = True
     model_pruning: bool = True
     knowledge_distillation: bool = False
@@ -107,7 +115,8 @@ class AIModelOptimizationConfig:
 
 @dataclass
 class PerformanceSpec:
-    """Complete performance optimization specification"""
+    """
+Complete performance optimization specification"""
     namespace: str = "ia-influencer-performance"
     performance_tier: PerformanceTier = PerformanceTier.PREMIUM
     optimization_targets: List[OptimizationTarget] = field(default_factory=lambda: [OptimizationTarget.LATENCY, OptimizationTarget.THROUGHPUT])
@@ -145,7 +154,8 @@ class PerformanceOptimizationManager:
         self.optimization_history = {}
         
     async def deploy_performance_infrastructure(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy comprehensive performance optimization infrastructure"""
+        """
+Deploy comprehensive performance optimization infrastructure"""
         try:
             results = {}
             logger.info(f"Deploying performance optimization infrastructure for IA Influencer platform")
@@ -891,7 +901,8 @@ def calculate_optimal_cache_size(memory_available: int, cache_hit_ratio_target: 
         return int(max_cache_memory * 0.4)
 
 def optimize_batch_size(model_complexity: str, available_gpu_memory: int) -> int:
-    """Calculate optimal batch size for AI model inference"""
+    """
+Calculate optimal batch size for AI model inference"""
     base_batch_sizes = {
         'simple': 128,
         'medium': 64,
@@ -912,7 +923,8 @@ def optimize_batch_size(model_complexity: str, available_gpu_memory: int) -> int
         return max(base_batch // 4, 1)
 
 def calculate_connection_pool_size(expected_concurrent_requests: int) -> Dict[str, int]:
-    """Calculate optimal database connection pool sizes"""
+    """
+Calculate optimal database connection pool sizes"""
     return {
         'postgres_pool_size': min(max(expected_concurrent_requests // 10, 10), 100),
         'redis_pool_size': min(max(expected_concurrent_requests // 5, 20), 200),

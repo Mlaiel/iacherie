@@ -16,6 +16,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import asyncio
 import json
 import logging
@@ -48,10 +49,12 @@ logger = logging.getLogger(__name__)
 
 
 class ContentManagementDemo:
-    """Comprehensive demonstration of content management capabilities."""
+    """
+Comprehensive demonstration of content management capabilities."""
     
     def __init__(self):
-        """Initialize all content management engines."""
+        """
+Initialize all content management engines."""
         logger.info("Initializing Content Management Demo...")
         
         # Initialize all engines

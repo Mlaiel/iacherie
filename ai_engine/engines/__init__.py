@@ -15,7 +15,7 @@ Supports advanced content generation, protection, SEO optimization, and monetiza
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import threading
 import logging
@@ -280,7 +281,8 @@ class ContentEngineManager:
         return available_engines[0][0]
     
     async def _engine_supports_content_type(self, engine: BaseContentEngine, content_type: str) -> bool:
-        """Check if engine supports the given content type"""
+        """
+Check if engine supports the given content type"""
         # This would be based on engine capabilities configuration
         engine_types = {
             'audio': ['audio_processing', 'music_generation', 'voice_synthesis'],
@@ -294,7 +296,8 @@ class ContentEngineManager:
         return engine.engine_name in supported_engines
     
     async def _get_failover_engine(self, content_type: str) -> Optional[BaseContentEngine]:
-        """Get a failover engine for the given content type"""
+        """
+Get a failover engine for the given content type"""
         for engine_name, engine in self.engines.items():
             if (await self._engine_supports_content_type(engine, content_type) and 
                 engine.status == EngineStatus.READY):
@@ -302,7 +305,8 @@ class ContentEngineManager:
         return None
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
+        """
+Get comprehensive system status"""
         total_engines = len(self.engines)
         ready_engines = sum(1 for e in self.engines.values() if e.status == EngineStatus.READY)
         
@@ -321,7 +325,8 @@ class ContentEngineManager:
         }
     
     async def shutdown_all_engines(self):
-        """Gracefully shutdown all engines"""
+        """
+Gracefully shutdown all engines"""
         for engine in self.engines.values():
             await engine.shutdown()
         self.logger.info("All engines shutdown completed")

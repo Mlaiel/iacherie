@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ from botocore.exceptions import ClientError
 
 @dataclass
 class S3BucketConfig:
-    """S3 bucket configuration for specific content types."""
+    """
+S3 bucket configuration for specific content types."""
     
     name: str
     region: str
@@ -66,12 +68,14 @@ class S3Config:
     presigned_url_expiration: int = 3600  # 1 hour
     
     def __post_init__(self):
-        """Initialize bucket configurations if not provided."""
+        """
+Initialize bucket configurations if not provided."""
         if self.buckets is None:
             self.buckets = self._get_default_bucket_config()
     
     def _get_default_bucket_config(self) -> Dict[str, S3BucketConfig]:
-        """Default bucket configuration for different content types."""
+        """
+Default bucket configuration for different content types."""
         env = os.getenv('ENVIRONMENT', 'development')
         base_name = f"ia-influencer-{env}"
         
@@ -185,7 +189,8 @@ class S3Config:
         )
     
     def get_transfer_config(self) -> boto3.s3.transfer.TransferConfig:
-        """Get optimized transfer configuration for large files."""
+        """
+Get optimized transfer configuration for large files."""
         return boto3.s3.transfer.TransferConfig(
             multipart_threshold=self.multipart_threshold,
             multipart_chunksize=self.multipart_chunksize,
@@ -195,7 +200,8 @@ class S3Config:
         )
     
     def validate_configuration(self) -> bool:
-        """Validate S3 configuration and connectivity."""
+        """
+Validate S3 configuration and connectivity."""
         try:
             client = self.get_client()
             client.list_buckets()

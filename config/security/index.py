@@ -23,6 +23,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -42,7 +43,9 @@ from .platform_integration import PlatformIntegrationSecurityConfig, get_platfor
 
 
 class SecurityProfile(Enum):
-    """Security profile presets for different deployment scenarios."""
+    """
+Security profile presets for different deployment scenarios."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -52,6 +55,7 @@ class SecurityProfile(Enum):
 
 class CreatorTier(Enum):
     """Creator subscription tiers affecting security configurations."""
+
     FREE = "free"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -83,7 +87,8 @@ class SecurityConfigurationManager:
     strict_mode: bool = True
     
     def get_config_by_name(self, config_name: str) -> Optional[Any]:
-        """Get configuration by name."""
+        """
+Get configuration by name."""
         config_mapping = {
             "authentication": self.authentication,
             "authorization": self.authorization,
@@ -110,7 +115,8 @@ class SecurityConfigurationManager:
                 self._apply_config_overrides(config, overrides)
     
     def apply_creator_tier_config(self, tier: CreatorTier) -> None:
-        """Apply creator tier-specific security configurations."""
+        """
+Apply creator tier-specific security configurations."""
         tier_configs = self._get_tier_configurations(tier)
         
         for config_name, overrides in tier_configs.items():
@@ -119,7 +125,8 @@ class SecurityConfigurationManager:
                 self._apply_config_overrides(config, overrides)
     
     def validate_all_configurations(self) -> Dict[str, bool]:
-        """Validate all security configurations."""
+        """
+Validate all security configurations."""
         validation_results = {}
         
         # Import validation functions
@@ -350,7 +357,8 @@ def initialize_security_config(
     creator_tier: Optional[CreatorTier] = None,
     custom_overrides: Optional[Dict[str, Any]] = None
 ) -> SecurityConfigurationManager:
-    """Initialize security configuration with profile and tier settings."""
+    """
+Initialize security configuration with profile and tier settings."""
     manager = get_security_manager()
     
     # Apply security profile

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Social Media Templates Tests
+"""
+Social Media Templates Tests
 
 Comprehensive tests for social media template system that handles
 platform-specific content templates and generation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -50,12 +53,14 @@ class TestSocialMediaTemplates:
     
     @pytest.fixture
     def templates(self):
-        """Create a social media templates instance"""
+        """
+Create a social media templates instance"""
         return SocialMediaTemplates()
     
     @pytest.fixture
     def sample_variables(self):
-        """Create sample template variables"""
+        """
+Create sample template variables"""
         return {
             "title": "The Future of AI Technology",
             "description": "Exploring how artificial intelligence will transform our world",
@@ -98,7 +103,8 @@ class TestSocialMediaTemplates:
     
     @pytest.mark.asyncio
     async def test_instagram_post_template(self, templates, sample_variables, instagram_data):
-        """Test Instagram post template generation"""
+        """
+Test Instagram post template generation"""
         with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
@@ -521,11 +527,13 @@ class TestTemplateEngine:
     
     @pytest.fixture
     def engine(self):
-        """Create a template engine instance"""
+        """
+Create a template engine instance"""
         return TemplateEngine()
     
     def test_engine_initialization(self, engine):
-        """Test template engine initialization"""
+        """
+Test template engine initialization"""
         assert engine is not None
         assert hasattr(engine, 'template_parser')
         assert hasattr(engine, 'variable_resolver')
@@ -533,7 +541,8 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_variable_substitution(self, engine):
-        """Test variable substitution in templates"""
+        """
+Test variable substitution in templates"""
         template = "Hello {name}, welcome to {platform}! Check out our {content_type}."
         variables = {
             "name": "Fahed",
@@ -584,7 +593,8 @@ class TestInstagramTemplate:
     """Test suite for InstagramTemplate"""
     
     def test_instagram_template_creation(self):
-        """Test Instagram template creation"""
+        """
+Test Instagram template creation"""
         template = InstagramTemplate(
             template_id="ig_001",
             name="Standard Post",

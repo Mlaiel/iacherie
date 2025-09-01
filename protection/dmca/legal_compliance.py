@@ -11,7 +11,7 @@ Enterprise-grade legal compliance framework for DMCA operations with:
 - Legal intelligence integration
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -46,6 +46,7 @@ This module provides:
 - Advanced threat detection and response
 - Legal intelligence and precedent analysis
 """
+
 import asyncio
 import logging
 import hashlib
@@ -74,7 +75,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Ultra-Advanced Legal compliance frameworks"""
+    """
+Ultra-Advanced Legal compliance frameworks"""
     # Copyright Laws
     DMCA_US = "dmca_us"
     EU_COPYRIGHT_DIRECTIVE = "eu_copyright_directive"
@@ -164,6 +166,7 @@ class AuditEventType(Enum):
 
 class ThreatLevel(IntEnum):
     """Security and legal threat levels"""
+
     MINIMAL = 1
     LOW = 2
     MEDIUM = 3
@@ -173,7 +176,9 @@ class ThreatLevel(IntEnum):
 
 
 class RiskLevel(Enum):
-    """Advanced Risk assessment levels"""
+    """
+Advanced Risk assessment levels"""
+
     MINIMAL = "minimal"          # 0-5% risk
     LOW = "low"                 # 5-15% risk
     MEDIUM = "medium"           # 15-35% risk
@@ -184,6 +189,7 @@ class RiskLevel(Enum):
 
 class ComplianceStatus(Enum):
     """Advanced Compliance validation status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -196,6 +202,7 @@ class ComplianceStatus(Enum):
 
 class AuditTrailIntegrity(Enum):
     """Audit trail integrity levels"""
+
     STANDARD = "standard"           # Basic logging
     ENHANCED = "enhanced"           # Digital signatures
     BLOCKCHAIN = "blockchain"       # Blockchain-secured
@@ -204,6 +211,7 @@ class AuditTrailIntegrity(Enum):
 
 class RegulatoryJurisdiction(Enum):
     """Regulatory jurisdictions for compliance"""
+
     US_FEDERAL = "us_federal"
     US_STATE_CA = "us_state_ca"
     US_STATE_NY = "us_state_ny"
@@ -266,7 +274,8 @@ class AdvancedAuditEvent:
     chain_of_custody: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        """Post-initialization processing for security"""
+        """
+Post-initialization processing for security"""
         if not self.event_id:
             self.event_id = str(uuid.uuid4())
         
@@ -277,7 +286,8 @@ class AdvancedAuditEvent:
         self.integrity_hash = self._calculate_integrity_hash()
     
     def _generate_digital_signature(self) -> str:
-        """Generate cryptographic signature for event integrity"""
+        """
+Generate cryptographic signature for event integrity"""
         event_data = f"{self.event_id}{self.timestamp.isoformat()}{self.action}{self.user_id}"
         return hashlib.sha256(event_data.encode()).hexdigest()
     
@@ -289,7 +299,8 @@ class AdvancedAuditEvent:
 
 @dataclass
 class ComplianceAssessment:
-    """Comprehensive compliance assessment result"""
+    """
+Comprehensive compliance assessment result"""
     assessment_id: str
     assessment_timestamp: datetime
     framework: ComplianceFramework
@@ -383,7 +394,8 @@ class BlockchainAuditRecord:
         self.block_hash = self._calculate_block_hash()
     
     def _calculate_block_hash(self) -> str:
-        """Calculate cryptographic hash for the entire block"""
+        """
+Calculate cryptographic hash for the entire block"""
         block_data = {
             "block_id": self.block_id,
             "previous_block_hash": self.previous_block_hash,
@@ -559,7 +571,8 @@ class ComplianceValidator:
         self._load_compliance_rules()
     
     def _load_compliance_rules(self):
-        """Load compliance rules for different frameworks"""
+        """
+Load compliance rules for different frameworks"""
         
         # DMCA US Rules
         dmca_rules = [
@@ -756,7 +769,8 @@ class ComplianceValidator:
         }
     
     async def assess_legal_risk(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess legal risk for given context"""
+        """
+Assess legal risk for given context"""
         
         risk_factors = []
         risk_score = 0.0
@@ -822,7 +836,8 @@ class ComplianceValidator:
         }
     
     def _generate_risk_recommendations(self, risk_factors: List[Dict[str, Any]]) -> List[str]:
-        """Generate risk mitigation recommendations"""
+        """
+Generate risk mitigation recommendations"""
         
         recommendations = []
         
@@ -981,7 +996,8 @@ class AuditLogger:
     
     async def generate_audit_report(self, framework: ComplianceFramework = None,
                                   date_range: Tuple[datetime, datetime] = None) -> Dict[str, Any]:
-        """Generate comprehensive audit report"""
+        """
+Generate comprehensive audit report"""
         
         filtered_events = self.events
         
@@ -1086,7 +1102,8 @@ class AuditLogger:
             await self._handle_security_incident_compliance(event)
     
     async def _ensure_gdpr_logging_compliance(self, event: AuditEvent):
-        """Ensure GDPR compliance for personal data processing events"""
+        """
+Ensure GDPR compliance for personal data processing events"""
         
         # Extend retention period if needed
         if event.sensitive_data_involved:
@@ -1096,7 +1113,8 @@ class AuditLogger:
         event.digital_signature = self._generate_digital_signature(event)
     
     async def _ensure_sox_compliance(self, event: AuditEvent):
-        """Ensure SOX compliance for financial controls"""
+        """
+Ensure SOX compliance for financial controls"""
         
         # SOX requires 7 years retention
         event.retention_period_days = max(event.retention_period_days, 2555)
@@ -1105,7 +1123,8 @@ class AuditLogger:
         event.digital_signature = self._generate_digital_signature(event)
     
     async def _handle_security_incident_compliance(self, event: AuditEvent):
-        """Handle security incident compliance requirements"""
+        """
+Handle security incident compliance requirements"""
         
         # Immediate notification requirements
         if event.risk_level in [RiskLevel.HIGH, RiskLevel.CRITICAL]:
@@ -1208,7 +1227,8 @@ class LegalComplianceEngine:
         }
     
     async def initialize(self) -> bool:
-        """Initialize compliance engine"""
+        """
+Initialize compliance engine"""
         
         try:
             logger.info("Initializing legal compliance engine")
@@ -1331,7 +1351,8 @@ class LegalComplianceEngine:
         return assessment
     
     async def _assess_gdpr_compliance(self, assessment: ComplianceAssessment) -> ComplianceAssessment:
-        """Assess GDPR compliance"""
+        """
+Assess GDPR compliance"""
         
         assessment.resources_assessed = ['data_processing_activities', 'privacy_policy', 'consent_management']
         
@@ -1359,7 +1380,8 @@ class LegalComplianceEngine:
         return assessment
     
     async def _assess_ccpa_compliance(self, assessment: ComplianceAssessment) -> ComplianceAssessment:
-        """Assess CCPA compliance"""
+        """
+Assess CCPA compliance"""
         
         assessment.resources_assessed = ['privacy_disclosures', 'opt_out_mechanisms', 'data_sales']
         
@@ -1442,7 +1464,8 @@ class LegalComplianceEngine:
         }
     
     async def _periodic_assessment_task(self):
-        """Background task for periodic compliance assessments"""
+        """
+Background task for periodic compliance assessments"""
         
         while True:
             try:

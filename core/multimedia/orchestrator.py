@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Callable
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
+    """
+Processing priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -42,6 +45,7 @@ class ProcessingPriority(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"

@@ -7,6 +7,7 @@ Integrates with existing revenue tracking and extends monitoring capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessMetric(Enum):
-    """Business metrics for monitoring"""
+    """
+Business metrics for monitoring"""
+
     REVENUE = "revenue"
     USER_ENGAGEMENT = "user_engagement"
     CONVERSION_RATE = "conversion_rate"
@@ -69,7 +72,8 @@ class BusinessAlertManager:
     """
     
     def __init__(self, alert_manager: IntelligentAlertManager):
-        """Initialize business alert manager"""
+        """
+Initialize business alert manager"""
         self.alert_manager = alert_manager
         self.business_metrics_history: List[BusinessMetrics] = []
         self.revenue_baselines: Dict[str, float] = {}

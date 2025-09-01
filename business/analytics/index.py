@@ -7,6 +7,7 @@ This file serves as the main entry point for external modules to access analytic
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -53,7 +54,8 @@ class AnalyticsServiceManager:
         self._initialized = False
         
     async def initialize_all_services(self) -> Dict[str, bool]:
-        """Initialize all analytics services and return status"""
+        """
+Initialize all analytics services and return status"""
         if self._initialized:
             return {"status": "already_initialized"}
             

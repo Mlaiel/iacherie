@@ -1,4 +1,5 @@
 """Rights anchoring on blockchain for permanent proof of ownership."""
+
 import hashlib
 import json
 from typing import Dict, List
@@ -12,7 +13,8 @@ class RightsAnchor:
         self.anchor_contract = None  # Would point to rights anchoring contract
 
     def create_rights_proof(self, content_info: Dict, creator_info: Dict) -> Dict:
-        """Create cryptographic proof of content rights."""
+        """
+Create cryptographic proof of content rights."""
         # Create rights claim document
         rights_claim = {
             "content_id": content_info.get("id"),

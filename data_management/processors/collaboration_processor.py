@@ -8,7 +8,7 @@ Responsibility: Traitement intelligent de matching collaborations entre créateu
 =================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER COLLABORATION:
 Creator Profile Analysis → Content Style Matching → Audience Compatibility → 
 Brand Alignment → Collaboration Opportunity Generation → Partnership Recommendations
 """
+
 import json
 import logging
 import asyncio
@@ -35,7 +36,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class CollaborationProcessor(BaseProcessor):
-    """Processeur de collaboration intelligent - Production Enterprise"""
+    """
+Processeur de collaboration intelligent - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -125,7 +127,8 @@ class CollaborationProcessor(BaseProcessor):
         self.collaboration_network = nx.Graph()
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les données pour générer des recommandations de collaboration"""
+        """
+Traite les données pour générer des recommandations de collaboration"""
         creator_profile = input_data.get('creator_profile', {})
         collaboration_goals = input_data.get('collaboration_goals', [])
         search_criteria = input_data.get('search_criteria', {})
@@ -317,7 +320,8 @@ class CollaborationProcessor(BaseProcessor):
         return category_scores
     
     def _analyze_engagement_patterns(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse les patterns d'engagement"""
+        """
+Analyse les patterns d'engagement"""
         patterns = {
             'peak_hours': [],
             'peak_days': [],
@@ -1131,7 +1135,8 @@ class CollaborationProcessor(BaseProcessor):
 
 
 class AsyncCollaborationProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur de collaboration"""
+    """
+Version asynchrone du processeur de collaboration"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -1139,7 +1144,8 @@ class AsyncCollaborationProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone des collaborations"""
+        """
+Traitement asynchrone des collaborations"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1148,11 +1154,13 @@ class AsyncCollaborationProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)
     
     async def find_compatible_creators(self, creator_profile: Dict, available_creators: List[Dict], criteria: Dict) -> List[Dict[str, Any]]:
-        """Recherche asynchrone de créateurs compatibles"""
+        """
+Recherche asynchrone de créateurs compatibles"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor,

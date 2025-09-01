@@ -24,6 +24,7 @@ Advanced Platform Distribution System for content creators implementing:
 - Real-time engagement monitoring and optimization
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class PlatformType(Enum):
-    """Types de plateformes supportées"""
+    """
+Types de plateformes supportées"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -67,6 +70,7 @@ class PlatformType(Enum):
 
 class ContentFormat(Enum):
     """Formats de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -80,6 +84,7 @@ class ContentFormat(Enum):
 
 class PublishStatus(Enum):
     """Statuts de publication"""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
@@ -90,6 +95,7 @@ class PublishStatus(Enum):
 
 class EngagementMetric(Enum):
     """Métriques d'engagement"""
+
     VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -101,6 +107,7 @@ class EngagementMetric(Enum):
 
 class OptimizationStrategy(Enum):
     """Stratégies d'optimisation"""
+
     TIME_OPTIMIZATION = "time_optimization"
     CONTENT_ADAPTATION = "content_adaptation"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
@@ -180,7 +187,8 @@ class PlatformDistributionConfig:
 # =============== SERVICE INTERFACES ===============
 
 class IPlatformDistributionService(ABC):
-    """Interface pour le service de distribution multi-plateforme"""
+    """
+Interface pour le service de distribution multi-plateforme"""
     
     @abstractmethod
     async def create_campaign(
@@ -193,7 +201,8 @@ class IPlatformDistributionService(ABC):
         target_platforms: List[PlatformType],
         publish_time: Optional[datetime] = None
     ) -> PublishingCampaign:
-        """Créer une campagne de publication"""
+        """
+Créer une campagne de publication"""
         pass
     
     @abstractmethod
@@ -201,7 +210,8 @@ class IPlatformDistributionService(ABC):
         self, 
         campaign_id: str
     ) -> Dict[str, Any]:
-        """Publier une campagne"""
+        """
+Publier une campagne"""
         pass
     
     @abstractmethod
@@ -212,7 +222,8 @@ class IPlatformDistributionService(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> List[PlatformMetrics]:
-        """Obtenir les métriques de plateforme"""
+        """
+Obtenir les métriques de plateforme"""
         pass
     
     @abstractmethod
@@ -222,7 +233,8 @@ class IPlatformDistributionService(ABC):
         target_platforms: List[PlatformType],
         optimization_strategies: List[OptimizationStrategy]
     ) -> Dict[PlatformType, ContentAdaptation]:
-        """Optimiser le contenu pour les plateformes"""
+        """
+Optimiser le contenu pour les plateformes"""
         pass
     
     @abstractmethod
@@ -231,13 +243,15 @@ class IPlatformDistributionService(ABC):
         creator_id: str,
         campaign_id: str
     ) -> datetime:
-        """Programmer la publication au moment optimal"""
+        """
+Programmer la publication au moment optimal"""
         pass
 
 # =============== CORE MANAGER ===============
 
 class PlatformDistributionManager:
-    """Gestionnaire avancé de distribution multi-plateforme"""
+    """
+Gestionnaire avancé de distribution multi-plateforme"""
     
     def __init__(self, config: Optional[PlatformDistributionConfig] = None):
         self.config = config or PlatformDistributionConfig()
@@ -486,7 +500,8 @@ class PlatformDistributionManager:
         return adapter(title)
     
     async def _adapt_description_for_platform(self, description: str, platform: PlatformType) -> str:
-        """Adapter la description pour une plateforme"""
+        """
+Adapter la description pour une plateforme"""
         # Règles d'adaptation par plateforme
         max_lengths = {
             PlatformType.YOUTUBE: 5000,
@@ -505,7 +520,8 @@ class PlatformDistributionManager:
         description: str, 
         platform: PlatformType
     ) -> List[str]:
-        """Générer des hashtags optimisés pour une plateforme"""
+        """
+Générer des hashtags optimisés pour une plateforme"""
         try:
             # Simulation de génération de hashtags intelligente
             # En production: utiliser NLP pour extraire des mots-clés pertinents
@@ -709,7 +725,8 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publier sur YouTube"""
+        """
+Publier sur YouTube"""
         # Simulation d'appel API YouTube
         success_rate = 0.85
         
@@ -929,7 +946,8 @@ class PlatformDistributionService(IPlatformDistributionService):
         target_platforms: List[PlatformType],
         publish_time: Optional[datetime] = None
     ) -> PublishingCampaign:
-        """Créer une campagne de publication"""
+        """
+Créer une campagne de publication"""
         return await self.manager.create_publishing_campaign(
             creator_id, title, description, content_data, 
             content_format, target_platforms, publish_time
@@ -939,7 +957,8 @@ class PlatformDistributionService(IPlatformDistributionService):
         self, 
         campaign_id: str
     ) -> Dict[str, Any]:
-        """Publier une campagne"""
+        """
+Publier une campagne"""
         return await self.manager.publish_campaign(campaign_id)
     
     async def get_platform_metrics(
@@ -949,7 +968,8 @@ class PlatformDistributionService(IPlatformDistributionService):
         start_date: datetime,
         end_date: datetime
     ) -> List[PlatformMetrics]:
-        """Obtenir les métriques de plateforme"""
+        """
+Obtenir les métriques de plateforme"""
         cache_key = f"{creator_id}_{platform.value}"
         cached_metrics = self.manager.metrics_cache.get(cache_key, [])
         
@@ -1049,7 +1069,8 @@ def create_platform_distribution_service(config: Optional[PlatformDistributionCo
     return PlatformDistributionService(config)
 
 def create_platform_distribution_manager(config: Optional[PlatformDistributionConfig] = None) -> PlatformDistributionManager:
-    """Factory pour créer un gestionnaire de distribution"""
+    """
+Factory pour créer un gestionnaire de distribution"""
     return PlatformDistributionManager(config)
 
 # =============== MODULE EXPORTS ===============

@@ -10,6 +10,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ import json
 
 
 class ConversationMetricType(Enum):
-    """Types of conversation metrics to analyze."""
+    """
+Types of conversation metrics to analyze."""
+
     RESPONSE_QUALITY = "response_quality"
     USER_SATISFACTION = "user_satisfaction"
     CONVERSATION_FLOW = "conversation_flow"
@@ -43,6 +46,7 @@ class ConversationMetricType(Enum):
 
 class ConversationStage(Enum):
     """Stages of conversation flow."""
+
     INITIATION = "initiation"
     EXPLORATION = "exploration"
     CLARIFICATION = "clarification"
@@ -71,7 +75,8 @@ class ConversationTurn:
 
 @dataclass
 class ConversationSession:
-    """Complete conversation session data structure."""
+    """
+Complete conversation session data structure."""
     session_id: str
     user_id: str
     start_time: datetime
@@ -490,7 +495,8 @@ class ConversationAnalytics:
         return weighted_score
     
     def _rate_quality(self, quality_score: float) -> str:
-        """Rate conversation quality based on score."""
+        """
+Rate conversation quality based on score."""
         if quality_score >= self.quality_thresholds['excellent']:
             return "excellent"
         elif quality_score >= self.quality_thresholds['good']:

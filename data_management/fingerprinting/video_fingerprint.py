@@ -8,7 +8,7 @@ Responsibility: Advanced video fingerprinting with OpenCV, YOLO, and perceptual 
 =======================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -28,6 +28,7 @@ VIDEO FINGERPRINTING TECHNOLOGIES:
 ├── 📊 Temporal Analysis (Frame Sequences + Patterns)
 └── 🛡️ Protection System (Monitoring + Takedown)
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -116,7 +117,8 @@ class VideoProcessor(ABC):
     
     @abstractmethod
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Process video file and generate fingerprint"""
+        """
+Process video file and generate fingerprint"""
         logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
@@ -142,7 +144,8 @@ class OpenCVProcessor(VideoProcessor):
     """Processeur OpenCV pour l'analyse vidéo de base"""
     
     def __init__(self):
-        """Initialise le processeur OpenCV"""
+        """
+Initialise le processeur OpenCV"""
         if not CV2_AVAILABLE:
             raise ImportError("OpenCV library not available for video processing")
         self.name = "opencv"
@@ -527,7 +530,8 @@ class YOLOFrameProcessor(VideoProcessor):
         return []
     
     def _analyze_detected_objects(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse les objets détectés dans toute la vidéo"""
+        """
+Analyse les objets détectés dans toute la vidéo"""
         try:
             analysis = {
                 "total_detections": 0,
@@ -586,7 +590,8 @@ class MotionVectorProcessor(VideoProcessor):
     """Processeur pour l'analyse des vecteurs de mouvement"""
     
     def __init__(self):
-        """Initialise le processeur de vecteurs de mouvement"""
+        """
+Initialise le processeur de vecteurs de mouvement"""
         if not CV2_AVAILABLE:
             raise ImportError("OpenCV library not available for motion vector analysis")
         self.name = "motion_vector"

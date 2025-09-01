@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -51,7 +52,8 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize content metadata repository"""
+        """
+Initialize content metadata repository"""
         super().__init__(db_session, ContentMetadata)
         
     def create_metadata(self,

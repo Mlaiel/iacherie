@@ -5,13 +5,16 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module configures AI-powered content protection services including fingerprinting,
 DMCA takedown services, copyright verification, and content monitoring platforms.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class ProtectionServiceType(Enum):
-    """Content protection service types"""
+    """
+Content protection service types"""
+
     FINGERPRINTING = "fingerprinting"
     COPYRIGHT_DETECTION = "copyright_detection"
     DMCA_TAKEDOWN = "dmca_takedown"
@@ -21,6 +24,7 @@ class ProtectionServiceType(Enum):
 
 class ContentType(Enum):
     """Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -345,21 +349,25 @@ def get_protection_config(service: str) -> Optional[ProtectionAPIConfig]:
     return PROTECTION_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: ProtectionServiceType) -> List[ProtectionAPIConfig]:
-    """Get all protection services of specific type"""
+    """
+Get all protection services of specific type"""
     return [config for config in PROTECTION_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_services_by_content_type(content_type: ContentType) -> List[ProtectionAPIConfig]:
-    """Get protection services supporting specific content type"""
+    """
+Get protection services supporting specific content type"""
     return [config for config in PROTECTION_CONFIGS.values() 
             if content_type in config.supported_content_types]
 
 def get_real_time_services() -> List[ProtectionAPIConfig]:
-    """Get services that support real-time processing"""
+    """
+Get services that support real-time processing"""
     return [config for config in PROTECTION_CONFIGS.values() 
             if config.supports_real_time]
 
 def get_monitoring_services() -> List[ProtectionAPIConfig]:
-    """Get services that support web monitoring"""
+    """
+Get services that support web monitoring"""
     return [config for config in PROTECTION_CONFIGS.values() 
             if config.supports_web_monitoring]

@@ -5,12 +5,13 @@ Professional crawler management system for coordinating multi-platform content m
 Orchestrates all crawlers with advanced scheduling, monitoring, and result aggregation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 
 class CrawlerPriority(Enum):
-    """Crawler execution priority levels"""
+    """
+Crawler execution priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -42,7 +45,9 @@ class CrawlerPriority(Enum):
 
 
 class ScheduleType(Enum):
-    """Crawler schedule types"""
+    """
+Crawler schedule types"""
+
     ONCE = "once"
     INTERVAL = "interval"
     CRON = "cron"
@@ -73,7 +78,8 @@ class CrawlerTask:
 
 @dataclass
 class CrawlerMetrics:
-    """Crawler performance metrics"""
+    """
+Crawler performance metrics"""
     total_tasks: int = 0
     completed_tasks: int = 0
     failed_tasks: int = 0
@@ -144,7 +150,8 @@ class CrawlerManager:
         self.thread_pool = ThreadPoolExecutor(max_workers=10)
     
     async def initialize(self):
-        """Initialize the crawler manager"""
+        """
+Initialize the crawler manager"""
         try:
             self.logger.info("Initializing Crawler Manager")
             
@@ -468,7 +475,8 @@ class CrawlerManager:
     # Private methods
     
     async def _scheduler_loop(self):
-        """Main scheduler loop"""
+        """
+Main scheduler loop"""
         try:
             while self.is_running:
                 try:
@@ -545,7 +553,8 @@ class CrawlerManager:
             await self._start_crawler_task(task)
     
     async def _start_crawler_task(self, task: CrawlerTask):
-        """Start execution of a crawler task"""
+        """
+Start execution of a crawler task"""
         try:
             # Create and start async task
             async_task = asyncio.create_task(self._execute_crawler_task(task))
@@ -746,12 +755,14 @@ class CrawlerManager:
             del self.running_tasks[task_id]
     
     async def _update_metrics(self):
-        """Update crawler metrics"""
+        """
+Update crawler metrics"""
         self.metrics.active_crawlers = len(self.running_tasks)
         self.metrics.last_update = datetime.utcnow()
     
     async def _check_crawler_health(self):
-        """Check health of crawler instances"""
+        """
+Check health of crawler instances"""
         for crawler_type, crawler in self.crawler_instances.items():
             try:
                 # Check if crawler is responsive
@@ -833,7 +844,8 @@ class CrawlerManager:
     
     def _add_to_execution_history(self, task: CrawlerTask, result: Optional[CrawlerResult], 
                                 execution_time: float, status: str, error_message: str = None):
-        """Add execution to history"""
+        """
+Add execution to history"""
         history_entry = {
             'task_id': task.task_id,
             'crawler_type': task.crawler_type,

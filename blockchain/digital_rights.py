@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -24,7 +25,9 @@ from .copyright_registry import CopyrightRegistryManager, CopyrightAsset
 
 
 class UsageRights(Enum):
-    """Digital content usage rights"""
+    """
+Digital content usage rights"""
+
     VIEW_ONLY = "view_only"
     DOWNLOAD = "download"
     STREAM = "stream"
@@ -39,6 +42,7 @@ class UsageRights(Enum):
 
 class AccessLevel(Enum):
     """Content access levels"""
+
     PUBLIC = "public"
     PREMIUM = "premium"
     EXCLUSIVE = "exclusive"
@@ -48,6 +52,7 @@ class AccessLevel(Enum):
 
 class LicenseType(Enum):
     """Digital license types"""
+
     SINGLE_USE = "single_use"
     LIMITED_TIME = "limited_time"
     UNLIMITED = "unlimited"
@@ -86,7 +91,8 @@ class DigitalLicense:
 
 @dataclass
 class UsageEvent:
-    """Content usage tracking event"""
+    """
+Content usage tracking event"""
     event_id: str
     license_id: str
     asset_id: str
@@ -102,7 +108,8 @@ class UsageEvent:
 
 @dataclass
 class ProtectionPolicy:
-    """Content protection policy"""
+    """
+Content protection policy"""
     policy_id: str
     asset_id: str
     creator_id: str
@@ -629,12 +636,14 @@ class DRMManager:
         return filtered
     
     def _calculate_average_duration(self, events: List[UsageEvent]) -> Optional[float]:
-        """Calculate average session duration"""
+        """
+Calculate average session duration"""
         durations = [e.session_duration for e in events if e.session_duration]
         return sum(durations) / len(durations) if durations else None
     
     def _reconstruct_license_from_blockchain(self, blockchain_data: Dict[str, Any]) -> DigitalLicense:
-        """Reconstruct license object from blockchain data"""
+        """
+Reconstruct license object from blockchain data"""
         return DigitalLicense(
             license_id=blockchain_data['license_id'],
             asset_id=blockchain_data['asset_id'],

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,9 @@ from .text_processor import TextProcessor
 logger = logging.getLogger(__name__)
 
 class GenerationType(Enum):
-    """Text generation types"""
+    """
+Text generation types"""
+
     CREATIVE = "creative"
     INFORMATIVE = "informative"
     PERSUASIVE = "persuasive"
@@ -71,6 +74,7 @@ class GenerationType(Enum):
 
 class WritingStyle(Enum):
     """Writing style variations"""
+
     FORMAL = "formal"
     CASUAL = "casual"
     PROFESSIONAL = "professional"
@@ -82,6 +86,7 @@ class WritingStyle(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     PARAGRAPH = "paragraph"
     LIST = "list"
     BULLET_POINTS = "bullet_points"
@@ -571,7 +576,8 @@ class AITextGenerator:
         return '. '.join(unique_sentences)
     
     async def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate similarity between two texts"""
+        """
+Calculate similarity between two texts"""
         try:
             embeddings = self.sentence_model.encode([text1, text2])
             similarity = cosine_similarity([embeddings[0]], [embeddings[1]])[0][0]
@@ -580,7 +586,8 @@ class AITextGenerator:
             return 0.0
     
     async def _assess_content_quality(self, generated_text: str, prompt: str) -> float:
-        """Assess quality of generated content"""
+        """
+Assess quality of generated content"""
         try:
             # Basic quality metrics
             word_count = len(generated_text.split())
@@ -634,7 +641,8 @@ class AITextGenerator:
         return await self._calculate_text_similarity(generated_text, prompt)
     
     async def _update_generation_stats(self, result: GenerationResult):
-        """Update generation statistics"""
+        """
+Update generation statistics"""
         self.generation_stats["total_generations"] += 1
         if result.quality_score >= self.quality_thresholds['minimum_quality']:
             self.generation_stats["successful_generations"] += 1
@@ -778,7 +786,8 @@ class ContentSynthesizer:
         return result.generated_text
     
     async def _synthesize_fusion(self, sources: List[str], target_length: int) -> str:
-        """Synthesize content by fusing sources into coherent narrative"""
+        """
+Synthesize content by fusing sources into coherent narrative"""
         fusion_prompt = f"""
         Create a coherent narrative that incorporates elements from the following texts:
         
@@ -798,7 +807,8 @@ class ContentSynthesizer:
         return result.generated_text
     
     async def _extract_key_sentences(self, text: str, target_length: int) -> str:
-        """Extract key sentences to reach target length"""
+        """
+Extract key sentences to reach target length"""
         sentences = text.split('.')
         sentences = [s.strip() for s in sentences if s.strip()]
         

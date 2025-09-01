@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import hashlib
 import hmac
 import logging
@@ -62,7 +63,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Structure for content fingerprints."""
+    """
+Structure for content fingerprints."""
     content_id: str
     content_type: str  # text, image, audio, video, html
     primary_hash: str
@@ -81,7 +83,8 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityResult:
-    """Structure for similarity comparison results."""
+    """
+Structure for similarity comparison results."""
     content_id_1: str
     content_id_2: str
     similarity_score: float
@@ -108,7 +111,8 @@ class ContentFingerprintGenerator:
     """
     
     def __init__(self):
-        """Initialize fingerprint generator."""
+        """
+Initialize fingerprint generator."""
         self.text_model = None
         self.spacy_nlp = None
         self.tfidf_vectorizer = None
@@ -117,7 +121,8 @@ class ContentFingerprintGenerator:
         self._init_text_models()
         
     def _init_text_models(self) -> None:
-        """Initialize text processing models."""
+        """
+Initialize text processing models."""
         try:
             # Initialize sentence transformer
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -578,11 +583,13 @@ class ContentFingerprintGenerator:
     
     # Helper methods for hashing
     def _basic_hash(self, content: str) -> str:
-        """Generate basic SHA-256 hash."""
+        """
+Generate basic SHA-256 hash."""
         return hashlib.sha256(content.encode()).hexdigest()
     
     def _normalize_text(self, text: str) -> str:
-        """Normalize text for consistent hashing."""
+        """
+Normalize text for consistent hashing."""
         # Remove extra whitespace, lowercase, basic cleanup
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
         # Remove punctuation for fuzzy matching
@@ -590,7 +597,8 @@ class ContentFingerprintGenerator:
         return normalized
     
     def _semantic_hash(self, text: str) -> str:
-        """Generate semantic hash based on meaning."""
+        """
+Generate semantic hash based on meaning."""
         # Use TF-IDF or other semantic features
         words = text.split()
         # Create a hash based on significant words
@@ -599,7 +607,8 @@ class ContentFingerprintGenerator:
         return hashlib.sha256(semantic_content.encode()).hexdigest()
     
     def _fuzzy_hash(self, text: str) -> str:
-        """Generate fuzzy hash for approximate matching."""
+        """
+Generate fuzzy hash for approximate matching."""
         # Simplified fuzzy hash - in production use ssdeep or similar
         words = text.split()
         # Group similar length words
@@ -620,7 +629,8 @@ class ContentFingerprintGenerator:
         return hashlib.md5(ngram_content.encode()).hexdigest()
     
     def _linguistic_hash(self, text: str) -> str:
-        """Generate hash based on linguistic features."""
+        """
+Generate hash based on linguistic features."""
         # Basic linguistic features
         words = text.split()
         avg_word_length = sum(len(w) for w in words) / len(words) if words else 0
@@ -638,14 +648,16 @@ class ContentFingerprintGenerator:
         return pos_counts
     
     def _html_structure_hash(self, soup) -> str:
-        """Generate hash based on HTML structure."""
+        """
+Generate hash based on HTML structure."""
         # Extract tag structure
         tags = [tag.name for tag in soup.find_all()]
         structure = ':'.join(tags[:50])  # Limit for performance
         return hashlib.md5(structure.encode()).hexdigest()
     
     def _html_metadata_hash(self, soup) -> str:
-        """Generate hash based on HTML metadata."""
+        """
+Generate hash based on HTML metadata."""
         meta_tags = soup.find_all('meta')
         meta_content = []
         for meta in meta_tags:
@@ -863,7 +875,8 @@ class ContentFingerprintGenerator:
     
     # Audio processing methods
     def _mfcc_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate hash based on MFCC features."""
+        """
+Generate hash based on MFCC features."""
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
         mfcc_mean = np.mean(mfcc, axis=1)
         feature_string = ':'.join([f"{f:.4f}" for f in mfcc_mean])
@@ -945,7 +958,8 @@ class ContentFingerprintGenerator:
     
     # Video processing methods
     def _calculate_frame_variance(self, frames: List[np.ndarray]) -> str:
-        """Calculate variance between frames."""
+        """
+Calculate variance between frames."""
         if len(frames) < 2:
             return "0"
         
@@ -1012,7 +1026,8 @@ class SimilarityAnalyzer:
     """
     
     def __init__(self):
-        """Initialize similarity analyzer."""
+        """
+Initialize similarity analyzer."""
         pass
     
     async def calculate_similarity(
@@ -1425,11 +1440,13 @@ class SimilarityAnalyzer:
 
 # Factory functions
 def create_fingerprint_generator() -> ContentFingerprintGenerator:
-    """Create a new fingerprint generator."""
+    """
+Create a new fingerprint generator."""
     return ContentFingerprintGenerator()
 
 def create_similarity_analyzer() -> SimilarityAnalyzer:
-    """Create a new similarity analyzer."""
+    """
+Create a new similarity analyzer."""
     return SimilarityAnalyzer()
 
 async def generate_content_fingerprint(
@@ -1438,7 +1455,8 @@ async def generate_content_fingerprint(
     content_id: str,
     metadata: Optional[Dict[str, Any]] = None
 ) -> ContentFingerprint:
-    """Quick function to generate content fingerprint."""
+    """
+Quick function to generate content fingerprint."""
     generator = create_fingerprint_generator()
     return await generator.generate_fingerprint(content, content_type, content_id, metadata)
 

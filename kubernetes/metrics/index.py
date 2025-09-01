@@ -31,6 +31,7 @@ Features:
 - AI model performance monitoring
 - Infrastructure health monitoring
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -70,7 +71,8 @@ class MetricsDeploymentManager:
         self._is_running = False
         
     async def initialize(self) -> None:
-        """Initialize all metrics services and collectors"""
+        """
+Initialize all metrics services and collectors"""
         if self._is_initialized:
             logger.warning("Metrics deployment manager already initialized")
             return
@@ -312,11 +314,13 @@ class MetricsDeploymentManager:
         return self._services.get(service_name)
     
     def get_collector(self, collector_name: str) -> Optional[Any]:
-        """Get a specific collector by name"""
+        """
+Get a specific collector by name"""
         return self._collectors.get(collector_name)
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of all services and collectors"""
+        """
+Get health status of all services and collectors"""
         status = {
             'initialized': self._is_initialized,
             'running': self._is_running,
@@ -342,7 +346,8 @@ class MetricsDeploymentManager:
         return status
     
     async def export_metrics(self, format: str = 'prometheus') -> str:
-        """Export metrics in specified format"""
+        """
+Export metrics in specified format"""
         if format == 'prometheus' and 'prometheus' in self._services:
             return await self._services['prometheus'].export_metrics()
         else:
@@ -383,7 +388,8 @@ class MetricsDeploymentManager:
 # Context manager for metrics deployment
 @asynccontextmanager
 async def metrics_deployment_context(config: Optional[MetricsConfiguration] = None):
-    """Context manager for metrics deployment lifecycle"""
+    """
+Context manager for metrics deployment lifecycle"""
     manager = MetricsDeploymentManager(config)
     
     try:
@@ -398,7 +404,8 @@ _deployment_manager: Optional[MetricsDeploymentManager] = None
 
 
 def get_metrics_deployment_manager() -> MetricsDeploymentManager:
-    """Get global metrics deployment manager instance"""
+    """
+Get global metrics deployment manager instance"""
     global _deployment_manager
     
     if _deployment_manager is None:
@@ -408,7 +415,8 @@ def get_metrics_deployment_manager() -> MetricsDeploymentManager:
 
 
 async def initialize_metrics_deployment(config: Optional[MetricsConfiguration] = None) -> None:
-    """Initialize global metrics deployment"""
+    """
+Initialize global metrics deployment"""
     manager = get_metrics_deployment_manager()
     if config:
         manager.config = config
@@ -416,13 +424,15 @@ async def initialize_metrics_deployment(config: Optional[MetricsConfiguration] =
 
 
 async def start_metrics_deployment() -> None:
-    """Start global metrics deployment"""
+    """
+Start global metrics deployment"""
     manager = get_metrics_deployment_manager()
     await manager.start()
 
 
 async def stop_metrics_deployment() -> None:
-    """Stop global metrics deployment"""
+    """
+Stop global metrics deployment"""
     manager = get_metrics_deployment_manager()
     await manager.stop()
 

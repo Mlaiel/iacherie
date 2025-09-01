@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -55,11 +56,13 @@ class ImageQualityAnalyzer:
     """Image quality analysis and aesthetic scoring."""
     
     def __init__(self):
-        """Initialize image quality analyzer."""
+        """
+Initialize image quality analyzer."""
         self.logger = logging.getLogger(__name__)
     
     def analyze_image_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyze comprehensive image quality metrics."""
+        """
+Analyze comprehensive image quality metrics."""
         try:
             quality_metrics = {}
             
@@ -233,11 +236,13 @@ class ImageAestheticAnalyzer:
     """Image aesthetic quality analysis using computer vision."""
     
     def __init__(self):
-        """Initialize aesthetic analyzer."""
+        """
+Initialize aesthetic analyzer."""
         self.logger = logging.getLogger(__name__)
     
     def analyze_aesthetic_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyze aesthetic properties of the image."""
+        """
+Analyze aesthetic properties of the image."""
         try:
             aesthetic_metrics = {}
             
@@ -509,12 +514,14 @@ class ImageDuplicateDetector:
     """Image duplicate detection using perceptual hashing."""
     
     def __init__(self):
-        """Initialize duplicate detector."""
+        """
+Initialize duplicate detector."""
         self.logger = logging.getLogger(__name__)
         self.hash_cache = {}
     
     def generate_perceptual_hashes(self, image: np.ndarray) -> Dict[str, str]:
-        """Generate multiple perceptual hashes for robust duplicate detection."""
+        """
+Generate multiple perceptual hashes for robust duplicate detection."""
         try:
             # Convert to PIL Image
             if len(image.shape) == 3:
@@ -568,7 +575,8 @@ class ImageContentFilter:
     """Enterprise-grade image content filter."""
     
     def __init__(self, config: ImageFilterConfig):
-        """Initialize image content filter."""
+        """
+Initialize image content filter."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -596,7 +604,8 @@ class ImageContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter image content with comprehensive analysis."""
+        """
+Filter image content with comprehensive analysis."""
         start_time = time.time()
         
         try:
@@ -911,7 +920,8 @@ class ImageContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine filter result based on analysis."""
+        """
+Determine filter result based on analysis."""
         # Check for blocking conditions
         nsfw_data = analysis_results.get('nsfw', {})
         if nsfw_data.get('is_nsfw') and nsfw_data.get('confidence', 0) > 0.7:
@@ -941,7 +951,8 @@ class ImageContentFilter:
                 return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on image filter."""
+        """
+Perform health check on image filter."""
         health_status = {
             'status': 'healthy',
             'libraries': {

@@ -4,6 +4,7 @@ Finalizes the integration of 53 AI agents into the business workflow
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -14,7 +15,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Supported creator types"""
+    """
+Supported creator types"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -28,6 +31,7 @@ class CreatorType(Enum):
 
 class WorkflowStage(Enum):
     """Business workflow stages"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_ANALYSIS = "content_analysis"
     RIGHTS_PROTECTION = "rights_protection"
@@ -51,7 +55,8 @@ class ContentUpload:
 
 @dataclass
 class WorkflowResult:
-    """Workflow processing result"""
+    """
+Workflow processing result"""
     content_id: str
     stage: WorkflowStage
     success: bool
@@ -192,7 +197,8 @@ class BusinessLogicCore:
         }
     
     async def _initialize_workflows(self):
-        """Initialize business workflow definitions"""
+        """
+Initialize business workflow definitions"""
         self.workflows = {
             'content_creation_workflow': {
                 'stages': [
@@ -423,7 +429,8 @@ class BusinessLogicCore:
         }
     
     def get_workflow_status(self) -> Dict[str, Any]:
-        """Get status of workflows"""
+        """
+Get status of workflows"""
         return {
             'total_workflows': len(self.workflows),
             'enabled_workflows': len([w for w in self.workflows.values() if w.get('enabled', False)]),

@@ -46,13 +46,14 @@ Lead Content Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 This content intelligence system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic Flow:
 Multi-Format Upload → AI Content Analysis → Quality Assessment → Protection Analysis → 
 SEO Optimization → Cross-Platform Strategy → Performance Prediction → 
 Content Enhancement → Brand Consistency → Monetization Assessment → Distribution
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -79,7 +80,9 @@ from ...ai.ml.content_intelligence import ContentIntelligenceEngine
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -94,6 +97,7 @@ class ContentFormat(Enum):
 
 class ContentType(Enum):
     """Content type classifications"""
+
     ORIGINAL = "original"
     DERIVATIVE = "derivative"
     COLLABORATIVE = "collaborative"
@@ -108,6 +112,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection requirement levels"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -118,6 +123,7 @@ class ProtectionLevel(Enum):
 
 class ContentCategory(Enum):
     """Content categorization for creators"""
+
     MUSIC = "music"
     PODCAST = "podcast"
     VIDEO_BLOG = "video_blog"
@@ -156,7 +162,8 @@ class ContentAnalysisResult:
 
 @dataclass
 class ContentContext:
-    """Rich content context information"""
+    """
+Rich content context information"""
     content_id: str
     creator_id: str
     session_id: str
@@ -174,7 +181,8 @@ class ContentContext:
 
 @dataclass
 class ProtectionAssessment:
-    """Content protection requirements assessment"""
+    """
+Content protection requirements assessment"""
     content_id: str
     recommended_protection: ProtectionLevel
     fingerprint_required: bool
@@ -761,7 +769,8 @@ class ContentContextAnalyzer:
             return ProtectionLevel.NONE
 
     async def _cache_analysis_result(self, content_id: str, result: ContentAnalysisResult):
-        """Cache analysis result for future use"""
+        """
+Cache analysis result for future use"""
         cache_key = f"content_analysis:{content_id}"
         
         # Convert to JSON-serializable format
@@ -966,7 +975,8 @@ class ContentContextAnalyzer:
             return 0.2  # Very poor
 
     def _analyze_sample_rate(self, sample_rate: int) -> float:
-        """Analyze audio sample rate quality (Hz)"""
+        """
+Analyze audio sample rate quality (Hz)"""
         if sample_rate >= 48000:
             return 1.0  # Professional quality
         elif sample_rate >= 44100:
@@ -977,7 +987,8 @@ class ContentContextAnalyzer:
             return 0.3  # Poor
 
     def _analyze_video_resolution(self, resolution: str) -> float:
-        """Analyze video resolution quality"""
+        """
+Analyze video resolution quality"""
         resolution_scores = {
             '4K': 1.0, '2160p': 1.0, '3840x2160': 1.0,
             'QHD': 0.9, '1440p': 0.9, '2560x1440': 0.9,
@@ -993,7 +1004,8 @@ class ContentContextAnalyzer:
         return 0.5  # Default for unknown resolution
 
     def _analyze_text_readability(self, text: str) -> float:
-        """Analyze text readability using multiple metrics"""
+        """
+Analyze text readability using multiple metrics"""
         if not text or len(text) < 10:
             return 0.1
         
@@ -1027,7 +1039,8 @@ class ContentContextAnalyzer:
         return (sentence_score + word_score) / 2
 
     def _analyze_seo_quality(self, text: str, metadata: Dict[str, Any]) -> float:
-        """Analyze SEO optimization quality"""
+        """
+Analyze SEO optimization quality"""
         if not text:
             return 0.1
         
@@ -1044,7 +1057,8 @@ class ContentContextAnalyzer:
         return sum(seo_factors.values()) / len(seo_factors)
 
     def _check_title_seo(self, title: str) -> float:
-        """Check title SEO optimization"""
+        """
+Check title SEO optimization"""
         if not title:
             return 0.0
         
@@ -1057,7 +1071,8 @@ class ContentContextAnalyzer:
             return 0.4
 
     def _check_keyword_presence(self, text: str, keywords: List[str]) -> float:
-        """Check keyword presence in content"""
+        """
+Check keyword presence in content"""
         if not keywords or not text:
             return 0.5
         
@@ -1066,7 +1081,8 @@ class ContentContextAnalyzer:
         return min(keyword_count / len(keywords), 1.0)
 
     async def _calculate_protection_score(self, analysis_result) -> float:
-        """Calculate comprehensive protection score"""
+        """
+Calculate comprehensive protection score"""
         try:
             protection_factors = {
                 'content_uniqueness': analysis_result.uniqueness_score,
@@ -1106,7 +1122,8 @@ class ContentContextAnalyzer:
         return vulnerability_map.get(content_format, 0.6)
 
     async def _predict_content_performance(self, analysis_result) -> Dict[str, Any]:
-        """Predict content performance using ML models"""
+        """
+Predict content performance using ML models"""
         try:
             performance_metrics = {
                 'engagement_score': self._predict_engagement(analysis_result),
@@ -1149,7 +1166,8 @@ class ContentContextAnalyzer:
         return sum(factors[factor] * weights[factor] for factor in weights)
 
     def _predict_reach(self, analysis_result) -> float:
-        """Predict content reach potential"""
+        """
+Predict content reach potential"""
         reach_factors = {
             'seo_potential': analysis_result.seo_potential,
             'social_shareability': analysis_result.shareability_score,
@@ -1161,7 +1179,8 @@ class ContentContextAnalyzer:
         return sum(reach_factors.values()) / len(reach_factors)
 
     async def _analyze_competitive_positioning(self, analysis_result) -> Dict[str, Any]:
-        """Analyze competitive positioning of content"""
+        """
+Analyze competitive positioning of content"""
         try:
             competitive_analysis = {
                 'uniqueness_factor': analysis_result.uniqueness_score,

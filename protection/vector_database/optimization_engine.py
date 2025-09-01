@@ -5,7 +5,7 @@ Advanced optimization engine for vector database performance tuning.
 Automatically optimizes indexes, parameters, and configurations for optimal performance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -16,6 +16,7 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Types of optimizations supported"""
+    """
+Types of optimizations supported"""
+
     INDEX_STRUCTURE = "index_structure"
     SEARCH_PARAMETERS = "search_parameters"
     MEMORY_USAGE = "memory_usage"
@@ -48,6 +51,7 @@ class OptimizationType(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization intensity levels"""
+
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -70,7 +74,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization implementation"""
+    """
+Result of optimization implementation"""
     optimization_id: str
     implemented_at: float
     before_metrics: Dict[str, float]
@@ -82,7 +87,8 @@ class OptimizationResult:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark measurement"""
+    """
+Performance benchmark measurement"""
     benchmark_id: str
     test_type: str
     dataset_size: int
@@ -97,7 +103,8 @@ class PerformanceBenchmark:
 
 
 class IndexAnalyzer:
-    """Analyze index characteristics and performance"""
+    """
+Analyze index characteristics and performance"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -198,7 +205,8 @@ class IndexAnalyzer:
                 return 0.4  # Poor choice for large datasets
     
     def _generate_index_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate specific recommendations based on analysis"""
+        """
+Generate specific recommendations based on analysis"""
         recommendations = []
         
         total_vectors = analysis['total_vectors']

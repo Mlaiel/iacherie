@@ -27,7 +27,7 @@ Advanced Influencer AI module implementing comprehensive business logic:
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All Rights Reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All Rights Reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"
 
 # Core imports

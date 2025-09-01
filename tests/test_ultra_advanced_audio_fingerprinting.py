@@ -8,8 +8,9 @@ Test suite for industrial-grade audio fingerprinting requirements:
 - Industrial performance validation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 import numpy as np
@@ -35,7 +36,8 @@ class MockAudioProcessor:
     @staticmethod
     def generate_test_audio(duration: float = 10.0, frequency: float = 440.0, 
                           sample_rate: int = 22050) -> np.ndarray:
-        """Generate test audio signal"""
+        """
+Generate test audio signal"""
         t = np.linspace(0, duration, int(sample_rate * duration), False)
         # Create a complex signal with harmonics
         signal = 0.5 * np.sin(2 * np.pi * frequency * t)
@@ -45,7 +47,8 @@ class MockAudioProcessor:
     
     @staticmethod
     def apply_pitch_shift(audio: np.ndarray, semitones: float) -> np.ndarray:
-        """Simulate pitch shift (mock implementation)"""
+        """
+Simulate pitch shift (mock implementation)"""
         # Simple frequency domain shift simulation
         factor = 2 ** (semitones / 12.0)
         # Resample simulation (simplified)
@@ -57,7 +60,8 @@ class MockAudioProcessor:
     
     @staticmethod
     def apply_tempo_change(audio: np.ndarray, factor: float) -> np.ndarray:
-        """Simulate tempo change (mock implementation)"""
+        """
+Simulate tempo change (mock implementation)"""
         new_length = int(len(audio) * factor)
         if new_length > 0:
             indices = np.linspace(0, len(audio) - 1, new_length)
@@ -66,19 +70,22 @@ class MockAudioProcessor:
     
     @staticmethod
     def apply_eq_filter(audio: np.ndarray, freq_response: Dict[str, float]) -> np.ndarray:
-        """Simulate EQ filtering (mock implementation)"""
+        """
+Simulate EQ filtering (mock implementation)"""
         # Simple gain adjustment simulation
         gain = freq_response.get('mid', 1.0)
         return (audio * gain).astype(np.float32)
 
 class IndustrialAudioFingerprintTester:
-    """Test harness for industrial audio fingerprinting validation"""
+    """
+Test harness for industrial audio fingerprinting validation"""
     
     def __init__(self):
         self.mock_processor = MockAudioProcessor()
         
     def create_test_dataset(self, num_samples: int = 100) -> List[Dict[str, Any]]:
-        """Create test dataset for precision validation"""
+        """
+Create test dataset for precision validation"""
         dataset = []
         
         for i in range(num_samples):
@@ -102,7 +109,8 @@ class IndustrialAudioFingerprintTester:
         return dataset
     
     def create_modification_variants(self, base_audio: np.ndarray) -> Dict[str, np.ndarray]:
-        """Create modified versions to test resistance"""
+        """
+Create modified versions to test resistance"""
         variants = {}
         
         # Pitch modifications
@@ -125,7 +133,8 @@ class IndustrialAudioFingerprintTester:
 
 # Mock implementations for testing without dependencies
 class MockIndustrialAudioFingerprintEngine:
-    """Mock engine for testing industrial requirements"""
+    """
+Mock engine for testing industrial requirements"""
     
     def __init__(self, config=None):
         self.config = config or {}
@@ -138,7 +147,8 @@ class MockIndustrialAudioFingerprintEngine:
     
     async def generate_fingerprint(self, audio_data: np.ndarray, content_id: str, 
                                  metadata: Dict = None) -> Dict[str, Any]:
-        """Mock fingerprint generation with timing"""
+        """
+Mock fingerprint generation with timing"""
         start_time = time.time()
         
         # Simulate processing
@@ -193,7 +203,8 @@ class MockIndustrialAudioFingerprintEngine:
         return sorted(matches, key=lambda x: x['similarity_score'], reverse=True)[:max_results]
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for validation"""
+        """
+Get performance metrics for validation"""
         if not self.processing_times:
             return {}
         
@@ -215,7 +226,8 @@ class MockIndustrialAudioFingerprintEngine:
 
 # Test Cases
 class TestUltraAdvancedAudioFingerprinting:
-    """Comprehensive test suite for ultra-advanced audio fingerprinting"""
+    """
+Comprehensive test suite for ultra-advanced audio fingerprinting"""
     
     @pytest.fixture
     def tester(self):
@@ -227,7 +239,8 @@ class TestUltraAdvancedAudioFingerprinting:
     
     @pytest.mark.asyncio
     async def test_industrial_performance_requirements(self, mock_engine):
-        """Test 1: Validate industrial performance requirements"""
+        """
+Test 1: Validate industrial performance requirements"""
         # Test real-time processing <50ms
         test_audio = MockAudioProcessor.generate_test_audio(duration=10.0)
         

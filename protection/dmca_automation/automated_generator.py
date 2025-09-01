@@ -7,8 +7,9 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
-Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
+Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import uuid
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class NoticeComplexity(Enum):
-    """Notice generation complexity levels"""
+    """
+Notice generation complexity levels"""
+
     SIMPLE = "simple"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -37,6 +40,7 @@ class NoticeComplexity(Enum):
 
 class GenerationStrategy(Enum):
     """AI generation strategies"""
+
     TEMPLATE_BASED = "template_based"
     AI_GENERATED = "ai_generated" 
     HYBRID_ENHANCED = "hybrid_enhanced"
@@ -91,7 +95,8 @@ class AutomatedNoticeGenerator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize automated notice generator"""
+        """
+Initialize automated notice generator"""
         self.config = config or {}
         self.db = get_database()
         self.template_manager = TemplateManager(config)
@@ -546,7 +551,8 @@ class AutomatedNoticeGenerator:
                                 evidence_analysis: Dict[str, Any]) -> TakedownNotice:
         """Generate notice using AI models"""
         # Simulate AI-generated content (would use actual models)
-        ai_content = f"""DMCA TAKEDOWN NOTICE
+        ai_content = f"""
+DMCA TAKEDOWN NOTICE
 
 To: Platform Copyright Team
 From: {request.copyright_owner}
@@ -594,7 +600,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     async def _generate_hybrid_notice(self, 
                                     request: GenerationRequest,
                                     evidence_analysis: Dict[str, Any]) -> TakedownNotice:
-        """Generate notice using hybrid template + AI approach"""
+        """
+Generate notice using hybrid template + AI approach"""
         # Start with template
         template_notice = await self._generate_template_based_notice(request, evidence_analysis)
         
@@ -610,7 +617,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     async def _generate_legal_reviewed_notice(self, 
                                             request: GenerationRequest,
                                             evidence_analysis: Dict[str, Any]) -> TakedownNotice:
-        """Generate legal-grade notice with comprehensive review"""
+        """
+Generate legal-grade notice with comprehensive review"""
         # Start with hybrid approach
         base_notice = await self._generate_hybrid_notice(request, evidence_analysis)
         
@@ -627,7 +635,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     async def _validate_generated_notice(self, 
                                        notice: TakedownNotice,
                                        request: Optional[GenerationRequest]) -> Dict[str, Any]:
-        """Validate generated notice quality and compliance"""
+        """
+Validate generated notice quality and compliance"""
         metrics = {
             'legal_compliance': 0.85,  # Simulated score
             'template_quality': 0.88,
@@ -711,7 +720,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
         self.stats['success_rate'] = 1.0  # This example assumes all generations succeed
     
     async def _enhance_with_ai(self, content: str, request: GenerationRequest) -> str:
-        """Enhance notice content with AI improvements"""
+        """
+Enhance notice content with AI improvements"""
         # Simulate AI enhancement (would use actual models)
         enhanced_content = content.replace(
             "I have a good faith belief",
@@ -745,7 +755,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
         return platform_groups
     
     async def _get_notice_from_database(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve notice from database"""
+        """
+Retrieve notice from database"""
         try:
             query = "SELECT * FROM dmca_notice_generations WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])

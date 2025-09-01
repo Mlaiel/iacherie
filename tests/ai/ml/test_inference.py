@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Inference Engine Tests - Enterprise Grade Test Suite
+"""
+Inference Engine Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for ML inference engine including batch processing,
 real-time inference, model serving, and distributed inference capabilities.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -47,10 +50,12 @@ from ai.ml.inference import (
 
 
 class TestInferenceEngine:
-    """Comprehensive tests for InferenceEngine class"""
+    """
+Comprehensive tests for InferenceEngine class"""
     
     def test_init_inference_engine(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test basic inference engine initialization"""
+        """
+Test basic inference engine initialization"""
         # Save model for loading
         model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
@@ -248,7 +253,8 @@ class TestBatchInferenceEngine:
     """Tests for batch inference capabilities"""
     
     def test_init_batch_engine(self, sample_inference_config):
-        """Test batch inference engine initialization"""
+        """
+Test batch inference engine initialization"""
         sample_inference_config.enable_dynamic_batching = True
         sample_inference_config.max_batch_size = 64
         sample_inference_config.batch_timeout_ms = 50
@@ -261,7 +267,8 @@ class TestBatchInferenceEngine:
         assert engine.batch_queue is not None
 
     def test_dynamic_batching(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test dynamic batching functionality"""
+        """
+Test dynamic batching functionality"""
         model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
@@ -348,7 +355,8 @@ class TestStreamInferenceEngine:
     """Tests for stream inference capabilities"""
     
     def test_init_stream_engine(self, sample_inference_config):
-        """Test stream inference engine initialization"""
+        """
+Test stream inference engine initialization"""
         engine = StreamInferenceEngine(sample_inference_config)
         
         assert engine.config == sample_inference_config
@@ -357,7 +365,8 @@ class TestStreamInferenceEngine:
 
     @pytest.mark.asyncio
     async def test_streaming_inference(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test streaming inference functionality"""
+        """
+Test streaming inference functionality"""
         model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
@@ -410,7 +419,8 @@ class TestModelServer:
     """Tests for model server functionality"""
     
     def test_init_model_server(self, sample_inference_config):
-        """Test model server initialization"""
+        """
+Test model server initialization"""
         server = ModelServer(
             config=sample_inference_config,
             host="localhost",
@@ -507,7 +517,8 @@ class TestModelCache:
     """Tests for model caching functionality"""
     
     def test_init_cache(self):
-        """Test cache initialization"""
+        """
+Test cache initialization"""
         cache = ModelCache(
             max_size=100,
             ttl_seconds=3600,
@@ -520,7 +531,8 @@ class TestModelCache:
         assert len(cache.cache_dict) == 0
 
     def test_cache_put_and_get(self):
-        """Test basic cache put and get operations"""
+        """
+Test basic cache put and get operations"""
         cache = ModelCache(max_size=10)
         
         key = "test_key"
@@ -610,7 +622,8 @@ class TestInferenceMetrics:
     """Tests for inference metrics collection and monitoring"""
     
     def test_init_metrics(self):
-        """Test metrics initialization"""
+        """
+Test metrics initialization"""
         metrics = InferenceMetrics()
         
         assert metrics.total_requests == 0
@@ -619,7 +632,8 @@ class TestInferenceMetrics:
         assert len(metrics.error_count) == 0
 
     def test_request_metrics_recording(self):
-        """Test recording request metrics"""
+        """
+Test recording request metrics"""
         metrics = InferenceMetrics()
         
         # Record successful request
@@ -736,7 +750,8 @@ class TestInferenceIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_inference_pipeline(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test complete inference pipeline from model loading to prediction"""
+        """
+Test complete inference pipeline from model loading to prediction"""
         model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)

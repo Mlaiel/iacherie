@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Notification types for creators"""
+    """
+Notification types for creators"""
+
     CONTENT_PROTECTION_ALERT = "content_protection_alert"
     COLLABORATION_REQUEST = "collaboration_request"
     REVENUE_UPDATE = "revenue_update"
@@ -63,6 +66,7 @@ class NotificationType(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -72,6 +76,7 @@ class NotificationPriority(Enum):
 
 class ChannelType(Enum):
     """Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -85,6 +90,7 @@ class ChannelType(Enum):
 
 class NotificationStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     QUEUED = "queued"
     SENDING = "sending"
@@ -97,6 +103,7 @@ class NotificationStatus(Enum):
 
 class ContentCreatorType(Enum):
     """Creator types for targeted notifications"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -123,7 +130,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""
+    """
+Notification recipient information"""
     user_id: str
     creator_type: ContentCreatorType
     channels: List[ChannelType]
@@ -134,7 +142,8 @@ class NotificationRecipient:
 
 
 class NotificationChannel(Base):
-    """Notification channel configuration"""
+    """
+Notification channel configuration"""
     __tablename__ = "notification_channels"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -346,7 +355,8 @@ class NotificationEngine:
         self.webhook_config = {}
     
     async def initialize(self):
-        """Initialize notification engine"""
+        """
+Initialize notification engine"""
         try:
             # Load templates and channels
             await self._load_templates()
@@ -720,7 +730,8 @@ class NotificationEngine:
             self.templates[template.template_key] = template
     
     async def _load_channel_configurations(self):
-        """Load channel configurations"""
+        """
+Load channel configurations"""
         try:
             # Email configuration
             self.channel_configs[ChannelType.EMAIL] = {
@@ -784,7 +795,8 @@ class NotificationEngine:
         user_id: str, 
         requested_channels: Optional[List[ChannelType]]
     ) -> List[ChannelType]:
-        """Get user's available notification channels"""
+        """
+Get user's available notification channels"""
         # Get user's verified channels
         channels = self.db.query(NotificationChannel).filter(
             NotificationChannel.user_id == user_id,
@@ -800,7 +812,8 @@ class NotificationEngine:
         return available_channels
     
     async def _render_template(self, template: str, variables: Dict[str, Any]) -> str:
-        """Render template with variables"""
+        """
+Render template with variables"""
         try:
             # Simple string replacement - could use Jinja2 for more complex templates
             rendered = template
@@ -873,7 +886,8 @@ class NotificationEngine:
         await self._send_email(channel.endpoint, subject, body)
     
     async def _send_sms_verification(self, channel: NotificationChannel, code: str):
-        """Send SMS verification"""
+        """
+Send SMS verification"""
         message = f"IA Influencer: Your verification code is {code}. Expires in 15 minutes."
         
         # Use your SMS service implementation
@@ -893,7 +907,8 @@ class NotificationEngine:
         return ContentCreatorType.MULTI_FORMAT  # Default
     
     async def _personalize_variables(self, user_id: str, variables: Dict[str, Any]) -> Dict[str, Any]:
-        """Personalize variables for specific user"""
+        """
+Personalize variables for specific user"""
         # Add user-specific data to variables
         personalized = variables.copy()
         personalized["user_id"] = user_id

@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Callable, Awaitable
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitorSeverity(Enum):
-    """Monitor alert severity levels"""
+    """
+Monitor alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -31,6 +34,7 @@ class MonitorSeverity(Enum):
 
 class MonitorStatus(Enum):
     """Platform monitor status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     DOWN = "down"
@@ -48,7 +52,8 @@ class HealthCheckResult:
     metadata: Dict[str, Any] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         result = asdict(self)
         result['status'] = self.status.value
         result['timestamp'] = self.timestamp.isoformat()
@@ -57,7 +62,8 @@ class HealthCheckResult:
 
 @dataclass
 class MonitorAlert:
-    """Platform monitoring alert"""
+    """
+Platform monitoring alert"""
     platform_id: str
     severity: MonitorSeverity
     message: str
@@ -67,7 +73,8 @@ class MonitorAlert:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         result = asdict(self)
         result['severity'] = self.severity.value
         result['timestamp'] = self.timestamp.isoformat()
@@ -77,7 +84,8 @@ class MonitorAlert:
 
 
 class PlatformMonitor:
-    """Monitor platform health and performance"""
+    """
+Monitor platform health and performance"""
     
     def __init__(self, check_interval: int = 60, alert_threshold: int = 3):
         """
@@ -97,7 +105,8 @@ class PlatformMonitor:
         self.alert_handlers: List[Callable[[MonitorAlert], Awaitable[None]]] = []
         
     def register_platform(self, platform: PlatformBase):
-        """Register a platform for monitoring"""
+        """
+Register a platform for monitoring"""
         self.platforms[platform.platform_id] = platform
         self.health_history[platform.platform_id] = []
         self.active_alerts[platform.platform_id] = []
@@ -116,7 +125,8 @@ class PlatformMonitor:
         self.alert_handlers.append(handler)
     
     async def check_platform_health(self, platform: PlatformBase) -> HealthCheckResult:
-        """Check health of a specific platform"""
+        """
+Check health of a specific platform"""
         start_time = time.time()
         
         try:
@@ -338,7 +348,8 @@ class PlatformMonitor:
         }
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get system-wide monitoring overview"""
+        """
+Get system-wide monitoring overview"""
         total_platforms = len(self.platforms)
         healthy_platforms = 0
         degraded_platforms = 0
@@ -370,7 +381,8 @@ class PlatformMonitor:
         }
     
     async def start_monitoring(self):
-        """Start continuous monitoring"""
+        """
+Start continuous monitoring"""
         if self.monitoring_active:
             logger.warning("Monitoring is already active")
             return
@@ -449,7 +461,8 @@ class PlatformMonitor:
         return all_alerts[:limit]
     
     def clear_alert_history(self, platform_id: str = None):
-        """Clear alert history"""
+        """
+Clear alert history"""
         if platform_id:
             if platform_id in self.active_alerts:
                 self.active_alerts[platform_id] = []

@@ -6,6 +6,7 @@ and intelligent query rewriting for maximum database performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import re
 import hashlib
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class OptimizationType(Enum):
-    """Types of query optimizations"""
+    """
+Types of query optimizations"""
+
     INDEX_SUGGESTION = "index_suggestion"
     QUERY_REWRITE = "query_rewrite"
     JOIN_OPTIMIZATION = "join_optimization"
@@ -39,6 +42,7 @@ class OptimizationType(Enum):
 
 class QueryType(Enum):
     """SQL query types"""
+
     SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
@@ -51,6 +55,7 @@ class QueryType(Enum):
 
 class JoinType(Enum):
     """SQL join types"""
+
     INNER = "inner"
     LEFT = "left"
     RIGHT = "right"
@@ -75,7 +80,8 @@ class QueryComponent:
     
     @property
     def complexity_score(self) -> int:
-        """Calculate query complexity score"""
+        """
+Calculate query complexity score"""
         score = 0
         score += len(self.tables) * 2
         score += len(self.joins) * 5
@@ -89,7 +95,8 @@ class QueryComponent:
 
 @dataclass
 class ExecutionPlan:
-    """Query execution plan representation"""
+    """
+Query execution plan representation"""
     plan_id: str
     query_text: str
     estimated_cost: float
@@ -103,7 +110,8 @@ class ExecutionPlan:
     
     @property
     def efficiency_score(self) -> float:
-        """Calculate plan efficiency score (0-100)"""
+        """
+Calculate plan efficiency score (0-100)"""
         score = 100.0
         
         # Penalize table scans
@@ -129,7 +137,8 @@ class ExecutionPlan:
 
 @dataclass
 class OptimizationSuggestion:
-    """Query optimization suggestion"""
+    """
+Query optimization suggestion"""
     optimization_type: OptimizationType
     priority: int  # 1-10 scale
     description: str
@@ -148,7 +157,8 @@ class OptimizationSuggestion:
 
 @dataclass
 class QueryPlan:
-    """Complete query analysis and optimization plan"""
+    """
+Complete query analysis and optimization plan"""
     query_id: str
     original_query: str
     query_type: QueryType
@@ -159,14 +169,16 @@ class QueryPlan:
     
     @property
     def optimization_potential(self) -> float:
-        """Calculate overall optimization potential"""
+        """
+Calculate overall optimization potential"""
         if not self.optimizations:
             return 0.0
         return sum(opt.impact_score for opt in self.optimizations) / len(self.optimizations)
 
 
 class QueryParser:
-    """Advanced SQL query parser"""
+    """
+Advanced SQL query parser"""
     
     def __init__(self):
         self._function_patterns = [
@@ -176,7 +188,8 @@ class QueryParser:
         ]
     
     def parse_query(self, query: str) -> QueryComponent:
-        """Parse SQL query into components"""
+        """
+Parse SQL query into components"""
         try:
             # Parse with sqlparse
             parsed = sqlparse.parse(query)[0]
@@ -242,7 +255,8 @@ class QueryParser:
         return list(set(cleaned_tables))
     
     def _extract_columns(self, parsed) -> List[str]:
-        """Extract column names from SELECT clause"""
+        """
+Extract column names from SELECT clause"""
         columns = []
         
         # Find SELECT clause
@@ -265,7 +279,8 @@ class QueryParser:
         return [col for col in columns if col and col != ',']
     
     def _extract_where_conditions(self, parsed) -> List[str]:
-        """Extract WHERE conditions"""
+        """
+Extract WHERE conditions"""
         conditions = []
         where_clause = None
         
@@ -288,7 +303,8 @@ class QueryParser:
         return conditions
     
     def _extract_joins(self, parsed) -> List[Dict[str, Any]]:
-        """Extract JOIN information"""
+        """
+Extract JOIN information"""
         joins = []
         
         query_str = str(parsed)
@@ -335,7 +351,8 @@ class QueryParser:
         return order_columns
     
     def _extract_group_by(self, parsed) -> List[str]:
-        """Extract GROUP BY columns"""
+        """
+Extract GROUP BY columns"""
         group_columns = []
         
         query_str = str(parsed)
@@ -348,7 +365,8 @@ class QueryParser:
         return group_columns
     
     def _extract_having(self, parsed) -> List[str]:
-        """Extract HAVING conditions"""
+        """
+Extract HAVING conditions"""
         having_conditions = []
         
         query_str = str(parsed)
@@ -362,7 +380,8 @@ class QueryParser:
         return having_conditions
     
     def _extract_subqueries(self, parsed) -> List[str]:
-        """Extract subqueries"""
+        """
+Extract subqueries"""
         subqueries = []
         
         query_str = str(parsed)
@@ -378,7 +397,8 @@ class QueryParser:
         return subqueries
     
     def _extract_functions(self, query: str) -> List[str]:
-        """Extract function calls"""
+        """
+Extract function calls"""
         functions = []
         
         for pattern in self._function_patterns:
@@ -390,7 +410,8 @@ class QueryParser:
         return list(set(functions))
     
     def _extract_limit_offset(self, parsed) -> Tuple[Optional[int], Optional[int]]:
-        """Extract LIMIT and OFFSET values"""
+        """
+Extract LIMIT and OFFSET values"""
         query_str = str(parsed)
         
         limit = None
@@ -410,7 +431,8 @@ class QueryParser:
 
 
 class QueryOptimizer:
-    """Advanced SQL query optimizer"""
+    """
+Advanced SQL query optimizer"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -431,7 +453,8 @@ class QueryOptimizer:
         self._query_cache: Dict[str, QueryPlan] = {}
         
     async def analyze_query(self, query: str) -> QueryPlan:
-        """Analyze query and create optimization plan"""
+        """
+Analyze query and create optimization plan"""
         try:
             # Generate query ID
             query_id = self._generate_query_id(query)
@@ -525,7 +548,8 @@ class QueryOptimizer:
         return optimizations
     
     async def _optimize_where_conditions(self, plan: QueryPlan) -> List[OptimizationSuggestion]:
-        """Optimize WHERE conditions"""
+        """
+Optimize WHERE conditions"""
         suggestions = []
         
         for condition in plan.components.where_conditions:
@@ -761,12 +785,14 @@ class QueryOptimizer:
             return QueryType.UNKNOWN
     
     def _generate_query_id(self, query: str) -> str:
-        """Generate unique query ID"""
+        """
+Generate unique query ID"""
         normalized = self._normalize_query(query)
         return hashlib.md5(normalized.encode()).hexdigest()
     
     def _generate_plan_id(self, query: str) -> str:
-        """Generate unique plan ID"""
+        """
+Generate unique plan ID"""
         return f"plan_{self._generate_query_id(query)}"
     
     def _normalize_query(self, query: str) -> str:
@@ -917,11 +943,13 @@ def get_query_optimizer(config: Optional[Dict[str, Any]] = None) -> QueryOptimiz
 
 # Execution planner helper classes
 class PlanOptimizer:
-    """Advanced execution plan optimizer"""
+    """
+Advanced execution plan optimizer"""
     
     @staticmethod
     async def optimize_execution_plan(engine: AsyncEngine, query: str) -> Optional[str]:
-        """Optimize query based on execution plan analysis"""
+        """
+Optimize query based on execution plan analysis"""
         optimizer = get_query_optimizer()
         
         # Get execution plan
@@ -944,7 +972,8 @@ class CostEstimator:
     
     @staticmethod
     def estimate_query_cost(components: QueryComponent) -> float:
-        """Estimate query execution cost based on components"""
+        """
+Estimate query execution cost based on components"""
         cost = 1.0
         
         # Table costs

@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class MarketplaceEngineStatus(Enum):
-    """Statuts du module Marketplace Engine"""
+    """
+Statuts du module Marketplace Engine"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -39,27 +42,32 @@ class MarketplaceEngineConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class IMarketplaceEngineService(ABC):
-    """Interface du service Marketplace Engine"""
+    """
+Interface du service Marketplace Engine"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class MarketplaceEngineManager:
-    """Gestionnaire principal Marketplace Engine"""
+    """
+Gestionnaire principal Marketplace Engine"""
     
     def __init__(self, config: MarketplaceEngineConfig):
         self.config = config
@@ -134,7 +142,8 @@ class MarketplaceEngineService(IMarketplaceEngineService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
+        """
+Exécution de la logique métier spécifique"""
         # Implement marketplace engine consolidated business logic
         marketplace_data = data.get('marketplace', {})
         item_id = marketplace_data.get('item_id')
@@ -210,7 +219,8 @@ async def create_marketplaceengine_service(config: Optional[MarketplaceEngineCon
     return service
 
 def get_marketplaceengine_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Marketplace Engine",
         "version": "1.0.0",
@@ -228,7 +238,8 @@ class MarketplaceEngineAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Marketplace Engine",

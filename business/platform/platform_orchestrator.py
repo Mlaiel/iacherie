@@ -4,8 +4,9 @@ Coordinates all platform operations including content lifecycle management,
 AI protection workflows, and multi-platform distribution orchestration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ from ...services.notification.notification_service import NotificationService
 logger = get_logger(__name__)
 
 class PlatformOperation(Enum):
-    """Platform operation types"""
+    """
+Platform operation types"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_PROTECTION = "content_protection"
     CONTENT_DISTRIBUTION = "content_distribution"
@@ -366,7 +369,8 @@ class PlatformOrchestrator:
         content_item: ContentItem,
         content_type: str
     ) -> List[PlatformOperation]:
-        """Determine workflow operations based on creator and content"""
+        """
+Determine workflow operations based on creator and content"""
         operations = [PlatformOperation.CONTENT_UPLOAD]
         
         # AI protection for premium creators or specific content types
@@ -391,7 +395,8 @@ class PlatformOrchestrator:
         return operations
     
     def _calculate_workflow_priority(self, creator: User) -> int:
-        """Calculate workflow priority based on creator tier"""
+        """
+Calculate workflow priority based on creator tier"""
         if creator.role == UserRole.PREMIUM_CREATOR:
             return 1  # High priority
         elif creator.role == UserRole.CREATOR:
@@ -400,7 +405,8 @@ class PlatformOrchestrator:
             return 3  # Low priority
     
     async def _process_workflow_queue(self):
-        """Background task to process workflow queue"""
+        """
+Background task to process workflow queue"""
         while True:
             try:
                 # Get workflow from queue
@@ -524,7 +530,8 @@ class PlatformOrchestrator:
         protection_level: str,
         session: AsyncSession
     ):
-        """Store fingerprint data in database"""
+        """
+Store fingerprint data in database"""
         # Implementation for storing fingerprint data
         logger.info(f"Storing fingerprint data for content: {content_item.id}")
     
@@ -548,7 +555,8 @@ class PlatformOrchestrator:
         platform: str,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for specific platform"""
+        """
+Optimize content for specific platform"""
         # Implementation for platform-specific content optimization
         return {'optimized': True, 'platform': platform}
     
@@ -558,6 +566,7 @@ class PlatformOrchestrator:
         optimized_data: Dict[str, Any],
         config: Dict[str, Any]
     ) -> str:
-        """Schedule distribution task for platform"""
+        """
+Schedule distribution task for platform"""
         # Implementation for distribution task scheduling
         return f"task_{platform}_{datetime.utcnow().timestamp()}"

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import os
 from pathlib import Path
@@ -27,7 +28,8 @@ class FingerprintingExamples:
     """
     
     def __init__(self):
-        """Initialize examples with fingerprinting system"""
+        """
+Initialize examples with fingerprinting system"""
         self.system = get_fingerprinting_system()
         self.manager = self.system['manager']
         self.analyzer = self.system['analyzer']
@@ -419,12 +421,14 @@ async def quick_demo_audio():
     await examples.example_1_basic_audio_fingerprinting()
 
 async def quick_demo_security():
-    """Quick demo for security features"""
+    """
+Quick demo for security features"""
     examples = FingerprintingExamples()
     await examples.example_5_security_and_hashing()
 
 async def quick_demo_workflow():
-    """Quick demo for complete workflow"""
+    """
+Quick demo for complete workflow"""
     examples = FingerprintingExamples()
     await examples.example_6_comprehensive_workflow()
 

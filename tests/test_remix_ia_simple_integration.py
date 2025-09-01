@@ -10,6 +10,7 @@ Created: 2025-01-26
 
 Simplified tests for the core Remix IA Professionnel requirements without heavy dependencies.
 """
+
 import asyncio
 import unittest
 import logging
@@ -27,10 +28,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class TestRemixIASimpleIntegration(unittest.TestCase):
-    """Simplified integration tests for Remix IA Professionnel system"""
+    """
+Simplified integration tests for Remix IA Professionnel system"""
     
     def setUp(self):
-        """Set up test environment"""
+        """
+Set up test environment"""
         self.sample_rate = 44100
         # Create mock audio data without numpy dependency
         self.test_audio_data = [0.1 * (i % 100 - 50) / 50.0 for i in range(self.sample_rate)]  # 1 second

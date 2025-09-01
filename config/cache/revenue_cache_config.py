@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,7 +26,9 @@ from pydantic import BaseModel, validator
 
 
 class RevenueType(str, Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     STREAMING_ROYALTIES = "streaming_royalties"     # Spotify, Apple Music, etc.
     CONTENT_LICENSING = "content_licensing"         # Licensed content usage
     BRAND_COLLABORATIONS = "brand_collaborations"   # Sponsored content
@@ -42,6 +45,7 @@ class RevenueType(str, Enum):
 
 class CurrencyCode(str, Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -56,6 +60,7 @@ class CurrencyCode(str, Enum):
 
 class TimePeriod(str, Enum):
     """Time periods for revenue aggregation"""
+
     REAL_TIME = "real_time"    # Live updates
     HOURLY = "hourly"          # Last hour
     DAILY = "daily"            # Daily totals
@@ -67,6 +72,7 @@ class TimePeriod(str, Enum):
 
 class PlatformProvider(str, Enum):
     """Revenue platform providers"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube" 
     INSTAGRAM = "instagram"
@@ -112,7 +118,8 @@ class RevenueCacheSettings:
 
 @dataclass
 class RevenueCacheConfig:
-    """Complete configuration for revenue caching system"""
+    """
+Complete configuration for revenue caching system"""
     
     # Cache identification
     cache_name: str = "revenue_data"
@@ -287,7 +294,8 @@ class RevenueCacheConfig:
 
 
 class RevenueCacheManager:
-    """Manager for revenue cache operations"""
+    """
+Manager for revenue cache operations"""
     
     def __init__(self, config: RevenueCacheConfig):
         self.config = config
@@ -298,7 +306,8 @@ class RevenueCacheManager:
     
     def calculate_total_revenue(self, user_id: str, start_date: datetime, 
                               end_date: datetime, currency: CurrencyCode = None) -> Dict[str, Any]:
-        """Calculate total revenue across all streams for a period"""
+        """
+Calculate total revenue across all streams for a period"""
         if currency is None:
             currency = self.config.default_currency
         
@@ -468,16 +477,19 @@ class RevenueCacheManager:
     
     def _get_historical_revenue_data(self, user_id: str, revenue_type: RevenueType, 
                                    days: int) -> List[Dict[str, Any]]:
-        """Get historical revenue data (mock implementation)"""
+        """
+Get historical revenue data (mock implementation)"""
         return []
     
     def _get_recent_revenue_data(self, user_id: str, revenue_type: RevenueType,
                                platform: PlatformProvider, hours: int) -> List[Dict[str, Any]]:
-        """Get recent revenue data for anomaly detection (mock implementation)"""
+        """
+Get recent revenue data for anomaly detection (mock implementation)"""
         return []
     
     def _count_alert_types(self) -> Dict[str, int]:
-        """Count alerts by type"""
+        """
+Count alerts by type"""
         alert_counts = {}
         for alert in self._alert_history:
             alert_type = alert.get("type", "unknown")

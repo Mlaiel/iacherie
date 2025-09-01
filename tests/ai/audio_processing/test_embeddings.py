@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -23,8 +24,9 @@ Comprehensive testing for audio embeddings and similarity matching including:
 - Memory efficiency testing
 
 Created by Expert Team: ML Engineer + AI Architect + Audio Developer
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -71,7 +73,8 @@ class TestAudioEmbeddingModel:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.embedding_model = AudioEmbeddingModel()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
@@ -85,7 +88,8 @@ class TestAudioEmbeddingModel:
         assert model.embedding_dim == 512  # Standard embedding dimension
     
     def test_model_architecture(self):
-        """Test model architecture consistency"""
+        """
+Test model architecture consistency"""
         model = AudioEmbeddingModel()
         
         # Test with sample input
@@ -98,7 +102,8 @@ class TestAudioEmbeddingModel:
         assert embeddings.dtype == np.float32
     
     def test_embedding_consistency(self):
-        """Test embedding consistency for same input"""
+        """
+Test embedding consistency for same input"""
         model = AudioEmbeddingModel()
         sample_input = np.random.randn(1, 128, 128)
         
@@ -110,7 +115,8 @@ class TestAudioEmbeddingModel:
         assert np.allclose(embedding1, embedding2, atol=1e-6)
     
     def test_embedding_normalization(self):
-        """Test embedding normalization"""
+        """
+Test embedding normalization"""
         model = AudioEmbeddingModel()
         sample_input = np.random.randn(5, 128, 128)  # Batch of 5
         
@@ -121,7 +127,8 @@ class TestAudioEmbeddingModel:
         assert np.allclose(norms, 1.0, atol=1e-5)  # Unit norm
     
     def test_batch_processing(self):
-        """Test batch processing capabilities"""
+        """
+Test batch processing capabilities"""
         model = AudioEmbeddingModel()
         
         # Test different batch sizes
@@ -133,7 +140,8 @@ class TestAudioEmbeddingModel:
             assert embeddings.shape[1] == 512
     
     def test_model_serialization(self):
-        """Test model save/load functionality"""
+        """
+Test model save/load functionality"""
         model = AudioEmbeddingModel()
         
         # Create temporary file for model
@@ -175,7 +183,8 @@ class TestAudioEmbeddingGenerator:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.generator = AudioEmbeddingGenerator()
         self.processor = AudioProcessor()
@@ -190,7 +199,8 @@ class TestAudioEmbeddingGenerator:
         assert hasattr(generator, 'embedding_dim')
     
     def test_generate_embeddings_single_audio(self):
-        """Test embedding generation for single audio file"""
+        """
+Test embedding generation for single audio file"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -327,7 +337,8 @@ class TestSimilarityMatcher:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.matcher = SimilarityMatcher()
         self.generator = AudioEmbeddingGenerator()
@@ -361,7 +372,8 @@ class TestSimilarityMatcher:
         assert hasattr(matcher, 'threshold')
     
     def test_cosine_similarity_computation(self):
-        """Test cosine similarity computation"""
+        """
+Test cosine similarity computation"""
         embedding1 = self.test_database["pure_tone_440hz.wav"]
         embedding2 = self.test_database["white_noise.wav"]
         
@@ -475,7 +487,8 @@ class TestSimilarityMatcher:
         assert len(results) == 10
     
     def test_batch_similarity_computation(self):
-        """Test batch similarity computation"""
+        """
+Test batch similarity computation"""
         query_embeddings = np.array([
             self.test_database["pure_tone_440hz.wav"],
             self.test_database["white_noise.wav"]
@@ -509,7 +522,8 @@ class TestSimilarityResult:
     """
     
     def test_result_creation(self):
-        """Test SimilarityResult creation"""
+        """
+Test SimilarityResult creation"""
         result = SimilarityResult(
             label="test_audio.wav",
             similarity=0.85,
@@ -561,7 +575,8 @@ class TestEmbeddingIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     

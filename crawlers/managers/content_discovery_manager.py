@@ -7,6 +7,7 @@ Manages intelligent content discovery across social media platforms and web serv
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -38,7 +39,9 @@ from ...models.content import ContentDiscovery, ContentMetadata
 
 
 class ContentType(Enum):
-    """Content type enumeration for discovery targeting."""
+    """
+Content type enumeration for discovery targeting."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -48,6 +51,7 @@ class ContentType(Enum):
 
 class PlatformType(Enum):
     """Supported platform types for content discovery."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -77,7 +81,8 @@ class DiscoveryTarget:
 
 @dataclass
 class DiscoveredContent:
-    """Discovered content item with metadata."""
+    """
+Discovered content item with metadata."""
     platform: PlatformType
     content_type: ContentType
     url: str
@@ -106,7 +111,8 @@ class ContentDiscoveryManager:
     """
     
     def __init__(self, config: Optional[DiscoveryConfig] = None):
-        """Initialize the content discovery manager."""
+        """
+Initialize the content discovery manager."""
         self.config = config or DiscoveryConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.session = None
@@ -137,16 +143,19 @@ class ContentDiscoveryManager:
         }
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self.initialize()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.cleanup()
         
     async def initialize(self):
-        """Initialize discovery manager resources."""
+        """
+Initialize discovery manager resources."""
         try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
@@ -418,7 +427,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_twitter_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover Twitter/X content using API or scraping."""
+        """
+Discover Twitter/X content using API or scraping."""
         content_items = []
         
         # Twitter discovery implementation
@@ -427,7 +437,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_spotify_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover Spotify content using Web API."""
+        """
+Discover Spotify content using Web API."""
         content_items = []
         
         try:
@@ -452,7 +463,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_web_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover content from generic web sources."""
+        """
+Discover content from generic web sources."""
         content_items = []
         
         try:
@@ -609,17 +621,20 @@ class ContentDiscoveryManager:
         return None
         
     def _parse_audio_element(self, element, base_url: str) -> Optional[DiscoveredContent]:
-        """Parse audio element from HTML."""
+        """
+Parse audio element from HTML."""
         # Implementation for audio parsing
         return None
         
     def _parse_image_element(self, element, base_url: str) -> Optional[DiscoveredContent]:
-        """Parse image element from HTML."""
+        """
+Parse image element from HTML."""
         # Implementation for image parsing
         return None
         
     def _validate_discovered_content(self, content: DiscoveredContent, target: DiscoveryTarget) -> bool:
-        """Validate discovered content against target criteria."""
+        """
+Validate discovered content against target criteria."""
         try:
             # Check content type
             if target.content_types and content.content_type not in target.content_types:
@@ -674,7 +689,8 @@ class ContentDiscoveryManager:
             return True
             
     def _deduplicate_content(self, content_items: List[DiscoveredContent]) -> List[DiscoveredContent]:
-        """Remove duplicate content items."""
+        """
+Remove duplicate content items."""
         unique_items = []
         seen_urls = set()
         seen_hashes = set()
@@ -698,7 +714,8 @@ class ContentDiscoveryManager:
         return unique_items
         
     def _generate_content_hash(self, content: DiscoveredContent) -> str:
-        """Generate hash for content deduplication."""
+        """
+Generate hash for content deduplication."""
         content_string = f"{content.platform.value}:{content.title}:{content.author}:{content.url}"
         return hashlib.md5(content_string.encode()).hexdigest()
         
@@ -730,7 +747,8 @@ class ContentDiscoveryManager:
         return 0
         
     def _parse_relative_date(self, text: str) -> Optional[datetime]:
-        """Parse relative date like '2 days ago'."""
+        """
+Parse relative date like '2 days ago'."""
         try:
             import re
             
@@ -758,7 +776,8 @@ class ContentDiscoveryManager:
         return None
         
     def _update_discovery_stats(self, content_items: List[DiscoveredContent]):
-        """Update discovery statistics."""
+        """
+Update discovery statistics."""
         self.discovery_stats['total_discovered'] = len(content_items)
         
         # Count by platform
@@ -770,11 +789,13 @@ class ContentDiscoveryManager:
             self.discovery_stats['by_content_type'][content_type] = self.discovery_stats['by_content_type'].get(content_type, 0) + 1
             
     async def get_discovery_stats(self) -> Dict[str, Any]:
-        """Get discovery statistics."""
+        """
+Get discovery statistics."""
         return self.discovery_stats.copy()
         
     async def save_discovered_content(self, content_items: List[DiscoveredContent]) -> bool:
-        """Save discovered content to database."""
+        """
+Save discovered content to database."""
         try:
             async with get_database_session() as db:
                 for item in content_items:
@@ -833,7 +854,8 @@ def create_content_discovery_manager(config: Optional[DiscoveryConfig] = None) -
 
 # Discovery utilities
 async def discover_trending_content(platforms: List[PlatformType], content_types: List[ContentType], limit: int = 50) -> List[DiscoveredContent]:
-    """Discover trending content across platforms."""
+    """
+Discover trending content across platforms."""
     async with create_content_discovery_manager() as manager:
         targets = []
         for platform in platforms:
@@ -850,7 +872,8 @@ async def discover_trending_content(platforms: List[PlatformType], content_types
 
 
 async def discover_content_by_keywords(keywords: List[str], platforms: List[PlatformType], limit: int = 100) -> List[DiscoveredContent]:
-    """Discover content by keywords across platforms."""
+    """
+Discover content by keywords across platforms."""
     async with create_content_discovery_manager() as manager:
         targets = []
         for platform in platforms:

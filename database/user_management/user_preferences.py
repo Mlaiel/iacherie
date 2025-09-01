@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -29,7 +30,9 @@ Base = declarative_base()
 
 
 class NotificationChannel(PyEnum):
-    """Canaux de notification disponibles."""
+    """
+Canaux de notification disponibles."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -39,6 +42,7 @@ class NotificationChannel(PyEnum):
 
 class NotificationFrequency(PyEnum):
     """Fréquences de notification."""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -49,6 +53,7 @@ class NotificationFrequency(PyEnum):
 
 class PrivacyLevel(PyEnum):
     """Niveaux de confidentialité."""
+
     PUBLIC = "public"
     FRIENDS = "friends"
     PRIVATE = "private"
@@ -57,6 +62,7 @@ class PrivacyLevel(PyEnum):
 
 class AIPersonality(PyEnum):
     """Types de personnalité IA."""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CREATIVE = "creative"
@@ -67,6 +73,7 @@ class AIPersonality(PyEnum):
 
 class ContentGenrePreference(PyEnum):
     """Préférences de genre de contenu."""
+
     MUSIC = "music"
     PODCAST = "podcast"
     VIDEO = "video"
@@ -151,7 +158,8 @@ class UserPreferences(Base):
         return getattr(self, key, default)
     
     def update_preference(self, key: str, value: Any) -> bool:
-        """Met à jour une préférence spécifique."""
+        """
+Met à jour une préférence spécifique."""
         if hasattr(self, key):
             setattr(self, key, value)
             self.updated_at = datetime.utcnow()

@@ -13,6 +13,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import os
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStatus(Enum):
-    """Deployment status states."""
+    """
+Deployment status states."""
+
     INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -61,6 +64,7 @@ class DeploymentStatus(Enum):
 
 class ScalingPolicy(Enum):
     """Auto-scaling policies."""
+
     DISABLED = "disabled"
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
@@ -86,7 +90,8 @@ class DeploymentMetrics:
 
 @dataclass
 class ScalingConfiguration:
-    """Auto-scaling configuration."""
+    """
+Auto-scaling configuration."""
     enabled: bool = True
     policy: ScalingPolicy = ScalingPolicy.MODERATE
     min_replicas: int = 2
@@ -102,7 +107,8 @@ class ScalingConfiguration:
 
 @dataclass
 class AlertConfiguration:
-    """Alert configuration for monitoring."""
+    """
+Alert configuration for monitoring."""
     enabled: bool = True
     error_rate_threshold: float = 5.0
     response_time_threshold_ms: float = 5000.0
@@ -126,7 +132,8 @@ class DeploymentManager:
         deployment_id: str,
         config_path: Optional[str] = None
     ):
-        """Initialize deployment manager."""
+        """
+Initialize deployment manager."""
         self.deployment_id = deployment_id
         self.config_path = config_path
         self.start_time = datetime.utcnow()
@@ -163,7 +170,8 @@ class DeploymentManager:
         asyncio.create_task(self._initialize_manager())
     
     async def _initialize_manager(self):
-        """Initialize deployment manager components."""
+        """
+Initialize deployment manager components."""
         try:
             logger.info(f"Initializing deployment manager: {self.deployment_id}")
             
@@ -545,7 +553,8 @@ class DeploymentManager:
             return 0.5  # Default score on error
     
     async def _store_metrics_in_database(self, metrics: DeploymentMetrics):
-        """Store metrics in database for historical analysis."""
+        """
+Store metrics in database for historical analysis."""
         try:
             if not self.db_engine:
                 return
@@ -785,7 +794,8 @@ class DeploymentManager:
             return False
     
     async def _check_database_health(self) -> bool:
-        """Check database connection health."""
+        """
+Check database connection health."""
         try:
             if not self.db_engine:
                 return False
@@ -845,14 +855,16 @@ class DeploymentManager:
         return cpu_trigger or memory_trigger
     
     def _should_scale_down(self, metrics: DeploymentMetrics) -> bool:
-        """Determine if scaling down is possible."""
+        """
+Determine if scaling down is possible."""
         cpu_ok = metrics.cpu_usage_percent < self.scaling_config.scale_down_threshold
         memory_ok = metrics.memory_usage_percent < self.scaling_config.scale_down_threshold
         
         return cpu_ok and memory_ok
     
     async def _scale_up(self):
-        """Execute scale up operation."""
+        """
+Execute scale up operation."""
         try:
             self.status = DeploymentStatus.SCALING
             current_replicas = await self._get_current_replicas()
@@ -1006,5 +1018,6 @@ def create_deployment_manager(deployment_id: str, config_path: Optional[str] = N
 
 
 def create_production_deployment_manager(deployment_id: str) -> DeploymentManager:
-    """Create production-ready deployment manager."""
+    """
+Create production-ready deployment manager."""
     return DeploymentManager(deployment_id, None)

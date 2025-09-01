@@ -5,7 +5,7 @@ social media and content platforms with real-time monitoring and automated enfor
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -64,6 +67,7 @@ class PlatformType(Enum):
 
 class IntegrationType(Enum):
     """Integration types"""
+
     OFFICIAL_API = "official_api"
     CONTENT_ID = "content_id"
     PARTNER_PROGRAM = "partner_program"
@@ -74,6 +78,7 @@ class IntegrationType(Enum):
 
 class ActionType(Enum):
     """Available platform actions"""
+
     SEARCH_CONTENT = "search_content"
     SUBMIT_TAKEDOWN = "submit_takedown"
     MONITOR_CHANNELS = "monitor_channels"
@@ -86,6 +91,7 @@ class ActionType(Enum):
 
 class ScanStatus(Enum):
     """Content scan status"""
+
     PENDING = "pending"
     SCANNING = "scanning"
     COMPLETED = "completed"

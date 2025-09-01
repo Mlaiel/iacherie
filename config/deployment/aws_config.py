@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import boto3
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ from pathlib import Path
 
 @dataclass
 class AWSResourceConfig:
-    """AWS resource configuration"""
+    """
+AWS resource configuration"""
     resource_type: str
     name: str
     region: str
@@ -34,7 +36,8 @@ class AWSResourceConfig:
 
 @dataclass 
 class AWSEC2Config:
-    """AWS EC2 instance configuration"""
+    """
+AWS EC2 instance configuration"""
     instance_type: str
     ami_id: str
     key_name: str
@@ -1118,6 +1121,7 @@ echo "4. Configure CI/CD: Setup GitHub Actions with AWS"
         return region in self.get_primary_regions()
     
     def get_region_priority(self, region: str) -> str:
-        """Get priority level for a specific region"""
+        """
+Get priority level for a specific region"""
         region_config = self.get_region_config(region)
         return region_config.get("priority", "unknown")

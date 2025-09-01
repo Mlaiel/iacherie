@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import sqlite3
 import asyncpg
 import aiosqlite
@@ -43,7 +44,9 @@ T = TypeVar('T')
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
+    """
+Supported database types"""
+
     SQLITE = "sqlite"
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
@@ -93,7 +96,8 @@ class QueryResult:
     query_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'success': self.success,
             'data': self.data,
@@ -106,7 +110,8 @@ class QueryResult:
 
 @dataclass
 class TransactionContext:
-    """Transaction context"""
+    """
+Transaction context"""
     transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     start_time: datetime = field(default_factory=datetime.utcnow)
     operations: List[str] = field(default_factory=list)
@@ -114,7 +119,8 @@ class TransactionContext:
     rolled_back: bool = False
     
     def add_operation(self, operation: str):
-        """Add operation to transaction"""
+        """
+Add operation to transaction"""
         self.operations.append(f"{datetime.utcnow().isoformat()}: {operation}")
 
 
@@ -130,7 +136,8 @@ class DatabaseConnectionManager:
         self._initialized = False
     
     def initialize(self):
-        """Initialize database connection"""
+        """
+Initialize database connection"""
         with self._lock:
             if self._initialized:
                 return
@@ -164,7 +171,8 @@ class DatabaseConnectionManager:
     
     @contextmanager
     def get_session(self):
-        """Get database session context manager"""
+        """
+Get database session context manager"""
         if not self._initialized:
             self.initialize()
         
@@ -179,7 +187,8 @@ class DatabaseConnectionManager:
             session.close()
     
     def test_connection(self) -> bool:
-        """Test database connection"""
+        """
+Test database connection"""
         try:
             if self.config.db_type == DatabaseType.SQLITE:
                 return self._test_sqlite_connection()
@@ -227,7 +236,8 @@ class DatabaseConnectionManager:
 
 
 class AsyncDatabaseManager:
-    """Asynchronous database operations manager"""
+    """
+Asynchronous database operations manager"""
     
     def __init__(self, config: DatabaseConfig):
         self.config = config
@@ -236,7 +246,8 @@ class AsyncDatabaseManager:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize async database connection"""
+        """
+Initialize async database connection"""
         async with self._lock:
             if self._initialized:
                 return
@@ -268,13 +279,15 @@ class AsyncDatabaseManager:
         )
     
     async def _initialize_sqlite(self):
-        """Initialize SQLite async connection"""
+        """
+Initialize SQLite async connection"""
         # For SQLite, we don't have a traditional pool
         self.pool = self.config.database
     
     @asynccontextmanager
     async def get_connection(self):
-        """Get async database connection"""
+        """
+Get async database connection"""
         if not self._initialized:
             await self.initialize()
         
@@ -286,7 +299,8 @@ class AsyncDatabaseManager:
                 yield connection
     
     async def execute_query(self, query: str, parameters: Optional[List[Any]] = None) -> QueryResult:
-        """Execute async query"""
+        """
+Execute async query"""
         start_time = time.time()
         query_id = str(uuid.uuid4())
         
@@ -401,7 +415,8 @@ class AsyncDatabaseManager:
 
 
 class RedisManager:
-    """Redis connection and operations manager"""
+    """
+Redis connection and operations manager"""
     
     def __init__(self, host: str = "localhost", port: int = 6379, 
                  db: int = 0, password: Optional[str] = None,
@@ -549,7 +564,8 @@ class RedisManager:
 
 
 class MongoDBManager:
-    """MongoDB connection and operations manager"""
+    """
+MongoDB connection and operations manager"""
     
     def __init__(self, connection_string: str, database_name: str):
         self.connection_string = connection_string
@@ -560,7 +576,8 @@ class MongoDBManager:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize MongoDB connection"""
+        """
+Initialize MongoDB connection"""
         async with self._lock:
             if self._initialized:
                 return
@@ -663,14 +680,16 @@ class MongoDBManager:
 
 
 class QueryBuilder:
-    """SQL query builder utility"""
+    """
+SQL query builder utility"""
     
     def __init__(self, db_type: DatabaseType = DatabaseType.POSTGRESQL):
         self.db_type = db_type
         self.reset()
     
     def reset(self):
-        """Reset query builder"""
+        """
+Reset query builder"""
         self._select_fields = []
         self._from_table = None
         self._joins = []
@@ -684,7 +703,8 @@ class QueryBuilder:
         return self
     
     def select(self, fields: Union[str, List[str]]):
-        """Add SELECT fields"""
+        """
+Add SELECT fields"""
         if isinstance(fields, str):
             self._select_fields.append(fields)
         else:
@@ -692,7 +712,8 @@ class QueryBuilder:
         return self
     
     def from_table(self, table: str):
-        """Set FROM table"""
+        """
+Set FROM table"""
         self._from_table = table
         return self
     
@@ -708,7 +729,8 @@ class QueryBuilder:
         return self
     
     def group_by(self, fields: Union[str, List[str]]):
-        """Add GROUP BY fields"""
+        """
+Add GROUP BY fields"""
         if isinstance(fields, str):
             self._group_by.append(fields)
         else:
@@ -716,7 +738,8 @@ class QueryBuilder:
         return self
     
     def having(self, condition: str, *params):
-        """Add HAVING condition"""
+        """
+Add HAVING condition"""
         self._having_conditions.append(condition)
         self._parameters.extend(params)
         return self
@@ -732,12 +755,14 @@ class QueryBuilder:
         return self
     
     def offset(self, count: int):
-        """Add OFFSET clause"""
+        """
+Add OFFSET clause"""
         self._offset_value = count
         return self
     
     def build(self) -> Tuple[str, List[Any]]:
-        """Build the SQL query"""
+        """
+Build the SQL query"""
         if not self._select_fields or not self._from_table:
             raise ValueError("SELECT fields and FROM table are required")
         
@@ -950,7 +975,8 @@ class DatabaseUtils:
     
     @staticmethod
     def sanitize_table_name(name: str) -> str:
-        """Sanitize table name for SQL safety"""
+        """
+Sanitize table name for SQL safety"""
         # Remove dangerous characters and ensure valid identifier
         import re
         sanitized = re.sub(r'[^a-zA-Z0-9_]', '', name)
@@ -958,12 +984,14 @@ class DatabaseUtils:
     
     @staticmethod
     def generate_uuid() -> str:
-        """Generate UUID for database records"""
+        """
+Generate UUID for database records"""
         return str(uuid.uuid4())
     
     @staticmethod
     def hash_password(password: str, salt: Optional[str] = None) -> str:
-        """Hash password for database storage"""
+        """
+Hash password for database storage"""
         if salt is None:
             salt = os.urandom(32).hex()
         
@@ -982,12 +1010,14 @@ class DatabaseUtils:
     
     @staticmethod
     def serialize_json(obj: Any) -> str:
-        """Serialize object to JSON for database storage"""
+        """
+Serialize object to JSON for database storage"""
         return json.dumps(obj, default=str, ensure_ascii=False)
     
     @staticmethod
     def deserialize_json(json_str: str) -> Any:
-        """Deserialize JSON from database"""
+        """
+Deserialize JSON from database"""
         try:
             return json.loads(json_str)
         except (json.JSONDecodeError, TypeError):
@@ -995,7 +1025,8 @@ class DatabaseUtils:
 
 
 class DatabaseError(Exception):
-    """Custom database exception"""
+    """
+Custom database exception"""
     
     def __init__(self, message: str, error_code: Optional[str] = None, 
                  query: Optional[str] = None):

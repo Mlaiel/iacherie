@@ -18,7 +18,7 @@ Features:
 - Automated test reporting and analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -26,6 +26,7 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
+
 import asyncio
 import logging
 import unittest
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestType(Enum):
-    """Types of tests in the framework."""
+    """
+Types of tests in the framework."""
+
     UNIT = "unit"
     INTEGRATION = "integration"
     PERFORMANCE = "performance"
@@ -64,6 +67,7 @@ class TestType(Enum):
 
 class TestSeverity(Enum):
     """Test severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -73,6 +77,7 @@ class TestSeverity(Enum):
 
 class TestStatus(Enum):
     """Test execution status."""
+
     PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
@@ -113,7 +118,8 @@ class TestSuite:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance test metrics."""
+    """
+Performance test metrics."""
     response_time_avg: float
     response_time_p95: float
     response_time_p99: float
@@ -140,7 +146,8 @@ class CollaborationTestingFramework:
     - Automated test reporting and analytics
     """
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the collaboration testing framework."""
+        """
+Initialize the collaboration testing framework."""
         self.config = config
         
         # Test execution and results
@@ -790,6 +797,7 @@ logger = logging.getLogger(__name__)
 
 class TestCategory(Enum):
     """Test categories."""
+
     UNIT = "unit"
     INTEGRATION = "integration"
     LOAD = "load"
@@ -801,6 +809,7 @@ class TestCategory(Enum):
 
 class TestSeverity(Enum):
     """Test severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -823,7 +832,8 @@ class TestResult:
 
 @dataclass
 class LoadTestConfig:
-    """Load test configuration."""
+    """
+Load test configuration."""
     concurrent_users: int = 100
     test_duration_seconds: int = 300
     ramp_up_seconds: int = 60
@@ -834,7 +844,8 @@ class LoadTestConfig:
 
 @dataclass
 class ChaosTestConfig:
-    """Chaos test configuration."""
+    """
+Chaos test configuration."""
     target_services: List[str] = field(default_factory=list)
     failure_rate_percent: float = 10.0
     test_duration_seconds: int = 600
@@ -862,18 +873,21 @@ class CollaborationDeploymentTester:
         self.session = None
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         self.session = aiohttp.ClientSession()
         await self._initialize_kubernetes_client()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
     async def _initialize_kubernetes_client(self):
-        """Initialize Kubernetes client."""
+        """
+Initialize Kubernetes client."""
         try:
             kubernetes.config.load_incluster_config()
         except kubernetes.config.ConfigException:

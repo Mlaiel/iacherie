@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Content Processor module.
+"""
+Test suite for Content Processor module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -26,9 +29,11 @@ import json
 
 
 class TestContentProcessor(unittest.TestCase):
-    """Test suite for ContentProcessor class"""
+    """
+Test suite for ContentProcessor class"""
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.processor = None  # Will be mocked
         self.sample_content = {
             "content_id": "content_123",

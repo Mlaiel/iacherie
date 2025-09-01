@@ -18,7 +18,8 @@ from cryptography.hazmat.backends import default_backend
 
 
 async def test_aes_256_repository_encryption():
-    """Test Requirement 1: AES-256 encryption repos"""
+    """
+Test Requirement 1: AES-256 encryption repos"""
     print("1. Testing AES-256 Repository Encryption...")
     
     try:

@@ -9,8 +9,9 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -42,6 +45,7 @@ class Platform(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -55,6 +59,7 @@ class ContentFormat(Enum):
 
 class DistributionStrategy(Enum):
     """Distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -78,7 +83,8 @@ class PlatformRequirements:
 
 @dataclass
 class ContentVariant:
-    """Content variant optimized for specific platform"""
+    """
+Content variant optimized for specific platform"""
     variant_id: str
     platform: Platform
     format: ContentFormat
@@ -96,7 +102,8 @@ class ContentVariant:
 
 @dataclass
 class DistributionPlan:
-    """Complete distribution plan for content"""
+    """
+Complete distribution plan for content"""
     plan_id: str
     content_id: str
     strategy: DistributionStrategy
@@ -110,7 +117,8 @@ class DistributionPlan:
 
 @dataclass
 class DistributionResult:
-    """Results of content distribution"""
+    """
+Results of content distribution"""
     result_id: str
     plan_id: str
     platform: Platform
@@ -122,14 +130,16 @@ class DistributionResult:
     warnings: List[str]
 
 class PlatformAnalyzer:
-    """Analyze platform requirements and optimization opportunities"""
+    """
+Analyze platform requirements and optimization opportunities"""
     
     def __init__(self):
         self.platform_requirements = self._initialize_platform_requirements()
         self.content_performance_cache = {}
         
     def _initialize_platform_requirements(self) -> Dict[Platform, PlatformRequirements]:
-        """Initialize platform requirements database"""
+        """
+Initialize platform requirements database"""
         return {
             Platform.YOUTUBE: PlatformRequirements(
                 platform=Platform.YOUTUBE,
@@ -217,7 +227,8 @@ class PlatformAnalyzer:
         content_metadata: Dict[str, Any], 
         target_platforms: List[Platform]
     ) -> Dict[Platform, Dict[str, Any]]:
-        """Analyze content compatibility with target platforms"""
+        """
+Analyze content compatibility with target platforms"""
         compatibility_analysis = {}
         
         for platform in target_platforms:
@@ -233,7 +244,8 @@ class PlatformAnalyzer:
         content_metadata: Dict[str, Any], 
         platform: Platform
     ) -> Dict[str, Any]:
-        """Analyze compatibility with single platform"""
+        """
+Analyze compatibility with single platform"""
         requirements = self.platform_requirements.get(platform)
         if not requirements:
             return {'compatible': False, 'reason': 'Platform not supported'}
@@ -335,7 +347,8 @@ class PlatformAnalyzer:
         return recommendations
 
 class ContentOptimizer:
-    """Optimize content for different platforms"""
+    """
+Optimize content for different platforms"""
     
     def __init__(self):
         self.platform_analyzer = PlatformAnalyzer()
@@ -346,7 +359,8 @@ class ContentOptimizer:
         original_content: Dict[str, Any], 
         target_platforms: List[Platform]
     ) -> Dict[Platform, ContentVariant]:
-        """Create optimized variants for each target platform"""
+        """
+Create optimized variants for each target platform"""
         variants = {}
         
         for platform in target_platforms:
@@ -362,7 +376,8 @@ class ContentOptimizer:
         original_content: Dict[str, Any], 
         platform: Platform
     ) -> ContentVariant:
-        """Create optimized variant for single platform"""
+        """
+Create optimized variant for single platform"""
         requirements = self.platform_analyzer.platform_requirements.get(platform)
         
         # Start with original content
@@ -444,7 +459,8 @@ class ContentOptimizer:
         platform: Platform, 
         requirements: PlatformRequirements
     ) -> str:
-        """Optimize title for platform"""
+        """
+Optimize title for platform"""
         if not original_title:
             return "Professional Content"
         
@@ -548,7 +564,8 @@ class ContentOptimizer:
         return optimized_hashtags
     
     async def _optimize_for_youtube(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """YouTube-specific optimizations"""
+        """
+YouTube-specific optimizations"""
         optimizations = {}
         
         # Ensure video format
@@ -569,7 +586,8 @@ class ContentOptimizer:
         return optimizations
     
     async def _optimize_for_instagram(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Instagram-specific optimizations"""
+        """
+Instagram-specific optimizations"""
         optimizations = {}
         
         # Determine best format
@@ -590,7 +608,8 @@ class ContentOptimizer:
         return optimizations
     
     async def _optimize_for_tiktok(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """TikTok-specific optimizations"""
+        """
+TikTok-specific optimizations"""
         optimizations = {}
         
         # TikTok is video-only
@@ -607,7 +626,8 @@ class ContentOptimizer:
         return optimizations
     
     async def _optimize_for_twitter(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Twitter-specific optimizations"""
+        """
+Twitter-specific optimizations"""
         optimizations = {}
         
         # Twitter supports multiple formats
@@ -626,7 +646,8 @@ class ContentOptimizer:
         return optimizations
     
     async def _optimize_for_spotify(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Spotify-specific optimizations"""
+        """
+Spotify-specific optimizations"""
         optimizations = {}
         
         # Spotify is audio-only
@@ -647,7 +668,8 @@ class ContentOptimizer:
         optimized_metadata: Dict[str, Any], 
         platform: Platform
     ) -> float:
-        """Calculate optimization score for platform variant"""
+        """
+Calculate optimization score for platform variant"""
         requirements = self.platform_analyzer.platform_requirements.get(platform)
         if not requirements:
             return 0.5
@@ -690,7 +712,8 @@ class ContentOptimizer:
         return sum(score_factors) / len(score_factors) if score_factors else 0.5
 
 class DistributionScheduler:
-    """Intelligent distribution scheduling system"""
+    """
+Intelligent distribution scheduling system"""
     
     def __init__(self):
         self.platform_analyzer = PlatformAnalyzer()
@@ -703,7 +726,8 @@ class DistributionScheduler:
         target_audience: Dict[str, Any] = None,
         budget_constraints: Dict[str, float] = None
     ) -> DistributionPlan:
-        """Create comprehensive distribution plan"""
+        """
+Create comprehensive distribution plan"""
         try:
             plan_id = f"plan_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             content_id = list(content_variants.values())[0].variant_id.split('_')[0]
@@ -816,7 +840,8 @@ class DistributionScheduler:
         platforms: List[Platform], 
         target_audience: Dict[str, Any] = None
     ) -> int:
-        """Find optimal time that works across multiple platforms"""
+        """
+Find optimal time that works across multiple platforms"""
         platform_times = []
         
         for platform in platforms:
@@ -843,7 +868,8 @@ class DistributionScheduler:
         platforms: List[Platform], 
         target_audience: Dict[str, Any] = None
     ) -> List[Platform]:
-        """Rank platforms by priority/importance"""
+        """
+Rank platforms by priority/importance"""
         # Base priority scores
         priority_scores = {
             Platform.YOUTUBE: 0.9,  # High reach, monetization
@@ -880,7 +906,8 @@ class DistributionScheduler:
         platform: Platform, 
         target_audience: Dict[str, Any] = None
     ) -> datetime:
-        """Find optimal posting time for specific platform"""
+        """
+Find optimal posting time for specific platform"""
         requirements = self.platform_analyzer.platform_requirements.get(platform)
         
         if not requirements or not requirements.best_posting_times:
@@ -905,7 +932,8 @@ class DistributionScheduler:
         content_variants: Dict[Platform, ContentVariant],
         target_audience: Dict[str, Any] = None
     ) -> Dict[Platform, int]:
-        """Predict expected reach for each platform"""
+        """
+Predict expected reach for each platform"""
         reach_predictions = {}
         
         # Base reach estimates (these would come from ML models in production)
@@ -940,7 +968,8 @@ class DistributionScheduler:
         expected_reach: Dict[Platform, int],
         budget_constraints: Dict[str, float] = None
     ) -> Dict[Platform, float]:
-        """Allocate budget across platforms"""
+        """
+Allocate budget across platforms"""
         if not budget_constraints:
             # No budget allocation needed
             return {platform: 0.0 for platform in content_variants.keys()}
@@ -982,7 +1011,8 @@ class DistributionScheduler:
         content_variants: Dict[Platform, ContentVariant],
         expected_reach: Dict[Platform, int]
     ) -> Dict[str, float]:
-        """Define success metrics for distribution"""
+        """
+Define success metrics for distribution"""
         total_expected_reach = sum(expected_reach.values())
         
         return {
@@ -998,7 +1028,8 @@ class DistributionScheduler:
         self, 
         posting_schedule: Dict[Platform, datetime]
     ) -> List[datetime]:
-        """Create monitoring schedule for distribution"""
+        """
+Create monitoring schedule for distribution"""
         monitoring_times = []
         
         # Get earliest and latest posting times
@@ -1025,7 +1056,8 @@ class DistributionScheduler:
         return monitoring_times
 
 class DistributionEngine:
-    """Main distribution engine coordinating all distribution activities"""
+    """
+Main distribution engine coordinating all distribution activities"""
     
     def __init__(self):
         self.platform_analyzer = PlatformAnalyzer()
@@ -1037,7 +1069,8 @@ class DistributionEngine:
         self, 
         plan: DistributionPlan
     ) -> List[DistributionResult]:
-        """Execute complete distribution plan"""
+        """
+Execute complete distribution plan"""
         try:
             results = []
             
@@ -1118,7 +1151,8 @@ class DistributionEngine:
         return random.random() > 0.05
     
     async def _get_initial_metrics(self, platform: Platform) -> Dict[str, int]:
-        """Get initial metrics after posting"""
+        """
+Get initial metrics after posting"""
         # Simulate initial metrics
         import random
         
@@ -1135,7 +1169,8 @@ class DistributionEngine:
         self, 
         plan_id: str
     ) -> Dict[Platform, Dict[str, Any]]:
-        """Monitor performance of distributed content"""
+        """
+Monitor performance of distributed content"""
         if plan_id not in self.distribution_results:
             return {}
         
@@ -1179,7 +1214,8 @@ class DistributionEngine:
         initial_metrics: Dict[str, int], 
         current_metrics: Dict[str, int]
     ) -> Dict[str, float]:
-        """Calculate growth rate for metrics"""
+        """
+Calculate growth rate for metrics"""
         growth_rates = {}
         
         for metric in initial_metrics:
@@ -1196,7 +1232,8 @@ class DistributionEngine:
         return growth_rates
     
     async def _calculate_engagement_rate(self, metrics: Dict[str, int]) -> float:
-        """Calculate engagement rate"""
+        """
+Calculate engagement rate"""
         views = metrics.get('views', 1)
         engagements = metrics.get('likes', 0) + metrics.get('comments', 0) + metrics.get('shares', 0)
         
@@ -1212,7 +1249,8 @@ class DistributionEngine:
         platform: Platform, 
         metrics: Dict[str, int]
     ) -> float:
-        """Calculate overall performance score"""
+        """
+Calculate overall performance score"""
         # Platform-specific scoring weights
         platform_weights = {
             Platform.YOUTUBE: {'views': 0.4, 'likes': 0.3, 'comments': 0.2, 'shares': 0.1},

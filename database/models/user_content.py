@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,6 +62,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content lifecycle status"""
+
     DRAFT = "draft"
     PROCESSING = "processing"
     READY = "ready"
@@ -73,6 +77,7 @@ class ContentStatus(Enum):
 
 class ContentGenre(Enum):
     """Music and content genres"""
+
     POP = "pop"
     ROCK = "rock"
     HIP_HOP = "hip_hop"
@@ -111,6 +116,7 @@ class ContentGenre(Enum):
 
 class LicenseType(Enum):
     """Content licensing types"""
+
     ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "creative_commons_by"
     CREATIVE_COMMONS_BY_SA = "creative_commons_by_sa"
@@ -129,6 +135,7 @@ class LicenseType(Enum):
 
 class VisibilityLevel(Enum):
     """Content visibility levels"""
+
     PUBLIC = "public"
     PRIVATE = "private"
     UNLISTED = "unlisted"
@@ -140,6 +147,7 @@ class VisibilityLevel(Enum):
 
 class ProcessingStatus(Enum):
     """Content processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -150,6 +158,7 @@ class ProcessingStatus(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     ULTRA = "ultra"  # 4K, 320kbps+, lossless
     HIGH = "high"    # 1080p, 256kbps, high quality
     MEDIUM = "medium"  # 720p, 192kbps, standard quality
@@ -462,11 +471,13 @@ class UserContent(Base):
         return (total_interactions / self.view_count) * 100
     
     def get_completion_rate(self) -> float:
-        """Get content completion rate"""
+        """
+Get content completion rate"""
         return self.average_completion_rate or 0.0
     
     def is_monetizable(self) -> bool:
-        """Check if content can be monetized"""
+        """
+Check if content can be monetized"""
         return (
             self.monetization_enabled and
             self.content_status == ContentStatus.PUBLISHED and
@@ -476,7 +487,8 @@ class UserContent(Base):
         )
     
     def get_revenue_potential(self) -> float:
-        """Estimate revenue potential based on metrics"""
+        """
+Estimate revenue potential based on metrics"""
         base_score = 0.0
         
         # Engagement factor
@@ -509,7 +521,8 @@ class UserContent(Base):
     
     @classmethod
     def create_from_upload(cls, upload_data: Dict[str, Any], user_id: str) -> 'UserContent':
-        """Create UserContent from upload data"""
+        """
+Create UserContent from upload data"""
         return cls(
             user_id=user_id,
             content_type=ContentType(upload_data.get('content_type', 'audio')),

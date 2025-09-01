@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import asyncio
 import redis
 import memcache
@@ -36,7 +37,9 @@ T = TypeVar('T')
 
 
 class CacheLevel(Enum):
-    """Cache level enumeration for multi-tier caching"""
+    """
+Cache level enumeration for multi-tier caching"""
+
     L1_MEMORY = "l1_memory"        # In-process memory cache
     L2_REDIS = "l2_redis"          # Redis distributed cache
     L3_DATABASE = "l3_database"    # Database query result cache
@@ -44,6 +47,7 @@ class CacheLevel(Enum):
 
 class CacheStrategy(Enum):
     """Cache invalidation strategies"""
+
     TTL = "ttl"                    # Time-to-live expiration
     LRU = "lru"                    # Least recently used
     LFU = "lfu"                    # Least frequently used
@@ -79,7 +83,8 @@ class CacheStats:
 
 
 class CacheSerializer:
-    """Cache data serialization handler"""
+    """
+Cache data serialization handler"""
     
     @staticmethod
     def serialize(data: Any, format: str = "pickle", compress: bool = True) -> bytes:
@@ -127,37 +132,44 @@ class CacheBackend(ABC):
     
     @abstractmethod
     async def get(self, key: str) -> Optional[Any]:
-        """Get value by key"""
+        """
+Get value by key"""
         pass
     
     @abstractmethod
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set key-value with optional TTL"""
+        """
+Set key-value with optional TTL"""
         pass
     
     @abstractmethod
     async def delete(self, key: str) -> bool:
-        """Delete key"""
+        """
+Delete key"""
         pass
     
     @abstractmethod
     async def exists(self, key: str) -> bool:
-        """Check if key exists"""
+        """
+Check if key exists"""
         pass
     
     @abstractmethod
     async def clear(self) -> bool:
-        """Clear all keys"""
+        """
+Clear all keys"""
         pass
     
     @abstractmethod
     async def get_stats(self) -> CacheStats:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         pass
 
 
 class MemoryCache(CacheBackend):
-    """In-memory cache backend with LRU eviction"""
+    """
+In-memory cache backend with LRU eviction"""
     
     def __init__(self, config: CacheConfig):
         self.config = config
@@ -168,7 +180,8 @@ class MemoryCache(CacheBackend):
         self._lock = asyncio.Lock()
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from memory cache"""
+        """
+Get value from memory cache"""
         async with self._lock:
             if key in self.cache:
                 self.access_times[key] = datetime.utcnow()
@@ -180,7 +193,8 @@ class MemoryCache(CacheBackend):
                 return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value in memory cache with LRU eviction"""
+        """
+Set value in memory cache with LRU eviction"""
         async with self._lock:
             try:
                 # Check if we need to evict items
@@ -207,11 +221,13 @@ class MemoryCache(CacheBackend):
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in memory cache"""
+        """
+Check if key exists in memory cache"""
         return key in self.cache
     
     async def clear(self) -> bool:
-        """Clear memory cache"""
+        """
+Clear memory cache"""
         async with self._lock:
             self.cache.clear()
             self.access_times.clear()
@@ -220,7 +236,8 @@ class MemoryCache(CacheBackend):
             return True
     
     async def get_stats(self) -> CacheStats:
-        """Get memory cache statistics"""
+        """
+Get memory cache statistics"""
         self.stats.total_keys = len(self.cache)
         self.stats.hit_rate = (
             self.stats.hits / (self.stats.hits + self.stats.misses)
@@ -229,7 +246,8 @@ class MemoryCache(CacheBackend):
         return self.stats
     
     async def _evict_lru(self):
-        """Evict least recently used item"""
+        """
+Evict least recently used item"""
         if not self.access_times:
             return
         
@@ -245,7 +263,8 @@ class MemoryCache(CacheBackend):
 
 
 class RedisCache(CacheBackend):
-    """Redis distributed cache backend"""
+    """
+Redis distributed cache backend"""
     
     def __init__(self, config: CacheConfig, connection: redis.Redis):
         self.config = config
@@ -254,7 +273,8 @@ class RedisCache(CacheBackend):
         self.stats = CacheStats(last_reset=datetime.utcnow())
     
     def _make_key(self, key: str) -> str:
-        """Create prefixed cache key"""
+        """
+Create prefixed cache key"""
         return f"{self.config.key_prefix}:{key}"
     
     async def get(self, key: str) -> Optional[Any]:
@@ -383,7 +403,8 @@ class DatabaseCache:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize cache backends"""
+        """
+Initialize cache backends"""
         if self._initialized:
             return
         
@@ -422,7 +443,8 @@ class DatabaseCache:
         }
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """Get value with multi-tier cache lookup"""
+        """
+Get value with multi-tier cache lookup"""
         try:
             pattern_config = self._get_pattern_config(key)
             levels = pattern_config.get('levels', [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS])
@@ -555,7 +577,8 @@ class DatabaseCache:
 
 
 class QueryCache:
-    """Database query result caching with intelligent invalidation"""
+    """
+Database query result caching with intelligent invalidation"""
     
     def __init__(self, database_cache: DatabaseCache):
         self.cache = database_cache
@@ -566,7 +589,8 @@ class QueryCache:
                               query_hash: str, 
                               tables: List[str],
                               default: Any = None) -> Any:
-        """Get cached query result"""
+        """
+Get cached query result"""
         cache_key = f"query:{query_hash}"
         
         # Register query dependencies
@@ -614,7 +638,8 @@ class ResultSetCache:
                            key: str, 
                            page: int = 1, 
                            page_size: int = 50) -> Optional[Dict[str, Any]]:
-        """Get cached result set page"""
+        """
+Get cached result set page"""
         cache_key = f"resultset:{key}:p{page}:s{page_size}"
         return await self.cache.get(cache_key)
     
@@ -686,12 +711,14 @@ async def cache_get(key: str, default: Any = None) -> Any:
 
 
 async def cache_set(key: str, value: Any, ttl: Optional[int] = None) -> bool:
-    """Set value in cache"""
+    """
+Set value in cache"""
     cache = await get_cache()
     return await cache.set(key, value, ttl)
 
 
 async def cache_delete(key: str) -> bool:
-    """Delete key from cache"""
+    """
+Delete key from cache"""
     cache = await get_cache()
     return await cache.delete(key)

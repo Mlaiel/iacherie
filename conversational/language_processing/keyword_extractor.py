@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
@@ -60,7 +61,9 @@ logger = get_logger(__name__)
 
 
 class ExtractionMethod(Enum):
-    """Keyword extraction methods"""
+    """
+Keyword extraction methods"""
+
     TFIDF = "tfidf"
     YAKE = "yake"
     TEXTRANK = "textrank"
@@ -72,6 +75,7 @@ class ExtractionMethod(Enum):
 
 class TopicModelType(Enum):
     """Topic modeling algorithms"""
+
     LDA = "lda"
     NMF = "nmf"
     GENSIM_LDA = "gensim_lda"
@@ -80,6 +84,7 @@ class TopicModelType(Enum):
 
 class KeywordType(Enum):
     """Types of extracted keywords"""
+
     PRIMARY = "primary"
     SECONDARY = "secondary"
     ENTITY = "entity"
@@ -106,7 +111,8 @@ class Keyword:
 
 @dataclass
 class Topic:
-    """Represents a discovered topic"""
+    """
+Represents a discovered topic"""
     topic_id: int
     topic_name: str
     keywords: List[str]
@@ -119,7 +125,8 @@ class Topic:
 
 @dataclass
 class KeywordExtractionResult:
-    """Complete keyword extraction result"""
+    """
+Complete keyword extraction result"""
     primary_keywords: List[Keyword]
     secondary_keywords: List[Keyword]
     entities: List[Keyword]
@@ -134,7 +141,8 @@ class KeywordExtractionResult:
 
 
 class KeywordExtractor:
-    """Advanced keyword extraction engine"""
+    """
+Advanced keyword extraction engine"""
     
     def __init__(self):
         self.nlp = None
@@ -143,7 +151,8 @@ class KeywordExtractor:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize keyword extraction models"""
+        """
+Initialize keyword extraction models"""
         try:
             # Initialize spaCy
             self.nlp = spacy.load("en_core_web_lg")

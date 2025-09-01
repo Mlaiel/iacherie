@@ -20,6 +20,7 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -36,7 +37,8 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Comprehensive platform enumeration for multi-platform ecosystem"""
+    """
+Comprehensive platform enumeration for multi-platform ecosystem"""
     # Music & Audio Platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
@@ -124,6 +126,7 @@ class ContentFormat(Enum):
 
 class RecommendationType(Enum):
     """Comprehensive recommendation type classification"""
+
     CONTENT_DISCOVERY = "content_discovery"
     CREATOR_COLLABORATION = "creator_collaboration"
     REVENUE_OPTIMIZATION = "revenue_optimization"
@@ -140,6 +143,7 @@ class RecommendationType(Enum):
 
 class EngagementMetricType(Enum):
     """Advanced engagement metrics classification"""
+
     VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -158,6 +162,7 @@ class EngagementMetricType(Enum):
 
 class CollaborationType(Enum):
     """Advanced collaboration type classification"""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_PRODUCTION = "video_production"
     CONTENT_CREATION = "content_creation"
@@ -174,6 +179,7 @@ class CollaborationType(Enum):
 
 class RevenueModel(Enum):
     """Comprehensive revenue model types"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     MERCHANDISE = "merchandise"
@@ -295,7 +301,8 @@ class UserProfile:
 
 @dataclass
 class RecommendationRequest:
-    """Comprehensive recommendation request structure"""
+    """
+Comprehensive recommendation request structure"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     
@@ -556,6 +563,7 @@ class ContentRecommendation:
 
 class TrendType(Enum):
     """Trend type enumeration"""
+
     VIRAL = "viral"
     EMERGING = "emerging"
     SEASONAL = "seasonal"
@@ -567,6 +575,7 @@ class TrendType(Enum):
 
 class RevenueStream(Enum):
     """Revenue stream enumeration"""
+
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -589,6 +598,7 @@ class RevenueStream(Enum):
 
 class CollaborationType(Enum):
     """Collaboration type enumeration"""
+
     DUET = "duet"
     JOINT_CONTENT = "joint_content"
     GUEST_APPEARANCE = "guest_appearance"
@@ -611,6 +621,7 @@ class CollaborationType(Enum):
 
 class MatchType(Enum):
     """Collaboration match type enumeration"""
+
     COMPLEMENTARY_SKILLS = "complementary_skills"
     SIMILAR_AUDIENCE = "similar_audience"
     CROSS_PROMOTION = "cross_promotion"
@@ -641,7 +652,8 @@ class Engagement:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""
+    """
+Content metadata structure"""
     title: str = ""
     description: str = ""
     tags: List[str] = field(default_factory=list)
@@ -685,7 +697,8 @@ class AudienceInsight:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile data structure"""
+    """
+Creator profile data structure"""
     creator_id: str
     username: str
     display_name: str
@@ -805,7 +818,8 @@ class CreatorCompatibility:
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match data structure"""
+    """
+Collaboration match data structure"""
     primary_creator_id: str
     suggested_creator_id: str
     collaboration_type: str
@@ -868,7 +882,8 @@ class BrandMatch:
 
 @dataclass
 class TrendInsight:
-    """Trend insight data structure"""
+    """
+Trend insight data structure"""
     title: str
     description: str
     trend_type: TrendType
@@ -1121,7 +1136,8 @@ StrategyList = List[RevenueStrategy]
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result for content."""
+    """
+Comprehensive analysis result for content."""
     content_id: str
     content_type: ContentType
     platform: Platform
@@ -1158,7 +1174,8 @@ class AnalysisResult:
 
 @dataclass
 class ContentFeatures:
-    """Base class for content features extracted from analysis."""
+    """
+Base class for content features extracted from analysis."""
     extraction_timestamp: str
     confidence_score: float
     feature_type: str = "base"

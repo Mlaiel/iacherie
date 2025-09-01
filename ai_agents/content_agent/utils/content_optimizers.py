@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -73,7 +74,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Content optimization types"""
+    """
+Content optimization types"""
+
     SEO = "seo"
     QUALITY = "quality"
     FORMAT = "format"
@@ -86,6 +89,7 @@ class OptimizationType(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization intensity levels"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -110,7 +114,8 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationResult:
-    """Result of content optimization operation"""
+    """
+Result of content optimization operation"""
     content_id: str
     optimization_timestamp: datetime
     
@@ -144,7 +149,8 @@ class OptimizationResult:
 
 
 class BaseOptimizer(ABC):
-    """Abstract base class for all content optimizers"""
+    """
+Abstract base class for all content optimizers"""
     
     def __init__(self, config: Optional[OptimizationConfig] = None):
         self.config = config or OptimizationConfig()
@@ -158,7 +164,8 @@ class BaseOptimizer(ABC):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> OptimizationResult:
-        """Optimize content based on specific strategy"""
+        """
+Optimize content based on specific strategy"""
         pass
     
     def _calculate_improvement_score(
@@ -166,7 +173,8 @@ class BaseOptimizer(ABC):
         original_metrics: Dict[str, float],
         optimized_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate improvement scores for each metric"""
+        """
+Calculate improvement scores for each metric"""
         improvements = {}
         
         for metric, original_value in original_metrics.items():
@@ -207,7 +215,8 @@ class ContentOptimizer(BaseOptimizer):
         self.is_initialized = False
         
     async def initialize(self) -> None:
-        """Initialize optimizer and AI models"""
+        """
+Initialize optimizer and AI models"""
         try:
             logger.info("Initializing Content Optimizer...")
             
@@ -490,7 +499,8 @@ class ContentOptimizer(BaseOptimizer):
             return 0
     
     def _generate_content_id(self, content: Any) -> str:
-        """Generate unique content ID"""
+        """
+Generate unique content ID"""
         if isinstance(content, bytes):
             content_hash = hashlib.sha256(content).hexdigest()
         elif isinstance(content, str):
@@ -558,7 +568,8 @@ class ContentOptimizer(BaseOptimizer):
         platform: str,
         content_type: str
     ) -> Optional[Dict[str, Any]]:
-        """Get platform-specific configuration"""
+        """
+Get platform-specific configuration"""
         platform_configs = {
             'instagram': {
                 'video': {'max_duration': 60, 'aspect_ratio': '9:16', 'max_size_mb': 100},
@@ -586,7 +597,8 @@ class ContentOptimizer(BaseOptimizer):
         platform: str,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for specific platform"""
+        """
+Optimize content for specific platform"""
         optimization_result = {
             'platform': platform,
             'optimizations_applied': [],
@@ -625,7 +637,8 @@ class SEOOptimizer(BaseOptimizer):
         self.seo_model = None
         
     async def initialize(self) -> None:
-        """Initialize SEO optimizer"""
+        """
+Initialize SEO optimizer"""
         try:
             # Initialize SEO tools
             await self.seo_analyzer.initialize()
@@ -738,7 +751,8 @@ class SEOOptimizer(BaseOptimizer):
         keywords: List[str],
         current_seo: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         improvements = {
             'keywords': [],
             'meta_tags': {},
@@ -838,7 +852,8 @@ class QualityOptimizer(BaseOptimizer):
         self.text_enhancer = TextEnhancer()
         
     async def initialize(self) -> None:
-        """Initialize quality optimizer"""
+        """
+Initialize quality optimizer"""
         try:
             # Initialize enhancers
             await asyncio.gather(
@@ -937,7 +952,8 @@ class FormatOptimizer(BaseOptimizer):
         self.text_processor = TextProcessor()
         
     async def initialize(self) -> None:
-        """Initialize format optimizer"""
+        """
+Initialize format optimizer"""
         try:
             # Initialize processors
             await asyncio.gather(
@@ -1038,7 +1054,8 @@ class PerformanceOptimizer(BaseOptimizer):
         }
         
     async def initialize(self) -> None:
-        """Initialize performance optimizer"""
+        """
+Initialize performance optimizer"""
         try:
             # Initialize compression tools and algorithms
             logger.info("Performance optimizer initialized")

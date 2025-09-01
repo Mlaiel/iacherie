@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -29,7 +30,8 @@ from pythonjsonlogger import jsonlogger
 
 
 class PlatformType(str, Enum):
-    """Supported platform types for integration"""
+    """
+Supported platform types for integration"""
     # Music Platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
@@ -79,6 +81,7 @@ class PlatformType(str, Enum):
 
 class IntegrationType(str, Enum):
     """Types of platform integrations"""
+
     API_INTEGRATION = "api_integration"
     WEBHOOK_INTEGRATION = "webhook_integration"
     OAUTH_INTEGRATION = "oauth_integration"
@@ -92,6 +95,7 @@ class IntegrationType(str, Enum):
 
 class APIOperationType(str, Enum):
     """API operation types"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_UPDATE = "content_update"
     CONTENT_DELETE = "content_delete"
@@ -140,14 +144,16 @@ class PlatformIntegrationLogConfig:
 
 
 class PlatformIntegrationLogger:
-    """Specialized logger for platform integration operations"""
+    """
+Specialized logger for platform integration operations"""
     
     def __init__(self, config: PlatformIntegrationLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for platform integrations"""
+        """
+Setup structured logger for platform integrations"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -492,12 +498,14 @@ class PlatformIntegrationLoggingConfig:
     
     @staticmethod
     def create_default_config() -> PlatformIntegrationLogConfig:
-        """Create default platform integration logging configuration"""
+        """
+Create default platform integration logging configuration"""
         return PlatformIntegrationLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> PlatformIntegrationLogConfig:
-        """Create enterprise platform integration logging configuration"""
+        """
+Create enterprise platform integration logging configuration"""
         return PlatformIntegrationLogConfig(
             enable_api_call_logging=True,
             enable_webhook_logging=True,

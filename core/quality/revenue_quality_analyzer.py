@@ -9,7 +9,7 @@ Creator content → Revenue potential analysis → Quality optimization →
 Platform-specific monetization → Revenue tracking → Performance insights
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -18,6 +18,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     YOUTUBE_AD_REVENUE = "youtube_ad_revenue"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
     YOUTUBE_SUPER_CHAT = "youtube_super_chat"
@@ -53,6 +56,7 @@ class RevenueStream(Enum):
 
 class RevenueQualityTier(Enum):
     """Revenue quality tiers"""
+
     PREMIUM = "premium"  # 90-100 score
     HIGH = "high"        # 80-89 score
     MEDIUM = "medium"    # 60-79 score
@@ -62,6 +66,7 @@ class RevenueQualityTier(Enum):
 
 class MonetizationPlatform(Enum):
     """Supported monetization platforms"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -101,7 +106,8 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformRevenueData:
-    """Revenue data for specific platform"""
+    """
+Revenue data for specific platform"""
     platform: MonetizationPlatform
     revenue_streams: Dict[RevenueStream, Decimal] = field(default_factory=dict)
     total_platform_revenue: Decimal = Decimal('0.00')
@@ -111,7 +117,8 @@ class PlatformRevenueData:
     optimization_potential: float = 0.0
     
     def calculate_total_revenue(self):
-        """Calculate total revenue for this platform"""
+        """
+Calculate total revenue for this platform"""
         self.total_platform_revenue = sum(self.revenue_streams.values(), Decimal('0.00'))
     
     def to_dict(self) -> Dict[str, Any]:
@@ -128,7 +135,8 @@ class PlatformRevenueData:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation"""
+    """
+Revenue optimization recommendation"""
     optimization_id: str
     platform: MonetizationPlatform
     optimization_type: str
@@ -142,7 +150,8 @@ class RevenueOptimization:
     priority_score: float = 0.0
     
     def calculate_increase_percentage(self):
-        """Calculate percentage increase"""
+        """
+Calculate percentage increase"""
         if self.current_revenue > 0:
             self.increase_percentage = float((self.potential_revenue - self.current_revenue) / self.current_revenue * 100)
         else:
@@ -166,7 +175,8 @@ class RevenueOptimization:
 
 @dataclass
 class RevenueQualityAnalysis:
-    """Comprehensive revenue quality analysis result"""
+    """
+Comprehensive revenue quality analysis result"""
     creator_id: str
     analysis_timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     overall_revenue_quality_score: float = 0.0
@@ -187,7 +197,8 @@ class RevenueQualityAnalysis:
     monetization_suggestions: List[str] = field(default_factory=list)
     
     def determine_quality_tier(self):
-        """Determine revenue quality tier based on score"""
+        """
+Determine revenue quality tier based on score"""
         if self.overall_revenue_quality_score >= 90:
             self.revenue_quality_tier = RevenueQualityTier.PREMIUM
         elif self.overall_revenue_quality_score >= 80:
@@ -388,7 +399,8 @@ class RevenueQualityAnalyzer:
         engagement_data: Dict[str, Any],
         creator_data: Dict[str, Any]
     ) -> Dict[MonetizationPlatform, PlatformRevenueData]:
-        """Analyze platform-specific revenue data"""
+        """
+Analyze platform-specific revenue data"""
         platform_data = {}
         
         for platform_name, platform_revenue in revenue_data.items():
@@ -432,7 +444,8 @@ class RevenueQualityAnalyzer:
         platform_data: PlatformRevenueData,
         creator_data: Dict[str, Any]
     ) -> float:
-        """Calculate quality score for specific platform"""
+        """
+Calculate quality score for specific platform"""
         score = 0.0
         
         # Revenue performance vs benchmark
@@ -468,7 +481,8 @@ class RevenueQualityAnalyzer:
         platform_data: PlatformRevenueData,
         creator_data: Dict[str, Any]
     ) -> float:
-        """Calculate optimization potential for platform"""
+        """
+Calculate optimization potential for platform"""
         potential = 0.0
         
         # Check for unused revenue streams
@@ -516,7 +530,8 @@ class RevenueQualityAnalyzer:
         platform_data: Dict[MonetizationPlatform, PlatformRevenueData],
         creator_data: Dict[str, Any]
     ) -> float:
-        """Calculate overall revenue quality score"""
+        """
+Calculate overall revenue quality score"""
         score = 0.0
         
         # Weighted platform scores
@@ -556,7 +571,8 @@ class RevenueQualityAnalyzer:
         creator_data: Dict[str, Any],
         historical_data: Optional[List[Dict[str, Any]]]
     ):
-        """Perform SWOT analysis for revenue optimization"""
+        """
+Perform SWOT analysis for revenue optimization"""
         
         # Strengths
         if analysis.revenue_metrics.growth_rate > 10:
@@ -763,7 +779,8 @@ class RevenueQualityAnalyzer:
         creator_id: str,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """Track revenue trends over specified timeframe"""
+        """
+Track revenue trends over specified timeframe"""
         # This would integrate with the analytics system
         # For now, return a placeholder structure
         return {

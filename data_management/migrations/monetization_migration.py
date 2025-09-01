@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -38,6 +38,7 @@ Business Logic Flow:
 Content Creation → Revenue Source Setup → Usage Tracking → Payment Processing → 
 Revenue Distribution → Analytics Generation → Tax Calculation → Compliance Reporting
 """
+
 import asyncio
 import logging
 import traceback
@@ -65,7 +66,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Types of revenue streams for creators"""
+    """
+Types of revenue streams for creators"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -85,6 +88,7 @@ class RevenueType(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     BANK_TRANSFER = "bank_transfer"
@@ -99,6 +103,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment transaction status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -111,6 +116,7 @@ class PaymentStatus(Enum):
 
 class SubscriptionTier(Enum):
     """Subscription tier levels"""
+
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -121,6 +127,7 @@ class SubscriptionTier(Enum):
 
 class CurrencyCode(Enum):
     """Supported currency codes"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -135,6 +142,7 @@ class CurrencyCode(Enum):
 
 class TaxRegion(Enum):
     """Tax calculation regions"""
+
     US = "US"
     EU = "EU"
     UK = "UK"
@@ -197,7 +205,8 @@ class PaymentAccount:
 
 @dataclass
 class PayoutRequest:
-    """Creator payout request"""
+    """
+Creator payout request"""
     payout_id: str
     creator_id: str
     account_id: str
@@ -217,7 +226,8 @@ class PayoutRequest:
 
 @dataclass
 class SubscriptionPlan:
-    """Subscription plan configuration"""
+    """
+Subscription plan configuration"""
     plan_id: str
     plan_name: str
     tier: SubscriptionTier
@@ -248,7 +258,8 @@ class MonetizationMigrationConfig:
 
 
 class RevenueCalculator:
-    """Advanced revenue calculation and analytics engine"""
+    """
+Advanced revenue calculation and analytics engine"""
     
     def __init__(self):
         self.platform_fees = {
@@ -262,7 +273,8 @@ class RevenueCalculator:
     
     def calculate_net_revenue(self, gross_amount: Decimal, platform: str, 
                             revenue_share: Dict[str, float] = None) -> Dict[str, Decimal]:
-        """Calculate net revenue after platform fees and revenue sharing"""
+        """
+Calculate net revenue after platform fees and revenue sharing"""
         gross = Decimal(str(gross_amount))
         
         # Platform fee
@@ -293,7 +305,8 @@ class RevenueCalculator:
     
     def calculate_taxes(self, amount: Decimal, tax_region: TaxRegion, 
                        tax_info: Dict[str, Any] = None) -> Dict[str, Decimal]:
-        """Calculate tax obligations based on region and tax information"""
+        """
+Calculate tax obligations based on region and tax information"""
         amount_decimal = Decimal(str(amount))
         
         # Tax rates by region (simplified - would use actual tax API in production)
@@ -334,7 +347,8 @@ class RevenueCalculator:
     
     def calculate_revenue_projection(self, historical_data: List[Dict], 
                                    months_ahead: int = 12) -> Dict[str, Any]:
-        """Calculate revenue projections based on historical data"""
+        """
+Calculate revenue projections based on historical data"""
         if not historical_data:
             return {'projection': [], 'confidence': 0.0}
         
@@ -383,7 +397,8 @@ class RevenueCalculator:
 
 
 class PaymentProcessor:
-    """Advanced payment processing and integration manager"""
+    """
+Advanced payment processing and integration manager"""
     
     def __init__(self, stripe_key: str = None):
         if stripe_key:
@@ -391,7 +406,8 @@ class PaymentProcessor:
         self.supported_methods = [method.value for method in PaymentMethod]
     
     async def process_payout(self, payout_request: PayoutRequest) -> Dict[str, Any]:
-        """Process creator payout request"""
+        """
+Process creator payout request"""
         try:
             if payout_request.payment_method == PaymentMethod.STRIPE:
                 return await self._process_stripe_payout(payout_request)
@@ -708,7 +724,8 @@ class MonetizationMigration(BaseMigration):
         session.commit()
     
     async def _migrate_revenue_data(self, session: Session):
-        """Migrate existing revenue data to new structure"""
+        """
+Migrate existing revenue data to new structure"""
         # Check for existing revenue/earnings tables
         check_tables_sql = """
         SELECT table_name FROM information_schema.tables 
@@ -759,7 +776,8 @@ class MonetizationMigration(BaseMigration):
         session.commit()
     
     async def _update_payment_processing(self, session: Session):
-        """Update payment processing capabilities"""
+        """
+Update payment processing capabilities"""
         # Create default payment accounts for creators
         default_accounts_sql = """
         INSERT INTO payment_accounts (creator_id, payment_method, account_details, is_primary)
@@ -793,7 +811,8 @@ class MonetizationMigration(BaseMigration):
         session.commit()
     
     async def _migrate_subscription_data(self, session: Session):
-        """Migrate subscription data to new structure"""
+        """
+Migrate subscription data to new structure"""
         # Create subscriptions for existing premium users
         subscription_migration_sql = """
         INSERT INTO creator_subscriptions (
@@ -816,7 +835,8 @@ class MonetizationMigration(BaseMigration):
         session.commit()
     
     async def _create_monetization_indexes(self, session: Session):
-        """Create indexes for monetization tables"""
+        """
+Create indexes for monetization tables"""
         index_sql = """
         -- Revenue streams indexes
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_revenue_streams_creator_id 
@@ -905,7 +925,8 @@ class MonetizationMigration(BaseMigration):
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback monetization migration changes"""
+        """
+Rollback monetization migration changes"""
         try:
             rollback_sql = """
             DROP TABLE IF EXISTS revenue_analytics CASCADE;
@@ -1007,7 +1028,8 @@ class RevenueMigration(MonetizationMigration):
 
 
 class PaymentMigration(MonetizationMigration):
-    """Specialized payment processing migration"""
+    """
+Specialized payment processing migration"""
     
     def __init__(self, version: str, description: str):
         super().__init__(version, description)

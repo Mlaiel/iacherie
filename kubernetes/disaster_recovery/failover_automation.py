@@ -11,6 +11,7 @@ This module provides intelligent failover automation:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ from backend.deployment.disaster_recovery.recovery_planner import RecoveryPlanne
 
 
 class FailurePredictionModel(Enum):
-    """Types of failure prediction models"""
+    """
+Types of failure prediction models"""
+
     ANOMALY_DETECTION = "anomaly_detection"
     TIME_SERIES = "time_series"
     CLASSIFICATION = "classification"
@@ -41,6 +44,7 @@ class FailurePredictionModel(Enum):
 
 class AutomationLevel(Enum):
     """Levels of failover automation"""
+
     MANUAL = "manual"              # Human approval required
     SEMI_AUTOMATIC = "semi_automatic"  # Automatic with human oversight
     AUTOMATIC = "automatic"        # Fully automated
@@ -49,6 +53,7 @@ class AutomationLevel(Enum):
 
 class FailoverTrigger(Enum):
     """Types of failover triggers"""
+
     THRESHOLD_BREACH = "threshold_breach"
     PREDICTION_ALERT = "prediction_alert"
     CASCADING_FAILURE = "cascading_failure"
@@ -72,7 +77,8 @@ class FailureSignal:
 
 @dataclass
 class AutomationRule:
-    """Automation rule for failover decisions"""
+    """
+Automation rule for failover decisions"""
     rule_id: str
     name: str
     description: str
@@ -86,7 +92,8 @@ class AutomationRule:
 
 @dataclass
 class FailoverDecision:
-    """Automated failover decision"""
+    """
+Automated failover decision"""
     decision_id: str
     timestamp: datetime
     trigger_type: FailoverTrigger
@@ -101,7 +108,8 @@ class FailoverDecision:
 
 
 class PredictiveModel:
-    """Base class for failure prediction models"""
+    """
+Base class for failure prediction models"""
     
     def __init__(self, model_type: FailurePredictionModel):
         self.model_type = model_type
@@ -111,7 +119,8 @@ class PredictiveModel:
         self.feature_importance = {}
         
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train the prediction model"""
+        """
+Train the prediction model"""
         # Default implementation for prediction models without training support
         logging.warning(f"Model training not implemented for {self.__class__.__name__}")
         pass
@@ -138,7 +147,8 @@ class AnomalyDetectionModel(PredictiveModel):
         self.anomaly_thresholds = {}
         
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train anomaly detection model"""
+        """
+Train anomaly detection model"""
         try:
             # Extract metrics from training data
             metrics_data = defaultdict(list)
@@ -225,7 +235,8 @@ class AnomalyDetectionModel(PredictiveModel):
 
 
 class TimeSeriesPredictionModel(PredictiveModel):
-    """Time series based failure prediction"""
+    """
+Time series based failure prediction"""
     
     def __init__(self):
         super().__init__(FailurePredictionModel.TIME_SERIES)
@@ -233,7 +244,8 @@ class TimeSeriesPredictionModel(PredictiveModel):
         self.seasonal_patterns = {}
         
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train time series prediction model"""
+        """
+Train time series prediction model"""
         try:
             # Group data by timestamp
             time_series_data = defaultdict(lambda: defaultdict(list))
@@ -393,7 +405,8 @@ class IntelligentFailoverAutomation:
         self._initialize_automation_rules()
 
     async def initialize(self):
-        """Initialize the automation system"""
+        """
+Initialize the automation system"""
         try:
             # Initialize Redis connection
             self.redis_client = aioredis.from_url(
@@ -498,7 +511,8 @@ class IntelligentFailoverAutomation:
             self.automation_rules[rule_config['rule_id']] = automation_rule
 
     async def _load_and_train_models(self):
-        """Load historical data and train prediction models"""
+        """
+Load historical data and train prediction models"""
         try:
             # Load historical incident and metrics data
             cutoff_date = datetime.utcnow() - timedelta(days=90)  # Last 90 days
@@ -700,7 +714,8 @@ class IntelligentFailoverAutomation:
     def _generate_recommendations(self, predictions: Dict[str, Tuple[float, Dict[str, Any]]], 
                                 impact_assessment: Dict[str, Any],
                                 confidence: float) -> List[str]:
-        """Generate actionable recommendations"""
+        """
+Generate actionable recommendations"""
         recommendations = []
         
         if confidence > 0.9:
@@ -819,7 +834,8 @@ class IntelligentFailoverAutomation:
             return False
 
     async def _execute_decision(self, decision: FailoverDecision, rule: AutomationRule):
-        """Execute automated failover decision"""
+        """
+Execute automated failover decision"""
         try:
             execution_results = []
             

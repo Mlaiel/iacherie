@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -51,6 +54,7 @@ class ContentType(Enum):
 
 class FingerprintAlgorithm(Enum):
     """Fingerprint algorithm types"""
+
     CHROMAPRINT = "chromaprint"
     OPENCV_PHASH = "opencv_phash"
     CLIP_EMBEDDING = "clip_embedding"
@@ -62,6 +66,7 @@ class FingerprintAlgorithm(Enum):
 
 class QualityLevel(Enum):
     """Fingerprint quality levels"""
+
     ULTRA = "ultra"
     HIGH = "high" 
     MEDIUM = "medium"
@@ -71,6 +76,7 @@ class QualityLevel(Enum):
 
 class ProcessingStatus(Enum):
     """Processing status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"

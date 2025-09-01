@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 from typing import Dict, List, Optional, Union, Any
 from datetime import datetime, timedelta
 from enum import Enum, auto
@@ -29,7 +30,9 @@ from sqlalchemy.dialects.postgresql import UUID, JSONB
 Base = declarative_base()
 
 class CommissionType(str, Enum):
-    """Commission type enumeration"""
+    """
+Commission type enumeration"""
+
     PLATFORM_FEE = "platform_fee"
     PROCESSING_FEE = "processing_fee"
     PERFORMANCE_BONUS = "performance_bonus"
@@ -43,6 +46,7 @@ class CommissionType(str, Enum):
 
 class CommissionStatus(str, Enum):
     """Commission status enumeration"""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     CALCULATED = "calculated"
@@ -57,6 +61,7 @@ class CommissionStatus(str, Enum):
 
 class CommissionTier(str, Enum):
     """Creator tier enumeration for commission rates"""
+
     STARTER = "starter"
     STANDARD = "standard" 
     PREMIUM = "premium"
@@ -66,6 +71,7 @@ class CommissionTier(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Payment method enumeration"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -76,6 +82,7 @@ class PaymentMethod(str, Enum):
 
 class Currency(str, Enum):
     """Supported currency enumeration"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -590,7 +597,7 @@ class CommissionTransactionDB(Base):
         return f"<CommissionTransaction(id={self.id}, creator_id={self.creator_id}, amount={self.amount})>"
 
 """Professional Commission Data Models
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 These models provide comprehensive data structures for commission management,
 calculation, and financial transactions with full type safety and validation.

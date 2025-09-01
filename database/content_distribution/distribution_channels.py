@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Security Specialist + Microservices Architect + ML Engineer + Platform Integration Expert
 """
+
 import asyncio
 import json
 import uuid
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class DistributionChannelType(str, Enum):
-    """Distribution channel types"""
+    """
+Distribution channel types"""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING_PLATFORM = "streaming_platform"
     CONTENT_PLATFORM = "content_platform"
@@ -51,6 +54,7 @@ class DistributionChannelType(str, Enum):
 
 class ChannelStatus(str, Enum):
     """Channel operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -60,6 +64,7 @@ class ChannelStatus(str, Enum):
 
 class PriorityLevel(str, Enum):
     """Channel priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -80,7 +85,8 @@ class ChannelMetrics:
 
 @dataclass
 class ChannelCapabilities:
-    """Channel technical capabilities"""
+    """
+Channel technical capabilities"""
     max_file_size: int = 0
     supported_formats: List[str] = field(default_factory=list)
     max_concurrent_uploads: int = 1
@@ -91,7 +97,8 @@ class ChannelCapabilities:
     requires_authentication: bool = True
 
 class DistributionChannel(Base):
-    """Distribution channel database model"""
+    """
+Distribution channel database model"""
     __tablename__ = "distribution_channels"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -180,7 +187,8 @@ class ChannelConfigRequest(BaseModel):
     tags: Optional[List[str]] = None
 
 class ChannelResponse(BaseModel):
-    """Channel response model"""
+    """
+Channel response model"""
     id: str
     channel_name: str
     channel_type: str
@@ -193,7 +201,8 @@ class ChannelResponse(BaseModel):
     updated_at: datetime
 
 class DistributionChannelManager:
-    """Enterprise distribution channel management system"""
+    """
+Enterprise distribution channel management system"""
     
     def __init__(self, database_url: str, redis_url: str):
         self.database_url = database_url
@@ -203,7 +212,8 @@ class DistributionChannelManager:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize database connections and create tables"""
+        """
+Initialize database connections and create tables"""
         try:
             self.engine = create_async_engine(
                 self.database_url,
@@ -254,7 +264,8 @@ class DistributionChannelManager:
         config: ChannelConfigRequest,
         user_id: str
     ) -> Dict[str, Any]:
-        """Create new distribution channel"""
+        """
+Create new distribution channel"""
         try:
             async with self.get_session() as session:
                 # Validate channel uniqueness
@@ -497,7 +508,8 @@ class DistributionChannelManager:
         return result.scalar_one_or_none()
 
     async def _get_channel_by_id(self, session: AsyncSession, channel_id: str):
-        """Get channel by ID"""
+        """
+Get channel by ID"""
         from sqlalchemy import select
         result = await session.execute(
             select(DistributionChannel).where(DistributionChannel.id == uuid.UUID(channel_id))
@@ -505,7 +517,8 @@ class DistributionChannelManager:
         return result.scalar_one_or_none()
 
     async def _get_active_channels(self, session: AsyncSession):
-        """Get all active channels"""
+        """
+Get all active channels"""
         from sqlalchemy import select
         result = await session.execute(
             select(DistributionChannel).where(DistributionChannel.status == ChannelStatus.ACTIVE)
@@ -513,7 +526,8 @@ class DistributionChannelManager:
         return result.scalars().all()
 
     async def _initialize_channel_performance(self, session: AsyncSession, channel_id: uuid.UUID):
-        """Initialize performance tracking for new channel"""
+        """
+Initialize performance tracking for new channel"""
         performance = ChannelPerformance(
             channel_id=channel_id,
             response_time_ms=0.0,
@@ -533,7 +547,8 @@ class DistributionChannelManager:
         session.add(performance)
 
     async def _cache_channel_config(self, channel_id: uuid.UUID, channel: DistributionChannel):
-        """Cache channel configuration in Redis"""
+        """
+Cache channel configuration in Redis"""
         config_data = {
             "id": str(channel.id),
             "name": channel.channel_name,
@@ -601,7 +616,8 @@ class DistributionChannelManager:
         channel: DistributionChannel,
         content_metadata: Dict[str, Any]
     ) -> float:
-        """Score content compatibility with channel"""
+        """
+Score content compatibility with channel"""
         capabilities = channel.channel_capabilities or {}
         
         # Check format support

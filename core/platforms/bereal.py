@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class BeRealPlatform(PlatformBase):
-    """BeReal platform integration"""
+    """
+BeReal platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize BeReal platform"""
+        """
+Initialize BeReal platform"""
         super().__init__(config)
         self.api_base = "https://mobile.bereal.com/api"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -44,7 +47,8 @@ class BeRealPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with BeReal"""
+        """
+Authenticate with BeReal"""
         try:
             # Note: BeReal has no official public API
             # This is a placeholder implementation for when/if they provide one
@@ -183,7 +187,8 @@ class BeRealPlatform(PlatformBase):
         return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to BeReal API"""
+        """
+Make authenticated request to BeReal API"""
         try:
             session = await self._get_session()
             

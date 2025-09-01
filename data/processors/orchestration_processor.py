@@ -23,6 +23,7 @@ Features:
 - Pipeline versioning and rollback capabilities
 - Enterprise-grade logging, monitoring, and alerting systems
 """
+
 import asyncio
 import logging
 import time
@@ -48,7 +49,9 @@ from .compression_processor import CompressionProcessor
 logger = logging.getLogger(__name__)
 
 class ProcessingStage(Enum):
-    """Processing pipeline stages"""
+    """
+Processing pipeline stages"""
+
     INITIALIZATION = "initialization"
     CONTENT_ANALYSIS = "content_analysis"
     METADATA_EXTRACTION = "metadata_extraction"
@@ -61,6 +64,7 @@ class ProcessingStage(Enum):
 
 class ProcessingStatus(Enum):
     """Processing status states"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -87,7 +91,8 @@ class ProcessingTask:
 
 @dataclass
 class ProcessingPipeline:
-    """Complete processing pipeline definition"""
+    """
+Complete processing pipeline definition"""
     pipeline_id: str
     pipeline_name: str
     tasks: List[ProcessingTask]
@@ -106,7 +111,8 @@ class ProcessingPipeline:
 
 @dataclass
 class ProcessingResult:
-    """Complete processing result"""
+    """
+Complete processing result"""
     pipeline_id: str
     success: bool
     output_files: List[str] = field(default_factory=list)
@@ -119,7 +125,8 @@ class ProcessingResult:
 
 @dataclass
 class WorkflowTemplate:
-    """Predefined workflow template"""
+    """
+Predefined workflow template"""
     template_name: str
     description: str
     content_types: List[str]
@@ -129,7 +136,8 @@ class WorkflowTemplate:
     optimization_strategy: str = 'balanced'  # 'speed', 'quality', 'balanced'
 
 class OrchestrationProcessor:
-    """Professional content processing orchestration engine"""
+    """
+Professional content processing orchestration engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -208,7 +216,8 @@ class OrchestrationProcessor:
         }
     
     def _initialize_processors(self):
-        """Initialize all content processors"""
+        """
+Initialize all content processors"""
         try:
             self.processors = {
                 'audio': AudioProcessor(self.config.get('audio_processor', {})),
@@ -687,7 +696,8 @@ class OrchestrationProcessor:
             return None
     
     def _get_stage_priority(self, stage: ProcessingStage) -> int:
-        """Get priority for processing stage"""
+        """
+Get priority for processing stage"""
         priority_map = {
             ProcessingStage.INITIALIZATION: 10,
             ProcessingStage.CONTENT_ANALYSIS: 9,
@@ -703,7 +713,8 @@ class OrchestrationProcessor:
         return priority_map.get(stage, 5)
     
     async def _validate_pipeline(self, pipeline: ProcessingPipeline):
-        """Validate processing pipeline integrity"""
+        """
+Validate processing pipeline integrity"""
         try:
             # Check for circular dependencies
             await self._check_circular_dependencies(pipeline.tasks)
@@ -1236,7 +1247,8 @@ class OrchestrationProcessor:
             }
     
     async def cancel_pipeline(self, pipeline_id: str) -> Dict[str, Any]:
-        """Cancel running processing pipeline"""
+        """
+Cancel running processing pipeline"""
         if pipeline_id in self.active_pipelines:
             pipeline = self.active_pipelines[pipeline_id]
             pipeline.status = ProcessingStatus.CANCELLED
@@ -1259,11 +1271,13 @@ class OrchestrationProcessor:
             }
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get global performance metrics"""
+        """
+Get global performance metrics"""
         return self.performance_metrics.copy()
     
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)
 
@@ -1280,7 +1294,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 logger = logging.getLogger(__name__)
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -1290,6 +1306,7 @@ class WorkflowStatus(Enum):
 
 class StageStatus(Enum):
     """Processing stage status"""
+
     WAITING = "waiting"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -1318,7 +1335,8 @@ class ProcessingStage:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     id: str
     name: str
     description: str
@@ -1352,7 +1370,8 @@ class WorkflowExecution:
     failed_stages: List[str] = field(default_factory=list)
 
 class OrchestrationProcessor:
-    """Professional content processing orchestration engine"""
+    """
+Professional content processing orchestration engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -1407,7 +1426,8 @@ class OrchestrationProcessor:
         }
     
     def _initialize_orchestrator(self):
-        """Initialize orchestration processing components"""
+        """
+Initialize orchestration processing components"""
         try:
             # Initialize workflow manager
             self.workflow_manager = WorkflowManager(self.config)
@@ -1588,7 +1608,8 @@ class OrchestrationProcessor:
         input_data: Any,
         execution_config: Optional[Dict[str, Any]]
     ) -> WorkflowExecution:
-        """Create workflow execution instance"""
+        """
+Create workflow execution instance"""
         execution_id = f"{workflow.id}_{int(time.time() * 1000)}"
         
         execution = WorkflowExecution(
@@ -1836,7 +1857,8 @@ class OrchestrationProcessor:
         stage: ProcessingStage,
         execution: WorkflowExecution
     ) -> Any:
-        """Prepare input data for stage"""
+        """
+Prepare input data for stage"""
         # Combine execution input with previous stage results
         stage_input = {
             'original_input': execution.input_data,
@@ -1854,7 +1876,8 @@ class OrchestrationProcessor:
         self,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Compile final workflow output from stage results"""
+        """
+Compile final workflow output from stage results"""
         return {
             'stage_results': execution.stage_results,
             'execution_summary': {
@@ -1868,7 +1891,8 @@ class OrchestrationProcessor:
         self,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Calculate execution performance metrics"""
+        """
+Calculate execution performance metrics"""
         try:
             metrics = {
                 'total_execution_time': 0,
@@ -1943,7 +1967,8 @@ class OrchestrationProcessor:
         }
     
     async def cancel_execution(self, execution_id: str) -> Dict[str, Any]:
-        """Cancel running workflow execution"""
+        """
+Cancel running workflow execution"""
         try:
             execution = self.executions.get(execution_id)
             if not execution:

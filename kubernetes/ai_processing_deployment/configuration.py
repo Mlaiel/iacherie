@@ -23,6 +23,7 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import os
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments."""
+    """
+Deployment environments."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -57,6 +60,7 @@ class Environment(Enum):
 
 class ConfigurationSource(Enum):
     """Configuration data sources."""
+
     FILE = "file"
     ENVIRONMENT = "environment"
     KUBERNETES = "kubernetes"
@@ -67,6 +71,7 @@ class ConfigurationSource(Enum):
 
 class SecretType(Enum):
     """Types of secrets."""
+
     DATABASE_PASSWORD = "database_password"
     API_KEY = "api_key"
     ENCRYPTION_KEY = "encryption_key"
@@ -159,7 +164,8 @@ class ScalingConfig:
 
 @dataclass
 class AIModelConfig:
-    """AI model configuration."""
+    """
+AI model configuration."""
     model_type: AIModelType
     model_path: str = ""
     model_name: str = ""
@@ -241,7 +247,8 @@ class ConfigurationValidator:
     
     @staticmethod
     def validate_configuration(config: CompleteAIProcessingConfig) -> List[str]:
-        """Validate complete configuration and return list of errors."""
+        """
+Validate complete configuration and return list of errors."""
         errors = []
         
         # Validate basic configuration
@@ -269,7 +276,8 @@ class ConfigurationValidator:
     
     @staticmethod
     def _validate_basic_config(config: CompleteAIProcessingConfig) -> List[str]:
-        """Validate basic configuration settings."""
+        """
+Validate basic configuration settings."""
         errors = []
         
         if not config.service_name:
@@ -412,18 +420,21 @@ class SecretManager:
     """
     
     def __init__(self, encryption_key: Optional[str] = None):
-        """Initialize secret manager."""
+        """
+Initialize secret manager."""
         self.encryption_key = encryption_key or self._generate_encryption_key()
         self.cipher = Fernet(self.encryption_key.encode() if isinstance(self.encryption_key, str) else self.encryption_key)
         self.secrets: Dict[str, Dict[str, Any]] = {}
         
     def _generate_encryption_key(self) -> str:
-        """Generate new encryption key."""
+        """
+Generate new encryption key."""
         key = Fernet.generate_key()
         return base64.urlsafe_b64encode(key).decode()
     
     def encrypt_secret(self, secret_value: str) -> str:
-        """Encrypt secret value."""
+        """
+Encrypt secret value."""
         try:
             encrypted = self.cipher.encrypt(secret_value.encode())
             return base64.urlsafe_b64encode(encrypted).decode()
@@ -546,7 +557,8 @@ class ConfigurationManager:
     """
     
     def __init__(self, environment: Environment = Environment.PRODUCTION):
-        """Initialize configuration manager."""
+        """
+Initialize configuration manager."""
         self.environment = environment
         self.config: Optional[CompleteAIProcessingConfig] = None
         self.secret_manager = SecretManager()
@@ -556,7 +568,8 @@ class ConfigurationManager:
         self.redis_client: Optional[aioredis.Redis] = None
         
     async def initialize(self, config_path: Optional[str] = None):
-        """Initialize configuration manager."""
+        """
+Initialize configuration manager."""
         try:
             # Load configuration from various sources
             await self._load_configuration(config_path)
@@ -793,7 +806,8 @@ class ConfigurationManager:
         update_nested(self.config, config_data)
     
     def _set_nested_config_value(self, config_path: str, value: Any):
-        """Set nested configuration value using dot notation."""
+        """
+Set nested configuration value using dot notation."""
         if self.config is None:
             return
         
@@ -813,7 +827,8 @@ class ConfigurationManager:
             setattr(obj, final_key, value)
     
     async def _validate_configuration(self):
-        """Validate loaded configuration."""
+        """
+Validate loaded configuration."""
         if self.config is None:
             raise ValueError("No configuration loaded")
         
@@ -963,7 +978,8 @@ async def create_configuration_manager(environment: str = "production",
 
 
 def create_default_config(environment: Environment = Environment.PRODUCTION) -> CompleteAIProcessingConfig:
-    """Create default configuration for specified environment."""
+    """
+Create default configuration for specified environment."""
     config = CompleteAIProcessingConfig(environment=environment)
     
     # Apply environment-specific defaults

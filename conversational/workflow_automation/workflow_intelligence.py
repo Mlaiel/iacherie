@@ -7,6 +7,7 @@ efficiency and performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import uuid
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class LearningMode(Enum):
-    """Machine learning modes for workflow optimization"""
+    """
+Machine learning modes for workflow optimization"""
+
     SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"
     REINFORCEMENT = "reinforcement"
@@ -33,6 +36,7 @@ class LearningMode(Enum):
 
 class OptimizationStrategy(Enum):
     """Workflow optimization strategies"""
+
     PERFORMANCE = "performance"
     COST = "cost"
     QUALITY = "quality"
@@ -43,6 +47,7 @@ class OptimizationStrategy(Enum):
 
 class PredictionType(Enum):
     """Types of workflow predictions"""
+
     EXECUTION_TIME = "execution_time"
     SUCCESS_PROBABILITY = "success_probability"
     RESOURCE_USAGE = "resource_usage"
@@ -69,7 +74,8 @@ class WorkflowPattern:
 
 @dataclass
 class WorkflowInsight:
-    """Actionable workflow insight"""
+    """
+Actionable workflow insight"""
     insight_id: str
     insight_type: str
     title: str
@@ -326,17 +332,20 @@ class WorkflowIntelligence:
         await self.pattern_recognition.initialize()
     
     async def _initialize_predictive_analytics(self):
-        """Initialize predictive analytics system"""
+        """
+Initialize predictive analytics system"""
         self.predictive_analytics = PredictiveAnalyticsEngine(self.config)
         await self.predictive_analytics.initialize()
     
     async def _initialize_optimization_engine(self):
-        """Initialize optimization engine"""
+        """
+Initialize optimization engine"""
         self.optimization_engine = WorkflowOptimizationEngine(self.config)
         await self.optimization_engine.initialize()
     
     async def _load_optimization_models(self):
-        """Load pre-trained optimization models"""
+        """
+Load pre-trained optimization models"""
         # In production, this would load actual ML models
         self.optimization_models = {
             "execution_time_predictor": {"type": "regression", "accuracy": 0.85},
@@ -365,7 +374,8 @@ class WorkflowIntelligence:
         workflow_id: str,
         execution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze workflow performance metrics"""
+        """
+Analyze workflow performance metrics"""
         return {
             "execution_time": execution_data.get("execution_time", 0),
             "success_rate": execution_data.get("success", True),
@@ -486,7 +496,8 @@ class WorkflowIntelligence:
         )
     
     async def _analyze_current_performance(self, workflow_id: str) -> Dict[str, Any]:
-        """Analyze current workflow performance"""
+        """
+Analyze current workflow performance"""
         # Get recent executions for this workflow
         recent_executions = [
             record for record in list(self.execution_history)[-100:]
@@ -530,7 +541,8 @@ class WorkflowIntelligence:
         self,
         suggestions: List[OptimizationSuggestion]
     ) -> List[OptimizationSuggestion]:
-        """Rank optimization suggestions by priority"""
+        """
+Rank optimization suggestions by priority"""
         # Sort by priority score (higher is better)
         return sorted(suggestions, key=lambda s: s.priority_score, reverse=True)
     
@@ -539,7 +551,8 @@ class WorkflowIntelligence:
         workflow_id: str,
         suggestions: List[OptimizationSuggestion]
     ) -> Dict[str, Any]:
-        """Create implementation plan for optimizations"""
+        """
+Create implementation plan for optimizations"""
         return {
             "workflow_id": workflow_id,
             "total_suggestions": len(suggestions),
@@ -591,7 +604,8 @@ class AdaptiveWorkflows:
         self.adaptation_history: List[Dict[str, Any]] = []
         
     async def initialize(self):
-        """Initialize adaptive workflows system"""
+        """
+Initialize adaptive workflows system"""
         logger.info("AdaptiveWorkflows initialized")
     
     async def adapt_workflow(
@@ -740,7 +754,8 @@ class PredictiveAutomation:
         self.automation_rules: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self):
-        """Initialize predictive automation system"""
+        """
+Initialize predictive automation system"""
         await self._load_prediction_models()
         await self._setup_automation_rules()
         logger.info("PredictiveAutomation initialized")
@@ -891,7 +906,8 @@ class LearningWorkflows:
         self.training_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
         
     async def initialize(self):
-        """Initialize learning workflows system"""
+        """
+Initialize learning workflows system"""
         await self._initialize_learning_models()
         logger.info("LearningWorkflows initialized")
     
@@ -944,7 +960,8 @@ class OptimizationEngine:
         self.improvement_tracking: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
         
     async def initialize(self):
-        """Initialize optimization engine"""
+        """
+Initialize optimization engine"""
         await self._register_optimization_strategies()
         logger.info("OptimizationEngine initialized")
     
@@ -1042,7 +1059,8 @@ class PatternRecognitionEngine:
         self.known_patterns: Dict[str, WorkflowPattern] = {}
     
     async def initialize(self):
-        """Initialize pattern recognition"""
+        """
+Initialize pattern recognition"""
         pass
     
     async def recognize_patterns(
@@ -1050,7 +1068,8 @@ class PatternRecognitionEngine:
         workflow_id: str,
         execution_data: Dict[str, Any]
     ) -> List[WorkflowPattern]:
-        """Recognize patterns in execution data"""
+        """
+Recognize patterns in execution data"""
         # Simulate pattern recognition
         patterns = [
             WorkflowPattern(
@@ -1074,7 +1093,8 @@ class PredictiveAnalyticsEngine:
         self.prediction_models: Dict[str, Any] = {}
     
     async def initialize(self):
-        """Initialize predictive analytics"""
+        """
+Initialize predictive analytics"""
         pass
     
     async def predict(
@@ -1083,7 +1103,8 @@ class PredictiveAnalyticsEngine:
         input_parameters: Dict[str, Any],
         prediction_type: PredictionType
     ) -> Dict[str, Any]:
-        """Make prediction based on type"""
+        """
+Make prediction based on type"""
         # Simulate prediction
         if prediction_type == PredictionType.EXECUTION_TIME:
             return {
@@ -1115,7 +1136,8 @@ class WorkflowOptimizationEngine:
         self.optimization_algorithms: Dict[str, Any] = {}
     
     async def initialize(self):
-        """Initialize optimization engine"""
+        """
+Initialize optimization engine"""
         pass
     
     async def generate_suggestions(
@@ -1124,7 +1146,8 @@ class WorkflowOptimizationEngine:
         strategy: OptimizationStrategy,
         constraints: Dict[str, Any]
     ) -> List[OptimizationSuggestion]:
-        """Generate optimization suggestions"""
+        """
+Generate optimization suggestions"""
         suggestions = []
         
         # Performance optimization suggestions
@@ -1183,7 +1206,8 @@ class WorkflowAnalytics:
         workflow_id: str,
         execution_data: Dict[str, Any]
     ):
-        """Collect comprehensive workflow execution metrics"""
+        """
+Collect comprehensive workflow execution metrics"""
         timestamp = datetime.utcnow()
         
         metrics = {
@@ -1437,7 +1461,8 @@ class PerformancePrediction:
         prediction_type: PredictionType,
         training_data: List[Dict[str, Any]]
     ):
-        """Train prediction model for specific workflow and prediction type"""
+        """
+Train prediction model for specific workflow and prediction type"""
         model_key = f"{workflow_id}_{prediction_type.value}"
         
         # Store training data
@@ -1585,7 +1610,8 @@ class PerformancePrediction:
 
 
 class AutomationInsights:
-    """Advanced automation insights and intelligence system"""
+    """
+Advanced automation insights and intelligence system"""
     
     def __init__(self):
         self.insight_analyzers: Dict[str, Callable] = {}
@@ -1596,7 +1622,8 @@ class AutomationInsights:
         self,
         workflow_data: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Analyze workflow data to identify automation opportunities"""
+        """
+Analyze workflow data to identify automation opportunities"""
         opportunities = []
         
         # Pattern analysis
@@ -1758,7 +1785,8 @@ class IntelligentRecommendations:
         workflow_context: Dict[str, Any],
         recommendation_types: List[str]
     ) -> List[Dict[str, Any]]:
-        """Generate intelligent recommendations for workflow optimization"""
+        """
+Generate intelligent recommendations for workflow optimization"""
         recommendations = []
         
         for rec_type in recommendation_types:
@@ -1835,7 +1863,8 @@ class WorkflowAI:
         workflow_type: str,
         training_data: List[Dict[str, Any]]
     ):
-        """Train AI model for specific workflow type"""
+        """
+Train AI model for specific workflow type"""
         # Store training data
         self.learning_data[workflow_type].extend(training_data)
         

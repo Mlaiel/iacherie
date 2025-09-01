@@ -9,12 +9,13 @@ This module provides comprehensive analytics and monitoring for content protecti
 - Predictive analytics using ML
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Tuple
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class MetricType(Enum):
-    """Types of protection metrics"""
+    """
+Types of protection metrics"""
+
     DETECTION_RATE = "detection_rate"
     FALSE_POSITIVE_RATE = "false_positive_rate"
     TAKEDOWN_SUCCESS_RATE = "takedown_success_rate"
@@ -59,6 +62,7 @@ class MetricType(Enum):
 
 class TimeWindow(Enum):
     """Time windows for metrics aggregation"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -81,7 +85,8 @@ class ProtectionKPI:
 
 @dataclass
 class PlatformAnalytics:
-    """Analytics data for specific platform"""
+    """
+Analytics data for specific platform"""
     platform: str
     violations_detected: int
     violations_resolved: int
@@ -94,7 +99,8 @@ class PlatformAnalytics:
 
 @dataclass
 class ProtectionReport:
-    """Comprehensive protection analytics report"""
+    """
+Comprehensive protection analytics report"""
     report_id: str
     user_id: str
     period_start: datetime
@@ -451,7 +457,8 @@ class ProtectionAnalytics:
         return []
     
     async def _calculate_detection_rate(self, violations: List[Dict[str, Any]]) -> float:
-        """Calculate violation detection rate"""
+        """
+Calculate violation detection rate"""
         if not violations:
             return 0.0
         
@@ -460,7 +467,8 @@ class ProtectionAnalytics:
         return (detected / total) * 100 if total > 0 else 0.0
     
     async def _calculate_false_positive_rate(self, violations: List[Dict[str, Any]]) -> float:
-        """Calculate false positive rate"""
+        """
+Calculate false positive rate"""
         if not violations:
             return 0.0
         
@@ -469,7 +477,8 @@ class ProtectionAnalytics:
         return (false_positives / total_detected) * 100 if total_detected > 0 else 0.0
     
     async def _calculate_takedown_success_rate(self, violations: List[Dict[str, Any]]) -> float:
-        """Calculate takedown success rate"""
+        """
+Calculate takedown success rate"""
         if not violations:
             return 0.0
         
@@ -479,12 +488,14 @@ class ProtectionAnalytics:
         return (len(successful_takedowns) / len(takedown_attempts)) * 100 if takedown_attempts else 0.0
     
     async def _calculate_revenue_recovered(self, user_id: str, start_date: datetime, end_date: datetime) -> Decimal:
-        """Calculate total revenue recovered"""
+        """
+Calculate total revenue recovered"""
         # This would query revenue records from database
         return Decimal('0.00')
     
     async def _calculate_average_response_time(self, violations: List[Dict[str, Any]]) -> float:
-        """Calculate average response time in hours"""
+        """
+Calculate average response time in hours"""
         if not violations:
             return 0.0
         
@@ -497,12 +508,14 @@ class ProtectionAnalytics:
         return statistics.mean(response_times) if response_times else 0.0
     
     async def _calculate_protection_coverage(self, user_id: str) -> float:
-        """Calculate percentage of content under protection"""
+        """
+Calculate percentage of content under protection"""
         # This would calculate based on total content vs protected content
         return 100.0
     
     async def _calculate_trend(self, user_id: str, metric: str, current_date: datetime) -> str:
-        """Calculate trend direction for a metric"""
+        """
+Calculate trend direction for a metric"""
         # This would compare current period with previous period
         return "stable"
     
@@ -517,14 +530,16 @@ class ProtectionAnalytics:
         return (accurate_detections / total_detections) * 100 if total_detections > 0 else 0.0
     
     def _get_top_violation_types(self, violation_types: List[str]) -> List[str]:
-        """Get top violation types by frequency"""
+        """
+Get top violation types by frequency"""
         from collections import Counter
         
         counter = Counter(violation_types)
         return [vtype for vtype, count in counter.most_common(5)]
     
     async def _generate_platform_trends(self, platform: str, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, List[float]]:
-        """Generate trend data for platform"""
+        """
+Generate trend data for platform"""
         # This would generate daily/weekly trend data
         return {
             'violations_daily': [],
@@ -533,7 +548,8 @@ class ProtectionAnalytics:
         }
     
     def _calculate_confidence_interval(self, predictions: np.ndarray, confidence: float) -> Dict[str, List[float]]:
-        """Calculate confidence interval for predictions"""
+        """
+Calculate confidence interval for predictions"""
         # Simplified confidence interval calculation
         margin = np.std(predictions) * confidence
         return {
@@ -542,7 +558,8 @@ class ProtectionAnalytics:
         }
     
     def _detect_seasonality(self, data: np.ndarray) -> bool:
-        """Detect if there's seasonality in the data"""
+        """
+Detect if there's seasonality in the data"""
         # Simple seasonality detection
         if len(data) < 14:
             return False
@@ -552,17 +569,20 @@ class ProtectionAnalytics:
         return abs(weekly_correlation) > 0.3
     
     async def _get_violations_by_platform(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, List[Dict[str, Any]]]:
-        """Get violations grouped by platform"""
+        """
+Get violations grouped by platform"""
         # This would query and group violations by platform
         return {}
     
     async def _get_daily_violations_data(self, user_id: str, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Get daily aggregated violations data"""
+        """
+Get daily aggregated violations data"""
         # This would return daily aggregated data for ML
         return []
     
     async def _generate_trend_analysis(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate comprehensive trend analysis"""
+        """
+Generate comprehensive trend analysis"""
         return {
             'violation_trends': {},
             'platform_trends': {},
@@ -571,33 +591,41 @@ class ProtectionAnalytics:
         }
     
     async def _count_new_protected_content(self, user_id: str, start_date: datetime) -> int:
-        """Count new content added to protection"""
+        """
+Count new content added to protection"""
         return 0
     
     async def _count_active_monitoring(self, user_id: str) -> int:
-        """Count active monitoring tasks"""
+        """
+Count active monitoring tasks"""
         return 0
     
     async def _count_pending_takedowns(self, user_id: str) -> int:
-        """Count pending takedown requests"""
+        """
+Count pending takedown requests"""
         return 0
     
     async def _generate_alerts(self, user_id: str, violations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate alerts for concerning trends"""
+        """
+Generate alerts for concerning trends"""
         return []
     
     async def _count_total_protected_content(self, user_id: str) -> int:
-        """Count total protected content"""
+        """
+Count total protected content"""
         return 0
     
     async def _count_total_violations(self, user_id: str) -> int:
-        """Count total violations all time"""
+        """
+Count total violations all time"""
         return 0
     
     async def _calculate_total_revenue_recovered(self, user_id: str) -> Decimal:
-        """Calculate total revenue recovered all time"""
+        """
+Calculate total revenue recovered all time"""
         return Decimal('0.00')
     
     async def _calculate_protection_score(self, user_id: str) -> float:
-        """Calculate overall protection effectiveness score"""
+        """
+Calculate overall protection effectiveness score"""
         return 100.0

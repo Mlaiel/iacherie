@@ -24,6 +24,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Web Surveillance & Content Monitoring
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import time
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerType(Enum):
-    """Types of web crawlers"""
+    """
+Types of web crawlers"""
+
     YOUTUBE_CRAWLER = "youtube_crawler"
     INSTAGRAM_CRAWLER = "instagram_crawler"
     TIKTOK_CRAWLER = "tiktok_crawler"
@@ -86,6 +89,7 @@ class CrawlerType(Enum):
 
 class CrawlingStrategy(Enum):
     """Web crawling strategies"""
+
     SELENIUM_BROWSER = "selenium_browser"
     REQUESTS_HTTP = "requests_http"
     SCRAPY_FRAMEWORK = "scrapy_framework"
@@ -98,6 +102,7 @@ class CrawlingStrategy(Enum):
 
 class AntiDetectionMode(Enum):
     """Anti-detection mechanisms"""
+
     USER_AGENT_ROTATION = "user_agent_rotation"
     PROXY_CHAIN = "proxy_chain"
     REQUEST_DELAY = "request_delay"
@@ -110,6 +115,7 @@ class AntiDetectionMode(Enum):
 
 class ContentType(Enum):
     """Types of content to monitor"""
+
     AUDIO_CONTENT = "audio_content"
     VIDEO_CONTENT = "video_content"
     IMAGE_CONTENT = "image_content"
@@ -122,6 +128,7 @@ class ContentType(Enum):
 
 class PlatformAPI(Enum):
     """Platform API integrations"""
+
     YOUTUBE_DATA_API = "youtube_data_api"
     INSTAGRAM_BASIC_API = "instagram_basic_api"
     TWITTER_API_V2 = "twitter_api_v2"
@@ -253,7 +260,8 @@ class WebCrawlersDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Web Crawlers Deployment Manager"""
+        """
+Initialize the Web Crawlers Deployment Manager"""
         self.config_path = config_path or os.getenv('CRAWLER_CONFIG_PATH', '/etc/crawlers/config.yaml')
         self.crawler_configs: Dict[str, CrawlerConfig] = {}
         self.proxy_configs: Dict[str, ProxyConfig] = {}
@@ -1081,7 +1089,8 @@ class WebCrawlersDeploymentManager:
                 )
     
     def start_crawler(self, crawler_id: str) -> bool:
-        """Start specific crawler"""
+        """
+Start specific crawler"""
         try:
             if crawler_id not in self.crawler_configs:
                 logger.error(f"Crawler configuration not found: {crawler_id}")

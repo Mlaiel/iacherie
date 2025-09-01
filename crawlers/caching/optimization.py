@@ -9,6 +9,7 @@ tuning, and automatic optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -26,7 +27,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Optimization types."""
+    """
+Optimization types."""
+
     SIZE = "size"
     SPEED = "speed"
     HIT_RATE = "hit_rate"
@@ -36,6 +39,7 @@ class OptimizationType(Enum):
 
 class MetricType(Enum):
     """Performance metric types."""
+
     HIT_RATE = "hit_rate"
     MISS_RATE = "miss_rate"
     RESPONSE_TIME = "response_time"
@@ -55,7 +59,8 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation."""
+    """
+Optimization recommendation."""
     recommendation_id: str
     optimization_type: OptimizationType
     description: str
@@ -67,7 +72,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class CacheProfile:
-    """Cache usage profile."""
+    """
+Cache usage profile."""
     access_patterns: Dict[str, int]
     hot_keys: List[str]
     cold_keys: List[str]
@@ -315,7 +321,8 @@ class CacheOptimizer:
         }
     
     async def _apply_optimization_parameters(self, parameters: Dict[str, Any]) -> bool:
-        """Apply optimization parameters to cache system."""
+        """
+Apply optimization parameters to cache system."""
         try:
             # This would integrate with the actual cache implementation
             # For now, we just log the parameters
@@ -436,7 +443,8 @@ class AccessPatternTracker:
     """Track and analyze cache access patterns."""
     
     def __init__(self):
-        """Initialize access pattern tracker."""
+        """
+Initialize access pattern tracker."""
         self.access_log: List[Dict[str, Any]] = []
         self.key_stats: Dict[str, Dict[str, Any]] = {}
         self.lock = threading.Lock()
@@ -444,7 +452,8 @@ class AccessPatternTracker:
     async def record_access(self, key: str, operation: str, 
                           hit: bool, response_time: float,
                           size: Optional[int] = None) -> None:
-        """Record cache access."""
+        """
+Record cache access."""
         try:
             access_record = {
                 'key': key,
@@ -522,7 +531,8 @@ class PerformanceAnalyzer:
     """Analyze performance trends and anomalies."""
     
     async def analyze_trends(self, metrics: Dict[MetricType, List[PerformanceMetric]]) -> Dict[str, Any]:
-        """Analyze performance trends."""
+        """
+Analyze performance trends."""
         try:
             trends = {}
             
@@ -562,7 +572,8 @@ class RecommendationEngine:
     
     async def generate_recommendations(self, performance_analysis: Dict[str, Any],
                                      optimization_type: OptimizationType) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations."""
+        """
+Generate optimization recommendations."""
         try:
             recommendations = []
             

@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -52,7 +53,9 @@ except ImportError:
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -63,6 +66,7 @@ class AlertSeverity(Enum):
 
 class MonitoringScope(Enum):
     """Monitoring scope types"""
+
     SYSTEM_HEALTH = "system_health"
     APPLICATION_PERFORMANCE = "application_performance"
     USER_BEHAVIOR = "user_behavior"
@@ -75,6 +79,7 @@ class MonitoringScope(Enum):
 
 class PredictionType(Enum):
     """Types of predictions"""
+
     ANOMALY_DETECTION = "anomaly_detection"
     CAPACITY_PLANNING = "capacity_planning"
     PERFORMANCE_FORECASTING = "performance_forecasting"
@@ -87,6 +92,7 @@ class PredictionType(Enum):
 
 class IncidentStatus(Enum):
     """Incident status types"""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     ACKNOWLEDGED = "acknowledged"
@@ -115,11 +121,13 @@ class MonitoringMetric:
         return self.value >= self.threshold_warning
     
     def is_critical(self) -> bool:
-        """Check if metric value exceeds critical threshold"""
+        """
+Check if metric value exceeds critical threshold"""
         return self.value >= self.threshold_critical
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             **asdict(self),
             'timestamp': self.timestamp.isoformat(),
@@ -129,7 +137,8 @@ class MonitoringMetric:
 
 @dataclass
 class PredictiveAlert:
-    """Predictive alert structure"""
+    """
+Predictive alert structure"""
     alert_id: str = field(default_factory=lambda: str(uuid4()))
     prediction_type: PredictionType = PredictionType.ANOMALY_DETECTION
     title: str = ""
@@ -155,7 +164,8 @@ class PredictiveAlert:
 
 @dataclass
 class Incident:
-    """Incident tracking structure"""
+    """
+Incident tracking structure"""
     incident_id: str = field(default_factory=lambda: str(uuid4()))
     title: str = ""
     description: str = ""
@@ -181,7 +191,8 @@ class Incident:
         self.updated_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             **asdict(self),
             'created_at': self.created_at.isoformat(),
@@ -191,7 +202,8 @@ class Incident:
 
 
 class AnomalyDetector:
-    """Advanced anomaly detection using multiple algorithms"""
+    """
+Advanced anomaly detection using multiple algorithms"""
     
     def __init__(self, sensitivity: float = 0.1):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -201,7 +213,8 @@ class AnomalyDetector:
         self.detection_history = defaultdict(list)
         
     async def detect_anomalies(self, metrics: List[MonitoringMetric]) -> List[PredictiveAlert]:
-        """Detect anomalies in metrics using multiple algorithms"""
+        """
+Detect anomalies in metrics using multiple algorithms"""
         try:
             anomalies = []
             
@@ -493,7 +506,8 @@ class AnomalyDetector:
             return AlertSeverity.LOW
     
     def _deduplicate_anomalies(self, anomalies: List[PredictiveAlert]) -> List[PredictiveAlert]:
-        """Remove duplicate anomalies and keep highest confidence ones"""
+        """
+Remove duplicate anomalies and keep highest confidence ones"""
         if not anomalies:
             return []
         
@@ -517,7 +531,8 @@ class AnomalyDetector:
 
 
 class PredictiveEngine:
-    """Advanced predictive analytics engine"""
+    """
+Advanced predictive analytics engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -527,7 +542,8 @@ class PredictiveEngine:
         
     async def predict_capacity_needs(self, resource_metrics: List[MonitoringMetric], 
                                    forecast_horizon: timedelta = timedelta(days=7)) -> List[PredictiveAlert]:
-        """Predict future capacity needs based on current trends"""
+        """
+Predict future capacity needs based on current trends"""
         try:
             predictions = []
             
@@ -830,7 +846,8 @@ class PredictiveEngine:
 
 
 class IncidentManager:
-    """Intelligent incident management and response"""
+    """
+Intelligent incident management and response"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -841,7 +858,8 @@ class IncidentManager:
         
     async def create_incident(self, alert: PredictiveAlert, 
                             additional_context: Optional[Dict[str, Any]] = None) -> Incident:
-        """Create incident from alert"""
+        """
+Create incident from alert"""
         try:
             incident = Incident(
                 title=alert.title,
@@ -1283,7 +1301,8 @@ class IntelligentMonitoringSystem:
         return unit_map.get(metric_name, '')
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
+        """
+Get comprehensive system status"""
         try:
             current_time = datetime.utcnow()
             

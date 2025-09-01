@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueTimeframe(str, Enum):
-    """Revenue analysis timeframes"""
+    """
+Revenue analysis timeframes"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -44,6 +47,7 @@ class RevenueTimeframe(str, Enum):
 
 class RevenueSource(str, Enum):
     """Revenue source types"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -57,6 +61,7 @@ class RevenueSource(str, Enum):
 
 class PredictionModel(str, Enum):
     """ML prediction models"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
@@ -66,6 +71,7 @@ class PredictionModel(str, Enum):
 
 class RevenueOptimizationStrategy(str, Enum):
     """Revenue optimization strategies"""
+
     PLATFORM_DIVERSIFICATION = "platform_diversification"
     CONTENT_FREQUENCY = "content_frequency"
     TIMING_OPTIMIZATION = "timing_optimization"
@@ -85,7 +91,8 @@ class RevenueInsight:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast data structure"""
+    """
+Revenue forecast data structure"""
     timeframe: str
     predicted_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]

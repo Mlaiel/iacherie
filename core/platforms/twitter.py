@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -29,10 +30,12 @@ logger = logging.getLogger(__name__)
 
 
 class TwitterPlatform(PlatformBase):
-    """Twitter/X platform integration"""
+    """
+Twitter/X platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Twitter platform"""
+        """
+Initialize Twitter platform"""
         super().__init__(config)
         self.api_base = "https://api.twitter.com/2"
         self.upload_base = "https://upload.twitter.com/1.1"
@@ -48,7 +51,8 @@ class TwitterPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitter using OAuth 2.0"""
+        """
+Authenticate with Twitter using OAuth 2.0"""
         try:
             # If we have an access token, validate it
             if self.config.credentials.access_token:
@@ -346,7 +350,8 @@ class TwitterPlatform(PlatformBase):
             return 'unknown'
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Twitter analytics for a tweet"""
+        """
+Get Twitter analytics for a tweet"""
         try:
             # Get tweet data
             params = {
@@ -402,7 +407,8 @@ class TwitterPlatform(PlatformBase):
         return (total_engagement / impressions) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Twitter"""
+        """
+Search content on Twitter"""
         try:
             params = {
                 'query': query,

@@ -15,6 +15,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -38,7 +39,9 @@ from ..storage.decision_storage import DecisionStorage
 
 
 class DecisionType(Enum):
-    """Types of decisions the engine can make"""
+    """
+Types of decisions the engine can make"""
+
     PROTECTION_STRATEGY = "protection_strategy"
     MONETIZATION_PLAN = "monetization_plan"
     PLATFORM_SELECTION = "platform_selection"
@@ -50,6 +53,7 @@ class DecisionType(Enum):
 
 class DecisionPriority(Enum):
     """Decision priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -58,6 +62,7 @@ class DecisionPriority(Enum):
 
 class DecisionStatus(Enum):
     """Decision execution status"""
+
     PENDING = "pending"
     APPROVED = "approved"
     EXECUTING = "executing"
@@ -81,7 +86,8 @@ class DecisionCriteria:
 
 @dataclass
 class DecisionOption:
-    """A decision option with scoring"""
+    """
+A decision option with scoring"""
     option_id: str
     description: str
     score: float
@@ -96,7 +102,8 @@ class DecisionOption:
 
 @dataclass
 class DecisionResult:
-    """Result of a decision process"""
+    """
+Result of a decision process"""
     decision_id: str
     decision_type: DecisionType
     selected_option: DecisionOption
@@ -181,11 +188,13 @@ class DecisionEngine:
         self.optimization_engine = OptimizationEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize decision storage"""
+        """
+Initialize decision storage"""
         self.decision_storage = DecisionStorage(self.config)
     
     def _load_pretrained_models(self) -> None:
-        """Load pre-trained models from storage"""
+        """
+Load pre-trained models from storage"""
         try:
             # This would load actual pre-trained models in production
             # For now, we'll train with synthetic data
@@ -338,7 +347,8 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate content protection strategy options"""
+        """
+Generate content protection strategy options"""
         options = []
         
         # Basic protection option
@@ -756,7 +766,8 @@ class DecisionEngine:
         option: DecisionOption,
         criteria: DecisionCriteria
     ) -> float:
-        """Calculate base score for an option"""
+        """
+Calculate base score for an option"""
         score = 0.0
         
         # ROI weight (30%)
@@ -786,7 +797,8 @@ class DecisionEngine:
         option: DecisionOption,
         criteria: DecisionCriteria
     ) -> float:
-        """Get ML-based score adjustment"""
+        """
+Get ML-based score adjustment"""
         try:
             # Prepare features for ML models
             features = self._prepare_ml_features(option, criteria)
@@ -823,7 +835,8 @@ class DecisionEngine:
         return features
     
     def _select_best_option(self, evaluated_options: List[DecisionOption]) -> DecisionOption:
-        """Select the best option from evaluated options"""
+        """
+Select the best option from evaluated options"""
         if not evaluated_options:
             raise ValueError("No options available for selection")
         
@@ -986,7 +999,8 @@ class DecisionEngine:
         selected_option: DecisionOption,
         all_options: List[DecisionOption]
     ) -> float:
-        """Calculate confidence in the decision"""
+        """
+Calculate confidence in the decision"""
         if len(all_options) <= 1:
             return selected_option.confidence
         
@@ -1010,7 +1024,8 @@ class DecisionEngine:
         return min(0.99, max(0.5, confidence))
     
     async def _store_decision(self, decision_result: DecisionResult) -> None:
-        """Store decision result"""
+        """
+Store decision result"""
         try:
             await self.decision_storage.store_decision(decision_result)
             self.active_decisions[decision_result.decision_id] = decision_result
@@ -1048,7 +1063,8 @@ class DecisionEngine:
         status: DecisionStatus,
         notes: Optional[str] = None
     ) -> bool:
-        """Update decision execution status"""
+        """
+Update decision execution status"""
         if decision_id in self.active_decisions:
             self.active_decisions[decision_id].status = status
             await self.decision_storage.update_decision_status(decision_id, status, notes)
@@ -1056,7 +1072,8 @@ class DecisionEngine:
         return False
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get decision engine performance metrics"""
+        """
+Get decision engine performance metrics"""
         return self.performance_metrics.copy()
     
     async def get_decision_history(
@@ -1064,7 +1081,8 @@ class DecisionEngine:
         decision_type: Optional[DecisionType] = None,
         limit: int = 100
     ) -> List[DecisionResult]:
-        """Get decision history with optional filtering"""
+        """
+Get decision history with optional filtering"""
         history = self.decision_history
         
         if decision_type:
@@ -1077,7 +1095,8 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[Tuple[DecisionType, float]]:
-        """Recommend decision types based on criteria"""
+        """
+Recommend decision types based on criteria"""
         recommendations = []
         
         # Analyze criteria to recommend decision types

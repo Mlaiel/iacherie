@@ -1,6 +1,7 @@
 """Notification Service for Copyright Enforcement
 Professional notification system for alerts, updates, and communications
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Callable
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types of notifications"""
+    """
+Types of notifications"""
+
     CASE_CREATED = "case_created"
     CASE_UPDATED = "case_updated"
     CASE_RESOLVED = "case_resolved"
@@ -45,6 +48,7 @@ class NotificationType(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -54,6 +58,7 @@ class NotificationPriority(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -66,6 +71,7 @@ class NotificationChannel(Enum):
 
 class NotificationStatus(Enum):
     """Status of notification delivery"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -152,7 +158,8 @@ class NotificationMessage:
 
 
 class EmailProvider:
-    """Email notification provider"""
+    """
+Email notification provider"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -165,7 +172,8 @@ class EmailProvider:
         self.from_name = config.get('from_name', 'IA Influencer Agent')
     
     async def send_email(self, message: NotificationMessage) -> bool:
-        """Send email notification"""
+        """
+Send email notification"""
         try:
             # Create email message
             msg = MIMEMultipart('alternative')
@@ -226,7 +234,8 @@ class WebhookProvider:
         self.retry_delays = [1, 5, 15]  # seconds
     
     async def send_webhook(self, message: NotificationMessage) -> bool:
-        """Send webhook notification"""
+        """
+Send webhook notification"""
         try:
             webhook_url = message.recipient.webhook_url
             if not webhook_url:
@@ -309,7 +318,8 @@ class SlackProvider:
         self.timeout = config.get('timeout', 30)
     
     async def send_slack_message(self, message: NotificationMessage) -> bool:
-        """Send Slack notification"""
+        """
+Send Slack notification"""
         try:
             if not self.webhook_url and not self.bot_token:
                 logger.error("No Slack configuration found")
@@ -886,14 +896,16 @@ Immediate attention required!
             message.delivered_at = datetime.utcnow()
     
     async def mark_message_read(self, message_id: str):
-        """Mark message as read"""
+        """
+Mark message as read"""
         message = self.sent_messages.get(message_id)
         if message:
             message.status = NotificationStatus.READ
             message.read_at = datetime.utcnow()
     
     async def get_notification_statistics(self) -> Dict[str, Any]:
-        """Get notification service statistics"""
+        """
+Get notification service statistics"""
         try:
             stats = {
                 'queue_size': len(self.message_queue),

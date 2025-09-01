@@ -24,6 +24,7 @@ ENTERPRISE FEATURES:
 - Regulatory compliance across global markets
 - Advanced security with tokenization and encryption
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -54,7 +55,9 @@ settings = get_settings()
 
 
 class GatewayStatus(Enum):
-    """Gateway operational status"""
+    """
+Gateway operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -64,6 +67,7 @@ class GatewayStatus(Enum):
 
 class RoutingStrategy(Enum):
     """Payment routing strategies"""
+
     LOWEST_COST = "lowest_cost"
     HIGHEST_SUCCESS_RATE = "highest_success_rate"
     FASTEST_PROCESSING = "fastest_processing"
@@ -104,7 +108,8 @@ class GatewayMetrics:
 
 @dataclass
 class PaymentRequest:
-    """Payment processing request"""
+    """
+Payment processing request"""
     amount: Decimal
     currency: CurrencyCode
     payment_method: PaymentMethodType
@@ -158,26 +163,31 @@ class BasePaymentGateway(ABC):
         
     @abstractmethod
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process a payment transaction"""
+        """
+Process a payment transaction"""
         pass
     
     @abstractmethod
     async def process_refund(self, transaction_id: str, amount: Decimal) -> PaymentResponse:
-        """Process a refund"""
+        """
+Process a refund"""
         pass
     
     @abstractmethod
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
-        """Get transaction status"""
+        """
+Get transaction status"""
         pass
     
     @abstractmethod
     async def calculate_fees(self, amount: Decimal, currency: CurrencyCode) -> Dict[str, Decimal]:
-        """Calculate processing fees"""
+        """
+Calculate processing fees"""
         pass
     
     async def health_check(self) -> bool:
-        """Check gateway health"""
+        """
+Check gateway health"""
         try:
             # Implement gateway-specific health check
             return await self._perform_health_check()
@@ -191,7 +201,8 @@ class BasePaymentGateway(ABC):
         pass
     
     def update_metrics(self, processing_time: float, success: bool, amount: Decimal):
-        """Update gateway performance metrics"""
+        """
+Update gateway performance metrics"""
         self.metrics.transaction_count += 1
         self.metrics.total_volume += amount
         
@@ -230,7 +241,8 @@ class StripeGateway(BasePaymentGateway):
         self.stripe = stripe
         
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process payment through Stripe"""
+        """
+Process payment through Stripe"""
         start_time = datetime.utcnow()
         
         try:
@@ -332,7 +344,8 @@ class StripeGateway(BasePaymentGateway):
         }
     
     async def _perform_health_check(self) -> bool:
-        """Stripe-specific health check"""
+        """
+Stripe-specific health check"""
         try:
             # Test API connectivity
             await self.stripe.Account.retrieve_async()
@@ -341,7 +354,8 @@ class StripeGateway(BasePaymentGateway):
             return False
     
     async def _create_payment_intent(self, request: PaymentRequest) -> Dict[str, Any]:
-        """Create Stripe payment intent"""
+        """
+Create Stripe payment intent"""
         return await self.stripe.PaymentIntent.create_async(
             amount=int(request.amount * 100),  # Convert to cents
             currency=request.currency.value.lower(),
@@ -354,14 +368,16 @@ class StripeGateway(BasePaymentGateway):
         intent_id: str, 
         payment_method: PaymentMethodType
     ) -> Dict[str, Any]:
-        """Confirm Stripe payment intent"""
+        """
+Confirm Stripe payment intent"""
         return await self.stripe.PaymentIntent.confirm_async(
             intent_id,
             payment_method=self._get_stripe_payment_method(payment_method)
         )
     
     def _map_stripe_status(self, stripe_status: str) -> PaymentStatus:
-        """Map Stripe status to internal status"""
+        """
+Map Stripe status to internal status"""
         status_mapping = {
             'succeeded': PaymentStatus.COMPLETED,
             'processing': PaymentStatus.PROCESSING,
@@ -374,7 +390,8 @@ class StripeGateway(BasePaymentGateway):
         return status_mapping.get(stripe_status, PaymentStatus.FAILED)
     
     def _get_stripe_payment_method(self, payment_method: PaymentMethodType) -> str:
-        """Convert internal payment method to Stripe format"""
+        """
+Convert internal payment method to Stripe format"""
         method_mapping = {
             PaymentMethodType.CREDIT_CARD: 'card',
             PaymentMethodType.DEBIT_CARD: 'card',
@@ -527,7 +544,8 @@ class PayPalGateway(BasePaymentGateway):
         }
     
     async def _perform_health_check(self) -> bool:
-        """PayPal-specific health check"""
+        """
+PayPal-specific health check"""
         try:
             access_token = await self._get_access_token()
             return access_token is not None
@@ -535,7 +553,8 @@ class PayPalGateway(BasePaymentGateway):
             return False
     
     async def _get_access_token(self) -> str:
-        """Get PayPal access token"""
+        """
+Get PayPal access token"""
         auth_data = {
             'grant_type': 'client_credentials'
         }
@@ -618,7 +637,8 @@ class PaymentGatewayManager:
         self.health_monitor = GatewayHealthMonitor()
         
     def register_gateway(self, gateway: BasePaymentGateway):
-        """Register a payment gateway"""
+        """
+Register a payment gateway"""
         self.gateways[gateway.provider] = gateway
         logger.info(f"Registered gateway: {gateway.provider.value}")
     
@@ -687,7 +707,8 @@ class PaymentGatewayManager:
         amount: Decimal,
         currency: CurrencyCode
     ) -> BasePaymentGateway:
-        """Select gateway with lowest cost"""
+        """
+Select gateway with lowest cost"""
         best_gateway = None
         lowest_cost = Decimal('inf')
         
@@ -705,14 +726,16 @@ class PaymentGatewayManager:
         self,
         gateways: List[BasePaymentGateway]
     ) -> BasePaymentGateway:
-        """Select gateway with highest success rate"""
+        """
+Select gateway with highest success rate"""
         return max(gateways, key=lambda g: g.metrics.success_rate)
     
     async def _select_fastest_gateway(
         self,
         gateways: List[BasePaymentGateway]
     ) -> BasePaymentGateway:
-        """Select gateway with fastest processing"""
+        """
+Select gateway with fastest processing"""
         return min(gateways, key=lambda g: g.metrics.average_processing_time)
     
     async def _select_balanced_gateway(
@@ -721,7 +744,8 @@ class PaymentGatewayManager:
         amount: Decimal,
         currency: CurrencyCode
     ) -> BasePaymentGateway:
-        """Select gateway using balanced scoring"""
+        """
+Select gateway using balanced scoring"""
         best_gateway = None
         best_score = -1
         
@@ -745,7 +769,8 @@ class PaymentGatewayManager:
 
 
 class GatewayLoadBalancer:
-    """Load balancer for payment gateways"""
+    """
+Load balancer for payment gateways"""
     
     def __init__(self):
         self.round_robin_index = 0
@@ -774,7 +799,8 @@ class GatewayHealthMonitor:
         self.monitoring_active = False
     
     async def start_monitoring(self, gateways: Dict[PaymentProvider, BasePaymentGateway]):
-        """Start health monitoring"""
+        """
+Start health monitoring"""
         self.monitoring_active = True
         
         while self.monitoring_active:
@@ -796,10 +822,12 @@ class GatewayHealthMonitor:
 
 # Custom exceptions
 class NoEligibleGatewayError(Exception):
-    """No eligible gateway found"""
+    """
+No eligible gateway found"""
     pass
 
 
 class GatewayProcessingError(Exception):
-    """Gateway processing error"""
+    """
+Gateway processing error"""
     pass

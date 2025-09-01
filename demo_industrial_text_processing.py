@@ -8,6 +8,7 @@ authorship analysis, and 644 languages support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import logging
@@ -86,7 +87,8 @@ de la médecine à l'éducation en passant par le divertissement.
 }
 
 async def demo_industrial_text_processing():
-    """Main demonstration function"""
+    """
+Main demonstration function"""
     
     logger.info("=" * 80)
     logger.info("INDUSTRIAL TEXT PROCESSING DEMONSTRATION")

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,8 @@ from ...utils.cache_manager import CacheManager
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile structure."""
+    """
+Comprehensive competitor profile structure."""
     competitor_id: str
     name: str
     industry: str
@@ -51,7 +53,8 @@ class CompetitorProfile:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data structure."""
+    """
+Market intelligence data structure."""
     market_id: str
     segment: str
     total_size: float
@@ -68,7 +71,8 @@ class MarketIntelligence:
 
 @dataclass
 class CompetitorAlert:
-    """Competitor monitoring alert structure."""
+    """
+Competitor monitoring alert structure."""
     alert_id: str
     competitor_id: str
     alert_type: str
@@ -90,7 +94,8 @@ class CompetitorMonitoringAgent(BaseAgent):
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the competitor monitoring agent."""
+        """
+Initialize the competitor monitoring agent."""
         super().__init__(config)
         self.agent_type = "competitor_monitoring"
         self.name = "CompetitorMonitoringAgent"

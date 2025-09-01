@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,16 +13,18 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Suite for Exception Handling Module
+"""
+Test Suite for Exception Handling Module
 
 Comprehensive tests for enterprise-grade exception handling system.
 Tests all custom exceptions, error tracking, and recovery mechanisms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -64,7 +67,8 @@ class TestBaseAIException:
     """Test cases for BaseAIException class"""
     
     def test_base_exception_creation(self):
-        """Test basic exception creation with all parameters"""
+        """
+Test basic exception creation with all parameters"""
         context = {"user_id": "test_123", "operation": "content_upload"}
         
         error = BaseAIException(
@@ -157,7 +161,8 @@ class TestSpecificExceptions:
     """Test cases for specific exception types"""
     
     def test_content_validation_error(self):
-        """Test ContentValidationError specific functionality"""
+        """
+Test ContentValidationError specific functionality"""
         validation_info = {
             "content_type": "audio",
             "file_size": 10485760,
@@ -242,7 +247,8 @@ class TestExceptionRegistry:
     """Test cases for exception registry system"""
     
     def test_exception_registry_population(self):
-        """Test that exception registry is properly populated"""
+        """
+Test that exception registry is properly populated"""
         assert isinstance(EXCEPTION_REGISTRY, dict)
         assert len(EXCEPTION_REGISTRY) > 0
         
@@ -293,7 +299,8 @@ class TestErrorSeverityAndCategory:
     """Test cases for error severity and category enums"""
     
     def test_error_severity_enum(self):
-        """Test ErrorSeverity enum values"""
+        """
+Test ErrorSeverity enum values"""
         assert ErrorSeverity.LOW.value == "low"
         assert ErrorSeverity.MEDIUM.value == "medium" 
         assert ErrorSeverity.HIGH.value == "high"
@@ -324,10 +331,12 @@ class TestErrorSeverityAndCategory:
 
 
 class TestExceptionHandling:
-    """Test cases for exception handling scenarios"""
+    """
+Test cases for exception handling scenarios"""
     
     def test_exception_chaining(self):
-        """Test exception chaining for debugging"""
+        """
+Test exception chaining for debugging"""
         try:
             # Simulate nested exception scenario
             try:
@@ -388,7 +397,8 @@ class TestBusinessLogicExceptions:
     """Test cases for business logic specific exceptions"""
     
     def test_monetization_error(self):
-        """Test MonetizationError for revenue-related failures"""
+        """
+Test MonetizationError for revenue-related failures"""
         monetization_data = {
             "creator_type": "musician",
             "content_type": "audio",
@@ -450,7 +460,8 @@ class TestExceptionLogging:
     """Test cases for exception logging and tracking"""
     
     def test_exception_logging(self, capture_logs):
-        """Test that exceptions are properly logged"""
+        """
+Test that exceptions are properly logged"""
         error = ContentValidationError(
             "Test logging error",
             validation_type="format"
@@ -494,7 +505,8 @@ class TestCreatorSpecificExceptions:
     """Test cases for creator-specific exception scenarios"""
     
     def test_musician_exceptions(self):
-        """Test exceptions specific to musician workflows"""
+        """
+Test exceptions specific to musician workflows"""
         # Audio content validation error
         audio_error = ContentValidationError(
             "Audio format not supported",
@@ -585,7 +597,8 @@ class TestExceptionRecovery:
     """Test cases for exception recovery mechanisms"""
     
     def test_graceful_degradation(self):
-        """Test graceful degradation when non-critical errors occur"""
+        """
+Test graceful degradation when non-critical errors occur"""
         # Simulate a scenario where some operations fail but system continues
         operations_completed = []
         
@@ -650,7 +663,8 @@ class TestExceptionPerformance:
     
     @pytest.mark.performance
     def test_exception_creation_performance(self, performance_tracker):
-        """Test performance of exception creation"""
+        """
+Test performance of exception creation"""
         performance_tracker.start()
         
         # Create many exceptions to test performance

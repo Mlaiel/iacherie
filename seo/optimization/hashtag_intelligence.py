@@ -6,6 +6,7 @@ for social media content across different platforms with trend analysis and perf
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class HashtagCategory(Enum):
-    """Categories of hashtags"""
+    """
+Categories of hashtags"""
+
     TRENDING = "trending"
     NICHE = "niche"
     BRANDED = "branded"
@@ -31,6 +34,7 @@ class HashtagCategory(Enum):
 
 class Platform(Enum):
     """Social media platforms for hashtag optimization"""
+
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     TIKTOK = "tiktok"
@@ -52,7 +56,8 @@ class HashtagMetrics:
 
 @dataclass
 class HashtagSuggestion:
-    """Individual hashtag suggestion"""
+    """
+Individual hashtag suggestion"""
     hashtag: str
     category: HashtagCategory
     metrics: HashtagMetrics
@@ -63,7 +68,8 @@ class HashtagSuggestion:
 
 @dataclass
 class HashtagStrategy:
-    """Complete hashtag strategy for content"""
+    """
+Complete hashtag strategy for content"""
     primary_hashtags: List[HashtagSuggestion]
     secondary_hashtags: List[HashtagSuggestion]
     trending_hashtags: List[HashtagSuggestion]
@@ -201,7 +207,8 @@ class HashtagIntelligence:
         return [tag.lower() for tag in hashtags]
 
     def _generate_primary_hashtags(self, keywords: List[str], industry: str) -> List[HashtagSuggestion]:
-        """Generate primary hashtags from keywords"""
+        """
+Generate primary hashtags from keywords"""
         primary_hashtags = []
         
         for keyword in keywords[:5]:  # Limit to top 5 keywords
@@ -528,7 +535,8 @@ class HashtagIntelligence:
         return platform_specific
 
     def _filter_and_deduplicate(self, hashtags: List[HashtagSuggestion]) -> List[HashtagSuggestion]:
-        """Filter banned hashtags and remove duplicates"""
+        """
+Filter banned hashtags and remove duplicates"""
         
         seen_hashtags = set()
         filtered_hashtags = []
@@ -554,7 +562,8 @@ class HashtagIntelligence:
         return filtered_hashtags
 
     def _prioritize_hashtags(self, hashtags: List[HashtagSuggestion], max_count: int) -> List[HashtagSuggestion]:
-        """Prioritize hashtags when limiting total count"""
+        """
+Prioritize hashtags when limiting total count"""
         
         # Calculate priority score for each hashtag
         for hashtag in hashtags:
@@ -572,7 +581,8 @@ class HashtagIntelligence:
         return hashtags[:max_count]
 
     def _calculate_hashtag_metrics(self, hashtag: str, category: HashtagCategory) -> HashtagMetrics:
-        """Calculate metrics for a hashtag (simulated data for demo)"""
+        """
+Calculate metrics for a hashtag (simulated data for demo)"""
         
         hashtag_length = len(hashtag)
         
@@ -624,7 +634,8 @@ class HashtagIntelligence:
         branded_hashtags: List[HashtagSuggestion],
         target_platforms: List[Platform]
     ) -> float:
-        """Calculate overall strategy score"""
+        """
+Calculate overall strategy score"""
         
         score = 0.0
         
@@ -666,7 +677,8 @@ class HashtagIntelligence:
         target_platforms: List[Platform],
         strategy_score: float
     ) -> List[str]:
-        """Generate strategy recommendations"""
+        """
+Generate strategy recommendations"""
         
         recommendations = []
         
@@ -735,7 +747,8 @@ class HashtagIntelligence:
         return True
 
     def _get_related_hashtags(self, hashtag: str) -> List[str]:
-        """Get related hashtags (simplified implementation)"""
+        """
+Get related hashtags (simplified implementation)"""
         
         # Simple related hashtag generation based on the hashtag content
         related = []
@@ -761,7 +774,8 @@ class HashtagIntelligence:
         return related[:5]
 
     def _initialize_trending_hashtags(self) -> Dict[str, List[str]]:
-        """Initialize trending hashtags database"""
+        """
+Initialize trending hashtags database"""
         
         return {
             "general": [
@@ -799,7 +813,8 @@ class HashtagIntelligence:
         }
 
     def _get_banned_hashtags(self) -> Dict[Platform, List[str]]:
-        """Get banned hashtags for each platform"""
+        """
+Get banned hashtags for each platform"""
         
         # Simplified banned hashtags list
         common_banned = ["#followme", "#like4like", "#follow4follow"]

@@ -31,6 +31,7 @@ Features:
 - Processing speed optimization
 - False positive/negative tracking
 """
+
 import asyncio
 import time
 import json
@@ -52,7 +53,9 @@ metrics_config = get_metrics_config()
 
 
 class ContentType(Enum):
-    """Content types for protection metrics"""
+    """
+Content types for protection metrics"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -85,6 +88,7 @@ class FingerprintAlgorithm(Enum):
 
 class MatchAccuracy(Enum):
     """Match accuracy classifications"""
+
     TRUE_POSITIVE = "true_positive"
     FALSE_POSITIVE = "false_positive"
     TRUE_NEGATIVE = "true_negative"
@@ -108,7 +112,8 @@ class FingerprintMetrics:
 
 @dataclass
 class MatchMetrics:
-    """Content matching metrics"""
+    """
+Content matching metrics"""
     original_fingerprint_id: str
     matched_content_url: str
     similarity_score: float
@@ -159,7 +164,8 @@ class ContentProtectionMetricsCollector:
         success: bool,
         error_message: Optional[str] = None
     ) -> None:
-        """Track fingerprint creation metrics"""
+        """
+Track fingerprint creation metrics"""
         
         metrics = FingerprintMetrics(
             content_type=content_type,

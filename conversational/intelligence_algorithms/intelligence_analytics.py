@@ -28,6 +28,7 @@ conversation intelligence measurement and business impact analysis.
 Unauthorized use, copying, or reverse engineering is strictly prohibited
 and legally prosecuted. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -56,7 +57,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     PERFORMANCE = "performance"
     QUALITY = "quality"
     BUSINESS_IMPACT = "business_impact"
@@ -69,6 +72,7 @@ class AnalyticsMetricType(Enum):
 
 class ReportingFrequency(Enum):
     """Reporting frequency options"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -80,6 +84,7 @@ class ReportingFrequency(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -127,7 +132,8 @@ class BusinessImpactMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report structure"""
+    """
+Comprehensive analytics report structure"""
     report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     report_title: str = ""
     report_type: str = "intelligence_analytics"
@@ -473,7 +479,8 @@ class ConversationPerformanceMetrics:
                                            conversation_id: str,
                                            conversation_data: Dict[str, Any],
                                            intelligence_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Track comprehensive conversation performance metrics"""
+        """
+Track comprehensive conversation performance metrics"""
         try:
             # Track conversation flow metrics
             flow_metrics = await self._track_conversation_flow(
@@ -524,7 +531,8 @@ class IntelligenceROICalculator:
                                        investment_data: Dict[str, Any],
                                        benefit_data: Dict[str, Any],
                                        time_period: timedelta) -> Dict[str, Any]:
-        """Calculate comprehensive ROI for intelligence investments"""
+        """
+Calculate comprehensive ROI for intelligence investments"""
         try:
             # Calculate total investment costs
             total_costs = await self._calculate_total_costs(investment_data, time_period)
@@ -575,7 +583,8 @@ class ConversationBusinessImpactAnalyzer:
                                     conversation_data: Dict[str, Any],
                                     intelligence_results: List[Dict[str, Any]],
                                     business_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze comprehensive business impact of conversations"""
+        """
+Analyze comprehensive business impact of conversations"""
         try:
             # Analyze revenue impact
             revenue_impact = await self._analyze_revenue_impact(
@@ -632,7 +641,8 @@ class AIIntelligenceReportGenerator:
                                          data_sources: List[Dict[str, Any]],
                                          reporting_period: Tuple[datetime, datetime],
                                          stakeholders: List[str]) -> AnalyticsReport:
-        """Generate comprehensive intelligence analytics report"""
+        """
+Generate comprehensive intelligence analytics report"""
         try:
             # Aggregate data from sources
             aggregated_data = await self._aggregate_report_data(

@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioProcessingMode(Enum):
-    """Audio processing operational modes"""
+    """
+Audio processing operational modes"""
+
     REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -38,6 +41,7 @@ class AudioProcessingMode(Enum):
 
 class AudioQualityTier(Enum):
     """Audio quality processing tiers"""
+
     BROADCAST = "broadcast"      # 96kHz/24bit - Professional broadcast
     STUDIO = "studio"           # 48kHz/24bit - Studio recording
     STREAMING = "streaming"     # 44.1kHz/16bit - High quality streaming
@@ -47,6 +51,7 @@ class AudioQualityTier(Enum):
 
 class ProcessingComplexity(Enum):
     """Audio processing complexity levels"""
+
     MINIMAL = "minimal"         # Basic processing only
     STANDARD = "standard"       # Standard processing pipeline
     ADVANCED = "advanced"       # Advanced ML-enhanced processing
@@ -55,6 +60,7 @@ class ProcessingComplexity(Enum):
 
 class AudioBufferStrategy(Enum):
     """Audio buffer management strategies"""
+
     FIXED = "fixed"             # Fixed buffer size
     ADAPTIVE = "adaptive"       # Adaptive buffer sizing
     PREDICTIVE = "predictive"   # ML-based buffer prediction
@@ -74,7 +80,8 @@ class PerformanceMetrics:
 
 @dataclass
 class AudioProcessingLimits:
-    """Audio processing resource limits"""
+    """
+Audio processing resource limits"""
     max_file_size_mb: int = 500
     max_duration_seconds: int = 3600
     max_sample_rate: int = 192000
@@ -87,7 +94,8 @@ class AudioProcessingLimits:
 
 @dataclass
 class MLProcessingConfig:
-    """Machine learning audio processing configuration"""
+    """
+Machine learning audio processing configuration"""
     enable_ai_enhancement: bool = True
     enable_noise_reduction: bool = True
     enable_auto_mastering: bool = False
@@ -120,7 +128,8 @@ class AudioProcessingConfig:
     """
     
     def __init__(self):
-        """Initialize audio processing configuration"""
+        """
+Initialize audio processing configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core configuration
@@ -451,11 +460,13 @@ class AudioProcessingConfig:
         return self._supported_formats.copy()
     
     def is_format_supported(self, format_name: str) -> bool:
-        """Check if audio format is supported"""
+        """
+Check if audio format is supported"""
         return format_name.lower() in self._supported_formats
     
     def get_platform_config(self, platform: str) -> Optional[Dict[str, Any]]:
-        """Get platform-specific configuration"""
+        """
+Get platform-specific configuration"""
         return self._platform_configs.get(platform.lower())
     
     def add_custom_platform(self, platform: str, config: Dict[str, Any]) -> bool:
@@ -493,7 +504,8 @@ class AudioProcessingConfig:
     
     @processing_mode.setter
     def processing_mode(self, mode: AudioProcessingMode):
-        """Set processing mode"""
+        """
+Set processing mode"""
         self._processing_mode = mode
         self.logger.info(f"Processing mode set to: {mode.value}")
     
@@ -504,7 +516,8 @@ class AudioProcessingConfig:
     
     @quality_tier.setter
     def quality_tier(self, tier: AudioQualityTier):
-        """Set quality tier"""
+        """
+Set quality tier"""
         self._quality_tier = tier
         self.logger.info(f"Quality tier set to: {tier.value}")
     

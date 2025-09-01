@@ -24,6 +24,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Licensing & Rights Management
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import time
@@ -65,7 +66,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     CREATIVE_COMMONS_ZERO = "cc0"
     CREATIVE_COMMONS_BY = "cc_by"
     CREATIVE_COMMONS_BY_SA = "cc_by_sa"
@@ -86,6 +89,7 @@ class LicenseType(Enum):
 
 class RightsScope(Enum):
     """Scope of licensing rights"""
+
     REPRODUCTION_RIGHTS = "reproduction_rights"
     DISTRIBUTION_RIGHTS = "distribution_rights"
     PUBLIC_PERFORMANCE_RIGHTS = "public_performance_rights"
@@ -105,6 +109,7 @@ class RightsScope(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions for licensing"""
+
     GERMANY = "DE"
     EUROPEAN_UNION = "EU"
     UNITED_STATES = "US"
@@ -123,6 +128,7 @@ class LegalJurisdiction(Enum):
 
 class ComplianceStandard(Enum):
     """Legal compliance standards"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -138,6 +144,7 @@ class ComplianceStandard(Enum):
 
 class ContractStatus(Enum):
     """Status of licensing contracts"""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     UNDER_NEGOTIATION = "under_negotiation"
@@ -152,6 +159,7 @@ class ContractStatus(Enum):
 
 class PaymentSchedule(Enum):
     """Payment schedule for licensing fees"""
+
     ONE_TIME = "one_time"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -207,7 +215,8 @@ class LicenseTerms:
 
 @dataclass
 class PricingModel:
-    """Pricing model for licensing"""
+    """
+Pricing model for licensing"""
     pricing_id: str
     pricing_name: str
     payment_schedule: PaymentSchedule
@@ -327,7 +336,8 @@ class LicensingRightsDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Licensing Rights Deployment Manager"""
+        """
+Initialize the Licensing Rights Deployment Manager"""
         self.config_path = config_path or os.getenv('LICENSING_CONFIG_PATH', '/etc/licensing/config.yaml')
         self.license_templates: Dict[str, LicenseTerms] = {}
         self.pricing_models: Dict[str, PricingModel] = {}
@@ -1434,7 +1444,8 @@ class LicensingRightsDeploymentManager:
                 )
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
+        """
+Perform comprehensive health check"""
         health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',

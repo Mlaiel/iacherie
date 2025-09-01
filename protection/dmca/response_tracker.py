@@ -4,7 +4,7 @@
 Enterprise-grade response tracking system for DMCA notice compliance monitoring and analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 This module provides:
@@ -14,6 +14,7 @@ This module provides:
 - Performance analytics
 - Legal compliance reporting
 """
+
 import asyncio
 import logging
 import re
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of platform responses"""
+    """
+Types of platform responses"""
+
     ACKNOWLEDGMENT = "acknowledgment"
     TAKEDOWN_CONFIRMATION = "takedown_confirmation"
     REJECTION = "rejection"
@@ -49,6 +52,7 @@ class ResponseType(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     NON_COMPLIANT = "non_compliant"
@@ -60,6 +64,7 @@ class ComplianceStatus(Enum):
 
 class ResponseChannel(Enum):
     """Response communication channels"""
+
     EMAIL = "email"
     API_WEBHOOK = "api_webhook"
     PLATFORM_PORTAL = "platform_portal"
@@ -85,7 +90,8 @@ class ResponseMetadata:
 
 @dataclass
 class PlatformResponse:
-    """Platform response to DMCA notice"""
+    """
+Platform response to DMCA notice"""
     response_id: str
     notice_id: str
     platform: str
@@ -154,14 +160,16 @@ class ComplianceReport:
 
 
 class ResponseParser:
-    """Intelligent response content parser"""
+    """
+Intelligent response content parser"""
     
     def __init__(self):
         self.patterns = self._load_response_patterns()
         self.ml_classifier = None  # Placeholder for ML-based classification
     
     def _load_response_patterns(self) -> Dict[str, List[str]]:
-        """Load response parsing patterns"""
+        """
+Load response parsing patterns"""
         return {
             'takedown_confirmation': [
                 r'content has been removed',
@@ -207,7 +215,8 @@ class ResponseParser:
         }
     
     async def parse_response(self, content: str, subject: str = None) -> Dict[str, Any]:
-        """Parse platform response content"""
+        """
+Parse platform response content"""
         
         try:
             # Normalize content
@@ -270,7 +279,8 @@ class ResponseParser:
         return content.lower().strip()
     
     async def _classify_response_type(self, content: str, subject: str = None) -> ResponseType:
-        """Classify the type of response"""
+        """
+Classify the type of response"""
         
         # Check subject line first if available
         if subject:
@@ -296,7 +306,8 @@ class ResponseParser:
     
     async def _determine_compliance_status(self, content: str, 
                                          response_type: ResponseType) -> ComplianceStatus:
-        """Determine compliance status from response"""
+        """
+Determine compliance status from response"""
         
         if response_type == ResponseType.TAKEDOWN_CONFIRMATION:
             return ComplianceStatus.COMPLIANT
@@ -314,7 +325,8 @@ class ResponseParser:
             return ComplianceStatus.UNDER_REVIEW
     
     async def _extract_actions_taken(self, content: str) -> List[str]:
-        """Extract specific actions taken by platform"""
+        """
+Extract specific actions taken by platform"""
         
         actions = []
         
@@ -337,7 +349,8 @@ class ResponseParser:
         return actions
     
     def _extract_urls(self, content: str) -> List[str]:
-        """Extract URLs from response content"""
+        """
+Extract URLs from response content"""
         
         # URL pattern
         url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
@@ -346,7 +359,8 @@ class ResponseParser:
         return list(set(urls))  # Remove duplicates
     
     async def _extract_legal_reasoning(self, content: str) -> Optional[str]:
-        """Extract legal reasoning from response"""
+        """
+Extract legal reasoning from response"""
         
         # Look for legal reasoning patterns
         legal_patterns = [
@@ -368,7 +382,8 @@ class ResponseParser:
     async def _calculate_confidence_score(self, content: str, 
                                         response_type: ResponseType,
                                         compliance_status: ComplianceStatus) -> float:
-        """Calculate confidence score for parsed response"""
+        """
+Calculate confidence score for parsed response"""
         
         score = 0.0
         
@@ -400,7 +415,8 @@ class ResponseParser:
         return min(1.0, score)
     
     def _check_content_removed(self, content: str) -> bool:
-        """Check if content was actually removed"""
+        """
+Check if content was actually removed"""
         removal_indicators = [
             'content removed', 'video deleted', 'post taken down',
             'material disabled', 'access blocked', 'no longer available'
@@ -409,7 +425,8 @@ class ResponseParser:
         return any(indicator in content for indicator in removal_indicators)
     
     def _check_counter_notice(self, content: str) -> bool:
-        """Check if response includes counter-notice"""
+        """
+Check if response includes counter-notice"""
         counter_indicators = [
             'counter notification', 'counter notice', 'dmca counter',
             'dispute claim', 'challenging takedown'
@@ -418,7 +435,8 @@ class ResponseParser:
         return any(indicator in content for indicator in counter_indicators)
     
     def _check_fair_use_claim(self, content: str) -> bool:
-        """Check if response claims fair use"""
+        """
+Check if response claims fair use"""
         fair_use_indicators = [
             'fair use', 'fair dealing', 'educational use',
             'criticism', 'commentary', 'parody', 'transformative'
@@ -428,7 +446,8 @@ class ResponseParser:
 
 
 class ResponseTracker:
-    """Main response tracking and monitoring system"""
+    """
+Main response tracking and monitoring system"""
     
     def __init__(self, redis_url: str = None):
         self.redis_url = redis_url or "redis://localhost:6379"
@@ -527,7 +546,8 @@ class ResponseTracker:
         return responses
     
     async def get_compliance_status(self, notice_id: str) -> Dict[str, Any]:
-        """Get overall compliance status for a notice"""
+        """
+Get overall compliance status for a notice"""
         
         responses = await self.get_notice_responses(notice_id)
         
@@ -579,7 +599,8 @@ class ResponseTracker:
         }
     
     async def generate_compliance_report(self, notice_id: str) -> ComplianceReport:
-        """Generate comprehensive compliance report"""
+        """
+Generate comprehensive compliance report"""
         
         responses = await self.get_notice_responses(notice_id)
         
@@ -732,7 +753,8 @@ class ResponseTracker:
         return total_score / total_weight if total_weight > 0 else 0.0
     
     async def _assess_legal_risks(self, responses: List[PlatformResponse]) -> List[str]:
-        """Assess legal risks from responses"""
+        """
+Assess legal risks from responses"""
         
         risks = []
         
@@ -857,7 +879,8 @@ class ResponseTracker:
         return min(1.0, total_rating / len(responses))
     
     async def _calculate_efficiency_score(self, responses: List[PlatformResponse]) -> float:
-        """Calculate efficiency score for the process"""
+        """
+Calculate efficiency score for the process"""
         
         if not responses:
             return 0.0
@@ -887,7 +910,8 @@ class ResponseTracker:
         return sum(efficiency_factors) / len(efficiency_factors)
     
     async def _update_compliance_tracking(self, response: PlatformResponse):
-        """Update compliance tracking metrics"""
+        """
+Update compliance tracking metrics"""
         
         # Store in Redis for real-time access
         key = f"compliance:{response.notice_id}"
@@ -1083,7 +1107,8 @@ class ResponseTracker:
         }
     
     async def cleanup(self):
-        """Clean up resources"""
+        """
+Clean up resources"""
         
         # Cancel active monitors
         for task in self.active_monitors.values():

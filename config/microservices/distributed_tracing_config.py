@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -22,7 +23,9 @@ from pydantic import BaseSettings, Field, validator
 
 
 class TracingBackend(str, Enum):
-    """Distributed tracing backend types."""
+    """
+Distributed tracing backend types."""
+
     JAEGER = "jaeger"
     ZIPKIN = "zipkin"
     OPENTELEMETRY = "opentelemetry"
@@ -34,6 +37,7 @@ class TracingBackend(str, Enum):
 
 class SamplingStrategy(str, Enum):
     """Trace sampling strategies."""
+
     CONST = "const"              # Constant sampling rate
     PROBABILISTIC = "probabilistic"  # Probabilistic sampling
     RATE_LIMITING = "rate_limiting"  # Rate-limited sampling
@@ -43,6 +47,7 @@ class SamplingStrategy(str, Enum):
 
 class SpanKind(str, Enum):
     """OpenTelemetry span kinds."""
+
     INTERNAL = "internal"
     SERVER = "server"
     CLIENT = "client"
@@ -62,7 +67,8 @@ class SamplingConfig:
 
 @dataclass
 class SpanProcessorConfig:
-    """Span processor configuration."""
+    """
+Span processor configuration."""
     processor_type: str = "batch"  # batch or simple
     max_queue_size: int = 2048
     schedule_delay_millis: int = 5000
@@ -249,7 +255,8 @@ class DistributedTracingConfig(BaseSettings):
         )
     
     def get_resource_config(self, service_name: Optional[str] = None) -> ResourceConfig:
-        """Get resource configuration."""
+        """
+Get resource configuration."""
         attributes = {
             "deployment.environment": self.deployment_environment,
             **self.resource_attributes,
@@ -281,7 +288,8 @@ class DistributedTracingConfig(BaseSettings):
         )
     
     def get_jaeger_config(self) -> Dict[str, Any]:
-        """Get Jaeger-specific configuration."""
+        """
+Get Jaeger-specific configuration."""
         config = {
             "service_name": self.service_name,
             "agent_host_name": self.jaeger_agent_host,

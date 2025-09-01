@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -38,7 +39,9 @@ from .utils import ReplicationUtils
 
 
 class ContentType(Enum):
-    """Types of content for protection"""
+    """
+Types of content for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -48,6 +51,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -56,6 +60,7 @@ class ProtectionLevel(Enum):
 
 class ViolationStatus(Enum):
     """Status of violation detection"""
+
     DETECTED = "detected"
     UNDER_REVIEW = "under_review"
     CONFIRMED = "confirmed"
@@ -882,51 +887,61 @@ class ContentProtectionReplicationHandler:
         return None
     
     async def _get_violation_from_primary(self, violation_id: str) -> Optional[Dict[str, Any]]:
-        """Get violation data from primary store"""
+        """
+Get violation data from primary store"""
         # Implementation would fetch from primary MongoDB
         return None
     
     async def _store_fingerprint_primary(self, fingerprint: ContentFingerprint) -> None:
-        """Store fingerprint in primary databases"""
+        """
+Store fingerprint in primary databases"""
         # Implementation would store in MongoDB and Elasticsearch
         pass
     
     async def _store_violation_primary(self, violation: ViolationAlert) -> None:
-        """Store violation in primary databases"""
+        """
+Store violation in primary databases"""
         # Implementation would store in MongoDB and Elasticsearch
         pass
     
     async def _replicate_fingerprint_to_secondaries(self, fingerprint_data: Dict[str, Any]) -> None:
-        """Replicate fingerprint to secondary stores"""
+        """
+Replicate fingerprint to secondary stores"""
         # Implementation would replicate to all secondary stores
         pass
     
     async def _replicate_violation_to_secondaries(self, violation_data: Dict[str, Any]) -> None:
-        """Replicate violation to secondary stores"""
+        """
+Replicate violation to secondary stores"""
         # Implementation would replicate to all secondary stores
         pass
     
     async def _replicate_violation_immediate(self, violation: ViolationAlert) -> None:
-        """Immediately replicate critical violation"""
+        """
+Immediately replicate critical violation"""
         # Implementation for urgent violation replication
         pass
     
     async def _sync_revenue_data(self) -> None:
-        """Sync revenue tracking data"""
+        """
+Sync revenue tracking data"""
         # Implementation for revenue data synchronization
         pass
     
     async def _batch_sync_all_data(self) -> None:
-        """Batch synchronization of all data"""
+        """
+Batch synchronization of all data"""
         # Implementation for batch sync mode
         pass
     
     async def _batch_revenue_sync(self) -> None:
-        """Batch synchronization of revenue data"""
+        """
+Batch synchronization of revenue data"""
         # Implementation for batch revenue sync
         pass
     
     async def _check_connection_health(self) -> None:
-        """Check health of all database connections"""
+        """
+Check health of all database connections"""
         # Implementation for connection health checks
         pass

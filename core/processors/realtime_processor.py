@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -59,7 +60,9 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(str, Enum):
-    """Types of real-time streams"""
+    """
+Types of real-time streams"""
+
     VIDEO_STREAM = "video_stream"
     AUDIO_STREAM = "audio_stream"
     TEXT_STREAM = "text_stream"
@@ -74,6 +77,7 @@ class StreamType(str, Enum):
 
 class ProcessingMode(str, Enum):
     """Real-time processing modes"""
+
     LOW_LATENCY = "low_latency"
     HIGH_QUALITY = "high_quality"
     BALANCED = "balanced"
@@ -83,6 +87,7 @@ class ProcessingMode(str, Enum):
 
 class StreamStatus(str, Enum):
     """Stream processing status"""
+
     CONNECTING = "connecting"
     CONNECTED = "connected"
     PROCESSING = "processing"
@@ -95,6 +100,7 @@ class StreamStatus(str, Enum):
 
 class AlertType(str, Enum):
     """Real-time alert types"""
+
     QUALITY_ISSUE = "quality_issue"
     CONTENT_WARNING = "content_warning"
     PERFORMANCE_ISSUE = "performance_issue"
@@ -179,7 +185,8 @@ class StreamMetadata:
 
 @dataclass
 class StreamAnalytics:
-    """Real-time stream analytics"""
+    """
+Real-time stream analytics"""
     # Engagement metrics
     viewer_count: int = 0
     peak_viewers: int = 0
@@ -233,7 +240,8 @@ class StreamAlert:
 
 @dataclass
 class StreamFrame:
-    """Individual frame in a stream"""
+    """
+Individual frame in a stream"""
     frame_id: str
     timestamp: float
     frame_type: str  # video, audio, text, metadata

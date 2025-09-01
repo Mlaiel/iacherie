@@ -13,6 +13,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Copyright (C) 2024 Fahed Mlaiel. All rights reserved.
 For licensing inquiries: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class SerializerType(Enum):
-    """Supported serialization formats"""
+    """
+Supported serialization formats"""
+
     PICKLE = "pickle"
     JSON = "json"
     MSGPACK = "msgpack"
@@ -46,6 +49,7 @@ class SerializerType(Enum):
 
 class CompressionType(Enum):
     """Supported compression algorithms"""
+
     NONE = "none"
     ZLIB = "zlib"
     GZIP = "gzip"
@@ -53,6 +57,7 @@ class CompressionType(Enum):
 
 class EncryptionMode(Enum):
     """Encryption modes for sensitive data"""
+
     NONE = "none"
     FERNET = "fernet"
     AES = "aes"
@@ -162,18 +167,21 @@ class RedisMetrics:
     
     @property
     def hit_rate(self) -> float:
-        """Calculate cache hit rate"""
+        """
+Calculate cache hit rate"""
         total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
     
     @property
     def error_rate(self) -> float:
-        """Calculate error rate"""
+        """
+Calculate error rate"""
         total = self.operation_count
         return self.errors / total if total > 0 else 0.0
     
     def update_latency(self, latency: float):
-        """Update latency statistics"""
+        """
+Update latency statistics"""
         self.total_latency += latency
         self.operation_count += 1
         self.avg_latency = self.total_latency / self.operation_count
@@ -181,7 +189,8 @@ class RedisMetrics:
         self.min_latency = min(self.min_latency, latency)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
+        """
+Convert metrics to dictionary"""
         return {
             'performance': {
                 'hit_rate': self.hit_rate,
@@ -297,7 +306,8 @@ class RedisCache:
             return lambda data: data
     
     def _get_serialization_handler(self) -> Callable:
-        """Get serialization handler"""
+        """
+Get serialization handler"""
         if self.config.serializer == SerializerType.PICKLE:
             return lambda obj: pickle.dumps(obj, protocol=pickle.HIGHEST_PROTOCOL)
         elif self.config.serializer == SerializerType.JSON:
@@ -308,7 +318,8 @@ class RedisCache:
             return lambda obj: str(obj).encode('utf-8')
     
     def _get_deserialization_handler(self) -> Callable:
-        """Get deserialization handler"""
+        """
+Get deserialization handler"""
         if self.config.serializer == SerializerType.PICKLE:
             return pickle.loads
         elif self.config.serializer == SerializerType.JSON:
@@ -319,7 +330,8 @@ class RedisCache:
             return lambda data: data.decode('utf-8')
     
     async def connect(self):
-        """Establish Redis connection with enterprise features"""
+        """
+Establish Redis connection with enterprise features"""
         try:
             # SSL context setup
             ssl_context = None
@@ -422,7 +434,8 @@ class RedisCache:
         return ttl_mapping.get(content_type, self.config.creator_cache_ttl)
     
     def _serialize(self, value: Any) -> bytes:
-        """Advanced serialization with compression and encryption"""
+        """
+Advanced serialization with compression and encryption"""
         start_time = time.time()
         
         try:
@@ -793,7 +806,8 @@ class RedisCache:
                                    creator_id: str,
                                    profile_data: Dict[str, Any],
                                    ttl: Optional[int] = None) -> bool:
-        """Cache creator profile with optimized settings"""
+        """
+Cache creator profile with optimized settings"""
         return await self.set(
             key=f"profile:{creator_id}",
             value=profile_data,
@@ -1189,7 +1203,8 @@ class RedisCache:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for monitoring"""
+        """
+Comprehensive health check for monitoring"""
         try:
             if not self._redis:
                 await self.connect()
@@ -1451,7 +1466,8 @@ async def create_redis_cluster_cache(
     config: RedisConfig, 
     startup_nodes: List[Dict[str, Any]]
 ) -> RedisClusterCache:
-    """Create and connect Redis Cluster cache instance"""
+    """
+Create and connect Redis Cluster cache instance"""
     cache = RedisClusterCache(config, startup_nodes)
     await cache.connect()
     return cache
@@ -1461,7 +1477,8 @@ _redis_cache_instance: Optional[RedisCache] = None
 _redis_cluster_cache_instance: Optional[RedisClusterCache] = None
 
 async def get_redis_cache() -> RedisCache:
-    """Get or create global Redis cache instance"""
+    """
+Get or create global Redis cache instance"""
     global _redis_cache_instance
     
     if _redis_cache_instance is None:
@@ -1471,7 +1488,8 @@ async def get_redis_cache() -> RedisCache:
     return _redis_cache_instance
 
 async def get_redis_cluster_cache(startup_nodes: List[Dict[str, Any]]) -> RedisClusterCache:
-    """Get or create global Redis Cluster cache instance"""
+    """
+Get or create global Redis Cluster cache instance"""
     global _redis_cluster_cache_instance
     
     if _redis_cluster_cache_instance is None:

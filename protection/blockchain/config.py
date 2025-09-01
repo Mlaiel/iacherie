@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, Any, List, Optional
 from enum import Enum
 import os
@@ -26,7 +27,9 @@ from dataclasses import dataclass
 
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -86,7 +89,8 @@ class BlockchainConfig:
             self.api_keys = {}
     
     def _get_default_ethereum_config(self) -> Dict[str, Any]:
-        """Default Ethereum configuration"""
+        """
+Default Ethereum configuration"""
         if self.environment == Environment.PRODUCTION:
             return {
                 'name': 'Ethereum Mainnet',
@@ -109,7 +113,8 @@ class BlockchainConfig:
             }
     
     def _get_default_polygon_config(self) -> Dict[str, Any]:
-        """Default Polygon configuration"""
+        """
+Default Polygon configuration"""
         if self.environment == Environment.PRODUCTION:
             return {
                 'name': 'Polygon Mainnet',
@@ -132,7 +137,8 @@ class BlockchainConfig:
             }
     
     def _get_default_bsc_config(self) -> Dict[str, Any]:
-        """Default Binance Smart Chain configuration"""
+        """
+Default Binance Smart Chain configuration"""
         if self.environment == Environment.PRODUCTION:
             return {
                 'name': 'BSC Mainnet',
@@ -155,7 +161,8 @@ class BlockchainConfig:
             }
     
     def _get_default_ipfs_config(self) -> Dict[str, Any]:
-        """Default IPFS configuration"""
+        """
+Default IPFS configuration"""
         return {
             'api_url': '/ip4/127.0.0.1/tcp/5001',
             'gateway_url': 'https://ipfs.io/ipfs/',
@@ -169,7 +176,8 @@ class BlockchainConfig:
         }
     
     def _get_default_arweave_config(self) -> Dict[str, Any]:
-        """Default Arweave configuration"""
+        """
+Default Arweave configuration"""
         return {
             'host': 'arweave.net',
             'port': 443,
@@ -180,7 +188,8 @@ class BlockchainConfig:
 
 
 def load_config_from_env() -> BlockchainConfig:
-    """Load configuration from environment variables"""
+    """
+Load configuration from environment variables"""
     config = BlockchainConfig()
     
     # Environment detection
@@ -228,7 +237,8 @@ def load_config_from_env() -> BlockchainConfig:
 
 
 def get_production_config() -> BlockchainConfig:
-    """Get production-ready configuration"""
+    """
+Get production-ready configuration"""
     config = BlockchainConfig(
         environment=Environment.PRODUCTION,
         debug_mode=False,
@@ -247,7 +257,8 @@ def get_production_config() -> BlockchainConfig:
 
 
 def get_development_config() -> BlockchainConfig:
-    """Get development configuration"""
+    """
+Get development configuration"""
     return BlockchainConfig(
         environment=Environment.DEVELOPMENT,
         debug_mode=True,
@@ -258,7 +269,8 @@ def get_development_config() -> BlockchainConfig:
 
 
 def get_testing_config() -> BlockchainConfig:
-    """Get testing configuration"""
+    """
+Get testing configuration"""
     return BlockchainConfig(
         environment=Environment.TESTING,
         debug_mode=True,

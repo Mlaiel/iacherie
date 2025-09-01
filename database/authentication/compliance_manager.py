@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timedelta, timezone
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     SOC2 = "soc2"  # Service Organization Control 2
@@ -55,6 +58,7 @@ class ComplianceFramework(Enum):
 
 class DataCategory(Enum):
     """Personal data categories"""
+
     PERSONAL_IDENTITY = "personal_identity"  # Name, email, phone
     BIOMETRIC_DATA = "biometric_data"  # Fingerprints, face recognition
     LOCATION_DATA = "location_data"  # GPS, IP geolocation
@@ -69,6 +73,7 @@ class DataCategory(Enum):
 
 class ProcessingPurpose(Enum):
     """Data processing purposes"""
+
     AUTHENTICATION = "authentication"
     CONTENT_PROTECTION = "content_protection"
     PERSONALIZATION = "personalization"
@@ -83,6 +88,7 @@ class ProcessingPurpose(Enum):
 
 class LegalBasis(Enum):
     """GDPR legal basis for processing"""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -93,6 +99,7 @@ class LegalBasis(Enum):
 
 class ConsentStatus(Enum):
     """User consent status"""
+
     GIVEN = "given"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
@@ -112,7 +119,8 @@ class DataRetentionPolicy:
 
 
 class GDPRCompliance(Base):
-    """GDPR compliance tracking"""
+    """
+GDPR compliance tracking"""
     __tablename__ = "gdpr_compliance"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -265,7 +273,8 @@ class ComplianceManager:
         self.retention_policies = self._initialize_retention_policies()
     
     def _initialize_retention_policies(self) -> Dict[str, DataRetentionPolicy]:
-        """Initialize default data retention policies"""
+        """
+Initialize default data retention policies"""
         return {
             "authentication_logs": DataRetentionPolicy(
                 retention_period_days=2555,  # 7 years

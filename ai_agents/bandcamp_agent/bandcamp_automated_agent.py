@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BandcampTrack:
-    """Bandcamp track information"""
+    """
+Bandcamp track information"""
     track_id: str
     title: str
     artist: str
@@ -43,7 +44,8 @@ class BandcampTrack:
 
 @dataclass
 class BandcampAlbum:
-    """Bandcamp album information"""
+    """
+Bandcamp album information"""
     album_id: str
     title: str
     artist: str
@@ -61,7 +63,8 @@ class BandcampAlbum:
 
 @dataclass
 class BandcampFan:
-    """Bandcamp fan information"""
+    """
+Bandcamp fan information"""
     fan_id: str
     username: str
     location: Optional[str]
@@ -75,7 +78,8 @@ class BandcampFan:
 
 @dataclass
 class BandcampSalesData:
-    """Bandcamp sales analytics"""
+    """
+Bandcamp sales analytics"""
     item_id: str
     item_type: str  # track, album
     sales_period: str  # daily, weekly, monthly
@@ -90,7 +94,8 @@ class BandcampSalesData:
 
 @dataclass
 class DistributionJob:
-    """Bandcamp distribution job"""
+    """
+Bandcamp distribution job"""
     job_id: str
     status: str  # pending, processing, completed, failed
     item_type: str  # track, album
@@ -245,7 +250,8 @@ class BandcampAutomatedAgent:
     # Automated Distribution
     async def upload_track(self, file_path: str, metadata: Dict[str, Any],
                           pricing: Optional[Dict[str, Any]] = None) -> DistributionJob:
-        """Upload and distribute a single track"""
+        """
+Upload and distribute a single track"""
         job_id = f"track_{hashlib.md5(f"{file_path}{datetime.now().isoformat()}".encode()).hexdigest()[:8]}"
         
         # Apply default pricing if not provided

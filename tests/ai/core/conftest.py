@@ -4,8 +4,9 @@ Advanced test configuration with fixtures, mocks, and test utilities.
 Provides enterprise-grade testing infrastructure.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import tempfile
 import shutil
@@ -48,7 +49,8 @@ def mock_creators():
 
 @pytest.fixture
 def temp_dir():
-    """Temporary directory fixture"""
+    """
+Temporary directory fixture"""
     temp_path = tempfile.mkdtemp()
     yield temp_path
     shutil.rmtree(temp_path, ignore_errors=True)
@@ -56,7 +58,8 @@ def temp_dir():
 
 @pytest.fixture
 def temp_file():
-    """Temporary file fixture"""
+    """
+Temporary file fixture"""
     fd, temp_path = tempfile.mkstemp()
     os.close(fd)
     yield temp_path
@@ -68,7 +71,8 @@ def temp_file():
 
 @pytest.fixture
 def temp_config_file():
-    """Temporary configuration file fixture"""
+    """
+Temporary configuration file fixture"""
     config_data = {
         "environment": "test",
         "debug_mode": True,
@@ -271,7 +275,8 @@ def mock_redis_cache():
 
 @pytest.fixture
 def mock_external_api():
-    """Mock external API fixture"""
+    """
+Mock external API fixture"""
     api_mock = MagicMock()
     api_mock.get.return_value = {"status": "success", "data": {"result": "test"}}
     api_mock.post.return_value = {"status": "success", "id": "123"}
@@ -290,7 +295,8 @@ def event_loop():
 
 @pytest.fixture
 async def async_test_client():
-    """Async test client fixture"""
+    """
+Async test client fixture"""
     from aiohttp import ClientSession
     async with ClientSession() as session:
         yield session
@@ -381,7 +387,8 @@ def capture_logs():
 # Error handling for tests
 @pytest.fixture
 def error_handler():
-    """Error handling fixture for tests"""
+    """
+Error handling fixture for tests"""
     errors = []
     
     def handle_error(error):
@@ -393,7 +400,8 @@ def error_handler():
 # Mock patches for external dependencies
 @pytest.fixture
 def mock_torch():
-    """Mock PyTorch for tests"""
+    """
+Mock PyTorch for tests"""
     with patch('torch.cuda.is_available', return_value=True), \
          patch('torch.cuda.device_count', return_value=1), \
          patch('torch.cuda.get_device_name', return_value="Mock GPU"):
@@ -413,7 +421,8 @@ def mock_transformers():
 
 @pytest.fixture
 def mock_psutil():
-    """Mock psutil for system monitoring tests"""
+    """
+Mock psutil for system monitoring tests"""
     with patch('psutil.cpu_percent', return_value=45.5), \
          patch('psutil.virtual_memory') as mock_memory, \
          patch('psutil.disk_usage') as mock_disk:
@@ -438,7 +447,8 @@ def mock_psutil():
 # Test data generators
 @pytest.fixture
 def generate_test_audio_content():
-    """Generate test audio content"""
+    """
+Generate test audio content"""
     def _generate(duration=180, format="mp3", quality="high"):
         return {
             "type": "audio",

@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -13,6 +13,7 @@ LOGIQUE MÉTIER BASE PROCESSOR:
 Input Data → Validation → Processing → Feature Extraction → 
 Output Generation → Quality Check → Performance Monitoring
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 import logging
@@ -20,7 +21,8 @@ import time
 from datetime import datetime, timezone
 
 class BaseProcessor(ABC):
-    """Processeur de base pour traitement de données"""
+    """
+Processeur de base pour traitement de données"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -142,7 +144,8 @@ class BaseProcessor(ABC):
         return self.processing_stats.copy()
     
     def reset_stats(self):
-        """Remet à zéro les statistiques"""
+        """
+Remet à zéro les statistiques"""
         self.processing_stats = {
             "total_processed": 0,
             "total_errors": 0,
@@ -271,7 +274,8 @@ class AsyncBaseProcessor(ABC):
         return self.processing_stats.copy()
     
     def reset_stats(self):
-        """Remet à zéro les statistiques"""
+        """
+Remet à zéro les statistiques"""
         self.processing_stats = {
             "total_processed": 0,
             "total_errors": 0,

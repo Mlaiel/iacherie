@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -55,7 +56,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class PoolingStrategy(Enum):
-    """Agent pooling and scaling strategies"""
+    """
+Agent pooling and scaling strategies"""
+
     FIXED_SIZE = "fixed_size"
     DYNAMIC_SCALING = "dynamic_scaling" 
     LOAD_BALANCED = "load_balanced"
@@ -77,7 +80,8 @@ class AgentPool:
     
 @dataclass  
 class RoutingRule:
-    """Request routing rules for load balancing"""
+    """
+Request routing rules for load balancing"""
     condition: str  # Python expression
     target_agent_type: str
     priority_boost: int = 0
@@ -199,7 +203,8 @@ class AgentManager:
         strategy: PoolingStrategy = PoolingStrategy.DYNAMIC_SCALING,
         agent_class: Optional[Type[BaseAgent]] = None
     ):
-        """Register a new agent pool with specified configuration"""
+        """
+Register a new agent pool with specified configuration"""
         if agent_type in self.pools:
             # Attach class and top up instances if pool already exists
             pool = self.pools[agent_type]
@@ -357,7 +362,8 @@ class AgentManager:
         agent_type: str, 
         priority: AgentPriority = AgentPriority.NORMAL
     ) -> Optional[BaseAgent]:
-        """Get available agent from pool using load balancing"""
+        """
+Get available agent from pool using load balancing"""
         
         if agent_type not in self.pools:
             logger.error(f"Unknown agent type: {agent_type}")
@@ -415,7 +421,8 @@ class AgentManager:
             await self._scale_down_pool(pool)
     
     async def _scale_up_pool(self, pool: AgentPool):
-        """Scale up agent pool by adding new instance"""
+        """
+Scale up agent pool by adding new instance"""
         try:
             if pool.agent_class is None:
                 logger.warning(f"Cannot scale up {pool.agent_type}: missing agent_class")
@@ -490,7 +497,8 @@ class AgentManager:
         self.request_stats['requests_by_agent_type'][agent_type] += 1
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
+        """
+Get comprehensive system status"""
         pool_status = {}
         
         for agent_type, pool in self.pools.items():
@@ -521,7 +529,8 @@ class AgentManager:
     
     # Background monitoring tasks
     async def _health_monitor_task(self):
-        """Background task for monitoring agent health"""
+        """
+Background task for monitoring agent health"""
         while self.is_running and not self.shutdown_requested:
             try:
                 for pool in self.pools.values():

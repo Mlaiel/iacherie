@@ -7,6 +7,7 @@ real-time audio processing, and streaming analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -17,7 +18,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class StreamingProtocol(Enum):
-    """Streaming protocols supported"""
+    """
+Streaming protocols supported"""
+
     RTMP = "rtmp"
     HLS = "hls"
     DASH = "dash"
@@ -30,6 +33,7 @@ class StreamingProtocol(Enum):
 
 class StreamQuality(Enum):
     """Audio streaming quality levels"""
+
     LOW = "low"          # 64 kbps
     MEDIUM = "medium"    # 128 kbps
     HIGH = "high"        # 256 kbps
@@ -39,6 +43,7 @@ class StreamQuality(Enum):
 
 class StreamingPlatform(Enum):
     """Supported streaming platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"

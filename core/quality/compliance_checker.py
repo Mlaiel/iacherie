@@ -10,7 +10,7 @@ Copyright compliance → Data privacy validation → Regulatory compliance →
 Protection compliance → Violation detection → Compliance reporting
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -19,6 +19,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import re
 from datetime import datetime, timezone
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceCategory(Enum):
-    """Categories of compliance requirements"""
+    """
+Categories of compliance requirements"""
+
     PLATFORM_POLICY = "platform_policy"
     LEGAL_REGULATORY = "legal_regulatory"
     DATA_PRIVACY = "data_privacy"
@@ -44,6 +47,7 @@ class ComplianceCategory(Enum):
 
 class ComplianceSeverity(Enum):
     """Compliance violation severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -52,6 +56,7 @@ class ComplianceSeverity(Enum):
 
 class Platform(Enum):
     """Supported platforms for compliance checking"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -65,6 +70,7 @@ class Platform(Enum):
 
 class Jurisdiction(Enum):
     """Legal jurisdictions"""
+
     EU = "eu"  # European Union
     US = "us"  # United States
     DE = "de"  # Germany
@@ -104,13 +110,15 @@ class ComplianceRule:
         return Platform.GENERIC in self.platforms or platform in self.platforms
     
     def applies_to_jurisdiction(self, jurisdiction: Jurisdiction) -> bool:
-        """Check if rule applies to specific jurisdiction"""
+        """
+Check if rule applies to specific jurisdiction"""
         return Jurisdiction.GLOBAL in self.jurisdictions or jurisdiction in self.jurisdictions
 
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation"""
+    """
+Individual compliance violation"""
     rule_id: str
     rule_name: str
     category: ComplianceCategory
@@ -153,7 +161,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report"""
+    """
+Comprehensive compliance assessment report"""
     content_id: str
     overall_compliance_score: float  # 0-100
     is_compliant: bool
@@ -180,7 +189,8 @@ class ComplianceReport:
     jurisdictions_checked: List[Jurisdiction] = field(default_factory=list)
     
     def add_violation(self, violation: ComplianceViolation):
-        """Add a compliance violation"""
+        """
+Add a compliance violation"""
         self.violations.append(violation)
         self.total_violations += 1
         
@@ -192,15 +202,18 @@ class ComplianceReport:
             self.warning_violations += 1
     
     def get_violations_by_category(self, category: ComplianceCategory) -> List[ComplianceViolation]:
-        """Get violations by category"""
+        """
+Get violations by category"""
         return [v for v in self.violations if v.category == category]
     
     def get_critical_violations(self) -> List[ComplianceViolation]:
-        """Get critical violations"""
+        """
+Get critical violations"""
         return [v for v in self.violations if v.severity == ComplianceSeverity.CRITICAL]
     
     def has_blocking_violations(self) -> bool:
-        """Check if there are blocking violations"""
+        """
+Check if there are blocking violations"""
         return self.critical_violations > 0 or self.violation_violations > 0
     
     def to_dict(self) -> Dict[str, Any]:
@@ -227,13 +240,15 @@ class ComplianceReport:
 
 
 class PlatformPolicyChecker:
-    """Platform-specific policy compliance checker"""
+    """
+Platform-specific policy compliance checker"""
     
     def __init__(self):
         self.platform_rules = self._initialize_platform_rules()
     
     def _initialize_platform_rules(self) -> Dict[Platform, List[ComplianceRule]]:
-        """Initialize platform-specific compliance rules"""
+        """
+Initialize platform-specific compliance rules"""
         rules = {
             Platform.YOUTUBE: [
                 ComplianceRule(
@@ -354,7 +369,8 @@ class PlatformPolicyChecker:
     
     def _check_length_constraint(self, content_data: Dict[str, Any], 
                                rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check length constraints"""
+        """
+Check length constraints"""
         violations = []
         
         # Determine which field to check based on rule
@@ -505,7 +521,8 @@ class LegalComplianceChecker:
         self.legal_rules = self._initialize_legal_rules()
     
     def _initialize_legal_rules(self) -> List[ComplianceRule]:
-        """Initialize legal compliance rules"""
+        """
+Initialize legal compliance rules"""
         return [
             ComplianceRule(
                 id="gdpr_data_collection",
@@ -548,7 +565,7 @@ class LegalComplianceChecker:
                 severity=ComplianceSeverity.CRITICAL,
                 platforms=[Platform.GENERIC],
                 jurisdictions=[Jurisdiction.GLOBAL],
-                keywords=["copyright", "©", "all rights reserved"],
+                keywords=["copyright", "(c)", "all rights reserved"],
                 source="Copyright Law"
             )
         ]
@@ -574,7 +591,8 @@ class LegalComplianceChecker:
     
     def _check_required_fields(self, content_data: Dict[str, Any],
                               rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check for required compliance fields"""
+        """
+Check for required compliance fields"""
         violations = []
         
         for required_field in rule.required_fields:
@@ -736,7 +754,8 @@ class ComplianceChecker:
         return max(0.0, base_score)
     
     def _generate_recommendations(self, report: ComplianceReport) -> List[str]:
-        """Generate compliance recommendations"""
+        """
+Generate compliance recommendations"""
         recommendations = []
         
         # Score-based recommendations
@@ -787,7 +806,8 @@ class ComplianceChecker:
         return list(actions)
     
     def get_platform_requirements(self, platform: Platform) -> Dict[str, Any]:
-        """Get compliance requirements for specific platform"""
+        """
+Get compliance requirements for specific platform"""
         if platform in self.platform_checker.platform_rules:
             rules = self.platform_checker.platform_rules[platform]
             return {
@@ -808,7 +828,8 @@ class ComplianceChecker:
         return {'platform': platform.value, 'total_rules': 0, 'rules': []}
     
     def get_jurisdiction_requirements(self, jurisdiction: Jurisdiction) -> Dict[str, Any]:
-        """Get compliance requirements for specific jurisdiction"""
+        """
+Get compliance requirements for specific jurisdiction"""
         applicable_rules = [
             rule for rule in self.legal_checker.legal_rules
             if rule.applies_to_jurisdiction(jurisdiction)
@@ -833,7 +854,8 @@ class ComplianceChecker:
     def batch_check_compliance(self, content_items: List[Dict[str, Any]],
                               platforms: List[Platform] = None,
                               jurisdictions: List[Jurisdiction] = None) -> List[ComplianceReport]:
-        """Check compliance for multiple content items"""
+        """
+Check compliance for multiple content items"""
         reports = []
         
         for i, content_data in enumerate(content_items):
@@ -844,7 +866,8 @@ class ComplianceChecker:
         return reports
     
     def get_compliance_summary(self, reports: List[ComplianceReport]) -> Dict[str, Any]:
-        """Get summary statistics for multiple compliance reports"""
+        """
+Get summary statistics for multiple compliance reports"""
         if not reports:
             return {}
         

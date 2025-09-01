@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -72,7 +73,8 @@ class IAInfluencerNetworkEnterpriseIntegration:
         }
     
     async def deploy_enterprise_platform(self):
-        """Deploy complete enterprise network platform"""
+        """
+Deploy complete enterprise network platform"""
         try:
             print("🚀 DEPLOYING IA INFLUENCER ENTERPRISE NETWORK PLATFORM")
             print("=" * 70)

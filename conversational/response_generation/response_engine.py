@@ -6,6 +6,7 @@ with multi-modal support, contextual intelligence, and business optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,7 +27,9 @@ from ...core.cache import CacheManager
 
 
 class ResponseType(Enum):
-    """Response type enumeration for classification"""
+    """
+Response type enumeration for classification"""
+
     TEXT = "text"
     AUDIO = "audio"
     VISUAL = "visual"
@@ -39,6 +42,7 @@ class ResponseType(Enum):
 
 class ResponsePriority(Enum):
     """Response priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -82,7 +86,8 @@ class ResponseRequest(BaseModel):
 
 
 class GeneratedResponse(BaseModel):
-    """Generated response data structure"""
+    """
+Generated response data structure"""
     response_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     text: str
     response_type: ResponseType
@@ -99,7 +104,8 @@ class GeneratedResponse(BaseModel):
 
 
 class ResponseValidator:
-    """Advanced response validation and quality assurance"""
+    """
+Advanced response validation and quality assurance"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -219,7 +225,8 @@ class ResponseValidator:
             return max(0.3, max_len / length)
     
     async def _language_validation(self, response: str, language: str) -> float:
-        """Language quality and consistency validation"""
+        """
+Language quality and consistency validation"""
         # Simplified language validation - in production, use proper NLP tools
         if language == "en":
             return 1.0 if response.isascii() else 0.8
@@ -240,7 +247,8 @@ class ResponseValidator:
         return max(0.0, coherence_score)
     
     def _assess_relevance(self, response: str, context: ResponseContext) -> float:
-        """Assess response relevance to context"""
+        """
+Assess response relevance to context"""
         if not context.current_intent:
             return 0.5
         
@@ -273,7 +281,8 @@ class ResponseValidator:
             return max(0.4, 25 / avg_sentence_length)
     
     def _assess_completeness(self, response: str, context: ResponseContext) -> float:
-        """Assess response completeness"""
+        """
+Assess response completeness"""
         # Check if response addresses the main points
         if len(response.split()) < 10:
             return 0.5
@@ -281,7 +290,8 @@ class ResponseValidator:
         return 0.9 if len(response.split()) >= 20 else 0.7
     
     def _assess_tone_match(self, response: str, preferred_tone: str) -> float:
-        """Assess tone matching with user preferences"""
+        """
+Assess tone matching with user preferences"""
         tone_indicators = {
             "professional": ["professional", "business", "formal", "enterprise"],
             "casual": ["casual", "friendly", "relaxed", "informal"],
@@ -470,7 +480,8 @@ class ResponseOptimizer:
         return ' '.join(clear_sentences).replace('..', '.')
     
     async def _optimize_for_engagement(self, response: str, context: ResponseContext, goals: Dict[str, float]) -> str:
-        """Optimize response for engagement"""
+        """
+Optimize response for engagement"""
         engagement_phrases = [
             "Here's what I recommend:",
             "Let me help you with that:",
@@ -1031,7 +1042,8 @@ class ResponseOrchestrator:
         return []
     
     async def _determine_response_type(self, user_input: str, context: ResponseContext) -> ResponseType:
-        """Determine appropriate response type"""
+        """
+Determine appropriate response type"""
         input_lower = user_input.lower()
         
         if any(word in input_lower for word in ["alert", "warning", "urgent", "critical"]):

@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Union, Callable, Any, Tuple
@@ -32,7 +33,9 @@ from ..core.validators import AudioValidator
 
 
 class PipelineMode(Enum):
-    """Processing pipeline modes"""
+    """
+Processing pipeline modes"""
+
     SINGLE_PASS = "single_pass"              # One-time enhancement
     MULTI_PASS = "multi_pass"                # Multiple enhancement passes
     ADAPTIVE_QUALITY = "adaptive_quality"    # Quality-guided enhancement
@@ -42,6 +45,7 @@ class PipelineMode(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -66,7 +70,8 @@ class PipelineConfig:
 
 @dataclass
 class ProcessingTask:
-    """Individual processing task definition"""
+    """
+Individual processing task definition"""
     task_id: str
     audio: np.ndarray
     sample_rate: int
@@ -80,7 +85,8 @@ class ProcessingTask:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline processing result"""
+    """
+Complete pipeline processing result"""
     task_id: str
     success: bool
     enhancement_result: Optional[EnhancementResult] = None
@@ -104,7 +110,8 @@ class AudioEnhancementPipeline:
     def __init__(self, 
                  config: Optional[PipelineConfig] = None,
                  config_dir: Optional[Union[str, Path]] = None):
-        """Initialize audio enhancement pipeline"""
+        """
+Initialize audio enhancement pipeline"""
         self.logger = logging.getLogger(__name__)
         
         # Configuration
@@ -138,12 +145,14 @@ class AudioEnhancementPipeline:
         self.progress_callbacks.append(callback)
     
     def remove_progress_callback(self, callback: Callable[[str, str, float], None]):
-        """Remove progress callback function"""
+        """
+Remove progress callback function"""
         if callback in self.progress_callbacks:
             self.progress_callbacks.remove(callback)
     
     def _notify_progress(self, task_id: str, stage: str, progress: float):
-        """Notify progress callbacks"""
+        """
+Notify progress callbacks"""
         if self.config.enable_progress_callback:
             for callback in self.progress_callbacks:
                 try:
@@ -289,7 +298,8 @@ class AudioEnhancementPipeline:
         return EnhancementParameters()
     
     def _analyze_audio_content(self, audio: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio content for adaptive parameter selection"""
+        """
+Analyze audio content for adaptive parameter selection"""
         analysis = {}
         
         try:
@@ -475,7 +485,8 @@ class AudioEnhancementPipeline:
                                      current_parameters: EnhancementParameters,
                                      current_metrics: QualityMetrics,
                                      original_metrics: Optional[QualityMetrics]) -> EnhancementParameters:
-        """Adapt parameters based on current quality metrics"""
+        """
+Adapt parameters based on current quality metrics"""
         adapted = EnhancementParameters(**current_parameters.__dict__)
         
         if original_metrics is None:
@@ -499,7 +510,8 @@ class AudioEnhancementPipeline:
     
     def start_realtime_processing(self, 
                                  realtime_config: Optional[RealTimeConfig] = None) -> bool:
-        """Start real-time processing mode"""
+        """
+Start real-time processing mode"""
         if self.realtime_processor and self.realtime_processor.is_running:
             self.logger.warning("Real-time processing already running")
             return False
@@ -537,14 +549,16 @@ class AudioEnhancementPipeline:
         return self.realtime_processor.process_audio_chunk(audio_chunk)
     
     def get_realtime_output(self, num_samples: int) -> Optional[np.ndarray]:
-        """Get processed real-time audio output"""
+        """
+Get processed real-time audio output"""
         if not self.realtime_processor:
             return None
         
         return self.realtime_processor.get_processed_audio(num_samples)
     
     def submit_batch_task(self, task: ProcessingTask):
-        """Submit task for batch processing"""
+        """
+Submit task for batch processing"""
         with self.processing_lock:
             self.task_queue.append(task)
             self.active_tasks[task.task_id] = task
@@ -609,7 +623,8 @@ class AudioEnhancementPipeline:
         )
     
     def stop_batch_processing(self):
-        """Stop batch processing"""
+        """
+Stop batch processing"""
         if self.batch_executor:
             self.batch_executor.shutdown(wait=True)
             self.batch_executor = None
@@ -632,7 +647,8 @@ class AudioEnhancementPipeline:
                 return {'status': 'not_found'}
     
     def get_pipeline_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive pipeline statistics"""
+        """
+Get comprehensive pipeline statistics"""
         with self.processing_lock:
             completed_results = list(self.completed_tasks.values())
         
@@ -674,7 +690,8 @@ class AudioEnhancementPipeline:
         return stats
     
     def cleanup_completed_tasks(self, keep_recent: int = 100):
-        """Clean up old completed tasks to free memory"""
+        """
+Clean up old completed tasks to free memory"""
         with self.processing_lock:
             if len(self.completed_tasks) <= keep_recent:
                 return
@@ -722,6 +739,7 @@ class AudioEnhancementPipeline:
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.stop_realtime_processing()
         self.stop_batch_processing()

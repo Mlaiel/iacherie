@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import logging
@@ -343,7 +344,8 @@ class EnterpriseRightsProtectionService:
         method: ProtectionMethod,
         fingerprint_data: FingerprintResult
     ) -> ProtectionRecord:
-        """Apply specific protection method to asset"""
+        """
+Apply specific protection method to asset"""
         try:
             details = {}
             
@@ -628,7 +630,8 @@ class EnterpriseRightsProtectionService:
         return params
 
     async def _search_platform_content(self, platform: str, search_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Search platform for potential violations (would use actual APIs)"""
+        """
+Search platform for potential violations (would use actual APIs)"""
         # This would implement actual platform API calls
         # For now, simulate search results
         
@@ -653,7 +656,8 @@ class EnterpriseRightsProtectionService:
         return simulated_results
 
     async def _compare_digital_fingerprints(self, original_hash: str, suspect_data: str) -> float:
-        """Compare digital fingerprints for similarity"""
+        """
+Compare digital fingerprints for similarity"""
         if not original_hash or not suspect_data:
             return 0.0
         
@@ -662,7 +666,8 @@ class EnterpriseRightsProtectionService:
         return 0.85 if hashlib.sha256(suspect_data.encode()).hexdigest() == original_hash else 0.3
 
     async def _compare_perceptual_hashes(self, original_hash: str, suspect_data: str) -> float:
-        """Compare perceptual hashes for similarity"""
+        """
+Compare perceptual hashes for similarity"""
         if not original_hash or not suspect_data:
             return 0.0
         
@@ -675,7 +680,8 @@ class EnterpriseRightsProtectionService:
         return 0.0
 
     async def _classify_violation_type(self, similarity_score: float, result_data: Dict[str, Any]) -> ViolationType:
-        """Classify the type of violation based on similarity and context"""
+        """
+Classify the type of violation based on similarity and context"""
         if similarity_score >= 0.95:
             return ViolationType.EXACT_COPY
         elif similarity_score >= 0.85:
@@ -688,7 +694,8 @@ class EnterpriseRightsProtectionService:
             return ViolationType.COMMERCIAL_USE  # Default assumption
 
     async def _determine_automated_actions(self, violation_type: ViolationType, similarity: float) -> List[str]:
-        """Determine automated enforcement actions based on violation"""
+        """
+Determine automated enforcement actions based on violation"""
         actions = []
         
         if similarity >= 0.90 and self.auto_dmca_enabled:
@@ -796,7 +803,8 @@ class EnterpriseRightsProtectionService:
         return sum(factors) / len(factors) if factors else 0.5
 
     async def _assess_vulnerability(self, asset: ContentAsset) -> float:
-        """Assess vulnerability score (higher = more vulnerable)"""
+        """
+Assess vulnerability score (higher = more vulnerable)"""
         vulnerability_factors = []
         
         # Public accessibility
@@ -820,7 +828,8 @@ class EnterpriseRightsProtectionService:
         return sum(vulnerability_factors) / len(vulnerability_factors)
 
     async def _generate_protection_recommendations(self, asset: ContentAsset, protection_score: float) -> List[str]:
-        """Generate protection improvement recommendations"""
+        """
+Generate protection improvement recommendations"""
         recommendations = []
         
         if protection_score < 0.7:
@@ -866,7 +875,8 @@ class EnterpriseRightsProtectionService:
         return min(1.0, max(0.0, final_score))
 
     async def _cache_protection_data(self, asset_id: int, report: ProtectionReport) -> None:
-        """Cache protection data for quick access"""
+        """
+Cache protection data for quick access"""
         try:
             cache_key = f"protection:report:{asset_id}"
             self.redis_client.setex(

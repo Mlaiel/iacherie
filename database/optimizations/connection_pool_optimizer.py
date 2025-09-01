@@ -6,6 +6,7 @@ circuit breakers, and intelligent resource management.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import statistics
@@ -24,7 +25,9 @@ logger = get_logger(__name__)
 
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies"""
+    """
+Load balancing strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -34,6 +37,7 @@ class LoadBalancingStrategy(Enum):
 
 class CircuitBreakerState(Enum):
     """Circuit breaker states"""
+
     CLOSED = "closed"
     OPEN = "open"
     HALF_OPEN = "half_open"
@@ -50,7 +54,8 @@ class ConnectionMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
     
     def update_response_time(self, response_time: float):
-        """Update average response time"""
+        """
+Update average response time"""
         if self.connection_count == 0:
             self.avg_response_time = response_time
         else:
@@ -63,7 +68,8 @@ class ConnectionMetrics:
 
 @dataclass
 class PoolOptimizationConfig:
-    """Pool optimization configuration"""
+    """
+Pool optimization configuration"""
     adaptive_sizing_enabled: bool = True
     load_balancing_strategy: LoadBalancingStrategy = LoadBalancingStrategy.ADAPTIVE
     circuit_breaker_enabled: bool = True
@@ -83,7 +89,8 @@ class PoolOptimizationConfig:
 
 
 class LoadBalancer:
-    """Intelligent load balancer for database connections"""
+    """
+Intelligent load balancer for database connections"""
     
     def __init__(self, strategy: LoadBalancingStrategy):
         self.strategy = strategy
@@ -93,7 +100,8 @@ class LoadBalancer:
         self._lock = asyncio.Lock()
     
     async def select_pool(self, available_pools: List[str]) -> str:
-        """Select optimal pool based on strategy"""
+        """
+Select optimal pool based on strategy"""
         async with self._lock:
             if not available_pools:
                 raise ValueError("No available pools")
@@ -121,7 +129,8 @@ class LoadBalancer:
         return selected
     
     def _least_connections_select(self, pools: List[str]) -> str:
-        """Select pool with least active connections"""
+        """
+Select pool with least active connections"""
         min_connections = float('inf')
         selected_pool = pools[0]
         
@@ -134,7 +143,8 @@ class LoadBalancer:
         return selected_pool
     
     def _weighted_round_robin_select(self, pools: List[str]) -> str:
-        """Weighted round-robin based on pool weights"""
+        """
+Weighted round-robin based on pool weights"""
         if not self.pool_weights:
             return self._round_robin_select(pools)
         
@@ -158,7 +168,8 @@ class LoadBalancer:
         return pools[0]
     
     def _response_time_select(self, pools: List[str]) -> str:
-        """Select pool with best response time"""
+        """
+Select pool with best response time"""
         best_time = float('inf')
         selected_pool = pools[0]
         
@@ -171,7 +182,8 @@ class LoadBalancer:
         return selected_pool
     
     def _adaptive_select(self, pools: List[str]) -> str:
-        """Adaptive selection based on multiple factors"""
+        """
+Adaptive selection based on multiple factors"""
         scores = {}
         
         for pool_id in pools:
@@ -197,16 +209,19 @@ class LoadBalancer:
         return max(scores.keys(), key=lambda k: scores[k])
     
     def update_metrics(self, pool_id: str, metrics: ConnectionMetrics):
-        """Update pool metrics for load balancing decisions"""
+        """
+Update pool metrics for load balancing decisions"""
         self.pool_metrics[pool_id] = metrics
     
     def set_pool_weight(self, pool_id: str, weight: float):
-        """Set weight for specific pool"""
+        """
+Set weight for specific pool"""
         self.pool_weights[pool_id] = weight
 
 
 class CircuitBreaker:
-    """Circuit breaker for database connections"""
+    """
+Circuit breaker for database connections"""
     
     def __init__(self, config: PoolOptimizationConfig):
         self.config = config
@@ -217,7 +232,8 @@ class CircuitBreaker:
         self._lock = asyncio.Lock()
     
     async def call_allowed(self) -> bool:
-        """Check if call is allowed through circuit breaker"""
+        """
+Check if call is allowed through circuit breaker"""
         async with self._lock:
             if self.state == CircuitBreakerState.CLOSED:
                 return True
@@ -235,7 +251,8 @@ class CircuitBreaker:
             return False
     
     async def record_success(self):
-        """Record successful operation"""
+        """
+Record successful operation"""
         async with self._lock:
             if self.state == CircuitBreakerState.HALF_OPEN:
                 self.half_open_calls += 1
@@ -249,7 +266,8 @@ class CircuitBreaker:
                 self.failure_count = max(0, self.failure_count - 1)
     
     async def record_failure(self):
-        """Record failed operation"""
+        """
+Record failed operation"""
         async with self._lock:
             self.failure_count += 1
             self.last_failure_time = datetime.now()
@@ -263,7 +281,8 @@ class CircuitBreaker:
                 self.state = CircuitBreakerState.OPEN
     
     def get_state(self) -> Dict[str, Any]:
-        """Get circuit breaker state"""
+        """
+Get circuit breaker state"""
         return {
             'state': self.state.value,
             'failure_count': self.failure_count,
@@ -273,7 +292,8 @@ class CircuitBreaker:
 
 
 class AdaptivePoolSizer:
-    """Adaptive pool sizing based on workload"""
+    """
+Adaptive pool sizing based on workload"""
     
     def __init__(self, config: PoolOptimizationConfig):
         self.config = config
@@ -282,7 +302,8 @@ class AdaptivePoolSizer:
     
     async def should_scale_pool(self, pool_id: str, current_metrics: ConnectionMetrics, 
                               current_size: int, max_size: int, min_size: int) -> Optional[int]:
-        """Determine if pool should be scaled and return new size"""
+        """
+Determine if pool should be scaled and return new size"""
         
         # Calculate current utilization
         utilization = current_metrics.active_connections / max(current_size, 1)
@@ -352,7 +373,8 @@ class EnhancedConnectionPoolManager:
         self.is_optimizing = False
     
     async def start_optimization(self):
-        """Start pool optimization background task"""
+        """
+Start pool optimization background task"""
         if self.is_optimizing:
             return
         
@@ -499,7 +521,8 @@ class EnhancedConnectionPoolManager:
             return DatabaseType.POSTGRESQL  # Default
     
     async def get_optimization_stats(self) -> Dict[str, Any]:
-        """Get comprehensive optimization statistics"""
+        """
+Get comprehensive optimization statistics"""
         stats = {
             'optimization_enabled': self.is_optimizing,
             'load_balancing_strategy': self.config.load_balancing_strategy.value,

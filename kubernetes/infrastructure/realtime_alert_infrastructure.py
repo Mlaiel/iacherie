@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -35,7 +36,9 @@ import threading
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -44,6 +47,7 @@ class AlertSeverity(Enum):
 
 class AlertCategory(Enum):
     """Alert categories"""
+
     CONTENT_VIOLATION = "content_violation"
     SECURITY_INCIDENT = "security_incident"
     SYSTEM_FAILURE = "system_failure"
@@ -55,6 +59,7 @@ class AlertCategory(Enum):
 
 class AlertChannel(Enum):
     """Alert delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -67,6 +72,7 @@ class AlertChannel(Enum):
 
 class AlertStatus(Enum):
     """Alert processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     SENT = "sent"
@@ -94,7 +100,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Real-time alert data structure"""
+    """
+Real-time alert data structure"""
     alert_id: str
     rule_id: str
     category: AlertCategory
@@ -116,7 +123,8 @@ class Alert:
 
 @dataclass
 class AlertInfrastructureSpec:
-    """Real-time alert infrastructure specification"""
+    """
+Real-time alert infrastructure specification"""
     redis_url: str = "redis://localhost:6379"
     email_config: Dict[str, str] = field(default_factory=dict)
     sms_config: Dict[str, str] = field(default_factory=dict)
@@ -215,7 +223,7 @@ class EmailAlertChannel:
                 
                 <div style="margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 4px; font-size: 12px; color: #6c757d;">
                     <p style="margin: 0;">This is an automated alert from IA Influencer Agent Platform.</p>
-                    <p style="margin: 5px 0 0 0;">© 2025 Fahed Mlaiel. All rights reserved.</p>
+                    <p style="margin: 5px 0 0 0;">(c) 2025 Fahed Mlaiel. All rights reserved.</p>
                 </div>
             </div>
         </body>
@@ -223,7 +231,8 @@ class EmailAlertChannel:
         """
     
     def _format_metadata_html(self, metadata: Dict[str, Any]) -> str:
-        """Format metadata as HTML"""
+        """
+Format metadata as HTML"""
         if not metadata:
             return ""
         
@@ -299,7 +308,8 @@ class WebSocketAlertChannel:
         self.server = None
         
     async def start_server(self):
-        """Start WebSocket server"""
+        """
+Start WebSocket server"""
         self.server = await websockets.serve(
             self.handle_client, "localhost", self.port
         )
@@ -314,7 +324,8 @@ class WebSocketAlertChannel:
             self.clients.remove(websocket)
     
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
-        """Send alert via WebSocket to all connected clients"""
+        """
+Send alert via WebSocket to all connected clients"""
         if not self.clients:
             return {
                 "status": "no_clients",
@@ -454,7 +465,8 @@ class RealTimeAlertInfrastructureManager:
         self._initialize_channels()
         
     async def initialize_alert_infrastructure(self) -> Dict[str, Any]:
-        """Initialize complete real-time alert infrastructure"""
+        """
+Initialize complete real-time alert infrastructure"""
         try:
             logger.info("Initializing real-time alert infrastructure...")
             
@@ -653,7 +665,8 @@ class RealTimeAlertInfrastructureManager:
         return sorted(alerts, key=lambda a: a.timestamp, reverse=True)
 
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert system statistics"""
+        """
+Get alert system statistics"""
         try:
             active_count = len(self.active_alerts)
             
@@ -703,7 +716,8 @@ class RealTimeAlertInfrastructureManager:
             self.channels[AlertChannel.SLACK] = SlackAlertChannel(self.spec.slack_config)
 
     async def _setup_alert_channels(self) -> Dict[str, Any]:
-        """Setup all alert delivery channels"""
+        """
+Setup all alert delivery channels"""
         results = {}
         
         for channel_type, channel in self.channels.items():
@@ -803,7 +817,8 @@ class RealTimeAlertInfrastructureManager:
         return matching_rules
 
     async def _rule_matches_alert(self, rule: AlertRule, alert: Alert) -> bool:
-        """Check if alert rule matches alert"""
+        """
+Check if alert rule matches alert"""
         # Basic matching by category
         if rule.category != alert.category:
             return False
@@ -823,7 +838,8 @@ class RealTimeAlertInfrastructureManager:
         return True
 
     async def _is_rule_in_cooldown(self, rule: AlertRule, alert: Alert) -> bool:
-        """Check if rule is in cooldown period"""
+        """
+Check if rule is in cooldown period"""
         cooldown_key = f"cooldown:{rule.rule_id}:{alert.category.value}"
         last_triggered = await self.redis_client.get(cooldown_key)
         

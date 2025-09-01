@@ -4,6 +4,7 @@ Specialized caching for AI fingerprinting and content similarity detection
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprints"""
+    """
+Types of fingerprints"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -33,6 +36,7 @@ class FingerprintType(Enum):
 
 class MatchConfidence(Enum):
     """Match confidence levels"""
+
     EXACT = "exact"        # 95-100%
     HIGH = "high"          # 85-95%
     MEDIUM = "medium"      # 70-85%
@@ -87,7 +91,8 @@ class SimilarityMatch:
     processing_time: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['confidence_level'] = self.confidence_level.value
         data['fingerprint_type'] = self.fingerprint_type.value
@@ -212,7 +217,8 @@ class FingerprintCache:
         await self.redis_cache.connect()
     
     def _get_config(self, fingerprint_type: FingerprintType) -> Dict[str, Any]:
-        """Get configuration for fingerprint type"""
+        """
+Get configuration for fingerprint type"""
         return self.type_configs.get(fingerprint_type, {
             'dimension': 512,
             'similarity_threshold': self.similarity_threshold,
@@ -221,7 +227,8 @@ class FingerprintCache:
         })
     
     def _calculate_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Calculate confidence level from similarity score"""
+        """
+Calculate confidence level from similarity score"""
         if similarity_score >= 0.95:
             return MatchConfidence.EXACT
         elif similarity_score >= 0.85:
@@ -581,7 +588,8 @@ class FingerprintCache:
     async def _update_content_fingerprints(self,
                                          content_id: str,
                                          fingerprint_type: FingerprintType):
-        """Update list of fingerprints for content"""
+        """
+Update list of fingerprints for content"""
         
         content_key = f"{self.CONTENT_PREFIX}:{content_id}"
         fingerprint_data = await self.redis_cache.get(content_key)
@@ -695,7 +703,8 @@ class FingerprintCache:
         }
     
     async def close(self):
-        """Close cache connections"""
+        """
+Close cache connections"""
         await self.redis_cache.close()
         self.memory_cache.close()
         if self.vector_cache:

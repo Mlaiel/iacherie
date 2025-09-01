@@ -19,6 +19,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ from ..base import BaseAgent
 
 
 class DecisionType(Enum):
-    """Types of intelligent decisions."""
+    """
+Types of intelligent decisions."""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     WORKFLOW_ROUTING = "workflow_routing"
     RESOURCE_ALLOCATION = "resource_allocation"
@@ -49,6 +52,7 @@ class DecisionType(Enum):
 
 class AgentStatus(Enum):
     """Status of individual agents in the system."""
+
     ACTIVE = "active"
     BUSY = "busy"
     IDLE = "idle"
@@ -59,6 +63,7 @@ class AgentStatus(Enum):
 
 class SystemHealth(Enum):
     """Overall system health status."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     WARNING = "warning"
@@ -84,7 +89,8 @@ class AgentMetrics:
 
 @dataclass
 class Decision:
-    """Intelligent decision record."""
+    """
+Intelligent decision record."""
     id: str
     decision_type: DecisionType
     context: Dict[str, Any]
@@ -98,7 +104,8 @@ class Decision:
 
 @dataclass
 class LearningRecord:
-    """Machine learning training record."""
+    """
+Machine learning training record."""
     id: str
     model_type: str
     training_data_size: int
@@ -125,7 +132,8 @@ class IntelligenceAgent(BaseAgent):
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Intelligence Agent with advanced AI capabilities."""
+        """
+Initialize the Intelligence Agent with advanced AI capabilities."""
         super().__init__(config)
         
         # Core intelligence configuration
@@ -185,7 +193,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _initialize_optimization_rules(self):
-        """Initialize system optimization rules."""
+        """
+Initialize system optimization rules."""
         self.optimization_rules = [
             {
                 'name': 'load_balancing',
@@ -554,7 +563,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _create_workflow_routing_model(self):
-        """Create ML model for workflow routing decisions."""
+        """
+Create ML model for workflow routing decisions."""
         return {
             'model_type': 'workflow_routing',
             'features': ['agent_load', 'capability_match', 'response_time', 'success_rate'],
@@ -562,7 +572,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _create_resource_allocation_model(self):
-        """Create ML model for resource allocation decisions."""
+        """
+Create ML model for resource allocation decisions."""
         return {
             'model_type': 'resource_allocation',
             'features': ['current_usage', 'predicted_demand', 'cost', 'performance_impact'],
@@ -570,7 +581,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _create_quality_control_model(self):
-        """Create ML model for quality control decisions."""
+        """
+Create ML model for quality control decisions."""
         return {
             'model_type': 'quality_control',
             'features': ['accuracy_score', 'processing_time', 'resource_usage', 'error_rate'],
@@ -578,7 +590,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _create_performance_tuning_model(self):
-        """Create ML model for performance tuning decisions."""
+        """
+Create ML model for performance tuning decisions."""
         return {
             'model_type': 'performance_tuning',
             'features': ['latency', 'throughput', 'resource_utilization', 'error_rate'],
@@ -586,7 +599,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     async def _evaluate_option(self, model: Dict, context: Dict, option: Dict) -> float:
-        """Evaluate an option using the AI model."""
+        """
+Evaluate an option using the AI model."""
         # Simplified scoring based on weighted features
         score = 0.0
         weights = model.get('weights', {})
@@ -617,7 +631,8 @@ class IntelligenceAgent(BaseAgent):
         chosen_option: Dict,
         score: float
     ) -> str:
-        """Generate human-readable reasoning for the decision."""
+        """
+Generate human-readable reasoning for the decision."""
         reasons = [
             f"Decision type: {decision_type.value}",
             f"Option scored {score:.2f} out of 100",
@@ -695,7 +710,8 @@ class IntelligenceAgent(BaseAgent):
         return statistics.mean(health_scores)
     
     async def _execute_optimization_rule(self, rule: Dict[str, Any]):
-        """Execute an optimization rule."""
+        """
+Execute an optimization rule."""
         try:
             action = rule['action']
             self.logger.info(f"Executing optimization rule: {rule['name']}")
@@ -783,7 +799,8 @@ class IntelligenceAgent(BaseAgent):
         agent_metrics: AgentMetrics, 
         performance_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate optimization recommendations for an agent."""
+        """
+Generate optimization recommendations for an agent."""
         recommendations = []
         
         if performance_analysis.get('cpu_trend') == 'increasing':
@@ -838,7 +855,8 @@ class IntelligenceAgent(BaseAgent):
         return min(0.5, total_improvement)  # Cap at 50% improvement
     
     async def _find_agents_with_capability(self, capability: str) -> List[str]:
-        """Find agents that have a specific capability."""
+        """
+Find agents that have a specific capability."""
         # In a real implementation, this would check agent capabilities
         # For now, return agents that are available
         available_agents = [
@@ -850,7 +868,8 @@ class IntelligenceAgent(BaseAgent):
         return available_agents[:3] if available_agents else []
     
     async def _select_optimal_agent(self, suitable_agents: List[str], priority: int) -> str:
-        """Select the optimal agent based on current performance."""
+        """
+Select the optimal agent based on current performance."""
         if not suitable_agents:
             raise RuntimeError("No suitable agents available")
         
@@ -897,7 +916,8 @@ class IntelligenceAgent(BaseAgent):
         capability_assignments: Dict[str, str], 
         workflow_id: str
     ) -> Dict[str, Any]:
-        """Reserve resources on assigned agents."""
+        """
+Reserve resources on assigned agents."""
         reservations = {}
         
         for capability, agent_id in capability_assignments.items():
@@ -915,12 +935,14 @@ class IntelligenceAgent(BaseAgent):
         return reservations
     
     def _estimate_workflow_completion(self, execution_plan: Dict[str, Any]) -> datetime:
-        """Estimate workflow completion time."""
+        """
+Estimate workflow completion time."""
         estimated_minutes = execution_plan.get('estimated_duration_minutes', 10)
         return datetime.now() + timedelta(minutes=estimated_minutes)
     
     def _calculate_prediction_accuracy(self, metric: str) -> float:
-        """Calculate prediction accuracy for a metric."""
+        """
+Calculate prediction accuracy for a metric."""
         # In a real implementation, this would compare predictions with actual outcomes
         # For now, return a simulated accuracy based on metric type
         accuracy_map = {
@@ -934,7 +956,8 @@ class IntelligenceAgent(BaseAgent):
         return accuracy_map.get(metric, 0.75)
     
     def _get_trend_recommendation(self, metric: str, slope: float, predicted_value: float) -> str:
-        """Get recommendation based on trend analysis."""
+        """
+Get recommendation based on trend analysis."""
         if slope > 0.1:
             return f"{metric} trending up significantly - monitor for capacity issues"
         elif slope < -0.1:
@@ -989,7 +1012,8 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _get_recent_decision_trends(self) -> Dict[str, str]:
-        """Get trends in recent decisions."""
+        """
+Get trends in recent decisions."""
         recent_decisions = list(self.decision_history.values())[-10:]
         if len(recent_decisions) < 2:
             return {'trend': 'insufficient_data'}
@@ -1015,12 +1039,14 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _count_recent_optimizations(self) -> int:
-        """Count optimizations applied in the last 24 hours."""
+        """
+Count optimizations applied in the last 24 hours."""
         # In a real implementation, this would track actual optimizations
         return len([rule for rule in self.optimization_rules if rule.get('last_applied')])
     
     def _calculate_performance_improvement_rate(self) -> float:
-        """Calculate rate of performance improvement over time."""
+        """
+Calculate rate of performance improvement over time."""
         # Simulate improvement rate based on system health trend
         if self.system_health_score > 90:
             return 0.02  # 2% improvement
@@ -1030,15 +1056,18 @@ class IntelligenceAgent(BaseAgent):
             return -0.01  # -1% (degradation)
     
     def _calculate_average_model_accuracy(self) -> float:
-        """Calculate average accuracy across all models."""
+        """
+Calculate average accuracy across all models."""
         # In a real implementation, this would be based on actual model validation
         return 0.82  # 82% average accuracy
     
     def _calculate_system_uptime(self) -> float:
-        """Calculate system uptime in hours."""
+        """
+Calculate system uptime in hours."""
         # This would track actual system start time
         return 24.5  # Simulate 24.5 hours uptime
     
     def _get_last_optimization_time(self) -> str:
-        """Get timestamp of last optimization."""
+        """
+Get timestamp of last optimization."""
         return (datetime.now() - timedelta(minutes=45)).isoformat()

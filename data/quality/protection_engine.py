@@ -15,8 +15,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
 import asyncio
 import logging
@@ -45,7 +46,9 @@ import io
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Quality protection levels"""
+    """
+Quality protection levels"""
+
     BASIC = "basic"                      # Standard protection
     ENHANCED = "enhanced"                # Enhanced protection with ML
     MAXIMUM = "maximum"                  # Maximum security protection
@@ -53,6 +56,7 @@ class ProtectionLevel(Enum):
 
 class ThreatType(Enum):
     """Types of quality threats"""
+
     MALICIOUS_CONTENT = "malicious_content"
     DATA_CORRUPTION = "data_corruption"
     FORMAT_EXPLOITATION = "format_exploitation"
@@ -64,6 +68,7 @@ class ThreatType(Enum):
 
 class ProtectionAction(Enum):
     """Protection actions to take"""
+
     ALLOW = "allow"                      # Content passes protection
     BLOCK = "block"                      # Block content completely
     QUARANTINE = "quarantine"            # Quarantine for manual review
@@ -86,7 +91,8 @@ class QualityThreat:
 
 @dataclass
 class ProtectionPolicy:
-    """Quality protection policy"""
+    """
+Quality protection policy"""
     name: str
     description: str
     protection_level: ProtectionLevel
@@ -580,7 +586,8 @@ class QualityProtectionEngine:
             await self._check_audio_steganography(result, content_data)
     
     async def _check_image_steganography(self, result: Dict[str, Any], content_data: bytes):
-        """Check for image steganography"""
+        """
+Check for image steganography"""
         
         try:
             # Convert bytes to numpy array
@@ -652,7 +659,8 @@ class QualityProtectionEngine:
         threats: List[Dict[str, Any]],
         policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Analyze overall threat level and determine action"""
+        """
+Analyze overall threat level and determine action"""
         
         if not threats:
             return {
@@ -722,7 +730,8 @@ class QualityProtectionEngine:
             return content_data
     
     async def _sanitize_content(self, content_data: bytes, content_type: str) -> bytes:
-        """Sanitize content by removing threats"""
+        """
+Sanitize content by removing threats"""
         
         try:
             if content_type.startswith('image/'):
@@ -759,7 +768,8 @@ class QualityProtectionEngine:
             return content_data
     
     async def _log_threats(self, threats: List[Dict[str, Any]]):
-        """Log detected threats for analysis"""
+        """
+Log detected threats for analysis"""
         
         for threat_data in threats:
             threat = QualityThreat(**threat_data)

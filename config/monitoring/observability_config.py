@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union
@@ -27,7 +28,9 @@ from pathlib import Path
 
 
 class ObservabilityLevel(Enum):
-    """Observability depth levels"""
+    """
+Observability depth levels"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -36,6 +39,7 @@ class ObservabilityLevel(Enum):
 
 class ComponentHealth(Enum):
     """Component health states"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -58,7 +62,8 @@ class ObservabilityComponent:
 
 @dataclass
 class ServiceLevelObjective:
-    """Service Level Objective definition"""
+    """
+Service Level Objective definition"""
     name: str
     metric: str
     target_value: float
@@ -71,7 +76,8 @@ class ServiceLevelObjective:
 
 @dataclass
 class ObservabilityPipeline:
-    """Observability data pipeline configuration"""
+    """
+Observability data pipeline configuration"""
     name: str
     source: str
     processors: List[str] = field(default_factory=list)
@@ -95,7 +101,8 @@ class ObservabilityConfig:
                  enable_slo: bool = True,
                  enable_distributed_tracing: bool = True,
                  enable_error_tracking: bool = True):
-        """Initialize observability configuration"""
+        """
+Initialize observability configuration"""
         self.level = level
         self.enable_slo = enable_slo
         self.enable_distributed_tracing = enable_distributed_tracing
@@ -356,20 +363,24 @@ class ObservabilityConfig:
         return self._components.get(name)
     
     def get_slo(self, name: str) -> Optional[ServiceLevelObjective]:
-        """Get SLO by name"""
+        """
+Get SLO by name"""
         return self._slos.get(name)
     
     def get_pipeline(self, name: str) -> Optional[ObservabilityPipeline]:
-        """Get pipeline by name"""
+        """
+Get pipeline by name"""
         return self._pipelines.get(name)
     
     def get_components_by_type(self, component_type: str) -> List[ObservabilityComponent]:
-        """Get components by type"""
+        """
+Get components by type"""
         return [comp for comp in self._components.values() 
                 if comp.component_type == component_type]
     
     def get_critical_components(self) -> List[ObservabilityComponent]:
-        """Get critical components (tier 1)"""
+        """
+Get critical components (tier 1)"""
         return [comp for comp in self._components.values()
                 if comp.metadata.get("tier", 99) == 1]
     
@@ -400,7 +411,8 @@ class ObservabilityConfig:
         return health_status
     
     def get_monitoring_dashboard_config(self) -> Dict[str, Any]:
-        """Get configuration for monitoring dashboards"""
+        """
+Get configuration for monitoring dashboards"""
         return {
             "service_map": {
                 "components": list(self._components.keys()),

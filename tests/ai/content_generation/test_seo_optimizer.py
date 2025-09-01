@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""SEO Optimizer Tests
+"""
+SEO Optimizer Tests
 
 Comprehensive tests for the SEOOptimizer class that handles
 search engine optimization for content.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -48,12 +51,14 @@ class TestSEOOptimizer:
     
     @pytest.fixture
     def optimizer(self):
-        """Create an SEO optimizer instance"""
+        """
+Create an SEO optimizer instance"""
         return SEOOptimizer()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for SEO analysis"""
+        """
+Create sample content for SEO analysis"""
         return """
         # The Future of Artificial Intelligence in 2025
         
@@ -80,7 +85,8 @@ class TestSEOOptimizer:
     
     @pytest.fixture
     def target_keywords(self):
-        """Create sample target keywords"""
+        """
+Create sample target keywords"""
         return [
             "artificial intelligence",
             "AI technology",
@@ -100,7 +106,8 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_keyword_analysis(self, optimizer, target_keywords):
-        """Test keyword analysis functionality"""
+        """
+Test keyword analysis functionality"""
         with patch.object(optimizer, '_analyze_keywords') as mock_analysis:
             mock_analysis.return_value = {
                 "success": True,
@@ -642,7 +649,8 @@ class TestKeywordAnalysis:
     """Test suite for KeywordAnalysis model"""
     
     def test_keyword_analysis_creation(self):
-        """Test keyword analysis creation"""
+        """
+Test keyword analysis creation"""
         analysis = KeywordAnalysis(
             keyword="artificial intelligence",
             search_volume=165000,
@@ -664,7 +672,8 @@ class TestSEOScore:
     """Test suite for SEOScore model"""
     
     def test_seo_score_creation(self):
-        """Test SEO score creation"""
+        """
+Test SEO score creation"""
         score = SEOScore(
             overall_score=78,
             keyword_optimization=82,
@@ -680,7 +689,8 @@ class TestSEOScore:
         assert score.readability == 88
     
     def test_seo_score_validation(self):
-        """Test SEO score validation"""
+        """
+Test SEO score validation"""
         # Test scores outside valid range
         with pytest.raises(Exception):  # Adjust based on actual validation
             SEOScore(

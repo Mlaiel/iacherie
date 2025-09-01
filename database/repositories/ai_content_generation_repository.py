@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Union, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
@@ -43,7 +44,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize AI Content Generation Repository"""
+        """
+Initialize AI Content Generation Repository"""
         super().__init__(db_session, AIContentGeneration)
         
     def create_generation_task(self, 

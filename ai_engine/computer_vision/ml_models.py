@@ -48,6 +48,7 @@ logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
     """Types of vision models"""
+
     CLASSIFICATION = "classification"
     DETECTION = "detection"
     SEGMENTATION = "segmentation"
@@ -59,6 +60,7 @@ class ModelType(Enum):
 
 class ModelArchitecture(Enum):
     """Model architectures"""
+
     RESNET = "resnet"
     EFFICIENTNET = "efficientnet"
     VISION_TRANSFORMER = "vision_transformer"
@@ -201,7 +203,8 @@ class VisionModelManager:
         return model
     
     def _create_segmentation_model(self, config: VisionModelConfig) -> nn.Module:
-        """Create segmentation model"""
+        """
+Create segmentation model"""
         if config.architecture == ModelArchitecture.UNET:
             model = UNetSegmentation(config)
         else:
@@ -210,15 +213,18 @@ class VisionModelManager:
         return model
     
     def _create_style_transfer_model(self, config: VisionModelConfig) -> nn.Module:
-        """Create style transfer model"""
+        """
+Create style transfer model"""
         return StyleTransferModel(config)
     
     def _create_super_resolution_model(self, config: VisionModelConfig) -> nn.Module:
-        """Create super resolution model"""
+        """
+Create super resolution model"""
         return SuperResolutionModel(config)
     
     def _create_generation_model(self, config: VisionModelConfig) -> nn.Module:
-        """Create image generation model"""
+        """
+Create image generation model"""
         if config.architecture == ModelArchitecture.GAN:
             return GANProcessor(config)
         elif config.architecture == ModelArchitecture.AUTOENCODER:
@@ -227,15 +233,18 @@ class VisionModelManager:
             return GANProcessor(config)  # Default to GAN
     
     def _create_enhancement_model(self, config: VisionModelConfig) -> nn.Module:
-        """Create image enhancement model"""
+        """
+Create image enhancement model"""
         return EnhancementModel(config)
     
     def _create_feature_extraction_model(self, config: VisionModelConfig) -> nn.Module:
-        """Create feature extraction model"""
+        """
+Create feature extraction model"""
         return FeatureExtractionModel(config)
     
     def load_model(self, model_key: str, checkpoint_path: str) -> nn.Module:
-        """Load model from checkpoint"""
+        """
+Load model from checkpoint"""
         if model_key not in self.loaded_models:
             raise ValueError(f"Model {model_key} not found. Create it first.")
         
@@ -323,7 +332,8 @@ class ContentCNN(nn.Module):
         self._initialize_weights()
     
     def _create_custom_backbone(self):
-        """Create custom lightweight backbone"""
+        """
+Create custom lightweight backbone"""
         return nn.Sequential(
             # Block 1
             nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3),
@@ -342,7 +352,8 @@ class ContentCNN(nn.Module):
         )
     
     def _make_layer(self, in_channels, out_channels, blocks, stride=1):
-        """Create residual layer"""
+        """
+Create residual layer"""
         layers = []
         
         # First block with potential downsampling
@@ -355,7 +366,8 @@ class ContentCNN(nn.Module):
         return nn.Sequential(*layers)
     
     def _initialize_weights(self):
-        """Initialize model weights"""
+        """
+Initialize model weights"""
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -367,7 +379,8 @@ class ContentCNN(nn.Module):
                 nn.init.constant_(m.bias, 0)
     
     def forward(self, x):
-        """Forward pass"""
+        """
+Forward pass"""
         # Extract features
         features = self.backbone(x)
         
@@ -390,7 +403,8 @@ class ContentCNN(nn.Module):
         }
 
 class BasicBlock(nn.Module):
-    """Basic residual block"""
+    """
+Basic residual block"""
     
     def __init__(self, in_channels, out_channels, stride=1):
         super(BasicBlock, self).__init__()
@@ -418,7 +432,8 @@ class BasicBlock(nn.Module):
         return out
 
 class SpatialAttention(nn.Module):
-    """Spatial attention mechanism"""
+    """
+Spatial attention mechanism"""
     
     def __init__(self, kernel_size=7):
         super(SpatialAttention, self).__init__()
@@ -435,7 +450,8 @@ class SpatialAttention(nn.Module):
         return x * attention
 
 class StyleTransferModel(nn.Module):
-    """Neural style transfer model"""
+    """
+Neural style transfer model"""
     
     def __init__(self, config: VisionModelConfig):
         super(StyleTransferModel, self).__init__()
@@ -457,7 +473,8 @@ class StyleTransferModel(nn.Module):
         self.content_encoder = self._build_content_encoder()
         
     def _build_encoder(self):
-        """Build encoder network"""
+        """
+Build encoder network"""
         return nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=7, stride=1, padding=3),
             nn.InstanceNorm2d(64),
@@ -477,7 +494,8 @@ class StyleTransferModel(nn.Module):
         )
     
     def _build_decoder(self):
-        """Build decoder network"""
+        """
+Build decoder network"""
         return nn.Sequential(
             nn.ConvTranspose2d(512, 256, kernel_size=3, stride=2, padding=1, output_padding=1),
             nn.InstanceNorm2d(256),
@@ -496,7 +514,8 @@ class StyleTransferModel(nn.Module):
         )
     
     def _build_style_encoder(self):
-        """Build style encoding network"""
+        """
+Build style encoding network"""
         vgg = models.vgg19(pretrained=True).features
         style_layers = [0, 5, 10, 19, 28]  # VGG style layers
         
@@ -509,7 +528,8 @@ class StyleTransferModel(nn.Module):
         return model
     
     def _build_content_encoder(self):
-        """Build content encoding network"""
+        """
+Build content encoding network"""
         vgg = models.vgg19(pretrained=True).features
         content_layer = 21  # VGG content layer
         
@@ -522,7 +542,8 @@ class StyleTransferModel(nn.Module):
         return model
     
     def forward(self, content_image, style_image=None, alpha=1.0):
-        """Forward pass for style transfer"""
+        """
+Forward pass for style transfer"""
         # Encode content
         content_features = self.encoder(content_image)
         
@@ -542,7 +563,8 @@ class StyleTransferModel(nn.Module):
         return output
     
     def _adaptive_instance_norm(self, content_features, style_features, alpha):
-        """Adaptive Instance Normalization"""
+        """
+Adaptive Instance Normalization"""
         content_mean = torch.mean(content_features, dim=(2, 3), keepdim=True)
         content_std = torch.std(content_features, dim=(2, 3), keepdim=True)
         
@@ -555,7 +577,8 @@ class StyleTransferModel(nn.Module):
         return alpha * stylized_features + (1 - alpha) * content_features
 
 class ResidualBlock(nn.Module):
-    """Residual block for style transfer"""
+    """
+Residual block for style transfer"""
     
     def __init__(self, channels):
         super(ResidualBlock, self).__init__()
@@ -571,7 +594,8 @@ class ResidualBlock(nn.Module):
         return out + residual
 
 class GANProcessor(nn.Module):
-    """Generative Adversarial Network for image generation and processing"""
+    """
+Generative Adversarial Network for image generation and processing"""
     
     def __init__(self, config: VisionModelConfig):
         super(GANProcessor, self).__init__()
@@ -587,7 +611,8 @@ class GANProcessor(nn.Module):
         self.feature_extractor = self._build_feature_extractor()
     
     def _build_generator(self):
-        """Build generator network"""
+        """
+Build generator network"""
         return nn.Sequential(
             # Encoder
             nn.Conv2d(3, 64, kernel_size=7, stride=1, padding=3),
@@ -621,7 +646,8 @@ class GANProcessor(nn.Module):
         )
     
     def _build_discriminator(self):
-        """Build discriminator network"""
+        """
+Build discriminator network"""
         return nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=4, stride=2, padding=1),
             nn.LeakyReLU(0.2, inplace=True),
@@ -642,7 +668,8 @@ class GANProcessor(nn.Module):
         )
     
     def _build_feature_extractor(self):
-        """Build feature extractor for perceptual loss"""
+        """
+Build feature extractor for perceptual loss"""
         vgg = models.vgg19(pretrained=True).features
         feature_extractor = nn.Sequential()
         
@@ -658,7 +685,8 @@ class GANProcessor(nn.Module):
         return feature_extractor
     
     def forward(self, x, mode='generate'):
-        """Forward pass"""
+        """
+Forward pass"""
         if mode == 'generate':
             return self.generator(x)
         elif mode == 'discriminate':
@@ -714,7 +742,8 @@ class TransformerVision(nn.Module):
         self._initialize_weights()
     
     def _initialize_weights(self):
-        """Initialize weights"""
+        """
+Initialize weights"""
         nn.init.trunc_normal_(self.pos_embed, std=0.02)
         nn.init.trunc_normal_(self.cls_token, std=0.02)
         
@@ -725,7 +754,9 @@ class TransformerVision(nn.Module):
                     nn.init.constant_(m.bias, 0)
     
     def forward(self, x):
-        """Forward pass"""
+        """
+Forward pass"""
+
         B = x.shape[0]
         
         # Patch embedding
@@ -751,7 +782,8 @@ class TransformerVision(nn.Module):
         }
 
 class PatchEmbedding(nn.Module):
-    """Patch embedding for Vision Transformer"""
+    """
+Patch embedding for Vision Transformer"""
     
     def __init__(self, img_size=224, patch_size=16, in_chans=3, embed_dim=768):
         super(PatchEmbedding, self).__init__()
@@ -762,7 +794,8 @@ class PatchEmbedding(nn.Module):
         self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_size, stride=patch_size)
     
     def forward(self, x):
-        """Forward pass"""
+        """
+Forward pass"""
         B, C, H, W = x.shape
         assert H == self.img_size and W == self.img_size, \
             f"Input image size ({H}*{W}) doesn't match model ({self.img_size}*{self.img_size})"
@@ -782,7 +815,8 @@ class VisionTransformerClassifier(nn.Module):
         return self.transformer(x)['logits']
 
 class CustomCNN(nn.Module):
-    """Custom CNN architecture"""
+    """
+Custom CNN architecture"""
     
     def __init__(self, config: VisionModelConfig):
         super(CustomCNN, self).__init__()
@@ -816,7 +850,8 @@ class CustomCNN(nn.Module):
         return x
 
 class YOLODetector(nn.Module):
-    """YOLO-based object detector"""
+    """
+YOLO-based object detector"""
     
     def __init__(self, config: VisionModelConfig):
         super(YOLODetector, self).__init__()
@@ -830,7 +865,8 @@ class YOLODetector(nn.Module):
         return detections
 
 class UNetSegmentation(nn.Module):
-    """U-Net for semantic segmentation"""
+    """
+U-Net for semantic segmentation"""
     
     def __init__(self, config: VisionModelConfig):
         super(UNetSegmentation, self).__init__()
@@ -852,7 +888,8 @@ class UNetSegmentation(nn.Module):
         return decoded
 
 class SuperResolutionModel(nn.Module):
-    """Super resolution model"""
+    """
+Super resolution model"""
     
     def __init__(self, config: VisionModelConfig):
         super(SuperResolutionModel, self).__init__()
@@ -887,7 +924,8 @@ class SuperResolutionModel(nn.Module):
         return output
 
 class AutoencoderModel(nn.Module):
-    """Autoencoder for feature learning and reconstruction"""
+    """
+Autoencoder for feature learning and reconstruction"""
     
     def __init__(self, config: VisionModelConfig):
         super(AutoencoderModel, self).__init__()
@@ -925,7 +963,8 @@ class AutoencoderModel(nn.Module):
         }
 
 class EnhancementModel(nn.Module):
-    """Neural network for image enhancement"""
+    """
+Neural network for image enhancement"""
     
     def __init__(self, config: VisionModelConfig):
         super(EnhancementModel, self).__init__()
@@ -943,7 +982,8 @@ class EnhancementModel(nn.Module):
         return x + enhanced  # Residual connection
 
 class FeatureExtractionModel(nn.Module):
-    """Model for extracting visual features"""
+    """
+Model for extracting visual features"""
     
     def __init__(self, config: VisionModelConfig):
         super(FeatureExtractionModel, self).__init__()
@@ -976,7 +1016,8 @@ class FeatureExtractionModel(nn.Module):
 
 # Additional utility classes
 class CustomDetectionModel(nn.Module):
-    """Custom object detection model"""
+    """
+Custom object detection model"""
     
     def __init__(self, config: VisionModelConfig):
         super(CustomDetectionModel, self).__init__()
@@ -989,7 +1030,8 @@ class CustomDetectionModel(nn.Module):
         return detections
 
 class CustomSegmentationModel(nn.Module):
-    """Custom segmentation model"""
+    """
+Custom segmentation model"""
     
     def __init__(self, config: VisionModelConfig):
         super(CustomSegmentationModel, self).__init__()

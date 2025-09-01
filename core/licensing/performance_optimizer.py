@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import numpy as np
 import psutil
@@ -44,7 +45,9 @@ from ..utils.ai_optimization import AIOptimizationEngine
 
 
 class OptimizationType(Enum):
-    """Types of optimization strategies"""
+    """
+Types of optimization strategies"""
+
     PERFORMANCE = "performance"
     RESOURCE_UTILIZATION = "resource_utilization"
     COST_OPTIMIZATION = "cost_optimization"
@@ -61,6 +64,7 @@ class OptimizationType(Enum):
 
 class PerformanceMetricType(Enum):
     """Types of performance metrics"""
+
     SYSTEM_METRICS = "system_metrics"
     APPLICATION_METRICS = "application_metrics"
     BUSINESS_METRICS = "business_metrics"
@@ -75,6 +79,7 @@ class PerformanceMetricType(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -85,6 +90,7 @@ class OptimizationPriority(Enum):
 
 class ResourceType(Enum):
     """Types of system resources"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -101,6 +107,7 @@ class ResourceType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -159,7 +166,8 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """AI-powered optimization recommendation"""
+    """
+AI-powered optimization recommendation"""
     recommendation_id: str
     generation_timestamp: datetime
     optimization_type: OptimizationType
@@ -217,7 +225,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ResourceOptimization:
-    """Resource optimization analysis and recommendations"""
+    """
+Resource optimization analysis and recommendations"""
     optimization_id: str
     analysis_timestamp: datetime
     resource_type: ResourceType
@@ -280,7 +289,8 @@ class ResourceOptimization:
 
 @dataclass
 class PerformanceAlert:
-    """Performance monitoring alert"""
+    """
+Performance monitoring alert"""
     alert_id: str
     alert_timestamp: datetime
     severity: AlertSeverity
@@ -341,7 +351,8 @@ class PerformanceAlert:
 
 @dataclass
 class OptimizationExecution:
-    """Optimization execution tracking"""
+    """
+Optimization execution tracking"""
     execution_id: str
     recommendation_id: str
     execution_start: datetime
@@ -454,7 +465,8 @@ class PerformanceOptimizerEngine:
         self.alert_rules: List[Dict[str, Any]] = []
         
     async def initialize_performance_optimizer(self, config: Dict[str, Any]):
-        """Initialize performance optimization engine"""
+        """
+Initialize performance optimization engine"""
         try:
             # Load configuration
             self.monitoring_config = config.get('monitoring_config', {})
@@ -921,7 +933,8 @@ class PerformanceOptimizerEngine:
         }
     
     async def _collect_business_metrics(self) -> Dict[str, float]:
-        """Collect business-level performance metrics"""
+        """
+Collect business-level performance metrics"""
         # Implementation would collect business KPIs
         return {
             'user_satisfaction': 4.2,    # out of 5
@@ -938,7 +951,8 @@ class PerformanceOptimizerEngine:
         application_metrics: Dict[str, float],
         business_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Detect performance anomalies using ML"""
+        """
+Detect performance anomalies using ML"""
         try:
             # Combine all metrics
             all_metrics = {**system_metrics, **application_metrics, **business_metrics}
@@ -977,16 +991,19 @@ class PerformanceOptimizerEngine:
         pass
     
     async def _save_optimization_recommendation(self, recommendation: OptimizationRecommendation):
-        """Save optimization recommendation to database"""
+        """
+Save optimization recommendation to database"""
         # Implementation would save to database
         pass
     
     async def _save_resource_optimization(self, optimization: ResourceOptimization):
-        """Save resource optimization to database"""
+        """
+Save resource optimization to database"""
         # Implementation would save to database
         pass
     
     async def _save_optimization_execution(self, execution: OptimizationExecution):
-        """Save optimization execution to database"""
+        """
+Save optimization execution to database"""
         # Implementation would save to database
         pass

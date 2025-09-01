@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -13,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""Test Enhanced AI Agents Implementation
+"""
+Test Enhanced AI Agents Implementation
 =====================================
 
 Validation script to test the enhanced AI agent implementations with
@@ -21,6 +23,7 @@ advanced business logic and comprehensive functionality.
 
 Author: Copilot Assistant
 """
+
 import asyncio
 import sys
 import os
@@ -30,7 +33,8 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 async def test_fingerprinting_engine():
-    """Test the enhanced fingerprinting engine"""
+    """
+Test the enhanced fingerprinting engine"""
     print("🔍 Testing Fingerprinting Engine...")
     
     try:

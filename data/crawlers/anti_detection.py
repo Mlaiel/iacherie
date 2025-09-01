@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import random
 import time
@@ -47,7 +48,9 @@ from fake_useragent import UserAgent
 
 
 class BrowserType(Enum):
-    """Supported browser types for automation"""
+    """
+Supported browser types for automation"""
+
     CHROME = "chrome"
     FIREFOX = "firefox"
     SAFARI = "safari"
@@ -56,6 +59,7 @@ class BrowserType(Enum):
 
 class ProxyType(Enum):
     """Types of proxy connections"""
+
     HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
@@ -98,7 +102,8 @@ class ProxyServer:
 
 @dataclass
 class SessionState:
-    """State of a crawling session"""
+    """
+State of a crawling session"""
     session_id: str
     browser_profile: BrowserProfile
     proxy_server: Optional[ProxyServer]
@@ -132,7 +137,8 @@ class ProxyManager:
         }
     
     def add_proxy_server(self, proxy: ProxyServer):
-        """Add proxy server to the pool"""
+        """
+Add proxy server to the pool"""
         self.proxy_servers.append(proxy)
         self.logger.info(f"Added proxy server: {proxy.host}:{proxy.port}")
     
@@ -150,7 +156,8 @@ class ProxyManager:
             self.add_proxy_server(proxy)
     
     async def get_working_proxy(self) -> Optional[ProxyServer]:
-        """Get a working proxy server with rotation"""
+        """
+Get a working proxy server with rotation"""
         try:
             # Perform health check if needed
             if (datetime.utcnow() - self.last_health_check).total_seconds() > self.health_check_interval:
@@ -300,7 +307,8 @@ class AntiDetectionSystem:
         asyncio.create_task(self._initialize_browser_profiles())
     
     async def _initialize_browser_profiles(self):
-        """Initialize pool of realistic browser profiles"""
+        """
+Initialize pool of realistic browser profiles"""
         try:
             self.logger.info("Initializing browser profiles")
             
@@ -773,7 +781,8 @@ class AntiDetectionSystem:
         return profile
     
     async def _rotate_session(self, session_id: str) -> str:
-        """Rotate session with new profile and proxy"""
+        """
+Rotate session with new profile and proxy"""
         try:
             old_session = self.active_sessions.get(session_id)
             if old_session:

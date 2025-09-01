@@ -16,6 +16,7 @@ Enterprise-grade scaling and auto-scaling configuration
 → horizontal scaling → vertical scaling → load-based scaling → predictive scaling.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Callable
@@ -26,7 +27,9 @@ import json
 import math
 
 class ScalingStrategy(Enum):
-    """Scaling strategies"""
+    """
+Scaling strategies"""
+
     REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     SCHEDULED = "scheduled"
@@ -34,12 +37,14 @@ class ScalingStrategy(Enum):
 
 class ScalingDirection(Enum):
     """Scaling directions"""
+
     UP = "up"
     DOWN = "down"
     BOTH = "both"
 
 class MetricType(Enum):
     """Metric types for scaling decisions"""
+
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
@@ -50,6 +55,7 @@ class MetricType(Enum):
 
 class ScalingTrigger(Enum):
     """Scaling triggers"""
+
     THRESHOLD = "threshold"
     TREND = "trend"
     SCHEDULE = "schedule"
@@ -58,6 +64,7 @@ class ScalingTrigger(Enum):
 
 class ResourceType(Enum):
     """Resource types for scaling"""
+
     PODS = "pods"
     NODES = "nodes"
     CONTAINERS = "containers"
@@ -91,7 +98,8 @@ class ScalingPolicy:
 
 @dataclass
 class PredictiveScaling:
-    """Predictive scaling configuration"""
+    """
+Predictive scaling configuration"""
     enabled: bool = False
     forecast_horizon_hours: int = 24
     forecast_confidence_threshold: float = 0.8
@@ -118,7 +126,8 @@ class ScalingMetrics:
 
 @dataclass
 class NotificationConfig:
-    """Scaling notification configuration"""
+    """
+Scaling notification configuration"""
     enabled: bool = True
     channels: List[str] = field(default_factory=list)
     events: List[str] = field(default_factory=lambda: ["scale_up", "scale_down", "error"])
@@ -155,7 +164,8 @@ class ScalingConfigManager:
     """
     
     def __init__(self):
-        """Initialize scaling configuration manager"""
+        """
+Initialize scaling configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Scaling configurations
@@ -523,7 +533,8 @@ class ScalingConfigManager:
                 await self._execute_scaling_action(service_name, policy, scaling_decision)
     
     async def _is_in_cooldown(self, service_name: str, policy_name: str) -> bool:
-        """Check if scaling action is in cooldown period"""
+        """
+Check if scaling action is in cooldown period"""
         key = f"{service_name}:{policy_name}"
         if key in self.cooldown_timers:
             return datetime.now() < self.cooldown_timers[key]
@@ -608,7 +619,8 @@ class ScalingConfigManager:
         return 3
     
     async def _scale_resource(self, service_name: str, policy: ScalingPolicy, new_capacity: int) -> bool:
-        """Scale resource to new capacity"""
+        """
+Scale resource to new capacity"""
         try:
             # Implementation would execute actual scaling
             # For Kubernetes: update HPA or deployment replicas

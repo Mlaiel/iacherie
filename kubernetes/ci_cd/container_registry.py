@@ -8,6 +8,7 @@ Enterprise container registry management for multi-format content processing.
 Handles AI model containers, audio processing images, and security scanning.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -26,7 +27,9 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class RegistryType(Enum):
-    """Container registry type enumeration"""
+    """
+Container registry type enumeration"""
+
     DOCKER_HUB = "docker_hub"
     AWS_ECR = "aws_ecr"
     GCP_GCR = "gcp_gcr"
@@ -36,6 +39,7 @@ class RegistryType(Enum):
 
 class ImageType(Enum):
     """Container image type enumeration"""
+
     API_GATEWAY = "api_gateway"
     AI_PROCESSOR = "ai_processor"
     AUDIO_ENGINE = "audio_engine"
@@ -49,6 +53,7 @@ class ImageType(Enum):
 
 class SecurityLevel(Enum):
     """Security scanning level enumeration"""
+
     CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
@@ -92,7 +97,8 @@ class RegistryCredentials:
 
 @dataclass
 class SecurityScanResult:
-    """Security scan result"""
+    """
+Security scan result"""
     image_name: str
     tag: str
     scan_date: datetime
@@ -105,10 +111,12 @@ class SecurityScanResult:
     layers_count: int
     
 class ContainerRegistryManager:
-    """Enterprise container registry management system"""
+    """
+Enterprise container registry management system"""
     
     def __init__(self):
-        """Initialize container registry manager"""
+        """
+Initialize container registry manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.docker_client = None
         self.registries: Dict[RegistryType, RegistryCredentials] = {}
@@ -484,7 +492,8 @@ class ContainerRegistryManager:
         return base_vulnerabilities.get(image_type, default_vulnerabilities)
     
     def _generate_mock_cves(self, count: int) -> List[str]:
-        """Generate mock CVE identifiers"""
+        """
+Generate mock CVE identifiers"""
         return [f"CVE-2024-{1000 + i}" for i in range(count)]
     
     async def _authenticate_registry(self, registry: RegistryCredentials) -> None:

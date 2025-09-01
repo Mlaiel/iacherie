@@ -10,13 +10,16 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import os
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 
 class Environment(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -318,12 +321,14 @@ def get_config() -> SupportAgentConfig:
     return _config
 
 def set_config(config: SupportAgentConfig):
-    """Set global configuration instance"""
+    """
+Set global configuration instance"""
     global _config
     _config = config
 
 def load_config_from_file(config_path: str) -> SupportAgentConfig:
-    """Load configuration from JSON or YAML file"""
+    """
+Load configuration from JSON or YAML file"""
     import json
     
     with open(config_path, 'r') as f:

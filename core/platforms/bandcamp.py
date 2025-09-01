@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class BandcampPlatform(PlatformBase):
-    """Bandcamp platform integration"""
+    """
+Bandcamp platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Bandcamp platform"""
+        """
+Initialize Bandcamp platform"""
         super().__init__(config)
         self.api_base = "https://bandcamp.com/api"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -39,7 +42,8 @@ class BandcampPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Bandcamp"""
+        """
+Authenticate with Bandcamp"""
         try:
             # Bandcamp doesn't have a traditional API key system
             # Authentication is typically done through website sessions
@@ -64,7 +68,8 @@ class BandcampPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make request to Bandcamp (limited API)"""
+        """
+Make request to Bandcamp (limited API)"""
         # Note: Bandcamp doesn't have a comprehensive public API
         # This is a simplified implementation for basic functionality
         

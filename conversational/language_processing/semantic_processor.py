@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
@@ -60,7 +61,9 @@ logger = get_logger(__name__)
 
 
 class ConceptType(Enum):
-    """Types of concepts extracted from content"""
+    """
+Types of concepts extracted from content"""
+
     PERSON = "person"
     ORGANIZATION = "organization"
     LOCATION = "location"
@@ -77,6 +80,7 @@ class ConceptType(Enum):
 
 class SemanticRelation(Enum):
     """Types of semantic relations between concepts"""
+
     SIMILAR_TO = "similar_to"
     RELATED_TO = "related_to"
     PART_OF = "part_of"
@@ -89,6 +93,7 @@ class SemanticRelation(Enum):
 
 class IntentCategory(Enum):
     """Content intent categories"""
+
     INFORMATIONAL = "informational"
     PROMOTIONAL = "promotional"
     EDUCATIONAL = "educational"
@@ -113,7 +118,8 @@ class Concept:
 
 @dataclass
 class SemanticRelationship:
-    """Represents a relationship between concepts"""
+    """
+Represents a relationship between concepts"""
     source_concept: str
     target_concept: str
     relation_type: SemanticRelation
@@ -123,7 +129,8 @@ class SemanticRelationship:
 
 @dataclass
 class SemanticAnalysisResult:
-    """Complete semantic analysis result"""
+    """
+Complete semantic analysis result"""
     concepts: List[Concept]
     relationships: List[SemanticRelationship]
     topics: List[Tuple[str, float]]
@@ -140,7 +147,8 @@ class SemanticAnalysisResult:
 
 @dataclass
 class ConceptGraph:
-    """Concept graph representation"""
+    """
+Concept graph representation"""
     nodes: Dict[str, Concept]
     edges: List[SemanticRelationship]
     centrality_scores: Dict[str, float] = field(default_factory=dict)
@@ -149,7 +157,8 @@ class ConceptGraph:
 
 
 class SemanticProcessor:
-    """Advanced semantic processing engine"""
+    """
+Advanced semantic processing engine"""
     
     def __init__(self):
         self.nlp = None
@@ -158,7 +167,8 @@ class SemanticProcessor:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize semantic processing models"""
+        """
+Initialize semantic processing models"""
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_lg")
@@ -350,7 +360,8 @@ class SemanticProcessor:
         return mapping.get(spacy_label, ConceptType.TOPIC)
         
     async def _get_concept_embedding(self, concept_text: str) -> Optional[np.ndarray]:
-        """Generate embedding for concept"""
+        """
+Generate embedding for concept"""
         try:
             if self.sentence_transformer:
                 embedding = self.sentence_transformer.encode([concept_text])
@@ -431,7 +442,8 @@ class SemanticProcessor:
         return relation_mappings.get(dependency)
         
     async def _calculate_cooccurrence_strength(self, concept1: str, concept2: str, text: str) -> float:
-        """Calculate strength of concept co-occurrence"""
+        """
+Calculate strength of concept co-occurrence"""
         try:
             sentences = re.split(r'[.!?]+', text)
             total_sentences = len(sentences)
@@ -721,7 +733,8 @@ class ConceptExtractor:
         self.semantic_processor = SemanticProcessor()
         
     async def extract_concept_graph(self, text: str) -> ConceptGraph:
-        """Extract concept graph from text"""
+        """
+Extract concept graph from text"""
         try:
             # Get semantic analysis
             semantic_result = await self.semantic_processor.analyze_semantics(text)

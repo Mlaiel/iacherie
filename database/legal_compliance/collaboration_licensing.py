@@ -8,6 +8,7 @@ Business Logic: Creator → Collaboration Matching → License Agreement → Rev
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creative collaborations."""
+    """
+Types of creative collaborations."""
+
     MUSIC_FEATURING = "music_featuring"
     REMIX_COLLABORATION = "remix_collaboration"
     PODCAST_GUEST = "podcast_guest"
@@ -34,6 +37,7 @@ class CollaborationType(Enum):
 
 class LicenseScope(Enum):
     """Scope of collaboration license."""
+
     SINGLE_PROJECT = "single_project"
     SERIES_PROJECT = "series_project"
     ONGOING_PARTNERSHIP = "ongoing_partnership"
@@ -43,6 +47,7 @@ class LicenseScope(Enum):
 
 class RevenueModel(Enum):
     """Revenue sharing models."""
+
     EQUAL_SPLIT = "equal_split"
     WEIGHTED_SPLIT = "weighted_split"
     LEAD_CREATOR_MAJORITY = "lead_creator_majority"
@@ -53,6 +58,7 @@ class RevenueModel(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration."""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     AGREED = "agreed"
@@ -85,7 +91,8 @@ class CollaborationProposal:
 
 @dataclass
 class CollaborationAgreement:
-    """Executed collaboration agreement."""
+    """
+Executed collaboration agreement."""
     agreement_id: str
     proposal_id: str
     collaborators: List[Dict[str, Any]]  # [{creator_id, creator_type, role, contribution_weight}]
@@ -104,7 +111,8 @@ class CollaborationAgreement:
 
 @dataclass
 class CollaborationRevenue:
-    """Revenue tracking for collaborations."""
+    """
+Revenue tracking for collaborations."""
     revenue_id: str
     agreement_id: str
     content_id: str
@@ -119,7 +127,8 @@ class CollaborationRevenue:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for collaboration matching."""
+    """
+Creator profile for collaboration matching."""
     creator_id: str
     creator_type: str
     specialties: List[str]
@@ -141,7 +150,8 @@ class CollaborationLicensingManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Collaboration Licensing Manager."""
+        """
+Initialize the Collaboration Licensing Manager."""
         self.config = config
         self.db_config = config.get("database", {})
         self.collaboration_config = config.get("collaboration", {})
@@ -725,7 +735,8 @@ class CollaborationLicensingManager:
         creator_id: str,
         limit: int = 5
     ) -> List[Dict[str, Any]]:
-        """Get top collaborators by revenue and frequency."""
+        """
+Get top collaborators by revenue and frequency."""
         collaborator_stats = {}
         
         # Aggregate collaboration data
@@ -785,7 +796,8 @@ class CollaborationLicensingManager:
         self,
         creator_id: str
     ) -> List[str]:
-        """Generate personalized collaboration recommendations."""
+        """
+Generate personalized collaboration recommendations."""
         recommendations = []
         
         creator_profile = self.creator_profiles.get(creator_id)

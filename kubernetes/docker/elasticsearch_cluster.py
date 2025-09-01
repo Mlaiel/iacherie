@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Production-ready Elasticsearch cluster for search, analytics,
 and content indexing with optimal performance configuration.
 """
+
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import logging
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ElasticsearchClusterDockerConfig:
-    """Production Elasticsearch Cluster Configuration"""
+    """
+Production Elasticsearch Cluster Configuration"""
     
     # Elasticsearch Configuration
     es_version: str = "8.11.0"
@@ -149,7 +151,8 @@ cluster.routing.allocation.disk.watermark.flood_stage: 95%
         return config.strip()
     
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Elasticsearch Docker Compose service"""
+        """
+Generate Elasticsearch Docker Compose service"""
         service = {
             "image": f"docker.elastic.co/elasticsearch/elasticsearch:{self.es_version}",
             "container_name": "ia-influencer-elasticsearch",
@@ -297,7 +300,8 @@ xpack.uptime.enabled: true
 """
     
     def generate_jvm_options(self) -> str:
-        """Generate JVM options for Elasticsearch"""
+        """
+Generate JVM options for Elasticsearch"""
         return f"""# JVM Options for IA-Influencer Elasticsearch
 # Optimized for production performance
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -350,7 +354,8 @@ xpack.uptime.enabled: true
 """
     
     def generate_elasticsearch_exporter_service(self) -> Dict[str, Any]:
-        """Generate Elasticsearch Exporter for Prometheus monitoring"""
+        """
+Generate Elasticsearch Exporter for Prometheus monitoring"""
         return {
             "image": "quay.io/prometheuscommunity/elasticsearch-exporter:latest",
             "container_name": "ia-influencer-elasticsearch-exporter",
@@ -429,7 +434,8 @@ EXPOSE 9200 9300
 """
     
     def generate_healthcheck_script(self) -> str:
-        """Generate Elasticsearch health check script"""
+        """
+Generate Elasticsearch health check script"""
         return """#!/bin/bash
 # Elasticsearch Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -447,7 +453,8 @@ fi
 """
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all Elasticsearch configuration files"""
+        """
+Save all Elasticsearch configuration files"""
         from pathlib import Path
         
         output_path = Path(output_dir)

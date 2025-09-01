@@ -6,6 +6,7 @@ content types, platforms, and business objectives.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -22,7 +23,9 @@ from .exceptions import StrategyError, InvalidStrategyError
 
 
 class StrategyType(str, Enum):
-    """Types of adaptation strategies"""
+    """
+Types of adaptation strategies"""
+
     VIRAL_OPTIMIZATION = "viral_optimization"
     ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
     REACH_EXPANSION = "reach_expansion"
@@ -37,6 +40,7 @@ class StrategyType(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for strategy selection"""
+
     MUSIC_VIDEO = "music_video"
     PODCAST = "podcast"
     EDUCATIONAL = "educational"
@@ -51,6 +55,7 @@ class ContentCategory(str, Enum):
 
 class BusinessObjective(str, Enum):
     """Business objectives for strategy alignment"""
+
     BRAND_AWARENESS = "brand_awareness"
     LEAD_GENERATION = "lead_generation"
     AUDIENCE_GROWTH = "audience_growth"
@@ -73,7 +78,8 @@ class StrategyRule:
 
 @dataclass
 class AdaptationStrategy:
-    """Comprehensive adaptation strategy"""
+    """
+Comprehensive adaptation strategy"""
     strategy_id: str
     strategy_type: StrategyType
     name: str
@@ -93,7 +99,8 @@ class AdaptationStrategy:
 
 @dataclass
 class StrategyRequest:
-    """Strategy recommendation request"""
+    """
+Strategy recommendation request"""
     content_id: str
     content_category: ContentCategory
     business_objective: BusinessObjective
@@ -108,7 +115,8 @@ class StrategyRequest:
 
 @dataclass
 class StrategyRecommendation:
-    """Strategy recommendation result"""
+    """
+Strategy recommendation result"""
     recommendation_id: str
     recommended_strategies: List[AdaptationStrategy]
     strategy_ranking: Dict[str, float]
@@ -556,7 +564,8 @@ class AdaptationStrategies:
         return strategies
     
     def _load_strategy_rules(self) -> Dict[str, List[StrategyRule]]:
-        """Load strategy rule sets"""
+        """
+Load strategy rule sets"""
         return {
             'platform_specific': [
                 StrategyRule(
@@ -586,7 +595,8 @@ class AdaptationStrategies:
         }
     
     def _initialize_performance_models(self) -> Dict[str, Any]:
-        """Initialize performance prediction models"""
+        """
+Initialize performance prediction models"""
         return {
             'engagement_model': {
                 'factors': ['content_quality', 'platform_fit', 'audience_match', 'timing'],
@@ -623,7 +633,8 @@ class AdaptationStrategies:
         request: StrategyRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze content context for strategy selection"""
+        """
+Analyze content context for strategy selection"""
         # Implementation would analyze content characteristics
         return {
             'content_type': request.content_category.value,

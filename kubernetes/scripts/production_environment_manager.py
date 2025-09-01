@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Complete production environment configuration with optimized settings.
 ===================================================================
 """
+
 import os
 import yaml
 import logging
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProductionEnvironmentConfig:
-    """Production environment configuration"""
+    """
+Production environment configuration"""
     # Application Configuration
     app_name: str = "Ainflue"
     app_version: str = "1.0.0"
@@ -425,7 +427,8 @@ class ProductionEnvironmentManager:
         return validation_results
     
     def get_environment_status(self) -> Dict[str, Any]:
-        """Get production environment status"""
+        """
+Get production environment status"""
         validation_results = self.validate_production_settings()
         
         return {
@@ -445,7 +448,8 @@ class ProductionEnvironmentManager:
         }
     
     def setup_production_environment(self) -> bool:
-        """Setup complete production environment"""
+        """
+Setup complete production environment"""
         try:
             # Create production ConfigMap
             if self.create_production_configmap():

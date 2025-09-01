@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import shutil
@@ -54,7 +55,9 @@ from ...utils.compression_utils import CompressionManager
 logger = logging.getLogger(__name__)
 
 class BackupType(str, Enum):
-    """Types of backups"""
+    """
+Types of backups"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -62,6 +65,7 @@ class BackupType(str, Enum):
 
 class BackupStatus(str, Enum):
     """Backup operation status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -70,6 +74,7 @@ class BackupStatus(str, Enum):
 
 class RestoreStatus(str, Enum):
     """Restore operation status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -109,7 +114,8 @@ class BackupMetadata:
 
 @dataclass
 class RestoreOperation:
-    """Restore operation tracking"""
+    """
+Restore operation tracking"""
     restore_id: str
     backup_id: str
     target_path: str
@@ -168,7 +174,8 @@ class BackupManager:
         self.backend_manager = backend_manager
     
     def _setup_backup_scheduler(self):
-        """Setup automatic backup scheduling"""
+        """
+Setup automatic backup scheduling"""
         try:
             @aiocron.crontab(self.config.schedule)
             async def scheduled_backup():
@@ -993,7 +1000,8 @@ class BackupManager:
         return True
     
     def _find_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Find backup metadata by ID"""
+        """
+Find backup metadata by ID"""
         for backup in self.backup_history:
             if backup.backup_id == backup_id:
                 return backup
@@ -1002,7 +1010,8 @@ class BackupManager:
         return self.active_backups.get(backup_id)
     
     def _find_last_backup(self, source_path: str) -> Optional[BackupMetadata]:
-        """Find most recent backup for source path"""
+        """
+Find most recent backup for source path"""
         source_backups = [
             backup for backup in self.backup_history
             if backup.source_path == source_path and backup.status == BackupStatus.COMPLETED
@@ -1014,7 +1023,8 @@ class BackupManager:
         return max(source_backups, key=lambda x: x.created_at)
     
     def _find_last_full_backup(self, source_path: str) -> Optional[BackupMetadata]:
-        """Find most recent full backup for source path"""
+        """
+Find most recent full backup for source path"""
         full_backups = [
             backup for backup in self.backup_history
             if (backup.source_path == source_path and 
@@ -1033,7 +1043,8 @@ class BackupManager:
         processing_time: float,
         success: bool
     ):
-        """Update backup statistics"""
+        """
+Update backup statistics"""
         self.stats['total_backups'] += 1
         self.stats['backup_by_type'][metadata.backup_type] += 1
         
@@ -1061,7 +1072,8 @@ class BackupManager:
             self.stats['failed_backups'] += 1
     
     async def create_automated_backup(self):
-        """Create automated backup based on configuration"""
+        """
+Create automated backup based on configuration"""
         try:
             logger.info("Starting automated backup process")
             

@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -40,7 +41,9 @@ settings = get_settings()
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""
+    """
+Types of performance metrics."""
+
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -65,6 +68,7 @@ class MetricType(Enum):
 
 class TimeFrame(Enum):
     """Time frame for performance analysis."""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -75,6 +79,7 @@ class TimeFrame(Enum):
 
 class PerformanceCategory(Enum):
     """Categories of performance analysis."""
+
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_QUALITY = "engagement_quality"
@@ -86,6 +91,7 @@ class PerformanceCategory(Enum):
 
 class TrendDirection(Enum):
     """Direction of performance trends."""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -106,7 +112,8 @@ class MetricDataPoint:
 
 @dataclass
 class PerformanceTrend:
-    """Performance trend analysis."""
+    """
+Performance trend analysis."""
     metric_type: MetricType
     trend_direction: TrendDirection
     growth_rate: float
@@ -119,7 +126,8 @@ class PerformanceTrend:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Performance metrics for individual content."""
+    """
+Performance metrics for individual content."""
     content_id: str
     content_type: str
     platform: str
@@ -135,7 +143,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance summary."""
+    """
+Platform-specific performance summary."""
     platform: str
     time_period: TimeFrame
     total_content: int
@@ -151,7 +160,8 @@ class PlatformPerformance:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark comparison."""
+    """
+Performance benchmark comparison."""
     metric_type: MetricType
     creator_value: float
     industry_average: float
@@ -163,7 +173,8 @@ class PerformanceBenchmark:
 
 @dataclass
 class PerformanceInsight:
-    """Actionable performance insight."""
+    """
+Actionable performance insight."""
     insight_id: str
     insight_type: str
     title: str
@@ -179,7 +190,8 @@ class PerformanceInsight:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report."""
+    """
+Comprehensive performance report."""
     report_id: str
     creator_id: str
     report_period: Dict[str, datetime]
@@ -201,7 +213,8 @@ class MetricsCollector:
     """
     
     def __init__(self):
-        """Initialize the metrics collector."""
+        """
+Initialize the metrics collector."""
         self.collection_service = MetricsCollectionService()
         self.platform_manager = PlatformAPIManager()
         
@@ -247,7 +260,8 @@ class MetricsCollector:
         }
     
     def _initialize_platform_metrics(self) -> Dict[str, List[MetricType]]:
-        """Initialize platform-specific available metrics."""
+        """
+Initialize platform-specific available metrics."""
         
         return {
             'instagram': [
@@ -445,7 +459,8 @@ class MetricsCollector:
     async def _generate_content_metrics(
         self, content_id: str, platform: str
     ) -> List[MetricDataPoint]:
-        """Generate realistic content-specific metrics."""
+        """
+Generate realistic content-specific metrics."""
         
         metrics = []
         content_metrics = self.platform_metrics.get(platform, [])
@@ -485,7 +500,8 @@ class PerformanceAnalyzer:
     """
     
     def __init__(self):
-        """Initialize the performance analyzer."""
+        """
+Initialize the performance analyzer."""
         self.prediction_engine = PerformancePredictionEngine()
         
         # ML models for analysis
@@ -673,7 +689,8 @@ class PerformanceAnalyzer:
         )
     
     def _detect_seasonality(self, values: List[float]) -> bool:
-        """Detect if there's seasonality in the data."""
+        """
+Detect if there's seasonality in the data."""
         
         if len(values) < 14:  # Need at least 2 weeks
             return False
@@ -689,7 +706,8 @@ class PerformanceAnalyzer:
     def _detect_anomalies(
         self, metrics: List[MetricDataPoint], values: List[float]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalous data points."""
+        """
+Detect anomalous data points."""
         
         anomalies = []
         
@@ -869,7 +887,8 @@ class PerformanceAnalyzer:
         return total_score / total_weight if total_weight > 0 else 0
     
     def _normalize_metric_value(self, metric_type: MetricType, value: float) -> float:
-        """Normalize metric value to 0-1 scale."""
+        """
+Normalize metric value to 0-1 scale."""
         
         # Normalization ranges based on typical values
         normalization_ranges = {
@@ -893,7 +912,8 @@ class PerformanceAnalyzer:
     def _identify_best_performing_aspects(
         self, metrics: Dict[MetricType, float]
     ) -> List[str]:
-        """Identify the best performing aspects of content."""
+        """
+Identify the best performing aspects of content."""
         
         best_aspects = []
         
@@ -1008,7 +1028,8 @@ class PerformanceAnalyzer:
         industry_data: Dict[str, float],
         platform: str
     ) -> PerformanceBenchmark:
-        """Create a performance benchmark."""
+        """
+Create a performance benchmark."""
         
         industry_average = industry_data.get('average', 0)
         top_10_threshold = industry_data.get('top_10_percent', 0)
@@ -1055,7 +1076,8 @@ class PerformanceTracker:
     """
     
     def __init__(self):
-        """Initialize the performance tracker."""
+        """
+Initialize the performance tracker."""
         self.metrics_collector = MetricsCollector()
         self.performance_analyzer = PerformanceAnalyzer()
         
@@ -1227,7 +1249,8 @@ class PerformanceTracker:
         metrics: List[MetricDataPoint],
         trends: List[PerformanceTrend]
     ) -> List[str]:
-        """Generate platform-specific optimization recommendations."""
+        """
+Generate platform-specific optimization recommendations."""
         
         recommendations = []
         
@@ -1430,7 +1453,8 @@ class PerformanceTracker:
         trends: List[PerformanceTrend],
         benchmarks: List[PerformanceBenchmark]
     ) -> List[str]:
-        """Generate high-level recommendations."""
+        """
+Generate high-level recommendations."""
         
         recommendations = []
         

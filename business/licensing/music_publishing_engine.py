@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -29,7 +30,9 @@ from ..ai.publishing_intelligence import PublishingIntelligenceEngine
 
 
 class PublishingRightType(Enum):
-    """Types of music publishing rights"""
+    """
+Types of music publishing rights"""
+
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -41,6 +44,7 @@ class PublishingRightType(Enum):
 
 class RoyaltyType(Enum):
     """Types of publishing royalties"""
+
     MECHANICAL_ROYALTIES = "mechanical_royalties"
     PERFORMANCE_ROYALTIES = "performance_royalties"
     SYNC_FEES = "sync_fees"
@@ -52,6 +56,7 @@ class RoyaltyType(Enum):
 
 class PublishingDealType(Enum):
     """Types of publishing deals"""
+
     FULL_PUBLISHING = "full_publishing"
     CO_PUBLISHING = "co_publishing"
     ADMINISTRATION = "administration"
@@ -73,7 +78,8 @@ class SongwriterShare:
 
 @dataclass
 class PublishingMetrics:
-    """Publishing performance metrics"""
+    """
+Publishing performance metrics"""
     total_catalog_size: int
     active_songs: int
     total_royalty_earnings: Decimal
@@ -85,7 +91,8 @@ class PublishingMetrics:
 
 
 class PublishingAgreementRequest(BaseModel):
-    """Publishing agreement creation request"""
+    """
+Publishing agreement creation request"""
     song_id: str = Field(..., description="Song/composition ID")
     deal_type: PublishingDealType = Field(..., description="Type of publishing deal")
     songwriter_shares: List[SongwriterShare] = Field(..., description="Songwriter share information")
@@ -605,7 +612,8 @@ class MusicPublishingEngine:
         pass
     
     async def _analyze_song_commercial_potential(self, song_id: str) -> Dict[str, Any]:
-        """Analyze commercial potential of song"""
+        """
+Analyze commercial potential of song"""
         # Implementation for commercial analysis
         pass
     
@@ -614,6 +622,7 @@ class MusicPublishingEngine:
         request: PublishingAgreementRequest, 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimized publishing terms"""
+        """
+Generate optimized publishing terms"""
         # Implementation for terms generation
         pass

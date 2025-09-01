@@ -4,6 +4,7 @@ Handles live streaming, VOD management, and gaming content monetization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwitchCredentials:
-    """Twitch API credentials configuration."""
+    """
+Twitch API credentials configuration."""
     client_id: str
     client_secret: str
     access_token: str
@@ -35,6 +37,7 @@ class TwitchAdapter(BasePlatformAdapter):
     Advanced Twitch platform adapter for streaming and gaming content.
     Supports live streams, VODs, clips, and subscriber monetization.
     """
+
     
     PLATFORM_NAME = "twitch"
     API_BASE_URL = "https://api.twitch.tv/helix"

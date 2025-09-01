@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import json
@@ -67,7 +68,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize S3 object storage provider."""
+        """
+Initialize S3 object storage provider."""
         super().__init__(provider_id, StorageBackendType.OBJECT_STORAGE, config)
         
         self.bucket_name = config['bucket_name']
@@ -286,7 +288,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return serialized_data, content_type
     
     def _decompress_data(self, data: bytes, content_type: str) -> bytes:
-        """Decompress data if needed."""
+        """
+Decompress data if needed."""
         if content_type == 'application/gzip':
             return gzip.decompress(data)
         return data
@@ -297,7 +300,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record in S3."""
+        """
+Store a record in S3."""
         start_time = asyncio.get_event_loop().time()
         
         try:
@@ -452,7 +456,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Retrieve a record from S3."""
+        """
+Retrieve a record from S3."""
         start_time = asyncio.get_event_loop().time()
         
         try:
@@ -576,7 +581,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""
+        """
+Retrieve multiple records in batch."""
         results = {}
         
         # Process downloads with concurrency limit
@@ -597,7 +603,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return results
     
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record from S3."""
+        """
+Delete a record from S3."""
         try:
             object_key = self._get_object_key(record_id)
             metadata_key = self._get_metadata_key(record_id)
@@ -812,7 +819,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return await self.store_record(record_id, data, metadata)
     
     async def get_statistics(self) -> StorageStats:
-        """Get S3 storage statistics."""
+        """
+Get S3 storage statistics."""
         try:
             total_records = 0
             total_size = 0
@@ -952,7 +960,8 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         }
 
 class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
-    """Content-specific S3 storage provider for media files."""
+    """
+Content-specific S3 storage provider for media files."""
     
     async def store_content(
         self,
@@ -962,7 +971,8 @@ class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
         content_data: Dict[str, Any],
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
-        """Store content with associated media files."""
+        """
+Store content with associated media files."""
         try:
             # Store main content data
             content_metadata = StorageMetadata(

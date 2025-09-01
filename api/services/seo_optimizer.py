@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -350,7 +351,8 @@ class EnterpriseSEOOptimizerService:
         }
 
     async def _analyze_readability(self, title: str, description: str) -> Dict[str, Any]:
-        """Analyze content readability"""
+        """
+Analyze content readability"""
         
         text = f"{title} {description}"
         
@@ -409,7 +411,8 @@ class EnterpriseSEOOptimizerService:
         }
 
     async def _get_trending_keywords(self, content_type: str) -> List[str]:
-        """Get trending keywords for content type"""
+        """
+Get trending keywords for content type"""
         
         cache_key = f"trending_keywords:{content_type}"
         cached = self.redis_client.get(cache_key)

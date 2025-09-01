@@ -1,6 +1,8 @@
 """Production Readiness Dashboard
 Comprehensive monitoring dashboard for all production requirements
-"""import asyncio
+"""
+
+import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, Any, Optional
@@ -42,7 +44,8 @@ class ProductionReadinessDashboard:
             self.business_metrics = None
     
     async def get_production_readiness_status(self) -> Dict[str, Any]:
-        """Get comprehensive production readiness status"""
+        """
+Get comprehensive production readiness status"""
         status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'UNKNOWN',
@@ -75,7 +78,8 @@ class ProductionReadinessDashboard:
         return status
     
     async def _check_performance_requirements(self) -> Dict[str, Any]:
-        """Check performance requirements compliance"""
+        """
+Check performance requirements compliance"""
         performance_status = {
             'category': 'Performance Requirements',
             'compliant': False,

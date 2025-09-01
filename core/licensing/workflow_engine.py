@@ -14,6 +14,7 @@ Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
 """
+
 from typing import Dict, Any, List, Optional, Callable
 import asyncio
 import logging
@@ -26,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 class WorkflowState(Enum):
     """États du workflow de licensing."""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     UNDER_REVIEW = "under_review"
@@ -41,6 +43,7 @@ class WorkflowState(Enum):
 
 class WorkflowAction(Enum):
     """Actions possibles dans le workflow."""
+
     SUBMIT = "submit"
     REVIEW = "review"
     APPROVE = "approve"
@@ -55,6 +58,7 @@ class WorkflowAction(Enum):
 
 class WorkflowTrigger(Enum):
     """Déclencheurs de workflow."""
+
     MANUAL = "manual"
     AUTOMATIC = "automatic"
     SCHEDULED = "scheduled"
@@ -147,7 +151,8 @@ class LicenseWorkflowEngine:
         }
     
     async def _setup_workflow_rules(self):
-        """Configure les règles métier du workflow."""
+        """
+Configure les règles métier du workflow."""
         self.workflow_rules = {
             "review_requirements": {
                 "high_value_threshold": 1000.0,
@@ -643,7 +648,8 @@ class LicenseWorkflowEngine:
         pass
     
     async def _run_scheduled_tasks(self):
-        """Exécute les tâches programmées."""
+        """
+Exécute les tâches programmées."""
         current_time = datetime.utcnow()
         
         for task_name, task_config in self.automation_rules["scheduled_tasks"].items():

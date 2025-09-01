@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ from datetime import datetime, timedelta
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels."""
+    """
+Threat severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -38,6 +41,7 @@ class ThreatLevel(Enum):
 
 class ThreatCategory(Enum):
     """Categories of security threats."""
+
     MALWARE = "malware"
     PHISHING = "phishing"
     DATA_BREACH = "data_breach"
@@ -54,6 +58,7 @@ class ThreatCategory(Enum):
 
 class DetectionMethod(Enum):
     """Threat detection methods."""
+
     SIGNATURE_BASED = "signature_based"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
     MACHINE_LEARNING = "machine_learning"
@@ -66,6 +71,7 @@ class DetectionMethod(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions."""
+
     ALERT = "alert"
     BLOCK = "block"
     QUARANTINE = "quarantine"
@@ -557,7 +563,8 @@ def get_threat_detection_config() -> ThreatDetectionConfig:
 
 
 def get_threat_signature(signature_id: str) -> Optional[ThreatSignature]:
-    """Get a specific threat signature by ID."""
+    """
+Get a specific threat signature by ID."""
     config = get_threat_detection_config()
     for signature in config.custom_signatures:
         if signature.signature_id == signature_id:
@@ -566,7 +573,8 @@ def get_threat_signature(signature_id: str) -> Optional[ThreatSignature]:
 
 
 def get_response_actions(threat_category: ThreatCategory, threat_level: ThreatLevel) -> List[ResponseAction]:
-    """Get appropriate response actions for a threat category and level."""
+    """
+Get appropriate response actions for a threat category and level."""
     config = get_threat_detection_config()
     
     # Get category-specific playbook

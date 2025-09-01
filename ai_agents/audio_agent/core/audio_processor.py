@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioProcessingConfig:
-    """Comprehensive audio processing configuration"""
+    """
+Comprehensive audio processing configuration"""
     target_sample_rate: int = 44100
     frame_length: int = 2048
     hop_length: int = 512
@@ -67,7 +69,8 @@ class AudioProcessingConfig:
     
 @dataclass
 class AudioFeatures:
-    """Complete audio feature set for ML and analysis"""
+    """
+Complete audio feature set for ML and analysis"""
     # Basic features
     duration_seconds: float
     sample_rate: int
@@ -181,7 +184,8 @@ class AudioProcessor:
         return model
     
     def _load_quality_model(self) -> Optional[nn.Module]:
-        """Load audio quality assessment model"""
+        """
+Load audio quality assessment model"""
         class QualityAssessmentNet(nn.Module):
             def __init__(self):
                 super().__init__()
@@ -201,7 +205,8 @@ class AudioProcessor:
         return QualityAssessmentNet().to(self.device)
     
     def _load_genre_model(self) -> Optional[nn.Module]:
-        """Load genre classification model"""
+        """
+Load genre classification model"""
         class GenreClassifier(nn.Module):
             def __init__(self, num_genres=10):
                 super().__init__()
@@ -385,7 +390,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, extract_spectral)
     
     async def _extract_rhythmic_features_async(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract rhythmic features asynchronously"""
+        """
+Extract rhythmic features asynchronously"""
         def extract_rhythmic():
             try:
                 # Tempo and beat tracking
@@ -551,7 +557,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, analyze_quality)
     
     async def _extract_ml_embeddings(self, audio_data: np.ndarray) -> Optional[np.ndarray]:
-        """Extract ML embeddings using neural network"""
+        """
+Extract ML embeddings using neural network"""
         try:
             if self.feature_extraction_model is None:
                 return None
@@ -577,7 +584,8 @@ class AudioProcessor:
         return audio_data
     
     def _generate_cache_key(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate cache key for audio data"""
+        """
+Generate cache key for audio data"""
         # Create hash of audio data and parameters
         audio_hash = hashlib.md5(audio_data.tobytes()).hexdigest()
         return f"{audio_hash}_{sample_rate}_{self.config.n_fft}_{self.config.hop_length}"
@@ -649,7 +657,8 @@ class AudioProcessor:
         return processed
     
     def _apply_multiband_compression(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply multiband compression"""
+        """
+Apply multiband compression"""
         # Split into frequency bands
         nyquist = sample_rate // 2
         
@@ -674,7 +683,8 @@ class AudioProcessor:
         return low_compressed + mid_compressed + high_compressed
     
     def _apply_compression(self, audio_data: np.ndarray, threshold: float = 0.7, ratio: float = 4.0) -> np.ndarray:
-        """Apply dynamic range compression"""
+        """
+Apply dynamic range compression"""
         compressed = audio_data.copy()
         
         # Simple compression algorithm
@@ -686,7 +696,8 @@ class AudioProcessor:
         return compressed
     
     def _apply_mastering_eq(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply mastering EQ"""
+        """
+Apply mastering EQ"""
         processed = audio_data.copy()
         nyquist = sample_rate // 2
         
@@ -702,7 +713,8 @@ class AudioProcessor:
         return processed
     
     def _apply_limiter(self, audio_data: np.ndarray, threshold: float = -0.1, ratio: float = 10.0) -> np.ndarray:
-        """Apply peak limiting"""
+        """
+Apply peak limiting"""
         limited = audio_data.copy()
         threshold_linear = 10**(threshold/20)  # Convert dB to linear
         
@@ -716,7 +728,8 @@ class AudioProcessor:
     async def batch_process_audio(self, 
                                 audio_files: List[str],
                                 processing_config: Dict[str, Any]) -> List[AudioFeatures]:
-        """Process multiple audio files in parallel"""
+        """
+Process multiple audio files in parallel"""
         async def process_single_file(file_path: str) -> AudioFeatures:
             try:
                 # Load audio file

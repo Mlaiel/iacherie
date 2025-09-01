@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -32,7 +33,9 @@ from ..core.database import get_database_session
 
 
 class ProcessingType(Enum):
-    """Data processing types."""
+    """
+Data processing types."""
+
     AGGREGATION = "aggregation"
     TREND_ANALYSIS = "trend_analysis"
     ANOMALY_DETECTION = "anomaly_detection"
@@ -42,6 +45,7 @@ class ProcessingType(Enum):
 
 class TimeGranularity(Enum):
     """Time aggregation granularity."""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -64,7 +68,8 @@ class ProcessedMetric:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results."""
+    """
+Trend analysis results."""
     metric_name: str
     trend_direction: str  # 'increasing', 'decreasing', 'stable'
     trend_strength: float  # 0-100
@@ -689,7 +694,8 @@ class TrendAnalyzer:
             return None
             
     def _detect_trend_anomalies(self, data: pd.DataFrame) -> List[datetime]:
-        """Detect anomalies in trend data."""
+        """
+Detect anomalies in trend data."""
         
         anomalies = []
         
@@ -723,7 +729,8 @@ class TrendAnalyzer:
         correlation: float,
         seasonality: Optional[str]
     ) -> List[str]:
-        """Generate actionable recommendations based on trend analysis."""
+        """
+Generate actionable recommendations based on trend analysis."""
         
         recommendations = []
         
@@ -863,7 +870,8 @@ class AnomalyDetector:
         values: np.ndarray,
         sensitivity: float
     ) -> List[bool]:
-        """Detect anomalies using statistical methods."""
+        """
+Detect anomalies using statistical methods."""
         
         try:
             # Use modified Z-score method
@@ -888,7 +896,8 @@ class AnomalyDetector:
         iso_result: bool,
         stat_result: bool
     ) -> float:
-        """Calculate confidence score for anomaly detection."""
+        """
+Calculate confidence score for anomaly detection."""
         
         confidence = 0.0
         

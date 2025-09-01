@@ -22,6 +22,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, Any, List, Optional
@@ -29,7 +30,9 @@ from enum import Enum
 
 
 class LogLevel(Enum):
-    """Audit log levels."""
+    """
+Audit log levels."""
+
     DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
@@ -39,6 +42,7 @@ class LogLevel(Enum):
 
 class StorageBackend(Enum):
     """Storage backend options."""
+
     POSTGRESQL = "postgresql"
     ELASTICSEARCH = "elasticsearch"
     MONGODB = "mongodb"
@@ -48,6 +52,7 @@ class StorageBackend(Enum):
 
 class RetentionPolicy(Enum):
     """Data retention policies."""
+
     STANDARD = "standard"  # 7 years
     EXTENDED = "extended"  # 10 years
     MINIMAL = "minimal"    # 3 years
@@ -56,6 +61,7 @@ class RetentionPolicy(Enum):
 
 class ExportFormat(Enum):
     """Export format options."""
+
     JSON = "json"
     CSV = "csv"
     XML = "xml"

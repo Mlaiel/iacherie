@@ -15,6 +15,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 from typing import Dict, List, Optional, Set, Union, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -36,7 +37,9 @@ from backend.core.logging import SecurityLogger
 
 
 class PermissionLevel(Enum):
-    """Permission levels for granular access control"""
+    """
+Permission levels for granular access control"""
+
     NONE = 0
     READ = 10
     WRITE = 20
@@ -49,7 +52,9 @@ class PermissionLevel(Enum):
 
 
 class ResourceType(Enum):
-    """Types of resources in the system"""
+    """
+Types of resources in the system"""
+
     USER = "user"
     CONTENT = "content"
     FINGERPRINT = "fingerprint"
@@ -67,6 +72,7 @@ class ResourceType(Enum):
 
 class ContentType(Enum):
     """Content types for content-specific permissions"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -78,6 +84,7 @@ class ContentType(Enum):
 
 class PermissionScope(Enum):
     """Permission scopes for different contexts"""
+
     GLOBAL = "global"
     TENANT = "tenant"
     RESOURCE = "resource"
@@ -98,7 +105,8 @@ class Permission:
 
 @dataclass
 class Role:
-    """Role definition with hierarchical permissions"""
+    """
+Role definition with hierarchical permissions"""
     name: str
     description: str
     permissions: Set[str] = field(default_factory=set)
@@ -110,7 +118,8 @@ class Role:
 
 @dataclass
 class ResourceAccess:
-    """Resource access definition"""
+    """
+Resource access definition"""
     resource_id: str
     resource_type: ResourceType
     user_id: str
@@ -122,7 +131,8 @@ class ResourceAccess:
 
 
 class PermissionManager:
-    """Manages system permissions and their definitions"""
+    """
+Manages system permissions and their definitions"""
     
     def __init__(self):
         self.logger = SecurityLogger("PermissionManager")
@@ -425,7 +435,8 @@ class RoleBasedAccess:
         tenant_id: str,
         assigned_by: str
     ) -> bool:
-        """Assign role to user"""
+        """
+Assign role to user"""
         try:
             # Validate role exists
             role = await self.get_role(role_name, tenant_id)
@@ -808,7 +819,8 @@ class AuthorizationManager:
         user_id: str, 
         tenant_id: str
     ) -> Dict[str, Any]:
-        """Get user's effective permissions summary"""
+        """
+Get user's effective permissions summary"""
         try:
             user_permissions = await self.content_access.get_user_permissions(user_id, tenant_id)
             user_roles = await self.content_access.get_user_roles(user_id, tenant_id)

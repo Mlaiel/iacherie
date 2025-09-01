@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class CreatorCreate(BaseSchema):
-    """Schema for creator profile creation."""
+    """
+Schema for creator profile creation."""
     
     user_id: UUID = Field(description="Associated user account ID")
     creator_name: str = Field(min_length=2, max_length=100, description="Creator display name")
@@ -69,7 +71,8 @@ class CreatorUpdate(BaseSchema):
 
 
 class CreatorOut(UUIDSchema, TimestampSchema):
-    """Public creator profile schema."""
+    """
+Public creator profile schema."""
     
     user_id: UUID
     creator_name: str
@@ -108,7 +111,8 @@ class CreatorOut(UUIDSchema, TimestampSchema):
 
 
 class CreatorProfile(UUIDSchema, TimestampSchema, AuditSchema):
-    """Extended creator profile with private information."""
+    """
+Extended creator profile with private information."""
     
     user_id: UUID
     creator_name: str
@@ -243,7 +247,8 @@ class CreatorSubscription(UUIDSchema, TimestampSchema):
 
 
 class CreatorVerification(UUIDSchema, TimestampSchema):
-    """Creator verification and identity confirmation."""
+    """
+Creator verification and identity confirmation."""
     
     creator_id: UUID
     verification_type: str = Field(description="Type of verification requested")
@@ -302,7 +307,8 @@ class CollaborationPreferences(BaseSchema):
 
 
 class MonetizationPreferences(BaseSchema):
-    """Creator monetization preferences schema."""
+    """
+Creator monetization preferences schema."""
     
     auto_monetization_enabled: bool = Field(default=False)
     preferred_revenue_models: List[str] = Field(default_factory=list)

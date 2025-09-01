@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests d'analyse de contenu pour le système d'évaluation de qualité IA.
+"""
+Tests d'analyse de contenu pour le système d'évaluation de qualité IA.
 Module de test complet pour la validation de l'intelligence de contenu multidimensionnelle.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
 """
+
 import pytest
 import sys
 import os
@@ -98,16 +101,19 @@ except ImportError:
 
 
 class TestContentAnalyzer:
-    """Tests complets pour l'analyseur de contenu principal."""
+    """
+Tests complets pour l'analyseur de contenu principal."""
     
     @pytest.fixture
     def content_analyzer(self):
-        """Fixture pour l'analyseur de contenu."""
+        """
+Fixture pour l'analyseur de contenu."""
         return ContentAnalyzer()
     
     @pytest.fixture
     def sample_content_data(self):
-        """Génère des données de contenu de test réalistes."""
+        """
+Génère des données de contenu de test réalistes."""
         return {
             'content_type': 'multimedia',
             'platform': 'instagram',
@@ -141,7 +147,8 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_content_comprehensive(self, content_analyzer, sample_content_data):
-        """Test d'analyse de contenu complète."""
+        """
+Test d'analyse de contenu complète."""
         result = await content_analyzer.analyze_content(sample_content_data)
         
         # Vérification de la structure de résultat
@@ -164,7 +171,8 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_image_content(self, content_analyzer):
-        """Test d'analyse spécifique aux images."""
+        """
+Test d'analyse spécifique aux images."""
         # Création d'une image de test
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
             test_image = Image.new('RGB', (1080, 1080), color='red')
@@ -194,7 +202,8 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_video_content(self, content_analyzer):
-        """Test d'analyse spécifique aux vidéos."""
+        """
+Test d'analyse spécifique aux vidéos."""
         content_data = {
             'content_type': 'video',
             'platform': 'youtube',
@@ -224,7 +233,8 @@ class TestContentAnalyzer:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_analyze_content_performance(self, content_analyzer, sample_content_data):
-        """Test de performance pour l'analyse de contenu."""
+        """
+Test de performance pour l'analyse de contenu."""
         import time
         
         start_time = time.time()
@@ -245,16 +255,19 @@ class TestContentIntelligence:
     
     @pytest.fixture
     def content_intelligence(self):
-        """Fixture pour l'intelligence de contenu."""
+        """
+Fixture pour l'intelligence de contenu."""
         return ContentIntelligence()
     
     def test_content_intelligence_initialization(self, content_intelligence):
-        """Test d'initialisation de l'intelligence de contenu."""
+        """
+Test d'initialisation de l'intelligence de contenu."""
         assert content_intelligence is not None
         assert hasattr(content_intelligence, '__class__')
     
     def test_trend_detection_analysis(self, content_intelligence):
-        """Test de détection des tendances."""
+        """
+Test de détection des tendances."""
         # Données de tendance simulées
         trend_data = {
             'hashtags': ['#AI2025', '#TechTrends', '#Innovation'],
@@ -276,15 +289,18 @@ class TestContentIntelligence:
 
 
 class TestContentOptimizer:
-    """Tests pour l'optimiseur de contenu."""
+    """
+Tests pour l'optimiseur de contenu."""
     
     @pytest.fixture
     def content_optimizer(self):
-        """Fixture pour l'optimiseur de contenu."""
+        """
+Fixture pour l'optimiseur de contenu."""
         return ContentOptimizer()
     
     def test_content_optimization_suggestions(self, content_optimizer):
-        """Test des suggestions d'optimisation."""
+        """
+Test des suggestions d'optimisation."""
         content_data = {
             'text': 'Voici mon nouveau post sur les tendances tech',
             'platform': 'linkedin',
@@ -304,7 +320,8 @@ class TestContentOptimizer:
             assert content_optimizer is not None
     
     def test_hashtag_optimization(self, content_optimizer):
-        """Test d'optimisation des hashtags."""
+        """
+Test d'optimisation des hashtags."""
         hashtag_data = {
             'current_hashtags': ['#tech', '#innovation'],
             'content_category': 'technology',
@@ -320,15 +337,18 @@ class TestContentOptimizer:
 
 
 class TestTrendAnalyzer:
-    """Tests pour l'analyseur de tendances."""
+    """
+Tests pour l'analyseur de tendances."""
     
     @pytest.fixture
     def trend_analyzer(self):
-        """Fixture pour l'analyseur de tendances."""
+        """
+Fixture pour l'analyseur de tendances."""
         return TrendAnalyzer()
     
     def test_trend_detection(self, trend_analyzer):
-        """Test de détection des tendances."""
+        """
+Test de détection des tendances."""
         trend_data = {
             'time_period': '30_days',
             'platforms': ['instagram', 'tiktok', 'youtube'],
@@ -347,7 +367,8 @@ class TestTrendAnalyzer:
             assert trend_analyzer is not None
     
     def test_seasonal_analysis(self, trend_analyzer):
-        """Test d'analyse saisonnière."""
+        """
+Test d'analyse saisonnière."""
         seasonal_data = {
             'historical_data': {
                 'Q1': {'engagement': 12.5, 'reach': 50000},
@@ -367,15 +388,18 @@ class TestTrendAnalyzer:
 
 
 class TestViralityPredictor:
-    """Tests pour le prédicteur de viralité."""
+    """
+Tests pour le prédicteur de viralité."""
     
     @pytest.fixture
     def virality_predictor(self):
-        """Fixture pour le prédicteur de viralité."""
+        """
+Fixture pour le prédicteur de viralité."""
         return ViralityPredictor()
     
     def test_virality_score_calculation(self, virality_predictor):
-        """Test de calcul du score de viralité."""
+        """
+Test de calcul du score de viralité."""
         content_metrics = {
             'engagement_rate': 8.5,
             'share_rate': 2.1,
@@ -399,7 +423,8 @@ class TestViralityPredictor:
             assert virality_predictor is not None
     
     def test_viral_factors_analysis(self, virality_predictor):
-        """Test d'analyse des facteurs viraux."""
+        """
+Test d'analyse des facteurs viraux."""
         viral_factors = {
             'timing': {'optimal_hour': 18, 'day_of_week': 'friday'},
             'content_quality': {'visual_appeal': 88, 'audio_quality': 92},
@@ -416,15 +441,18 @@ class TestViralityPredictor:
 
 
 class TestAudienceAnalyzer:
-    """Tests pour l'analyseur d'audience."""
+    """
+Tests pour l'analyseur d'audience."""
     
     @pytest.fixture
     def audience_analyzer(self):
-        """Fixture pour l'analyseur d'audience."""
+        """
+Fixture pour l'analyseur d'audience."""
         return AudienceAnalyzer()
     
     def test_audience_segmentation(self, audience_analyzer):
-        """Test de segmentation d'audience."""
+        """
+Test de segmentation d'audience."""
         audience_data = {
             'demographics': {
                 'age_groups': {'18-24': 35, '25-34': 45, '35-44': 20},
@@ -449,7 +477,8 @@ class TestAudienceAnalyzer:
             assert audience_analyzer is not None
     
     def test_audience_insights_generation(self, audience_analyzer):
-        """Test de génération d'insights d'audience."""
+        """
+Test de génération d'insights d'audience."""
         engagement_data = {
             'content_performance': {
                 'videos': {'avg_engagement': 8.2, 'avg_reach': 15000},
@@ -476,16 +505,19 @@ class TestAudienceAnalyzer:
 
 
 class TestContentStrategyIntegration:
-    """Tests d'intégration pour la stratégie de contenu complète."""
+    """
+Tests d'intégration pour la stratégie de contenu complète."""
     
     @pytest.fixture
     def content_strategy(self):
-        """Fixture pour la stratégie de contenu."""
+        """
+Fixture pour la stratégie de contenu."""
         return ContentStrategy() if 'ContentStrategy' in globals() else None
     
     @pytest.mark.integration
     def test_complete_content_analysis_workflow(self, content_strategy):
-        """Test du workflow complet d'analyse de contenu."""
+        """
+Test du workflow complet d'analyse de contenu."""
         if content_strategy is None:
             pytest.skip("ContentStrategy class not available")
         
@@ -539,7 +571,8 @@ class TestRealTimeContentAnalysis:
     
     @pytest.mark.asyncio
     async def test_real_time_performance_monitoring(self):
-        """Test de monitoring de performance en temps réel."""
+        """
+Test de monitoring de performance en temps réel."""
         # Simulation de données de performance en temps réel
         real_time_data = {
             'content_id': 'test_content_123',
@@ -572,7 +605,8 @@ class TestRealTimeContentAnalysis:
     
     @pytest.mark.performance
     def test_bulk_content_analysis_performance(self):
-        """Test de performance pour l'analyse en masse."""
+        """
+Test de performance pour l'analyse en masse."""
         # Génération de contenu de test en masse
         bulk_content = []
         for i in range(10):

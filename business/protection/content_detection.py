@@ -4,6 +4,7 @@ Professional content identification and analysis system for IA Influencer Protec
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import hashlib
 import imagehash
 import librosa
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint for identification"""
+    """
+Content fingerprint for identification"""
     content_id: str
     content_type: str  # 'image', 'audio', 'video', 'text'
     hash_signatures: Dict[str, str]
@@ -33,7 +35,8 @@ class ContentFingerprint:
 
 
 class ContentHashGenerator:
-    """Advanced hashing system for content identification"""
+    """
+Advanced hashing system for content identification"""
     
     def __init__(self):
         self.supported_formats = {
@@ -44,7 +47,8 @@ class ContentHashGenerator:
         }
     
     def generate_image_hash(self, image_path: str) -> Dict[str, str]:
-        """Generate multiple hash signatures for images"""
+        """
+Generate multiple hash signatures for images"""
         try:
             image = Image.open(image_path)
             
@@ -197,7 +201,8 @@ class ContentDetectionEngine:
         self.fingerprint_cache = {}
     
     def analyze_content(self, content_path: str, content_type: str = None) -> ContentFingerprint:
-        """Comprehensive content analysis and fingerprinting"""
+        """
+Comprehensive content analysis and fingerprinting"""
         try:
             if not content_type:
                 content_type = self._detect_content_type(content_path)
@@ -403,7 +408,8 @@ class ContentDetectionEngine:
         return metadata
     
     def _calculate_confidence_score(self, hash_signatures: Dict[str, str], feature_vectors: Dict[str, List[float]]) -> float:
-        """Calculate confidence score for fingerprint quality"""
+        """
+Calculate confidence score for fingerprint quality"""
         score = 0.0
         
         # Hash quality (more hashes = higher confidence)
@@ -418,7 +424,8 @@ class ContentDetectionEngine:
         return min(score, 1.0)
     
     def _compare_hashes(self, hashes1: Dict[str, str], hashes2: Dict[str, str]) -> float:
-        """Compare hash signatures for similarity"""
+        """
+Compare hash signatures for similarity"""
         common_keys = set(hashes1.keys()) & set(hashes2.keys())
         if not common_keys:
             return 0.0
@@ -427,7 +434,8 @@ class ContentDetectionEngine:
         return matches / len(common_keys)
     
     def _compare_features(self, features1: Dict[str, List[float]], features2: Dict[str, List[float]]) -> float:
-        """Compare feature vectors for similarity"""
+        """
+Compare feature vectors for similarity"""
         common_keys = set(features1.keys()) & set(features2.keys())
         if not common_keys:
             return 0.0
@@ -450,7 +458,8 @@ class ContentDetectionEngine:
         return np.mean(similarities) if similarities else 0.0
     
     def _calculate_texture_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Calculate basic texture features"""
+        """
+Calculate basic texture features"""
         # Simple gradient-based texture features
         grad_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
         grad_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
@@ -469,14 +478,16 @@ class ContentDetectionEngine:
 
 
 class ContentDetectionManager:
-    """High-level manager for content detection operations"""
+    """
+High-level manager for content detection operations"""
     
     def __init__(self):
         self.detection_engine = ContentDetectionEngine()
         self.fingerprint_database = []
     
     def register_content(self, content_path: str, owner_id: str, content_metadata: Dict[str, Any] = None) -> str:
-        """Register new content for protection"""
+        """
+Register new content for protection"""
         try:
             fingerprint = self.detection_engine.analyze_content(content_path)
             

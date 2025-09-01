@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -109,7 +110,8 @@ class WorkflowAutomationOrchestrator:
         self.system_metrics: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize all workflow automation components"""
+        """
+Initialize all workflow automation components"""
         try:
             logger.info("Initializing Workflow Automation Orchestrator...")
             

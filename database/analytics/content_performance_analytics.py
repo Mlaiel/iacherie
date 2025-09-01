@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ContentType(str, Enum):
-    """Content type categories"""
+    """
+Content type categories"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -46,6 +49,7 @@ class ContentType(str, Enum):
 
 class Platform(str, Enum):
     """Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -64,6 +68,7 @@ class Platform(str, Enum):
 
 class EngagementMetric(str, Enum):
     """Engagement metric types"""
+
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -78,6 +83,7 @@ class EngagementMetric(str, Enum):
 
 class OptimizationCategory(str, Enum):
     """Content optimization categories"""
+
     TIMING = "timing"
     HASHTAGS = "hashtags"
     THUMBNAIL = "thumbnail"

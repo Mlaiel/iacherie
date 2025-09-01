@@ -4,7 +4,7 @@ Sophisticated business intelligence system for multi-format content creators
 with predictive analytics, trend analysis, and strategic insights.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -23,6 +23,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class InsightType(Enum):
-    """Types of business insights"""
+    """
+Types of business insights"""
+
     PERFORMANCE = "performance"
     REVENUE = "revenue"
     USER_BEHAVIOR = "user_behavior"
@@ -61,6 +64,7 @@ class InsightType(Enum):
 
 class InsightPriority(Enum):
     """Priority levels for insights"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -69,6 +73,7 @@ class InsightPriority(Enum):
 
 class PredictionModel(Enum):
     """Types of prediction models"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     TIME_SERIES = "time_series"
@@ -91,7 +96,8 @@ class BusinessInsight:
     timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert insight to dictionary"""
+        """
+Convert insight to dictionary"""
         return {
             'id': self.id,
             'type': self.type.value,
@@ -108,7 +114,8 @@ class BusinessInsight:
 
 @dataclass
 class PredictionResult:
-    """Prediction result from analytics model"""
+    """
+Prediction result from analytics model"""
     model_type: PredictionModel
     prediction_type: str
     predicted_values: List[float]
@@ -118,7 +125,8 @@ class PredictionResult:
     timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert prediction to dictionary"""
+        """
+Convert prediction to dictionary"""
         return {
             'model_type': self.model_type.value,
             'prediction_type': self.prediction_type,
@@ -171,7 +179,8 @@ class BusinessIntelligence:
         }
     
     async def initialize(self) -> None:
-        """Initialize business intelligence system"""
+        """
+Initialize business intelligence system"""
         try:
             self.logger.info("Initializing BusinessIntelligence...")
             
@@ -409,12 +418,14 @@ class BusinessIntelligence:
         }
     
     async def _save_insights(self) -> None:
-        """Save generated insights"""
+        """
+Save generated insights"""
         # Implementation for persisting insights
         pass
     
     async def _analyze_revenue_performance(self, period: str) -> List[BusinessInsight]:
-        """Analyze revenue performance and generate insights"""
+        """
+Analyze revenue performance and generate insights"""
         insights = []
         
         try:
@@ -636,7 +647,8 @@ class BusinessIntelligence:
         }
     
     def _assess_impact_level(self, severity_score: float) -> str:
-        """Assess impact level based on severity score"""
+        """
+Assess impact level based on severity score"""
         if severity_score >= 0.8:
             return 'critical'
         elif severity_score >= 0.6:
@@ -647,7 +659,8 @@ class BusinessIntelligence:
             return 'low'
     
     def _get_anomaly_actions(self, category: str, severity: str) -> List[str]:
-        """Get recommended actions for anomaly"""
+        """
+Get recommended actions for anomaly"""
         actions = {
             'revenue': [
                 'Investigate revenue streams',
@@ -677,7 +690,8 @@ class BusinessIntelligence:
         self,
         anomalies: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate recommendations based on detected anomalies"""
+        """
+Generate recommendations based on detected anomalies"""
         recommendations = []
         
         # Count anomalies by category
@@ -735,7 +749,8 @@ class BusinessIntelligence:
         self,
         insights: List[BusinessInsight]
     ) -> List[str]:
-        """Generate strategic recommendations from insights"""
+        """
+Generate strategic recommendations from insights"""
         recommendations = set()
         
         for insight in insights:
@@ -760,12 +775,14 @@ class BusinessIntelligence:
         return {'total_revenue': 10000, 'growth_rate': 5.2}
     
     async def _get_user_data(self, period: str) -> Optional[Dict[str, Any]]:
-        """Get user data for analysis"""
+        """
+Get user data for analysis"""
         # Placeholder for user data retrieval
         return {'active_users': 1000, 'engagement_rate': 0.75}
     
     async def _get_content_data(self, period: str) -> Optional[Dict[str, Any]]:
-        """Get content data for analysis"""
+        """
+Get content data for analysis"""
         # Placeholder for content data retrieval
         return {'total_content': 500, 'quality_score': 0.85}
     
@@ -776,7 +793,8 @@ class BusinessIntelligence:
         revenue_data: Dict[str, Any],
         period: str
     ) -> Optional[BusinessInsight]:
-        """Create revenue trend insight"""
+        """
+Create revenue trend insight"""
         growth_rate = revenue_data.get('growth_rate', 0)
         
         if abs(growth_rate) > 2:  # Significant change
@@ -811,7 +829,8 @@ class BusinessIntelligence:
         user_data: Dict[str, Any],
         period: str
     ) -> Optional[BusinessInsight]:
-        """Create user engagement insight"""
+        """
+Create user engagement insight"""
         engagement_rate = user_data.get('engagement_rate', 0)
         
         if engagement_rate < 0.6:  # Low engagement threshold
@@ -878,7 +897,8 @@ class BusinessIntelligence:
         }
     
     async def _get_key_performance_metrics(self, period_days: int) -> Dict[str, Any]:
-        """Get key performance metrics"""
+        """
+Get key performance metrics"""
         return {
             'revenue_metrics': {'total': 12345, 'growth': 5.2},
             'user_metrics': {'active': 1234, 'retention': 0.85},
@@ -886,7 +906,8 @@ class BusinessIntelligence:
         }
     
     async def _analyze_performance_trends(self, period_days: int) -> Dict[str, Any]:
-        """Analyze performance trends"""
+        """
+Analyze performance trends"""
         return {
             'revenue_trend': 'increasing',
             'user_trend': 'stable',
@@ -894,27 +915,33 @@ class BusinessIntelligence:
         }
     
     async def _generate_detailed_analysis(self, period_days: int) -> Dict[str, Any]:
-        """Generate detailed analysis"""
+        """
+Generate detailed analysis"""
         return {'detailed_metrics': {}, 'deep_insights': []}
     
     async def _analyze_performance_segments(self, period_days: int) -> Dict[str, Any]:
-        """Analyze performance by segments"""
+        """
+Analyze performance by segments"""
         return {'segments': {}}
     
     async def _generate_performance_forecasts(self, period_days: int) -> Dict[str, Any]:
-        """Generate performance forecasts"""
+        """
+Generate performance forecasts"""
         return {'forecasts': {}}
     
     async def _get_operational_metrics(self, period_days: int) -> Dict[str, Any]:
-        """Get operational metrics"""
+        """
+Get operational metrics"""
         return {'operational_data': {}}
     
     async def _analyze_system_performance(self, period_days: int) -> Dict[str, Any]:
-        """Analyze system performance"""
+        """
+Analyze system performance"""
         return {'system_metrics': {}}
     
     async def _generate_area_recommendations(self, area: str) -> List[str]:
-        """Generate recommendations for specific area"""
+        """
+Generate recommendations for specific area"""
         recommendations = {
             'revenue': [
                 'Optimize pricing strategies',
@@ -944,7 +971,8 @@ class BusinessIntelligence:
         self,
         area_recommendations: Dict[str, List[str]]
     ) -> List[str]:
-        """Generate cross-area insights"""
+        """
+Generate cross-area insights"""
         return [
             'Align revenue and growth strategies',
             'Balance efficiency improvements with risk management',
@@ -984,7 +1012,8 @@ class PredictiveAnalytics:
         }
     
     async def initialize(self) -> None:
-        """Initialize predictive analytics system"""
+        """
+Initialize predictive analytics system"""
         try:
             self.logger.info("Initializing PredictiveAnalytics...")
             
@@ -1050,12 +1079,14 @@ class PredictiveAnalytics:
         self.models['content'] = LinearRegression()
     
     async def _save_models(self) -> None:
-        """Save trained models"""
+        """
+Save trained models"""
         # Placeholder for model persistence
         pass
     
     async def _generate_revenue_forecast(self) -> Dict[str, Any]:
-        """Generate revenue forecast"""
+        """
+Generate revenue forecast"""
         # Placeholder implementation
         return {
             'model_type': 'linear_regression',
@@ -1065,7 +1096,8 @@ class PredictiveAnalytics:
         }
     
     async def _generate_user_forecast(self) -> Dict[str, Any]:
-        """Generate user behavior forecast"""
+        """
+Generate user behavior forecast"""
         # Placeholder implementation
         return {
             'model_type': 'random_forest',
@@ -1075,7 +1107,8 @@ class PredictiveAnalytics:
         }
     
     async def _generate_content_forecast(self) -> Dict[str, Any]:
-        """Generate content performance forecast"""
+        """
+Generate content performance forecast"""
         # Placeholder implementation
         return {
             'model_type': 'linear_regression',
@@ -1088,7 +1121,8 @@ class PredictiveAnalytics:
         self,
         forecasts: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate overall forecast confidence"""
+        """
+Calculate overall forecast confidence"""
         confidence_scores = []
         
         for forecast_type, forecast_data in forecasts.items():

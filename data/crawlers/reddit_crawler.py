@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -41,7 +42,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class RedditUser:
-    """Reddit user information"""
+    """
+Reddit user information"""
     username: str
     user_id: str
     created_utc: datetime
@@ -90,7 +92,8 @@ class RedditUser:
 
 @dataclass
 class RedditPost:
-    """Reddit post/submission information"""
+    """
+Reddit post/submission information"""
     post_id: str
     title: str
     selftext: str
@@ -165,7 +168,8 @@ class RedditPost:
 
 @dataclass
 class RedditComment:
-    """Reddit comment information"""
+    """
+Reddit comment information"""
     comment_id: str
     post_id: str
     parent_id: str
@@ -216,7 +220,8 @@ class RedditComment:
 
 @dataclass
 class RedditSubreddit:
-    """Reddit subreddit information"""
+    """
+Reddit subreddit information"""
     subreddit_id: str
     name: str
     display_name: str

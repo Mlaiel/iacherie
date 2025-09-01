@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
@@ -9,7 +10,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Settings:
-    """Core settings for the AI agents system"""
+    """
+Core settings for the AI agents system"""
     
     # Database settings
     DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://localhost/ainflue")

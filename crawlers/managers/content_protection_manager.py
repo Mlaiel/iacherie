@@ -20,6 +20,7 @@ This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -71,7 +72,9 @@ from ...models.content_protection import (
 
 
 class ContentFormat(Enum):
-    """Supported content formats for protection."""
+    """
+Supported content formats for protection."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -82,6 +85,7 @@ class ContentFormat(Enum):
 
 class FingerprintType(Enum):
     """Types of fingerprints for content identification."""
+
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -93,6 +97,7 @@ class FingerprintType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -102,6 +107,7 @@ class ProtectionLevel(Enum):
 
 class InfringementSeverity(Enum):
     """Severity levels for infringement detection."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -126,7 +132,8 @@ class FingerprintMetadata:
 
 @dataclass
 class ContentProtectionRecord:
-    """Complete content protection record."""
+    """
+Complete content protection record."""
     content_id: str
     owner_id: str
     content_format: ContentFormat
@@ -161,7 +168,8 @@ class InfringementMatch:
 
 @dataclass
 class TakedownRequestData:
-    """Takedown request information."""
+    """
+Takedown request information."""
     request_id: str
     infringement_match: InfringementMatch
     copyright_owner: str
@@ -190,7 +198,8 @@ class ContentProtectionManager:
     """
     
     def __init__(self, config: Optional[ProtectionConfig] = None):
-        """Initialize content protection manager."""
+        """
+Initialize content protection manager."""
         self.config = config or ProtectionConfig()
         self.logger = get_logger(__name__)
         self.storage_manager = StorageManager()
@@ -226,7 +235,8 @@ class ContentProtectionManager:
         self._initialize_vector_databases()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for content analysis."""
+        """
+Initialize machine learning models for content analysis."""
         try:
             # Initialize text similarity model
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -860,7 +870,8 @@ class ContentProtectionManager:
         return self.protected_content.get(content_id)
     
     async def update_protection_level(self, content_id: str, new_level: ProtectionLevel) -> bool:
-        """Update protection level for content."""
+        """
+Update protection level for content."""
         try:
             if content_id in self.protected_content:
                 self.protected_content[content_id].protection_level = new_level
@@ -903,7 +914,8 @@ async def register_content_batch(
     manager: ContentProtectionManager,
     content_files: List[Tuple[str, str, ContentFormat, ProtectionLevel]]
 ) -> List[str]:
-    """Register multiple content files for protection."""
+    """
+Register multiple content files for protection."""
     content_ids = []
     
     for file_path, owner_id, content_format, protection_level in content_files:

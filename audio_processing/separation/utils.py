@@ -12,6 +12,7 @@ Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import logging
@@ -39,7 +40,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Container for audio file metadata."""
+    """
+Container for audio file metadata."""
     title: Optional[str] = None
     artist: Optional[str] = None
     album: Optional[str] = None
@@ -59,7 +61,8 @@ class AudioMetadata:
 
 @dataclass
 class ValidationResult:
-    """Result of audio validation operations."""
+    """
+Result of audio validation operations."""
     is_valid: bool
     file_format: str
     sample_rate: int
@@ -71,7 +74,9 @@ class ValidationResult:
 
 
 class AudioValidator:
-    """Professional audio file validation and format detection."""
+    """
+Professional audio file validation and format detection."""
+
     
     SUPPORTED_FORMATS = {
         'wav': ['audio/wav', 'audio/x-wav', 'audio/wave'],
@@ -95,7 +100,8 @@ class AudioValidator:
         self.magic = magic.Magic(mime=True)
         
     async def validate_file(self, file_path: Union[str, Path]) -> ValidationResult:
-        """Validate audio file comprehensively."""
+        """
+Validate audio file comprehensively."""
         file_path = Path(file_path)
         issues = []
         
@@ -341,7 +347,8 @@ class AudioValidator:
         return None
     
     async def _generate_fingerprint(self, file_path: Path) -> str:
-        """Generate audio fingerprint for duplicate detection."""
+        """
+Generate audio fingerprint for duplicate detection."""
         try:
             # Load audio for fingerprinting
             audio, sr = librosa.load(str(file_path), sr=22050, duration=30)  # First 30 seconds
@@ -405,7 +412,8 @@ class FormatConverter:
         self.conversion_profiles = self._setup_conversion_profiles()
         
     def _setup_conversion_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Setup conversion profiles for different output formats."""
+        """
+Setup conversion profiles for different output formats."""
         return {
             OutputFormat.WAV.value: {
                 'format': 'WAV',
@@ -433,7 +441,8 @@ class FormatConverter:
                           output_format: OutputFormat, 
                           output_path: Optional[Path] = None,
                           quality: SeparationQuality = SeparationQuality.HIGH) -> Union[bytes, Path]:
-        """Convert audio to specified format."""
+        """
+Convert audio to specified format."""
         try:
             # Validate input
             validator = AudioValidator()
@@ -530,7 +539,8 @@ class FormatConverter:
     
     async def _write_audio_file(self, audio: np.ndarray, sample_rate: int,
                                output_path: Path, profile: Dict[str, Any]) -> None:
-        """Write audio to file with specified profile."""
+        """
+Write audio to file with specified profile."""
         try:
             # Ensure directory exists
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -609,7 +619,8 @@ class MetadataExtractor:
     
     async def extract_comprehensive_metadata(self, file_path: Path,
                                            extract_types: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Extract comprehensive metadata from audio file."""
+        """
+Extract comprehensive metadata from audio file."""
         extract_types = extract_types or ['basic', 'technical', 'musical', 'fingerprint']
         metadata = {}
         
@@ -677,7 +688,8 @@ class MetadataExtractor:
         return metadata
     
     async def _extract_technical_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract technical audio analysis metadata."""
+        """
+Extract technical audio analysis metadata."""
         try:
             # Load audio for analysis
             audio, sr = librosa.load(str(file_path), sr=None, duration=60)  # First minute
@@ -892,7 +904,8 @@ class MetadataExtractor:
         return None
     
     def _format_duration(self, seconds: float) -> str:
-        """Format duration in human-readable format."""
+        """
+Format duration in human-readable format."""
         hours = int(seconds // 3600)
         minutes = int((seconds % 3600) // 60)
         secs = int(seconds % 60)

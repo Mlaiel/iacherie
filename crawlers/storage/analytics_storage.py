@@ -23,6 +23,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
@@ -44,7 +45,9 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetricType(Enum):
-    """Analytics metric types."""
+    """
+Analytics metric types."""
+
     CONTENT_VIEWS = "content_views"
     ENGAGEMENT_RATE = "engagement_rate"
     REVENUE_PERFORMANCE = "revenue_performance"
@@ -60,6 +63,7 @@ class AnalyticsMetricType(Enum):
 
 class AnalyticsAggregation(Enum):
     """Analytics aggregation types."""
+
     SUM = "sum"
     AVERAGE = "average"
     MEDIAN = "median"
@@ -72,6 +76,7 @@ class AnalyticsAggregation(Enum):
 
 class TimePeriod(Enum):
     """Time period for analytics."""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -97,7 +102,8 @@ class AnalyticsMetric:
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query specification."""
+    """
+Analytics query specification."""
     metric_types: List[AnalyticsMetricType]
     start_time: datetime
     end_time: datetime
@@ -112,7 +118,8 @@ class AnalyticsQuery:
 
 @dataclass
 class AnalyticsResult:
-    """Analytics query result."""
+    """
+Analytics query result."""
     metrics: List[AnalyticsMetric]
     aggregated_values: Dict[str, Union[int, float, Decimal]]
     time_series: List[TimeSeriesPoint]
@@ -146,7 +153,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         self.last_flush = datetime.utcnow()
         
     async def initialize(self) -> None:
-        """Initialize analytics storage provider."""
+        """
+Initialize analytics storage provider."""
         try:
             await self._create_connections()
             await self._create_tables()
@@ -548,22 +556,26 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         pass
 
     async def _create_tables(self) -> None:
-        """Create analytics tables with proper schema."""
+        """
+Create analytics tables with proper schema."""
         # Implementation depends on storage backend
         pass
 
     async def _create_indexes(self) -> None:
-        """Create optimized indexes for analytics queries."""
+        """
+Create optimized indexes for analytics queries."""
         # Implementation depends on storage backend
         pass
 
     async def _setup_partitioning(self) -> None:
-        """Setup table partitioning for time-series data."""
+        """
+Setup table partitioning for time-series data."""
         # Implementation depends on storage backend
         pass
 
     async def _flush_buffers(self) -> None:
-        """Flush metric buffers to storage."""
+        """
+Flush metric buffers to storage."""
         try:
             for buffer_key, metrics in self.metric_buffers.items():
                 if metrics:
@@ -581,7 +593,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         return True
 
     def _build_analytics_query(self, query: AnalyticsQuery) -> str:
-        """Build SQL query from analytics query specification."""
+        """
+Build SQL query from analytics query specification."""
         # Implementation depends on storage backend
         return ""
 
@@ -591,7 +604,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         return []
 
     def _row_to_metric(self, row: Dict[str, Any]) -> AnalyticsMetric:
-        """Convert database row to AnalyticsMetric."""
+        """
+Convert database row to AnalyticsMetric."""
         # Implementation depends on storage backend
         return AnalyticsMetric(
             metric_id=row.get('metric_id', ''),
@@ -609,7 +623,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         metrics: List[AnalyticsMetric], 
         aggregation: AnalyticsAggregation
     ) -> Dict[str, Union[int, float, Decimal]]:
-        """Calculate aggregated values from metrics."""
+        """
+Calculate aggregated values from metrics."""
         if not metrics:
             return {}
         
@@ -644,77 +659,92 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         start_time: datetime, 
         end_time: datetime
     ) -> Dict[str, Any]:
-        """Calculate trends for user metrics."""
+        """
+Calculate trends for user metrics."""
         # Implementation for trend calculation
         return {}
 
     async def _generate_insights(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AI-powered insights from analytics data."""
+        """
+Generate AI-powered insights from analytics data."""
         # Implementation for insight generation
         return {}
 
     async def _generate_user_summary_report(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate user summary report."""
+        """
+Generate user summary report."""
         # Implementation for user summary report
         return {}
 
     async def _generate_content_performance_report(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content performance report."""
+        """
+Generate content performance report."""
         # Implementation for content performance report
         return {}
 
     async def _generate_platform_comparison_report(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate platform comparison report."""
+        """
+Generate platform comparison report."""
         # Implementation for platform comparison report
         return {}
 
     async def _generate_revenue_analysis_report(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate revenue analysis report."""
+        """
+Generate revenue analysis report."""
         # Implementation for revenue analysis report
         return {}
 
     async def _generate_trend_analysis_report(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate trend analysis report."""
+        """
+Generate trend analysis report."""
         # Implementation for trend analysis report
         return {}
 
     async def _generate_report_insights(self, report_data: Dict[str, Any]) -> List[str]:
-        """Generate insights from report data."""
+        """
+Generate insights from report data."""
         # Implementation for report insights
         return []
 
     async def _generate_recommendations(self, report_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations from report data."""
+        """
+Generate recommendations from report data."""
         # Implementation for recommendations
         return []
 
     async def _archive_old_data(self, cutoff_date: datetime) -> int:
-        """Archive old data before deletion."""
+        """
+Archive old data before deletion."""
         # Implementation for data archiving
         return 0
 
     async def _delete_old_data(self, cutoff_date: datetime) -> int:
-        """Delete old data from storage."""
+        """
+Delete old data from storage."""
         # Implementation for data deletion
         return 0
 
     async def _test_connection(self) -> bool:
-        """Test database connection."""
+        """
+Test database connection."""
         # Implementation for connection test
         return True
 
     async def _get_storage_info(self) -> Dict[str, Any]:
-        """Get storage information and metrics."""
+        """
+Get storage information and metrics."""
         # Implementation for storage info
         return {}
 
     async def _test_query_performance(self) -> float:
-        """Test query performance and return average time in ms."""
+        """
+Test query performance and return average time in ms."""
         # Implementation for performance test
         return 100.0
 
 class InMemoryAnalyticsStorage(AnalyticsStorageProvider):
-    """In-memory analytics storage for testing and development."""
+    """
+In-memory analytics storage for testing and development."""
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
@@ -722,7 +752,8 @@ class InMemoryAnalyticsStorage(AnalyticsStorageProvider):
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize in-memory storage."""
+        """
+Initialize in-memory storage."""
         self.is_initialized = True
         logger.info(f"In-memory analytics storage {self.provider_id} initialized")
     
@@ -732,13 +763,15 @@ class InMemoryAnalyticsStorage(AnalyticsStorageProvider):
         return True
     
     async def _execute_query(self, sql_query: str) -> List[Dict[str, Any]]:
-        """Execute query on in-memory data."""
+        """
+Execute query on in-memory data."""
         # Simple implementation for testing
         return [{'metric_id': m.metric_id, 'value': m.value} for m in self.metrics_store]
 
 # Analytics storage factory
 def create_analytics_storage(provider_type: str, provider_id: str, config: Dict[str, Any]) -> AnalyticsStorageProvider:
-    """Create analytics storage provider instance."""
+    """
+Create analytics storage provider instance."""
     if provider_type == 'memory':
         return InMemoryAnalyticsStorage(provider_id, config)
     elif provider_type == 'postgresql':

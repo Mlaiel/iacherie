@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ClubhouseRoomType(str, Enum):
-    """Clubhouse room types"""
+    """
+Clubhouse room types"""
+
     OPEN = "open"
     SOCIAL = "social"
     CLOSED = "closed"
@@ -47,6 +50,7 @@ class ClubhouseRoomType(str, Enum):
 
 class ClubhouseRoomStatus(str, Enum):
     """Clubhouse room status"""
+
     LIVE = "live"
     ENDED = "ended"
     SCHEDULED = "scheduled"
@@ -55,6 +59,7 @@ class ClubhouseRoomStatus(str, Enum):
 
 class ClubhouseUserRole(str, Enum):
     """User roles in Clubhouse rooms"""
+
     MODERATOR = "moderator"
     SPEAKER = "speaker"
     LISTENER = "listener"
@@ -63,6 +68,7 @@ class ClubhouseUserRole(str, Enum):
 
 class ClubhouseContentType(str, Enum):
     """Clubhouse content types"""
+
     ROOM = "room"
     CONVERSATION = "conversation"
     ANNOUNCEMENT = "announcement"
@@ -111,7 +117,8 @@ class ClubhouseUser(BaseModel):
 
 
 class ClubhouseClub(BaseModel):
-    """Clubhouse club data model"""
+    """
+Clubhouse club data model"""
     club_id: str
     name: str
     description: Optional[str] = None
@@ -129,7 +136,8 @@ class ClubhouseClub(BaseModel):
 
 
 class ClubhouseRoom(BaseModel):
-    """Clubhouse room data model"""
+    """
+Clubhouse room data model"""
     channel: str  # room ID
     channel_user: ClubhouseUser
     topic: str
@@ -200,7 +208,8 @@ class ClubhouseEvent(BaseModel):
 
 
 class ClubhouseSearchResults(BaseModel):
-    """Clubhouse search results data model"""
+    """
+Clubhouse search results data model"""
     query: str
     total_results: int
     rooms: List[ClubhouseRoom] = Field(default_factory=list)
@@ -216,7 +225,8 @@ class ClubhouseSearchResults(BaseModel):
 
 
 class ClubhouseAnalytics(BaseModel):
-    """Clubhouse analytics data model"""
+    """
+Clubhouse analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_rooms_created: int
@@ -792,7 +802,8 @@ class ClubhouseCrawler(BaseCrawler):
         return keywords[:10]  # Limit to 10 keywords
 
     async def _detect_content_warnings(self, text: str) -> List[str]:
-        """Detect content warnings in text"""
+        """
+Detect content warnings in text"""
         warnings = []
         warning_keywords = [
             "explicit", "adult", "sensitive", "trigger", "warning",
@@ -1140,7 +1151,8 @@ class ClubhouseCrawler(BaseCrawler):
         return 0.0
 
     async def _check_protection_status(self, conversation: ClubhouseConversation) -> str:
-        """Check protection status of conversation"""
+        """
+Check protection status of conversation"""
         if conversation.content_warnings:
             return "flagged"
         return "unprotected"

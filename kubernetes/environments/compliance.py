@@ -16,6 +16,7 @@ Handles GDPR, CCPA, copyright law, data protection, audit trails,
 and regulatory compliance for multi-format content protection.
 ====================================================
 """
+
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegulation(Enum):
-    """Compliance regulation enumeration"""
+    """
+Compliance regulation enumeration"""
+
     GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"                # Personal Information Protection (Canada)
@@ -46,6 +49,7 @@ class ComplianceRegulation(Enum):
 
 class DataClassification(Enum):
     """Data classification levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -56,6 +60,7 @@ class DataClassification(Enum):
 
 class ConsentType(Enum):
     """User consent types"""
+
     EXPLICIT = "explicit"
     IMPLIED = "implied"
     OPT_IN = "opt_in"
@@ -65,6 +70,7 @@ class ConsentType(Enum):
 
 class AuditEventType(Enum):
     """Audit event types"""
+
     DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
     DATA_DELETION = "data_deletion"
@@ -104,7 +110,8 @@ class GDPRConfiguration:
 
 @dataclass
 class CCPAConfiguration:
-    """CCPA compliance configuration"""
+    """
+CCPA compliance configuration"""
     enabled: bool = bool(os.getenv('CCPA_ENABLED', 'true').lower() == 'true')
     consumer_rights_enabled: List[str] = field(default_factory=lambda: [
         'right_to_know', 'right_to_delete', 'right_to_opt_out', 'right_to_non_discrimination'
@@ -122,7 +129,8 @@ class CCPAConfiguration:
 
 @dataclass
 class CopyrightComplianceConfig:
-    """Copyright compliance configuration"""
+    """
+Copyright compliance configuration"""
     dmca_enabled: bool = True
     takedown_response_hours: int = 24
     counter_notification_enabled: bool = True
@@ -137,7 +145,8 @@ class CopyrightComplianceConfig:
 
 @dataclass
 class DataProtectionConfig:
-    """Data protection configuration"""
+    """
+Data protection configuration"""
     encryption_at_rest: bool = True
     encryption_in_transit: bool = True
     encryption_algorithm: str = "AES-256-GCM"
@@ -611,7 +620,8 @@ class ComplianceEnvironmentManager:
         }
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get compliance environment health status"""
+        """
+Get compliance environment health status"""
         return {
             'environment': self.environment,
             'status': 'compliant',
@@ -633,7 +643,8 @@ class ComplianceEnvironmentManager:
     
     # Private helper methods
     def _initialize_active_regulations(self):
-        """Initialize active regulations based on configuration"""
+        """
+Initialize active regulations based on configuration"""
         if self.gdpr_config.enabled:
             self.active_regulations.add(ComplianceRegulation.GDPR)
         if self.ccpa_config.enabled:
@@ -648,7 +659,8 @@ class ComplianceEnvironmentManager:
             self.active_regulations.add(ComplianceRegulation.LGPD)
     
     def _setup_gdpr_compliance(self):
-        """Setup GDPR compliance controls"""
+        """
+Setup GDPR compliance controls"""
         logger.info("Setting up GDPR compliance controls")
     
     def _setup_ccpa_compliance(self):
@@ -707,7 +719,8 @@ class ComplianceEnvironmentManager:
     
     def _log_audit_event(self, event_type: AuditEventType, user_id: str = None, 
                         details: Dict[str, Any] = None):
-        """Log audit event"""
+        """
+Log audit event"""
         event = {
             'event_id': f"audit_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}",
             'event_type': event_type.value,
@@ -741,7 +754,8 @@ class ComplianceEnvironmentManager:
     
     # Data subject request processing methods
     def _process_access_request(self, request_id: str):
-        """Process data access request"""
+        """
+Process data access request"""
         logger.info(f"Processing access request: {request_id}")
     
     def _process_erasure_request(self, request_id: str):
@@ -808,23 +822,28 @@ class ComplianceEnvironmentManager:
         return []  # Placeholder
     
     def _check_consent_violations(self) -> List[Dict]:
-        """Check consent violations"""
+        """
+Check consent violations"""
         return []  # Placeholder
     
     def _check_data_processing_violations(self) -> List[Dict]:
-        """Check data processing violations"""
+        """
+Check data processing violations"""
         return []  # Placeholder
     
     def _check_security_violations(self) -> List[Dict]:
-        """Check security violations"""
+        """
+Check security violations"""
         return []  # Placeholder
     
     def _check_copyright_violations(self) -> List[Dict]:
-        """Check copyright violations"""
+        """
+Check copyright violations"""
         return []  # Placeholder
     
     def _generate_compliance_alerts(self, violations: List[Dict]):
-        """Generate compliance alerts"""
+        """
+Generate compliance alerts"""
         logger.warning(f"Critical compliance violations detected: {len(violations)}")
     
     # Reporting methods
@@ -843,7 +862,8 @@ class ComplianceEnvironmentManager:
         return []
     
     def _get_dsr_metrics(self, start_date: datetime, end_date: datetime) -> Dict:
-        """Get data subject request metrics"""
+        """
+Get data subject request metrics"""
         return {"total_requests": 25, "completed_requests": 23, "pending_requests": 2}
     
     def _get_consent_metrics(self, start_date: datetime, end_date: datetime) -> Dict:
@@ -855,7 +875,8 @@ class ComplianceEnvironmentManager:
         return []
     
     def _generate_compliance_recommendations(self, regulation: ComplianceRegulation) -> List[str]:
-        """Generate compliance recommendations"""
+        """
+Generate compliance recommendations"""
         return ["Regular compliance training", "Update privacy policies"]
     
     def _generate_action_items(self, regulation: ComplianceRegulation) -> List[str]:
@@ -868,11 +889,13 @@ class ComplianceEnvironmentManager:
         return 92.5
     
     def _calculate_consent_compliance_rate(self) -> float:
-        """Calculate consent compliance rate"""
+        """
+Calculate consent compliance rate"""
         total_consents = len(self.consent_records)
         active_consents = len([c for c in self.consent_records.values() if c['status'] == 'active'])
         return (active_consents / total_consents * 100) if total_consents > 0 else 100.0
     
     def _get_last_compliance_scan_time(self) -> str:
-        """Get last compliance scan time"""
+        """
+Get last compliance scan time"""
         return datetime.now().isoformat()

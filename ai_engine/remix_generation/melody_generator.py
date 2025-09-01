@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Générateur de mélodies IA ultra-avancé avec réseaux de neurones
 TECHNOLOGIES: Deep Learning, RNN/LSTM, Transformer, Music Theory, Harmonic Analysis
 LOGIQUE MÉTIER: Musical context → AI analysis → Melodic composition → Harmonic validation → Quality assessment
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -39,7 +40,9 @@ from scipy import signal
 logger = logging.getLogger(__name__)
 
 class MelodyStyle(Enum):
-    """Melody generation styles"""
+    """
+Melody generation styles"""
+
     CLASSICAL = "classical"
     JAZZ = "jazz"
     POP = "pop"
@@ -53,6 +56,7 @@ class MelodyStyle(Enum):
 
 class MelodyComplexity(Enum):
     """Melody complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -60,6 +64,7 @@ class MelodyComplexity(Enum):
 
 class MelodyMode(Enum):
     """Musical modes for melody generation"""
+
     IONIAN = "ionian"          # Major
     DORIAN = "dorian"
     PHRYGIAN = "phrygian"
@@ -101,7 +106,8 @@ class GeneratedMelody:
     success: bool
 
 class MelodyTransformerNetwork(nn.Module):
-    """Transformer-based melody generation network"""
+    """
+Transformer-based melody generation network"""
     
     def __init__(self, vocab_size: int = 128, d_model: int = 256, 
                  nhead: int = 8, num_layers: int = 6, max_seq_length: int = 512):
@@ -178,7 +184,8 @@ class MelodyTransformerNetwork(nn.Module):
         return logits
     
     def _generate_square_subsequent_mask(self, sz):
-        """Generate causal mask for transformer"""
+        """
+Generate causal mask for transformer"""
         mask = torch.triu(torch.ones(sz, sz)) == 1
         mask = mask.transpose(0, 1)
         mask = mask.float().masked_fill(mask == 0, float('-inf')).masked_fill(mask == 1, float(0.0))
@@ -187,7 +194,8 @@ class MelodyTransformerNetwork(nn.Module):
     @torch.no_grad()
     def generate(self, prompt_tokens, style_token=None, parameters=None, 
                  max_length=256, temperature=1.0, top_k=50, top_p=0.9):
-        """Generate melody sequence"""
+        """
+Generate melody sequence"""
         self.eval()
         
         generated = prompt_tokens.clone()
@@ -231,7 +239,8 @@ class MelodyTransformerNetwork(nn.Module):
         return generated
 
 class MelodyLSTMNetwork(nn.Module):
-    """LSTM-based melody generation network"""
+    """
+LSTM-based melody generation network"""
     
     def __init__(self, vocab_size: int = 128, hidden_size: int = 256, 
                  num_layers: int = 3, dropout: float = 0.2):
@@ -273,13 +282,15 @@ class MelodyLSTMNetwork(nn.Module):
         return output, hidden
     
     def init_hidden(self, batch_size, device):
-        """Initialize hidden state"""
+        """
+Initialize hidden state"""
         h0 = torch.zeros(self.num_layers, batch_size, self.hidden_size).to(device)
         c0 = torch.zeros(self.num_layers, batch_size, self.hidden_size).to(device)
         return (h0, c0)
 
 class MusicTheoryEngine:
-    """Music theory analysis and validation engine"""
+    """
+Music theory analysis and validation engine"""
     
     def __init__(self):
         self.scale_patterns = self._initialize_scale_patterns()
@@ -287,7 +298,8 @@ class MusicTheoryEngine:
         self.interval_weights = self._initialize_interval_weights()
     
     def _initialize_scale_patterns(self) -> Dict[MelodyMode, List[int]]:
-        """Initialize scale patterns in semitones"""
+        """
+Initialize scale patterns in semitones"""
         return {
             MelodyMode.IONIAN: [0, 2, 4, 5, 7, 9, 11],
             MelodyMode.DORIAN: [0, 2, 3, 5, 7, 9, 10],
@@ -301,7 +313,8 @@ class MusicTheoryEngine:
         }
     
     def _initialize_chord_progressions(self) -> Dict[str, List[str]]:
-        """Initialize common chord progressions"""
+        """
+Initialize common chord progressions"""
         return {
             "pop": ["I", "V", "vi", "IV"],
             "jazz": ["ii", "V", "I", "vi"],
@@ -329,7 +342,8 @@ class MusicTheoryEngine:
         }
     
     async def get_scale_notes(self, key: str, mode: MelodyMode) -> List[int]:
-        """Get scale notes for given key and mode"""
+        """
+Get scale notes for given key and mode"""
         try:
             # Convert key to root note number (C = 0)
             key_map = {
@@ -487,7 +501,8 @@ class MelodyAnalyzer:
     
     async def analyze_melody_quality(self, melody_notes: List[int], 
                                    parameters: MelodyParameters) -> Dict[str, float]:
-        """Comprehensive melody quality analysis"""
+        """
+Comprehensive melody quality analysis"""
         try:
             analysis = {}
             

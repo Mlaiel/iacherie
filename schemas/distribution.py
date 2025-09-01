@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class DistributionRequest(BaseSchema):
-    """Content distribution request schema."""
+    """
+Content distribution request schema."""
     
     content_id: UUID = Field(description="Content to distribute")
     creator_id: UUID = Field(description="Content creator")
@@ -125,7 +127,8 @@ class DistributionOut(UUIDSchema, TimestampSchema):
 
 
 class PlatformIntegration(UUIDSchema, TimestampSchema, AuditSchema):
-    """Platform integration configuration schema."""
+    """
+Platform integration configuration schema."""
     
     creator_id: UUID = Field(description="Creator setting up integration")
     platform_name: str = Field(description="Platform name")

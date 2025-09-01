@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -31,7 +32,8 @@ from fake_useragent import UserAgent
 
 @dataclass
 class SeleniumConfig:
-    """Selenium scraper configuration."""
+    """
+Selenium scraper configuration."""
     headless: bool = True
     window_size: tuple = (1920, 1080)
     timeout: int = 30
@@ -47,7 +49,8 @@ class SeleniumConfig:
 
 @dataclass
 class InteractionStep:
-    """Selenium interaction step definition."""
+    """
+Selenium interaction step definition."""
     action: str  # click, type, scroll, wait, screenshot, etc.
     selector: str
     value: Optional[str] = None
@@ -76,16 +79,19 @@ class SeleniumScraper:
         self.user_agent = UserAgent()
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self.start_driver()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close_driver()
         
     async def start_driver(self):
-        """Initialize and start Chrome driver."""
+        """
+Initialize and start Chrome driver."""
         if self.driver:
             return
             
@@ -188,7 +194,8 @@ class SeleniumScraper:
         """)
         
     async def navigate_to(self, url: str, wait_for_element: Optional[str] = None) -> bool:
-        """Navigate to URL and optionally wait for element."""
+        """
+Navigate to URL and optionally wait for element."""
         if not self.driver:
             await self.start_driver()
             
@@ -439,7 +446,8 @@ class SeleniumScraper:
         return await self._find_element(selector, timeout)
         
     async def scroll_page(self, direction: str = 'down', amount: int = 3) -> bool:
-        """Scroll page in specified direction."""
+        """
+Scroll page in specified direction."""
         try:
             body = self.driver.find_element(By.TAG_NAME, 'body')
             

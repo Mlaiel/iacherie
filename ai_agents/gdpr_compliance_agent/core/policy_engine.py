@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class PolicyType(Enum):
-    """Types of privacy policies"""
+    """
+Types of privacy policies"""
+
     PRIVACY_POLICY = "privacy_policy"
     COOKIE_POLICY = "cookie_policy"
     DATA_RETENTION_POLICY = "data_retention_policy"
@@ -51,6 +54,7 @@ class PolicyType(Enum):
 
 class PolicyStatus(Enum):
     """Policy lifecycle status"""
+
     DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -60,6 +64,7 @@ class PolicyStatus(Enum):
 
 class ComplianceFramework(Enum):
     """Regulatory compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
@@ -68,6 +73,7 @@ class ComplianceFramework(Enum):
 
 class PolicyLanguage(Enum):
     """Supported policy languages"""
+
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -86,7 +92,8 @@ class PolicyValidationResult:
 
 @dataclass
 class PolicyMetrics:
-    """Policy management metrics"""
+    """
+Policy management metrics"""
     total_policies: int
     active_policies: int
     outdated_policies: int
@@ -826,7 +833,8 @@ class PolicyEngine:
         return updated_content
     
     async def _requires_user_notification(self, updates: Dict[str, Any]) -> bool:
-        """Determine if policy updates require user notification"""
+        """
+Determine if policy updates require user notification"""
         significant_changes = [
             "data_collection_changes",
             "new_processing_purposes",
@@ -849,7 +857,8 @@ class PolicyEngine:
         return False
     
     async def _get_update_recommendations(self, policy: PrivacyPolicy) -> List[str]:
-        """Get update recommendations for outdated policy"""
+        """
+Get update recommendations for outdated policy"""
         recommendations = []
         
         if policy.review_date and datetime.utcnow() > policy.review_date:

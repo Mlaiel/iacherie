@@ -21,6 +21,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import time
 import logging
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class CheckType(Enum):
-    """Enhanced check types for comprehensive monitoring"""
+    """
+Enhanced check types for comprehensive monitoring"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -63,6 +66,7 @@ class CheckType(Enum):
 
 class CheckStatus(Enum):
     """Enhanced status levels"""
+
     UP = "up"
     DOWN = "down"
     DEGRADED = "degraded"
@@ -74,6 +78,7 @@ class CheckStatus(Enum):
 
 class BusinessImpact(Enum):
     """Business impact levels"""
+
     NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
@@ -84,6 +89,7 @@ class BusinessImpact(Enum):
 
 class PerformanceThreshold(Enum):
     """Performance threshold levels"""
+
     EXCELLENT = "excellent"  # < 100ms
     GOOD = "good"           # 100-500ms
     ACCEPTABLE = "acceptable"  # 500ms-2s
@@ -234,7 +240,8 @@ class AIAnomalyDetector:
         self.baseline_data: Dict[str, List[float]] = {}
         
     def add_measurement(self, check_id: str, response_time: float):
-        """Add a new measurement for trend analysis"""
+        """
+Add a new measurement for trend analysis"""
         if check_id not in self.baseline_data:
             self.baseline_data[check_id] = []
             
@@ -246,7 +253,8 @@ class AIAnomalyDetector:
             baseline.pop(0)
     
     def detect_anomaly(self, check_id: str, current_value: float) -> Tuple[bool, float]:
-        """Detect if current value is anomalous"""
+        """
+Detect if current value is anomalous"""
         if check_id not in self.baseline_data or len(self.baseline_data[check_id]) < 10:
             return False, 0.0
             
@@ -267,7 +275,8 @@ class AIAnomalyDetector:
         return is_anomaly, anomaly_score
     
     def get_trend(self, check_id: str) -> str:
-        """Get performance trend for a check"""
+        """
+Get performance trend for a check"""
         if check_id not in self.baseline_data or len(self.baseline_data[check_id]) < 10:
             return "stable"
             
@@ -303,7 +312,8 @@ class BusinessImpactCalculator:
         downtime_minutes: float,
         performance_degradation: float = 0.0
     ) -> Dict[str, Any]:
-        """Calculate revenue impact of downtime/degradation"""
+        """
+Calculate revenue impact of downtime/degradation"""
         
         # Base revenue impact per hour
         hourly_impact = check.revenue_impact_per_hour
@@ -343,7 +353,8 @@ class BusinessImpactCalculator:
     
     @staticmethod
     def get_business_priority(check: UptimeCheck) -> int:
-        """Get business priority score (1-10, 10 = highest)"""
+        """
+Get business priority score (1-10, 10 = highest)"""
         impact_scores = {
             BusinessImpact.CRITICAL: 10,
             BusinessImpact.REVENUE_AFFECTING: 9,
@@ -422,7 +433,8 @@ class UptimeMonitor:
         self._register_enhanced_default_checks()
         
     def _register_enhanced_default_checks(self):
-        """Register enhanced default uptime checks with business context"""
+        """
+Register enhanced default uptime checks with business context"""
         
         # Core API Infrastructure
         self.register_check(UptimeCheck(
@@ -1001,7 +1013,8 @@ class UptimeMonitor:
         )
         
     async def _process_check_result(self, check: UptimeCheck, result: CheckResult):
-        """Process check result and update statistics"""
+        """
+Process check result and update statistics"""
         # Update statistics
         await self._update_stats(check.id, result)
         
@@ -1015,7 +1028,8 @@ class UptimeMonitor:
         self._update_performance_history(check.id, result.response_time)
         
     async def _update_stats(self, check_id: str, result: CheckResult):
-        """Update uptime statistics"""
+        """
+Update uptime statistics"""
         if check_id not in self.stats:
             self.stats[check_id] = UptimeStats(
                 check_id=check_id,
@@ -1059,7 +1073,8 @@ class UptimeMonitor:
                 stats.max_response_time = max(stats.max_response_time, result.response_time)
                 
     async def _store_result(self, result: CheckResult):
-        """Store check result"""
+        """
+Store check result"""
         if self.redis_client:
             try:
                 key = f"uptime_results:{result.check_id}"
@@ -1210,7 +1225,8 @@ class UptimeMonitor:
             history.pop(0)
             
     async def _maintenance_loop(self):
-        """Maintenance loop for cleanup and SLA calculations"""
+        """
+Maintenance loop for cleanup and SLA calculations"""
         while self._monitoring:
             try:
                 await self._calculate_sla_compliance()
@@ -1379,7 +1395,8 @@ class UptimeMonitor:
         }
         
     def get_active_incidents(self) -> List[Dict[str, Any]]:
-        """Get active downtime incidents"""
+        """
+Get active downtime incidents"""
         return [
             {
                 "id": incident.id,

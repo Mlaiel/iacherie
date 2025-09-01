@@ -8,12 +8,13 @@ This module provides comprehensive web crawling and surveillance capabilities:
 - Automated screenshot and metadata capture
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import random
@@ -59,7 +60,9 @@ settings = get_settings()
 
 
 class CrawlerPlatform(Enum):
-    """Supported crawler platforms"""
+    """
+Supported crawler platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -73,6 +76,7 @@ class CrawlerPlatform(Enum):
 
 class CrawlerType(Enum):
     """Types of crawlers"""
+
     API_BASED = "api_based"         # Official API access
     SELENIUM_BROWSER = "selenium"   # Browser automation
     REQUESTS_HTTP = "requests"      # HTTP requests
@@ -81,6 +85,7 @@ class CrawlerType(Enum):
 
 class CrawlerStatus(Enum):
     """Crawler execution status"""
+
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -123,7 +128,8 @@ class CrawlerConfiguration:
 
 @dataclass
 class CrawlResult:
-    """Result from a crawling operation"""
+    """
+Result from a crawling operation"""
     platform: CrawlerPlatform
     url: str
     content_type: str
@@ -501,14 +507,16 @@ class PlatformCrawler:
         return browser
     
     async def _return_browser(self, browser: webdriver.Chrome):
-        """Return browser to pool or close if pool is full"""
+        """
+Return browser to pool or close if pool is full"""
         if len(self._browser_pool) < self._max_browsers:
             self._browser_pool.append(browser)
         else:
             browser.quit()
     
     async def _check_rate_limits(self):
-        """Check and enforce rate limiting"""
+        """
+Check and enforce rate limiting"""
         current_time = time.time()
         
         # Remove old request times (older than 1 minute)
@@ -637,7 +645,8 @@ class PlatformCrawler:
         return random.choice(user_agents)
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         # Close all browsers
         for browser in self._browser_pool:
             browser.quit()

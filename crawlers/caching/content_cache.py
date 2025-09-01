@@ -9,6 +9,7 @@ metadata handling, and intelligent content-aware policies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -28,7 +29,9 @@ from .cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type categories for specialized caching."""
+    """
+Content type categories for specialized caching."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -53,7 +56,8 @@ class ContentMetadata:
     tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
+        """
+Convert to dictionary for serialization."""
         return {
             "content_type": self.content_type.value,
             "mime_type": self.mime_type,
@@ -89,7 +93,8 @@ class ContentMetadata:
 
 @dataclass
 class CachedContent:
-    """Cached content with metadata and optimization."""
+    """
+Cached content with metadata and optimization."""
     key: str
     content: Any
     metadata: ContentMetadata
@@ -178,7 +183,8 @@ class ContentCache:
         return self.cache_manager
     
     def _detect_content_type(self, content: Any, mime_type: Optional[str] = None) -> ContentType:
-        """Detect content type from content and mime type."""
+        """
+Detect content type from content and mime type."""
         if mime_type:
             if mime_type.startswith('audio/'):
                 return ContentType.AUDIO
@@ -202,7 +208,8 @@ class ContentCache:
     
     def _create_metadata(self, content: Any, content_type: ContentType, 
                         **kwargs) -> ContentMetadata:
-        """Create metadata for content."""
+        """
+Create metadata for content."""
         metadata = ContentMetadata(content_type=content_type)
         
         # Update with provided metadata
@@ -232,7 +239,8 @@ class ContentCache:
         return metadata
     
     def _make_content_key(self, key: str, content_type: ContentType) -> str:
-        """Create content-specific cache key."""
+        """
+Create content-specific cache key."""
         prefix = self.key_prefixes["content"]
         type_prefix = content_type.value[:4]  # e.g., "audi", "vide"
         return f"{prefix}{type_prefix}:{key}"
@@ -553,7 +561,8 @@ class MediaCache(ContentCache):
     """
     
     def __init__(self, **kwargs):
-        """Initialize media cache."""
+        """
+Initialize media cache."""
         super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.MediaCache")
         
@@ -571,7 +580,8 @@ class MetadataCache(ContentCache):
     """
     
     def __init__(self, **kwargs):
-        """Initialize metadata cache."""
+        """
+Initialize metadata cache."""
         super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.MetadataCache")
         

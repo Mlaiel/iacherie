@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Analytics Engineer + Performance Engineer + ML Engineer + Data Scientist
 """
+
 import asyncio
 import json
 import uuid
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MetricType(str, Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     SUCCESS_RATE = "success_rate"
@@ -54,6 +57,7 @@ class MetricType(str, Enum):
 
 class AnalyticsPeriod(str, Enum):
     """Analytics aggregation periods"""
+
     REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
@@ -65,6 +69,7 @@ class AnalyticsPeriod(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -73,6 +78,7 @@ class AlertSeverity(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction indicators"""
+
     IMPROVING = "improving"
     DEGRADING = "degrading"
     STABLE = "stable"
@@ -91,7 +97,8 @@ class PerformanceThresholds:
 
 @dataclass
 class StatisticalSummary:
-    """Statistical summary of metrics"""
+    """
+Statistical summary of metrics"""
     mean: float = 0.0
     median: float = 0.0
     std_dev: float = 0.0
@@ -103,7 +110,8 @@ class StatisticalSummary:
     percentile_99: float = 0.0
 
 class PerformanceMetric(Base):
-    """Performance metrics database model"""
+    """
+Performance metrics database model"""
     __tablename__ = "performance_metrics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -440,7 +448,8 @@ class AnalyticsReportRequest(BaseModel):
     include_recommendations: bool = True
 
 class AlertConfigurationRequest(BaseModel):
-    """Request model for performance alerts"""
+    """
+Request model for performance alerts"""
     alert_name: str
     alert_type: str
     metric_type: MetricType
@@ -454,7 +463,8 @@ class AlertConfigurationRequest(BaseModel):
     notification_channels: Optional[List[str]] = None
 
 class BenchmarkRequest(BaseModel):
-    """Request model for performance benchmarks"""
+    """
+Request model for performance benchmarks"""
     benchmark_name: str
     platform_name: str
     content_type: str
@@ -466,7 +476,8 @@ class BenchmarkRequest(BaseModel):
     quality_score_benchmark: Optional[float] = None
 
 class PerformanceAnalyticsManager:
-    """Enterprise performance analytics management system"""
+    """
+Enterprise performance analytics management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -479,7 +490,8 @@ class PerformanceAnalyticsManager:
         user_id: str,
         metric_request: MetricRequest
     ) -> PerformanceMetric:
-        """Record performance metric"""
+        """
+Record performance metric"""
         try:
             # Create metric instance
             metric = PerformanceMetric(
@@ -843,19 +855,22 @@ class PerformanceAnalyticsManager:
         return None
     
     async def _detect_metric_anomaly(self, user_id: str, metric: PerformanceMetric) -> Dict[str, Any]:
-        """Detect if metric value is anomalous"""
+        """
+Detect if metric value is anomalous"""
         # This would use statistical methods or ML to detect anomalies
         # For now, return no anomaly detected
         return {'is_anomaly': False, 'score': 0.0}
     
     async def _calculate_percentile_rank(self, user_id: str, metric: PerformanceMetric) -> Optional[float]:
-        """Calculate percentile rank of metric value"""
+        """
+Calculate percentile rank of metric value"""
         # This would compare against historical values
         # For now, return None
         return None
     
     async def _check_performance_alerts(self, user_id: str, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""
+        """
+Check if metric triggers any alerts"""
         # Get relevant alerts
         alerts = await self.db_session.query(PerformanceAlert).filter(
             PerformanceAlert.user_id == uuid.UUID(user_id),
@@ -894,7 +909,8 @@ class PerformanceAnalyticsManager:
         await self.db_session.commit()
     
     async def _evaluate_alert_threshold(self, alert: PerformanceAlert, value: float) -> bool:
-        """Evaluate if value breaches alert threshold"""
+        """
+Evaluate if value breaches alert threshold"""
         if alert.comparison_operator == '>':
             return value > alert.threshold_value
         elif alert.comparison_operator == '<':

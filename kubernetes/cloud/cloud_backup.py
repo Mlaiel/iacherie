@@ -14,6 +14,7 @@ This module provides comprehensive backup and recovery solutions for the IA
 Influencer Agent platform across multiple cloud providers, including automated
 backup scheduling, versioning, encryption, and cross-cloud replication.
 """
+
 import logging
 import asyncio
 import json
@@ -32,7 +33,9 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class BackupType(Enum):
-    """Backup types supported"""
+    """
+Backup types supported"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -41,6 +44,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -50,6 +54,7 @@ class BackupStatus(Enum):
 
 class CloudProvider(Enum):
     """Supported cloud providers for backup"""
+
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -73,7 +78,8 @@ class BackupConfiguration:
 
 @dataclass
 class BackupJob:
-    """Backup job representation"""
+    """
+Backup job representation"""
     job_id: str
     configuration: BackupConfiguration
     status: BackupStatus
@@ -87,7 +93,8 @@ class BackupJob:
 
 @dataclass
 class RestorePoint:
-    """Restore point information"""
+    """
+Restore point information"""
     restore_id: str
     backup_job_id: str
     created_at: datetime
@@ -98,13 +105,15 @@ class RestorePoint:
     verified: bool = False
 
 class CloudBackupManager:
-    """Enterprise cloud backup and recovery manager"""
+    """
+Enterprise cloud backup and recovery manager"""
     
     def __init__(self, 
                  aws_credentials: Optional[Dict[str, str]] = None,
                  azure_credentials: Optional[Dict[str, str]] = None,
                  gcp_credentials: Optional[Dict[str, str]] = None):
-        """Initialize cloud backup manager"""
+        """
+Initialize cloud backup manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.aws_credentials = aws_credentials
         self.azure_credentials = azure_credentials
@@ -563,11 +572,13 @@ class CloudBackupManager:
         )
 
     async def list_restore_points(self) -> List[RestorePoint]:
-        """List all available restore points"""
+        """
+List all available restore points"""
         return list(self.restore_points.values())
 
     async def get_backup_statistics(self) -> Dict[str, Any]:
-        """Get backup statistics and metrics"""
+        """
+Get backup statistics and metrics"""
         total_jobs = len(self.backup_history)
         successful_jobs = len([j for j in self.backup_history if j.status == BackupStatus.COMPLETED])
         failed_jobs = len([j for j in self.backup_history if j.status == BackupStatus.FAILED])

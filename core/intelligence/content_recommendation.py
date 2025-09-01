@@ -7,10 +7,11 @@ audience behavior, trending patterns, and cross-platform optimization.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -37,7 +38,9 @@ from ..cache.redis_cache import RedisCache
 
 
 class RecommendationType(Enum):
-    """Content recommendation types"""
+    """
+Content recommendation types"""
+
     CONTENT_IDEAS = "content_ideas"
     COLLABORATION = "collaboration"
     TIMING = "optimal_timing"
@@ -48,6 +51,7 @@ class RecommendationType(Enum):
 
 class PersonalizationLevel(Enum):
     """Personalization sophistication levels"""
+
     BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -76,7 +80,8 @@ class ContentRecommendation:
 
 @dataclass
 class PersonalizationProfile:
-    """User personalization profile"""
+    """
+User personalization profile"""
     user_id: str
     content_preferences: Dict[str, float]
     platform_preferences: Dict[str, float]
@@ -103,7 +108,8 @@ class ContentRecommendationEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize recommendation engine"""
+        """
+Initialize recommendation engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -127,7 +133,8 @@ class ContentRecommendationEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for recommendations"""
+        """
+Initialize ML models for recommendations"""
         try:
             # Content embedding model
             self.content_embedder = AutoModel.from_pretrained(
@@ -170,7 +177,8 @@ class ContentRecommendationEngine:
         self.trend_predictor = TrendPredictor()
     
     def _initialize_engagement_predictor(self):
-        """Initialize engagement prediction neural network"""
+        """
+Initialize engagement prediction neural network"""
         class EngagementPredictor(nn.Module):
             def __init__(self, input_size: int = 256, hidden_size: int = 128):
                 super().__init__()
@@ -591,7 +599,8 @@ class ContentRecommendationEngine:
         }
     
     def _generate_id(self) -> str:
-        """Generate unique recommendation ID"""
+        """
+Generate unique recommendation ID"""
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
@@ -604,7 +613,8 @@ class PersonalizationEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize personalization engine"""
+        """
+Initialize personalization engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -616,7 +626,8 @@ class PersonalizationEngine:
         self._initialize_personalization_models()
     
     def _initialize_personalization_models(self):
-        """Initialize ML models for personalization"""
+        """
+Initialize ML models for personalization"""
         try:
             # User behavior embedding model
             class UserEmbeddingModel(nn.Module):

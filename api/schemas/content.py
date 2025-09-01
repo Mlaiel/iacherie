@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set, Union
@@ -20,7 +21,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema, FileUplo
 
 
 class ContentUpload(BaseSchema):
-    """Professional multi-format content upload schema."""
+    """
+Professional multi-format content upload schema."""
     
     creator_id: UUID = Field(description="Content creator ID")
     title: str = Field(min_length=1, max_length=200, description="Content title")
@@ -91,7 +93,8 @@ class ContentUpdate(BaseSchema):
 
 
 class ContentOut(UUIDSchema, TimestampSchema):
-    """Public content information schema."""
+    """
+Public content information schema."""
     
     creator_id: UUID
     title: str
@@ -147,7 +150,8 @@ class ContentOut(UUIDSchema, TimestampSchema):
 
 
 class ContentMetadata(UUIDSchema, TimestampSchema):
-    """Extended content metadata schema."""
+    """
+Extended content metadata schema."""
     
     content_id: UUID
     
@@ -246,7 +250,8 @@ class ContentTag(UUIDSchema, TimestampSchema):
 
 
 class ContentSearch(BaseSchema):
-    """Advanced content search schema."""
+    """
+Advanced content search schema."""
     
     query: Optional[str] = Field(None, description="Search query string")
     creator_id: Optional[UUID] = Field(None, description="Filter by creator")

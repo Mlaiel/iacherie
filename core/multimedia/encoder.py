@@ -17,7 +17,9 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -64,6 +66,7 @@ class EncodingCodec(Enum):
 
 class EncodingProfile(Enum):
     """Predefined encoding profiles"""
+
     STREAMING_ULTRA = "streaming_ultra"
     STREAMING_HIGH = "streaming_high"
     STREAMING_MEDIUM = "streaming_medium"
@@ -77,6 +80,7 @@ class EncodingProfile(Enum):
 
 class BitrateMode(Enum):
     """Bitrate encoding modes"""
+
     CBR = "cbr"  # Constant Bitrate
     VBR = "vbr"  # Variable Bitrate
     ABR = "abr"  # Average Bitrate
@@ -144,7 +148,8 @@ class MultimediaEncoder:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia encoder"""
+        """
+Initialize multimedia encoder"""
         self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
@@ -450,7 +455,8 @@ class MultimediaEncoder:
         job: EncodingJob,
         input_metadata: Dict[str, Any]
     ) -> Tuple[bool, int]:
-        """Encode image content"""
+        """
+Encode image content"""
         # This would use image processing libraries (PIL, OpenCV, etc.)
         # For now, simulate encoding
         
@@ -470,7 +476,8 @@ class MultimediaEncoder:
             return False, 0
     
     async def _encode_raw_data(self, job: EncodingJob) -> Tuple[bool, int]:
-        """Encode raw data"""
+        """
+Encode raw data"""
         try:
             # Apply encoding to raw data
             if isinstance(job.input_data, bytes):
@@ -487,7 +494,8 @@ class MultimediaEncoder:
             return False, 0
     
     async def _calculate_quality_metrics(self, job: EncodingJob) -> Dict[str, Any]:
-        """Calculate encoding quality metrics"""
+        """
+Calculate encoding quality metrics"""
         # This would implement actual quality measurement
         return {
             'psnr': 42.5,
@@ -497,7 +505,8 @@ class MultimediaEncoder:
         }
     
     async def _get_codec_info(self, job: EncodingJob) -> Dict[str, Any]:
-        """Get codec information from encoded file"""
+        """
+Get codec information from encoded file"""
         return {
             'codec': job.settings.codec.value,
             'profile': job.settings.profile,
@@ -617,7 +626,8 @@ class MultimediaEncoder:
         return None
     
     def get_supported_codecs(self) -> Dict[str, List[str]]:
-        """Get supported codecs by category"""
+        """
+Get supported codecs by category"""
         return {
             'video': [codec.value for codec in EncodingCodec if codec.value in ['h264', 'h265', 'vp8', 'vp9', 'av1']],
             'audio': [codec.value for codec in EncodingCodec if codec.value in ['aac', 'mp3', 'opus', 'vorbis', 'flac']],
@@ -625,7 +635,8 @@ class MultimediaEncoder:
         }
     
     def add_custom_profile(self, name: str, settings: EncodingSettings):
-        """Add custom encoding profile"""
+        """
+Add custom encoding profile"""
         self.encoding_profiles[name] = settings
         logger.info(f"Added custom encoding profile: {name}")
     
@@ -643,7 +654,8 @@ class MultimediaEncoder:
         input_source: Union[str, bytes],
         profile_name: str
     ) -> float:
-        """Estimate encoding time for given input and profile"""
+        """
+Estimate encoding time for given input and profile"""
         # This would analyze input characteristics and return time estimate
         # For now, return a placeholder estimate
         

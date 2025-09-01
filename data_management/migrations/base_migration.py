@@ -10,12 +10,13 @@ Ultra-advanced database migration framework for IA Influencer Agent platform:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This migration framework is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import traceback
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationStatus(Enum):
-    """Migration execution status tracking"""
+    """
+Migration execution status tracking"""
+
     PENDING = "pending"
     RUNNING = "running" 
     COMPLETED = "completed"
@@ -52,6 +55,7 @@ class MigrationStatus(Enum):
 
 class MigrationPriority(Enum):
     """Migration priority levels for execution ordering"""
+
     CRITICAL = "critical"     # Security, data integrity
     HIGH = "high"            # Performance, new features
     MEDIUM = "medium"        # Optimizations, enhancements
@@ -60,6 +64,7 @@ class MigrationPriority(Enum):
 
 class MigrationCategory(Enum):
     """Migration categories for organization"""
+
     SCHEMA = "schema"                    # Table structure changes
     DATA = "data"                       # Data transformations
     INDEX = "index"                     # Index optimizations
@@ -103,7 +108,8 @@ class MigrationMetadata:
 
 @dataclass
 class MigrationResult:
-    """Migration execution result"""
+    """
+Migration execution result"""
     migration_id: str
     status: MigrationStatus
     started_at: datetime
@@ -243,7 +249,8 @@ class BaseMigration(ABC):
         await self._validate_data_integrity()
         
     async def _check_dependency(self, dependency: MigrationDependency) -> None:
-        """Check if migration dependency is satisfied"""
+        """
+Check if migration dependency is satisfied"""
         async with self._get_session() as session:
             query = text("""
                 SELECT version FROM migration_history 
@@ -270,16 +277,19 @@ class BaseMigration(ABC):
         pass
         
     async def _validate_post_migration(self, session: Session) -> None:
-        """Validate data integrity after migration"""
+        """
+Validate data integrity after migration"""
         # Override in subclasses for specific post-migration validation
         pass
         
     async def _get_session(self) -> Session:
-        """Get database session"""
+        """
+Get database session"""
         return self.session_maker()
         
     async def _get_transaction_session(self) -> Session:
-        """Get database session with transaction management"""
+        """
+Get database session with transaction management"""
         session = self.session_maker()
         try:
             session.begin()
@@ -292,7 +302,8 @@ class BaseMigration(ABC):
             session.close()
             
     async def _record_migration_execution(self, result: MigrationResult) -> None:
-        """Record migration execution in history"""
+        """
+Record migration execution in history"""
         async with self._get_session() as session:
             try:
                 insert_query = text("""
@@ -327,7 +338,8 @@ class BaseMigration(ABC):
         return hashlib.sha256(data.encode()).hexdigest()
         
     def log_operation(self, operation: str, details: Dict[str, Any]) -> None:
-        """Log migration operation for rollback purposes"""
+        """
+Log migration operation for rollback purposes"""
         self.executed_operations.append({
             "operation": operation,
             "details": details,
@@ -352,7 +364,8 @@ class MigrationRegistry:
         self.dependencies: Dict[str, Set[str]] = {}
         
     def register(self, migration: BaseMigration) -> None:
-        """Register migration in registry"""
+        """
+Register migration in registry"""
         migration_id = migration.metadata.migration_id
         self.migrations[migration_id] = migration
         
@@ -361,7 +374,8 @@ class MigrationRegistry:
         self.dependencies[migration_id] = deps
         
     def get_execution_order(self) -> List[str]:
-        """Get migrations in dependency-resolved execution order"""
+        """
+Get migrations in dependency-resolved execution order"""
         ordered = []
         resolved = set()
         
@@ -382,11 +396,13 @@ class MigrationRegistry:
         return ordered
         
     def get_migration(self, migration_id: str) -> Optional[BaseMigration]:
-        """Get migration by ID"""
+        """
+Get migration by ID"""
         return self.migrations.get(migration_id)
         
     def list_pending_migrations(self, executed_migrations: Set[str]) -> List[str]:
-        """List migrations that haven't been executed"""
+        """
+List migrations that haven't been executed"""
         all_migrations = set(self.migrations.keys())
         pending = all_migrations - executed_migrations
         

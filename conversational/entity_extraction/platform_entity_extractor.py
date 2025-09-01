@@ -24,6 +24,7 @@ Team Specializations:
 - DevOps Engineer: CI/CD & infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt optimization
 """
+
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -48,7 +49,9 @@ from ...utils.validation import validate_input
 
 
 class PlatformType(Enum):
-    """Supported social media and content platforms"""
+    """
+Supported social media and content platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -74,6 +77,7 @@ class PlatformType(Enum):
 
 class PlatformEntityType(Enum):
     """Types of platform-specific entities"""
+
     HANDLE = "handle"
     CHANNEL_ID = "channel_id"
     CONTENT_ID = "content_id"
@@ -116,7 +120,8 @@ class PlatformEntity:
 
 @dataclass
 class PlatformExtractionResult:
-    """Complete platform entity extraction results"""
+    """
+Complete platform entity extraction results"""
     entities: List[PlatformEntity]
     platforms_detected: Set[PlatformType]
     total_entities: int
@@ -465,7 +470,8 @@ class PlatformEntityExtractor(BaseService):
         return entities
     
     async def _is_platform_url(self, url: str, platform: PlatformType) -> bool:
-        """Check if URL belongs to specified platform"""
+        """
+Check if URL belongs to specified platform"""
         try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
@@ -954,7 +960,8 @@ class PlatformEntityExtractor(BaseService):
         return unique_entities
     
     async def extract_hashtags(self, text: str) -> List[PlatformEntity]:
-        """Extract hashtags from text"""
+        """
+Extract hashtags from text"""
         hashtag_pattern = re.compile(r"#\w+", re.IGNORECASE)
         hashtags = []
         
@@ -994,7 +1001,8 @@ class PlatformEntityExtractor(BaseService):
         return await self.metrics.get_all_metrics()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check service health status"""
+        """
+Check service health status"""
         return {
             "status": "healthy" if self.models_loaded else "degraded",
             "models_loaded": self.models_loaded,

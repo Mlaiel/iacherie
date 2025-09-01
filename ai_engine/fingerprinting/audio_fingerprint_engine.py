@@ -4,6 +4,7 @@ Multi-algorithm audio fingerprinting with Chromaprint, Essentia, and spectral an
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 from typing import Dict, Any, List, Optional, Tuple
@@ -34,7 +35,8 @@ from ...config import settings
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure"""
+    """
+Audio fingerprint data structure"""
     file_id: str
     chromaprint_hash: str
     spectral_features: Dict[str, Any]

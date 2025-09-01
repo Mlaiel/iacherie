@@ -5,8 +5,9 @@ The ContentTracker monitors content performance, engagement metrics,
 and monetization data across all platforms in real-time.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,8 @@ from ..platforms.analytics_aggregator import AnalyticsAggregator
 
 @dataclass
 class TrackingMetrics:
-    """Content tracking metrics container"""
+    """
+Content tracking metrics container"""
     content_id: str
     views: int = 0
     likes: int = 0
@@ -42,7 +44,8 @@ class TrackingMetrics:
 
 @dataclass
 class TrackingConfig:
-    """Content tracking configuration"""
+    """
+Content tracking configuration"""
     enable_real_time: bool = True
     tracking_interval: int = 300  # seconds
     metrics_to_track: List[str] = None

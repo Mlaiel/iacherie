@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Central Rights Orchestrator
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,6 +49,7 @@ security = HTTPBearer()
 
 class ProtectionLevel(str, Enum):
     """Content protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -56,6 +58,7 @@ class ProtectionLevel(str, Enum):
 
 class OperationStatus(str, Enum):
     """Operation status types."""
+
     SUCCESS = "success"
     PENDING = "pending"
     FAILED = "failed"
@@ -86,7 +89,8 @@ class ContentRegistrationResponse(BaseModel):
 
 
 class ViolationResponse(BaseModel):
-    """Violation detection response model."""
+    """
+Violation detection response model."""
     violation_id: str
     content_id: str
     platform: str
@@ -99,7 +103,8 @@ class ViolationResponse(BaseModel):
 
 
 class DMCANoticeResponse(BaseModel):
-    """DMCA notice response model."""
+    """
+DMCA notice response model."""
     notice_id: str
     content_id: str
     platform: str
@@ -109,7 +114,8 @@ class DMCANoticeResponse(BaseModel):
 
 
 class RevenueAnalyticsResponse(BaseModel):
-    """Revenue analytics response model."""
+    """
+Revenue analytics response model."""
     total_revenue: float
     platform_breakdown: Dict[str, float]
     period_start: datetime
@@ -119,7 +125,8 @@ class RevenueAnalyticsResponse(BaseModel):
 
 
 class RightsOrchestrator:
-    """Central orchestrator for all rights management operations."""
+    """
+Central orchestrator for all rights management operations."""
     
     def __init__(self):
         self.rights_manager = RightsManager()
@@ -134,7 +141,8 @@ class RightsOrchestrator:
         self._initialization_complete = False
     
     async def initialize(self):
-        """Initialize all sub-systems."""
+        """
+Initialize all sub-systems."""
         if self._initialization_complete:
             return
         

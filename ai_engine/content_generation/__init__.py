@@ -3,7 +3,7 @@
 Professional Multi-Format Content Generation Engine for Creators
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This content generation code, concepts, and intellectual property belong exclusively to Fahed Mlaiel.
@@ -133,7 +133,7 @@ except ImportError:
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - All rights reserved"
 
 # Module capabilities
@@ -299,12 +299,14 @@ def get_version():
 
 
 def get_copyright():
-    """Get the copyright information."""
+    """
+Get the copyright information."""
     return __copyright__
 
 
 def get_supported_formats():
-    """Get list of supported content formats."""
+    """
+Get list of supported content formats."""
     return [
         "text",
         "audio", 

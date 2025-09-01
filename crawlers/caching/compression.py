@@ -10,13 +10,14 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
 ⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 BUSINESS LOGIC:
 Data input → Algorithm selection → Compression optimization → 
 Space efficiency → Performance tracking → Adaptive learning
 """
+
 import asyncio
 import logging
 import gzip
@@ -35,7 +36,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class CompressionAlgorithm(Enum):
-    """Advanced compression algorithms for different use cases."""
+    """
+Advanced compression algorithms for different use cases."""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -45,6 +48,7 @@ class CompressionAlgorithm(Enum):
 
 class CompressionLevel(Enum):
     """Compression level priorities."""
+
     FASTEST = 1
     FAST = 3
     BALANCED = 6
@@ -53,7 +57,8 @@ class CompressionLevel(Enum):
 
 @dataclass
 class CompressionStats:
-    """Comprehensive compression statistics."""
+    """
+Comprehensive compression statistics."""
     algorithm: CompressionAlgorithm
     original_size: int
     compressed_size: int
@@ -62,19 +67,22 @@ class CompressionStats:
     
     @property
     def compression_ratio(self) -> float:
-        """Calculate compression ratio."""
+        """
+Calculate compression ratio."""
         if self.original_size == 0:
             return 1.0
         return self.compressed_size / self.original_size
     
     @property
     def space_savings_percent(self) -> float:
-        """Calculate space savings percentage."""
+        """
+Calculate space savings percentage."""
         return (1 - self.compression_ratio) * 100
     
     @property
     def compression_speed_mbps(self) -> float:
-        """Calculate compression speed in MB/s."""
+        """
+Calculate compression speed in MB/s."""
         if self.compression_time_ms == 0:
             return 0.0
         size_mb = self.original_size / (1024 * 1024)
@@ -95,7 +103,8 @@ class IndustrialCacheCompressor:
     """
     
     def __init__(self):
-        """Initialize industrial cache compressor."""
+        """
+Initialize industrial cache compressor."""
         self.logger = logging.getLogger(f"{__name__}.IndustrialCacheCompressor")
         
         # Performance tracking
@@ -339,7 +348,8 @@ class IndustrialCacheCompressor:
                 return CompressionAlgorithm.GZIP
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data sample."""
+        """
+Calculate Shannon entropy of data sample."""
         if not data:
             return 0.0
         
@@ -360,7 +370,8 @@ class IndustrialCacheCompressor:
         return entropy
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get comprehensive compression performance statistics."""
+        """
+Get comprehensive compression performance statistics."""
         with self._lock:
             stats = {}
             
@@ -386,7 +397,8 @@ class IndustrialCacheCompressor:
             return stats
     
     def optimize_thresholds(self) -> Dict[str, int]:
-        """Optimize size thresholds based on performance data."""
+        """
+Optimize size thresholds based on performance data."""
         optimized_thresholds = {}
         
         with self._lock:
@@ -412,7 +424,8 @@ class IndustrialCacheCompressor:
 CacheCompressor = IndustrialCacheCompressor
 
 class ContentCompressor(IndustrialCacheCompressor):
-    """Content-aware compressor with specialized handling for different data types."""
+    """
+Content-aware compressor with specialized handling for different data types."""
     
     def __init__(self):
         super().__init__()
@@ -428,7 +441,8 @@ class ContentCompressor(IndustrialCacheCompressor):
         }
     
     def detect_content_type(self, data: bytes) -> str:
-        """Detect content type for optimization."""
+        """
+Detect content type for optimization."""
         if not data:
             return 'binary'
         
@@ -489,7 +503,9 @@ from ...core.utils import calculate_object_size
 logger = logging.getLogger(__name__)
 
 class CompressionAlgorithm(Enum):
-    """Compression algorithm types."""
+    """
+Compression algorithm types."""
+
     NONE = "none"
     GZIP = "gzip"
     ZLIB = "zlib"
@@ -500,6 +516,7 @@ class CompressionAlgorithm(Enum):
 
 class CompressionLevel(Enum):
     """Compression level settings."""
+
     FASTEST = 1
     FAST = 3
     BALANCED = 6
@@ -507,7 +524,8 @@ class CompressionLevel(Enum):
 
 @dataclass
 class CompressionResult:
-    """Compression operation result."""
+    """
+Compression operation result."""
     original_size: int
     compressed_size: int
     compression_ratio: float
@@ -518,7 +536,8 @@ class CompressionResult:
 
 @dataclass
 class CompressionSettings:
-    """Compression configuration."""
+    """
+Compression configuration."""
     algorithm: CompressionAlgorithm = CompressionAlgorithm.GZIP
     level: CompressionLevel = CompressionLevel.BALANCED
     threshold_bytes: int = 1024  # Minimum size to compress
@@ -526,7 +545,8 @@ class CompressionSettings:
     auto_detect: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "algorithm": self.algorithm.value,
             "level": self.level.value,
@@ -548,7 +568,8 @@ class CacheCompressor:
     """
     
     def __init__(self, settings: Optional[CompressionSettings] = None):
-        """Initialize cache compressor."""
+        """
+Initialize cache compressor."""
         self.settings = settings or CompressionSettings()
         self.logger = logging.getLogger(f"{__name__}.CacheCompressor")
         
@@ -623,7 +644,8 @@ class CacheCompressor:
             return self.settings.algorithm
     
     def _serialize_data(self, data: Any) -> bytes:
-        """Serialize data to bytes."""
+        """
+Serialize data to bytes."""
         if isinstance(data, bytes):
             return data
         elif isinstance(data, str):
@@ -636,7 +658,8 @@ class CacheCompressor:
     def _compress_with_algorithm(self, data: bytes, 
                                algorithm: CompressionAlgorithm,
                                level: int) -> bytes:
-        """Compress data with specific algorithm."""
+        """
+Compress data with specific algorithm."""
         if algorithm == CompressionAlgorithm.GZIP:
             return gzip.compress(data, compresslevel=level)
             
@@ -661,7 +684,8 @@ class CacheCompressor:
     
     def _decompress_with_algorithm(self, data: bytes,
                                  algorithm: CompressionAlgorithm) -> bytes:
-        """Decompress data with specific algorithm."""
+        """
+Decompress data with specific algorithm."""
         if algorithm == CompressionAlgorithm.GZIP:
             return gzip.decompress(data)
             
@@ -914,7 +938,8 @@ class ContentCompressor(CacheCompressor):
     """
     
     def __init__(self, settings: Optional[CompressionSettings] = None):
-        """Initialize content compressor."""
+        """
+Initialize content compressor."""
         super().__init__(settings)
         self.logger = logging.getLogger(f"{__name__}.ContentCompressor")
         

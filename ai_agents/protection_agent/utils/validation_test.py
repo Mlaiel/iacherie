@@ -6,11 +6,13 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 import sys
 import traceback
 
 def test_imports():
-    """Test all imports from the protection agent module"""
+    """
+Test all imports from the protection agent module"""
     print("🔍 Testing Protection Agent imports...")
     
     try:

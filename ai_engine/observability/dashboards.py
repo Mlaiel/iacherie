@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import time
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardType(Enum):
-    """Dashboard types"""
+    """
+Dashboard types"""
+
     OVERVIEW = "overview"
     PERFORMANCE = "performance"
     SECURITY = "security"
@@ -42,6 +45,7 @@ class DashboardType(Enum):
 
 class WidgetType(Enum):
     """Widget types for dashboards"""
+
     METRIC = "metric"                    # Single metric display
     GAUGE = "gauge"                      # Circular gauge
     CHART = "chart"                      # Line/bar/pie chart
@@ -59,6 +63,7 @@ class WidgetType(Enum):
 
 class ChartType(Enum):
     """Chart visualization types"""
+
     LINE = "line"
     BAR = "bar"
     PIE = "pie"
@@ -72,6 +77,7 @@ class ChartType(Enum):
 
 class RefreshInterval(Enum):
     """Dashboard refresh intervals"""
+
     REAL_TIME = 1        # 1 second
     FAST = 5             # 5 seconds
     NORMAL = 30          # 30 seconds
@@ -81,7 +87,8 @@ class RefreshInterval(Enum):
 
 @dataclass
 class WidgetConfig:
-    """Widget configuration"""
+    """
+Widget configuration"""
     widget_id: str
     title: str
     widget_type: WidgetType
@@ -98,7 +105,8 @@ class WidgetConfig:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'widget_id': self.widget_id,
             'title': self.title,
@@ -119,7 +127,8 @@ class WidgetConfig:
 
 @dataclass
 class Dashboard:
-    """Dashboard definition"""
+    """
+Dashboard definition"""
     dashboard_id: str
     name: str
     description: str
@@ -135,7 +144,8 @@ class Dashboard:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'dashboard_id': self.dashboard_id,
             'name': self.name,
@@ -155,7 +165,8 @@ class Dashboard:
 
 @dataclass
 class WidgetData:
-    """Widget data response"""
+    """
+Widget data response"""
     widget_id: str
     data: Any
     timestamp: datetime
@@ -163,7 +174,8 @@ class WidgetData:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'widget_id': self.widget_id,
             'data': self.data,
@@ -181,12 +193,14 @@ class DataProvider:
     """
     
     def __init__(self, provider_name: str, config: Optional[Dict[str, Any]] = None):
-        """Initialize data provider"""
+        """
+Initialize data provider"""
         self.provider_name = provider_name
         self.config = config or {}
         
     async def fetch_data(self, query: str, options: Optional[Dict[str, Any]] = None) -> Any:
-        """Fetch data based on query - base implementation"""
+        """
+Fetch data based on query - base implementation"""
         try:
             # Basic implementation that returns simulated data
             logger.info(f"Fetching data for query: {query}")
@@ -241,15 +255,18 @@ class DataProvider:
         return True  # Default implementation allows all queries
     
     def format_data(self, raw_data: Any, widget_type: WidgetType) -> Any:
-        """Format data for specific widget type"""
+        """
+Format data for specific widget type"""
         return raw_data  # Default implementation returns raw data
 
 
 class MetricsDataProvider(DataProvider):
-    """Data provider for metrics data"""
+    """
+Data provider for metrics data"""
     
     def __init__(self, metrics_collector, config: Optional[Dict[str, Any]] = None):
-        """Initialize metrics data provider"""
+        """
+Initialize metrics data provider"""
         super().__init__("metrics", config)
         self.metrics_collector = metrics_collector
     
@@ -358,7 +375,8 @@ class AlertsDataProvider(DataProvider):
     """Data provider for alerts data"""
     
     def __init__(self, alert_manager, config: Optional[Dict[str, Any]] = None):
-        """Initialize alerts data provider"""
+        """
+Initialize alerts data provider"""
         super().__init__("alerts", config)
         self.alert_manager = alert_manager
     
@@ -442,7 +460,8 @@ class SystemDataProvider(DataProvider):
     """Data provider for system information"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize system data provider"""
+        """
+Initialize system data provider"""
         super().__init__("system", config)
     
     async def fetch_data(self, query: str, options: Optional[Dict[str, Any]] = None) -> Any:
@@ -552,7 +571,8 @@ class DashboardEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize dashboard engine"""
+        """
+Initialize dashboard engine"""
         self.config = config or {}
         
         # Dashboard storage
@@ -575,7 +595,8 @@ class DashboardEngine:
         }
     
     def register_data_provider(self, provider: DataProvider):
-        """Register a data provider"""
+        """
+Register a data provider"""
         try:
             self.data_providers[provider.provider_name] = provider
             logger.info(f"Registered data provider: {provider.provider_name}")
@@ -687,7 +708,8 @@ class DashboardEngine:
         return self.dashboards.get(dashboard_id)
     
     def list_dashboards(self, filters: Optional[Dict[str, Any]] = None) -> List[Dashboard]:
-        """List dashboards with optional filtering"""
+        """
+List dashboards with optional filtering"""
         try:
             dashboards = list(self.dashboards.values())
             
@@ -991,7 +1013,8 @@ class DashboardTemplates:
     
     @staticmethod
     def create_overview_dashboard() -> Dashboard:
-        """Create system overview dashboard"""
+        """
+Create system overview dashboard"""
         widgets = [
             WidgetConfig(
                 widget_id="system_health",

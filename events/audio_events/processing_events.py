@@ -7,6 +7,7 @@ format conversion, enhancement, and real-time processing pipelines.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -17,7 +18,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class ProcessingStage(Enum):
-    """Audio processing pipeline stages"""
+    """
+Audio processing pipeline stages"""
+
     INITIALIZATION = "initialization"
     FORMAT_CONVERSION = "format_conversion"
     QUALITY_ANALYSIS = "quality_analysis"
@@ -30,6 +33,7 @@ class ProcessingStage(Enum):
 
 class ProcessingQuality(Enum):
     """Audio processing quality levels"""
+
     LOSSLESS = "lossless"
     HIGH = "high"
     MEDIUM = "medium"

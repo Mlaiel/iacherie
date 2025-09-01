@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -52,6 +55,7 @@ class ThreatLevel(Enum):
 
 class ThreatCategory(Enum):
     """Threat categories"""
+
     SQL_INJECTION = "sql_injection"
     PRIVILEGE_ESCALATION = "privilege_escalation"
     DATA_EXFILTRATION = "data_exfiltration"
@@ -68,6 +72,7 @@ class ThreatCategory(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions"""
+
     ALERT = "alert"
     BLOCK_USER = "block_user"
     BLOCK_IP = "block_ip"
@@ -97,7 +102,8 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatEvent:
-    """Detected threat event"""
+    """
+Detected threat event"""
     event_id: str
     threat_id: str
     source_ip: str
@@ -117,7 +123,8 @@ class ThreatEvent:
 
 @dataclass
 class UserBehaviorProfile:
-    """User behavior analysis profile"""
+    """
+User behavior analysis profile"""
     user_id: str
     username: str
     typical_login_times: List[int] = field(default_factory=list)  # Hours of day
@@ -135,7 +142,8 @@ class UserBehaviorProfile:
 
 @dataclass
 class SecurityMetrics:
-    """Security monitoring metrics"""
+    """
+Security monitoring metrics"""
     timestamp: datetime
     total_connections: int
     failed_logins: int
@@ -151,7 +159,8 @@ class SecurityMetrics:
 
 @dataclass
 class IncidentResponse:
-    """Security incident response"""
+    """
+Security incident response"""
     incident_id: str
     threat_event_id: str
     response_type: ResponseAction
@@ -167,22 +176,26 @@ class ThreatDetectionEngine(ABC):
     
     @abstractmethod
     async def analyze_query(self, query: str, context: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze database query for threats"""
+        """
+Analyze database query for threats"""
         pass
     
     @abstractmethod
     async def analyze_login(self, login_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze login attempt for threats"""
+        """
+Analyze login attempt for threats"""
         pass
     
     @abstractmethod
     async def analyze_session(self, session_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze user session for threats"""
+        """
+Analyze user session for threats"""
         pass
 
 
 class SQLInjectionDetector(ThreatDetectionEngine):
-    """SQL injection threat detection engine"""
+    """
+SQL injection threat detection engine"""
     
     def __init__(self):
         self.sql_injection_patterns = [
@@ -327,14 +340,16 @@ class SQLInjectionDetector(ThreatDetectionEngine):
 
 
 class BehaviorAnalysisEngine(ThreatDetectionEngine):
-    """User behavior analysis threat detection engine"""
+    """
+User behavior analysis threat detection engine"""
     
     def __init__(self):
         self.user_profiles: Dict[str, UserBehaviorProfile] = {}
         self.session_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     
     async def analyze_query(self, query: str, context: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze query for behavioral anomalies"""
+        """
+Analyze query for behavioral anomalies"""
         threats = []
         user_id = context.get("user_id")
         
@@ -625,7 +640,8 @@ class ThreatDetector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize threat detector"""
+        """
+Initialize threat detector"""
         self.config = config or {}
         
         # Detection engines
@@ -833,7 +849,8 @@ class ThreatDetector:
         return actions
     
     async def _execute_response_action(self, threat: ThreatEvent, action: ResponseAction):
-        """Execute response action for threat"""
+        """
+Execute response action for threat"""
         try:
             handler = self.response_handlers.get(action)
             if handler:
@@ -920,11 +937,13 @@ class ThreatDetector:
         return ip_address in self.blocked_ips
     
     def is_user_blocked(self, user_id: str) -> bool:
-        """Check if user is blocked"""
+        """
+Check if user is blocked"""
         return user_id in self.blocked_users
     
     def unblock_ip(self, ip_address: str) -> bool:
-        """Unblock IP address"""
+        """
+Unblock IP address"""
         if ip_address in self.blocked_ips:
             self.blocked_ips.remove(ip_address)
             logger.info(f"Unblocked IP: {ip_address}")

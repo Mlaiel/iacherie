@@ -4,7 +4,7 @@ Industrial-grade analytics module entry point providing unified access to all
 analytics capabilities with advanced routing and service orchestration.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -23,6 +23,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Type
@@ -76,7 +77,7 @@ class AnalyticsModule:
         self.version = "2.0.0"
         self.author = "Fahed Mlaiel"
         self.email = "mlaiel@live.de"
-        self.copyright = "© 2025 Fahed Mlaiel. All rights reserved."
+        self.copyright = "(c) 2025 Fahed Mlaiel. All rights reserved."
         
         # Performance metrics
         self.module_stats = {
@@ -441,7 +442,8 @@ class AnalyticsModule:
             await collector.initialize()
     
     async def _initialize_aggregators(self) -> None:
-        """Initialize data aggregators"""
+        """
+Initialize data aggregators"""
         self._aggregators = {
             'data': DataAggregator(self.config.get('aggregators', {}).get('data', {})),
             'timeseries': TimeSeriesAggregator(self.config.get('aggregators', {}).get('timeseries', {}))
@@ -451,7 +453,8 @@ class AnalyticsModule:
             await aggregator.initialize()
     
     async def _initialize_dashboards(self) -> None:
-        """Initialize dashboards"""
+        """
+Initialize dashboards"""
         self._dashboards = {
             'analytics': AnalyticsDashboard(self.config.get('dashboards', {}).get('analytics', {})),
             'realtime': RealtimeDashboard(self.config.get('dashboards', {}).get('realtime', {}))
@@ -461,7 +464,8 @@ class AnalyticsModule:
             await dashboard.initialize()
     
     async def _initialize_intelligence(self) -> None:
-        """Initialize intelligence services"""
+        """
+Initialize intelligence services"""
         self._intelligence = {
             'business': BusinessIntelligence(
                 self._collectors.get('business'),
@@ -474,7 +478,8 @@ class AnalyticsModule:
             await intelligence.initialize()
     
     async def _initialize_reporting(self) -> None:
-        """Initialize reporting services"""
+        """
+Initialize reporting services"""
         self._reporting = {
             'generator': ReportGenerator(self.config.get('reporting', {}).get('generator', {})),
             'performance': PerformanceReporter(self.config.get('reporting', {}).get('performance', {}))
@@ -484,7 +489,8 @@ class AnalyticsModule:
             await reporter.initialize()
     
     async def _initialize_tracking(self) -> None:
-        """Initialize tracking services"""
+        """
+Initialize tracking services"""
         self._tracking = {
             'user': UserTracker(self.config.get('tracking', {}).get('user', {})),
             'content': ContentTracker(self.config.get('tracking', {}).get('content', {})),
@@ -495,7 +501,8 @@ class AnalyticsModule:
             await tracker.initialize()
     
     async def _initialize_processors(self) -> None:
-        """Initialize processors"""
+        """
+Initialize processors"""
         self._processors = {
             'analytics': AnalyticsProcessor(self.config.get('processors', {}).get('analytics', {})),
             'metrics': MetricsProcessor(self.config.get('processors', {}).get('metrics', {}))
@@ -505,7 +512,8 @@ class AnalyticsModule:
             await processor.initialize()
     
     def _register_services(self) -> None:
-        """Register all services in the service registry"""
+        """
+Register all services in the service registry"""
         self._services = {
             'collector': self._collectors,
             'aggregator': self._aggregators,
@@ -517,7 +525,8 @@ class AnalyticsModule:
         }
     
     def _get_service_instance(self, service_type: str, service_name: str):
-        """Get service instance by type and name"""
+        """
+Get service instance by type and name"""
         if service_type not in self._services:
             raise AnalyticsError(f"Unknown service type: {service_type}")
         
@@ -541,7 +550,8 @@ class AnalyticsModule:
         }
     
     async def _get_system_metrics(self) -> Dict[str, Any]:
-        """Get system-level metrics"""
+        """
+Get system-level metrics"""
         try:
             import psutil
             
@@ -558,7 +568,8 @@ class AnalyticsModule:
             return {'error': f'System metrics error: {str(e)}'}
     
     async def _update_request_stats(self, start_time: datetime, success: bool) -> None:
-        """Update request statistics"""
+        """
+Update request statistics"""
         try:
             self.module_stats['total_requests'] += 1
             
@@ -599,7 +610,8 @@ async def get_analytics_module(config: Optional[Dict[str, Any]] = None) -> Analy
 
 
 async def shutdown_analytics_module() -> None:
-    """Shutdown the global analytics module instance"""
+    """
+Shutdown the global analytics module instance"""
     global _analytics_module
     
     if _analytics_module is not None:
@@ -616,13 +628,15 @@ async def collect_metric(
     tags: Optional[Dict[str, str]] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> str:
-    """Convenience function for collecting metrics"""
+    """
+Convenience function for collecting metrics"""
     module = await get_analytics_module()
     return await module.collect_metric(name, value, metric_type, scope, tags, metadata)
 
 
 async def get_realtime_metrics() -> Dict[str, Any]:
-    """Convenience function for getting real-time metrics"""
+    """
+Convenience function for getting real-time metrics"""
     module = await get_analytics_module()
     return await module.get_realtime_metrics()
 
@@ -643,7 +657,8 @@ async def track_user_activity(
     activity: Dict[str, Any],
     session_id: Optional[str] = None
 ) -> str:
-    """Convenience function for tracking user activity"""
+    """
+Convenience function for tracking user activity"""
     module = await get_analytics_module()
     return await module.track_user_activity(user_id, activity, session_id)
 
@@ -652,7 +667,8 @@ async def track_content_performance(
     content_id: str,
     metrics: Dict[str, Any]
 ) -> None:
-    """Convenience function for tracking content performance"""
+    """
+Convenience function for tracking content performance"""
     module = await get_analytics_module()
     return await module.track_content_performance(content_id, metrics)
 
@@ -662,7 +678,8 @@ async def track_revenue_event(
     amount: float,
     metadata: Dict[str, Any]
 ) -> str:
-    """Convenience function for tracking revenue events"""
+    """
+Convenience function for tracking revenue events"""
     module = await get_analytics_module()
     return await module.track_revenue_event(event_type, amount, metadata)
 
@@ -695,7 +712,8 @@ async def get_predictive_forecasts(
 
 
 async def health_check() -> Dict[str, Any]:
-    """Convenience function for health check"""
+    """
+Convenience function for health check"""
     try:
         module = await get_analytics_module()
         return await module.health_check()
@@ -711,7 +729,7 @@ async def health_check() -> Dict[str, Any]:
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Export everything from __init__.py plus additional index functionality
 from . import *

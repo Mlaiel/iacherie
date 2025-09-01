@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 from typing import Dict, Any, Optional, List
 import logging
 
@@ -476,7 +477,8 @@ class ModerationExceptionFactory:
     @staticmethod
     def create_model_error(model_name: str, error_type: str, details: str,
                           context: Dict[str, Any] = None) -> ModerationAgentException:
-        """Create model-related exception"""
+        """
+Create model-related exception"""
         if error_type == "loading":
             return ModelLoadingError(model_name, details, context)
         elif error_type == "inference":
@@ -497,13 +499,15 @@ class ModerationExceptionFactory:
     @staticmethod
     def create_configuration_error(config_key: str, issue: str,
                                  context: Dict[str, Any] = None) -> ConfigurationError:
-        """Create configuration exception"""
+        """
+Create configuration exception"""
         return ConfigurationError(config_key, issue, context=context)
     
     @staticmethod
     def create_resource_error(resource: str, requirement: str, 
                             availability: str = None, context: Dict[str, Any] = None) -> InsufficientResourcesError:
-        """Create resource limitation exception"""
+        """
+Create resource limitation exception"""
         return InsufficientResourcesError(resource, requirement, availability, context)
 
 # Error handler for graceful exception handling

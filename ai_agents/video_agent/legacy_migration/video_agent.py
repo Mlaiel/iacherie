@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import os
@@ -60,7 +61,9 @@ from ...seo.video_optimizer import VideoSEOOptimizer
 logger = logging.getLogger(__name__)
 
 class VideoFormat:
-    """Supported video formats with technical specifications"""
+    """
+Supported video formats with technical specifications"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -72,6 +75,7 @@ class VideoFormat:
 
 class VideoQuality:
     """Video quality levels and specifications"""
+
     SD_480 = {"width": 854, "height": 480, "bitrate": "1000k"}
     HD_720 = {"width": 1280, "height": 720, "bitrate": "2500k"}
     HD_1080 = {"width": 1920, "height": 1080, "bitrate": "5000k"}
@@ -80,6 +84,7 @@ class VideoQuality:
 
 class VideoOperation:
     """Available video processing operations"""
+
     ANALYZE = "analyze"
     ENHANCE = "enhance"
     CONVERT = "convert"
@@ -603,7 +608,8 @@ class VideoAgentManager:
         self._initialize_workers()
     
     def _initialize_workers(self):
-        """Initialize video processing workers"""
+        """
+Initialize video processing workers"""
         for i in range(self.max_workers):
             worker = VideoAgent(config={"worker_id": i})
             self.workers.append(worker)
@@ -628,7 +634,8 @@ class VideoAgentManager:
         return await worker.process_request(request)
     
     async def shutdown(self):
-        """Shutdown all workers and cleanup resources"""
+        """
+Shutdown all workers and cleanup resources"""
         for worker in self.workers:
             await worker.cleanup()
         

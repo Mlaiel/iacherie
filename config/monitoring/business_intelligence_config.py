@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union, Tuple
@@ -29,7 +30,9 @@ import numpy as np
 
 
 class BusinessMetricCategory(Enum):
-    """Business metric categories"""
+    """
+Business metric categories"""
+
     REVENUE = "revenue"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
@@ -42,6 +45,7 @@ class BusinessMetricCategory(Enum):
 
 class KPIType(Enum):
     """Key Performance Indicator types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     RATE = "rate"
@@ -54,6 +58,7 @@ class KPIType(Enum):
 
 class BusinessDimension(Enum):
     """Business analysis dimensions"""
+
     TIME = "time"
     GEOGRAPHY = "geography"
     USER_SEGMENT = "user_segment"
@@ -118,7 +123,8 @@ class BusinessIntelligenceConfig:
     """
     
     def __init__(self):
-        """Initialize business intelligence configuration"""
+        """
+Initialize business intelligence configuration"""
         self._kpis = {}
         self._reports = {}
         self._competitive_intelligence = {}
@@ -622,23 +628,28 @@ class BusinessIntelligenceConfig:
         return self._kpis.get(name)
     
     def get_report(self, name: str) -> Optional[BusinessReport]:
-        """Get report by name"""
+        """
+Get report by name"""
         return self._reports.get(name)
     
     def get_competitive_intelligence(self, competitor: str) -> Optional[CompetitiveIntelligence]:
-        """Get competitive intelligence by competitor name"""
+        """
+Get competitive intelligence by competitor name"""
         return self._competitive_intelligence.get(competitor)
     
     def get_kpis_by_category(self, category: BusinessMetricCategory) -> List[BusinessKPI]:
-        """Get KPIs by category"""
+        """
+Get KPIs by category"""
         return [kpi for kpi in self._kpis.values() if kpi.category == category]
     
     def get_kpis_by_owner(self, owner: str) -> List[BusinessKPI]:
-        """Get KPIs by business owner"""
+        """
+Get KPIs by business owner"""
         return [kpi for kpi in self._kpis.values() if kpi.business_owner == owner]
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete business intelligence configuration"""
+        """
+Export complete business intelligence configuration"""
         return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),

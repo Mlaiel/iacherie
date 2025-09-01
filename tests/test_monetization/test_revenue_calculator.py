@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for Revenue Calculator
+"""
+Unit tests for Revenue Calculator
 Tests for automated revenue calculation functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -30,16 +33,19 @@ from monetization.revenue_calculator import RevenueCalculator, RevenueData
 
 
 class TestRevenueCalculator:
-    """Test suite for RevenueCalculator class"""
+    """
+Test suite for RevenueCalculator class"""
     
     @pytest.fixture
     def calculator(self):
-        """Create RevenueCalculator instance for testing"""
+        """
+Create RevenueCalculator instance for testing"""
         return RevenueCalculator()
     
     @pytest.fixture
     def sample_revenue_data(self):
-        """Sample revenue data for testing"""
+        """
+Sample revenue data for testing"""
         return [
             RevenueData(
                 platform="youtube",
@@ -131,7 +137,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_instagram_revenue_below_threshold(self, calculator):
-        """Test Instagram revenue below follower threshold"""
+        """
+Test Instagram revenue below follower threshold"""
         revenue = await calculator.calculate_instagram_revenue(
             impressions=50000,
             reach=35000,
@@ -145,7 +152,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tiktok_revenue_calculation(self, calculator):
-        """Test TikTok revenue calculation"""
+        """
+Test TikTok revenue calculation"""
         revenue = await calculator.calculate_tiktok_revenue(
             views=100000,
             shares=5000,
@@ -160,7 +168,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tiktok_revenue_below_threshold(self, calculator):
-        """Test TikTok revenue below follower threshold"""
+        """
+Test TikTok revenue below follower threshold"""
         revenue = await calculator.calculate_tiktok_revenue(
             views=100000,
             shares=5000,
@@ -174,7 +183,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_spotify_revenue_calculation(self, calculator):
-        """Test Spotify revenue calculation"""
+        """
+Test Spotify revenue calculation"""
         revenue = await calculator.calculate_spotify_revenue(
             streams=50000,
             premium_streams=30000,

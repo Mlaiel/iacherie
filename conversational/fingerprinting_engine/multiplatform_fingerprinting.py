@@ -28,13 +28,14 @@ major platforms and content formats (audio, video, image, text).
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary fingerprinting platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import hashlib
 import base64
@@ -81,7 +82,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for fingerprinting"""
+    """
+Supported content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -118,6 +121,7 @@ class FingerprintAlgorithm(Enum):
 
 class FingerprintQuality(Enum):
     """Fingerprint quality levels"""
+
     ULTRA_HIGH = "ultra_high"    # 99%+ accuracy, highest resource usage
     HIGH = "high"                # 95-99% accuracy, high resource usage
     STANDARD = "standard"        # 90-95% accuracy, moderate resource usage
@@ -681,7 +685,8 @@ class MultiplePlatformFingerprintingEngine:
     async def _generate_algorithm_fingerprint(self, content_path: str, 
                                             algorithm: FingerprintAlgorithm,
                                             fingerprint: ContentFingerprint) -> Optional[Dict[str, Any]]:
-        """Generate fingerprint using specific algorithm"""
+        """
+Generate fingerprint using specific algorithm"""
         try:
             # Get appropriate engine based on content type
             if fingerprint.content_type == ContentType.AUDIO:
@@ -913,43 +918,53 @@ class MultiplePlatformFingerprintingEngine:
         return await self._mfcc_fingerprint(content_path, fingerprint)
     
     async def _audio_neural_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for audio neural hash"""
+        """
+Placeholder for audio neural hash"""
         return await self._mfcc_fingerprint(content_path, fingerprint)
     
     async def _opencv_orb_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for OpenCV ORB fingerprinting"""
+        """
+Placeholder for OpenCV ORB fingerprinting"""
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _perceptual_video_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for perceptual video hash"""
+        """
+Placeholder for perceptual video hash"""
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _temporal_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for temporal fingerprinting"""
+        """
+Placeholder for temporal fingerprinting"""
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _video_neural_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for video neural hash"""
+        """
+Placeholder for video neural hash"""
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _difference_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for difference hash"""
+        """
+Placeholder for difference hash"""
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _wavelet_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for wavelet hash"""
+        """
+Placeholder for wavelet hash"""
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _sentence_transformer_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for sentence transformer"""
+        """
+Placeholder for sentence transformer"""
         return await self._bert_embedding_fingerprint(content_path, fingerprint)
     
     async def _semantic_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for semantic hash"""
+        """
+Placeholder for semantic hash"""
         return await self._bert_embedding_fingerprint(content_path, fingerprint)
     
     async def _combine_fingerprint_results(self, fingerprint: ContentFingerprint, results: List[Dict[str, Any]]):
-        """Combine results from multiple algorithms"""
+        """
+Combine results from multiple algorithms"""
         try:
             if not results:
                 raise BusinessLogicError("No valid fingerprint results generated")

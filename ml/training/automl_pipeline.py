@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 PIPELINE AUTOML ENTERPRISE
@@ -15,6 +15,7 @@ Pipeline automatisé d'entraînement de modèles ML
 - Cross-validation et validation robuste
 - Model comparison et selection automatique
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ from sklearn.pipeline import Pipeline
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
-    """Types de modèles supportés"""
+    """
+Types de modèles supportés"""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -52,6 +55,7 @@ class ModelType(Enum):
 
 class TrainingStatus(Enum):
     """Statuts d'entraînement"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -86,7 +90,8 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingJob:
-    """Job d'entraînement"""
+    """
+Job d'entraînement"""
     job_id: str
     model_type: ModelType
     status: TrainingStatus
@@ -98,7 +103,8 @@ class TrainingJob:
     model_path: Optional[str] = None
 
 class AutoMLPipeline:
-    """Pipeline AutoML Enterprise"""
+    """
+Pipeline AutoML Enterprise"""
     
     def __init__(self, config: AutoMLConfig):
         self.config = config
@@ -148,7 +154,8 @@ class AutoMLPipeline:
                            X: np.ndarray, 
                            y: np.ndarray,
                            job_name: Optional[str] = None) -> str:
-        """Démarre un job d'entraînement AutoML"""
+        """
+Démarre un job d'entraînement AutoML"""
         try:
             job_id = str(uuid.uuid4())
             if job_name:
@@ -350,7 +357,8 @@ class AutoMLPipeline:
         return self.training_jobs.get(job_id)
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Annule un job d'entraînement"""
+        """
+Annule un job d'entraînement"""
         job = self.training_jobs.get(job_id)
         if job and job.status in [TrainingStatus.PENDING, TrainingStatus.RUNNING]:
             job.status = TrainingStatus.CANCELLED
@@ -393,7 +401,8 @@ class AutoMLPipeline:
         return list(self.training_jobs.values())
     
     async def cleanup_old_jobs(self, days_old: int = 30):
-        """Nettoie les anciens jobs"""
+        """
+Nettoie les anciens jobs"""
         cutoff_date = datetime.now() - timedelta(days=days_old)
         jobs_to_remove = []
         
@@ -421,7 +430,8 @@ class AutoMLPipelineFactory:
     
     @staticmethod
     def create_content_protection_pipeline() -> AutoMLPipeline:
-        """Pipeline pour la protection de contenu"""
+        """
+Pipeline pour la protection de contenu"""
         config = AutoMLConfig(
             model_type=ModelType.CONTENT_PROTECTION,
             max_trials=50,

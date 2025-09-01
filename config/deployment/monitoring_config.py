@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import time
 import json
@@ -28,7 +29,9 @@ from enum import Enum
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -38,6 +41,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -57,7 +61,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""
+    """
+Alert rule definition"""
     name: str
     description: str
     severity: AlertSeverity
@@ -69,7 +74,8 @@ class AlertRule:
 
 @dataclass
 class Dashboard:
-    """Dashboard definition"""
+    """
+Dashboard definition"""
     name: str
     title: str
     description: str
@@ -657,7 +663,8 @@ class MonitoringConfig:
     
     def _get_email_template(self) -> str:
         """Get email alert template"""
-        return """Alert: {{ .GroupLabels.alertname }}
+        return """
+Alert: {{ .GroupLabels.alertname }}
 Environment: {{ .CommonLabels.environment }}
 Severity: {{ .CommonLabels.severity }}
 
@@ -674,7 +681,8 @@ Generated at: {{ .Timestamp }}
 """
     
     def _get_slack_template(self) -> str:
-        """Get Slack alert template"""
+        """
+Get Slack alert template"""
         return """{{ range .Alerts }}
 *Alert:* {{ .Labels.alertname }}
 *Environment:* {{ .Labels.environment }}
@@ -689,7 +697,8 @@ Generated at: {{ .Timestamp }}
 """
     
     def _define_custom_metrics(self) -> List[MetricDefinition]:
-        """Define custom application metrics"""
+        """
+Define custom application metrics"""
         return [
             # API Metrics
             MetricDefinition(

@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Security Specialist + Microservices Architect + ML Engineer + Content Optimization Expert
 """
+
 import asyncio
 import json
 import uuid
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SchedulingStrategy(str, Enum):
-    """Content scheduling strategies"""
+    """
+Content scheduling strategies"""
+
     IMMEDIATE = "immediate"
     OPTIMAL_TIMING = "optimal_timing"
     AUDIENCE_BASED = "audience_based"
@@ -53,6 +56,7 @@ class SchedulingStrategy(str, Enum):
 
 class ScheduleStatus(str, Enum):
     """Schedule execution status"""
+
     PENDING = "pending"
     QUEUED = "queued"
     EXECUTING = "executing"
@@ -63,6 +67,7 @@ class ScheduleStatus(str, Enum):
 
 class TimingPriority(str, Enum):
     """Timing optimization priority"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     COST = "cost"
@@ -91,7 +96,8 @@ class SchedulingConstraints:
 
 @dataclass
 class AudienceAnalytics:
-    """Audience behavior analytics for optimal timing"""
+    """
+Audience behavior analytics for optimal timing"""
     peak_activity_hours: List[int] = field(default_factory=list)
     engagement_patterns: Dict[str, float] = field(default_factory=dict)
     demographic_timezones: Dict[str, float] = field(default_factory=dict)
@@ -99,7 +105,8 @@ class AudienceAnalytics:
     platform_preferences: Dict[str, float] = field(default_factory=dict)
 
 class ContentSchedule(Base):
-    """Content scheduling database model"""
+    """
+Content scheduling database model"""
     __tablename__ = "content_schedules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -267,7 +274,8 @@ class ScheduleUpdateRequest(BaseModel):
     status: Optional[ScheduleStatus] = None
 
 class ScheduleResponse(BaseModel):
-    """Response model for content schedules"""
+    """
+Response model for content schedules"""
     id: str
     content_id: str
     user_id: str
@@ -285,7 +293,8 @@ class ScheduleResponse(BaseModel):
     updated_at: datetime
 
 class ContentSchedulingManager:
-    """Enterprise content scheduling management system"""
+    """
+Enterprise content scheduling management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -297,7 +306,8 @@ class ContentSchedulingManager:
         user_id: str,
         schedule_request: ScheduleCreateRequest
     ) -> ContentSchedule:
-        """Create new content schedule with AI optimization"""
+        """
+Create new content schedule with AI optimization"""
         try:
             # Generate optimal timing if not provided
             if not schedule_request.scheduled_time:

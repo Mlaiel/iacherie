@@ -4,7 +4,7 @@
 Multi-platform content scanning and crawling system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - Multi-platform content scanning across 500+ platforms
@@ -13,6 +13,7 @@ This module provides:
 - Web scraping with anti-detection
 - Real-time content discovery
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -25,7 +26,9 @@ import time
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Platform types for scanning."""
+    """
+Platform types for scanning."""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -35,6 +38,7 @@ class PlatformType(Enum):
 
 class ScanMethod(Enum):
     """Scanning methods."""
+
     API = "api"
     WEB_SCRAPING = "web_scraping"
     RSS_FEED = "rss_feed"
@@ -54,7 +58,8 @@ class PlatformConfig:
 
 @dataclass
 class ScanResult:
-    """Platform scan result."""
+    """
+Platform scan result."""
     platform: str
     scan_id: str
     items_found: int
@@ -305,7 +310,8 @@ class PlatformScanner:
         return scanner
     
     async def _authenticate_platform(self, scanner: Dict[str, Any]) -> None:
-        """Authenticate with platform API."""
+        """
+Authenticate with platform API."""
         config = scanner['config']
         platform_name = config.platform_name
         
@@ -494,7 +500,8 @@ class PlatformScanner:
     
     async def _scan_via_api(self, scanner: Dict[str, Any], fingerprint: Dict[str, Any], 
                           scan_id: str) -> Dict[str, Any]:
-        """Scan platform using API."""
+        """
+Scan platform using API."""
         config = scanner['config']
         platform_name = config.platform_name
         
@@ -567,7 +574,8 @@ class PlatformScanner:
         }
     
     def _prepare_search_query(self, fingerprint: Dict[str, Any], config: PlatformConfig) -> str:
-        """Prepare search query from fingerprint."""
+        """
+Prepare search query from fingerprint."""
         # Extract searchable terms from fingerprint
         content_type = fingerprint.get('content_type', 'unknown')
         metadata = fingerprint.get('metadata', {})
@@ -652,7 +660,8 @@ class PlatformScanner:
         }
     
     def _parse_api_response(self, data: Dict[str, Any], platform: str) -> List[Dict[str, Any]]:
-        """Parse API response data."""
+        """
+Parse API response data."""
         items = []
         
         try:
@@ -723,11 +732,13 @@ class PlatformScanner:
         self.scan_stats['items_discovered'] += scan_result.items_found
     
     async def get_scan_stats(self) -> Dict[str, Any]:
-        """Get scanning performance statistics."""
+        """
+Get scanning performance statistics."""
         return self.scan_stats.copy()
     
     async def get_platform_status(self) -> Dict[str, Any]:
-        """Get status of all platform scanners."""
+        """
+Get status of all platform scanners."""
         status = {}
         
         for platform_name, scanner in self.active_scanners.items():
@@ -747,7 +758,8 @@ class PlatformScanner:
         return status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the scanner."""
+        """
+Gracefully shutdown the scanner."""
         logger.info("Shutting down Platform Scanner...")
         
         # Close HTTP session

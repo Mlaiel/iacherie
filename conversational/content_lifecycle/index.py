@@ -2,7 +2,7 @@
 
 Enterprise Creator Economy Platform - Central Orchestration Hub
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 This code is the EXCLUSIVE intellectual property of Fahed Mlaiel.
@@ -29,6 +29,7 @@ Multi-Platform Distribution (Spotify/YouTube/Instagram/TikTok)
     ↓
 Monetization & Analytics
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union
@@ -407,7 +408,7 @@ def get_system_info() -> Dict[str, Any]:
         "version": "2.1.0",
         "author": "Fahed Mlaiel",
         "contact": "mlaiel@live.de",
-        "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+        "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
         "license": "Proprietary - All Rights Reserved",
         "description": "Enterprise Creator Economy Platform - Complete workflow from upload to monetization",
         "business_logic": [
@@ -440,7 +441,7 @@ async def main():
     print("=" * 80)
     print(f"👨‍💻 Author: Fahed Mlaiel (mlaiel@live.de)")
     print(f"📅 Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}")
-    print(f"⚖️ Copyright: © 2025 Fahed Mlaiel. All rights reserved.")
+    print(f"⚖️ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.")
     print("=" * 80)
     
     # Initialize the system

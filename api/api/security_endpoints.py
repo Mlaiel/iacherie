@@ -17,6 +17,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 import logging
@@ -142,7 +143,8 @@ class SecurityDashboardResponse(BaseModel):
     recommendations: List[str]
 
 class ComplianceReportRequest(BaseModel):
-    """Request model for compliance reporting"""
+    """
+Request model for compliance reporting"""
     standards: List[str] = Field(
         ...,
         description="Compliance standards to include in report",

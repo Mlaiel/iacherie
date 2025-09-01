@@ -12,7 +12,7 @@ This monitoring system and methodologies are the exclusive intellectual property
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 🎯 BUSINESS LOGIC INTEGRATION:
 Performance Monitoring → Drift Detection → Quality Analysis → Alert Generation
@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -96,7 +97,9 @@ from ...utils.alerting import AlertManager
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -104,6 +107,7 @@ class AlertSeverity(Enum):
 
 class DriftType(Enum):
     """Data drift types"""
+
     DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
@@ -111,6 +115,7 @@ class DriftType(Enum):
 
 class PerformanceMetric(Enum):
     """Performance metrics to track"""
+
     ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
@@ -135,7 +140,8 @@ class PerformanceThresholds:
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert data"""
+    """
+Monitoring alert data"""
     alert_id: str
     model_id: str
     alert_type: str
@@ -148,7 +154,8 @@ class MonitoringAlert:
 
 @dataclass
 class DriftReport:
-    """Data drift analysis report"""
+    """
+Data drift analysis report"""
     report_id: str
     model_id: str
     drift_type: DriftType
@@ -164,7 +171,8 @@ class DriftReport:
 
 @dataclass
 class ModelQualityReport:
-    """Model quality analysis report"""
+    """
+Model quality analysis report"""
     report_id: str
     model_id: str
     model_version: str
@@ -195,7 +203,8 @@ class MLPerformanceMonitor:
         self._initialize_monitoring()
     
     def _initialize_monitoring(self):
-        """Initialize performance monitoring system"""
+        """
+Initialize performance monitoring system"""
         try:
             # Setup default thresholds
             self.default_thresholds = PerformanceThresholds()
@@ -227,7 +236,8 @@ class MLPerformanceMonitor:
         model_id: str, 
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Register a model for continuous monitoring"""
+        """
+Register a model for continuous monitoring"""
         try:
             config_id = str(uuid.uuid4())
             
@@ -354,7 +364,8 @@ class MLPerformanceMonitor:
         }
     
     async def _collect_system_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect system-level metrics"""
+        """
+Collect system-level metrics"""
         import psutil
         
         return {
@@ -365,7 +376,8 @@ class MLPerformanceMonitor:
         }
     
     async def _collect_data_quality_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect data quality metrics"""
+        """
+Collect data quality metrics"""
         # This would analyze incoming data quality
         return {
             'completeness': np.random.uniform(0.9, 1.0),
@@ -375,7 +387,8 @@ class MLPerformanceMonitor:
         }
     
     async def _collect_drift_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect drift-related metrics"""
+        """
+Collect drift-related metrics"""
         # This would calculate statistical measures for drift detection
         return {
             'feature_drift_scores': {f'feature_{i}': np.random.uniform(0, 0.2) for i in range(5)},
@@ -384,7 +397,8 @@ class MLPerformanceMonitor:
         }
     
     async def _detect_drift(self, model_id: str):
-        """Detect data drift for a model"""
+        """
+Detect data drift for a model"""
         try:
             config = self.monitoring_configs.get(model_id)
             if not config:
@@ -434,7 +448,8 @@ class MLPerformanceMonitor:
         current_data: pd.DataFrame,
         model_id: str
     ) -> Dict[str, Any]:
-        """Perform comprehensive drift analysis"""
+        """
+Perform comprehensive drift analysis"""
         
         drift_results = {
             'drift_detected': False,
@@ -681,7 +696,8 @@ class MLPerformanceMonitor:
         model_id: str, 
         recent_metrics: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate comprehensive quality metrics"""
+        """
+Calculate comprehensive quality metrics"""
         
         quality_metrics = {
             'performance_metrics': {},
@@ -809,7 +825,8 @@ class MLPerformanceMonitor:
             return 0.5  # Default neutral score
     
     async def _create_quality_report(self, model_id: str, quality_analysis: Dict[str, Any]):
-        """Create model quality report"""
+        """
+Create model quality report"""
         try:
             report_id = str(uuid.uuid4())
             
@@ -913,7 +930,8 @@ class MLPerformanceMonitor:
         pass
     
     async def get_model_performance_summary(self, model_id: str) -> Dict[str, Any]:
-        """Get comprehensive performance summary for a model"""
+        """
+Get comprehensive performance summary for a model"""
         try:
             if model_id not in self.performance_data:
                 raise ValueError(f"No performance data found for model: {model_id}")
@@ -1001,7 +1019,8 @@ class MLPerformanceMonitor:
         return trends
     
     async def _get_overall_health_status(self, model_id: str) -> str:
-        """Get overall health status for a model"""
+        """
+Get overall health status for a model"""
         # Check for critical alerts
         critical_alerts = [
             alert for alert in self.alerts.values()

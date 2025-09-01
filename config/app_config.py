@@ -4,6 +4,7 @@ Main configuration module that consolidates settings from various sources.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 from typing import Optional
 from dataclasses import dataclass
@@ -25,7 +26,8 @@ except ImportError:
 
 @dataclass
 class AppConfig:
-    """Application configuration settings"""
+    """
+Application configuration settings"""
     environment: str = os.getenv("ENVIRONMENT", "development")
     debug: bool = os.getenv("DEBUG", "false").lower() == "true"
     host: str = os.getenv("HOST", "0.0.0.0")

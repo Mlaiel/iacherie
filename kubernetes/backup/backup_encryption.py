@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import base64
@@ -30,7 +31,9 @@ from ...core.exceptions import EncryptionError
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithm enumeration."""
+    """
+Encryption algorithm enumeration."""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -39,6 +42,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyDerivationMethod(Enum):
     """Key derivation method enumeration."""
+
     PBKDF2 = "pbkdf2"
     SCRYPT = "scrypt"
     ARGON2 = "argon2"
@@ -60,7 +64,8 @@ class EncryptionConfig:
 
 @dataclass
 class EncryptionMetadata:
-    """Encryption operation metadata."""
+    """
+Encryption operation metadata."""
     algorithm: str
     key_id: str
     key_derivation_method: str
@@ -110,7 +115,8 @@ class BackupEncryption:
         self.backend = default_backend()
 
     def is_enabled(self) -> bool:
-        """Check if encryption is enabled."""
+        """
+Check if encryption is enabled."""
         return self.master_key is not None
 
     async def encrypt_data(
@@ -506,7 +512,8 @@ class BackupEncryption:
         return ciphertext, encryptor.tag
 
     async def _decrypt_aes_gcm(self, data: bytes, key: bytes, iv: bytes, tag: bytes) -> bytes:
-        """Decrypt using AES-256-GCM."""
+        """
+Decrypt using AES-256-GCM."""
         cipher = Cipher(
             algorithms.AES(key),
             modes.GCM(iv, tag),
@@ -517,7 +524,8 @@ class BackupEncryption:
         return decryptor.update(data) + decryptor.finalize()
 
     async def _encrypt_aes_cbc(self, data: bytes, key: bytes, iv: bytes) -> Tuple[bytes, None]:
-        """Encrypt using AES-256-CBC."""
+        """
+Encrypt using AES-256-CBC."""
         # Pad data to block size
         from cryptography.hazmat.primitives import padding
         padder = padding.PKCS7(128).padder()
@@ -534,7 +542,8 @@ class BackupEncryption:
         return ciphertext, None
 
     async def _decrypt_aes_cbc(self, data: bytes, key: bytes, iv: bytes) -> bytes:
-        """Decrypt using AES-256-CBC."""
+        """
+Decrypt using AES-256-CBC."""
         cipher = Cipher(
             algorithms.AES(key),
             modes.CBC(iv),
@@ -550,7 +559,8 @@ class BackupEncryption:
         return unpadder.update(padded_data) + unpadder.finalize()
 
     async def _encrypt_chacha20(self, data: bytes, key: bytes, nonce: bytes) -> Tuple[bytes, bytes]:
-        """Encrypt using ChaCha20-Poly1305."""
+        """
+Encrypt using ChaCha20-Poly1305."""
         from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
         
         chacha = ChaCha20Poly1305(key)
@@ -564,7 +574,8 @@ class BackupEncryption:
         return ciphertext, tag
 
     async def _decrypt_chacha20(self, data: bytes, key: bytes, nonce: bytes, tag: bytes) -> bytes:
-        """Decrypt using ChaCha20-Poly1305."""
+        """
+Decrypt using ChaCha20-Poly1305."""
         from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
         
         chacha = ChaCha20Poly1305(key)
@@ -574,7 +585,8 @@ class BackupEncryption:
         return chacha.decrypt(nonce, encrypted_with_tag, None)
 
     async def _encrypt_fernet(self, data: bytes, key: bytes) -> Tuple[bytes, None]:
-        """Encrypt using Fernet."""
+        """
+Encrypt using Fernet."""
         # Fernet requires base64-encoded key
         fernet_key = base64.urlsafe_b64encode(key)
         f = Fernet(fernet_key)
@@ -583,7 +595,8 @@ class BackupEncryption:
         return encrypted, None
 
     async def _decrypt_fernet(self, data: bytes, key: bytes) -> bytes:
-        """Decrypt using Fernet."""
+        """
+Decrypt using Fernet."""
         # Fernet requires base64-encoded key
         fernet_key = base64.urlsafe_b64encode(key)
         f = Fernet(fernet_key)
@@ -591,12 +604,14 @@ class BackupEncryption:
         return f.decrypt(data)
 
     async def _compress_data(self, data: bytes) -> bytes:
-        """Compress data using gzip."""
+        """
+Compress data using gzip."""
         import gzip
         return gzip.compress(data, compresslevel=6)
 
     async def _decompress_data(self, data: bytes) -> bytes:
-        """Decompress gzip-compressed data."""
+        """
+Decompress gzip-compressed data."""
         import gzip
         return gzip.decompress(data)
 
@@ -605,7 +620,8 @@ class BackupEncryption:
         encrypted_data: bytes,
         metadata: EncryptionMetadata
     ) -> bytes:
-        """Package encrypted data with metadata."""
+        """
+Package encrypted data with metadata."""
         # Convert metadata to dict
         metadata_dict = {
             "algorithm": metadata.algorithm,

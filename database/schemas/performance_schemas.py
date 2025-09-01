@@ -13,6 +13,7 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copyin
 modification, or distribution is strictly prohibited and will result in immediate 
 legal action under German and international copyright law.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -24,7 +25,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class MetricTypeEnum(str, Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     SYSTEM_CPU = "system_cpu"
     SYSTEM_MEMORY = "system_memory"
     SYSTEM_DISK = "system_disk"
@@ -49,6 +52,7 @@ class MetricTypeEnum(str, Enum):
 
 class AlertThresholdTypeEnum(str, Enum):
     """Types of alert thresholds"""
+
     ABSOLUTE_VALUE = "absolute_value"
     PERCENTAGE_CHANGE = "percentage_change"
     STANDARD_DEVIATION = "standard_deviation"
@@ -60,6 +64,7 @@ class AlertThresholdTypeEnum(str, Enum):
 
 class PerformanceStatusEnum(str, Enum):
     """Performance status levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -71,6 +76,7 @@ class PerformanceStatusEnum(str, Enum):
 
 class ServiceComponentEnum(str, Enum):
     """System service components"""
+
     API_GATEWAY = "api_gateway"
     USER_SERVICE = "user_service"
     CONTENT_SERVICE = "content_service"
@@ -94,6 +100,7 @@ class ServiceComponentEnum(str, Enum):
 
 class MetricAggregationEnum(str, Enum):
     """Metric aggregation methods"""
+
     AVERAGE = "average"
     SUM = "sum"
     MIN = "min"

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import json
@@ -58,7 +59,9 @@ from ...utils.legal_templates import LegalTemplates
 logger = logging.getLogger(__name__)
 
 class LegalActionType(Enum):
-    """Legal action categories"""
+    """
+Legal action categories"""
+
     CONTRACT_REVIEW = "contract_review"
     IP_PROTECTION = "ip_protection"
     LITIGATION_SUPPORT = "litigation_support"
@@ -70,6 +73,7 @@ class LegalActionType(Enum):
 
 class LegalPriority(Enum):
     """Legal matter priority levels"""
+
     CRITICAL = "critical"        # Immediate legal action required
     HIGH = "high"               # Urgent legal attention needed  
     MEDIUM = "medium"           # Standard legal processing
@@ -77,6 +81,7 @@ class LegalPriority(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdiction coverage"""
+
     US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GENERAL = "eu_general" 
@@ -99,7 +104,8 @@ class LegalContext:
 
 @dataclass
 class LegalResult:
-    """Legal operation result structure"""
+    """
+Legal operation result structure"""
     success: bool
     legal_advice: Optional[str] = None
     documents_generated: List[str] = field(default_factory=list)
@@ -285,7 +291,8 @@ class LegalAgent(BaseAgent):
         return handlers.get(action_type)
     
     async def _handle_contract_review(self, context: LegalContext) -> LegalResult:
-        """Handle comprehensive contract review and analysis"""
+        """
+Handle comprehensive contract review and analysis"""
         try:
             contract_content = context.metadata.get('contract_content', '')
             if not contract_content:
@@ -630,7 +637,8 @@ class LegalAgent(BaseAgent):
         return terms
     
     def _validate_legal_context(self, context: LegalContext):
-        """Validate legal processing context"""
+        """
+Validate legal processing context"""
         if not context.user_id:
             raise ValidationError("User ID is required for legal processing")
         if not context.content_id:
@@ -676,7 +684,8 @@ class LegalAgentManager:
         self._initialize_manager()
     
     def _initialize_manager(self):
-        """Initialize legal agent manager"""
+        """
+Initialize legal agent manager"""
         try:
             # Create specialized legal agents for different jurisdictions
             jurisdictions = [
@@ -1139,7 +1148,8 @@ class LegalAgent(BaseAgent):
         - Potential issues or concerns
         """
     def _categorize_risk_level(self, risk_score: float) -> str:
-        """Categorize risk level based on score"""
+        """
+Categorize risk level based on score"""
         if risk_score >= 0.8:
             return "CRITICAL"
         elif risk_score >= 0.6:
@@ -1164,7 +1174,8 @@ class LegalAgentManager:
         }
 
     async def get_or_create_agent(self, user_id: str) -> LegalAgent:
-        """Get existing agent or create new one for user"""
+        """
+Get existing agent or create new one for user"""
         if user_id not in self.active_agents:
             agent = LegalAgent(agent_id=f"legal_{user_id}")
             await agent.initialize()

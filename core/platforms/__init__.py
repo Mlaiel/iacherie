@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 from typing import Dict, List, Any
 
 from .base import (
@@ -129,12 +130,14 @@ SUPPORTED_PLATFORMS = {
 
 
 def get_platform_count() -> int:
-    """Get total number of supported platforms"""
+    """
+Get total number of supported platforms"""
     return len(SUPPORTED_PLATFORMS)
 
 
 def get_platform_categories() -> Dict[str, List[str]]:
-    """Get platforms organized by categories"""
+    """
+Get platforms organized by categories"""
     return {
         "social_media": [
             "instagram", "tiktok", "twitter", "facebook", "linkedin", 

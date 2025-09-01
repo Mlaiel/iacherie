@@ -14,6 +14,7 @@ Advanced distribution engine for multi-platform content deployment providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -27,7 +28,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -41,6 +44,7 @@ class PlatformType(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     VIDEO_LONG = "video_long"      # >1 min
     VIDEO_SHORT = "video_short"    # <1 min
     AUDIO = "audio"
@@ -65,7 +69,8 @@ class PlatformConfig:
 
 @dataclass
 class ContentItem:
-    """Content item for distribution"""
+    """
+Content item for distribution"""
     content_id: str
     creator_id: str
     content_type: ContentFormat
@@ -81,7 +86,8 @@ class ContentItem:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result"""
+    """
+Distribution operation result"""
     content_id: str
     platform: PlatformType
     success: bool
@@ -119,7 +125,8 @@ class ContentDistributionEngine:
         }
     
     def register_platform(self, config: PlatformConfig) -> bool:
-        """Register a new platform configuration"""
+        """
+Register a new platform configuration"""
         try:
             self.platform_configs[config.platform] = config
             logger.info(f"Platform {config.platform.value} registered successfully")
@@ -405,12 +412,14 @@ class ContentDistributionEngine:
         }
     
     def _calculate_average_distribution_time(self) -> float:
-        """Calculate average distribution processing time"""
+        """
+Calculate average distribution processing time"""
         # Placeholder - implement actual timing logic
         return 5.2  # seconds
     
     def get_distribution_analytics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get distribution analytics"""
+        """
+Get distribution analytics"""
         try:
             if creator_id:
                 # Filter by creator
@@ -432,7 +441,8 @@ class ContentDistributionEngine:
         return None
     
     def _generate_analytics_report(self, results: List[DistributionResult]) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""
+        """
+Generate comprehensive analytics report"""
         if not results:
             return {}
         
@@ -450,7 +460,8 @@ class ContentDistributionEngine:
         }
     
     def _get_platform_breakdown(self, results: List[DistributionResult]) -> Dict[str, Any]:
-        """Get platform-wise breakdown"""
+        """
+Get platform-wise breakdown"""
         breakdown = {}
         
         for result in results:
@@ -465,7 +476,8 @@ class ContentDistributionEngine:
         return breakdown
     
     def _get_recent_activity(self, results: List[DistributionResult]) -> List[Dict[str, Any]]:
-        """Get recent distribution activity"""
+        """
+Get recent distribution activity"""
         recent_results = sorted(
             results, 
             key=lambda x: x.timestamp, 
@@ -484,7 +496,8 @@ class ContentDistributionEngine:
         ]
     
     def _get_performance_trends(self, results: List[DistributionResult]) -> Dict[str, List[float]]:
-        """Get performance trends over time"""
+        """
+Get performance trends over time"""
         # Group results by day and calculate success rates
         daily_stats = {}
         
@@ -510,31 +523,38 @@ class ContentDistributionEngine:
     
     # Platform adapter implementations
     def _create_youtube_adapter(self):
-        """Create YouTube API adapter"""
+        """
+Create YouTube API adapter"""
         return YouTubeAdapter()
     
     def _create_instagram_adapter(self):
-        """Create Instagram API adapter"""
+        """
+Create Instagram API adapter"""
         return InstagramAdapter()
     
     def _create_tiktok_adapter(self):
-        """Create TikTok API adapter"""
+        """
+Create TikTok API adapter"""
         return TikTokAdapter()
     
     def _create_twitter_adapter(self):
-        """Create Twitter API adapter"""
+        """
+Create Twitter API adapter"""
         return TwitterAdapter()
     
     def _create_spotify_adapter(self):
-        """Create Spotify API adapter"""
+        """
+Create Spotify API adapter"""
         return SpotifyAdapter()
 
 # Platform-specific adapters
 class PlatformAdapter:
-    """Base class for platform adapters with comprehensive publishing capabilities"""
+    """
+Base class for platform adapters with comprehensive publishing capabilities"""
     
     def __init__(self, platform_type: PlatformType, config: Optional[Dict[str, Any]] = None):
-        """Initialize platform adapter."""
+        """
+Initialize platform adapter."""
         self.platform_type = platform_type
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -727,7 +747,8 @@ class PlatformAdapter:
         return {'errors': [], 'warnings': []}
     
     async def _prepare_content_for_platform(self, content: ContentItem) -> Optional[Dict[str, Any]]:
-        """Prepare content for platform-specific requirements."""
+        """
+Prepare content for platform-specific requirements."""
         try:
             prepared = {
                 'content_id': content.content_id,
@@ -810,7 +831,8 @@ class PlatformAdapter:
         return cleaned_tags
     
     def _get_platform_privacy_settings(self, content: ContentItem) -> Dict[str, Any]:
-        """Get platform-specific privacy settings."""
+        """
+Get platform-specific privacy settings."""
         return {
             'visibility': 'public',  # Default to public
             'comments_enabled': True,
@@ -819,7 +841,8 @@ class PlatformAdapter:
         }
     
     def _get_platform_scheduling(self, content: ContentItem) -> Dict[str, Any]:
-        """Get platform-specific scheduling settings."""
+        """
+Get platform-specific scheduling settings."""
         return {
             'publish_immediately': True,
             'scheduled_time': None,
@@ -827,7 +850,8 @@ class PlatformAdapter:
         }
     
     def _get_platform_monetization_settings(self, content: ContentItem) -> Dict[str, Any]:
-        """Get platform-specific monetization settings."""
+        """
+Get platform-specific monetization settings."""
         return {
             'monetization_enabled': False,
             'ads_enabled': False,
@@ -835,11 +859,13 @@ class PlatformAdapter:
         }
     
     async def _prepare_platform_specific(self, content: ContentItem) -> Dict[str, Any]:
-        """Platform-specific preparation - to be overridden by subclasses."""
+        """
+Platform-specific preparation - to be overridden by subclasses."""
         return {}
     
     async def _authenticate(self) -> Dict[str, Any]:
-        """Authenticate with the platform."""
+        """
+Authenticate with the platform."""
         try:
             # Generic authentication logic
             if not self.auth_token and not (self.api_key or (self.client_id and self.client_secret)):
@@ -876,7 +902,8 @@ class PlatformAdapter:
         return bool(self.auth_token or self.api_key or (self.client_id and self.client_secret))
     
     async def _upload_content(self, prepared_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to platform."""
+        """
+Upload content to platform."""
         try:
             # Simulate content upload
             upload_id = f"{self.platform_type.value}_{prepared_content['content_id']}_{int(datetime.utcnow().timestamp())}"
@@ -1004,7 +1031,8 @@ class YouTubeAdapter(PlatformAdapter):
     """YouTube API adapter"""
     
     async def publish_content(self, content: ContentItem) -> Dict[str, Any]:
-        """Publish content to YouTube"""
+        """
+Publish content to YouTube"""
         # Implement YouTube API integration
         logger.info(f"Publishing to YouTube: {content.content_id}")
         return {
@@ -1017,7 +1045,8 @@ class InstagramAdapter(PlatformAdapter):
     """Instagram API adapter"""
     
     async def publish_content(self, content: ContentItem) -> Dict[str, Any]:
-        """Publish content to Instagram"""
+        """
+Publish content to Instagram"""
         # Implement Instagram API integration
         logger.info(f"Publishing to Instagram: {content.content_id}")
         return {
@@ -1030,7 +1059,8 @@ class TikTokAdapter(PlatformAdapter):
     """TikTok API adapter"""
     
     async def publish_content(self, content: ContentItem) -> Dict[str, Any]:
-        """Publish content to TikTok"""
+        """
+Publish content to TikTok"""
         # Implement TikTok API integration
         logger.info(f"Publishing to TikTok: {content.content_id}")
         return {
@@ -1043,7 +1073,8 @@ class TwitterAdapter(PlatformAdapter):
     """Twitter API adapter"""
     
     async def publish_content(self, content: ContentItem) -> Dict[str, Any]:
-        """Publish content to Twitter"""
+        """
+Publish content to Twitter"""
         # Implement Twitter API integration
         logger.info(f"Publishing to Twitter: {content.content_id}")
         return {
@@ -1056,7 +1087,8 @@ class SpotifyAdapter(PlatformAdapter):
     """Spotify API adapter"""
     
     async def publish_content(self, content: ContentItem) -> Dict[str, Any]:
-        """Publish content to Spotify"""
+        """
+Publish content to Spotify"""
         # Implement Spotify API integration
         logger.info(f"Publishing to Spotify: {content.content_id}")
         return {

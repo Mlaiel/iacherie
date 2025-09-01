@@ -50,7 +50,7 @@ Usage Example:
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All Rights Reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All Rights Reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"
 
 # Core imports
@@ -145,7 +145,8 @@ class InfluencerAISuiteConfig:
 # =============== SUITE MANAGER ===============
 
 class InfluencerAISuite:
-    """Suite complète des services Influencer AI"""
+    """
+Suite complète des services Influencer AI"""
     
     def __init__(self, config: Optional[InfluencerAISuiteConfig] = None):
         self.config = config or InfluencerAISuiteConfig()
@@ -374,11 +375,13 @@ class InfluencerAISuite:
         return self.services.get(service_name)
     
     def get_manager(self, manager_name: str) -> Optional[Any]:
-        """Obtenir un gestionnaire par nom"""
+        """
+Obtenir un gestionnaire par nom"""
         return self.managers.get(manager_name)
     
     async def shutdown(self):
-        """Arrêter proprement tous les services"""
+        """
+Arrêter proprement tous les services"""
         try:
             self.logger.info("Shutting down Influencer AI Suite")
             
@@ -413,55 +416,64 @@ async def create_influencer_ai_suite(config: Optional[InfluencerAISuiteConfig] =
     return suite
 
 async def create_ai_assistant(config: Optional[AiAssistantConfig] = None) -> AiAssistantService:
-    """Factory pour créer un service AI Assistant"""
+    """
+Factory pour créer un service AI Assistant"""
     service = create_aiassistant_service(config)
     await service.initialize()
     return service
 
 async def create_analytics_intelligence(config: Optional[AnalyticsIntelligenceConfig] = None) -> AnalyticsIntelligenceService:
-    """Factory pour créer un service Analytics Intelligence"""
+    """
+Factory pour créer un service Analytics Intelligence"""
     service = AnalyticsIntelligenceService(config)
     await service.initialize()
     return service
 
 async def create_collaboration_platform(config: Optional[CollaborationPlatformConfig] = None) -> CollaborationPlatformService:
-    """Factory pour créer un service Collaboration Platform"""
+    """
+Factory pour créer un service Collaboration Platform"""
     service = CollaborationPlatformService(config)
     await service.initialize()
     return service
 
 async def create_content_optimization(config: Optional[ContentOptimizationConfig] = None) -> ContentOptimizationService:
-    """Factory pour créer un service Content Optimization"""
+    """
+Factory pour créer un service Content Optimization"""
     service = ContentOptimizationService(config)
     await service.initialize()
     return service
 
 async def create_creator_management(config: Optional[CreatorManagementConfig] = None) -> CreatorManagementService:
-    """Factory pour créer un service Creator Management"""
+    """
+Factory pour créer un service Creator Management"""
     service = CreatorManagementService(config)
     await service.initialize()
     return service
 
 async def create_content_protection(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionService:
-    """Factory pour créer un service Content Protection"""
+    """
+Factory pour créer un service Content Protection"""
     service = create_content_protection_service(config)
     await service.initialize()
     return service
 
 async def create_revenue_monetization(config: Optional[RevenueMonetizationConfig] = None) -> RevenueMonetizationService:
-    """Factory pour créer un service Revenue Monetization"""
+    """
+Factory pour créer un service Revenue Monetization"""
     service = create_revenue_monetization_service(config)
     await service.initialize()
     return service
 
 async def create_platform_distribution(config: Optional[PlatformDistributionConfig] = None) -> PlatformDistributionService:
-    """Factory pour créer un service Platform Distribution"""
+    """
+Factory pour créer un service Platform Distribution"""
     service = create_platform_distribution_service(config)
     await service.initialize()
     return service
 
 async def create_seo_marketing(config: Optional[SEOMarketingConfig] = None) -> SEOMarketingService:
-    """Factory pour créer un service SEO Marketing"""
+    """
+Factory pour créer un service SEO Marketing"""
     service = create_seo_marketing_service(config)
     await service.initialize()
     return service
@@ -469,7 +481,8 @@ async def create_seo_marketing(config: Optional[SEOMarketingConfig] = None) -> S
 # =============== HEALTH CHECK UTILITIES ===============
 
 async def check_suite_health() -> Dict[str, Any]:
-    """Vérifier la santé de la suite complète"""
+    """
+Vérifier la santé de la suite complète"""
     try:
         # Créer une instance temporaire pour les vérifications
         suite = InfluencerAISuite()

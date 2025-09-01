@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -25,7 +26,8 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 # Mock engines for testing - would be replaced with actual implementations
 class MusicGenerationEngine:
     async def initialize(self): 
-        """Initialize music generation engine"""
+        """
+Initialize music generation engine"""
         logger.info("MusicGenerationEngine initialized")
         self.models_loaded = True
         self.generation_ready = True
@@ -70,6 +72,7 @@ logger = logging.getLogger(__name__)
 
 class MusicGenre(Enum):
     """Comprehensive music genres"""
+
     POP = "pop"
     ELECTRONIC = "electronic"
     HIP_HOP = "hip_hop"
@@ -99,6 +102,7 @@ class MusicGenre(Enum):
 
 class MusicMood(Enum):
     """Music mood categories"""
+
     ENERGETIC = "energetic"
     RELAXING = "relaxing"
     DRAMATIC = "dramatic"
@@ -118,6 +122,7 @@ class MusicMood(Enum):
 
 class InstrumentCategory(Enum):
     """Instrument categories"""
+
     STRINGS = "strings"
     BRASS = "brass"
     WOODWINDS = "woodwinds"
@@ -133,6 +138,7 @@ class InstrumentCategory(Enum):
 
 class ProductionQuality(Enum):
     """Production quality levels"""
+
     DEMO = "demo"           # Basic quality for concepts
     STANDARD = "standard"   # Good quality for social media
     PROFESSIONAL = "professional"  # High quality for releases
@@ -185,7 +191,8 @@ class SoundDesignAsset:
 
 @dataclass
 class MusicAnalysis:
-    """Music analysis results"""
+    """
+Music analysis results"""
     analysis_id: str
     project_id: str
     tempo_analysis: Dict[str, Any]
@@ -664,7 +671,8 @@ class MusicProducerAgent(BaseAIAgent):
         return requirements
 
     async def _generate_music_structure(self, requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate song structure based on genre and requirements"""
+        """
+Generate song structure based on genre and requirements"""
         
         genre = requirements['genre']
         duration = requirements['duration']
@@ -679,7 +687,8 @@ class MusicProducerAgent(BaseAIAgent):
         return structure
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle music production task"""
+        """
+Check if agent can handle music production task"""
         supported_tasks = [
             "create_music_project",
             "produce_music_track",

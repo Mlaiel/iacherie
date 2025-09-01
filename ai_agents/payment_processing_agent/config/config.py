@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import timedelta
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union
@@ -22,7 +23,8 @@ from pydantic.types import SecretStr
 
 @dataclass
 class ProviderConfig:
-    """Configuration for a single payment provider."""
+    """
+Configuration for a single payment provider."""
     api_key: str
     api_secret: Optional[str] = None
     webhook_secret: Optional[str] = None
@@ -239,7 +241,8 @@ class PaymentConfig(BaseSettings):
         return self.providers.get(provider_name)
     
     def is_provider_enabled(self, provider_name: str) -> bool:
-        """Check if provider is enabled and configured."""
+        """
+Check if provider is enabled and configured."""
         config = self.get_provider_config(provider_name)
         if not config:
             return False
@@ -370,14 +373,16 @@ def get_payment_config() -> PaymentConfig:
 
 
 def override_payment_config(config: PaymentConfig):
-    """Override global configuration instance."""
+    """
+Override global configuration instance."""
     global _config_instance
     _config_instance = config
 
 
 # Environment-specific configurations
 def get_test_config() -> PaymentConfig:
-    """Get test configuration with safe defaults."""
+    """
+Get test configuration with safe defaults."""
     return PaymentConfig(
         environment="test",
         debug=True,

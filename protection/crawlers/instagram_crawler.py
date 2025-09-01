@@ -5,12 +5,13 @@ Professional Instagram content discovery and monitoring system.
 Integrates Instagram Graph API with web scraping for comprehensive coverage.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import re
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramPostInfo:
-    """Instagram post information structure."""
+    """
+Instagram post information structure."""
     post_id: str
     shortcode: str
     url: str
@@ -57,7 +59,8 @@ class InstagramPostInfo:
 
 @dataclass
 class InstagramUserInfo:
-    """Instagram user information structure."""
+    """
+Instagram user information structure."""
     user_id: str
     username: str
     full_name: str
@@ -74,7 +77,8 @@ class InstagramUserInfo:
 
 @dataclass
 class InstagramStoryInfo:
-    """Instagram story information structure."""
+    """
+Instagram story information structure."""
     story_id: str
     username: str
     user_id: str
@@ -86,10 +90,12 @@ class InstagramStoryInfo:
     is_ad: bool = False
 
 class InstagramAPIClient:
-    """Instagram Graph API client for business accounts."""
+    """
+Instagram Graph API client for business accounts."""
     
     def __init__(self, access_token: str, app_id: str):
-        """Initialize Instagram API client."""
+        """
+Initialize Instagram API client."""
         self.access_token = access_token
         self.app_id = app_id
         self.base_url = "https://graph.instagram.com"
@@ -114,7 +120,8 @@ class InstagramAPIClient:
         return len(self.requests_made) < self.requests_per_hour
     
     async def _make_request(self, endpoint: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Make authenticated API request."""
+        """
+Make authenticated API request."""
         if not self._check_rate_limit():
             raise Exception("Instagram API rate limit exceeded")
         
@@ -211,10 +218,12 @@ class InstagramAPIClient:
         return match.group(1) if match else ''
 
 class InstagramSeleniumCrawler:
-    """Selenium-based Instagram crawler for public content."""
+    """
+Selenium-based Instagram crawler for public content."""
     
     def __init__(self, headless: bool = True, proxy: Optional[str] = None):
-        """Initialize Instagram Selenium crawler."""
+        """
+Initialize Instagram Selenium crawler."""
         self.headless = headless
         self.proxy = proxy
         self.driver = None
@@ -268,7 +277,8 @@ class InstagramSeleniumCrawler:
         self.last_request_time = time.time()
     
     async def search_hashtag(self, hashtag: str, max_results: int = 20) -> List[InstagramPostInfo]:
-        """Search posts by hashtag."""
+        """
+Search posts by hashtag."""
         if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
@@ -417,7 +427,8 @@ class InstagramSeleniumCrawler:
         return match.group(1) if match else ''
     
     async def scrape_post_details(self, post_url: str) -> Optional[InstagramPostInfo]:
-        """Scrape detailed information from Instagram post page."""
+        """
+Scrape detailed information from Instagram post page."""
         if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
@@ -473,7 +484,8 @@ class InstagramCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Instagram crawler."""
+        """
+Initialize Instagram crawler."""
         super().__init__("instagram", config)
         
         # API configuration
@@ -700,7 +712,8 @@ class InstagramCrawler(BasePlatformCrawler):
         return api_ok
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""
+        """
+Get crawler statistics."""
         stats = {
             "platform": "instagram",
             "api_available": self.api_client is not None,

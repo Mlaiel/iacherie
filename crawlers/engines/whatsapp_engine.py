@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -47,7 +48,8 @@ settings = get_settings()
 
 @dataclass
 class WhatsAppMessage:
-    """WhatsApp message data structure"""
+    """
+WhatsApp message data structure"""
     id: str
     type: str  # text, image, video, audio, document, location, etc.
     timestamp: datetime
@@ -68,7 +70,8 @@ class WhatsAppMessage:
 
 @dataclass
 class WhatsAppContact:
-    """WhatsApp contact data structure"""
+    """
+WhatsApp contact data structure"""
     phone: str
     name: Optional[str]
     profile: Optional[Dict[str, Any]]
@@ -87,7 +90,8 @@ class WhatsAppContact:
 
 @dataclass
 class WhatsAppBusinessProfile:
-    """WhatsApp Business profile data structure"""
+    """
+WhatsApp Business profile data structure"""
     business_id: str
     display_name: str
     phone_number: str
@@ -109,7 +113,8 @@ class WhatsAppBusinessProfile:
 
 @dataclass
 class WhatsAppCampaign:
-    """WhatsApp marketing campaign data structure"""
+    """
+WhatsApp marketing campaign data structure"""
     id: str
     name: str
     template_name: str
@@ -140,7 +145,8 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize WhatsApp crawler engine"""
+        """
+Initialize WhatsApp crawler engine"""
         super().__init__(platform="whatsapp", config=config)
         
         # Rate limiting (WhatsApp Business API has strict limits)
@@ -199,7 +205,8 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         )
     
     async def _verify_credentials(self) -> None:
-        """Verify WhatsApp Business API credentials"""
+        """
+Verify WhatsApp Business API credentials"""
         if not self.access_token:
             raise AuthenticationError("WhatsApp access token required")
         
@@ -472,28 +479,32 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         return None
     
     def _extract_media_type(self, message_data: Dict[str, Any]) -> Optional[str]:
-        """Extract media type from message data"""
+        """
+Extract media type from message data"""
         for media_type in ['image', 'video', 'audio', 'document']:
             if media_type in message_data:
                 return media_type
         return None
     
     def _extract_media_caption(self, message_data: Dict[str, Any]) -> Optional[str]:
-        """Extract media caption from message data"""
+        """
+Extract media caption from message data"""
         for media_type in ['image', 'video', 'audio', 'document']:
             if media_type in message_data:
                 return message_data[media_type].get('caption')
         return None
     
     def _analyze_message_types(self, messages: List[WhatsAppMessage]) -> Dict[str, int]:
-        """Analyze distribution of message types"""
+        """
+Analyze distribution of message types"""
         type_counts = {}
         for message in messages:
             type_counts[message.type] = type_counts.get(message.type, 0) + 1
         return type_counts
     
     def _analyze_hourly_distribution(self, messages: List[WhatsAppMessage]) -> Dict[int, int]:
-        """Analyze hourly distribution of messages"""
+        """
+Analyze hourly distribution of messages"""
         hourly_counts = {hour: 0 for hour in range(24)}
         for message in messages:
             hour = message.timestamp.hour
@@ -501,7 +512,8 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         return hourly_counts
     
     def _analyze_response_times(self, messages: List[WhatsAppMessage]) -> Dict[str, float]:
-        """Analyze response times for business messages"""
+        """
+Analyze response times for business messages"""
         response_times = []
         
         # Group messages by conversation
@@ -537,7 +549,8 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         return {'average_minutes': 0, 'median_minutes': 0, 'max_minutes': 0, 'min_minutes': 0, 'total_responses': 0}
     
     def _calculate_engagement_metrics(self, messages: List[WhatsAppMessage]) -> Dict[str, float]:
-        """Calculate engagement metrics"""
+        """
+Calculate engagement metrics"""
         total_messages = len(messages)
         if total_messages == 0:
             return {'engagement_rate': 0.0, 'media_rate': 0.0, 'interactive_rate': 0.0}
@@ -552,7 +565,8 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         }
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
+        """
+Clean up resources"""
         try:
             if self.session:
                 await self.session.close()

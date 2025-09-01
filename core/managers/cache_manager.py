@@ -8,7 +8,7 @@ Technologies: Redis Cluster, Memcached, CDN, Edge Caching, ML Prediction
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Requête utilisateur → Analyse patterns → Cache intelligent → 
 Prédiction AI → Préchargement smart → Response ultra-rapide → Analytics optimisation
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class CacheLevel(Enum):
-    """Cache hierarchy levels"""
+    """
+Cache hierarchy levels"""
+
     L1_MEMORY = "l1_memory"  # In-process memory cache
     L2_REDIS = "l2_redis"  # Redis distributed cache
     L3_PERSISTENT = "l3_persistent"  # Persistent cache (SSD)
@@ -51,6 +54,7 @@ class CacheLevel(Enum):
 
 class CacheStrategy(Enum):
     """Cache eviction and replacement strategies"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
@@ -61,6 +65,7 @@ class CacheStrategy(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms for cache data"""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"  # Fast compression
@@ -70,6 +75,7 @@ class CompressionType(Enum):
 
 class CacheHotness(Enum):
     """Data hotness classification"""
+
     COLD = "cold"  # Rarely accessed
     WARM = "warm"  # Occasionally accessed
     HOT = "hot"  # Frequently accessed
@@ -166,7 +172,8 @@ class CacheMetrics:
 
 @dataclass
 class CacheEntry:
-    """Individual cache entry with metadata"""
+    """
+Individual cache entry with metadata"""
     key: str
     value: Any
     ttl_seconds: int
@@ -486,14 +493,16 @@ class IntelligentCacheManager(ABC):
         self._hotness_scores[key] = min(access_count / 100.0, 1.0)  # Normalize to 0-1
     
     async def _execute_compute_function(self, compute_func: Callable) -> Any:
-        """Execute compute function safely"""
+        """
+Execute compute function safely"""
         if asyncio.iscoroutinefunction(compute_func):
             return await compute_func()
         else:
             return compute_func()
     
     async def _calculate_adaptive_ttl(self, key: str, compute_time: float) -> int:
-        """Calculate adaptive TTL based on access patterns and compute cost"""
+        """
+Calculate adaptive TTL based on access patterns and compute cost"""
         if not self.config.adaptive_ttl_enabled:
             return self.config.redis_default_ttl
         
@@ -510,66 +519,81 @@ class IntelligentCacheManager(ABC):
         return base_ttl
     
     async def _get_cache_predictions(self) -> List[Dict[str, Any]]:
-        """Get cache access predictions"""
+        """
+Get cache access predictions"""
         # Placeholder for ML prediction logic
         return []
     
     async def _trigger_preload(self, key: str, prediction: Dict[str, Any]) -> bool:
-        """Trigger preloading for a predicted key"""
+        """
+Trigger preloading for a predicted key"""
         # Placeholder for preloading logic
         return True
     
     async def _analyze_cache_distribution(self) -> Dict[str, Any]:
-        """Analyze current cache distribution"""
+        """
+Analyze current cache distribution"""
         return {}
     
     async def _promote_hot_data(self) -> int:
-        """Promote hot data to faster cache levels"""
+        """
+Promote hot data to faster cache levels"""
         return 0
     
     async def _demote_cold_data(self) -> int:
-        """Demote cold data to cheaper cache levels"""
+        """
+Demote cold data to cheaper cache levels"""
         return 0
     
     async def _optimize_compression_settings(self) -> List[str]:
-        """Optimize compression settings"""
+        """
+Optimize compression settings"""
         return []
     
     async def _calculate_projected_hit_ratio(self) -> float:
-        """Calculate projected hit ratio after optimization"""
+        """
+Calculate projected hit ratio after optimization"""
         return self._metrics.hit_ratio + 0.05  # Placeholder improvement
     
     async def _get_cache_level_distribution(self) -> Dict[str, Any]:
-        """Get distribution of data across cache levels"""
+        """
+Get distribution of data across cache levels"""
         return {}
     
     async def _get_top_cached_keys(self) -> List[Dict[str, Any]]:
-        """Get top cached keys by access frequency"""
+        """
+Get top cached keys by access frequency"""
         return []
     
     async def _analyze_access_patterns(self) -> Dict[str, Any]:
-        """Analyze access patterns"""
+        """
+Analyze access patterns"""
         return {}
     
     async def _calculate_cache_costs(self) -> Dict[str, float]:
-        """Calculate cache costs"""
+        """
+Calculate cache costs"""
         return {}
     
     async def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         return []
     
     async def _get_ai_model_performance(self) -> Dict[str, float]:
-        """Get AI model performance metrics"""
+        """
+Get AI model performance metrics"""
         return {}
 
 
 # Concrete implementation
 class ProductionCacheManager(IntelligentCacheManager):
-    """Production implementation of the intelligent cache manager"""
+    """
+Production implementation of the intelligent cache manager"""
     
     async def initialize_cache_system(self) -> bool:
-        """Initialize cache system"""
+        """
+Initialize cache system"""
         try:
             # Initialize Redis connections
             if CacheLevel.L2_REDIS in self.config.enabled_levels:
@@ -742,18 +766,21 @@ class ProductionCacheManager(IntelligentCacheManager):
             self._redis_pools[node] = redis_client
     
     async def _initialize_cdn(self):
-        """Initialize CDN clients"""
+        """
+Initialize CDN clients"""
         for provider in self.config.cdn_providers:
             # Initialize CDN client based on provider
             self._cdn_clients[provider] = None  # Placeholder
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for cache optimization"""
+        """
+Initialize AI models for cache optimization"""
         # Placeholder for AI model initialization
         pass
     
     async def _get_from_l1(self, key: str) -> Any:
-        """Get from L1 memory cache"""
+        """
+Get from L1 memory cache"""
         entry = self._l1_cache.get(key)
         if entry and datetime.now() < entry.created_at + timedelta(seconds=entry.ttl_seconds):
             entry.last_accessed = datetime.now()
@@ -767,7 +794,8 @@ class ProductionCacheManager(IntelligentCacheManager):
         return None
     
     async def _set_to_l1(self, key: str, value: Any, ttl_seconds: int = None) -> bool:
-        """Set to L1 memory cache"""
+        """
+Set to L1 memory cache"""
         try:
             ttl = ttl_seconds or self.config.l1_ttl_seconds
             
@@ -831,16 +859,19 @@ class ProductionCacheManager(IntelligentCacheManager):
         return None
     
     async def _set_to_cdn(self, key: str, value: Any, ttl_seconds: int) -> bool:
-        """Set to CDN cache"""
+        """
+Set to CDN cache"""
         # Placeholder for CDN implementation
         return True
     
     async def _delete_from_l1(self, key: str) -> bool:
-        """Delete from L1 cache"""
+        """
+Delete from L1 cache"""
         return self._l1_cache.pop(key, None) is not None
     
     async def _delete_from_redis(self, key: str) -> bool:
-        """Delete from Redis cache"""
+        """
+Delete from Redis cache"""
         try:
             deleted_count = 0
             for redis_client in self._redis_pools.values():
@@ -857,7 +888,8 @@ class ProductionCacheManager(IntelligentCacheManager):
         return True
     
     async def _invalidate_l1_pattern(self, pattern: str) -> int:
-        """Invalidate L1 cache entries matching pattern"""
+        """
+Invalidate L1 cache entries matching pattern"""
         import fnmatch
         keys_to_delete = [key for key in self._l1_cache.keys() if fnmatch.fnmatch(key, pattern)]
         for key in keys_to_delete:
@@ -865,7 +897,8 @@ class ProductionCacheManager(IntelligentCacheManager):
         return len(keys_to_delete)
     
     async def _invalidate_redis_pattern(self, pattern: str) -> int:
-        """Invalidate Redis cache entries matching pattern"""
+        """
+Invalidate Redis cache entries matching pattern"""
         try:
             total_deleted = 0
             for redis_client in self._redis_pools.values():
@@ -884,7 +917,8 @@ class ProductionCacheManager(IntelligentCacheManager):
         return 0
     
     async def _compress_data(self, data: bytes, compression_type: CompressionType) -> bytes:
-        """Compress data using specified algorithm"""
+        """
+Compress data using specified algorithm"""
         if compression_type == CompressionType.GZIP:
             return gzip.compress(data)
         elif compression_type == CompressionType.LZ4:

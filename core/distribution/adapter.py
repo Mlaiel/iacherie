@@ -5,8 +5,9 @@ Provides unified interface for integrating with various social media and content
 handling API differences, authentication, and platform-specific requirements.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from ..monitoring.metrics import MetricsCollector
 
 
 class PlatformType(Enum):
-    """Platform type enumeration."""
+    """
+Platform type enumeration."""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     AUDIO_PLATFORM = "audio_platform"
@@ -36,6 +39,7 @@ class PlatformType(Enum):
 
 class AuthenticationType(Enum):
     """Authentication type enumeration."""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
@@ -61,7 +65,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformLimits:
-    """Platform limits and constraints."""
+    """
+Platform limits and constraints."""
     max_file_size: int = 0  # bytes
     max_duration: int = 0  # seconds
     max_title_length: int = 0
@@ -75,7 +80,8 @@ class PlatformLimits:
 
 @dataclass
 class PublicationRequest:
-    """Publication request data structure."""
+    """
+Publication request data structure."""
     content_id: UUID
     file_path: str
     metadata: Dict[str, Any]
@@ -89,7 +95,8 @@ class PublicationRequest:
 
 @dataclass
 class PublicationResponse:
-    """Publication response data structure."""
+    """
+Publication response data structure."""
     success: bool
     platform_id: Optional[str] = None
     platform_url: Optional[str] = None
@@ -101,34 +108,42 @@ class PublicationResponse:
 
 
 class PlatformAdapterProtocol(Protocol):
-    """Protocol defining platform adapter interface."""
+    """
+Protocol defining platform adapter interface."""
     
     async def authenticate(self, credentials: PlatformCredentials) -> bool:
-        """Authenticate with platform."""
+        """
+Authenticate with platform."""
         ...
     
     async def publish_content(self, request: PublicationRequest) -> PublicationResponse:
-        """Publish content to platform."""
+        """
+Publish content to platform."""
         ...
     
     async def get_content_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get content status from platform."""
+        """
+Get content status from platform."""
         ...
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from platform."""
+        """
+Delete content from platform."""
         ...
     
     async def get_analytics(self, platform_id: str) -> Dict[str, Any]:
-        """Get content analytics from platform."""
+        """
+Get content analytics from platform."""
         ...
 
 
 class BasePlatformAdapter(ABC):
-    """Base class for platform adapters."""
+    """
+Base class for platform adapters."""
     
     def __init__(self, platform_name: str, config: Dict[str, Any]):
-        """Initialize base adapter."""
+        """
+Initialize base adapter."""
         self.platform_name = platform_name
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{platform_name}")
@@ -190,26 +205,31 @@ class BasePlatformAdapter(ABC):
     
     @abstractmethod
     async def publish_content(self, request: PublicationRequest) -> PublicationResponse:
-        """Publish content to platform."""
+        """
+Publish content to platform."""
         pass
     
     @abstractmethod
     async def get_content_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get content status from platform."""
+        """
+Get content status from platform."""
         pass
     
     @abstractmethod
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from platform."""
+        """
+Delete content from platform."""
         pass
     
     @abstractmethod
     async def get_analytics(self, platform_id: str) -> Dict[str, Any]:
-        """Get content analytics from platform."""
+        """
+Get content analytics from platform."""
         pass
     
     async def _load_platform_limits(self) -> PlatformLimits:
-        """Load platform limits and constraints."""
+        """
+Load platform limits and constraints."""
         # This would load from configuration or API
         # Default limits for safety
         return PlatformLimits(
@@ -233,7 +253,8 @@ class BasePlatformAdapter(ABC):
         }
     
     async def _apply_rate_limiting(self) -> None:
-        """Apply rate limiting."""
+        """
+Apply rate limiting."""
         await self.rate_limiter.acquire(
             key=f"{self.platform_name}_api",
             limit=self.platform_limits.rate_limit_per_hour,
@@ -302,7 +323,8 @@ class BasePlatformAdapter(ABC):
         pass
     
     async def test_connection(self) -> bool:
-        """Test connection to platform."""
+        """
+Test connection to platform."""
         try:
             # This would make a simple API call to test connectivity
             # Implementation varies by platform
@@ -509,7 +531,8 @@ class YouTubeAdapter(BasePlatformAdapter):
         }
     
     async def _upload_thumbnail(self, video_id: str, thumbnail_path: str) -> bool:
-        """Upload video thumbnail."""
+        """
+Upload video thumbnail."""
         try:
             with open(thumbnail_path, 'rb') as thumb_file:
                 files = {'thumbnail': thumb_file}
@@ -797,7 +820,8 @@ class PlatformAdapter:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize platform adapter manager."""
+        """
+Initialize platform adapter manager."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -815,7 +839,8 @@ class PlatformAdapter:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize all platform adapters."""
+        """
+Initialize all platform adapters."""
         try:
             self.logger.info("Initializing Platform Adapter Manager")
             
@@ -857,11 +882,13 @@ class PlatformAdapter:
         return self.adapters.get(platform)
     
     def is_platform_supported(self, platform: str) -> bool:
-        """Check if platform is supported."""
+        """
+Check if platform is supported."""
         return platform in self.adapters
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms."""
+        """
+Get list of supported platforms."""
         return list(self.adapters.keys())
     
     async def publish_to_platform(
@@ -869,7 +896,8 @@ class PlatformAdapter:
         platform: str,
         request: PublicationRequest
     ) -> PublicationResponse:
-        """Publish content to specific platform."""
+        """
+Publish content to specific platform."""
         adapter = self.get_adapter(platform)
         if not adapter:
             return PublicationResponse(
@@ -888,7 +916,8 @@ class PlatformAdapter:
         return await adapter.get_content_status(platform_id)
     
     async def delete_from_platform(self, platform: str, platform_id: str) -> bool:
-        """Delete content from specific platform."""
+        """
+Delete content from specific platform."""
         adapter = self.get_adapter(platform)
         if not adapter:
             return False
@@ -896,7 +925,8 @@ class PlatformAdapter:
         return await adapter.delete_content(platform_id)
     
     async def get_platform_analytics(self, platform: str, platform_id: str) -> Dict[str, Any]:
-        """Get analytics from specific platform."""
+        """
+Get analytics from specific platform."""
         adapter = self.get_adapter(platform)
         if not adapter:
             return {}
@@ -904,7 +934,8 @@ class PlatformAdapter:
         return await adapter.get_analytics(platform_id)
     
     async def test_all_connections(self) -> Dict[str, bool]:
-        """Test connections to all configured platforms."""
+        """
+Test connections to all configured platforms."""
         results = {}
         
         for platform_name, adapter in self.adapters.items():
@@ -924,7 +955,8 @@ class PlatformAdapter:
         return None
     
     def get_adapter_status(self) -> Dict[str, Any]:
-        """Get status of all adapters."""
+        """
+Get status of all adapters."""
         status = {}
         
         for platform_name, adapter in self.adapters.items():

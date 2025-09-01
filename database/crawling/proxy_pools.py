@@ -11,6 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -35,7 +36,9 @@ from ..core.exceptions import (
 
 
 class ProxyHealthStatus(Enum):
-    """Proxy health status levels."""
+    """
+Proxy health status levels."""
+
     EXCELLENT = 'excellent'     # < 1s response, 99%+ success
     GOOD = 'good'              # < 2s response, 95%+ success
     FAIR = 'fair'              # < 5s response, 85%+ success

@@ -18,6 +18,7 @@ Features:
 - Advanced statistical modeling
 - Content optimization insights
 """
+
 import logging
 import numpy as np
 import torch
@@ -61,6 +62,7 @@ except ImportError:
 
 class MetricType(Enum):
     """Types of metrics to analyze"""
+
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -75,6 +77,7 @@ class MetricType(Enum):
 
 class ContentType(Enum):
     """Types of content for analysis"""
+
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
@@ -87,6 +90,7 @@ class ContentType(Enum):
 
 class Platform(Enum):
     """Social media platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -99,6 +103,7 @@ class Platform(Enum):
 
 class TimeFrame(Enum):
     """Time frames for analysis"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -127,7 +132,8 @@ class ContentMetrics:
 
 @dataclass
 class PerformancePrediction:
-    """Performance prediction result"""
+    """
+Performance prediction result"""
     predicted_metrics: Dict[MetricType, float]
     confidence_intervals: Dict[MetricType, Tuple[float, float]]
     prediction_timeframe: TimeFrame
@@ -139,7 +145,8 @@ class PerformancePrediction:
 
 @dataclass
 class EngagementForecast:
-    """Engagement forecasting result"""
+    """
+Engagement forecasting result"""
     forecasted_engagement: List[Dict[str, Any]]
     trend_analysis: Dict[str, Any]
     seasonal_patterns: Dict[str, Any]
@@ -151,7 +158,8 @@ class EngagementForecast:
 
 @dataclass
 class GrowthAnalysis:
-    """Growth analysis result"""
+    """
+Growth analysis result"""
     growth_rate: float
     growth_trajectory: List[Dict[str, Any]]
     growth_factors: Dict[str, float]
@@ -163,7 +171,8 @@ class GrowthAnalysis:
 
 
 class BaseAnalyzer(ABC):
-    """Base class for analytics modules"""
+    """
+Base class for analytics modules"""
     
     def __init__(self, analyzer_name: str = "base_analyzer"):
         self.analyzer_name = analyzer_name
@@ -178,7 +187,8 @@ class BaseAnalyzer(ABC):
         pass
     
     def _prepare_data(self, data: List[Dict[str, Any]]) -> np.ndarray:
-        """Prepare data for analysis"""
+        """
+Prepare data for analysis"""
         try:
             if PANDAS_AVAILABLE:
                 df = pd.DataFrame(data)
@@ -274,7 +284,8 @@ class PerformancePredictor(BaseAnalyzer):
         return model
     
     def train_on_historical_data(self, historical_data: List[ContentMetrics]) -> bool:
-        """Train the predictor on historical data"""
+        """
+Train the predictor on historical data"""
         try:
             if not self.is_loaded:
                 if not self.load_model():
@@ -429,7 +440,8 @@ class PerformancePredictor(BaseAnalyzer):
     
     def _predict_metric(self, features: np.ndarray, metric: MetricType, 
                        timeframe: TimeFrame) -> Tuple[float, Tuple[float, float]]:
-        """Predict specific metric"""
+        """
+Predict specific metric"""
         try:
             model = self.prediction_models[metric]
             
@@ -587,7 +599,8 @@ class EngagementForecaster(BaseAnalyzer):
         return TimeSeriesLSTM()
     
     def analyze_engagement_patterns(self, historical_data: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze engagement patterns from historical data"""
+        """
+Analyze engagement patterns from historical data"""
         try:
             if PANDAS_AVAILABLE:
                 # Convert to DataFrame
@@ -694,7 +707,8 @@ class EngagementForecaster(BaseAnalyzer):
             return {str(h): 0.05 for h in range(24)}
     
     def _analyze_daily_patterns(self, df) -> Dict[str, float]:
-        """Analyze daily engagement patterns"""
+        """
+Analyze daily engagement patterns"""
         try:
             df['day_of_week'] = df['created_at'].dt.day_name()
             daily_avg = df.groupby('day_of_week')['engagement_rate'].mean()
@@ -704,7 +718,8 @@ class EngagementForecaster(BaseAnalyzer):
             return {day: 0.05 for day in days}
     
     def _analyze_content_patterns(self, df) -> Dict[str, float]:
-        """Analyze content type patterns"""
+        """
+Analyze content type patterns"""
         try:
             content_avg = df.groupby('content_type')['engagement_rate'].mean()
             return content_avg.to_dict()
@@ -712,7 +727,8 @@ class EngagementForecaster(BaseAnalyzer):
             return {ct.value: 0.05 for ct in ContentType}
     
     def _analyze_platform_patterns(self, df) -> Dict[str, float]:
-        """Analyze platform-specific patterns"""
+        """
+Analyze platform-specific patterns"""
         try:
             platform_avg = df.groupby('platform')['engagement_rate'].mean()
             return platform_avg.to_dict()
@@ -720,7 +736,8 @@ class EngagementForecaster(BaseAnalyzer):
             return {p.value: 0.05 for p in Platform}
     
     def _simple_pattern_analysis(self, historical_data: List[ContentMetrics]) -> Dict[str, Any]:
-        """Simple pattern analysis without pandas"""
+        """
+Simple pattern analysis without pandas"""
         try:
             hourly_engagement = {str(h): [] for h in range(24)}
             platform_engagement = {}
@@ -981,7 +998,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def analyze_growth(self, historical_metrics: List[ContentMetrics],
                       user_metrics: Dict[str, Any]) -> GrowthAnalysis:
-        """Comprehensive growth analysis"""
+        """
+Comprehensive growth analysis"""
         start_time = time.time()
         
         try:

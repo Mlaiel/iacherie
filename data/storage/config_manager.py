@@ -8,7 +8,7 @@ Technologies: Python, YAML, JSON, Environment variables, Dynamic loading
 =========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ Configuration Loading → Validation → Environment Detection →
 Provider Setup → Security Configuration → Performance Tuning → 
 Hot Reload → Health Monitoring → Disaster Recovery Settings
 """
+
 import asyncio
 import logging
 import os
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
+    """
+Environment types for configuration"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -61,6 +64,7 @@ class EnvironmentType(Enum):
 
 class ConfigurationSource(Enum):
     """Configuration data sources"""
+
     FILE_YAML = "file_yaml"
     FILE_JSON = "file_json"
     ENVIRONMENT_VARS = "environment_vars"
@@ -135,7 +139,8 @@ class PerformanceConfig:
 
 @dataclass
 class BackupConfig:
-    """Backup configuration"""
+    """
+Backup configuration"""
     enabled: bool = True
     real_time_backup: bool = True
     scheduled_backup_enabled: bool = True
@@ -744,17 +749,20 @@ class ConfigurationManager:
         current[keys[-1]] = value
     
     def _encrypt_sensitive_data(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive configuration data"""
+        """
+Encrypt sensitive configuration data"""
         # Implementation would encrypt sensitive fields like API keys
         return config_dict
     
     def _decrypt_sensitive_data(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt sensitive configuration data"""
+        """
+Decrypt sensitive configuration data"""
         # Implementation would decrypt sensitive fields
         return config_dict
     
     def _dict_to_config(self, config_dict: Dict[str, Any]) -> StorageConfiguration:
-        """Convert dictionary to configuration object"""
+        """
+Convert dictionary to configuration object"""
         # Convert dictionary to StorageConfiguration object
         # This is a simplified implementation
         config = StorageConfiguration()
@@ -768,7 +776,8 @@ class ConfigurationManager:
     
     def _compare_configurations(self, old_config: StorageConfiguration, 
                               new_config: StorageConfiguration) -> List[str]:
-        """Compare two configurations and return list of changes"""
+        """
+Compare two configurations and return list of changes"""
         changes = []
         
         # Compare provider counts
@@ -805,7 +814,8 @@ class ConfigurationManager:
         pass
     
     def _cache_configuration(self):
-        """Cache current configuration"""
+        """
+Cache current configuration"""
         if self.current_config:
             cache_key = f"config_{self.environment.value}"
             self.config_cache[cache_key] = {

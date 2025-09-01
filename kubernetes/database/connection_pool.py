@@ -10,6 +10,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import time
 import threading
 from typing import Dict, List, Optional, Any, Callable
@@ -30,7 +31,8 @@ from backend.core.monitoring import MetricsCollector
 
 @dataclass
 class DatabaseEndpoint:
-    """Database endpoint configuration"""
+    """
+Database endpoint configuration"""
     endpoint_id: str
     host: str
     port: int
@@ -47,7 +49,8 @@ class DatabaseEndpoint:
 
 @dataclass
 class ConnectionPoolStats:
-    """Connection pool statistics"""
+    """
+Connection pool statistics"""
     pool_id: str
     total_connections: int
     active_connections: int
@@ -101,7 +104,8 @@ class ConnectionPoolManager:
         self._initialize_pools()
     
     def _initialize_pools(self) -> None:
-        """Initialize connection pools"""
+        """
+Initialize connection pools"""
         try:
             # Add primary database endpoint
             primary_endpoint = DatabaseEndpoint(
@@ -633,7 +637,8 @@ class ConnectionPoolManager:
             self._initiate_failover()
     
     def _initiate_failover(self) -> None:
-        """Initiate failover to read replica"""
+        """
+Initiate failover to read replica"""
         try:
             self.failover_in_progress = True
             self.logger.critical("Initiating database failover")

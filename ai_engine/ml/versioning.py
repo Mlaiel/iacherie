@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive model versioning capabilities including
 version management, experiment tracking, and A/B testing infrastructure.
 """
+
 import logging
 import json
 import hashlib
@@ -20,7 +21,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ModelStatus(Enum):
-    """Model version status"""
+    """
+Model version status"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -29,6 +32,7 @@ class ModelStatus(Enum):
 
 class ExperimentStatus(Enum):
     """Experiment status"""
+
     CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -37,6 +41,7 @@ class ExperimentStatus(Enum):
 
 class ABTestStatus(Enum):
     """A/B Test status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -75,7 +80,8 @@ class Experiment:
 
 @dataclass
 class ABTest:
-    """A/B Test configuration and results"""
+    """
+A/B Test configuration and results"""
     test_id: str
     name: str
     description: str
@@ -91,7 +97,8 @@ class ABTest:
     statistical_significance: Optional[float]
 
 class ModelVersionManager:
-    """Manage model versions and lifecycle"""
+    """
+Manage model versions and lifecycle"""
     
     def __init__(self, storage_path: str = "./models"):
         self.storage_path = Path(storage_path)
@@ -206,7 +213,8 @@ class ModelVersionManager:
     
     def list_versions(self, model_name: Optional[str] = None, 
                      status: Optional[ModelStatus] = None) -> List[ModelVersion]:
-        """List model versions with optional filtering"""
+        """
+List model versions with optional filtering"""
         versions = list(self.versions.values())
         
         if model_name:
@@ -218,7 +226,8 @@ class ModelVersionManager:
         return sorted(versions, key=lambda x: x.created_at, reverse=True)
     
     def promote_version(self, version_id: str, target_status: ModelStatus) -> bool:
-        """Promote version to target status"""
+        """
+Promote version to target status"""
         try:
             if version_id not in self.versions:
                 raise ValueError(f"Version not found: {version_id}")
@@ -441,7 +450,8 @@ class ExperimentTracker:
         return self.experiments.get(experiment_id)
     
     def list_experiments(self, status: Optional[ExperimentStatus] = None) -> List[Experiment]:
-        """List experiments with optional status filtering"""
+        """
+List experiments with optional status filtering"""
         experiments = list(self.experiments.values())
         
         if status:
@@ -450,7 +460,8 @@ class ExperimentTracker:
         return sorted(experiments, key=lambda x: x.created_at, reverse=True)
 
 class ABTestManager:
-    """Manage A/B tests for model versions"""
+    """
+Manage A/B tests for model versions"""
     
     def __init__(self, storage_path: str = "./ab_tests"):
         self.storage_path = Path(storage_path)
@@ -688,7 +699,8 @@ class ABTestManager:
         return self.tests.get(test_id)
     
     def list_ab_tests(self, status: Optional[ABTestStatus] = None) -> List[ABTest]:
-        """List A/B tests with optional status filtering"""
+        """
+List A/B tests with optional status filtering"""
         tests = list(self.tests.values())
         
         if status:

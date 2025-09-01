@@ -18,6 +18,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class NotificationType(Enum):
-    """Notification types"""
+    """
+Notification types"""
+
     CONTENT_UPLOADED = "content_uploaded"
     COPYRIGHT_VIOLATION = "copyright_violation"
     REVENUE_EARNED = "revenue_earned"
@@ -48,6 +51,7 @@ class NotificationType(Enum):
 
 class DeliveryChannel(Enum):
     """Notification delivery channels"""
+
     PUSH_MOBILE = "push_mobile"
     PUSH_WEB = "push_web"
     EMAIL = "email"
@@ -59,6 +63,7 @@ class DeliveryChannel(Enum):
 
 class EventPriority(Enum):
     """Event priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -67,6 +72,7 @@ class EventPriority(Enum):
 
 class StreamType(Enum):
     """Event stream types"""
+
     USER_ACTIVITY = "user_activity"
     CONTENT_EVENTS = "content_events"
     REVENUE_EVENTS = "revenue_events"
@@ -92,7 +98,8 @@ class NotificationMessage:
 
 @dataclass
 class EventMessage:
-    """Event streaming message structure"""
+    """
+Event streaming message structure"""
     event_id: str
     stream_type: StreamType
     event_type: str
@@ -106,7 +113,8 @@ class EventMessage:
 
 @dataclass
 class WebSocketConnection:
-    """WebSocket connection tracking"""
+    """
+WebSocket connection tracking"""
     connection_id: str
     user_id: str
     session_id: str
@@ -117,7 +125,8 @@ class WebSocketConnection:
 
 @dataclass
 class CommunicationInfrastructureSpec:
-    """Real-time communication infrastructure specification"""
+    """
+Real-time communication infrastructure specification"""
     namespace: str = "ia-influencer-communication"
     enable_websockets: bool = True
     enable_push_notifications: bool = True
@@ -152,7 +161,8 @@ class CommunicationInfrastructureManager:
         self.event_streams = {}
         
     async def deploy_communication_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy comprehensive real-time communication infrastructure"""
+        """
+Deploy comprehensive real-time communication infrastructure"""
         try:
             results = {}
             logger.info("Deploying real-time communication infrastructure for IA Influencer platform")
@@ -758,7 +768,8 @@ def create_notification_message(user_id: str, notification_type: NotificationTyp
 
 def create_event_message(stream_type: StreamType, event_type: str, 
                         payload: Dict[str, Any], user_id: str = None) -> EventMessage:
-    """Create a standardized event message"""
+    """
+Create a standardized event message"""
     return EventMessage(
         event_id=str(uuid.uuid4()),
         stream_type=stream_type,
@@ -770,7 +781,8 @@ def create_event_message(stream_type: StreamType, event_type: str,
 
 def format_content_upload_notification(creator_name: str, content_title: str, 
                                      content_type: str) -> Tuple[str, str]:
-    """Format content upload notification"""
+    """
+Format content upload notification"""
     title = f"New {content_type} uploaded!"
     content = f"{creator_name} just uploaded '{content_title}'. Check it out now!"
     return title, content

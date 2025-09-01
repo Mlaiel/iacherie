@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import asyncio
 import time
 import logging
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConflictType(Enum):
-    """Types of conflicts that can occur"""
+    """
+Types of conflicts that can occur"""
+
     DEADLOCK = "DEADLOCK"                       # Classic deadlock
     LIVELOCK = "LIVELOCK"                       # Livelock situation
     RESOURCE_CONTENTION = "RESOURCE_CONTENTION" # High resource contention
@@ -57,6 +60,7 @@ class ConflictType(Enum):
 
 class ResolutionStrategy(Enum):
     """Conflict resolution strategies"""
+
     ABORT_YOUNGEST = "ABORT_YOUNGEST"           # Abort youngest transaction
     ABORT_OLDEST = "ABORT_OLDEST"               # Abort oldest transaction
     ABORT_LOWEST_PRIORITY = "ABORT_LOWEST_PRIORITY"  # Abort lowest priority
@@ -87,18 +91,21 @@ class TransactionInfo:
     
     @property
     def age(self) -> float:
-        """Get transaction age in seconds"""
+        """
+Get transaction age in seconds"""
         return (datetime.now(timezone.utc) - self.created_at).total_seconds()
     
     @property
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""
+        """
+Check if transaction has expired"""
         return self.age > self.timeout
 
 
 @dataclass
 class ConflictInfo:
-    """Information about a detected conflict"""
+    """
+Information about a detected conflict"""
     conflict_id: str
     conflict_type: ConflictType
     detected_at: datetime
@@ -112,7 +119,8 @@ class ConflictInfo:
     resolved: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'conflict_id': self.conflict_id,
             'conflict_type': self.conflict_type.value,
@@ -129,7 +137,8 @@ class ConflictInfo:
 
 
 class WaitForGraph:
-    """Wait-for graph for deadlock detection"""
+    """
+Wait-for graph for deadlock detection"""
     
     def __init__(self):
         self.graph = nx.DiGraph()
@@ -137,20 +146,23 @@ class WaitForGraph:
         self.node_metadata: Dict[str, TransactionInfo] = {}
     
     def add_transaction(self, transaction_info: TransactionInfo) -> None:
-        """Add transaction to the graph"""
+        """
+Add transaction to the graph"""
         with self.lock:
             self.graph.add_node(transaction_info.transaction_id)
             self.node_metadata[transaction_info.transaction_id] = transaction_info
     
     def remove_transaction(self, transaction_id: str) -> None:
-        """Remove transaction from the graph"""
+        """
+Remove transaction from the graph"""
         with self.lock:
             if transaction_id in self.graph:
                 self.graph.remove_node(transaction_id)
             self.node_metadata.pop(transaction_id, None)
     
     def add_wait_edge(self, waiting_tx: str, blocking_tx: str, resource: str) -> None:
-        """Add wait edge (waiting_tx waits for blocking_tx)"""
+        """
+Add wait edge (waiting_tx waits for blocking_tx)"""
         with self.lock:
             if waiting_tx not in self.graph:
                 self.graph.add_node(waiting_tx)
@@ -162,13 +174,15 @@ class WaitForGraph:
                               created_at=datetime.now(timezone.utc))
     
     def remove_wait_edge(self, waiting_tx: str, blocking_tx: str) -> None:
-        """Remove wait edge"""
+        """
+Remove wait edge"""
         with self.lock:
             if self.graph.has_edge(waiting_tx, blocking_tx):
                 self.graph.remove_edge(waiting_tx, blocking_tx)
     
     def detect_deadlocks(self) -> List[List[str]]:
-        """Detect all deadlocks (cycles) in the wait-for graph"""
+        """
+Detect all deadlocks (cycles) in the wait-for graph"""
         with self.lock:
             try:
                 cycles = list(nx.simple_cycles(self.graph))
@@ -201,7 +215,8 @@ class WaitForGraph:
         return sorted(potential_deadlocks, key=lambda x: x[2], reverse=True)
     
     def get_blocking_chain(self, transaction_id: str) -> List[str]:
-        """Get the chain of transactions blocking this transaction"""
+        """
+Get the chain of transactions blocking this transaction"""
         with self.lock:
             chain = [transaction_id]
             current = transaction_id
@@ -226,7 +241,8 @@ class WaitForGraph:
             return chain
     
     def get_graph_metrics(self) -> Dict[str, Any]:
-        """Get graph metrics for analysis"""
+        """
+Get graph metrics for analysis"""
         with self.lock:
             metrics = {
                 'node_count': self.graph.number_of_nodes(),
@@ -248,7 +264,8 @@ class WaitForGraph:
 
 
 class ResourceContention:
-    """Resource contention tracking and analysis"""
+    """
+Resource contention tracking and analysis"""
     
     def __init__(self):
         self.resource_requests: Dict[str, List[Tuple[str, datetime, int]]] = defaultdict(list)  # resource -> [(tx_id, timestamp, priority)]
@@ -263,7 +280,8 @@ class ResourceContention:
         self.lock = threading.RLock()
     
     def add_resource_request(self, transaction_id: str, resource_id: str, priority: int = 0) -> None:
-        """Add resource request"""
+        """
+Add resource request"""
         with self.lock:
             request_time = datetime.now(timezone.utc)
             self.resource_requests[resource_id].append((transaction_id, request_time, priority))
@@ -273,7 +291,8 @@ class ResourceContention:
             metrics['current_waiters'] = len(self.resource_requests[resource_id])
     
     def grant_resource(self, transaction_id: str, resource_id: str) -> None:
-        """Grant resource to transaction"""
+        """
+Grant resource to transaction"""
         with self.lock:
             self.resource_holders[resource_id] = transaction_id
             
@@ -302,13 +321,15 @@ class ResourceContention:
             metrics['current_waiters'] = len(requests)
     
     def release_resource(self, transaction_id: str, resource_id: str) -> None:
-        """Release resource from transaction"""
+        """
+Release resource from transaction"""
         with self.lock:
             if self.resource_holders.get(resource_id) == transaction_id:
                 del self.resource_holders[resource_id]
     
     def remove_transaction_requests(self, transaction_id: str) -> None:
-        """Remove all requests from a transaction"""
+        """
+Remove all requests from a transaction"""
         with self.lock:
             for resource_id in list(self.resource_requests.keys()):
                 requests = self.resource_requests[resource_id]
@@ -321,7 +342,8 @@ class ResourceContention:
                 metrics['current_waiters'] = len(self.resource_requests[resource_id])
     
     def get_high_contention_resources(self, threshold: int = 5) -> List[Tuple[str, int]]:
-        """Get resources with high contention"""
+        """
+Get resources with high contention"""
         with self.lock:
             high_contention = []
             
@@ -332,7 +354,8 @@ class ResourceContention:
             return sorted(high_contention, key=lambda x: x[1], reverse=True)
     
     def get_contention_metrics(self, resource_id: str) -> Dict[str, Any]:
-        """Get contention metrics for specific resource"""
+        """
+Get contention metrics for specific resource"""
         with self.lock:
             return self.contention_metrics[resource_id].copy()
 
@@ -490,7 +513,8 @@ class ConflictResolver:
         conflict: ConflictInfo,
         strategy: Optional[ResolutionStrategy] = None
     ) -> bool:
-        """Resolve specific conflict using given or default strategy"""
+        """
+Resolve specific conflict using given or default strategy"""
         
         start_time = time.time()
         resolution_strategy = strategy or self._select_optimal_strategy(conflict)
@@ -627,7 +651,8 @@ class ConflictResolver:
         return statistics
     
     async def _detect_deadlocks(self) -> List[ConflictInfo]:
-        """Detect deadlocks in wait-for graph"""
+        """
+Detect deadlocks in wait-for graph"""
         
         deadlocks = self.wait_for_graph.detect_deadlocks()
         conflicts = []
@@ -833,7 +858,8 @@ class ConflictResolver:
         return self.default_strategy
     
     async def _abort_youngest_strategy(self, conflict: ConflictInfo) -> bool:
-        """Abort youngest transaction in conflict"""
+        """
+Abort youngest transaction in conflict"""
         
         youngest_tx = None
         youngest_age = float('inf')
@@ -1069,12 +1095,14 @@ class ConflictResolver:
         return list(resources)
     
     def _get_blocking_transactions(self, transaction_id: str) -> List[str]:
-        """Get transactions blocking this transaction"""
+        """
+Get transactions blocking this transaction"""
         
         return list(self.wait_for_graph.graph.successors(transaction_id))
     
     def _calculate_deadlock_severity(self, cycle: List[str]) -> float:
-        """Calculate deadlock severity based on involved transactions"""
+        """
+Calculate deadlock severity based on involved transactions"""
         
         severity = 0.5  # Base severity
         
@@ -1093,7 +1121,8 @@ class ConflictResolver:
         return min(1.0, severity)
     
     def _calculate_business_impact(self, transaction_ids: List[str]) -> float:
-        """Calculate business impact of conflict"""
+        """
+Calculate business impact of conflict"""
         
         total_impact = 0.0
         
@@ -1105,19 +1134,22 @@ class ConflictResolver:
         return total_impact
     
     def _calculate_contention_business_impact(self, resource_id: str, waiter_count: int) -> float:
-        """Calculate business impact of resource contention"""
+        """
+Calculate business impact of resource contention"""
         
         # Simple impact calculation based on waiting transactions
         return waiter_count * 10.0  # Mock calculation
     
     def _calculate_creator_priority(self, creator_id: str) -> float:
-        """Calculate creator priority (mock implementation)"""
+        """
+Calculate creator priority (mock implementation)"""
         
         # In a real implementation, this would look up creator metrics
         return hash(creator_id) % 100  # Mock priority
     
     def _get_content_age(self, content_id: str) -> float:
-        """Get content age in days (mock implementation)"""
+        """
+Get content age in days (mock implementation)"""
         
         # In a real implementation, this would look up content creation date
         return hash(content_id) % 365  # Mock age in days
@@ -1128,7 +1160,8 @@ class ConflictResolver:
         blocking_tx: str,
         risk_score: float
     ) -> bool:
-        """Apply preventive measures for potential deadlock"""
+        """
+Apply preventive measures for potential deadlock"""
         
         # Simple prevention: increase timeout for high-risk waiting transaction
         tx_info = self.active_transactions.get(waiting_tx)
@@ -1222,16 +1255,19 @@ class DeadlockDetector:
         self.conflict_resolver = ConflictResolver()
     
     def start_detection(self):
-        """Start deadlock detection"""
+        """
+Start deadlock detection"""
         # Already started in ConflictResolver constructor
         pass
     
     def stop_detection(self):
-        """Stop deadlock detection"""
+        """
+Stop deadlock detection"""
         asyncio.create_task(self.conflict_resolver.shutdown())
     
     def add_wait_edge(self, waiting_tx: str, blocking_tx: str):
-        """Add wait edge"""
+        """
+Add wait edge"""
         self.conflict_resolver.add_resource_wait(waiting_tx, blocking_tx, "unknown_resource")
     
     def remove_wait_edge(self, waiting_tx: str, blocking_tx: str):

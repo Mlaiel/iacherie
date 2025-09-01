@@ -9,6 +9,7 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from ...ml.predictive_models import PredictiveAnalyzer
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""
+    """
+Metric type enumeration."""
+
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     GROWTH = "growth"
@@ -40,6 +43,7 @@ class MetricType(Enum):
 
 class AnalyticsPeriod(Enum):
     """Analytics time period enumeration."""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -62,7 +66,8 @@ class MetricConfig:
 
 @dataclass
 class PerformanceKPI:
-    """Key Performance Indicator structure."""
+    """
+Key Performance Indicator structure."""
     kpi_name: str
     current_value: float
     target_value: float
@@ -356,7 +361,8 @@ class MarketplaceMetrics:
         self, 
         time_windows: Dict[str, Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect core marketplace KPIs."""
+        """
+Collect core marketplace KPIs."""
         core_kpis = {}
         
         # Active users

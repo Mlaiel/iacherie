@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import time
 import threading
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -26,7 +27,9 @@ import statistics
 
 
 class CircuitState(str, Enum):
-    """Circuit breaker states."""
+    """
+Circuit breaker states."""
+
     CLOSED = "closed"       # Normal operation
     OPEN = "open"           # Circuit is open, requests fail fast
     HALF_OPEN = "half_open" # Testing if service is back
@@ -34,6 +37,7 @@ class CircuitState(str, Enum):
 
 class FailureType(str, Enum):
     """Types of failures that can trigger circuit breaker."""
+
     TIMEOUT = "timeout"
     CONNECTION_ERROR = "connection_error"
     HTTP_ERROR = "http_error"
@@ -57,7 +61,8 @@ class CircuitBreakerMetrics:
     recent_response_times: deque = field(default_factory=lambda: deque(maxlen=100))
     
     def update_success(self, response_time: float):
-        """Update metrics for successful request."""
+        """
+Update metrics for successful request."""
         self.total_requests += 1
         self.successful_requests += 1
         self.last_success_time = time.time()
@@ -65,7 +70,8 @@ class CircuitBreakerMetrics:
         self._update_derived_metrics()
     
     def update_failure(self, failure_type: FailureType):
-        """Update metrics for failed request."""
+        """
+Update metrics for failed request."""
         self.total_requests += 1
         self.failed_requests += 1
         self.last_failure_time = time.time()
@@ -74,11 +80,13 @@ class CircuitBreakerMetrics:
         self._update_derived_metrics()
     
     def update_rejection(self):
-        """Update metrics for rejected request (circuit open)."""
+        """
+Update metrics for rejected request (circuit open)."""
         self.rejected_requests += 1
     
     def _update_derived_metrics(self):
-        """Update derived metrics."""
+        """
+Update derived metrics."""
         if self.total_requests > 0:
             self.failure_rate = self.failed_requests / self.total_requests
         
@@ -86,7 +94,8 @@ class CircuitBreakerMetrics:
             self.average_response_time = statistics.mean(self.recent_response_times)
     
     def reset(self):
-        """Reset all metrics."""
+        """
+Reset all metrics."""
         self.total_requests = 0
         self.successful_requests = 0
         self.failed_requests = 0
@@ -101,7 +110,8 @@ class CircuitBreakerMetrics:
 
 @dataclass
 class CircuitBreakerRule:
-    """Circuit breaker rule configuration."""
+    """
+Circuit breaker rule configuration."""
     name: str
     failure_threshold: int = 5           # Number of failures to open circuit
     success_threshold: int = 3           # Number of successes to close circuit
@@ -182,7 +192,8 @@ class CircuitBreaker:
         self.state_change_listeners: List[Callable] = []
     
     def call(self, func: Callable, *args, **kwargs) -> Any:
-        """Execute function with circuit breaker protection."""
+        """
+Execute function with circuit breaker protection."""
         if not self.rule.enabled:
             return func(*args, **kwargs)
         
@@ -324,22 +335,26 @@ class CircuitBreaker:
         return False
     
     def _should_close_circuit(self) -> bool:
-        """Check if circuit should be closed (from half-open state)."""
+        """
+Check if circuit should be closed (from half-open state)."""
         return self.metrics.successful_requests >= self.rule.success_threshold
     
     def _should_attempt_reset(self) -> bool:
-        """Check if we should attempt to reset circuit (from open to half-open)."""
+        """
+Check if we should attempt to reset circuit (from open to half-open)."""
         return (time.time() - self.last_state_change) >= self.rule.recovery_timeout
     
     def _transition_to_open(self):
-        """Transition circuit to open state."""
+        """
+Transition circuit to open state."""
         if self.state != CircuitState.OPEN:
             self.state = CircuitState.OPEN
             self.last_state_change = time.time()
             self._notify_state_change(CircuitState.OPEN)
     
     def _transition_to_half_open(self):
-        """Transition circuit to half-open state."""
+        """
+Transition circuit to half-open state."""
         if self.state != CircuitState.HALF_OPEN:
             self.state = CircuitState.HALF_OPEN
             self.last_state_change = time.time()
@@ -347,14 +362,16 @@ class CircuitBreaker:
             self._notify_state_change(CircuitState.HALF_OPEN)
     
     def _transition_to_closed(self):
-        """Transition circuit to closed state."""
+        """
+Transition circuit to closed state."""
         if self.state != CircuitState.CLOSED:
             self.state = CircuitState.CLOSED
             self.last_state_change = time.time()
             self._notify_state_change(CircuitState.CLOSED)
     
     def _classify_failure(self, exception: Exception) -> FailureType:
-        """Classify the type of failure."""
+        """
+Classify the type of failure."""
         if isinstance(exception, TimeoutError):
             return FailureType.TIMEOUT
         elif isinstance(exception, ConnectionError):
@@ -370,7 +387,8 @@ class CircuitBreaker:
             return FailureType.CUSTOM
     
     def _execute_fallback(self, *args, **kwargs):
-        """Execute fallback function."""
+        """
+Execute fallback function."""
         if self.fallback_function:
             try:
                 return self.fallback_function(*args, **kwargs)
@@ -402,19 +420,23 @@ class CircuitBreaker:
                     pass  # Don't let notification failures affect circuit breaker
     
     def set_fallback(self, fallback_function: Callable):
-        """Set fallback function."""
+        """
+Set fallback function."""
         self.fallback_function = fallback_function
     
     def add_state_change_listener(self, listener: Callable):
-        """Add state change listener."""
+        """
+Add state change listener."""
         self.state_change_listeners.append(listener)
     
     def get_metrics(self) -> CircuitBreakerMetrics:
-        """Get current metrics."""
+        """
+Get current metrics."""
         return self.metrics
     
     def reset(self):
-        """Reset circuit breaker to closed state."""
+        """
+Reset circuit breaker to closed state."""
         with self._lock:
             self.state = CircuitState.CLOSED
             self.metrics.reset()
@@ -423,7 +445,8 @@ class CircuitBreaker:
 
 
 class CircuitBreakerRegistry:
-    """Registry for managing multiple circuit breakers."""
+    """
+Registry for managing multiple circuit breakers."""
     
     def __init__(self, config: CircuitBreakerConfig):
         self.config = config
@@ -431,7 +454,8 @@ class CircuitBreakerRegistry:
         self._lock = threading.Lock()
     
     def get_or_create(self, name: str, rule: Optional[CircuitBreakerRule] = None) -> CircuitBreaker:
-        """Get existing circuit breaker or create new one."""
+        """
+Get existing circuit breaker or create new one."""
         with self._lock:
             if name not in self.circuit_breakers:
                 if rule is None:
@@ -440,21 +464,25 @@ class CircuitBreakerRegistry:
             return self.circuit_breakers[name]
     
     def get(self, name: str) -> Optional[CircuitBreaker]:
-        """Get circuit breaker by name."""
+        """
+Get circuit breaker by name."""
         return self.circuit_breakers.get(name)
     
     def remove(self, name: str):
-        """Remove circuit breaker."""
+        """
+Remove circuit breaker."""
         with self._lock:
             if name in self.circuit_breakers:
                 del self.circuit_breakers[name]
     
     def list_all(self) -> Dict[str, CircuitBreaker]:
-        """List all circuit breakers."""
+        """
+List all circuit breakers."""
         return self.circuit_breakers.copy()
     
     def get_metrics_summary(self) -> Dict[str, Dict]:
-        """Get metrics summary for all circuit breakers."""
+        """
+Get metrics summary for all circuit breakers."""
         summary = {}
         for name, cb in self.circuit_breakers.items():
             metrics = cb.get_metrics()

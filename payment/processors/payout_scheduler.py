@@ -5,8 +5,9 @@ Advanced payout scheduling system with automated timing, batch processing,
 and intelligent optimization for payment distributions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class PayoutFrequency(Enum):
-    """Payout frequency options"""
+    """
+Payout frequency options"""
+
     INSTANT = "instant"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -33,6 +36,7 @@ class PayoutFrequency(Enum):
 
 class PayoutStatus(Enum):
     """Payout status"""
+
     SCHEDULED = "scheduled"
     PENDING = "pending"
     PROCESSING = "processing"
@@ -44,6 +48,7 @@ class PayoutStatus(Enum):
 
 class PayoutMethod(Enum):
     """Payout methods"""
+
     STRIPE_INSTANT = "stripe_instant"
     STRIPE_STANDARD = "stripe_standard"
     PAYPAL_INSTANT = "paypal_instant"
@@ -120,7 +125,8 @@ class PayoutSchedulerProcessor:
         config: Dict[str, Any],
         payment_processors: Dict[str, Any]
     ):
-        """Initialize payout scheduler processor"""
+        """
+Initialize payout scheduler processor"""
         self.config = config
         self.payment_processors = payment_processors
         self.logger = logging.getLogger(__name__)
@@ -481,7 +487,8 @@ class PayoutSchedulerProcessor:
             return now + timedelta(days=7)  # Default to weekly
     
     async def _get_due_payouts(self, batch_date: datetime) -> List[ScheduledPayout]:
-        """Get all payouts due for processing"""
+        """
+Get all payouts due for processing"""
         # Mock data (in production, query database for due payouts)
         due_payouts = []
         
@@ -522,7 +529,8 @@ class PayoutSchedulerProcessor:
         method: PayoutMethod,
         batch: PayoutBatch
     ) -> None:
-        """Process a group of payouts with the same method"""
+        """
+Process a group of payouts with the same method"""
         for payout in payouts:
             try:
                 result = await self._execute_payout(payout)
@@ -549,7 +557,8 @@ class PayoutSchedulerProcessor:
         return method in instant_methods
     
     def _calculate_payout_fee(self, amount: Decimal, method: PayoutMethod) -> Decimal:
-        """Calculate payout fee for method"""
+        """
+Calculate payout fee for method"""
         config = self.method_config.get(method, {})
         fee_percent = config.get("fee_percent", Decimal("0.01"))
         fixed_fee = config.get("fixed_fee", Decimal("0.25"))

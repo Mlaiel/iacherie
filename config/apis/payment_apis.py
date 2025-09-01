@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module configures payment processing APIs for automated monetization,
 revenue tracking, and financial transactions across multiple providers.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
@@ -12,7 +13,9 @@ from enum import Enum
 from decimal import Decimal
 
 class PaymentProviderType(Enum):
-    """Payment provider types"""
+    """
+Payment provider types"""
+
     CREDIT_CARD = "credit_card"
     DIGITAL_WALLET = "digital_wallet"
     BANK_TRANSFER = "bank_transfer"
@@ -21,6 +24,7 @@ class PaymentProviderType(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     CARD = "card"
     PAYPAL = "paypal"
     APPLE_PAY = "apple_pay"
@@ -392,16 +396,19 @@ def get_payment_config(provider: str) -> Optional[PaymentAPIConfig]:
     return PAYMENT_CONFIGS.get(provider.lower())
 
 def get_providers_by_type(provider_type: PaymentProviderType) -> List[PaymentAPIConfig]:
-    """Get all payment providers of specific type"""
+    """
+Get all payment providers of specific type"""
     return [config for config in PAYMENT_CONFIGS.values() 
             if config.provider_type == provider_type]
 
 def get_providers_by_currency(currency: str) -> List[PaymentAPIConfig]:
-    """Get payment providers supporting specific currency"""
+    """
+Get payment providers supporting specific currency"""
     return [config for config in PAYMENT_CONFIGS.values() 
             if currency.upper() in config.supported_currencies]
 
 def get_providers_by_country(country: str) -> List[PaymentAPIConfig]:
-    """Get payment providers supporting specific country"""
+    """
+Get payment providers supporting specific country"""
     return [config for config in PAYMENT_CONFIGS.values() 
             if country.upper() in config.supported_countries]

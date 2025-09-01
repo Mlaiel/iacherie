@@ -37,6 +37,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import warnings
@@ -156,6 +157,7 @@ if MONITORING_AVAILABLE:
 
 class ServiceStatus(Enum):
     """Service status enumeration."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -164,6 +166,7 @@ class ServiceStatus(Enum):
 
 class ComponentType(Enum):
     """Component type enumeration."""
+
     GENERATOR = "generator"
     ANALYTICS = "analytics"
     FORMATTER = "formatter"
@@ -718,20 +721,23 @@ def run_service(
 
 # Dependency injection functions
 async def get_db_session() -> AsyncSession:
-    """Database session dependency."""
+    """
+Database session dependency."""
     manager = get_service_manager()
     async for session in manager.get_database_session():
         yield session
 
 
 async def get_redis_client() -> redis.Redis:
-    """Redis client dependency."""
+    """
+Redis client dependency."""
     manager = get_service_manager()
     return await manager.get_redis_client()
 
 
 def get_component_factory(component_type: str):
-    """Component factory dependency."""
+    """
+Component factory dependency."""
     def _get_component(component_name: str):
         manager = get_service_manager()
         return manager.get_component(component_type, component_name)
@@ -744,7 +750,8 @@ security = HTTPBearer()
 
 
 async def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
-    """Verify JWT token and return user info."""
+    """
+Verify JWT token and return user info."""
     
     try:
         import jwt
@@ -864,7 +871,8 @@ def rate_limit(limit: str = "100/minute"):
 
 # Circuit breaker decorator
 def circuit_breaker(failure_threshold: int = 5, recovery_timeout: int = 30):
-    """Circuit breaker decorator."""
+    """
+Circuit breaker decorator."""
     def decorator(func):
         if CIRCUIT_BREAKER_AVAILABLE:
             return circuit(failure_threshold=failure_threshold, recovery_timeout=recovery_timeout)(func)

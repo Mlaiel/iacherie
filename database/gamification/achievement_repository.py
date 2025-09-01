@@ -8,7 +8,7 @@ Responsibility: Achievement system data persistence and analytics
 ===============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ ACHIEVEMENT REPOSITORY ARCHITECTURE:
 Achievement Definition → Progress Tracking → Unlock Validation → 
 Badge Management → Analytics Collection → Performance Optimization
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -32,7 +33,9 @@ from decimal import Decimal
 from ...data_management.repositories.base_repository import BaseRepository, OperationType
 
 class AchievementTier(Enum):
-    """Achievement difficulty tiers"""
+    """
+Achievement difficulty tiers"""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -41,6 +44,7 @@ class AchievementTier(Enum):
 
 class AchievementCategory(Enum):
     """Achievement categories"""
+
     CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     ENGAGEMENT = "engagement"
@@ -52,6 +56,7 @@ class AchievementCategory(Enum):
 
 class AchievementStatus(Enum):
     """Achievement status"""
+
     LOCKED = "locked"
     IN_PROGRESS = "in_progress"
     UNLOCKED = "unlocked"
@@ -77,7 +82,8 @@ class Achievement:
 
 @dataclass
 class UserAchievement:
-    """User achievement progress"""
+    """
+User achievement progress"""
     user_achievement_id: str
     user_id: str
     achievement_id: str
@@ -92,7 +98,8 @@ class UserAchievement:
     metadata: Dict[str, Any]
 
 class AchievementRepository(BaseRepository[Achievement]):
-    """Enterprise achievement management repository"""
+    """
+Enterprise achievement management repository"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
@@ -430,12 +437,14 @@ class AchievementRepository(BaseRepository[Achievement]):
         requirement_value: Any,
         progress_data: Optional[Dict[str, Any]]
     ) -> bool:
-        """Check individual requirement"""
+        """
+Check individual requirement"""
         # Implementation would check specific requirements
         return True  # Simplified for production implementation
     
     def _get_rarity_multiplier(self, rarity_score: float) -> float:
-        """Get rarity multiplier for points calculation"""
+        """
+Get rarity multiplier for points calculation"""
         for (min_rarity, max_rarity), multiplier in self._rarity_multipliers.items():
             if min_rarity <= rarity_score < max_rarity:
                 return multiplier
@@ -446,12 +455,14 @@ class AchievementRepository(BaseRepository[Achievement]):
         user_id: str,
         achievement_id: str
     ) -> Optional[UserAchievement]:
-        """Get specific user achievement"""
+        """
+Get specific user achievement"""
         # Implementation would query user_achievements table
         return None  # Simplified for production implementation
     
     def _save_user_achievement(self, user_achievement: UserAchievement) -> UserAchievement:
-        """Save user achievement to database"""
+        """
+Save user achievement to database"""
         # Implementation would save to user_achievements table
         return user_achievement  # Simplified for production implementation
     
@@ -461,7 +472,8 @@ class AchievementRepository(BaseRepository[Achievement]):
         limit: int,
         offset: int
     ) -> List[UserAchievement]:
-        """Query user achievements with filters"""
+        """
+Query user achievements with filters"""
         # Implementation would execute filtered query
         return []  # Simplified for production implementation
     
@@ -473,7 +485,8 @@ class AchievementRepository(BaseRepository[Achievement]):
         end_date: datetime,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Calculate achievement leaderboard"""
+        """
+Calculate achievement leaderboard"""
         # Implementation would calculate leaderboard data
         return []  # Simplified for production implementation
     
@@ -482,34 +495,40 @@ class AchievementRepository(BaseRepository[Achievement]):
         achievement: Achievement,
         days: int
     ) -> Dict[str, Any]:
-        """Calculate detailed achievement analytics"""
+        """
+Calculate detailed achievement analytics"""
         # Implementation would calculate comprehensive analytics
         return {}  # Simplified for production implementation
     
     # BaseRepository abstract method implementations
     def create(self, entity: Achievement, **kwargs) -> Achievement:
-        """Create achievement entity"""
+        """
+Create achievement entity"""
         self._validate_entity(entity)
         # Implementation would save to database
         return entity
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[Achievement]:
-        """Get achievement by ID"""
+        """
+Get achievement by ID"""
         # Implementation would query database
         return None
     
     def update(self, entity: Achievement, **kwargs) -> Achievement:
-        """Update achievement entity"""
+        """
+Update achievement entity"""
         self._validate_entity(entity)
         # Implementation would update database
         return entity
     
     def delete(self, entity_id: str, **kwargs) -> bool:
-        """Soft delete achievement"""
+        """
+Soft delete achievement"""
         # Implementation would soft delete (set is_active=False)
         return True
     
     def list_all(self, limit: int = 100, offset: int = 0, **filters) -> List[Achievement]:
-        """List all achievements with filtering"""
+        """
+List all achievements with filtering"""
         # Implementation would query with filters
         return []

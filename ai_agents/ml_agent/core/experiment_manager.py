@@ -12,7 +12,7 @@ This experiment management system and methodologies are the exclusive intellectu
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 🎯 BUSINESS LOGIC INTEGRATION:
 Experiment Design → Model Training → Performance Evaluation → Statistical Analysis
@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -96,7 +97,9 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class ExperimentStatus(Enum):
-    """Experiment execution status"""
+    """
+Experiment execution status"""
+
     CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -106,6 +109,7 @@ class ExperimentStatus(Enum):
 
 class ExperimentType(Enum):
     """Types of ML experiments"""
+
     HYPERPARAMETER_TUNING = "hyperparameter_tuning"
     MODEL_COMPARISON = "model_comparison"
     FEATURE_SELECTION = "feature_selection"
@@ -115,6 +119,7 @@ class ExperimentType(Enum):
 
 class MetricType(Enum):
     """ML metric types"""
+
     ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
@@ -188,7 +193,8 @@ class MLExperimentTracker:
         self._initialize_tracking()
     
     def _initialize_tracking(self):
-        """Initialize experiment tracking backends"""
+        """
+Initialize experiment tracking backends"""
         try:
             # Initialize MLflow
             mlflow.set_tracking_uri(settings.MLFLOW_TRACKING_URI)
@@ -542,7 +548,8 @@ class MLExperimentTracker:
         results: List[ExperimentResult],
         execution_time: float
     ) -> ExperimentSummary:
-        """Generate comprehensive experiment summary"""
+        """
+Generate comprehensive experiment summary"""
         if not results:
             raise ExperimentError("No results to summarize")
         
@@ -601,7 +608,8 @@ class MLExperimentTracker:
         }
     
     async def _analyze_convergence(self, results: List[ExperimentResult]) -> Dict[str, Any]:
-        """Analyze experiment convergence"""
+        """
+Analyze experiment convergence"""
         scores = [r.metrics.get('accuracy', 0) for r in results]
         
         if len(scores) < 5:
@@ -625,7 +633,8 @@ class MLExperimentTracker:
         }
     
     async def _log_experiment_summary(self, summary: ExperimentSummary):
-        """Log experiment summary to tracking backend"""
+        """
+Log experiment summary to tracking backend"""
         with mlflow.start_run():
             mlflow.log_metrics({
                 'best_score': summary.best_score,
@@ -641,7 +650,8 @@ class MLExperimentTracker:
                 mlflow.log_metrics(summary.statistical_significance)
     
     async def compare_experiments(self, experiment_ids: List[str]) -> Dict[str, Any]:
-        """Compare multiple experiments"""
+        """
+Compare multiple experiments"""
         if len(experiment_ids) < 2:
             raise ValueError("At least two experiments are required for comparison")
         

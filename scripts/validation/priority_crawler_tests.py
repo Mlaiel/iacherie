@@ -11,6 +11,7 @@ Comprehensive tests for Spotify, YouTube, and Instagram crawlers to verify:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import pytest
 import logging
@@ -27,7 +28,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class PriorityCrawlerTester:
-    """Test suite for priority crawlers."""
+    """
+Test suite for priority crawlers."""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
@@ -381,7 +383,8 @@ class PriorityCrawlerTester:
         return sum(scores) / len(scores)
     
     async def test_api_connectivity(self) -> Dict[str, Any]:
-        """Test external API connectivity for priority platforms."""
+        """
+Test external API connectivity for priority platforms."""
         logger.info("🌐 Testing API Connectivity...")
         
         connectivity_tests = {}

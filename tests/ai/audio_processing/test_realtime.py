@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -22,8 +23,9 @@ Comprehensive testing for real-time audio processing including:
 - Performance constraints
 
 Created by Expert Team: Real-time Systems Engineer + Performance Specialist + Audio Engineer
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -75,7 +77,8 @@ class TestRealtimeProcessor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         
         # Create real-time configuration
@@ -88,7 +91,8 @@ class TestRealtimeProcessor:
         self.processor = RealtimeProcessor(config=self.config)
     
     def test_initialization(self):
-        """Test RealtimeProcessor initialization"""
+        """
+Test RealtimeProcessor initialization"""
         processor = RealtimeProcessor()
         
         assert processor is not None
@@ -98,7 +102,8 @@ class TestRealtimeProcessor:
         assert hasattr(processor, 'processing_chain')
     
     def test_buffer_size_optimization(self):
-        """Test buffer size optimization for low latency"""
+        """
+Test buffer size optimization for low latency"""
         # Test different buffer sizes
         buffer_sizes = [64, 128, 256, 512, 1024]
         latencies = []
@@ -129,7 +134,8 @@ class TestRealtimeProcessor:
         assert latencies[0] <= latencies[-1] * 2  # Allow some tolerance
     
     def test_low_latency_processing(self):
-        """Test low-latency processing requirements"""
+        """
+Test low-latency processing requirements"""
         # Configure for very low latency
         low_latency_config = RealtimeConfig(
             sample_rate=44100,
@@ -159,7 +165,8 @@ class TestRealtimeProcessor:
         assert average_latency < low_latency_config.max_latency_ms * 0.5
     
     def test_thread_safety(self):
-        """Test thread safety of real-time processing"""
+        """
+Test thread safety of real-time processing"""
         processed_buffers = []
         errors = []
         
@@ -276,7 +283,8 @@ class TestBufferManager:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.buffer_size = 1024
         self.num_buffers = 8
@@ -286,7 +294,8 @@ class TestBufferManager:
         )
     
     def test_initialization(self):
-        """Test BufferManager initialization"""
+        """
+Test BufferManager initialization"""
         manager = BufferManager(buffer_size=512, num_buffers=4)
         
         assert manager is not None
@@ -297,7 +306,8 @@ class TestBufferManager:
         assert hasattr(manager, 'used_buffers')
     
     def test_buffer_allocation(self):
-        """Test buffer allocation and deallocation"""
+        """
+Test buffer allocation and deallocation"""
         # Allocate buffer
         buffer = self.manager.allocate_buffer()
         
@@ -316,7 +326,8 @@ class TestBufferManager:
         assert len(self.manager.used_buffers) == 0
     
     def test_buffer_pool_exhaustion(self):
-        """Test behavior when buffer pool is exhausted"""
+        """
+Test behavior when buffer pool is exhausted"""
         allocated_buffers = []
         
         # Allocate all buffers
@@ -338,7 +349,8 @@ class TestBufferManager:
             self.manager.deallocate_buffer(buffer)
     
     def test_circular_buffer_operations(self):
-        """Test circular buffer operations"""
+        """
+Test circular buffer operations"""
         circular_buffer = self.manager.create_circular_buffer(size=2048)
         
         # Test writing
@@ -357,7 +369,8 @@ class TestBufferManager:
         assert bytes_written <= 2048  # Should not exceed buffer size
     
     def test_lock_free_operations(self):
-        """Test lock-free buffer operations"""
+        """
+Test lock-free buffer operations"""
         lock_free_queue = LockFreeQueue(capacity=16)
         
         # Test concurrent access
@@ -392,7 +405,8 @@ class TestBufferManager:
         assert True  # If we reach here, no deadlock occurred
     
     def test_memory_efficiency(self):
-        """Test memory efficiency of buffer management"""
+        """
+Test memory efficiency of buffer management"""
         import psutil
         import gc
         
@@ -437,7 +451,8 @@ class TestStreamProcessor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         
         self.config = RealtimeConfig(
@@ -448,7 +463,8 @@ class TestStreamProcessor:
         self.stream_processor = StreamProcessor(config=self.config)
     
     def test_initialization(self):
-        """Test StreamProcessor initialization"""
+        """
+Test StreamProcessor initialization"""
         processor = StreamProcessor()
         
         assert processor is not None
@@ -458,7 +474,8 @@ class TestStreamProcessor:
         assert hasattr(processor, 'is_running')
     
     def test_stream_callback_processing(self):
-        """Test stream callback processing"""
+        """
+Test stream callback processing"""
         processed_buffers = []
         
         def test_callback(input_buffer):
@@ -482,7 +499,8 @@ class TestStreamProcessor:
         assert len(processed_buffers) == 10
     
     def test_stream_synchronization(self):
-        """Test stream synchronization between input and output"""
+        """
+Test stream synchronization between input and output"""
         input_timestamps = []
         output_timestamps = []
         
@@ -513,7 +531,8 @@ class TestStreamProcessor:
         assert delay_std < 0.005  # Low jitter
     
     def test_stream_error_recovery(self):
-        """Test error recovery in stream processing"""
+        """
+Test error recovery in stream processing"""
         error_count = 0
         recovery_count = 0
         
@@ -606,12 +625,14 @@ class TestLatencyMonitor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.monitor = LatencyMonitor(max_samples=1000)
     
     def test_initialization(self):
-        """Test LatencyMonitor initialization"""
+        """
+Test LatencyMonitor initialization"""
         monitor = LatencyMonitor()
         
         assert monitor is not None
@@ -620,7 +641,8 @@ class TestLatencyMonitor:
         assert hasattr(monitor, 'thresholds')
     
     def test_latency_measurement(self):
-        """Test latency measurement accuracy"""
+        """
+Test latency measurement accuracy"""
         # Simulate known processing delays
         known_delays = [0.001, 0.002, 0.005, 0.010, 0.003]  # Known delays in seconds
         
@@ -635,7 +657,8 @@ class TestLatencyMonitor:
             assert abs(measured_latency - delay * 1000) < 1.0  # Convert to ms
     
     def test_statistics_calculation(self):
-        """Test latency statistics calculation"""
+        """
+Test latency statistics calculation"""
         # Record known latency values
         test_latencies = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]  # ms
         
@@ -654,7 +677,8 @@ class TestLatencyMonitor:
         assert stats['p99'] >= 9.5  # 99th percentile
     
     def test_threshold_monitoring(self):
-        """Test latency threshold monitoring"""
+        """
+Test latency threshold monitoring"""
         # Set thresholds
         warning_threshold = 5.0  # ms
         critical_threshold = 10.0  # ms
@@ -692,7 +716,8 @@ class TestLatencyMonitor:
         assert len(critical_alerts) >= 2  # Should detect critical cases
     
     def test_performance_trend_analysis(self):
-        """Test performance trend analysis"""
+        """
+Test performance trend analysis"""
         # Simulate degrading performance
         base_latency = 2.0
         
@@ -715,7 +740,8 @@ class TestLatencyMonitor:
         assert trend_analysis['trend_magnitude'] > 0
     
     def test_real_time_monitoring(self):
-        """Test real-time latency monitoring"""
+        """
+Test real-time latency monitoring"""
         monitoring_results = []
         
         def monitor_callback(stats):
@@ -747,10 +773,12 @@ class TestLatencyMonitor:
 
 
 class TestRealtimeConfig:
-    """Test RealtimeConfig data structure"""
+    """
+Test RealtimeConfig data structure"""
     
     def test_config_creation(self):
-        """Test RealtimeConfig creation"""
+        """
+Test RealtimeConfig creation"""
         config = RealtimeConfig(
             sample_rate=48000,
             buffer_size=128,
@@ -766,7 +794,8 @@ class TestRealtimeConfig:
         assert config.enable_adaptive_buffering is True
     
     def test_config_validation(self):
-        """Test config validation"""
+        """
+Test config validation"""
         # Valid config
         valid_config = RealtimeConfig(
             sample_rate=44100,
@@ -787,15 +816,18 @@ class TestRealtimeConfig:
 
 
 class TestAudioStream:
-    """Test AudioStream implementation"""
+    """
+Test AudioStream implementation"""
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_stream_creation(self):
-        """Test audio stream creation"""
+        """
+Test audio stream creation"""
         stream = AudioStream(
             sample_rate=44100,
             channels=2,
@@ -810,7 +842,8 @@ class TestAudioStream:
         assert hasattr(stream, 'output_callback')
     
     def test_stream_data_flow(self):
-        """Test stream data flow"""
+        """
+Test stream data flow"""
         received_data = []
         
         def data_callback(input_data, frame_count, time_info, status):
@@ -842,11 +875,13 @@ class TestRealtimeIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_complete_realtime_workflow(self):
-        """Test complete real-time processing workflow"""
+        """
+Test complete real-time processing workflow"""
         # Configure real-time system
         config = RealtimeConfig(
             sample_rate=44100,

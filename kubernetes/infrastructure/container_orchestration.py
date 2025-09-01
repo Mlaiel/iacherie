@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import yaml
@@ -23,13 +24,16 @@ import json
 logger = logging.getLogger(__name__)
 
 class OrchestrationPlatform(Enum):
-    """Supported orchestration platforms"""
+    """
+Supported orchestration platforms"""
+
     KUBERNETES = "kubernetes"
     DOCKER_SWARM = "docker_swarm"
     DOCKER_COMPOSE = "docker_compose"
 
 class DeploymentStrategy(Enum):
     """Deployment strategies"""
+
     ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -70,7 +74,8 @@ class NamespaceSpec:
     network_policies: Optional[List[Dict[str, Any]]] = None
 
 class ContainerOrchestrator:
-    """Main container orchestration manager"""
+    """
+Main container orchestration manager"""
     
     def __init__(self, platform: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES):
         self.platform = platform
@@ -79,7 +84,8 @@ class ContainerOrchestrator:
         self._init_clients()
         
     def _init_clients(self):
-        """Initialize orchestration clients"""
+        """
+Initialize orchestration clients"""
         try:
             if self.platform == OrchestrationPlatform.KUBERNETES:
                 config.load_incluster_config()
@@ -147,7 +153,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': f'Unsupported platform: {self.platform}'}
     
     async def _deploy_k8s_service(self, service_spec: ServiceSpec, namespace: str) -> Dict[str, Any]:
-        """Deploy service to Kubernetes"""
+        """
+Deploy service to Kubernetes"""
         try:
             # Create deployment
             deployment = self._create_k8s_deployment(service_spec, namespace)

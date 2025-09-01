@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Test: Complete FastAPI Application Startup
+"""
+Integration Test: Complete FastAPI Application Startup
 =====================================================
 
 Tests the complete startup process of the Ainflue FastAPI application including:
@@ -23,6 +25,7 @@ Tests the complete startup process of the Ainflue FastAPI application including:
 
 Author: Integration Test Suite
 """
+
 import asyncio
 import subprocess
 import time
@@ -39,7 +42,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestFastAPIApplicationStartup:
-    """Integration tests for FastAPI application startup"""
+    """
+Integration tests for FastAPI application startup"""
     
     @pytest.fixture(scope="class")
     def app_process(self):

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Visualization Module
+"""
+Ultra-Industrial Test Suite for Visualization Module
 
 This module provides comprehensive testing for visualization engines,
 chart generators, dashboard renderers, and interactive plotters.
@@ -48,6 +50,7 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -82,11 +85,13 @@ from ai.observability.visualization import (
 
 
 class TestVisualizationEngine:
-    """Ultra-industrial tests for VisualizationEngine class"""
+    """
+Ultra-industrial tests for VisualizationEngine class"""
     
     @pytest.fixture
     def visualization_engine(self):
-        """Create VisualizationEngine instance for testing"""
+        """
+Create VisualizationEngine instance for testing"""
         config = {
             "supported_backends": ["plotly", "d3js", "matplotlib", "bokeh"],
             "default_theme": "professional",
@@ -578,7 +583,8 @@ class TestChartGenerator:
     
     @pytest.fixture
     def chart_generator(self):
-        """Create ChartGenerator instance for testing"""
+        """
+Create ChartGenerator instance for testing"""
         config = {
             "default_backend": "plotly",
             "fallback_backends": ["matplotlib", "bokeh"],
@@ -940,7 +946,8 @@ class TestRealtimeVisualizer:
     
     @pytest.fixture
     def realtime_visualizer(self):
-        """Create RealtimeVisualizer instance for testing"""
+        """
+Create RealtimeVisualizer instance for testing"""
         config = {
             "update_interval_ms": 1000,
             "max_data_points": 1000,

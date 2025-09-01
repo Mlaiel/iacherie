@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Critical Crawlers
+"""
+Unit Tests for Critical Crawlers
 ================================
 
 Critical unit tests for the platform crawler modules including
@@ -21,6 +23,7 @@ Spotify, YouTube, and platform integration engine.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
 """
+
 import pytest
 import sys
 import os
@@ -34,7 +37,8 @@ import uuid
 
 
 class MockSpotifyCrawler:
-    """Mock implementation of Spotify crawler for testing"""
+    """
+Mock implementation of Spotify crawler for testing"""
     
     def __init__(self, client_id: str, client_secret: str):
         self.client_id = client_id
@@ -45,7 +49,8 @@ class MockSpotifyCrawler:
         self.crawled_artists = []
         
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""
+        """
+Authenticate with Spotify API"""
         if not self.client_id or not self.client_secret:
             return False
         
@@ -162,7 +167,8 @@ class MockYouTubeCrawler:
         self.crawled_channels = []
         
     async def search_videos(self, query: str, max_results: int = 25) -> Dict[str, Any]:
-        """Search for videos on YouTube"""
+        """
+Search for videos on YouTube"""
         if not self.api_key:
             raise Exception("API key required")
         
@@ -293,7 +299,8 @@ class MockPlatformIntegrationEngine:
         self.crawl_history = []
         
     async def register_platform(self, platform_name: str, crawler_instance: Any, credentials: Dict) -> bool:
-        """Register a platform crawler"""
+        """
+Register a platform crawler"""
         if not platform_name or not crawler_instance:
             return False
         
@@ -438,7 +445,8 @@ class TestCriticalCrawlers:
     
     @pytest.fixture
     def spotify_crawler(self):
-        """Create Spotify crawler fixture"""
+        """
+Create Spotify crawler fixture"""
         return MockSpotifyCrawler("test_client_id", "test_client_secret")
     
     @pytest.fixture
@@ -453,7 +461,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_spotify_authentication(self, spotify_crawler):
-        """Test Spotify authentication"""
+        """
+Test Spotify authentication"""
         # Test successful authentication
         auth_result = await spotify_crawler.authenticate()
         assert auth_result is True

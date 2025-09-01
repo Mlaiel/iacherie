@@ -18,6 +18,7 @@ Development Team Specialties:
 - DevOps & Infrastructure Engineer
 - AI Prompt Engineering Expert
 """
+
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Set, Union
 from dataclasses import dataclass, field, asdict
@@ -33,7 +34,9 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class SyncStatus(Enum):
-    """Cross-platform synchronization status"""
+    """
+Cross-platform synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -43,6 +46,7 @@ class SyncStatus(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     LATEST_WINS = "latest_wins"
     PLATFORM_PRIORITY = "platform_priority"
     MANUAL_REVIEW = "manual_review"
@@ -51,6 +55,7 @@ class ConflictResolution(Enum):
 
 class SyncDirection(Enum):
     """Synchronization direction"""
+
     BIDIRECTIONAL = "bidirectional"
     ONE_WAY_TO = "one_way_to"
     ONE_WAY_FROM = "one_way_from"
@@ -86,12 +91,14 @@ class PlatformContent:
         return self.checksum != other.checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 @dataclass
 class SyncRule:
-    """Cross-platform synchronization rule"""
+    """
+Cross-platform synchronization rule"""
     id: str
     name: str
     source_platforms: List[str]
@@ -108,7 +115,8 @@ class SyncRule:
 
 @dataclass
 class SyncOperation:
-    """Synchronization operation tracking"""
+    """
+Synchronization operation tracking"""
     id: str
     rule_id: str
     source_platform: str
@@ -124,7 +132,8 @@ class SyncOperation:
     
 @dataclass
 class ConflictItem:
-    """Content conflict requiring resolution"""
+    """
+Content conflict requiring resolution"""
     id: str
     content_id: str
     platforms: List[str]
@@ -137,20 +146,25 @@ class ConflictItem:
     resolution: Optional[str] = None
 
 class ContentTransformer(ABC):
-    """Abstract base class for content transformation"""
+    """
+Abstract base class for content transformation"""
     
     @abstractmethod
     async def transform(self, content: PlatformContent, target_platform: str) -> PlatformContent:
-        """Transform content for target platform"""
+        """
+Transform content for target platform"""
         pass
     
     @abstractmethod
     def can_transform(self, source_platform: str, target_platform: str) -> bool:
-        """Check if transformation is supported"""
+        """
+Check if transformation is supported"""
         pass
 
 class StandardContentTransformer(ContentTransformer):
-    """Standard content transformer with platform-specific adaptations"""
+    """
+Standard content transformer with platform-specific adaptations"""
+
     
     PLATFORM_LIMITS = {
         'twitter': {'text_limit': 280, 'hashtag_limit': 10, 'media_limit': 4},
@@ -162,11 +176,13 @@ class StandardContentTransformer(ContentTransformer):
     }
     
     def can_transform(self, source_platform: str, target_platform: str) -> bool:
-        """Check if transformation is supported"""
+        """
+Check if transformation is supported"""
         return target_platform.lower() in self.PLATFORM_LIMITS
     
     async def transform(self, content: PlatformContent, target_platform: str) -> PlatformContent:
-        """Transform content for target platform"""
+        """
+Transform content for target platform"""
         if not self.can_transform(content.platform, target_platform):
             raise ValueError(f"Transformation from {content.platform} to {target_platform} not supported")
         
@@ -200,20 +216,23 @@ class StandardContentTransformer(ContentTransformer):
             content.description = self._smart_truncate(content.description, text_limit)
     
     async def _apply_hashtag_limits(self, content: PlatformContent, limits: Dict[str, Any]):
-        """Apply hashtag limits"""
+        """
+Apply hashtag limits"""
         hashtag_limit = limits.get('hashtag_limit')
         if hashtag_limit and len(content.hashtags) > hashtag_limit:
             # Keep most important hashtags
             content.hashtags = content.hashtags[:hashtag_limit]
     
     async def _apply_media_limits(self, content: PlatformContent, limits: Dict[str, Any]):
-        """Apply media limits"""
+        """
+Apply media limits"""
         media_limit = limits.get('media_limit')
         if media_limit and len(content.media_urls) > media_limit:
             content.media_urls = content.media_urls[:media_limit]
     
     async def _apply_platform_specific_rules(self, content: PlatformContent, platform: str):
-        """Apply platform-specific formatting rules"""
+        """
+Apply platform-specific formatting rules"""
         platform_lower = platform.lower()
         
         if platform_lower == 'twitter':
@@ -227,7 +246,8 @@ class StandardContentTransformer(ContentTransformer):
             content.description = self._format_for_instagram(content.description)
     
     def _smart_truncate(self, text: str, limit: int) -> str:
-        """Intelligently truncate text preserving meaning"""
+        """
+Intelligently truncate text preserving meaning"""
         if len(text) <= limit:
             return text
         
@@ -264,7 +284,8 @@ class StandardContentTransformer(ContentTransformer):
         return text
     
     def _format_for_linkedin(self, text: str) -> str:
-        """Format text for LinkedIn professional style"""
+        """
+Format text for LinkedIn professional style"""
         # Add line breaks for better readability
         sentences = text.split('. ')
         if len(sentences) > 2:
@@ -273,7 +294,8 @@ class StandardContentTransformer(ContentTransformer):
         return text
     
     def _format_for_instagram(self, text: str) -> str:
-        """Format text for Instagram visual-first approach"""
+        """
+Format text for Instagram visual-first approach"""
         # Move hashtags to the end for cleaner appearance
         lines = text.split('\n')
         content_lines = []
@@ -292,7 +314,8 @@ class StandardContentTransformer(ContentTransformer):
         return formatted
 
 class ConflictResolver:
-    """Handles content conflicts between platforms"""
+    """
+Handles content conflicts between platforms"""
     
     def __init__(self):
         self.pending_conflicts: List[ConflictItem] = []
@@ -312,7 +335,8 @@ class ConflictResolver:
         }
     
     async def detect_conflicts(self, content_versions: List[PlatformContent]) -> List[ConflictItem]:
-        """Detect conflicts between content versions"""
+        """
+Detect conflicts between content versions"""
         conflicts = []
         
         # Group by content ID (base ID without platform suffix)
@@ -329,7 +353,8 @@ class ConflictResolver:
         return conflicts
     
     async def _check_version_conflicts(self, content_id: str, versions: List[PlatformContent]) -> List[ConflictItem]:
-        """Check for conflicts between content versions"""
+        """
+Check for conflicts between content versions"""
         conflicts = []
         
         # Compare all pairs of versions
@@ -355,7 +380,8 @@ class ConflictResolver:
         return conflicts
     
     def _determine_conflict_type(self, content_a: PlatformContent, content_b: PlatformContent) -> str:
-        """Determine the type of conflict between two content versions"""
+        """
+Determine the type of conflict between two content versions"""
         if content_a.title != content_b.title:
             return "title_mismatch"
         elif content_a.description != content_b.description:
@@ -405,7 +431,8 @@ class ConflictResolver:
         return conflict.target_content
     
     async def _resolve_platform_priority(self, conflict: ConflictItem) -> PlatformContent:
-        """Resolve by platform priority"""
+        """
+Resolve by platform priority"""
         source_priority = self.platform_priorities.get(conflict.source_content.platform, 10)
         target_priority = self.platform_priorities.get(conflict.target_content.platform, 10)
         
@@ -414,7 +441,8 @@ class ConflictResolver:
         return conflict.target_content
     
     async def _resolve_merge_content(self, conflict: ConflictItem) -> PlatformContent:
-        """Resolve by merging content from both versions"""
+        """
+Resolve by merging content from both versions"""
         source = conflict.source_content
         target = conflict.target_content
         
@@ -455,7 +483,8 @@ class ConflictResolver:
         return base
     
     async def _resolve_keep_both(self, conflict: ConflictItem) -> List[PlatformContent]:
-        """Resolve by keeping both versions as separate content"""
+        """
+Resolve by keeping both versions as separate content"""
         source = conflict.source_content
         target = conflict.target_content
         
@@ -483,7 +512,8 @@ class CrossPlatformSync:
         self.running = False
         
     async def start_sync_engine(self, num_workers: int = 3):
-        """Start the synchronization engine with worker tasks"""
+        """
+Start the synchronization engine with worker tasks"""
         if self.running:
             return
         
@@ -557,14 +587,16 @@ class CrossPlatformSync:
                 await self._trigger_rule_sync(rule)
     
     def _get_last_sync_time(self, rule_id: str) -> Optional[datetime]:
-        """Get last sync time for a rule"""
+        """
+Get last sync time for a rule"""
         for entry in reversed(self.sync_history):
             if entry.get('rule_id') == rule_id:
                 return entry.get('completed_at')
         return None
     
     async def _trigger_rule_sync(self, rule: SyncRule):
-        """Trigger synchronization for a rule"""
+        """
+Trigger synchronization for a rule"""
         logger.info(f"Triggering periodic sync for rule: {rule.name}")
         
         # Create sync operations for all content matching the rule
@@ -728,7 +760,8 @@ class CrossPlatformSync:
     
     async def _apply_transformation_rules(self, content: PlatformContent, 
                                         transformation_rules: Dict[str, Any]) -> PlatformContent:
-        """Apply transformation rules to content"""
+        """
+Apply transformation rules to content"""
         # Apply hashtag transformations
         if 'hashtag_mappings' in transformation_rules:
             mappings = transformation_rules['hashtag_mappings']
@@ -754,7 +787,8 @@ class CrossPlatformSync:
         return content
     
     async def _get_platform_content(self, platform: str, filters: Dict[str, Any]) -> List[PlatformContent]:
-        """Get content from platform with filters"""
+        """
+Get content from platform with filters"""
         # This would typically connect to platform APIs
         # For now, return cached content
         platform_content = [
@@ -775,7 +809,8 @@ class CrossPlatformSync:
         return platform_content
     
     async def _fetch_content(self, platform: str, content_id: str) -> Optional[PlatformContent]:
-        """Fetch content from platform"""
+        """
+Fetch content from platform"""
         # Check cache first
         cache_key = f"{platform}_{content_id}"
         if cache_key in self.content_cache:
@@ -813,7 +848,8 @@ class CrossPlatformSync:
             }
     
     def get_sync_status(self, operation_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a sync operation"""
+        """
+Get status of a sync operation"""
         operation = self.active_operations.get(operation_id)
         if operation:
             return {
@@ -835,7 +871,8 @@ class CrossPlatformSync:
         return None
     
     def get_sync_analytics(self, days_back: int = 7) -> Dict[str, Any]:
-        """Get synchronization analytics"""
+        """
+Get synchronization analytics"""
         cutoff_date = datetime.utcnow() - timedelta(days=days_back)
         
         recent_operations = [
@@ -873,7 +910,8 @@ class CrossPlatformSync:
         return dict(analytics)
     
     def get_pending_conflicts(self) -> List[Dict[str, Any]]:
-        """Get pending conflicts requiring resolution"""
+        """
+Get pending conflicts requiring resolution"""
         return [
             {
                 'id': conflict.id,
@@ -888,7 +926,8 @@ class CrossPlatformSync:
         ]
     
     async def resolve_manual_conflict(self, conflict_id: str, resolution: ConflictResolution) -> bool:
-        """Manually resolve a conflict"""
+        """
+Manually resolve a conflict"""
         for conflict in self.conflict_resolver.pending_conflicts:
             if conflict.id == conflict_id and not conflict.resolved:
                 conflict.suggested_resolution = resolution

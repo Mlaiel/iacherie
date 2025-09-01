@@ -4,11 +4,12 @@ Professional configuration system for content generation parameters,
 platform settings, and optimization preferences.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import os
 import json
 import yaml
@@ -24,12 +25,15 @@ from .content_models import Platform, ContentType, QualityLevel, BrandVoice, Con
 
 
 class ConfigurationError(Exception):
-    """Configuration-related errors"""
+    """
+Configuration-related errors"""
     pass
 
 
 class ConfigSource(str, Enum):
-    """Configuration source types"""
+    """
+Configuration source types"""
+
     ENVIRONMENT = "environment"
     FILE = "file"
     DATABASE = "database"
@@ -169,7 +173,8 @@ class SEOConfig:
 
 @dataclass
 class QualityConfig:
-    """Quality control configuration"""
+    """
+Quality control configuration"""
     enable_grammar_check: bool = True
     enable_spell_check: bool = True
     enable_readability_check: bool = True
@@ -489,7 +494,8 @@ class GenerationConfigManager:
         return self._configs.get(config_name, default)
     
     def update_config(self, config_name: str, config_data: Dict[str, Any]) -> None:
-        """Update configuration dynamically"""
+        """
+Update configuration dynamically"""
         if config_name in self._configs:
             self._configs[config_name].update(config_data)
         else:
@@ -535,7 +541,8 @@ class GenerationConfigManager:
         return False
     
     def get_all_configurations(self) -> Dict[str, Any]:
-        """Get all loaded configurations"""
+        """
+Get all loaded configurations"""
         return {
             "configurations": self._configs.copy(),
             "sources": self._config_sources.copy(),
@@ -593,7 +600,9 @@ GenerationConfig = AIModelConfig
 
 
 class ModelProvider:
-    """Model provider enumeration"""
+    """
+Model provider enumeration"""
+
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     COHERE = "cohere"
@@ -627,48 +636,58 @@ class ConfigValidator:
     
     @staticmethod
     def validate_temperature(temperature: float) -> bool:
-        """Validate temperature parameter"""
+        """
+Validate temperature parameter"""
         return 0.0 <= temperature <= 2.0
     
     @staticmethod
     def validate_token_limits(max_tokens: int) -> bool:
-        """Validate token limits"""
+        """
+Validate token limits"""
         return 1 <= max_tokens <= 8192
     
     @staticmethod
     def validate_model_compatibility(model: str, provider: str) -> bool:
-        """Validate model compatibility"""
+        """
+Validate model compatibility"""
         return True  # Simplified validation
 
 
 class ConfigLoader:
-    """Configuration loader utilities"""
+    """
+Configuration loader utilities"""
     
     @staticmethod
     def load_from_file(file_path: str) -> Dict[str, Any]:
-        """Load configuration from file"""
+        """
+Load configuration from file"""
         return {}
     
     @staticmethod
     def load_from_yaml(yaml_path: str) -> Dict[str, Any]:
-        """Load configuration from YAML"""
+        """
+Load configuration from YAML"""
         return {}
     
     @staticmethod
     def load_with_environment_override(config: Dict[str, Any]) -> Dict[str, Any]:
-        """Load with environment overrides"""
+        """
+Load with environment overrides"""
         return config
 
 
 class ConfigManager:
-    """Configuration manager utilities"""
+    """
+Configuration manager utilities"""
     
     def register_config(self, name: str, config: Any) -> None:
-        """Register a configuration"""
+        """
+Register a configuration"""
         pass
     
     def get_config_version(self, name: str) -> str:
-        """Get configuration version"""
+        """
+Get configuration version"""
         return "1.0.0"
     
     def get_config_templates(self) -> List[str]:
@@ -676,5 +695,6 @@ class ConfigManager:
         return []
     
     def cache_config(self, name: str, config: Any) -> None:
-        """Cache configuration"""
+        """
+Cache configuration"""
         pass

@@ -8,7 +8,8 @@ class PipelineOptimizer:
     """
     
     def __init__(self):
-        """Initialize the pipeline optimizer."""
+        """
+Initialize the pipeline optimizer."""
         self.logger = logger
         self.metrics = MetricsCollector()
         self.db_path = "/tmp/pipeline_optimizer.db"
@@ -62,7 +63,8 @@ class PipelineOptimizer:
         }
     
     def _has_gpu(self) -> bool:
-        """Check if GPU is available."""
+        """
+Check if GPU is available."""
         try:
             import torch
             return torch.cuda.is_available()
@@ -70,7 +72,8 @@ class PipelineOptimizer:
             return False
     
     def _setup_database(self) -> None:
-        """Setup SQLite database for pipeline optimization tracking."""
+        """
+Setup SQLite database for pipeline optimization tracking."""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -428,7 +431,8 @@ class PipelineOptimizer:
         input_data: Optional[Dict[str, Any]],
         task_results: Dict[str, Any]
     ) -> str:
-        """Generate cache key for task result."""
+        """
+Generate cache key for task result."""
         # Create deterministic cache key based on task and inputs
         key_components = [
             task.id,
@@ -442,7 +446,8 @@ class PipelineOptimizer:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     def _get_resource_snapshot(self) -> Dict[str, float]:
-        """Get current resource utilization snapshot."""
+        """
+Get current resource utilization snapshot."""
         try:
             import psutil
             
@@ -631,7 +636,8 @@ class PipelineOptimizer:
         task2: TaskNode,
         all_tasks: List[TaskNode]
     ) -> bool:
-        """Check if two tasks can run in parallel."""
+        """
+Check if two tasks can run in parallel."""
         # Tasks can run in parallel if they don't depend on each other
         # and their dependencies don't create a conflict
         
@@ -661,7 +667,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline for caching."""
+        """
+Optimize pipeline for caching."""
         # Identify cacheable tasks
         for task in tasks:
             # Tasks are cacheable if they are deterministic and don't have side effects
@@ -679,7 +686,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline for batch processing."""
+        """
+Optimize pipeline for batch processing."""
         # Group similar tasks for batch processing
         batch_groups = defaultdict(list)
         
@@ -703,7 +711,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline for data prefetching."""
+        """
+Optimize pipeline for data prefetching."""
         # Add prefetching hints for data-heavy tasks
         for task in tasks:
             if task.resource_requirements.get('data_intensive', False):
@@ -717,7 +726,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline for load balancing."""
+        """
+Optimize pipeline for load balancing."""
         # Distribute tasks based on resource requirements
         cpu_tasks = [t for t in tasks if t.resource_requirements.get('cpu_intensive')]
         memory_tasks = [t for t in tasks if t.resource_requirements.get('memory_intensive')]
@@ -740,7 +750,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline for resource pooling."""
+        """
+Optimize pipeline for resource pooling."""
         # Group tasks by resource type and create pools
         resource_pools = {
             'cpu_pool': [t for t in tasks if t.resource_requirements.get('cpu_intensive')],
@@ -760,7 +771,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline by fusing compatible tasks."""
+        """
+Optimize pipeline by fusing compatible tasks."""
         # Find sequential tasks that can be fused
         for i, task in enumerate(tasks[:-1]):
             next_task = tasks[i + 1]
@@ -780,7 +792,8 @@ class PipelineOptimizer:
         tasks: List[TaskNode],
         config: PipelineConfig
     ) -> List[TaskNode]:
-        """Optimize pipeline for lazy evaluation."""
+        """
+Optimize pipeline for lazy evaluation."""
         # Mark tasks for lazy evaluation if they produce intermediate results
         for task in tasks:
             # Check if task result is only used by one other task
@@ -797,7 +810,8 @@ class PipelineOptimizer:
         original_config: PipelineConfig,
         strategies: List[OptimizationStrategy]
     ) -> PipelineConfig:
-        """Create optimized pipeline configuration."""
+        """
+Create optimized pipeline configuration."""
         optimized_config = PipelineConfig(
             max_parallel_tasks=original_config.max_parallel_tasks,
             enable_caching=original_config.enable_caching,
@@ -827,7 +841,8 @@ class PipelineOptimizer:
         return optimized_config
     
     async def _measure_baseline_performance(self, pipeline_id: str) -> PipelineMetrics:
-        """Measure baseline pipeline performance."""
+        """
+Measure baseline pipeline performance."""
         # Use existing execution history or run a test execution
         if self.execution_history:
             return self.execution_history[-1]  # Return most recent execution
@@ -836,7 +851,8 @@ class PipelineOptimizer:
         return await self.execute_pipeline(pipeline_id, {'test_mode': True})
     
     async def _measure_optimized_performance(self, pipeline_id: str) -> PipelineMetrics:
-        """Measure optimized pipeline performance."""
+        """
+Measure optimized pipeline performance."""
         # Execute pipeline with optimizations
         return await self.execute_pipeline(pipeline_id, {'optimization_test': True})
     
@@ -845,7 +861,8 @@ class PipelineOptimizer:
         baseline: PipelineMetrics,
         optimized: PipelineMetrics
     ) -> Dict[str, float]:
-        """Calculate resource savings from optimization."""
+        """
+Calculate resource savings from optimization."""
         savings = {}
         
         # CPU savings
@@ -872,7 +889,8 @@ class PipelineOptimizer:
         baseline: PipelineMetrics,
         optimized: PipelineMetrics
     ) -> List[str]:
-        """Generate optimization recommendations."""
+        """
+Generate optimization recommendations."""
         recommendations = []
         
         # Analyze bottlenecks
@@ -929,7 +947,8 @@ class PipelineOptimizer:
         metrics: PipelineMetrics,
         config: PipelineConfig
     ) -> None:
-        """Save pipeline execution record."""
+        """
+Save pipeline execution record."""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -1013,7 +1032,8 @@ class PipelineOptimizer:
         }
     
     async def get_performance_report(self, pipeline_id: Optional[str] = None) -> Dict[str, Any]:
-        """Generate comprehensive performance report."""
+        """
+Generate comprehensive performance report."""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -1133,7 +1153,9 @@ class PipelineOptimizer:
                 self.process_executor.shutdown(wait=False)
         except:
             pass
-    """Types of pipelines that can be optimized"""
+    """
+Types of pipelines that can be optimized"""
+
     DATA_PROCESSING = "data_processing"
     ML_TRAINING = "ml_training"
     ML_INFERENCE = "ml_inference"
@@ -1147,6 +1169,7 @@ class PipelineOptimizer:
 
 class OptimizationObjective(Enum):
     """Pipeline optimization objectives"""
+
     MINIMIZE_LATENCY = "minimize_latency"
     MAXIMIZE_THROUGHPUT = "maximize_throughput"
     MINIMIZE_COST = "minimize_cost"
@@ -1157,6 +1180,7 @@ class OptimizationObjective(Enum):
 
 class PipelineStage(Enum):
     """Pipeline execution stages"""
+
     PREPROCESSING = "preprocessing"
     PROCESSING = "processing"
     POSTPROCESSING = "postprocessing"
@@ -1185,7 +1209,8 @@ class PipelineMetrics:
 
 @dataclass
 class OptimizationPlan:
-    """Pipeline optimization execution plan"""
+    """
+Pipeline optimization execution plan"""
     pipeline_id: str
     optimization_strategies: List[str]
     expected_improvements: Dict[str, float]
@@ -1198,7 +1223,8 @@ class OptimizationPlan:
 
 @dataclass
 class PipelineNode:
-    """Individual pipeline node/stage definition"""
+    """
+Individual pipeline node/stage definition"""
     node_id: str
     node_type: str
     function: Callable
@@ -1547,7 +1573,8 @@ class PipelineOptimizer:
         return graph
 
     async def _calculate_pipeline_complexity(self, graph: nx.DiGraph) -> Dict[str, float]:
-        """Calculate pipeline complexity metrics"""
+        """
+Calculate pipeline complexity metrics"""
         complexity = {}
         
         # Basic graph metrics
@@ -1574,7 +1601,8 @@ class PipelineOptimizer:
         return complexity
 
     def _calculate_parallelism_potential(self, graph: nx.DiGraph) -> float:
-        """Calculate how much of the pipeline can be parallelized"""
+        """
+Calculate how much of the pipeline can be parallelized"""
         total_nodes = graph.number_of_nodes()
         if total_nodes == 0:
             return 0.0
@@ -1603,7 +1631,8 @@ class PipelineOptimizer:
         return parallel_nodes / total_nodes
 
     async def _establish_performance_baseline(self, pipeline_id: str) -> PipelineMetrics:
-        """Establish performance baseline for pipeline"""
+        """
+Establish performance baseline for pipeline"""
         try:
             # Run baseline performance test
             baseline_metrics = await self._run_pipeline_performance_test(pipeline_id)
@@ -1702,7 +1731,8 @@ class PipelineOptimizer:
         opportunities: List[Dict[str, Any]],
         constraints: Optional[Dict[str, Any]]
     ) -> OptimizationPlan:
-        """Generate detailed optimization execution plan"""
+        """
+Generate detailed optimization execution plan"""
         
         # Select optimization strategies based on opportunities and constraints
         selected_strategies = []
@@ -1761,7 +1791,8 @@ class PipelineOptimizer:
         )
 
     async def _execute_optimization_plan(self, plan: OptimizationPlan) -> bool:
-        """Execute the optimization plan"""
+        """
+Execute the optimization plan"""
         try:
             logger.info(f"Executing optimization plan for pipeline: {plan.pipeline_id}")
             

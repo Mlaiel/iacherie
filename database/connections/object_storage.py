@@ -11,6 +11,7 @@ Manages object storage connections for content files and assets:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import os
@@ -29,7 +30,8 @@ from minio.error import S3Error
 
 @dataclass
 class ObjectStorageConfig:
-    """Object storage connection configuration"""
+    """
+Object storage connection configuration"""
     provider: str = "s3"  # s3, minio, gcs, azure
     # S3/MinIO configuration
     endpoint_url: Optional[str] = None
@@ -86,7 +88,8 @@ class ObjectStorageConnectionHandler:
         self.bucket_exists = False
     
     def _get_default_content_types(self) -> Dict[str, str]:
-        """Get default content type mappings"""
+        """
+Get default content type mappings"""
         return {
             "audio": "audio/",
             "video": "video/", 

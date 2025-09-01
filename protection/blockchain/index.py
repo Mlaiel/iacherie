@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Blockchain service status"""
+    """
+Blockchain service status"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     MAINTENANCE = "maintenance"
@@ -318,7 +321,8 @@ class BlockchainContentProtectionHub:
             return False
     
     async def _check_nft_health(self) -> bool:
-        """Check NFT manager health"""
+        """
+Check NFT manager health"""
         try:
             # Test NFT operations
             return await self.nft_manager.test_connection()
@@ -326,7 +330,8 @@ class BlockchainContentProtectionHub:
             return False
     
     async def _check_payment_health(self) -> bool:
-        """Check payment processor health"""
+        """
+Check payment processor health"""
         try:
             # Test payment processing capability
             return await self.payment_processor.test_connection()
@@ -334,7 +339,8 @@ class BlockchainContentProtectionHub:
             return False
     
     async def _check_defi_health(self) -> bool:
-        """Check DeFi integration health"""
+        """
+Check DeFi integration health"""
         try:
             # Test DeFi protocol connectivity
             return await self.defi_integration.test_protocols()
@@ -342,7 +348,8 @@ class BlockchainContentProtectionHub:
             return False
     
     async def _check_monitoring_health(self) -> bool:
-        """Check monitoring service health"""
+        """
+Check monitoring service health"""
         try:
             # Test monitoring capabilities
             return self.monitor.is_healthy()

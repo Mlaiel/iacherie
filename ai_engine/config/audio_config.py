@@ -4,7 +4,7 @@
 =========================================
 
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
-Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
+Copyright (c) 2025 Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This software and its source code are the exclusive property of Fahed Mlaiel.
@@ -34,6 +34,7 @@ Ultra-advanced audio processing configuration for musicians, podcasters, audio c
 and multi-media professionals. Supports enterprise-grade audio quality, AI-powered noise reduction,
 real-time processing, format optimization, streaming, and professional mastering workflows.
 """
+
 import os
 import json
 import asyncio
@@ -66,7 +67,8 @@ logger.setLevel(logging.INFO)
 
 
 class AudioFormat(Enum):
-    """Ultra-comprehensive audio formats with enterprise support"""
+    """
+Ultra-comprehensive audio formats with enterprise support"""
     # Lossless formats
     WAV = "wav"
     FLAC = "flac"
@@ -100,6 +102,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(IntEnum):
     """Ultra-detailed audio quality levels with bit rates"""
+
     PHONE_QUALITY = 64      # Phone calls, voice memos
     LOW_QUALITY = 128       # Basic streaming
     STANDARD_QUALITY = 256  # Good streaming
@@ -113,7 +116,8 @@ class AudioQuality(IntEnum):
 
 
 class SampleRate(Enum):
-    """Ultra-comprehensive sample rates for all use cases"""
+    """
+Ultra-comprehensive sample rates for all use cases"""
     # Standard rates
     SR_8000 = 8000      # Telephone quality
     SR_11025 = 11025    # Low quality
@@ -138,7 +142,9 @@ class SampleRate(Enum):
 
 
 class BitDepth(Enum):
-    """Audio bit depths for different quality levels"""
+    """
+Audio bit depths for different quality levels"""
+
     BIT_8 = 8       # Legacy, low quality
     BIT_16 = 16     # CD quality
     BIT_20 = 20     # DVD-Audio
@@ -150,6 +156,7 @@ class BitDepth(Enum):
 
 class AudioChannelConfig(Enum):
     """Audio channel configurations"""
+
     MONO = "1.0"
     STEREO = "2.0"
     STEREO_SURROUND = "2.1"
@@ -168,6 +175,7 @@ class AudioChannelConfig(Enum):
 
 class AudioProcessingMode(Enum):
     """Audio processing modes"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -180,6 +188,7 @@ class AudioProcessingMode(Enum):
 
 class NoiseReductionAlgorithm(Enum):
     """Advanced noise reduction algorithms"""
+
     SPECTRAL_SUBTRACTION = "spectral_subtraction"
     WIENER_FILTER = "wiener_filter"
     KALMAN_FILTER = "kalman_filter"
@@ -194,6 +203,7 @@ class NoiseReductionAlgorithm(Enum):
 
 class AudioEnhancementType(Enum):
     """Audio enhancement types"""
+
     NOISE_REDUCTION = "noise_reduction"
     ECHO_CANCELLATION = "echo_cancellation"
     REVERB_REMOVAL = "reverb_removal"
@@ -210,6 +220,7 @@ class AudioEnhancementType(Enum):
 
 class AudioAnalysisType(Enum):
     """Audio analysis types"""
+
     SPECTRAL_ANALYSIS = "spectral_analysis"
     PITCH_DETECTION = "pitch_detection"
     TEMPO_DETECTION = "tempo_detection"
@@ -235,13 +246,16 @@ class AudioAnalysisType(Enum):
 
 class BitDepth(Enum):
     """Audio bit depths"""
+
     BIT_16 = 16  # CD Quality
     BIT_24 = 24  # Professional
     BIT_32 = 32  # Studio Float
 
 
 class NoiseReductionLevel(Enum):
-    """Noise reduction levels"""
+    """
+Noise reduction levels"""
+
     OFF = "off"
     LIGHT = "light"
     MODERATE = "moderate"
@@ -251,6 +265,7 @@ class NoiseReductionLevel(Enum):
 
 class AudioEffect(Enum):
     """Audio effects"""
+
     COMPRESSOR = "compressor"
     EQUALIZER = "equalizer"
     REVERB = "reverb"
@@ -274,7 +289,8 @@ class AudioQualityConfig:
 
 @dataclass
 class NoiseReductionConfig:
-    """Noise reduction configuration"""
+    """
+Noise reduction configuration"""
     enabled: bool = True
     default_level: NoiseReductionLevel = NoiseReductionLevel.MODERATE
     
@@ -427,7 +443,8 @@ class StreamingOptimizationConfig:
 
 @dataclass
 class AnalysisConfig:
-    """Audio analysis configuration"""
+    """
+Audio analysis configuration"""
     enabled: bool = True
     
     # Content analysis
@@ -462,7 +479,8 @@ class AnalysisConfig:
 
 @dataclass
 class ProcessingConfig:
-    """Audio processing configuration"""
+    """
+Audio processing configuration"""
     enabled: bool = True
     
     # Processing pipeline
@@ -726,7 +744,8 @@ class AudioConfig:
         return asdict(self)
 
     def import_settings(self, settings: Dict[str, Any]):
-        """Import configuration from dictionary"""
+        """
+Import configuration from dictionary"""
         # This would update the configuration from provided settings
         # Implementation would handle enum conversions and validation
         pass

@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpectralAnalysisResult:
-    """Real-time spectral analysis result"""
+    """
+Real-time spectral analysis result"""
     analysis_id: str
     tempo: float
     key: str
@@ -274,7 +275,8 @@ class RealTimeMusicAgent:
         return min(1.0, quality_score)
     
     def _simple_genre_classification(self, energy: float, data_size: int) -> str:
-        """Simple genre classification for basic mode"""
+        """
+Simple genre classification for basic mode"""
         if energy > 0.7:
             return "High Energy"
         elif energy > 0.4:

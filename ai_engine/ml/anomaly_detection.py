@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive anomaly detection capabilities for content protection,
 fraud detection, and automated content moderation using advanced ML algorithms.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -28,7 +29,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AnomalyType(Enum):
-    """Types of anomalies that can be detected"""
+    """
+Types of anomalies that can be detected"""
+
     CONTENT_ANOMALY = "content_anomaly"
     BEHAVIORAL_ANOMALY = "behavioral_anomaly" 
     FRAUD_PATTERN = "fraud_pattern"
@@ -39,6 +42,7 @@ class AnomalyType(Enum):
 
 class SeverityLevel(Enum):
     """Severity levels for detected anomalies"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -57,7 +61,8 @@ class AnomalyAlert:
 
 @dataclass
 class DetectionConfig:
-    """Configuration for anomaly detection"""
+    """
+Configuration for anomaly detection"""
     sensitivity: float = 0.8
     min_confidence: float = 0.7
     lookback_hours: int = 24
@@ -65,7 +70,8 @@ class DetectionConfig:
     custom_rules: List[Dict[str, Any]] = None
 
 class BaseDetector(ABC):
-    """Base class for all anomaly detectors"""
+    """
+Base class for all anomaly detectors"""
     
     def __init__(self, config: DetectionConfig):
         self.config = config
@@ -74,16 +80,19 @@ class BaseDetector(ABC):
     
     @abstractmethod
     def _initialize_models(self):
-        """Initialize detection models"""
+        """
+Initialize detection models"""
         pass
     
     @abstractmethod
     def detect(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect anomalies in the provided data"""
+        """
+Detect anomalies in the provided data"""
         pass
 
 class AnomalyDetector(BaseDetector):
-    """General purpose anomaly detector"""
+    """
+General purpose anomaly detector"""
     
     def __init__(self, config: Optional[DetectionConfig] = None):
         if config is None:
@@ -271,7 +280,8 @@ class AnomalyDetector(BaseDetector):
         return False
 
 class FraudDetector(BaseDetector):
-    """Specialized fraud detection system"""
+    """
+Specialized fraud detection system"""
     
     def __init__(self, config: Optional[DetectionConfig] = None):
         if config is None:
@@ -445,7 +455,8 @@ class FraudDetector(BaseDetector):
         return ip_address in self.suspicious_ips
 
 class ContentModerator(BaseDetector):
-    """Automated content moderation system"""
+    """
+Automated content moderation system"""
     
     def __init__(self, config: Optional[DetectionConfig] = None):
         if config is None:
@@ -605,12 +616,13 @@ class ContentModerator(BaseDetector):
         """Check for potential copyright violations"""
         # Simplified copyright check
         text = content.get('text', '')
-        if 'copyright' in text.lower() or '©' in text:
+        if 'copyright' in text.lower() or '(c)' in text:
             return True
         return False
     
     def _check_privacy_risk(self, content: Dict[str, Any]) -> bool:
-        """Check for potential privacy violations"""
+        """
+Check for potential privacy violations"""
         # Simplified privacy check
         text = content.get('text', '')
         privacy_indicators = ['phone number', 'email', 'address', 'ssn']

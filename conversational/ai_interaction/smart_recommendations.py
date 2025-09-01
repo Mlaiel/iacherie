@@ -5,8 +5,9 @@ Intelligent recommendation system for content creators.
 Provides personalized suggestions, optimization advice, and strategic insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
+    """
+Types of recommendations"""
+
     CONTENT_CREATION = "content_creation"
     OPTIMIZATION = "optimization"
     MONETIZATION = "monetization"
@@ -41,6 +44,7 @@ class RecommendationType(Enum):
 
 class RecommendationPriority(Enum):
     """Recommendation priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -50,6 +54,7 @@ class RecommendationPriority(Enum):
 
 class RecommendationCategory(Enum):
     """Recommendation categories"""
+
     TECHNICAL = "technical"
     CREATIVE = "creative"
     BUSINESS = "business"
@@ -71,7 +76,8 @@ class RecommendationMetrics:
 
 @dataclass
 class RecommendationContext:
-    """Context for generating recommendations"""
+    """
+Context for generating recommendations"""
     user_id: str
     creator_type: str
     current_goals: List[str]
@@ -86,7 +92,8 @@ class RecommendationContext:
 
 @dataclass
 class Recommendation:
-    """Individual recommendation structure"""
+    """
+Individual recommendation structure"""
     recommendation_id: str
     type: RecommendationType
     category: RecommendationCategory
@@ -106,7 +113,8 @@ class Recommendation:
 
 @dataclass
 class RecommendationSet:
-    """Set of related recommendations"""
+    """
+Set of related recommendations"""
     set_id: str
     title: str
     description: str
@@ -134,7 +142,8 @@ class SmartRecommendations:
         self._scoring_models = {}
         
     async def initialize(self) -> None:
-        """Initialize the smart recommendations engine"""
+        """
+Initialize the smart recommendations engine"""
         try:
             await self.ai_models.load_recommendation_models()
             await self.recommendation_engine.initialize()
@@ -704,13 +713,15 @@ class SmartRecommendations:
     async def _generate_monetization_recommendations(
         self, context: RecommendationContext, limit: int
     ) -> List[Recommendation]:
-        """Generate monetization recommendations"""
+        """
+Generate monetization recommendations"""
         # Implementation for monetization recommendations
         return []
     
     # Helper methods for context building and analysis
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile data"""
+        """
+Get user profile data"""
         # Implementation to fetch user profile
         return {
             "creator_type": "musician",

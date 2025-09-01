@@ -1,4 +1,5 @@
 """Email notification service using SendGrid or SMTP."""
+
 import os
 from typing import Dict, List, Optional
 from datetime import datetime
@@ -177,7 +178,7 @@ class EmailNotifier:
             The IA Influencer Agent Team</p>
             
             <hr>
-            <p><small>Copyright © 2025 Fahed Mlaiel. All rights reserved.</small></p>
+            <p><small>Copyright (c) 2025 Fahed Mlaiel. All rights reserved.</small></p>
         </body>
         </html>
         """

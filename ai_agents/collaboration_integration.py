@@ -323,7 +323,8 @@ async def start_collaboration(
     collaboration_type: str,
     project_details: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Convenience function to start a collaboration workflow"""
+    """
+Convenience function to start a collaboration workflow"""
     manager = get_collaboration_manager()
     return await manager.start_collaboration_workflow(creator_id, collaboration_type, project_details)
 
@@ -332,7 +333,8 @@ async def find_collaborators(
     creator_profile: Dict[str, Any],
     requirements: Dict[str, Any]
 ) -> List[Dict[str, Any]]:
-    """Convenience function to find collaboration matches"""
+    """
+Convenience function to find collaboration matches"""
     manager = get_collaboration_manager()
     return await manager.get_collaboration_matches(creator_id, creator_profile, requirements)
 
@@ -340,12 +342,14 @@ async def create_project_listing(
     creator_id: str,
     project_data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Convenience function to create marketplace listing"""
+    """
+Convenience function to create marketplace listing"""
     manager = get_collaboration_manager()
     return await manager.create_marketplace_listing(creator_id, project_data)
 
 async def assess_content_quality(content_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Convenience function to run quality assessment"""
+    """
+Convenience function to run quality assessment"""
     manager = get_collaboration_manager()
     return await manager.run_quality_check(content_data)
 

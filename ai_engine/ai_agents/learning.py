@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Any, Optional, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class LearningMode(Enum):
-    """Learning modes for agent adaptation."""
+    """
+Learning modes for agent adaptation."""
+
     SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"  
     REINFORCEMENT = "reinforcement"
@@ -46,7 +49,8 @@ class LearningMetrics:
 
 @dataclass
 class PersonalizationProfile:
-    """User personalization profile."""
+    """
+User personalization profile."""
     user_id: str
     preferences: Dict[str, Any] = field(default_factory=dict)
     behavior_patterns: Dict[str, List[float]] = field(default_factory=dict)
@@ -56,13 +60,15 @@ class PersonalizationProfile:
 
 
 class AgentLearningSystem:
-    """Advanced learning system for AI agents."""
+    """
+Advanced learning system for AI agents."""
     
     def __init__(self, 
                  learning_rate: float = 0.01,
                  adaptation_threshold: float = 0.1,
                  max_memory_size: int = 10000):
-        """Initialize the learning system."""
+        """
+Initialize the learning system."""
         self.learning_rate = learning_rate
         self.adaptation_threshold = adaptation_threshold
         self.max_memory_size = max_memory_size
@@ -128,7 +134,8 @@ class AgentLearningSystem:
             })
     
     def _reinforcement_learning(self, data: Dict, reward: float):
-        """Reinforcement learning implementation."""
+        """
+Reinforcement learning implementation."""
         # Q-learning inspired update
         current_value = self._get_state_value(data)
         new_value = current_value + self.learning_rate * (reward - current_value)
@@ -139,7 +146,8 @@ class AgentLearningSystem:
             self.metrics.improvement_rate += 0.1
     
     def _unsupervised_learning(self, data: Dict):
-        """Unsupervised learning implementation."""
+        """
+Unsupervised learning implementation."""
         # Pattern recognition and clustering
         patterns = self._extract_patterns(data)
         for pattern in patterns:
@@ -149,7 +157,8 @@ class AgentLearningSystem:
             self.knowledge_base[pattern]['contexts'].append(data)
     
     def _predict(self, data: Dict) -> float:
-        """Predict outcome based on current knowledge."""
+        """
+Predict outcome based on current knowledge."""
         # Simple prediction based on knowledge base
         prediction = 0.5  # Default neutral prediction
         
@@ -163,19 +172,22 @@ class AgentLearningSystem:
         return prediction
     
     def _get_state_value(self, data: Dict) -> float:
-        """Get current state value."""
+        """
+Get current state value."""
         state_key = str(sorted(data.items()))
         return self.knowledge_base.get(state_key, {}).get('value', 0.0)
     
     def _update_state_value(self, data: Dict, value: float):
-        """Update state value."""
+        """
+Update state value."""
         state_key = str(sorted(data.items()))
         if state_key not in self.knowledge_base:
             self.knowledge_base[state_key] = {}
         self.knowledge_base[state_key]['value'] = value
     
     def _extract_patterns(self, data: Dict) -> List[str]:
-        """Extract patterns from data."""
+        """
+Extract patterns from data."""
         patterns = []
         for key, value in data.items():
             if isinstance(value, str):
@@ -232,7 +244,8 @@ class AgentLearningSystem:
         }
     
     def reset_learning(self):
-        """Reset learning state."""
+        """
+Reset learning state."""
         self.metrics = LearningMetrics()
         self.memory = []
         self.knowledge_base = {}
@@ -244,7 +257,8 @@ class PersonalizationEngine:
     """Engine for personalizing user experience."""
     
     def __init__(self):
-        """Initialize personalization engine."""
+        """
+Initialize personalization engine."""
         self.profiles = {}
         self.global_patterns = {}
         self.learning_system = AgentLearningSystem()
@@ -265,7 +279,8 @@ class PersonalizationEngine:
     def update_preferences(self, 
                           user_id: str, 
                           preferences: Dict[str, Any]) -> bool:
-        """Update user preferences."""
+        """
+Update user preferences."""
         try:
             if user_id not in self.profiles:
                 self.create_profile(user_id)

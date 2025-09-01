@@ -11,6 +11,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import hashlib
 import hmac
 import secrets
@@ -29,7 +30,9 @@ from backend.core.logging import SecurityLogger
 
 
 class SessionSecurityLevel(Enum):
-    """Session security levels"""
+    """
+Session security levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -38,6 +41,7 @@ class SessionSecurityLevel(Enum):
 
 class SessionStatus(Enum):
     """Session status values"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -62,7 +66,8 @@ class SessionFingerprint:
         self.fingerprint_hash = self._generate_fingerprint_hash()
     
     def _generate_fingerprint_hash(self) -> str:
-        """Generate unique fingerprint hash"""
+        """
+Generate unique fingerprint hash"""
         fingerprint_data = {
             "user_agent": self.user_agent,
             "ip_address": self.ip_address,
@@ -97,7 +102,8 @@ class SecureSession:
 
 
 class SessionSecurityManager:
-    """Enhanced session security management"""
+    """
+Enhanced session security management"""
     
     def __init__(self):
         self.logger = SecurityLogger("SessionSecurityManager")
@@ -285,7 +291,8 @@ class SessionSecurityManager:
         return secrets.token_urlsafe(len(session_data))[:48]  # Truncate to reasonable length
     
     async def _enforce_concurrent_session_limit(self, user_id: str):
-        """Enforce maximum concurrent sessions per user"""
+        """
+Enforce maximum concurrent sessions per user"""
         try:
             user_sessions = await self._get_active_user_sessions(user_id)
             
@@ -452,7 +459,8 @@ class SessionSecurityManager:
         return 2 <= current_hour <= 5
     
     async def _handle_suspicious_activity(self, session: SecureSession, reason: str):
-        """Handle detected suspicious activity"""
+        """
+Handle detected suspicious activity"""
         try:
             session.status = SessionStatus.SUSPICIOUS
             session.metadata[f"suspicious_reason"] = reason
@@ -589,7 +597,8 @@ class SessionSecurityManager:
         return [s for s in all_sessions if s.status == SessionStatus.ACTIVE]
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""
+        """
+Check if IP address is suspicious"""
         try:
             # Check if IP is private/local
             ip = ipaddress.ip_address(ip_address)
@@ -604,7 +613,8 @@ class SessionSecurityManager:
             return True  # Invalid IP is suspicious
     
     async def _get_country_from_ip(self, ip_address: str) -> str:
-        """Get country code from IP address"""
+        """
+Get country code from IP address"""
         # In production, use GeoIP service
         # For now, return a mock country
         return "US"
@@ -714,6 +724,7 @@ async def validate_session_security(
     session_id: str,
     fingerprint: SessionFingerprint
 ) -> Tuple[bool, Optional[SecureSession]]:
-    """Validate session security"""
+    """
+Validate session security"""
     manager = SessionSecurityManager()
     return await manager.validate_session(session_id, fingerprint)

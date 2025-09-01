@@ -6,6 +6,7 @@ for creators on the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ActivityCategory(str, Enum):
-    """Activity categories for classification."""
+    """
+Activity categories for classification."""
+
     AUTHENTICATION = "authentication"
     CONTENT_MANAGEMENT = "content_management"
     PROFILE_MANAGEMENT = "profile_management"
@@ -48,6 +51,7 @@ class ActivityCategory(str, Enum):
 
 class InteractionType(str, Enum):
     """Content interaction types."""
+
     VIEW = "view"
     LIKE = "like"
     SHARE = "share"
@@ -68,7 +72,8 @@ class SessionData(BaseModel):
 
 
 class ActivityFilter(BaseModel):
-    """Activity filtering options."""
+    """
+Activity filtering options."""
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     activity_types: Optional[List[ActivityType]] = None
@@ -662,7 +667,8 @@ class ActivityManager:
         return category_mapping.get(activity_type, ActivityCategory.CONTENT_MANAGEMENT)
         
     async def _update_activity_cache(self, client_id: UUID, activity: ClientActivity) -> None:
-        """Update real-time activity cache."""
+        """
+Update real-time activity cache."""
         cache_key = f"recent_activity:{client_id}"
         recent_activities = await self.redis_cache.get(cache_key) or []
         
@@ -689,7 +695,8 @@ class ActivityManager:
         pass
         
     async def _update_engagement_metrics(self, activity: ClientActivity) -> None:
-        """Update engagement metrics for activity."""
+        """
+Update engagement metrics for activity."""
         if activity.content_id:
             await self.engagement_analytics.record_activity(
                 content_id=activity.content_id,
@@ -701,7 +708,8 @@ class ActivityManager:
         content_id: UUID,
         interaction_type: InteractionType
     ) -> None:
-        """Update real-time engagement metrics."""
+        """
+Update real-time engagement metrics."""
         cache_key = f"engagement:{content_id}"
         engagement_data = await self.redis_cache.get(cache_key) or {}
         

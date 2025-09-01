@@ -27,6 +27,7 @@ for cross-modal analysis and intelligence fusion. Unauthorized use, copying,
 or reverse engineering is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -81,7 +82,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModalityType(Enum):
-    """Types of conversation modalities"""
+    """
+Types of conversation modalities"""
+
     TEXT = "text"
     VOICE = "voice"
     IMAGE = "image"
@@ -91,6 +94,7 @@ class ModalityType(Enum):
 
 class ConversationFormat(Enum):
     """Conversation format types"""
+
     CHAT_TEXT = "chat_text"
     VOICE_MESSAGE = "voice_message"
     VIDEO_CALL = "video_call"
@@ -132,7 +136,8 @@ class MultiModalAnalysisResult:
 
 @dataclass
 class VoiceAnalysisResult:
-    """Voice conversation analysis result"""
+    """
+Voice conversation analysis result"""
     transcription: str = ""
     emotion_detection: Dict[str, float] = field(default_factory=dict)
     speaker_identification: str = ""
@@ -645,7 +650,8 @@ class VoiceConversationAnalyzer:
     async def analyze_voice_conversation(self,
                                        audio_data: bytes,
                                        conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze voice conversation with advanced intelligence"""
+        """
+Analyze voice conversation with advanced intelligence"""
         try:
             # Voice processing and transcription
             transcription_result = await self._process_voice_transcription(audio_data)
@@ -688,7 +694,8 @@ class TextConversationProcessor:
     async def process_text_conversation(self,
                                       text_content: str,
                                       conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text conversation with advanced NLP intelligence"""
+        """
+Process text conversation with advanced NLP intelligence"""
         try:
             # Advanced text preprocessing
             processed_text = await self._advanced_text_preprocessing(text_content)
@@ -733,7 +740,8 @@ class ImageContextAnalyzer:
     async def analyze_image_context(self,
                                   image_data: bytes,
                                   conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image context for conversation intelligence"""
+        """
+Analyze image context for conversation intelligence"""
         try:
             # Image preprocessing and analysis
             image_analysis = await self._comprehensive_image_analysis(image_data)
@@ -778,7 +786,8 @@ class VideoConversationIntelligence:
     async def analyze_video_conversation(self,
                                        video_data: bytes,
                                        conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video conversation with comprehensive intelligence"""
+        """
+Analyze video conversation with comprehensive intelligence"""
         try:
             # Comprehensive video analysis
             video_analysis = await self._comprehensive_video_analysis(video_data)

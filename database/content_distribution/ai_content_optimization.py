@@ -8,7 +8,7 @@ for multi-platform content distribution.
 Business Logic: Content Upload → AI Protection → AI Optimization → Enhanced Distribution → Maximized Reach
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + ML Engineer + 
 SEO Specialist + Content Optimization Expert + NLP Engineer + Data Scientist + 
@@ -27,6 +27,7 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Permanent injunction against unauthorized use
 - Full recovery of legal costs and fees
 """
+
 import asyncio
 import json
 import uuid
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OptimizationType(str, Enum):
-    """Types of AI content optimization"""
+    """
+Types of AI content optimization"""
+
     SEO_OPTIMIZATION = "seo_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
     ENGAGEMENT_PREDICTION = "engagement_prediction"
@@ -68,6 +71,7 @@ class OptimizationType(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for optimization"""
+
     MUSIC = "music"
     VIDEO = "video"
     BLOG_POST = "blog_post"
@@ -81,6 +85,7 @@ class ContentCategory(str, Enum):
 
 class OptimizationPriority(str, Enum):
     """Optimization priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -89,6 +94,7 @@ class OptimizationPriority(str, Enum):
 
 class OptimizationStatus(str, Enum):
     """Status of optimization process"""
+
     PENDING = "pending"
     ANALYZING = "analyzing"
     OPTIMIZING = "optimizing"
@@ -232,7 +238,8 @@ class OptimizationRequest:
 
 @dataclass
 class OptimizationResult:
-    """Result of AI content optimization"""
+    """
+Result of AI content optimization"""
     optimization_id: str
     content_id: str
     optimization_score: float
@@ -252,7 +259,8 @@ class AIContentOptimizationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the AI content optimization manager"""
+        """
+Initialize the AI content optimization manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
@@ -609,7 +617,8 @@ class AIContentOptimizationManager:
         }
     
     async def _optimize_seo(self, content_data: Dict[str, Any], analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for SEO using AI"""
+        """
+Optimize content for SEO using AI"""
         # Mock implementation - would use actual SEO optimization algorithms
         return {
             'seo_score': 0.85,
@@ -626,7 +635,8 @@ class AIContentOptimizationManager:
         platforms: List[str], 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for specific audience targeting"""
+        """
+Optimize content for specific audience targeting"""
         # Mock implementation
         return {
             'target_demographics': {
@@ -652,7 +662,8 @@ class AIContentOptimizationManager:
         analysis: Dict[str, Any], 
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Predict content engagement using AI models"""
+        """
+Predict content engagement using AI models"""
         # Mock implementation
         return {
             'predicted_reach': 15000,
@@ -677,7 +688,8 @@ class AIContentOptimizationManager:
         analysis: Dict[str, Any], 
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Generate optimized hashtags using AI"""
+        """
+Generate optimized hashtags using AI"""
         # Mock implementation
         return {
             'recommended_hashtags': [
@@ -702,7 +714,8 @@ class AIContentOptimizationManager:
         analysis: Dict[str, Any], 
         seo_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimized titles using AI"""
+        """
+Generate optimized titles using AI"""
         # Mock implementation
         return {
             'optimized_titles': [
@@ -729,7 +742,8 @@ class AIContentOptimizationManager:
         audience_data: Dict[str, Any], 
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Optimize posting timing using AI"""
+        """
+Optimize posting timing using AI"""
         # Mock implementation
         return {
             'optimal_posting_times': {
@@ -756,7 +770,8 @@ class AIContentOptimizationManager:
         platforms: List[str], 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Adapt content for specific platforms using AI"""
+        """
+Adapt content for specific platforms using AI"""
         # Mock implementation
         return {
             platform: {
@@ -769,7 +784,8 @@ class AIContentOptimizationManager:
         }
     
     async def _calculate_optimization_score(self, optimization_results: Dict[str, Any]) -> float:
-        """Calculate overall optimization score"""
+        """
+Calculate overall optimization score"""
         # Mock implementation
         scores = []
         for result in optimization_results.values():
@@ -787,7 +803,8 @@ class AIContentOptimizationManager:
         results: Dict[str, Any], 
         score: float
     ):
-        """Update optimization record with results"""
+        """
+Update optimization record with results"""
         try:
             await self.db_session.execute(
                 f"UPDATE ai_content_optimizations SET "
@@ -814,7 +831,8 @@ class AIContentOptimizationManager:
         ]
     
     async def _cache_optimization_result(self, result: OptimizationResult):
-        """Cache optimization result in Redis"""
+        """
+Cache optimization result in Redis"""
         try:
             cache_key = f"optimization_result:{result.optimization_id}"
             await self.redis_client.setex(

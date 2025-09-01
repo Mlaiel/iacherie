@@ -16,6 +16,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import os
 import sys
 import shutil
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModuleMaintenance:
-    """Comprehensive maintenance toolkit for content management system."""
+    """
+Comprehensive maintenance toolkit for content management system."""
     
     def __init__(self):
         self.base_path = Path.cwd()
@@ -186,7 +188,8 @@ class ContentModuleMaintenance:
             return 0.0
     
     async def optimize_performance(self) -> Dict[str, Any]:
-        """Optimize system performance."""
+        """
+Optimize system performance."""
         logger.info("⚡ Optimizing System Performance...")
         
         optimization_results = {

@@ -5,7 +5,7 @@ Industrial-grade revenue calculation system with multi-platform support,
 real-time calculations, AI-powered optimization, and comprehensive analytics.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -16,6 +16,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Calculation
 ===============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Revenue stream types for comprehensive tracking"""
+    """
+Revenue stream types for comprehensive tracking"""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     SYNCHRONIZATION = "synchronization"
@@ -55,6 +58,7 @@ class RevenueType(Enum):
 
 class CalculationMethod(Enum):
     """Revenue calculation methodologies"""
+
     REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     PREDICTIVE = "predictive"
@@ -75,14 +79,16 @@ class RevenueData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Calculate net amount after deductions"""
+        """
+Calculate net amount after deductions"""
         total_deductions = self.platform_fee + self.taxes + self.commission
         self.net_amount = self.gross_amount - total_deductions
 
 
 @dataclass
 class PlatformRevenue:
-    """Platform-specific revenue configuration"""
+    """
+Platform-specific revenue configuration"""
     platform_id: str
     platform_name: str
     commission_rate: Decimal
@@ -132,7 +138,8 @@ class RevenueCalculator:
         self._initialize_calculation_engines()
         
     async def _initialize_calculation_engines(self):
-        """Initialize all calculation engines and platform configurations"""
+        """
+Initialize all calculation engines and platform configurations"""
         try:
             # Load platform configurations
             self._platform_configs = await self._load_platform_configurations()
@@ -353,7 +360,8 @@ class RevenueCalculator:
                                      revenue_type: RevenueType,
                                      raw_data: Dict[str, Any],
                                      platform_config: Dict[str, Any]) -> Decimal:
-        """Calculate YouTube-specific gross revenue"""
+        """
+Calculate YouTube-specific gross revenue"""
         if revenue_type == RevenueType.STREAMING:
             # YouTube ad revenue calculation
             views = Decimal(str(raw_data.get('views', 0)))
@@ -374,7 +382,8 @@ class RevenueCalculator:
                                     gross_amount: Decimal,
                                     platform_config: Dict[str, Any],
                                     revenue_type: RevenueType) -> Decimal:
-        """Calculate platform-specific fees"""
+        """
+Calculate platform-specific fees"""
         fee_config = platform_config.get('fees', {})
         
         if revenue_type.value in fee_config:
@@ -389,7 +398,8 @@ class RevenueCalculator:
                              gross_amount: Decimal,
                              platform: str,
                              revenue_type: RevenueType) -> Decimal:
-        """Calculate taxes based on creator location and platform"""
+        """
+Calculate taxes based on creator location and platform"""
         try:
             # Get creator tax information
             creator_tax_info = await self.db.fetch_one(
@@ -587,13 +597,15 @@ class RevenueCalculator:
         return self._platform_configs[platform]
 
     async def _setup_calculation_cache(self):
-        """Setup calculation result cache"""
+        """
+Setup calculation result cache"""
         # Initialize Redis cache for calculation results
         # This would be implemented with actual Redis connection
         pass
 
     async def _store_revenue_calculation(self, revenue_data: RevenueData):
-        """Store revenue calculation result in database"""
+        """
+Store revenue calculation result in database"""
         try:
             query = """
                 INSERT INTO revenue_calculations 
@@ -685,7 +697,8 @@ class RevenueCalculator:
         return Decimal('0')
 
     async def cleanup(self):
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         try:
             # Close platform connections
             for platform_integration in self.platforms.values():

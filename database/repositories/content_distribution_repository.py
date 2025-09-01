@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Union, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
@@ -43,7 +44,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize Content Distribution Repository"""
+        """
+Initialize Content Distribution Repository"""
         super().__init__(db_session, ContentDistribution)
         
     def create_distribution_plan(self, 

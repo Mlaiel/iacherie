@@ -18,6 +18,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -36,7 +37,8 @@ from .infrastructure_health import InfrastructureHealthChecker
 
 @dataclass
 class PlatformHealthSummary:
-    """Complete platform health summary"""
+    """
+Complete platform health summary"""
     overall_status: str
     overall_health_percentage: float
     total_services: int

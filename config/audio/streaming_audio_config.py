@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class StreamingProtocol(Enum):
-    """Streaming protocols"""
+    """
+Streaming protocols"""
+
     HTTP_LIVE_STREAMING = "hls"         # Apple HLS
     DASH = "dash"                       # MPEG-DASH
     SMOOTH_STREAMING = "smooth"         # Microsoft Smooth Streaming
@@ -41,6 +44,7 @@ class StreamingProtocol(Enum):
 
 class AdaptiveBitrateStrategy(Enum):
     """Adaptive bitrate strategies"""
+
     CONSERVATIVE = "conservative"        # Prefer stability over quality
     BALANCED = "balanced"               # Balance quality and stability
     AGGRESSIVE = "aggressive"           # Prefer quality over stability
@@ -50,6 +54,7 @@ class AdaptiveBitrateStrategy(Enum):
 
 class StreamingQuality(Enum):
     """Streaming quality levels"""
+
     ULTRA_LOW = "ultra_low"             # 32-64 kbps
     LOW = "low"                         # 64-96 kbps
     STANDARD = "standard"               # 128-160 kbps
@@ -60,6 +65,7 @@ class StreamingQuality(Enum):
 
 class BufferingStrategy(Enum):
     """Audio buffering strategies"""
+
     MINIMAL = "minimal"                 # Minimal buffering, low latency
     STANDARD = "standard"               # Standard buffering
     AGGRESSIVE = "aggressive"           # Large buffer, stable playback
@@ -69,6 +75,7 @@ class BufferingStrategy(Enum):
 
 class NetworkCondition(Enum):
     """Network condition types"""
+
     EXCELLENT = "excellent"             # >10 Mbps, <50ms latency
     GOOD = "good"                      # 1-10 Mbps, 50-150ms latency
     FAIR = "fair"                      # 256kbps-1Mbps, 150-300ms latency
@@ -91,7 +98,8 @@ class StreamingEndpoint:
 
 @dataclass
 class BitrateProfile:
-    """Bitrate profile for adaptive streaming"""
+    """
+Bitrate profile for adaptive streaming"""
     name: str
     bitrate_kbps: int
     sample_rate: int
@@ -104,7 +112,8 @@ class BitrateProfile:
 
 @dataclass
 class BufferingConfig:
-    """Audio buffering configuration"""
+    """
+Audio buffering configuration"""
     initial_buffer_duration_ms: int = 2000
     target_buffer_duration_ms: int = 5000
     max_buffer_duration_ms: int = 10000
@@ -116,7 +125,8 @@ class BufferingConfig:
 
 @dataclass
 class NetworkAdaptationConfig:
-    """Network adaptation configuration"""
+    """
+Network adaptation configuration"""
     bandwidth_estimation_enabled: bool = True
     bandwidth_probe_interval_ms: int = 5000
     quality_adaptation_enabled: bool = True
@@ -135,7 +145,8 @@ class StreamingAudioConfig:
     """
     
     def __init__(self):
-        """Initialize streaming audio configuration"""
+        """
+Initialize streaming audio configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core streaming configuration

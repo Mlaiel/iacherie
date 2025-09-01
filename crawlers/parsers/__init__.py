@@ -4,7 +4,7 @@
 Enterprise-grade parsers module with comprehensive content analysis capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
@@ -196,7 +196,7 @@ from .index import ParsersIndex, get_parsers_index, initialize_parsers, shutdown
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 __status__ = "Production"
 

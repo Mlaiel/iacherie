@@ -23,6 +23,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
 from dataclasses import dataclass, field
 from enum import Enum
@@ -49,7 +50,9 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 class StorageProvider(Enum):
-    """Supported decentralized storage providers."""
+    """
+Supported decentralized storage providers."""
+
     IPFS = "ipfs"
     FILECOIN = "filecoin"
     ARWEAVE = "arweave"
@@ -58,6 +61,7 @@ class StorageProvider(Enum):
 
 class ContentType(Enum):
     """Types of content stored in decentralized storage."""
+
     FINGERPRINT = "fingerprint"
     METADATA = "metadata"
     EVIDENCE = "evidence"
@@ -67,6 +71,7 @@ class ContentType(Enum):
 
 class StorageStatus(Enum):
     """Status of storage operations."""
+
     UPLOADING = "uploading"
     STORED = "stored"
     PINNED = "pinned"
@@ -97,7 +102,8 @@ class StorageMetadata:
 
 @dataclass
 class StorageConfig:
-    """Configuration for storage providers."""
+    """
+Configuration for storage providers."""
     provider: StorageProvider
     api_endpoint: str
     gateway_url: str
@@ -109,14 +115,17 @@ class StorageConfig:
     replication_factor: int = 3
 
 class EncryptionManager:
-    """Manager for content encryption and decryption."""
+    """
+Manager for content encryption and decryption."""
     
     def __init__(self):
-        """Initialize encryption manager."""
+        """
+Initialize encryption manager."""
         self.keys = {}
         
     def generate_key(self) -> str:
-        """Generate a new encryption key."""
+        """
+Generate a new encryption key."""
         key = Fernet.generate_key()
         return key.decode('utf-8')
         
@@ -314,7 +323,8 @@ class DecentralizedStorageManager:
         self._initialize_connectors()
         
     def _initialize_connectors(self) -> None:
-        """Initialize connectors for configured storage providers."""
+        """
+Initialize connectors for configured storage providers."""
         storage_configs = self.config.get('storage_providers', {})
         
         for provider_name, provider_config in storage_configs.items():
@@ -689,7 +699,8 @@ class DecentralizedStorageManager:
         ]
 
     def get_storage_stats(self) -> Dict[str, Any]:
-        """Get storage statistics."""
+        """
+Get storage statistics."""
         total_files = len(self.storage_metadata)
         total_size = sum(metadata.file_size for metadata in self.storage_metadata.values())
         

@@ -11,7 +11,7 @@ Ultra-sophisticated analytics and reporting system for licensing operations:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Data Scientist + Business Analyst + BI Expert + Financial Analyst
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
@@ -21,6 +21,7 @@ applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -50,7 +51,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Available report types"""
+    """
+Available report types"""
+
     EXECUTIVE_DASHBOARD = "executive_dashboard"
     REVENUE_ANALYSIS = "revenue_analysis"
     TERRITORY_PERFORMANCE = "territory_performance"
@@ -64,6 +67,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     PDF = "pdf"
     EXCEL = "excel"
@@ -73,6 +77,7 @@ class ReportFormat(Enum):
 
 class AnalyticsPeriod(Enum):
     """Analytics time periods"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -83,6 +88,7 @@ class AnalyticsPeriod(Enum):
 
 class MetricType(Enum):
     """Key performance indicator types"""
+
     REVENUE = "revenue"
     USAGE = "usage"
     GROWTH = "growth"
@@ -167,7 +173,8 @@ class AnalyticsInsight:
 
 @dataclass
 class ReportResult:
-    """Complete report result"""
+    """
+Complete report result"""
     report_id: str
     config: ReportConfig
     generated_at: datetime
@@ -196,7 +203,8 @@ class LicensingAnalyticsEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize analytics engine with configuration."""
+        """
+Initialize analytics engine with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -334,7 +342,8 @@ class LicensingAnalyticsEngine:
         return hashlib.md5(key_string.encode()).hexdigest()
 
     async def _gather_report_data(self, config: ReportConfig) -> Dict[str, Any]:
-        """Gather all necessary data for report generation."""
+        """
+Gather all necessary data for report generation."""
         
         # Apply date filters
         start_date = config.start_date
@@ -379,7 +388,8 @@ class LicensingAnalyticsEngine:
         }
 
     def _get_period_dates(self, period: AnalyticsPeriod) -> Tuple[date, date]:
-        """Get start and end dates for analytics period."""
+        """
+Get start and end dates for analytics period."""
         end_date = date.today()
         
         if period == AnalyticsPeriod.DAILY:
@@ -406,7 +416,8 @@ class LicensingAnalyticsEngine:
         end_date: date,
         config: ReportConfig
     ) -> List[Dict[str, Any]]:
-        """Get licensing data for the specified period."""
+        """
+Get licensing data for the specified period."""
         # In production, this would query actual database
         # Returning mock data for demonstration
         
@@ -842,7 +853,8 @@ class LicensingAnalyticsEngine:
         report_data: Dict[str, Any],
         config: ReportConfig
     ) -> Dict[str, Any]:
-        """Generate visualization charts for the report."""
+        """
+Generate visualization charts for the report."""
         
         charts = {}
         
@@ -1009,7 +1021,8 @@ class LicensingAnalyticsEngine:
         return final_score
 
     def _update_analytics_metrics(self, generation_time: float):
-        """Update analytics engine performance metrics."""
+        """
+Update analytics engine performance metrics."""
         self.analytics_metrics['reports_generated'] += 1
         
         # Update average generation time
@@ -1024,7 +1037,8 @@ class LicensingAnalyticsEngine:
         dashboard_name: str,
         widgets: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Create configuration for interactive dashboard."""
+        """
+Create configuration for interactive dashboard."""
         
         dashboard_config = {
             'dashboard_id': str(uuid.uuid4()),
@@ -1047,7 +1061,8 @@ class LicensingAnalyticsEngine:
         format: ReportFormat,
         output_path: Optional[str] = None
     ) -> str:
-        """Export report in specified format."""
+        """
+Export report in specified format."""
         
         try:
             if format == ReportFormat.JSON:
@@ -1103,7 +1118,8 @@ class LicensingAnalyticsEngine:
             return json_str
 
     async def _export_excel(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report as Excel file."""
+        """
+Export report as Excel file."""
         
         if not output_path:
             output_path = f"report_{report_result.report_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
@@ -1271,7 +1287,8 @@ class LicensingAnalyticsEngine:
         return output_path
 
     async def _export_pdf(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report as PDF (placeholder implementation)."""
+        """
+Export report as PDF (placeholder implementation)."""
         # In production, would use libraries like reportlab or weasyprint
         # For now, export as HTML and suggest conversion
         html_path = await self._export_html(report_result, output_path)

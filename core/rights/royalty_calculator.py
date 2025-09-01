@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Royalty Calculation Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue generation sources."""
+    """
+Revenue generation sources."""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -53,6 +56,7 @@ class RevenueSource(str, Enum):
 
 class DistributionModel(str, Enum):
     """Revenue distribution models."""
+
     EXCLUSIVE_OWNER = "exclusive_owner"
     PROPORTIONAL_SPLIT = "proportional_split"
     FIXED_PERCENTAGE = "fixed_percentage"
@@ -63,6 +67,7 @@ class DistributionModel(str, Enum):
 
 class Platform(str, Enum):
     """Supported platforms for royalty calculation."""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -142,7 +147,8 @@ class RoyaltyCalculationResult(BaseModel):
 
 
 class CollaboratorShare(BaseModel):
-    """Collaborator revenue share model."""
+    """
+Collaborator revenue share model."""
     collaborator_id: str = Field(..., description="Collaborator user ID")
     role: str = Field(..., description="Role in content creation")
     share_percentage: Decimal = Field(..., ge=0, le=100)
@@ -158,7 +164,8 @@ class RoyaltyCalculationEngine:
     """
     
     def __init__(self, db_session: AsyncSession):
-        """Initialize royalty calculation engine."""
+        """
+Initialize royalty calculation engine."""
         self.db = db_session
         self.encryption = AdvancedEncryption()
         
@@ -562,7 +569,8 @@ class RoyaltyCalculationEngine:
         pass
     
     async def _validate_calculation_access(self, content: Any, user_id: str) -> bool:
-        """Validate user access for royalty calculation."""
+        """
+Validate user access for royalty calculation."""
         return content.owner_id == user_id or user_id in [c["collaborator_id"] for c in content.collaborators or []]
     
     async def _get_royalty_configuration(self, content_id: str) -> RoyaltyConfiguration:
@@ -654,7 +662,8 @@ class RoyaltyCalculationEngine:
     async def _calculate_fees_and_deductions(
         self, revenue_data: List[Dict[str, Any]], config: RoyaltyConfiguration
     ) -> Dict[str, Decimal]:
-        """Calculate platform fees and other deductions."""
+        """
+Calculate platform fees and other deductions."""
         fees = {
             "platform_fees": Decimal("0"),
             "service_fees": Decimal("0"),

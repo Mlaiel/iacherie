@@ -4,6 +4,7 @@ Platform-specific configs, feature flags, and environment management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Flexible mobile platform configuration for multi-environment deployment
 """
+
 import json
 import logging
 import os
@@ -28,6 +29,7 @@ except ImportError:
 
 class Environment(Enum):
     """Environment types."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -36,6 +38,7 @@ class Environment(Enum):
 
 class Platform(Enum):
     """Mobile platform types."""
+
     ANDROID = "android"
     IOS = "ios"
     REACT_NATIVE = "react_native"
@@ -62,7 +65,8 @@ class FeatureFlag:
         platform: Platform,
         environment: Environment
     ) -> bool:
-        """Check if feature is enabled for specific user/platform/environment."""
+        """
+Check if feature is enabled for specific user/platform/environment."""
         
         # Check if expired
         if self.expiry_date and datetime.utcnow() > self.expiry_date:
@@ -108,7 +112,8 @@ class PlatformSettings:
 
 @dataclass
 class MobileAppConfig:
-    """Complete mobile application configuration."""
+    """
+Complete mobile application configuration."""
     config_id: str
     environment: Environment
     app_name: str
@@ -125,7 +130,8 @@ class MobileAppConfig:
 
 
 class MobileConfig:
-    """Professional mobile configuration management system."""
+    """
+Professional mobile configuration management system."""
     
     def __init__(self):
         self.logger = get_logger("mobile.config")
@@ -153,7 +159,8 @@ class MobileConfig:
         self._create_default_app_config()
     
     def _create_default_feature_flags(self):
-        """Create default feature flags."""
+        """
+Create default feature flags."""
         
         default_flags = [
             {
@@ -506,7 +513,8 @@ class MobileConfig:
         platform: Platform,
         **updates
     ) -> Optional[PlatformSettings]:
-        """Update platform-specific settings."""
+        """
+Update platform-specific settings."""
         
         if platform not in self.platform_settings:
             return None
@@ -601,7 +609,8 @@ class MobileConfig:
             return False
     
     def export_config(self, platform: Optional[Platform] = None) -> Dict[str, Any]:
-        """Export configuration for backup or deployment."""
+        """
+Export configuration for backup or deployment."""
         
         export_data = {
             "environment": self.current_environment.value,
@@ -667,7 +676,8 @@ def get_mobile_config() -> MobileConfig:
 
 
 def load_platform_settings(platform: Platform) -> Optional[PlatformSettings]:
-    """Load platform-specific settings."""
+    """
+Load platform-specific settings."""
     config = get_mobile_config()
     return config.get_platform_settings(platform)
 
@@ -677,7 +687,8 @@ def get_feature_flags_for_user(
     platform: Platform,
     environment: Optional[Environment] = None
 ) -> Dict[str, bool]:
-    """Get feature flags for specific user and platform."""
+    """
+Get feature flags for specific user and platform."""
     config = get_mobile_config()
     return config.get_feature_flags(user_id, platform, environment)
 

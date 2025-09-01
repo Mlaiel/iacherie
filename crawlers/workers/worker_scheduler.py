@@ -8,7 +8,7 @@ Technologies: Priority Scheduling, Resource Allocation, Dependency Management
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Task analysis → Dependency resolution → Resource calculation → 
 Priority assignment → Worker selection → Execution scheduling → Monitoring
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulingStrategy(Enum):
-    """Task scheduling strategies"""
+    """
+Task scheduling strategies"""
+
     FIFO = "fifo"
     LIFO = "lifo"
     PRIORITY = "priority"
@@ -52,6 +55,7 @@ class SchedulingStrategy(Enum):
 
 class ResourceType(Enum):
     """Resource types for scheduling"""
+
     CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
@@ -81,7 +85,8 @@ class ResourceRequirement:
 
 @dataclass
 class SchedulingConstraint:
-    """Scheduling constraint definition"""
+    """
+Scheduling constraint definition"""
     constraint_type: str  # time_window, resource_limit, dependency, affinity
     constraint_data: Dict[str, Any]
     priority: int = 1
@@ -90,7 +95,8 @@ class SchedulingConstraint:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task with metadata"""
+    """
+Scheduled task with metadata"""
     task: CrawlerTask
     scheduled_time: datetime
     estimated_completion: datetime
@@ -104,7 +110,8 @@ class ScheduledTask:
 
 @dataclass
 class WorkerCapacity:
-    """Worker capacity information"""
+    """
+Worker capacity information"""
     worker_id: str
     worker_type: WorkerType
     max_cpu: float = 4.0
@@ -175,7 +182,8 @@ class WorkerScheduler:
         }
 
     async def initialize(self) -> None:
-        """Initialize the scheduler"""
+        """
+Initialize the scheduler"""
         try:
             logger.info("🚀 Initializing worker scheduler")
             

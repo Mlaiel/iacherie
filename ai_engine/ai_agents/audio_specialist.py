@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -42,6 +45,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(Enum):
     """Audio quality levels"""
+
     LOW = "low"          # 64-128 kbps
     MEDIUM = "medium"    # 128-256 kbps
     HIGH = "high"        # 256-320 kbps
@@ -50,6 +54,7 @@ class AudioQuality(Enum):
 
 class ProcessingMode(Enum):
     """Audio processing modes"""
+
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
@@ -106,7 +111,8 @@ class AudioMetadata:
 
 @dataclass
 class AudioProcessingRequest:
-    """Request for audio processing"""
+    """
+Request for audio processing"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     file_path: str = ""
     processing_mode: ProcessingMode = ProcessingMode.ANALYSIS

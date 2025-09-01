@@ -5,8 +5,9 @@ Advanced revenue streaming and analytics system for real-time monetization
 tracking, payment processing, and revenue optimization across platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -29,7 +30,9 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     SPONSORSHIP = "sponsorship"
@@ -42,6 +45,7 @@ class RevenueSource(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -52,6 +56,7 @@ class PaymentStatus(str, Enum):
 
 class CurrencyCode(str, Enum):
     """Supported currency codes"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -93,7 +98,8 @@ class RevenueEvent:
 
 
 class RevenueAnalytics(BaseModel):
-    """Revenue analytics data"""
+    """
+Revenue analytics data"""
     user_id: str = Field(description="User identifier")
     total_revenue: Decimal = Field(default=Decimal("0"), description="Total revenue earned")
     pending_revenue: Decimal = Field(default=Decimal("0"), description="Pending revenue")
@@ -136,7 +142,8 @@ class RevenueStreamer:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize revenue streamer with Redis and payment processors"""
+        """
+Initialize revenue streamer with Redis and payment processors"""
         try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
@@ -305,7 +312,8 @@ class RevenueStreamer:
         return self.user_analytics[user_id]
         
     async def get_revenue_streams(self, user_id: str) -> List[RevenueStream]:
-        """Get all revenue streams for user"""
+        """
+Get all revenue streams for user"""
         return [
             stream for stream in self.revenue_streams.values()
             if stream.user_id == user_id
@@ -316,7 +324,8 @@ class RevenueStreamer:
         stream_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update revenue stream configuration"""
+        """
+Update revenue stream configuration"""
         try:
             if stream_id not in self.revenue_streams:
                 return False
@@ -419,14 +428,16 @@ class RevenueStreamer:
         return self.pending_payments.get(payment_id)
         
     async def get_user_payments(self, user_id: str) -> List[PaymentInfo]:
-        """Get all payments for user"""
+        """
+Get all payments for user"""
         return [
             payment for payment in self.pending_payments.values()
             if payment.user_id == user_id
         ]
         
     async def calculate_pending_payout(self, user_id: str) -> Tuple[Decimal, CurrencyCode]:
-        """Calculate pending payout amount for user"""
+        """
+Calculate pending payout amount for user"""
         try:
             analytics = await self.get_user_analytics(user_id)
             

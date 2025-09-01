@@ -24,6 +24,7 @@ Team Specialists:
 - UI/UX Engineer: Dashboard Design & User Experience
 - IA Prompt Engineer: Intelligent Monitoring Insights
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -61,7 +62,9 @@ logger = get_logger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
+    """
+Types of metrics tracked"""
+
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -76,6 +79,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -85,6 +89,7 @@ class AlertSeverity(Enum):
 
 class DashboardViewType(Enum):
     """Dashboard view types"""
+
     OVERVIEW = "overview"
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
@@ -98,6 +103,7 @@ class DashboardViewType(Enum):
 
 class TimeRange(Enum):
     """Time range options"""
+
     REAL_TIME = "real_time"
     LAST_5_MIN = "last_5_min"
     LAST_15_MIN = "last_15_min"
@@ -157,7 +163,8 @@ class SessionAlert(BaseModel):
 
 
 class DashboardWidget(BaseModel):
-    """Dashboard widget configuration"""
+    """
+Dashboard widget configuration"""
     widget_id: str = Field(default_factory=lambda: str(uuid4()))
     widget_type: str  # chart, table, metric, alert_list
     title: str
@@ -173,7 +180,8 @@ class DashboardWidget(BaseModel):
 
 
 class DashboardView(BaseModel):
-    """Dashboard view configuration"""
+    """
+Dashboard view configuration"""
     view_id: str = Field(default_factory=lambda: str(uuid4()))
     view_name: str
     view_type: DashboardViewType
@@ -194,7 +202,8 @@ class DashboardView(BaseModel):
 
 
 class SessionAnalytics(BaseModel):
-    """Session analytics data"""
+    """
+Session analytics data"""
     session_id: str
     user_id: str
     session_duration: float  # minutes
@@ -218,7 +227,8 @@ class SessionAnalytics(BaseModel):
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring dashboard configuration"""
+    """
+Monitoring dashboard configuration"""
     enable_real_time_monitoring: bool = True
     metric_collection_interval: int = 5  # seconds
     alert_evaluation_interval: int = 10  # seconds
@@ -234,7 +244,8 @@ class MonitoringConfig:
 
 
 class MetricsCollectionEngine:
-    """Collects and processes session metrics"""
+    """
+Collects and processes session metrics"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -475,7 +486,8 @@ class AnomalyDetectionEngine:
         session_id: str,
         metrics_data: Dict[str, List[SessionMetric]]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in session metrics"""
+        """
+Detect anomalies in session metrics"""
         
         try:
             anomalies = []
@@ -946,7 +958,8 @@ class DashboardDataProvider:
         session_id: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get data for dashboard widget"""
+        """
+Get data for dashboard widget"""
         
         try:
             # Check cache first
@@ -1141,7 +1154,8 @@ class SessionMonitoringDashboard:
         self.monitoring_task: Optional[asyncio.Task] = None
     
     async def start_monitoring(self):
-        """Start real-time monitoring"""
+        """
+Start real-time monitoring"""
         
         try:
             if self.monitoring_active:

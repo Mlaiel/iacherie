@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List
 from pydantic import BaseSettings, Field, validator
@@ -21,7 +22,9 @@ from enum import Enum
 
 
 class OAuthProvider(str, Enum):
-    """Supported OAuth providers for content platforms."""
+    """
+Supported OAuth providers for content platforms."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -160,6 +163,7 @@ class OAuthConfig(BaseSettings):
 
 class OAuthEndpoints:
     """OAuth endpoints configuration for supported platforms."""
+
     
     ENDPOINTS = {
         OAuthProvider.SPOTIFY: {
@@ -226,7 +230,8 @@ class OAuthEndpoints:
 
 
 class OAuthManager:
-    """OAuth manager for handling multi-platform authentication."""
+    """
+OAuth manager for handling multi-platform authentication."""
     
     def __init__(self, config: OAuthConfig):
         self.config = config
@@ -237,7 +242,8 @@ class OAuthManager:
         state: str,
         scopes: Optional[List[str]] = None
     ) -> str:
-        """Generate authorization URL for OAuth flow."""
+        """
+Generate authorization URL for OAuth flow."""
         endpoints = OAuthEndpoints.get_endpoints(provider)
         if not endpoints:
             raise ValueError(f"Unsupported OAuth provider: {provider}")

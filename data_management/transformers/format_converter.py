@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import asyncio
 import logging
 import time
@@ -61,7 +62,8 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class SupportedFormat(Enum):
-    """Formats supportés pour conversion"""
+    """
+Formats supportés pour conversion"""
     # Image formats
     JPEG = "jpg"
     PNG = "png"
@@ -110,6 +112,7 @@ class SupportedFormat(Enum):
 
 class ConversionType(Enum):
     """Types de conversion"""
+
     FORMAT_CHANGE = "format_change"        # Changement de format uniquement
     QUALITY_OPTIMIZATION = "quality_opt"   # Optimisation qualité
     SIZE_OPTIMIZATION = "size_opt"         # Optimisation taille
@@ -146,7 +149,8 @@ class FormatConversionResult:
     errors: List[str]
 
 class ImageFormatConverter:
-    """Convertisseur spécialisé pour images"""
+    """
+Convertisseur spécialisé pour images"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -184,7 +188,8 @@ class ImageFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> FormatConversionResult:
-        """Convertit une image vers le format cible"""
+        """
+Convertit une image vers le format cible"""
         
         start_time = time.time()
         warnings = []
@@ -358,7 +363,8 @@ class ImageFormatConverter:
         return params
     
     def _estimate_quality(self, config: ConversionConfig) -> float:
-        """Estime la qualité de la conversion"""
+        """
+Estime la qualité de la conversion"""
         
         quality_scores = {
             'low': 0.6,
@@ -378,7 +384,8 @@ class ImageFormatConverter:
         return min(1.0, max(0.0, base_score))
     
     def _detect_format(self, file_path: str) -> SupportedFormat:
-        """Détecte le format d'un fichier"""
+        """
+Détecte le format d'un fichier"""
         
         ext = Path(file_path).suffix.lower().lstrip('.')
         
@@ -394,7 +401,8 @@ class ImageFormatConverter:
         processed_img: Image.Image,
         config: ConversionConfig
     ) -> ConversionMetadata:
-        """Crée les métadonnées de conversion"""
+        """
+Crée les métadonnées de conversion"""
         
         return ConversionMetadata(
             source_format=self._detect_format(original_img.filename or ""),
@@ -445,7 +453,8 @@ class AudioFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> FormatConversionResult:
-        """Convertit un fichier audio"""
+        """
+Convertit un fichier audio"""
         
         start_time = time.time()
         warnings = []
@@ -603,7 +612,8 @@ class AudioFormatConverter:
         audio_segment.export(target_path, **export_params)
     
     def _get_target_bitrate(self, config: ConversionConfig) -> int:
-        """Détermine le bitrate cible"""
+        """
+Détermine le bitrate cible"""
         
         # Bitrate selon la qualité
         bitrate_mapping = {
@@ -624,7 +634,8 @@ class AudioFormatConverter:
         return base_bitrate
     
     def _detect_audio_format(self, file_path: str) -> SupportedFormat:
-        """Détecte le format audio"""
+        """
+Détecte le format audio"""
         
         ext = Path(file_path).suffix.lower().lstrip('.')
         
@@ -641,7 +652,8 @@ class AudioFormatConverter:
         target_sr: int,
         config: ConversionConfig
     ) -> ConversionMetadata:
-        """Crée les métadonnées de conversion audio"""
+        """
+Crée les métadonnées de conversion audio"""
         
         return ConversionMetadata(
             source_format=SupportedFormat.WAV,  # Format intermédiaire
@@ -656,7 +668,8 @@ class AudioFormatConverter:
         )
 
 class DocumentFormatConverter:
-    """Convertisseur spécialisé pour documents"""
+    """
+Convertisseur spécialisé pour documents"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -667,7 +680,8 @@ class DocumentFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> FormatConversionResult:
-        """Convertit un document"""
+        """
+Convertit un document"""
         
         start_time = time.time()
         warnings = []
@@ -770,7 +784,8 @@ class DocumentFormatConverter:
         return '\n'.join(content)
     
     def _read_html(self, file_path: str) -> str:
-        """Lit un fichier HTML"""
+        """
+Lit un fichier HTML"""
         with open(file_path, 'r', encoding='utf-8') as f:
             html_content = f.read()
         
@@ -778,7 +793,8 @@ class DocumentFormatConverter:
         return soup.get_text()
     
     def _read_markdown(self, file_path: str) -> str:
-        """Lit un fichier Markdown"""
+        """
+Lit un fichier Markdown"""
         with open(file_path, 'r', encoding='utf-8') as f:
             return f.read()
     
@@ -858,7 +874,8 @@ class DocumentFormatConverter:
         config: ConversionConfig,
         warnings: List[str]
     ) -> str:
-        """Traite le contenu du document"""
+        """
+Traite le contenu du document"""
         
         processed = content
         
@@ -883,12 +900,14 @@ class DocumentFormatConverter:
         return cleaned.strip()
     
     def _optimize_for_web(self, text: str) -> str:
-        """Optimise le texte pour le web"""
+        """
+Optimise le texte pour le web"""
         # Ajout de balises HTML basiques si nécessaire
         return text
     
     def _create_document_metadata(self, config: ConversionConfig) -> ConversionMetadata:
-        """Crée les métadonnées de conversion document"""
+        """
+Crée les métadonnées de conversion document"""
         
         return ConversionMetadata(
             source_format=config.source_format,
@@ -903,7 +922,8 @@ class DocumentFormatConverter:
         )
 
 class FormatConverter:
-    """Convertisseur de format principal"""
+    """
+Convertisseur de format principal"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -949,7 +969,8 @@ class FormatConverter:
         conversion_type: ConversionType = ConversionType.FORMAT_CHANGE,
         **kwargs
     ) -> FormatConversionResult:
-        """Convertit un fichier vers le format cible"""
+        """
+Convertit un fichier vers le format cible"""
         
         try:
             # Validation des formats
@@ -1091,7 +1112,8 @@ class AsyncFormatConverter:
         target_format: SupportedFormat,
         **kwargs
     ) -> FormatConversionResult:
-        """Conversion asynchrone"""
+        """
+Conversion asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -1110,7 +1132,8 @@ class AsyncFormatConverter:
         max_concurrent: int = 4,
         **kwargs
     ) -> List[FormatConversionResult]:
-        """Conversion en lot asynchrone"""
+        """
+Conversion en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

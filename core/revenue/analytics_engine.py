@@ -1,7 +1,7 @@
 """Revenue Analytics Engine - Advanced Analytics and Business Intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Insights Generation
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -63,6 +66,7 @@ class AnalyticsTimeframe(Enum):
 
 class AnalyticsMetric(Enum):
     """Available analytics metrics"""
+
     TOTAL_REVENUE = "total_revenue"
     AVERAGE_REVENUE = "average_revenue"
     GROWTH_RATE = "growth_rate"
@@ -77,6 +81,7 @@ class AnalyticsMetric(Enum):
 
 class RevenueSegment(Enum):
     """Revenue segmentation categories"""
+
     PLATFORM = "platform"
     CONTENT_TYPE = "content_type"
     GEOGRAPHY = "geography"
@@ -88,6 +93,7 @@ class RevenueSegment(Enum):
 
 class AnalyticsInsightType(Enum):
     """Types of analytics insights"""
+
     TREND_ANALYSIS = "trend_analysis"
     PERFORMANCE_COMPARISON = "performance_comparison"
     ANOMALY_DETECTION = "anomaly_detection"
@@ -109,7 +115,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight structure"""
+    """
+Analytics insight structure"""
     insight_id: str
     insight_type: AnalyticsInsightType
     title: str
@@ -124,7 +131,8 @@ class AnalyticsInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     title: str
     timeframe: AnalyticsTimeframe
@@ -137,7 +145,8 @@ class AnalyticsReport:
 
 
 class RevenueDataProcessor:
-    """Advanced revenue data processing and preparation"""
+    """
+Advanced revenue data processing and preparation"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -149,7 +158,8 @@ class RevenueDataProcessor:
         raw_data: List[Dict[str, Any]], 
         timeframe: AnalyticsTimeframe
     ) -> pd.DataFrame:
-        """Process and clean revenue data for analytics"""
+        """
+Process and clean revenue data for analytics"""
         try:
             # Convert to DataFrame
             df = pd.DataFrame(raw_data)
@@ -215,7 +225,8 @@ class RevenueDataProcessor:
         return aggregated
     
     async def _add_calculated_fields(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Add calculated fields for analytics"""
+        """
+Add calculated fields for analytics"""
         # Sort by timestamp
         df = df.sort_values('timestamp')
         
@@ -238,7 +249,8 @@ class RevenueDataProcessor:
         return df
     
     async def _handle_outliers(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Detect and handle outliers in revenue data"""
+        """
+Detect and handle outliers in revenue data"""
         if len(df) < 10:  # Need minimum data points
             return df
         
@@ -263,13 +275,15 @@ class RevenueDataProcessor:
 
 
 class TrendAnalyzer:
-    """Advanced trend analysis for revenue data"""
+    """
+Advanced trend analysis for revenue data"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
     
     async def analyze_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Perform comprehensive trend analysis"""
+        """
+Perform comprehensive trend analysis"""
         try:
             results = {}
             
@@ -326,7 +340,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_seasonality(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze seasonal patterns in revenue"""
+        """
+Analyze seasonal patterns in revenue"""
         if len(df) < 12:  # Need at least 12 data points
             return {'seasonality': 'insufficient_data'}
         
@@ -369,7 +384,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_growth_patterns(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze growth patterns and rates"""
+        """
+Analyze growth patterns and rates"""
         if len(df) < 3:
             return {'growth': 'insufficient_data'}
         
@@ -399,7 +415,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_volatility(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze revenue volatility"""
+        """
+Analyze revenue volatility"""
         if len(df) < 5:
             return {'volatility': 'insufficient_data'}
         
@@ -427,7 +444,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_momentum(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze revenue momentum indicators"""
+        """
+Analyze revenue momentum indicators"""
         if len(df) < 10:
             return {'momentum': 'insufficient_data'}
         
@@ -454,7 +472,8 @@ class TrendAnalyzer:
 
 
 class CorrelationAnalyzer:
-    """Advanced correlation analysis between revenue streams and external factors"""
+    """
+Advanced correlation analysis between revenue streams and external factors"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -464,7 +483,8 @@ class CorrelationAnalyzer:
         revenue_data: pd.DataFrame, 
         external_factors: Optional[pd.DataFrame] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive correlation analysis"""
+        """
+Perform comprehensive correlation analysis"""
         try:
             results = {}
             
@@ -533,7 +553,8 @@ class CorrelationAnalyzer:
         }
     
     async def _analyze_temporal_correlations(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze temporal patterns and lag correlations"""
+        """
+Analyze temporal patterns and lag correlations"""
         if len(df) < 10:
             return {'temporal_correlations': 'insufficient_data'}
         
@@ -560,7 +581,8 @@ class CorrelationAnalyzer:
         revenue_data: pd.DataFrame, 
         external_factors: pd.DataFrame
     ) -> Dict[str, Any]:
-        """Analyze correlations with external factors"""
+        """
+Analyze correlations with external factors"""
         # Merge datasets on timestamp
         merged_data = pd.merge(
             revenue_data.groupby('timestamp')['revenue'].sum().reset_index(),
@@ -601,7 +623,8 @@ class CorrelationAnalyzer:
         }
     
     async def _analyze_platform_synergies(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze synergies and interactions between platforms"""
+        """
+Analyze synergies and interactions between platforms"""
         if 'platform' not in df.columns:
             return {'platform_synergies': 'platform_data_missing'}
         
@@ -660,7 +683,8 @@ class CorrelationAnalyzer:
         }
     
     def _classify_correlation_strength(self, correlation: float) -> str:
-        """Classify correlation strength"""
+        """
+Classify correlation strength"""
         if np.isnan(correlation):
             return 'undefined'
         
@@ -676,7 +700,8 @@ class CorrelationAnalyzer:
 
 
 class RevenueAnalyticsEngine:
-    """Comprehensive revenue analytics and insights engine"""
+    """
+Comprehensive revenue analytics and insights engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -687,7 +712,8 @@ class RevenueAnalyticsEngine:
         self.encryption_manager = EncryptionManager()
     
     async def initialize(self) -> None:
-        """Initialize analytics engine"""
+        """
+Initialize analytics engine"""
         try:
             await self._setup_analytics_infrastructure()
             logger.info("Revenue analytics engine initialized successfully")
@@ -965,7 +991,8 @@ class RevenueAnalyticsEngine:
         return metrics
     
     async def _generate_visualizations_metadata(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Generate metadata for visualizations"""
+        """
+Generate metadata for visualizations"""
         visualizations = {}
         
         # Time series chart
@@ -996,7 +1023,8 @@ class RevenueAnalyticsEngine:
         return visualizations
     
     async def _generate_trend_recommendations(self, trend_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on trend analysis"""
+        """
+Generate recommendations based on trend analysis"""
         recommendations = []
         
         trend_direction = trend_data.get('trend_direction', 'stable')
@@ -1053,5 +1081,6 @@ class RevenueAnalyticsEngine:
 
 
 def create_revenue_analytics_engine(config: Optional[Dict[str, Any]] = None) -> RevenueAnalyticsEngine:
-    """Factory function to create revenue analytics engine"""
+    """
+Factory function to create revenue analytics engine"""
     return RevenueAnalyticsEngine(config)

@@ -4,11 +4,12 @@ Advanced monetization and revenue optimization system for multi-format content c
 Supports revenue tracking, collaboration matching, and multi-platform monetization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationModel(Enum):
-    """Monetization models"""
+    """
+Monetization models"""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     ADVERTISING = "advertising"
@@ -38,6 +41,7 @@ class MonetizationModel(Enum):
 
 class RevenueStream(Enum):
     """Revenue stream types"""
+
     CONTENT_SALES = "content_sales"
     PLATFORM_REVENUE = "platform_revenue"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -52,6 +56,7 @@ class RevenueStream(Enum):
 
 class PlatformType(Enum):
     """Monetization platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -66,6 +71,7 @@ class PlatformType(Enum):
 
 class CollaborationType(Enum):
     """Collaboration types"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -77,6 +83,7 @@ class CollaborationType(Enum):
 
 class PaymentMethod(Enum):
     """Payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -223,7 +230,8 @@ class RevenueTrackingConfig:
 
 @dataclass
 class PricingStrategy:
-    """Dynamic pricing strategy configuration"""
+    """
+Dynamic pricing strategy configuration"""
     enabled: bool = True
     
     # Pricing models
@@ -257,7 +265,8 @@ class PricingStrategy:
 
 @dataclass
 class PaymentProcessingConfig:
-    """Payment processing configuration"""
+    """
+Payment processing configuration"""
     enabled: bool = True
     
     # Payment providers
@@ -354,7 +363,8 @@ class MonetizationConfig:
             self._setup_default_platform_configs()
 
     def _setup_default_platform_configs(self):
-        """Setup default platform configurations"""
+        """
+Setup default platform configurations"""
         platforms = [
             PlatformType.YOUTUBE,
             PlatformType.INSTAGRAM,
@@ -374,7 +384,8 @@ class MonetizationConfig:
                                    engagement_rate: float, 
                                    platform: PlatformType,
                                    monetization_model: MonetizationModel) -> Dict[str, Any]:
-        """Calculate revenue projection for content"""
+        """
+Calculate revenue projection for content"""
         
         platform_config = self.platform_configs.get(platform.value)
         if not platform_config:

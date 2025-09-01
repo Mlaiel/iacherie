@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EnhancementConfig:
-    """Configuration for audio enhancement processing"""
+    """
+Configuration for audio enhancement processing"""
     # Noise reduction settings
     noise_reduction_strength: float = 0.7  # 0-1
     spectral_gating: bool = True
@@ -96,7 +98,8 @@ class EnhancementResult:
     error_message: Optional[str] = None
 
 class SpectralGate:
-    """Advanced spectral gating noise reduction"""
+    """
+Advanced spectral gating noise reduction"""
     
     def __init__(self, 
                  sample_rate: int = 44100,
@@ -108,7 +111,8 @@ class SpectralGate:
         self.noise_profile = None
         
     def learn_noise_profile(self, noise_audio: np.ndarray) -> None:
-        """Learn noise profile from noise-only audio segment"""
+        """
+Learn noise profile from noise-only audio segment"""
         # Compute power spectral density of noise
         f, t, stft = signal.stft(
             noise_audio, 
@@ -124,7 +128,8 @@ class SpectralGate:
                             audio: np.ndarray,
                             gate_strength: float = 0.7,
                             frequency_smoothing: float = 0.1) -> np.ndarray:
-        """Apply spectral gating based on learned noise profile"""
+        """
+Apply spectral gating based on learned noise profile"""
         if self.noise_profile is None:
             # Auto-detect noise from quiet segments
             self._auto_detect_noise_profile(audio)
@@ -175,7 +180,8 @@ class SpectralGate:
         return enhanced_audio
     
     def _auto_detect_noise_profile(self, audio: np.ndarray) -> None:
-        """Auto-detect noise profile from quiet segments"""
+        """
+Auto-detect noise profile from quiet segments"""
         # Find quietest 10% of audio for noise estimation
         frame_size = self.sample_rate // 10  # 100ms frames
         frame_energies = []
@@ -203,7 +209,8 @@ class SpectralGate:
             self.noise_profile = np.ones(self.frame_length // 2 + 1) * 1e-6
 
 class MultibandProcessor:
-    """Multiband audio processor for frequency-specific enhancement"""
+    """
+Multiband audio processor for frequency-specific enhancement"""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
@@ -219,7 +226,8 @@ class MultibandProcessor:
         ]
         
     def split_into_bands(self, audio: np.ndarray) -> List[np.ndarray]:
-        """Split audio into frequency bands"""
+        """
+Split audio into frequency bands"""
         bands = []
         
         for low_freq, high_freq in self.band_frequencies:
@@ -313,7 +321,8 @@ class MultibandProcessor:
         return combined
     
     def _apply_compression(self, audio: np.ndarray, threshold: float, ratio: float) -> np.ndarray:
-        """Apply compression to audio"""
+        """
+Apply compression to audio"""
         compressed = audio.copy()
         
         for i in range(len(compressed)):
@@ -324,7 +333,8 @@ class MultibandProcessor:
         return compressed
     
     def _enhance_transients(self, audio: np.ndarray) -> np.ndarray:
-        """Enhance transients for clarity"""
+        """
+Enhance transients for clarity"""
         # Use difference between original and low-passed version
         b, a = butter(2, 0.1, btype='low')  # Very low cutoff
         smooth = filtfilt(b, a, audio)
@@ -334,7 +344,8 @@ class MultibandProcessor:
         return audio + transients * 0.3
     
     def _apply_deessing(self, audio: np.ndarray, threshold: float = 0.5) -> np.ndarray:
-        """Apply de-essing to reduce harsh sibilants"""
+        """
+Apply de-essing to reduce harsh sibilants"""
         # Detect sibilant frequencies (4-8 kHz)
         b, a = butter(4, [4000/self.nyquist, 8000/self.nyquist], btype='band')
         sibilant_content = filtfilt(b, a, audio)
@@ -350,7 +361,8 @@ class MultibandProcessor:
         return audio * reduction_factor
     
     def _enhance_air_band(self, audio: np.ndarray) -> np.ndarray:
-        """Enhance air band (high frequencies)"""
+        """
+Enhance air band (high frequencies)"""
         # Add subtle harmonic content
         enhanced = audio.copy()
         
@@ -361,7 +373,8 @@ class MultibandProcessor:
         return enhanced
 
 class DynamicsProcessor:
-    """Professional dynamics processing (compression, limiting, gating)"""
+    """
+Professional dynamics processing (compression, limiting, gating)"""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
@@ -369,7 +382,8 @@ class DynamicsProcessor:
     def multiband_compressor(self,
                            audio: np.ndarray,
                            band_params: List[Dict[str, float]]) -> np.ndarray:
-        """Apply multiband compression"""
+        """
+Apply multiband compression"""
         processor = MultibandProcessor(self.sample_rate)
         
         # Split into bands
@@ -423,7 +437,8 @@ class DynamicsProcessor:
                           audio: np.ndarray,
                           attack_time: float,
                           release_time: float) -> np.ndarray:
-        """Calculate envelope for dynamics processing"""
+        """
+Calculate envelope for dynamics processing"""
         # Convert time constants to sample-based coefficients
         attack_coeff = np.exp(-1.0 / (attack_time * self.sample_rate))
         release_coeff = np.exp(-1.0 / (release_time * self.sample_rate))
@@ -449,7 +464,8 @@ class DynamicsProcessor:
                      audio: np.ndarray,
                      threshold_db: float = -0.5,
                      lookahead_ms: float = 5.0) -> np.ndarray:
-        """Apply transparent limiting"""
+        """
+Apply transparent limiting"""
         threshold_linear = 10**(threshold_db/20)
         lookahead_samples = int(lookahead_ms * self.sample_rate / 1000)
         
@@ -483,7 +499,8 @@ class DynamicsProcessor:
                         ratio: float = 10.0,
                         attack_time: float = 0.001,
                         release_time: float = 0.1) -> np.ndarray:
-        """Apply noise gate to reduce background noise"""
+        """
+Apply noise gate to reduce background noise"""
         threshold_linear = 10**(threshold_db/20)
         
         # Calculate envelope
@@ -572,7 +589,8 @@ class AudioEnhancer:
         return DenoiseNet().to(self.device)
     
     def _create_enhancement_model(self) -> Optional[nn.Module]:
-        """Create audio enhancement neural network"""
+        """
+Create audio enhancement neural network"""
         class EnhancementNet(nn.Module):
             def __init__(self):
                 super().__init__()
@@ -591,7 +609,8 @@ class AudioEnhancer:
                                         audio_data: np.ndarray,
                                         sample_rate: int,
                                         custom_config: Optional[EnhancementConfig] = None) -> EnhancementResult:
-        """Comprehensive audio enhancement pipeline"""
+        """
+Comprehensive audio enhancement pipeline"""
         start_time = datetime.now()
         config = custom_config or self.config
         
@@ -801,7 +820,8 @@ class AudioEnhancer:
         return combined
     
     async def _apply_adaptive_filtering(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply adaptive filtering for noise reduction"""
+        """
+Apply adaptive filtering for noise reduction"""
         try:
             # Simple adaptive filtering using spectral subtraction
             # Compute STFT

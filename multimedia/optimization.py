@@ -11,6 +11,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
+
 import asyncio
 import logging
 import tempfile
@@ -46,7 +47,8 @@ settings = get_settings()
 
 @dataclass
 class OptimizationProfile:
-    """Optimization profile configuration"""
+    """
+Optimization profile configuration"""
     name: str
     description: str
     target_use: str  # 'web', 'mobile', 'print', 'archive', 'streaming', 'social'
@@ -78,7 +80,8 @@ class OptimizationProfile:
 
 @dataclass
 class OptimizationResult:
-    """Result of content optimization"""
+    """
+Result of content optimization"""
     success: bool
     original_path: Path
     optimized_path: Optional[Path] = None
@@ -114,7 +117,8 @@ class OptimizationResult:
 
 
 class BaseOptimizer(ABC):
-    """Abstract base class for content optimizers"""
+    """
+Abstract base class for content optimizers"""
     
     def __init__(self, profile: OptimizationProfile):
         self.profile = profile
@@ -128,16 +132,19 @@ class BaseOptimizer(ABC):
     
     @abstractmethod
     async def optimize(self, content_path: Path, output_path: Optional[Path] = None) -> OptimizationResult:
-        """Optimize content and return result"""
+        """
+Optimize content and return result"""
         pass
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if optimizer supports format"""
+        """
+Check if optimizer supports format"""
         pass
     
     def _calculate_size_metrics(self, original_path: Path, optimized_path: Path) -> Tuple[int, int, float]:
-        """Calculate size reduction metrics"""
+        """
+Calculate size reduction metrics"""
         original_size = original_path.stat().st_size
         optimized_size = optimized_path.stat().st_size
         
@@ -147,7 +154,8 @@ class BaseOptimizer(ABC):
         return size_reduction, reduction_percent, optimized_size
     
     async def _preserve_metadata(self, original_path: Path, optimized_path: Path):
-        """Preserve important metadata from original to optimized file"""
+        """
+Preserve important metadata from original to optimized file"""
         try:
             original_metadata = await self.metadata_extractor.extract_metadata(original_path)
             if original_metadata and hasattr(original_metadata, 'technical_metadata'):
@@ -162,13 +170,15 @@ class AudioOptimizer(BaseOptimizer):
     """Professional audio content optimizer"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if optimizer supports audio format"""
+        """
+Check if optimizer supports audio format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.AUDIO
         return SupportedFormats.is_audio_format(format_type)
     
     async def optimize(self, content_path: Path, output_path: Optional[Path] = None) -> OptimizationResult:
-        """Optimize audio content"""
+        """
+Optimize audio content"""
         start_time = datetime.now()
         
         result = OptimizationResult(
@@ -376,7 +386,8 @@ class AudioOptimizer(BaseOptimizer):
     async def _save_optimized_audio(self, audio: np.ndarray, sr: int, 
                                   output_path: Path, output_format: str,
                                   result: OptimizationResult):
-        """Save optimized audio to file"""
+        """
+Save optimized audio to file"""
         try:
             if output_format in ['wav', 'flac']:
                 # Lossless formats
@@ -437,16 +448,19 @@ class AudioOptimizer(BaseOptimizer):
 
 
 class VideoOptimizer(BaseOptimizer):
-    """Professional video content optimizer"""
+    """
+Professional video content optimizer"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if optimizer supports video format"""
+        """
+Check if optimizer supports video format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.VIDEO
         return SupportedFormats.is_video_format(format_type)
     
     async def optimize(self, content_path: Path, output_path: Optional[Path] = None) -> OptimizationResult:
-        """Optimize video content"""
+        """
+Optimize video content"""
         start_time = datetime.now()
         
         result = OptimizationResult(
@@ -608,7 +622,8 @@ class VideoOptimizer(BaseOptimizer):
     
     async def _calculate_target_fps(self, original_fps: float,
                                   result: OptimizationResult) -> float:
-        """Calculate target frame rate"""
+        """
+Calculate target frame rate"""
         
         # Profile-specific defaults
         if self.profile.target_use == 'mobile':
@@ -638,7 +653,8 @@ class VideoOptimizer(BaseOptimizer):
     
     async def _calculate_target_bitrate(self, width: int, height: int, fps: float,
                                       result: OptimizationResult) -> int:
-        """Calculate target bitrate in kbps"""
+        """
+Calculate target bitrate in kbps"""
         
         # Base bitrate calculation (simplified)
         pixels_per_second = width * height * fps
@@ -671,7 +687,8 @@ class VideoOptimizer(BaseOptimizer):
     
     async def _select_optimal_format(self, original_path: Path,
                                    result: OptimizationResult) -> str:
-        """Select optimal video format based on profile"""
+        """
+Select optimal video format based on profile"""
         original_format = original_path.suffix.lower().lstrip('.')
         
         # Format selection based on use case
@@ -692,7 +709,8 @@ class VideoOptimizer(BaseOptimizer):
     async def _optimize_with_ffmpeg(self, input_path: Path, output_path: Path,
                                   target_settings: Dict[str, Any], output_format: str,
                                   result: OptimizationResult):
-        """Optimize video using ffmpeg"""
+        """
+Optimize video using ffmpeg"""
         
         # Build ffmpeg command
         input_stream = ffmpeg.input(str(input_path))
@@ -782,7 +800,8 @@ class VideoOptimizer(BaseOptimizer):
         return settings
     
     def _get_audio_bitrate_for_video(self) -> int:
-        """Get appropriate audio bitrate for video"""
+        """
+Get appropriate audio bitrate for video"""
         if self.profile.quality_level == QualityLevel.HIGH:
             return 192  # 192 kbps
         elif self.profile.quality_level == QualityLevel.MEDIUM:
@@ -792,16 +811,19 @@ class VideoOptimizer(BaseOptimizer):
 
 
 class ImageOptimizer(BaseOptimizer):
-    """Professional image content optimizer"""
+    """
+Professional image content optimizer"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if optimizer supports image format"""
+        """
+Check if optimizer supports image format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.IMAGE
         return SupportedFormats.is_image_format(format_type)
     
     async def optimize(self, content_path: Path, output_path: Optional[Path] = None) -> OptimizationResult:
-        """Optimize image content"""
+        """
+Optimize image content"""
         start_time = datetime.now()
         
         result = OptimizationResult(
@@ -961,7 +983,8 @@ class ImageOptimizer(BaseOptimizer):
     
     async def _enhance_image(self, image: Image.Image,
                            result: OptimizationResult) -> Image.Image:
-        """Apply image enhancement techniques"""
+        """
+Apply image enhancement techniques"""
         enhanced_image = image.copy()
         
         try:
@@ -1076,7 +1099,8 @@ class ImageOptimizer(BaseOptimizer):
     
     async def _select_optimal_format(self, original_path: Path,
                                    result: OptimizationResult) -> str:
-        """Select optimal image format"""
+        """
+Select optimal image format"""
         original_format = original_path.suffix.lower().lstrip('.')
         
         # Get image properties
@@ -1112,7 +1136,8 @@ class ImageOptimizer(BaseOptimizer):
     
     async def _save_optimized_image(self, image: Image.Image, output_path: Path,
                                   output_format: str, result: OptimizationResult):
-        """Save optimized image with format-specific settings"""
+        """
+Save optimized image with format-specific settings"""
         
         save_kwargs = {}
         
@@ -1454,7 +1479,8 @@ class MediaOptimizer:
     
     @classmethod
     def create_custom_profile(cls, **kwargs) -> OptimizationProfile:
-        """Create a custom optimization profile"""
+        """
+Create a custom optimization profile"""
         return OptimizationProfile(**kwargs)
 
 
@@ -1464,12 +1490,14 @@ ContentOptimizer = MediaOptimizer
 
 async def optimize_multimedia(content_path: Path, profile: str = 'web_standard',
                              output_path: Optional[Path] = None) -> OptimizationResult:
-    """Convenient function for single file optimization"""
+    """
+Convenient function for single file optimization"""
     optimizer = MediaOptimizer(profile)
     return await optimizer.optimize(content_path, output_path)
 
 async def batch_optimize_multimedia(content_paths: List[Path], profile: str = 'web_standard',
                                   output_directory: Optional[Path] = None) -> List[OptimizationResult]:
-    """Convenient function for batch optimization"""
+    """
+Convenient function for batch optimization"""
     optimizer = MediaOptimizer(profile)
     return await optimizer.batch_optimize(content_paths, output_directory)

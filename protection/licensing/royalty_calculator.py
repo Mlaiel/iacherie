@@ -10,8 +10,9 @@ Professional royalty and revenue calculation system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Financial Engineer + Music Business Analyst + Tax Specialist
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -25,7 +26,9 @@ import math
 logger = logging.getLogger(__name__)
 
 class RoyaltyType(Enum):
-    """Types of royalty structures"""
+    """
+Types of royalty structures"""
+
     FLAT_PERCENTAGE = "flat_percentage"
     TIERED_PERCENTAGE = "tiered_percentage"
     PERFORMANCE_BASED = "performance_based"
@@ -34,6 +37,7 @@ class RoyaltyType(Enum):
 
 class RevenueSource(Enum):
     """Sources of revenue"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     PHYSICAL_SALES = "physical_sales"
@@ -45,6 +49,7 @@ class RevenueSource(Enum):
 
 class CalculationMethod(Enum):
     """Calculation methodologies"""
+
     NET_RECEIPTS = "net_receipts"
     GROSS_RECEIPTS = "gross_receipts"
     PUBLISHED_PRICE_TO_DEALER = "ppd"
@@ -62,7 +67,8 @@ class RoyaltyTier:
 
 @dataclass
 class DeductionRule:
-    """Revenue deduction rule"""
+    """
+Revenue deduction rule"""
     deduction_id: str
     name: str
     deduction_type: str  # percentage, fixed, tiered
@@ -73,7 +79,8 @@ class DeductionRule:
 
 @dataclass
 class RoyaltyStructure:
-    """Complete royalty structure definition"""
+    """
+Complete royalty structure definition"""
     structure_id: str
     license_id: str
     royalty_type: RoyaltyType
@@ -91,7 +98,8 @@ class RoyaltyStructure:
 
 @dataclass
 class CalculationResult:
-    """Royalty calculation result"""
+    """
+Royalty calculation result"""
     calculation_id: str
     license_id: str
     period_start: datetime
@@ -115,7 +123,8 @@ class RoyaltyCalculator:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize royalty calculator with configuration."""
+        """
+Initialize royalty calculator with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -368,7 +377,8 @@ class RoyaltyCalculator:
         license_type: str,
         custom_terms: Dict[str, Any]
     ) -> List[RoyaltyTier]:
-        """Create royalty tier structure."""
+        """
+Create royalty tier structure."""
         tiers = []
         
         if royalty_type == RoyaltyType.FLAT_PERCENTAGE:
@@ -425,7 +435,8 @@ class RoyaltyCalculator:
         jurisdiction: str,
         license_type: str
     ) -> List[DeductionRule]:
-        """Create applicable deduction rules."""
+        """
+Create applicable deduction rules."""
         deductions = []
         
         # Platform fees (universal)
@@ -491,7 +502,8 @@ class RoyaltyCalculator:
         base_rate: Decimal,
         jurisdiction: str
     ) -> Dict[str, Decimal]:
-        """Calculate territory-specific royalty rates."""
+        """
+Calculate territory-specific royalty rates."""
         territory_rates = {}
         
         # Base jurisdiction rate
@@ -511,7 +523,8 @@ class RoyaltyCalculator:
         base_rate: Decimal,
         custom_terms: Dict[str, Any]
     ) -> Dict[str, Optional[Decimal]]:
-        """Calculate financial terms like advances and minimum guarantees."""
+        """
+Calculate financial terms like advances and minimum guarantees."""
         financial_terms = {}
         
         # Minimum guarantee calculation
@@ -541,7 +554,8 @@ class RoyaltyCalculator:
         return financial_terms
     
     async def _generate_calculation_methodology(self, royalty_structure: RoyaltyStructure) -> Dict[str, Any]:
-        """Generate explanation of calculation methodology."""
+        """
+Generate explanation of calculation methodology."""
         methodology = {
             'calculation_method': royalty_structure.calculation_method.value,
             'royalty_type': royalty_structure.royalty_type.value,
@@ -618,7 +632,8 @@ class RoyaltyCalculator:
         revenue_amount: Decimal,
         royalty_structure: RoyaltyStructure
     ) -> Decimal:
-        """Calculate royalties for a specific revenue amount."""
+        """
+Calculate royalties for a specific revenue amount."""
         if royalty_structure.royalty_type == RoyaltyType.FLAT_PERCENTAGE:
             return revenue_amount * royalty_structure.base_rate
         
@@ -649,7 +664,8 @@ class RoyaltyCalculator:
             return revenue_amount * royalty_structure.base_rate
     
     async def _generate_compliance_notes(self, jurisdiction: str, license_type: str) -> List[str]:
-        """Generate compliance notes for the royalty structure."""
+        """
+Generate compliance notes for the royalty structure."""
         notes = []
         
         # General compliance

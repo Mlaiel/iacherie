@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
@@ -54,7 +55,8 @@ settings = get_settings()
 
 @dataclass
 class SpotifyTrackData:
-    """Spotify track data structure"""
+    """
+Spotify track data structure"""
     track_id: str
     name: str
     artist_names: List[str]
@@ -90,7 +92,8 @@ class SpotifyTrackData:
 
 @dataclass
 class SpotifyArtistData:
-    """Spotify artist data structure"""
+    """
+Spotify artist data structure"""
     artist_id: str
     name: str
     genres: List[str]
@@ -111,7 +114,8 @@ class SpotifyArtistData:
 
 @dataclass
 class SpotifyPlaylistData:
-    """Spotify playlist data structure"""
+    """
+Spotify playlist data structure"""
     playlist_id: str
     name: str
     description: str
@@ -148,7 +152,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, api_credentials: Dict, config: Optional[Dict] = None):
-        """Initialize Spotify crawler engine"""
+        """
+Initialize Spotify crawler engine"""
         super().__init__(config)
         self.api_credentials = api_credentials
         self.client = None
@@ -167,7 +172,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_spotify_client(self) -> None:
-        """Setup Spotify API client"""
+        """
+Setup Spotify API client"""
         try:
             client_credentials_manager = SpotifyClientCredentials(
                 client_id=self.api_credentials.get('client_id'),
@@ -805,7 +811,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         return variance ** 0.5
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

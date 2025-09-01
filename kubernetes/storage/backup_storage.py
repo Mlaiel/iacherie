@@ -8,7 +8,7 @@ Technologies: Python, AWS S3, Restic, Velero, Kubernetes Backup, Multi-Cloud
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Content creation → Backup scheduling → Multi-cloud replication → 
 Encryption & compression → Recovery testing → Compliance reporting → Disaster recovery
 """
+
 import logging
 import asyncio
 import json
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Backup types and strategies"""
+    """
+Backup types and strategies"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -62,6 +65,7 @@ class BackupType(Enum):
 
 class BackupDestination(Enum):
     """Backup destination types"""
+
     AWS_S3 = "aws-s3"
     GOOGLE_CLOUD = "google-cloud"
     AZURE_BLOB = "azure-blob"
@@ -73,6 +77,7 @@ class BackupDestination(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -84,6 +89,7 @@ class BackupStatus(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -94,6 +100,7 @@ class CompressionType(Enum):
 
 class EncryptionType(Enum):
     """Encryption methods"""
+
     NONE = "none"
     AES_256 = "aes-256"
     AES_256_GCM = "aes-256-gcm"
@@ -178,7 +185,8 @@ class BackupJob:
 
 @dataclass
 class BackupMetrics:
-    """Backup system metrics"""
+    """
+Backup system metrics"""
     total_backups: int = 0
     successful_backups: int = 0
     failed_backups: int = 0
@@ -1083,7 +1091,8 @@ class BackupConfigurationManager:
     
     @staticmethod
     def load_config_from_file(config_path: Path) -> BackupConfig:
-        """Load backup configuration from YAML file"""
+        """
+Load backup configuration from YAML file"""
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -1161,7 +1170,8 @@ def create_backup_manager(
 
 # Usage Example
 async def main():
-    """Example usage of BackupStorageManager"""
+    """
+Example usage of BackupStorageManager"""
     try:
         # Create backup manager for content protection
         backup_manager = create_backup_manager(

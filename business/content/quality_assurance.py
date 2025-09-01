@@ -7,6 +7,7 @@ through automated analysis, human review workflows, and compliance checking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import hashlib
 import json
@@ -38,7 +39,8 @@ settings = get_settings()
 
 
 class ContentQualityAssuranceSystem:
-    """Advanced quality assurance system for content validation."""
+    """
+Advanced quality assurance system for content validation."""
     
     def __init__(self):
         self.db = get_database()
@@ -1061,7 +1063,8 @@ class ContentQualityAssuranceSystem:
         analysis_results: Dict[str, Any],
         standards: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Identify technical issues based on analysis."""
+        """
+Identify technical issues based on analysis."""
         issues = []
         
         # Low resolution issue
@@ -1104,7 +1107,8 @@ class ContentQualityAssuranceSystem:
         return (blur_stability + brightness_stability) / 2.0
     
     def _calculate_hue_distribution(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Calculate hue distribution in image."""
+        """
+Calculate hue distribution in image."""
         hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
         hue_channel = hsv[:, :, 0]
         
@@ -1132,7 +1136,8 @@ class ContentQualityAssuranceSystem:
         return hue_distribution
     
     def _detect_language(self, text: str) -> str:
-        """Basic language detection for text."""
+        """
+Basic language detection for text."""
         # This is a simplified implementation
         # In production, use a proper language detection library
         
@@ -1150,7 +1155,8 @@ class ContentQualityAssuranceSystem:
         return max(scores, key=scores.get) if max(scores.values()) > 0 else 'unknown'
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate text readability score (simplified Flesch Reading Ease)."""
+        """
+Calculate text readability score (simplified Flesch Reading Ease)."""
         sentences = text.split('.')
         sentence_count = len([s for s in sentences if s.strip()])
         
@@ -1182,7 +1188,8 @@ class ContentQualityAssuranceSystem:
         content_metadata: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Run content moderation checks."""
+        """
+Run content moderation checks."""
         try:
             moderation_results = await self.moderation_engine.moderate_content(
                 content_path=content_metadata.get('file_path'),
@@ -1301,7 +1308,8 @@ class ContentQualityAssuranceSystem:
         }
     
     async def _run_final_approval(self, check_id: UUID) -> Dict[str, Any]:
-        """Run final approval stage."""
+        """
+Run final approval stage."""
         check_data = self.active_checks[check_id]
         stage_results = check_data['stage_results']
         
@@ -1322,7 +1330,8 @@ class ContentQualityAssuranceSystem:
         }
     
     def _calculate_overall_quality_score(self, stage_results: Dict[str, Any]) -> float:
-        """Calculate overall quality score from all stages."""
+        """
+Calculate overall quality score from all stages."""
         scores = []
         
         for stage, result in stage_results.items():
@@ -1343,7 +1352,8 @@ class ContentQualityAssuranceSystem:
         stage_results: Dict[str, Any],
         quality_level: str
     ) -> bool:
-        """Evaluate if content passes quality standards."""
+        """
+Evaluate if content passes quality standards."""
         overall_score = self._calculate_overall_quality_score(stage_results)
         
         thresholds = {
@@ -1355,7 +1365,8 @@ class ContentQualityAssuranceSystem:
         return overall_score >= thresholds.get(quality_level, 0.7)
     
     def _calculate_estimated_completion(self, quality_level: str) -> datetime:
-        """Calculate estimated completion time."""
+        """
+Calculate estimated completion time."""
         time_estimates = {
             'basic': 10,      # 10 minutes
             'standard': 20,   # 20 minutes
@@ -1369,7 +1380,8 @@ class ContentQualityAssuranceSystem:
     # Due to length constraints, I'm providing the core structure and key methods
     
     async def _complete_quality_check(self, check_id: UUID) -> None:
-        """Complete the quality check process."""
+        """
+Complete the quality check process."""
         check_data = self.active_checks[check_id]
         
         # Update database

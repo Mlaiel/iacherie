@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -34,7 +35,9 @@ settings = get_settings()
 
 
 class RevenueSource(Enum):
-    """Revenue source types."""
+    """
+Revenue source types."""
+
     PLATFORM_ADS = "platform_ads"
     SPONSORSHIPS = "sponsorships"
     MERCHANDISE = "merchandise"
@@ -49,6 +52,7 @@ class RevenueSource(Enum):
 
 class RevenueFrequency(Enum):
     """Revenue payment frequency."""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -79,7 +83,8 @@ class RevenueEntry:
 
 @dataclass
 class RevenueReport:
-    """Revenue analytics report."""
+    """
+Revenue analytics report."""
     report_id: str
     creator_id: str
     period_start: datetime
@@ -102,14 +107,16 @@ class RevenueTracker:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the revenue tracker."""
+        """
+Initialize the revenue tracker."""
         self.config = config or MonetizationConfig()
         self._time_series_analyzer = TimeSeriesAnalyzer()
         self._alert_manager = AlertManager()
         self._revenue_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize the revenue tracker."""
+        """
+Initialize the revenue tracker."""
         try:
             await self._time_series_analyzer.initialize()
             await self._alert_manager.initialize()
@@ -467,27 +474,32 @@ class RevenueTracker:
     async def _calculate_platform_fees(
         self, amount: Decimal, platform: str, source: RevenueSource
     ) -> Decimal:
-        """Calculate platform fees."""
+        """
+Calculate platform fees."""
         # Implementation for fee calculation
         pass
     
     async def _store_revenue_entry(self, entry: RevenueEntry) -> None:
-        """Store revenue entry in database."""
+        """
+Store revenue entry in database."""
         # Implementation for data storage
         pass
     
     async def _update_realtime_analytics(self, entry: RevenueEntry) -> None:
-        """Update real-time analytics."""
+        """
+Update real-time analytics."""
         # Implementation for real-time updates
         pass
     
     async def _check_revenue_alerts(self, entry: RevenueEntry) -> None:
-        """Check if revenue entry triggers alerts."""
+        """
+Check if revenue entry triggers alerts."""
         # Implementation for alert checking
         pass
     
     def _generate_entry_id(self) -> str:
-        """Generate unique entry ID."""
+        """
+Generate unique entry ID."""
         return f"REV_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(datetime.now().isoformat())}"
     
     def _generate_report_id(self) -> str:

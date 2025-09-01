@@ -5,11 +5,12 @@ Provides comprehensive revenue analytics, prediction models, and optimization st
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -59,6 +60,7 @@ metrics = MetricsCollector("distribution.revenue_tracker")
 
 class RevenueSource(str, Enum):
     """Revenue source types across platforms"""
+
     AD_REVENUE = "ad_revenue"
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -78,6 +80,7 @@ class RevenueSource(str, Enum):
 
 class PayoutFrequency(str, Enum):
     """Payout frequency options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -88,6 +91,7 @@ class PayoutFrequency(str, Enum):
 
 class RevenueStatus(str, Enum):
     """Revenue tracking status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     DISPUTED = "disputed"
@@ -119,7 +123,8 @@ class RevenueRecord:
 
 @dataclass
 class RevenueInsight:
-    """Revenue analysis insight"""
+    """
+Revenue analysis insight"""
     insight_type: str
     title: str
     description: str
@@ -131,7 +136,8 @@ class RevenueInsight:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecasting data"""
+    """
+Revenue forecasting data"""
     period: str
     predicted_amount: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
@@ -140,7 +146,8 @@ class RevenueForecast:
 
 
 class RevenueTracker:
-    """Advanced revenue tracking and analytics system"""
+    """
+Advanced revenue tracking and analytics system"""
     
     def __init__(self, db: Session):
         self.db = db
@@ -148,7 +155,8 @@ class RevenueTracker:
         self.currency_converter = self._initialize_currency_converter()
         
     def _initialize_platform_rates(self) -> Dict[PlatformType, Dict[str, float]]:
-        """Initialize platform-specific revenue rates"""
+        """
+Initialize platform-specific revenue rates"""
         return {
             PlatformType.YOUTUBE: {
                 "rpm_base": 2.5,  # Revenue per mille (thousand views)
@@ -681,17 +689,20 @@ class RevenueTracker:
         platform: PlatformType,
         source: RevenueSource
     ) -> None:
-        """Update user's revenue analytics"""
+        """
+Update user's revenue analytics"""
         # This would update aggregated revenue metrics
         pass
     
     async def _check_revenue_milestones(self, user_id: str, amount: Decimal) -> None:
-        """Check and trigger revenue milestone notifications"""
+        """
+Check and trigger revenue milestone notifications"""
         # Implementation for milestone checking
         pass
     
     def _estimate_revenue_source(self, platform: str) -> str:
-        """Estimate revenue source based on platform"""
+        """
+Estimate revenue source based on platform"""
         source_map = {
             "youtube": "ad_revenue",
             "instagram": "sponsorship",
@@ -757,7 +768,8 @@ class RevenueTracker:
         user_id: str,
         historical_data: List[AnalyticsModel]
     ) -> List[str]:
-        """Identify factors influencing revenue trends"""
+        """
+Identify factors influencing revenue trends"""
         factors = []
         
         # Analyze view patterns

@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStage(Enum):
-    """Stages in the content processing workflow"""
+    """
+Stages in the content processing workflow"""
+
     UPLOAD = "upload"
     IA_PROCESSING = "ia_processing"
     PROTECTION = "protection"
@@ -46,6 +49,7 @@ class WorkflowStage(Enum):
 
 class WorkflowStatus(Enum):
     """Status of workflow execution"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -87,7 +91,8 @@ class WorkflowResult:
 
 @dataclass
 class StageResult:
-    """Result of individual workflow stage"""
+    """
+Result of individual workflow stage"""
     stage: WorkflowStage
     status: WorkflowStatus
     processing_time_ms: int
@@ -97,7 +102,8 @@ class StageResult:
 
 
 class BusinessWorkflowOrchestrator:
-    """Main orchestrator for business workflows"""
+    """
+Main orchestrator for business workflows"""
     
     def __init__(
         self,
@@ -123,7 +129,8 @@ class BusinessWorkflowOrchestrator:
         }
     
     async def execute_complete_workflow(self, context: WorkflowContext) -> WorkflowResult:
-        """Execute the complete creator-to-platform workflow"""
+        """
+Execute the complete creator-to-platform workflow"""
         start_time = datetime.now(timezone.utc)
         
         workflow_result = WorkflowResult(
@@ -718,7 +725,8 @@ class WorkflowManager:
         target_platforms: List[str],
         options: Dict[str, Any] = None
     ) -> str:
-        """Start a complete creator workflow"""
+        """
+Start a complete creator workflow"""
         
         import uuid
         workflow_id = str(uuid.uuid4())

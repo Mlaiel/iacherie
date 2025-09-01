@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Sentiment Analysis Tests - Enterprise Grade Test Suite
+"""
+Sentiment Analysis Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for sentiment analysis, emotion detection, opinion mining,
 and advanced natural language understanding capabilities.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -47,10 +50,12 @@ from ai.ml.sentiment_analysis import (
 
 
 class TestSentimentAnalyzer:
-    """Tests for basic sentiment analysis functionality"""
+    """
+Tests for basic sentiment analysis functionality"""
     
     def test_init_sentiment_analyzer(self):
-        """Test sentiment analyzer initialization"""
+        """
+Test sentiment analyzer initialization"""
         analyzer = SentimentAnalyzer(
             model_name="bert-base-uncased",
             max_length=512,
@@ -203,7 +208,8 @@ class TestEmotionDetector:
     """Tests for emotion detection functionality"""
     
     def test_init_emotion_detector(self):
-        """Test emotion detector initialization"""
+        """
+Test emotion detector initialization"""
         detector = EmotionDetector(
             emotion_model="roberta-base",
             emotions=["joy", "sadness", "anger", "fear", "surprise", "disgust"],
@@ -319,7 +325,8 @@ class TestAdvancedSentimentModel:
     """Tests for advanced sentiment analysis models"""
     
     def test_init_advanced_model(self):
-        """Test advanced sentiment model initialization"""
+        """
+Test advanced sentiment model initialization"""
         model = AdvancedSentimentModel(
             architecture="transformer",
             pretrained_model="roberta-large",
@@ -414,7 +421,8 @@ class TestMultilingualSentimentAnalyzer:
     """Tests for multilingual sentiment analysis"""
     
     def test_init_multilingual_analyzer(self):
-        """Test multilingual sentiment analyzer initialization"""
+        """
+Test multilingual sentiment analyzer initialization"""
         analyzer = MultilingualSentimentAnalyzer(
             supported_languages=["en", "fr", "de", "es", "it"],
             model_name="xlm-roberta-base",
@@ -507,7 +515,8 @@ class TestSentimentTrendAnalyzer:
     """Tests for sentiment trend analysis"""
     
     def test_init_trend_analyzer(self):
-        """Test sentiment trend analyzer initialization"""
+        """
+Test sentiment trend analyzer initialization"""
         analyzer = SentimentTrendAnalyzer(
             time_window="7d",
             aggregation_method="weighted_average",
@@ -573,7 +582,8 @@ class TestOpinionMiningEngine:
     """Tests for opinion mining functionality"""
     
     def test_init_opinion_mining(self):
-        """Test opinion mining engine initialization"""
+        """
+Test opinion mining engine initialization"""
         engine = OpinionMiningEngine(
             enable_aspect_extraction=True,
             enable_opinion_summarization=True,
@@ -585,7 +595,8 @@ class TestOpinionMiningEngine:
         assert engine.enable_stance_detection
 
     def test_aspect_extraction(self):
-        """Test aspect extraction from opinions"""
+        """
+Test aspect extraction from opinions"""
         engine = OpinionMiningEngine(enable_aspect_extraction=True)
         
         review_text = """
@@ -677,7 +688,8 @@ class TestBrandSentimentAnalyzer:
     """Tests for brand sentiment analysis"""
     
     def test_init_brand_analyzer(self):
-        """Test brand sentiment analyzer initialization"""
+        """
+Test brand sentiment analyzer initialization"""
         analyzer = BrandSentimentAnalyzer(
             brand_name="TechCorp",
             competitor_brands=["CompetitorA", "CompetitorB"],
@@ -779,7 +791,8 @@ class TestSentimentMetrics:
     """Tests for sentiment analysis metrics and evaluation"""
     
     def test_init_metrics(self):
-        """Test sentiment metrics initialization"""
+        """
+Test sentiment metrics initialization"""
         metrics = SentimentMetrics()
         
         assert hasattr(metrics, 'accuracy_scores')
@@ -788,7 +801,8 @@ class TestSentimentMetrics:
         assert hasattr(metrics, 'f1_scores')
 
     def test_classification_metrics(self):
-        """Test sentiment classification metrics"""
+        """
+Test sentiment classification metrics"""
         metrics = SentimentMetrics()
         
         # Mock predictions and ground truth
@@ -863,7 +877,8 @@ class TestSentimentAnalysisIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_sentiment_pipeline(self, sample_text_data, temp_dir):
-        """Test complete sentiment analysis pipeline"""
+        """
+Test complete sentiment analysis pipeline"""
         # Initialize components
         analyzer = SentimentAnalyzer(batch_size=4)
         emotion_detector = EmotionDetector()

@@ -4,11 +4,12 @@ Advanced copyright protection, watermarking, and rights management system
 for multi-format content creators (musicians, bloggers, photographers, influencers, comedians).
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -34,6 +37,7 @@ class ProtectionLevel(Enum):
 
 class ContentType(Enum):
     """Supported content types for protection"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -45,6 +49,7 @@ class ContentType(Enum):
 
 class WatermarkType(Enum):
     """Types of watermarks"""
+
     VISIBLE = "visible"
     INVISIBLE = "invisible"
     STEGANOGRAPHIC = "steganographic"
@@ -54,6 +59,7 @@ class WatermarkType(Enum):
 
 class DetectionMethod(Enum):
     """Copyright detection methods"""
+
     HASH_MATCHING = "hash_matching"
     PERCEPTUAL_HASHING = "perceptual_hashing"
     FINGERPRINTING = "fingerprinting"
@@ -64,6 +70,7 @@ class DetectionMethod(Enum):
 
 class LicenseType(Enum):
     """Content license types"""
+
     ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "cc_by"
     CREATIVE_COMMONS_BY_SA = "cc_by_sa"
@@ -82,7 +89,7 @@ class WatermarkConfig:
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     intensity: float = 0.3  # 0.0 to 1.0
     position: str = "bottom_right"  # For visible watermarks
-    text: str = "© Fahed Mlaiel - Unauthorized use prohibited"
+    text: str = "(c) Fahed Mlaiel - Unauthorized use prohibited"
     font_size: int = 12
     opacity: float = 0.5
     color: str = "#FFFFFF"
@@ -310,7 +317,8 @@ class ProtectionConfig:
             self._setup_default_webhooks()
 
     def _setup_default_api_endpoints(self):
-        """Setup default API endpoints"""
+        """
+Setup default API endpoints"""
         self.api_endpoints = {
             "copyright_check": "https://api.ia-influencer.com/v1/protection/copyright/check",
             "watermark_apply": "https://api.ia-influencer.com/v1/protection/watermark/apply",
@@ -495,7 +503,8 @@ class ProtectionConfig:
 
     @classmethod
     def load_from_file(cls, config_file: str) -> 'ProtectionConfig':
-        """Load configuration from JSON file"""
+        """
+Load configuration from JSON file"""
         try:
             with open(config_file, 'r') as f:
                 data = json.load(f)

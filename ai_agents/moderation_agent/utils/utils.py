@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import re
 import cv2
 import numpy as np
@@ -319,7 +320,8 @@ class ContentPreprocessor:
         }
     
     def _detect_language(self, text: str) -> str:
-        """Simple language detection based on character patterns"""
+        """
+Simple language detection based on character patterns"""
         try:
             # Simple heuristic-based language detection
             if re.search(r'[äöüÄÖÜß]', text):
@@ -346,7 +348,8 @@ class ContentPreprocessor:
             return 'unknown'
     
     def _calculate_readability(self, text: str) -> Dict[str, float]:
-        """Calculate text readability metrics"""
+        """
+Calculate text readability metrics"""
         if not text:
             return {}
         
@@ -369,7 +372,8 @@ class ContentPreprocessor:
         }
     
     def _count_syllables(self, word: str) -> int:
-        """Simple syllable counting"""
+        """
+Simple syllable counting"""
         word = word.lower()
         vowels = "aeiouy"
         syllable_count = 0
@@ -415,7 +419,8 @@ class ContentPreprocessor:
         return metadata
     
     def _enhance_image_quality(self, image: Image.Image) -> Image.Image:
-        """Enhance image quality for better analysis"""
+        """
+Enhance image quality for better analysis"""
         try:
             # Brightness and contrast enhancement
             enhancer = ImageEnhance.Brightness(image)
@@ -486,7 +491,8 @@ class ContentPreprocessor:
         }
     
     def _analyze_texture(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze texture features in image"""
+        """
+Analyze texture features in image"""
         # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
@@ -505,7 +511,8 @@ class ContentPreprocessor:
         }
     
     def _analyze_edges(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze edge features in image"""
+        """
+Analyze edge features in image"""
         # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
@@ -527,7 +534,8 @@ class ContentPreprocessor:
         }
     
     def _extract_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""
+        """
+Extract comprehensive audio features"""
         try:
             features = {}
             
@@ -625,7 +633,8 @@ class ContentHasher:
     
     @staticmethod
     def hash_text(text: str, algorithm: str = 'sha256') -> str:
-        """Generate hash for text content"""
+        """
+Generate hash for text content"""
         if not text:
             return ""
         
@@ -754,7 +763,8 @@ class ViolationReporter:
         return report
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""
+        """
+Generate unique report ID"""
         timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         random_suffix = hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest()[:8]
         return f"MOD_{timestamp}_{random_suffix}"
@@ -774,7 +784,8 @@ class ViolationReporter:
         return 'low'
     
     def _generate_violation_description(self, violation: Dict[str, Any]) -> str:
-        """Generate human-readable violation description"""
+        """
+Generate human-readable violation description"""
         violation_type = violation.get('violation_type', 'unknown')
         template = self.report_templates.get(violation_type, "Violation of type {type} detected with {confidence:.2%} confidence")
         

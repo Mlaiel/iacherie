@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -466,7 +467,8 @@ class CollaborationMatcher(ICollaborationMatcher):
         return min(match_ratio + skill_abundance_bonus, 1.0)
     
     def _calculate_opportunity_value(self, request: CollaborationRequest) -> float:
-        """Calculate the potential value of a collaboration opportunity"""
+        """
+Calculate the potential value of a collaboration opportunity"""
         value_score = 0.0
         
         # Budget-based value
@@ -489,12 +491,14 @@ class CollaborationMatcher(ICollaborationMatcher):
         self,
         request: CollaborationRequest
     ) -> List[CreatorProfile]:
-        """Get creators eligible for the collaboration request"""
+        """
+Get creators eligible for the collaboration request"""
         # In real implementation, this would query the creator database
         # with filters for skills, tier, availability, etc.
         return []  # Mock return
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve creator profile from storage"""
+        """
+Retrieve creator profile from storage"""
         # In real implementation, would fetch from database
         return None  # Mock return

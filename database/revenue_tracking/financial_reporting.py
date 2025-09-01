@@ -10,6 +10,7 @@ prohibited and will result in severe legal consequences.
 Comprehensive financial reporting for content creators, including income statements,
 balance sheets, cash flow, profit/loss, tax, compliance, and audit reports.
 """
+
 import logging
 from typing import Dict, List, Any, Optional
 from decimal import Decimal
@@ -20,7 +21,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Financial report types"""
+    """
+Financial report types"""
+
     INCOME_STATEMENT = "income_statement"
     BALANCE_SHEET = "balance_sheet"
     CASH_FLOW = "cash_flow"
@@ -45,7 +48,8 @@ class FinancialReport:
     details: Dict[str, Any] = field(default_factory=dict)
 
 class FinancialReportingEngine:
-    """Comprehensive financial reporting engine"""
+    """
+Comprehensive financial reporting engine"""
     def __init__(self, creator_id: str):
         self.creator_id = creator_id
         self.logger = logging.getLogger(f"FinancialReportingEngine:{creator_id}")

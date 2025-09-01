@@ -27,6 +27,7 @@ This cognitive intelligence system is proprietary intellectual property.
 Unauthorized use is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for authorization only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -57,7 +58,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class CognitiveState(Enum):
-    """Cognitive state classifications"""
+    """
+Cognitive state classifications"""
+
     HIGH_FOCUS = "high_focus"
     MODERATE_FOCUS = "moderate_focus"
     LOW_FOCUS = "low_focus"
@@ -71,6 +74,7 @@ class CognitiveState(Enum):
 
 class CognitiveComplexity(Enum):
     """Cognitive complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -136,7 +140,8 @@ class CognitivePatternAnalyzer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize cognitive pattern analyzer with advanced AI models"""
+        """
+Initialize cognitive pattern analyzer with advanced AI models"""
         self.config = config or {}
         self.pattern_cache = {}
         self.model_cache = {}
@@ -323,7 +328,8 @@ class CognitivePatternAnalyzer:
         return features
     
     async def _extract_linguistic_features(self, text_data: List[str]) -> Dict[str, float]:
-        """Extract linguistic cognitive features from text"""
+        """
+Extract linguistic cognitive features from text"""
         if not text_data:
             return {}
         
@@ -369,7 +375,8 @@ class CognitivePatternAnalyzer:
         }
     
     async def _extract_temporal_features(self, interaction_history: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Extract temporal cognitive patterns"""
+        """
+Extract temporal cognitive patterns"""
         if not interaction_history:
             return {}
         
@@ -402,7 +409,8 @@ class CognitivePatternAnalyzer:
         }
     
     async def _analyze_attention_patterns(self, cognitive_features: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze attention patterns from cognitive features"""
+        """
+Analyze attention patterns from cognitive features"""
         linguistic = cognitive_features.get('linguistic_features', {})
         temporal = cognitive_features.get('temporal_features', {})
         
@@ -438,7 +446,8 @@ class CognitivePatternAnalyzer:
         cognitive_features: Dict[str, Any],
         content_creation_data: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Assess cognitive load from features and content creation patterns"""
+        """
+Assess cognitive load from features and content creation patterns"""
         linguistic = cognitive_features.get('linguistic_features', {})
         temporal = cognitive_features.get('temporal_features', {})
         
@@ -480,7 +489,8 @@ class CognitivePatternAnalyzer:
         cognitive_load_analysis: Dict[str, float],
         processing_analysis: Dict[str, float]
     ) -> Dict[str, float]:
-        """Generate comprehensive cognitive profile"""
+        """
+Generate comprehensive cognitive profile"""
         return {
             'attention_span': attention_analysis.get('attention_span', 0.5),
             'focus_quality': attention_analysis.get('focus_quality', 0.5),
@@ -497,7 +507,8 @@ class CognitivePatternAnalyzer:
         }
     
     async def _evaluate_processing_patterns(self, cognitive_features: Dict[str, Any]) -> Dict[str, float]:
-        """Evaluate cognitive processing patterns"""
+        """
+Evaluate cognitive processing patterns"""
         linguistic = cognitive_features.get('linguistic_features', {})
         temporal = cognitive_features.get('temporal_features', {})
         
@@ -552,7 +563,8 @@ class CognitivePatternAnalyzer:
         cognitive_profile: Dict[str, float],
         creator_id: str
     ) -> List[CognitivePattern]:
-        """Identify dominant cognitive patterns"""
+        """
+Identify dominant cognitive patterns"""
         patterns = []
         
         # Determine cognitive state
@@ -602,7 +614,8 @@ class CognitivePatternAnalyzer:
         cognitive_profile: Dict[str, float],
         dominant_patterns: List[CognitivePattern]
     ) -> List[str]:
-        """Generate cognitive optimization recommendations"""
+        """
+Generate cognitive optimization recommendations"""
         recommendations = []
         
         # Attention optimization
@@ -658,7 +671,8 @@ class CognitivePatternAnalyzer:
         self,
         cognitive_profile: Dict[str, float]
     ) -> Dict[str, float]:
-        """Assess collaboration compatibility based on cognitive profile"""
+        """
+Assess collaboration compatibility based on cognitive profile"""
         return {
             'creative_collaborations': cognitive_profile.get('creativity_index', 0.5),
             'analytical_collaborations': cognitive_profile.get('analytical_thinking', 0.5),
@@ -672,7 +686,8 @@ class CognitivePatternAnalyzer:
         }
     
     async def _identify_cognitive_strengths(self, cognitive_profile: Dict[str, float]) -> List[str]:
-        """Identify cognitive strengths from profile"""
+        """
+Identify cognitive strengths from profile"""
         strengths = []
         
         for metric, value in cognitive_profile.items():
@@ -692,7 +707,8 @@ class CognitivePatternAnalyzer:
         return strengths
     
     async def _identify_cognitive_weaknesses(self, cognitive_profile: Dict[str, float]) -> List[str]:
-        """Identify cognitive areas for improvement"""
+        """
+Identify cognitive areas for improvement"""
         weaknesses = []
         
         for metric, value in cognitive_profile.items():
@@ -711,7 +727,8 @@ class CognitivePatternAnalyzer:
         return weaknesses
     
     async def _generate_engagement_strategies(self, cognitive_profile: Dict[str, float]) -> List[str]:
-        """Generate engagement strategies based on cognitive profile"""
+        """
+Generate engagement strategies based on cognitive profile"""
         strategies = []
         
         # High creativity strategies
@@ -761,7 +778,8 @@ class CognitivePatternAnalyzer:
         }
     
     async def _calculate_confidence_score(self, cognitive_profile: Dict[str, float]) -> float:
-        """Calculate confidence score for the analysis"""
+        """
+Calculate confidence score for the analysis"""
         # Base confidence from data completeness
         data_completeness = len([v for v in cognitive_profile.values() if v != 0.5]) / len(cognitive_profile)
         
@@ -775,7 +793,8 @@ class CognitivePatternAnalyzer:
         return min(1.0, max(0.0, confidence))
     
     async def _cache_analysis_results(self, insight: CognitiveInsight):
-        """Cache analysis results for future reference"""
+        """
+Cache analysis results for future reference"""
         cache_key = f"cognitive_analysis_{insight.creator_id}_{insight.generated_at.isoformat()}"
         self.pattern_cache[cache_key] = insight
         
@@ -798,7 +817,8 @@ class CognitivePatternAnalyzer:
         return None
     
     async def get_cognitive_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get cognitive analytics for a creator"""
+        """
+Get cognitive analytics for a creator"""
         return {
             'cognitive_history': [
                 insight for insight in self.pattern_cache.values()

@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta, date
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Types of revenue sources"""
+    """
+Types of revenue sources"""
+
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE = "affiliate"
@@ -49,6 +52,7 @@ class RevenueType(Enum):
 
 class DistributionMethod(Enum):
     """Revenue distribution methods"""
+
     EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     ROLE_BASED = "role_based"
@@ -60,6 +64,7 @@ class DistributionMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -71,6 +76,7 @@ class PaymentStatus(Enum):
 
 class ContractStatus(Enum):
     """Revenue sharing contract status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -81,6 +87,7 @@ class ContractStatus(Enum):
 
 class TaxStatus(Enum):
     """Tax handling status"""
+
     GROSS = "gross"
     NET = "net"
     TAX_EXEMPT = "tax_exempt"
@@ -107,7 +114,8 @@ class RevenueShare:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "share_id": self.share_id,
             "contract_id": self.contract_id,
@@ -150,7 +158,8 @@ class RevenueContract:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "contract_id": self.contract_id,
             "project_id": self.project_id,
@@ -192,7 +201,8 @@ class RevenueTransaction:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "transaction_id": self.transaction_id,
             "contract_id": self.contract_id,
@@ -227,7 +237,8 @@ class RevenueDistributionEngine:
         contract_data: Dict[str, Any],
         created_by: str
     ) -> Dict[str, Any]:
-        """Create new revenue sharing contract"""
+        """
+Create new revenue sharing contract"""
         try:
             # Validate contract data
             await self._validate_contract_data(contract_data)
@@ -778,7 +789,8 @@ class ContractAutomationManager:
         trigger_event: str,
         event_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automated contract actions"""
+        """
+Execute automated contract actions"""
         try:
             contract_data = await self.cache.get(f"revenue_contract:{contract_id}")
             if not contract_data:
@@ -962,7 +974,8 @@ class FinancialReportingManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate summary revenue report"""
+        """
+Generate summary revenue report"""
         total_revenue = Decimal("0")
         total_distributions = Decimal("0")
         total_fees = Decimal("0")

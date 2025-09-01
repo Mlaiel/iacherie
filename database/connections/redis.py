@@ -11,6 +11,7 @@ Manages Redis connections for caching, sessions, and real-time operations:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Set
@@ -25,7 +26,8 @@ from redis.asyncio.sentinel import Sentinel
 
 @dataclass
 class RedisConfig:
-    """Redis connection configuration"""
+    """
+Redis connection configuration"""
     host: str = "localhost"
     port: int = 6379
     database: int = 0
@@ -75,7 +77,8 @@ class RedisConnectionHandler:
         self.last_health_check = None
     
     async def initialize(self) -> None:
-        """Initialize Redis connection"""
+        """
+Initialize Redis connection"""
         try:
             self.logger.info("Initializing Redis connection...")
             
@@ -111,7 +114,8 @@ class RedisConnectionHandler:
         self.redis_client = Redis(connection_pool=self.connection_pool)
     
     async def _initialize_sentinel(self) -> None:
-        """Initialize Redis Sentinel for high availability"""
+        """
+Initialize Redis Sentinel for high availability"""
         if not self.config.sentinel_hosts or not self.config.sentinel_service_name:
             raise ValueError("Sentinel configuration incomplete")
         
@@ -146,7 +150,8 @@ class RedisConnectionHandler:
         return self.tenant_clients[tenant_id]
     
     async def _create_tenant_client(self, tenant_id: str) -> None:
-        """Create Redis client for specific tenant"""
+        """
+Create Redis client for specific tenant"""
         # Calculate tenant database number
         tenant_db = self.config.tenant_database_offset + hash(tenant_id) % 14  # Redis has 16 DBs by default
         
@@ -175,7 +180,8 @@ class RedisConnectionHandler:
     
     # Core Redis operations
     async def get(self, key: str, tenant_id: Optional[str] = None) -> Optional[str]:
-        """Get value by key"""
+        """
+Get value by key"""
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.get(key)
@@ -257,7 +263,8 @@ class RedisConnectionHandler:
         return await self.set(key, json_value, ex=ex, tenant_id=tenant_id)
     
     async def get_json(self, key: str, tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Get JSON value"""
+        """
+Get JSON value"""
         value = await self.get(key, tenant_id)
         if value:
             try:

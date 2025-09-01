@@ -208,7 +208,8 @@ COMMON_PATTERNS = {
 
 
 def get_pattern(pattern_name: str):
-    """Get a pre-configured pattern by name"""
+    """
+Get a pre-configured pattern by name"""
     pattern_func = COMMON_PATTERNS.get(pattern_name)
     if pattern_func:
         return pattern_func()

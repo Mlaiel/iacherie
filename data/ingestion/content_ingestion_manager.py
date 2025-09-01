@@ -6,7 +6,7 @@ Complete industrial-level content upload, validation, processing, and storage pi
 with advanced AI-powered analysis, quality assurance, and automated optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
@@ -23,6 +23,7 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
+
 import asyncio
 import logging
 import time
@@ -75,7 +76,9 @@ from ..analytics.content_analyzer import ContentAnalyzer
 
 
 class IngestionStatus(Enum):
-    """Content ingestion status enumeration"""
+    """
+Content ingestion status enumeration"""
+
     PENDING = "pending"
     VALIDATING = "validating"
     SCANNING = "scanning"
@@ -93,6 +96,7 @@ class IngestionStatus(Enum):
 
 class IngestionPriority(IntEnum):
     """Content ingestion priority levels"""
+
     LOW = 1
     NORMAL = 5
     HIGH = 10
@@ -101,7 +105,9 @@ class IngestionPriority(IntEnum):
 
 
 class ProcessingMode(Enum):
-    """Content processing modes"""
+    """
+Content processing modes"""
+
     STANDARD = "standard"
     FAST = "fast"
     QUALITY = "quality"
@@ -111,6 +117,7 @@ class ProcessingMode(Enum):
 
 class ContentSource(Enum):
     """Content source types"""
+
     DIRECT_UPLOAD = "direct_upload"
     URL_IMPORT = "url_import"
     API_UPLOAD = "api_upload"
@@ -172,7 +179,8 @@ class ProcessingMetrics:
 
 @dataclass
 class QualityMetrics:
-    """Content quality assessment metrics"""
+    """
+Content quality assessment metrics"""
     overall_score: float = 0.0
     technical_quality: float = 0.0
     content_quality: float = 0.0
@@ -185,7 +193,8 @@ class QualityMetrics:
 
 @dataclass
 class SecurityAssessment:
-    """Content security assessment results"""
+    """
+Content security assessment results"""
     is_safe: bool = True
     threat_level: str = "none"
     detected_threats: List[str] = field(default_factory=list)
@@ -767,7 +776,8 @@ class ContentIngestionManager:
         }
     
     def get_ingestion_stats(self) -> Dict[str, Any]:
-        """Get ingestion statistics"""
+        """
+Get ingestion statistics"""
         return {
             'max_file_size': self.max_file_size,
             'chunk_size': self.chunk_size,

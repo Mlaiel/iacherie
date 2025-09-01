@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Standalone AI Engines Test Suite
+"""
+Standalone AI Engines Test Suite
 
 Independent test suite that doesn't rely on complex imports.
 Tests the structure and functionality without circular dependencies.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -26,6 +28,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -39,7 +42,8 @@ from pathlib import Path
 
 
 def test_engines_directory_exists():
-    """Test that engines directory exists"""
+    """
+Test that engines directory exists"""
     engines_path = Path("/workspaces/Ainflue/backend/ai/engines")
     assert engines_path.exists(), "Engines directory must exist"
     assert engines_path.is_dir(), "Engines path must be a directory"

@@ -5,8 +5,9 @@ Basic tests to verify that the AI modules we've created are working correctly.
 This provides a foundation to build upon.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 from ai.nlp.core import AdvancedNLPEngine, NLPTask, NLPResult, NLPTaskType
@@ -16,11 +17,13 @@ from ai.recommendation.exceptions import RecommendationError, ValidationError
 
 
 class TestNLPCore:
-    """Test the NLP core module."""
+    """
+Test the NLP core module."""
     
     @pytest.mark.asyncio
     async def test_nlp_engine_initialization(self):
-        """Test NLP engine can be initialized."""
+        """
+Test NLP engine can be initialized."""
         engine = AdvancedNLPEngine()
         assert not engine.is_initialized
         
@@ -30,7 +33,8 @@ class TestNLPCore:
     
     @pytest.mark.asyncio
     async def test_nlp_task_processing(self):
-        """Test NLP task processing."""
+        """
+Test NLP task processing."""
         engine = AdvancedNLPEngine()
         await engine.initialize()
         
@@ -76,7 +80,8 @@ class TestRecommendationCore:
     
     @pytest.mark.asyncio
     async def test_recommendation_engine_initialization(self):
-        """Test recommendation engine initialization."""
+        """
+Test recommendation engine initialization."""
         config = RecommendationConfig()
         engine = RecommendationEngine(config)
         
@@ -88,7 +93,8 @@ class TestRecommendationCore:
     
     @pytest.mark.asyncio
     async def test_content_recommendations(self):
-        """Test content recommendation generation."""
+        """
+Test content recommendation generation."""
         engine = RecommendationEngine()
         await engine.initialize()
         
@@ -137,10 +143,12 @@ class TestRecommendationCore:
 
 
 class TestRecommendationModels:
-    """Test the recommendation models."""
+    """
+Test the recommendation models."""
     
     def test_creator_profile_creation(self):
-        """Test creator profile creation."""
+        """
+Test creator profile creation."""
         profile = CreatorProfile(
             creator_id="creator_123",
             username="test_creator",
@@ -181,7 +189,8 @@ class TestRecommendationExceptions:
     """Test the recommendation exceptions."""
     
     def test_validation_error(self):
-        """Test validation error handling."""
+        """
+Test validation error handling."""
         from ai.recommendation.exceptions import validate_creator_profile
         
         # Test missing required field
@@ -207,7 +216,8 @@ class TestRecommendationExceptions:
             validate_recommendation_scores([-0.1, 0.8])  # Score < 0.0
     
     def test_input_sanitization(self):
-        """Test input sanitization."""
+        """
+Test input sanitization."""
         from ai.recommendation.exceptions import sanitize_user_input
         
         # Clean input should pass through
@@ -229,7 +239,8 @@ class TestAIIntegration:
     
     @pytest.mark.asyncio
     async def test_nlp_recommendation_integration(self):
-        """Test integration between NLP and recommendation engines."""
+        """
+Test integration between NLP and recommendation engines."""
         # Initialize both engines
         nlp_engine = AdvancedNLPEngine()
         rec_engine = RecommendationEngine()

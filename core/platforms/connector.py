@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Type, Union
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionState(Enum):
-    """Connection state enumeration"""
+    """
+Connection state enumeration"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -62,7 +65,8 @@ class ConnectionMetrics:
 
 
 class PlatformConnectionPool:
-    """Connection pool for platform instances"""
+    """
+Connection pool for platform instances"""
     
     def __init__(self, max_connections: int = 10, idle_timeout: int = 300):
         """
@@ -81,7 +85,8 @@ class PlatformConnectionPool:
         
     async def get_connection(self, platform_type: PlatformType, 
                            config: PlatformConfig) -> PlatformBase:
-        """Get connection from pool or create new one"""
+        """
+Get connection from pool or create new one"""
         platform_key = f"{platform_type.value}_{config.user_id}"
         
         async with self.lock:
@@ -242,7 +247,8 @@ class PlatformConnectionPool:
 
 
 class PlatformConnector:
-    """Main connector for managing platform connections"""
+    """
+Main connector for managing platform connections"""
     
     def __init__(self, pool_size: int = 10, cleanup_interval: int = 300):
         """
@@ -259,7 +265,8 @@ class PlatformConnector:
         self.active_sessions: Dict[str, aiohttp.ClientSession] = {}
         
     async def start(self):
-        """Start the connector and cleanup tasks"""
+        """
+Start the connector and cleanup tasks"""
         self.cleanup_task = asyncio.create_task(self._cleanup_loop())
         logger.info("Platform connector started")
     
@@ -298,12 +305,14 @@ class PlatformConnector:
     
     async def create_platform(self, platform_type: PlatformType, 
                             config: PlatformConfig) -> PlatformBase:
-        """Create a new platform instance (not pooled)"""
+        """
+Create a new platform instance (not pooled)"""
         return await self.pool._create_connection(platform_type, config)
     
     async def test_connection(self, platform_type: PlatformType, 
                             config: PlatformConfig) -> bool:
-        """Test platform connection without using pool"""
+        """
+Test platform connection without using pool"""
         try:
             async with self.get_platform(platform_type, config) as platform:
                 return await platform.authenticate()
@@ -377,7 +386,8 @@ class PlatformConnector:
             }
     
     async def bulk_platform_health(self, configs: Dict[PlatformType, PlatformConfig]) -> Dict[str, Any]:
-        """Get health information for multiple platforms"""
+        """
+Get health information for multiple platforms"""
         results = {}
         
         # Check health concurrently
@@ -439,14 +449,16 @@ class PlatformConnector:
         return self.active_sessions[session_key]
     
     async def close_session(self, session_key: str):
-        """Close specific HTTP session"""
+        """
+Close specific HTTP session"""
         if session_key in self.active_sessions:
             session = self.active_sessions.pop(session_key)
             if not session.closed:
                 await session.close()
     
     async def _cleanup_loop(self):
-        """Background cleanup task"""
+        """
+Background cleanup task"""
         try:
             while True:
                 await asyncio.sleep(self.cleanup_interval)
@@ -487,7 +499,8 @@ _global_connector: Optional[PlatformConnector] = None
 
 
 async def get_connector() -> PlatformConnector:
-    """Get global connector instance"""
+    """
+Get global connector instance"""
     global _global_connector
     
     if _global_connector is None:
@@ -498,7 +511,8 @@ async def get_connector() -> PlatformConnector:
 
 
 async def cleanup_connector():
-    """Cleanup global connector"""
+    """
+Cleanup global connector"""
     global _global_connector
     
     if _global_connector:

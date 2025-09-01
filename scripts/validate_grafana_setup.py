@@ -4,6 +4,7 @@
 This script validates that the Grafana setup is complete and properly configured
 for the Ainflue platform dashboards and visualization requirements.
 """
+
 import json
 import os
 import sys
@@ -23,7 +24,8 @@ class DashboardInfo:
     tags: List[str]
 
 class GrafanaSetupValidator:
-    """Validates and manages Grafana setup for Ainflue platform"""
+    """
+Validates and manages Grafana setup for Ainflue platform"""
     
     def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
         self.project_root = Path(project_root)

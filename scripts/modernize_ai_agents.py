@@ -7,6 +7,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ WARNING: This script will restructure the entire ai_agents directory
 """
+
 import os
 import shutil
 import logging
@@ -18,7 +19,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class ArchitectureModernizer:
-    """Ultra-advanced architecture modernization system"""
+    """
+Ultra-advanced architecture modernization system"""
     
     def __init__(self, base_path: str = "/workspaces/Ainflue/ai_agents"):
         self.base_path = Path(base_path)
@@ -79,6 +81,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -94,7 +97,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class {class_name}SystemStatus:
-    """Overall {base_name} system status"""
+    """
+Overall {base_name} system status"""
     is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
@@ -191,6 +195,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -201,7 +206,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class {class_name}Job:
-    """Job configuration for {base_name} operations"""
+    """
+Job configuration for {base_name} operations"""
     job_id: str
     data: Dict[str, Any]
     priority: int = 5
@@ -209,7 +215,8 @@ class {class_name}Job:
 
 @dataclass 
 class {class_name}Result:
-    """Result of {base_name} operations"""
+    """
+Result of {base_name} operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
@@ -353,7 +360,8 @@ __all__ = [
                         f.write('"""Sub-module initialization"""\\n')
     
     def migrate_legacy_files(self, module_path: Path, module_name: str):
-        """Move legacy files to migration directory"""
+        """
+Move legacy files to migration directory"""
         legacy_dir = module_path / "legacy_migration"
         main_file = module_path / f"{module_name}.py"
         

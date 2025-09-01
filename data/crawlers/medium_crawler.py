@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class MediumArticle:
-    """Medium article information"""
+    """
+Medium article information"""
     article_id: str
     title: str
     subtitle: str
@@ -78,7 +80,8 @@ class MediumArticle:
 
 @dataclass
 class MediumAuthor:
-    """Medium author information"""
+    """
+Medium author information"""
     author_id: str
     username: str
     name: str
@@ -111,7 +114,8 @@ class MediumAuthor:
 
 @dataclass
 class MediumPublication:
-    """Medium publication information"""
+    """
+Medium publication information"""
     publication_id: str
     name: str
     description: str
@@ -143,7 +147,8 @@ class MediumPublication:
 
 @dataclass
 class MediumTopic:
-    """Medium topic information"""
+    """
+Medium topic information"""
     topic_id: str
     name: str
     slug: str
@@ -162,7 +167,8 @@ class MediumTopic:
 
 @dataclass
 class MediumResponse:
-    """Medium response (comment) information"""
+    """
+Medium response (comment) information"""
     response_id: str
     content: str
     author_id: str
@@ -746,7 +752,8 @@ class MediumCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""
+        """
+Get featured content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -763,7 +770,8 @@ class MediumCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_article_data(self, article_data: Dict[str, Any]) -> Optional[MediumArticle]:
-        """Parse article data"""
+        """
+Parse article data"""
         try:
             published_at = datetime.fromisoformat(article_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

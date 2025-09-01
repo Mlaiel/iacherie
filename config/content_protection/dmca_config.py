@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,7 +23,9 @@ from datetime import datetime, timedelta
 
 
 class DMCANoticeType(str, Enum):
-    """Types of DMCA notices."""
+    """
+Types of DMCA notices."""
+
     TAKEDOWN = "takedown"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -32,6 +35,7 @@ class DMCANoticeType(str, Enum):
 
 class DMCAStatus(str, Enum):
     """Status of DMCA processes."""
+
     DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -45,6 +49,7 @@ class DMCAStatus(str, Enum):
 
 class InfringementType(str, Enum):
     """Types of copyright infringement."""
+
     EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -73,7 +78,8 @@ class CopyrightHolderInfo:
 
 @dataclass
 class InfringementEvidence:
-    """Evidence of copyright infringement."""
+    """
+Evidence of copyright infringement."""
     original_work_url: str
     infringing_work_url: str
     similarity_score: float
@@ -89,7 +95,8 @@ class InfringementEvidence:
 
 @dataclass
 class DMCANoticeTemplate:
-    """Template for DMCA notices."""
+    """
+Template for DMCA notices."""
     template_id: str
     notice_type: DMCANoticeType
     subject_template: str
@@ -140,7 +147,8 @@ class CounterNotificationConfig:
 
 @dataclass
 class AutomationConfig:
-    """Automation configuration for DMCA processes."""
+    """
+Automation configuration for DMCA processes."""
     enable_automated_detection: bool = True
     enable_automated_notice_generation: bool = True
     enable_automated_submission: bool = False
@@ -383,7 +391,8 @@ Date: {counter_notification_date}
         self.copyright_holder = holder_info
     
     def get_notice_template(self, template_id: str) -> DMCANoticeTemplate:
-        """Get DMCA notice template by ID."""
+        """
+Get DMCA notice template by ID."""
         if template_id not in self.notice_templates:
             raise ValueError(f"Notice template not found: {template_id}")
         return self.notice_templates[template_id]
@@ -393,7 +402,8 @@ Date: {counter_notification_date}
         self.notice_templates[template.template_id] = template
     
     def get_platform_config(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific DMCA configuration."""
+        """
+Get platform-specific DMCA configuration."""
         if platform not in self.platform_configs:
             raise ValueError(f"Platform configuration not found: {platform}")
         return self.platform_configs[platform]
@@ -416,7 +426,8 @@ Date: {counter_notification_date}
         return True
     
     def is_repeat_infringer(self, user_id: str, infringement_history: List[datetime]) -> bool:
-        """Check if user is a repeat infringer based on history."""
+        """
+Check if user is a repeat infringer based on history."""
         if not self.safe_harbor.repeat_infringer_policy:
             return False
         
@@ -431,14 +442,16 @@ Date: {counter_notification_date}
         return len(recent_infringements) >= self.safe_harbor.repeat_infringer_threshold
     
     def should_terminate_user(self, user_id: str, infringement_history: List[datetime]) -> bool:
-        """Determine if repeat infringer should be terminated."""
+        """
+Determine if repeat infringer should be terminated."""
         if not self.safe_harbor.terminate_repeat_infringers:
             return False
         
         return self.is_repeat_infringer(user_id, infringement_history)
     
     def generate_notice_content(self, template_id: str, **variables) -> str:
-        """Generate DMCA notice content from template."""
+        """
+Generate DMCA notice content from template."""
         template = self.get_notice_template(template_id)
         
         # Check required fields
@@ -525,7 +538,8 @@ Date: {counter_notification_date}
         return priority
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
+        """
+Validate current configuration and return any issues."""
         issues = []
         
         # General validation

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests Ultra-Industriels pour le Module Models Content Protection
+"""
+Tests Ultra-Industriels pour le Module Models Content Protection
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -30,6 +32,7 @@ Toute utilisation, copie, distribution ou exploitation sans autorisation écrite
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -63,9 +66,11 @@ from ai.content_protection.models import (
 
 
 class TestContentProtectionModelsUltraIndustrial:
-    """Suite de tests ultra-industriels pour tous les modèles de données"""
+    """
+Suite de tests ultra-industriels pour tous les modèles de données"""
     def test_content_type_enum_comprehensive(self):
-        """Test complet de l'énumération ContentType"""
+        """
+Test complet de l'énumération ContentType"""
         # Verify all content types
         assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"

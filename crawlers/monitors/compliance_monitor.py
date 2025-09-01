@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -37,7 +38,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks."""
+    """
+Regulatory compliance frameworks."""
+
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
@@ -50,6 +53,7 @@ class ComplianceFramework(Enum):
 
 class ViolationType(Enum):
     """Types of compliance violations."""
+
     DATA_PRIVACY = "data_privacy"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DATA_ACCESS = "unauthorized_data_access"
@@ -63,6 +67,7 @@ class ViolationType(Enum):
 
 class ComplianceSeverity(Enum):
     """Compliance violation severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -71,6 +76,7 @@ class ComplianceSeverity(Enum):
 
 class DataClassification(Enum):
     """Data classification levels."""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -94,7 +100,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record."""
+    """
+Compliance violation record."""
     violation_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     rule_id: str = ""
@@ -132,7 +139,8 @@ class LegalMonitor:
         self.regulatory_updates = deque(maxlen=1000)
         
     async def check_content_legality(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Check content for legal compliance issues."""
+        """
+Check content for legal compliance issues."""
         issues = []
         
         try:
@@ -166,7 +174,7 @@ class LegalMonitor:
         
         # Simple pattern matching (would use more sophisticated detection in production)
         copyright_patterns = [
-            r"©\s*\d{4}",  # Copyright symbol with year
+            r"(c)\s*\d{4}",  # Copyright symbol with year
             r"copyright\s+\d{4}",  # Copyright text with year
             r"all rights reserved",  # Rights reservation
         ]
@@ -247,7 +255,8 @@ class ComplianceMonitor(MonitorEngine):
         self._initialize_compliance_rules()
     
     def _initialize_compliance_rules(self) -> None:
-        """Initialize compliance monitoring rules."""
+        """
+Initialize compliance monitoring rules."""
         self.compliance_rules = {
             "gdpr_data_access": ComplianceRule(
                 rule_id="gdpr_data_access",
@@ -387,7 +396,8 @@ class ComplianceMonitor(MonitorEngine):
             await self._process_compliance_event(event)
     
     async def _process_compliance_event(self, event: Dict[str, Any]) -> None:
-        """Process individual compliance event."""
+        """
+Process individual compliance event."""
         try:
             event_type = event.get("type", "")
             
@@ -641,12 +651,14 @@ class ComplianceMonitor(MonitorEngine):
         pass
     
     async def _initialize_audit_logging(self) -> None:
-        """Initialize audit logging infrastructure."""
+        """
+Initialize audit logging infrastructure."""
         # Implementation would setup audit log storage and rotation
         pass
     
     async def _monitor_data_access(self) -> None:
-        """Monitor data access patterns for compliance."""
+        """
+Monitor data access patterns for compliance."""
         while True:
             try:
                 # Monitor data access patterns

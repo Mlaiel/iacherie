@@ -6,6 +6,7 @@ including automated index creation, usage analysis, and intelligent recommendati
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import re
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class IndexType(Enum):
-    """Database index types"""
+    """
+Database index types"""
+
     BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
@@ -40,6 +43,7 @@ class IndexType(Enum):
 
 class IndexStrategy(Enum):
     """Index optimization strategies"""
+
     PERFORMANCE = "performance"
     STORAGE = "storage"
     BALANCED = "balanced"
@@ -49,6 +53,7 @@ class IndexStrategy(Enum):
 
 class IndexPriority(Enum):
     """Index creation priorities"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -82,7 +87,8 @@ class IndexConfig:
 
 @dataclass
 class IndexMetrics:
-    """Index performance metrics"""
+    """
+Index performance metrics"""
     total_indexes: int = 0
     used_indexes: int = 0
     unused_indexes: int = 0
@@ -95,14 +101,16 @@ class IndexMetrics:
     
     @property
     def usage_efficiency(self) -> float:
-        """Calculate index usage efficiency"""
+        """
+Calculate index usage efficiency"""
         if self.total_indexes == 0:
             return 0.0
         return self.used_indexes / self.total_indexes
     
     @property
     def space_efficiency(self) -> float:
-        """Calculate space efficiency"""
+        """
+Calculate space efficiency"""
         if self.total_size_mb == 0:
             return 100.0
         return (1 - (self.unused_indexes * 100 / self.total_indexes)) if self.total_indexes > 0 else 0.0
@@ -110,7 +118,8 @@ class IndexMetrics:
 
 @dataclass
 class IndexInfo:
-    """Database index information"""
+    """
+Database index information"""
     name: str
     table_name: str
     columns: List[str]
@@ -127,14 +136,16 @@ class IndexInfo:
     
     @property
     def scan_ratio(self) -> float:
-        """Calculate index scan ratio"""
+        """
+Calculate index scan ratio"""
         if self.tuple_read == 0:
             return 0.0
         return self.tuple_fetch / self.tuple_read
     
     @property
     def usage_score(self) -> float:
-        """Calculate usage score (0-100)"""
+        """
+Calculate usage score (0-100)"""
         score = 0.0
         
         # Scan frequency (40%)
@@ -165,7 +176,8 @@ class IndexInfo:
 
 @dataclass
 class QueryPattern:
-    """Query pattern for index analysis"""
+    """
+Query pattern for index analysis"""
     pattern: str
     count: int
     avg_duration: float
@@ -178,7 +190,8 @@ class QueryPattern:
     
     @property
     def priority_score(self) -> float:
-        """Calculate query pattern priority for indexing"""
+        """
+Calculate query pattern priority for indexing"""
         score = 0.0
         
         # Frequency (40%)
@@ -199,7 +212,8 @@ class QueryPattern:
 
 @dataclass
 class IndexRecommendation:
-    """Index creation recommendation"""
+    """
+Index creation recommendation"""
     table_name: str
     columns: List[str]
     index_type: IndexType
@@ -211,14 +225,16 @@ class IndexRecommendation:
     
     @property
     def cost_benefit_ratio(self) -> float:
-        """Calculate cost-benefit ratio"""
+        """
+Calculate cost-benefit ratio"""
         if self.estimated_cost == 0:
             return float('inf')
         return self.estimated_benefit / self.estimated_cost
 
 
 class QueryAnalyzer:
-    """Analyzes queries to identify indexing opportunities"""
+    """
+Analyzes queries to identify indexing opportunities"""
     
     def __init__(self, config: IndexConfig):
         self.config = config
@@ -226,7 +242,8 @@ class QueryAnalyzer:
         self._table_columns: Dict[str, Set[str]] = defaultdict(set)
         
     def analyze_query(self, query: str, duration: float) -> None:
-        """Analyze a query for indexing opportunities"""
+        """
+Analyze a query for indexing opportunities"""
         try:
             # Normalize query
             normalized = self._normalize_query(query)
@@ -286,7 +303,8 @@ class QueryAnalyzer:
         return hashlib.md5(normalized_query.encode()).hexdigest()
     
     def _extract_tables(self, query: str) -> Set[str]:
-        """Extract table names from query"""
+        """
+Extract table names from query"""
         tables = set()
         
         # FROM clause
@@ -314,7 +332,8 @@ class QueryAnalyzer:
         return tables
     
     def _extract_columns(self, query: str) -> Set[str]:
-        """Extract column names from query"""
+        """
+Extract column names from query"""
         columns = set()
         
         # WHERE conditions
@@ -341,7 +360,8 @@ class QueryAnalyzer:
         return columns
     
     def _extract_where_conditions(self, query: str) -> List[str]:
-        """Extract WHERE conditions"""
+        """
+Extract WHERE conditions"""
         where_match = re.search(r'where\s+(.*?)(?:\s+order\s+by|\s+group\s+by|\s+limit|$)', query)
         if where_match:
             where_clause = where_match.group(1)
@@ -351,7 +371,8 @@ class QueryAnalyzer:
         return []
     
     def _extract_order_by(self, query: str) -> List[str]:
-        """Extract ORDER BY columns"""
+        """
+Extract ORDER BY columns"""
         order_match = re.search(r'order\s+by\s+(.*?)(?:\s+limit|$)', query)
         if order_match:
             order_clause = order_match.group(1)
@@ -360,12 +381,14 @@ class QueryAnalyzer:
         return []
     
     def _extract_joins(self, query: str) -> List[str]:
-        """Extract JOIN conditions"""
+        """
+Extract JOIN conditions"""
         join_matches = re.findall(r'join\s+\w+\s+on\s+(.*?)(?:\s+join|\s+where|\s+order|\s+group|$)', query)
         return [join.strip() for join in join_matches]
     
     def get_recommendations(self) -> List[IndexRecommendation]:
-        """Generate index recommendations based on query analysis"""
+        """
+Generate index recommendations based on query analysis"""
         recommendations = []
         
         for pattern in self._query_patterns.values():
@@ -384,7 +407,8 @@ class QueryAnalyzer:
         return recommendations
     
     def _analyze_pattern_for_indexes(self, pattern: QueryPattern) -> List[IndexRecommendation]:
-        """Analyze a query pattern for index opportunities"""
+        """
+Analyze a query pattern for index opportunities"""
         recommendations = []
         
         for table in pattern.tables_used:
@@ -409,7 +433,8 @@ class QueryAnalyzer:
         return recommendations
     
     def _create_where_index_recommendation(self, table: str, pattern: QueryPattern) -> Optional[IndexRecommendation]:
-        """Create index recommendation for WHERE conditions"""
+        """
+Create index recommendation for WHERE conditions"""
         # Extract columns from WHERE conditions
         where_columns = []
         for condition in pattern.where_conditions:
@@ -502,7 +527,8 @@ class QueryAnalyzer:
 
 
 class IndexOptimizer:
-    """Advanced database index optimizer"""
+    """
+Advanced database index optimizer"""
     
     def __init__(self, config: IndexConfig):
         self.config = config
@@ -518,7 +544,8 @@ class IndexOptimizer:
         self._last_analysis = datetime.now()
         
     async def analyze_indexes(self, engine: AsyncEngine) -> None:
-        """Analyze existing indexes and their usage"""
+        """
+Analyze existing indexes and their usage"""
         try:
             logger.info("Starting index analysis")
             
@@ -566,7 +593,8 @@ class IndexOptimizer:
                 self._existing_indexes[index_info.name] = index_info
     
     async def _collect_usage_stats(self, conn) -> None:
-        """Collect index usage statistics"""
+        """
+Collect index usage statistics"""
         query = text("""
             SELECT 
                 schemaname,
@@ -590,7 +618,8 @@ class IndexOptimizer:
                 index_info.tuple_fetch = row.idx_tup_fetch or 0
     
     def _parse_index_definition(self, row) -> Optional[IndexInfo]:
-        """Parse index definition from database row"""
+        """
+Parse index definition from database row"""
         try:
             index_def = row.indexdef
             index_name = row.indexname
@@ -660,7 +689,8 @@ class IndexOptimizer:
         return columns
     
     async def _detect_duplicate_indexes(self) -> None:
-        """Detect duplicate or redundant indexes"""
+        """
+Detect duplicate or redundant indexes"""
         duplicates = 0
         
         # Group indexes by table
@@ -711,7 +741,8 @@ class IndexOptimizer:
             self._send_metrics()
     
     async def generate_recommendations(self) -> List[IndexRecommendation]:
-        """Generate index optimization recommendations"""
+        """
+Generate index optimization recommendations"""
         recommendations = []
         
         # Query-based recommendations
@@ -729,7 +760,8 @@ class IndexOptimizer:
         return recommendations
     
     def _generate_usage_recommendations(self) -> List[IndexRecommendation]:
-        """Generate recommendations based on index usage patterns"""
+        """
+Generate recommendations based on index usage patterns"""
         recommendations = []
         
         for index_info in self._existing_indexes.values():
@@ -766,7 +798,8 @@ class IndexOptimizer:
         return unique_recs
     
     async def create_index(self, engine: AsyncEngine, recommendation: IndexRecommendation) -> bool:
-        """Create an index based on recommendation"""
+        """
+Create an index based on recommendation"""
         try:
             if not self.config.auto_create:
                 logger.info(f"Auto-create disabled, skipping index creation: {recommendation.table_name}.{recommendation.columns}")
@@ -858,7 +891,8 @@ class IndexOptimizer:
         self.query_analyzer.analyze_query(query, duration)
     
     def _send_metrics(self) -> None:
-        """Send metrics to monitoring system"""
+        """
+Send metrics to monitoring system"""
         self.metrics_collector.gauge("database_indexes_total", self.metrics.total_indexes)
         self.metrics_collector.gauge("database_indexes_used", self.metrics.used_indexes)
         self.metrics_collector.gauge("database_indexes_unused", self.metrics.unused_indexes)
@@ -900,11 +934,13 @@ def get_index_optimizer(config: Optional[IndexConfig] = None) -> IndexOptimizer:
 
 
 class IndexAnalyzer:
-    """Helper class for index analysis"""
+    """
+Helper class for index analysis"""
     
     @staticmethod
     async def analyze_table_indexes(engine: AsyncEngine, table_name: str) -> Dict[str, Any]:
-        """Analyze indexes for a specific table"""
+        """
+Analyze indexes for a specific table"""
         query = text("""
             SELECT 
                 indexname,
@@ -1224,7 +1260,8 @@ class AIProcessingIndexOptimizer:
         self.base_optimizer = base_optimizer
     
     async def optimize_ai_processing_indexes(self, engine: AsyncEngine) -> List[str]:
-        """Create optimized indexes for AI processing operations"""
+        """
+Create optimized indexes for AI processing operations"""
         created_indexes = []
         
         try:

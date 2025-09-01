@@ -4,8 +4,9 @@ Comprehensive monetization engine managing cross-platform revenue tracking,
 automated licensing, payment processing, and creator earnings optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ from ...services.analytics.revenue_analytics import RevenueAnalyticsService
 logger = get_logger(__name__)
 
 class RevenueType(Enum):
-    """Revenue types"""
+    """
+Revenue types"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
@@ -42,6 +45,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment status types"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -52,6 +56,7 @@ class PaymentStatus(Enum):
 
 class PaymentProvider(Enum):
     """Payment provider types"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -72,7 +77,8 @@ class RevenueSource:
 
 @dataclass
 class PayoutRequest:
-    """Payout request structure"""
+    """
+Payout request structure"""
     user_id: int
     amount: Decimal
     currency: str
@@ -546,24 +552,28 @@ class MonetizationController:
         return Decimal(str(total_earnings)) - Decimal(str(total_payouts))
     
     async def _update_user_earnings(self, user_id: int, amount: Decimal, session: AsyncSession):
-        """Update user's total earnings"""
+        """
+Update user's total earnings"""
         # Implementation for updating user earnings
         pass
     
     async def _update_user_balance(self, user_id: int, amount: Decimal, session: AsyncSession):
-        """Update user's available balance"""
+        """
+Update user's available balance"""
         # Implementation for updating user balance
         pass
     
     async def _check_payout_eligibility(self, user_id: int, session: AsyncSession) -> bool:
-        """Check if user is eligible for payout"""
+        """
+Check if user is eligible for payout"""
         available_balance = await self._get_available_balance(user_id, session)
         min_threshold = self.payout_thresholds.get('USD', Decimal('10.00'))
         
         return available_balance >= min_threshold
     
     async def _process_payout_queue(self):
-        """Process payout queue in background"""
+        """
+Process payout queue in background"""
         while True:
             try:
                 # Implementation for processing payout queue

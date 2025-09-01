@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class NetworkType(Enum):
-    """Network types"""
+    """
+Network types"""
+
     VPC = "vpc"
     SUBNET = "subnet"
     SECURITY_GROUP = "security_group"
@@ -30,6 +33,7 @@ class NetworkType(Enum):
 
 class ProtocolType(Enum):
     """Network protocols"""
+
     TCP = "tcp"
     UDP = "udp"
     ICMP = "icmp"
@@ -37,6 +41,7 @@ class ProtocolType(Enum):
 
 class TrafficDirection(Enum):
     """Traffic direction"""
+
     INGRESS = "ingress"
     EGRESS = "egress"
 
@@ -60,7 +65,8 @@ class SecurityGroupSpec:
 
 @dataclass
 class SubnetSpec:
-    """Subnet specification"""
+    """
+Subnet specification"""
     name: str
     cidr_block: str
     availability_zone: str
@@ -82,7 +88,8 @@ class VPCSpec:
 
 @dataclass
 class NetworkPolicySpec:
-    """Kubernetes Network Policy specification"""
+    """
+Kubernetes Network Policy specification"""
     name: str
     namespace: str
     pod_selector: Dict[str, str]
@@ -111,7 +118,8 @@ class NetworkingManager:
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         
     async def create_vpc_infrastructure(self, vpc_spec: VPCSpec) -> Dict[str, Any]:
-        """Create complete VPC infrastructure"""
+        """
+Create complete VPC infrastructure"""
         try:
             results = {}
             

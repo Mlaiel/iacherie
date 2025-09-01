@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types de violations de protection de contenu"""
+    """
+Types de violations de protection de contenu"""
+
     DIRECT_COPY = "direct_copy"
     PARTIAL_USE = "partial_use"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
@@ -54,6 +57,7 @@ class ViolationType(Enum):
 
 class ViolationSeverity(IntEnum):
     """Niveaux de gravité des violations"""
+
     LOW = 1          # Utilisation partielle, non commerciale
     MEDIUM = 2       # Utilisation significative sans attribution
     HIGH = 3         # Utilisation commerciale non autorisée
@@ -61,7 +65,9 @@ class ViolationSeverity(IntEnum):
 
 
 class Platform(Enum):
-    """Plateformes surveillées pour la protection de contenu"""
+    """
+Plateformes surveillées pour la protection de contenu"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
@@ -129,7 +135,8 @@ class ContentProtectionAlertManager:
         self.legal_contacts = self._load_legal_contacts()
         
     def _load_escalation_rules(self) -> List[EscalationRule]:
-        """Charge les règles d'escalation depuis la configuration"""
+        """
+Charge les règles d'escalation depuis la configuration"""
         return [
             EscalationRule(
                 violation_type=ViolationType.COMMERCIAL_USE,
@@ -213,7 +220,8 @@ class ContentProtectionAlertManager:
         return templates
 
     def _load_legal_contacts(self) -> Dict[str, Any]:
-        """Charge les contacts juridiques pour escalation"""
+        """
+Charge les contacts juridiques pour escalation"""
         return {
             "primary_lawyer": {
                 "name": "Dr. Maria Schmidt",
@@ -543,17 +551,20 @@ class ContentProtectionAlertManager:
         return violation_id
 
     async def _detect_commercial_use(self, violation: ProtectionViolation) -> bool:
-        """Détecte si l'usage est commercial (publicités, monétisation)"""
+        """
+Détecte si l'usage est commercial (publicités, monétisation)"""
         # Implementation de détection usage commercial via ML et analyse metadata
         return False  # Placeholder
 
     async def _calculate_revenue_impact(self, violation: ProtectionViolation) -> Decimal:
-        """Calcule l'impact sur les revenus estimé"""
+        """
+Calcule l'impact sur les revenus estimé"""
         # Implementation calcul impact revenus basé sur analytics et données marché
         return Decimal('0.00')  # Placeholder
 
     async def _send_automated_dmca_notice(self, violation: ProtectionViolation) -> bool:
-        """Envoi automatique notice DMCA via API dédiée"""
+        """
+Envoi automatique notice DMCA via API dédiée"""
         # Implementation envoi DMCA automatique
         return True  # Placeholder
 

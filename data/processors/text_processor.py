@@ -22,6 +22,7 @@ Features:
 - SEO optimization and keyword extraction
 - Batch processing for large text collections
 """
+
 import asyncio
 import logging
 import re
@@ -102,7 +103,8 @@ class TextMetadata:
 
 @dataclass
 class SentimentAnalysis:
-    """Sentiment analysis results"""
+    """
+Sentiment analysis results"""
     compound_score: float
     positive_score: float
     negative_score: float
@@ -113,7 +115,8 @@ class SentimentAnalysis:
 
 @dataclass
 class TextFeatures:
-    """Text feature extraction results"""
+    """
+Text feature extraction results"""
     keywords: List[Tuple[str, float]]
     entities: List[Tuple[str, str]]  # (entity, type)
     topics: List[Tuple[str, float]]
@@ -124,7 +127,8 @@ class TextFeatures:
 
 @dataclass
 class SEOAnalysis:
-    """SEO optimization analysis"""
+    """
+SEO optimization analysis"""
     keyword_density: Dict[str, float]
     title_suggestions: List[str]
     meta_description: str
@@ -135,7 +139,8 @@ class SEOAnalysis:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint for plagiarism detection"""
+    """
+Text fingerprint for plagiarism detection"""
     content_hash: str
     semantic_hash: str
     structural_hash: str
@@ -144,7 +149,8 @@ class TextFingerprint:
     combined_hash: str
 
 class TextProcessor:
-    """Professional text processing and NLP engine"""
+    """
+Professional text processing and NLP engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -176,7 +182,8 @@ class TextProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize text processing engines"""
+        """
+Initialize text processing engines"""
         try:
             # Initialize NLTK tools
             if NLTK_AVAILABLE:
@@ -466,7 +473,8 @@ class TextMetadata:
 
 @dataclass
 class TextFeatures:
-    """Text feature extraction results"""
+    """
+Text feature extraction results"""
     tfidf_vector: Optional[np.ndarray] = None
     word_frequencies: Dict[str, int] = None
     pos_tags: List[Tuple[str, str]] = None
@@ -480,7 +488,8 @@ class TextFeatures:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data"""
+    """
+Text fingerprint data"""
     content_hash: Optional[str] = None
     semantic_hash: Optional[str] = None
     structure_hash: Optional[str] = None
@@ -489,7 +498,8 @@ class TextFingerprint:
     combined_hash: Optional[str] = None
 
 class TextProcessor:
-    """Professional text processing engine"""
+    """
+Professional text processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -523,7 +533,8 @@ class TextProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize text processing engines"""
+        """
+Initialize text processing engines"""
         try:
             # Initialize NLTK components
             if NLTK_AVAILABLE:
@@ -1392,7 +1403,8 @@ class TextProcessor:
             return 50.0  # Default score
     
     def _split_text_chunks(self, text: str, max_length: int = 512) -> List[str]:
-        """Split text into chunks for processing"""
+        """
+Split text into chunks for processing"""
         if len(text) <= max_length:
             return [text]
         

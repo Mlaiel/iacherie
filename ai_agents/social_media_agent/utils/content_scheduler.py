@@ -23,6 +23,7 @@ Expert Development Team Specialties:
 - AI Prompt Engineering Expert - Content optimization and audience analysis
 - Content Protection Specialist - Scheduled content protection and monitoring
 """
+
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Callable, Union
 from dataclasses import dataclass, field
@@ -41,7 +42,9 @@ import holidays
 logger = logging.getLogger(__name__)
 
 class ScheduleType(Enum):
-    """Comprehensive content scheduling types"""
+    """
+Comprehensive content scheduling types"""
+
     IMMEDIATE = "immediate"
     DELAYED = "delayed"
     RECURRING = "recurring"
@@ -57,6 +60,7 @@ class ScheduleType(Enum):
 
 class ContentPriority(Enum):
     """Enhanced content priority levels"""
+
     EMERGENCY = "emergency"  # Critical announcements, crisis management
     HIGH = "high"  # Time-sensitive promotions, breaking news
     MEDIUM = "medium"  # Regular content, evergreen posts
@@ -65,6 +69,7 @@ class ContentPriority(Enum):
 
 class SchedulingStrategy(Enum):
     """AI scheduling optimization strategies"""
+
     ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
     REACH_OPTIMIZATION = "reach_optimization"
     CONVERSION_FOCUS = "conversion_focus"
@@ -76,6 +81,7 @@ class SchedulingStrategy(Enum):
 
 class TimingModel(Enum):
     """ML models for timing optimization"""
+
     RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -90,6 +96,7 @@ class TimingModel(Enum):
 
 class AudienceSegment(Enum):
     """Audience segments for targeted scheduling"""
+
     GENERAL = "general"
     YOUNG_ADULTS = "young_adults"
     PROFESSIONALS = "professionals"
@@ -127,7 +134,8 @@ class ScheduleRule:
 
 @dataclass
 class ContentSchedule:
-    """Scheduled content item"""
+    """
+Scheduled content item"""
     id: str
     content_id: str
     platforms: List[str]
@@ -155,7 +163,8 @@ class AudienceAnalyzer:
         
     def add_engagement_data(self, platform: str, timestamp: datetime, 
                           engagement_metrics: Dict[str, Any]):
-        """Add engagement data for analysis"""
+        """
+Add engagement data for analysis"""
         if platform not in self.engagement_data:
             self.engagement_data[platform] = []
         
@@ -177,7 +186,8 @@ class AudienceAnalyzer:
             self.engagement_data[platform] = self.engagement_data[platform][-8000:]
     
     def _is_holiday(self, date: datetime) -> bool:
-        """Check if date is a holiday"""
+        """
+Check if date is a holiday"""
         try:
             us_holidays = holidays.UnitedStates()
             return date.date() in us_holidays
@@ -185,7 +195,8 @@ class AudienceAnalyzer:
             return False
     
     def train_engagement_model(self, platform: str) -> bool:
-        """Train ML model to predict optimal posting times"""
+        """
+Train ML model to predict optimal posting times"""
         if platform not in self.engagement_data:
             return False
         
@@ -316,7 +327,8 @@ class TimezoneManager:
         }
     
     def convert_to_timezone(self, dt: datetime, target_timezone: str) -> datetime:
-        """Convert datetime to target timezone"""
+        """
+Convert datetime to target timezone"""
         try:
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
@@ -359,7 +371,8 @@ class TimezoneManager:
         return best_time or preferred_times[0]
     
     def _score_time_for_region(self, local_time: datetime) -> float:
-        """Score how good a time is for engagement in a region"""
+        """
+Score how good a time is for engagement in a region"""
         hour = local_time.hour
         day_of_week = local_time.weekday()
         
@@ -518,7 +531,8 @@ class ContentScheduler:
     async def schedule_optimal_content(self, content_id: str, platforms: List[str],
                                      date: datetime, audience_segments: List[AudienceSegment] = None,
                                      priority: ContentPriority = ContentPriority.NORMAL) -> List[str]:
-        """Schedule content at optimal times for each platform"""
+        """
+Schedule content at optimal times for each platform"""
         if audience_segments is None:
             audience_segments = [AudienceSegment.GENERAL]
         
@@ -554,7 +568,8 @@ class ContentScheduler:
         return schedule_ids
     
     def add_schedule_rule(self, rule: ScheduleRule):
-        """Add recurring schedule rule"""
+        """
+Add recurring schedule rule"""
         self.schedule_rules[rule.id] = rule
         logger.info(f"Added schedule rule: {rule.name}")
     
@@ -616,7 +631,8 @@ class ContentScheduler:
     
     def update_engagement_data(self, platform: str, timestamp: datetime,
                              engagement_metrics: Dict[str, Any]):
-        """Update engagement data for ML optimization"""
+        """
+Update engagement data for ML optimization"""
         self.audience_analyzer.add_engagement_data(platform, timestamp, engagement_metrics)
         
         # Retrain model periodically
@@ -625,7 +641,8 @@ class ContentScheduler:
             asyncio.create_task(self._retrain_models())
     
     async def _retrain_models(self):
-        """Retrain engagement prediction models"""
+        """
+Retrain engagement prediction models"""
         for platform in self.audience_analyzer.engagement_data.keys():
             success = self.audience_analyzer.train_engagement_model(platform)
             if success:
@@ -679,7 +696,8 @@ class ContentScheduler:
         return analytics
     
     def get_upcoming_schedules(self, hours_ahead: int = 24) -> List[ContentSchedule]:
-        """Get schedules for the next specified hours"""
+        """
+Get schedules for the next specified hours"""
         cutoff_time = datetime.utcnow() + timedelta(hours=hours_ahead)
         
         upcoming = [

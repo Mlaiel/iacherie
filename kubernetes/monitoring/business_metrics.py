@@ -17,6 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import time
 import logging
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Enhanced business metric types for comprehensive analytics"""
+    """
+Enhanced business metric types for comprehensive analytics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -49,6 +52,7 @@ class MetricType(Enum):
 
 class BusinessDomain(Enum):
     """Business domain classification for metrics"""
+
     CONTENT_PROTECTION = "content_protection"
     AI_FINGERPRINTING = "ai_fingerprinting"
     REVENUE_TRACKING = "revenue_tracking"
@@ -99,7 +103,8 @@ class MetricAggregation:
 
 @dataclass
 class BusinessKPI:
-    """Key Performance Indicator definition and tracking"""
+    """
+Key Performance Indicator definition and tracking"""
     name: str
     description: str
     metric_source: str
@@ -119,7 +124,8 @@ class ContentProtectionMetrics:
         self.db_engine = db_engine
     
     async def collect_fingerprint_metrics(self) -> List[BusinessMetric]:
-        """Collect AI fingerprinting performance metrics"""
+        """
+Collect AI fingerprinting performance metrics"""
         metrics = []
         
         try:
@@ -250,7 +256,8 @@ class RevenueTrackingMetrics:
         self.db_engine = db_engine
     
     async def collect_revenue_metrics(self) -> List[BusinessMetric]:
-        """Collect revenue and monetization metrics"""
+        """
+Collect revenue and monetization metrics"""
         metrics = []
         
         try:
@@ -371,7 +378,8 @@ class UserEngagementMetrics:
         self.db_engine = db_engine
     
     async def collect_engagement_metrics(self) -> List[BusinessMetric]:
-        """Collect user engagement and activity metrics"""
+        """
+Collect user engagement and activity metrics"""
         metrics = []
         
         try:
@@ -521,7 +529,8 @@ class PlatformPerformanceMetrics:
         self.db_engine = db_engine
     
     async def collect_performance_metrics(self) -> List[BusinessMetric]:
-        """Collect platform performance metrics"""
+        """
+Collect platform performance metrics"""
         metrics = []
         
         try:
@@ -678,7 +687,8 @@ class BusinessMetricsCollector:
         self._initialize_business_kpis()
         
     def _initialize_business_kpis(self):
-        """Initialize key business KPIs for the platform"""
+        """
+Initialize key business KPIs for the platform"""
         
         # Content Protection KPIs
         self._kpis["fingerprint_success_rate"] = BusinessKPI(
@@ -870,25 +880,29 @@ class BusinessMetricsCollector:
             self._metrics_buffer.append(metric)
             
     async def _collect_content_metrics(self):
-        """Collect content protection metrics"""
+        """
+Collect content protection metrics"""
         metrics = await self._content_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _collect_revenue_metrics(self):
-        """Collect revenue tracking metrics"""
+        """
+Collect revenue tracking metrics"""
         metrics = await self._revenue_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _collect_user_metrics(self):
-        """Collect user engagement metrics"""
+        """
+Collect user engagement metrics"""
         metrics = await self._user_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _process_metrics_buffer(self):
-        """Process metrics buffer"""
+        """
+Process metrics buffer"""
         if not self._metrics_buffer:
             return
             
@@ -903,7 +917,8 @@ class BusinessMetricsCollector:
         await self._update_aggregations(metrics_to_process)
         
     async def _store_metrics(self, metrics: List[BusinessMetric]):
-        """Store metrics in Redis"""
+        """
+Store metrics in Redis"""
         try:
             pipeline = self.redis_client.pipeline()
             
@@ -1181,13 +1196,15 @@ class BusinessMetricsCollector:
 
 
 class PlatformMetricsTracker:
-    """Track platform-level metrics"""
+    """
+Track platform-level metrics"""
     
     def __init__(self, db_engine: Optional[AsyncEngine]):
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect platform metrics"""
+        """
+Collect platform metrics"""
         metrics = []
         timestamp = datetime.utcnow()
         
@@ -1234,7 +1251,8 @@ class ContentMetricsTracker:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect content metrics"""
+        """
+Collect content metrics"""
         metrics = []
         timestamp = datetime.utcnow()
         
@@ -1292,7 +1310,8 @@ class RevenueMetricsTracker:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect revenue metrics"""
+        """
+Collect revenue metrics"""
         metrics = []
         timestamp = datetime.utcnow()
         
@@ -1331,7 +1350,8 @@ class UserMetricsTracker:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect user metrics"""
+        """
+Collect user metrics"""
         metrics = []
         timestamp = datetime.utcnow()
         

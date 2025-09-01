@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration tests for Ainflue Platform
+"""
+Integration tests for Ainflue Platform
 End-to-end integration tests for the complete platform workflow.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -33,11 +36,13 @@ from crawlers.youtube_crawler import YouTubeVideoData, YouTubeMonitoringResult
 
 
 class TestEndToEndMonetization:
-    """Integration tests for complete monetization workflow"""
+    """
+Integration tests for complete monetization workflow"""
     
     @pytest.fixture
     async def setup_monetization_system(self):
-        """Setup complete monetization system for testing"""
+        """
+Setup complete monetization system for testing"""
         revenue_calculator = RevenueCalculator()
         payment_processor = PaymentProcessor()
         

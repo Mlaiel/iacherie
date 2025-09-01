@@ -21,6 +21,7 @@ Team Specialties:
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -57,7 +58,8 @@ class OrchestrationPlatform:
     and infrastructure automation capabilities.
     """
     def __init__(self):
-        """Initialize orchestration platform."""
+        """
+Initialize orchestration platform."""
         self.initialized = False
         self.start_time = datetime.now()
         

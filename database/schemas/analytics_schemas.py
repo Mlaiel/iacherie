@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class ReportTypeEnum(str, Enum):
-    """Types of reports"""
+    """
+Types of reports"""
+
     REVENUE = "revenue"
     PROTECTION = "protection"
     ENGAGEMENT = "engagement"
@@ -37,6 +40,7 @@ class ReportTypeEnum(str, Enum):
 
 class ReportFormatEnum(str, Enum):
     """Report output formats"""
+
     PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
@@ -49,6 +53,7 @@ class ReportFormatEnum(str, Enum):
 
 class AnalyticsPeriodEnum(str, Enum):
     """Analytics time periods"""
+
     REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -61,6 +66,7 @@ class AnalyticsPeriodEnum(str, Enum):
 
 class MetricTypeEnum(str, Enum):
     """Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -73,6 +79,7 @@ class MetricTypeEnum(str, Enum):
 
 class AggregationTypeEnum(str, Enum):
     """Data aggregation types"""
+
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -87,6 +94,7 @@ class AggregationTypeEnum(str, Enum):
 
 class TrendDirectionEnum(str, Enum):
     """Trend directions"""
+
     UP = "up"
     DOWN = "down"
     STABLE = "stable"
@@ -96,6 +104,7 @@ class TrendDirectionEnum(str, Enum):
 
 class DashboardTypeEnum(str, Enum):
     """Types of dashboards"""
+
     EXECUTIVE = "executive"
     OPERATIONAL = "operational"
     ANALYTICAL = "analytical"
@@ -106,6 +115,7 @@ class DashboardTypeEnum(str, Enum):
 
 class VisualizationTypeEnum(str, Enum):
     """Types of data visualizations"""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"

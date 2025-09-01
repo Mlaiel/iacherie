@@ -20,6 +20,7 @@ Team Specialization:
 - DevOps Engineer: Production deployment and monitoring
 - AI Prompt Engineer: Intelligent content analysis
 """
+
 import asyncio
 import logging
 import signal
@@ -65,7 +66,8 @@ class AudioFingerprintingService:
     """
     
     def __init__(self, config_path: Optional[str] = None, database_url: Optional[str] = None):
-        """Initialize the audio fingerprinting service."""
+        """
+Initialize the audio fingerprinting service."""
         self.config_path = config_path
         self.database_url = database_url
         
@@ -208,7 +210,8 @@ class AudioFingerprintingService:
             asyncio.create_task(self._health_check_task())
     
     async def _performance_monitoring_task(self):
-        """Background task for performance monitoring."""
+        """
+Background task for performance monitoring."""
         interval = self.config_manager.monitoring.metrics_interval_seconds
         
         while self.is_running and not self._shutdown_event.is_set():
@@ -499,7 +502,8 @@ class AudioFingerprintingService:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.shutdown()
 
 
@@ -510,7 +514,8 @@ class AudioFingerprintingAPI:
     """
     
     def __init__(self, service: AudioFingerprintingService):
-        """Initialize the API wrapper."""
+        """
+Initialize the API wrapper."""
         self.service = service
         self.temp_upload_dir = Path("temp_uploads")
         self.temp_upload_dir.mkdir(exist_ok=True)

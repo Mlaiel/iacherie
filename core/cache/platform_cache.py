@@ -4,6 +4,7 @@ Specialized caching for external platform APIs and rate limiting
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -20,7 +21,9 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Supported platforms"""
+    """
+Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -34,6 +37,7 @@ class Platform(Enum):
 
 class APIEndpoint(Enum):
     """API endpoint types"""
+
     USER_PROFILE = "user_profile"
     CONTENT_LIST = "content_list"
     ANALYTICS = "analytics"
@@ -56,7 +60,8 @@ class APIResponse:
     request_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['platform'] = self.platform.value
         data['endpoint'] = self.endpoint.value
@@ -66,7 +71,8 @@ class APIResponse:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'APIResponse':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         data['platform'] = Platform(data['platform'])
         data['endpoint'] = APIEndpoint(data['endpoint'])
         data['cached_at'] = datetime.fromisoformat(data['cached_at'])
@@ -75,12 +81,14 @@ class APIResponse:
     
     @property
     def is_expired(self) -> bool:
-        """Check if response is expired"""
+        """
+Check if response is expired"""
         return datetime.utcnow() > self.expires_at
 
 @dataclass
 class RateLimitInfo:
-    """Rate limiting information"""
+    """
+Rate limiting information"""
     platform: Platform
     endpoint: APIEndpoint
     requests_made: int
@@ -91,12 +99,14 @@ class RateLimitInfo:
     
     @property
     def requests_remaining(self) -> int:
-        """Get remaining requests in current window"""
+        """
+Get remaining requests in current window"""
         return max(0, self.requests_limit - self.requests_made)
     
     @property
     def is_rate_limited(self) -> bool:
-        """Check if rate limited"""
+        """
+Check if rate limited"""
         return self.requests_made >= self.requests_limit and datetime.utcnow() < self.reset_at
 
 class PlatformCache:
@@ -205,7 +215,8 @@ class PlatformCache:
                           endpoint: APIEndpoint,
                           params: Dict[str, Any],
                           user_id: Optional[str] = None) -> str:
-        """Generate cache key for API request"""
+        """
+Generate cache key for API request"""
         # Sort parameters for consistent key generation
         sorted_params = json.dumps(params, sort_keys=True)
         params_hash = hashlib.md5(sorted_params.encode()).hexdigest()
@@ -236,7 +247,8 @@ class PlatformCache:
                                response_time: float,
                                user_id: Optional[str] = None,
                                custom_ttl: Optional[int] = None) -> bool:
-        """Cache API response"""
+        """
+Cache API response"""
         
         try:
             ttl = custom_ttl or self._get_ttl(platform, endpoint)
@@ -629,7 +641,8 @@ class PlatformCache:
         return status
     
     async def cleanup_expired_responses(self) -> int:
-        """Clean up expired API responses"""
+        """
+Clean up expired API responses"""
         
         try:
             # Get all API response keys
@@ -700,7 +713,8 @@ class APIResponseCache(PlatformCache):
                            endpoint_url: str,
                            response_data: Dict[str, Any],
                            ttl: Optional[int] = None) -> bool:
-        """Cache arbitrary API response"""
+        """
+Cache arbitrary API response"""
         
         try:
             url_hash = hashlib.md5(endpoint_url.encode()).hexdigest()

@@ -8,9 +8,10 @@ Enterprise-grade storage management system for multi-format content
 with intelligent tiering, multi-cloud support, and advanced features.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator
 import logging
 import asyncio
@@ -41,7 +42,9 @@ from .utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class StorageTier(Enum):
-    """Storage tiers based on access frequency and business requirements"""
+    """
+Storage tiers based on access frequency and business requirements"""
+
     HOT = "hot"          # Frequently accessed (< 30 days) - Active content
     WARM = "warm"        # Occasional access (30-90 days) - Recent content  
     COLD = "cold"        # Rare access (90-365 days) - Archived content
@@ -49,6 +52,7 @@ class StorageTier(Enum):
 
 class ContentType(Enum):
     """Content types for specialized handling"""
+
     AUDIO = "audio"           # Music, podcasts, sound effects
     VIDEO = "video"           # Performance videos, tutorials
     IMAGE = "image"           # Album covers, photos, artwork
@@ -75,7 +79,8 @@ class StorageRequest:
 
 @dataclass
 class StorageResponse:
-    """Response from storage operations"""
+    """
+Response from storage operations"""
     success: bool
     storage_id: str
     file_path: str
@@ -97,7 +102,8 @@ class StorageManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize storage manager with configuration"""
+        """
+Initialize storage manager with configuration"""
         self.config = config
         self.providers: Dict[str, Any] = {}
         self.engines: Dict[str, Any] = {}
@@ -464,7 +470,8 @@ class StorageManager:
         return hashlib.sha256(content).hexdigest()
     
     async def _check_duplicate(self, content_hash: str) -> Optional[StorageResponse]:
-        """Check if content with same hash already exists"""
+        """
+Check if content with same hash already exists"""
         try:
             if 'deduplication' in self.engines:
                 return await self.engines['deduplication'].check_duplicate(content_hash)

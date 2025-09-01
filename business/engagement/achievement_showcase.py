@@ -4,7 +4,7 @@ This module provides a comprehensive showcase system for the 50+ achievements,
 allowing users to view their progress, unlock status, and achievement details.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import logging
@@ -19,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class ShowcaseFilter(str, Enum):
-    """Filters for achievement showcase."""
+    """
+Filters for achievement showcase."""
+
     ALL = "all"
     UNLOCKED = "unlocked"
     LOCKED = "locked"
@@ -58,7 +60,8 @@ class AchievementShowcase:
     """
     
     def __init__(self, achievement_tracker: AchievementTracker):
-        """Initialize the achievement showcase."""
+        """
+Initialize the achievement showcase."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.tracker = achievement_tracker
         

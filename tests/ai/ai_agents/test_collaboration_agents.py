@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Collaboration AI Agents
+"""
+Test suite for Collaboration AI Agents
 
 Tests all functionalities of collaboration matching, partnership opportunities, 
 cross-promotion strategies, and network building agents.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -26,6 +28,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,16 +52,19 @@ from ai.ai_agents.collaboration_agents import (
 
 
 class TestCollaborationMatcherAgent:
-    """Test CollaborationMatcherAgent functionality"""
+    """
+Test CollaborationMatcherAgent functionality"""
     
     @pytest.fixture
     def agent(self):
-        """Create CollaborationMatcherAgent instance"""
+        """
+Create CollaborationMatcherAgent instance"""
         return CollaborationMatcherAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for collaboration matching"""
+        """
+Sample creator profile for collaboration matching"""
         return {
             "creator_id": "creator_001",
             "name": "TechCreator",
@@ -118,7 +124,8 @@ class TestCollaborationMatcherAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_compatibility(self, agent, sample_creator_profile):
-        """Test creator compatibility analysis"""
+        """
+Test creator compatibility analysis"""
         potential_partner = {
             "creator_id": "creator_002",
             "niche": "tech_reviews",
@@ -217,12 +224,14 @@ class TestNetworkAnalysisAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create NetworkAnalysisAgent instance"""
+        """
+Create NetworkAnalysisAgent instance"""
         return NetworkAnalysisAgent()
     
     @pytest.fixture
     def sample_network_data(self):
-        """Sample network data for analysis"""
+        """
+Sample network data for analysis"""
         return {
             "creator_id": "creator_001",
             "direct_connections": [
@@ -263,7 +272,8 @@ class TestNetworkAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_identify_network_gaps(self, agent, sample_network_data):
-        """Test network gap identification"""
+        """
+Test network gap identification"""
         gaps = await agent.identify_network_gaps(sample_network_data)
         
         assert isinstance(gaps, list)
@@ -317,12 +327,14 @@ class TestPartnershipAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create PartnershipAgent instance"""
+        """
+Create PartnershipAgent instance"""
         return PartnershipAgent()
     
     @pytest.fixture
     def sample_partnership_requirements(self):
-        """Sample partnership requirements"""
+        """
+Sample partnership requirements"""
         return {
             "partnership_type": "brand_collaboration",
             "creator_profile": {
@@ -380,7 +392,8 @@ class TestPartnershipAgent:
     
     @pytest.mark.asyncio
     async def test_monitor_partnership_performance(self, agent, sample_partnership_requirements):
-        """Test partnership performance monitoring"""
+        """
+Test partnership performance monitoring"""
         campaign_data = {
             "posts_performance": [
                 {"reach": 25000, "engagement": 1500, "clicks": 200},
@@ -410,12 +423,14 @@ class TestCrossPromotionAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create CrossPromotionAgent instance"""
+        """
+Create CrossPromotionAgent instance"""
         return CrossPromotionAgent()
     
     @pytest.fixture
     def sample_cross_promotion_setup(self):
-        """Sample cross-promotion setup"""
+        """
+Sample cross-promotion setup"""
         return {
             "primary_creator": {
                 "id": "creator_001",
@@ -459,7 +474,8 @@ class TestCrossPromotionAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_promotion_strategy(self, agent, sample_cross_promotion_setup):
-        """Test promotion strategy optimization"""
+        """
+Test promotion strategy optimization"""
         strategy = await agent.optimize_promotion_strategy(sample_cross_promotion_setup)
         
         assert "content_distribution" in strategy
@@ -505,7 +521,8 @@ class TestIntegrationScenarios:
     
     @pytest.fixture
     def agents(self):
-        """Create all collaboration agents for integration testing"""
+        """
+Create all collaboration agents for integration testing"""
         return {
             "matcher": CollaborationMatcherAgent(),
             "network": NetworkAnalysisAgent(),
@@ -582,12 +599,14 @@ class TestErrorHandling:
     
     @pytest.fixture
     def agent(self):
-        """Create CollaborationMatcherAgent for error testing"""
+        """
+Create CollaborationMatcherAgent for error testing"""
         return CollaborationMatcherAgent()
     
     @pytest.mark.asyncio
     async def test_invalid_creator_profile(self, agent):
-        """Test handling of invalid creator profile"""
+        """
+Test handling of invalid creator profile"""
         invalid_profile = {"invalid": "data"}
         goals = {"objectives": ["growth"]}
         
@@ -631,12 +650,14 @@ class TestPerformanceAndScaling:
     
     @pytest.fixture
     def agent(self):
-        """Create CollaborationMatcherAgent for performance testing"""
+        """
+Create CollaborationMatcherAgent for performance testing"""
         return CollaborationMatcherAgent()
     
     @pytest.mark.asyncio
     async def test_large_scale_matching(self, agent):
-        """Test large-scale collaboration matching performance"""
+        """
+Test large-scale collaboration matching performance"""
         # Simulate large creator database
         large_profile = {
             "creator_id": "large_creator",

@@ -6,11 +6,12 @@ Provides comprehensive analytics, performance metrics, trend analysis,
 and predictive modeling for content creator monetization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ from .revenue_calculator import Currency, PlatformType
 
 
 class AnalyticsType(Enum):
-    """Types of analytics"""
+    """
+Types of analytics"""
+
     REVENUE = "revenue"
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
@@ -47,6 +50,7 @@ class AnalyticsType(Enum):
 
 class MetricType(Enum):
     """Metric types"""
+
     ABSOLUTE = "absolute"
     PERCENTAGE = "percentage"
     RATIO = "ratio"
@@ -56,6 +60,7 @@ class MetricType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -78,7 +83,8 @@ class AnalyticsMetric:
 
 @dataclass
 class TimeSeriesData:
-    """Time series analytics data"""
+    """
+Time series analytics data"""
     metric_name: str
     time_granularity: TimeGranularity
     data_points: List[Tuple[datetime, float]]
@@ -89,7 +95,8 @@ class TimeSeriesData:
 
 @dataclass
 class PerformanceReport:
-    """Performance analytics report"""
+    """
+Performance analytics report"""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -103,7 +110,8 @@ class PerformanceReport:
 
 @dataclass
 class PredictiveModel:
-    """Predictive analytics model"""
+    """
+Predictive analytics model"""
     model_id: str
     model_type: str
     target_metric: str
@@ -612,7 +620,8 @@ class AnalyticsEngine:
         return Decimal('800.00')  # Sample previous revenue
     
     async def _calculate_platform_revenue(self, revenue_data: List[Dict]) -> Dict[str, Decimal]:
-        """Calculate revenue by platform"""
+        """
+Calculate revenue by platform"""
         platform_revenue = {}
         
         for item in revenue_data:
@@ -623,7 +632,8 @@ class AnalyticsEngine:
         return platform_revenue
     
     async def _calculate_revenue_diversity(self, platform_revenue: Dict[str, Decimal]) -> float:
-        """Calculate revenue diversity index using Gini coefficient"""
+        """
+Calculate revenue diversity index using Gini coefficient"""
         if not platform_revenue:
             return 0.0
         
@@ -642,7 +652,8 @@ class AnalyticsEngine:
         return 1.0 - gini
     
     async def _calculate_revenue_volatility(self, revenue_data: List[Dict]) -> float:
-        """Calculate revenue volatility (standard deviation)"""
+        """
+Calculate revenue volatility (standard deviation)"""
         if len(revenue_data) < 2:
             return 0.0
         
@@ -650,7 +661,8 @@ class AnalyticsEngine:
         return float(np.std(amounts))
     
     async def _calculate_trend(self, values: np.ndarray) -> str:
-        """Calculate trend direction"""
+        """
+Calculate trend direction"""
         if len(values) < 2:
             return 'stable'
         
@@ -666,7 +678,8 @@ class AnalyticsEngine:
             return 'stable'
     
     async def _calculate_seasonality(self, values: np.ndarray) -> float:
-        """Calculate seasonality factor"""
+        """
+Calculate seasonality factor"""
         if len(values) < 7:  # Need at least a week of data
             return 0.0
         
@@ -676,7 +689,8 @@ class AnalyticsEngine:
     async def _get_metric_time_series(self, user_id: str, metric_name: str,
                                     start_date: datetime, end_date: datetime,
                                     granularity: TimeGranularity) -> List[Tuple]:
-        """Get time series data for metric"""
+        """
+Get time series data for metric"""
         # Implementation would query metric data
         # Placeholder implementation generating sample data
         data = []
@@ -691,7 +705,8 @@ class AnalyticsEngine:
         return data
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
+        """
+Get data from cache"""
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -699,7 +714,8 @@ class AnalyticsEngine:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import json
@@ -40,7 +41,9 @@ from .platform_crawler import ContentMatch, CrawlerResult
 
 
 class AggregationMethod(Enum):
-    """Methods for aggregating results"""
+    """
+Methods for aggregating results"""
+
     WEIGHTED_AVERAGE = "weighted_average"
     MAXIMUM_SCORE = "maximum_score"
     CONSENSUS_VOTING = "consensus_voting"
@@ -49,6 +52,7 @@ class AggregationMethod(Enum):
 
 class EvidenceType(Enum):
     """Types of evidence for content matches"""
+
     FINGERPRINT_MATCH = "fingerprint_match"
     METADATA_SIMILARITY = "metadata_similarity"
     VISUAL_SIMILARITY = "visual_similarity"
@@ -75,7 +79,8 @@ class MatchScore:
 
 @dataclass
 class EvidenceItem:
-    """Individual piece of evidence for a match"""
+    """
+Individual piece of evidence for a match"""
     evidence_type: EvidenceType
     source_platform: str
     evidence_data: Dict[str, Any]

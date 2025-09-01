@@ -21,6 +21,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -62,7 +63,8 @@ settings = get_settings()
 
 @dataclass
 class LinkedInPostData:
-    """LinkedIn post data structure"""
+    """
+LinkedIn post data structure"""
     post_id: str
     author_id: str
     author_name: str
@@ -91,7 +93,8 @@ class LinkedInPostData:
 
 @dataclass
 class LinkedInProfileData:
-    """LinkedIn profile data structure"""
+    """
+LinkedIn profile data structure"""
     profile_id: str
     public_id: str
     first_name: str
@@ -128,7 +131,8 @@ class LinkedInProfileData:
 
 @dataclass
 class LinkedInCompanyData:
-    """LinkedIn company data structure"""
+    """
+LinkedIn company data structure"""
     company_id: str
     universal_name: str
     name: str
@@ -155,7 +159,8 @@ class LinkedInCompanyData:
 
 @dataclass
 class LinkedInBusinessData:
-    """LinkedIn business analytics data structure"""
+    """
+LinkedIn business analytics data structure"""
     page_id: str
     page_name: str
     follower_count: int

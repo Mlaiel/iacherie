@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Table
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -29,7 +30,9 @@ Base = declarative_base()
 
 
 class CollaborationType(PyEnum):
-    """Types de collaboration supportés."""
+    """
+Types de collaboration supportés."""
+
     MUSIC_FEATURE = "music_feature"
     PODCAST_GUEST = "podcast_guest"
     CONTENT_CROSS_PROMOTION = "content_cross_promotion"
@@ -42,6 +45,7 @@ class CollaborationType(PyEnum):
 
 class CollaborationStatus(PyEnum):
     """Statuts des collaborations."""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -52,6 +56,7 @@ class CollaborationStatus(PyEnum):
 
 class NetworkTier(PyEnum):
     """Niveaux du réseau de collaboration."""
+
     STARTER = "starter"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
@@ -60,6 +65,7 @@ class NetworkTier(PyEnum):
 
 class MatchingAlgorithm(PyEnum):
     """Algorithmes de matching IA disponibles."""
+
     CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
@@ -280,7 +286,8 @@ class CollaborationNetworkRepository:
         self.db = db_session
 
     def create_network(self, creator_id: str, network_data: Dict[str, Any]) -> CollaborationNetwork:
-        """Créer un nouveau réseau de collaboration."""
+        """
+Créer un nouveau réseau de collaboration."""
         try:
             network = CollaborationNetwork(
                 creator_id=creator_id,
@@ -472,7 +479,8 @@ class CollaborationNetworkRepository:
         return min(score, 1.0)
 
     def _get_compatibility_factors(self, network1: CollaborationNetwork, network2: CollaborationNetwork) -> List[str]:
-        """Obtenir les facteurs de compatibilité."""
+        """
+Obtenir les facteurs de compatibilité."""
         factors = []
         
         if network1.preferred_genres and network2.preferred_genres:
@@ -496,6 +504,7 @@ class CollaborationNetworkRepository:
         return breakdown
 
     def _get_monthly_trend(self, creator_id: str, timeframe_days: int) -> List[Dict[str, Any]]:
-        """Tendance mensuelle des collaborations."""
+        """
+Tendance mensuelle des collaborations."""
         # Implémentation simplifiée - à enrichir selon les besoins
         return []

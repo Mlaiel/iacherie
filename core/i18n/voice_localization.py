@@ -8,7 +8,7 @@ Technologies: Python, TTS, Voice Cloning, Accent Processing, Audio Analysis
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Text input → Language detection → Voice profile selection → Accent adaptation → 
 Cultural pronunciation → TTS synthesis → Audio processing → Quality enhancement
 """
+
 import logging
 import asyncio
 import json
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class VoiceGender(Enum):
-    """Voice gender options"""
+    """
+Voice gender options"""
+
     MALE = "male"
     FEMALE = "female"
     NEUTRAL = "neutral"
@@ -39,6 +42,7 @@ class VoiceGender(Enum):
 
 class VoiceAge(Enum):
     """Voice age categories"""
+
     CHILD = "child"  # 5-12 years
     TEEN = "teen"    # 13-19 years
     YOUNG_ADULT = "young_adult"  # 20-35 years
@@ -48,6 +52,7 @@ class VoiceAge(Enum):
 
 class AccentType(Enum):
     """Accent types for voice synthesis"""
+
     NATIVE = "native"
     REGIONAL = "regional"
     INTERNATIONAL = "international"
@@ -57,6 +62,7 @@ class AccentType(Enum):
 
 class AudioQuality(Enum):
     """Audio quality levels"""
+
     DRAFT = "draft"      # 16kHz, basic quality
     STANDARD = "standard"  # 22kHz, good quality
     HIGH = "high"        # 44kHz, professional quality
@@ -65,6 +71,7 @@ class AudioQuality(Enum):
 
 class VoiceEmotion(Enum):
     """Voice emotional states"""
+
     NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
@@ -79,6 +86,7 @@ class VoiceEmotion(Enum):
 
 class SpeechStyle(Enum):
     """Speech delivery styles"""
+
     CONVERSATIONAL = "conversational"
     NARRATION = "narration"
     NEWS = "news"
@@ -113,7 +121,8 @@ class VoiceProfile:
 
 @dataclass
 class AudioLocalization:
-    """Audio localization parameters"""
+    """
+Audio localization parameters"""
     language_code: str
     voice_profile: VoiceProfile
     speech_rate: float  # 0.5 - 2.0
@@ -130,7 +139,8 @@ class AudioLocalization:
 
 @dataclass
 class VoiceSynthesisRequest:
-    """Voice synthesis request"""
+    """
+Voice synthesis request"""
     request_id: str
     text: str
     language_code: str
@@ -145,7 +155,8 @@ class VoiceSynthesisRequest:
 
 @dataclass
 class VoiceSynthesisResult:
-    """Voice synthesis result"""
+    """
+Voice synthesis result"""
     request_id: str
     audio_data: bytes
     audio_format: str
@@ -161,7 +172,8 @@ class VoiceSynthesisResult:
 
 
 class VoiceLocalization:
-    """Advanced voice localization and synthesis engine"""
+    """
+Advanced voice localization and synthesis engine"""
     
     def __init__(self):
         self.voice_profiles: Dict[str, VoiceProfile] = {}

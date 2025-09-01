@@ -8,7 +8,7 @@ Technologies: Python, Machine Learning, Geolocation, Cultural Analysis, Neural N
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Content input → Language detection → Cultural markers → Geographic indicators → 
 Regional patterns → Temporal analysis → Context enrichment → Locale prediction
 """
+
 import logging
 import asyncio
 import re
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class LocaleFeature(Enum):
-    """Features used for locale detection"""
+    """
+Features used for locale detection"""
+
     LANGUAGE = "language"
     SCRIPT = "script"
     CURRENCY = "currency"
@@ -47,6 +50,7 @@ class LocaleFeature(Enum):
 
 class DetectionMethod(Enum):
     """AI detection methods"""
+
     NEURAL_CLASSIFIER = "neural_classifier"
     PATTERN_MATCHING = "pattern_matching"
     STATISTICAL_ANALYSIS = "statistical_analysis"
@@ -58,6 +62,7 @@ class DetectionMethod(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for detection"""
+
     VERY_HIGH = "very_high"    # > 0.9
     HIGH = "high"              # 0.8 - 0.9
     MEDIUM = "medium"          # 0.6 - 0.8
@@ -86,7 +91,8 @@ class LocaleContext:
 
 @dataclass
 class DetectionFeature:
-    """Individual detection feature"""
+    """
+Individual detection feature"""
     feature_type: LocaleFeature
     value: str
     confidence: float
@@ -99,7 +105,8 @@ class DetectionFeature:
 
 @dataclass
 class DetectionConfidence:
-    """Confidence scoring for locale detection"""
+    """
+Confidence scoring for locale detection"""
     overall_confidence: float
     language_confidence: float
     country_confidence: float
@@ -114,7 +121,8 @@ class DetectionConfidence:
 
 @dataclass
 class LocaleDetectionResult:
-    """Complete locale detection result"""
+    """
+Complete locale detection result"""
     detected_locale: str
     primary_alternatives: List[Tuple[str, float]]  # (locale, confidence)
     locale_context: LocaleContext
@@ -130,7 +138,8 @@ class LocaleDetectionResult:
 
 
 class LocaleDetectionAI:
-    """Advanced AI-powered locale detection and cultural analysis engine"""
+    """
+Advanced AI-powered locale detection and cultural analysis engine"""
     
     def __init__(self):
         self.locale_models: Dict[str, Dict[str, Any]] = {}
@@ -650,7 +659,8 @@ class LocaleDetectionAI:
         return features
     
     async def _extract_pattern_features(self, text: str) -> List[DetectionFeature]:
-        """Extract features using pattern matching"""
+        """
+Extract features using pattern matching"""
         features = []
         
         # Check for locale-specific patterns

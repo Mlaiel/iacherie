@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaggingStrategy(Enum):
-    """Automated tagging strategies"""
+    """
+Automated tagging strategies"""
+
     AI_CONTENT_ANALYSIS = "ai_content_analysis"
     ACOUSTIC_FINGERPRINTING = "acoustic_fingerprinting"
     GENRE_CLASSIFICATION = "genre_classification"
@@ -44,6 +47,7 @@ class TaggingStrategy(Enum):
 
 class SEOOptimizationLevel(Enum):
     """SEO optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -53,6 +57,7 @@ class SEOOptimizationLevel(Enum):
 
 class ContentClassificationType(Enum):
     """Content classification types"""
+
     GENRE_CLASSIFICATION = "genre_classification"
     MOOD_CLASSIFICATION = "mood_classification"
     ENERGY_LEVEL = "energy_level"
@@ -67,6 +72,7 @@ class ContentClassificationType(Enum):
 
 class AnalyticsProvider(Enum):
     """Analytics and tracking providers"""
+
     GOOGLE_ANALYTICS = "google_analytics"
     SPOTIFY_ANALYTICS = "spotify_analytics"
     YOUTUBE_ANALYTICS = "youtube_analytics"

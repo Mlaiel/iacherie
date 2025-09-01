@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -57,12 +58,14 @@ class TextQualityAnalyzer:
     """Text quality analysis and readability scoring."""
     
     def __init__(self):
-        """Initialize text quality analyzer."""
+        """
+Initialize text quality analyzer."""
         self.logger = logging.getLogger(__name__)
         self.stemmer = PorterStemmer() if HAS_NLP_LIBS else None
     
     def analyze_text_quality(self, text: str) -> Dict[str, float]:
-        """Analyze comprehensive text quality metrics."""
+        """
+Analyze comprehensive text quality metrics."""
         try:
             quality_metrics = {}
             
@@ -192,7 +195,8 @@ class TextQualityAnalyzer:
             return 1
     
     def _analyze_language_quality(self, text: str) -> Dict[str, float]:
-        """Analyze language quality metrics."""
+        """
+Analyze language quality metrics."""
         try:
             # Vocabulary diversity (Type-Token Ratio)
             words = re.findall(r'\b\w+\b', text.lower())
@@ -320,7 +324,8 @@ class TextSentimentAnalyzer:
     """Text sentiment analysis and emotional content detection."""
     
     def __init__(self):
-        """Initialize sentiment analyzer."""
+        """
+Initialize sentiment analyzer."""
         self.logger = logging.getLogger(__name__)
         self.sentiment_analyzer = None
         
@@ -428,7 +433,8 @@ class TextSentimentAnalyzer:
             return 'neutral'
     
     def _analyze_emotional_content(self, text: str) -> Dict[str, float]:
-        """Analyze emotional content beyond basic sentiment."""
+        """
+Analyze emotional content beyond basic sentiment."""
         try:
             text_lower = text.lower()
             
@@ -470,11 +476,13 @@ class TextToxicityDetector:
     """Text toxicity and harmful content detection."""
     
     def __init__(self):
-        """Initialize toxicity detector."""
+        """
+Initialize toxicity detector."""
         self.logger = logging.getLogger(__name__)
     
     def detect_toxicity(self, text: str) -> Dict[str, Any]:
-        """Detect toxic and harmful content in text."""
+        """
+Detect toxic and harmful content in text."""
         try:
             toxicity_metrics = {}
             
@@ -625,7 +633,8 @@ class TextContentFilter:
     """Enterprise-grade text content filter."""
     
     def __init__(self, config: TextFilterConfig):
-        """Initialize text content filter."""
+        """
+Initialize text content filter."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -653,7 +662,8 @@ class TextContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter text content with comprehensive analysis."""
+        """
+Filter text content with comprehensive analysis."""
         start_time = time.time()
         
         try:
@@ -935,7 +945,8 @@ class TextContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine filter result based on analysis."""
+        """
+Determine filter result based on analysis."""
         # Check for blocking conditions
         toxicity_data = analysis_results.get('toxicity', {})
         if toxicity_data.get('is_toxic') and toxicity_data.get('overall_toxicity', 0) > 0.7:
@@ -975,7 +986,8 @@ class TextContentFilter:
                 return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on text filter."""
+        """
+Perform health check on text filter."""
         health_status = {
             'status': 'healthy',
             'libraries': {

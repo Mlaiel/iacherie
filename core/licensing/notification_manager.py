@@ -14,6 +14,7 @@ Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
 """
+
 from typing import Dict, Any, List, Optional
 import asyncio
 import logging
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types de notifications."""
+    """
+Types de notifications."""
+
     LICENSE_CREATED = "license_created"
     LICENSE_APPROVED = "license_approved"
     LICENSE_REJECTED = "license_rejected"
@@ -45,6 +48,7 @@ class NotificationType(Enum):
 
 class NotificationChannel(Enum):
     """Canaux de notification."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -57,6 +61,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Priorités de notification."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -66,6 +71,7 @@ class NotificationPriority(Enum):
 
 class NotificationStatus(Enum):
     """Statuts de notification."""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"

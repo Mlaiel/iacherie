@@ -4,6 +4,7 @@ Automated data lifecycle and retention policy management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -29,7 +30,9 @@ logger = get_logger(__name__)
 
 
 class RetentionReason(str, Enum):
-    """Data retention reasons"""
+    """
+Data retention reasons"""
+
     LEGAL_REQUIREMENT = "legal_requirement"
     BUSINESS_PURPOSE = "business_purpose"
     USER_CONSENT = "user_consent"
@@ -40,6 +43,7 @@ class RetentionReason(str, Enum):
 
 class DataCategory(str, Enum):
     """Data category classifications"""
+
     PERSONAL_IDENTIFIABLE = "personal_identifiable"
     FINANCIAL = "financial"
     CONTENT_DATA = "content_data"
@@ -52,6 +56,7 @@ class DataCategory(str, Enum):
 
 class RetentionAction(str, Enum):
     """Actions to take when retention period expires"""
+
     DELETE = "delete"
     ARCHIVE = "archive"
     ANONYMIZE = "anonymize"
@@ -62,6 +67,7 @@ class RetentionAction(str, Enum):
 
 class DeletionStatus(str, Enum):
     """Data deletion status"""
+
     SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -90,7 +96,8 @@ class RetentionPolicyDefinition:
 
 @dataclass
 class DataInventoryItem:
-    """Data inventory item for retention management"""
+    """
+Data inventory item for retention management"""
     item_id: str
     data_type: str
     data_category: DataCategory
@@ -107,7 +114,8 @@ class DataInventoryItem:
 
 @dataclass
 class RetentionReport:
-    """Data retention compliance report"""
+    """
+Data retention compliance report"""
     report_id: str
     generated_at: datetime
     period_start: datetime
@@ -123,7 +131,8 @@ class RetentionReport:
 
 
 class DataRetentionManager:
-    """Enterprise data retention and lifecycle management system"""
+    """
+Enterprise data retention and lifecycle management system"""
     
     def __init__(self):
         self.logger = logger

@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import os
 import json
 import base64
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SecretMetadata:
-    """Secret metadata container"""
+    """
+Secret metadata container"""
     name: str
     version: str
     created_at: str
@@ -47,7 +49,8 @@ class SecretMetadata:
 
 @dataclass
 class ConfigTemplate:
-    """Configuration template for different environments"""
+    """
+Configuration template for different environments"""
     environment: str
     database_url: str
     redis_url: str
@@ -222,20 +225,23 @@ class SecretVaultIntegration:
         return self._aws_client
     
     def _get_azure_client(self, vault_url: str):
-        """Get Azure Key Vault client"""
+        """
+Get Azure Key Vault client"""
         if self._azure_client is None:
             credential = DefaultAzureCredential()
             self._azure_client = SecretClient(vault_url=vault_url, credential=credential)
         return self._azure_client
     
     def _get_vault_client(self, vault_url: str, token: str):
-        """Get HashiCorp Vault client"""
+        """
+Get HashiCorp Vault client"""
         if self._vault_client is None:
             self._vault_client = hvac.Client(url=vault_url, token=token)
         return self._vault_client
     
     def _get_gcp_client(self):
-        """Get Google Secret Manager client"""
+        """
+Get Google Secret Manager client"""
         if self._gcp_client is None:
             self._gcp_client = secretmanager.SecretManagerServiceClient()
         return self._gcp_client

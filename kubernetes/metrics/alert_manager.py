@@ -31,6 +31,7 @@ Features:
 - Alert lifecycle management with audit trails
 - Predictive alerting with forecasting capabilities
 """
+
 import logging
 import asyncio
 import time
@@ -61,7 +62,9 @@ settings = get_settings()
 
 
 class AlertSeverity(Enum):
-    """Enhanced alert severity levels with business impact"""
+    """
+Enhanced alert severity levels with business impact"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -71,6 +74,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert lifecycle status tracking"""
+
     PENDING = "pending"
     FIRING = "firing"
     RESOLVED = "resolved"
@@ -82,6 +86,7 @@ class AlertStatus(Enum):
 
 class AlertCategory(Enum):
     """Alert categorization for intelligent routing"""
+
     PERFORMANCE = "performance"
     SECURITY = "security"
     BUSINESS = "business"
@@ -94,6 +99,7 @@ class AlertCategory(Enum):
 
 class NotificationChannel(Enum):
     """Enhanced notification delivery channels"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -229,7 +235,8 @@ class AlertManager:
         self._initialize_notification_channels()
     
     async def start(self) -> None:
-        """Start enhanced alert manager with ML capabilities"""
+        """
+Start enhanced alert manager with ML capabilities"""
         try:
             if self._running:
                 self.logger.warning("Alert manager already running")
@@ -704,24 +711,28 @@ class AlertManager:
         pass
     
     async def _optimize_rule_conditions(self, conditions: List[AlertCondition]) -> List[AlertCondition]:
-        """Optimize alert rule conditions for performance"""
+        """
+Optimize alert rule conditions for performance"""
         # Implementation for condition optimization
         return conditions
     
     async def _initialize_rule_ml_models(self, rule_id: str, rule_config: AlertRuleConfig) -> None:
-        """Initialize ML models for rule"""
+        """
+Initialize ML models for rule"""
         # Implementation for ML model initialization
         pass
     
     async def _cache_rule_config(self, rule_id: str, rule_config: AlertRuleConfig) -> None:
-        """Cache rule configuration for performance"""
+        """
+Cache rule configuration for performance"""
         # Implementation for rule caching
         pass
     
     # Additional private methods would be implemented here...
     
     def _initialize_default_rules(self) -> None:
-        """Initialize comprehensive default alert rules"""
+        """
+Initialize comprehensive default alert rules"""
         # High error rate alert
         error_rate_rule = AlertRuleConfig(
             name="High HTTP Error Rate",
@@ -789,47 +800,56 @@ class AlertManager:
         pass
     
     def _initialize_notification_channels(self) -> None:
-        """Initialize notification channels"""
+        """
+Initialize notification channels"""
         # Implementation for notification channel setup
         pass
     
     def _initialize_business_impact_calculator(self):
-        """Initialize business impact calculation engine"""
+        """
+Initialize business impact calculation engine"""
         # Implementation for business impact calculator
         return None
     
     async def _initialize_anomaly_detection(self) -> None:
-        """Initialize anomaly detection system"""
+        """
+Initialize anomaly detection system"""
         # Implementation for anomaly detection initialization
         pass
     
     async def _start_evaluation_loops(self) -> None:
-        """Start alert evaluation loops"""
+        """
+Start alert evaluation loops"""
         # Implementation for evaluation loop startup
         pass
     
     async def _start_correlation_engine(self) -> None:
-        """Start alert correlation engine"""
+        """
+Start alert correlation engine"""
         # Implementation for correlation engine
         pass
     
     async def _start_suppression_engine(self) -> None:
-        """Start alert suppression engine"""
+        """
+Start alert suppression engine"""
         # Implementation for suppression engine
         pass
     
     async def _start_business_intelligence(self) -> None:
-        """Start business intelligence engine"""
+        """
+Start business intelligence engine"""
         # Implementation for business intelligence
         pass
     
     # Additional helper methods would be implemented here...
     async def _evaluate_rule_loop(self, rule_id: str, rule_config: AlertRuleConfig) -> None:
-        """Main evaluation loop for alert rule"""
+        """
+Main evaluation loop for alert rule"""
         pass
     
     async def _generate_alert_fingerprint(self, rule_id: str, values: Dict[str, float], labels: Dict[str, str]) -> str:
-        """Generate unique alert fingerprint"""
+        """
+Generate unique alert fingerprint"""
         return f"{rule_id}_{hash(str(values) + str(labels))}"
     
     async def _find_existing_alert(self, fingerprint: str) -> Optional[AlertIncident]:
@@ -837,87 +857,108 @@ class AlertManager:
         return None
     
     async def _update_existing_alert(self, alert: AlertIncident, values: Dict[str, float]) -> None:
-        """Update existing alert"""
+        """
+Update existing alert"""
         pass
     
     async def _calculate_business_impact(self, rule_config: AlertRuleConfig, values: Dict[str, float], tenant_id: Optional[str]) -> float:
-        """Calculate business impact score"""
+        """
+Calculate business impact score"""
         return 5.0
     
     async def _apply_alert_correlation(self, alert: AlertIncident) -> Optional[str]:
-        """Apply alert correlation"""
+        """
+Apply alert correlation"""
         return None
     
     async def _check_suppression_rules(self, alert: AlertIncident) -> bool:
-        """Check if alert should be suppressed"""
+        """
+Check if alert should be suppressed"""
         return False
     
     async def _send_intelligent_notifications(self, alert: AlertIncident, rule_config: AlertRuleConfig) -> None:
-        """Send intelligent notifications"""
+        """
+Send intelligent notifications"""
         pass
     
     async def _update_alert_metrics(self, alert: AlertIncident) -> None:
-        """Update alert metrics"""
+        """
+Update alert metrics"""
         pass
     
     async def _store_alert_history(self, alert: AlertIncident) -> None:
-        """Store alert in history"""
+        """
+Store alert in history"""
         pass
     
     async def _check_escalation_rules(self, alert: AlertIncident, rule_config: AlertRuleConfig) -> None:
-        """Check escalation rules"""
+        """
+Check escalation rules"""
         pass
     
     async def _send_resolution_notifications(self, alert: AlertIncident) -> None:
-        """Send resolution notifications"""
+        """
+Send resolution notifications"""
         pass
     
     async def _update_business_intelligence(self, alert: AlertIncident, action: str) -> None:
-        """Update business intelligence"""
+        """
+Update business intelligence"""
         pass
     
     async def _update_alert_history(self, alert: AlertIncident) -> None:
-        """Update alert history"""
+        """
+Update alert history"""
         pass
     
     async def _update_ml_models_with_resolution(self, alert: AlertIncident) -> None:
-        """Update ML models with resolution data"""
+        """
+Update ML models with resolution data"""
         pass
     
     async def _send_acknowledgment_notifications(self, alert: AlertIncident) -> None:
-        """Send acknowledgment notifications"""
+        """
+Send acknowledgment notifications"""
         pass
     
     async def _generate_ml_insights(self, alerts: List[AlertIncident]) -> Dict[str, Any]:
-        """Generate ML insights"""
+        """
+Generate ML insights"""
         return {}
     
     async def _analyze_alert_trends(self, alerts: List[AlertIncident], time_window: timedelta) -> Dict[str, Any]:
-        """Analyze alert trends"""
+        """
+Analyze alert trends"""
         return {}
     
     async def _resolve_rule_alerts(self, rule_id: str) -> None:
-        """Resolve all alerts for a rule"""
+        """
+Resolve all alerts for a rule"""
         pass
     
     async def _cleanup_rule_ml_models(self, rule_id: str) -> None:
-        """Cleanup ML models for rule"""
+        """
+Cleanup ML models for rule"""
         pass
     
     async def _remove_rule_from_cache(self, rule_id: str) -> None:
-        """Remove rule from cache"""
+        """
+Remove rule from cache"""
         pass
     
     async def _save_ml_models(self) -> None:
-        """Save ML models"""
+        """
+Save ML models"""
         pass
     
     async def _save_alert_statistics(self) -> None:
-        """Save alert statistics"""
+        """
+Save alert statistics"""
         pass
     
     async def _send_shutdown_notifications(self) -> None:
-        """Send shutdown notifications"""
+        """
+Send shutdown notifications"""
         pass
 
 import logging
@@ -946,7 +987,9 @@ settings = get_settings()
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
@@ -954,6 +997,7 @@ class AlertSeverity(Enum):
 
 class AlertState(Enum):
     """Alert states"""
+
     PENDING = "pending"
     FIRING = "firing"
     RESOLVED = "resolved"
@@ -963,6 +1007,7 @@ class AlertState(Enum):
 
 class NotificationType(Enum):
     """Notification channel types"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -996,7 +1041,8 @@ class AlertRuleConfig:
 
 @dataclass
 class AlertNotification:
-    """Alert notification data"""
+    """
+Alert notification data"""
     alert_id: str
     rule_name: str
     severity: AlertSeverity
@@ -1044,7 +1090,8 @@ class AlertManager:
         self._initialize_notification_channels()
     
     async def start(self) -> None:
-        """Start alert manager"""
+        """
+Start alert manager"""
         try:
             if self._running:
                 self.logger.warning("Alert manager already running")

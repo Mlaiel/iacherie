@@ -8,12 +8,13 @@ This module provides comprehensive notification capabilities:
 - Integration with external services (Slack, Discord, Telegram)
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Set, Callable
@@ -57,7 +58,9 @@ settings = get_settings()
 
 
 class NotificationChannel(Enum):
-    """Available notification channels"""
+    """
+Available notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -71,6 +74,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -80,6 +84,7 @@ class NotificationPriority(Enum):
 
 class NotificationType(Enum):
     """Types of notifications"""
+
     VIOLATION_DETECTED = "violation_detected"
     TAKEDOWN_SUCCESS = "takedown_success"
     TAKEDOWN_FAILED = "takedown_failed"
@@ -106,7 +111,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationContent:
-    """Content for a notification"""
+    """
+Content for a notification"""
     notification_id: str
     user_id: str
     notification_type: NotificationType
@@ -121,7 +127,8 @@ class NotificationContent:
 
 @dataclass
 class NotificationDelivery:
-    """Delivery status for a notification"""
+    """
+Delivery status for a notification"""
     notification_id: str
     channel: NotificationChannel
     status: str  # pending, sent, delivered, failed, read
@@ -679,13 +686,15 @@ class NotificationManager:
     def _filter_channels_by_preferences(self, channels: List[NotificationChannel], 
                                        preferences: Dict[str, Any], 
                                        priority: NotificationPriority) -> List[NotificationChannel]:
-        """Filter channels based on user preferences"""
+        """
+Filter channels based on user preferences"""
         # This would filter channels based on user preferences and priority
         return channels
     
     def _get_channels_for_violation(self, priority: NotificationPriority, 
                                    preferences: Dict[str, Any]) -> List[NotificationChannel]:
-        """Get appropriate channels for violation based on priority"""
+        """
+Get appropriate channels for violation based on priority"""
         if priority in [NotificationPriority.URGENT, NotificationPriority.CRITICAL]:
             return [NotificationChannel.EMAIL, NotificationChannel.SMS, NotificationChannel.WEBSOCKET, NotificationChannel.PUSH]
         elif priority == NotificationPriority.HIGH:
@@ -694,7 +703,8 @@ class NotificationManager:
             return [NotificationChannel.EMAIL, NotificationChannel.IN_APP]
     
     async def _render_email_template(self, content: NotificationContent) -> str:
-        """Render email template with content"""
+        """
+Render email template with content"""
         try:
             template = self.jinja_env.get_template(f'{content.notification_type.value}.html')
             return template.render(
@@ -713,33 +723,41 @@ class NotificationManager:
         return {}
     
     async def _get_user_email(self, user_id: str) -> Optional[str]:
-        """Get user email address"""
+        """
+Get user email address"""
         return None
     
     async def _get_user_phone(self, user_id: str) -> Optional[str]:
-        """Get user phone number"""
+        """
+Get user phone number"""
         return None
     
     async def _get_user_push_tokens(self, user_id: str) -> List[str]:
-        """Get user push notification tokens"""
+        """
+Get user push notification tokens"""
         return []
     
     async def _get_user_slack_channel(self, user_id: str) -> Optional[str]:
-        """Get user Slack channel"""
+        """
+Get user Slack channel"""
         return None
     
     async def _get_user_telegram_chat(self, user_id: str) -> Optional[str]:
-        """Get user Telegram chat ID"""
+        """
+Get user Telegram chat ID"""
         return None
     
     async def _get_user_webhook_url(self, user_id: str) -> Optional[str]:
-        """Get user webhook URL"""
+        """
+Get user webhook URL"""
         return None
     
     async def _store_notification_log(self, content: NotificationContent, deliveries: Dict[str, NotificationDelivery]):
-        """Store notification log in database"""
+        """
+Store notification log in database"""
         pass
     
     async def _store_in_app_notification(self, content: NotificationContent):
-        """Store in-app notification in database"""
+        """
+Store in-app notification in database"""
         pass

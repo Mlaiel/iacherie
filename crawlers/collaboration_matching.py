@@ -12,6 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities."""
+    """
+Types of collaboration opportunities."""
+
     MUSIC_COLLAB = "music_collaboration"
     CONTENT_CROSS_PROMOTION = "content_cross_promotion"
     JOINT_PROJECT = "joint_project"
@@ -54,6 +57,7 @@ class CollaborationType(Enum):
 
 class CompatibilityLevel(Enum):
     """Compatibility levels for collaborations."""
+
     PERFECT = "perfect"         # 90-100%
     EXCELLENT = "excellent"     # 80-89%
     GOOD = "good"              # 70-79%
@@ -63,6 +67,7 @@ class CompatibilityLevel(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration matching."""
+
     SUGGESTED = "suggested"
     CONTACTED = "contacted"
     IN_NEGOTIATION = "in_negotiation"
@@ -88,7 +93,8 @@ class CreatorMetrics:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity data structure."""
+    """
+Collaboration opportunity data structure."""
     opportunity_id: str
     collaboration_type: CollaborationType
     primary_creator: str
@@ -106,7 +112,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class MatchingCriteria:
-    """Criteria for collaboration matching."""
+    """
+Criteria for collaboration matching."""
     creator_id: str
     collaboration_types: List[CollaborationType]
     target_audience_overlap: float  # 0.0 to 1.0
@@ -120,7 +127,8 @@ class MatchingCriteria:
 
 @dataclass
 class CollaborationMatch:
-    """Final collaboration match result."""
+    """
+Final collaboration match result."""
     match_id: str
     primary_creator: str
     partner_creator: str
@@ -155,7 +163,8 @@ class CollaborationMatchingEngine:
         self._initialize_matching_models()
         
     def _initialize_matching_models(self):
-        """Initialize matching algorithms and models."""
+        """
+Initialize matching algorithms and models."""
         try:
             # Sentence transformer for content similarity
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -658,7 +667,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics, 
         creator2: CreatorMetrics
     ) -> float:
-        """Calculate content similarity between creators."""
+        """
+Calculate content similarity between creators."""
         # Simplified content similarity calculation
         # In real implementation, this would analyze actual content using NLP
         
@@ -687,7 +697,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics, 
         creator2: CreatorMetrics
     ) -> float:
-        """Calculate engagement rate compatibility."""
+        """
+Calculate engagement rate compatibility."""
         # Calculate compatibility based on engagement rate similarity
         rate1 = creator1.engagement_rate
         rate2 = creator2.engagement_rate
@@ -704,7 +715,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics, 
         creator2: CreatorMetrics
     ) -> float:
-        """Calculate brand alignment between creators."""
+        """
+Calculate brand alignment between creators."""
         # Simplified brand alignment calculation
         # In real implementation, this would analyze brand values, aesthetics, etc.
         
@@ -722,7 +734,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics, 
         creator2: CreatorMetrics
     ) -> float:
-        """Calculate growth synergy potential."""
+        """
+Calculate growth synergy potential."""
         # Synergy is higher when growth rates complement each other
         growth1 = creator1.growth_rate
         growth2 = creator2.growth_rate
@@ -742,7 +755,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics, 
         creator2: CreatorMetrics
     ) -> float:
-        """Analyze collaboration history compatibility."""
+        """
+Analyze collaboration history compatibility."""
         # Higher scores for creators with good collaboration experience
         hist1 = creator1.collaboration_history
         hist2 = creator2.collaboration_history
@@ -762,7 +776,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics, 
         creator2: CreatorMetrics
     ) -> float:
-        """Calculate geographic proximity score."""
+        """
+Calculate geographic proximity score."""
         # Simplified geographic calculation
         # In real implementation, this would use actual location data
         
@@ -790,7 +805,8 @@ class CollaborationMatchingEngine:
         creator1: CreatorMetrics,
         creator2: CreatorMetrics
     ) -> float:
-        """Get modifier based on collaboration type suitability."""
+        """
+Get modifier based on collaboration type suitability."""
         modifiers = {
             CollaborationType.MUSIC_COLLAB: 1.2,
             CollaborationType.CONTENT_CROSS_PROMOTION: 1.0,
@@ -812,7 +828,8 @@ class CollaborationMatchingEngine:
         partner: CreatorMetrics,
         criteria: Optional[MatchingCriteria]
     ) -> CollaborationType:
-        """Determine the best collaboration type for creators."""
+        """
+Determine the best collaboration type for creators."""
         # Consider creator metrics and preferences
         if criteria and criteria.collaboration_types:
             # Return first preferred type for simplicity
@@ -832,7 +849,8 @@ class CollaborationMatchingEngine:
         partner: CreatorMetrics,
         collaboration_type: CollaborationType
     ) -> float:
-        """Calculate synergy potential for collaboration."""
+        """
+Calculate synergy potential for collaboration."""
         # Base synergy from complementary strengths
         base_synergy = 0.5
         
@@ -858,7 +876,8 @@ class CollaborationMatchingEngine:
         creator: CreatorMetrics,
         partner: CreatorMetrics
     ) -> int:
-        """Estimate total reach for collaboration."""
+        """
+Estimate total reach for collaboration."""
         # Calculate combined reach with overlap consideration
         creator_reach = creator.follower_count
         partner_reach = partner.follower_count
@@ -881,7 +900,8 @@ class CollaborationMatchingEngine:
         partner: CreatorMetrics,
         collaboration_type: CollaborationType
     ) -> float:
-        """Estimate revenue potential for collaboration."""
+        """
+Estimate revenue potential for collaboration."""
         # Base revenue calculation
         base_cpm = 2.0  # $2 per 1000 views
         estimated_reach = self._estimate_collaboration_reach(creator, partner)
@@ -908,7 +928,8 @@ class CollaborationMatchingEngine:
         creator: CreatorMetrics,
         partner: CreatorMetrics
     ) -> float:
-        """Calculate success probability for collaboration."""
+        """
+Calculate success probability for collaboration."""
         # Base probability from compatibility and synergy
         base_probability = (compatibility_score + synergy_potential) / 2
         
@@ -937,7 +958,8 @@ class CollaborationMatchingEngine:
         partner: CreatorMetrics,
         collaboration_type: CollaborationType
     ) -> List[str]:
-        """Identify key benefits of the collaboration."""
+        """
+Identify key benefits of the collaboration."""
         benefits = []
         
         # Audience growth
@@ -1051,7 +1073,8 @@ class CollaborationMatchingEngine:
         return timelines.get(collaboration_type, 30)
     
     async def _extract_success_features(self, collaboration_match: CollaborationMatch) -> Dict[str, float]:
-        """Extract features for success prediction."""
+        """
+Extract features for success prediction."""
         features = {
             'compatibility_score': collaboration_match.compatibility_score,
             'synergy_score': collaboration_match.synergy_analysis.get('overall_synergy', 0.5),
@@ -1064,7 +1087,8 @@ class CollaborationMatchingEngine:
         return features
     
     def _calculate_base_success_probability(self, features: Dict[str, float]) -> float:
-        """Calculate base success probability from features."""
+        """
+Calculate base success probability from features."""
         # Weighted calculation
         probability = (
             features.get('compatibility_score', 0.5) * self.success_factors['mutual_audience'] +
@@ -1081,7 +1105,8 @@ class CollaborationMatchingEngine:
         features: Dict[str, float], 
         historical_data: List[Dict[str, Any]]
     ) -> float:
-        """Apply historical learning to adjust success probability."""
+        """
+Apply historical learning to adjust success probability."""
         # Simplified historical learning
         # In real implementation, this would use ML models trained on historical data
         
@@ -1101,21 +1126,24 @@ class CollaborationMatchingEngine:
         return 1.0  # No adjustment if no similar data
     
     def _predict_engagement_boost(self, features: Dict[str, float]) -> float:
-        """Predict engagement boost from collaboration."""
+        """
+Predict engagement boost from collaboration."""
         base_boost = features.get('synergy_score', 0.5) * 0.3  # Up to 30% boost
         quality_factor = features.get('creator_quality_avg', 0.8)
         
         return base_boost * quality_factor
     
     def _predict_follower_growth(self, features: Dict[str, float]) -> float:
-        """Predict follower growth from collaboration."""
+        """
+Predict follower growth from collaboration."""
         base_growth = features.get('compatibility_score', 0.5) * 0.2  # Up to 20% growth
         synergy_factor = features.get('synergy_score', 0.5)
         
         return base_growth * synergy_factor
     
     def _predict_revenue_potential(self, features: Dict[str, float]) -> float:
-        """Predict revenue potential multiplier."""
+        """
+Predict revenue potential multiplier."""
         base_multiplier = 1.5  # 50% increase
         quality_bonus = features.get('creator_quality_avg', 0.8) * 0.5
         synergy_bonus = features.get('synergy_score', 0.5) * 0.3
@@ -1123,11 +1151,13 @@ class CollaborationMatchingEngine:
         return base_multiplier + quality_bonus + synergy_bonus
     
     def _predict_brand_value_increase(self, features: Dict[str, float]) -> float:
-        """Predict brand value increase from collaboration."""
+        """
+Predict brand value increase from collaboration."""
         return features.get('creator_quality_avg', 0.8) * 0.25  # Up to 25% increase
     
     def _identify_risk_factors(self, features: Dict[str, float]) -> List[str]:
-        """Identify risk factors for collaboration."""
+        """
+Identify risk factors for collaboration."""
         risks = []
         
         if features.get('compatibility_score', 0.5) < 0.6:
@@ -1161,7 +1191,8 @@ class CollaborationMatchingEngine:
         collaboration_match: CollaborationMatch,
         features: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations for collaboration success."""
+        """
+Generate recommendations for collaboration success."""
         recommendations = []
         
         if features.get('communication_fit', 0.8) < 0.8:
@@ -1186,7 +1217,8 @@ class CollaborationMatchingEngine:
         }
     
     def _define_collaboration_objectives(self, collaboration_match: CollaborationMatch) -> List[str]:
-        """Define collaboration objectives."""
+        """
+Define collaboration objectives."""
         return [
             "Increase audience reach and engagement",
             "Create high-quality collaborative content",
@@ -1212,7 +1244,8 @@ class CollaborationMatchingEngine:
         return deliverables
     
     def _create_detailed_timeline(self, collaboration_match: CollaborationMatch) -> Dict[str, str]:
-        """Create detailed timeline for collaboration."""
+        """
+Create detailed timeline for collaboration."""
         return {
             'planning_phase': '1-3 days',
             'content_creation': '1-3 weeks',
@@ -1222,7 +1255,8 @@ class CollaborationMatchingEngine:
         }
     
     def _calculate_resource_requirements(self, collaboration_match: CollaborationMatch) -> Dict[str, Any]:
-        """Calculate resource requirements."""
+        """
+Calculate resource requirements."""
         return {
             'time_commitment': '10-20 hours total',
             'equipment_needed': ['recording_equipment', 'editing_software'],
@@ -1231,7 +1265,8 @@ class CollaborationMatchingEngine:
         }
     
     def _propose_revenue_sharing(self, collaboration_match: CollaborationMatch) -> Dict[str, Any]:
-        """Propose revenue sharing structure."""
+        """
+Propose revenue sharing structure."""
         return {
             'split_percentage': '50/50',
             'revenue_streams': ['streaming', 'licensing', 'merchandise'],
@@ -1240,7 +1275,8 @@ class CollaborationMatchingEngine:
         }
     
     def _suggest_legal_framework(self, collaboration_match: CollaborationMatch) -> Dict[str, Any]:
-        """Suggest legal framework for collaboration."""
+        """
+Suggest legal framework for collaboration."""
         return {
             'contract_type': 'collaboration_agreement',
             'key_clauses': ['ip_ownership', 'revenue_sharing', 'promotion_obligations'],
@@ -1249,7 +1285,8 @@ class CollaborationMatchingEngine:
         }
     
     def _define_success_metrics(self, collaboration_match: CollaborationMatch) -> Dict[str, str]:
-        """Define success metrics for collaboration."""
+        """
+Define success metrics for collaboration."""
         return {
             'engagement_increase': '>20%',
             'follower_growth': '>10%',
@@ -1258,7 +1295,8 @@ class CollaborationMatchingEngine:
         }
     
     def _create_risk_mitigation_plan(self, collaboration_match: CollaborationMatch) -> List[Dict[str, str]]:
-        """Create risk mitigation plan."""
+        """
+Create risk mitigation plan."""
         return [
             {'risk': 'communication_breakdown', 'mitigation': 'weekly_check_ins'},
             {'risk': 'creative_differences', 'mitigation': 'mediation_process'},
@@ -1267,7 +1305,8 @@ class CollaborationMatchingEngine:
         ]
     
     def _design_communication_plan(self, collaboration_match: CollaborationMatch) -> Dict[str, Any]:
-        """Design communication plan for collaboration."""
+        """
+Design communication plan for collaboration."""
         return {
             'primary_channel': 'video_calls',
             'backup_channel': 'messaging_app',
@@ -1281,7 +1320,8 @@ class CollaborationMatchingEngine:
         proposal: Dict[str, Any], 
         custom_requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply custom requirements to proposal."""
+        """
+Apply custom requirements to proposal."""
         # Override specific sections based on custom requirements
         if 'timeline' in custom_requirements:
             proposal['timeline'].update(custom_requirements['timeline'])
@@ -1292,7 +1332,8 @@ class CollaborationMatchingEngine:
         return proposal
     
     async def _get_collaboration_data(self, collab_id: str) -> Optional[Dict[str, Any]]:
-        """Get collaboration data for monitoring."""
+        """
+Get collaboration data for monitoring."""
         # Mock collaboration data
         return {
             'collaboration_id': collab_id,
@@ -1303,7 +1344,8 @@ class CollaborationMatchingEngine:
         }
     
     async def _analyze_collaboration_performance(self, collab_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze collaboration performance."""
+        """
+Analyze collaboration performance."""
         return {
             'performance_score': 0.75,
             'engagement_growth': 0.25,
@@ -1313,7 +1355,8 @@ class CollaborationMatchingEngine:
         }
     
     async def _identify_trending_opportunities(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Identify trending collaboration opportunities."""
+        """
+Identify trending collaboration opportunities."""
         return [
             {
                 'opportunity_type': 'viral_trend_collaboration',
@@ -1324,7 +1367,8 @@ class CollaborationMatchingEngine:
         ]
     
     async def _analyze_market_changes(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze market changes affecting collaborations."""
+        """
+Analyze market changes affecting collaborations."""
         return {
             'algorithm_updates': ['instagram_reels_boost', 'youtube_shorts_priority'],
             'trending_formats': ['behind_the_scenes', 'collaborative_playlists'],
@@ -1338,7 +1382,8 @@ class CollaborationMatchingEngine:
         trending_opportunities: List[Dict[str, Any]],
         market_insights: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable monitoring recommendations."""
+        """
+Generate actionable monitoring recommendations."""
         recommendations = [
             "Increase focus on trending collaboration formats",
             "Leverage algorithm updates for better content distribution",
@@ -1361,5 +1406,6 @@ class CollaborationMatchingEngine:
 
 # Factory function
 def create_collaboration_matching_engine() -> CollaborationMatchingEngine:
-    """Create and return a collaboration matching engine instance."""
+    """
+Create and return a collaboration matching engine instance."""
     return CollaborationMatchingEngine()

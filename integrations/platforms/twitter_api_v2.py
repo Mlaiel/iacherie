@@ -7,6 +7,7 @@ Handles tweets, users, spaces, lists, and comprehensive analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Tweet:
-    """Twitter tweet information"""
+    """
+Twitter tweet information"""
     tweet_id: str
     text: str
     author_id: str
@@ -40,7 +42,8 @@ class Tweet:
 
 @dataclass
 class TwitterUser:
-    """Twitter user information"""
+    """
+Twitter user information"""
     user_id: str
     username: str
     name: str
@@ -58,7 +61,8 @@ class TwitterUser:
 
 @dataclass
 class TwitterAnalytics:
-    """Twitter analytics data"""
+    """
+Twitter analytics data"""
     user_id: str
     date_range: Dict[str, str]
     tweet_count: int = 0
@@ -70,7 +74,8 @@ class TwitterAnalytics:
 
 
 class TwitterAPIv2:
-    """Twitter API v2 integration"""
+    """
+Twitter API v2 integration"""
     
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
@@ -84,7 +89,8 @@ class TwitterAPIv2:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -97,7 +103,8 @@ class TwitterAPIv2:
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("twitter", endpoint)

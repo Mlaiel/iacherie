@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -24,7 +25,9 @@ from .copyright_registry import CopyrightRegistryManager
 
 
 class RevenueStream(Enum):
-    """Revenue generation streams"""
+    """
+Revenue generation streams"""
+
     CONTENT_SALES = "content_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
@@ -41,6 +44,7 @@ class RevenueStream(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     CRYPTOCURRENCY = "cryptocurrency"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
@@ -53,6 +57,7 @@ class PaymentMethod(Enum):
 
 class SubscriptionTier(Enum):
     """Content subscription tiers"""
+
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -84,7 +89,8 @@ class RevenueTransaction:
 
 @dataclass
 class MonetizationStrategy:
-    """Creator monetization strategy"""
+    """
+Creator monetization strategy"""
     strategy_id: str
     creator_id: str
     strategy_name: str
@@ -102,7 +108,8 @@ class MonetizationStrategy:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics and reporting"""
+    """
+Revenue analytics and reporting"""
     period_start: datetime
     period_end: datetime
     creator_id: str
@@ -121,7 +128,8 @@ class RevenueAnalytics:
 
 @dataclass
 class PayoutConfiguration:
-    """Creator payout configuration"""
+    """
+Creator payout configuration"""
     creator_id: str
     preferred_payment_method: PaymentMethod
     minimum_payout_amount: Decimal
@@ -583,12 +591,14 @@ class MonetizationManager:
         return {key: Decimal(str(value)) for key, value in targets.items()}
     
     def _generate_config_hash(self, config_data: Dict[str, Any]) -> str:
-        """Generate configuration hash"""
+        """
+Generate configuration hash"""
         config_str = json.dumps(config_data, sort_keys=True, default=str)
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     async def _get_creator_balance(self, creator_id: str, currency: str) -> Decimal:
-        """Get creator's available balance"""
+        """
+Get creator's available balance"""
         # Calculate total earnings minus payouts
         total_earnings = sum(
             tx.net_amount for tx in self._revenue_transactions
@@ -602,7 +612,8 @@ class MonetizationManager:
     
     async def _process_crypto_payout(self, creator_id: str, amount: Decimal,
                                    currency: str, wallet_address: str) -> str:
-        """Process cryptocurrency payout"""
+        """
+Process cryptocurrency payout"""
         # Implementation would integrate with crypto payment processor
         return f"crypto_tx_{uuid.uuid4().hex[:16]}"
     
@@ -620,7 +631,8 @@ class MonetizationManager:
         pass
     
     async def _check_automatic_payout(self, creator_id: str):
-        """Check if automatic payout should be triggered"""
+        """
+Check if automatic payout should be triggered"""
         config = self._payout_configurations.get(creator_id)
         if not config or not config.automatic_payouts:
             return
@@ -633,7 +645,8 @@ class MonetizationManager:
     def _generate_monetization_recommendations(self, transactions: List[RevenueTransaction],
                                              revenue_by_stream: Dict[RevenueStream, Decimal],
                                              growth_rate: float) -> List[str]:
-        """Generate AI-powered monetization recommendations"""
+        """
+Generate AI-powered monetization recommendations"""
         recommendations = []
         
         if growth_rate < 0:
@@ -659,7 +672,8 @@ class MonetizationManager:
     
     def _apply_optimization_recommendations(self, strategy: MonetizationStrategy,
                                           recommendations: Dict[str, Any]) -> MonetizationStrategy:
-        """Apply optimization recommendations to strategy"""
+        """
+Apply optimization recommendations to strategy"""
         # Apply AI recommendations to current strategy
         optimized = strategy
         optimized.updated_at = datetime.now(timezone.utc)

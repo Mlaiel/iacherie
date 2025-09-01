@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
@@ -43,7 +44,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize Creator Profile Repository"""
+        """
+Initialize Creator Profile Repository"""
         super().__init__(db_session, CreatorProfile)
         
     def create_creator_profile(self, 
@@ -334,7 +336,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             return {'total_items': 0, 'item_types': {}, 'latest_addition': None}
             
     def _analyze_specializations(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze creator's specializations"""
+        """
+Analyze creator's specializations"""
         try:
             specializations = json.loads(profile.specializations or '[]')
             
@@ -348,7 +351,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             return {'total_specializations': 0, 'specializations_list': [], 'specialization_diversity': 0}
             
     def _analyze_social_links(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze creator's social media presence"""
+        """
+Analyze creator's social media presence"""
         try:
             social_links = json.loads(profile.social_links or '{}')
             
@@ -365,7 +369,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             return {'connected_platforms': 0, 'platforms': [], 'has_professional_links': False}
             
     def _calculate_profile_completeness(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Calculate profile completeness score"""
+        """
+Calculate profile completeness score"""
         score = 0
         total_fields = 10
         completed_fields = []
@@ -451,19 +456,22 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         }
         
     def _count_profile_updates(self, profile_id: int, start_date: datetime) -> int:
-        """Count profile updates in time period"""
+        """
+Count profile updates in time period"""
         # This would require an audit log or update tracking
         # For now, return a placeholder
         return 0
         
     def _count_portfolio_updates(self, profile_id: int, start_date: datetime) -> int:
-        """Count portfolio updates in time period"""
+        """
+Count portfolio updates in time period"""
         # This would require portfolio change tracking
         # For now, return a placeholder
         return 0
         
     def _generate_profile_recommendations(self, profile: CreatorProfile) -> List[str]:
-        """Generate profile improvement recommendations"""
+        """
+Generate profile improvement recommendations"""
         recommendations = []
         
         completeness = self._calculate_profile_completeness(profile)

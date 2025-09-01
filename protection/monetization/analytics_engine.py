@@ -4,6 +4,7 @@ Provides comprehensive insights into revenue, performance, and optimization oppo
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of analytics metrics."""
+    """
+Types of analytics metrics."""
+
     REVENUE = "revenue"
     TRANSACTIONS = "transactions"
     USERS = "users"
@@ -32,6 +35,7 @@ class MetricType(Enum):
 
 class ReportType(Enum):
     """Types of analytics reports."""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -42,6 +46,7 @@ class ReportType(Enum):
 
 class AggregationType(Enum):
     """Data aggregation methods."""
+
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -62,7 +67,8 @@ class MetricData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary."""
+        """
+Convert metric to dictionary."""
         return {
             "metric_id": self.metric_id,
             "metric_type": self.metric_type.value,
@@ -84,21 +90,25 @@ class ReportSection:
     recommendations: List[str] = field(default_factory=list)
     
     def add_metric(self, metric: MetricData) -> None:
-        """Add metric to section."""
+        """
+Add metric to section."""
         self.metrics.append(metric)
     
     def add_insight(self, insight: str) -> None:
-        """Add insight to section."""
+        """
+Add insight to section."""
         self.insights.append(insight)
     
     def add_recommendation(self, recommendation: str) -> None:
-        """Add recommendation to section."""
+        """
+Add recommendation to section."""
         self.recommendations.append(recommendation)
 
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
+    """
+Comprehensive analytics report."""
     report_id: str
     title: str
     report_type: ReportType
@@ -109,11 +119,13 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
     
     def add_section(self, section: ReportSection) -> None:
-        """Add section to report."""
+        """
+Add section to report."""
         self.sections.append(section)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary."""
+        """
+Convert report to dictionary."""
         return {
             "report_id": self.report_id,
             "title": self.title,
@@ -146,7 +158,8 @@ class MetricCollector(ABC):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect metrics for specified period."""
+        """
+Collect metrics for specified period."""
         # Abstract method that must be implemented by subclasses
         # This method should return a list of MetricData objects
         # representing the collected metrics for the specified period
@@ -154,7 +167,8 @@ class MetricCollector(ABC):
 
 
 class RevenueMetricCollector(MetricCollector):
-    """Revenue metrics collector."""
+    """
+Revenue metrics collector."""
     
     def __init__(self, revenue_engine):
         self.revenue_engine = revenue_engine
@@ -165,7 +179,8 @@ class RevenueMetricCollector(MetricCollector):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect revenue metrics."""
+        """
+Collect revenue metrics."""
         if metric_type != MetricType.REVENUE:
             return []
         
@@ -212,7 +227,8 @@ class TransactionMetricCollector(MetricCollector):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect transaction metrics."""
+        """
+Collect transaction metrics."""
         if metric_type != MetricType.TRANSACTIONS:
             return []
         
@@ -258,7 +274,8 @@ class ConversionMetricCollector(MetricCollector):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect conversion metrics."""
+        """
+Collect conversion metrics."""
         if metric_type != MetricType.CONVERSION:
             return []
         
@@ -290,7 +307,8 @@ class AnalyticsEngine:
         self.is_initialized = False
     
     async def initialize(self, revenue_engine, subscription_manager, commission_manager) -> bool:
-        """Initialize analytics engine with data sources."""
+        """
+Initialize analytics engine with data sources."""
         try:
             # Initialize metric collectors
             self.metric_collectors[MetricType.REVENUE] = RevenueMetricCollector(revenue_engine)

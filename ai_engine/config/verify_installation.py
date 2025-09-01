@@ -2,8 +2,9 @@
 """Script de vérification des dépendances et configuration du module IA-Influencer-Agent
 
 Auteur: Fahed Mlaiel (mlaiel@live.de)
-Copyright © 2025 Fahed Mlaiel - Tous droits réservés
+Copyright (c) 2025 Fahed Mlaiel - Tous droits réservés
 """
+
 import sys
 import warnings
 import importlib
@@ -12,7 +13,8 @@ import importlib
 warnings.filterwarnings('ignore')
 
 def test_direct_config_imports():
-    """Test direct des classes de configuration sans passer par les modules problématiques"""
+    """
+Test direct des classes de configuration sans passer par les modules problématiques"""
     print("🔍 Test direct des configurations principales...")
     
     try:
@@ -75,7 +77,7 @@ def main():
     print("🚀 VÉRIFICATION DU MODULE IA-INFLUENCER-AGENT CONFIG")
     print("=" * 70)
     print("Auteur: Fahed Mlaiel (mlaiel@live.de)")
-    print("Copyright © 2025 - Tous droits réservés")
+    print("Copyright (c) 2025 - Tous droits réservés")
     print("=" * 70)
     
     # Test 1: Dépendances essentielles

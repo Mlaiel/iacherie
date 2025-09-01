@@ -16,6 +16,7 @@ Features:
 - Video quality assessment and improvement
 - Batch processing for large video collections
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -71,7 +72,8 @@ class VideoMetadata:
 
 @dataclass
 class VideoFeatures:
-    """Video feature extraction results"""
+    """
+Video feature extraction results"""
     motion_vectors: np.ndarray
     optical_flow: np.ndarray
     scene_changes: List[float]
@@ -84,7 +86,8 @@ class VideoFeatures:
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data"""
+    """
+Video fingerprint data"""
     perceptual_hash: Optional[str] = None
     temporal_hash: Optional[str] = None
     color_hash: Optional[str] = None
@@ -93,7 +96,8 @@ class VideoFingerprint:
     combined_hash: Optional[str] = None
 
 class VideoProcessor:
-    """Professional video processing engine"""
+    """
+Professional video processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -125,7 +129,8 @@ class VideoProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize video processing engines"""
+        """
+Initialize video processing engines"""
         try:
             # Ensure temp directory exists
             os.makedirs(self.config['temp_dir'], exist_ok=True)
@@ -861,7 +866,8 @@ class VideoProcessor:
         ]
     
     def cleanup(self):
-        """Cleanup temporary files and resources"""
+        """
+Cleanup temporary files and resources"""
         try:
             # Clean up temporary directory
             temp_dir = self.config['temp_dir']

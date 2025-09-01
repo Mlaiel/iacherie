@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class StreamingProtocol(Enum):
-    """Supported streaming protocols"""
+    """
+Supported streaming protocols"""
+
     RTMP = "rtmp"
     RTMPS = "rtmps"
     WEBRTC = "webrtc"
@@ -44,6 +47,7 @@ class StreamingProtocol(Enum):
 
 class AudioCodec(Enum):
     """Real-time audio codecs"""
+
     OPUS = "opus"
     AAC = "aac"
     MP3 = "mp3"
@@ -56,6 +60,7 @@ class AudioCodec(Enum):
 
 class LatencyProfile(Enum):
     """Latency optimization profiles"""
+
     ULTRA_LOW_LATENCY = "ultra_low_latency"      # <20ms
     LOW_LATENCY = "low_latency"                  # 20-50ms
     STANDARD_LATENCY = "standard_latency"        # 50-150ms
@@ -65,6 +70,7 @@ class LatencyProfile(Enum):
 
 class InteractionMode(Enum):
     """Real-time interaction modes"""
+
     LIVE_CHAT = "live_chat"
     VOICE_CHAT = "voice_chat"
     COLLABORATIVE_MIXING = "collaborative_mixing"
@@ -77,6 +83,7 @@ class InteractionMode(Enum):
 
 class BroadcastQuality(Enum):
     """Broadcasting quality levels"""
+
     MOBILE_OPTIMIZED = "mobile_optimized"
     STANDARD_DEFINITION = "standard_definition"
     HIGH_DEFINITION = "high_definition"

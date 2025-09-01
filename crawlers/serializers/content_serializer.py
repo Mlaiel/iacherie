@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, BinaryIO
 from datetime import datetime
@@ -27,7 +28,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types."""
+    """
+Supported content types."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -37,6 +40,7 @@ class ContentType(Enum):
 
 class AudioFormat(Enum):
     """Supported audio formats."""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -46,6 +50,7 @@ class AudioFormat(Enum):
 
 class VideoFormat(Enum):
     """Supported video formats."""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -56,6 +61,7 @@ class VideoFormat(Enum):
 
 class ImageFormat(Enum):
     """Supported image formats."""
+
     JPEG = "jpeg"
     PNG = "png"
     GIF = "gif"
@@ -192,7 +198,8 @@ class ContentSerializer:
     """
     
     def __init__(self):
-        """Initialize content serializer."""
+        """
+Initialize content serializer."""
         self.supported_formats = {
             ContentType.AUDIO: [f.value for f in AudioFormat],
             ContentType.VIDEO: [f.value for f in VideoFormat],
@@ -435,11 +442,13 @@ class ContentSerializer:
         }
     
     def _deserialize_audio_metadata(self, data: Dict[str, Any]) -> AudioMetadata:
-        """Deserialize audio metadata."""
+        """
+Deserialize audio metadata."""
         return AudioMetadata(**data)
     
     def _serialize_video_metadata(self, metadata: VideoMetadata) -> Dict[str, Any]:
-        """Serialize video metadata."""
+        """
+Serialize video metadata."""
         return {
             'duration': metadata.duration,
             'width': metadata.width,
@@ -452,11 +461,13 @@ class ContentSerializer:
         }
     
     def _deserialize_video_metadata(self, data: Dict[str, Any]) -> VideoMetadata:
-        """Deserialize video metadata."""
+        """
+Deserialize video metadata."""
         return VideoMetadata(**data)
     
     def _serialize_image_metadata(self, metadata: ImageMetadata) -> Dict[str, Any]:
-        """Serialize image metadata."""
+        """
+Serialize image metadata."""
         data = {
             'width': metadata.width,
             'height': metadata.height,
@@ -473,14 +484,16 @@ class ContentSerializer:
         return data
     
     def _deserialize_image_metadata(self, data: Dict[str, Any]) -> ImageMetadata:
-        """Deserialize image metadata."""
+        """
+Deserialize image metadata."""
         if 'taken_at' in data and isinstance(data['taken_at'], str):
             data['taken_at'] = datetime.fromisoformat(data['taken_at'])
         
         return ImageMetadata(**data)
     
     def _serialize_text_metadata(self, metadata: TextMetadata) -> Dict[str, Any]:
-        """Serialize text metadata."""
+        """
+Serialize text metadata."""
         return {
             'word_count': metadata.word_count,
             'character_count': metadata.character_count,
@@ -491,11 +504,13 @@ class ContentSerializer:
         }
     
     def _deserialize_text_metadata(self, data: Dict[str, Any]) -> TextMetadata:
-        """Deserialize text metadata."""
+        """
+Deserialize text metadata."""
         return TextMetadata(**data)
     
     def calculate_content_fingerprint(self, content_data: ContentData) -> str:
-        """Calculate unique fingerprint for content."""
+        """
+Calculate unique fingerprint for content."""
         try:
             # Create hash from key content properties
             hash_input = f"{content_data.content_id}_{content_data.file_size}_{content_data.mime_type}"

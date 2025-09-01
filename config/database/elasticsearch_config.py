@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class ElasticsearchEnvironment(Enum):
-    """Elasticsearch environment configurations"""
+    """
+Elasticsearch environment configurations"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -40,6 +43,7 @@ class ElasticsearchEnvironment(Enum):
 
 class ElasticsearchClusterType(Enum):
     """Elasticsearch cluster deployment types"""
+
     SINGLE_NODE = "single_node"
     CLUSTER = "cluster"
     CLOUD = "cloud"
@@ -47,6 +51,7 @@ class ElasticsearchClusterType(Enum):
 
 class ElasticsearchWorkloadType(Enum):
     """Elasticsearch workload optimization types"""
+
     SEARCH = "search"
     ANALYTICS = "analytics"
     LOGGING = "logging"
@@ -84,7 +89,8 @@ class ElasticsearchConnectionConfig:
 
 @dataclass
 class ElasticsearchIndexConfig:
-    """Elasticsearch index configuration templates"""
+    """
+Elasticsearch index configuration templates"""
     content_protection: Dict[str, Any] = field(default_factory=lambda: {
         "settings": {
             "number_of_shards": 3,
@@ -219,7 +225,8 @@ class ElasticsearchConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup Elasticsearch-specific logging"""
+        """
+Setup Elasticsearch-specific logging"""
         self.logger = logging.getLogger(f"elasticsearch.{self.environment.value}.{self.workload_type.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
@@ -280,7 +287,8 @@ class ElasticsearchConfig:
         return config
 
     def _get_performance_config(self) -> ElasticsearchPerformanceConfig:
-        """Get performance configuration based on workload type"""
+        """
+Get performance configuration based on workload type"""
         workload_configs = {
             ElasticsearchWorkloadType.SEARCH: ElasticsearchPerformanceConfig(
                 bulk_size=500,

@@ -16,6 +16,7 @@ and will result in legal action. This includes but is not limited to:
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Regulatory frameworks for compliance checking"""
+    """
+Regulatory frameworks for compliance checking"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -52,6 +55,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceLevel(IntEnum):
     """Compliance requirement levels"""
+
     MINIMAL = 1
     BASIC = 2
     STANDARD = 3
@@ -60,7 +64,9 @@ class ComplianceLevel(IntEnum):
 
 
 class ViolationType(Enum):
-    """Types of compliance violations"""
+    """
+Types of compliance violations"""
+
     DATA_PRIVACY = "data_privacy"
     CONSENT_MISSING = "consent_missing"
     RETENTION_VIOLATION = "retention_violation"
@@ -75,6 +81,7 @@ class ViolationType(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -119,7 +126,8 @@ class ComplianceViolation:
 
 @dataclass
 class RegulatoryFramework:
-    """Regulatory framework configuration"""
+    """
+Regulatory framework configuration"""
     framework_id: str
     name: str
     jurisdiction: str
@@ -133,7 +141,8 @@ class RegulatoryFramework:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
+    """
+Compliance assessment result"""
     assessment_id: str
     framework: ComplianceFramework
     assessed_at: datetime
@@ -493,7 +502,8 @@ class ComplianceChecker:
             return ComplianceStatus.NON_COMPLIANT
     
     def _generate_recommendations(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate compliance recommendations"""
+        """
+Generate compliance recommendations"""
         recommendations = []
         
         # Group violations by type

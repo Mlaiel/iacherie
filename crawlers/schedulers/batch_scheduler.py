@@ -27,6 +27,7 @@ Creator content upload batch → AI fingerprinting batch → Protection monitori
 Multi-platform distribution batch → Revenue analytics batch → Performance optimization → 
 Creator satisfaction → Business growth → Market leadership
 """
+
 import asyncio
 import logging
 import time
@@ -302,7 +303,8 @@ class IntelligentBatchOptimizer:
         
     async def optimize_batch_size(self, job_type: str, estimated_items: int, 
                                  available_resources: Dict[str, Any]) -> int:
-        """Optimize batch size based on job type and resources."""
+        """
+Optimize batch size based on job type and resources."""
         try:
             # Default batch sizes by job type
             default_sizes = {
@@ -489,6 +491,7 @@ class IntelligentBatchOptimizer:
 
 class BatchType(Enum):
     """Types of batch processing operations."""
+
     CONTENT_FINGERPRINTING = "content_fingerprinting"
     PROTECTION_MONITORING = "protection_monitoring"
     PLATFORM_CRAWLING = "platform_crawling"
@@ -503,6 +506,7 @@ class BatchType(Enum):
 
 class BatchPriority(Enum):
     """Batch processing priority levels."""
+
     CRITICAL = "critical"          # Real-time protection, urgent processing
     HIGH = "high"                  # Revenue-generating content, trending content
     NORMAL = "normal"              # Regular content processing
@@ -512,6 +516,7 @@ class BatchPriority(Enum):
 
 class BatchStatus(Enum):
     """Batch execution status."""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -524,6 +529,7 @@ class BatchStatus(Enum):
 
 class ProcessingStrategy(Enum):
     """Batch processing strategies."""
+
     SEQUENTIAL = "sequential"         # One by one processing
     PARALLEL = "parallel"             # Parallel processing within batch
     DISTRIBUTED = "distributed"      # Multi-node distributed processing
@@ -534,6 +540,7 @@ class ProcessingStrategy(Enum):
 
 class ResourceMode(Enum):
     """Resource allocation modes for batch processing."""
+
     LOW_IMPACT = "low_impact"         # Minimal resource usage
     BALANCED = "balanced"             # Balanced resource utilization
     HIGH_PERFORMANCE = "high_performance"  # Maximum performance
@@ -569,7 +576,8 @@ class BatchConfiguration:
 
 @dataclass
 class BatchItem:
-    """Individual item within a batch."""
+    """
+Individual item within a batch."""
     item_id: str
     item_type: str
     data: Dict[str, Any]
@@ -586,7 +594,8 @@ class BatchItem:
 
 @dataclass
 class BatchRequest:
-    """Batch processing request."""
+    """
+Batch processing request."""
     batch_id: str
     batch_type: BatchType
     items: List[BatchItem]
@@ -623,7 +632,8 @@ class BatchProgress:
 
 @dataclass
 class BatchResult:
-    """Batch processing result."""
+    """
+Batch processing result."""
     batch_id: str
     status: BatchStatus
     total_items: int
@@ -647,7 +657,8 @@ class BatchResult:
 
 @dataclass
 class BatchMetrics:
-    """Batch scheduler performance metrics."""
+    """
+Batch scheduler performance metrics."""
     total_batches_processed: int = 0
     successful_batches: int = 0
     failed_batches: int = 0
@@ -664,7 +675,8 @@ class BatchMetrics:
 
 
 class BatchProcessor(ABC):
-    """Abstract base class for batch processors."""
+    """
+Abstract base class for batch processors."""
     
     @abstractmethod
     async def process_item(
@@ -672,29 +684,34 @@ class BatchProcessor(ABC):
         item: BatchItem,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process a single batch item."""
+        """
+Process a single batch item."""
         pass
     
     @abstractmethod
     async def validate_item(self, item: BatchItem) -> bool:
-        """Validate if item can be processed."""
+        """
+Validate if item can be processed."""
         pass
     
     @abstractmethod
     async def estimate_processing_time(self, item: BatchItem) -> int:
-        """Estimate processing time for item in seconds."""
+        """
+Estimate processing time for item in seconds."""
         pass
 
 
 class ContentFingerprintingProcessor(BatchProcessor):
-    """Processor for content fingerprinting batch operations."""
+    """
+Processor for content fingerprinting batch operations."""
     
     async def process_item(
         self,
         item: BatchItem,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process content fingerprinting for an item."""
+        """
+Process content fingerprinting for an item."""
         try:
             content_data = item.data
             
@@ -737,7 +754,8 @@ class ContentFingerprintingProcessor(BatchProcessor):
         return all(field in item.data for field in required_fields)
     
     async def estimate_processing_time(self, item: BatchItem) -> int:
-        """Estimate fingerprinting processing time."""
+        """
+Estimate fingerprinting processing time."""
         content_type = item.data.get('content_type', 'unknown')
         
         time_estimates = {
@@ -751,14 +769,16 @@ class ContentFingerprintingProcessor(BatchProcessor):
 
 
 class ProtectionMonitoringProcessor(BatchProcessor):
-    """Processor for protection monitoring batch operations."""
+    """
+Processor for protection monitoring batch operations."""
     
     async def process_item(
         self,
         item: BatchItem,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process protection monitoring for an item."""
+        """
+Process protection monitoring for an item."""
         try:
             monitoring_data = item.data
             
@@ -796,12 +816,14 @@ class ProtectionMonitoringProcessor(BatchProcessor):
             }
     
     async def validate_item(self, item: BatchItem) -> bool:
-        """Validate protection monitoring item."""
+        """
+Validate protection monitoring item."""
         required_fields = ['content_id', 'fingerprint_hash']
         return all(field in item.data for field in required_fields)
     
     async def estimate_processing_time(self, item: BatchItem) -> int:
-        """Estimate protection monitoring processing time."""
+        """
+Estimate protection monitoring processing time."""
         return 10  # Basic monitoring takes ~10 seconds
 
 
@@ -814,7 +836,8 @@ class BatchScheduler:
     """
     
     def __init__(self, configuration: Optional[BatchConfiguration] = None):
-        """Initialize batch scheduler."""
+        """
+Initialize batch scheduler."""
         self.config = configuration or BatchConfiguration()
         self.is_running = False
         
@@ -1003,7 +1026,8 @@ class BatchScheduler:
             return self.metrics
     
     async def _processing_loop(self) -> None:
-        """Main batch processing loop."""
+        """
+Main batch processing loop."""
         while self.is_running:
             try:
                 # Check if we can process more batches
@@ -1121,7 +1145,8 @@ class BatchScheduler:
         batch_request: BatchRequest,
         processor: BatchProcessor
     ) -> BatchResult:
-        """Process batch items in parallel."""
+        """
+Process batch items in parallel."""
         batch_id = batch_request.batch_id
         items = batch_request.items
         config = batch_request.configuration
@@ -1275,7 +1300,8 @@ class BatchScheduler:
         batch_request: BatchRequest,
         processor: BatchProcessor
     ) -> BatchResult:
-        """Process batch items using pipeline strategy."""
+        """
+Process batch items using pipeline strategy."""
         # Implementation for pipeline processing
         # This would involve multiple stages of processing
         return await self._process_parallel(batch_request, processor)
@@ -1285,7 +1311,8 @@ class BatchScheduler:
         batch_request: BatchRequest,
         processor: BatchProcessor
     ) -> BatchResult:
-        """Process batch items using adaptive strategy selection."""
+        """
+Process batch items using adaptive strategy selection."""
         # Analyze batch characteristics and choose optimal strategy
         items = batch_request.items
         config = batch_request.configuration
@@ -1307,7 +1334,8 @@ class BatchScheduler:
         semaphore: asyncio.Semaphore,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process a single item with semaphore control."""
+        """
+Process a single item with semaphore control."""
         async with semaphore:
             try:
                 # Validate item
@@ -1330,7 +1358,8 @@ class BatchScheduler:
                 }
     
     async def _get_next_batch(self) -> Optional[BatchRequest]:
-        """Get the next batch to process based on priority."""
+        """
+Get the next batch to process based on priority."""
         if not self.pending_batches:
             return None
         
@@ -1343,7 +1372,8 @@ class BatchScheduler:
         return sorted_batches[0] if sorted_batches else None
     
     def _get_priority_weight(self, priority: BatchPriority) -> int:
-        """Get numerical weight for priority sorting."""
+        """
+Get numerical weight for priority sorting."""
         weights = {
             BatchPriority.CRITICAL: 0,
             BatchPriority.HIGH: 1,
@@ -1354,7 +1384,8 @@ class BatchScheduler:
         return weights.get(priority, 2)
     
     async def _validate_batch_request(self, batch_request: BatchRequest) -> bool:
-        """Validate batch request."""
+        """
+Validate batch request."""
         if not batch_request.batch_id:
             return False
         
@@ -1367,7 +1398,8 @@ class BatchScheduler:
         return True
     
     async def _optimize_batch_configuration(self, batch_request: BatchRequest) -> None:
-        """Optimize batch configuration based on batch characteristics."""
+        """
+Optimize batch configuration based on batch characteristics."""
         config = batch_request.configuration
         items = batch_request.items
         
@@ -1387,7 +1419,8 @@ class BatchScheduler:
         result: BatchResult,
         batch_request: BatchRequest
     ) -> None:
-        """Calculate business impact of batch processing."""
+        """
+Calculate business impact of batch processing."""
         batch_type = batch_request.batch_type
         
         # Calculate different business impacts based on batch type
@@ -1409,7 +1442,8 @@ class BatchScheduler:
         result.business_impact['cost_efficiency'] = result.throughput * result.success_rate
     
     async def _update_batch_metrics(self, result: BatchResult) -> None:
-        """Update overall batch scheduler metrics."""
+        """
+Update overall batch scheduler metrics."""
         async with self.metrics_lock:
             self.metrics.total_batches_processed += 1
             
@@ -1455,7 +1489,8 @@ class BatchScheduler:
             self.metrics.last_updated = datetime.utcnow()
     
     async def _monitoring_loop(self) -> None:
-        """Monitoring loop for batch processing."""
+        """
+Monitoring loop for batch processing."""
         while self.is_running:
             try:
                 # Monitor resource usage
@@ -1559,7 +1594,8 @@ class BatchScheduler:
             return False
     
     async def stop(self) -> None:
-        """Stop the batch scheduler."""
+        """
+Stop the batch scheduler."""
         logger.info("Stopping batch scheduler...")
         
         self.is_running = False

@@ -8,7 +8,7 @@ Technologies: ML-based Scaling, Predictive Analytics, Resource Optimization
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Load monitoring → Trend analysis → Resource prediction → 
 Scaling decision → Worker allocation → Performance validation → Optimization
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScalingDirection(Enum):
-    """Scaling directions"""
+    """
+Scaling directions"""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     MAINTAIN = "maintain"
@@ -47,6 +50,7 @@ class ScalingDirection(Enum):
 
 class ScalingReason(Enum):
     """Reasons for scaling decisions"""
+
     HIGH_LOAD = "high_load"
     LOW_LOAD = "low_load"
     QUEUE_BUILDUP = "queue_buildup"
@@ -59,6 +63,7 @@ class ScalingReason(Enum):
 
 class ScalingTrigger(Enum):
     """Scaling trigger types"""
+
     THRESHOLD = "threshold"
     TREND = "trend"
     PREDICTIVE = "predictive"
@@ -83,7 +88,8 @@ class ScalingRule:
 
 @dataclass
 class ScalingAction:
-    """Scaling action definition"""
+    """
+Scaling action definition"""
     should_scale: bool
     direction: ScalingDirection
     target_workers: int
@@ -97,7 +103,8 @@ class ScalingAction:
 
 @dataclass
 class ScalingHistory:
-    """Scaling action history"""
+    """
+Scaling action history"""
     timestamp: datetime
     action: ScalingAction
     previous_workers: int
@@ -109,7 +116,8 @@ class ScalingHistory:
 
 @dataclass
 class LoadPrediction:
-    """Load prediction result"""
+    """
+Load prediction result"""
     predicted_load: float
     confidence: float
     time_horizon: int  # seconds
@@ -171,7 +179,8 @@ class WorkerScalingManager:
         self._initialize_default_rules()
 
     async def initialize(self) -> None:
-        """Initialize the scaling manager"""
+        """
+Initialize the scaling manager"""
         try:
             logger.info("🚀 Initializing scaling manager")
             

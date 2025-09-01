@@ -4,6 +4,7 @@ Complete implementation of GDPR, CCPA, and other global compliance standards.
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ COPYRIGHT WARNING: Proprietary code - unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceStandard(Enum):
-    """Global compliance standards supported."""
+    """
+Global compliance standards supported."""
+
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"  # Personal Information Protection and Electronic Documents Act (Canada)
@@ -43,6 +46,7 @@ class ComplianceStandard(Enum):
 
 class DataProcessingLawfulness(Enum):
     """GDPR Article 6 lawful bases for processing."""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -53,6 +57,7 @@ class DataProcessingLawfulness(Enum):
 
 class DataSubjectRights(Enum):
     """Data subject rights under various regulations."""
+
     ACCESS = "access"  # Right to access personal data
     RECTIFICATION = "rectification"  # Right to correct inaccurate data
     ERASURE = "erasure"  # Right to be forgotten
@@ -105,7 +110,8 @@ class DataProcessingRecord:
 
 @dataclass
 class DataSubjectRequest:
-    """Data subject rights request handling."""
+    """
+Data subject rights request handling."""
     request_id: str
     request_type: DataSubjectRights
     data_subject_id: str
@@ -132,7 +138,8 @@ class EnterpriseComplianceEngine:
         self._setup_monitoring()
     
     def _initialize_compliance_requirements(self) -> Dict[str, ComplianceRequirement]:
-        """Initialize all compliance requirements for supported standards."""
+        """
+Initialize all compliance requirements for supported standards."""
         requirements = {}
         
         # GDPR Requirements
@@ -330,7 +337,8 @@ class EnterpriseComplianceEngine:
         data_categories: List[str],
         **kwargs
     ) -> str:
-        """Create a new data processing record (GDPR Article 30)."""
+        """
+Create a new data processing record (GDPR Article 30)."""
         
         record_id = str(uuid.uuid4())
         
@@ -444,7 +452,8 @@ class EnterpriseComplianceEngine:
         pass
     
     async def conduct_compliance_audit(self, standard: ComplianceStandard) -> Dict[str, Any]:
-        """Conduct comprehensive compliance audit for specific standard."""
+        """
+Conduct comprehensive compliance audit for specific standard."""
         
         relevant_requirements = [
             req for req in self.compliance_requirements.values()

@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import time
 import psutil
 import threading
@@ -52,7 +53,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Performance metrics types"""
+    """
+Performance metrics types"""
+
     EXECUTION_TIME = "execution_time"
     MEMORY_USAGE = "memory_usage"
     CPU_USAGE = "cpu_usage"
@@ -64,6 +67,7 @@ class PerformanceMetric(Enum):
 
 class OptimizationStrategy(Enum):
     """Optimization strategy types"""
+
     BATCH_PROCESSING = "batch_processing"
     PARALLEL_EXECUTION = "parallel_execution"
     MEMORY_OPTIMIZATION = "memory_optimization"
@@ -80,7 +84,8 @@ class PerformanceStats:
     timestamps: deque = field(default_factory=lambda: deque(maxlen=1000))
     
     def add_measurement(self, value: float, timestamp: Optional[datetime] = None):
-        """Add a performance measurement"""
+        """
+Add a performance measurement"""
         if timestamp is None:
             timestamp = datetime.now()
         
@@ -88,7 +93,8 @@ class PerformanceStats:
         self.timestamps.append(timestamp)
     
     def get_average(self, time_window: Optional[timedelta] = None) -> float:
-        """Get average value within time window"""
+        """
+Get average value within time window"""
         if not self.values:
             return 0.0
         
@@ -104,7 +110,8 @@ class PerformanceStats:
         return statistics.mean(filtered_values) if filtered_values else 0.0
     
     def get_percentile(self, percentile: float, time_window: Optional[timedelta] = None) -> float:
-        """Get percentile value within time window"""
+        """
+Get percentile value within time window"""
         if not self.values:
             return 0.0
         
@@ -124,7 +131,8 @@ class PerformanceStats:
 
 @dataclass
 class ResourceUsage:
-    """Resource usage monitoring"""
+    """
+Resource usage monitoring"""
     cpu_percent: float = 0.0
     memory_percent: float = 0.0
     memory_used_gb: float = 0.0
@@ -137,7 +145,8 @@ class ResourceUsage:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class PerformanceMonitor:
-    """Real-time performance monitoring system"""
+    """
+Real-time performance monitoring system"""
     
     def __init__(self, monitoring_interval: float = 1.0):
         self.monitoring_interval = monitoring_interval
@@ -156,7 +165,8 @@ class PerformanceMonitor:
         self.logger = logging.getLogger(__name__)
     
     def start_monitoring(self):
-        """Start performance monitoring"""
+        """
+Start performance monitoring"""
         if self._monitoring_active:
             return
         
@@ -258,7 +268,8 @@ class PerformanceMonitor:
             self.stats[PerformanceMetric.THROUGHPUT].add_measurement(throughput)
     
     def record_error(self, operation_name: str, error_type: str):
-        """Record an error occurrence"""
+        """
+Record an error occurrence"""
         with self._lock:
             self.error_counters[f"{operation_name}:{error_type}"] += 1
             
@@ -377,7 +388,8 @@ class PerformanceOptimizer:
         self.logger = logging.getLogger(__name__)
     
     def optimize_performance(self, force_optimization: bool = False) -> Dict[str, Any]:
-        """Perform intelligent performance optimization"""
+        """
+Perform intelligent performance optimization"""
         try:
             report = self.monitor.get_performance_report()
             optimizations_applied = []
@@ -517,7 +529,8 @@ class BatchProcessor:
                      items: List[Any], 
                      processor_func: Callable[[Any], Any],
                      progress_callback: Optional[Callable[[int, int], None]] = None) -> List[Any]:
-        """Process items in optimized batches"""
+        """
+Process items in optimized batches"""
         try:
             results = []
             total_items = len(items)
@@ -605,13 +618,16 @@ def start_performance_monitoring():
     performance_monitor.start_monitoring()
 
 def stop_performance_monitoring():
-    """Stop global performance monitoring"""
+    """
+Stop global performance monitoring"""
     performance_monitor.stop_monitoring()
 
 def get_performance_report() -> Dict[str, Any]:
-    """Get global performance report"""
+    """
+Get global performance report"""
     return performance_monitor.get_performance_report()
 
 def optimize_system_performance(force: bool = False) -> Dict[str, Any]:
-    """Optimize system performance"""
+    """
+Optimize system performance"""
     return performance_optimizer.optimize_performance(force)

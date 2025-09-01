@@ -69,6 +69,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import warnings
@@ -208,6 +209,7 @@ class AggregationType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for aggregation."""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -219,6 +221,7 @@ class TimeGranularity(Enum):
 
 class AggregationStatus(Enum):
     """Aggregation status enumeration."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -306,7 +309,8 @@ class DataAggregator(ABC):
         pass
     
     async def extract_data(self, session: AsyncSession) -> pd.DataFrame:
-        """Extract data from source tables."""
+        """
+Extract data from source tables."""
         try:
             start_time = datetime.utcnow()
             
@@ -623,7 +627,8 @@ class PerformanceAggregator(DataAggregator):
     """
     
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate performance data."""
+        """
+Aggregate performance data."""
         try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
@@ -825,7 +830,8 @@ class ContentAggregator(DataAggregator):
     """
     
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate content data."""
+        """
+Aggregate content data."""
         try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
@@ -1017,7 +1023,8 @@ class RevenueAggregator(DataAggregator):
     """
     
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate revenue data."""
+        """
+Aggregate revenue data."""
         try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
@@ -1202,7 +1209,8 @@ class MetricsAggregator(DataAggregator):
     """
     
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate general metrics."""
+        """
+Aggregate general metrics."""
         try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
@@ -1297,7 +1305,8 @@ class RealTimeAggregator(DataAggregator):
         self._real_time_cache = {}
     
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate real-time streaming data."""
+        """
+Aggregate real-time streaming data."""
         try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
@@ -1822,7 +1831,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
     """
     
     def __init__(self, configuration: Optional[AggregatorConfiguration] = None):
-        """Initialize the multi-platform crawler aggregator."""
+        """
+Initialize the multi-platform crawler aggregator."""
         super().__init__(configuration)
         self.logger = logging.getLogger(__name__ + ".multiplatform")
         
@@ -2014,7 +2024,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         platform_data: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze performance across platforms to identify patterns."""
+        """
+Analyze performance across platforms to identify patterns."""
         return {
             'best_performing_platform': '',
             'performance_trends': {},
@@ -2027,7 +2038,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         content_type: str,
         time_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Aggregate discovery metrics for a specific content type."""
+        """
+Aggregate discovery metrics for a specific content type."""
         return {
             'content_type': content_type,
             'discovered_count': 0,
@@ -2040,7 +2052,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         content_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze content protection requirements using AI insights."""
+        """
+Analyze content protection requirements using AI insights."""
         return {
             'high_risk_content': [],
             'protection_recommendations': [],
@@ -2051,7 +2064,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         content_metrics: Dict[str, Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate SEO optimization recommendations."""
+        """
+Generate SEO optimization recommendations."""
         return [
             {
                 'content_type': '',
@@ -2065,7 +2079,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         creator_profiles: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate compatibility matrix between creators."""
+        """
+Calculate compatibility matrix between creators."""
         return {
             'compatibility_scores': {},
             'synergy_factors': {},
@@ -2077,7 +2092,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         session: AsyncSession,
         time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
-        """Identify trending collaboration opportunities."""
+        """
+Identify trending collaboration opportunities."""
         return [
             {
                 'collaboration_type': '',
@@ -2092,7 +2108,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         creator_profiles: List[Dict[str, Any]],
         collaboration_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Project potential reach and engagement for collaborations."""
+        """
+Project potential reach and engagement for collaborations."""
         return {
             'projected_reach': 0,
             'engagement_estimate': 0.0,
@@ -2105,7 +2122,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         compatibility_matrix: Dict[str, Any],
         trending_opportunities: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered collaboration recommendations."""
+        """
+Generate AI-powered collaboration recommendations."""
         return [
             {
                 'creator_pair': [],
@@ -2127,7 +2145,8 @@ class ContentProtectionAggregator(DataAggregator):
     """
     
     def __init__(self, configuration: Optional[AggregatorConfiguration] = None):
-        """Initialize the content protection aggregator."""
+        """
+Initialize the content protection aggregator."""
         super().__init__(configuration)
         self.logger = logging.getLogger(__name__ + ".protection")
         
@@ -2209,7 +2228,8 @@ class ContentProtectionAggregator(DataAggregator):
         self,
         fingerprinting_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate overall protection effectiveness."""
+        """
+Calculate overall protection effectiveness."""
         return {
             'overall_accuracy': 0.0,
             'protection_coverage': 0.0,
@@ -2220,7 +2240,8 @@ class ContentProtectionAggregator(DataAggregator):
         self,
         fingerprinting_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze threat patterns and violation trends."""
+        """
+Analyze threat patterns and violation trends."""
         return {
             'common_violation_types': [],
             'threat_evolution': {},

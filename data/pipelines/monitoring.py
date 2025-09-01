@@ -12,13 +12,14 @@ Team Specialties:
 - Database Administrator: Database performance monitoring
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This monitoring technology and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, or reproduction without explicit written permission
 will result in immediate legal prosecution under international copyright laws.
 """
+
 import asyncio
 import logging
 import time
@@ -61,7 +62,9 @@ settings = get_settings()
 
 
 class HealthStatus(str, Enum):
-    """Health check status levels"""
+    """
+Health check status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -71,6 +74,7 @@ class HealthStatus(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -80,6 +84,7 @@ class AlertSeverity(str, Enum):
 
 class MetricType(str, Enum):
     """Types of metrics being monitored"""
+
     PERFORMANCE = "performance"
     AVAILABILITY = "availability"
     ERROR_RATE = "error_rate"
@@ -92,6 +97,7 @@ class MetricType(str, Enum):
 
 class PipelineComponent(str, Enum):
     """Pipeline components being monitored"""
+
     ANALYTICS = "analytics"
     PROTECTION = "protection"
     MONETIZATION = "monetization"
@@ -119,7 +125,8 @@ class HealthCheck:
 
 @dataclass
 class Alert:
-    """Alert data structure"""
+    """
+Alert data structure"""
     id: str
     severity: AlertSeverity
     component: str
@@ -133,7 +140,8 @@ class Alert:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics data structure"""
+    """
+Performance metrics data structure"""
     component: str
     timestamp: datetime
     cpu_usage: float
@@ -810,33 +818,39 @@ class PipelineMonitor:
         pass
 
     async def _check_collaboration_health(self) -> HealthCheck:
-        """Check collaboration pipeline health"""
+        """
+Check collaboration pipeline health"""
         # Implementation for collaboration health check
         pass
 
     async def _check_distribution_health(self) -> HealthCheck:
-        """Check distribution pipeline health"""
+        """
+Check distribution pipeline health"""
         # Implementation for distribution health check
         pass
 
     async def _check_storage_health(self) -> HealthCheck:
-        """Check storage system health"""
+        """
+Check storage system health"""
         # Implementation for storage health check
         pass
 
     async def _check_api_gateway_health(self) -> HealthCheck:
-        """Check API gateway health"""
+        """
+Check API gateway health"""
         # Implementation for API gateway health check
         pass
 
     async def _check_external_apis_health(self) -> HealthCheck:
-        """Check external APIs health"""
+        """
+Check external APIs health"""
         # Implementation for external APIs health check
         pass
 
     # Monitoring utility methods...
     def _update_prometheus_metrics(self, component: PipelineComponent, health_check: HealthCheck):
-        """Update Prometheus metrics with health check data"""
+        """
+Update Prometheus metrics with health check data"""
         try:
             # Health status (convert to numeric)
             status_value = {
@@ -916,7 +930,8 @@ class PipelineMonitor:
             return HealthStatus.HEALTHY.value
 
     async def _generate_performance_summary(self) -> Dict[str, Any]:
-        """Generate performance summary from collected metrics"""
+        """
+Generate performance summary from collected metrics"""
         # Implementation would aggregate performance metrics
         return {"placeholder": "performance_summary"}
 
@@ -952,6 +967,7 @@ class PipelineMonitor:
 
 class MetricType(str, Enum):
     """Types of metrics collected"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -969,13 +985,15 @@ class HealthCheckResult:
     metadata: Dict[str, Any] = None
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class PipelineMetrics:
-    """Pipeline performance metrics"""
+    """
+Pipeline performance metrics"""
     pipeline_name: str
     execution_count: int
     success_count: int
@@ -987,7 +1005,8 @@ class PipelineMetrics:
     active_tasks: int
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data["last_execution"] = self.last_execution.isoformat()
         return data
@@ -1417,7 +1436,8 @@ class PipelineMonitor:
         self.metrics_cache = {}
 
     async def start_monitoring(self):
-        """Start continuous monitoring of all pipelines"""
+        """
+Start continuous monitoring of all pipelines"""
         logger.info("Starting pipeline monitoring system")
         
         # Start background monitoring tasks
@@ -1576,7 +1596,8 @@ class PipelineMonitor:
         return generate_latest().decode('utf-8')
 
     async def _continuous_health_monitoring(self):
-        """Continuous health monitoring background task"""
+        """
+Continuous health monitoring background task"""
         while True:
             try:
                 await asyncio.sleep(60)  # Check every minute

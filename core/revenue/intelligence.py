@@ -1,7 +1,7 @@
 """Revenue Intelligence Engine - Advanced AI-powered revenue intelligence and market analysis
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceType(Enum):
-    """Types of revenue intelligence"""
+    """
+Types of revenue intelligence"""
+
     MARKET_ANALYSIS = "market_analysis"
     COMPETITIVE_INTELLIGENCE = "competitive_intelligence"
     TREND_PREDICTION = "trend_prediction"
@@ -70,6 +73,7 @@ class IntelligenceType(Enum):
 
 class IntelligenceScope(Enum):
     """Scope of intelligence analysis"""
+
     INDIVIDUAL = "individual"
     PLATFORM = "platform"
     INDUSTRY = "industry"
@@ -79,6 +83,7 @@ class IntelligenceScope(Enum):
 
 class PredictionHorizon(Enum):
     """Prediction time horizons"""
+
     SHORT_TERM = "short_term"  # 1-3 months
     MEDIUM_TERM = "medium_term"  # 3-12 months
     LONG_TERM = "long_term"  # 1-3 years
@@ -108,7 +113,8 @@ class IntelligenceInsight:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data"""
+    """
+Market intelligence data"""
     market_id: str
     market_name: str
     market_size: Decimal
@@ -127,7 +133,8 @@ class MarketIntelligence:
 
 @dataclass
 class CompetitorProfile:
-    """Competitor intelligence profile"""
+    """
+Competitor intelligence profile"""
     competitor_id: str
     name: str
     market_share: float
@@ -145,7 +152,8 @@ class CompetitorProfile:
 
 @dataclass
 class TrendPrediction:
-    """Trend prediction analysis"""
+    """
+Trend prediction analysis"""
     trend_id: str
     trend_name: str
     category: str
@@ -164,7 +172,8 @@ class TrendPrediction:
 
 @dataclass
 class OpportunityIdentification:
-    """Revenue opportunity identification"""
+    """
+Revenue opportunity identification"""
     opportunity_id: str
     title: str
     description: str
@@ -183,7 +192,8 @@ class OpportunityIdentification:
 
 
 class RevenueIntelligenceEngine:
-    """Advanced AI-powered revenue intelligence and market analysis engine"""
+    """
+Advanced AI-powered revenue intelligence and market analysis engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -204,7 +214,8 @@ class RevenueIntelligenceEngine:
         self.data_sources = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue intelligence engine"""
+        """
+Initialize revenue intelligence engine"""
         try:
             # Initialize AI/ML models
             await self._initialize_ml_models()
@@ -277,7 +288,8 @@ class RevenueIntelligenceEngine:
         self.ml_models['nmf'] = NMF(n_components=10, random_state=42)
     
     async def _setup_data_sources(self) -> None:
-        """Setup external data sources for intelligence"""
+        """
+Setup external data sources for intelligence"""
         
         # Market data sources (placeholder for real integrations)
         self.data_sources = {
@@ -309,7 +321,8 @@ class RevenueIntelligenceEngine:
         }
     
     async def _initialize_market_intelligence(self) -> None:
-        """Initialize market intelligence baselines"""
+        """
+Initialize market intelligence baselines"""
         
         # Content creator market intelligence
         content_creator_market = MarketIntelligence(
@@ -596,7 +609,8 @@ class RevenueIntelligenceEngine:
         scope: IntelligenceScope,
         time_horizon: PredictionHorizon
     ) -> List[IntelligenceInsight]:
-        """Generate market analysis insights"""
+        """
+Generate market analysis insights"""
         insights = []
         
         # Market growth analysis
@@ -1193,7 +1207,8 @@ class RevenueIntelligenceEngine:
         insight_a: IntelligenceInsight,
         insight_b: IntelligenceInsight
     ) -> float:
-        """Calculate similarity between two insights"""
+        """
+Calculate similarity between two insights"""
         
         # Combine text content
         text_a = f"{insight_a.title} {insight_a.description} {' '.join(insight_a.key_findings)}"
@@ -1256,7 +1271,8 @@ class RevenueIntelligenceEngine:
         insights: List[IntelligenceInsight],
         include_recommendations: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive intelligence report"""
+        """
+Generate comprehensive intelligence report"""
         try:
             
             # Executive summary

@@ -22,6 +22,7 @@ User (musician/blogger/photographer/influencer/comedian) →
 Upload multi-format → IA protection rights → SEO pro → 
 Matching collaboration → Multi-platform distribution
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -70,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Enumeration of supported creator types."""
+    """
+Enumeration of supported creator types."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -82,6 +85,7 @@ class CreatorType(Enum):
 
 class PipelineMode(Enum):
     """Pipeline execution modes."""
+
     BATCH = "batch"
     STREAMING = "streaming"
     REAL_TIME = "real_time"
@@ -112,7 +116,8 @@ class PipelineInterface:
     """
     
     def __init__(self, config: PipelineConfig):
-        """Initialize the pipeline interface."""
+        """
+Initialize the pipeline interface."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -148,7 +153,8 @@ class PipelineInterface:
         }
     
     def _init_transformers(self) -> None:
-        """Initialize content transformers."""
+        """
+Initialize content transformers."""
         self.transformers = {
             'content': ContentTransformer(),
             'metadata': MetadataTransformer(),
@@ -158,7 +164,8 @@ class PipelineInterface:
         }
     
     def _init_engines(self) -> None:
-        """Initialize processing engines."""
+        """
+Initialize processing engines."""
         engine_map = {
             PipelineMode.BATCH: BatchEngine(),
             PipelineMode.STREAMING: StreamingEngine(),
@@ -167,7 +174,8 @@ class PipelineInterface:
         self.engine = engine_map.get(self.config.mode, BatchEngine())
     
     def _init_validators(self) -> None:
-        """Initialize content validators."""
+        """
+Initialize content validators."""
         self.validators = {
             'content': ContentValidator(),
             'metadata': MetadataValidator(),
@@ -176,7 +184,8 @@ class PipelineInterface:
         }
     
     def _init_workflows(self) -> None:
-        """Initialize creator-specific workflows."""
+        """
+Initialize creator-specific workflows."""
         workflow_map = {
             CreatorType.MUSICIAN: MusicianWorkflow(),
             CreatorType.BLOGGER: BloggerWorkflow(),
@@ -188,7 +197,8 @@ class PipelineInterface:
         self.workflow = workflow_map.get(self.config.creator_type)
     
     def _init_integrations(self) -> None:
-        """Initialize platform integrations."""
+        """
+Initialize platform integrations."""
         self.integrations = {
             'spotify': SpotifyIntegration(),
             'youtube': YouTubeIntegration(),
@@ -199,7 +209,8 @@ class PipelineInterface:
         }
     
     def _init_analytics(self) -> None:
-        """Initialize monetization analytics."""
+        """
+Initialize monetization analytics."""
         self.analytics = {
             'revenue': RevenueAnalyzer(),
             'engagement': EngagementAnalyzer(),
@@ -309,7 +320,8 @@ class PipelineInterface:
         metadata: Optional[Dict[str, Any]],
         custom_pipeline: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Execute the content processing pipeline."""
+        """
+Execute the content processing pipeline."""
         content_path = Path(content_path)
         
         # Determine content type and select appropriate processor
@@ -367,7 +379,8 @@ class PipelineInterface:
         return type_mapping.get(extension, 'document')
     
     async def _apply_ai_protection(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply AI-powered content protection."""
+        """
+Apply AI-powered content protection."""
         # This would integrate with the content_protection module
         protection_result = {
             'ai_protection': {
@@ -380,7 +393,8 @@ class PipelineInterface:
         return protection_result
     
     async def _optimize_seo(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply SEO optimization."""
+        """
+Apply SEO optimization."""
         seo_result = {
             'seo_optimization': {
                 'keywords_extracted': True,
@@ -392,7 +406,8 @@ class PipelineInterface:
         return seo_result
     
     async def _match_collaborations(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Find collaboration opportunities."""
+        """
+Find collaboration opportunities."""
         collaboration_result = {
             'collaboration_matching': {
                 'potential_collaborators': [],
@@ -403,7 +418,8 @@ class PipelineInterface:
         return collaboration_result
     
     async def _distribute_content(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Distribute content to multiple platforms."""
+        """
+Distribute content to multiple platforms."""
         distribution_tasks = []
         
         for platform_name, integration in self.integrations.items():
@@ -422,7 +438,8 @@ class PipelineInterface:
         }
     
     def _should_distribute_to_platform(self, platform_name: str) -> bool:
-        """Determine if content should be distributed to a specific platform."""
+        """
+Determine if content should be distributed to a specific platform."""
         platform_mapping = {
             CreatorType.MUSICIAN: ['spotify', 'youtube', 'soundcloud'],
             CreatorType.BLOGGER: ['substack', 'youtube'],
@@ -436,7 +453,8 @@ class PipelineInterface:
         return platform_name in relevant_platforms
     
     async def _analyze_monetization(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze monetization opportunities."""
+        """
+Analyze monetization opportunities."""
         analytics_tasks = []
         
         for analyzer_name, analyzer in self.analytics.items():
@@ -460,7 +478,8 @@ class PipelineInterface:
         content_list: List[Union[str, Path]],
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[Dict[str, Any]]:
-        """Process multiple content files in batch."""
+        """
+Process multiple content files in batch."""
         if metadata_list and len(metadata_list) != len(content_list):
             raise ValueError("Metadata list length must match content list length")
         
@@ -497,7 +516,8 @@ class PipelineInterface:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform a health check on all pipeline components."""
+        """
+Perform a health check on all pipeline components."""
         health_status = {
             'overall_health': 'healthy',
             'components': {}
@@ -577,7 +597,8 @@ async def quick_process(
 
 
 def main():
-    """Main entry point for command-line usage."""
+    """
+Main entry point for command-line usage."""
     import argparse
     import asyncio
     

@@ -21,6 +21,7 @@ class AgentStatus(Enum):
     """
 Agent operational status"""
 
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     ERROR = "error"

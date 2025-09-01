@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Event Generation → Routing → Filtering → Processing → Distribution → Acknowledgment
 """
+
 import asyncio
 import uuid
 import threading
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class EventType(Enum):
-    """Types of events in the system"""
+    """
+Types of events in the system"""
+
     WORKFLOW_EVENT = "workflow_event"
     PROCESS_EVENT = "process_event"
     TASK_EVENT = "task_event"
@@ -48,6 +51,7 @@ class EventType(Enum):
 
 class EventPriority(Enum):
     """Event processing priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -56,7 +60,9 @@ class EventPriority(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status"""
+    """
+Event processing status"""
+
     CREATED = "created"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -68,6 +74,7 @@ class EventStatus(Enum):
 
 class DeliveryMode(Enum):
     """Event delivery modes"""
+
     FIRE_AND_FORGET = "fire_and_forget"
     AT_LEAST_ONCE = "at_least_once"
     EXACTLY_ONCE = "exactly_once"
@@ -87,7 +94,8 @@ class EventFilter:
 
 @dataclass
 class EventSubscription:
-    """Event subscription configuration"""
+    """
+Event subscription configuration"""
     subscription_id: str
     subscriber_id: str
     filters: EventFilter
@@ -103,7 +111,8 @@ class EventSubscription:
 
 @dataclass
 class Event:
-    """Core event structure"""
+    """
+Core event structure"""
     event_id: str
     event_type: EventType
     source: str
@@ -122,7 +131,8 @@ class Event:
 
 @dataclass
 class EventDelivery:
-    """Event delivery tracking"""
+    """
+Event delivery tracking"""
     delivery_id: str
     event_id: str
     subscription_id: str
@@ -135,7 +145,8 @@ class EventDelivery:
 
 
 class EventDispatcher:
-    """Enterprise event processing and distribution system"""
+    """
+Enterprise event processing and distribution system"""
     
     def __init__(self, max_workers: int = 20, queue_size: int = 10000):
         self.max_workers = max_workers
@@ -298,7 +309,8 @@ class EventDispatcher:
             self.subscriber_routing[subscription.subscriber_id].append(subscription.subscription_id)
     
     def _compile_filters(self, subscription: EventSubscription):
-        """Compile event filters for performance optimization"""
+        """
+Compile event filters for performance optimization"""
         # This would compile complex filters into optimized forms
         # For now, store the filters as-is
         self.compiled_filters[subscription.subscription_id] = subscription.filters
@@ -314,7 +326,8 @@ class EventDispatcher:
         trace_id: str = None,
         expires_in_seconds: int = None
     ) -> str:
-        """Publish an event to the system"""
+        """
+Publish an event to the system"""
         try:
             event_id = str(uuid.uuid4())
             
@@ -580,7 +593,8 @@ class EventDispatcher:
             return text == pattern
     
     async def _deliver_event(self, event: Event, subscription: EventSubscription):
-        """Deliver event to a subscription"""
+        """
+Deliver event to a subscription"""
         try:
             delivery_id = str(uuid.uuid4())
             

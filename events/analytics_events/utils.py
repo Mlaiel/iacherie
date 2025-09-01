@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import hashlib
 import json
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class TimeSeriesAnalyzer:
-    """Ultra-advanced time series analysis for analytics events"""
+    """
+Ultra-advanced time series analysis for analytics events"""
     
     def __init__(self):
         self.scaler = StandardScaler()
@@ -178,7 +180,8 @@ class TimeSeriesAnalyzer:
 
 
 class FeatureEngineering:
-    """Advanced feature engineering for analytics events"""
+    """
+Advanced feature engineering for analytics events"""
     
     def __init__(self):
         self.scalers = {}
@@ -277,7 +280,8 @@ class FeatureEngineering:
     
     def _engineer_numerical_features(self, value: Union[int, float], 
                                    feature_name: str) -> Dict[str, Any]:
-        """Engineer features from numerical values"""
+        """
+Engineer features from numerical values"""
         features = {
             f"{feature_name}_original": value,
             f"{feature_name}_log": np.log1p(abs(value)) if value != 0 else 0,
@@ -436,12 +440,14 @@ class EventHasher:
 
 
 class DataValidator:
-    """Advanced data validation for analytics events"""
+    """
+Advanced data validation for analytics events"""
     
     @staticmethod
     def validate_event_schema(event: Dict[str, Any], 
                             required_fields: List[str]) -> Tuple[bool, List[str]]:
-        """Validate event against required schema"""
+        """
+Validate event against required schema"""
         errors = []
         
         # Check required fields
@@ -516,7 +522,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def batch_process(items: List[Any], batch_size: int = 100) -> List[List[Any]]:
-        """Split items into batches for efficient processing"""
+        """
+Split items into batches for efficient processing"""
         batches = []
         for i in range(0, len(items), batch_size):
             batches.append(items[i:i + batch_size])
@@ -525,7 +532,8 @@ class PerformanceOptimizer:
     @staticmethod
     async def parallel_execute(coroutines: List[Callable], 
                              max_concurrency: int = 10) -> List[Any]:
-        """Execute coroutines in parallel with concurrency limit"""
+        """
+Execute coroutines in parallel with concurrency limit"""
         semaphore = asyncio.Semaphore(max_concurrency)
         
         async def execute_with_semaphore(coro):
@@ -537,7 +545,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def memoize(func: Callable) -> Callable:
-        """Memoization decorator for expensive computations"""
+        """
+Memoization decorator for expensive computations"""
         cache = {}
         
         @wraps(func)
@@ -551,7 +560,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def rate_limit(calls_per_second: int):
-        """Rate limiting decorator"""
+        """
+Rate limiting decorator"""
         min_interval = 1.0 / calls_per_second
         last_called = [0.0]
         
@@ -570,11 +580,13 @@ class PerformanceOptimizer:
 
 
 class StatisticalAnalyzer:
-    """Advanced statistical analysis utilities"""
+    """
+Advanced statistical analysis utilities"""
     
     @staticmethod
     def calculate_correlation_matrix(data: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate correlation matrix with statistical significance"""
+        """
+Calculate correlation matrix with statistical significance"""
         numeric_cols = data.select_dtypes(include=[np.number]).columns
         corr_matrix = data[numeric_cols].corr()
         
@@ -606,7 +618,8 @@ class StatisticalAnalyzer:
     
     @staticmethod
     def detect_outliers(data: np.ndarray, method: str = 'iqr') -> Dict[str, Any]:
-        """Detect outliers using various statistical methods"""
+        """
+Detect outliers using various statistical methods"""
         outliers = {}
         
         if method == 'iqr':
@@ -640,7 +653,8 @@ class StatisticalAnalyzer:
     @staticmethod
     def hypothesis_test(sample1: np.ndarray, sample2: np.ndarray, 
                        test_type: str = 'ttest') -> Dict[str, Any]:
-        """Perform hypothesis testing between two samples"""
+        """
+Perform hypothesis testing between two samples"""
         results = {}
         
         if test_type == 'ttest':
@@ -679,7 +693,8 @@ class StatisticalAnalyzer:
 
 # Utility functions for common analytics tasks
 async def calculate_engagement_metrics(events: List[Dict[str, Any]]) -> Dict[str, float]:
-    """Calculate comprehensive engagement metrics from events"""
+    """
+Calculate comprehensive engagement metrics from events"""
     if not events:
         return {}
     
@@ -706,7 +721,8 @@ async def calculate_engagement_metrics(events: List[Dict[str, Any]]) -> Dict[str
 
 
 async def calculate_revenue_metrics(transactions: List[Dict[str, Any]]) -> Dict[str, float]:
-    """Calculate comprehensive revenue metrics from transaction data"""
+    """
+Calculate comprehensive revenue metrics from transaction data"""
     if not transactions:
         return {}
     

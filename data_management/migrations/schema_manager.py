@@ -10,12 +10,13 @@ Ultra-advanced database schema management system for IA Influencer Agent:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This schema management system is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -43,7 +44,9 @@ Base = declarative_base()
 
 
 class SchemaVersion(Enum):
-    """Schema version management"""
+    """
+Schema version management"""
+
     V1_0_0 = "1.0.0"    # Initial schema
     V1_1_0 = "1.1.0"    # Content protection additions
     V1_2_0 = "1.2.0"    # Fingerprinting enhancements
@@ -56,6 +59,7 @@ class SchemaVersion(Enum):
 
 class SchemaComponent(Enum):
     """Schema component categories"""
+
     CORE = "core"                      # Core user and content tables
     PROTECTION = "protection"          # Content protection tables
     FINGERPRINT = "fingerprint"        # Fingerprinting system
@@ -82,7 +86,8 @@ class SchemaChange:
 
 @dataclass
 class SchemaState:
-    """Current schema state information"""
+    """
+Current schema state information"""
     current_version: SchemaVersion
     installed_components: Set[SchemaComponent]
     pending_changes: List[SchemaChange]
@@ -543,7 +548,8 @@ class SchemaManager:
                 await self._rollback_version_changes(version_order[i])
                 
     async def _apply_version_changes(self, version: SchemaVersion) -> None:
-        """Apply all changes for a specific version"""
+        """
+Apply all changes for a specific version"""
         if version == SchemaVersion.V1_1_0:
             await self.create_content_protection_schema()
             await self.create_performance_indices()
@@ -555,7 +561,8 @@ class SchemaManager:
             pass
             
     async def _apply_schema_changes(self, changes: List[SchemaChange]) -> None:
-        """Apply list of schema changes"""
+        """
+Apply list of schema changes"""
         async with self._get_session() as session:
             try:
                 for change in changes:
@@ -613,7 +620,8 @@ class SchemaManager:
         pass
         
     async def _calculate_schema_hash(self) -> str:
-        """Calculate hash of current schema structure"""
+        """
+Calculate hash of current schema structure"""
         inspector = inspect(self.engine)
         
         schema_info = {
@@ -631,10 +639,12 @@ class SchemaManager:
         return hashlib.sha256(schema_json.encode()).hexdigest()
         
     async def _get_session(self) -> Session:
-        """Get database session"""
+        """
+Get database session"""
         return self.session_maker()
         
     async def _rollback_version_changes(self, version: SchemaVersion) -> None:
-        """Rollback changes for a specific version"""
+        """
+Rollback changes for a specific version"""
         # Implementation for rollback logic
         pass

@@ -25,6 +25,7 @@ intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
 """
+
 import asyncio
 import logging
 import json
@@ -76,7 +77,9 @@ from ...integrations.platforms import PlatformAPIManager
 logger = logging.getLogger(__name__)
 
 class TrackingStatus(Enum):
-    """Revenue tracking session status"""
+    """
+Revenue tracking session status"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -86,6 +89,7 @@ class TrackingStatus(Enum):
 
 class AlertType(Enum):
     """Types of revenue alerts"""
+
     REVENUE_SPIKE = "revenue_spike"
     REVENUE_DROP = "revenue_drop"
     ANOMALY_DETECTED = "anomaly_detected"
@@ -99,6 +103,7 @@ class AlertType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     LOW = "low" 
     MEDIUM = "medium"
@@ -708,7 +713,8 @@ class PlatformAnalyzer:
         self.metrics_history: List[Dict[str, Any]] = []
         
     async def initialize(self):
-        """Initialize platform-specific API connection"""
+        """
+Initialize platform-specific API connection"""
         platform_apis = {
             'spotify': 'SpotifyAPI',
             'youtube': 'YouTubeAPI',
@@ -772,7 +778,8 @@ class PlatformAnalyzer:
         }
 
     async def _collect_platform_data(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Collect comprehensive platform-specific data"""
+        """
+Collect comprehensive platform-specific data"""
         # Platform-specific data collection logic
         return {
             'revenue_data': [],
@@ -849,7 +856,9 @@ from ...services.notification import NotificationService
 logger = logging.getLogger(__name__)
 
 class TrackingMode(Enum):
-    """Revenue tracking operation modes"""
+    """
+Revenue tracking operation modes"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
@@ -857,6 +866,7 @@ class TrackingMode(Enum):
 
 class TrackingStatus(Enum):
     """Revenue tracking session status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -865,6 +875,7 @@ class TrackingStatus(Enum):
 
 class MetricType(Enum):
     """Revenue metric calculation types"""
+
     GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     REVENUE_PER_VIEW = "revenue_per_view"
@@ -891,7 +902,8 @@ class RevenueDataPoint:
 
 @dataclass
 class PlatformMetrics:
-    """Comprehensive platform performance metrics"""
+    """
+Comprehensive platform performance metrics"""
     platform: str
     period_start: datetime
     period_end: datetime
@@ -1344,7 +1356,8 @@ class RevenueTracker:
         platforms: List[str],
         content_ids: List[str]
     ) -> List[RevenueDataPoint]:
-        """Collect revenue data from all specified platforms"""
+        """
+Collect revenue data from all specified platforms"""
         data_points = []
         
         for platform in platforms:
@@ -1412,7 +1425,8 @@ class RevenueTracker:
         tracking_session: TrackingSession,
         analysis_results: Dict[str, Any]
     ) -> None:
-        """Check if any alert thresholds have been exceeded"""
+        """
+Check if any alert thresholds have been exceeded"""
         alert_thresholds = tracking_session.alert_thresholds
         
         if not alert_thresholds:
@@ -1465,7 +1479,8 @@ class RevenueTracker:
         session_id: str,
         data_points: List[RevenueDataPoint]
     ) -> None:
-        """Store revenue data points in database"""
+        """
+Store revenue data points in database"""
         if not data_points:
             return
         
@@ -1520,7 +1535,8 @@ class RevenueTracker:
         session_id: str,
         data_points: List[RevenueDataPoint]
     ) -> None:
-        """Cache recent revenue data for quick access"""
+        """
+Cache recent revenue data for quick access"""
         if not data_points:
             return
         
@@ -1667,7 +1683,8 @@ class RevenueTracker:
         intervals: List[Dict[str, Any]],
         granularity: str
     ) -> Dict[str, Any]:
-        """Analyze trends and patterns in revenue data"""
+        """
+Analyze trends and patterns in revenue data"""
         if len(intervals) < 2:
             return {'trend_analysis': 'insufficient_data'}
         
@@ -1706,7 +1723,8 @@ class RevenueTracker:
         user_id: str,
         batch_results: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate insights and recommendations from batch analysis"""
+        """
+Generate insights and recommendations from batch analysis"""
         insights = []
         
         aggregated = batch_results.get('aggregated_metrics', {})
@@ -1840,7 +1858,8 @@ class PlatformAnalyzer:
         user_id: str,
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Identify platform-specific optimization opportunities"""
+        """
+Identify platform-specific optimization opportunities"""
         # Implementation placeholder
         return []
 
@@ -1849,7 +1868,8 @@ class PlatformAnalyzer:
         user_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Perform competitive analysis for platform"""
+        """
+Perform competitive analysis for platform"""
         # Implementation placeholder
         return {
             'market_position': 'unknown',

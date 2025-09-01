@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Content Monitoring Tests - Industrial Grade
+"""
+Advanced Content Monitoring Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for content processing and monitoring system.
 Tests multi-format content processing, protection validation, and quality assurance with real scenarios.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -68,11 +71,13 @@ from .fixtures import (
 
 
 class TestContentProcessingMonitorCore:
-    """Core functionality tests for content processing monitor."""
+    """
+Core functionality tests for content processing monitor."""
     
     @pytest.fixture
     async def content_monitor(self):
-        """Create and initialize content processing monitor."""
+        """
+Create and initialize content processing monitor."""
         monitor = ContentProcessingMonitor(
             config={
                 "supported_formats": ["video", "audio", "image", "text", "document"],
@@ -590,7 +595,8 @@ class TestContentAnalyticsAndInsights:
     
     @pytest.fixture
     async def analytics_monitor(self):
-        """Create analytics-focused content monitor."""
+        """
+Create analytics-focused content monitor."""
         monitor = ContentProcessingMonitor(
             config={
                 "analytics_enabled": True,
@@ -819,7 +825,8 @@ class TestContentDistributionMonitoring:
     
     @pytest.fixture
     async def distribution_monitor(self):
-        """Create distribution-focused content monitor."""
+        """
+Create distribution-focused content monitor."""
         monitor = ContentProcessingMonitor(
             config={
                 "distribution_tracking": True,
@@ -1018,7 +1025,8 @@ class TestContentMonitoringPerformance:
     
     @pytest.fixture
     async def performance_monitor(self):
-        """Create high-performance content monitor."""
+        """
+Create high-performance content monitor."""
         monitor = ContentProcessingMonitor(
             config={
                 "high_performance_mode": True,
@@ -1161,7 +1169,8 @@ class TestContentProcessingMonitor:
     
     @pytest.fixture
     async def content_monitor(self):
-        """Create Content Processing Monitor instance."""
+        """
+Create Content Processing Monitor instance."""
         monitor = ContentProcessingMonitor()
         await monitor.initialize()
         yield monitor
@@ -1169,12 +1178,14 @@ class TestContentProcessingMonitor:
     
     @pytest.fixture
     def content_test_data(self):
-        """Generate comprehensive content test data."""
+        """
+Generate comprehensive content test data."""
         return TestDataGenerator.generate_content_processing_data(num_contents=50)
     
     @pytest.fixture
     def temp_content_files(self):
-        """Create temporary content files for testing."""
+        """
+Create temporary content files for testing."""
         temp_dir = Path(tempfile.mkdtemp())
         
         # Create sample content files
@@ -1211,7 +1222,8 @@ class TestContentProcessingMonitor:
         assert content_monitor.performance_metrics is not None
     
     async def test_content_upload_monitoring(self, content_monitor, temp_content_files):
-        """Test content upload process monitoring."""
+        """
+Test content upload process monitoring."""
         # Test different content types
         for content_type, file_path in temp_content_files.items():
             upload_start_time = datetime.utcnow()

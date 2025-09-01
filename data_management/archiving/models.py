@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -22,7 +23,8 @@ from .archival_manager import ArchivalStatus, ArchivalTier
 
 @dataclass
 class ArchiveEntry:
-    """Core archive entry model"""
+    """
+Core archive entry model"""
     archive_id: str
     content_id: str
     content_type: str
@@ -143,30 +145,35 @@ class StorageQuota:
     
     @property
     def usage_percentage(self) -> float:
-        """Calculate usage percentage"""
+        """
+Calculate usage percentage"""
         if self.limit_bytes == 0:
             return 0.0
         return self.used_bytes / self.limit_bytes
     
     @property
     def is_warning(self) -> bool:
-        """Check if usage exceeds warning threshold"""
+        """
+Check if usage exceeds warning threshold"""
         return self.usage_percentage >= self.warning_threshold
     
     @property
     def is_critical(self) -> bool:
-        """Check if usage exceeds critical threshold"""
+        """
+Check if usage exceeds critical threshold"""
         return self.usage_percentage >= self.critical_threshold
     
     @property
     def available_bytes(self) -> int:
-        """Calculate available bytes"""
+        """
+Calculate available bytes"""
         return max(0, self.limit_bytes - self.used_bytes)
 
 
 @dataclass
 class AccessPattern:
-    """Content access pattern tracking"""
+    """
+Content access pattern tracking"""
     content_id: str
     archive_id: str
     
@@ -210,7 +217,8 @@ class AccessPattern:
                 self.access_frequency = len(self.access_history) / (time_span / 86400)  # 86400 seconds in a day
     
     def calculate_business_value(self, creator_metrics: Dict[str, Any] = None) -> float:
-        """Calculate business value score based on access patterns"""
+        """
+Calculate business value score based on access patterns"""
         score = 0.0
         
         # Access frequency component (0-0.4)
@@ -243,7 +251,8 @@ class AccessPattern:
         return self.business_value_score
     
     def recommend_tier(self) -> ArchivalTier:
-        """Recommend storage tier based on access patterns"""
+        """
+Recommend storage tier based on access patterns"""
         if self.access_frequency > 5:  # Very frequent access
             return ArchivalTier.HOT
         elif self.access_frequency > 1:  # Regular access

@@ -5,11 +5,12 @@ Advanced reporting system for comprehensive revenue analysis and stakeholder com
 Generates detailed financial reports, dashboards, and executive summaries for content creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ from ..models.revenue_model import RevenueModel
 
 
 class ReportType(Enum):
-    """Types of financial reports"""
+    """
+Types of financial reports"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_REVENUE = "detailed_revenue"
     PLATFORM_BREAKDOWN = "platform_breakdown"
@@ -58,6 +61,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     PDF = "pdf"
     HTML = "html"
     EXCEL = "excel"
@@ -68,6 +72,7 @@ class ReportFormat(Enum):
 
 class TimeInterval(Enum):
     """Report time intervals"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -109,7 +114,8 @@ class ReportSection:
 
 @dataclass
 class RevenueReport:
-    """Complete revenue report structure"""
+    """
+Complete revenue report structure"""
     report_id: str
     configuration: ReportConfiguration
     title: str
@@ -125,7 +131,8 @@ class RevenueReport:
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration"""
+    """
+Report template configuration"""
     template_id: str
     name: str
     description: str
@@ -164,7 +171,8 @@ class ReportingEngine:
         self._setup_visualization_theme()
 
     def _initialize_templates(self):
-        """Initialize default report templates"""
+        """
+Initialize default report templates"""
         # Executive Summary Template
         self.templates["executive"] = ReportTemplate(
             template_id="executive_summary",
@@ -474,7 +482,8 @@ class ReportingEngine:
         return sections
 
     async def _export_to_pdf(self, report: RevenueReport) -> bytes:
-        """Export report to PDF format"""
+        """
+Export report to PDF format"""
         # Implementation for PDF export using matplotlib/reportlab
         buffer = io.BytesIO()
         
@@ -508,7 +517,8 @@ class ReportingEngine:
         return html_content.encode('utf-8')
 
     async def _export_to_excel(self, report: RevenueReport) -> bytes:
-        """Export report to Excel format"""
+        """
+Export report to Excel format"""
         buffer = io.BytesIO()
         
         with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
@@ -561,7 +571,8 @@ class ReportingEngine:
         </html>
         """
     def _get_detailed_template(self) -> str:
-        """Get detailed revenue HTML template"""
+        """
+Get detailed revenue HTML template"""
         return """
         <html>
         <head>
@@ -587,11 +598,13 @@ class ReportingEngine:
         </html>
         """
     def _get_html_template(self) -> str:
-        """Get general HTML template"""
+        """
+Get general HTML template"""
         return self._get_detailed_template()
 
     def _generate_report_title(self, config: ReportConfiguration) -> str:
-        """Generate report title based on configuration"""
+        """
+Generate report title based on configuration"""
         return f"Revenue {config.report_type.value.replace('_', ' ').title()} Report"
 
     def _generate_report_subtitle(self, config: ReportConfiguration) -> str:
@@ -604,7 +617,8 @@ class ReportingEngine:
         return (datetime.now() + timedelta(days=30)).isoformat()
 
     async def _cache_report(self, report: RevenueReport):
-        """Cache generated report in Redis"""
+        """
+Cache generated report in Redis"""
         await self.redis_client.setex(
             f"report:{report.report_id}",
             3600 * 24 * 7,  # 7 days

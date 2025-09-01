@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE VALIDATION DE FORMATS MULTIMÉDIA
@@ -15,6 +15,7 @@ Validation avancée des formats pour tous types de créateurs
 - Validation headers et métadonnées
 - Support formats professionnels
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FormatValidationResult:
-    """Résultat de validation de format"""
+    """
+Résultat de validation de format"""
     is_valid: bool
     format_detected: str
     mime_type: str
@@ -66,7 +68,8 @@ class FormatValidationResult:
     integrity_score: float  # 0.0 - 1.0
 
 class FormatDetector:
-    """Détecteur avancé de formats de fichiers"""
+    """
+Détecteur avancé de formats de fichiers"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.FormatDetector")
@@ -336,7 +339,8 @@ class AudioFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _detect_audio_format(self, file_path: str, metadata: Dict) -> str:
-        """Détecte le format audio réel"""
+        """
+Détecte le format audio réel"""
         extension = Path(file_path).suffix.lower().lstrip('.')
         
         # Validation basée sur les informations Mutagen
@@ -566,7 +570,8 @@ class VideoFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _detect_video_format(self, file_path: str, metadata: Dict) -> str:
-        """Détecte le format vidéo réel"""
+        """
+Détecte le format vidéo réel"""
         extension = Path(file_path).suffix.lower().lstrip('.')
         
         # Validation basée sur fourcc et autres métadonnées
@@ -831,7 +836,8 @@ class ImageFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _detect_image_format(self, file_path: str, metadata: Dict) -> str:
-        """Détecte le format image réel"""
+        """
+Détecte le format image réel"""
         if 'pil_format' in metadata:
             return metadata['pil_format']
         
@@ -839,7 +845,8 @@ class ImageFormatValidator:
         return extension if extension in self.supported_formats else 'unknown'
 
 class DocumentFormatValidator:
-    """Validateur spécialisé pour formats de documents"""
+    """
+Validateur spécialisé pour formats de documents"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.DocumentFormatValidator")
@@ -1121,7 +1128,8 @@ class DocumentFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _get_document_mime_type(self, format_name: str) -> str:
-        """Retourne le type MIME pour un format de document"""
+        """
+Retourne le type MIME pour un format de document"""
         mime_types = {
             'txt': 'text/plain',
             'md': 'text/markdown',
@@ -1136,7 +1144,8 @@ class DocumentFormatValidator:
         return mime_types.get(format_name, 'application/octet-stream')
 
 class FormatValidator:
-    """Validateur principal de formats"""
+    """
+Validateur principal de formats"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.FormatValidator")
@@ -1238,7 +1247,8 @@ class FormatValidator:
         return 'unknown'
 
 class AsyncFormatValidator:
-    """Version asynchrone du validateur de formats"""
+    """
+Version asynchrone du validateur de formats"""
     
     def __init__(self):
         self.sync_validator = FormatValidator()
@@ -1258,7 +1268,8 @@ class AsyncFormatValidator:
         return result
     
     async def validate_batch(self, file_paths: List[str], expected_types: Optional[List[str]] = None) -> Dict[str, FormatValidationResult]:
-        """Valide un lot de fichiers de manière asynchrone"""
+        """
+Valide un lot de fichiers de manière asynchrone"""
         if expected_types is None:
             expected_types = [None] * len(file_paths)
         

@@ -6,7 +6,7 @@ Handles revenue tracking, optimization, forecasting, and real-time analytics acr
 all major platforms (Spotify, YouTube, Instagram, TikTok, OnlyFans, Patreon, etc.).
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Optimization
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream types for content creators"""
+    """
+Revenue stream types for content creators"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -57,6 +60,7 @@ class RevenueStream(Enum):
 
 class PlatformType(Enum):
     """Supported monetization platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -79,6 +83,7 @@ class PlatformType(Enum):
 
 class RevenueCurrency(Enum):
     """Supported currencies for revenue processing"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -110,7 +115,8 @@ class PlatformRevenue:
 
 @dataclass
 class RevenueMetrics:
-    """Comprehensive revenue metrics and analytics"""
+    """
+Comprehensive revenue metrics and analytics"""
     total_gross_revenue: Decimal
     total_net_revenue: Decimal
     total_fees: Decimal
@@ -128,7 +134,8 @@ class RevenueMetrics:
 
 
 class RevenueCalculator:
-    """Advanced revenue calculation engine with multi-currency support"""
+    """
+Advanced revenue calculation engine with multi-currency support"""
     
     def __init__(self, currency_rates: Dict[str, float] = None):
         self.currency_rates = currency_rates or {}
@@ -285,7 +292,8 @@ class RevenueOptimizer:
         platform: PlatformType,
         metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate platform-specific action recommendations"""
+        """
+Generate platform-specific action recommendations"""
         actions = []
         
         if platform == PlatformType.SPOTIFY:

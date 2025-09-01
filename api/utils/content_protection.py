@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import hashlib
 import numpy as np
 import cv2
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -37,6 +40,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Protection level enumeration"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -45,6 +49,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Copyright violation type"""
+
     EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     SIMILARITY_MATCH = "similarity_match"
@@ -64,7 +69,8 @@ class ContentFingerprint:
     protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert fingerprint to dictionary"""
+        """
+Convert fingerprint to dictionary"""
         return {
             'content_id': self.content_id,
             'content_type': self.content_type.value,
@@ -79,7 +85,8 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationReport:
-    """Copyright violation report"""
+    """
+Copyright violation report"""
     violation_id: str
     original_content_id: str
     infringing_url: str
@@ -106,7 +113,8 @@ class ViolationReport:
 
 
 class FingerprintGenerator:
-    """Advanced multi-format content fingerprinting system"""
+    """
+Advanced multi-format content fingerprinting system"""
     
     def __init__(self):
         self.supported_audio_formats = ['.mp3', '.wav', '.flac', '.m4a', '.ogg']
@@ -115,7 +123,8 @@ class FingerprintGenerator:
         self.similarity_threshold = 0.85
         
     async def generate_fingerprint(self, content_path: str, content_id: str) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint"""
+        """
+Generate comprehensive content fingerprint"""
         try:
             content_type = self._detect_content_type(content_path)
             
@@ -299,7 +308,8 @@ class FingerprintGenerator:
         return hashlib.md5(chroma_bytes).hexdigest()
     
     def _generate_spectral_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate spectral-based hash"""
+        """
+Generate spectral-based hash"""
         # Compute spectrogram
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
@@ -312,7 +322,8 @@ class FingerprintGenerator:
         return hashlib.sha256(peak_bytes).hexdigest()
     
     def _generate_mfcc_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate MFCC-based hash"""
+        """
+Generate MFCC-based hash"""
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
         
         # Quantize MFCC coefficients
@@ -322,7 +333,8 @@ class FingerprintGenerator:
         return hashlib.sha256(mfcc_bytes).hexdigest()
     
     def _generate_audio_perceptual_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate perceptual hash for audio similarity"""
+        """
+Generate perceptual hash for audio similarity"""
         # Use mel spectrogram for perceptual similarity
         mel_spec = librosa.feature.melspectrogram(y=y, sr=sr)
         log_mel = librosa.power_to_db(mel_spec)
@@ -340,7 +352,8 @@ class FingerprintGenerator:
         return format(hash_int, 'x')
     
     def _extract_audio_features(self, y: np.ndarray, sr: int) -> List[float]:
-        """Extract audio features for ML-based similarity"""
+        """
+Extract audio features for ML-based similarity"""
         features = []
         
         # Spectral features
@@ -365,7 +378,8 @@ class FingerprintGenerator:
         return features
     
     def _generate_frame_hash(self, frame: np.ndarray) -> str:
-        """Generate hash for video frame"""
+        """
+Generate hash for video frame"""
         # Convert to grayscale
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
@@ -377,7 +391,8 @@ class FingerprintGenerator:
         return hashlib.md5(frame_bytes).hexdigest()
     
     def _generate_video_perceptual_hash(self, video_path: str) -> str:
-        """Generate perceptual hash for video"""
+        """
+Generate perceptual hash for video"""
         cap = cv2.VideoCapture(video_path)
         
         # Extract first frame
@@ -426,7 +441,8 @@ class FingerprintGenerator:
         return features
     
     def _extract_image_features(self, image_path: str) -> List[float]:
-        """Extract image features for similarity matching"""
+        """
+Extract image features for similarity matching"""
         image = cv2.imread(image_path)
         features = []
         
@@ -454,7 +470,8 @@ class FingerprintGenerator:
 
 
 class ContentValidator:
-    """Content validation and quality assurance"""
+    """
+Content validation and quality assurance"""
     
     def __init__(self):
         self.min_quality_thresholds = {
@@ -464,7 +481,8 @@ class ContentValidator:
         }
     
     def validate_content(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Validate content meets quality standards"""
+        """
+Validate content meets quality standards"""
         try:
             if content_type == ContentType.AUDIO:
                 return self._validate_audio(content_path)
@@ -479,7 +497,8 @@ class ContentValidator:
             return {'valid': False, 'error': str(e)}
     
     def _validate_audio(self, audio_path: str) -> Dict[str, Any]:
-        """Validate audio content"""
+        """
+Validate audio content"""
         try:
             y, sr = librosa.load(audio_path)
             duration = len(y) / sr
@@ -580,11 +599,13 @@ class PiracyDetector:
         self.fingerprint_database = {}  # In production, this would be a proper database
         
     def register_content(self, fingerprint: ContentFingerprint):
-        """Register content fingerprint for protection"""
+        """
+Register content fingerprint for protection"""
         self.fingerprint_database[fingerprint.content_id] = fingerprint
     
     def detect_violations(self, candidate_fingerprint: ContentFingerprint) -> List[ViolationReport]:
-        """Detect potential copyright violations"""
+        """
+Detect potential copyright violations"""
         violations = []
         
         for registered_id, registered_fp in self.fingerprint_database.items():
@@ -636,7 +657,8 @@ class PiracyDetector:
         return max(0.0, min(1.0, combined_score))
     
     def _calculate_hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate Hamming similarity between two hashes"""
+        """
+Calculate Hamming similarity between two hashes"""
         if len(hash1) != len(hash2):
             return 0.0
         
@@ -646,7 +668,8 @@ class PiracyDetector:
         return 1.0 - (hamming_distance / max_distance)
     
     def _determine_violation_type(self, similarity_score: float) -> ViolationType:
-        """Determine type of violation based on similarity score"""
+        """
+Determine type of violation based on similarity score"""
         if similarity_score >= 0.98:
             return ViolationType.EXACT_MATCH
         elif similarity_score >= 0.9:
@@ -658,7 +681,8 @@ class PiracyDetector:
 
 
 class ProtectionEngine:
-    """Comprehensive content protection orchestration"""
+    """
+Comprehensive content protection orchestration"""
     
     def __init__(self):
         self.fingerprint_generator = FingerprintGenerator()
@@ -667,7 +691,8 @@ class ProtectionEngine:
         self.protected_content = {}
         
     async def protect_content(self, content_path: str, content_id: str, user_id: str) -> Dict[str, Any]:
-        """Complete content protection workflow"""
+        """
+Complete content protection workflow"""
         try:
             # Step 1: Validate content
             content_type = self.fingerprint_generator._detect_content_type(content_path)
@@ -732,7 +757,8 @@ class ProtectionEngine:
         return all_violations
     
     def _simulate_violation_detection(self, content_id: str) -> List[ViolationReport]:
-        """Simulate violation detection (placeholder for actual implementation)"""
+        """
+Simulate violation detection (placeholder for actual implementation)"""
         # In production, this would:
         # 1. Crawl major platforms (YouTube, Instagram, TikTok, etc.)
         # 2. Download/analyze found content
@@ -742,7 +768,8 @@ class ProtectionEngine:
         return []  # No simulated violations for now
     
     def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get protection status for content"""
+        """
+Get protection status for content"""
         if content_id not in self.protected_content:
             return {'protected': False, 'error': 'Content not found'}
         
@@ -757,7 +784,8 @@ class ProtectionEngine:
 
 
 class ViolationReporter:
-    """Automated violation reporting and DMCA takedown"""
+    """
+Automated violation reporting and DMCA takedown"""
     
     def __init__(self):
         self.platform_contacts = {
@@ -767,7 +795,8 @@ class ViolationReporter:
         }
     
     async def file_violation_report(self, violation: ViolationReport, user_contact: Dict[str, str]) -> Dict[str, Any]:
-        """File copyright violation report"""
+        """
+File copyright violation report"""
         try:
             platform = self._detect_platform_from_url(violation.infringing_url)
             
@@ -807,7 +836,8 @@ class ViolationReporter:
             return 'unknown'
     
     def _generate_dmca_notice(self, violation: ViolationReport, user_contact: Dict[str, str]) -> Dict[str, Any]:
-        """Generate DMCA takedown notice"""
+        """
+Generate DMCA takedown notice"""
         return {
             'copyright_owner': user_contact.get('name', ''),
             'contact_email': user_contact.get('email', ''),
@@ -823,7 +853,8 @@ class ViolationReporter:
         }
     
     async def _submit_report(self, platform: str, dmca_notice: Dict[str, Any], violation: ViolationReport) -> Dict[str, Any]:
-        """Submit report to platform (simulated)"""
+        """
+Submit report to platform (simulated)"""
         # In production, this would use actual platform APIs
         report_id = f"{platform}_{int(time.time())}_{violation.violation_id}"
         
@@ -843,5 +874,6 @@ class FingerprintError(Exception):
 
 
 class ProtectionError(Exception):
-    """Custom exception for content protection errors"""
+    """
+Custom exception for content protection errors"""
     pass

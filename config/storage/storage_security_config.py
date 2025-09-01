@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass
@@ -23,7 +24,9 @@ import secrets
 from datetime import datetime, timedelta
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
+    """
+Supported encryption algorithms."""
+
     AES_256_GCM = "AES-256-GCM"
     AES_256_CBC = "AES-256-CBC"
     CHACHA20_POLY1305 = "ChaCha20-Poly1305"
@@ -31,6 +34,7 @@ class EncryptionAlgorithm(Enum):
 
 class AccessLevel(Enum):
     """Storage access levels."""
+
     PUBLIC_READ = "public_read"
     AUTHENTICATED_READ = "authenticated_read"
     PRIVATE = "private"
@@ -39,6 +43,7 @@ class AccessLevel(Enum):
 
 class SecurityThreat(Enum):
     """Types of security threats to monitor."""
+
     UNAUTHORIZED_ACCESS = "unauthorized_access"
     DATA_BREACH = "data_breach"
     MALWARE_UPLOAD = "malware_upload"
@@ -74,7 +79,8 @@ class EncryptionConfig:
 
 @dataclass
 class AccessControl:
-    """Access control configuration for storage resources."""
+    """
+Access control configuration for storage resources."""
     
     # Permission settings
     default_access_level: AccessLevel = AccessLevel.PRIVATE
@@ -122,7 +128,8 @@ class AccessControl:
 
 @dataclass
 class ContentScanningConfig:
-    """Content scanning and malware detection configuration."""
+    """
+Content scanning and malware detection configuration."""
     
     # Virus scanning
     enable_virus_scanning: bool = True
@@ -172,7 +179,8 @@ class ContentScanningConfig:
 
 @dataclass
 class AuditingConfig:
-    """Security auditing and logging configuration."""
+    """
+Security auditing and logging configuration."""
     
     # Audit logging
     enable_audit_logging: bool = True
@@ -245,7 +253,8 @@ class StorageSecurityConfig:
     security_cache_ttl_seconds: int = 300
     
     def __post_init__(self):
-        """Initialize security configurations if not provided."""
+        """
+Initialize security configurations if not provided."""
         if self.encryption_config is None:
             self.encryption_config = EncryptionConfig()
         
@@ -270,7 +279,8 @@ class StorageSecurityConfig:
             self.compliance_standards = ['GDPR', 'SOC2', 'ISO27001']
     
     def generate_encryption_key(self, key_type: str = 'file') -> str:
-        """Generate a new encryption key for specified purpose."""
+        """
+Generate a new encryption key for specified purpose."""
         key_lengths = {
             'file': 32,      # 256 bits for file encryption
             'database': 32,  # 256 bits for database encryption
@@ -282,7 +292,8 @@ class StorageSecurityConfig:
         return secrets.token_hex(key_length)
     
     def hash_sensitive_data(self, data: str, salt: Optional[str] = None) -> str:
-        """Hash sensitive data with salt for secure storage."""
+        """
+Hash sensitive data with salt for secure storage."""
         if salt is None:
             salt = secrets.token_hex(16)
         
@@ -309,7 +320,8 @@ class StorageSecurityConfig:
         return operation in ['read']  # Default to read-only
     
     def scan_file_for_threats(self, file_path: str) -> Dict[str, Any]:
-        """Scan file for security threats (simulated)."""
+        """
+Scan file for security threats (simulated)."""
         results = {
             'clean': True,
             'threats_found': [],
@@ -349,7 +361,8 @@ class StorageSecurityConfig:
     
     def generate_access_token(self, user_id: str, permissions: List[str], 
                             duration_hours: int = 24) -> Dict[str, Any]:
-        """Generate secure access token for storage operations."""
+        """
+Generate secure access token for storage operations."""
         token_data = {
             'user_id': user_id,
             'permissions': permissions,
@@ -370,7 +383,8 @@ class StorageSecurityConfig:
         }
     
     def validate_ip_access(self, client_ip: str) -> bool:
-        """Validate IP address against allow/block lists."""
+        """
+Validate IP address against allow/block lists."""
         # Check blocked IPs first
         for blocked_range in self.access_control.blocked_ip_ranges:
             if self._ip_in_range(client_ip, blocked_range):
@@ -388,7 +402,8 @@ class StorageSecurityConfig:
         return False
     
     def _ip_in_range(self, ip: str, ip_range: str) -> bool:
-        """Check if IP is in specified range (simplified implementation)."""
+        """
+Check if IP is in specified range (simplified implementation)."""
         # This is a simplified implementation
         # In production, use proper IP address libraries
         if '/' in ip_range:
@@ -399,7 +414,8 @@ class StorageSecurityConfig:
             return ip == ip_range
     
     def log_security_event(self, event_type: str, details: Dict[str, Any]):
-        """Log security event for auditing."""
+        """
+Log security event for auditing."""
         if not self.auditing_config.enable_audit_logging:
             return
         
@@ -458,7 +474,8 @@ class StorageSecurityConfig:
         return policies.get(content_type, policies['document'])  # Default to document policy
     
     def validate_configuration(self) -> bool:
-        """Validate storage security configuration."""
+        """
+Validate storage security configuration."""
         try:
             # Check encryption configuration
             if self.encryption_config.encrypt_at_rest and not self.encryption_config.master_key:

@@ -6,13 +6,14 @@ Handles comprehensive processing of audio, video, image, and text content with
 advanced AI-powered optimization and format conversion.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -46,7 +47,9 @@ from ...core.exceptions import ProcessingError, ValidationError
 
 
 class ProcessingQuality(Enum):
-    """Content processing quality levels"""
+    """
+Content processing quality levels"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
@@ -55,6 +58,7 @@ class ProcessingQuality(Enum):
 
 class OutputFormat(Enum):
     """Supported output formats"""
+
     ORIGINAL = "original"
     OPTIMIZED = "optimized"
     COMPRESSED = "compressed"
@@ -107,7 +111,8 @@ class MultiFormatProcessor:
     """
     
     def __init__(self):
-        """Initialize MultiFormatProcessor with specialized processors."""
+        """
+Initialize MultiFormatProcessor with specialized processors."""
         self.logger = logging.getLogger(__name__)
         
         # Initialize specialized processors
@@ -156,7 +161,8 @@ class MultiFormatProcessor:
         }
     
     def _init_ai_models(self):
-        """Initialize AI models for content enhancement"""
+        """
+Initialize AI models for content enhancement"""
         try:
             # Image enhancement models
             self.image_enhancer = pipeline(
@@ -805,7 +811,8 @@ class MultiFormatProcessor:
             return audio_data
     
     def _compress_dynamic_range(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply dynamic range compression"""
+        """
+Apply dynamic range compression"""
         try:
             # Simple compression using numpy
             threshold = 0.7
@@ -827,7 +834,8 @@ class MultiFormatProcessor:
             return audio_data
     
     async def _generate_waveform_thumbnail(self, audio_data: np.ndarray, sample_rate: int) -> bytes:
-        """Generate waveform visualization thumbnail"""
+        """
+Generate waveform visualization thumbnail"""
         try:
             import matplotlib.pyplot as plt
             import matplotlib
@@ -1042,7 +1050,8 @@ class MultiFormatProcessor:
             return text
     
     async def _analyze_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Analyze audio quality metrics"""
+        """
+Analyze audio quality metrics"""
         try:
             metrics = {}
             
@@ -1222,5 +1231,6 @@ class MultiFormatProcessor:
         return self.supported_formats.copy()
     
     def get_quality_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Get quality presets configuration"""
+        """
+Get quality presets configuration"""
         return {preset.value: config for preset, config in self.quality_presets.items()}

@@ -14,6 +14,7 @@ This module provides comprehensive auto-scaling capabilities for the IA Influenc
 Agent platform, supporting intelligent scaling decisions, predictive scaling,
 and multi-cloud scaling orchestration.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -29,7 +30,9 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class ScalingAction(Enum):
-    """Auto-scaling actions"""
+    """
+Auto-scaling actions"""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
@@ -38,6 +41,7 @@ class ScalingAction(Enum):
 
 class ScalingPolicy(Enum):
     """Scaling policy types"""
+
     TARGET_TRACKING = "target_tracking"
     STEP_SCALING = "step_scaling"
     SIMPLE_SCALING = "simple_scaling"
@@ -46,6 +50,7 @@ class ScalingPolicy(Enum):
 
 class MetricType(Enum):
     """Scaling metric types"""
+
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     NETWORK_IO = "network_io"
@@ -71,7 +76,8 @@ class ScalingMetric:
 
 @dataclass
 class ScalingConfiguration:
-    """Auto-scaling configuration"""
+    """
+Auto-scaling configuration"""
     resource_id: str
     resource_type: str
     min_capacity: int
@@ -88,7 +94,8 @@ class ScalingConfiguration:
 
 @dataclass
 class ScalingEvent:
-    """Auto-scaling event"""
+    """
+Auto-scaling event"""
     event_id: str
     resource_id: str
     action: ScalingAction
@@ -103,7 +110,8 @@ class ScalingEvent:
 
 @dataclass
 class PredictionData:
-    """Scaling prediction data"""
+    """
+Scaling prediction data"""
     resource_id: str
     predicted_load: float
     confidence_score: float
@@ -112,10 +120,12 @@ class PredictionData:
     created_at: datetime
 
 class CloudAutoScaler:
-    """Enterprise cloud auto-scaling management system"""
+    """
+Enterprise cloud auto-scaling management system"""
     
     def __init__(self):
-        """Initialize cloud auto-scaler"""
+        """
+Initialize cloud auto-scaler"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.scaling_configs: Dict[str, ScalingConfiguration] = {}
         self.scaling_history: List[ScalingEvent] = []
@@ -128,7 +138,8 @@ class CloudAutoScaler:
         self.is_trained = False
         
     async def initialize(self) -> bool:
-        """Initialize auto-scaler"""
+        """
+Initialize auto-scaler"""
         try:
             self.logger.info("Initializing cloud auto-scaler")
             
@@ -467,7 +478,8 @@ class CloudAutoScaler:
     
     async def _generate_load_prediction(self, resource_id: str, 
                                       current_metrics: Dict[str, float]) -> Optional[PredictionData]:
-        """Generate load prediction using ML model"""
+        """
+Generate load prediction using ML model"""
         if resource_id not in self.prediction_models:
             return None
         
@@ -534,7 +546,8 @@ class CloudAutoScaler:
     
     async def _calculate_prediction_confidence(self, historical_data: List[Dict[str, Any]], 
                                              predicted_load: float) -> float:
-        """Calculate confidence score for prediction"""
+        """
+Calculate confidence score for prediction"""
         # Simple confidence calculation based on data variance
         recent_loads = [data.get('cpu_utilization', 0) for data in historical_data[-10:]]
         
@@ -549,7 +562,8 @@ class CloudAutoScaler:
         return confidence
     
     async def _resolve_scaling_decisions(self, decisions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Resolve multiple scaling decisions"""
+        """
+Resolve multiple scaling decisions"""
         if not decisions:
             return {"action": ScalingAction.NO_ACTION, "reason": "No scaling decisions"}
         
@@ -610,7 +624,8 @@ class CloudAutoScaler:
         return datetime.now() < cooldown_end
     
     async def _store_metrics(self, resource_id: str, metrics: Dict[str, float]) -> None:
-        """Store metrics data for historical analysis"""
+        """
+Store metrics data for historical analysis"""
         metrics_entry = {
             "timestamp": datetime.now().isoformat(),
             **metrics
@@ -638,7 +653,8 @@ class CloudAutoScaler:
     
     async def _execute_resource_scaling(self, config: ScalingConfiguration, 
                                       action: ScalingAction, new_capacity: int) -> bool:
-        """Execute scaling action on the actual resource"""
+        """
+Execute scaling action on the actual resource"""
         # This would integrate with cloud provider APIs
         # For now, return success simulation
         self.logger.info(f"Executing {action.value} for {config.resource_type} {config.resource_id} to capacity {new_capacity}")
@@ -676,17 +692,20 @@ class CloudAutoScaler:
         pass
     
     async def _initialize_prediction_models(self) -> None:
-        """Initialize ML prediction models"""
+        """
+Initialize ML prediction models"""
         # Initialize basic linear regression models for each resource
         # Real implementation would use more sophisticated models
         pass
     
     async def _setup_predictive_model(self, resource_id: str) -> None:
-        """Setup predictive model for resource"""
+        """
+Setup predictive model for resource"""
         self.prediction_models[resource_id] = LinearRegression()
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while True:
             try:
                 # Check all configured resources

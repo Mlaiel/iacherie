@@ -18,7 +18,7 @@ Features:
 - Deployment validation and verification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -26,6 +26,7 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
+
 import asyncio
 import logging
 import functools
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentPhase(Enum):
-    """Deployment phases for IA Influencer Agent collaboration services."""
+    """
+Deployment phases for IA Influencer Agent collaboration services."""
+
     INITIALIZATION = "initialization"
     VALIDATION = "validation"
     PREPARATION = "preparation"
@@ -67,6 +70,7 @@ class DeploymentPhase(Enum):
 
 class MetricCategory(Enum):
     """Categories of deployment and operational metrics."""
+
     PERFORMANCE = "performance"
     AVAILABILITY = "availability"
     RELIABILITY = "reliability"
@@ -79,6 +83,7 @@ class MetricCategory(Enum):
 
 class UtilityType(Enum):
     """Types of utility functions."""
+
     VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     CALCULATION = "calculation"
@@ -134,11 +139,13 @@ class DeploymentStep:
 
 
 class CreatorDeploymentUtilities:
-    """Creator-specific deployment utilities for the IA Influencer Agent platform."""
+    """
+Creator-specific deployment utilities for the IA Influencer Agent platform."""
     
     @staticmethod
     def validate_creator_deployment_config(config: Dict[str, Any]) -> ValidationResult:
-        """Validate creator-specific deployment configuration."""
+        """
+Validate creator-specific deployment configuration."""
         errors = []
         warnings = []
         recommendations = []
@@ -326,7 +333,8 @@ class AdvancedDeploymentUtilities:
     
     @staticmethod
     async def validate_kubernetes_cluster(cluster_config: Dict[str, Any]) -> ValidationResult:
-        """Validate Kubernetes cluster configuration and health."""
+        """
+Validate Kubernetes cluster configuration and health."""
         checks = []
         
         try:
@@ -541,7 +549,8 @@ class DeploymentUtils:
     
     @staticmethod
     def generate_deployment_id(deployment_name: str, creator_id: Optional[str] = None) -> str:
-        """Generate unique deployment ID with optional creator context."""
+        """
+Generate unique deployment ID with optional creator context."""
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         unique_suffix = secrets.token_hex(4)
         
@@ -573,7 +582,8 @@ class DeploymentUtils:
     
     @staticmethod
     def validate_kubernetes_name(name: str) -> bool:
-        """Validate Kubernetes resource name format."""
+        """
+Validate Kubernetes resource name format."""
         if not name or len(name) > 63:
             return False
         
@@ -585,7 +595,8 @@ class DeploymentUtils:
     
     @staticmethod
     def calculate_checksum(data: Any) -> str:
-        """Calculate SHA256 checksum of data."""
+        """
+Calculate SHA256 checksum of data."""
         if isinstance(data, dict):
             data_str = json.dumps(data, sort_keys=True)
         elif isinstance(data, str):
@@ -597,7 +608,8 @@ class DeploymentUtils:
     
     @staticmethod
     def format_resource_value(value: Union[int, float], unit: str) -> str:
-        """Format resource values for Kubernetes specifications."""
+        """
+Format resource values for Kubernetes specifications."""
         if unit.lower() in ['cpu', 'cores']:
             return f"{value}"
         elif unit.lower() in ['memory', 'ram', 'mi', 'mb']:
@@ -643,7 +655,8 @@ class DeploymentUtils:
     
     @staticmethod
     def extract_errors_from_logs(logs: str, error_patterns: List[str] = None) -> List[str]:
-        """Extract error messages from logs using patterns."""
+        """
+Extract error messages from logs using patterns."""
         if error_patterns is None:
             error_patterns = [
                 r'ERROR.*',
@@ -683,7 +696,8 @@ def current_timestamp() -> str:
 
 
 def safe_get(dictionary: Dict[str, Any], key_path: str, default: Any = None) -> Any:
-    """Safely get nested dictionary value using dot notation."""
+    """
+Safely get nested dictionary value using dot notation."""
     keys = key_path.split('.')
     value = dictionary
     
@@ -696,7 +710,8 @@ def safe_get(dictionary: Dict[str, Any], key_path: str, default: Any = None) -> 
 
 
 def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
-    """Decorator for retrying functions on failure."""
+    """
+Decorator for retrying functions on failure."""
     def decorator(func):
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
@@ -751,19 +766,22 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def encode_base64(data: Union[str, bytes]) -> str:
-        """Encode data to base64."""
+        """
+Encode data to base64."""
         if isinstance(data, str):
             data = data.encode('utf-8')
         return base64.b64encode(data).decode('utf-8')
     
     @staticmethod
     def decode_base64(data: str) -> str:
-        """Decode base64 data."""
+        """
+Decode base64 data."""
         return base64.b64decode(data).decode('utf-8')
     
     @staticmethod
     def sanitize_label_value(value: str) -> str:
-        """Sanitize value for Kubernetes labels."""
+        """
+Sanitize value for Kubernetes labels."""
         # Kubernetes label values must be 63 characters or less
         # and match the regex [a-z0-9A-Z]([a-z0-9A-Z\-\_\.]*[a-z0-9A-Z])?
         sanitized = re.sub(r'[^a-zA-Z0-9\-_.]', '-', value)
@@ -938,12 +956,14 @@ class CollaborationMetrics:
     """
     
     def __init__(self):
-        """Initialize metrics collector."""
+        """
+Initialize metrics collector."""
         self.metrics: List[DeploymentMetric] = []
         self.start_time = datetime.utcnow()
         
     def add_metric(self, metric: DeploymentMetric) -> None:
-        """Add a metric to the collection."""
+        """
+Add a metric to the collection."""
         self.metrics.append(metric)
         logger.debug(f"Added metric: {metric.name} = {metric.value} {metric.unit}")
     
@@ -962,7 +982,8 @@ class CollaborationMetrics:
     
     def record_timing_metric(self, operation_name: str, start_time: datetime, 
                            end_time: datetime = None) -> None:
-        """Record timing metric for an operation."""
+        """
+Record timing metric for an operation."""
         if end_time is None:
             end_time = datetime.utcnow()
         
@@ -1080,13 +1101,15 @@ class CollaborationMetrics:
         return [m for m in self.metrics if m.category == category]
     
     def get_metrics_by_name_pattern(self, pattern: str) -> List[DeploymentMetric]:
-        """Get metrics matching name pattern."""
+        """
+Get metrics matching name pattern."""
         import re
         compiled_pattern = re.compile(pattern)
         return [m for m in self.metrics if compiled_pattern.search(m.name)]
     
     def calculate_sla_metrics(self, target_availability: float = 99.9) -> Dict[str, Any]:
-        """Calculate SLA metrics."""
+        """
+Calculate SLA metrics."""
         availability_metrics = self.get_metrics_by_category(MetricCategory.AVAILABILITY)
         
         if not availability_metrics:
@@ -1121,11 +1144,13 @@ class DeploymentValidator:
     """
     
     def __init__(self):
-        """Initialize deployment validator."""
+        """
+Initialize deployment validator."""
         self.validation_results: List[ValidationResult] = []
     
     def add_validation_result(self, result: ValidationResult) -> None:
-        """Add validation result."""
+        """
+Add validation result."""
         self.validation_results.append(result)
         
         log_level = logging.ERROR if not result.passed else logging.INFO
@@ -1288,14 +1313,16 @@ class DeploymentOrchestrator:
     """
     
     def __init__(self):
-        """Initialize deployment orchestrator."""
+        """
+Initialize deployment orchestrator."""
         self.steps: List[DeploymentStep] = []
         self.executed_steps: List[str] = []
         self.failed_steps: List[str] = []
         self.metrics = CollaborationMetrics()
     
     def add_step(self, step: DeploymentStep) -> None:
-        """Add deployment step."""
+        """
+Add deployment step."""
         self.steps.append(step)
         logger.info(f"Added deployment step: {step.name}")
     

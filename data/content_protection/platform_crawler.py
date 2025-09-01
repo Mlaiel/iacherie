@@ -5,7 +5,7 @@ Industrial-grade web crawling and monitoring system for content protection.
 Monitors multiple platforms for unauthorized content usage with AI-powered detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -50,7 +51,9 @@ from redis import Redis
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -64,6 +67,7 @@ class PlatformType(Enum):
 
 class CrawlMethod(Enum):
     """Crawling methods"""
+
     API_OFFICIAL = "api_official"
     WEB_SCRAPING = "web_scraping"
     RSS_FEED = "rss_feed"
@@ -73,6 +77,7 @@ class CrawlMethod(Enum):
 
 class ContentStatus(Enum):
     """Crawled content status"""
+
     DISCOVERED = "discovered"
     ANALYZING = "analyzing"
     MATCHED = "matched"
@@ -97,7 +102,8 @@ class CrawlTarget:
 
 @dataclass
 class CrawledContent:
-    """Discovered content from crawling"""
+    """
+Discovered content from crawling"""
     content_id: str
     platform: PlatformType
     url: str
@@ -118,7 +124,8 @@ class CrawledContent:
 
 @dataclass
 class CrawlResult:
-    """Crawling session result"""
+    """
+Crawling session result"""
     crawl_id: str
     target_id: str
     platform: PlatformType
@@ -177,7 +184,8 @@ class PlatformCrawler:
         self.driver = None
     
     def _initialize_api_clients(self):
-        """Initialize platform API clients"""
+        """
+Initialize platform API clients"""
         try:
             # YouTube API
             if 'youtube_api_key' in self.config:
@@ -216,13 +224,15 @@ class PlatformCrawler:
             )
     
     async def close_crawler_session(self):
-        """Close crawler session"""
+        """
+Close crawler session"""
         if self.session:
             await self.session.close()
             self.session = None
     
     def _get_selenium_driver(self):
-        """Get configured Selenium WebDriver"""
+        """
+Get configured Selenium WebDriver"""
         if self.driver is None:
             options = Options()
             options.add_argument('--headless')
@@ -238,7 +248,8 @@ class PlatformCrawler:
         return self.driver
     
     def _close_selenium_driver(self):
-        """Close Selenium WebDriver"""
+        """
+Close Selenium WebDriver"""
         if self.driver:
             self.driver.quit()
             self.driver = None

@@ -6,6 +6,7 @@ Handles invitations, approvals, and team member onboarding workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class InvitationStatus(Enum):
-    """Invitation status enumeration"""
+    """
+Invitation status enumeration"""
+
     PENDING = "pending"
     SENT = "sent"
     VIEWED = "viewed"
@@ -42,6 +45,7 @@ class InvitationStatus(Enum):
 
 class InvitationType(Enum):
     """Invitation type enumeration"""
+
     PROJECT_COLLABORATION = "project_collaboration"
     TEAM_MEMBERSHIP = "team_membership"
     CONTENT_REVIEW = "content_review"
@@ -51,6 +55,7 @@ class InvitationType(Enum):
 
 class OnboardingStage(Enum):
     """Onboarding stage enumeration"""
+
     INVITATION_SENT = "invitation_sent"
     PROFILE_SETUP = "profile_setup"
     SKILL_ASSESSMENT = "skill_assessment"
@@ -279,7 +284,8 @@ class InvitationTemplate(Base):
 
 @dataclass
 class InvitationRequest:
-    """Data class for invitation creation requests"""
+    """
+Data class for invitation creation requests"""
     project_id: str
     invited_email: str
     invitation_type: InvitationType
@@ -294,7 +300,8 @@ class InvitationRequest:
 
 @dataclass
 class OnboardingConfig:
-    """Data class for onboarding configuration"""
+    """
+Data class for onboarding configuration"""
     project_id: str
     user_id: str
     invitation_id: str = None
@@ -714,7 +721,8 @@ class InvitationSystemManager:
         return secrets.token_urlsafe(self.token_length)
     
     def _generate_invitation_id(self, project_id: str) -> str:
-        """Generate unique invitation identifier"""
+        """
+Generate unique invitation identifier"""
         timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"INV-{timestamp}-{random_suffix}"
@@ -751,7 +759,8 @@ class InvitationSystemManager:
         return permissions.get(role.lower(), permissions['content_creator'])
     
     def _generate_subject(self, template: Optional[InvitationTemplate], request: InvitationRequest) -> str:
-        """Generate invitation subject line"""
+        """
+Generate invitation subject line"""
         if template and template.subject_template:
             return template.subject_template.format(
                 project_name="[Project Name]",  # Would be filled from actual project
@@ -795,7 +804,8 @@ class InvitationSystemManager:
         }
     
     def _generate_follow_up_schedule(self, expires_in_days: int) -> Dict[str, Any]:
-        """Generate follow-up reminder schedule"""
+        """
+Generate follow-up reminder schedule"""
         schedule = {
             'enabled': True,
             'reminders': []
@@ -820,7 +830,8 @@ class InvitationSystemManager:
         return schedule
     
     def _initialize_stage_progress(self, custom_stages: List[str] = None) -> Dict[str, Any]:
-        """Initialize onboarding stage progress tracking"""
+        """
+Initialize onboarding stage progress tracking"""
         progress = {}
         
         # Standard stages
@@ -857,7 +868,8 @@ class InvitationSystemManager:
         }
     
     def _get_next_onboarding_stage(self, current_stage: OnboardingStage) -> Optional[OnboardingStage]:
-        """Get next onboarding stage in sequence"""
+        """
+Get next onboarding stage in sequence"""
         stages = list(OnboardingStage)
         try:
             current_index = stages.index(current_stage)

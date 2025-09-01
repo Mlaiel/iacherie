@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for YouTube Crawler
+"""
+Unit tests for YouTube Crawler
 Tests for YouTube content surveillance and monitoring functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -31,11 +34,13 @@ from crawlers.youtube_crawler import YouTubeVideoData, YouTubeMonitoringResult
 
 
 class TestYouTubeCrawler:
-    """Test suite for YouTube crawler functionality"""
+    """
+Test suite for YouTube crawler functionality"""
     
     @pytest.fixture
     def sample_video_data(self):
-        """Sample YouTube video data for testing"""
+        """
+Sample YouTube video data for testing"""
         return YouTubeVideoData(
             video_id="dQw4w9WgXcQ",
             title="Test Video Title",

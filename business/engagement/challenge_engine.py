@@ -9,7 +9,7 @@ Module: backend/business/engagement/challenge_engine.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Challenge Participation → Distribution → Monetization → Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChallengeType(str, Enum):
-    """Types of challenges available in the system."""
+    """
+Types of challenges available in the system."""
+
     CREATIVE = "creative"
     TECHNICAL = "technical"
     COLLABORATIVE = "collaborative"
@@ -60,6 +63,7 @@ class ChallengeType(str, Enum):
 
 class ChallengeDifficulty(str, Enum):
     """Difficulty levels for challenges."""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -69,6 +73,7 @@ class ChallengeDifficulty(str, Enum):
 
 class ChallengeStatus(str, Enum):
     """Status of a challenge."""
+
     DRAFT = "draft"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -78,6 +83,7 @@ class ChallengeStatus(str, Enum):
 
 class ParticipationStatus(str, Enum):
     """Status of user participation in a challenge."""
+
     REGISTERED = "registered"
     IN_PROGRESS = "in_progress"
     SUBMITTED = "submitted"
@@ -88,6 +94,7 @@ class ParticipationStatus(str, Enum):
 
 class ContentFormat(str, Enum):
     """Content formats for challenges."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -189,7 +196,8 @@ class Challenge:
         return True
     
     def can_register(self) -> bool:
-        """Check if new participants can register."""
+        """
+Check if new participants can register."""
         if not self.is_active():
             return False
         
@@ -199,7 +207,8 @@ class Challenge:
         return True
     
     def get_time_remaining(self) -> Optional[timedelta]:
-        """Get time remaining in the challenge."""
+        """
+Get time remaining in the challenge."""
         if not self.end_date:
             return None
         
@@ -212,7 +221,8 @@ class Challenge:
 
 @dataclass
 class ChallengeParticipation:
-    """Represents a user's participation in a challenge."""
+    """
+Represents a user's participation in a challenge."""
     participation_id: str = field(default_factory=lambda: str(uuid4()))
     challenge_id: str = ""
     user_id: str = ""
@@ -247,7 +257,8 @@ class ChallengeParticipation:
         return self.status in [ParticipationStatus.COMPLETED, ParticipationStatus.SUBMITTED]
     
     def can_submit(self) -> bool:
-        """Check if user can submit for this challenge."""
+        """
+Check if user can submit for this challenge."""
         return self.status in [ParticipationStatus.REGISTERED, ParticipationStatus.IN_PROGRESS]
 
 
@@ -260,7 +271,8 @@ class ChallengeEngine:
     """
     
     def __init__(self):
-        """Initialize the challenge engine."""
+        """
+Initialize the challenge engine."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._challenges: Dict[str, Challenge] = {}
         self._participations: Dict[str, ChallengeParticipation] = {}
@@ -646,7 +658,8 @@ class ChallengeEngine:
         user_id: str,
         submission_data: Dict[str, Any]
     ) -> bool:
-        """Submit an entry for a challenge."""
+        """
+Submit an entry for a challenge."""
         try:
             participation = self._get_user_participation(challenge_id, user_id)
             if not participation:
@@ -861,7 +874,8 @@ class ChallengeEngine:
         challenge_type: Optional[ChallengeType] = None,
         difficulty: Optional[ChallengeDifficulty] = None
     ) -> List[Challenge]:
-        """Get list of active challenges with optional filtering."""
+        """
+Get list of active challenges with optional filtering."""
         challenges = []
         
         for challenge in self._challenges.values():
@@ -892,7 +906,8 @@ class ChallengeEngine:
         user_id: str,
         status_filter: Optional[ParticipationStatus] = None
     ) -> List[Tuple[Challenge, ChallengeParticipation]]:
-        """Get challenges that a user is participating in."""
+        """
+Get challenges that a user is participating in."""
         user_challenges = []
         
         for participation in self._participations.values():
@@ -916,7 +931,8 @@ class ChallengeEngine:
         challenge_id: str,
         limit: int = 50
     ) -> List[Tuple[ChallengeParticipation, int]]:
-        """Get leaderboard for a specific challenge."""
+        """
+Get leaderboard for a specific challenge."""
         if challenge_id not in self._challenges:
             raise ValueError(f"Challenge {challenge_id} not found")
         
@@ -1041,7 +1057,8 @@ class ChallengeEngine:
         challenge: Challenge,
         user_profile: Dict[str, Any]
     ) -> float:
-        """Calculate recommendation score for a challenge based on user profile."""
+        """
+Calculate recommendation score for a challenge based on user profile."""
         score = 0.0
         
         # Difficulty matching
@@ -1109,7 +1126,8 @@ async def create_challenge_from_template(
     template_name: str,
     custom_params: Optional[Dict[str, Any]] = None
 ) -> Challenge:
-    """Create a challenge from a template (convenience function)."""
+    """
+Create a challenge from a template (convenience function)."""
     engine = await get_challenge_engine()
     return await engine.create_challenge(template_name, custom_params)
 
@@ -1119,6 +1137,7 @@ async def register_for_challenge(
     user_id: str,
     team_id: Optional[str] = None
 ) -> ChallengeParticipation:
-    """Register a user for a challenge (convenience function)."""
+    """
+Register a user for a challenge (convenience function)."""
     engine = await get_challenge_engine()
     return await engine.register_participant(challenge_id, user_id, team_id)

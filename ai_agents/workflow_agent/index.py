@@ -12,6 +12,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowAgentFactory:
-    """Factory class for creating and configuring Workflow Agent instances."""
+    """
+Factory class for creating and configuring Workflow Agent instances."""
     
     @staticmethod
     async def create_agent(
@@ -126,7 +128,8 @@ class WorkflowTemplateLibrary:
     
     @staticmethod
     def get_template_recommendations(user_profile: Dict[str, Any]) -> List[str]:
-        """Get template recommendations based on user profile."""
+        """
+Get template recommendations based on user profile."""
         try:
             user_type = user_profile.get('type', 'content_creator')
             interests = user_profile.get('interests', [])
@@ -214,7 +217,8 @@ class WorkflowTemplateLibrary:
 
 
 class QuickWorkflowBuilder:
-    """Builder for creating common workflows quickly."""
+    """
+Builder for creating common workflows quickly."""
     
     @staticmethod
     async def create_content_publishing_workflow(
@@ -379,7 +383,8 @@ class WorkflowUtilities:
         agent: WorkflowAgent,
         workflow_configs: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Execute multiple workflows in parallel."""
+        """
+Execute multiple workflows in parallel."""
         try:
             tasks = []
             
@@ -478,7 +483,8 @@ async def create_simple_workflow(
     name: str,
     tasks: List[Dict[str, Any]]
 ) -> str:
-    """Create a simple sequential workflow from a list of tasks."""
+    """
+Create a simple sequential workflow from a list of tasks."""
     try:
         nodes = []
         edges = []

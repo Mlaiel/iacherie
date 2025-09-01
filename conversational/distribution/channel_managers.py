@@ -6,6 +6,7 @@ Each manager handles the specific characteristics and optimization for its platf
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class BasePlatformManager(ABC):
-    """Base class for all platform managers"""
+    """
+Base class for all platform managers"""
     
     def __init__(self, db: Session):
         self.db = db
@@ -41,7 +43,8 @@ class BasePlatformManager(ABC):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to the platform"""
+        """
+Distribute content to the platform"""
         pass
     
     @abstractmethod
@@ -50,7 +53,8 @@ class BasePlatformManager(ABC):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get metrics for specific content"""
+        """
+Get metrics for specific content"""
         pass
     
     @abstractmethod
@@ -59,25 +63,29 @@ class BasePlatformManager(ABC):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete content from platform"""
+        """
+Delete content from platform"""
         pass
     
     async def get_session(self, platform: str) -> aiohttp.ClientSession:
-        """Get or create HTTP session for platform"""
+        """
+Get or create HTTP session for platform"""
         if platform not in self.session_pool:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session_pool[platform] = aiohttp.ClientSession(timeout=timeout)
         return self.session_pool[platform]
     
     async def close_sessions(self):
-        """Close all HTTP sessions"""
+        """
+Close all HTTP sessions"""
         for session in self.session_pool.values():
             await session.close()
         self.session_pool.clear()
 
 
 class YouTubeChannelManager(BasePlatformManager):
-    """YouTube platform manager with advanced features"""
+    """
+YouTube platform manager with advanced features"""
     
     def __init__(self, db: Session):
         super().__init__(db)

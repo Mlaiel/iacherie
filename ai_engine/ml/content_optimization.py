@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive content optimization capabilities for improving
 engagement, SEO, and performance across multiple platforms and content types.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -20,7 +21,9 @@ from collections import Counter
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of content optimization"""
+    """
+Types of content optimization"""
+
     SEO = "seo"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
@@ -34,6 +37,7 @@ class OptimizationType(Enum):
 
 class ContentType(Enum):
     """Content types for optimization"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -47,6 +51,7 @@ class ContentType(Enum):
 
 class Platform(Enum):
     """Platforms for content optimization"""
+
     WEBSITE = "website"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -74,7 +79,8 @@ class OptimizationMetrics:
 
 @dataclass
 class OptimizationSuggestion:
-    """Individual optimization suggestion"""
+    """
+Individual optimization suggestion"""
     suggestion_id: str
     type: OptimizationType
     priority: str  # high, medium, low
@@ -102,7 +108,8 @@ class OptimizationResult:
 
 @dataclass
 class SEOAnalysis:
-    """SEO-specific analysis results"""
+    """
+SEO-specific analysis results"""
     title_optimization: Dict[str, Any] = field(default_factory=dict)
     meta_description: Dict[str, Any] = field(default_factory=dict)
     headings_structure: Dict[str, Any] = field(default_factory=dict)
@@ -116,7 +123,8 @@ class SEOAnalysis:
     mobile_friendly: bool = True
 
 class ContentOptimizer:
-    """Main content optimization engine"""
+    """
+Main content optimization engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -377,7 +385,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_engagement_score(self, content: str, platform: Platform) -> float:
-        """Calculate engagement potential score"""
+        """
+Calculate engagement potential score"""
         score = 0.0
         content_lower = content.lower()
         
@@ -464,7 +473,8 @@ class ContentOptimizer:
         return min(100.0, readability)
     
     def _calculate_viral_potential(self, content: str, platform: Platform) -> float:
-        """Calculate viral potential score"""
+        """
+Calculate viral potential score"""
         score = 0.0
         content_lower = content.lower()
         
@@ -521,7 +531,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_quality_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate content quality score"""
+        """
+Calculate content quality score"""
         score = 0.0
         
         # Content length appropriateness
@@ -591,7 +602,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_accessibility_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate accessibility score"""
+        """
+Calculate accessibility score"""
         score = 0.0
         
         # Simple language usage
@@ -654,7 +666,8 @@ class ContentOptimizer:
         return max(0.0, min(100.0, score))
     
     def _calculate_brand_alignment(self, content: str) -> float:
-        """Calculate brand alignment score (simplified)"""
+        """
+Calculate brand alignment score (simplified)"""
         score = 50.0  # Neutral starting point
         
         # Professional tone indicators
@@ -679,7 +692,8 @@ class ContentOptimizer:
         return max(0.0, min(100.0, score))
     
     def _calculate_conversion_potential(self, content: str, content_type: ContentType) -> float:
-        """Calculate conversion potential score"""
+        """
+Calculate conversion potential score"""
         score = 0.0
         content_lower = content.lower()
         
@@ -740,7 +754,8 @@ class ContentOptimizer:
                                          target_keywords: Optional[List[str]],
                                          target_audience: Optional[str],
                                          current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate specific optimization suggestions"""
+        """
+Generate specific optimization suggestions"""
         suggestions = []
         
         try:
@@ -1172,7 +1187,8 @@ class ContentOptimizer:
         return self.optimization_history[-limit:]
     
     def get_platform_guidelines(self, platform: Platform) -> Dict[str, Any]:
-        """Get optimization guidelines for specific platform"""
+        """
+Get optimization guidelines for specific platform"""
         return self.platform_guidelines.get(platform.value, {})
 
 # Export main classes

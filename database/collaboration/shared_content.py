@@ -6,6 +6,7 @@ Handles content versioning, access control, and real-time synchronization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ContentType(Enum):
-    """Content type enumeration for multi-format support"""
+    """
+Content type enumeration for multi-format support"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -48,6 +51,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content status enumeration"""
+
     DRAFT = "draft"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -58,6 +62,7 @@ class ContentStatus(Enum):
 
 class AccessLevel(Enum):
     """Access level enumeration"""
+
     OWNER = "owner"
     EDITOR = "editor"
     VIEWER = "viewer"
@@ -293,7 +298,8 @@ class ContentComment(Base):
 
 @dataclass
 class ContentUploadRequest:
-    """Data class for content upload requests"""
+    """
+Data class for content upload requests"""
     title: str
     project_id: str
     owner_id: str
@@ -309,7 +315,8 @@ class ContentUploadRequest:
 
 @dataclass
 class ContentUpdateRequest:
-    """Data class for content update requests"""
+    """
+Data class for content update requests"""
     content_id: str
     title: str = None
     description: str = None
@@ -978,7 +985,8 @@ class SharedContentManager:
         return safe_name[:100]  # Limit length
     
     async def _upload_to_s3(self, file_data: bytes, storage_path: str) -> str:
-        """Upload file to S3 storage"""
+        """
+Upload file to S3 storage"""
         try:
             response = self.s3_client.put_object(
                 Bucket=self.default_bucket,
@@ -1026,7 +1034,8 @@ class SharedContentManager:
         return content_format, mime_type or 'application/octet-stream'
     
     async def _extract_content_metadata(self, file_data: bytes, content_format: ContentFormat) -> Dict[str, Any]:
-        """Extract format-specific metadata"""
+        """
+Extract format-specific metadata"""
         metadata = {}
         
         # This would integrate with libraries like:
@@ -1042,7 +1051,8 @@ class SharedContentManager:
         return metadata
     
     async def _analyze_technical_specs(self, file_data: bytes, content_format: ContentFormat) -> Dict[str, Any]:
-        """Analyze technical specifications"""
+        """
+Analyze technical specifications"""
         specs = {}
         
         # This would analyze:
@@ -1057,7 +1067,8 @@ class SharedContentManager:
         return specs
     
     def _default_access_permissions(self, access_level: AccessLevel) -> Dict[str, Any]:
-        """Generate default access permissions"""
+        """
+Generate default access permissions"""
         return {
             'default_access_level': access_level.value,
             'inheritance_enabled': True,
@@ -1066,7 +1077,8 @@ class SharedContentManager:
         }
     
     def _default_sharing_settings(self) -> Dict[str, Any]:
-        """Generate default sharing settings"""
+        """
+Generate default sharing settings"""
         return {
             'public_sharing_enabled': False,
             'link_sharing_enabled': True,
@@ -1076,7 +1088,8 @@ class SharedContentManager:
         }
     
     async def _create_owner_access(self, content_id: uuid.UUID, owner_id: str):
-        """Create owner access record"""
+        """
+Create owner access record"""
         owner_access = ContentAccess(
             content_id=content_id,
             user_id=uuid.UUID(owner_id),
@@ -1093,7 +1106,8 @@ class SharedContentManager:
         self.db_session.add(owner_access)
     
     def _get_permissions_for_level(self, access_level: AccessLevel) -> Dict[str, bool]:
-        """Get permissions dictionary for access level"""
+        """
+Get permissions dictionary for access level"""
         permissions = {
             AccessLevel.OWNER: {
                 'can_view': True,

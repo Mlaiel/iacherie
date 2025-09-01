@@ -6,6 +6,7 @@ including content gap analysis, keyword monitoring, and competitive positioning 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class CompetitorType(Enum):
-    """Types of competitors"""
+    """
+Types of competitors"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     SUBSTITUTE = "substitute"
@@ -28,6 +31,7 @@ class CompetitorType(Enum):
 
 class AnalysisType(Enum):
     """Types of competitive analysis"""
+
     KEYWORD_GAP = "keyword_gap"
     CONTENT_GAP = "content_gap"
     BACKLINK_ANALYSIS = "backlink_analysis"
@@ -38,6 +42,7 @@ class AnalysisType(Enum):
 
 class Platform(Enum):
     """Platforms for competitive analysis"""
+
     WEBSITE = "website"
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
@@ -64,7 +69,8 @@ class CompetitorProfile:
 
 @dataclass
 class KeywordGap:
-    """Keyword gap analysis result"""
+    """
+Keyword gap analysis result"""
     keyword: str
     competitor_rank: int
     user_rank: Optional[int]
@@ -76,7 +82,8 @@ class KeywordGap:
 
 @dataclass
 class ContentGap:
-    """Content gap analysis result"""
+    """
+Content gap analysis result"""
     topic: str
     competitor_coverage: int
     user_coverage: int
@@ -88,7 +95,8 @@ class ContentGap:
 
 @dataclass
 class CompetitiveIntelligenceResult:
-    """Complete competitive intelligence analysis"""
+    """
+Complete competitive intelligence analysis"""
     competitor_profiles: List[CompetitorProfile]
     keyword_gaps: List[KeywordGap]
     content_gaps: List[ContentGap]
@@ -329,7 +337,8 @@ class CompetitorIntelligence:
         competitors: List[str], 
         user_keywords: List[str]
     ) -> List[KeywordGap]:
-        """Analyze keyword gaps between user and competitors"""
+        """
+Analyze keyword gaps between user and competitors"""
         
         keyword_gaps = []
         
@@ -672,7 +681,8 @@ class CompetitorIntelligence:
         return min(100.0, score)
 
     def _classify_competitor_type(self, competitor: str) -> CompetitorType:
-        """Classify the type of competitor"""
+        """
+Classify the type of competitor"""
         
         # Simplified competitor classification
         major_brands = ["google.com", "microsoft.com", "amazon.com", "apple.com"]
@@ -747,7 +757,8 @@ class CompetitorIntelligence:
         }
 
     def _analyze_content_frequency(self, competitor: str) -> Dict[str, float]:
-        """Analyze content publishing frequency (simulated)"""
+        """
+Analyze content publishing frequency (simulated)"""
         
         # Simulated content frequency analysis
         return {
@@ -899,7 +910,8 @@ class CompetitorIntelligence:
         return min(50, base_rank)
 
     def _identify_competitor_content_topics(self, competitors: List[str]) -> Dict[str, Dict[str, Any]]:
-        """Identify content topics covered by competitors"""
+        """
+Identify content topics covered by competitors"""
         
         topics = {}
         
@@ -954,7 +966,8 @@ class CompetitorIntelligence:
         user_coverage: int, 
         competitor_data: Dict[str, Any]
     ) -> float:
-        """Calculate priority score for content gap"""
+        """
+Calculate priority score for content gap"""
         
         # Gap size factor
         gap_size = max(0, competitor_coverage - user_coverage)

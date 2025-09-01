@@ -8,6 +8,7 @@ Project: IA Influencer Agent with Advanced Content Protection
 
 WARNING: This code is proprietary and confidential. Unauthorized use prohibited.
 """
+
 import pytest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
@@ -50,11 +51,13 @@ from backend.business.client.verification import (
 
 
 class TestClientManager:
-    """Test suite for ClientManager functionality."""
+    """
+Test suite for ClientManager functionality."""
     
     @pytest.fixture
     def client_manager(self):
-        """Create ClientManager instance with mocked dependencies."""
+        """
+Create ClientManager instance with mocked dependencies."""
         mock_db = Mock()
         mock_email_service = AsyncMock()
         mock_analytics_tracker = AsyncMock()
@@ -67,7 +70,8 @@ class TestClientManager:
     
     @pytest.fixture
     def sample_registration_data(self):
-        """Sample client registration data."""
+        """
+Sample client registration data."""
         return ClientRegistrationData(
             email="test.creator@example.com",
             password="SecurePassword123!",
@@ -120,7 +124,8 @@ class TestContentManager:
     
     @pytest.fixture
     def content_manager(self):
-        """Create ContentManager instance with mocked dependencies."""
+        """
+Create ContentManager instance with mocked dependencies."""
         mock_db = Mock()
         mock_file_storage = AsyncMock()
         mock_content_analysis = AsyncMock()
@@ -134,7 +139,8 @@ class TestContentManager:
         )
     
     def test_content_type_determination(self, content_manager):
-        """Test content type determination from filename."""
+        """
+Test content type determination from filename."""
         # Test audio file
         content_type, extension = content_manager._determine_content_type("track.mp3")
         assert content_type.value == "audio"
@@ -189,7 +195,8 @@ class TestSubscriptionManager:
     
     @pytest.fixture
     def subscription_manager(self):
-        """Create SubscriptionManager instance with mocked dependencies."""
+        """
+Create SubscriptionManager instance with mocked dependencies."""
         mock_db = Mock()
         mock_stripe_service = AsyncMock()
         mock_paypal_service = AsyncMock()
@@ -205,7 +212,8 @@ class TestSubscriptionManager:
         )
     
     def test_subscription_plan_configuration(self, subscription_manager):
-        """Test subscription plan configuration."""
+        """
+Test subscription plan configuration."""
         # Check free plan
         free_plan = subscription_manager.plan_config[SubscriptionPlan.FREE]
         assert free_plan["monthly_price"] == Decimal('0.00')
@@ -243,11 +251,13 @@ class TestSubscriptionManager:
 
 
 class TestVerificationManager:
-    """Test suite for VerificationManager functionality."""
+    """
+Test suite for VerificationManager functionality."""
     
     @pytest.fixture
     def verification_manager(self):
-        """Create VerificationManager instance with mocked dependencies."""
+        """
+Create VerificationManager instance with mocked dependencies."""
         mock_db = Mock()
         mock_document_verification = AsyncMock()
         mock_social_verification = AsyncMock()
@@ -265,7 +275,8 @@ class TestVerificationManager:
         )
     
     def test_verification_level_hierarchy(self, verification_manager):
-        """Test verification level calculation."""
+        """
+Test verification level calculation."""
         # Test verification level enum order
         levels = list(VerificationLevel)
         expected_order = [
@@ -283,14 +294,16 @@ class TestVerificationManager:
             assert expected_level in levels
     
     def test_document_type_validation(self):
-        """Test supported document types."""
+        """
+Test supported document types."""
         # Test document type enum
         assert DocumentType.PASSPORT in DocumentType
         assert DocumentType.DRIVERS_LICENSE in DocumentType
         assert DocumentType.NATIONAL_ID in DocumentType
     
     def test_required_documents_mapping(self, verification_manager):
-        """Test required documents for different verification types."""
+        """
+Test required documents for different verification types."""
         # Passport requirements
         passport_docs = verification_manager._get_required_documents(DocumentType.PASSPORT)
         assert "passport_front" in passport_docs
@@ -308,7 +321,8 @@ class TestActivityManager:
     
     @pytest.fixture
     def activity_manager(self):
-        """Create ActivityManager instance with mocked dependencies."""
+        """
+Create ActivityManager instance with mocked dependencies."""
         mock_db = Mock()
         mock_engagement_analytics = AsyncMock()
         mock_behavior_analytics = AsyncMock()
@@ -322,7 +336,8 @@ class TestActivityManager:
         )
     
     def test_activity_importance_scoring(self, activity_manager):
-        """Test activity importance scoring system."""
+        """
+Test activity importance scoring system."""
         from backend.business.client.activity import ActivityType
         
         # High importance activities
@@ -338,11 +353,13 @@ class TestActivityManager:
 
 
 class TestPreferenceManager:
-    """Test suite for PreferenceManager functionality."""
+    """
+Test suite for PreferenceManager functionality."""
     
     @pytest.fixture
     def preference_manager(self):
-        """Create PreferenceManager instance with mocked dependencies."""
+        """
+Create PreferenceManager instance with mocked dependencies."""
         mock_db = Mock()
         mock_notification_service = AsyncMock()
         mock_privacy_service = AsyncMock()
@@ -356,7 +373,8 @@ class TestPreferenceManager:
         )
     
     def test_default_preferences_structure(self, preference_manager):
-        """Test default preferences structure."""
+        """
+Test default preferences structure."""
         from backend.business.client.preference import PreferenceCategory
         
         defaults = preference_manager.default_preferences
@@ -383,7 +401,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_complete_creator_onboarding_workflow(self):
-        """Test complete creator onboarding workflow."""
+        """
+Test complete creator onboarding workflow."""
         # This would test the entire flow:
         # Registration -> Email Verification -> Profile Setup -> 
         # Content Upload -> Subscription -> Verification
@@ -431,7 +450,8 @@ class TestPerformanceAndScalability:
     """Performance and scalability test scenarios."""
     
     def test_subscription_plan_scalability(self):
-        """Test subscription plan configuration scalability."""
+        """
+Test subscription plan configuration scalability."""
         from backend.business.client.index import SUBSCRIPTION_PLANS
         
         # Verify all plans are configured
@@ -472,13 +492,15 @@ def event_loop():
 
 @pytest.fixture
 def mock_database_session():
-    """Mock database session for testing."""
+    """
+Mock database session for testing."""
     return Mock()
 
 
 @pytest.fixture
 def sample_client_data():
-    """Sample client data for testing."""
+    """
+Sample client data for testing."""
     return {
         "id": str(uuid4()),
         "email": "test@example.com",

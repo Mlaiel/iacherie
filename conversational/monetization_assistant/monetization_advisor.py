@@ -18,6 +18,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set, Callable
@@ -68,7 +69,8 @@ settings = get_settings()
 
 
 class AdviceCategory(Enum):
-    """Comprehensive categories of monetization advice."""
+    """
+Comprehensive categories of monetization advice."""
     # Core revenue optimization
     REVENUE_OPTIMIZATION = "revenue_optimization"
     PRICING_STRATEGY = "pricing_strategy"
@@ -126,6 +128,7 @@ class AdviceCategory(Enum):
 
 class PriorityLevel(Enum):
     """Detailed priority levels for recommendations."""
+
     CRITICAL = "critical"      # Immediate action required
     URGENT = "urgent"          # Action needed within days
     HIGH = "high"              # Action needed within weeks
@@ -136,6 +139,7 @@ class PriorityLevel(Enum):
 
 class ImpactLevel(Enum):
     """Expected impact levels for recommendations."""
+
     TRANSFORMATIONAL = "transformational"  # 50%+ revenue impact
     MAJOR = "major"                        # 20-50% revenue impact
     SIGNIFICANT = "significant"            # 10-20% revenue impact
@@ -146,6 +150,7 @@ class ImpactLevel(Enum):
 
 class ImplementationDifficulty(Enum):
     """Implementation difficulty levels."""
+
     TRIVIAL = "trivial"        # <1 day, no resources
     EASY = "easy"              # 1-3 days, minimal resources
     MODERATE = "moderate"      # 1-2 weeks, some resources
@@ -156,6 +161,7 @@ class ImplementationDifficulty(Enum):
 
 class MarketOpportunityType(Enum):
     """Types of market opportunities."""
+
     EMERGING_TREND = "emerging_trend"
     UNDERSERVED_NICHE = "underserved_niche"
     PLATFORM_GROWTH = "platform_growth"
@@ -319,7 +325,8 @@ class MarketOpportunity:
 
 @dataclass
 class StrategicRecommendation:
-    """High-level strategic recommendation for monetization."""
+    """
+High-level strategic recommendation for monetization."""
     recommendation_id: str
     strategy_type: str
     title: str
@@ -354,7 +361,8 @@ class MonetizationAdvisor:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the monetization advisor with advanced AI capabilities."""
+        """
+Initialize the monetization advisor with advanced AI capabilities."""
         self.config = config or get_monetization_config()
         
         # Core AI services
@@ -818,31 +826,36 @@ class MonetizationAdvisor:
     async def _analyze_current_position(
         self, creator_id: str, metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze creator's current market position."""
+        """
+Analyze creator's current market position."""
         # Implementation for position analysis
         pass
     
     async def _identify_monetization_opportunities(
         self, creator_id: str, position: Dict[str, Any], goals: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify monetization opportunities."""
+        """
+Identify monetization opportunities."""
         # Implementation for opportunity identification
         pass
     
     async def _generate_strategic_recommendations(
         self, position: Dict[str, Any], opportunities: List[Dict[str, Any]], goals: Dict[str, Any]
     ) -> List[MonetizationAdvice]:
-        """Generate strategic recommendations."""
+        """
+Generate strategic recommendations."""
         # Implementation for recommendation generation
         pass
     
     async def _create_implementation_roadmap(
         self, recommendations: List[MonetizationAdvice], goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create implementation roadmap."""
+        """
+Create implementation roadmap."""
         # Implementation for roadmap creation
         pass
     
     def _generate_opportunity_id(self) -> str:
-        """Generate unique opportunity ID."""
+        """
+Generate unique opportunity ID."""
         return f"OPP_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(datetime.now().isoformat())}"

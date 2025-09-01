@@ -4,11 +4,12 @@ Advanced SEO content optimization for creators and influencers to maximize
 discoverability and engagement across platforms and search engines.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import re
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SEOAnalysis:
-    """SEO analysis result"""
+    """
+SEO analysis result"""
     content_id: str
     overall_score: float
     keyword_score: float
@@ -43,7 +45,8 @@ class SEOAnalysis:
 
 @dataclass
 class KeywordResearch:
-    """Keyword research result"""
+    """
+Keyword research result"""
     primary_keywords: List[str]
     secondary_keywords: List[str]
     long_tail_keywords: List[str]
@@ -72,7 +75,8 @@ class SEOOptimizer:
         self.seo_rules = self._load_seo_rules()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default SEO configuration"""
+        """
+Get default SEO configuration"""
         return {
             'target_keyword_density': 0.02,  # 2%
             'max_keyword_density': 0.05,     # 5%
@@ -87,7 +91,8 @@ class SEOOptimizer:
         }
     
     def _load_stop_words(self) -> set:
-        """Load stop words for filtering"""
+        """
+Load stop words for filtering"""
         try:
             nltk.data.find('corpora/stopwords')
         except LookupError:
@@ -96,7 +101,8 @@ class SEOOptimizer:
         return set(stopwords.words('english'))
     
     def _load_seo_rules(self) -> Dict[str, Any]:
-        """Load SEO optimization rules"""
+        """
+Load SEO optimization rules"""
         return {
             'title_rules': {
                 'max_length': 60,
@@ -129,7 +135,8 @@ class SEOOptimizer:
         }
     
     async def analyze_content_seo(self, content: str, target_keywords: List[str] = None, metadata: Dict[str, Any] = None) -> SEOAnalysis:
-        """Comprehensive SEO analysis of content"""
+        """
+Comprehensive SEO analysis of content"""
         content_id = self._generate_content_id(content)
         metadata = metadata or {}
         
@@ -227,7 +234,8 @@ class SEOOptimizer:
         )
     
     async def optimize_for_platform(self, content: str, platform: str, keywords: List[str] = None) -> Dict[str, Any]:
-        """Optimize content for specific platform"""
+        """
+Optimize content for specific platform"""
         
         platform_rules = self.seo_rules['social_media_rules']['platform_character_limits']
         max_length = platform_rules.get(platform, 2200)
@@ -247,7 +255,8 @@ class SEOOptimizer:
             return await self._optimize_for_general(content, keywords, max_length)
     
     async def _extract_primary_keywords(self, content: str) -> List[str]:
-        """Extract primary keywords from content"""
+        """
+Extract primary keywords from content"""
         # Tokenize and clean
         tokens = word_tokenize(content.lower())
         tokens = [token for token in tokens if token.isalpha() and token not in self.stop_words]
@@ -279,7 +288,8 @@ class SEOOptimizer:
         return keywords[:15]  # Return top 15 keywords
     
     async def _analyze_keywords(self, content: str, target_keywords: List[str]) -> Dict[str, Any]:
-        """Analyze keyword usage in content"""
+        """
+Analyze keyword usage in content"""
         content_lower = content.lower()
         word_count = len(content.split())
         
@@ -325,7 +335,8 @@ class SEOOptimizer:
         return keyword_analysis
     
     async def _analyze_readability(self, content: str) -> Dict[str, Any]:
-        """Analyze content readability"""
+        """
+Analyze content readability"""
         sentences = sent_tokenize(content)
         words = word_tokenize(content)
         
@@ -382,7 +393,8 @@ class SEOOptimizer:
         }
     
     async def _analyze_content_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze content structure for SEO"""
+        """
+Analyze content structure for SEO"""
         lines = content.split('\n')
         paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         
@@ -454,7 +466,8 @@ class SEOOptimizer:
         return structure_analysis
     
     async def _analyze_metadata(self, metadata: Dict[str, Any], keywords: List[str]) -> Dict[str, Any]:
-        """Analyze metadata for SEO"""
+        """
+Analyze metadata for SEO"""
         title = metadata.get('title', '')
         description = metadata.get('description', '')
         tags = metadata.get('tags', [])
@@ -476,7 +489,8 @@ class SEOOptimizer:
         return metadata_analysis
     
     def _analyze_title(self, title: str, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze title for SEO"""
+        """
+Analyze title for SEO"""
         title_rules = self.seo_rules['title_rules']
         
         analysis = {
@@ -526,7 +540,8 @@ class SEOOptimizer:
         return analysis
     
     def _analyze_description(self, description: str, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze description for SEO"""
+        """
+Analyze description for SEO"""
         description_rules = self.seo_rules['description_rules']
         
         analysis = {
@@ -567,7 +582,8 @@ class SEOOptimizer:
         return analysis
     
     def _analyze_tags(self, tags: List[str], keywords: List[str]) -> Dict[str, Any]:
-        """Analyze tags for SEO"""
+        """
+Analyze tags for SEO"""
         analysis = {
             'tag_count': len(tags),
             'keyword_overlap': 0,
@@ -599,7 +615,8 @@ class SEOOptimizer:
         return analysis
     
     def _analyze_keyword_placement(self, content: str, keyword: str) -> Dict[str, bool]:
-        """Analyze keyword placement in content"""
+        """
+Analyze keyword placement in content"""
         content_lower = content.lower()
         keyword_lower = keyword.lower()
         
@@ -626,7 +643,8 @@ class SEOOptimizer:
         return any(keyword in header.lower() for header in headers)
     
     def _calculate_placement_score(self, placement_analysis: Dict[str, Dict[str, bool]]) -> float:
-        """Calculate score based on keyword placement"""
+        """
+Calculate score based on keyword placement"""
         if not placement_analysis:
             return 0.0
         
@@ -650,7 +668,8 @@ class SEOOptimizer:
         return total_score / keyword_count if keyword_count > 0 else 0.0
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
@@ -672,7 +691,8 @@ class SEOOptimizer:
                                           readability_analysis: Dict[str, Any],
                                           structure_analysis: Dict[str, Any],
                                           metadata_analysis: Dict[str, Any]) -> List[str]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         recommendations = []
         
         # Keyword recommendations
@@ -821,7 +841,8 @@ class SEOOptimizer:
         return seeds
     
     async def _generate_primary_keywords(self, seeds: List[str], topic: str) -> List[str]:
-        """Generate primary keywords from seeds"""
+        """
+Generate primary keywords from seeds"""
         primary = []
         
         # Use seeds as primary keywords
@@ -891,7 +912,8 @@ class SEOOptimizer:
         return trending_by_niche.get(niche, trending_by_niche['general'])
     
     async def _analyze_keyword_competition(self, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze keyword competition (simplified)"""
+        """
+Analyze keyword competition (simplified)"""
         # Simplified competition analysis
         competition = {}
         
@@ -912,7 +934,8 @@ class SEOOptimizer:
         }
     
     async def _estimate_search_volumes(self, keywords: List[str]) -> Dict[str, int]:
-        """Estimate search volumes (simplified)"""
+        """
+Estimate search volumes (simplified)"""
         # Simplified volume estimation based on keyword characteristics
         volumes = {}
         
@@ -928,7 +951,8 @@ class SEOOptimizer:
         return volumes
     
     async def _calculate_keyword_difficulty(self, keywords: List[str]) -> Dict[str, float]:
-        """Calculate keyword difficulty scores"""
+        """
+Calculate keyword difficulty scores"""
         # Simplified difficulty calculation
         difficulty = {}
         
@@ -947,7 +971,8 @@ class SEOOptimizer:
         return difficulty
     
     async def _optimize_for_instagram(self, content: str, keywords: List[str], max_length: int) -> Dict[str, Any]:
-        """Optimize content for Instagram"""
+        """
+Optimize content for Instagram"""
         # Ensure content fits within Instagram limits
         if len(content) > max_length:
             content = content[:max_length-3] + "..."
@@ -1128,7 +1153,8 @@ class SEOOptimizer:
 
 # Utility functions
 async def analyze_seo_quick(content: str, keywords: List[str] = None) -> Dict[str, Any]:
-    """Quick SEO analysis function"""
+    """
+Quick SEO analysis function"""
     optimizer = SEOOptimizer()
     analysis = await optimizer.analyze_content_seo(content, keywords)
     
@@ -1145,14 +1171,16 @@ async def analyze_seo_quick(content: str, keywords: List[str] = None) -> Dict[st
     }
 
 async def optimize_for_platform_quick(content: str, platform: str, keywords: List[str] = None) -> str:
-    """Quick platform optimization function"""
+    """
+Quick platform optimization function"""
     optimizer = SEOOptimizer()
     result = await optimizer.optimize_for_platform(content, platform, keywords)
     return result.get('optimized_content', content)
 
 # SEO monitoring and tracking
 class SEOTracker:
-    """Track SEO performance over time"""
+    """
+Track SEO performance over time"""
     
     def __init__(self):
         self.performance_history = []
@@ -1160,7 +1188,8 @@ class SEOTracker:
         self.optimization_impact = {}
     
     def track_performance(self, content_id: str, seo_analysis: SEOAnalysis):
-        """Track SEO performance for content"""
+        """
+Track SEO performance for content"""
         self.performance_history.append({
             'content_id': content_id,
             'timestamp': datetime.utcnow(),
@@ -1175,7 +1204,8 @@ class SEOTracker:
         })
     
     def get_performance_trends(self) -> Dict[str, Any]:
-        """Get SEO performance trends"""
+        """
+Get SEO performance trends"""
         if not self.performance_history:
             return {}
         

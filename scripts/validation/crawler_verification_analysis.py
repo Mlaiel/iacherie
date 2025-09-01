@@ -10,6 +10,7 @@ This tool analyzes all crawler implementations to distinguish between:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import ast
 import re
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerAnalysis:
-    """Data structure for crawler analysis results."""
+    """
+Data structure for crawler analysis results."""
     name: str
     file_path: str
     implementation_type: str  # 'real', 'stub', 'abstract', 'incomplete'
@@ -43,7 +45,8 @@ class CrawlerAnalysis:
     test_file_exists: bool
 
 class CrawlerVerifier:
-    """Comprehensive crawler implementation analyzer."""
+    """
+Comprehensive crawler implementation analyzer."""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
@@ -169,7 +172,8 @@ class CrawlerVerifier:
     def _classify_implementation(self, content: str, stub_indicators: List[str], 
                                real_indicators: List[str], has_api_calls: bool,
                                method_count: int, line_count: int) -> Tuple[str, float]:
-        """Classify implementation type and calculate confidence score."""
+        """
+Classify implementation type and calculate confidence score."""
         
         # Abstract base classes
         if 'ABC' in content or '@abstractmethod' in content:
@@ -192,7 +196,8 @@ class CrawlerVerifier:
             return 'incomplete', 0.4
     
     def _has_test_file(self, crawler_path: Path) -> bool:
-        """Check if a test file exists for the crawler."""
+        """
+Check if a test file exists for the crawler."""
         test_name = f"test_{crawler_path.stem}.py"
         test_locations = [
             self.tests_path / test_name,
@@ -326,7 +331,8 @@ class CrawlerVerifier:
     
     def _generate_recommendations(self, analyses: List[CrawlerAnalysis], 
                                 priority_crawlers: Dict[str, CrawlerAnalysis]) -> List[str]:
-        """Generate actionable recommendations."""
+        """
+Generate actionable recommendations."""
         recommendations = []
         
         # Check priority crawlers

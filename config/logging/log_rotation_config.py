@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import gzip
 import bz2
@@ -37,7 +38,9 @@ import psutil
 
 
 class CompressionType(str, Enum):
-    """Supported compression types"""
+    """
+Supported compression types"""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -46,6 +49,7 @@ class CompressionType(str, Enum):
 
 class RotationTrigger(str, Enum):
     """Log rotation triggers"""
+
     SIZE = "size"
     TIME = "time"
     HYBRID = "hybrid"  # Both size and time
@@ -54,6 +58,7 @@ class RotationTrigger(str, Enum):
 
 class ArchiveStrategy(str, Enum):
     """Archive storage strategies"""
+
     LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
@@ -172,7 +177,8 @@ class LogRotationConfig:
             self.start_scheduler()
     
     def _create_default_policies(self) -> List[RotationPolicy]:
-        """Create default rotation policies for platform components"""
+        """
+Create default rotation policies for platform components"""
         return [
             # Main application logs
             RotationPolicy(
@@ -303,7 +309,8 @@ class LogRotationConfig:
             (self.base_log_path / subdir).mkdir(exist_ok=True)
     
     def _initialize_handlers(self) -> None:
-        """Initialize rotating file handlers"""
+        """
+Initialize rotating file handlers"""
         for policy in self.policies:
             try:
                 self._create_handler_for_policy(policy)
@@ -366,7 +373,8 @@ class LogRotationConfig:
             return 100 * 1024**2  # 100MB default
     
     def _parse_rotation_interval(self, interval: str) -> str:
-        """Parse rotation interval to logging format"""
+        """
+Parse rotation interval to logging format"""
         interval_map = {
             'daily': 'D',
             'weekly': 'W0',  # Monday
@@ -544,7 +552,8 @@ class LogRotationConfig:
                 self._compress_file(file_path, policy.compression, policy.compression_level)
     
     def _compress_file(self, file_path: Path, compression: CompressionType, level: int) -> None:
-        """Compress a single file"""
+        """
+Compress a single file"""
         try:
             if compression == CompressionType.GZIP:
                 compressed_path = file_path.with_suffix(file_path.suffix + '.gz')
@@ -604,7 +613,8 @@ class LogRotationConfig:
         # Add other archive strategies as needed
     
     def _archive_to_local(self, files: List[Path], policy: RotationPolicy) -> None:
-        """Archive files to local directory"""
+        """
+Archive files to local directory"""
         archive_dir = self.base_log_path / 'archive' / policy.name
         archive_dir.mkdir(parents=True, exist_ok=True)
         
@@ -895,7 +905,8 @@ def initialize_log_rotation(
 
 
 def get_rotation_config() -> LogRotationConfig:
-    """Get the global log rotation configuration"""
+    """
+Get the global log rotation configuration"""
     if not _rotation_config:
         initialize_log_rotation()
     

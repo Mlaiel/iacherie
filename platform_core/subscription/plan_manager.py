@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 GESTIONNAIRE DE PLANS D'ABONNEMENT
@@ -15,6 +15,7 @@ Système de gestion intelligent des plans tarifaires
 - A/B testing automatique des prix
 - Optimisation revenue basée sur ML
 """
+
 import asyncio
 import json
 import logging
@@ -29,7 +30,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class PlanTier(Enum):
-    """Niveaux de plans"""
+    """
+Niveaux de plans"""
+
     FREE = "free"
     STARTER = "starter"
     PROFESSIONAL = "professional"
@@ -39,6 +42,7 @@ class PlanTier(Enum):
 
 class FeatureType(Enum):
     """Types de fonctionnalités"""
+
     BOOLEAN = "boolean"          # Activé/Désactivé
     NUMERIC = "numeric"          # Limite numérique
     UNLIMITED = "unlimited"      # Illimité
@@ -47,6 +51,7 @@ class FeatureType(Enum):
 
 class PricingStrategy(Enum):
     """Stratégies de tarification"""
+
     FIXED = "fixed"
     DYNAMIC = "dynamic"
     COMPETITIVE = "competitive"
@@ -99,7 +104,8 @@ class PlanFeature:
 
 @dataclass
 class SubscriptionPlan:
-    """Plan d'abonnement intelligent"""
+    """
+Plan d'abonnement intelligent"""
     plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -166,16 +172,19 @@ class SubscriptionPlan:
         self.updated_at = datetime.utcnow()
         
     def get_feature(self, feature_name: str) -> Optional[PlanFeature]:
-        """Récupère une fonctionnalité par nom"""
+        """
+Récupère une fonctionnalité par nom"""
         return next((f for f in self.features if f.name == feature_name), None)
         
     def has_feature(self, feature_name: str) -> bool:
-        """Vérifie si le plan a une fonctionnalité"""
+        """
+Vérifie si le plan a une fonctionnalité"""
         feature = self.get_feature(feature_name)
         return feature is not None and feature.enabled
         
     def get_feature_limit(self, feature_name: str, usage_data: Optional[Dict[str, Any]] = None) -> Optional[int]:
-        """Récupère la limite d'une fonctionnalité"""
+        """
+Récupère la limite d'une fonctionnalité"""
         feature = self.get_feature(feature_name)
         if not feature:
             return None
@@ -184,7 +193,8 @@ class SubscriptionPlan:
     def calculate_dynamic_price(self, 
                               customer_data: Optional[Dict[str, Any]] = None,
                               market_data: Optional[Dict[str, Any]] = None) -> Decimal:
-        """Calcule le prix dynamique selon la stratégie"""
+        """
+Calcule le prix dynamique selon la stratégie"""
         if self.pricing_strategy == PricingStrategy.FIXED:
             return self.base_price
             
@@ -264,7 +274,8 @@ class PlanManager:
         self._load_default_plans()
         
     def _load_default_plans(self):
-        """Charge les plans par défaut de la plateforme"""
+        """
+Charge les plans par défaut de la plateforme"""
         
         # Plan Free
         free_plan = SubscriptionPlan(
@@ -474,13 +485,15 @@ class PlanManager:
         return None
         
     async def get_plans_by_tier(self, tier: PlanTier) -> List[SubscriptionPlan]:
-        """Récupère tous les plans d'un niveau"""
+        """
+Récupère tous les plans d'un niveau"""
         return [plan for plan in self.plans.values() if plan.tier == tier and plan.is_active]
         
     async def get_visible_plans(self, 
                               customer_data: Optional[Dict[str, Any]] = None,
                               include_ab_test: bool = True) -> List[SubscriptionPlan]:
-        """Récupère les plans visibles pour un client"""
+        """
+Récupère les plans visibles pour un client"""
         visible_plans = []
         
         for plan in self.plans.values():
@@ -771,7 +784,8 @@ class PlanManager:
         return None
         
     def get_manager_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du gestionnaire"""
+        """
+Retourne les statistiques du gestionnaire"""
         plans_by_tier = {}
         for tier in PlanTier:
             count = len([p for p in self.plans.values() if p.tier == tier])

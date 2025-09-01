@@ -10,6 +10,7 @@ Comprehensive tests for the enhanced translation engine with multiple providers:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 import os
@@ -40,7 +41,8 @@ class TestMultiProviderTranslation:
     
     @pytest.fixture
     def mock_redis(self):
-        """Mock Redis client"""
+        """
+Mock Redis client"""
         mock_redis = AsyncMock()
         mock_redis.get.return_value = None
         mock_redis.setex.return_value = True
@@ -48,12 +50,14 @@ class TestMultiProviderTranslation:
     
     @pytest.fixture  
     def mock_db_session(self):
-        """Mock database session"""
+        """
+Mock database session"""
         return Mock()
     
     @pytest.fixture
     def translation_request(self):
-        """Sample translation request"""
+        """
+Sample translation request"""
         return TranslationRequest(
             text="Hello, world! This is a test message for translation.",
             source_language=SupportedLanguage.ENGLISH,
@@ -227,12 +231,14 @@ class TestMultilingualSEO:
     
     @pytest.fixture
     def seo_engine(self):
-        """Create SEO engine instance"""
+        """
+Create SEO engine instance"""
         return SEOEngine()
     
     @pytest.fixture
     def sample_seo_metadata(self):
-        """Sample SEO metadata for testing"""
+        """
+Sample SEO metadata for testing"""
         return SEOMetadata(
             title="Best Content Creation Tips for 2025",
             description="Discover the ultimate guide to content creation with proven strategies for social media success.",

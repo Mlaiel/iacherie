@@ -24,6 +24,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Metrics and Business Intelligence
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import time
@@ -68,7 +69,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     SYSTEM_PERFORMANCE = "system_performance"
     APPLICATION_METRICS = "application_metrics"
     BUSINESS_METRICS = "business_metrics"
@@ -85,6 +88,7 @@ class MetricType(Enum):
 
 class DataSource(Enum):
     """Data sources for metrics collection"""
+
     PROMETHEUS = "prometheus"
     ELASTICSEARCH = "elasticsearch"
     INFLUXDB = "influxdb"
@@ -99,6 +103,7 @@ class DataSource(Enum):
 
 class ReportType(Enum):
     """Types of reports generated"""
+
     REAL_TIME_DASHBOARD = "real_time_dashboard"
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
@@ -113,6 +118,7 @@ class ReportType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -151,7 +157,8 @@ class MetricConfig:
 
 @dataclass
 class DashboardConfig:
-    """Configuration for dashboard deployment"""
+    """
+Configuration for dashboard deployment"""
     dashboard_id: str
     dashboard_name: str
     dashboard_type: str = "grafana"
@@ -245,7 +252,8 @@ class MetricsReportingDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Metrics and Reporting Deployment Manager"""
+        """
+Initialize the Metrics and Reporting Deployment Manager"""
         self.config_path = config_path or os.getenv('METRICS_CONFIG_PATH', '/etc/metrics/config.yaml')
         self.metrics: Dict[str, MetricConfig] = {}
         self.dashboards: Dict[str, DashboardConfig] = {}
@@ -700,7 +708,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def create_dashboard(self, dashboard_config: DashboardConfig) -> bool:
-        """Create Grafana dashboard"""
+        """
+Create Grafana dashboard"""
         if not self.grafana_client:
             logger.error("Grafana client not available")
             return False
@@ -792,7 +801,8 @@ class MetricsReportingDeploymentManager:
         return panels
     
     def collect_metrics(self) -> Dict[str, Any]:
-        """Collect metrics from all configured sources"""
+        """
+Collect metrics from all configured sources"""
         collected_metrics = {}
         
         for metric_id, metric_config in self.metrics.items():
@@ -959,7 +969,8 @@ class MetricsReportingDeploymentManager:
                 )
     
     def generate_report(self, report_type: ReportType, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate comprehensive report"""
+        """
+Generate comprehensive report"""
         report = {
             'report_type': report_type.value,
             'period': {
@@ -987,7 +998,8 @@ class MetricsReportingDeploymentManager:
         return report
     
     def _get_metric_history(self, metric_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get historical data for a metric"""
+        """
+Get historical data for a metric"""
         # This would typically query the time series database
         # For now, return placeholder data
         return {
@@ -1002,7 +1014,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def _generate_report_summary(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate report summary"""
+        """
+Generate report summary"""
         return {
             'total_metrics': len(metrics),
             'healthy_metrics': sum(1 for m in metrics.values() if m.get('status') == 'healthy'),
@@ -1011,7 +1024,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def _generate_insights(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate insights from metrics data"""
+        """
+Generate insights from metrics data"""
         insights = []
         
         # Add some example insights

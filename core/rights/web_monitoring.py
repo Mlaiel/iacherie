@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Web Monitoring Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -44,7 +45,9 @@ settings = get_settings()
 
 
 class PlatformType(str, Enum):
-    """Supported monitoring platforms."""
+    """
+Supported monitoring platforms."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -62,6 +65,7 @@ class PlatformType(str, Enum):
 
 class MonitoringType(str, Enum):
     """Types of monitoring operations."""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -70,6 +74,7 @@ class MonitoringType(str, Enum):
 
 class ViolationSeverity(str, Enum):
     """Severity levels for content violations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -92,7 +97,8 @@ class MonitoringTarget:
 
 @dataclass
 class ViolationResult:
-    """Content violation detection result."""
+    """
+Content violation detection result."""
     violation_id: str
     content_id: str
     platform: str
@@ -117,16 +123,19 @@ class BaseCrawler(ABC):
         
     @abstractmethod
     async def search_content(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Search for content on the platform."""
+        """
+Search for content on the platform."""
         pass
     
     @abstractmethod
     async def extract_content_data(self, url: str) -> Dict[str, Any]:
-        """Extract content data from a specific URL."""
+        """
+Extract content data from a specific URL."""
         pass
     
     async def setup_session(self):
-        """Setup HTTP session for crawling."""
+        """
+Setup HTTP session for crawling."""
         if not self.session:
             connector = aiohttp.TCPConnector(limit=100, ttl_dns_cache=300)
             timeout = aiohttp.ClientTimeout(total=30)
@@ -139,7 +148,8 @@ class BaseCrawler(ABC):
             )
     
     async def cleanup_session(self):
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         if self.session:
             await self.session.close()
         if self.driver:
@@ -147,7 +157,8 @@ class BaseCrawler(ABC):
 
 
 class YouTubeCrawler(BaseCrawler):
-    """YouTube-specific content crawler."""
+    """
+YouTube-specific content crawler."""
     
     def __init__(self):
         super().__init__(PlatformType.YOUTUBE)
@@ -219,7 +230,8 @@ class YouTubeCrawler(BaseCrawler):
         return None
     
     def _process_youtube_results(self, items: List[Dict]) -> List[Dict[str, Any]]:
-        """Process YouTube search results."""
+        """
+Process YouTube search results."""
         results = []
         for item in items:
             snippet = item.get('snippet', {})
@@ -257,7 +269,8 @@ class YouTubeCrawler(BaseCrawler):
 
 
 class TikTokCrawler(BaseCrawler):
-    """TikTok-specific content crawler using web scraping."""
+    """
+TikTok-specific content crawler using web scraping."""
     
     def __init__(self):
         super().__init__(PlatformType.TIKTOK)
@@ -335,7 +348,8 @@ class TikTokCrawler(BaseCrawler):
             self.driver = webdriver.Chrome(options=chrome_options)
     
     async def _extract_tiktok_video_data(self, element) -> Dict[str, Any]:
-        """Extract data from TikTok video element."""
+        """
+Extract data from TikTok video element."""
         try:
             link_element = element.find_element(By.TAG_NAME, 'a')
             url = link_element.get_attribute('href')
@@ -351,7 +365,8 @@ class TikTokCrawler(BaseCrawler):
 
 
 class InstagramCrawler(BaseCrawler):
-    """Instagram-specific content crawler."""
+    """
+Instagram-specific content crawler."""
     
     def __init__(self):
         super().__init__(PlatformType.INSTAGRAM)
@@ -425,7 +440,8 @@ class InstagramCrawler(BaseCrawler):
             self.driver = webdriver.Chrome(options=chrome_options)
     
     def _process_instagram_results(self, items: List[Dict]) -> List[Dict[str, Any]]:
-        """Process Instagram API results."""
+        """
+Process Instagram API results."""
         results = []
         for item in items:
             results.append({
@@ -441,7 +457,8 @@ class InstagramCrawler(BaseCrawler):
 
 
 class WebMonitoringEngine:
-    """Central web monitoring and surveillance engine."""
+    """
+Central web monitoring and surveillance engine."""
     
     def __init__(self):
         self.crawlers = self._initialize_crawlers()
@@ -450,7 +467,8 @@ class WebMonitoringEngine:
         self.active_jobs = {}
     
     def _initialize_crawlers(self) -> Dict[str, BaseCrawler]:
-        """Initialize platform-specific crawlers."""
+        """
+Initialize platform-specific crawlers."""
         return {
             PlatformType.YOUTUBE: YouTubeCrawler(),
             PlatformType.TIKTOK: TikTokCrawler(),
@@ -459,7 +477,8 @@ class WebMonitoringEngine:
         }
     
     async def add_monitoring_target(self, target: MonitoringTarget) -> bool:
-        """Add content for monitoring."""
+        """
+Add content for monitoring."""
         try:
             self.monitoring_targets[target.content_id] = target
             
@@ -608,7 +627,8 @@ class WebMonitoringEngine:
             return ViolationSeverity.LOW
     
     async def _handle_violation(self, violation: ViolationResult):
-        """Handle detected content violation."""
+        """
+Handle detected content violation."""
         try:
             # Log the violation
             logger.warning(
@@ -635,18 +655,21 @@ class WebMonitoringEngine:
         pass
     
     async def _send_critical_alert(self, violation: ViolationResult):
-        """Send critical violation alert."""
+        """
+Send critical violation alert."""
         # Notification implementation (email, SMS, webhook)
         pass
     
     async def _trigger_automated_response(self, violation: ViolationResult):
-        """Trigger automated response based on violation."""
+        """
+Trigger automated response based on violation."""
         # Automated response implementation (DMCA takedown, etc.)
         pass
     
     @performance_monitor
     async def get_violation_statistics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get violation statistics."""
+        """
+Get violation statistics."""
         # Implementation for getting violation stats
         return {
             "total_violations": 0,

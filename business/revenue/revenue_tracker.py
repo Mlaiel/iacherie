@@ -6,7 +6,7 @@ historical analytics, performance insights, and automated notifications
 for content creators across all platforms.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Tracking
 ==========================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrackingFrequency(Enum):
-    """Revenue tracking frequency options"""
+    """
+Revenue tracking frequency options"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -50,6 +53,7 @@ class TrackingFrequency(Enum):
 
 class TrackingStatus(Enum):
     """Revenue tracking status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     ERROR = "error"
@@ -126,7 +130,8 @@ class RevenueTracker:
         }
         
     async def initialize(self):
-        """Initialize the revenue tracking system"""
+        """
+Initialize the revenue tracking system"""
         try:
             # Load tracking configurations
             await self._load_tracking_configurations()
@@ -696,7 +701,8 @@ class RevenueTracker:
             return now + timedelta(hours=1)
 
     def _is_snapshot_due(self, tracking_config: Dict[str, Any]) -> bool:
-        """Check if snapshot is due for a tracking configuration"""
+        """
+Check if snapshot is due for a tracking configuration"""
         next_snapshot = tracking_config.get('next_snapshot')
         if not next_snapshot:
             return True
@@ -704,7 +710,8 @@ class RevenueTracker:
         return datetime.utcnow() >= next_snapshot
 
     async def _validate_tracking_request(self, creator_id: str, platforms: List[str]):
-        """Validate tracking request parameters"""
+        """
+Validate tracking request parameters"""
         if not creator_id:
             raise ValueError("Creator ID is required")
         
@@ -801,7 +808,8 @@ class RevenueTracker:
         pass
 
     async def cleanup(self):
-        """Cleanup tracking resources"""
+        """
+Cleanup tracking resources"""
         try:
             # Stop all active tracking sessions
             for tracking_id in list(self._active_trackers.keys()):

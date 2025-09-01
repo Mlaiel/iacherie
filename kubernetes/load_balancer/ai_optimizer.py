@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -58,6 +59,7 @@ AI_MODEL_TRAINING_TIME = Histogram('ai_model_training_time_seconds', 'Model trai
 
 class OptimizationType(Enum):
     """Types of AI optimizations"""
+
     TRAFFIC_DISTRIBUTION = "traffic_distribution"
     CAPACITY_SCALING = "capacity_scaling"
     ROUTING_OPTIMIZATION = "routing_optimization"
@@ -68,6 +70,7 @@ class OptimizationType(Enum):
 
 class MLModel(Enum):
     """Machine learning models available"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -84,7 +87,8 @@ class TrainingData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'timestamp': self.timestamp.isoformat(),
             'service_name': self.service_name,
@@ -96,7 +100,8 @@ class TrainingData:
 
 @dataclass
 class OptimizationRecommendation:
-    """AI optimization recommendation"""
+    """
+AI optimization recommendation"""
     optimization_type: OptimizationType
     service_name: str
     confidence: float  # 0.0 to 1.0
@@ -109,7 +114,8 @@ class OptimizationRecommendation:
     results: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'optimization_type': self.optimization_type.value,
             'service_name': self.service_name,
@@ -125,14 +131,16 @@ class OptimizationRecommendation:
 
 
 class FeatureExtractor:
-    """Extract features for ML models"""
+    """
+Extract features for ML models"""
     
     def __init__(self):
         self.feature_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
     
     def extract_features(self, service_metrics: List[Dict[str, Any]], 
                         timestamp: datetime) -> Dict[str, float]:
-        """Extract features from service metrics"""
+        """
+Extract features from service metrics"""
         features = {}
         
         if not service_metrics:
@@ -194,7 +202,8 @@ class PredictiveModel:
         self.last_training_time = None
         
     def _create_model(self) -> Any:
-        """Create ML model based on type"""
+        """
+Create ML model based on type"""
         if not ML_AVAILABLE:
             return None
         
@@ -215,7 +224,8 @@ class PredictiveModel:
         return None
     
     def train(self, training_data: List[TrainingData], target_metric: str) -> bool:
-        """Train the model with provided data"""
+        """
+Train the model with provided data"""
         if not ML_AVAILABLE or not training_data:
             return False
         
@@ -305,7 +315,8 @@ class PredictiveModel:
         return np.mean(predictions, axis=0)
     
     def predict(self, features: Dict[str, float]) -> Optional[float]:
-        """Make prediction for given features"""
+        """
+Make prediction for given features"""
         if not self.is_trained or not ML_AVAILABLE:
             return None
         
@@ -534,7 +545,8 @@ class AILoadBalancerOptimizer:
         }
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection for distributed optimization"""
+        """
+Initialize Redis connection for distributed optimization"""
         try:
             self.redis_client = redis.Redis(
                 host='localhost',
@@ -768,7 +780,8 @@ class AILoadBalancerOptimizer:
         return metrics
     
     def _calculate_service_performance_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate performance score for service"""
+        """
+Calculate performance score for service"""
         try:
             # Response time score (inverse)
             response_score = max(0, 100 - (analysis['response_time'] * 50))
@@ -1044,11 +1057,13 @@ class AILoadBalancerOptimizer:
             return list(self.active_optimizations.values())
     
     def get_optimization_history(self) -> List[Dict[str, Any]]:
-        """Get optimization history"""
+        """
+Get optimization history"""
         return [opt.to_dict() for opt in self.optimization_history]
     
     def get_model_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all ML models"""
+        """
+Get status of all ML models"""
         status = {}
         
         for model_name, model in self.models.items():
@@ -1065,7 +1080,8 @@ class AILoadBalancerOptimizer:
         return status
     
     async def stop_optimization(self) -> None:
-        """Stop AI optimization engine"""
+        """
+Stop AI optimization engine"""
         self.is_optimizing = False
         
         if self.optimizer_thread and self.optimizer_thread.is_alive():
@@ -1091,7 +1107,8 @@ class AILoadBalancerOptimizer:
 
 
 async def main():
-    """Demo function for AI optimization"""
+    """
+Demo function for AI optimization"""
     optimizer = AILoadBalancerOptimizer()
     
     try:

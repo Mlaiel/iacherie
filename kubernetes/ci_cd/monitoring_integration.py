@@ -8,6 +8,7 @@ Enterprise monitoring and observability integration for CI/CD pipeline.
 Comprehensive metrics collection, alerting, and dashboard management.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
@@ -27,7 +28,9 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric type enumeration"""
+    """
+Metric type enumeration"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -35,6 +38,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity enumeration"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -43,6 +47,7 @@ class AlertSeverity(Enum):
 
 class MonitoringBackend(Enum):
     """Monitoring backend enumeration"""
+
     PROMETHEUS = "prometheus"
     INFLUXDB = "influxdb"
     CLOUDWATCH = "cloudwatch"
@@ -98,7 +103,8 @@ class MonitoringIntegration:
     """Enterprise monitoring integration system"""
     
     def __init__(self):
-        """Initialize monitoring integration"""
+        """
+Initialize monitoring integration"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.metrics_registry = {}
         self.alert_rules = {}
@@ -466,7 +472,8 @@ class MonitoringIntegration:
         pass
     
     async def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check all alert rules and return triggered alerts"""
+        """
+Check all alert rules and return triggered alerts"""
         triggered_alerts = []
         
         for alert_name, alert_rule in self.alert_rules.items():
@@ -504,7 +511,8 @@ class MonitoringIntegration:
         condition: str,
         threshold: float
     ) -> bool:
-        """Evaluate alert condition"""
+        """
+Evaluate alert condition"""
         try:
             if condition.startswith(">"):
                 return current_value > threshold
@@ -559,7 +567,8 @@ class MonitoringIntegration:
         pass
     
     async def _setup_default_alerts(self) -> None:
-        """Setup default alert rules"""
+        """
+Setup default alert rules"""
         default_alerts = [
             AlertRule(
                 name="high_build_failure_rate",

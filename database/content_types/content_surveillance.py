@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -38,7 +39,9 @@ from .content_fingerprinting import ContentFingerprint, FingerprintMatch
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported surveillance platforms"""
+    """
+Supported surveillance platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -56,6 +59,7 @@ class PlatformType(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     PIRACY = "piracy"
@@ -67,6 +71,7 @@ class ViolationType(Enum):
 
 class DetectionMethod(Enum):
     """Content detection methods"""
+
     FINGERPRINT_MATCH = "fingerprint_match"
     METADATA_MATCH = "metadata_match"
     VISUAL_RECOGNITION = "visual_recognition"
@@ -77,6 +82,7 @@ class DetectionMethod(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -85,6 +91,7 @@ class AlertSeverity(Enum):
 
 class ActionStatus(Enum):
     """Action status for violations"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     TAKEDOWN_REQUESTED = "takedown_requested"
@@ -107,7 +114,8 @@ class SurveillanceTarget:
 
 @dataclass
 class DetectionResult:
-    """Result of content detection"""
+    """
+Result of content detection"""
     url: str
     platform: PlatformType
     detection_method: DetectionMethod
@@ -118,7 +126,8 @@ class DetectionResult:
     detected_at: datetime = field(default_factory=datetime.utcnow)
 
 class ContentViolation(Base):
-    """Database model for content violations"""
+    """
+Database model for content violations"""
     __tablename__ = "content_violations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -226,13 +235,15 @@ class PlatformCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search for content on platform"""
+        """
+Search for content on platform"""
         # Default implementation for platforms without specific search capabilities
         self.logger.warning(f"Generic search not implemented for {self.platform.value}")
         return []
@@ -425,14 +436,16 @@ class TikTokCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search TikTok for content"""
+        """
+Search TikTok for content"""
         # TikTok API access is very limited
         # Would require web scraping or special partnerships
         # For now, return empty list as placeholder
         return []
 
 class GenericWebCrawler(PlatformCrawler):
-    """Generic web crawler for any website"""
+    """
+Generic web crawler for any website"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PlatformType.GENERIC_WEB, config)
@@ -440,7 +453,8 @@ class GenericWebCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search the web for content using search engines"""
+        """
+Search the web for content using search engines"""
         results = []
         
         for engine in self.search_engines:
@@ -464,7 +478,8 @@ class GenericWebCrawler(PlatformCrawler):
         return []
 
 class ContentSurveillanceManager:
-    """Main surveillance management system"""
+    """
+Main surveillance management system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -483,7 +498,8 @@ class ContentSurveillanceManager:
         }
     
     async def add_surveillance_target(self, user_id: str, target: SurveillanceTarget):
-        """Add content surveillance target"""
+        """
+Add content surveillance target"""
         target_key = f"{user_id}:{target.platform.value}"
         self.surveillance_targets[target_key] = target
         self.logger.info(f"Added surveillance target for {target.platform.value}")
@@ -625,7 +641,8 @@ class ContentSurveillanceManager:
             return AlertSeverity.LOW
     
     async def schedule_surveillance_scans(self):
-        """Schedule automatic surveillance scans"""
+        """
+Schedule automatic surveillance scans"""
         while True:
             try:
                 current_time = datetime.utcnow()

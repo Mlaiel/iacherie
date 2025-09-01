@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive content type definitions, format specifications,
 and quality metrics for the IA Influencer Agent platform.
 """
+
 import logging
 from enum import Enum, IntEnum
 from typing import Dict, List, Any, Optional, Set
@@ -13,7 +14,8 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Core content types supported by the platform"""
+    """
+Core content types supported by the platform"""
     # Media Types
     IMAGE = "image"
     VIDEO = "video"
@@ -129,6 +131,7 @@ class ContentFormat(Enum):
 
 class ContentQuality(IntEnum):
     """Content quality levels"""
+
     VERY_LOW = 1
     LOW = 2
     BELOW_AVERAGE = 3
@@ -141,7 +144,9 @@ class ContentQuality(IntEnum):
     PERFECT = 10
 
 class ContentStatus(Enum):
-    """Content processing and publication status"""
+    """
+Content processing and publication status"""
+
     DRAFT = "draft"
     IN_REVIEW = "in_review"
     NEEDS_REVISION = "needs_revision"
@@ -156,6 +161,7 @@ class ContentStatus(Enum):
 
 class ContentCategory(Enum):
     """Content categories for organization"""
+
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     NEWS = "news"
@@ -188,6 +194,7 @@ class ContentCategory(Enum):
 
 class ContentPlatform(Enum):
     """Target platforms for content"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -214,6 +221,7 @@ class ContentPlatform(Enum):
 
 class ContentRights(Enum):
     """Content rights and licensing"""
+
     ORIGINAL = "original"
     LICENSED = "licensed"
     CREATIVE_COMMONS = "creative_commons"
@@ -225,6 +233,7 @@ class ContentRights(Enum):
 
 class ContentModerationLevel(Enum):
     """Content moderation levels"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -404,7 +413,8 @@ class PlatformSpecs:
     @classmethod
     def validate_content_for_platform(cls, platform: ContentPlatform, content_type: ContentType, 
                                     content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content against platform specifications"""
+        """
+Validate content against platform specifications"""
         specs = cls.get_platform_specs(platform, content_type)
         
         if not specs:
@@ -464,7 +474,8 @@ class ContentTypeUtils:
     
     @staticmethod
     def get_content_type_from_filename(filename: str) -> ContentType:
-        """Determine content type from filename extension"""
+        """
+Determine content type from filename extension"""
         extension = filename.lower().split('.')[-1] if '.' in filename else ''
         
         image_extensions = {'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'tiff', 'bmp'}
@@ -488,7 +499,8 @@ class ContentTypeUtils:
     
     @staticmethod
     def get_content_format_from_filename(filename: str) -> ContentFormat:
-        """Determine content format from filename extension"""
+        """
+Determine content format from filename extension"""
         extension = filename.lower().split('.')[-1] if '.' in filename else ''
         
         format_mapping = {
@@ -537,12 +549,14 @@ class ContentTypeUtils:
     
     @staticmethod
     def is_media_content(content_type: ContentType) -> bool:
-        """Check if content type is media (image, video, audio)"""
+        """
+Check if content type is media (image, video, audio)"""
         return content_type in {ContentType.IMAGE, ContentType.VIDEO, ContentType.AUDIO, ContentType.MUSIC}
     
     @staticmethod
     def is_text_content(content_type: ContentType) -> bool:
-        """Check if content type is text-based"""
+        """
+Check if content type is text-based"""
         return content_type in {
             ContentType.TEXT, ContentType.BLOG_POST, ContentType.ARTICLE,
             ContentType.CAPTION, ContentType.DESCRIPTION, ContentType.SOCIAL_POST,
@@ -551,7 +565,8 @@ class ContentTypeUtils:
     
     @staticmethod
     def requires_processing(content_type: ContentType) -> bool:
-        """Check if content type typically requires AI processing"""
+        """
+Check if content type typically requires AI processing"""
         processing_types = {
             ContentType.IMAGE, ContentType.VIDEO, ContentType.AUDIO, ContentType.MUSIC,
             ContentType.TEXT, ContentType.BLOG_POST, ContentType.ARTICLE, ContentType.SOCIAL_POST
@@ -560,7 +575,8 @@ class ContentTypeUtils:
     
     @staticmethod
     def get_recommended_platforms(content_type: ContentType, category: ContentCategory = None) -> List[ContentPlatform]:
-        """Get recommended platforms for content type and category"""
+        """
+Get recommended platforms for content type and category"""
         recommendations = {
             ContentType.IMAGE: [ContentPlatform.INSTAGRAM, ContentPlatform.PINTEREST, ContentPlatform.FACEBOOK],
             ContentType.VIDEO: [ContentPlatform.YOUTUBE, ContentPlatform.TIKTOK, ContentPlatform.INSTAGRAM],

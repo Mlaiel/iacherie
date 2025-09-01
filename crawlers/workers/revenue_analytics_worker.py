@@ -8,7 +8,7 @@ Technologies: ML Revenue Models, Multi-Platform APIs, Real-time Analytics, Predi
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Platform integration → Revenue data collection → ML analysis → 
 Trend prediction → Optimization recommendations → Automated distribution → Performance tracking
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms for revenue tracking"""
+    """
+Supported platforms for revenue tracking"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -66,6 +69,7 @@ class Platform(Enum):
 
 class RevenueType(Enum):
     """Types of revenue"""
+
     STREAMING = "streaming"
     ADVERTISING = "advertising"
     MERCHANDISE = "merchandise"
@@ -79,6 +83,7 @@ class RevenueType(Enum):
 
 class RevenueStatus(Enum):
     """Revenue collection status"""
+
     PENDING = "pending"
     COLLECTED = "collected"
     PROCESSING = "processing"
@@ -89,6 +94,7 @@ class RevenueStatus(Enum):
 
 class AnalyticsType(Enum):
     """Analytics computation types"""
+
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
     MONTHLY_REPORT = "monthly_report"
@@ -118,7 +124,8 @@ class RevenueEntry:
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific metrics"""
+    """
+Platform-specific metrics"""
     platform: Platform
     total_revenue: Decimal
     revenue_growth: float
@@ -132,7 +139,8 @@ class PlatformMetrics:
 
 @dataclass
 class RevenueAnalyticsTask:
-    """Revenue analytics task definition"""
+    """
+Revenue analytics task definition"""
     task_id: str
     creator_id: str
     analytics_type: AnalyticsType
@@ -163,7 +171,8 @@ class RevenueReport:
 
 
 class RevenueAnalyticsWorker:
-    """Advanced revenue analytics worker with ML-powered insights"""
+    """
+Advanced revenue analytics worker with ML-powered insights"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -1017,7 +1026,8 @@ class RevenueAnalyticsWorker:
         return base_rates.get(platform, 0.10)
     
     def _estimate_audience_size(self, platform: Platform, entries: List[RevenueEntry]) -> int:
-        """Estimate audience size based on revenue data"""
+        """
+Estimate audience size based on revenue data"""
         # This would be retrieved from actual platform metrics in production
         if not entries:
             return 0
@@ -1096,7 +1106,8 @@ async def get_revenue_analytics_worker() -> Optional[RevenueAnalyticsWorker]:
 
 
 async def initialize_revenue_analytics_worker(config: Dict[str, Any] = None) -> bool:
-    """Initialize the revenue analytics worker"""
+    """
+Initialize the revenue analytics worker"""
     global _revenue_analytics_worker
     
     try:

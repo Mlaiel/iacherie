@@ -5,6 +5,7 @@ session persistence, and intelligent progress tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -44,7 +45,9 @@ from ...utils.notifications import NotificationService
 logger = logging.getLogger(__name__)
 
 class OnboardingStatus(Enum):
-    """Onboarding process status levels"""
+    """
+Onboarding process status levels"""
+
     NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress" 
     PAUSED = "paused"
@@ -492,7 +495,8 @@ class OnboardingManager:
         return min((completed_count / total_stages) * 100, 100.0)
     
     def _validate_completion_requirements(self, session_data: Dict[str, Any]) -> bool:
-        """Validate that onboarding requirements are met."""
+        """
+Validate that onboarding requirements are met."""
         required_stages = [
             'profile_creation',
             'content_analysis', 
@@ -504,7 +508,8 @@ class OnboardingManager:
         return all(stage in completed_stages for stage in required_stages)
     
     def _calculate_session_duration(self, session_data: Dict[str, Any]) -> int:
-        """Calculate session duration in minutes."""
+        """
+Calculate session duration in minutes."""
         try:
             created_at = datetime.fromisoformat(session_data['created_at'])
             updated_at = datetime.fromisoformat(session_data['updated_at'])
@@ -514,14 +519,16 @@ class OnboardingManager:
             return 0
     
     def _update_completion_metrics(self) -> None:
-        """Update completion rate and related metrics."""
+        """
+Update completion rate and related metrics."""
         if self.metrics.total_sessions > 0:
             self.metrics.completion_rate = (
                 self.metrics.completed_sessions / self.metrics.total_sessions
             ) * 100
     
     async def _refresh_metrics(self) -> None:
-        """Refresh metrics from database."""
+        """
+Refresh metrics from database."""
         try:
             async with get_db_session() as db:
                 # Get basic counts

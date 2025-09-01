@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 VÉRIFICATION CONFORMITÉ LÉGALE & PLATEFORME
@@ -16,6 +16,7 @@ Vérification automatisée des conformités multi-juridictionnelles
 - Standards plateformes (YouTube, TikTok, Instagram)
 - Conformité business multi-créateurs
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -47,7 +48,9 @@ from geopy.geocoders import Nominatim
 logger = logging.getLogger(__name__)
 
 class ComplianceLevel(Enum):
-    """Niveaux de conformité"""
+    """
+Niveaux de conformité"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -55,6 +58,7 @@ class ComplianceLevel(Enum):
 
 class ComplianceCategory(Enum):
     """Catégories de conformité"""
+
     PRIVACY = "privacy"
     COPYRIGHT = "copyright"
     CONTENT_SAFETY = "content_safety"
@@ -65,6 +69,7 @@ class ComplianceCategory(Enum):
 
 class JurisdictionType(Enum):
     """Types de juridiction"""
+
     EU = "european_union"
     US = "united_states"
     CA = "canada"
@@ -86,7 +91,8 @@ class ComplianceIssue:
 
 @dataclass
 class ComplianceResult:
-    """Résultat de vérification de conformité"""
+    """
+Résultat de vérification de conformité"""
     overall_compliance: ComplianceLevel
     issues: List[ComplianceIssue]
     compliant_categories: List[ComplianceCategory]
@@ -98,7 +104,8 @@ class ComplianceResult:
     metadata: Dict[str, Any]
 
 class PrivacyComplianceChecker:
-    """Vérificateur de conformité vie privée (RGPD/CCPA)"""
+    """
+Vérificateur de conformité vie privée (RGPD/CCPA)"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.PrivacyComplianceChecker")
@@ -144,7 +151,8 @@ class PrivacyComplianceChecker:
         return issues
     
     def _check_pii_exposure(self, content: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie l'exposition de données personnelles"""
+        """
+Vérifie l'exposition de données personnelles"""
         issues = []
         
         # Analyse du contenu textuel
@@ -347,15 +355,16 @@ class PrivacyComplianceChecker:
         return False
 
 class CopyrightComplianceChecker:
-    """Vérificateur de conformité copyright"""
+    """
+Vérificateur de conformité copyright"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.CopyrightComplianceChecker")
         
         # Mots-clés de copyright
         self.copyright_indicators = [
-            '©', 'copyright', 'all rights reserved', 'proprietary',
-            'trademark', '®', '™', 'licensed', 'permission required'
+            '(c)', 'copyright', 'all rights reserved', 'proprietary',
+            'trademark', '(R)', '(TM)', 'licensed', 'permission required'
         ]
         
         # Formats protégés couramment
@@ -389,7 +398,8 @@ class CopyrightComplianceChecker:
         return issues
     
     def _check_license_compliance(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la conformité de licence"""
+        """
+Vérifie la conformité de licence"""
         issues = []
         
         business = metadata.get('business', {})
@@ -718,7 +728,8 @@ class PlatformPolicyChecker:
     def _check_single_platform(self, content: Dict[str, Any], 
                               metadata: Dict[str, Any], 
                               platform: str) -> List[ComplianceIssue]:
-        """Vérifie la conformité pour une plateforme"""
+        """
+Vérifie la conformité pour une plateforme"""
         issues = []
         
         if platform not in self.platform_rules:
@@ -746,7 +757,8 @@ class PlatformPolicyChecker:
     
     def _check_duration_limits(self, metadata: Dict[str, Any], 
                               platform: str, rules: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie les limites de durée"""
+        """
+Vérifie les limites de durée"""
         issues = []
         
         dimensions = metadata.get('dimensions', {})
@@ -1059,7 +1071,8 @@ class ComplianceChecker:
         )
     
     def _generate_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Génère des recommandations globales"""
+        """
+Génère des recommandations globales"""
         recommendations = []
         
         # Recommandations par catégorie
@@ -1103,7 +1116,8 @@ class ComplianceChecker:
         return required_actions
     
     def _create_error_result(self, error: str) -> ComplianceResult:
-        """Crée un résultat d'erreur"""
+        """
+Crée un résultat d'erreur"""
         return ComplianceResult(
             overall_compliance=ComplianceLevel.CRITICAL,
             issues=[ComplianceIssue(
@@ -1154,7 +1168,8 @@ class AsyncComplianceChecker:
                                    content_batch: List[Tuple[Dict[str, Any], Dict[str, Any]]],
                                    target_platforms: List[str] = None,
                                    jurisdictions: List[JurisdictionType] = None) -> List[ComplianceResult]:
-        """Vérifie la conformité d'un lot de contenus"""
+        """
+Vérifie la conformité d'un lot de contenus"""
         tasks = []
         
         for content, metadata in content_batch:

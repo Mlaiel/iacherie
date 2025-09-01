@@ -16,6 +16,7 @@ Professional revenue calculation engine for content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueStream:
-    """Revenue stream definition"""
+    """
+Revenue stream definition"""
     stream_id: str
     stream_type: str
     platform: str
@@ -42,7 +44,8 @@ class RevenueStream:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis result"""
+    """
+Revenue analysis result"""
     total_revenue: float
     revenue_by_stream: Dict[str, float]
     revenue_by_platform: Dict[str, float]
@@ -52,7 +55,8 @@ class RevenueAnalysis:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection result"""
+    """
+Revenue projection result"""
     projected_revenue: float
     confidence_interval: Tuple[float, float]
     projection_period: str
@@ -61,7 +65,8 @@ class RevenueProjection:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity"""
+    """
+Monetization opportunity"""
     opportunity_type: str
     platform: str
     estimated_revenue: float
@@ -980,7 +985,8 @@ class RevenueCalculationEngine:
         return requirements_map.get(stream_type, ['Platform-specific requirements'])
     
     def _calculate_tax_implications(self, revenue_analysis: RevenueAnalysis, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate tax implications"""
+        """
+Calculate tax implications"""
         try:
             region = config.get('tax_region', 'US')
             tax_rates = self.tax_rates.get(region, self.tax_rates['US'])
@@ -1144,7 +1150,8 @@ class RevenueCalculationEngine:
             return 'below_average'
     
     def _identify_improvement_areas(self, revenue_analysis: RevenueAnalysis, benchmark_data: Dict[str, Any]) -> List[str]:
-        """Identify areas for improvement"""
+        """
+Identify areas for improvement"""
         improvement_areas = []
         
         # Revenue diversification
@@ -1165,7 +1172,8 @@ class RevenueCalculationEngine:
     def _generate_revenue_optimization_suggestions(self, revenue_by_stream: Dict[str, float], 
                                                   revenue_by_platform: Dict[str, float],
                                                   performance_metrics: Dict[str, Any]) -> List[str]:
-        """Generate revenue optimization suggestions"""
+        """
+Generate revenue optimization suggestions"""
         suggestions = []
         
         # Suggest focusing on high-performing streams
@@ -1214,16 +1222,19 @@ class RevenueCalculationEngine:
         return {'optimal_posting_times': ['9:00 AM', '2:00 PM', '7:00 PM']}
     
     def _optimize_platform_allocation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize platform resource allocation"""
+        """
+Optimize platform resource allocation"""
         # Simplified implementation
         return {'recommended_allocation': {'youtube': 0.4, 'instagram': 0.3, 'tiktok': 0.3}}
     
     def _optimize_pricing_strategy(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize pricing strategy"""
+        """
+Optimize pricing strategy"""
         # Simplified implementation
         return {'recommended_prices': {'subscription': 9.99, 'merchandise': 25.0}}
     
     def _optimize_audience_targeting(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize audience targeting"""
+        """
+Optimize audience targeting"""
         # Simplified implementation
         return {'target_demographics': ['18-35 years', 'music enthusiasts', 'digital content consumers']}

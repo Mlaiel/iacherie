@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -31,7 +32,9 @@ from ..integrations.ip_databases import IPDatabaseManager
 
 
 class IPType(Enum):
-    """Types of intellectual property"""
+    """
+Types of intellectual property"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -46,6 +49,7 @@ class IPType(Enum):
 
 class IPStatus(Enum):
     """IP protection status"""
+
     PENDING_REGISTRATION = "pending_registration"
     REGISTERED = "registered"
     ACTIVE = "active"
@@ -59,6 +63,7 @@ class IPStatus(Enum):
 
 class ProtectionScope(Enum):
     """Scope of IP protection"""
+
     NATIONAL = "national"
     REGIONAL = "regional"
     INTERNATIONAL = "international"
@@ -69,6 +74,7 @@ class ProtectionScope(Enum):
 
 class IPPriority(Enum):
     """Priority levels for IP management"""
+
     CRITICAL = "critical"          # Core business assets
     HIGH = "high"                  # Important revenue generators
     MEDIUM = "medium"              # Standard protection
@@ -91,7 +97,8 @@ class IPPortfolioMetrics:
 
 
 class IPRegistrationRequest(BaseModel):
-    """IP registration request structure"""
+    """
+IP registration request structure"""
     ip_type: IPType = Field(..., description="Type of IP to register")
     content_id: Optional[str] = Field(None, description="Associated content ID")
     title: str = Field(..., description="Title or name of IP")
@@ -612,7 +619,8 @@ class IntellectualPropertyService:
         self, 
         request: IPRegistrationRequest
     ) -> Dict[str, Any]:
-        """Perform comprehensive IP conflict analysis"""
+        """
+Perform comprehensive IP conflict analysis"""
         # Implementation for conflict analysis
         pass
     
@@ -620,6 +628,7 @@ class IntellectualPropertyService:
         self, 
         portfolio: List[IntellectualProperty]
     ) -> IPPortfolioMetrics:
-        """Calculate comprehensive portfolio metrics"""
+        """
+Calculate comprehensive portfolio metrics"""
         # Implementation for portfolio metrics calculation
         pass

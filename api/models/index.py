@@ -95,7 +95,8 @@ from .factories import (
 
 
 def get_user_models():
-    """Get all user-related models"""
+    """
+Get all user-related models"""
     return {
         'domain': User,
         'database': UserModel,
@@ -107,7 +108,8 @@ def get_user_models():
 
 
 def get_creator_models():
-    """Get all creator-related models"""
+    """
+Get all creator-related models"""
     return {
         'domain': Creator,
         'database': CreatorModel,
@@ -117,7 +119,8 @@ def get_creator_models():
 
 
 def get_content_models():
-    """Get all content-related models"""
+    """
+Get all content-related models"""
     return {
         'domain': Content,
         'database': ContentModel,
@@ -129,7 +132,8 @@ def get_content_models():
 
 
 def get_media_models():
-    """Get all media-related models"""
+    """
+Get all media-related models"""
     return {
         'domain': MediaFile,
         'database': MediaFileModel,
@@ -139,7 +143,8 @@ def get_media_models():
 
 
 def get_collaboration_models():
-    """Get all collaboration-related models"""
+    """
+Get all collaboration-related models"""
     return {
         'domain': Collaboration,
         'database': CollaborationModel,
@@ -150,7 +155,8 @@ def get_collaboration_models():
 
 
 def get_project_models():
-    """Get all project-related models"""
+    """
+Get all project-related models"""
     return {
         'domain': Project,
         'database': ProjectModel,
@@ -161,7 +167,8 @@ def get_project_models():
 
 
 def get_copyright_models():
-    """Get all copyright-related models"""
+    """
+Get all copyright-related models"""
     return {
         'domain': Copyright,
         'database': CopyrightModel,
@@ -170,7 +177,8 @@ def get_copyright_models():
 
 
 def get_license_models():
-    """Get all license-related models"""
+    """
+Get all license-related models"""
     return {
         'domain': License,
         'database': LicenseModel,
@@ -180,7 +188,8 @@ def get_license_models():
 
 
 def get_revenue_models():
-    """Get all revenue-related models"""
+    """
+Get all revenue-related models"""
     return {
         'domain': Revenue,
         'database': RevenueModel,
@@ -189,7 +198,8 @@ def get_revenue_models():
 
 
 def get_distribution_models():
-    """Get all distribution-related models"""
+    """
+Get all distribution-related models"""
     return {
         'domain': Distribution,
         'database': DistributionModel,
@@ -199,7 +209,8 @@ def get_distribution_models():
 
 
 def get_all_models_by_category():
-    """Get all models organized by category"""
+    """
+Get all models organized by category"""
     return {
         'user': get_user_models(),
         'creator': get_creator_models(),

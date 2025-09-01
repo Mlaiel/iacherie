@@ -17,6 +17,7 @@ Features:
 - Cultural context awareness
 - Real-time translation capabilities
 """
+
 import logging
 import numpy as np
 import torch
@@ -48,6 +49,7 @@ except ImportError:
 
 class LanguageCode(Enum):
     """Supported language codes (ISO 639-1)"""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -104,6 +106,7 @@ class LanguageCode(Enum):
 
 class TranslationQuality(Enum):
     """Translation quality levels"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -112,6 +115,7 @@ class TranslationQuality(Enum):
 
 class CulturalContext(Enum):
     """Cultural context types"""
+
     FORMAL = "formal"
     INFORMAL = "informal"
     BUSINESS = "business"
@@ -137,7 +141,8 @@ class TranslationResult:
 
 @dataclass
 class LanguageAdaptationResult:
-    """Result from language adaptation"""
+    """
+Result from language adaptation"""
     original_text: str
     adapted_text: str
     source_region: str
@@ -148,7 +153,8 @@ class LanguageAdaptationResult:
 
 @dataclass
 class MultilingualAnalysis:
-    """Multilingual content analysis result"""
+    """
+Multilingual content analysis result"""
     text: str
     detected_languages: List[Tuple[LanguageCode, float]]
     mixed_language: bool
@@ -156,7 +162,8 @@ class MultilingualAnalysis:
 
 
 class BaseTranslationEngine(ABC):
-    """Base class for translation engines"""
+    """
+Base class for translation engines"""
     
     def __init__(self, engine_name: str = "base_translation"):
         self.engine_name = engine_name
@@ -174,16 +181,19 @@ class BaseTranslationEngine(ABC):
     @abstractmethod
     def translate_text(self, text: str, source_lang: LanguageCode, 
                       target_lang: LanguageCode) -> TranslationResult:
-        """Translate text between languages"""
+        """
+Translate text between languages"""
         pass
         
     def is_language_supported(self, language: LanguageCode) -> bool:
-        """Check if language is supported"""
+        """
+Check if language is supported"""
         return language.value in self.supported_languages
 
 
 class MultilingualTranslator(BaseTranslationEngine):
-    """Advanced multilingual translator"""
+    """
+Advanced multilingual translator"""
     
     def __init__(self, model_name: str = "multilingual_translator_v1"):
         super().__init__(f"translator_{model_name}")
@@ -467,13 +477,15 @@ class MultilingualTranslator(BaseTranslationEngine):
         return results
     
     def detect_and_translate(self, text: str, target_lang: LanguageCode) -> TranslationResult:
-        """Auto-detect source language and translate"""
+        """
+Auto-detect source language and translate"""
         # Simple language detection (fallback)
         detected_lang = self._detect_language_simple(text)
         return self.translate_text(text, detected_lang, target_lang)
     
     def _detect_language_simple(self, text: str) -> LanguageCode:
-        """Simple language detection"""
+        """
+Simple language detection"""
         # Common word patterns for basic detection
         language_indicators = {
             LanguageCode.ENGLISH: ['the', 'and', 'is', 'in', 'to', 'of', 'a'],
@@ -496,7 +508,8 @@ class MultilingualTranslator(BaseTranslationEngine):
 
 
 class LanguageAdapter(BaseTranslationEngine):
-    """Language and cultural adaptation engine"""
+    """
+Language and cultural adaptation engine"""
     
     def __init__(self, adapter_name: str = "language_adapter_v1"):
         super().__init__(f"adapter_{adapter_name}")
@@ -550,7 +563,8 @@ class LanguageAdapter(BaseTranslationEngine):
     
     def adapt_to_region(self, text: str, language: LanguageCode, 
                        source_region: str, target_region: str) -> LanguageAdaptationResult:
-        """Adapt text from one regional variant to another"""
+        """
+Adapt text from one regional variant to another"""
         import time
         start_time = time.time()
         
@@ -681,7 +695,8 @@ class LanguageAdapter(BaseTranslationEngine):
         return False
     
     def _calculate_language_confidence(self, text: str, language: LanguageCode) -> float:
-        """Calculate confidence score for language detection"""
+        """
+Calculate confidence score for language detection"""
         # Simple confidence calculation
         if self._has_language_patterns(text, language):
             return 0.7  # Basic confidence if patterns found

@@ -2,8 +2,9 @@
 Advanced commission structure management and calculation engine
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
@@ -15,7 +16,9 @@ from pydantic import BaseModel, Field
 
 
 class CommissionType(Enum):
-    """Types of commission structures"""
+    """
+Types of commission structures"""
+
     PERCENTAGE = "percentage"
     FLAT_RATE = "flat_rate"
     TIERED = "tiered"
@@ -25,6 +28,7 @@ class CommissionType(Enum):
 
 class TierCriteria(Enum):
     """Criteria for tiered commissions"""
+
     REVENUE_AMOUNT = "revenue_amount"
     TRANSACTION_COUNT = "transaction_count"
     USER_LEVEL = "user_level"
@@ -43,7 +47,8 @@ class CommissionTier:
     bonus_rate: Optional[Decimal] = None
     
     def applies_to_amount(self, amount: Decimal) -> bool:
-        """Check if tier applies to given amount"""
+        """
+Check if tier applies to given amount"""
         if amount < self.min_threshold:
             return False
         if self.max_threshold and amount > self.max_threshold:
@@ -53,7 +58,8 @@ class CommissionTier:
 
 @dataclass 
 class CommissionStructure:
-    """Complete commission structure definition"""
+    """
+Complete commission structure definition"""
     structure_id: str
     name: str
     description: str
@@ -78,7 +84,8 @@ class CommissionStructure:
 
 
 class CommissionCalculationRequest(BaseModel):
-    """Request for commission calculation"""
+    """
+Request for commission calculation"""
     user_id: int
     revenue_amount: Decimal = Field(..., gt=0)
     platform: str
@@ -90,7 +97,8 @@ class CommissionCalculationRequest(BaseModel):
 
 
 class CommissionResult(BaseModel):
-    """Commission calculation result"""
+    """
+Commission calculation result"""
     gross_revenue: Decimal
     commission_amount: Decimal
     commission_rate: Decimal
@@ -100,7 +108,8 @@ class CommissionResult(BaseModel):
     bonuses_applied: List[Dict[str, Any]] = Field(default_factory=list)
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get calculation summary"""
+        """
+Get calculation summary"""
         return {
             "gross_revenue": float(self.gross_revenue),
             "commission_amount": float(self.commission_amount),
@@ -120,7 +129,8 @@ class CommissionCalculator:
         self._initialize_default_structures()
         
     def _initialize_default_structures(self) -> None:
-        """Initialize default commission structures"""
+        """
+Initialize default commission structures"""
         
         # Standard percentage structure
         standard = CommissionStructure(
@@ -284,7 +294,8 @@ class CommissionCalculator:
         request: CommissionCalculationRequest,
         structure: CommissionStructure
     ) -> tuple[Decimal, Decimal, str]:
-        """Calculate tiered commission based on revenue amount"""
+        """
+Calculate tiered commission based on revenue amount"""
         total_commission = Decimal("0")
         remaining_amount = request.revenue_amount
         applied_tier = None

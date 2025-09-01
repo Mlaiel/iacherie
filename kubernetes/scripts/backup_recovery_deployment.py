@@ -24,6 +24,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Backup and Disaster Recovery
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import time
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backups"""
+    """
+Types of backups"""
+
     FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     DIFFERENTIAL_BACKUP = "differential_backup"
@@ -81,6 +84,7 @@ class BackupType(Enum):
 
 class StorageTier(Enum):
     """Storage tiers for backup retention"""
+
     HOT_STORAGE = "hot_storage"      # Immediate access
     WARM_STORAGE = "warm_storage"    # Quick access
     COLD_STORAGE = "cold_storage"    # Infrequent access
@@ -90,6 +94,7 @@ class StorageTier(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -101,6 +106,7 @@ class BackupStatus(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -112,6 +118,7 @@ class CompressionType(Enum):
 
 class EncryptionType(Enum):
     """Encryption methods"""
+
     NONE = "none"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
@@ -187,7 +194,8 @@ class RecoveryConfig:
 
 @dataclass
 class BackupMetadata:
-    """Metadata for backup operations"""
+    """
+Metadata for backup operations"""
     backup_id: str
     timestamp: datetime
     size_bytes: int
@@ -250,7 +258,8 @@ class BackupRecoveryDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Backup and Recovery Deployment Manager"""
+        """
+Initialize the Backup and Recovery Deployment Manager"""
         self.config_path = config_path or os.getenv('BACKUP_CONFIG_PATH', '/etc/backup/config.yaml')
         self.backup_configs: Dict[str, BackupConfig] = {}
         self.recovery_configs: Dict[str, RecoveryConfig] = {}
@@ -1146,7 +1155,8 @@ class BackupRecoveryDeploymentManager:
                 )
     
     def list_backups(self) -> List[Dict[str, Any]]:
-        """List all available backups"""
+        """
+List all available backups"""
         backups = []
         
         for backup_id, metadata in self.backup_metadata.items():
@@ -1162,7 +1172,8 @@ class BackupRecoveryDeploymentManager:
         return sorted(backups, key=lambda x: x['timestamp'], reverse=True)
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
+        """
+Perform comprehensive health check"""
         health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',

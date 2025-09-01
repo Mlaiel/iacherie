@@ -15,6 +15,7 @@ Module: backend.deployment.kubernetes
 Purpose: Kubernetes deployment automation and management tools
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import sys
 import subprocess
@@ -45,7 +46,8 @@ class KubernetesDeployer:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Kubernetes deployer."""
+        """
+Initialize the Kubernetes deployer."""
         self.base_path = Path(__file__).parent
         self.manifests = {
             'namespaces': 'namespaces.yaml',

@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import hashlib
 import hmac
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security access levels."""
+    """
+Security access levels."""
+
     PUBLIC = 1
     RESTRICTED = 2
     CONFIDENTIAL = 3
@@ -36,7 +39,9 @@ class SecurityLevel(Enum):
 
 
 class ThreatLevel(Enum):
-    """Security threat levels."""
+    """
+Security threat levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -45,7 +50,8 @@ class ThreatLevel(Enum):
 
 @dataclass
 class SecurityEvent:
-    """Security event record."""
+    """
+Security event record."""
     event_id: str
     timestamp: datetime
     event_type: str
@@ -69,10 +75,12 @@ class AccessControl:
 
 
 class AgentSecurityManager:
-    """Advanced security manager for AI agents."""
+    """
+Advanced security manager for AI agents."""
     
     def __init__(self, secret_key: str = None):
-        """Initialize security manager."""
+        """
+Initialize security manager."""
         self.secret_key = secret_key or secrets.token_urlsafe(32)
         self.security_events: List[SecurityEvent] = []
         self.access_controls: Dict[str, AccessControl] = {}
@@ -398,7 +406,8 @@ class AgentSecurityManager:
         return default_limits.get(agent_type, 100)
     
     def _is_unusual_time_pattern(self, agent_id: str, timestamp: float) -> bool:
-        """Check if the request time is unusual for this agent."""
+        """
+Check if the request time is unusual for this agent."""
         import time
         from datetime import datetime
         
@@ -436,7 +445,8 @@ class AgentSecurityManager:
         return source_ip in known_bad_ips
     
     def _get_agent_permissions(self, agent_id: str) -> List[str]:
-        """Get all permissions for an agent."""
+        """
+Get all permissions for an agent."""
         permissions = []
         
         for access_control in self.access_controls.values():
@@ -450,7 +460,8 @@ class AgentSecurityManager:
                            agent_id: str,
                            threat_level: ThreatLevel,
                            description: str):
-        """Log security event."""
+        """
+Log security event."""
         try:
             event = SecurityEvent(
                 event_id=secrets.token_hex(16),

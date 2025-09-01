@@ -8,7 +8,8 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 async def test_function_imports():
-    """Test that all enhanced monitoring functions can be imported and called"""
+    """
+Test that all enhanced monitoring functions can be imported and called"""
     try:
         # Import the enhanced functions directly from the module
         from protection.rights_tracking.usage_monitor import (

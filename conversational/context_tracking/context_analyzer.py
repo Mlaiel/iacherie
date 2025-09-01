@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import re
@@ -31,7 +32,9 @@ from ...ml.text_processing import TextProcessor
 
 
 class ContextType(Enum):
-    """Types of context elements"""
+    """
+Types of context elements"""
+
     INTENT = "intent"
     ENTITY = "entity"
     EMOTION = "emotion"
@@ -49,6 +52,7 @@ class ContextType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for context analysis"""
+
     VERY_LOW = 0.2
     LOW = 0.4
     MEDIUM = 0.6
@@ -58,7 +62,8 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ContextElement:
-    """Individual context element"""
+    """
+Individual context element"""
     element_id: str
     context_type: ContextType
     value: Any
@@ -1181,7 +1186,8 @@ class ContextAnalyzer:
         pass
     
     async def _load_context_data(self):
-        """Load existing context data"""
+        """
+Load existing context data"""
         try:
             # Load from cache or persistent storage
             pass
@@ -1205,7 +1211,8 @@ class ContextAnalyzer:
         return min(base_confidence, 1.0)
     
     def _calculate_entity_confidence(self, entity) -> float:
-        """Calculate confidence for entity extraction"""
+        """
+Calculate confidence for entity extraction"""
         # Base confidence from spaCy model
         base_confidence = 0.7
         
@@ -1237,7 +1244,8 @@ class ContextAnalyzer:
         return similar[:max_results]
     
     async def _enhance_confidence(self, element: ContextElement, user_id: str) -> float:
-        """Enhance confidence based on context consistency"""
+        """
+Enhance confidence based on context consistency"""
         base_confidence = element.confidence
         
         # Find similar historical elements
@@ -1256,7 +1264,8 @@ class ContextAnalyzer:
         min_frequency: int,
         min_strength: float
     ) -> List[ContextPattern]:
-        """Detect patterns for specific user"""
+        """
+Detect patterns for specific user"""
         patterns = []
         user_elements = self.context_elements.get(user_id, [])
         
@@ -1303,7 +1312,8 @@ class ContextAnalyzer:
         return unique_patterns
     
     async def _extract_context_features(self, context: List[ContextElement]) -> Dict[str, Any]:
-        """Extract features from context elements"""
+        """
+Extract features from context elements"""
         features = {
             "context_types": [e.context_type.value for e in context],
             "values": [str(e.value) for e in context],

@@ -11,6 +11,7 @@ This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -57,7 +58,9 @@ from ...security.audit_logger import AuditLogger
 logger = logging.getLogger(__name__)
 
 class AuditType(Enum):
-    """Types of audit events"""
+    """
+Types of audit events"""
+
     COMPLIANCE_CHECK = "compliance_check"
     POLICY_VIOLATION = "policy_violation"
     DATA_ACCESS = "data_access"
@@ -70,6 +73,7 @@ class AuditType(Enum):
 
 class AuditSeverity(Enum):
     """Audit event severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -79,6 +83,7 @@ class AuditSeverity(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks for auditing"""
+
     GDPR = "gdpr"
     DMCA = "dmca"
     SOX = "sox"
@@ -90,6 +95,7 @@ class ComplianceFramework(Enum):
 
 class AuditStatus(Enum):
     """Audit event status"""
+
     ACTIVE = "active"
     RESOLVED = "resolved"
     INVESTIGATING = "investigating"
@@ -119,7 +125,8 @@ class AuditEvent:
 
 @dataclass
 class AuditQuery:
-    """Audit query parameters"""
+    """
+Audit query parameters"""
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     event_types: Optional[List[AuditType]] = None
@@ -134,7 +141,8 @@ class AuditQuery:
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance metrics for reporting"""
+    """
+Compliance metrics for reporting"""
     framework: ComplianceFramework
     period_start: datetime
     period_end: datetime
@@ -150,7 +158,8 @@ class ComplianceMetrics:
 
 @dataclass
 class AuditReport:
-    """Comprehensive audit report"""
+    """
+Comprehensive audit report"""
     id: str
     report_type: str
     framework: ComplianceFramework
@@ -173,7 +182,8 @@ class AuditSystem:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize audit system with enterprise security features"""
+        """
+Initialize audit system with enterprise security features"""
         self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
@@ -1192,7 +1202,8 @@ class AuditSystem:
     
     async def _analyze_coverage_gaps(self, events: List[AuditEvent], 
                                    framework: ComplianceFramework) -> Optional[Dict[str, Any]]:
-        """Analyze potential coverage gaps in monitoring"""
+        """
+Analyze potential coverage gaps in monitoring"""
         # Simplified gap analysis
         expected_event_types = {
             ComplianceFramework.GDPR: [AuditType.DATA_ACCESS, AuditType.USER_ACTION, AuditType.GDPR_EVENT],
@@ -1216,7 +1227,8 @@ class AuditSystem:
     
     async def _calculate_compliance_trends(self, events: List[AuditEvent],
                                          start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate compliance trends over time"""
+        """
+Calculate compliance trends over time"""
         try:
             # Calculate weekly trends
             period_days = (end_date - start_date).days
@@ -1307,7 +1319,8 @@ class AuditSystem:
         return findings
     
     async def _analyze_dmca_specific_findings(self, events: List[AuditEvent]) -> List[Dict[str, Any]]:
-        """Analyze DMCA-specific compliance findings"""
+        """
+Analyze DMCA-specific compliance findings"""
         findings = []
         
         # Look for takedown-related issues
@@ -1326,7 +1339,8 @@ class AuditSystem:
     async def _create_report_appendices(self, events: List[AuditEvent],
                                       metrics: ComplianceMetrics,
                                       framework: ComplianceFramework) -> Dict[str, Any]:
-        """Create detailed appendices for compliance reports"""
+        """
+Create detailed appendices for compliance reports"""
         try:
             appendices = {
                 'event_summary': {
@@ -1377,7 +1391,8 @@ class ComplianceReporter:
         self.scheduled_reports = {}
     
     async def generate_executive_dashboard(self) -> Dict[str, Any]:
-        """Generate executive compliance dashboard"""
+        """
+Generate executive compliance dashboard"""
         try:
             dashboard = {
                 'overview': {},

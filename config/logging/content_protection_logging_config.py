@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -29,7 +30,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class ProtectionEventType(str, Enum):
-    """Content protection event types for specialized logging"""
+    """
+Content protection event types for specialized logging"""
+
     FINGERPRINT_GENERATION = "fingerprint_generation"
     FINGERPRINT_MATCHING = "fingerprint_matching" 
     PIRACY_DETECTION = "piracy_detection"
@@ -49,6 +52,7 @@ class ProtectionEventType(str, Enum):
 
 class ContentType(str, Enum):
     """Multi-format content types for protection logging"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -98,14 +102,16 @@ class ContentProtectionLogConfig:
 
 
 class ContentProtectionLogger:
-    """Specialized logger for content protection operations"""
+    """
+Specialized logger for content protection operations"""
     
     def __init__(self, config: ContentProtectionLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for content protection"""
+        """
+Setup structured logger for content protection"""
         structlog.configure(
             processors=[
                 structlog.threadlocal.merge_threadlocal_context,
@@ -372,12 +378,14 @@ class ContentProtectionLoggingConfig:
     
     @staticmethod
     def create_default_config() -> ContentProtectionLogConfig:
-        """Create default content protection logging configuration"""
+        """
+Create default content protection logging configuration"""
         return ContentProtectionLogConfig()
     
     @staticmethod
     def create_high_security_config() -> ContentProtectionLogConfig:
-        """Create high-security content protection logging configuration"""
+        """
+Create high-security content protection logging configuration"""
         return ContentProtectionLogConfig(
             enable_fingerprint_logging=True,
             enable_piracy_detection_logging=True,
@@ -404,7 +412,8 @@ class ContentProtectionLoggingConfig:
     
     @staticmethod
     def create_performance_focused_config() -> ContentProtectionLogConfig:
-        """Create performance-focused content protection logging configuration"""
+        """
+Create performance-focused content protection logging configuration"""
         return ContentProtectionLogConfig(
             enable_fingerprint_logging=True,
             enable_piracy_detection_logging=True,

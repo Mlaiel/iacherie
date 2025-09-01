@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SystemConfig:
-    """Main system configuration"""
+    """
+Main system configuration"""
     # Core settings
     redis_url: str = "redis://localhost:6379"
     elasticsearch_hosts: List[str] = None
@@ -100,7 +102,8 @@ class IndexingOrchestrator:
         self.health_checks = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the complete indexing system"""
+        """
+Initialize the complete indexing system"""
         try:
             self.start_time = datetime.now(timezone.utc)
             logger.info("🚀 Starting IA Influencer Agent Indexing System initialization...")
@@ -701,7 +704,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexingModuleConfig:
-    """Configuration for the entire indexing module"""
+    """
+Configuration for the entire indexing module"""
     # Database configuration
     database_url: str = "postgresql+asyncpg://user:pass@localhost/ia_influencer"
     redis_url: str = "redis://localhost:6379"
@@ -743,7 +747,8 @@ class IndexingModuleFactory:
         Path(config.temp_directory).mkdir(parents=True, exist_ok=True)
     
     def create_indexing_config(self) -> IndexingConfig:
-        """Create indexing engine configuration"""
+        """
+Create indexing engine configuration"""
         return IndexingConfig(
             vector_dimension=self.config.vector_dimension,
             similarity_threshold=self.config.similarity_threshold,
@@ -763,7 +768,8 @@ class IndexingModuleFactory:
         )
     
     async def create_repositories(self) -> Dict[str, Any]:
-        """Create repository instances"""
+        """
+Create repository instances"""
         try:
             # This would typically initialize database connections
             # For now, we'll return mock repositories
@@ -844,7 +850,8 @@ class IndexingModule:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the indexing module"""
+        """
+Initialize the indexing module"""
         try:
             if self._initialized:
                 self.logger.warning("IndexingModule already initialized")

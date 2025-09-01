@@ -4,6 +4,7 @@ Real-time monitoring across multiple platforms with intelligent violation detect
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 from typing import Dict, Any, List, Optional, Set
@@ -35,7 +36,8 @@ from ..ai_engine.vector_database import vector_database
 
 @dataclass
 class MonitoringTarget:
-    """Represents a content monitoring target"""
+    """
+Represents a content monitoring target"""
     user_id: str
     content_id: str
     content_type: str
@@ -48,7 +50,8 @@ class MonitoringTarget:
 
 
 class PlatformCrawler:
-    """Base class for platform-specific crawlers"""
+    """
+Base class for platform-specific crawlers"""
     
     def __init__(self, platform_name: str):
         self.platform_name = platform_name
@@ -60,7 +63,8 @@ class PlatformCrawler:
         self._setup_selenium()
     
     def _setup_selenium(self):
-        """Setup headless Chrome driver"""
+        """
+Setup headless Chrome driver"""
         try:
             chrome_options = Options()
             chrome_options.add_argument("--headless")
@@ -87,14 +91,16 @@ class PlatformCrawler:
             )
     
     async def close_session(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session:
             await self.session.close()
         if self.driver:
             self.driver.quit()
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search for content on platform - to be implemented by subclasses"""
+        """
+Search for content on platform - to be implemented by subclasses"""
         logger.info(f"Searching for {content_type} content with query: {query}")
         
         # Base implementation with generic web scraping approach
@@ -133,7 +139,8 @@ class PlatformCrawler:
         return []
     
     async def _web_search(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Web scraping search implementation"""
+        """
+Web scraping search implementation"""
         try:
             if not self.driver:
                 return []
@@ -292,7 +299,8 @@ class PlatformCrawler:
 
 
 class YouTubeCrawler(PlatformCrawler):
-    """YouTube content crawler using API and web scraping"""
+    """
+YouTube content crawler using API and web scraping"""
     
     def __init__(self):
         super().__init__("youtube")
@@ -562,7 +570,8 @@ class ProtectionMonitor:
         self.check_interval = 3600  # 1 hour default
     
     async def initialize(self):
-        """Initialize monitoring system"""
+        """
+Initialize monitoring system"""
         try:
             # Initialize all crawlers
             for crawler in self.crawlers.values():
@@ -671,7 +680,8 @@ class ProtectionMonitor:
         return time_since_check.total_seconds() >= (target.monitoring_frequency * 3600)
     
     async def _check_content_violations(self, target: MonitoringTarget):
-        """Check for violations of specific content"""
+        """
+Check for violations of specific content"""
         logger.info(f"Checking content {target.content_id} for violations")
         
         # Generate search queries based on content

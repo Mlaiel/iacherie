@@ -9,6 +9,7 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from ...security.protection import ContentProtector
 
 
 class ContentType(Enum):
-    """Content type enumeration for marketplace catalog."""
+    """
+Content type enumeration for marketplace catalog."""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
@@ -38,6 +41,7 @@ class ContentType(Enum):
 
 class CreatorTier(Enum):
     """Creator tier classification for marketplace."""
+
     EMERGING = "emerging"
     RISING = "rising"
     ESTABLISHED = "established"
@@ -65,7 +69,8 @@ class ContentMetadata:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile structure for marketplace catalog."""
+    """
+Creator profile structure for marketplace catalog."""
     username: str
     display_name: str
     bio: str
@@ -256,7 +261,8 @@ class ContentCatalog:
         analysis: Dict[str, Any], 
         metadata: ContentMetadata
     ) -> float:
-        """Calculate collaboration potential score."""
+        """
+Calculate collaboration potential score."""
         base_score = metadata.collaboration_potential
         
         # AI analysis factors
@@ -280,7 +286,8 @@ class ContentCatalog:
         filters: Dict[str, Any],
         sort_by: str
     ) -> List[Dict[str, Any]]:
-        """Apply filters and sorting to search results."""
+        """
+Apply filters and sorting to search results."""
         if not filters:
             return results
         
@@ -321,14 +328,16 @@ class ContentCatalog:
         time_window: timedelta,
         category: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Calculate trending scores for content."""
+        """
+Calculate trending scores for content."""
         # Implementation for trending calculation
         # This would involve engagement metrics, view counts, shares, etc.
         trending_content = []
         return trending_content
     
     async def _optimize_title(self, title: str) -> str:
-        """Optimize content title for SEO."""
+        """
+Optimize content title for SEO."""
         # AI-powered title optimization
         return title
     
@@ -337,7 +346,8 @@ class ContentCatalog:
         description: str, 
         analysis: Dict[str, Any]
     ) -> str:
-        """Generate SEO meta description."""
+        """
+Generate SEO meta description."""
         return description[:160]  # SEO best practice
     
     async def _extract_seo_keywords(
@@ -345,11 +355,13 @@ class ContentCatalog:
         tags: List[str], 
         analysis: Dict[str, Any]
     ) -> List[str]:
-        """Extract SEO keywords from content."""
+        """
+Extract SEO keywords from content."""
         return tags
     
     async def _generate_hashtags(self, tags: List[str]) -> List[str]:
-        """Generate social media hashtags."""
+        """
+Generate social media hashtags."""
         return [f"#{tag.replace(' ', '').lower()}" for tag in tags]
     
     async def _suggest_platforms(self, analysis: Dict[str, Any]) -> List[str]:
@@ -553,7 +565,8 @@ class CreatorCatalog:
         profile: CreatorProfile, 
         score: float
     ) -> CreatorTier:
-        """Determine creator tier based on profile and score."""
+        """
+Determine creator tier based on profile and score."""
         if score >= 0.9 and profile.verified:
             return CreatorTier.EXCLUSIVE
         elif score >= 0.75:
@@ -570,7 +583,8 @@ class CreatorCatalog:
         query: str,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Match creators based on query and filters."""
+        """
+Match creators based on query and filters."""
         # Implementation for creator matching algorithm
         return []
     
@@ -579,7 +593,8 @@ class CreatorCatalog:
         results: List[Dict[str, Any]],
         sort_by: str
     ) -> List[Dict[str, Any]]:
-        """Sort creator search results."""
+        """
+Sort creator search results."""
         if sort_by == "score":
             results.sort(key=lambda x: x.get('creator_score', 0), reverse=True)
         elif sort_by == "followers":

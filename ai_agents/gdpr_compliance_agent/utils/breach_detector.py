@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class BreachSeverity(Enum):
-    """Data breach severity levels"""
+    """
+Data breach severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -49,12 +52,14 @@ class BreachSeverity(Enum):
 
 class BreachCategory(Enum):
     """Categories of data breaches"""
+
     CONFIDENTIALITY = "confidentiality"  # Unauthorized access
     INTEGRITY = "integrity"              # Data modification
     AVAILABILITY = "availability"        # Data loss/unavailability
 
 class BreachStatus(Enum):
     """Status of breach investigation"""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
@@ -63,6 +68,7 @@ class BreachStatus(Enum):
 
 class NotificationTarget(Enum):
     """Notification targets for breaches"""
+
     SUPERVISORY_AUTHORITY = "supervisory_authority"
     DATA_SUBJECTS = "data_subjects"
     INTERNAL_TEAM = "internal_team"
@@ -83,7 +89,8 @@ class BreachMetrics:
 
 @dataclass
 class BreachAlert:
-    """Data breach alert structure"""
+    """
+Data breach alert structure"""
     alert_id: str
     breach_type: str
     severity: BreachSeverity

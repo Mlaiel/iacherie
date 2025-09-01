@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import json
 
 
 class LogLevel(Enum):
-    """Log levels"""
+    """
+Log levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -33,6 +36,7 @@ class LogLevel(Enum):
 
 class LogFormat(Enum):
     """Log output formats"""
+
     JSON = "json"
     TEXT = "text"
     LOGFMT = "logfmt"
@@ -40,6 +44,7 @@ class LogFormat(Enum):
 
 class LogDestination(Enum):
     """Log destinations"""
+
     CONSOLE = "console"
     FILE = "file"
     ELASTICSEARCH = "elasticsearch"
@@ -60,7 +65,8 @@ class LoggerConfig:
 
 @dataclass
 class HandlerConfig:
-    """Log handler configuration"""
+    """
+Log handler configuration"""
     name: str
     handler_type: str
     level: LogLevel
@@ -71,7 +77,8 @@ class HandlerConfig:
 
 @dataclass
 class FormatterConfig:
-    """Log formatter configuration"""
+    """
+Log formatter configuration"""
     name: str
     format_type: LogFormat
     format_string: Optional[str] = None
@@ -80,7 +87,8 @@ class FormatterConfig:
 
 
 class LoggingAggregationConfig:
-    """Professional logging aggregation configuration for IA-Influencer platform"""
+    """
+Professional logging aggregation configuration for IA-Influencer platform"""
     
     def __init__(self):
         self.log_level = LogLevel(os.getenv("LOG_LEVEL", "INFO"))
@@ -525,7 +533,8 @@ class LoggingAggregationConfig:
             return int(size_str)
     
     def get_complete_logging_config(self) -> Dict[str, Any]:
-        """Get complete logging configuration"""
+        """
+Get complete logging configuration"""
         return {
             "version": 1,
             "disable_existing_loggers": False,

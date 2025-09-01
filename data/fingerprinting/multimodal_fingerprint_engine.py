@@ -15,9 +15,10 @@ Upload Créateur → Fingerprinting Multi-Modal → Base Vectorielle →
 Surveillance Web → Détection Violations → Protection Automatisée
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
+
 import hashlib
 import numpy as np
 import cv2
@@ -48,6 +49,7 @@ logger = logging.getLogger(__name__)
 
 class ContentFormat(Enum):
     """Formats de contenu supportés pour créateurs multi-format."""
+
     AUDIO = "audio"      # Musiciens (Spotify, SoundCloud, etc.)
     VIDEO = "video"      # Influenceurs, Comédiens (YouTube, TikTok, etc.)  
     IMAGE = "image"      # Photographes (Instagram, portfolios, etc.)
@@ -84,6 +86,7 @@ class FingerprintMethod(Enum):
 
 class SimilarityMetric(Enum):
     """Métriques de similarité pour matching avancé."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     HAMMING = "hamming"
@@ -112,7 +115,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Match de similarité entre contenus créateurs."""
+    """
+Match de similarité entre contenus créateurs."""
     query_content_id: str
     matched_content_id: str
     query_creator_id: str
@@ -129,7 +133,8 @@ class SimilarityMatch:
 
 @dataclass
 class MultiModalFingerprint:
-    """Fingerprint multi-modal complet pour créateur."""
+    """
+Fingerprint multi-modal complet pour créateur."""
     content_id: str
     creator_id: str
     creator_type: str  # 'musician', 'influencer', 'photographer', 'blogger', 'comedian'
@@ -539,7 +544,8 @@ class MultiModalFingerprintEngine:
         return methods or self._get_default_methods(content_format)
     
     def _get_default_methods(self, content_format: ContentFormat) -> List[FingerprintMethod]:
-        """Méthodes par défaut selon format."""
+        """
+Méthodes par défaut selon format."""
         defaults = {
             ContentFormat.AUDIO: [FingerprintMethod.CHROMAPRINT, FingerprintMethod.MFCC],
             ContentFormat.VIDEO: [FingerprintMethod.PERCEPTUAL_HASH, FingerprintMethod.FRAME_DIFFERENCE],
@@ -554,7 +560,8 @@ class MultiModalFingerprintEngine:
         creator_type: str,
         content_format: ContentFormat
     ) -> float:
-        """Calcule score qualité adapté au type de créateur."""
+        """
+Calcule score qualité adapté au type de créateur."""
         if not quality_scores:
             return 0.0
         
@@ -577,7 +584,8 @@ class MultiModalFingerprintEngine:
         embeddings: List[np.ndarray],
         content_format: ContentFormat
     ) -> np.ndarray:
-        """Fusion intelligente d'embeddings selon format."""
+        """
+Fusion intelligente d'embeddings selon format."""
         if not embeddings:
             return np.array([])
         
@@ -608,7 +616,8 @@ class MultiModalFingerprintEngine:
         return np.sum(weighted_embeddings, axis=0)
     
     def _get_used_ai_models(self, fingerprints: Dict[FingerprintMethod, FingerprintResult]) -> List[str]:
-        """Obtient liste des modèles IA utilisés."""
+        """
+Obtient liste des modèles IA utilisés."""
         models = set()
         
         for method in fingerprints.keys():
@@ -631,7 +640,8 @@ class MultiModalFingerprintEngine:
         match_metadata: Dict[str, Any],
         violation_detection: bool
     ) -> Optional[SimilarityMatch]:
-        """Valide match et évalue risque violation."""
+        """
+Valide match et évalue risque violation."""
         try:
             # Détermination niveau confiance
             if similarity_score >= 0.98:
@@ -722,7 +732,8 @@ class MultiModalFingerprintEngine:
         return base_risk
     
     def _get_violation_priority(self, violation_risk: str) -> int:
-        """Convertit risque violation en priorité numérique."""
+        """
+Convertit risque violation en priorité numérique."""
         priorities = {
             'critical': 5,
             'high': 4,
@@ -733,7 +744,8 @@ class MultiModalFingerprintEngine:
         return priorities.get(violation_risk, 0)
     
     def _count_violations_by_risk(self, matches: List[SimilarityMatch]) -> Dict[str, int]:
-        """Compte violations par niveau de risque."""
+        """
+Compte violations par niveau de risque."""
         counts = {'critical': 0, 'high': 0, 'medium': 0, 'low': 0, 'none': 0}
         for match in matches:
             counts[match.violation_risk] = counts.get(match.violation_risk, 0) + 1
@@ -744,7 +756,8 @@ class MultiModalFingerprintEngine:
     # [Implémentations détaillées identiques au fichier original mais optimisées]
     
     async def _store_in_enterprise_vector_db(self, fingerprint: MultiModalFingerprint) -> None:
-        """Stockage enterprise optimisé dans base vectorielle."""
+        """
+Stockage enterprise optimisé dans base vectorielle."""
         try:
             if fingerprint.primary_embedding.size > 0:
                 # Stockage avec métadonnées enterprise

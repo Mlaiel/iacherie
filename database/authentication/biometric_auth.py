@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import hashlib
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class BiometricType(Enum):
-    """Biometric modality types"""
+    """
+Biometric modality types"""
+
     FINGERPRINT = "fingerprint"
     FACE = "face"
     VOICE = "voice"
@@ -56,6 +59,7 @@ class BiometricType(Enum):
 
 class BiometricQuality(Enum):
     """Biometric template quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -65,6 +69,7 @@ class BiometricQuality(Enum):
 
 class VerificationStatus(Enum):
     """Verification attempt status"""
+
     SUCCESS = "success"
     FAILURE = "failure"
     LIVENESS_FAILED = "liveness_failed"
@@ -86,7 +91,8 @@ class BiometricFeatures:
 
 
 class BiometricTemplate(Base):
-    """Biometric template storage"""
+    """
+Biometric template storage"""
     __tablename__ = "biometric_templates"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -206,7 +212,8 @@ class BiometricAuthManager:
         self.default_policy = self._get_default_policy()
     
     def _get_default_policy(self) -> Dict[str, Any]:
-        """Get default biometric policy"""
+        """
+Get default biometric policy"""
         policy = self.db.query(BiometricPolicy).filter(
             BiometricPolicy.is_default == True
         ).first()
@@ -242,16 +249,19 @@ class BiometricAuthManager:
         return self.fernet.encrypt(template_data)
     
     def _decrypt_template(self, encrypted_template: bytes) -> bytes:
-        """Decrypt biometric template"""
+        """
+Decrypt biometric template"""
         return self.fernet.decrypt(encrypted_template)
     
     def _calculate_feature_hash(self, features: BiometricFeatures) -> str:
-        """Calculate hash of feature vector for indexing"""
+        """
+Calculate hash of feature vector for indexing"""
         feature_str = json.dumps(features.feature_vector, sort_keys=True)
         return hashlib.sha256(feature_str.encode()).hexdigest()
     
     def _calculate_quality_score(self, features: BiometricFeatures) -> int:
-        """Calculate overall quality score from biometric features"""
+        """
+Calculate overall quality score from biometric features"""
         base_quality = int(features.quality_score * 100)
         confidence_bonus = int(features.confidence_level * 10)
         liveness_bonus = int((features.liveness_score or 0) * 5)
@@ -267,7 +277,8 @@ class BiometricAuthManager:
         device_info: Dict[str, Any],
         template_name: Optional[str] = None
     ) -> Optional[str]:
-        """Enroll new biometric template"""
+        """
+Enroll new biometric template"""
         try:
             # Validate quality
             quality_score = self._calculate_quality_score(features)
@@ -614,28 +625,32 @@ class BiometricVerification:
     
     @staticmethod
     def extract_face_features(image_data: bytes) -> Optional[BiometricFeatures]:
-        """Extract facial features from image data"""
+        """
+Extract facial features from image data"""
         # Implementation would use face recognition libraries
         # like dlib, face_recognition, or OpenCV
         pass
     
     @staticmethod
     def extract_fingerprint_features(image_data: bytes) -> Optional[BiometricFeatures]:
-        """Extract fingerprint minutiae from image data"""
+        """
+Extract fingerprint minutiae from image data"""
         # Implementation would use fingerprint libraries
         # like NIST NBIS or commercial SDKs
         pass
     
     @staticmethod
     def extract_voice_features(audio_data: bytes) -> Optional[BiometricFeatures]:
-        """Extract voice features from audio data"""
+        """
+Extract voice features from audio data"""
         # Implementation would use speaker recognition libraries
         # like speechbrain, pyannote, or commercial SDKs
         pass
     
     @staticmethod
     def perform_liveness_detection(image_data: bytes, biometric_type: BiometricType) -> float:
-        """Perform liveness detection on biometric sample"""
+        """
+Perform liveness detection on biometric sample"""
         # Implementation would use anti-spoofing algorithms
         # to detect if the biometric is from a live person
         pass

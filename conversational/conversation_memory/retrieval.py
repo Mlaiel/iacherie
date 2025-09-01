@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SearchQuery:
-    """Structured search query for conversation retrieval"""
+    """
+Structured search query for conversation retrieval"""
     text_query: Optional[str] = None
     user_id: Optional[str] = None
     content_types: Optional[List[str]] = None
@@ -62,7 +64,8 @@ class SearchQuery:
     offset: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for caching"""
+        """
+Convert to dictionary for caching"""
         return {
             "text_query": self.text_query,
             "user_id": self.user_id,
@@ -89,7 +92,8 @@ class SearchResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for API responses"""
+        """
+Convert to dictionary for API responses"""
         return {
             "conversation": self.conversation.to_dict(),
             "relevance_score": self.relevance_score,
@@ -105,7 +109,8 @@ class RetrievalInterface(ABC):
     
     @abstractmethod
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """Search conversations based on query"""
+        """
+Search conversations based on query"""
         pass
     
     @abstractmethod
@@ -114,7 +119,8 @@ class RetrievalInterface(ABC):
         conversation_id: str,
         limit: int = 10
     ) -> List[ConversationRecord]:
-        """Get conversations related to a specific conversation"""
+        """
+Get conversations related to a specific conversation"""
         pass
 
 
@@ -315,7 +321,8 @@ class ConversationRetriever(RetrievalInterface):
         return unique_results
     
     def _calculate_final_score(self, result: SearchResult, query: SearchQuery) -> float:
-        """Calculate final ranking score for a search result"""
+        """
+Calculate final ranking score for a search result"""
         
         # Base relevance score
         score = result.relevance_score
@@ -347,7 +354,8 @@ class ConversationRetriever(RetrievalInterface):
         return min(score, 1.0)  # Cap at 1.0
     
     def _extract_conversation_text(self, conversation: ConversationRecord) -> str:
-        """Extract text content from conversation for analysis"""
+        """
+Extract text content from conversation for analysis"""
         text_parts = []
         
         if conversation.conversation_data:
@@ -516,7 +524,8 @@ class SemanticSearch:
         conversation: ConversationRecord,
         query_text: str
     ) -> List[str]:
-        """Extract context matches for highlighting"""
+        """
+Extract context matches for highlighting"""
         
         matches = []
         query_words = query_text.lower().split()
@@ -710,7 +719,8 @@ class ContextualRetriever:
         return max(0, min(score, 1.0))
     
     def _has_collaboration_context(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation has collaboration context"""
+        """
+Check if conversation has collaboration context"""
         if conversation.context and isinstance(conversation.context, CollaborationContext):
             return True
         
@@ -949,7 +959,8 @@ class ContentAwareRetriever:
         content_type: str,
         query: SearchQuery
     ) -> List[str]:
-        """Extract content-specific matches"""
+        """
+Extract content-specific matches"""
         
         matches = []
         

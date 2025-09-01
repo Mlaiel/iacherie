@@ -4,7 +4,7 @@ Master orchestration system that coordinates all AI components, manages workflow
 and provides unified interface for the IA-Influencer-Agent platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This advanced AI orchestration system is the crown jewel of proprietary technology.
@@ -12,6 +12,7 @@ Any unauthorized access, copying, or reverse engineering will result in maximum 
 
 Business Logic: Request Processing → Component Coordination → Workflow Execution → Result Aggregation → Optimization Loop → Continuous Learning
 """
+
 import asyncio
 import json
 import uuid
@@ -67,7 +68,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowType(Enum):
-    """Types of AI workflows"""
+    """
+Types of AI workflows"""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     REVENUE_MAXIMIZATION = "revenue_maximization"
     COLLABORATION_DISCOVERY = "collaboration_discovery"
@@ -82,6 +85,7 @@ class WorkflowType(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -91,6 +95,7 @@ class ProcessingPriority(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -101,6 +106,7 @@ class WorkflowStatus(Enum):
 
 class ComponentStatus(Enum):
     """AI component status"""
+
     ACTIVE = "active"
     IDLE = "idle"
     BUSY = "busy"
@@ -290,7 +296,8 @@ class AIComponentManager:
         self._initialize_components()
     
     def _initialize_components(self):
-        """Initialize all AI components"""
+        """
+Initialize all AI components"""
         try:
             # Register core AI components
             self.components = {
@@ -469,7 +476,8 @@ class WorkflowOrchestrator:
         self._start_background_processing()
     
     def _start_background_processing(self):
-        """Start background workflow processing"""
+        """
+Start background workflow processing"""
         try:
             self._processing_task = asyncio.create_task(self._process_workflow_queue())
             logger.info("Background workflow processing started")

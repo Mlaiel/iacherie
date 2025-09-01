@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks"""
+    """
+Regulatory compliance frameworks"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
@@ -58,6 +61,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -68,6 +72,7 @@ class ComplianceStatus(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -76,6 +81,7 @@ class RiskLevel(Enum):
 
 class AuditType(Enum):
     """Audit types"""
+
     INTERNAL = "internal"
     EXTERNAL = "external"
     REGULATORY = "regulatory"
@@ -152,7 +158,8 @@ class ComplianceRequirement(Base):
     )
 
 class CreatorComplianceProfile(Base):
-    """Creator compliance profile and status"""
+    """
+Creator compliance profile and status"""
     __tablename__ = 'creator_compliance_profiles'
     
     # Primary identification
@@ -233,7 +240,8 @@ class CreatorComplianceProfile(Base):
     )
 
 class ComplianceAssessment(Base):
-    """Compliance assessment results and findings"""
+    """
+Compliance assessment results and findings"""
     __tablename__ = 'compliance_assessments'
     
     # Primary identification
@@ -556,7 +564,8 @@ class ComplianceIncident(Base):
 
 @dataclass
 class ComplianceDashboard:
-    """Compliance dashboard data structure"""
+    """
+Compliance dashboard data structure"""
     overall_score: float
     framework_scores: Dict[str, float]
     risk_level: str
@@ -567,7 +576,8 @@ class ComplianceDashboard:
     compliance_trends: Dict[str, Any]
 
 class RegulatoryUpdate(Base):
-    """Regulatory updates and changes tracking"""
+    """
+Regulatory updates and changes tracking"""
     __tablename__ = 'regulatory_updates'
     
     # Primary identification

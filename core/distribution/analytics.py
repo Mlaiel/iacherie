@@ -5,8 +5,9 @@ Comprehensive analytics system for content distribution providing deep insights,
 performance analysis, and predictive analytics for optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from ..visualization.charts import ChartGenerator
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe enumeration."""
+    """
+Analytics timeframe enumeration."""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -39,6 +42,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Metric type enumeration."""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     PERFORMANCE = "performance"
@@ -122,7 +126,8 @@ class DistributionAnalytics:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution analytics."""
+        """
+Initialize distribution analytics."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -525,7 +530,8 @@ class DistributionAnalytics:
         return base_data
     
     async def _generate_aggregated_metrics(self, query: AnalyticsQuery, base_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate aggregated metrics from base data."""
+        """
+Generate aggregated metrics from base data."""
         aggregated = {
             'overview': {
                 'total_content': len(query.content_ids) if query.content_ids else 0,
@@ -589,7 +595,8 @@ class DistributionAnalytics:
         return aggregated
     
     async def _generate_time_series(self, query: AnalyticsQuery, base_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate time series data."""
+        """
+Generate time series data."""
         time_series = []
         
         # Generate time points based on timeframe
@@ -633,7 +640,8 @@ class DistributionAnalytics:
         return time_series
     
     async def _generate_platform_breakdown(self, query: AnalyticsQuery, base_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate platform breakdown analysis."""
+        """
+Generate platform breakdown analysis."""
         platform_breakdown = {}
         
         platform_data = base_data.get('platform_data', {})
@@ -797,7 +805,8 @@ class DistributionAnalytics:
         return predictions
     
     async def _generate_comparisons(self, query: AnalyticsQuery, base_data: Dict[str, Any], result: AnalyticsResult) -> Dict[str, Any]:
-        """Generate comparison analysis."""
+        """
+Generate comparison analysis."""
         comparisons = {
             'period_comparison': {
                 'current_period': result.aggregated_metrics,
@@ -857,7 +866,8 @@ class DistributionAnalytics:
         return comparisons
     
     async def _analyze_trends(self, query: AnalyticsQuery, base_data: Dict[str, Any], result: AnalyticsResult) -> List[Dict[str, Any]]:
-        """Analyze trends in the data."""
+        """
+Analyze trends in the data."""
         trends = []
         
         # Analyze time series for trends
@@ -968,7 +978,8 @@ class DistributionAnalytics:
         return charts
     
     async def _generate_comprehensive_report(self, query: AnalyticsQuery, result: AnalyticsResult) -> Dict[str, Any]:
-        """Generate comprehensive performance report."""
+        """
+Generate comprehensive performance report."""
         return {
             'report_type': 'comprehensive',
             'generated_at': datetime.utcnow().isoformat(),
@@ -1007,7 +1018,8 @@ class DistributionAnalytics:
         }
     
     async def _generate_summary_report(self, query: AnalyticsQuery, result: AnalyticsResult) -> Dict[str, Any]:
-        """Generate summary performance report."""
+        """
+Generate summary performance report."""
         return {
             'report_type': 'summary',
             'generated_at': datetime.utcnow().isoformat(),
@@ -1026,7 +1038,8 @@ class DistributionAnalytics:
     
     # Additional helper methods for data management, caching, etc.
     def _generate_cache_key(self, query: AnalyticsQuery) -> str:
-        """Generate cache key for query."""
+        """
+Generate cache key for query."""
         key_parts = [
             ','.join(str(cid) for cid in sorted(query.content_ids)),
             ','.join(sorted(query.platforms)),
@@ -1044,7 +1057,8 @@ class DistributionAnalytics:
         return None
     
     def _cache_result(self, cache_key: str, result: AnalyticsResult) -> None:
-        """Cache analytics result."""
+        """
+Cache analytics result."""
         self.analytics_cache[cache_key] = {
             'result': result,
             'cached_at': datetime.utcnow(),
@@ -1052,7 +1066,8 @@ class DistributionAnalytics:
         }
     
     async def _load_historical_data(self) -> None:
-        """Load historical analytics data."""
+        """
+Load historical analytics data."""
         # Mock historical data loading
         self.historical_data = {
             'engagement_history': [],
@@ -1061,7 +1076,8 @@ class DistributionAnalytics:
         }
     
     async def _load_benchmark_data(self) -> None:
-        """Load benchmark data for comparisons."""
+        """
+Load benchmark data for comparisons."""
         # Mock benchmark data
         self.benchmark_data = {
             'industry_averages': {
@@ -1077,7 +1093,8 @@ class DistributionAnalytics:
         }
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize ML models for predictions."""
+        """
+Initialize ML models for predictions."""
         try:
             await self.ml_model_manager.load_models([
                 'engagement_predictor',
@@ -1099,7 +1116,8 @@ class DistributionAnalytics:
         asyncio.create_task(self._update_benchmarks())
     
     async def _update_real_time_data(self) -> None:
-        """Update real-time analytics data."""
+        """
+Update real-time analytics data."""
         while self.is_initialized:
             try:
                 # Update real-time metrics
@@ -1143,23 +1161,28 @@ class DistributionAnalytics:
         return {}
     
     async def _calculate_real_time_insights(self, current_data):
-        """Calculate real-time insights."""
+        """
+Calculate real-time insights."""
         return []
     
     async def _get_trending_content(self):
-        """Get trending content."""
+        """
+Get trending content."""
         return []
     
     async def _get_performance_alerts(self):
-        """Get performance alerts."""
+        """
+Get performance alerts."""
         return []
     
     async def _save_cache_data(self):
-        """Save cache data to persistent storage."""
+        """
+Save cache data to persistent storage."""
         pass
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status."""
+        """
+Get current system status."""
         return {
             'initialized': self.is_initialized,
             'active_queries': len(self.active_queries),

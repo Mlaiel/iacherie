@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -27,10 +28,12 @@ logger = logging.getLogger(__name__)
 
 
 class TikTokPlatform(PlatformBase):
-    """TikTok platform integration"""
+    """
+TikTok platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize TikTok platform"""
+        """
+Initialize TikTok platform"""
         super().__init__(config)
         self.api_base = "https://open-api.tiktok.com"
         self.auth_base = "https://www.tiktok.com"
@@ -45,7 +48,8 @@ class TikTokPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with TikTok using OAuth2"""
+        """
+Authenticate with TikTok using OAuth2"""
         try:
             # If we have an access token, validate it
             if self.config.credentials.access_token:
@@ -138,7 +142,8 @@ class TikTokPlatform(PlatformBase):
         return signature
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to TikTok API"""
+        """
+Make authenticated request to TikTok API"""
         if not self.is_authenticated:
             if not await self.authenticate():
                 return None
@@ -335,7 +340,8 @@ class TikTokPlatform(PlatformBase):
         return ((likes + comments + shares) / views) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on TikTok"""
+        """
+Search content on TikTok"""
         try:
             search_data = {
                 'query': query,

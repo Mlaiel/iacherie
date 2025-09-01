@@ -4,11 +4,12 @@ Advanced SEO optimization system for multi-format content creators.
 Supports musicians, bloggers, photographers, influencers, and comedians.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class SEOLevel(Enum):
-    """SEO optimization levels"""
+    """
+SEO optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -34,6 +37,7 @@ class SEOLevel(Enum):
 
 class ContentCategory(Enum):
     """Content categories for SEO optimization"""
+
     MUSIC = "music"
     BLOG = "blog"
     PHOTOGRAPHY = "photography"
@@ -48,6 +52,7 @@ class ContentCategory(Enum):
 
 class Platform(Enum):
     """Target platforms for SEO optimization"""
+
     GOOGLE = "google"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -63,6 +68,7 @@ class Platform(Enum):
 
 class Language(Enum):
     """Supported languages for SEO"""
+
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -108,7 +114,8 @@ class KeywordConfig:
 
 @dataclass
 class MetaTagsConfig:
-    """Meta tags configuration"""
+    """
+Meta tags configuration"""
     enabled: bool = True
     
     # Title optimization
@@ -192,7 +199,8 @@ class ContentStructureConfig:
 
 @dataclass
 class TechnicalSEOConfig:
-    """Technical SEO configuration"""
+    """
+Technical SEO configuration"""
     enabled: bool = True
     
     # URL optimization
@@ -234,7 +242,8 @@ class TechnicalSEOConfig:
 
 @dataclass
 class LocalSEOConfig:
-    """Local SEO configuration"""
+    """
+Local SEO configuration"""
     enabled: bool = True
     
     # Business information
@@ -331,7 +340,8 @@ class PlatformSpecificConfig:
 
 @dataclass
 class SEOConfig:
-    """Main SEO configuration"""
+    """
+Main SEO configuration"""
     
     # Core settings
     enabled: bool = True
@@ -383,7 +393,8 @@ class SEOConfig:
             self._setup_content_category_settings()
 
     def _setup_default_social_profiles(self):
-        """Setup default social media profiles"""
+        """
+Setup default social media profiles"""
         self.creator_social_profiles = {
             "instagram": "@fahed_mlaiel",
             "twitter": "@fahed_mlaiel",
@@ -583,7 +594,8 @@ class SEOConfig:
         return density
 
     def _adapt_for_platform(self, content: str, platform: str, settings: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for specific platform"""
+        """
+Adapt content for specific platform"""
         platform_adaptations = {
             "youtube": {
                 "title_length": 100,

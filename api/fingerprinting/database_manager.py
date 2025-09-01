@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Advanced database management for content fingerprints with high-performance storage
 """
+
 import asyncio
 import json
 import logging
@@ -35,13 +36,15 @@ class DatabaseManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize database manager"""
+        """
+Initialize database manager"""
         self.config = config or self._get_default_config()
         self.pool = None
         self._initialized = False
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default database configuration"""
+        """
+Get default database configuration"""
         return {
             'host': 'localhost',
             'port': 5432,
@@ -54,7 +57,8 @@ class DatabaseManager:
         }
     
     async def initialize(self):
-        """Initialize database connection pool and tables"""
+        """
+Initialize database connection pool and tables"""
         try:
             # Create connection pool
             self.pool = await asyncpg.create_pool(
@@ -450,7 +454,8 @@ class DatabaseManager:
     
     async def find_similar_fingerprints(self, fingerprint: Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint], 
                                       similarity_threshold: float = 0.8, limit: int = 10) -> List[Tuple[int, float]]:
-        """Find similar fingerprints in database"""
+        """
+Find similar fingerprints in database"""
         if not self._initialized:
             await self.initialize()
         
@@ -527,7 +532,8 @@ class DatabaseManager:
             """, fingerprint1_id, fingerprint2_id, similarity_score, match_type)
     
     async def get_similarity_matches(self, fingerprint_id: int, similarity_threshold: float = 0.8) -> List[Tuple[int, float]]:
-        """Get cached similarity matches for a fingerprint"""
+        """
+Get cached similarity matches for a fingerprint"""
         if not self._initialized:
             await self.initialize()
         
@@ -542,7 +548,8 @@ class DatabaseManager:
             return [(record['fingerprint2_id'], record['similarity_score']) for record in records]
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get database statistics"""
+        """
+Get database statistics"""
         if not self._initialized:
             await self.initialize()
         
@@ -580,7 +587,8 @@ class DatabaseManager:
             return stats
     
     async def cleanup_old_records(self, days_to_keep: int = 90):
-        """Cleanup old fingerprint records"""
+        """
+Cleanup old fingerprint records"""
         if not self._initialized:
             await self.initialize()
         
@@ -610,5 +618,6 @@ class DatabaseManager:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         await self.close()

@@ -6,7 +6,7 @@ ROI optimization, market intelligence, and comprehensive reporting systems.
 Real-time financial insights for multi-platform content monetization.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Data Collection → AI Analysis → Predictive Modeling → Actionable Insights
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -94,7 +95,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsPeriod(Enum):
-    """Analytics time periods"""
+    """
+Analytics time periods"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -105,6 +108,7 @@ class AnalyticsPeriod(Enum):
 
 class MetricType(Enum):
     """Financial metric types"""
+
     REVENUE = "revenue"
     PROFIT = "profit"
     MARGIN = "margin"
@@ -119,6 +123,7 @@ class MetricType(Enum):
 
 class ReportType(Enum):
     """Financial report types"""
+
     REVENUE_SUMMARY = "revenue_summary"
     PROFIT_LOSS = "profit_loss"
     PLATFORM_COMPARISON = "platform_comparison"
@@ -131,6 +136,7 @@ class ReportType(Enum):
 
 class TrendDirection(Enum):
     """Trend analysis directions"""
+
     UPWARD = "upward"
     DOWNWARD = "downward"
     STABLE = "stable"
@@ -156,7 +162,8 @@ class FinancialMetric:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
+    """
+Trend analysis results"""
     metric_type: MetricType
     direction: TrendDirection
     percentage_change: float
@@ -171,7 +178,8 @@ class TrendAnalysis:
 
 @dataclass
 class ROIAnalysis:
-    """Return on Investment analysis"""
+    """
+Return on Investment analysis"""
     investment_category: str
     total_investment: Decimal
     total_return: Decimal
@@ -217,7 +225,8 @@ class FinancialForecast:
 
 
 class FinancialCalculator:
-    """Advanced financial calculations and metrics"""
+    """
+Advanced financial calculations and metrics"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.FinancialCalculator")
@@ -779,7 +788,8 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> List[FinancialMetric]:
-        """Fetch engagement metrics from database"""
+        """
+Fetch engagement metrics from database"""
         # This would query the database
         return []
     
@@ -789,7 +799,8 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, List[FinancialMetric]]:
-        """Fetch platform-specific metrics"""
+        """
+Fetch platform-specific metrics"""
         # This would query the database
         return {}
     
@@ -800,12 +811,14 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> float:
-        """Calculate growth compared to previous period"""
+        """
+Calculate growth compared to previous period"""
         # This would calculate actual growth
         return 15.5  # Placeholder
     
     async def _generate_market_intelligence(self, user_id: str) -> MarketIntelligence:
-        """Generate market intelligence analysis"""
+        """
+Generate market intelligence analysis"""
         return MarketIntelligence(
             industry_averages={'cpm': 2.5, 'engagement_rate': 0.045},
             competitor_analysis={'avg_revenue': 5000, 'top_platforms': ['youtube', 'instagram']},
@@ -823,7 +836,8 @@ class ReportGenerator:
         user_id: str,
         revenue_data: List[FinancialMetric]
     ) -> List[Dict[str, Any]]:
-        """Generate performance alerts and warnings"""
+        """
+Generate performance alerts and warnings"""
         alerts = []
         
         if not revenue_data:
@@ -841,7 +855,8 @@ class ReportGenerator:
         engagement_data: List[FinancialMetric],
         platform_data: Dict[str, List[FinancialMetric]]
     ) -> List[str]:
-        """Generate executive-level recommendations"""
+        """
+Generate executive-level recommendations"""
         recommendations = []
         
         if len(platform_data) < 3:
@@ -868,7 +883,8 @@ class ReportGenerator:
         self,
         engagement_data: List[FinancialMetric]
     ) -> float:
-        """Calculate average engagement value"""
+        """
+Calculate average engagement value"""
         if not engagement_data:
             return 0.0
         
@@ -880,7 +896,8 @@ class ReportGenerator:
         metric_type: MetricType,
         periods: int
     ) -> List[Tuple[datetime, Decimal]]:
-        """Fetch historical metrics for forecasting"""
+        """
+Fetch historical metrics for forecasting"""
         # This would query the database
         return []  # Placeholder
     
@@ -889,7 +906,8 @@ class ReportGenerator:
         dates: List[datetime],
         values: List[float]
     ) -> List[List[float]]:
-        """Create features for forecasting model"""
+        """
+Create features for forecasting model"""
         features = []
         
         for i in range(1, len(values)):
@@ -910,7 +928,8 @@ class ReportGenerator:
         current_features: List[float],
         prediction: float
     ) -> List[float]:
-        """Update features for next period prediction"""
+        """
+Update features for next period prediction"""
         # This would properly update features based on the prediction
         return current_features  # Simplified
     
@@ -921,7 +940,8 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Fetch investment data by category"""
+        """
+Fetch investment data by category"""
         # This would query the database
         return Decimal('100')  # Placeholder
     
@@ -932,7 +952,8 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Fetch return data by category"""
+        """
+Fetch return data by category"""
         # This would query the database
         return Decimal('150')  # Placeholder
     
@@ -942,7 +963,8 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Analyze ROI trends over time"""
+        """
+Analyze ROI trends over time"""
         return {
             'direction': 'upward',
             'confidence': 0.8,
@@ -953,7 +975,8 @@ class ReportGenerator:
         self,
         roi_analyses: Dict[str, ROIAnalysis]
     ) -> List[str]:
-        """Generate ROI optimization recommendations"""
+        """
+Generate ROI optimization recommendations"""
         recommendations = []
         
         # Find lowest performing categories
@@ -1209,7 +1232,8 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate total ROI for period"""
+        """
+Calculate total ROI for period"""
         # This would calculate actual ROI
         return Decimal('25.5')  # 25.5% ROI placeholder
     
@@ -1219,7 +1243,8 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate growth rate for period"""
+        """
+Calculate growth rate for period"""
         # This would calculate actual growth rate
         return Decimal('15.2')  # 15.2% growth placeholder
     
@@ -1229,7 +1254,8 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate engagement value for period"""
+        """
+Calculate engagement value for period"""
         # This would calculate actual engagement value
         return Decimal('500.00')  # Placeholder
     
@@ -1240,12 +1266,14 @@ class FinancialAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> List[Tuple[datetime, Decimal]]:
-        """Fetch historical metric data"""
+        """
+Fetch historical metric data"""
         # This would query the database
         return []  # Placeholder
     
     async def _generate_forecast_chart(self, forecast: FinancialForecast) -> str:
-        """Generate forecast visualization chart"""
+        """
+Generate forecast visualization chart"""
         try:
             # Create plot
             plt.figure(figsize=(12, 6))

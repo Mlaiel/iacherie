@@ -5,13 +5,14 @@ Centralized configuration system for multi-modal content fingerprinting.
 Provides default settings, environment-based overrides, and validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import os
 import json
 import yaml
@@ -21,13 +22,16 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 class ProcessingMode(str, Enum):
-    """Processing mode configurations."""
+    """
+Processing mode configurations."""
+
     CPU = "cpu"
     GPU = "gpu"
     AUTO = "auto"
 
 class QualityLevel(str, Enum):
     """Quality levels for processing."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -419,7 +423,8 @@ class FingerprintingConfig:
     
     @classmethod
     def from_environment(cls) -> 'FingerprintingConfig':
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         config = cls()
         
         # Environment-specific overrides
@@ -459,7 +464,8 @@ class FingerprintingConfig:
     
     @staticmethod
     def _convert_env_value(value: str) -> Any:
-        """Convert environment variable value to appropriate type."""
+        """
+Convert environment variable value to appropriate type."""
         # Boolean conversion
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
@@ -477,12 +483,14 @@ class FingerprintingConfig:
         return value
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
+        """
+Convert configuration to dictionary."""
         import dataclasses
         return dataclasses.asdict(self)
     
     def save_to_file(self, config_path: Union[str, Path]):
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         config_path = Path(config_path)
         config_dict = self.to_dict()
         

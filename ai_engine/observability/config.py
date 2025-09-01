@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import json
 import os
 import logging
@@ -24,7 +25,9 @@ from enum import Enum
 
 
 class Environment(Enum):
-    """Environment types"""
+    """
+Environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -33,6 +36,7 @@ class Environment(Enum):
 
 class LogLevel(Enum):
     """Logging levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -79,7 +83,8 @@ class MonitoringConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics configuration"""
+    """
+Analytics configuration"""
     enabled: bool = True
     content_analysis_enabled: bool = True
     user_behavior_enabled: bool = True
@@ -111,7 +116,8 @@ class AnalyticsConfig:
 
 @dataclass
 class ReportingConfig:
-    """Reporting configuration"""
+    """
+Reporting configuration"""
     enabled: bool = True
     automated_reports_enabled: bool = True
     
@@ -169,7 +175,8 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration"""
+    """
+Performance configuration"""
     # Threading
     max_worker_threads: int = 10
     thread_pool_size: int = 20
@@ -196,7 +203,8 @@ class PerformanceConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Integration configuration"""
+    """
+Integration configuration"""
     # Database integrations
     postgresql_enabled: bool = True
     mongodb_enabled: bool = False
@@ -225,7 +233,8 @@ class IntegrationConfig:
 
 @dataclass
 class ObservabilityConfig:
-    """Complete observability configuration"""
+    """
+Complete observability configuration"""
     environment: Environment = Environment.DEVELOPMENT
     debug_mode: bool = False
     log_level: LogLevel = LogLevel.INFO
@@ -254,12 +263,14 @@ class ObservabilityConfig:
         return asdict(self)
     
     def to_json(self) -> str:
-        """Convert configuration to JSON string"""
+        """
+Convert configuration to JSON string"""
         return json.dumps(self.to_dict(), indent=2, default=str)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ObservabilityConfig':
-        """Create configuration from dictionary"""
+        """
+Create configuration from dictionary"""
         # Handle nested dataclasses
         if 'monitoring' in data and isinstance(data['monitoring'], dict):
             data['monitoring'] = MonitoringConfig(**data['monitoring'])
@@ -290,12 +301,14 @@ class ObservabilityConfig:
     
     @classmethod
     def from_json(cls, json_str: str) -> 'ObservabilityConfig':
-        """Create configuration from JSON string"""
+        """
+Create configuration from JSON string"""
         data = json.loads(json_str)
         return cls.from_dict(data)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of issues"""
+        """
+Validate configuration and return list of issues"""
         issues = []
         
         # Validate monitoring thresholds
@@ -362,7 +375,8 @@ class ObservabilityConfig:
 
 
 class ConfigurationManager:
-    """Configuration manager for observability suite"""
+    """
+Configuration manager for observability suite"""
     
     def __init__(self, config_path: Optional[Path] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -424,7 +438,8 @@ class ConfigurationManager:
         return self._config
     
     def update_config(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration with new values"""
+        """
+Update configuration with new values"""
         try:
             current_config = self.get_config()
             config_dict = current_config.to_dict()
@@ -459,7 +474,8 @@ class ConfigurationManager:
         self._watchers.append(callback)
     
     def _notify_watchers(self, config: ObservabilityConfig):
-        """Notify all configuration watchers"""
+        """
+Notify all configuration watchers"""
         for watcher in self._watchers:
             try:
                 watcher(config)
@@ -475,7 +491,8 @@ class ConfigurationManager:
                 target[key] = value
     
     def _create_default_config(self) -> ObservabilityConfig:
-        """Create default configuration"""
+        """
+Create default configuration"""
         config = ObservabilityConfig()
         
         # Set environment from environment variable
@@ -499,22 +516,26 @@ class ConfigurationManager:
 _config_manager = None
 
 def get_config_manager() -> ConfigurationManager:
-    """Get global configuration manager"""
+    """
+Get global configuration manager"""
     global _config_manager
     if _config_manager is None:
         _config_manager = ConfigurationManager()
     return _config_manager
 
 def get_config() -> ObservabilityConfig:
-    """Get current observability configuration"""
+    """
+Get current observability configuration"""
     return get_config_manager().get_config()
 
 def update_config(updates: Dict[str, Any]) -> bool:
-    """Update observability configuration"""
+    """
+Update observability configuration"""
     return get_config_manager().update_config(updates)
 
 def load_config_from_file(config_file: Path) -> ObservabilityConfig:
-    """Load configuration from specific file"""
+    """
+Load configuration from specific file"""
     return get_config_manager().load_config(config_file)
 
 # Export key classes and functions

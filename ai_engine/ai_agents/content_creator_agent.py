@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 AGENT CRÉATEUR DE CONTENU INTELLIGENT
@@ -15,6 +15,7 @@ Agent spécialisé dans la création automatisée de contenu multimédia
 - Personnalisation basée sur l'audience
 - Intégration avec outils de création
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
+    """
+Types de contenu supportés"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -50,6 +53,7 @@ class ContentType(Enum):
 
 class ContentStyle(Enum):
     """Styles de contenu"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     HUMOROUS = "humorous"
@@ -273,7 +277,8 @@ When implementing strategies around {prompt.lower()}, consider:
         return min(1.0, max(0.0, total_score))
     
     async def _generate_image_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Générer du contenu image (placeholder)"""
+        """
+Générer du contenu image (placeholder)"""
         
         description = context.get("description", "")
         style = context.get("style", "realistic")

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class AlertType(Enum):
-    """Alert type enumeration"""
+    """
+Alert type enumeration"""
+
     COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     COMMERCIAL_INFRINGEMENT = "commercial_infringement"
@@ -51,6 +54,7 @@ class AlertType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -60,6 +64,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert processing status"""
+
     PENDING = "pending"
     INVESTIGATING = "investigating"
     VERIFIED = "verified"
@@ -72,6 +77,7 @@ class AlertStatus(Enum):
 
 class DetectionMethod(Enum):
     """Detection method enumeration"""
+
     AI_FINGERPRINT = "ai_fingerprint"
     WEB_CRAWLER = "web_crawler"
     USER_REPORT = "user_report"
@@ -83,6 +89,7 @@ class DetectionMethod(Enum):
 
 class Platform(Enum):
     """Platform enumeration"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -102,6 +109,7 @@ class Platform(Enum):
 
 class ActionType(Enum):
     """Automated action types"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CONTENT_BLOCKING = "content_blocking"
     MONETIZATION_CLAIM = "monetization_claim"
@@ -347,7 +355,8 @@ class ProtectionAlert(Base):
         return min(base_score, 100.0)  # Cap at 100
     
     def should_escalate(self) -> bool:
-        """Determine if alert should be escalated"""
+        """
+Determine if alert should be escalated"""
         if self.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH]:
             return True
         
@@ -364,7 +373,8 @@ class ProtectionAlert(Base):
     
     @classmethod
     def create_from_detection(cls, detection_data: Dict[str, Any], fingerprint_id: str, user_id: str) -> 'ProtectionAlert':
-        """Create ProtectionAlert from detection engine output"""
+        """
+Create ProtectionAlert from detection engine output"""
         return cls(
             fingerprint_id=fingerprint_id,
             user_id=user_id,

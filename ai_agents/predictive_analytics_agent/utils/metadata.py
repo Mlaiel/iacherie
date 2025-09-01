@@ -11,6 +11,7 @@ This metadata documentation and architectural specifications are the exclusive i
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import datetime
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
@@ -22,7 +23,7 @@ MODULE_METADATA = {
     "author": "Fahed Mlaiel",
     "contact": "mlaiel@live.de",
     "license": "Proprietary - All Rights Reserved",
-    "copyright": "© 2025 Fahed Mlaiel",
+    "copyright": "(c) 2025 Fahed Mlaiel",
     "created_date": "2025-01-11",
     "last_updated": datetime.now().isoformat(),
     "description": "Enterprise-grade predictive analytics system for IA Influencer platform",
@@ -422,7 +423,8 @@ class ModuleDocumentation:
     deployment: Dict[str, Any] = field(default_factory=lambda: DEPLOYMENT_SPECIFICATIONS)
     
     def get_component_info(self, component_name: str) -> Dict[str, Any]:
-        """Get detailed information about a specific component"""
+        """
+Get detailed information about a specific component"""
         return self.architecture.get("core_components", {}).get(component_name, {})
     
     def get_integration_details(self, integration_type: str) -> Dict[str, Any]:

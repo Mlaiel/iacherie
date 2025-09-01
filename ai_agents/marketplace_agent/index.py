@@ -4,7 +4,7 @@ Central entry point for the marketplace agent system providing
 unified access to all marketplace functionalities and services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead IA Developer: Fahed Mlaiel
@@ -23,6 +23,7 @@ ou distribution non autorisée est strictement interdite.
 This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -54,7 +55,8 @@ from .marketplace_agent import (
 
 @dataclass
 class MarketplaceSystemStatus:
-    """Overall marketplace system status."""
+    """
+Overall marketplace system status."""
     is_operational: bool = True
     active_components: List[str] = field(default_factory=list)
     failed_components: List[str] = field(default_factory=list)

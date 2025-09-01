@@ -29,6 +29,7 @@ Features:
 - Contract lifecycle management
 - Intellectual property protection metrics
 """
+
 import time
 import asyncio
 import logging
@@ -46,7 +47,9 @@ logger = get_logger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     COMMERCIAL = "commercial"
     PERSONAL = "personal"
     EDUCATIONAL = "educational"
@@ -61,6 +64,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License transaction status"""
+
     PENDING = "pending"
     NEGOTIATING = "negotiating"
     APPROVED = "approved"
@@ -73,6 +77,7 @@ class LicenseStatus(Enum):
 
 class NegotiationPhase(Enum):
     """License negotiation phases"""
+
     INITIAL_REQUEST = "initial_request"
     TERMS_PROPOSAL = "terms_proposal"
     COUNTER_OFFER = "counter_offer"
@@ -83,6 +88,7 @@ class NegotiationPhase(Enum):
 
 class ComplianceLevel(Enum):
     """License compliance levels"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -106,7 +112,8 @@ class LicenseTransaction:
 
 @dataclass
 class RightsNegotiation:
-    """Rights negotiation session"""
+    """
+Rights negotiation session"""
     negotiation_id: str
     content_id: str
     licensee_id: str
@@ -140,7 +147,8 @@ class LicensingAutomationMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize Prometheus metrics for licensing automation"""
+        """
+Initialize Prometheus metrics for licensing automation"""
         
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
@@ -626,7 +634,8 @@ class LicensingAutomationMetricsCollector:
         ).set(accuracy_percent)
     
     async def get_licensing_summary(self) -> Dict[str, Any]:
-        """Get comprehensive licensing operations summary"""
+        """
+Get comprehensive licensing operations summary"""
         
         summary = {
             "timestamp": datetime.utcnow().isoformat(),

@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -48,6 +49,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 class SimilarityMetric(Enum):
     """Similarity metrics for vector comparison"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -57,6 +59,7 @@ class SimilarityMetric(Enum):
 
 class IndexType(Enum):
     """FAISS index types for different use cases"""
+
     FLAT = "IndexFlatL2"
     IVF_FLAT = "IndexIVFFlat"
     IVF_PQ = "IndexIVFPQ"
@@ -76,7 +79,8 @@ class MatchResult:
 
 @dataclass
 class VectorIndexConfig:
-    """Configuration for vector index"""
+    """
+Configuration for vector index"""
     index_type: IndexType
     dimension: int
     nlist: int = 100  # For IVF indices
@@ -145,7 +149,8 @@ class VectorMatcher:
         self._initialize_index()
     
     def _initialize_index(self):
-        """Initialize FAISS index based on configuration"""
+        """
+Initialize FAISS index based on configuration"""
         try:
             if not FAISS_AVAILABLE:
                 self.logger.warning("FAISS not available, using fallback similarity")
@@ -478,14 +483,16 @@ class VectorMatcher:
     # Private helper methods
     
     def _normalize_vector(self, vector: np.ndarray) -> np.ndarray:
-        """Normalize vector to unit length"""
+        """
+Normalize vector to unit length"""
         norm = np.linalg.norm(vector)
         if norm == 0:
             return vector
         return vector / norm
     
     async def _add_to_faiss_index(self, vector: np.ndarray):
-        """Add single vector to FAISS index"""
+        """
+Add single vector to FAISS index"""
         if self.faiss_index is None:
             return
         
@@ -504,7 +511,8 @@ class VectorMatcher:
         self.faiss_index.add(vector_2d)
     
     async def _add_batch_to_faiss_index(self, vectors: np.ndarray):
-        """Add batch of vectors to FAISS index"""
+        """
+Add batch of vectors to FAISS index"""
         if self.faiss_index is None:
             return
         
@@ -521,7 +529,8 @@ class VectorMatcher:
     
     async def _search_faiss_index(self, query_vector: np.ndarray, 
                                 top_k: int, similarity_threshold: float) -> List[MatchResult]:
-        """Search using FAISS index"""
+        """
+Search using FAISS index"""
         if self.faiss_index is None or not self.index_trained:
             return []
         
@@ -618,7 +627,8 @@ class VectorMatcher:
     
     def _get_cache_key(self, query_vector: np.ndarray, top_k: int, 
                       similarity_threshold: float, metric: SimilarityMetric) -> str:
-        """Generate cache key for query"""
+        """
+Generate cache key for query"""
         vector_hash = hashlib.md5(query_vector.tobytes()).hexdigest()[:16]
         return f"vector_search:{vector_hash}:{top_k}:{similarity_threshold}:{metric.value}"
     

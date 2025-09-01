@@ -436,7 +436,7 @@ content distribution operations.
 For technical documentation, API references, and implementation guides, please
 refer to the comprehensive README files and technical documentation.
 
-© 2025 Fahed Mlaiel. All rights reserved. Proprietary software protected under 
+(c) 2025 Fahed Mlaiel. All rights reserved. Proprietary software protected under 
 international intellectual property law.
 """# Initialization Function
 def get_distribution_agent(config: dict = None) -> DistributionAgent:

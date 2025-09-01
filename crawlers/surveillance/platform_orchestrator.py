@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -22,6 +22,7 @@ Professional platform orchestration engine for coordinating surveillance activit
 across multiple digital platforms with intelligent load balancing, rate limiting,
 and cross-platform correlation capabilities.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for orchestrated surveillance."""
+    """
+Supported platform types for orchestrated surveillance."""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MUSIC_PLATFORM = "music_platform"
@@ -51,6 +54,7 @@ class PlatformType(Enum):
 
 class PlatformStatus(Enum):
     """Platform operational status."""
+
     ACTIVE = "active"
     RATE_LIMITED = "rate_limited"
     MAINTENANCE = "maintenance"
@@ -61,6 +65,7 @@ class PlatformStatus(Enum):
 
 class OrchestrationPriority(Enum):
     """Task orchestration priority levels."""
+
     EMERGENCY = 1
     CRITICAL = 2
     HIGH = 3
@@ -71,7 +76,8 @@ class OrchestrationPriority(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration for surveillance operations."""
+    """
+Platform-specific configuration for surveillance operations."""
     platform_id: str
     platform_name: str
     platform_type: PlatformType
@@ -88,7 +94,8 @@ class PlatformConfiguration:
 
 @dataclass
 class OrchestrationTask:
-    """Task for platform orchestration."""
+    """
+Task for platform orchestration."""
     task_id: str
     platform_id: str
     endpoint: str
@@ -122,20 +129,24 @@ class PlatformMetrics:
 
 
 class RateLimitManager:
-    """Advanced rate limiting manager for platform API calls."""
+    """
+Advanced rate limiting manager for platform API calls."""
     
     def __init__(self):
-        """Initialize rate limit manager."""
+        """
+Initialize rate limit manager."""
         self.platform_limits: Dict[str, Dict[str, int]] = {}
         self.platform_windows: Dict[str, Dict[str, deque]] = defaultdict(lambda: defaultdict(deque))
         self.platform_penalties: Dict[str, datetime] = {}
         
     def configure_platform(self, platform_id: str, rate_limits: Dict[str, int]) -> None:
-        """Configure rate limits for a platform."""
+        """
+Configure rate limits for a platform."""
         self.platform_limits[platform_id] = rate_limits
         
     async def can_make_request(self, platform_id: str, endpoint: str) -> bool:
-        """Check if a request can be made without hitting rate limits."""
+        """
+Check if a request can be made without hitting rate limits."""
         try:
             # Check if platform is under penalty
             if platform_id in self.platform_penalties:
@@ -210,17 +221,20 @@ class LoadBalancer:
     """Intelligent load balancer for distributing requests across platforms."""
     
     def __init__(self):
-        """Initialize load balancer."""
+        """
+Initialize load balancer."""
         self.platform_weights: Dict[str, float] = {}
         self.platform_health: Dict[str, float] = {}
         self.request_distribution: Dict[str, int] = defaultdict(int)
         
     def update_platform_health(self, platform_id: str, health_score: float) -> None:
-        """Update platform health score (0.0 to 1.0)."""
+        """
+Update platform health score (0.0 to 1.0)."""
         self.platform_health[platform_id] = max(0.0, min(1.0, health_score))
         
     def update_platform_weight(self, platform_id: str, weight: float) -> None:
-        """Update platform weight for load balancing."""
+        """
+Update platform weight for load balancing."""
         self.platform_weights[platform_id] = max(0.0, weight)
     
     async def select_platform(
@@ -228,7 +242,8 @@ class LoadBalancer:
         available_platforms: List[str],
         task_requirements: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """Select optimal platform for task execution."""
+        """
+Select optimal platform for task execution."""
         if not available_platforms:
             return None
         
@@ -267,7 +282,8 @@ class LoadBalancer:
         return selected_platform
     
     def get_load_distribution(self) -> Dict[str, Any]:
-        """Get current load distribution across platforms."""
+        """
+Get current load distribution across platforms."""
         total_requests = sum(self.request_distribution.values())
         
         distribution = {}
@@ -287,7 +303,8 @@ class CrossPlatformCorrelator:
     """Advanced correlation engine for cross-platform intelligence."""
     
     def __init__(self):
-        """Initialize correlation engine."""
+        """
+Initialize correlation engine."""
         self.correlation_rules: List[Dict[str, Any]] = []
         self.platform_data: Dict[str, List[Dict]] = defaultdict(list)
         self.correlation_cache: Dict[str, Any] = {}
@@ -300,7 +317,8 @@ class CrossPlatformCorrelator:
         threshold: float = 0.8,
         time_window_minutes: int = 60
     ) -> None:
-        """Add a cross-platform correlation rule."""
+        """
+Add a cross-platform correlation rule."""
         rule = {
             "rule_id": rule_id,
             "platforms": platforms,
@@ -404,7 +422,8 @@ class CrossPlatformCorrelator:
         return matching_fields / total_fields if total_fields > 0 else 0.0
     
     def _calculate_correlation_confidence(self, correlations: List[Dict]) -> float:
-        """Calculate overall confidence for correlation set."""
+        """
+Calculate overall confidence for correlation set."""
         if not correlations:
             return 0.0
         
@@ -439,7 +458,8 @@ class PlatformOrchestrator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize platform orchestrator."""
+        """
+Initialize platform orchestrator."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -730,7 +750,8 @@ class PlatformOrchestrator:
                 self.http_sessions[platform_id] = aiohttp.ClientSession()
     
     async def _start_workers(self) -> None:
-        """Start worker tasks for task execution."""
+        """
+Start worker tasks for task execution."""
         for i in range(self.max_concurrent_workers):
             worker = asyncio.create_task(self._worker_task(f"worker-{i}"))
             self.workers.append(worker)
@@ -835,7 +856,8 @@ class PlatformOrchestrator:
         self.load_balancer.update_platform_health(platform_id, health_score)
     
     async def shutdown(self) -> None:
-        """Shutdown the platform orchestrator."""
+        """
+Shutdown the platform orchestrator."""
         self._logger.info("Shutting down Platform Orchestrator...")
         
         try:

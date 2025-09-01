@@ -4,13 +4,14 @@
 Ultra-professional production configuration with enterprise-grade settings.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import os
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
@@ -20,7 +21,9 @@ import json
 
 
 class EnvironmentType(Enum):
-    """Environment types"""
+    """
+Environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -29,6 +32,7 @@ class EnvironmentType(Enum):
 
 class LogLevel(Enum):
     """Logging levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -126,7 +130,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
+    """
+Security configuration"""
     # API keys and secrets
     youtube_api_key: Optional[str] = None
     instagram_api_key: Optional[str] = None
@@ -256,7 +261,8 @@ class ProductionConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> 'ProductionConfig':
-        """Load configuration from YAML file"""
+        """
+Load configuration from YAML file"""
         with open(config_path, 'r') as f:
             if config_path.endswith('.yaml') or config_path.endswith('.yml'):
                 data = yaml.safe_load(f)
@@ -267,7 +273,8 @@ class ProductionConfig:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ProductionConfig':
-        """Create configuration from dictionary"""
+        """
+Create configuration from dictionary"""
         config = cls()
         
         # Apply configuration from dictionary
@@ -287,7 +294,8 @@ class ProductionConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         result = {}
         
         for key, value in self.__dict__.items():
@@ -302,7 +310,8 @@ class ProductionConfig:
         return result
     
     def save_to_file(self, config_path: str):
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         data = self.to_dict()
         
         with open(config_path, 'w') as f:
@@ -312,7 +321,8 @@ class ProductionConfig:
                 json.dump(data, f, indent=2)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         # Required API keys for production

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 from typing import List, Dict, Any
 from datetime import timedelta
@@ -12,7 +13,8 @@ from .app_config import AppConfig
 
 
 class DevelopmentConfig(AppConfig):
-    """Development environment configuration"""
+    """
+Development environment configuration"""
     
     def __init__(self):
         super().__init__()
@@ -382,7 +384,8 @@ def get_config(environment: str = None) -> AppConfig:
 
 
 def validate_environment_config(config: AppConfig) -> Dict[str, Any]:
-    """Validate environment-specific configuration"""
+    """
+Validate environment-specific configuration"""
     issues = []
     
     # Production-specific validations

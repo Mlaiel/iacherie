@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import time
 import asyncio
 import logging
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class LimitType(Enum):
-    """Rate limit types"""
+    """
+Rate limit types"""
+
     REQUESTS_PER_SECOND = "requests_per_second"
     REQUESTS_PER_MINUTE = "requests_per_minute"
     REQUESTS_PER_HOUR = "requests_per_hour"
@@ -40,6 +43,7 @@ class LimitType(Enum):
 
 class LimitScope(Enum):
     """Rate limit scope"""
+
     GLOBAL = "global"
     PER_IP = "per_ip"
     PER_USER = "per_user"
@@ -50,6 +54,7 @@ class LimitScope(Enum):
 
 class ActionType(Enum):
     """Action to take when limit is exceeded"""
+
     DENY = "deny"
     DELAY = "delay"
     THROTTLE = "throttle"
@@ -76,7 +81,8 @@ class RateLimit:
 
 @dataclass
 class RateLimitRequest:
-    """Rate limit request information"""
+    """
+Rate limit request information"""
     client_ip: str
     user_id: Optional[str] = None
     api_key: Optional[str] = None
@@ -90,7 +96,8 @@ class RateLimitRequest:
 
 @dataclass
 class LimitStatus:
-    """Rate limit status"""
+    """
+Rate limit status"""
     limit_name: str
     current_count: int
     limit_value: int
@@ -102,7 +109,8 @@ class LimitStatus:
 
 
 class TokenBucket:
-    """Token bucket algorithm implementation"""
+    """
+Token bucket algorithm implementation"""
     
     def __init__(self, capacity: int, refill_rate: float):
         self.capacity = capacity
@@ -112,7 +120,8 @@ class TokenBucket:
         self.lock = threading.Lock()
     
     def consume(self, tokens: int = 1) -> bool:
-        """Consume tokens from bucket"""
+        """
+Consume tokens from bucket"""
         with self.lock:
             now = time.time()
             
@@ -129,7 +138,8 @@ class TokenBucket:
             return False
     
     def get_status(self) -> Dict[str, Any]:
-        """Get bucket status"""
+        """
+Get bucket status"""
         with self.lock:
             return {
                 "capacity": self.capacity,
@@ -149,7 +159,8 @@ class SlidingWindowCounter:
         self.lock = threading.Lock()
     
     def add_request(self, timestamp: Optional[datetime] = None) -> bool:
-        """Add request and check if within limit"""
+        """
+Add request and check if within limit"""
         if timestamp is None:
             timestamp = datetime.now()
         
@@ -168,7 +179,8 @@ class SlidingWindowCounter:
             return True
     
     def get_count(self) -> int:
-        """Get current count in window"""
+        """
+Get current count in window"""
         with self.lock:
             now = datetime.now()
             cutoff_time = now - timedelta(seconds=self.window_seconds)
@@ -180,7 +192,8 @@ class SlidingWindowCounter:
             return len(self.requests)
     
     def get_status(self) -> Dict[str, Any]:
-        """Get counter status"""
+        """
+Get counter status"""
         count = self.get_count()
         now = datetime.now()
         
@@ -202,7 +215,8 @@ class DistributedRateLimiter:
         self.redis = redis_client
     
     def check_limit(self, key: str, limit: int, window_seconds: int) -> Tuple[bool, Dict[str, Any]]:
-        """Check rate limit using Redis sliding window"""
+        """
+Check rate limit using Redis sliding window"""
         try:
             now = time.time()
             pipeline = self.redis.pipeline()
@@ -257,7 +271,8 @@ class InMemoryRateLimiter:
         self.last_cleanup = time.time()
     
     def _cleanup_old_entries(self):
-        """Cleanup old counters and buckets"""
+        """
+Cleanup old counters and buckets"""
         now = time.time()
         if now - self.last_cleanup < self.cleanup_interval:
             return
@@ -275,7 +290,8 @@ class InMemoryRateLimiter:
             self.last_cleanup = now
     
     def check_sliding_window_limit(self, key: str, limit: int, window_seconds: int) -> Tuple[bool, Dict[str, Any]]:
-        """Check sliding window rate limit"""
+        """
+Check sliding window rate limit"""
         self._cleanup_old_entries()
         
         with self.lock:
@@ -290,7 +306,8 @@ class InMemoryRateLimiter:
         return allowed, status
     
     def check_token_bucket_limit(self, key: str, capacity: int, refill_rate: float, tokens: int = 1) -> Tuple[bool, Dict[str, Any]]:
-        """Check token bucket rate limit"""
+        """
+Check token bucket rate limit"""
         self._cleanup_old_entries()
         
         with self.lock:
@@ -306,7 +323,8 @@ class InMemoryRateLimiter:
 
 
 class RateLimiter:
-    """Enterprise Rate Limiter for Load Balancer"""
+    """
+Enterprise Rate Limiter for Load Balancer"""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.rate_limits: Dict[str, RateLimit] = {}
@@ -323,7 +341,8 @@ class RateLimiter:
         self.lock = threading.RLock()
     
     def add_rate_limit(self, rate_limit: RateLimit) -> bool:
-        """Add rate limit configuration"""
+        """
+Add rate limit configuration"""
         try:
             with self.lock:
                 self.rate_limits[rate_limit.name] = rate_limit
@@ -508,7 +527,8 @@ class RateLimiter:
             return self.memory_limiter.check_sliding_window_limit(key, limit, window_seconds)
     
     def _check_bandwidth_limit(self, key: str, limit: int, window_seconds: int, request_size: int) -> Tuple[bool, Dict[str, Any]]:
-        """Check bandwidth-based rate limit"""
+        """
+Check bandwidth-based rate limit"""
         # Use token bucket for bandwidth limiting
         tokens_needed = max(1, request_size // 1024)  # Convert to KB
         refill_rate = limit / window_seconds  # tokens per second
@@ -516,7 +536,8 @@ class RateLimiter:
         return self.memory_limiter.check_token_bucket_limit(key, limit, refill_rate, tokens_needed)
     
     def _check_concurrent_limit(self, key: str, limit: int) -> Tuple[bool, Dict[str, Any]]:
-        """Check concurrent connections limit"""
+        """
+Check concurrent connections limit"""
         # This would typically be implemented with connection tracking
         # For now, return a simple implementation
         return True, {"current_count": 0, "limit": limit, "remaining": limit}
@@ -533,7 +554,8 @@ class RateLimiter:
             await self.request_queue.put(time.time())
     
     def configure_platform_rate_limits(self) -> bool:
-        """Configure rate limits for platform services"""
+        """
+Configure rate limits for platform services"""
         try:
             rate_limits = [
                 # Global API limits

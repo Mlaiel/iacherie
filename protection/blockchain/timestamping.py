@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class TimestampingService(Enum):
-    """Available timestamping services"""
+    """
+Available timestamping services"""
+
     OPENTIMESTAMPS = "opentimestamps"
     BLOCKCHAIN_PROOF = "blockchain_proof"
     RFC3161_TSA = "rfc3161_tsa"
@@ -59,6 +62,7 @@ class TimestampingService(Enum):
 
 class ProofStatus(Enum):
     """Proof verification status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -80,7 +84,8 @@ class TimestampProof:
     status: ProofStatus = ProofStatus.PENDING
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage/transmission"""
+        """
+Convert to dictionary for storage/transmission"""
         return {
             "content_hash": self.content_hash,
             "timestamp": self.timestamp.isoformat(),
@@ -107,7 +112,8 @@ class ContentFingerprint:
     mime_type: str
     
     def __post_init__(self):
-        """Generate combined hash from content and metadata"""
+        """
+Generate combined hash from content and metadata"""
         if not self.combined_hash:
             data = f"{self.file_hash}:{self.metadata_hash}:{self.content_type}"
             self.combined_hash = hashlib.sha256(data.encode()).hexdigest()
@@ -126,17 +132,20 @@ class CryptographicTimestamping:
         self.session = None
         
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     def _load_private_key(self) -> rsa.RSAPrivateKey:
-        """Load or generate RSA private key for signing"""
+        """
+Load or generate RSA private key for signing"""
         key_path = self.config.get("private_key_path")
         
         if key_path and Path(key_path).exists():
@@ -464,7 +473,8 @@ class CryptographicTimestamping:
         return proof.transaction_hash is not None
     
     async def _verify_opentimestamps_proof(self, proof: TimestampProof) -> bool:
-        """Verify OpenTimestamps proof"""
+        """
+Verify OpenTimestamps proof"""
         # Implementation would verify with OpenTimestamps
         return "ots_file" in proof.proof_data
     

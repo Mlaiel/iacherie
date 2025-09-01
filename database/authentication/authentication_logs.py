@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import hashlib
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuthEventType(Enum):
-    """Authentication event types"""
+    """
+Authentication event types"""
+
     LOGIN_ATTEMPT = "login_attempt"
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
@@ -71,6 +74,7 @@ class AuthEventType(Enum):
 
 class AuthResult(Enum):
     """Authentication result types"""
+
     SUCCESS = "success"
     FAILURE = "failure"
     BLOCKED = "blocked"
@@ -83,6 +87,7 @@ class AuthResult(Enum):
 
 class RiskLevel(Enum):
     """Risk level classifications"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -105,7 +110,8 @@ class AuthContext:
 
 
 class AuthenticationLog(Base):
-    """Comprehensive authentication logging"""
+    """
+Comprehensive authentication logging"""
     __tablename__ = "authentication_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -278,7 +284,8 @@ class AuthenticationLogger:
         failure_reason: Optional[str] = None,
         duration_ms: Optional[int] = None
     ) -> str:
-        """Log authentication event"""
+        """
+Log authentication event"""
         try:
             # Calculate risk score
             risk_score = self._calculate_risk_score(auth_context, event_type, auth_result)
@@ -381,7 +388,8 @@ class AuthenticationLogger:
         auth_context: AuthContext,
         event_type: AuthEventType
     ) -> Dict[str, Any]:
-        """Detect authentication anomalies"""
+        """
+Detect authentication anomalies"""
         anomalies = {}
         
         if not user_id:

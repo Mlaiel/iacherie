@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Blog Templates Tests
+"""
+Blog Templates Tests
 
 Comprehensive tests for blog template system that handles
 article structure, SEO optimization, and content formatting.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -46,12 +49,14 @@ class TestBlogTemplates:
     
     @pytest.fixture
     def blog_templates(self):
-        """Create a blog templates instance"""
+        """
+Create a blog templates instance"""
         return BlogTemplates()
     
     @pytest.fixture
     def article_data(self):
-        """Create sample article data"""
+        """
+Create sample article data"""
         return {
             "title": "The Complete Guide to AI in Content Creation",
             "subtitle": "How Artificial Intelligence is Revolutionizing Digital Content",
@@ -101,7 +106,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_generate_article_structure(self, blog_templates, article_data):
-        """Test article structure generation"""
+        """
+Test article structure generation"""
         with patch.object(blog_templates, '_generate_structure') as mock_structure:
             mock_structure.return_value = {
                 "success": True,
@@ -635,7 +641,8 @@ class TestArticleTemplate:
     """Test suite for ArticleTemplate"""
     
     def test_article_template_creation(self):
-        """Test article template creation"""
+        """
+Test article template creation"""
         template = ArticleTemplate(
             template_id="article_001",
             name="Standard Article",

@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateCategory(Enum):
-    """Workflow template categories"""
+    """
+Workflow template categories"""
+
     CONTENT_CREATION = "content_creation"
     SOCIAL_MEDIA_MANAGEMENT = "social_media_management"
     COLLABORATION = "collaboration"
@@ -62,6 +65,7 @@ class TemplateCategory(Enum):
 
 class TemplateComplexity(Enum):
     """Template complexity levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -70,6 +74,7 @@ class TemplateComplexity(Enum):
 
 class TemplateStatus(Enum):
     """Template lifecycle status"""
+
     DRAFT = "draft"
     TESTING = "testing"
     ACTIVE = "active"
@@ -79,6 +84,7 @@ class TemplateStatus(Enum):
 
 class ParameterType(Enum):
     """Template parameter types"""
+
     STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
@@ -95,6 +101,7 @@ class ParameterType(Enum):
 
 class ConfigurationScope(Enum):
     """Configuration scope levels"""
+
     GLOBAL = "global"
     USER = "user"
     ORGANIZATION = "organization"
@@ -879,7 +886,8 @@ class WorkflowTemplateManager:
         return template_details
     
     async def _validate_template_definition(self, template_definition: Dict[str, Any]):
-        """Validate template definition structure"""
+        """
+Validate template definition structure"""
         required_fields = ['name', 'tasks', 'triggers']
         
         for field in required_fields:
@@ -905,7 +913,8 @@ class WorkflowTemplateManager:
         }
     
     async def _create_template_parameters(self, template_id: str, parameter_schema: Dict[str, Any]):
-        """Create parameter definitions for template"""
+        """
+Create parameter definitions for template"""
         parameters = parameter_schema.get('parameters', [])
         
         for i, param_def in enumerate(parameters):
@@ -927,7 +936,8 @@ class WorkflowTemplateManager:
         self.db_session.commit()
     
     async def _calculate_template_quality_scores(self, template_id: str):
-        """Calculate quality scores for template"""
+        """
+Calculate quality scores for template"""
         # Implementation would analyze template quality
         template = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.id == template_id
@@ -944,7 +954,8 @@ class WorkflowTemplateManager:
         base_definition: Dict[str, Any],
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply customizations to base template definition"""
+        """
+Apply customizations to base template definition"""
         # Deep copy base definition
         import copy
         customized_definition = copy.deepcopy(base_definition)
@@ -964,7 +975,8 @@ class WorkflowTemplateManager:
         usage_type: str,
         usage_data: Dict[str, Any]
     ):
-        """Track template usage for analytics"""
+        """
+Track template usage for analytics"""
         usage_record = TemplateUsageHistory(
             template_id=template_id,
             user_id=user_id,
@@ -992,7 +1004,8 @@ class WorkflowTemplateManager:
         template_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get personalized recommendations for template"""
+        """
+Get personalized recommendations for template"""
         # Implementation would analyze user preferences and history
         return {
             'compatibility_score': 0.85,
@@ -1002,7 +1015,8 @@ class WorkflowTemplateManager:
         }
     
     async def _calculate_template_usage_stats(self, template_id: str) -> Dict[str, Any]:
-        """Calculate template usage statistics"""
+        """
+Calculate template usage statistics"""
         usage_records = self.db_session.query(TemplateUsageHistory).filter(
             TemplateUsageHistory.template_id == template_id
         ).all()
@@ -1023,7 +1037,8 @@ class WorkflowTemplateManager:
 
 
 class AITemplateGenerator:
-    """AI-powered template generation system"""
+    """
+AI-powered template generation system"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -1033,7 +1048,8 @@ class AITemplateGenerator:
         requirements: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Generate workflow template using AI"""
+        """
+Generate workflow template using AI"""
         # AI would analyze requirements and generate optimized template
         # For now, return mock template
         return {
@@ -1077,7 +1093,8 @@ class ConfigurationManager:
         config_data: Dict[str, Any],
         user_id: str
     ) -> str:
-        """Create new workflow configuration"""
+        """
+Create new workflow configuration"""
         configuration = WorkflowConfiguration(
             configuration_name=config_data['configuration_name'],
             configuration_description=config_data.get('configuration_description', ''),
@@ -1102,7 +1119,8 @@ class ConfigurationManager:
         scope_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get configuration for specific scope"""
+        """
+Get configuration for specific scope"""
         config = self.db_session.query(WorkflowConfiguration).filter(
             WorkflowConfiguration.scope == scope,
             WorkflowConfiguration.scope_id == scope_id,
@@ -1117,7 +1135,8 @@ class ConfigurationManager:
 
 
 class MarketplaceManager:
-    """Template marketplace management system"""
+    """
+Template marketplace management system"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -1127,7 +1146,8 @@ class MarketplaceManager:
         template_id: str,
         marketplace_data: Dict[str, Any]
     ) -> bool:
-        """Publish template to marketplace"""
+        """
+Publish template to marketplace"""
         template = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.id == template_id
         ).first()

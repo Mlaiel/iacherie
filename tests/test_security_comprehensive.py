@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Core Security Components
+"""
+Unit Tests for Core Security Components
 Ensures comprehensive testing of security-critical modules
 """
+
 import pytest
 import sys
 import os
@@ -26,10 +29,12 @@ from datetime import datetime, timedelta
 
 
 class TestAuthenticationSecurity:
-    """Unit tests for authentication security"""
+    """
+Unit tests for authentication security"""
     
     def test_password_hashing(self):
-        """Test secure password hashing"""
+        """
+Test secure password hashing"""
         password = "test_password_123"
         
         # Mock bcrypt hashing
@@ -79,7 +84,8 @@ class TestDataEncryption:
     """Unit tests for data encryption"""
     
     def test_aes_encryption(self):
-        """Test AES encryption/decryption"""
+        """
+Test AES encryption/decryption"""
         plaintext = "sensitive_data_123"
         encryption_key = "32_character_encryption_key_here"
         
@@ -110,10 +116,12 @@ class TestDataEncryption:
 
 
 class TestInputValidation:
-    """Unit tests for input validation and sanitization"""
+    """
+Unit tests for input validation and sanitization"""
     
     def test_sql_injection_prevention(self):
-        """Test SQL injection prevention"""
+        """
+Test SQL injection prevention"""
         malicious_input = "'; DROP TABLE users; --"
         
         # Mock input sanitization
@@ -155,7 +163,8 @@ class TestAPISecurityHeaders:
     """Unit tests for API security headers"""
     
     def test_cors_headers(self):
-        """Test CORS security headers"""
+        """
+Test CORS security headers"""
         cors_headers = {
             "Access-Control-Allow-Origin": "https://ainflue.com",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
@@ -193,7 +202,8 @@ class TestContentSecurityPolicy:
     """Unit tests for Content Security Policy"""
     
     def test_csp_directives(self):
-        """Test CSP directive validation"""
+        """
+Test CSP directive validation"""
         csp_policy = {
             "default-src": "'self'",
             "script-src": "'self' 'unsafe-inline'",
@@ -215,10 +225,12 @@ class TestContentSecurityPolicy:
 
 
 class TestDatabaseSecurity:
-    """Unit tests for database security"""
+    """
+Unit tests for database security"""
     
     def test_connection_encryption(self):
-        """Test database connection encryption"""
+        """
+Test database connection encryption"""
         connection_string = "postgresql://user:pass@host:5432/db?sslmode=require"
         
         assert "sslmode=require" in connection_string
@@ -254,7 +266,8 @@ class TestAuditLogging:
     """Unit tests for security audit logging"""
     
     def test_authentication_logging(self):
-        """Test authentication event logging"""
+        """
+Test authentication event logging"""
         auth_event = {
             "event_type": "login_attempt",
             "user_id": "123",
@@ -299,7 +312,8 @@ class TestThreatDetection:
     """Unit tests for threat detection"""
     
     def test_anomaly_detection(self):
-        """Test anomaly detection algorithms"""
+        """
+Test anomaly detection algorithms"""
         normal_requests_per_minute = [50, 55, 48, 52, 49]
         current_requests = 200  # Anomalous spike
         
@@ -310,7 +324,8 @@ class TestThreatDetection:
         assert is_anomaly is True
     
     def test_bot_detection(self):
-        """Test bot traffic detection"""
+        """
+Test bot traffic detection"""
         user_agent = "Mozilla/5.0 (compatible; bot/1.0)"
         suspicious_patterns = ["bot", "crawler", "spider", "scraper"]
         
@@ -330,7 +345,8 @@ class TestComplianceChecks:
     """Unit tests for regulatory compliance"""
     
     def test_gdpr_compliance(self):
-        """Test GDPR compliance checks"""
+        """
+Test GDPR compliance checks"""
         user_data = {
             "user_id": "123",
             "email": "user@example.com",

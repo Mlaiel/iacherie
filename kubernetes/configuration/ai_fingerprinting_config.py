@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade AI fingerprinting configuration management system.
 ================================================================
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
@@ -30,7 +31,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class FingerprintAlgorithm(Enum):
-    """AI fingerprinting algorithms enumeration"""
+    """
+AI fingerprinting algorithms enumeration"""
+
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     LIBROSA = "librosa"
@@ -46,6 +49,7 @@ class FingerprintAlgorithm(Enum):
 
 class ContentType(Enum):
     """Content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -55,6 +59,7 @@ class ContentType(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity measurement metrics"""
+
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
@@ -64,6 +69,7 @@ class SimilarityMetric(Enum):
 
 class VectorDatabase(Enum):
     """Vector database backends"""
+
     FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
@@ -73,6 +79,7 @@ class VectorDatabase(Enum):
 
 class ProcessingMode(Enum):
     """Fingerprinting processing modes"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -304,7 +311,8 @@ class ProcessingConfig:
 
 @dataclass
 class QualityAssuranceConfig:
-    """Quality assurance configuration"""
+    """
+Quality assurance configuration"""
     enabled: bool = True
     validation_enabled: bool = True
     accuracy_testing: bool = True
@@ -337,7 +345,8 @@ class QualityAssuranceConfig:
 
 @dataclass
 class AIFingerprintingConfiguration:
-    """Master AI fingerprinting configuration"""
+    """
+Master AI fingerprinting configuration"""
     # Content type configurations
     audio_config: AudioFingerprintingConfig = field(default_factory=AudioFingerprintingConfig)
     video_config: VideoFingerprintingConfig = field(default_factory=VideoFingerprintingConfig)
@@ -426,7 +435,8 @@ class AIFingerprintingConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize AI fingerprinting configuration manager"""
+        """
+Initialize AI fingerprinting configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -479,7 +489,8 @@ class AIFingerprintingConfigManager:
         self.last_updated = datetime.now()
     
     def save_configuration(self, config_path: Optional[str] = None) -> bool:
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         try:
             save_path = config_path or self.config_path
             
@@ -515,7 +526,8 @@ class AIFingerprintingConfigManager:
         return result
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         try:
@@ -580,35 +592,43 @@ class AIFingerprintingConfigManager:
         return self._config.audio_config
     
     def get_video_config(self) -> VideoFingerprintingConfig:
-        """Get video fingerprinting configuration"""
+        """
+Get video fingerprinting configuration"""
         return self._config.video_config
     
     def get_image_config(self) -> ImageFingerprintingConfig:
-        """Get image fingerprinting configuration"""
+        """
+Get image fingerprinting configuration"""
         return self._config.image_config
     
     def get_text_config(self) -> TextFingerprintingConfig:
-        """Get text fingerprinting configuration"""
+        """
+Get text fingerprinting configuration"""
         return self._config.text_config
     
     def get_vector_matching_config(self) -> VectorMatchingConfig:
-        """Get vector matching configuration"""
+        """
+Get vector matching configuration"""
         return self._config.vector_matching_config
     
     def get_processing_config(self) -> ProcessingConfig:
-        """Get processing configuration"""
+        """
+Get processing configuration"""
         return self._config.processing_config
     
     def get_quality_assurance_config(self) -> QualityAssuranceConfig:
-        """Get quality assurance configuration"""
+        """
+Get quality assurance configuration"""
         return self._config.quality_assurance_config
     
     def get_complete_config(self) -> AIFingerprintingConfiguration:
-        """Get complete configuration"""
+        """
+Get complete configuration"""
         return self._config
     
     def update_audio_config(self, **kwargs) -> bool:
-        """Update audio configuration"""
+        """
+Update audio configuration"""
         try:
             for key, value in kwargs.items():
                 if hasattr(self._config.audio_config, key):

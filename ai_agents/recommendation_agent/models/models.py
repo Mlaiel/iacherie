@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Set
 from datetime import datetime, timezone
@@ -20,7 +21,9 @@ import uuid
 
 
 class ContentType(Enum):
-    """Content type enumeration for multi-modal support"""
+    """
+Content type enumeration for multi-modal support"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -35,6 +38,7 @@ class ContentType(Enum):
 
 class InteractionType(Enum):
     """User interaction type enumeration"""
+
     PLAY = "play"
     LIKE = "like"
     SHARE = "share"
@@ -52,6 +56,7 @@ class InteractionType(Enum):
 
 class RecommendationType(Enum):
     """Recommendation algorithm type enumeration"""
+
     COLLABORATIVE = "collaborative"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -66,6 +71,7 @@ class RecommendationType(Enum):
 
 class CreatorTier(Enum):
     """Creator tier classification"""
+
     EMERGING = "emerging"
     ESTABLISHED = "established"
     PREMIUM = "premium"
@@ -76,6 +82,7 @@ class CreatorTier(Enum):
 
 class MonetizationStrategy(Enum):
     """Revenue generation strategies"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
@@ -123,7 +130,8 @@ class UserProfile:
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile and analytics"""
+    """
+Comprehensive creator profile and analytics"""
     creator_id: str
     username: str
     display_name: str
@@ -146,7 +154,8 @@ class CreatorProfile:
     last_active: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_influence_score(self) -> float:
-        """Calculate overall influence score based on metrics"""
+        """
+Calculate overall influence score based on metrics"""
         base_score = min(self.follower_count / 1000.0, 100.0)  # Cap at 100
         engagement_boost = self.engagement_metrics.get('avg_engagement_rate', 0.0) * 50
         quality_boost = self.quality_score * 30
@@ -157,7 +166,8 @@ class CreatorProfile:
 
 @dataclass
 class ContentItem:
-    """Comprehensive content item representation"""
+    """
+Comprehensive content item representation"""
     content_id: str
     title: str
     description: str
@@ -209,7 +219,8 @@ class ContentItem:
 
 @dataclass
 class InteractionEvent:
-    """User interaction event tracking"""
+    """
+User interaction event tracking"""
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_id: str = ""
@@ -243,7 +254,8 @@ class InteractionEvent:
 
 @dataclass
 class RecommendationContext:
-    """Context information for generating recommendations"""
+    """
+Context information for generating recommendations"""
     session_id: str
     device_type: str
     location: Optional[Dict[str, Any]] = None
@@ -272,7 +284,8 @@ class RecommendationContext:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration opportunity representation"""
+    """
+Collaboration opportunity representation"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     initiator_id: str = ""
     target_creator_id: str = ""
@@ -315,7 +328,8 @@ class CollaborationRequest:
 
 @dataclass
 class TrendData:
-    """Trending content and creator analytics"""
+    """
+Trending content and creator analytics"""
     trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: Optional[str] = None
     creator_id: Optional[str] = None
@@ -340,7 +354,8 @@ class TrendData:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue and monetization analytics"""
+    """
+Revenue and monetization analytics"""
     content_id: str
     creator_id: str
     total_revenue: float = 0.0
@@ -356,7 +371,8 @@ class RevenueMetrics:
     period_end: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_efficiency_score(self) -> float:
-        """Calculate revenue efficiency score"""
+        """
+Calculate revenue efficiency score"""
         if self.audience_value == 0:
             return 0.0
         
@@ -366,7 +382,8 @@ class RevenueMetrics:
 
 @dataclass
 class SimilarityScore:
-    """Similarity calculation result between entities"""
+    """
+Similarity calculation result between entities"""
     entity_a_id: str
     entity_b_id: str
     similarity_type: str  # user-user, content-content, creator-creator
@@ -376,13 +393,15 @@ class SimilarityScore:
     calculated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def is_significant(self, threshold: float = 0.7) -> bool:
-        """Check if similarity score is significant"""
+        """
+Check if similarity score is significant"""
         return self.score >= threshold and self.confidence >= 0.8
 
 
 @dataclass
 class PersonalizationVector:
-    """User personalization vector for ML models"""
+    """
+User personalization vector for ML models"""
     user_id: str
     vector_data: np.ndarray
     feature_names: List[str] = field(default_factory=list)
@@ -397,7 +416,8 @@ class PersonalizationVector:
         self.last_updated = datetime.now(timezone.utc)
     
     def get_similarity(self, other_vector: 'PersonalizationVector') -> float:
-        """Calculate cosine similarity with another personalization vector"""
+        """
+Calculate cosine similarity with another personalization vector"""
         if len(self.vector_data) != len(other_vector.vector_data):
             return 0.0
         
@@ -413,7 +433,8 @@ class PersonalizationVector:
 
 @dataclass
 class RecommendationResult:
-    """Final recommendation result with metadata"""
+    """
+Final recommendation result with metadata"""
     recommendations: List[ContentItem]
     algorithm_used: str
     confidence_score: float
@@ -425,7 +446,8 @@ class RecommendationResult:
     generated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def get_top_recommendations(self, count: int) -> List[ContentItem]:
-        """Get top N recommendations sorted by score"""
+        """
+Get top N recommendations sorted by score"""
         sorted_recs = sorted(
             self.recommendations, 
             key=lambda x: x.recommendation_score, 

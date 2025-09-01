@@ -5,9 +5,10 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -22,7 +23,8 @@ from .video_processor import VideoProcessor, AsyncVideoProcessor, ImageProcessor
 
 @dataclass
 class BatchJob:
-    """Représente un job de traitement en lot"""
+    """
+Représente un job de traitement en lot"""
     id: str
     files: List[str]
     processor_type: str
@@ -47,7 +49,8 @@ class BatchProcessor(BaseProcessor):
         }
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour traitement en lot"""
+        """
+Valide les données d'entrée pour traitement en lot"""
         if not isinstance(input_data, dict):
             return False
         
@@ -59,7 +62,8 @@ class BatchProcessor(BaseProcessor):
                 processor_type in self.processors)
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Lance un traitement en lot"""
+        """
+Lance un traitement en lot"""
         job_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         files = input_data.get('files', [])
         processor_type = input_data.get('processor_type')
@@ -142,7 +146,8 @@ class AsyncBatchProcessor(AsyncBaseProcessor):
         }
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour traitement en lot asynchrone"""
+        """
+Valide les données d'entrée pour traitement en lot asynchrone"""
         if not isinstance(input_data, dict):
             return False
         
@@ -154,7 +159,8 @@ class AsyncBatchProcessor(AsyncBaseProcessor):
                 processor_type in self.processors)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Lance un traitement en lot asynchrone"""
+        """
+Lance un traitement en lot asynchrone"""
         job_id = f"async_batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         files = input_data.get('files', [])
         processor_type = input_data.get('processor_type')
@@ -214,7 +220,8 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour extraction de métadonnées"""
+        """
+Valide les données d'entrée pour extraction de métadonnées"""
         if not isinstance(input_data, dict):
             return False
         
@@ -225,7 +232,8 @@ class MetadataProcessor(BaseProcessor):
                 content_type in self.extractors)
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait et normalise les métadonnées"""
+        """
+Extrait et normalise les métadonnées"""
         file_path = input_data.get('file_path')
         content_type = input_data.get('content_type')
         

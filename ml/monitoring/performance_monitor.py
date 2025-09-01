@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 MONITORING DES PERFORMANCES DE MODÈLES
@@ -15,6 +15,7 @@ Surveillance en temps réel des modèles ML en production
 - A/B testing metrics comparison
 - Real-time dashboards et reporting
 """
+
 import asyncio
 import logging
 import time
@@ -35,7 +36,9 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité des alertes"""
+    """
+Niveaux de sévérité des alertes"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -43,6 +46,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Types de métriques"""
+
     PERFORMANCE = "performance"
     LATENCY = "latency"
     THROUGHPUT = "throughput"
@@ -53,6 +57,7 @@ class MetricType(Enum):
 
 class DriftType(Enum):
     """Types de drift"""
+
     FEATURE_DRIFT = "feature_drift"
     LABEL_DRIFT = "label_drift"
     CONCEPT_DRIFT = "concept_drift"
@@ -67,7 +72,8 @@ class MetricPoint:
 
 @dataclass
 class Alert:
-    """Alerte de monitoring"""
+    """
+Alerte de monitoring"""
     alert_id: str
     model_id: str
     metric_type: MetricType
@@ -81,7 +87,8 @@ class Alert:
 
 @dataclass
 class DriftAnalysis:
-    """Analyse de drift"""
+    """
+Analyse de drift"""
     drift_type: DriftType
     drift_score: float
     p_value: float
@@ -93,7 +100,8 @@ class DriftAnalysis:
 
 @dataclass
 class PerformanceReport:
-    """Rapport de performance"""
+    """
+Rapport de performance"""
     model_id: str
     period_start: datetime
     period_end: datetime
@@ -108,7 +116,8 @@ class PerformanceReport:
     alerts: List[Alert] = field(default_factory=list)
 
 class ModelPerformanceMonitor:
-    """Moniteur de performance des modèles"""
+    """
+Moniteur de performance des modèles"""
     
     def __init__(self, 
                  buffer_size: int = 10000,
@@ -139,7 +148,8 @@ class ModelPerformanceMonitor:
         self.alert_callbacks: List[Callable[[Alert], None]] = []
     
     def _setup_default_thresholds(self):
-        """Configure les thresholds par défaut"""
+        """
+Configure les thresholds par défaut"""
         default_thresholds = {
             MetricType.LATENCY: {"warning": 0.5, "critical": 1.0},
             MetricType.ERROR_RATE: {"warning": 0.05, "critical": 0.10},
@@ -156,7 +166,8 @@ class ModelPerformanceMonitor:
         self.thresholds[model_id] = thresholds
     
     def add_alert_callback(self, callback: Callable[[Alert], None]):
-        """Ajoute un callback pour les alertes"""
+        """
+Ajoute un callback pour les alertes"""
         self.alert_callbacks.append(callback)
     
     async def record_prediction(self, 
@@ -166,7 +177,8 @@ class ModelPerformanceMonitor:
                                latency: float,
                                actual_label: Optional[Any] = None,
                                metadata: Optional[Dict[str, Any]] = None):
-        """Enregistre une prédiction et ses métriques"""
+        """
+Enregistre une prédiction et ses métriques"""
         
         timestamp = datetime.now()
         
@@ -214,7 +226,8 @@ class ModelPerformanceMonitor:
                                metric_type: MetricType, 
                                value: float, 
                                timestamp: datetime):
-        """Vérifie les thresholds et génère des alertes"""
+        """
+Vérifie les thresholds et génère des alertes"""
         
         try:
             # Récupérer les thresholds pour ce modèle
@@ -595,7 +608,8 @@ class ModelPerformanceMonitor:
             return all_alerts
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Résout une alerte"""
+        """
+Résout une alerte"""
         
         for model_alerts in self.alerts.values():
             for alert in model_alerts:
@@ -680,7 +694,8 @@ class MonitorFactory:
     
     @staticmethod
     def create_production_monitor() -> ModelPerformanceMonitor:
-        """Moniteur pour production avec alertes strictes"""
+        """
+Moniteur pour production avec alertes strictes"""
         monitor = ModelPerformanceMonitor(
             buffer_size=50000,
             drift_detection_window=2000,
@@ -710,7 +725,8 @@ class MonitorFactory:
 
 # Exemple d'utilisation
 async def example_usage():
-    """Exemple d'utilisation du moniteur de performance"""
+    """
+Exemple d'utilisation du moniteur de performance"""
     
     # Créer le moniteur
     monitor = MonitorFactory.create_production_monitor()

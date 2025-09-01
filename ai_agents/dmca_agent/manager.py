@@ -4,6 +4,7 @@ Advanced DMCA compliance and automated takedown system manager.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -69,7 +70,8 @@ class DMCAConfig:
     response_timeout_hours: int = 24
 
 class DMCAManager(BaseAgent):
-    """DMCA Manager - Enterprise-grade legal protection system"""
+    """
+DMCA Manager - Enterprise-grade legal protection system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -190,23 +192,28 @@ class DMCAManager(BaseAgent):
         }
 
     async def _verify_copyright(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify copyright ownership"""
+        """
+Verify copyright ownership"""
         return await self.copyright_verification.verify_ownership(data)
 
     async def _check_compliance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check legal compliance"""
+        """
+Check legal compliance"""
         return await self.compliance_engine.check_compliance(data)
 
     async def _generate_legal_document(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate legal documents"""
+        """
+Generate legal documents"""
         return await self.document_generator.generate_document(data)
 
     async def _execute_takedown(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute takedown on specific platforms"""
+        """
+Execute takedown on specific platforms"""
         return await self.takedown_automation.execute_takedown(data)
 
     async def _get_case_status(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get status of a DMCA case"""
+        """
+Get status of a DMCA case"""
         case_id = data.get('case_id')
         
         # In a real implementation, this would query a database
@@ -224,7 +231,8 @@ class DMCAManager(BaseAgent):
         }
 
     async def _bulk_takedown(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process multiple DMCA takedowns"""
+        """
+Process multiple DMCA takedowns"""
         cases = data.get('cases', [])
         results = []
         
@@ -249,7 +257,8 @@ class DMCAManager(BaseAgent):
         }
 
     def _determine_priority(self, data: Dict[str, Any]) -> str:
-        """Determine case priority based on data"""
+        """
+Determine case priority based on data"""
         # High priority if involves major platforms or high-value content
         platforms = data.get('platforms', [])
         high_value_platforms = ['youtube', 'instagram', 'facebook', 'tiktok']
@@ -260,7 +269,8 @@ class DMCAManager(BaseAgent):
             return DMCAPriority.MEDIUM
 
     def _estimate_completion_time(self, platforms: List[str]) -> str:
-        """Estimate completion time based on platforms"""
+        """
+Estimate completion time based on platforms"""
         # Different platforms have different response times
         max_hours = max([
             24 if 'youtube' in platforms else 0,
@@ -277,7 +287,8 @@ class DMCAManager(BaseAgent):
         return completion_time.isoformat()
 
     async def get_agent_status(self) -> Dict[str, Any]:
-        """Get current agent status and metrics"""
+        """
+Get current agent status and metrics"""
         return {
             "agent_type": "dmca_protection",
             "status": "active",

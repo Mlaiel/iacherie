@@ -5,12 +5,13 @@ Comprehensive content protection system with AI-powered fingerprinting,
 real-time monitoring, automated takedown requests, and rights management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
 from enum import Enum
@@ -32,7 +33,9 @@ from backend.utils.blockchain_recorder import BlockchainRecorder
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -41,6 +44,7 @@ class ProtectionLevel(str, Enum):
 
 class ContentViolationType(str, Enum):
     """Types of content violations"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -53,6 +57,7 @@ class ContentViolationType(str, Enum):
 
 class ProtectionStatus(str, Enum):
     """Protection status states"""
+
     UNPROTECTED = "unprotected"
     PROCESSING = "processing"
     PROTECTED = "protected"
@@ -65,6 +70,7 @@ class ProtectionStatus(str, Enum):
 
 class MonitoringScope(str, Enum):
     """Monitoring scope options"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -86,7 +92,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionRule:
-    """Content protection rule"""
+    """
+Content protection rule"""
     rule_id: str
     content_id: str
     rule_type: str
@@ -99,7 +106,8 @@ class ProtectionRule:
 
 @dataclass
 class ViolationReport:
-    """Content violation report"""
+    """
+Content violation report"""
     violation_id: str
     content_id: str
     violation_type: ContentViolationType
@@ -114,7 +122,8 @@ class ViolationReport:
 
 @dataclass
 class ProtectionMetrics:
-    """Protection performance metrics"""
+    """
+Protection performance metrics"""
     total_content_protected: int
     active_monitoring: int
     violations_detected: int
@@ -126,7 +135,8 @@ class ProtectionMetrics:
 
 
 class ProtectionConfiguration:
-    """Protection configuration settings"""
+    """
+Protection configuration settings"""
     def __init__(
         self,
         content_id: str,

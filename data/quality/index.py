@@ -14,8 +14,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Type, Tuple
 import asyncio
 import logging
@@ -60,7 +61,8 @@ class QualityModuleRegistry:
     """
     
     def __init__(self):
-        """Initialize the quality module registry"""
+        """
+Initialize the quality module registry"""
         self.logger = logger
         self.components: Dict[str, Type] = {}
         self.instances: Dict[str, Any] = {}
@@ -269,15 +271,18 @@ class QualityModuleRegistry:
         return self.instances.get(name)
     
     def get_all_components(self) -> Dict[str, Any]:
-        """Get all initialized component instances"""
+        """
+Get all initialized component instances"""
         return self.instances.copy()
     
     def list_components(self) -> List[str]:
-        """List all registered component names"""
+        """
+List all registered component names"""
         return list(self.components.keys())
     
     def get_component_info(self, name: str) -> Dict[str, Any]:
-        """Get detailed information about a component"""
+        """
+Get detailed information about a component"""
         if name not in self.components:
             return {}
         
@@ -498,7 +503,8 @@ def get_quality_registry() -> QualityModuleRegistry:
     return _quality_registry
 
 def get_quality_orchestrator() -> QualityModuleOrchestrator:
-    """Get the global quality module orchestrator"""
+    """
+Get the global quality module orchestrator"""
     global _quality_orchestrator
     if _quality_orchestrator is None:
         _quality_orchestrator = QualityModuleOrchestrator(get_quality_registry())
@@ -518,7 +524,8 @@ async def initialize_quality_module(config: Optional[Dict[str, Any]] = None) -> 
     return await orchestrator.initialize(config)
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive information about the quality module"""
+    """
+Get comprehensive information about the quality module"""
     
     orchestrator = get_quality_orchestrator()
     registry = get_quality_registry()

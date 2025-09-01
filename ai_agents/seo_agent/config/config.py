@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -18,7 +19,9 @@ from enum import Enum
 import json
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
+    """
+Environment types for configuration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -26,6 +29,7 @@ class EnvironmentType(Enum):
 
 class OptimizationMode(Enum):
     """SEO optimization modes"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -46,7 +50,8 @@ class AIModelConfig:
 
 @dataclass
 class CacheConfig:
-    """Caching configuration"""
+    """
+Caching configuration"""
     enabled: bool = True
     backend: str = "redis"  # redis, memory, database
     ttl: int = 3600  # Time to live in seconds
@@ -66,7 +71,8 @@ class APIConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""
+    """
+Performance optimization configuration"""
     async_processing: bool = True
     parallel_workers: int = 4
     batch_processing: bool = True
@@ -100,7 +106,8 @@ class SEOAgentConfig:
         self._initialize_component_configs()
     
     def _load_base_config(self):
-        """Load base configuration settings"""
+        """
+Load base configuration settings"""
         
         # SEO Agent Core Settings
         self.seo_agent = {
@@ -175,7 +182,8 @@ class SEOAgentConfig:
         }
     
     def _load_environment_config(self):
-        """Load environment-specific configuration"""
+        """
+Load environment-specific configuration"""
         
         env_configs = {
             EnvironmentType.DEVELOPMENT: self._get_development_config(),
@@ -188,7 +196,8 @@ class SEOAgentConfig:
         self._merge_config(env_config)
     
     def _get_development_config(self) -> Dict[str, Any]:
-        """Development environment configuration"""
+        """
+Development environment configuration"""
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.STANDARD,
@@ -221,7 +230,8 @@ class SEOAgentConfig:
         }
     
     def _get_testing_config(self) -> Dict[str, Any]:
-        """Testing environment configuration"""
+        """
+Testing environment configuration"""
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.BASIC,
@@ -249,7 +259,8 @@ class SEOAgentConfig:
         }
     
     def _get_staging_config(self) -> Dict[str, Any]:
-        """Staging environment configuration"""
+        """
+Staging environment configuration"""
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.ADVANCED,
@@ -280,7 +291,8 @@ class SEOAgentConfig:
         }
     
     def _get_production_config(self) -> Dict[str, Any]:
-        """Production environment configuration"""
+        """
+Production environment configuration"""
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.EXPERT,
@@ -331,7 +343,8 @@ class SEOAgentConfig:
         }
     
     def _initialize_component_configs(self):
-        """Initialize specific component configurations"""
+        """
+Initialize specific component configurations"""
         
         # External API Configurations
         self.apis = {
@@ -389,7 +402,8 @@ class SEOAgentConfig:
         }
     
     def _merge_config(self, env_config: Dict[str, Any]):
-        """Merge environment-specific configuration with base configuration"""
+        """
+Merge environment-specific configuration with base configuration"""
         
         for key, value in env_config.items():
             if hasattr(self, key):
@@ -402,16 +416,19 @@ class SEOAgentConfig:
                 setattr(self, key, value)
     
     def get_ai_model_config(self, model_name: str) -> Optional[AIModelConfig]:
-        """Get configuration for a specific AI model"""
+        """
+Get configuration for a specific AI model"""
         ai_models = getattr(self, 'ai_models', {})
         return ai_models.get(model_name)
     
     def get_api_config(self, api_name: str) -> Optional[APIConfig]:
-        """Get configuration for a specific API"""
+        """
+Get configuration for a specific API"""
         return self.apis.get(api_name)
     
     def is_feature_enabled(self, feature_name: str) -> bool:
-        """Check if a specific feature is enabled"""
+        """
+Check if a specific feature is enabled"""
         # Check in various configuration sections
         for config_section in [self.seo_agent, self.keyword_research, 
                               self.content_optimization, self.technical_seo,
@@ -421,7 +438,8 @@ class SEOAgentConfig:
         return False
     
     def get_optimization_weights(self) -> Dict[str, float]:
-        """Get optimization weights for SEO scoring"""
+        """
+Get optimization weights for SEO scoring"""
         return {
             'keyword_relevance': 0.25,
             'content_quality': 0.20,
@@ -432,7 +450,8 @@ class SEOAgentConfig:
         }
     
     def get_performance_thresholds(self) -> Dict[str, float]:
-        """Get performance thresholds for SEO metrics"""
+        """
+Get performance thresholds for SEO metrics"""
         return {
             'min_seo_score': 0.6,
             'min_content_quality': 0.7,
@@ -444,7 +463,8 @@ class SEOAgentConfig:
         }
     
     def export_config(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Export configuration as dictionary"""
+        """
+Export configuration as dictionary"""
         config_dict = {}
         
         for attr_name in dir(self):
@@ -460,7 +480,8 @@ class SEOAgentConfig:
         return config_dict
     
     def validate_config(self) -> Dict[str, Any]:
-        """Validate current configuration"""
+        """
+Validate current configuration"""
         validation_results = {
             'valid': True,
             'errors': [],
@@ -510,7 +531,8 @@ def get_config(environment: Optional[EnvironmentType] = None) -> SEOAgentConfig:
     return seo_config
 
 def reload_config(environment: Optional[EnvironmentType] = None):
-    """Reload global configuration"""
+    """
+Reload global configuration"""
     global seo_config
     seo_config = SEOAgentConfig(environment or seo_config.environment)
 

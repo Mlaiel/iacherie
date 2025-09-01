@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import yaml
 
 
 class ScalingTrigger(Enum):
-    """Scaling trigger types"""
+    """
+Scaling trigger types"""
+
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
@@ -35,6 +38,7 @@ class ScalingTrigger(Enum):
 
 class ScalingDirection(Enum):
     """Scaling direction"""
+
     UP = "up"
     DOWN = "down"
     BOTH = "both"
@@ -42,6 +46,7 @@ class ScalingDirection(Enum):
 
 class ScalingPolicy(Enum):
     """Scaling policy types"""
+
     TARGET_TRACKING = "target_tracking"
     STEP_SCALING = "step_scaling"
     SIMPLE_SCALING = "simple_scaling"
@@ -81,7 +86,8 @@ class ScalingRule:
 
 @dataclass
 class HorizontalPodAutoscaler:
-    """Kubernetes HPA configuration"""
+    """
+Kubernetes HPA configuration"""
     name: str
     namespace: str
     target_ref: Dict[str, str]
@@ -93,7 +99,8 @@ class HorizontalPodAutoscaler:
 
 @dataclass
 class VerticalPodAutoscaler:
-    """Kubernetes VPA configuration"""
+    """
+Kubernetes VPA configuration"""
     name: str
     namespace: str
     target_ref: Dict[str, str]

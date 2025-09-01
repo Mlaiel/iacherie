@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import yaml
 
 
 class ServiceMeshType(str, Enum):
-    """Service mesh implementation types."""
+    """
+Service mesh implementation types."""
+
     ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
@@ -33,6 +36,7 @@ class ServiceMeshType(str, Enum):
 
 class TrafficPolicyType(str, Enum):
     """Traffic policy types."""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONN = "least_conn"
     RANDOM = "random"
@@ -41,6 +45,7 @@ class TrafficPolicyType(str, Enum):
 
 class SecurityMode(str, Enum):
     """Security modes for service communication."""
+
     PERMISSIVE = "permissive"
     STRICT = "strict"
     DISABLE = "disable"

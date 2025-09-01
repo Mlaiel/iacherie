@@ -4,11 +4,12 @@ AI-powered content generation capabilities for creating engaging posts,
 captions, descriptions, and multi-format content for influencers and creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -22,7 +23,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     SOCIAL_POST = "social_post"
     CAPTION = "caption"
     DESCRIPTION = "description"
@@ -35,6 +38,7 @@ class ContentType(Enum):
 
 class ToneType(Enum):
     """Tone type enumeration"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     FRIENDLY = "friendly"
@@ -72,7 +76,8 @@ class GenerationResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class ContentTemplate:
-    """Content template structure"""
+    """
+Content template structure"""
     
     def __init__(self, template_type: str, structure: List[str], variables: List[str]):
         self.template_type = template_type
@@ -82,7 +87,8 @@ class ContentTemplate:
         self.success_rate = 0.0
 
 class ContentGenerator(ABC):
-    """Abstract base class for content generators"""
+    """
+Abstract base class for content generators"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -92,11 +98,13 @@ class ContentGenerator(ABC):
     
     @abstractmethod
     async def generate(self, request: GenerationRequest) -> GenerationResult:
-        """Generate content based on request"""
+        """
+Generate content based on request"""
         pass
     
     def _generate_request_id(self, request: GenerationRequest) -> str:
-        """Generate unique request ID"""
+        """
+Generate unique request ID"""
         import hashlib
         content_hash = hashlib.md5(f"{request.topic}{request.content_type.value}{datetime.utcnow()}".encode()).hexdigest()
         return content_hash[:12]
@@ -193,7 +201,8 @@ class SocialPostGenerator(ContentGenerator):
         return content
     
     async def _generate_hashtags(self, request: GenerationRequest) -> List[str]:
-        """Generate relevant hashtags"""
+        """
+Generate relevant hashtags"""
         hashtags = []
         
         # Topic-based hashtags
@@ -339,7 +348,8 @@ class SocialPostGenerator(ContentGenerator):
         }
     
     async def _calculate_quality_score(self, content: str, request: GenerationRequest) -> float:
-        """Calculate content quality score"""
+        """
+Calculate content quality score"""
         quality_factors = []
         
         # Content length appropriateness
@@ -366,7 +376,8 @@ class SocialPostGenerator(ContentGenerator):
         return sum(quality_factors) / len(quality_factors)
     
     def _load_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific configurations"""
+        """
+Load platform-specific configurations"""
         return {
             'instagram': {
                 'max_length': 2200,
@@ -427,7 +438,8 @@ class SocialPostGenerator(ContentGenerator):
         }
     
     def _load_engagement_patterns(self) -> Dict[str, List[str]]:
-        """Load engagement-driving patterns"""
+        """
+Load engagement-driving patterns"""
         return {
             'hooks': [
                 "Did you know that...",
@@ -494,7 +506,8 @@ class SocialPostGenerator(ContentGenerator):
         }
     
     def _get_content_templates(self, tone: ToneType, content_type: ContentType) -> List[ContentTemplate]:
-        """Get content templates based on tone and type"""
+        """
+Get content templates based on tone and type"""
         templates = []
         
         if tone == ToneType.PROFESSIONAL:
@@ -591,7 +604,8 @@ class SocialPostGenerator(ContentGenerator):
         return selected_template
     
     async def _fill_template(self, template: ContentTemplate, request: GenerationRequest) -> str:
-        """Fill template with dynamic content"""
+        """
+Fill template with dynamic content"""
         if not template:
             return await self._generate_fallback_content(request)
         
@@ -785,11 +799,13 @@ class SocialPostGenerator(ContentGenerator):
         return hashtags
     
     def _get_niche_hashtags(self, niche: str) -> List[str]:
-        """Get niche-specific hashtags"""
+        """
+Get niche-specific hashtags"""
         return self.hashtag_database.get(niche.lower(), [])
     
     def _get_trending_hashtags(self, platform: str) -> List[str]:
-        """Get trending hashtags for platform"""
+        """
+Get trending hashtags for platform"""
         # Simplified trending hashtags - in production, fetch from APIs
         trending_by_platform = {
             'instagram': ['trending', 'viral', 'explore'],
@@ -800,7 +816,8 @@ class SocialPostGenerator(ContentGenerator):
         return trending_by_platform.get(platform, ['trending'])
     
     def _get_platform_hashtags(self, platform: str) -> List[str]:
-        """Get platform-specific hashtags"""
+        """
+Get platform-specific hashtags"""
         platform_hashtags = {
             'instagram': ['insta', 'instagood', 'instadaily'],
             'tiktok': ['tiktok', 'tiktokviral'],
@@ -810,7 +827,8 @@ class SocialPostGenerator(ContentGenerator):
         return platform_hashtags.get(platform, [])
     
     def _calculate_length_factor(self, content: str, platform: str) -> float:
-        """Calculate engagement factor based on content length"""
+        """
+Calculate engagement factor based on content length"""
         ideal_length = self.platform_configs.get(platform, {}).get('ideal_length', 150)
         current_length = len(content)
         
@@ -823,7 +841,8 @@ class SocialPostGenerator(ContentGenerator):
             return max(0.5, 1.0 - excess_ratio * 0.3)
     
     def _calculate_hashtag_factor(self, content: str) -> float:
-        """Calculate engagement factor based on hashtag usage"""
+        """
+Calculate engagement factor based on hashtag usage"""
         hashtag_count = len(re.findall(r'#\w+', content))
         
         if hashtag_count == 0:
@@ -836,7 +855,8 @@ class SocialPostGenerator(ContentGenerator):
             return 0.8  # Too many hashtags can hurt engagement
     
     def _calculate_cta_factor(self, content: str) -> float:
-        """Calculate engagement factor based on call-to-action presence"""
+        """
+Calculate engagement factor based on call-to-action presence"""
         cta_indicators = [
             'comment', 'share', 'like', 'follow', 'tag',
             'thoughts', 'opinion', 'experience', 'think'
@@ -848,7 +868,8 @@ class SocialPostGenerator(ContentGenerator):
         return 1.2 if has_cta else 0.8
     
     def _calculate_tone_factor(self, tone: ToneType, target_audience: str) -> float:
-        """Calculate engagement factor based on tone-audience fit"""
+        """
+Calculate engagement factor based on tone-audience fit"""
         tone_audience_fit = {
             (ToneType.PROFESSIONAL, 'business'): 1.2,
             (ToneType.PROFESSIONAL, 'corporate'): 1.3,
@@ -862,7 +883,8 @@ class SocialPostGenerator(ContentGenerator):
         return tone_audience_fit.get((tone, target_audience), 1.0)
     
     def _assess_platform_optimization(self, content: str, platform_config: Dict[str, Any]) -> Dict[str, float]:
-        """Assess how well content is optimized for the platform"""
+        """
+Assess how well content is optimized for the platform"""
         optimization_scores = {}
         
         # Length optimization
@@ -886,14 +908,16 @@ class SocialPostGenerator(ContentGenerator):
         return optimization_scores
     
     def _has_engaging_hook(self, content: str) -> bool:
-        """Check if content has an engaging hook"""
+        """
+Check if content has an engaging hook"""
         hooks = self.engagement_patterns.get('hooks', [])
         content_start = content[:100].lower()
         
         return any(hook.lower()[:20] in content_start for hook in hooks)
     
     def _has_call_to_action(self, content: str) -> bool:
-        """Check if content has a call to action"""
+        """
+Check if content has a call to action"""
         cta_indicators = [
             'comment', 'share', 'like', 'follow', 'tag',
             'thoughts', 'opinion', 'experience', 'think',
@@ -904,7 +928,8 @@ class SocialPostGenerator(ContentGenerator):
         return any(indicator in content_lower for indicator in cta_indicators)
     
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate content readability score"""
+        """
+Calculate content readability score"""
         sentences = content.split('.')
         words = content.split()
         
@@ -969,7 +994,8 @@ class ContentGenerationPipeline:
         }
     
     async def generate_multi_format_content(self, topic: str, platforms: List[str]) -> Dict[str, GenerationResult]:
-        """Generate content optimized for multiple platforms"""
+        """
+Generate content optimized for multiple platforms"""
         results = {}
         
         base_request = GenerationRequest(
@@ -1049,5 +1075,6 @@ class ContentGenerationPipeline:
         self.generation_stats['success_rate'] = successful_attempts / total_attempts if total_attempts > 0 else 0.0
     
     def get_generation_stats(self) -> Dict[str, Any]:
-        """Get generation statistics"""
+        """
+Get generation statistics"""
         return self.generation_stats.copy()

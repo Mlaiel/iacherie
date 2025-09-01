@@ -49,6 +49,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import logging
 import warnings
 import numpy as np
@@ -223,6 +224,7 @@ class ChartType(Enum):
 
 class OutputFormat(Enum):
     """Output format enumeration."""
+
     PNG = "png"
     SVG = "svg"
     PDF = "pdf"
@@ -233,6 +235,7 @@ class OutputFormat(Enum):
 
 class VisualizationStyle(Enum):
     """Visualization style themes."""
+
     PROFESSIONAL = "professional"
     MODERN = "modern"
     DARK = "dark"
@@ -367,7 +370,8 @@ class ChartVisualizer(ABC):
         pass
     
     async def preprocess_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Preprocess data for visualization."""
+        """
+Preprocess data for visualization."""
         try:
             if data.empty:
                 return data
@@ -653,7 +657,8 @@ class PerformanceVisualizer(ChartVisualizer):
     """
     
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create performance visualization."""
+        """
+Create performance visualization."""
         try:
             data = await self.preprocess_data(data)
             
@@ -870,7 +875,8 @@ class ContentVisualizer(ChartVisualizer):
     """
     
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create content visualization."""
+        """
+Create content visualization."""
         try:
             data = await self.preprocess_data(data)
             
@@ -1093,7 +1099,8 @@ class RevenueVisualizer(ChartVisualizer):
     """
     
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create revenue visualization."""
+        """
+Create revenue visualization."""
         try:
             data = await self.preprocess_data(data)
             
@@ -1330,7 +1337,8 @@ class DashboardVisualizer(ChartVisualizer):
     """
     
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create dashboard visualization."""
+        """
+Create dashboard visualization."""
         try:
             data = await self.preprocess_data(data)
             
@@ -1525,7 +1533,8 @@ class TrendVisualizer(ChartVisualizer):
     """
     
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create trend visualization."""
+        """
+Create trend visualization."""
         try:
             data = await self.preprocess_data(data)
             
@@ -1833,7 +1842,8 @@ class VisualizationManager:
         return list(self._visualizers.keys())
     
     def get_available_templates(self) -> List[str]:
-        """Get list of available templates."""
+        """
+Get list of available templates."""
         return list(self._templates.keys())
 
 

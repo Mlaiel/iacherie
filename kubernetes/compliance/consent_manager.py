@@ -11,6 +11,7 @@ This module provides comprehensive consent management functionality including:
 - Privacy preference centers
 - Compliance-ready consent documentation
 """
+
 import asyncio
 import json
 import logging
@@ -35,7 +36,9 @@ logger = get_logger(__name__)
 
 
 class ConsentType(str, Enum):
-    """Types of user consent"""
+    """
+Types of user consent"""
+
     ESSENTIAL = "essential"
     FUNCTIONAL = "functional"
     ANALYTICS = "analytics"
@@ -52,6 +55,7 @@ class ConsentType(str, Enum):
 
 class ConsentStatus(str, Enum):
     """Consent status values"""
+
     GRANTED = "granted"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
@@ -62,6 +66,7 @@ class ConsentStatus(str, Enum):
 
 class ConsentMethod(str, Enum):
     """Methods of consent collection"""
+
     EXPLICIT_CHECKBOX = "explicit_checkbox"
     DIGITAL_SIGNATURE = "digital_signature"
     EMAIL_CONFIRMATION = "email_confirmation"
@@ -74,6 +79,7 @@ class ConsentMethod(str, Enum):
 
 class ProcessingPurpose(str, Enum):
     """Data processing purposes"""
+
     SERVICE_PROVISION = "service_provision"
     CONTENT_PERSONALIZATION = "content_personalization"
     ANALYTICS_INSIGHTS = "analytics_insights"
@@ -109,7 +115,8 @@ class ConsentDetails:
 
 @dataclass
 class ConsentBundle:
-    """Bundle of related consents"""
+    """
+Bundle of related consents"""
     bundle_id: str
     user_id: str
     bundle_name: str
@@ -122,7 +129,8 @@ class ConsentBundle:
 
 @dataclass
 class PrivacyPreferences:
-    """User privacy preferences"""
+    """
+User privacy preferences"""
     user_id: str
     communication_preferences: Dict[str, bool]
     data_sharing_preferences: Dict[str, bool]
@@ -634,17 +642,20 @@ class ConsentManager:
         pass
 
     async def _remove_from_marketing_lists(self, user_id: str) -> None:
-        """Remove user from marketing lists"""
+        """
+Remove user from marketing lists"""
         # Implementation for removing from marketing lists
         pass
 
     async def _reset_personalization_data(self, user_id: str) -> None:
-        """Reset personalization data for user"""
+        """
+Reset personalization data for user"""
         # Implementation for resetting personalization data
         pass
 
     async def _adjust_protection_settings(self, user_id: str) -> None:
-        """Adjust content protection settings"""
+        """
+Adjust content protection settings"""
         # Implementation for adjusting protection settings
         pass
 

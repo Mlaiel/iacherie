@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Advanced image fingerprinting processor for multi-format content protection
 """
+
 import cv2
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
+    """
+Image fingerprint data structure"""
     content_hash: str
     perceptual_hash: str
     color_histogram: np.ndarray
@@ -46,13 +48,15 @@ class ImageFingerprintProcessor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize image fingerprinting processor"""
+        """
+Initialize image fingerprinting processor"""
         self.config = config or self._get_default_config()
         self.executor = ThreadPoolExecutor(max_workers=4)
         self.sift_detector = cv2.SIFT_create(nfeatures=500)
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for image processing"""
+        """
+Get default configuration for image processing"""
         return {
             'resize_width': 512,
             'resize_height': 512,
@@ -143,12 +147,14 @@ class ImageFingerprintProcessor:
         return image
     
     def _generate_content_hash(self, image: np.ndarray) -> str:
-        """Generate unique hash for image content"""
+        """
+Generate unique hash for image content"""
         image_bytes = image.tobytes()
         return hashlib.sha256(image_bytes).hexdigest()
     
     async def _extract_perceptual_hash(self, image: np.ndarray) -> str:
-        """Extract perceptual hash from image"""
+        """
+Extract perceptual hash from image"""
         loop = asyncio.get_event_loop()
         
         def compute_hash():
@@ -164,7 +170,8 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_hash)
     
     async def _extract_color_histogram(self, image: np.ndarray) -> np.ndarray:
-        """Extract color histogram features"""
+        """
+Extract color histogram features"""
         loop = asyncio.get_event_loop()
         
         def compute_histogram():
@@ -190,7 +197,8 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_histogram)
     
     async def _extract_texture_features(self, image: np.ndarray) -> np.ndarray:
-        """Extract texture features using Local Binary Patterns"""
+        """
+Extract texture features using Local Binary Patterns"""
         loop = asyncio.get_event_loop()
         
         def compute_texture():
@@ -231,7 +239,8 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_texture)
     
     async def _extract_shape_features(self, image: np.ndarray) -> np.ndarray:
-        """Extract shape features using edge detection and contours"""
+        """
+Extract shape features using edge detection and contours"""
         loop = asyncio.get_event_loop()
         
         def compute_shape():
@@ -287,7 +296,8 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_shape)
     
     async def _extract_sift_features(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Extract SIFT keypoint features"""
+        """
+Extract SIFT keypoint features"""
         loop = asyncio.get_event_loop()
         
         def compute_sift():
@@ -400,7 +410,8 @@ class ImageFingerprintProcessor:
         return similarity
     
     def _histogram_intersection(self, hist1: np.ndarray, hist2: np.ndarray) -> float:
-        """Calculate histogram intersection similarity"""
+        """
+Calculate histogram intersection similarity"""
         try:
             if len(hist1) != len(hist2):
                 return 0.0
@@ -412,7 +423,8 @@ class ImageFingerprintProcessor:
             return 0.0
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between two vectors"""
+        """
+Calculate cosine similarity between two vectors"""
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -432,7 +444,8 @@ class ImageFingerprintProcessor:
             return 0.0
     
     def _resolution_similarity(self, res1: Tuple[int, int], res2: Tuple[int, int]) -> float:
-        """Calculate resolution similarity"""
+        """
+Calculate resolution similarity"""
         aspect_ratio_1 = res1[0] / res1[1] if res1[1] > 0 else 0
         aspect_ratio_2 = res2[0] / res2[1] if res2[1] > 0 else 0
         
@@ -443,16 +456,19 @@ class ImageFingerprintProcessor:
         return 1.0 - min(ratio_diff, 1.0)
     
     def is_duplicate(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> bool:
-        """Check if two fingerprints represent duplicate content"""
+        """
+Check if two fingerprints represent duplicate content"""
         similarity = self.calculate_similarity(fp1, fp2)
         return similarity >= self.config['similarity_threshold']
     
     async def batch_process(self, file_paths: List[Path]) -> List[ImageFingerprint]:
-        """Process multiple image files in parallel"""
+        """
+Process multiple image files in parallel"""
         tasks = [self.process_image_file(path) for path in file_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)

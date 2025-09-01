@@ -4,6 +4,7 @@ Revenue tracking and monetization management endpoints.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -783,7 +784,8 @@ async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: d
 
 
 async def _update_goals_progress(user_id: str, platform: str, revenue_type: str, amount_usd: float):
-    """Update progress towards monetization goals"""
+    """
+Update progress towards monetization goals"""
     try:
         async with database_manager.get_postgres_session() as session:
             # Find matching goals

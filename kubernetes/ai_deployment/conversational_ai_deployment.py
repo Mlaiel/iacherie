@@ -6,8 +6,9 @@ for chatbots, virtual assistants, dialogue agents, and multi-turn conversation s
 with advanced natural language understanding and generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationalAIType(Enum):
-    """Conversational AI system types"""
+    """
+Conversational AI system types"""
+
     CHATBOT = "chatbot"
     VIRTUAL_ASSISTANT = "virtual_assistant"
     CUSTOMER_SERVICE = "customer_service"
@@ -45,6 +48,7 @@ class ConversationalAIType(Enum):
 
 class ConversationMode(Enum):
     """Conversation interaction modes"""
+
     TEXT_CHAT = "text_chat"
     VOICE_CHAT = "voice_chat"
     VIDEO_CHAT = "video_chat"
@@ -54,6 +58,7 @@ class ConversationMode(Enum):
 
 class DialogueStrategy(Enum):
     """Dialogue management strategies"""
+
     RULE_BASED = "rule_based"
     RETRIEVAL_BASED = "retrieval_based"
     GENERATIVE = "generative"
@@ -64,6 +69,7 @@ class DialogueStrategy(Enum):
 
 class PersonalityType(Enum):
     """AI personality types"""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CASUAL = "casual"
@@ -78,6 +84,7 @@ class PersonalityType(Enum):
 
 class ContextAwareness(Enum):
     """Context awareness levels"""
+
     TURN_LEVEL = "turn_level"
     SESSION_LEVEL = "session_level"
     USER_PROFILE = "user_profile"

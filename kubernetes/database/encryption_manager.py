@@ -71,6 +71,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Cache intelligent des clés
 - Batch encryption operations
 """
+
 import asyncio
 import hashlib
 import secrets
@@ -96,7 +97,9 @@ from backend.deployment.database.vault_client import VaultClient
 
 
 class EncryptionType(Enum):
-    """Types de chiffrement disponibles"""
+    """
+Types de chiffrement disponibles"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     FERNET = "fernet"
@@ -107,6 +110,7 @@ class EncryptionType(Enum):
 
 class KeyType(Enum):
     """Types de clés de chiffrement"""
+
     MASTER_KEY = "master_key"
     COLUMN_KEY = "column_key"
     BACKUP_KEY = "backup_key"
@@ -116,6 +120,7 @@ class KeyType(Enum):
 
 class DataClassification(Enum):
     """Classification des données"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -517,7 +522,8 @@ class DatabaseEncryptionManager:
         return encryption_map.get(classification, EncryptionType.AES_256_GCM)
     
     def _get_current_key_version(self) -> str:
-        """Récupère la version actuelle de la clé"""
+        """
+Récupère la version actuelle de la clé"""
         try:
             # Récupération depuis Vault
             metadata = self.vault_client.get_secret_metadata("database/master_key")
@@ -809,13 +815,15 @@ async def encrypt_data(
     data: Union[str, bytes],
     classification: DataClassification = DataClassification.CONFIDENTIAL
 ) -> Dict[str, Any]:
-    """Interface simplifiée pour chiffrer des données"""
+    """
+Interface simplifiée pour chiffrer des données"""
     manager = get_encryption_manager()
     return manager.encrypt_sensitive_data(data, classification)
 
 
 async def decrypt_data(encrypted_payload: Dict[str, Any]) -> Union[str, bytes]:
-    """Interface simplifiée pour déchiffrer des données"""
+    """
+Interface simplifiée pour déchiffrer des données"""
     manager = get_encryption_manager()
     return manager.decrypt_sensitive_data(encrypted_payload)
 

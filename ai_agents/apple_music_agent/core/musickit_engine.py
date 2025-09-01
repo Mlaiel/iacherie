@@ -7,6 +7,7 @@ catalog management, and intelligent music operations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
+
 import asyncio
 import logging
 import json
@@ -19,7 +20,9 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 class AppleMusicEndpoint(Enum):
-    """Apple Music API endpoints"""
+    """
+Apple Music API endpoints"""
+
     CATALOG = "catalog"
     LIBRARY = "library"
     SEARCH = "search"
@@ -44,7 +47,8 @@ class AppleMusicTrack:
 
 @dataclass 
 class AppleMusicPlaylist:
-    """Apple Music playlist data structure"""
+    """
+Apple Music playlist data structure"""
     id: str
     name: str
     description: str
@@ -57,7 +61,8 @@ class AppleMusicPlaylist:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist data structure"""
+    """
+Apple Music artist data structure"""
     id: str
     name: str
     genres: List[str] = field(default_factory=list)
@@ -422,7 +427,8 @@ class MusicKitEngine:
         self.request_count += 1
     
     async def _get_mock_response(self, method: str, url: str, params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate mock responses for testing"""
+        """
+Generate mock responses for testing"""
         import random
         
         if 'search' in url:
@@ -507,7 +513,8 @@ class MusicKitEngine:
         return {'data': []}
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> AppleMusicTrack:
-        """Parse track data from Apple Music API response"""
+        """
+Parse track data from Apple Music API response"""
         try:
             attributes = track_data.get('attributes', {})
             
@@ -565,7 +572,8 @@ class MusicKitEngine:
         }
     
     def _parse_artist_data(self, artist_data: Dict[str, Any]) -> AppleMusicArtist:
-        """Parse artist data from Apple Music API response"""
+        """
+Parse artist data from Apple Music API response"""
         try:
             attributes = artist_data.get('attributes', {})
             
@@ -594,7 +602,8 @@ class MusicKitEngine:
         return None
     
     def _parse_date(self, date_string: Optional[str]) -> Optional[datetime]:
-        """Parse date string to datetime object"""
+        """
+Parse date string to datetime object"""
         if not date_string:
             return None
         
@@ -604,7 +613,8 @@ class MusicKitEngine:
             return None
     
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get engine statistics and status"""
+        """
+Get engine statistics and status"""
         return {
             'initialized': self.session is not None,
             'storefront': self.storefront,

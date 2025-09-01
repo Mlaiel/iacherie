@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class TrainingMode(str, Enum):
-    """Training modes for model development."""
+    """
+Training modes for model development."""
+
     
     SCRATCH = "scratch"
     FINE_TUNING = "fine_tuning"
@@ -37,6 +40,7 @@ class TrainingMode(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Optimization strategies for training."""
+
     
     ADAM = "adam"
     ADAMW = "adamw"
@@ -49,6 +53,7 @@ class OptimizationStrategy(str, Enum):
 
 class SchedulerType(str, Enum):
     """Learning rate scheduler types."""
+
     
     COSINE = "cosine"
     LINEAR = "linear"
@@ -83,7 +88,8 @@ class TrainingHyperparameters:
 
 @dataclass
 class TrainingSpec:
-    """Complete training specification for a model."""
+    """
+Complete training specification for a model."""
     
     model_name: str
     task_type: str
@@ -204,7 +210,8 @@ class ModelTrainingConfig(BaseSettings):
         return v
     
     def get_training_spec(self, model_name: str, task_type: str) -> TrainingSpec:
-        """Get training specification for a specific model and task."""
+        """
+Get training specification for a specific model and task."""
         
         # Base specifications for different task types
         base_specs = {

@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,8 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class AIModelType(Enum):
-    """Types de modèles IA supportés"""
+    """
+Types de modèles IA supportés"""
     # Language Models
     GPT2 = "gpt2"
     GPT3 = "gpt3"
@@ -82,6 +84,7 @@ class AIModelType(Enum):
 
 class TransformationType(Enum):
     """Types de transformations IA"""
+
     TEXT_GENERATION = "text_generation"
     TEXT_SUMMARIZATION = "text_summarization"
     TEXT_TRANSLATION = "text_translation"
@@ -102,6 +105,7 @@ class TransformationType(Enum):
 
 class CreatorOptimization(Enum):
     """Optimisations spécifiques par type de créateur"""
+
     MUSICIAN_FOCUSED = "musician_focused"
     INFLUENCER_FOCUSED = "influencer_focused"
     PHOTOGRAPHER_FOCUSED = "photographer_focused"
@@ -140,7 +144,8 @@ class AIProcessingResult:
     warnings: List[str]
 
 class AIModelManager:
-    """Gestionnaire des modèles IA"""
+    """
+Gestionnaire des modèles IA"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -248,7 +253,8 @@ class AIModelManager:
         }
     
     def _estimate_model_memory(self, model_type: AIModelType) -> str:
-        """Estime l'usage mémoire d'un modèle"""
+        """
+Estime l'usage mémoire d'un modèle"""
         
         memory_estimates = {
             AIModelType.GPT2: "~500MB",
@@ -272,7 +278,8 @@ class TextAITransformer:
         text: str,
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transforme le texte avec IA"""
+        """
+Transforme le texte avec IA"""
         
         start_time = time.time()
         
@@ -616,7 +623,8 @@ class TextAITransformer:
         )
     
     def _calculate_readability(self, text: str) -> float:
-        """Calcule un score de lisibilité simplifié"""
+        """
+Calcule un score de lisibilité simplifié"""
         
         sentences = text.count('.') + text.count('!') + text.count('?')
         words = len(text.split())
@@ -632,7 +640,8 @@ class TextAITransformer:
         return readability
 
 class VisionAITransformer:
-    """Transformateur IA spécialisé pour images"""
+    """
+Transformateur IA spécialisé pour images"""
     
     def __init__(self, model_manager: AIModelManager):
         self.model_manager = model_manager
@@ -643,7 +652,8 @@ class VisionAITransformer:
         image_path: str,
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transforme une image avec IA"""
+        """
+Transforme une image avec IA"""
         
         start_time = time.time()
         
@@ -769,7 +779,8 @@ class VisionAITransformer:
         }
     
     async def _enhance_image(self, image: Image.Image, config: AITransformationConfig) -> Dict[str, Any]:
-        """Amélioration d'image avec IA"""
+        """
+Amélioration d'image avec IA"""
         
         # Amélioration basique avec PIL
         from PIL import ImageEnhance
@@ -810,7 +821,8 @@ class VisionAITransformer:
         }
     
     def _optimize_caption_for_creator(self, caption: str, creator_opt: Optional[CreatorOptimization]) -> str:
-        """Optimise la description selon le type de créateur"""
+        """
+Optimise la description selon le type de créateur"""
         
         if not creator_opt:
             return caption
@@ -876,7 +888,8 @@ class AudioAITransformer:
         audio_path: str,
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transforme l'audio avec IA"""
+        """
+Transforme l'audio avec IA"""
         
         start_time = time.time()
         
@@ -958,7 +971,8 @@ class AudioAITransformer:
         }
     
     async def _analyze_music(self, audio_path: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Analyse musicale avancée"""
+        """
+Analyse musicale avancée"""
         
         # Chargement audio avec librosa
         y, sr = librosa.load(audio_path)
@@ -1002,7 +1016,8 @@ class AudioAITransformer:
         }
     
     def _format_music_transcription(self, transcription: str, segments: List[Dict]) -> str:
-        """Formate la transcription pour musiciens avec timestamps"""
+        """
+Formate la transcription pour musiciens avec timestamps"""
         
         formatted_lines = []
         
@@ -1115,7 +1130,8 @@ class AITransformer:
         input_data: Union[str, bytes, Any],
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transformation IA selon le type de contenu"""
+        """
+Transformation IA selon le type de contenu"""
         
         try:
             # Détermination du type de contenu
@@ -1192,7 +1208,8 @@ class AITransformer:
         inputs: List[Tuple[Any, AITransformationConfig]],
         max_concurrent: int = 4
     ) -> List[AIProcessingResult]:
-        """Transformation en lot"""
+        """
+Transformation en lot"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         
@@ -1205,7 +1222,8 @@ class AITransformer:
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def get_supported_transformations(self) -> Dict[str, List[str]]:
-        """Récupère les transformations supportées par type de contenu"""
+        """
+Récupère les transformations supportées par type de contenu"""
         
         return {
             'text': [
@@ -1227,7 +1245,8 @@ class AITransformer:
         }
     
     async def cleanup_models(self) -> None:
-        """Nettoie les modèles chargés"""
+        """
+Nettoie les modèles chargés"""
         
         for model_type in AIModelType:
             try:

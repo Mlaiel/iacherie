@@ -12,10 +12,11 @@ Expert Team: Lead Dev IA + Backend Senior + System Architect + API Designer +
             Microservices Expert + DevOps Engineer + Security Specialist
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -60,6 +61,7 @@ commission_router = APIRouter(prefix="/api/v1/commission", tags=["Commission Sys
 
 class SystemStatus(str, Enum):
     """System status enumeration"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -74,7 +76,8 @@ class CommissionSystemCoordinator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission System Coordinator"""
+        """
+Initialize Commission System Coordinator"""
         self.config = config or {}
         
         # Core system components
@@ -277,12 +280,14 @@ class CalculateCommissionRequest(BaseModel):
     options: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class ProcessPaymentRequest(BaseModel):
-    """Process payment API request"""
+    """
+Process payment API request"""
     payment_request: PaymentRequest
     options: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class GenerateReportRequest(BaseModel):
-    """Generate report API request"""
+    """
+Generate report API request"""
     report_type: str
     time_frame: str = "monthly"
     filters: Optional[Dict[str, Any]] = Field(default_factory=dict)
@@ -601,8 +606,9 @@ def get_commission_router() -> APIRouter:
     """Get commission API router"""
     return commission_router
 
-"""Professional Commission System Coordination
-© 2025 Fahed Mlaiel - Enterprise System Integration
+"""
+Professional Commission System Coordination
+(c) 2025 Fahed Mlaiel - Enterprise System Integration
 
 This module provides central coordination for the complete commission system,
 offering unified API endpoints and comprehensive business logic orchestration.

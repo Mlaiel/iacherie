@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import cv2
 import numpy as np
@@ -57,6 +58,7 @@ except ImportError:
 
 class VideoFingerprintType(Enum):
     """Types of video fingerprints"""
+
     FRAME_HASH = "frame_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     FEATURE_DESCRIPTOR = "feature_descriptor"
@@ -68,6 +70,7 @@ class VideoFingerprintType(Enum):
 
 class FrameSamplingMethod(Enum):
     """Methods for sampling frames from video"""
+
     UNIFORM = "uniform"
     KEYFRAME = "keyframe"
     ADAPTIVE = "adaptive"
@@ -92,7 +95,8 @@ class VideoFingerprint:
 
 @dataclass
 class VideoMatchResult:
-    """Video similarity match result"""
+    """
+Video similarity match result"""
     query_video_id: str
     matched_video_id: str
     similarity_score: float
@@ -154,7 +158,8 @@ class VideoFingerprinter:
             self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for feature extraction"""
+        """
+Initialize AI models for feature extraction"""
         try:
             if TORCH_AVAILABLE:
                 # Load pre-trained MobileNet for feature extraction
@@ -451,7 +456,8 @@ class VideoFingerprinter:
         return [i * step for i in range(max_frames)]
     
     async def _detect_keyframes(self, cap: cv2.VideoCapture, max_frames: int) -> List[int]:
-        """Detect keyframes using scene change detection"""
+        """
+Detect keyframes using scene change detection"""
         try:
             frame_indices = []
             prev_frame = None
@@ -1076,7 +1082,8 @@ class VideoFingerprinter:
         }
     
     async def close(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)

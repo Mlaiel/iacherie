@@ -8,8 +8,9 @@ Content submission → Validation rules engine → Quality assessment →
 Compliance verification → Security checks → Validation report
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationRuleType(Enum):
-    """Types of validation rules"""
+    """
+Types of validation rules"""
+
     REQUIRED_FIELD = "required_field"
     FORMAT_VALIDATION = "format_validation"
     RANGE_VALIDATION = "range_validation"
@@ -40,6 +43,7 @@ class ValidationRuleType(Enum):
 
 class ValidationSeverity(Enum):
     """Validation result severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -48,6 +52,7 @@ class ValidationSeverity(Enum):
 
 class ValidationStatus(Enum):
     """Validation execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
@@ -96,7 +101,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationIssue:
-    """Individual validation issue"""
+    """
+Individual validation issue"""
     rule_id: str
     rule_name: str
     severity: ValidationSeverity
@@ -125,7 +131,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result"""
+    """
+Comprehensive validation result"""
     validation_id: str
     target_type: str
     target_id: str
@@ -150,19 +157,23 @@ class ValidationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def add_issue(self, issue: ValidationIssue):
-        """Add a validation issue"""
+        """
+Add a validation issue"""
         self.issues.append(issue)
     
     def get_issues_by_severity(self, severity: ValidationSeverity) -> List[ValidationIssue]:
-        """Get issues filtered by severity"""
+        """
+Get issues filtered by severity"""
         return [issue for issue in self.issues if issue.severity == severity]
     
     def has_critical_issues(self) -> bool:
-        """Check if there are critical issues"""
+        """
+Check if there are critical issues"""
         return any(issue.severity == ValidationSeverity.CRITICAL for issue in self.issues)
     
     def has_blocking_issues(self) -> bool:
-        """Check if there are blocking issues (critical or error)"""
+        """
+Check if there are blocking issues (critical or error)"""
         return any(
             issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]
             for issue in self.issues
@@ -190,27 +201,32 @@ class ValidationResult:
 
 
 class BaseValidator(ABC):
-    """Abstract base class for validators"""
+    """
+Abstract base class for validators"""
     
     @abstractmethod
     def validate(self, data: Any, context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Execute validation and return issues"""
+        """
+Execute validation and return issues"""
         pass
     
     @abstractmethod
     def get_rules(self) -> List[ValidationRule]:
-        """Get validation rules"""
+        """
+Get validation rules"""
         pass
 
 
 class FieldValidator(BaseValidator):
-    """Field-level validation"""
+    """
+Field-level validation"""
     
     def __init__(self, rules: List[ValidationRule]):
         self.rules = {rule.id: rule for rule in rules if rule.enabled}
     
     def validate(self, data: Any, context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate data against field rules"""
+        """
+Validate data against field rules"""
         issues = []
         
         for rule in self.rules.values():
@@ -440,18 +456,21 @@ class FieldValidator(BaseValidator):
         return current
     
     def get_rules(self) -> List[ValidationRule]:
-        """Get all validation rules"""
+        """
+Get all validation rules"""
         return list(self.rules.values())
 
 
 class BusinessRuleValidator(BaseValidator):
-    """Business logic validation"""
+    """
+Business logic validation"""
     
     def __init__(self):
         self.rules = self._initialize_business_rules()
     
     def _initialize_business_rules(self) -> Dict[str, ValidationRule]:
-        """Initialize standard business rules"""
+        """
+Initialize standard business rules"""
         rules = [
             ValidationRule(
                 id="content_monetization_ready",
@@ -585,7 +604,8 @@ class BusinessRuleValidator(BaseValidator):
 
 
 class ValidationEngine:
-    """Enterprise validation engine with comprehensive rule processing"""
+    """
+Enterprise validation engine with comprehensive rule processing"""
     
     def __init__(self):
         self.field_validator = FieldValidator([])
@@ -596,7 +616,8 @@ class ValidationEngine:
         self._initialize_standard_field_rules()
     
     def _initialize_standard_field_rules(self):
-        """Initialize standard field validation rules"""
+        """
+Initialize standard field validation rules"""
         standard_rules = [
             ValidationRule(
                 id="title_required",
@@ -762,7 +783,8 @@ class ValidationEngine:
         return max(0.0, base_score)
     
     def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate validation recommendations"""
+        """
+Generate validation recommendations"""
         recommendations = []
         
         # Critical issues
@@ -800,7 +822,8 @@ class ValidationEngine:
         )
     
     def batch_validate(self, items: List[Dict[str, Any]]) -> List[ValidationResult]:
-        """Validate multiple items in batch"""
+        """
+Validate multiple items in batch"""
         results = []
         
         for item in items:
@@ -815,7 +838,8 @@ class ValidationEngine:
         return results
     
     def get_validation_summary(self, results: List[ValidationResult]) -> Dict[str, Any]:
-        """Get summary statistics for multiple validation results"""
+        """
+Get summary statistics for multiple validation results"""
         if not results:
             return {}
         

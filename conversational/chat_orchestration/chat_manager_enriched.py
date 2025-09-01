@@ -7,12 +7,13 @@ and monetization capabilities. Provides advanced session management, context tra
 and AI-powered response generation with creator-specific optimizations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -43,7 +44,9 @@ from .chat_analytics import ChatAnalytics
 
 
 class ChatStatus(Enum):
-    """Chat session status enumeration with extended states"""
+    """
+Chat session status enumeration with extended states"""
+
     ACTIVE = "active"
     PAUSED = "paused" 
     ENDED = "ended"
@@ -58,6 +61,7 @@ class ChatStatus(Enum):
 
 class CreatorType(Enum):
     """Supported creator types with specialized handling"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -70,6 +74,7 @@ class CreatorType(Enum):
 
 class ConversationPriority(Enum):
     """Conversation priority levels for resource allocation"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -79,6 +84,7 @@ class ConversationPriority(Enum):
 
 class MessageSentiment(Enum):
     """Message sentiment classification"""
+
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
@@ -117,7 +123,8 @@ class ConversationMetrics:
 
 @dataclass
 class ChatSession:
-    """Enhanced chat session data structure with comprehensive tracking"""
+    """
+Enhanced chat session data structure with comprehensive tracking"""
     session_id: str
     user_id: str
     creator_profile: CreatorProfile
@@ -216,7 +223,8 @@ class EnterpriseConversationOrchestrator:
         asyncio.create_task(self._protection_monitoring_task())
     
     async def _session_cleanup_task(self) -> None:
-        """Background task to cleanup expired sessions"""
+        """
+Background task to cleanup expired sessions"""
         while True:
             try:
                 current_time = datetime.utcnow()
@@ -726,7 +734,8 @@ class EnterpriseConversationOrchestrator:
         return None
 
     def _get_session_capabilities(self, creator_profile: CreatorProfile) -> List[str]:
-        """Get session capabilities based on creator profile"""
+        """
+Get session capabilities based on creator profile"""
         capabilities = ["basic_chat", "content_analysis", "protection_monitoring"]
         
         if creator_profile.creator_type == CreatorType.MUSICIAN:
@@ -750,15 +759,18 @@ class EnterpriseConversationOrchestrator:
         return await self.protection.get_user_protection_settings(user_id)
 
     async def _get_monetization_config(self, user_id: str) -> Dict[str, Any]:
-        """Get user's monetization configuration"""
+        """
+Get user's monetization configuration"""
         return await self.monetization.get_user_monetization_config(user_id)
 
     async def _get_platform_integrations(self, user_id: str) -> List[str]:
-        """Get user's connected platform integrations"""
+        """
+Get user's connected platform integrations"""
         return await self.platform_apis.get_user_integrations(user_id)
 
     async def _get_conversation_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user's conversation preferences"""
+        """
+Get user's conversation preferences"""
         # Implementation would fetch from user preferences
         return {
             "response_style": "professional",
@@ -777,26 +789,31 @@ class EnterpriseConversationOrchestrator:
         message_content: str,
         message_history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze message sentiment and emotional context"""
+        """
+Analyze message sentiment and emotional context"""
         return await self.ai_engine.analyze_sentiment(message_content, message_history)
 
     async def _send_welcome_message(self, session: ChatSession) -> None:
-        """Send personalized welcome message based on creator type"""
+        """
+Send personalized welcome message based on creator type"""
         # Implementation would send creator-specific welcome message
         pass
 
     async def _send_protection_alert(self, session: ChatSession) -> None:
-        """Send protection alert to session"""
+        """
+Send protection alert to session"""
         # Implementation would notify user about protection concerns
         pass
 
     def _calculate_engagement_score(self, session: ChatSession) -> float:
-        """Calculate session engagement score"""
+        """
+Calculate session engagement score"""
         # Implementation would calculate based on message frequency, sentiment, etc.
         return 0.8
 
     async def _calculate_satisfaction_score(self, session: ChatSession) -> float:
-        """Calculate user satisfaction score"""
+        """
+Calculate user satisfaction score"""
         # Implementation would calculate based on various factors
         return 0.9
 

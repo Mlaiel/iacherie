@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE NOTIFICATIONS MULTI-CANAL ENTERPRISE
@@ -15,6 +15,7 @@ Notifications intelligentes avec templates et targeting avancé
 - Scheduling et automation de campagnes
 - Analytics et tracking des engagements
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types de notifications"""
+    """
+Types de notifications"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -44,6 +47,7 @@ class NotificationType(Enum):
 
 class NotificationPriority(Enum):
     """Priorités des notifications"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -53,6 +57,7 @@ class NotificationPriority(Enum):
 
 class NotificationStatus(Enum):
     """Statuts des notifications"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -104,7 +109,8 @@ class NotificationRequest:
 
 @dataclass
 class NotificationResult:
-    """Résultat d'envoi de notification"""
+    """
+Résultat d'envoi de notification"""
     notification_id: str
     recipient_id: str
     status: NotificationStatus
@@ -116,7 +122,8 @@ class NotificationResult:
 
 
 class NotificationManager:
-    """Gestionnaire principal des notifications"""
+    """
+Gestionnaire principal des notifications"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -425,7 +432,8 @@ class TemplateManager:
         self._create_default_templates()
     
     def _create_default_templates(self) -> None:
-        """Créer les templates par défaut"""
+        """
+Créer les templates par défaut"""
         default_templates = [
             NotificationTemplate(
                 template_id="welcome_email",
@@ -474,7 +482,8 @@ class TemplateManager:
         return self.templates.get(template_id)
     
     def create_template(self, template: NotificationTemplate) -> bool:
-        """Créer un nouveau template"""
+        """
+Créer un nouveau template"""
         try:
             self.templates[template.template_id] = template
             logger.info(f"✅ Template created: {template.template_id}")

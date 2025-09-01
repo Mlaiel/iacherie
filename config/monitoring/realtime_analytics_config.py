@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union
@@ -29,7 +30,9 @@ import pandas as pd
 
 
 class AnalyticsMetricType(Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -40,6 +43,7 @@ class AnalyticsMetricType(Enum):
 
 class TimeAggregation(Enum):
     """Time aggregation methods"""
+
     SUM = "sum"
     AVG = "avg"
     MIN = "min"
@@ -52,6 +56,7 @@ class TimeAggregation(Enum):
 
 class AlertCondition(Enum):
     """Analytics alert conditions"""
+
     ABOVE = "above"
     BELOW = "below"
     EQUALS = "equals"
@@ -77,7 +82,8 @@ class AnalyticsMetric:
 
 @dataclass
 class AnalyticsDashboard:
-    """Analytics dashboard configuration"""
+    """
+Analytics dashboard configuration"""
     name: str
     category: str
     description: str
@@ -91,7 +97,8 @@ class AnalyticsDashboard:
 
 @dataclass
 class AlertRule:
-    """Real-time analytics alert rule"""
+    """
+Real-time analytics alert rule"""
     name: str
     metric: str
     condition: AlertCondition
@@ -112,7 +119,8 @@ class RealTimeAnalyticsConfig:
     """
     
     def __init__(self):
-        """Initialize real-time analytics configuration"""
+        """
+Initialize real-time analytics configuration"""
         self._metrics = {}
         self._dashboards = {}
         self._alert_rules = {}
@@ -554,25 +562,30 @@ class RealTimeAnalyticsConfig:
         return self._metrics.get(name)
     
     def get_dashboard(self, name: str) -> Optional[AnalyticsDashboard]:
-        """Get dashboard by name"""
+        """
+Get dashboard by name"""
         return self._dashboards.get(name)
     
     def get_alert_rule(self, name: str) -> Optional[AlertRule]:
-        """Get alert rule by name"""
+        """
+Get alert rule by name"""
         return self._alert_rules.get(name)
     
     def get_metrics_by_type(self, metric_type: AnalyticsMetricType) -> List[AnalyticsMetric]:
-        """Get metrics by type"""
+        """
+Get metrics by type"""
         return [metric for metric in self._metrics.values() 
                 if metric.metric_type == metric_type]
     
     def get_dashboards_by_role(self, role: str) -> List[AnalyticsDashboard]:
-        """Get dashboards accessible by role"""
+        """
+Get dashboards accessible by role"""
         return [dashboard for dashboard in self._dashboards.values()
                 if role in dashboard.role_access or dashboard.public]
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete analytics configuration"""
+        """
+Export complete analytics configuration"""
         return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),

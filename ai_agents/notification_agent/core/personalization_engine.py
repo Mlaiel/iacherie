@@ -28,6 +28,7 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -71,7 +72,9 @@ logger = logging.getLogger(__name__)
 
 
 class PersonalizationType(Enum):
-    """Types of personalization strategies"""
+    """
+Types of personalization strategies"""
+
     DEMOGRAPHIC = "demographic"
     BEHAVIORAL = "behavioral"
     CONTEXTUAL = "contextual"
@@ -84,6 +87,7 @@ class PersonalizationType(Enum):
 
 class EngagementLevel(Enum):
     """User engagement level classification"""
+
     VERY_HIGH = "very_high"
     HIGH = "high"
     MEDIUM = "medium"
@@ -94,6 +98,7 @@ class EngagementLevel(Enum):
 
 class ContentStyle(Enum):
     """Content style preferences"""
+
     FORMAL = "formal"
     CASUAL = "casual"
     PROFESSIONAL = "professional"
@@ -125,7 +130,8 @@ class PersonalizationConfiguration:
 
 @dataclass
 class UserBehaviorData:
-    """Comprehensive user behavior tracking data"""
+    """
+Comprehensive user behavior tracking data"""
     user_id: str
     session_data: Dict[str, Any] = field(default_factory=dict)
     interaction_history: List[Dict[str, Any]] = field(default_factory=list)
@@ -140,7 +146,8 @@ class UserBehaviorData:
 
 @dataclass
 class PersonalizationRequest:
-    """Request for content personalization"""
+    """
+Request for content personalization"""
     user_id: str
     content_template: Dict[str, Any]
     context: Dict[str, Any]
@@ -153,7 +160,8 @@ class PersonalizationRequest:
 
 
 class BehaviorAnalyzer:
-    """Advanced behavioral analysis and pattern recognition"""
+    """
+Advanced behavioral analysis and pattern recognition"""
     
     def __init__(self, config: PersonalizationConfiguration):
         self.config = config
@@ -163,7 +171,8 @@ class BehaviorAnalyzer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize machine learning models for behavior analysis"""
+        """
+Initialize machine learning models for behavior analysis"""
         try:
             # Engagement level classifier
             self.engagement_classifier = GradientBoostingClassifier(
@@ -731,7 +740,8 @@ class PersonalizationEngine:
         self._initialize_ai_models()
         
     def _initialize_ai_models(self):
-        """Initialize AI models for personalization"""
+        """
+Initialize AI models for personalization"""
         try:
             # Sentiment analysis
             if self.config.enable_sentiment_analysis:
@@ -931,7 +941,8 @@ class PersonalizationEngine:
         return adjusted_content
         
     def _adjust_tone_for_mature_audience(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Adjust content tone for mature audience"""
+        """
+Adjust content tone for mature audience"""
         adjusted_content = content.copy()
         
         # Make text more formal and detailed
@@ -956,7 +967,8 @@ class PersonalizationEngine:
         
     async def _apply_location_personalization(self, content: Dict[str, Any], 
                                             location: str) -> Dict[str, Any]:
-        """Apply location-based personalization"""
+        """
+Apply location-based personalization"""
         try:
             personalized_content = content.copy()
             
@@ -1048,7 +1060,8 @@ class PersonalizationEngine:
         return enhanced_content
         
     def _simplify_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Simplify content for low engagement users"""
+        """
+Simplify content for low engagement users"""
         simplified_content = content.copy()
         
         # Make content more concise and engaging
@@ -1060,11 +1073,13 @@ class PersonalizationEngine:
         return simplified_content
         
     def _apply_formal_style(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply formal communication style"""
+        """
+Apply formal communication style"""
         return self._adjust_tone_for_mature_audience(content)
         
     def _apply_humorous_style(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply humorous communication style"""
+        """
+Apply humorous communication style"""
         humorous_content = content.copy()
         
         # Add light humor where appropriate
@@ -1076,7 +1091,8 @@ class PersonalizationEngine:
         
     def _apply_temporal_personalization(self, content: Dict[str, Any],
                                       temporal_patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply temporal-based personalization"""
+        """
+Apply temporal-based personalization"""
         temporal_content = content.copy()
         
         # Adjust content timing and urgency based on user patterns
@@ -1094,7 +1110,8 @@ class PersonalizationEngine:
     async def _apply_contextual_personalization(self, content: Dict[str, Any],
                                               context: Dict[str, Any],
                                               behavior_data: UserBehaviorData) -> Dict[str, Any]:
-        """Apply contextual personalization based on current context"""
+        """
+Apply contextual personalization based on current context"""
         try:
             personalized_content = content.copy()
             confidence = 0.5
@@ -1149,7 +1166,8 @@ class PersonalizationEngine:
         return mobile_content
         
     def _optimize_for_desktop(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for desktop devices"""
+        """
+Optimize content for desktop devices"""
         desktop_content = content.copy()
         
         # Can include more detailed content, richer formatting
@@ -1159,7 +1177,8 @@ class PersonalizationEngine:
         return desktop_content
         
     def _apply_morning_context(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply morning-appropriate context"""
+        """
+Apply morning-appropriate context"""
         morning_content = content.copy()
         
         if 'message' in morning_content:
@@ -1169,7 +1188,8 @@ class PersonalizationEngine:
         return morning_content
         
     def _apply_evening_context(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply evening-appropriate context"""
+        """
+Apply evening-appropriate context"""
         evening_content = content.copy()
         
         if 'message' in evening_content:
@@ -1179,7 +1199,8 @@ class PersonalizationEngine:
         return evening_content
         
     def _apply_high_urgency_styling(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply high urgency styling to content"""
+        """
+Apply high urgency styling to content"""
         urgent_content = content.copy()
         
         if 'message' in urgent_content:
@@ -1192,7 +1213,8 @@ class PersonalizationEngine:
     async def _apply_collaborative_personalization(self, content: Dict[str, Any],
                                                  behavior_data: UserBehaviorData,
                                                  context: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply collaborative filtering personalization"""
+        """
+Apply collaborative filtering personalization"""
         try:
             # This would use collaborative filtering based on similar users
             # For now, return basic personalization

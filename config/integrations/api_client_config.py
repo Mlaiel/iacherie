@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Union
 from pydantic import BaseSettings, Field, validator
@@ -23,7 +24,9 @@ from dataclasses import dataclass
 
 
 class APIProvider(str, Enum):
-    """Supported API providers for content platforms and services."""
+    """
+Supported API providers for content platforms and services."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -70,7 +73,8 @@ class RateLimitConfig:
 
 @dataclass
 class TimeoutConfig:
-    """Timeout configuration for API clients."""
+    """
+Timeout configuration for API clients."""
     connect_timeout: float = 30.0
     read_timeout: float = 60.0
     write_timeout: float = 30.0
@@ -78,7 +82,8 @@ class TimeoutConfig:
 
 
 class APIClientConfig(BaseSettings):
-    """API client configuration for external service integrations."""
+    """
+API client configuration for external service integrations."""
     
     # Spotify API
     spotify_base_url: str = Field(default="https://api.spotify.com/v1", env="SPOTIFY_BASE_URL")
@@ -201,6 +206,7 @@ class APIClientConfig(BaseSettings):
 
 class APIEndpoints:
     """API endpoints configuration for supported platforms."""
+
     
     ENDPOINTS = {
         APIProvider.SPOTIFY: {
@@ -262,14 +268,16 @@ class APIEndpoints:
 
 
 class APIClientManager:
-    """API client manager for handling external service communications."""
+    """
+API client manager for handling external service communications."""
     
     def __init__(self, config: APIClientConfig):
         self.config = config
         self.clients: Dict[APIProvider, httpx.AsyncClient] = {}
         
     def get_base_headers(self, provider: APIProvider) -> Dict[str, str]:
-        """Get base headers for API requests."""
+        """
+Get base headers for API requests."""
         headers = {
             "User-Agent": self.config.user_agent,
             "Accept": "application/json",
@@ -316,7 +324,8 @@ class APIClientManager:
         )
     
     async def get_client(self, provider: APIProvider) -> httpx.AsyncClient:
-        """Get or create an async HTTP client for a specific provider."""
+        """
+Get or create an async HTTP client for a specific provider."""
         if provider not in self.clients:
             base_url = getattr(self.config, f"{provider}_base_url", "")
             headers = self.get_base_headers(provider)

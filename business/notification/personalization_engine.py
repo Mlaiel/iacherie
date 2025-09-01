@@ -29,6 +29,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Creator types for personalization."""
+    """
+Creator types for personalization."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -61,6 +64,7 @@ class CreatorType(Enum):
 
 class PersonalizationStyle(Enum):
     """Content personalization styles."""
+
     PROFESSIONAL = "professional"      # Formal, business-focused
     CASUAL = "casual"                  # Friendly, conversational
     ENTHUSIASTIC = "enthusiastic"     # Energetic, motivational
@@ -71,6 +75,7 @@ class PersonalizationStyle(Enum):
 
 class CommunicationTone(Enum):
     """Communication tone options."""
+
     FORMAL = "formal"
     FRIENDLY = "friendly"
     ENCOURAGING = "encouraging"
@@ -99,7 +104,8 @@ class UserProfile:
 
 @dataclass
 class PersonalizationContext:
-    """Context for content personalization."""
+    """
+Context for content personalization."""
     user_profile: UserProfile
     notification_type: str
     business_context: Dict[str, Any]
@@ -111,7 +117,8 @@ class PersonalizationContext:
 
 @dataclass
 class PersonalizationResult:
-    """Result of content personalization."""
+    """
+Result of content personalization."""
     personalized_content: NotificationContent
     personalization_factors: Dict[str, Any]
     confidence_score: float
@@ -130,7 +137,8 @@ class PersonalizationEngine:
     """
     
     def __init__(self, config: NotificationConfig):
-        """Initialize personalization engine with configuration."""
+        """
+Initialize personalization engine with configuration."""
         self.config = config
         self.personalization_rules = PERSONALIZATION_RULES
         self.creator_types = CREATOR_TYPES
@@ -939,7 +947,8 @@ class PersonalizationEngine:
         return timestamp.weekday() < 5 and 9 <= timestamp.hour < 17
     
     def _extract_platform_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Extract platform context from request."""
+        """
+Extract platform context from request."""
         context = {
             "primary_platform": "email",  # Default
             "preferred_channels": ["email"],
@@ -1072,7 +1081,8 @@ class PersonalizationEngine:
         return changes
     
     def _get_applied_personalization_rules(self, context: PersonalizationContext) -> List[str]:
-        """Get list of applied personalization rules."""
+        """
+Get list of applied personalization rules."""
         rules = []
         
         if context.user_profile.personalization_settings.get("enable_localization"):
@@ -1165,32 +1175,38 @@ class PersonalizationEngine:
         return None
     
     async def _detect_preferred_language(self, user_id: str) -> Optional[str]:
-        """Detect user's preferred language."""
+        """
+Detect user's preferred language."""
         # This would analyze user's language patterns
         return None
     
     async def _detect_user_timezone(self, user_id: str) -> Optional[str]:
-        """Detect user's timezone from activity patterns."""
+        """
+Detect user's timezone from activity patterns."""
         # This would analyze user's activity timing
         return None
     
     async def _analyze_communication_style(self, user_id: str) -> Optional[PersonalizationStyle]:
-        """Analyze user's preferred communication style."""
+        """
+Analyze user's preferred communication style."""
         # This would analyze user's response patterns
         return None
     
     async def _analyze_engagement_patterns(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Analyze user's engagement patterns."""
+        """
+Analyze user's engagement patterns."""
         # This would analyze user's interaction history
         return None
     
     def _is_profile_cache_valid(self, profile: UserProfile) -> bool:
-        """Check if cached profile is still valid."""
+        """
+Check if cached profile is still valid."""
         # For now, assume profiles are valid for 1 hour
         return True
     
     def _update_personalization_stats(self, processing_time: float):
-        """Update personalization performance statistics."""
+        """
+Update personalization performance statistics."""
         self.personalization_stats["total_personalizations"] += 1
         
         # Update average processing time
@@ -1208,6 +1224,7 @@ class PersonalizationEngine:
         return self.personalization_stats.copy()
     
     def clear_profile_cache(self):
-        """Clear user profile cache."""
+        """
+Clear user profile cache."""
         self._profile_cache.clear()
         logger.info("User profile cache cleared")

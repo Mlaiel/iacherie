@@ -14,6 +14,7 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -41,7 +42,9 @@ from ...models.distribution import DistributionResult, PlatformConfig
 
 
 class YouTubeContentType(Enum):
-    """YouTube content type enumeration"""
+    """
+YouTube content type enumeration"""
+
     VIDEO = "video"
     SHORTS = "shorts"
     LIVE_STREAM = "live"
@@ -51,6 +54,7 @@ class YouTubeContentType(Enum):
 
 class YouTubeMonetization(Enum):
     """YouTube monetization type enumeration"""
+
     ADSENSE = "adsense"
     CHANNEL_MEMBERSHIPS = "memberships"
     SUPER_CHAT = "super_chat"
@@ -60,6 +64,7 @@ class YouTubeMonetization(Enum):
 
 class YouTubePrivacy(Enum):
     """YouTube privacy settings enumeration"""
+
     PUBLIC = "public"
     UNLISTED = "unlisted"
     PRIVATE = "private"
@@ -98,7 +103,8 @@ class YouTubeMetadata:
 
 @dataclass
 class YouTubeAnalytics:
-    """YouTube analytics data structure"""
+    """
+YouTube analytics data structure"""
     views: int = 0
     watch_time_minutes: int = 0
     subscribers_gained: int = 0
@@ -423,7 +429,8 @@ class YouTubeAdapter(BaseAgent):
         ) + timedelta(days=1)
     
     async def _validate_content(self, content: ContentItem, metadata: YouTubeMetadata) -> None:
-        """Validate content and metadata for YouTube distribution"""
+        """
+Validate content and metadata for YouTube distribution"""
         # Validate content format
         if not content.file_path or not content.content_type.startswith('video/'):
             raise ContentError("Invalid video content for YouTube")
@@ -463,7 +470,8 @@ class YouTubeAdapter(BaseAgent):
         content: ContentItem,
         metadata: YouTubeMetadata
     ) -> str:
-        """Upload video to YouTube with resumable upload"""
+        """
+Upload video to YouTube with resumable upload"""
         try:
             # Prepare video metadata
             video_metadata = {
@@ -499,7 +507,8 @@ class YouTubeAdapter(BaseAgent):
         pass
     
     async def _upload_video_chunks(self, upload_url: str, file_path: str) -> str:
-        """Upload video file in chunks"""
+        """
+Upload video file in chunks"""
         # Implementation would handle chunked upload
         # Return video ID after successful upload
         pass
@@ -509,17 +518,20 @@ class YouTubeAdapter(BaseAgent):
         video_id: str,
         monetization_types: List[YouTubeMonetization]
     ) -> None:
-        """Configure monetization settings for video"""
+        """
+Configure monetization settings for video"""
         # Implementation would set up monetization
         pass
     
     async def _upload_thumbnail(self, video_id: str, thumbnail_path: str) -> None:
-        """Upload custom thumbnail for video"""
+        """
+Upload custom thumbnail for video"""
         # Implementation would upload custom thumbnail
         pass
     
     async def _add_to_playlists(self, video_id: str, playlist_ids: List[str]) -> None:
-        """Add video to specified playlists"""
+        """
+Add video to specified playlists"""
         # Implementation would add video to playlists
         pass
     
@@ -528,17 +540,20 @@ class YouTubeAdapter(BaseAgent):
         video_id: str,
         metadata: YouTubeMetadata
     ) -> None:
-        """Configure end screens and cards"""
+        """
+Configure end screens and cards"""
         # Implementation would set up interactive elements
         pass
     
     async def _schedule_publication(self, video_id: str, publish_time: datetime) -> None:
-        """Schedule video publication"""
+        """
+Schedule video publication"""
         # Implementation would schedule video publication
         pass
     
     async def _collect_analytics(self, video_id: str) -> YouTubeAnalytics:
-        """Collect initial analytics for uploaded video"""
+        """
+Collect initial analytics for uploaded video"""
         # Return basic analytics structure
         return YouTubeAnalytics()
     
@@ -548,7 +563,8 @@ class YouTubeAdapter(BaseAgent):
         url: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Make authenticated YouTube API request"""
+        """
+Make authenticated YouTube API request"""
         if not self.session:
             raise PlatformError("HTTP session not initialized")
         
@@ -575,7 +591,8 @@ class YouTubeAdapter(BaseAgent):
         return True
     
     async def _prepare_update_data(self, updates: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare update data for video modification"""
+        """
+Prepare update data for video modification"""
         # Implementation would prepare update payload
         return updates
     
@@ -585,7 +602,8 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch video-specific analytics"""
+        """
+Fetch video-specific analytics"""
         # Implementation would fetch analytics data
         return {}
     
@@ -595,7 +613,8 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch audience insights and demographics"""
+        """
+Fetch audience insights and demographics"""
         # Implementation would fetch audience data
         return {}
     
@@ -605,17 +624,20 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch revenue and monetization analytics"""
+        """
+Fetch revenue and monetization analytics"""
         # Implementation would fetch revenue data
         return {}
     
     async def _check_content_rights(self, content: ContentItem) -> bool:
-        """Check content rights and licensing"""
+        """
+Check content rights and licensing"""
         # Implementation would verify content rights
         return True
     
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         if self.session:
             await self.session.close()
             self.session = None

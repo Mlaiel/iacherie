@@ -6,6 +6,7 @@ for identifying unusual patterns in user behavior and system interactions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -35,7 +36,9 @@ from ...data.models.user_behavior import BehaviorMetrics
 logger = logging.getLogger(__name__)
 
 class AnomalyType(Enum):
-    """Types of anomalies that can be detected"""
+    """
+Types of anomalies that can be detected"""
+
     STATISTICAL_OUTLIER = "statistical_outlier"
     BEHAVIORAL_DRIFT = "behavioral_drift"
     VOLUME_ANOMALY = "volume_anomaly"
@@ -58,7 +61,8 @@ class AnomalyResult:
 
 @dataclass
 class AnomalyDetectionOutput:
-    """Comprehensive anomaly detection output"""
+    """
+Comprehensive anomaly detection output"""
     anomaly_score: float
     anomalies: List[AnomalyResult]
     baseline_comparison: Dict[str, float]
@@ -278,7 +282,8 @@ class AnomalyDetectionEngine:
         user_id: str, 
         historical_baseline: Dict[str, Any]
     ) -> np.ndarray:
-        """Get baseline feature vector for user"""
+        """
+Get baseline feature vector for user"""
         try:
             # Try to get from cache first
             cache_key = f"baseline_features:{user_id}"
@@ -824,7 +829,8 @@ class AnomalyDetectionEngine:
         return R * c
 
     async def _calculate_composite_anomaly_score(self, anomalies: List[AnomalyResult]) -> float:
-        """Calculate composite anomaly score from all detected anomalies"""
+        """
+Calculate composite anomaly score from all detected anomalies"""
         if not anomalies:
             return 0.0
             
@@ -849,7 +855,8 @@ class AnomalyDetectionEngine:
         current_features: np.ndarray,
         baseline_features: np.ndarray
     ) -> Dict[str, float]:
-        """Generate comparison metrics between current and baseline features"""
+        """
+Generate comparison metrics between current and baseline features"""
         feature_names = [
             'session_duration', 'action_frequency', 'error_rate', 'response_time',
             'cpu_usage', 'memory_usage', 'network_usage', 'location_variance',
@@ -874,7 +881,8 @@ class AnomalyDetectionEngine:
         return comparison
 
     def _assess_risk_level(self, anomaly_score: float, anomalies: List[AnomalyResult]) -> str:
-        """Assess overall risk level based on anomaly score and types"""
+        """
+Assess overall risk level based on anomaly score and types"""
         if anomaly_score >= 0.8:
             return "CRITICAL"
         elif anomaly_score >= 0.6:

@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 from typing import Dict, Type, List, Optional, Any
 import logging
 
@@ -79,7 +80,8 @@ class EngineRegistry:
         self._initialize_registry()
         
     def _initialize_registry(self):
-        """Initialize the engine registry with all available engines"""
+        """
+Initialize the engine registry with all available engines"""
         
         # Video platforms
         self._engines.update({
@@ -154,7 +156,8 @@ class EngineRegistry:
         self._initialize_categories()
         
     def _initialize_categories(self):
-        """Initialize engine categories for easy discovery"""
+        """
+Initialize engine categories for easy discovery"""
         
         self._categories = {
             'video': ['youtube', 'vimeo', 'rumble', 'tiktok'],
@@ -185,11 +188,13 @@ class EngineRegistry:
         return self._engines.get(platform.lower())
         
     def list_engines(self) -> List[str]:
-        """List all available engine platforms"""
+        """
+List all available engine platforms"""
         return list(self._engines.keys())
         
     def list_categories(self) -> List[str]:
-        """List all available categories"""
+        """
+List all available categories"""
         return list(self._categories.keys())
         
     def get_engines_by_category(self, category: str) -> List[str]:
@@ -356,31 +361,38 @@ engine_registry = EngineRegistry()
 
 # Convenience functions
 def get_engine(platform: str) -> Optional[Type]:
-    """Get engine class for platform"""
+    """
+Get engine class for platform"""
     return engine_registry.get_engine(platform)
 
 def list_engines() -> List[str]:
-    """List all available engines"""
+    """
+List all available engines"""
     return engine_registry.list_engines()
 
 def get_engines_by_category(category: str) -> List[str]:
-    """Get engines by category"""
+    """
+Get engines by category"""
     return engine_registry.get_engines_by_category(category)
 
 def search_engines(query: str) -> List[str]:
-    """Search engines by query"""
+    """
+Search engines by query"""
     return engine_registry.search_engines(query)
 
 def get_engine_info(platform: str) -> Dict[str, Any]:
-    """Get engine information"""
+    """
+Get engine information"""
     return engine_registry.get_engine_info(platform)
 
 def validate_engines() -> Dict[str, bool]:
-    """Validate all engines"""
+    """
+Validate all engines"""
     return engine_registry.validate_engines()
 
 def get_registry_statistics() -> Dict[str, Any]:
-    """Get registry statistics"""
+    """
+Get registry statistics"""
     return engine_registry.get_statistics()
 
 

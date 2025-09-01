@@ -5,9 +5,10 @@ Professional format conversion utilities handling multi-format content
 transformation workflows for creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConversionType(Enum):
-    """Types of format conversion."""
+    """
+Types of format conversion."""
+
     AUDIO_TO_AUDIO = "audio_to_audio"
     VIDEO_TO_VIDEO = "video_to_video"
     IMAGE_TO_IMAGE = "image_to_image"
@@ -46,7 +49,8 @@ class ConversionRule:
 
 @dataclass
 class ConversionRequest:
-    """Format conversion request."""
+    """
+Format conversion request."""
     input_path: str
     output_path: Optional[str] = None
     source_format: Optional[str] = None
@@ -240,7 +244,8 @@ class FormatConverter:
         }
     
     def _init_quality_mappings(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize quality mappings for different content types."""
+        """
+Initialize quality mappings for different content types."""
         return {
             'audio': {
                 'low': {'bitrate': 128, 'sample_rate': 44100},
@@ -533,7 +538,8 @@ class FormatConverter:
             return 'unknown'
     
     def _get_conversion_rule(self, source_format: str, target_format: str) -> Optional[ConversionRule]:
-        """Get conversion rule for format pair."""
+        """
+Get conversion rule for format pair."""
         rule_key = f"{source_format}_to_{target_format}"
         return self.conversion_rules.get(rule_key)
     
@@ -542,7 +548,8 @@ class FormatConverter:
         return self._get_conversion_rule(source_format, target_format) is not None
     
     async def _validate_conversion(self, request: ConversionRequest) -> Dict[str, Any]:
-        """Validate conversion request."""
+        """
+Validate conversion request."""
         try:
             # Check if file exists
             if not Path(request.input_path).exists():
@@ -567,7 +574,8 @@ class FormatConverter:
         request: ConversionRequest,
         rule: ConversionRule
     ) -> Dict[str, Any]:
-        """Perform the actual conversion."""
+        """
+Perform the actual conversion."""
         try:
             start_time = time.time()
             
@@ -747,7 +755,8 @@ class ConversionManager:
         return self.conversion_history.copy()
     
     def get_conversion_stats(self) -> Dict[str, Any]:
-        """Get conversion statistics."""
+        """
+Get conversion statistics."""
         if not self.conversion_history:
             return {'total_conversions': 0}
         

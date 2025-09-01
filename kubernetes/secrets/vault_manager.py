@@ -4,6 +4,7 @@ Secure HashiCorp Vault integration for secrets management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import os
 import logging
 import hvac
@@ -693,7 +694,8 @@ class VaultHealthChecker:
         self.vault = vault_manager
         
     def check_health(self) -> Dict[str, Any]:
-        """Comprehensive Vault health check."""
+        """
+Comprehensive Vault health check."""
         health_status = {
             'timestamp': datetime.utcnow().isoformat(),
             'overall_status': 'healthy',
@@ -1092,19 +1094,22 @@ class InfluencerVaultManager(VaultManager):
         return all(field in credentials for field in platform_fields)
     
     def _validate_credential_permissions(self, platform: str, credentials: Dict[str, Any]) -> bool:
-        """Validate that credentials have required permissions."""
+        """
+Validate that credentials have required permissions."""
         # Implementation would test actual API calls
         # For now, return True if credentials exist
         return bool(credentials)
     
     def _test_platform_credentials(self, platform: str, credentials: Dict[str, str]) -> bool:
-        """Test platform credentials with actual API calls."""
+        """
+Test platform credentials with actual API calls."""
         # Implementation would make test API calls
         # For now, return True if credentials are properly formatted
         return self._validate_platform_credentials(platform, credentials)
     
     def _get_platform_rotation_interval(self, platform: str) -> str:
-        """Get recommended rotation interval for platform."""
+        """
+Get recommended rotation interval for platform."""
         intervals = {
             'youtube': '90d',
             'instagram': '60d',
@@ -1118,7 +1123,8 @@ class InfluencerVaultManager(VaultManager):
         return intervals.get(platform.lower(), '60d')
     
     def _get_platform_compliance_level(self, platform: str) -> str:
-        """Get compliance level required for platform."""
+        """
+Get compliance level required for platform."""
         levels = {
             'youtube': 'high',
             'instagram': 'high',
@@ -1132,7 +1138,8 @@ class InfluencerVaultManager(VaultManager):
         return levels.get(platform.lower(), 'medium')
     
     def _get_model_rate_limits(self, model_name: str) -> Dict[str, int]:
-        """Get rate limits for AI model."""
+        """
+Get rate limits for AI model."""
         limits = {
             'openai': {'requests_per_minute': 3000, 'tokens_per_minute': 250000},
             'anthropic': {'requests_per_minute': 1000, 'tokens_per_minute': 100000},
@@ -1142,7 +1149,8 @@ class InfluencerVaultManager(VaultManager):
         return limits.get(model_name.lower(), {'requests_per_minute': 500, 'tokens_per_minute': 25000})
     
     def _get_model_provider(self, model_name: str) -> str:
-        """Get model provider."""
+        """
+Get model provider."""
         providers = {
             'openai': 'OpenAI',
             'anthropic': 'Anthropic',
@@ -1152,7 +1160,8 @@ class InfluencerVaultManager(VaultManager):
         return providers.get(model_name.lower(), 'Unknown')
     
     def _get_model_capabilities(self, model_name: str) -> List[str]:
-        """Get model capabilities."""
+        """
+Get model capabilities."""
         capabilities = {
             'openai': ['text_generation', 'embeddings', 'fine_tuning', 'moderation'],
             'anthropic': ['text_generation', 'analysis', 'reasoning'],
@@ -1162,7 +1171,8 @@ class InfluencerVaultManager(VaultManager):
         return capabilities.get(model_name.lower(), ['text_generation'])
     
     def _get_model_cost_tier(self, model_name: str) -> str:
-        """Get model cost tier."""
+        """
+Get model cost tier."""
         tiers = {
             'openai': 'premium',
             'anthropic': 'premium',
@@ -1172,7 +1182,8 @@ class InfluencerVaultManager(VaultManager):
         return tiers.get(model_name.lower(), 'standard')
     
     def _get_protection_key_strength(self, protection_type: str) -> int:
-        """Get encryption key strength for protection type."""
+        """
+Get encryption key strength for protection type."""
         strengths = {
             'audio': 256,
             'video': 256,
@@ -1182,7 +1193,8 @@ class InfluencerVaultManager(VaultManager):
         return strengths.get(protection_type.lower(), 256)
     
     def _get_protection_rotation_schedule(self, protection_type: str) -> str:
-        """Get rotation schedule for protection keys."""
+        """
+Get rotation schedule for protection keys."""
         schedules = {
             'audio': '30d',
             'video': '30d',
@@ -1192,7 +1204,8 @@ class InfluencerVaultManager(VaultManager):
         return schedules.get(protection_type.lower(), '30d')
     
     def _get_processor_currencies(self, processor: str) -> List[str]:
-        """Get supported currencies for payment processor."""
+        """
+Get supported currencies for payment processor."""
         currencies = {
             'stripe': ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'],
             'paypal': ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CHF'],
@@ -1202,7 +1215,8 @@ class InfluencerVaultManager(VaultManager):
         return currencies.get(processor.lower(), ['USD', 'EUR'])
     
     def _get_processor_limits(self, processor: str) -> Dict[str, Any]:
-        """Get transaction limits for payment processor."""
+        """
+Get transaction limits for payment processor."""
         limits = {
             'stripe': {'daily_limit': 1000000, 'transaction_limit': 99999},
             'paypal': {'daily_limit': 10000, 'transaction_limit': 10000},
@@ -1212,7 +1226,8 @@ class InfluencerVaultManager(VaultManager):
         return limits.get(processor.lower(), {'daily_limit': 10000, 'transaction_limit': 1000})
     
     def _get_processor_regions(self, processor: str) -> List[str]:
-        """Get supported regions for payment processor."""
+        """
+Get supported regions for payment processor."""
         regions = {
             'stripe': ['US', 'EU', 'UK', 'CA', 'AU', 'JP', 'SG'],
             'paypal': ['US', 'EU', 'UK', 'CA', 'AU', 'JP', 'SG', 'IN', 'BR'],
@@ -1222,7 +1237,8 @@ class InfluencerVaultManager(VaultManager):
         return regions.get(processor.lower(), ['US', 'EU'])
     
     def _get_similarity_threshold(self, fingerprint_engine: str) -> float:
-        """Get similarity threshold for fingerprinting engine."""
+        """
+Get similarity threshold for fingerprinting engine."""
         thresholds = {
             'chromaprint': 0.85,
             'opencv': 0.90,
@@ -1233,7 +1249,8 @@ class InfluencerVaultManager(VaultManager):
         return thresholds.get(fingerprint_engine.lower(), 0.85)
     
     def _get_fingerprint_accuracy(self, fingerprint_engine: str) -> str:
-        """Get accuracy level for fingerprinting engine."""
+        """
+Get accuracy level for fingerprinting engine."""
         accuracies = {
             'chromaprint': 'high',
             'opencv': 'very_high',
@@ -1244,7 +1261,8 @@ class InfluencerVaultManager(VaultManager):
         return accuracies.get(fingerprint_engine.lower(), 'medium')
     
     def _get_fingerprint_speed(self, fingerprint_engine: str) -> str:
-        """Get processing speed for fingerprinting engine."""
+        """
+Get processing speed for fingerprinting engine."""
         speeds = {
             'chromaprint': 'fast',
             'opencv': 'medium',
@@ -1255,7 +1273,8 @@ class InfluencerVaultManager(VaultManager):
         return speeds.get(fingerprint_engine.lower(), 'medium')
     
     def _get_supported_formats(self, fingerprint_engine: str) -> List[str]:
-        """Get supported formats for fingerprinting engine."""
+        """
+Get supported formats for fingerprinting engine."""
         formats = {
             'chromaprint': ['mp3', 'wav', 'flac', 'aac', 'm4a'],
             'opencv': ['mp4', 'avi', 'mov', 'mkv', 'webm'],

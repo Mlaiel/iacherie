@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Image Engine Testing Module
+"""
+Image Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all image processing engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -67,18 +70,21 @@ from .test_helpers import (
 )
 
 class TestImageProcessingEngine:
-    """Comprehensive tests for ImageProcessingEngine"""
+    """
+Comprehensive tests for ImageProcessingEngine"""
     
     @pytest.fixture
     async def image_engine(self):
-        """Create and initialize image processing engine"""
+        """
+Create and initialize image processing engine"""
         engine = ImageProcessingEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_image_data(self):
-        """Provide sample image data for testing"""
+        """
+Provide sample image data for testing"""
         return {
             'raw_image': "sample_image_raw_data_placeholder",
             'jpg_file': "sample_image.jpg",
@@ -114,7 +120,8 @@ class TestImageProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, image_engine):
-        """Test image engine initialization"""
+        """
+Test image engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(image_engine)
@@ -180,7 +187,8 @@ class TestImageProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_image_format_conversion(self, image_engine, sample_image_data):
-        """Test image format conversion capabilities"""
+        """
+Test image format conversion capabilities"""
         # Test conversion between different formats
         format_conversions = [
             (ImageFormat.JPEG, ImageFormat.PNG),
@@ -209,7 +217,8 @@ class TestImageProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_image_resizing_and_scaling(self, image_engine, sample_image_data):
-        """Test image resizing and scaling capabilities"""
+        """
+Test image resizing and scaling capabilities"""
         resize_tests = [
             {'target_width': 1280, 'target_height': 720, 'algorithm': 'lanczos'},
             {'target_width': 640, 'target_height': 480, 'algorithm': 'bicubic'},
@@ -376,7 +385,8 @@ class TestImageProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_image_seo_optimization(self, image_engine, sample_image_data):
-        """Test image SEO optimization features"""
+        """
+Test image SEO optimization features"""
         target_keywords = ['professional image', 'high quality', 'content creation', 'optimized']
         
         result = await image_engine.optimize_for_seo(
@@ -394,7 +404,8 @@ class TestImageProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_image_protection(self, image_engine, sample_image_data):
-        """Test image content protection features"""
+        """
+Test image content protection features"""
         result = await image_engine.protect_content(sample_image_data['raw_image'])
         
         assert result['image_watermarked'] is True
@@ -406,18 +417,21 @@ class TestImageProcessingEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestImageGenerationEngine:
-    """Comprehensive tests for ImageGenerationEngine"""
+    """
+Comprehensive tests for ImageGenerationEngine"""
     
     @pytest.fixture
     async def image_generation_engine(self):
-        """Create and initialize image generation engine"""
+        """
+Create and initialize image generation engine"""
         engine = ImageGenerationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def image_generation_options(self):
-        """Provide image generation options"""
+        """
+Provide image generation options"""
         return {
             'content_id': 'image_gen_test_123',
             'style': 'photorealistic',
@@ -433,7 +447,8 @@ class TestImageGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_image_generation_engine_initialization(self, image_generation_engine):
-        """Test image generation engine initialization"""
+        """
+Test image generation engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(image_generation_engine)
@@ -633,14 +648,16 @@ class TestPhotoEditingEngine:
     
     @pytest.fixture
     async def photo_editing_engine(self):
-        """Create and initialize photo editing engine"""
+        """
+Create and initialize photo editing engine"""
         engine = PhotoEditingEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def photo_editing_options(self):
-        """Provide photo editing options"""
+        """
+Provide photo editing options"""
         return {
             'content_id': 'photo_edit_test_123',
             'editing_style': 'professional',
@@ -655,7 +672,8 @@ class TestPhotoEditingEngine:
     
     @pytest.mark.asyncio
     async def test_photo_editing_engine_initialization(self, photo_editing_engine):
-        """Test photo editing engine initialization"""
+        """
+Test photo editing engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(photo_editing_engine)
@@ -699,7 +717,8 @@ class TestPhotoEditingEngine:
     
     @pytest.mark.asyncio
     async def test_portrait_photography_enhancements(self, photo_editing_engine, sample_image_data):
-        """Test portrait-specific photo enhancements"""
+        """
+Test portrait-specific photo enhancements"""
         portrait_options = {
             'content_id': 'portrait_enhancement_test',
             'portrait_mode': True,
@@ -725,7 +744,8 @@ class TestPhotoEditingEngine:
     
     @pytest.mark.asyncio
     async def test_object_and_background_manipulation(self, photo_editing_engine, sample_image_data):
-        """Test object and background manipulation features"""
+        """
+Test object and background manipulation features"""
         manipulation_tests = [
             {
                 'operation': 'background_removal',
@@ -840,7 +860,8 @@ class TestPhotoEditingEngine:
     
     @pytest.mark.asyncio
     async def test_photo_editing_seo_optimization(self, photo_editing_engine, sample_image_data):
-        """Test photo editing SEO optimization"""
+        """
+Test photo editing SEO optimization"""
         target_keywords = ['professional photo editing', 'enhanced image', 'retouched photo', 'high quality']
         
         result = await photo_editing_engine.optimize_for_seo(
@@ -856,7 +877,8 @@ class TestPhotoEditingEngine:
     
     @pytest.mark.asyncio
     async def test_photo_editing_protection(self, photo_editing_engine, sample_image_data):
-        """Test photo editing content protection"""
+        """
+Test photo editing content protection"""
         result = await photo_editing_engine.protect_content(sample_image_data['raw_image'])
         
         assert result['edited_photo_protected'] is True
@@ -866,11 +888,13 @@ class TestPhotoEditingEngine:
         assert 'editing_fingerprint' in result
 
 class TestImageEngineIntegration:
-    """Integration tests for image engines"""
+    """
+Integration tests for image engines"""
     
     @pytest.mark.asyncio
     async def test_complete_image_workflow_pipeline(self, sample_content):
-        """Test complete image processing workflow"""
+        """
+Test complete image processing workflow"""
         # Initialize all image engines
         image_engine = ImageProcessingEngine()
         image_generation_engine = ImageGenerationEngine()

@@ -1,4 +1,5 @@
 """Health checking system for monitoring service availability."""
+
 import asyncio
 import time
 import psutil
@@ -238,7 +239,8 @@ class HealthChecker:
             return check_func()
 
     def _generate_summary(self, results: Dict) -> Dict:
-        """Generate summary statistics from check results."""
+        """
+Generate summary statistics from check results."""
         total_checks = len(results)
         healthy_checks = sum(1 for r in results.values() if r["status"] == HealthStatus.HEALTHY.value)
         critical_failures = sum(1 for r in results.values() if r["status"] != HealthStatus.HEALTHY.value and r["critical"])

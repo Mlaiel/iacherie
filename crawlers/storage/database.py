@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CrawlerData(Base):
-    """Database model for crawler data."""
+    """
+Database model for crawler data."""
     __tablename__ = 'crawler_data'
     
     record_id = Column(String(255), primary_key=True)
@@ -71,7 +73,8 @@ class CrawlerData(Base):
     version = Column(Integer, default=1)
 
 class ContentRecord(Base):
-    """Database model for content records."""
+    """
+Database model for content records."""
     __tablename__ = 'content_records'
     
     content_id = Column(String(255), primary_key=True)
@@ -91,7 +94,8 @@ class ContentRecord(Base):
     protected_content = Column(Boolean, default=False)
 
 class ViolationRecord(Base):
-    """Database model for violation records."""
+    """
+Database model for violation records."""
     __tablename__ = 'violation_records'
     
     violation_id = Column(String(255), primary_key=True)
@@ -127,7 +131,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize database storage provider."""
+        """
+Initialize database storage provider."""
         super().__init__(provider_id, StorageBackendType.DATABASE, config)
         
         self.database_url = config['database_url']
@@ -236,7 +241,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return pickled_data
     
     def _decompress_data(self, compressed_data: bytes) -> Any:
-        """Decompress data using configured compression."""
+        """
+Decompress data using configured compression."""
         if not self.enable_compression:
             return pickle.loads(compressed_data)
         
@@ -250,7 +256,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         return pickle.loads(decompressed)
     
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate SHA-256 checksum of data."""
+        """
+Calculate SHA-256 checksum of data."""
         return hashlib.sha256(data).hexdigest()
     
     async def store_record(
@@ -259,7 +266,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record in database."""
+        """
+Store a record in database."""
         try:
             start_time = asyncio.get_event_loop().time()
             
@@ -868,7 +876,8 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
         content_data: Dict[str, Any],
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
-        """Store content with associated media files."""
+        """
+Store content with associated media files."""
         try:
             async with self.async_session_factory() as session:
                 # Prepare media URLs
@@ -1093,7 +1102,8 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
         violation_type: str,
         evidence: Dict[str, Any]
     ) -> bool:
-        """Store a violation record."""
+        """
+Store a violation record."""
         try:
             async with self.async_session_factory() as session:
                 violation_record = ViolationRecord(
@@ -1259,13 +1269,15 @@ class DatabaseTransaction(StorageTransaction):
     """Database transaction implementation."""
     
     def __init__(self, transaction_id: str, session_factory):
-        """Initialize database transaction."""
+        """
+Initialize database transaction."""
         super().__init__(transaction_id)
         self.session_factory = session_factory
         self.session = None
     
     async def begin(self) -> None:
-        """Begin transaction."""
+        """
+Begin transaction."""
         self.session = self.session_factory()
         await self.session.begin()
         logger.debug(f"Database transaction {self.transaction_id} started")

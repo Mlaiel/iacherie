@@ -12,6 +12,7 @@ Features:
 - Circuit breaker and retry policies
 - Canary deployments and A/B testing
 """
+
 import asyncio
 import logging
 import json
@@ -31,9 +32,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize service mesh metrics collector with observability"""
+        """
+Initialize service mesh metrics collector with observability"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.mesh_metrics = ['request_volume', 'success_rate', 'latency_p99', 'circuit_breaker_status']
         self.security_metrics = ['mTLS_status', 'unauthorized_requests', 'policy_violations']
@@ -46,6 +49,7 @@ class MetricsCollector:
 
 class ServiceMeshType(Enum):
     """Service mesh types."""
+
     ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul-connect"
@@ -54,6 +58,7 @@ class ServiceMeshType(Enum):
 
 class TrafficPolicy(Enum):
     """Traffic routing policies."""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONN = "least_conn"
     RANDOM = "random"
@@ -63,6 +68,7 @@ class TrafficPolicy(Enum):
 
 class SecurityMode(Enum):
     """Security modes for service communication."""
+
     PERMISSIVE = "PERMISSIVE"
     STRICT = "STRICT"
     DISABLE = "DISABLE"
@@ -83,7 +89,8 @@ class ServiceMeshConfig:
 
 @dataclass
 class VirtualService:
-    """Virtual service configuration."""
+    """
+Virtual service configuration."""
     name: str
     namespace: str
     hosts: List[str]
@@ -95,7 +102,8 @@ class VirtualService:
 
 @dataclass
 class DestinationRule:
-    """Destination rule configuration."""
+    """
+Destination rule configuration."""
     name: str
     namespace: str
     host: str
@@ -106,7 +114,8 @@ class DestinationRule:
 
 @dataclass
 class Gateway:
-    """Gateway configuration."""
+    """
+Gateway configuration."""
     name: str
     namespace: str
     selector: Dict[str, str]
@@ -115,7 +124,8 @@ class Gateway:
 
 @dataclass
 class PeerAuthentication:
-    """Peer authentication configuration."""
+    """
+Peer authentication configuration."""
     name: str
     namespace: str
     selector: Dict[str, str]

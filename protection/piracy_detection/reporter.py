@@ -4,7 +4,7 @@
 Comprehensive reporting and analytics for piracy detection activities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - Comprehensive violation reports
@@ -13,6 +13,7 @@ This module provides:
 - Trend analysis and forecasting
 - Executive dashboards and summaries
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Types of reports available."""
+    """
+Types of reports available."""
+
     VIOLATION_SUMMARY = "violation_summary"
     PERFORMANCE_ANALYTICS = "performance_analytics"
     REVENUE_IMPACT = "revenue_impact"
@@ -35,6 +38,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats."""
+
     JSON = "json"
     PDF = "pdf"
     CSV = "csv"
@@ -43,6 +47,7 @@ class ReportFormat(Enum):
 
 class TimeRange(Enum):
     """Time range options for reports."""
+
     LAST_24_HOURS = "last_24_hours"
     LAST_7_DAYS = "last_7_days"
     LAST_30_DAYS = "last_30_days"
@@ -402,7 +407,8 @@ class PiracyReporter:
     
     async def _collect_violation_data(self, config: ReportConfig, start_date: datetime, 
                                     end_date: datetime) -> Dict[str, Any]:
-        """Collect violation data."""
+        """
+Collect violation data."""
         # Simulate violation data collection
         return {
             'total_violations': 1250,
@@ -430,7 +436,8 @@ class PiracyReporter:
     
     async def _collect_detection_data(self, config: ReportConfig, start_date: datetime, 
                                     end_date: datetime) -> Dict[str, Any]:
-        """Collect detection performance data."""
+        """
+Collect detection performance data."""
         return {
             'total_scans': 50000,
             'detection_rate': 0.025,
@@ -445,7 +452,8 @@ class PiracyReporter:
     
     async def _collect_enforcement_data(self, config: ReportConfig, start_date: datetime, 
                                       end_date: datetime) -> Dict[str, Any]:
-        """Collect enforcement data."""
+        """
+Collect enforcement data."""
         return {
             'total_enforcements': 980,
             'successful_enforcements': 784,
@@ -462,7 +470,8 @@ class PiracyReporter:
     
     async def _collect_performance_data(self, config: ReportConfig, start_date: datetime, 
                                       end_date: datetime) -> Dict[str, Any]:
-        """Collect system performance data."""
+        """
+Collect system performance data."""
         return {
             'system_uptime': 0.998,
             'api_response_times': {
@@ -479,7 +488,8 @@ class PiracyReporter:
     
     async def _collect_revenue_data(self, config: ReportConfig, start_date: datetime, 
                                   end_date: datetime) -> Dict[str, Any]:
-        """Collect revenue impact data."""
+        """
+Collect revenue impact data."""
         return {
             'protected_revenue': 125000.0,
             'prevented_losses': 87500.0,
@@ -495,7 +505,8 @@ class PiracyReporter:
     
     async def _generate_violation_summary_report(self, base_data: Dict[str, Any], 
                                                config: ReportConfig) -> Dict[str, Any]:
-        """Generate violation summary report."""
+        """
+Generate violation summary report."""
         violations = base_data['violations']
         enforcement = base_data['enforcement']
         
@@ -553,7 +564,8 @@ class PiracyReporter:
     
     async def _generate_revenue_impact_report(self, base_data: Dict[str, Any], 
                                             config: ReportConfig) -> Dict[str, Any]:
-        """Generate revenue impact report."""
+        """
+Generate revenue impact report."""
         revenue = base_data['revenue']
         
         report = {
@@ -580,7 +592,8 @@ class PiracyReporter:
     
     async def _generate_platform_analysis_report(self, base_data: Dict[str, Any], 
                                                config: ReportConfig) -> Dict[str, Any]:
-        """Generate platform analysis report."""
+        """
+Generate platform analysis report."""
         return {
             'report_type': 'platform_analysis',
             'generated_at': datetime.utcnow().isoformat(),
@@ -593,7 +606,8 @@ class PiracyReporter:
     
     async def _generate_trend_analysis_report(self, base_data: Dict[str, Any], 
                                             config: ReportConfig) -> Dict[str, Any]:
-        """Generate trend analysis report."""
+        """
+Generate trend analysis report."""
         return {
             'report_type': 'trend_analysis',
             'generated_at': datetime.utcnow().isoformat(),
@@ -604,7 +618,8 @@ class PiracyReporter:
     
     async def _generate_executive_summary_report(self, base_data: Dict[str, Any], 
                                                config: ReportConfig) -> Dict[str, Any]:
-        """Generate executive summary report."""
+        """
+Generate executive summary report."""
         violations = base_data['violations']
         enforcement = base_data['enforcement']
         revenue = base_data['revenue']
@@ -632,7 +647,8 @@ class PiracyReporter:
     
     async def _analyze_platform_performance(self, violations: Dict[str, Any], 
                                           enforcement: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze performance by platform."""
+        """
+Analyze performance by platform."""
         platform_analysis = {}
         
         for platform, violation_count in violations['platform_breakdown'].items():
@@ -650,7 +666,8 @@ class PiracyReporter:
     
     def _get_platform_recommendations(self, platform: str, violation_count: int, 
                                     success_rate: float) -> List[str]:
-        """Get recommendations for specific platform."""
+        """
+Get recommendations for specific platform."""
         recommendations = []
         
         if violation_count > 300:
@@ -712,7 +729,8 @@ class PiracyReporter:
         return charts
     
     async def _calculate_confidence_distribution(self, detections: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate confidence score distribution."""
+        """
+Calculate confidence score distribution."""
         return {
             '0.9-1.0': 0.35,
             '0.8-0.9': 0.28,
@@ -722,7 +740,8 @@ class PiracyReporter:
         }
     
     async def _calculate_performance_trends(self, detections: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate performance trends."""
+        """
+Calculate performance trends."""
         return {
             'detection_rate_trend': 'increasing',
             'accuracy_trend': 'stable',
@@ -730,7 +749,8 @@ class PiracyReporter:
         }
     
     async def _calculate_revenue_projections(self, revenue: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate revenue projections."""
+        """
+Calculate revenue projections."""
         return {
             'next_month_projected_protection': revenue['protected_revenue'] * 1.1,
             'annual_projection': revenue['protected_revenue'] * 12 * 1.15,
@@ -738,7 +758,8 @@ class PiracyReporter:
         }
     
     async def _calculate_trends(self, base_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate various trends from base data."""
+        """
+Calculate various trends from base data."""
         return {
             'violation_trends': {
                 'monthly_growth': 0.08,
@@ -753,7 +774,8 @@ class PiracyReporter:
         }
     
     async def _generate_forecasts(self, base_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate forecasts based on historical data."""
+        """
+Generate forecasts based on historical data."""
         return {
             'next_30_days': {
                 'expected_violations': 1350,
@@ -766,7 +788,8 @@ class PiracyReporter:
         }
     
     async def _generate_strategic_insights(self, base_data: Dict[str, Any]) -> List[str]:
-        """Generate strategic insights for executive summary."""
+        """
+Generate strategic insights for executive summary."""
         return [
             "Protection system is effectively preventing 94% of potential revenue loss",
             "YouTube remains the primary threat vector requiring focused attention",
@@ -798,7 +821,8 @@ class PiracyReporter:
         ]
     
     def _generate_cache_key(self, config: ReportConfig) -> str:
-        """Generate cache key for report configuration."""
+        """
+Generate cache key for report configuration."""
         config_str = json.dumps({
             'report_type': config.report_type.value,
             'time_range': config.time_range.value,
@@ -822,7 +846,8 @@ class PiracyReporter:
         return age_minutes < self.cache_duration_minutes
     
     def _update_reporting_stats(self, cache_hit: bool, generation_time: float) -> None:
-        """Update reporting statistics."""
+        """
+Update reporting statistics."""
         self.reporting_stats['total_reports_generated'] += 1
         
         # Update cache hit rate
@@ -847,7 +872,8 @@ class PiracyReporter:
                 self.reporting_stats['average_generation_time_seconds'] = generation_time
     
     async def _cache_cleanup_task(self) -> None:
-        """Background task to clean up expired cache entries."""
+        """
+Background task to clean up expired cache entries."""
         while True:
             try:
                 current_time = datetime.utcnow()
@@ -926,7 +952,8 @@ class PiracyReporter:
         return html_content.encode('utf-8')
     
     async def _export_excel(self, report_data: Dict[str, Any]) -> bytes:
-        """Export report as Excel."""
+        """
+Export report as Excel."""
         # Placeholder for Excel generation
         # In production, this would use libraries like openpyxl or xlswriter
         return b"Excel content placeholder"

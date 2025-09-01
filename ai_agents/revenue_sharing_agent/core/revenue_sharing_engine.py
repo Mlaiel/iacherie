@@ -5,6 +5,7 @@ Core engine for revenue sharing operations with equitable revenue distribution w
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueSharingJob:
-    """Revenue Sharing operation job"""
+    """
+Revenue Sharing operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class RevenueSharingJob:
 
 @dataclass
 class RevenueSharingResult:
-    """Revenue Sharing operation result"""
+    """
+Revenue Sharing operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class RevenueSharingResult:
     completed_at: datetime = None
 
 class RevenueSharingEngine:
-    """Core revenue sharing processing engine"""
+    """
+Core revenue sharing processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

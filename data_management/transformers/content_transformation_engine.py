@@ -8,7 +8,7 @@ Responsibility: Transformation intelligente multi-format avec optimisation IA
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ SUPPORTS TRANSFORMATIONS:
 📸 Images: JPG↔PNG↔WEBP, Optimization, HDR, Super Resolution
 📝 Texte: Format Conversion, SEO Enhancement, Translation
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
 from dataclasses import dataclass, field
 from enum import Enum
@@ -100,6 +101,7 @@ class TransformationType(Enum):
 
 class QualityLevel(Enum):
     """Niveaux de qualité pour les transformations"""
+
     DRAFT = "draft"          # Rapide, qualité basique
     STANDARD = "standard"    # Équilibre qualité/vitesse
     HIGH = "high"           # Haute qualité
@@ -121,7 +123,8 @@ class TransformationConfig:
 
 @dataclass
 class TransformationResult:
-    """Résultat d'une transformation"""
+    """
+Résultat d'une transformation"""
     job_id: str
     original_path: str
     transformed_path: str
@@ -164,7 +167,8 @@ class ContentTransformationEngine:
         self.transformation_cache = {}
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialise les modèles IA pour l'enhancement"""
+        """
+Initialise les modèles IA pour l'enhancement"""
         models = {}
         
         try:

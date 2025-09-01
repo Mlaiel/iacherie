@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -48,7 +49,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
+    """
+Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -61,6 +64,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -69,6 +73,7 @@ class NotificationPriority(Enum):
 
 class NotificationStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     SENDING = "sending"
     SENT = "sent"
@@ -91,7 +96,8 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template configuration"""
+    """
+Notification template configuration"""
     template_id: str
     name: str
     channel: NotificationChannel
@@ -103,7 +109,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationMessage:
-    """Notification message data"""
+    """
+Notification message data"""
     message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_id: str = None
     recipient: NotificationRecipient = None
@@ -122,7 +129,8 @@ class NotificationMessage:
 
 @dataclass
 class NotificationMetrics:
-    """Notification delivery metrics"""
+    """
+Notification delivery metrics"""
     total_notifications: int = 0
     sent_notifications: int = 0
     failed_notifications: int = 0
@@ -465,7 +473,8 @@ class NotificationDispatcher:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of notification dispatcher"""
+        """
+Graceful shutdown of notification dispatcher"""
         try:
             logger.info("Shutting down NotificationDispatcher")
             
@@ -540,7 +549,8 @@ class NotificationDispatcher:
         return notifications
 
     async def _queue_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
-        """Queue notification for dispatch"""
+        """
+Queue notification for dispatch"""
         try:
             await self._notification_queue.put(notification)
             
@@ -568,7 +578,8 @@ class NotificationDispatcher:
         self._dispatch_tasks.add(task)
 
     async def _notification_dispatch_loop(self) -> None:
-        """Background task to dispatch notifications from queue"""
+        """
+Background task to dispatch notifications from queue"""
         while True:
             try:
                 # Get notification from queue with timeout
@@ -832,29 +843,34 @@ class NotificationDispatcher:
         return {'success': True}
 
     async def _send_discord_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
-        """Send Discord notification"""
+        """
+Send Discord notification"""
         # Implementation would send Discord notification
         return {'success': True}
 
     async def _send_teams_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
-        """Send Microsoft Teams notification"""
+        """
+Send Microsoft Teams notification"""
         # Implementation would send Teams notification
         return {'success': True}
 
     async def _send_push_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
-        """Send push notification"""
+        """
+Send push notification"""
         # Implementation would send push notification
         return {'success': True}
 
     async def _send_in_app_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
-        """Send in-app notification"""
+        """
+Send in-app notification"""
         # Implementation would store in-app notification
         return {'success': True}
 
     # Utility methods
     
     async def _get_recipient_config(self, recipient_id: str) -> Optional[NotificationRecipient]:
-        """Get recipient configuration"""
+        """
+Get recipient configuration"""
         if recipient_id in self._recipients:
             return self._recipients[recipient_id]
         
@@ -866,7 +882,8 @@ class NotificationDispatcher:
         return recipient
 
     async def _get_notification_template(self, template_id: str) -> Optional[NotificationTemplate]:
-        """Get notification template"""
+        """
+Get notification template"""
         return self._templates.get(template_id)
 
     async def _create_notification_message(
@@ -878,7 +895,8 @@ class NotificationDispatcher:
         priority: NotificationPriority,
         scheduled_at: Optional[datetime] = None
     ) -> NotificationMessage:
-        """Create notification message from template and data"""
+        """
+Create notification message from template and data"""
         # Render subject
         subject = None
         if template.subject_template:
@@ -909,7 +927,8 @@ class NotificationDispatcher:
         )
 
     async def _get_user_recipients(self, user_id: str) -> List[NotificationRecipient]:
-        """Get all recipients for a user"""
+        """
+Get all recipients for a user"""
         return [r for r in self._recipients.values() if r.user_id == user_id]
 
     def _should_send_notification(
@@ -918,7 +937,8 @@ class NotificationDispatcher:
         event_type: str,
         processing_result: Any
     ) -> bool:
-        """Check if notification should be sent based on recipient preferences"""
+        """
+Check if notification should be sent based on recipient preferences"""
         # Check recipient preferences
         preferences = recipient.preferences
         
@@ -947,7 +967,8 @@ class NotificationDispatcher:
         return priority_mapping.get(event_type, NotificationPriority.MEDIUM)
 
     async def _schedule_notification_retry(self, notification: NotificationMessage) -> None:
-        """Schedule notification retry"""
+        """
+Schedule notification retry"""
         notification.retry_count += 1
         
         # Calculate retry delay (exponential backoff)
@@ -971,7 +992,8 @@ class NotificationDispatcher:
                 self._metrics.failed_notifications += 1
 
     async def _validate_recipient_config(self, recipient: NotificationRecipient) -> Dict[str, Any]:
-        """Validate recipient configuration"""
+        """
+Validate recipient configuration"""
         if not recipient.user_id:
             return {'valid': False, 'reason': 'User ID is required'}
         
@@ -992,7 +1014,8 @@ class NotificationDispatcher:
         return {'valid': True}
 
     async def _validate_notification_template(self, template: NotificationTemplate) -> Dict[str, Any]:
-        """Validate notification template"""
+        """
+Validate notification template"""
         if not template.name:
             return {'valid': False, 'reason': 'Template name is required'}
         
@@ -1015,26 +1038,31 @@ class NotificationDispatcher:
         return {'valid': True}
 
     async def _load_notification_templates(self) -> None:
-        """Load notification templates from storage"""
+        """
+Load notification templates from storage"""
         # Implementation would load templates from database
         pass
 
     async def _load_recipient_configurations(self) -> None:
-        """Load recipient configurations from storage"""
+        """
+Load recipient configurations from storage"""
         # Implementation would load recipients from database
         pass
 
     async def _store_recipient_config(self, recipient: NotificationRecipient) -> None:
-        """Store recipient configuration"""
+        """
+Store recipient configuration"""
         # Implementation would store recipient in database
         pass
 
     async def _load_recipient_config(self, recipient_id: str) -> Optional[NotificationRecipient]:
-        """Load recipient configuration from storage"""
+        """
+Load recipient configuration from storage"""
         # Implementation would load recipient from database
         return None
 
     async def _store_notification_template(self, template: NotificationTemplate) -> None:
-        """Store notification template"""
+        """
+Store notification template"""
         # Implementation would store template in database
         pass

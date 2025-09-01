@@ -14,6 +14,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -32,7 +33,8 @@ Base = declarative_base()
 
 
 class SecurityEventType(Enum):
-    """Security event types for tracking."""
+    """
+Security event types for tracking."""
     
     # Authentication Security
     SUSPICIOUS_LOGIN = "suspicious_login"
@@ -104,6 +106,7 @@ class SecurityEventType(Enum):
 
 class ThreatLevel(Enum):
     """Threat level classification."""
+
     
     CRITICAL = "critical"
     HIGH = "high"
@@ -114,6 +117,7 @@ class ThreatLevel(Enum):
 
 class SecurityEventStatus(Enum):
     """Security event status."""
+
     
     ACTIVE = "active"
     INVESTIGATING = "investigating"
@@ -125,6 +129,7 @@ class SecurityEventStatus(Enum):
 
 class AttackVector(Enum):
     """Attack vector types."""
+
     
     WEB_APPLICATION = "web_application"
     API = "api"
@@ -154,7 +159,8 @@ class SecurityContext:
 
 
 class SecurityEventLog(Base):
-    """Security event log model."""
+    """
+Security event log model."""
     
     __tablename__ = "security_event_logs"
     

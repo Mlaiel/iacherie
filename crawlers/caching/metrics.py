@@ -9,6 +9,7 @@ with real-time monitoring, alerting, and optimization insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -25,7 +26,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Cache metric types."""
+    """
+Cache metric types."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -33,6 +36,7 @@ class MetricType(Enum):
 
 class MetricSeverity(Enum):
     """Metric alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -48,7 +52,8 @@ class MetricValue:
 
 @dataclass
 class MetricAlert:
-    """Metric alert configuration."""
+    """
+Metric alert configuration."""
     alert_id: str
     metric_name: str
     condition: str  # e.g., "> 0.9", "< 1000"
@@ -122,7 +127,8 @@ class CacheMetrics:
         return int(self.retention_hours * 3600 / self.collection_interval)
     
     async def start_collection(self) -> None:
-        """Start metrics collection."""
+        """
+Start metrics collection."""
         if self._collection_task is not None:
             return
         
@@ -194,7 +200,8 @@ class CacheMetrics:
     
     def increment_counter(self, name: str, value: int = 1, 
                          tags: Optional[Dict[str, str]] = None) -> None:
-        """Increment a counter metric."""
+        """
+Increment a counter metric."""
         self.counters[name] += value
         self.total_operations += value
         
@@ -203,13 +210,15 @@ class CacheMetrics:
     
     def set_gauge(self, name: str, value: Union[int, float],
                  tags: Optional[Dict[str, str]] = None) -> None:
-        """Set a gauge metric value."""
+        """
+Set a gauge metric value."""
         self.gauges[name] = value
         self._record_metric(name, value, datetime.now(), tags)
     
     def record_timer(self, name: str, duration: float,
                     tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a timer metric."""
+        """
+Record a timer metric."""
         self.timers[name].append(duration)
         self.operation_times.append(duration)
         
@@ -221,7 +230,8 @@ class CacheMetrics:
     
     def record_operation(self, operation: str, duration: float, 
                         success: bool = True, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a cache operation."""
+        """
+Record a cache operation."""
         self.total_operations += 1
         
         # Record timing
@@ -267,7 +277,8 @@ class CacheMetrics:
         return self.error_count / self.total_operations
     
     def _calculate_throughput(self) -> float:
-        """Calculate operations per second."""
+        """
+Calculate operations per second."""
         uptime = (datetime.now() - self.start_time).total_seconds()
         
         if uptime == 0:
@@ -276,7 +287,8 @@ class CacheMetrics:
         return self.total_operations / uptime
     
     def _calculate_average_response_time(self) -> float:
-        """Calculate average response time."""
+        """
+Calculate average response time."""
         if not self.operation_times:
             return 0.0
         
@@ -322,7 +334,8 @@ class CacheMetrics:
         return result
     
     async def get_performance_snapshot(self) -> CachePerformanceSnapshot:
-        """Get current performance snapshot."""
+        """
+Get current performance snapshot."""
         return CachePerformanceSnapshot(
             timestamp=datetime.now(),
             hit_rate=self._calculate_hit_rate(),
@@ -438,7 +451,8 @@ class CacheMetrics:
         return self.alert_history[-limit:]
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics."""
+        """
+Get comprehensive cache statistics."""
         snapshot = await self.get_performance_snapshot()
         
         return {
@@ -479,7 +493,8 @@ class PerformanceMonitor:
     """
     
     def __init__(self, metrics: CacheMetrics):
-        """Initialize performance monitor."""
+        """
+Initialize performance monitor."""
         self.metrics = metrics
         self.logger = logging.getLogger(f"{__name__}.PerformanceMonitor")
         

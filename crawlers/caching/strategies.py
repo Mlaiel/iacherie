@@ -9,6 +9,7 @@ decision making, and machine learning-based optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import random
@@ -26,7 +27,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class StrategyType(Enum):
-    """Cache strategy types."""
+    """
+Cache strategy types."""
+
     LRU = "lru"                    # Least Recently Used
     LFU = "lfu"                    # Least Frequently Used
     FIFO = "fifo"                  # First In, First Out
@@ -39,6 +42,7 @@ class StrategyType(Enum):
 
 class CacheDecision(Enum):
     """Cache operation decisions."""
+
     CACHE = "cache"
     NO_CACHE = "no_cache"
     EVICT = "evict"
@@ -61,23 +65,27 @@ class CacheEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if entry is expired."""
+        """
+Check if entry is expired."""
         if self.ttl_seconds is None:
             return False
         expires_at = self.created_at + timedelta(seconds=self.ttl_seconds)
         return datetime.now() > expires_at
     
     def age_seconds(self) -> float:
-        """Get entry age in seconds."""
+        """
+Get entry age in seconds."""
         return (datetime.now() - self.created_at).total_seconds()
     
     def idle_seconds(self) -> float:
-        """Get idle time since last access."""
+        """
+Get idle time since last access."""
         return (datetime.now() - self.last_accessed).total_seconds()
 
 @dataclass
 class StrategyMetrics:
-    """Strategy performance metrics."""
+    """
+Strategy performance metrics."""
     hit_rate: float = 0.0
     miss_rate: float = 0.0
     eviction_rate: float = 0.0
@@ -94,7 +102,8 @@ class CacheStrategy:
     """
     
     def __init__(self, strategy_type: StrategyType, config: Optional[Dict[str, Any]] = None):
-        """Initialize cache strategy."""
+        """
+Initialize cache strategy."""
         self.strategy_type = strategy_type
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{strategy_type.value.upper()}Strategy")
@@ -143,7 +152,8 @@ class CacheStrategy:
         return CacheDecision.CACHE
     
     async def should_evict(self, key: str) -> bool:
-        """Decide whether to evict a specific entry."""
+        """
+Decide whether to evict a specific entry."""
         entry = self.entries.get(key)
         if not entry:
             return False
@@ -184,7 +194,8 @@ class CacheStrategy:
         return expired_keys + strategy_candidates
     
     async def record_access(self, key: str) -> None:
-        """Record cache access for strategy optimization."""
+        """
+Record cache access for strategy optimization."""
         self.total_requests += 1
         
         if key in self.entries:
@@ -211,7 +222,8 @@ class CacheStrategy:
     
     async def add_entry(self, key: str, value: Any, 
                        metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Add entry to cache with strategy tracking."""
+        """
+Add entry to cache with strategy tracking."""
         try:
             entry = CacheEntry(
                 key=key,
@@ -275,17 +287,20 @@ class CacheStrategy:
             return 1024  # 1KB default
     
     async def _strategy_should_evict(self, entry: CacheEntry) -> bool:
-        """Strategy-specific eviction decision."""
+        """
+Strategy-specific eviction decision."""
         # Base implementation - override in subclasses
         return False
     
     async def _strategy_select_candidates(self, count: int) -> List[str]:
-        """Strategy-specific candidate selection."""
+        """
+Strategy-specific candidate selection."""
         # Base implementation - LRU
         return self.access_order[:count]
     
     async def _update_metrics(self) -> None:
-        """Update strategy metrics."""
+        """
+Update strategy metrics."""
         if self.total_requests > 0:
             self.metrics.hit_rate = self.cache_hits / self.total_requests
             self.metrics.miss_rate = self.cache_misses / self.total_requests
@@ -294,12 +309,14 @@ class CacheStrategy:
             self.metrics.eviction_rate = self.evictions / (self.cache_hits + self.cache_misses)
     
     async def get_metrics(self) -> StrategyMetrics:
-        """Get current strategy metrics."""
+        """
+Get current strategy metrics."""
         await self._update_metrics()
         return self.metrics
     
     async def optimize(self) -> Dict[str, Any]:
-        """Optimize strategy based on current performance."""
+        """
+Optimize strategy based on current performance."""
         # Base optimization - override in subclasses
         return {"optimizations_applied": []}
 
@@ -311,7 +328,8 @@ class AdaptiveStrategy(CacheStrategy):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize adaptive strategy."""
+        """
+Initialize adaptive strategy."""
         super().__init__(StrategyType.ADAPTIVE, config)
         self.logger = logging.getLogger(f"{__name__}.AdaptiveStrategy")
         
@@ -361,7 +379,8 @@ class AdaptiveStrategy(CacheStrategy):
             return CacheDecision.NO_CACHE
     
     async def select_eviction_candidates(self, count: int = 1) -> List[str]:
-        """Adaptive eviction candidate selection."""
+        """
+Adaptive eviction candidate selection."""
         if not self.entries:
             return []
         
@@ -387,7 +406,8 @@ class AdaptiveStrategy(CacheStrategy):
         return [key for key, score in sorted_entries[:count]]
     
     async def record_access(self, key: str) -> None:
-        """Record access and potentially adapt strategy."""
+        """
+Record access and potentially adapt strategy."""
         await super().record_access(key)
         
         self.requests_since_adaptation += 1
@@ -398,7 +418,8 @@ class AdaptiveStrategy(CacheStrategy):
             self.requests_since_adaptation = 0
     
     async def _adapt_strategy(self) -> None:
-        """Adapt strategy weights based on performance."""
+        """
+Adapt strategy weights based on performance."""
         try:
             # Calculate recent performance for each strategy
             current_hit_rate = self.metrics.hit_rate
@@ -442,7 +463,8 @@ class AdaptiveStrategy(CacheStrategy):
     
     async def _lfu_score(self, key: str, value: Any,
                         metadata: Optional[Dict[str, Any]] = None) -> float:
-        """LFU-based scoring."""
+        """
+LFU-based scoring."""
         if key in self.entries:
             entry = self.entries[key]
             frequency = entry.access_count
@@ -452,7 +474,8 @@ class AdaptiveStrategy(CacheStrategy):
     
     async def _ttl_score(self, key: str, value: Any,
                         metadata: Optional[Dict[str, Any]] = None) -> float:
-        """TTL-based scoring."""
+        """
+TTL-based scoring."""
         if key in self.entries:
             entry = self.entries[key]
             if entry.ttl_seconds:
@@ -462,14 +485,16 @@ class AdaptiveStrategy(CacheStrategy):
     
     async def _size_score(self, key: str, value: Any,
                          metadata: Optional[Dict[str, Any]] = None) -> float:
-        """Size-based scoring."""
+        """
+Size-based scoring."""
         size = self._estimate_size(value)
         # Prefer smaller items (inverse scoring)
         max_size = 1048576  # 1MB
         return max(0, 1 - size / max_size)
     
     async def optimize(self) -> Dict[str, Any]:
-        """Optimize adaptive strategy."""
+        """
+Optimize adaptive strategy."""
         optimizations = []
         
         # Analyze strategy performance

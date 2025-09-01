@@ -16,6 +16,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for creators"""
+    """
+Supported content types for creators"""
+
     AUDIO = "audio"          # Musicians, podcasters
     VIDEO = "video"          # Comedians, influencers, educators
     IMAGE = "image"          # Photographers, visual artists
@@ -56,6 +59,7 @@ class ContentType(Enum):
 
 class ProcessingStage(Enum):
     """Processing pipeline stages"""
+
     UPLOAD = "upload"
     CONTENT_ANALYSIS = "content_analysis"
     PROTECTION = "protection"
@@ -79,7 +83,8 @@ class ContentUpload:
 
 @dataclass
 class ProcessingResult:
-    """Complete processing result"""
+    """
+Complete processing result"""
     upload_id: str
     success: bool
     content_analysis: Dict[str, Any] = field(default_factory=dict)
@@ -480,7 +485,8 @@ class AIOrchestrator:
         return engine_map.get(content_type, self.content_processor)
 
     async def _check_platform_compatibility(self, file_path: str, content_type: ContentType) -> Dict[str, List[str]]:
-        """Check compatibility with various social media platforms"""
+        """
+Check compatibility with various social media platforms"""
         try:
             # Platform requirements mapping
             platform_requirements = {
@@ -527,7 +533,8 @@ class AIOrchestrator:
     async def _generate_protection_recommendations(
         self, upload: ContentUpload, analysis: Dict[str, Any], matches: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate content protection recommendations"""
+        """
+Generate content protection recommendations"""
         recommendations = []
         
         if matches:
@@ -549,7 +556,8 @@ class AIOrchestrator:
         return file_path  # Simplified for now
 
     async def _generate_distribution_url(self, upload: ContentUpload, platform: str, optimized_content: str) -> str:
-        """Generate distribution URL for platform"""
+        """
+Generate distribution URL for platform"""
         # Generate platform-specific distribution URLs
         return f"https://{platform}.com/content/{upload.upload_id}"
 
@@ -609,7 +617,8 @@ class AIOrchestrator:
         return self.results_cache.get(upload_id)
 
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get current processing statistics"""
+        """
+Get current processing statistics"""
         return {
             **self.processing_stats,
             "active_uploads": len(self.active_uploads),
@@ -1032,7 +1041,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         seo_data: Dict[str, Any]
     ) -> Dict[str, Dict[str, Any]]:
-        """Generate optimized versions for different platforms"""
+        """
+Generate optimized versions for different platforms"""
         
         platform_versions = {}
         
@@ -1080,7 +1090,8 @@ class AIOrchestrator:
         platform: str,
         version_info: Dict[str, Any]
     ) -> Optional[str]:
-        """Create distribution URL for platform"""
+        """
+Create distribution URL for platform"""
         
         try:
             # Generate secure, trackable distribution URL
@@ -1099,7 +1110,8 @@ class AIOrchestrator:
         return self.processing_status.get(upload_id)
     
     async def cancel_processing(self, upload_id: str) -> bool:
-        """Cancel ongoing processing for an upload"""
+        """
+Cancel ongoing processing for an upload"""
         
         if upload_id in self.processing_status:
             try:

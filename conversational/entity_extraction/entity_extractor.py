@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -39,7 +40,9 @@ from ...utils.validation import validate_input
 
 
 class EntityCategory(Enum):
-    """Entity categories specific to creative industry"""
+    """
+Entity categories specific to creative industry"""
+
     PERSON = "person"
     ORGANIZATION = "organization"
     CREATIVE_WORK = "creative_work"
@@ -56,6 +59,7 @@ class EntityCategory(Enum):
 
 class EntityConfidence(Enum):
     """Confidence levels for entity extraction"""
+
     HIGH = 0.9
     MEDIUM = 0.7
     LOW = 0.5
@@ -63,7 +67,8 @@ class EntityConfidence(Enum):
 
 @dataclass
 class ExtractedEntity:
-    """Data class for extracted entity with metadata"""
+    """
+Data class for extracted entity with metadata"""
     text: str
     entity_type: EntityCategory
     confidence: float
@@ -88,7 +93,8 @@ class ExtractedEntity:
 
 @dataclass
 class ExtractionResult:
-    """Comprehensive extraction result with analytics"""
+    """
+Comprehensive extraction result with analytics"""
     entities: List[ExtractedEntity]
     processing_time: float
     confidence_score: float
@@ -97,11 +103,13 @@ class ExtractionResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def get_high_confidence_entities(self) -> List[ExtractedEntity]:
-        """Get entities with high confidence scores"""
+        """
+Get entities with high confidence scores"""
         return [e for e in self.entities if e.confidence >= EntityConfidence.HIGH.value]
     
     def get_entities_by_type(self, entity_type: EntityCategory) -> List[ExtractedEntity]:
-        """Get entities filtered by type"""
+        """
+Get entities filtered by type"""
         return [e for e in self.entities if e.entity_type == entity_type]
 
 
@@ -263,7 +271,8 @@ class EntityExtractor(BaseService):
         }
     
     def _load_creative_patterns(self) -> Dict[str, List[str]]:
-        """Load regex patterns for creative industry entities"""
+        """
+Load regex patterns for creative industry entities"""
         return {
             'social_handles': [
                 r'@[\w\d_]+',
@@ -520,7 +529,8 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _extract_content_specific_entities(self, text: str, content_type: ContentType) -> List[ExtractedEntity]:
-        """Extract entities specific to content type"""
+        """
+Extract entities specific to content type"""
         entities = []
         
         if content_type == ContentType.AUDIO:
@@ -582,7 +592,8 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _deduplicate_entities(self, entities: List[ExtractedEntity]) -> List[ExtractedEntity]:
-        """Remove duplicate entities and merge similar ones"""
+        """
+Remove duplicate entities and merge similar ones"""
         if not entities:
             return []
             
@@ -611,7 +622,8 @@ class EntityExtractor(BaseService):
         return deduplicated
     
     def _select_best_entity(self, entities: List[ExtractedEntity]) -> ExtractedEntity:
-        """Select the best entity from overlapping entities"""
+        """
+Select the best entity from overlapping entities"""
         if len(entities) == 1:
             return entities[0]
             
@@ -631,7 +643,8 @@ class EntityExtractor(BaseService):
         return best
     
     def _get_entity_type_specificity(self, entity_type: EntityCategory) -> int:
-        """Get specificity score for entity type (higher = more specific)"""
+        """
+Get specificity score for entity type (higher = more specific)"""
         specificity_map = {
             EntityCategory.CREATIVE_WORK: 10,
             EntityCategory.INSTRUMENT: 9,
@@ -647,7 +660,8 @@ class EntityExtractor(BaseService):
         return specificity_map.get(entity_type, 0)
     
     async def _extract_relationships(self, entities: List[ExtractedEntity], text: str) -> List[EntityRelation]:
-        """Extract relationships between entities"""
+        """
+Extract relationships between entities"""
         relationships = []
         
         # Simple relationship extraction based on proximity and patterns
@@ -664,7 +678,8 @@ class EntityExtractor(BaseService):
         return relationships
     
     def _identify_relationship(self, entity1: ExtractedEntity, entity2: ExtractedEntity, text: str) -> Optional[EntityRelation]:
-        """Identify relationship between two entities"""
+        """
+Identify relationship between two entities"""
         # Extract text between entities
         between_text = text[entity1.end_pos:entity2.start_pos].lower().strip()
         
@@ -689,13 +704,15 @@ class EntityExtractor(BaseService):
         return None
     
     def _extract_context(self, text: str, start_pos: int, end_pos: int, context_size: int = 50) -> str:
-        """Extract context around entity"""
+        """
+Extract context around entity"""
         context_start = max(0, start_pos - context_size)
         context_end = min(len(text), end_pos + context_size)
         return text[context_start:context_end].strip()
     
     def _map_spacy_label_to_category(self, label: str) -> Optional[EntityCategory]:
-        """Map spaCy entity labels to our categories"""
+        """
+Map spaCy entity labels to our categories"""
         mapping = {
             'PERSON': EntityCategory.PERSON,
             'ORG': EntityCategory.ORGANIZATION,
@@ -709,7 +726,8 @@ class EntityExtractor(BaseService):
         return mapping.get(label)
     
     def _map_transformer_label_to_category(self, label: str) -> Optional[EntityCategory]:
-        """Map transformer entity labels to our categories"""
+        """
+Map transformer entity labels to our categories"""
         mapping = {
             'PER': EntityCategory.PERSON,
             'ORG': EntityCategory.ORGANIZATION,
@@ -719,7 +737,8 @@ class EntityExtractor(BaseService):
         return mapping.get(label)
     
     def _map_pattern_type_to_category(self, pattern_type: str) -> Optional[EntityCategory]:
-        """Map pattern types to entity categories"""
+        """
+Map pattern types to entity categories"""
         mapping = {
             'social_handles': EntityCategory.PLATFORM,
             'urls': EntityCategory.PLATFORM,
@@ -731,7 +750,8 @@ class EntityExtractor(BaseService):
         return mapping.get(pattern_type)
     
     def _map_vocabulary_type_to_category(self, vocab_type: str) -> Optional[EntityCategory]:
-        """Map vocabulary types to entity categories"""
+        """
+Map vocabulary types to entity categories"""
         mapping = {
             'music_genres': EntityCategory.GENRE,
             'instruments': EntityCategory.INSTRUMENT,
@@ -742,7 +762,8 @@ class EntityExtractor(BaseService):
         return mapping.get(vocab_type)
     
     def _calculate_overall_confidence(self, entities: List[ExtractedEntity]) -> float:
-        """Calculate overall confidence score for extraction"""
+        """
+Calculate overall confidence score for extraction"""
         if not entities:
             return 0.0
             
@@ -750,14 +771,16 @@ class EntityExtractor(BaseService):
         return total_confidence / len(entities)
     
     def _count_entities_by_type(self, entities: List[ExtractedEntity]) -> Dict[EntityCategory, int]:
-        """Count entities by type"""
+        """
+Count entities by type"""
         counts = {}
         for entity in entities:
             counts[entity.entity_type] = counts.get(entity.entity_type, 0) + 1
         return counts
     
     def _update_extraction_stats(self, result: ExtractionResult):
-        """Update extraction statistics"""
+        """
+Update extraction statistics"""
         self.extraction_stats['total_extractions'] += 1
         self.extraction_stats['successful_extractions'] += 1
         
@@ -773,7 +796,8 @@ class EntityExtractor(BaseService):
             self.extraction_stats['entity_type_distribution'][entity_type.value] = current_count + count
     
     async def get_extraction_statistics(self) -> Dict[str, Any]:
-        """Get extraction statistics"""
+        """
+Get extraction statistics"""
         return {
             **self.extraction_stats,
             'cache_stats': cache_manager.get_stats(),
@@ -785,7 +809,8 @@ class EntityExtractor(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for entity extraction service"""
+        """
+Health check for entity extraction service"""
         return {
             'status': 'healthy',
             'models_loaded': len(self.models),

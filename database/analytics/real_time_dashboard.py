@@ -10,6 +10,7 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union, AsyncGenerator
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -32,7 +33,9 @@ Base = declarative_base()
 
 
 class DashboardWidget(Enum):
-    """Available dashboard widgets"""
+    """
+Available dashboard widgets"""
+
     REAL_TIME_METRICS = "real_time_metrics"
     PERFORMANCE_OVERVIEW = "performance_overview"
     PLATFORM_COMPARISON = "platform_comparison"
@@ -47,6 +50,7 @@ class DashboardWidget(Enum):
 
 class MetricTimeframe(Enum):
     """Time frames for analytics"""
+
     LIVE = "live"
     LAST_HOUR = "last_hour"
     LAST_24H = "last_24h"
@@ -58,6 +62,7 @@ class MetricTimeframe(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -84,7 +89,8 @@ class RealTimeMetric:
 
 @dataclass
 class DashboardAlert:
-    """Dashboard alert data structure"""
+    """
+Dashboard alert data structure"""
     id: str
     title: str
     message: str
@@ -96,7 +102,8 @@ class DashboardAlert:
     dismiss_after: int = 300  # seconds
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
+        """
+Convert to dictionary for JSON serialization"""
         return {
             "id": self.id,
             "title": self.title,
@@ -170,7 +177,8 @@ class RealTimeDashboard:
         self.alert_manager = AlertManager(self.redis_client)
         
     async def connect_user(self, user_id: str, websocket: WebSocket, session_config: Dict[str, Any] = None) -> str:
-        """Connect user to real-time dashboard"""
+        """
+Connect user to real-time dashboard"""
         await websocket.accept()
         
         # Generate session token
@@ -211,7 +219,8 @@ class RealTimeDashboard:
             del self.user_sessions[session_token]
     
     async def _save_session_to_db(self, user_id: str, session_token: str, config: Dict[str, Any]):
-        """Save dashboard session to database"""
+        """
+Save dashboard session to database"""
         try:
             session = DashboardSession(
                 user_id=user_id,
@@ -678,7 +687,8 @@ class AlertManager:
         self.alert_cache_ttl = 3600  # 1 hour
     
     async def create_alert(self, user_id: str, alert: DashboardAlert) -> bool:
-        """Create new alert for user"""
+        """
+Create new alert for user"""
         try:
             alert_key = f"alerts:{user_id}:{alert.id}"
             alert_data = json.dumps(alert.to_dict())
@@ -740,7 +750,8 @@ class AlertManager:
         return new_alerts
     
     async def dismiss_alert(self, user_id: str, alert_id: str) -> bool:
-        """Dismiss specific alert"""
+        """
+Dismiss specific alert"""
         try:
             alert_key = f"alerts:{user_id}:{alert_id}"
             user_alerts_key = f"user_alerts:{user_id}"

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
+
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -29,7 +30,9 @@ ConversationBase = declarative_base()
 
 
 class ContentType(Enum):
-    """Content creator specialization types"""
+    """
+Content creator specialization types"""
+
     MUSIC_CREATION = "music_creation"
     BLOG_CONTENT = "blog_content"
     PHOTOGRAPHY = "photography"
@@ -44,6 +47,7 @@ class ContentType(Enum):
 
 class ConversationStatus(Enum):
     """Conversation processing status"""
+
     ACTIVE = "active"
     ARCHIVED = "archived"
     PROCESSING = "processing"
@@ -53,6 +57,7 @@ class ConversationStatus(Enum):
 
 class MemoryType(Enum):
     """Memory classification types"""
+
     SHORT_TERM = "short_term"
     LONG_TERM = "long_term"
     WORKING_MEMORY = "working_memory"
@@ -62,6 +67,7 @@ class MemoryType(Enum):
 
 class ContextType(Enum):
     """Context classification types"""
+
     CONTENT_CONTEXT = "content_context"
     COLLABORATION_CONTEXT = "collaboration_context"
     PROTECTION_CONTEXT = "protection_context"
@@ -84,7 +90,8 @@ class ConversationMetadata:
     processing_notes: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             "platform": self.platform,
             "language": self.language,
@@ -190,7 +197,8 @@ class ConversationRecord(Base):
     
     @context.setter
     def context(self, value: Optional['ConversationContext']):
-        """Set conversation context"""
+        """
+Set conversation context"""
         if not self.metadata:
             self.metadata = {}
         
@@ -200,7 +208,8 @@ class ConversationRecord(Base):
             self.metadata.pop('context', None)
     
     def encrypt_content(self, encryption_manager: EncryptionManager) -> bool:
-        """Encrypt conversation content"""
+        """
+Encrypt conversation content"""
         try:
             if self.conversation_data and not self.is_encrypted:
                 encrypted_data, key_id = encryption_manager.encrypt_data(
@@ -290,12 +299,14 @@ class MemoryEntry:
         return False
     
     def update_access(self):
-        """Update access tracking"""
+        """
+Update access tracking"""
         self.access_count += 1
         self.last_accessed = datetime.now(timezone.utc)
     
     def calculate_retention_score(self) -> float:
-        """Calculate how long this memory should be retained"""
+        """
+Calculate how long this memory should be retained"""
         # Combine relevance, importance, and access patterns
         base_score = (self.relevance_score + self.importance_score) / 2
         
@@ -309,7 +320,8 @@ class MemoryEntry:
         return min(base_score + access_boost + (recency_factor * 0.2), 1.0)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             "entry_id": self.entry_id,
             "conversation_id": self.conversation_id,
@@ -368,7 +380,8 @@ class ConversationContext:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "context_id": self.context_id,
             "type": self.context_type.value,

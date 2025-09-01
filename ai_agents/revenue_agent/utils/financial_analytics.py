@@ -25,6 +25,7 @@ intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
 """
+
 import asyncio
 import logging
 import json
@@ -87,7 +88,9 @@ from ...utils.statistics import StatisticalAnalyzer
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeframe(Enum):
-    """Analytics time frame options"""
+    """
+Analytics time frame options"""
+
     REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -99,6 +102,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Financial metric types"""
+
     REVENUE = "revenue"
     PROFIT = "profit"
     MARGIN = "margin"
@@ -112,6 +116,7 @@ class MetricType(Enum):
 
 class AnalysisType(Enum):
     """Types of financial analysis"""
+
     DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
@@ -123,6 +128,7 @@ class AnalysisType(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
@@ -523,7 +529,8 @@ class FinancialAnalytics:
         financial_data: Dict[str, Any], 
         config: AnalyticsConfiguration
     ) -> FinancialMetrics:
-        """Calculate comprehensive financial metrics"""
+        """
+Calculate comprehensive financial metrics"""
         
         with self.metrics['calculation_duration'].labels(complexity_level="comprehensive").time():
             
@@ -1100,7 +1107,9 @@ from ...services.notification import NotificationService
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeframe(Enum):
-    """Analytics time frame options"""
+    """
+Analytics time frame options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -1110,12 +1119,14 @@ class AnalyticsTimeframe(Enum):
 
 class ForecastHorizon(Enum):
     """Revenue forecast time horizons"""
+
     SHORT_TERM = "short_term"    # 1-30 days
     MEDIUM_TERM = "medium_term"  # 1-6 months
     LONG_TERM = "long_term"      # 6-24 months
 
 class MetricCategory(Enum):
     """Financial metric categories"""
+
     REVENUE_METRICS = "revenue_metrics"
     PROFITABILITY = "profitability"
     GROWTH_METRICS = "growth_metrics"
@@ -1139,7 +1150,8 @@ class FinancialSnapshot:
 
 @dataclass
 class Revenueforecast:
-    """Revenue forecasting results with confidence intervals"""
+    """
+Revenue forecasting results with confidence intervals"""
     user_id: str
     forecast_id: str
     forecast_horizon: ForecastHorizon
@@ -1154,7 +1166,8 @@ class Revenueforecast:
 
 @dataclass
 class BenchmarkAnalysis:
-    """Industry benchmark analysis results"""
+    """
+Industry benchmark analysis results"""
     user_id: str
     industry_segment: str
     benchmark_date: datetime
@@ -1733,7 +1746,8 @@ class FinancialAnalytics:
         end_date: datetime,
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Analyze historical revenue and performance trends"""
+        """
+Analyze historical revenue and performance trends"""
         # Get historical data points
         historical_data = await self._get_historical_data_points(
             user_id, start_date, end_date, timeframe
@@ -1771,7 +1785,8 @@ class FinancialAnalytics:
         self,
         timeframe: AnalyticsTimeframe
     ) -> Tuple[datetime, datetime]:
-        """Calculate start and end dates for timeframe"""
+        """
+Calculate start and end dates for timeframe"""
         end_date = datetime.now(timezone.utc)
         
         if timeframe == AnalyticsTimeframe.DAILY:
@@ -1794,7 +1809,8 @@ class FinancialAnalytics:
         user_id: str,
         lookback_days: int
     ) -> List[Dict[str, Any]]:
-        """Get historical revenue data for forecasting"""
+        """
+Get historical revenue data for forecasting"""
         end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=lookback_days)
         
@@ -1815,7 +1831,8 @@ class FinancialAnalytics:
         user_id: str,
         historical_data: List[Dict[str, Any]]
     ) -> pd.DataFrame:
-        """Prepare feature matrix for ML forecasting"""
+        """
+Prepare feature matrix for ML forecasting"""
         df = pd.DataFrame(historical_data)
         df['date'] = pd.to_datetime(df['date'])
         df.set_index('date', inplace=True)
@@ -1846,7 +1863,8 @@ class FinancialAnalytics:
         features_data: pd.DataFrame,
         historical_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Train multiple ML models for ensemble forecasting"""
+        """
+Train multiple ML models for ensemble forecasting"""
         # Prepare target variable
         y = features_data['revenue']
         X = features_data.drop(['revenue'], axis=1)
@@ -1880,7 +1898,8 @@ class FinancialAnalytics:
         self,
         forecast_horizon: ForecastHorizon
     ) -> List[datetime]:
-        """Generate forecast time periods"""
+        """
+Generate forecast time periods"""
         start_date = datetime.now(timezone.utc)
         
         if forecast_horizon == ForecastHorizon.SHORT_TERM:
@@ -1897,7 +1916,8 @@ class FinancialAnalytics:
         model_predictions: Dict[str, List[float]],
         confidence_level: float
     ) -> List[Tuple[datetime, Decimal, Decimal, Decimal]]:
-        """Create ensemble forecast with confidence intervals"""
+        """
+Create ensemble forecast with confidence intervals"""
         # Simple ensemble: average predictions
         ensemble_values = []
         dates = self._generate_forecast_period(ForecastHorizon.MEDIUM_TERM)
@@ -2030,13 +2050,16 @@ class RevenueForecaster:
         return {'forecast': [], 'confidence': 0.8, 'performance': {}}
 
     async def _forecast_with_prophet(self, data: List[Dict], periods: int) -> Dict[str, Any]:
-        """Prophet forecasting implementation"""
+        """
+Prophet forecasting implementation"""
         return {'forecast': [], 'confidence': 0.85, 'performance': {}}
 
     async def _forecast_with_lstm(self, data: List[Dict], periods: int) -> Dict[str, Any]:
-        """LSTM neural network forecasting implementation"""
+        """
+LSTM neural network forecasting implementation"""
         return {'forecast': [], 'confidence': 0.75, 'performance': {}}
 
     async def _forecast_with_ensemble(self, data: List[Dict], periods: int) -> Dict[str, Any]:
-        """Ensemble forecasting using multiple models"""
+        """
+Ensemble forecasting using multiple models"""
         return {'forecast': [], 'confidence': 0.9, 'performance': {}}

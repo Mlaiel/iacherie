@@ -17,6 +17,7 @@ Team Specialization:
 - DevOps Engineer: Production deployment & monitoring systems
 - AI Prompt Engineer: Intelligent content analysis & classification
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,9 @@ logger = get_logger(__name__)
 
 
 class SurveillanceScope(str, Enum):
-    """Surveillance scope levels."""
+    """
+Surveillance scope levels."""
+
     SURFACE_WEB = "surface_web"
     DEEP_WEB = "deep_web"
     SOCIAL_PLATFORMS = "social_platforms"
@@ -49,6 +52,7 @@ class SurveillanceScope(str, Enum):
 
 class PlatformType(str, Enum):
     """Supported platform types for surveillance."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -65,6 +69,7 @@ class PlatformType(str, Enum):
 
 class ViolationType(str, Enum):
     """Types of content violations."""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIXED_CONTENT = "remixed_content"
@@ -76,6 +81,7 @@ class ViolationType(str, Enum):
 
 class ViolationSeverity(str, Enum):
     """Violation severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -100,7 +106,8 @@ class SurveillanceTarget:
 
 @dataclass
 class ViolationDetection:
-    """Detected content violation."""
+    """
+Detected content violation."""
     detection_id: str
     target_id: str
     violation_type: ViolationType
@@ -119,7 +126,8 @@ class ViolationDetection:
 
 @dataclass
 class SurveillanceReport:
-    """Comprehensive surveillance report."""
+    """
+Comprehensive surveillance report."""
     report_id: str
     scan_period: Tuple[datetime, datetime]
     targets_monitored: List[str]
@@ -901,7 +909,8 @@ class ContentSurveillance:
         start_time: datetime,
         end_time: datetime
     ):
-        """Generate comprehensive surveillance report."""
+        """
+Generate comprehensive surveillance report."""
         logger.info(f"Generated surveillance report for period {start_time} to {end_time}")
     
     # Pattern analysis methods (simplified)
@@ -916,7 +925,8 @@ class ContentSurveillance:
         return []
     
     async def _analyze_violation_trends(self, violations: List[ViolationDetection]) -> Dict[str, Any]:
-        """Analyze violation trends."""
+        """
+Analyze violation trends."""
         return {"trend": "increasing", "rate": 0.15}
     
     async def _analyze_temporal_patterns(self, violations: List[ViolationDetection]) -> Dict[str, Any]:
@@ -1072,12 +1082,14 @@ class BasePlatformCrawler:
         keywords: List[str],
         metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan platform for content matches."""
+        """
+Scan platform for content matches."""
         return []
 
 
 class YouTubeCrawler(BasePlatformCrawler):
-    """YouTube platform crawler."""
+    """
+YouTube platform crawler."""
     
     async def scan_for_content(
         self,
@@ -1085,7 +1097,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         keywords: List[str],
         metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan YouTube for content matches."""
+        """
+Scan YouTube for content matches."""
         # Mock YouTube scan
         return [
             {
@@ -1108,36 +1121,43 @@ class TikTokCrawler(BasePlatformCrawler):
         keywords: List[str],
         metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan TikTok for content matches."""
+        """
+Scan TikTok for content matches."""
         # Mock TikTok scan
         return []
 
 
 class InstagramCrawler(BasePlatformCrawler):
-    """Instagram platform crawler."""
+    """
+Instagram platform crawler."""
     pass
 
 
 class FacebookCrawler(BasePlatformCrawler):
-    """Facebook platform crawler."""
+    """
+Facebook platform crawler."""
     pass
 
 
 class TwitterCrawler(BasePlatformCrawler):
-    """Twitter platform crawler."""
+    """
+Twitter platform crawler."""
     pass
 
 
 class SpotifyCrawler(BasePlatformCrawler):
-    """Spotify platform crawler."""
+    """
+Spotify platform crawler."""
     pass
 
 
 class SoundCloudCrawler(BasePlatformCrawler):
-    """SoundCloud platform crawler."""
+    """
+SoundCloud platform crawler."""
     pass
 
 
 class GenericWebCrawler(BasePlatformCrawler):
-    """Generic web crawler."""
+    """
+Generic web crawler."""
     pass

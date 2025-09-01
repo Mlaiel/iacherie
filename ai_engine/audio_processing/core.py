@@ -4,8 +4,9 @@ Advanced core components for high-performance audio processing in the IA Influen
 Implements industrial-grade audio analysis, enhancement, and processing capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure"""
+    """
+Comprehensive audio metadata structure"""
     sample_rate: int
     channels: int
     duration: float
@@ -44,7 +46,8 @@ class AudioMetadata:
 
 @dataclass
 class AudioFeatures:
-    """Rich audio feature representation"""
+    """
+Rich audio feature representation"""
     mfcc: np.ndarray
     spectral_centroid: np.ndarray
     spectral_rolloff: np.ndarray
@@ -60,7 +63,8 @@ class AudioFeatures:
 
 @dataclass
 class AudioAnalysisResult:
-    """Comprehensive audio analysis output"""
+    """
+Comprehensive audio analysis output"""
     metadata: AudioMetadata
     features: AudioFeatures
     quality_score: float
@@ -269,7 +273,8 @@ class AudioAnalyzer:
     async def extract_features(self,
                              audio_data: np.ndarray,
                              sample_rate: int) -> AudioFeatures:
-        """Extract comprehensive audio features"""
+        """
+Extract comprehensive audio features"""
         try:
             # Basic spectral features
             mfcc = librosa.feature.mfcc(
@@ -438,7 +443,8 @@ class AudioAnalyzer:
             return 50.0  # Default quality score
     
     def _predict_genre(self, features: AudioFeatures) -> str:
-        """Predict musical genre based on features"""
+        """
+Predict musical genre based on features"""
         # Simplified genre prediction based on feature analysis
         mean_mfcc = np.mean(features.mfcc, axis=1)
         spectral_centroid_mean = np.mean(features.spectral_centroid)
@@ -481,44 +487,52 @@ class AudioAnalyzer:
         return min(1.0, (rms_mean * 10 + spectral_centroid_mean / 5000) / 2)
     
     def _calculate_danceability(self, features: AudioFeatures) -> float:
-        """Calculate danceability score (0-1)"""
+        """
+Calculate danceability score (0-1)"""
         tempo_factor = 1.0 if 90 <= features.tempo <= 140 else 0.5
         rhythm_regularity = 1.0 - np.std(np.diff(features.onset_frames)) / 100
         return min(1.0, tempo_factor * rhythm_regularity)
     
     def _calculate_valence(self, features: AudioFeatures) -> float:
-        """Calculate musical valence/positivity (0-1)"""
+        """
+Calculate musical valence/positivity (0-1)"""
         chroma_brightness = np.mean(features.chroma[:7])  # Major scale notes
         spectral_rolloff_mean = np.mean(features.spectral_rolloff)
         return min(1.0, (chroma_brightness + spectral_rolloff_mean / 5000) / 2)
     
     def _calculate_acousticness(self, features: AudioFeatures) -> float:
-        """Calculate acousticness score (0-1)"""
+        """
+Calculate acousticness score (0-1)"""
         spectral_contrast_var = np.var(features.spectral_contrast)
         return max(0.0, 1.0 - spectral_contrast_var / 10)
     
     def _calculate_instrumentalness(self, features: AudioFeatures) -> float:
-        """Calculate instrumentalness score (0-1)"""
+        """
+Calculate instrumentalness score (0-1)"""
         mfcc_variance = np.var(features.mfcc)
         return min(1.0, mfcc_variance / 50)
     
     def _calculate_liveness(self, features: AudioFeatures) -> float:
-        """Calculate liveness score (0-1)"""
+        """
+Calculate liveness score (0-1)"""
         spectral_bandwidth_var = np.var(features.spectral_bandwidth)
         return min(1.0, spectral_bandwidth_var / 1000000)
     
     def _calculate_speechiness(self, features: AudioFeatures) -> float:
-        """Calculate speechiness score (0-1)"""
+        """
+Calculate speechiness score (0-1)"""
         zcr_mean = np.mean(features.zero_crossing_rate)
         return min(1.0, zcr_mean * 20)
     
     def _calculate_loudness(self, audio_data: np.ndarray) -> float:
-        """Calculate loudness in dB"""
+        """
+Calculate loudness in dB"""
         rms = np.sqrt(np.mean(audio_data ** 2))
         return 20 * np.log10(rms + 1e-10)
     
     def _analyze_key_mode(self, chroma: np.ndarray) -> Tuple[str, str]:
-        """Analyze musical key and mode"""
+        """
+Analyze musical key and mode"""
         chroma_mean = np.mean(chroma, axis=1)
         key_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         
@@ -572,7 +586,8 @@ class AudioEnhancer:
                           audio_data: np.ndarray,
                           sample_rate: int,
                           noise_floor_db: float = -40.0) -> np.ndarray:
-        """Advanced noise reduction using spectral gating"""
+        """
+Advanced noise reduction using spectral gating"""
         try:
             # Convert to frequency domain
             stft = librosa.stft(audio_data, hop_length=512)

@@ -11,13 +11,15 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import sys
 import traceback
 from typing import List, Dict, Any
 
 
 def validate_orchestration_imports() -> Dict[str, Any]:
-    """Validate that all orchestration modules can be imported."""
+    """
+Validate that all orchestration modules can be imported."""
     results = {
         "success": [],
         "failed": [],

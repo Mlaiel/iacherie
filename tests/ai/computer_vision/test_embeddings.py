@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -85,14 +86,16 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     """Test suite for VisualEmbeddingModel class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.embedding_model = VisualEmbeddingModel()
         self.test_image = self._create_test_image()
         self.test_images = [self._create_test_image() for _ in range(5)]
         self.embedding_config = self._create_embedding_config()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for embedding generation"""
+        """
+Create a test image for embedding generation"""
         image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add distinctive visual features
@@ -130,11 +133,13 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             }
     
     def test_embedding_model_initialization(self):
-        """Test VisualEmbeddingModel initialization"""
+        """
+Test VisualEmbeddingModel initialization"""
         self.assertIsInstance(self.embedding_model, VisualEmbeddingModel)
     
     def test_single_image_embedding(self):
-        """Test single image embedding generation"""
+        """
+Test single image embedding generation"""
         try:
             embedding = self.embedding_model.generate_embedding(
                 image=self.test_image,
@@ -276,13 +281,15 @@ class TestSimilarityMatcher(unittest.TestCase):
     """Test suite for SimilarityMatcher class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.matcher = SimilarityMatcher()
         self.test_embeddings = self._create_test_embeddings()
         self.query_embedding = self._create_query_embedding()
     
     def _create_test_embeddings(self) -> List[np.ndarray]:
-        """Create test embeddings for similarity matching"""
+        """
+Create test embeddings for similarity matching"""
         embeddings = []
         
         # Create similar embeddings (cluster 1)
@@ -308,18 +315,21 @@ class TestSimilarityMatcher(unittest.TestCase):
         return embeddings
     
     def _create_query_embedding(self) -> np.ndarray:
-        """Create query embedding similar to first cluster"""
+        """
+Create query embedding similar to first cluster"""
         base = self.test_embeddings[0]  # Use first embedding as base
         noise = np.random.normal(0, 0.05, base.shape).astype(np.float32)
         query = base + noise
         return query / np.linalg.norm(query)
     
     def test_matcher_initialization(self):
-        """Test SimilarityMatcher initialization"""
+        """
+Test SimilarityMatcher initialization"""
         self.assertIsInstance(self.matcher, SimilarityMatcher)
     
     def test_cosine_similarity_calculation(self):
-        """Test cosine similarity calculation"""
+        """
+Test cosine similarity calculation"""
         try:
             similarities = self.matcher.calculate_cosine_similarity(
                 query_embedding=self.query_embedding,
@@ -470,13 +480,15 @@ class TestContentMatcher(unittest.TestCase):
     """Test suite for ContentMatcher class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.content_matcher = ContentMatcher()
         self.test_images = self._create_test_images()
         self.content_database = self._create_content_database()
     
     def _create_test_images(self) -> List[np.ndarray]:
-        """Create test images for content matching"""
+        """
+Create test images for content matching"""
         images = []
         
         # Create images with different content types
@@ -515,11 +527,13 @@ class TestContentMatcher(unittest.TestCase):
         }
     
     def test_content_matcher_initialization(self):
-        """Test ContentMatcher initialization"""
+        """
+Test ContentMatcher initialization"""
         self.assertIsInstance(self.content_matcher, ContentMatcher)
     
     def test_content_type_classification(self):
-        """Test content type classification"""
+        """
+Test content type classification"""
         try:
             for i, image in enumerate(self.test_images):
                 content_type = self.content_matcher.classify_content_type(
@@ -656,13 +670,15 @@ class TestEmbeddingDatabase(unittest.TestCase):
     """Test suite for EmbeddingDatabase class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.db = EmbeddingDatabase()
         self.test_embeddings = self._create_test_embeddings()
         self.test_metadata = self._create_test_metadata()
     
     def _create_test_embeddings(self) -> List[np.ndarray]:
-        """Create test embeddings for database operations"""
+        """
+Create test embeddings for database operations"""
         embeddings = []
         for i in range(10):
             embedding = np.random.randn(512).astype(np.float32)
@@ -671,7 +687,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
         return embeddings
     
     def _create_test_metadata(self) -> List[Dict[str, Any]]:
-        """Create test metadata for embeddings"""
+        """
+Create test metadata for embeddings"""
         metadata = []
         for i in range(10):
             metadata.append({
@@ -683,11 +700,13 @@ class TestEmbeddingDatabase(unittest.TestCase):
         return metadata
     
     def test_database_initialization(self):
-        """Test EmbeddingDatabase initialization"""
+        """
+Test EmbeddingDatabase initialization"""
         self.assertIsInstance(self.db, EmbeddingDatabase)
     
     def test_embedding_insertion(self):
-        """Test embedding insertion into database"""
+        """
+Test embedding insertion into database"""
         try:
             for i, (embedding, metadata) in enumerate(zip(self.test_embeddings, self.test_metadata)):
                 result = self.db.insert_embedding(
@@ -843,12 +862,14 @@ class TestClusteringEngine(unittest.TestCase):
     """Test suite for ClusteringEngine class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.clustering_engine = ClusteringEngine()
         self.test_embeddings = self._create_clusterable_embeddings()
     
     def _create_clusterable_embeddings(self) -> np.ndarray:
-        """Create embeddings with clear cluster structure"""
+        """
+Create embeddings with clear cluster structure"""
         embeddings = []
         
         # Cluster 1: centered around (1, 1, ...)
@@ -875,11 +896,13 @@ class TestClusteringEngine(unittest.TestCase):
         return np.array(embeddings, dtype=np.float32)
     
     def test_clustering_engine_initialization(self):
-        """Test ClusteringEngine initialization"""
+        """
+Test ClusteringEngine initialization"""
         self.assertIsInstance(self.clustering_engine, ClusteringEngine)
     
     def test_kmeans_clustering(self):
-        """Test K-means clustering"""
+        """
+Test K-means clustering"""
         try:
             clustering_result = self.clustering_engine.kmeans_clustering(
                 embeddings=self.test_embeddings,
@@ -996,7 +1019,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
     """Test suite for embeddings integration and workflows"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.embedding_model = VisualEmbeddingModel()
         self.similarity_matcher = SimilarityMatcher()
         self.content_matcher = ContentMatcher()
@@ -1006,7 +1030,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
         self.test_images = self._create_diverse_test_images()
     
     def _create_diverse_test_images(self) -> List[np.ndarray]:
-        """Create diverse test images for integration testing"""
+        """
+Create diverse test images for integration testing"""
         images = []
         
         # Category 1: Geometric shapes

@@ -16,7 +16,8 @@ from tests.utils.mock_api_server import ensure_api_server
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_api_health_endpoint():
-    """Test API health endpoint integration."""
+    """
+Test API health endpoint integration."""
     # Ensure API server is available
     await ensure_api_server()
     

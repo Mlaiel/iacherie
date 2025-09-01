@@ -16,6 +16,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from ..base import BaseAgent
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks."""
+    """
+Supported blockchain networks."""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "bsc"
@@ -53,6 +56,7 @@ class BlockchainNetwork(Enum):
 
 class ContractType(Enum):
     """Types of smart contracts."""
+
     COPYRIGHT_REGISTRY = "copyright_registry"
     NFT_COLLECTION = "nft_collection"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -62,6 +66,7 @@ class ContractType(Enum):
 
 class TransactionStatus(Enum):
     """Blockchain transaction statuses."""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -133,7 +138,8 @@ class BlockchainAgent(BaseAgent):
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Blockchain Agent with multi-network support."""
+        """
+Initialize the Blockchain Agent with multi-network support."""
         super().__init__(config)
         
         # Network configurations
@@ -613,7 +619,8 @@ class BlockchainAgent(BaseAgent):
         return rate
     
     async def _estimate_gas_cost(self, network: BlockchainNetwork, amount: Decimal) -> Dict[str, Any]:
-        """Estimate gas cost for transaction."""
+        """
+Estimate gas cost for transaction."""
         base_gas_costs = {
             BlockchainNetwork.ETHEREUM: {'gas_limit': 21000, 'gas_price_gwei': 50},
             BlockchainNetwork.POLYGON: {'gas_limit': 21000, 'gas_price_gwei': 30},
@@ -630,7 +637,8 @@ class BlockchainAgent(BaseAgent):
         }
     
     def _get_copyright_registry_address(self, network: BlockchainNetwork) -> Optional[str]:
-        """Get deployed copyright registry contract address for network."""
+        """
+Get deployed copyright registry contract address for network."""
         # In real implementation, would return actual deployed contract addresses
         registry_addresses = {
             BlockchainNetwork.ETHEREUM: "0x1234567890123456789012345678901234567890",

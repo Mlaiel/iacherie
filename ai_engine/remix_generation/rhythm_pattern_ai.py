@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Générateur de patterns rythmiques IA ultra-avancé avec deep learning
 TECHNOLOGIES: Neural Networks, Rhythmic Analysis, Pattern Recognition, Temporal Modeling
 LOGIQUE MÉTIER: Musical context → Rhythm analysis → Pattern generation → Groove optimization → Quality validation
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ import mido
 logger = logging.getLogger(__name__)
 
 class RhythmStyle(Enum):
-    """Rhythm generation styles"""
+    """
+Rhythm generation styles"""
+
     ROCK = "rock"
     JAZZ = "jazz"
     POP = "pop"
@@ -56,6 +59,7 @@ class RhythmStyle(Enum):
 
 class RhythmComplexity(Enum):
     """Rhythm complexity levels"""
+
     SIMPLE = "simple"        # Basic patterns
     MODERATE = "moderate"    # Standard complexity
     COMPLEX = "complex"      # Advanced patterns
@@ -63,6 +67,7 @@ class RhythmComplexity(Enum):
 
 class TimeSignature(Enum):
     """Time signatures"""
+
     FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"
@@ -73,6 +78,7 @@ class TimeSignature(Enum):
 
 class DrumVoice(Enum):
     """Drum voices/instruments"""
+
     KICK = "kick"
     SNARE = "snare"
     HIHAT_CLOSED = "hihat_closed"
@@ -103,7 +109,8 @@ class RhythmParameters:
 
 @dataclass
 class RhythmPattern:
-    """Generated rhythm pattern"""
+    """
+Generated rhythm pattern"""
     pattern_id: str
     drum_patterns: Dict[DrumVoice, List[float]]  # Velocity per subdivision
     timing_grid: List[float]  # Timing for each subdivision
@@ -118,7 +125,8 @@ class RhythmPattern:
     midi_data: Optional[bytes] = None
 
 class RhythmConvNet(nn.Module):
-    """Convolutional Neural Network for rhythm pattern generation"""
+    """
+Convolutional Neural Network for rhythm pattern generation"""
     
     def __init__(self, num_voices: int = 12, pattern_length: int = 64, 
                  hidden_dim: int = 128):
@@ -207,7 +215,8 @@ class RhythmConvNet(nn.Module):
         return output, groove_adjustment
 
 class RhythmLSTM(nn.Module):
-    """LSTM-based rhythm sequence generator"""
+    """
+LSTM-based rhythm sequence generator"""
     
     def __init__(self, num_voices: int = 12, hidden_size: int = 256, 
                  num_layers: int = 3):
@@ -253,13 +262,15 @@ class RhythmLSTM(nn.Module):
         return torch.sigmoid(output), hidden
 
 class GrooveAnalyzer:
-    """Analyze and quantify groove characteristics"""
+    """
+Analyze and quantify groove characteristics"""
     
     def __init__(self):
         self.groove_templates = self._initialize_groove_templates()
     
     def _initialize_groove_templates(self) -> Dict[RhythmStyle, Dict[str, Any]]:
-        """Initialize style-specific groove templates"""
+        """
+Initialize style-specific groove templates"""
         return {
             RhythmStyle.ROCK: {
                 "kick_pattern": [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],

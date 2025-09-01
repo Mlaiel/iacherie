@@ -24,6 +24,7 @@ Team Specialists:
 - DevOps: Cross-Platform Scalability & Performance
 - IA Prompt Engineer: Multi-Device Conversational Experience
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -55,7 +56,9 @@ logger = get_logger(__name__)
 
 
 class DeviceType(Enum):
-    """Device type classifications"""
+    """
+Device type classifications"""
+
     MOBILE_PHONE = "mobile_phone"
     TABLET = "tablet"
     DESKTOP = "desktop"
@@ -69,6 +72,7 @@ class DeviceType(Enum):
 
 class DeviceCapability(Enum):
     """Device capability flags"""
+
     AUDIO_RECORDING = "audio_recording"
     VIDEO_RECORDING = "video_recording"
     IMAGE_CAPTURE = "image_capture"
@@ -83,6 +87,7 @@ class DeviceCapability(Enum):
 
 class SyncStatus(Enum):
     """Session synchronization status"""
+
     SYNCED = "synced"
     PENDING = "pending"
     CONFLICT = "conflict"
@@ -93,6 +98,7 @@ class SyncStatus(Enum):
 
 class HandoffReason(Enum):
     """Reasons for session handoff"""
+
     USER_INITIATED = "user_initiated"
     DEVICE_SWITCH = "device_switch"
     NETWORK_OPTIMIZATION = "network_optimization"
@@ -127,7 +133,8 @@ class DeviceInfo(BaseModel):
 
 
 class SessionState(BaseModel):
-    """Cross-device session state"""
+    """
+Cross-device session state"""
     session_id: str
     user_id: str
     primary_device_id: str
@@ -149,7 +156,8 @@ class SessionState(BaseModel):
 
 
 class DeviceSessionInfo(BaseModel):
-    """Device-specific session information"""
+    """
+Device-specific session information"""
     device_id: str
     session_id: str
     local_state: Dict[str, Any] = Field(default_factory=dict)
@@ -169,7 +177,8 @@ class DeviceSessionInfo(BaseModel):
 
 @dataclass
 class CrossDeviceConfig:
-    """Cross-device synchronization configuration"""
+    """
+Cross-device synchronization configuration"""
     sync_interval: int = 30  # seconds
     max_devices_per_session: int = 5
     handoff_timeout: int = 60  # seconds
@@ -209,7 +218,8 @@ class DeviceSessionSynchronizer:
         self.cleanup_task: Optional[asyncio.Task] = None
     
     async def start_synchronization(self):
-        """Start background synchronization tasks"""
+        """
+Start background synchronization tasks"""
         
         self.sync_task = asyncio.create_task(self._sync_loop())
         self.cleanup_task = asyncio.create_task(self._cleanup_loop())
@@ -919,7 +929,8 @@ class DeviceSessionSynchronizer:
         asyncio.create_task(self._persist_session_state(session_state))
     
     async def _cache_session_state(self, session_state: SessionState):
-        """Cache session state in Redis"""
+        """
+Cache session state in Redis"""
         
         try:
             cache_key = f"cross_device_session:{session_state.session_id}"
@@ -1004,7 +1015,8 @@ class DeviceSessionSynchronizer:
         pass
     
     async def _cache_device_session(self, device_id: str, device_session: DeviceSessionInfo):
-        """Cache device session information"""
+        """
+Cache device session information"""
         
         try:
             cache_key = f"device_session:{device_id}"
@@ -1118,7 +1130,8 @@ class MobileDesktopSessionSync:
         self.logger = get_logger(self.__class__.__name__)
     
     async def optimize_mobile_sync(self, session_id: str, device_id: str) -> bool:
-        """Optimize sync for mobile devices (battery, network)"""
+        """
+Optimize sync for mobile devices (battery, network)"""
         
         try:
             device_info = self.synchronizer.device_registry.get(device_id)
@@ -1148,13 +1161,15 @@ class MobileDesktopSessionSync:
         pass
     
     async def _enable_aggressive_compression(self, session_id: str, device_id: str):
-        """Enable aggressive compression for cellular networks"""
+        """
+Enable aggressive compression for cellular networks"""
         # Implementation would enable compression
         pass
 
 
 class SessionContinuityManager:
-    """Manages session continuity across device switches"""
+    """
+Manages session continuity across device switches"""
     
     def __init__(self, config: CrossDeviceConfig):
         self.config = config
@@ -1163,7 +1178,8 @@ class SessionContinuityManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def ensure_continuity(self, session_id: str) -> bool:
-        """Ensure session continuity across all devices"""
+        """
+Ensure session continuity across all devices"""
         
         try:
             session_state = self.synchronizer.session_states.get(session_id)
@@ -1234,12 +1250,14 @@ class SessionContinuityManager:
         pass
     
     async def _retry_failed_sync(self, session_id: str, device_id: str):
-        """Retry failed sync for device"""
+        """
+Retry failed sync for device"""
         # Implementation would retry sync operations
         pass
     
     async def _validate_state_consistency(self, session_id: str) -> bool:
-        """Validate state consistency across devices"""
+        """
+Validate state consistency across devices"""
         
         try:
             session_state = self.synchronizer.session_states.get(session_id)
@@ -1278,7 +1296,8 @@ class CrossDeviceSessionBridge:
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize cross-device session bridge"""
+        """
+Initialize cross-device session bridge"""
         
         await self.synchronizer.start_synchronization()
         self.logger.info("Cross-device session bridge initialized")
@@ -1312,12 +1331,14 @@ class CrossDeviceSessionBridge:
         return list(session_state.active_devices) if session_state else []
     
     async def get_device_info(self, device_id: str) -> Optional[DeviceInfo]:
-        """Get device information"""
+        """
+Get device information"""
         
         return self.synchronizer.device_registry.get(device_id)
     
     async def get_bridge_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive bridge statistics"""
+        """
+Get comprehensive bridge statistics"""
         
         try:
             return {

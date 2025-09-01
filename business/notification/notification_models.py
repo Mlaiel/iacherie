@@ -25,6 +25,7 @@ Data Models:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
@@ -36,7 +37,9 @@ from uuid import uuid4
 # Enumerations
 
 class NotificationPriority(Enum):
-    """Notification priority levels."""
+    """
+Notification priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -46,6 +49,7 @@ class NotificationPriority(Enum):
 
 class DeliveryStatus(Enum):
     """Notification delivery status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     DELIVERED = "delivered"
@@ -57,6 +61,7 @@ class DeliveryStatus(Enum):
 
 class ChannelType(Enum):
     """Supported notification channels."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -113,6 +118,7 @@ class NotificationType(Enum):
 
 class ProcessingStage(Enum):
     """Notification processing stages."""
+
     VALIDATION = "validation"
     PRIORITY_CLASSIFICATION = "priority_classification"
     TEMPLATE_PROCESSING = "template_processing"
@@ -124,6 +130,7 @@ class ProcessingStage(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status."""
+
     CREATED = "created"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -245,7 +252,8 @@ class NotificationResponse:
     metadata: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
+        """
+Convert to dictionary for serialization."""
         return {
             "notification_id": self.notification_id,
             "status": self.status.value if isinstance(self.status, DeliveryStatus) else self.status,
@@ -285,14 +293,16 @@ class NotificationTemplate:
         return self.channel_templates.get(channel)
     
     def add_channel_template(self, channel: str, template_config: Dict[str, Any]):
-        """Add template configuration for specific channel."""
+        """
+Add template configuration for specific channel."""
         self.channel_templates[channel] = template_config
         self.updated_at = datetime.now(timezone.utc)
 
 
 @dataclass
 class NotificationChannel:
-    """Notification channel configuration and metrics."""
+    """
+Notification channel configuration and metrics."""
     channel_id: str
     channel_type: ChannelType
     name: str
@@ -355,7 +365,8 @@ class NotificationWorkflow:
     created_by: Optional[str] = None
     
     def add_step(self, step_config: Dict[str, Any]):
-        """Add step to workflow."""
+        """
+Add step to workflow."""
         step_config["step_id"] = len(self.steps)
         self.steps.append(step_config)
     
@@ -419,7 +430,8 @@ class NotificationMetrics:
         return (successful / total * 100) if total > 0 else 0.0
     
     def get_failure_rate(self) -> float:
-        """Calculate failure rate."""
+        """
+Calculate failure rate."""
         return 100.0 - self.get_success_rate()
     
     def add_delivery_metric(
@@ -429,7 +441,8 @@ class NotificationMetrics:
         success: bool,
         cost: Optional[float] = None
     ):
-        """Add delivery metric data."""
+        """
+Add delivery metric data."""
         # Update overall metrics
         self.total_sent += 1
         if success:
@@ -524,7 +537,8 @@ class UserPreferences:
         return self.notification_type_preferences.get(notification_type, True)
     
     def is_channel_enabled(self, channel: str) -> bool:
-        """Check if channel is enabled for user."""
+        """
+Check if channel is enabled for user."""
         channel_map = {
             "email": self.email_enabled,
             "sms": self.sms_enabled,
@@ -543,7 +557,8 @@ class UserPreferences:
 
 @dataclass
 class BusinessRules:
-    """Configurable business rules for notification processing."""
+    """
+Configurable business rules for notification processing."""
     rule_id: str = field(default_factory=lambda: str(uuid4()))
     rule_name: str = ""
     notification_type: str = ""

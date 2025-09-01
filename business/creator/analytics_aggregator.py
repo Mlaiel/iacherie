@@ -5,7 +5,7 @@ to provide creators with unified insights, predictions, and optimization recomme
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ logger = get_logger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -40,6 +43,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricCategory(Enum):
     """Analytics metric categories"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     GROWTH = "growth"
@@ -62,7 +66,8 @@ class AnalyticsMetric:
 
 
 class PlatformConnector:
-    """Platform API connector for analytics data"""
+    """
+Platform API connector for analytics data"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
@@ -73,7 +78,8 @@ class PlatformConnector:
         ]
     
     async def fetch_platform_analytics(self, creator_id: str, platform: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Fetch analytics data from specific platform"""
+        """
+Fetch analytics data from specific platform"""
         cache_key = f"platform_analytics:{creator_id}:{platform}:{timeframe.value}"
         
         # Check cache first
@@ -134,7 +140,8 @@ class PlatformConnector:
 
 
 class DataAggregator:
-    """Multi-platform data aggregation engine"""
+    """
+Multi-platform data aggregation engine"""
     
     def __init__(self, platform_connector: PlatformConnector, cache_manager: CacheManager):
         self.platform_connector = platform_connector
@@ -142,7 +149,8 @@ class DataAggregator:
         self.logger = get_logger(self.__class__.__name__)
     
     async def aggregate_cross_platform_metrics(self, creator_id: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Aggregate metrics across all platforms"""
+        """
+Aggregate metrics across all platforms"""
         try:
             # Get connected platforms for creator
             connected_platforms = await self._get_connected_platforms(creator_id)
@@ -189,7 +197,8 @@ class DataAggregator:
         return ['youtube', 'instagram', 'tiktok']
     
     async def _calculate_cross_platform_metrics(self, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate cross-platform aggregated metrics"""
+        """
+Calculate cross-platform aggregated metrics"""
         metrics = {
             'average_engagement_rate': 0,
             'total_content_pieces': 0,
@@ -245,14 +254,16 @@ class DataAggregator:
 
 
 class InsightGenerator:
-    """AI-powered insights and recommendations generator"""
+    """
+AI-powered insights and recommendations generator"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def generate_performance_insights(self, aggregated_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate performance insights from aggregated data"""
+        """
+Generate performance insights from aggregated data"""
         insights = []
         
         # Engagement insight
@@ -313,7 +324,8 @@ class InsightGenerator:
         return insights
     
     async def generate_growth_predictions(self, historical_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate growth predictions based on historical data"""
+        """
+Generate growth predictions based on historical data"""
         # Mock growth predictions
         return {
             'predicted_follower_growth': {

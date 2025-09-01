@@ -6,7 +6,7 @@ platform compliance, and revenue optimization. Integrates with protection and li
 systems for complete creator content lifecycle management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 
 Features:
@@ -19,6 +19,7 @@ Features:
 - Automated workflow orchestration
 - Real-time business intelligence
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Set, Tuple
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessRuleType(Enum):
-    """Types of business rules for creator workflows."""
+    """
+Types of business rules for creator workflows."""
+
     CONTENT_POLICY = "content_policy"
     MONETIZATION = "monetization"
     PLATFORM_COMPLIANCE = "platform_compliance"
@@ -66,6 +69,7 @@ class BusinessRuleType(Enum):
 
 class RuleSeverity(Enum):
     """Business rule violation severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -75,6 +79,7 @@ class RuleSeverity(Enum):
 
 class ValidationContext(Enum):
     """Validation context for business rules."""
+
     UPLOAD = "upload"
     PUBLISH = "publish"
     MONETIZE = "monetize"
@@ -86,6 +91,7 @@ class ValidationContext(Enum):
 
 class CreatorType(Enum):
     """Creator types for specialized validation."""
+
     MUSICIAN = "musician"
     PODCASTER = "podcaster"
     VIDEO_CREATOR = "video_creator"
@@ -100,6 +106,7 @@ class CreatorType(Enum):
 
 class MonetizationModel(Enum):
     """Monetization models supported."""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     ADVERTISING = "advertising"
@@ -114,6 +121,7 @@ class MonetizationModel(Enum):
 
 class PlatformType(Enum):
     """Platform types for compliance."""
+
     MUSIC_STREAMING = "music_streaming"  # Spotify, Apple Music
     VIDEO_PLATFORM = "video_platform"    # YouTube, Vimeo
     SOCIAL_MEDIA = "social_media"        # Instagram, TikTok
@@ -125,6 +133,7 @@ class PlatformType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations."""
+
     FEATURE = "feature"                  # Featured artist
     REMIX = "remix"                      # Remix collaboration
     SPLIT = "split"                      # Revenue split
@@ -210,7 +219,8 @@ class BusinessRuleResult:
 
 @dataclass
 class CreatorProfile:
-    """Enhanced creator profile for business validation."""
+    """
+Enhanced creator profile for business validation."""
     creator_id: str
     creator_type: CreatorType
     name: str
@@ -300,7 +310,8 @@ class ContentLicensingInfo:
 
 @dataclass
 class MonetizationEligibility:
-    """Monetization eligibility assessment."""
+    """
+Monetization eligibility assessment."""
     creator_id: str
     platform: PlatformType
     monetization_model: MonetizationModel
@@ -343,6 +354,7 @@ class BusinessValidator:
     - Automated workflow orchestration
     - Real-time business rule execution
     """
+
     
     VERSION = "2.0.0"
     
@@ -931,7 +943,8 @@ class BusinessRule:
 
 @dataclass
 class BusinessRuleViolation:
-    """Business rule violation."""
+    """
+Business rule violation."""
     rule: BusinessRule
     field_path: str
     violation_message: str
@@ -952,7 +965,8 @@ class BusinessRuleViolation:
 
 @dataclass
 class BusinessValidationResult:
-    """Comprehensive business validation result."""
+    """
+Comprehensive business validation result."""
     is_compliant: bool
     total_rules_checked: int
     
@@ -1630,7 +1644,8 @@ class BusinessValidator:
             return 50.0
     
     async def _calculate_risk_level(self, result: BusinessValidationResult) -> str:
-        """Calculate risk level."""
+        """
+Calculate risk level."""
         try:
             if result.blocking_violations:
                 return "critical"
@@ -2004,7 +2019,8 @@ class BusinessValidator:
         return None
     
     async def _validate_youtube_duration(self, content_data: Dict[str, Any], creator_data: Optional[Dict[str, Any]], context: ValidationContext) -> Optional[Dict[str, Any]]:
-        """Validate YouTube duration limits."""
+        """
+Validate YouTube duration limits."""
         duration = content_data.get("duration", 0)
         max_duration = self.platform_policies["youtube"]["max_duration"]
         

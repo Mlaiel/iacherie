@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ from ...utils.cache import CacheManager
 
 
 class ContextType(Enum):
-    """Types of context being tracked"""
+    """
+Types of context being tracked"""
+
     USER_INTENT = "user_intent"
     CONTENT_FOCUS = "content_focus"
     BUSINESS_GOAL = "business_goal"
@@ -45,6 +48,7 @@ class ContextType(Enum):
 
 class TrackingMode(Enum):
     """Context tracking modes"""
+
     PASSIVE = "passive"      # Background tracking
     ACTIVE = "active"        # Explicit user interaction
     PREDICTIVE = "predictive"  # AI-powered predictions
@@ -64,13 +68,15 @@ class ContextSignal:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def get_current_weight(self) -> float:
-        """Calculate current weight considering decay"""
+        """
+Calculate current weight considering decay"""
         age_hours = (datetime.utcnow() - self.timestamp).total_seconds() / 3600
         decay_factor = np.exp(-self.decay_rate * age_hours)
         return self.weight * self.confidence * decay_factor
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "signal_type": self.signal_type.value,
             "value": self.value,
@@ -108,7 +114,8 @@ class ContextPattern:
 
 @dataclass
 class UserContextProfile:
-    """Comprehensive user context profile"""
+    """
+Comprehensive user context profile"""
     user_id: str
     created_at: datetime
     last_updated: datetime
@@ -613,7 +620,8 @@ class ContextTracker:
         )
     
     async def _analyze_patterns(self, user_id: str, context_type: ContextType):
-        """Analyze patterns for specific context type"""
+        """
+Analyze patterns for specific context type"""
         signals = self.context_signals[user_id][context_type]
         
         # Group signals by value
@@ -665,7 +673,8 @@ class ContextTracker:
         user_id: str,
         context_types: List[ContextType]
     ) -> Dict[str, Any]:
-        """Generate predictions for multiple context types"""
+        """
+Generate predictions for multiple context types"""
         predictions = {}
         
         for context_type in context_types:
@@ -828,19 +837,22 @@ class ContextTracker:
                 ]
     
     async def _initialize_pattern_models(self):
-        """Initialize machine learning models for pattern recognition"""
+        """
+Initialize machine learning models for pattern recognition"""
         # Placeholder for ML model initialization
         # In a full implementation, this would load pre-trained models
         for context_type in ContextType:
             self.pattern_models[context_type] = None
     
     async def _update_pattern_models(self):
-        """Update pattern recognition models with new data"""
+        """
+Update pattern recognition models with new data"""
         # Placeholder for model training/updating
         pass
     
     async def _load_user_profiles(self):
-        """Load user profiles from persistent storage"""
+        """
+Load user profiles from persistent storage"""
         try:
             # Load from cache or database
             profiles_data = await self.cache_manager.get("user_context_profiles")

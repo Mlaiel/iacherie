@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Performance and Load Testing Suite
+"""
+Performance and Load Testing Suite
 
 Comprehensive performance tests for load, stress, and scalability testing
 of critical Ainflue platform components, including both simulated and real API testing.
@@ -20,6 +22,7 @@ of critical Ainflue platform components, including both simulated and real API t
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -46,7 +49,8 @@ PERFORMANCE_THRESHOLDS = {
 
 
 class PerformanceMetrics:
-    """Performance metrics collection and analysis."""
+    """
+Performance metrics collection and analysis."""
     
     def __init__(self):
         self.response_times: List[float] = []
@@ -56,27 +60,33 @@ class PerformanceMetrics:
         self.end_time: float = 0
     
     def start_monitoring(self):
-        """Start performance monitoring."""
+        """
+Start performance monitoring."""
         self.start_time = time.time()
     
     def stop_monitoring(self):
-        """Stop performance monitoring."""
+        """
+Stop performance monitoring."""
         self.end_time = time.time()
     
     def add_response_time(self, response_time: float):
-        """Add response time measurement."""
+        """
+Add response time measurement."""
         self.response_times.append(response_time)
     
     def add_success(self):
-        """Record successful operation."""
+        """
+Record successful operation."""
         self.success_count += 1
     
     def add_error(self):
-        """Record failed operation."""
+        """
+Record failed operation."""
         self.error_count += 1
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get performance summary."""
+        """
+Get performance summary."""
         if not self.response_times:
             return {"error": "No measurements recorded"}
         
@@ -107,7 +117,8 @@ class TestSimulatedPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_simulated_api_performance(self):
-        """Test simulated API endpoint performance."""
+        """
+Test simulated API endpoint performance."""
         metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
@@ -183,7 +194,8 @@ class TestSimulatedPerformance:
         metrics.start_monitoring()
         
         async def simulate_task(task_id: int):
-            """Simulate a processing task."""
+            """
+Simulate a processing task."""
             start_time = time.time()
             
             # Simulate variable processing time (10-100ms)
@@ -245,7 +257,8 @@ class TestSimulatedPerformance:
     def test_cpu_efficiency(self):
         """Test CPU usage efficiency."""
         def cpu_task():
-            """Simulate CPU-intensive task."""
+            """
+Simulate CPU-intensive task."""
             result = 0
             for i in range(100000):  # Reduced for testing
                 result += i ** 2
@@ -274,7 +287,8 @@ class TestStressSimulation:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_high_concurrency_simulation(self):
-        """Test high concurrency simulation."""
+        """
+Test high concurrency simulation."""
         metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
@@ -359,7 +373,8 @@ class TestScalabilitySimulation:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_linear_scaling_simulation(self):
-        """Test linear scaling simulation."""
+        """
+Test linear scaling simulation."""
         results = {}
         
         # Test different load levels
@@ -418,7 +433,8 @@ class TestAPILoadTesting:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_api_endpoint_load_simulation(self):
-        """Test API endpoint load with simulated responses."""
+        """
+Test API endpoint load with simulated responses."""
         metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
@@ -489,7 +505,8 @@ class TestAPILoadTesting:
         metrics.start_monitoring()
         
         async def simulate_user_session(user_id: int):
-            """Simulate a complete user session."""
+            """
+Simulate a complete user session."""
             session_metrics = {
                 "user_id": user_id,
                 "requests": [],
@@ -571,7 +588,8 @@ class TestAPILoadTesting:
         
         # Simulate peak traffic scenarios
         async def peak_traffic_burst():
-            """Simulate a traffic burst scenario."""
+            """
+Simulate a traffic burst scenario."""
             burst_tasks = []
             
             # Create a burst of 200 requests in quick succession
@@ -637,12 +655,14 @@ class TestStressTestingEnhanced:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_memory_stress_with_large_payloads(self):
-        """Test system behavior with large data payloads."""
+        """
+Test system behavior with large data payloads."""
         metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         async def process_large_payload(payload_size_mb: int):
-            """Simulate processing of large payloads."""
+            """
+Simulate processing of large payloads."""
             start_time = time.time()
             
             # Create large data structure to simulate memory usage

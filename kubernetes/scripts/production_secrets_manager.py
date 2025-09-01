@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Production secrets management with automated rotation and validation.
 ==============================================================
 """
+
 import os
 import base64
 import secrets
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ExternalAPISecrets:
-    """External API credentials configuration"""
+    """
+External API credentials configuration"""
     # Social Media APIs
     youtube_api_key: str = ""
     instagram_app_id: str = ""
@@ -173,7 +175,8 @@ class ProductionSecretsManager:
         )
     
     def encode_secrets(self, secrets: ExternalAPISecrets) -> Dict[str, str]:
-        """Encode secrets to base64 for Kubernetes"""
+        """
+Encode secrets to base64 for Kubernetes"""
         encoded_secrets = {}
         
         # Convert dataclass to dict
@@ -240,7 +243,8 @@ class ProductionSecretsManager:
         return encoded_secrets
     
     def create_kubernetes_secret(self, secrets: ExternalAPISecrets) -> bool:
-        """Create or update Kubernetes secret with external API credentials"""
+        """
+Create or update Kubernetes secret with external API credentials"""
         if not self.kubernetes_client:
             logger.error("Kubernetes client not available")
             return False
@@ -320,7 +324,8 @@ class ProductionSecretsManager:
         return validation_results
     
     def rotate_secrets(self) -> bool:
-        """Rotate secrets that support programmatic rotation"""
+        """
+Rotate secrets that support programmatic rotation"""
         try:
             # Generate new JWT and encryption keys
             new_jwt_secret = secrets.token_urlsafe(64)

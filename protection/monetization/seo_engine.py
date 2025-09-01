@@ -20,6 +20,7 @@ Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution,
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for SEO optimization."""
+    """
+Content types for SEO optimization."""
+
     MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
@@ -50,6 +53,7 @@ class ContentType(Enum):
 
 class SEOMetricType(Enum):
     """SEO metric types."""
+
     SEARCH_RANKING = "search_ranking"
     KEYWORD_DENSITY = "keyword_density"
     READABILITY_SCORE = "readability_score"
@@ -62,6 +66,7 @@ class SEOMetricType(Enum):
 
 class OptimizationLevel(Enum):
     """SEO optimization levels."""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -84,7 +89,8 @@ class Keyword:
     
     @property
     def opportunity_score(self) -> float:
-        """Calculate keyword opportunity score."""
+        """
+Calculate keyword opportunity score."""
         volume_score = min(self.search_volume / 10000, 1.0) * 0.3
         competition_score = (1.0 - self.competition_level) * 0.25
         relevance_score = self.relevance_score * 0.25
@@ -95,7 +101,8 @@ class Keyword:
 
 @dataclass
 class SEOAnalysis:
-    """SEO analysis results."""
+    """
+SEO analysis results."""
     content_id: str
     content_type: ContentType
     current_ranking: Dict[str, int]  # keyword -> ranking position
@@ -110,7 +117,8 @@ class SEOAnalysis:
     analysis_date: datetime = field(default_factory=datetime.utcnow)
     
     def get_priority_actions(self) -> List[Dict[str, Any]]:
-        """Get prioritized optimization actions."""
+        """
+Get prioritized optimization actions."""
         actions = []
         
         # High-impact, low-effort optimizations
@@ -132,7 +140,8 @@ class SEOAnalysis:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization configuration."""
+    """
+Content optimization configuration."""
     target_keywords: List[Keyword]
     title_optimization: Dict[str, str]
     description_optimization: Dict[str, str]
@@ -145,7 +154,8 @@ class ContentOptimization:
 
 
 class KeywordResearchEngine:
-    """Advanced keyword research and analysis engine."""
+    """
+Advanced keyword research and analysis engine."""
     
     def __init__(self):
         self.keyword_cache: Dict[str, List[Keyword]] = {}
@@ -366,7 +376,8 @@ class KeywordResearchEngine:
 
 
 class ContentSEOOptimizer:
-    """Content SEO optimization engine."""
+    """
+Content SEO optimization engine."""
     
     def __init__(self):
         self.keyword_research = KeywordResearchEngine()
@@ -378,7 +389,8 @@ class ContentSEOOptimizer:
         content_data: Dict[str, Any],
         optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
     ) -> ContentOptimization:
-        """Optimize content for SEO."""
+        """
+Optimize content for SEO."""
         try:
             # Extract current content elements
             title = content_data.get('title', '')
@@ -567,7 +579,8 @@ class ContentSEOOptimizer:
         return metadata
     
     def _get_og_type(self, content_type: str) -> str:
-        """Get OpenGraph type for content."""
+        """
+Get OpenGraph type for content."""
         og_types = {
             'music': 'music.song',
             'video': 'video.other',
@@ -578,7 +591,8 @@ class ContentSEOOptimizer:
         return og_types.get(content_type, 'website')
     
     async def _optimize_content_structure(self, content_data: Dict[str, Any], keywords: List[Keyword]) -> Dict[str, Any]:
-        """Optimize content structure for SEO."""
+        """
+Optimize content structure for SEO."""
         structure = {
             'heading_structure': await self._optimize_headings(content_data, keywords),
             'internal_linking': await self._suggest_internal_links(content_data, keywords),
@@ -590,7 +604,8 @@ class ContentSEOOptimizer:
         return structure
     
     async def _optimize_headings(self, content_data: Dict[str, Any], keywords: List[Keyword]) -> Dict[str, Any]:
-        """Optimize heading structure."""
+        """
+Optimize heading structure."""
         return {
             'h1_suggestion': keywords[0].keyword if keywords else content_data.get('title', ''),
             'h2_suggestions': [kw.keyword for kw in keywords[1:4]] if len(keywords) > 1 else [],
@@ -598,7 +613,8 @@ class ContentSEOOptimizer:
         }
     
     async def _suggest_internal_links(self, content_data: Dict[str, Any], keywords: List[Keyword]) -> List[Dict[str, str]]:
-        """Suggest internal linking opportunities."""
+        """
+Suggest internal linking opportunities."""
         # This would analyze existing content and suggest relevant internal links
         return [
             {'anchor_text': kw.keyword, 'suggested_url': f'/content/{kw.keyword.replace(" ", "-")}'}
@@ -618,7 +634,8 @@ class ContentSEOOptimizer:
         }
     
     async def _analyze_readability(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content readability."""
+        """
+Analyze content readability."""
         description = content_data.get('description', '')
         
         # Simple readability analysis
@@ -638,7 +655,8 @@ class ContentSEOOptimizer:
         }
     
     async def _analyze_keyword_density(self, content_data: Dict[str, Any], keywords: List[Keyword]) -> Dict[str, float]:
-        """Analyze keyword density."""
+        """
+Analyze keyword density."""
         text = f"{content_data.get('title', '')} {content_data.get('description', '')}"
         words = text.lower().split()
         total_words = len(words)
@@ -763,7 +781,8 @@ class SEOEngine:
         content_data: Dict[str, Any],
         competitor_urls: List[str] = None
     ) -> SEOAnalysis:
-        """Comprehensive SEO analysis of content."""
+        """
+Comprehensive SEO analysis of content."""
         try:
             # Check cache
             if content_id in self.seo_cache:
@@ -929,7 +948,8 @@ class SEOEngine:
         content_gaps: List[str],
         technical_issues: List[str]
     ) -> List[Dict[str, Any]]:
-        """Generate specific optimization suggestions."""
+        """
+Generate specific optimization suggestions."""
         suggestions = []
         
         # Keyword optimization suggestions

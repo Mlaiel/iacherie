@@ -5,6 +5,7 @@ Provides unified access to all onboarding components and services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 from .creator_onboarding_agent import CreatorOnboardingAgent
 from .onboarding_manager import OnboardingManager
 from .profile_builder import ProfileBuilder
@@ -76,25 +77,30 @@ class OnboardingRouter:
         }
     
     def get_service(self, service_name: str):
-        """Get a specific service by name."""
+        """
+Get a specific service by name."""
         return self.services.get(service_name)
     
     def get_all_services(self):
-        """Get all available services."""
+        """
+Get all available services."""
         return self.services
     
     async def start_onboarding(self, user_id: str, creator_type: str, initial_data: dict = None):
-        """Start comprehensive onboarding workflow."""
+        """
+Start comprehensive onboarding workflow."""
         return await self.onboarding_workflow.start_onboarding_workflow(
             user_id, creator_type, initial_data
         )
     
     async def continue_onboarding(self, session_id: str, user_input: dict = None):
-        """Continue existing onboarding workflow."""
+        """
+Continue existing onboarding workflow."""
         return await self.onboarding_workflow.continue_workflow(session_id, user_input)
     
     async def get_onboarding_status(self, session_id: str):
-        """Get current onboarding status."""
+        """
+Get current onboarding status."""
         return await self.onboarding_workflow.get_workflow_status(session_id)
 
 # Create default router instance
@@ -102,42 +108,52 @@ default_router = OnboardingRouter()
 
 # Convenience functions using default router
 async def start_creator_onboarding(user_id: str, creator_type: str, initial_data: dict = None):
-    """Start creator onboarding workflow."""
+    """
+Start creator onboarding workflow."""
     return await default_router.start_onboarding(user_id, creator_type, initial_data)
 
 async def continue_creator_onboarding(session_id: str, user_input: dict = None):
-    """Continue creator onboarding workflow."""
+    """
+Continue creator onboarding workflow."""
     return await default_router.continue_onboarding(session_id, user_input)
 
 async def get_creator_onboarding_status(session_id: str):
-    """Get creator onboarding status."""
+    """
+Get creator onboarding status."""
     return await default_router.get_onboarding_status(session_id)
 
 def get_onboarding_service(service_name: str):
-    """Get specific onboarding service."""
+    """
+Get specific onboarding service."""
     return default_router.get_service(service_name)
 
 # Quick access to main components
 def get_onboarding_agent():
-    """Get the main onboarding agent."""
+    """
+Get the main onboarding agent."""
     return default_router.onboarding_agent
 
 def get_profile_builder():
-    """Get the profile builder service."""
+    """
+Get the profile builder service."""
     return default_router.profile_builder
 
 def get_content_analyzer():
-    """Get the content analyzer service."""
+    """
+Get the content analyzer service."""
     return default_router.content_analyzer
 
 def get_quality_assessor():
-    """Get the quality assessor service."""
+    """
+Get the quality assessor service."""
     return default_router.quality_assessor
 
 def get_verification_engine():
-    """Get the verification engine service."""
+    """
+Get the verification engine service."""
     return default_router.verification_engine
 
 def get_workflow_manager():
-    """Get the workflow manager service."""
+    """
+Get the workflow manager service."""
     return default_router.onboarding_workflow

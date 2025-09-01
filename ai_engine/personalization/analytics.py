@@ -72,7 +72,9 @@ from .exceptions import PersonalizationError, AnalyticsError, DataValidationErro
 
 
 class MetricType(Enum):
-    """Types of personalization metrics"""
+    """
+Types of personalization metrics"""
+
     ENGAGEMENT = "engagement"
     CONVERSION = "conversion"
     RETENTION = "retention"
@@ -86,6 +88,7 @@ class MetricType(Enum):
 
 class AnalyticsPeriod(Enum):
     """Analytics time periods"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"

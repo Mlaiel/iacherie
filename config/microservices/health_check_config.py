@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import time
 import asyncio
@@ -29,7 +30,9 @@ from datetime import datetime, timedelta
 
 
 class HealthStatus(str, Enum):
-    """Health check status types."""
+    """
+Health check status types."""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
@@ -38,6 +41,7 @@ class HealthStatus(str, Enum):
 
 class HealthCheckType(str, Enum):
     """Health check types."""
+
     HTTP = "http"
     TCP = "tcp"
     DATABASE = "database"
@@ -48,6 +52,7 @@ class HealthCheckType(str, Enum):
 
 class ServiceType(str, Enum):
     """Service types for health checking."""
+
     WEB_SERVICE = "web_service"
     DATABASE = "database"
     CACHE = "cache"
@@ -67,7 +72,8 @@ class HealthCheckResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "service_name": self.service_name,
             "status": self.status.value,
@@ -209,23 +215,27 @@ class HealthChecker:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
     def add_check(self, check: HealthCheckDefinition):
-        """Add health check definition."""
+        """
+Add health check definition."""
         self.checks[check.name] = check
     
     def remove_check(self, name: str):
-        """Remove health check definition."""
+        """
+Remove health check definition."""
         if name in self.checks:
             del self.checks[name]
         if name in self.results:
             del self.results[name]
     
     async def check_http(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform HTTP health check."""
+        """
+Perform HTTP health check."""
         start_time = time.time()
         
         try:

@@ -8,7 +8,7 @@ Responsibility: Comprehensive type system for content protection and monetizatio
 ==========================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,13 +23,15 @@ TYPE CLASSIFICATION LOGIC:
 Migration Request → Type Analysis → Priority Assignment → 
 Category Classification → Risk Assessment → Execution Strategy Selection
 """
+
 from enum import Enum, IntEnum
 from typing import Optional, List, Dict, Any
 from dataclasses import dataclass
 
 
 class MigrationType(Enum):
-    """Comprehensive migration type classification for enterprise platform"""
+    """
+Comprehensive migration type classification for enterprise platform"""
     
     # Core schema migrations
     SCHEMA_CREATION = "schema_creation"
@@ -92,6 +94,7 @@ class MigrationType(Enum):
 
 class MigrationPriority(IntEnum):
     """Migration priority levels with numeric ordering"""
+
     
     EMERGENCY = 1      # Critical system failures, security breaches
     CRITICAL = 2       # Production issues, data corruption
@@ -102,7 +105,8 @@ class MigrationPriority(IntEnum):
 
 
 class MigrationStatus(Enum):
-    """Comprehensive migration status tracking"""
+    """
+Comprehensive migration status tracking"""
     
     # Planning phase
     DRAFT = "draft"
@@ -195,6 +199,7 @@ class RollbackStrategy(Enum):
 
 class ValidationSeverity(Enum):
     """Validation issue severity levels"""
+
     
     CRITICAL = "critical"     # Blocks execution
     ERROR = "error"          # Major issues
@@ -205,6 +210,7 @@ class ValidationSeverity(Enum):
 
 class NotificationLevel(Enum):
     """Notification levels for migration events"""
+
     
     EMERGENCY = "emergency"   # Immediate attention required
     ALERT = "alert"          # Important notifications
@@ -215,6 +221,7 @@ class NotificationLevel(Enum):
 
 class EnvironmentType(Enum):
     """Environment types for migration targeting"""
+
     
     DEVELOPMENT = "development"
     TESTING = "testing"
@@ -226,6 +233,7 @@ class EnvironmentType(Enum):
 
 class DataClassification(Enum):
     """Data classification levels for security and compliance"""
+
     
     PUBLIC = "public"                    # Public data
     INTERNAL = "internal"                # Internal use only
@@ -238,6 +246,7 @@ class DataClassification(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks for migration validation"""
+
     
     GDPR = "gdpr"                        # General Data Protection Regulation
     CCPA = "ccpa"                        # California Consumer Privacy Act
@@ -393,7 +402,8 @@ class MigrationConstraints:
 
 @dataclass
 class MigrationMetadata:
-    """Comprehensive migration metadata"""
+    """
+Comprehensive migration metadata"""
     
     # Basic information
     title: str
@@ -441,7 +451,8 @@ class MigrationMetadata:
 # Utility functions for type handling
 
 def get_migration_type_by_category(category: str) -> List[MigrationType]:
-    """Get migration types by category"""
+    """
+Get migration types by category"""
     
     category_mapping = {
         "schema": [
@@ -486,7 +497,8 @@ def get_priority_weight(priority: MigrationPriority) -> int:
 
 
 def is_critical_migration(migration_type: MigrationType, priority: MigrationPriority) -> bool:
-    """Determine if migration is critical"""
+    """
+Determine if migration is critical"""
     
     critical_types = [
         MigrationType.SECURITY_ENHANCEMENT,
@@ -502,7 +514,8 @@ def is_critical_migration(migration_type: MigrationType, priority: MigrationPrio
 
 
 def requires_maintenance_window(migration_type: MigrationType) -> bool:
-    """Determine if migration requires maintenance window"""
+    """
+Determine if migration requires maintenance window"""
     
     maintenance_types = [
         MigrationType.SCHEMA_DELETION,
@@ -515,7 +528,8 @@ def requires_maintenance_window(migration_type: MigrationType) -> bool:
 
 
 def get_default_rollback_strategy(migration_type: MigrationType) -> RollbackStrategy:
-    """Get default rollback strategy for migration type"""
+    """
+Get default rollback strategy for migration type"""
     
     strategy_mapping = {
         MigrationType.SCHEMA_CREATION: RollbackStrategy.SAFE_ROLLBACK,

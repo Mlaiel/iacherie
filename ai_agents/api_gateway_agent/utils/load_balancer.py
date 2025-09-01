@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import random
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ServiceInstance:
-    """Service instance information"""
+    """
+Service instance information"""
     service_name: str
     upstream_url: str
     weight: int = 10
@@ -58,7 +60,8 @@ class LoadBalancer:
         strategy: LoadBalancingStrategy = LoadBalancingStrategy.WEIGHTED_ROUND_ROBIN,
         services: Optional[Dict[str, Dict[str, Any]]] = None
     ):
-        """Initialize load balancer"""
+        """
+Initialize load balancer"""
         self.strategy = strategy
         self.services: Dict[str, List[ServiceInstance]] = {}
         
@@ -192,7 +195,8 @@ class LoadBalancer:
         service_name: str, 
         instances: List[ServiceInstance]
     ) -> ServiceInstance:
-        """Round robin instance selection"""
+        """
+Round robin instance selection"""
         index = self.round_robin_indices.get(service_name, 0)
         selected = instances[index % len(instances)]
         
@@ -206,7 +210,8 @@ class LoadBalancer:
         service_name: str, 
         instances: List[ServiceInstance]
     ) -> ServiceInstance:
-        """Weighted round robin instance selection"""
+        """
+Weighted round robin instance selection"""
         # Create weighted list
         weighted_instances = []
         for instance in instances:
@@ -224,7 +229,8 @@ class LoadBalancer:
         return selected
     
     def _least_connections_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
-        """Least connections instance selection"""
+        """
+Least connections instance selection"""
         return min(instances, key=lambda x: x.current_connections)
     
     def _ip_hash_selection(
@@ -233,7 +239,8 @@ class LoadBalancer:
         instances: List[ServiceInstance], 
         client_ip: Optional[str]
     ) -> ServiceInstance:
-        """IP hash based instance selection"""
+        """
+IP hash based instance selection"""
         if not client_ip:
             # Fallback to round robin
             return self._round_robin_selection(service_name, instances)
@@ -250,7 +257,8 @@ class LoadBalancer:
         return random.choice(instances)
     
     def _health_based_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
-        """Health and performance based instance selection"""
+        """
+Health and performance based instance selection"""
         # Score instances based on health metrics
         scored_instances = []
         
@@ -264,7 +272,8 @@ class LoadBalancer:
         return scored_instances[0][0]
     
     def _calculate_instance_score(self, instance: ServiceInstance) -> float:
-        """Calculate instance health score"""
+        """
+Calculate instance health score"""
         try:
             score = 100.0  # Base score
             

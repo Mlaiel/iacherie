@@ -13,6 +13,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """AI model types"""
+    """
+AI model types"""
+
     CONTENT_CLASSIFIER = "content_classifier"
     FINGERPRINT_EXTRACTOR = "fingerprint_extractor"
     SIMILARITY_MATCHER = "similarity_matcher"
@@ -68,6 +71,7 @@ class ModelType(Enum):
 
 class TrainingStatus(Enum):
     """Training status enumeration"""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     TRAINING = "training"
@@ -80,6 +84,7 @@ class TrainingStatus(Enum):
 
 class DatasetFormat(Enum):
     """Dataset format types"""
+
     CSV = "csv"
     JSON = "json"
     JSONL = "jsonl"
@@ -93,6 +98,7 @@ class DatasetFormat(Enum):
 
 class TrainingStrategy(Enum):
     """Training strategy types"""
+
     FULL_FINE_TUNING = "full_fine_tuning"
     LORA = "lora"
     ADALORA = "adalora"
@@ -154,7 +160,8 @@ class TrainingConfiguration:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics and progress tracking"""
+    """
+Training metrics and progress tracking"""
     training_id: str
     epoch: int
     step: int
@@ -171,7 +178,8 @@ class TrainingMetrics:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_wandb_dict(self) -> Dict[str, Any]:
-        """Convert metrics to WandB logging format"""
+        """
+Convert metrics to WandB logging format"""
         return {
             'epoch': self.epoch,
             'step': self.step,
@@ -190,7 +198,8 @@ class TrainingMetrics:
 
 @dataclass
 class ModelVersion:
-    """Model version information"""
+    """
+Model version information"""
     model_id: str
     version: str
     model_type: ModelType
@@ -579,7 +588,8 @@ class ModelTrainingPipeline:
         self._training_jobs: Dict[str, Dict[str, Any]] = {}
         
     def _setup_accelerator(self):
-        """Setup Accelerate for distributed training"""
+        """
+Setup Accelerate for distributed training"""
         try:
             self._accelerator = Accelerator(
                 mixed_precision='fp16' if self.config.get('mixed_precision', True) else 'no',
@@ -854,7 +864,8 @@ class ModelTrainingPipeline:
         return job_info
     
     async def cancel_training(self, training_id: str) -> bool:
-        """Cancel training job"""
+        """
+Cancel training job"""
         try:
             if training_id not in self._training_jobs:
                 return False
@@ -891,7 +902,8 @@ class ModelTrainingPipeline:
 
 
 class CustomAITrainer:
-    """Main custom AI trainer orchestrator"""
+    """
+Main custom AI trainer orchestrator"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -904,7 +916,8 @@ class CustomAITrainer:
             self._initialize_ray_cluster()
     
     def _initialize_ray_cluster(self):
-        """Initialize Ray cluster for distributed training"""
+        """
+Initialize Ray cluster for distributed training"""
         try:
             if not ray.is_initialized():
                 ray.init(
@@ -1053,7 +1066,8 @@ class CustomAITrainer:
         version: str,
         test_dataset_id: str
     ) -> Dict[str, float]:
-        """Benchmark model performance"""
+        """
+Benchmark model performance"""
         try:
             version_key = f"{model_id}:{version}"
             if version_key not in self._model_registry:

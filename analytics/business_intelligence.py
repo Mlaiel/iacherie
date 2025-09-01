@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -34,7 +35,9 @@ import joblib
 
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     CONTENT_PERFORMANCE = "content_performance"
     USER_ENGAGEMENT = "user_engagement"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -47,6 +50,7 @@ class AnalyticsMetric(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -68,7 +72,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance metrics"""
+    """
+Content performance metrics"""
     content_id: str
     views: int
     likes: int
@@ -84,7 +89,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """User engagement metrics"""
+    """
+User engagement metrics"""
     user_id: str
     session_duration: float
     page_views: int
@@ -99,7 +105,8 @@ class UserEngagementMetrics:
 
 @dataclass
 class PlatformHealthMetrics:
-    """Platform health metrics"""
+    """
+Platform health metrics"""
     response_time: float
     throughput: float
     error_rate: float
@@ -113,7 +120,8 @@ class PlatformHealthMetrics:
 
 @dataclass
 class PredictiveInsight:
-    """Predictive analytics insight"""
+    """
+Predictive analytics insight"""
     insight_id: str
     insight_type: str
     prediction: Any
@@ -126,7 +134,8 @@ class PredictiveInsight:
 
 
 class ContentPerformanceAnalyzer:
-    """Analyzes content performance and trends"""
+    """
+Analyzes content performance and trends"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -143,7 +152,8 @@ class ContentPerformanceAnalyzer:
         content_data: List[Dict[str, Any]],
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Analyze content performance across multiple dimensions"""
+        """
+Analyze content performance across multiple dimensions"""
         try:
             if not content_data:
                 return {"error": "No content data provided"}
@@ -270,7 +280,8 @@ class ContentPerformanceAnalyzer:
             return 0.0
     
     def _determine_trend_direction(self, df: pd.DataFrame) -> str:
-        """Determine overall trend direction"""
+        """
+Determine overall trend direction"""
         try:
             if 'engagement_rate' not in df.columns:
                 return "unknown"
@@ -394,7 +405,8 @@ class UserBehaviorAnalyzer:
         user_data: List[Dict[str, Any]],
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Comprehensive user behavior analysis"""
+        """
+Comprehensive user behavior analysis"""
         try:
             if not user_data:
                 return {"error": "No user data provided"}
@@ -635,7 +647,8 @@ class PredictiveAnalyticsEngine:
         historical_data: List[Dict[str, Any]],
         prediction_horizon: timedelta = timedelta(days=30)
     ) -> List[PredictiveInsight]:
-        """Generate predictive insights from historical data"""
+        """
+Generate predictive insights from historical data"""
         insights = []
         
         try:

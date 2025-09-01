@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -21,10 +22,12 @@ logger = logging.getLogger(__name__)
 
 
 class TwitchPlatform(PlatformBase):
-    """Twitch platform integration"""
+    """
+Twitch platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Twitch platform"""
+        """
+Initialize Twitch platform"""
         super().__init__(config)
         self.api_base = "https://api.twitch.tv/helix"
         self.auth_base = "https://id.twitch.tv/oauth2"
@@ -39,7 +42,8 @@ class TwitchPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitch using OAuth2"""
+        """
+Authenticate with Twitch using OAuth2"""
         try:
             session = await self._get_session()
             
@@ -76,7 +80,8 @@ class TwitchPlatform(PlatformBase):
         return await self.authenticate()  # Twitch uses client credentials flow
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Twitch API"""
+        """
+Make authenticated request to Twitch API"""
         if not self.is_authenticated or self._token_expired():
             if not await self.authenticate():
                 return None
@@ -124,7 +129,8 @@ class TwitchPlatform(PlatformBase):
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Twitch (clips/highlights only)"""
+        """
+Upload content to Twitch (clips/highlights only)"""
         # Twitch doesn't support direct video uploads via API
         # Only supports creating clips from existing streams
         return UploadResult(

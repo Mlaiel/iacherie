@@ -5,7 +5,7 @@ AI-powered content violation detection system for multi-format content.
 Detects unauthorized usage, copyright infringement, and content theft across platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ from bs4 import BeautifulSoup
 
 
 class ViolationType(Enum):
-    """Content violation types"""
+    """
+Content violation types"""
+
     DIRECT_COPY = "direct_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -48,6 +51,7 @@ class ViolationType(Enum):
 
 class DetectionMethod(Enum):
     """Detection method types"""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -59,6 +63,7 @@ class DetectionMethod(Enum):
 
 class ViolationSeverity(Enum):
     """Violation severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -81,7 +86,8 @@ class DetectionConfig:
 
 @dataclass
 class ViolationEvidence:
-    """Violation evidence data"""
+    """
+Violation evidence data"""
     evidence_id: str
     violation_id: str
     evidence_type: str
@@ -95,7 +101,8 @@ class ViolationEvidence:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
+    """
+Content violation alert"""
     alert_id: str
     content_id: str
     detected_url: str
@@ -112,7 +119,8 @@ class ViolationAlert:
 
 @dataclass
 class DetectionReport:
-    """Violation detection report"""
+    """
+Violation detection report"""
     report_id: str
     content_id: str
     scan_period: int
@@ -556,7 +564,8 @@ class ViolationDetector:
             return await coro
     
     async def _validate_detection_config(self, config: DetectionConfig) -> bool:
-        """Validate detection configuration"""
+        """
+Validate detection configuration"""
         if config.similarity_threshold < 0.0 or config.similarity_threshold > 1.0:
             return False
         
@@ -569,17 +578,20 @@ class ViolationDetector:
         return True
     
     async def _store_detection_config(self, config: DetectionConfig):
-        """Store detection configuration in database"""
+        """
+Store detection configuration in database"""
         # Implementation would store config in database
         pass
     
     async def _initialize_detection_fingerprints(self, config: DetectionConfig):
-        """Initialize detection fingerprints for content"""
+        """
+Initialize detection fingerprints for content"""
         # Implementation would create/update fingerprints
         pass
     
     async def _schedule_detection_scans(self, config: DetectionConfig):
-        """Schedule periodic detection scans"""
+        """
+Schedule periodic detection scans"""
         scan_data = {
             'content_id': config.content_id,
             'platforms': config.platforms_to_scan,
@@ -645,7 +657,8 @@ class ViolationDetector:
     
     async def _scan_platform_violations(self, content_id: str, platform: str,
                                       fingerprints: Dict, config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan specific platform for violations"""
+        """
+Scan specific platform for violations"""
         violations = []
         
         try:
@@ -678,7 +691,8 @@ class ViolationDetector:
     
     async def _scan_instagram_violations(self, content_id: str, fingerprints: Dict,
                                        config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan Instagram for violations"""
+        """
+Scan Instagram for violations"""
         violations = []
         
         # Implementation would use Instagram API to search for similar content
@@ -688,7 +702,8 @@ class ViolationDetector:
     
     async def _scan_tiktok_violations(self, content_id: str, fingerprints: Dict,
                                     config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan TikTok for violations"""
+        """
+Scan TikTok for violations"""
         violations = []
         
         # Implementation would use TikTok API to search for similar content
@@ -698,7 +713,8 @@ class ViolationDetector:
     
     async def _scan_twitter_violations(self, content_id: str, fingerprints: Dict,
                                      config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan Twitter for violations"""
+        """
+Scan Twitter for violations"""
         violations = []
         
         # Implementation would use Twitter API to search for similar content
@@ -707,7 +723,8 @@ class ViolationDetector:
         return violations
     
     async def _validate_violation(self, violation: ViolationAlert, config: DetectionConfig) -> bool:
-        """Validate detected violation"""
+        """
+Validate detected violation"""
         # Check if similarity score meets threshold
         if violation.similarity_score < config.alert_threshold:
             return False
@@ -716,12 +733,14 @@ class ViolationDetector:
         return True
     
     async def _store_violation_alert(self, violation: ViolationAlert):
-        """Store violation alert in database"""
+        """
+Store violation alert in database"""
         # Implementation would store violation in database
         pass
     
     async def _update_scan_statistics(self, content_id: str, violations_found: int):
-        """Update scan statistics"""
+        """
+Update scan statistics"""
         stats_key = f"scan_stats:{content_id}"
         current_stats = await self.redis.get(stats_key)
         
@@ -742,22 +761,26 @@ class ViolationDetector:
         return 0.0  # Placeholder
     
     async def _calculate_video_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate video fingerprint similarity"""
+        """
+Calculate video fingerprint similarity"""
         # Implementation would calculate similarity using frame comparison
         return 0.0  # Placeholder
     
     async def _calculate_image_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate image fingerprint similarity"""
+        """
+Calculate image fingerprint similarity"""
         # Implementation would calculate similarity using hash comparison
         return 0.0  # Placeholder
     
     async def _capture_webpage_screenshot(self, url: str) -> Optional[ViolationEvidence]:
-        """Capture screenshot of webpage as evidence"""
+        """
+Capture screenshot of webpage as evidence"""
         # Implementation would capture screenshot using headless browser
         return None
     
     async def _collect_webpage_metadata(self, url: str) -> Optional[ViolationEvidence]:
-        """Collect webpage metadata as evidence"""
+        """
+Collect webpage metadata as evidence"""
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -814,36 +837,42 @@ class ViolationDetector:
         return evidence_list
     
     async def _collect_whois_evidence(self, url: str) -> Optional[ViolationEvidence]:
-        """Collect WHOIS information as evidence"""
+        """
+Collect WHOIS information as evidence"""
         # Implementation would collect WHOIS data
         return None
     
     async def _store_violation_evidence(self, evidence: ViolationEvidence):
-        """Store violation evidence in database"""
+        """
+Store violation evidence in database"""
         # Implementation would store evidence in database
         pass
     
     async def _get_scan_statistics(self, content_id: str, start_date: datetime, 
                                  end_date: datetime) -> Dict[str, Any]:
-        """Get scan statistics for period"""
+        """
+Get scan statistics for period"""
         # Implementation would query scan statistics
         return {'total_scans': 10, 'platforms_scanned': ['youtube', 'instagram']}
     
     async def _get_violation_statistics(self, content_id: str, start_date: datetime,
                                       end_date: datetime) -> Dict[str, Any]:
-        """Get violation statistics for period"""
+        """
+Get violation statistics for period"""
         # Implementation would query violation statistics
         return {'total_violations': 5, 'false_positives': 1}
     
     async def _calculate_detection_accuracy(self, content_id: str, start_date: datetime,
                                           end_date: datetime) -> float:
-        """Calculate detection accuracy for period"""
+        """
+Calculate detection accuracy for period"""
         # Implementation would calculate accuracy based on confirmed violations
         return 0.95  # 95% accuracy placeholder
     
     async def _get_top_violation_types(self, content_id: str, start_date: datetime,
                                      end_date: datetime) -> List[Dict[str, Any]]:
-        """Get top violation types for period"""
+        """
+Get top violation types for period"""
         # Implementation would query and aggregate violation types
         return [
             {'type': 'direct_copy', 'count': 3, 'percentage': 60.0},

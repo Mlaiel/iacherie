@@ -5,8 +5,9 @@ Multi-channel notification delivery system for content protection alerts.
 Supports email, SMS, WebSocket, Discord, Slack, and other messaging platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -40,7 +41,9 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class NotificationPriority(str, Enum):
-    """Notification priority levels."""
+    """
+Notification priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,6 +51,7 @@ class NotificationPriority(str, Enum):
 
 class DeliveryMethod(str, Enum):
     """Available delivery methods."""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -69,7 +73,8 @@ class NotificationConfig:
 
 @dataclass
 class DeliveryResult:
-    """Result of notification delivery attempt."""
+    """
+Result of notification delivery attempt."""
     success: bool
     message_id: Optional[str] = None
     error_message: Optional[str] = None
@@ -77,7 +82,8 @@ class DeliveryResult:
     retry_count: int = 0
 
 class NotificationProvider(ABC):
-    """Abstract base class for notification providers."""
+    """
+Abstract base class for notification providers."""
     
     @abstractmethod
     async def send(
@@ -87,16 +93,19 @@ class NotificationProvider(ABC):
         content: str,
         template_data: Optional[Dict[str, Any]] = None
     ) -> DeliveryResult:
-        """Send notification."""
+        """
+Send notification."""
         pass
     
     @abstractmethod
     async def validate_recipient(self, recipient: str) -> bool:
-        """Validate recipient address/identifier."""
+        """
+Validate recipient address/identifier."""
         pass
 
 class EmailProvider(NotificationProvider):
-    """Email notification provider using SMTP."""
+    """
+Email notification provider using SMTP."""
     
     def __init__(self, smtp_config: Dict[str, Any]):
         self.smtp_host = smtp_config["host"]
@@ -163,7 +172,8 @@ class EmailProvider(NotificationProvider):
         return bool(re.match(pattern, recipient))
 
 class SMSProvider(NotificationProvider):
-    """SMS notification provider using Twilio."""
+    """
+SMS notification provider using Twilio."""
     
     def __init__(self, twilio_config: Dict[str, Any]):
         self.client = TwilioClient(
@@ -278,7 +288,8 @@ class WebhookProvider(NotificationProvider):
         return bool(re.match(pattern, recipient))
 
 class DiscordProvider(NotificationProvider):
-    """Discord notification provider."""
+    """
+Discord notification provider."""
     
     def __init__(self, discord_config: Dict[str, Any]):
         self.webhook_url = discord_config.get("webhook_url")
@@ -981,7 +992,8 @@ class EnterpriseNotificationEngine:
         self.intelligence_engine = NotificationIntelligenceEngine()
         
     async def initialize_enterprise_features(self):
-        """Initialize enterprise notification features"""
+        """
+Initialize enterprise notification features"""
         await self.notification_engine.initialize()
         await self.routing_engine.initialize()
         await self.orchestrator.initialize()
@@ -994,7 +1006,8 @@ class EnterpriseNotificationEngine:
         business_context: Dict[str, Any] = None,
         compliance_requirements: List[str] = None
     ) -> Dict[str, Any]:
-        """Send notification with enterprise features"""
+        """
+Send notification with enterprise features"""
         try:
             # Apply intelligent routing
             routing_result = await self.routing_engine.route_notification(
@@ -1058,7 +1071,8 @@ class NotificationRoutingEngine:
         self.ml_router = None
         
     async def initialize(self):
-        """Initialize routing engine"""
+        """
+Initialize routing engine"""
         await self._load_routing_rules()
         await self._initialize_ml_router()
         
@@ -1068,7 +1082,8 @@ class NotificationRoutingEngine:
         tenant_id: str,
         context: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Intelligently route notification to optimal channels"""
+        """
+Intelligently route notification to optimal channels"""
         try:
             # Analyze alert characteristics
             alert_analysis = await self._analyze_alert_characteristics(alert_data)
@@ -1110,7 +1125,8 @@ class NotificationRoutingEngine:
         }
     
     def _calculate_urgency_score(self, alert_data: Dict[str, Any]) -> float:
-        """Calculate urgency score based on alert data"""
+        """
+Calculate urgency score based on alert data"""
         base_score = 0.5
         
         # Severity impact
@@ -1135,7 +1151,8 @@ class NotificationRoutingEngine:
         return min(base_score, 1.0)
     
     def _assess_business_impact(self, alert_data: Dict[str, Any]) -> str:
-        """Assess business impact of alert"""
+        """
+Assess business impact of alert"""
         revenue_impact = alert_data.get('revenue_impact', 0)
         
         if revenue_impact > 10000:
@@ -1146,7 +1163,8 @@ class NotificationRoutingEngine:
             return 'low'
     
     def _identify_relevant_stakeholders(self, alert_data: Dict[str, Any]) -> List[str]:
-        """Identify relevant stakeholders for notification"""
+        """
+Identify relevant stakeholders for notification"""
         stakeholders = ['security_team']
         
         if alert_data.get('category') == 'copyright_violation':
@@ -1166,7 +1184,8 @@ class NotificationRoutingEngine:
         tenant_id: str, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply business-specific routing rules"""
+        """
+Apply business-specific routing rules"""
         return {
             'tenant_preferences': await self._get_tenant_preferences(tenant_id),
             'time_based_routing': await self._apply_time_based_routing(alert_data),
@@ -1179,7 +1198,8 @@ class NotificationRoutingEngine:
         alert_data: Dict[str, Any], 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply ML-based intelligent routing"""
+        """
+Apply ML-based intelligent routing"""
         # Simulate ML routing decision
         return {
             'ml_confidence': 0.87,
@@ -1194,7 +1214,8 @@ class NotificationRoutingEngine:
         ml_routing: Dict[str, Any],
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Combine all routing decisions into final routing plan"""
+        """
+Combine all routing decisions into final routing plan"""
         return {
             'primary_channels': ['email', 'slack'],
             'fallback_channels': ['sms', 'webhook'],
@@ -1204,15 +1225,18 @@ class NotificationRoutingEngine:
         }
     
     async def _load_routing_rules(self):
-        """Load routing rules from configuration"""
+        """
+Load routing rules from configuration"""
         pass
     
     async def _initialize_ml_router(self):
-        """Initialize ML-based routing component"""
+        """
+Initialize ML-based routing component"""
         pass
     
     async def _get_tenant_preferences(self, tenant_id: str) -> Dict[str, Any]:
-        """Get tenant-specific notification preferences"""
+        """
+Get tenant-specific notification preferences"""
         return {
             'preferred_channels': ['email', 'slack'],
             'quiet_hours': {'start': '22:00', 'end': '08:00'},
@@ -1221,7 +1245,8 @@ class NotificationRoutingEngine:
         }
     
     async def _apply_time_based_routing(self, alert_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply time-based routing rules"""
+        """
+Apply time-based routing rules"""
         return {
             'respect_quiet_hours': True,
             'timezone_aware': True,
@@ -1229,7 +1254,8 @@ class NotificationRoutingEngine:
         }
     
     async def _determine_escalation_routing(self, alert_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine escalation routing requirements"""
+        """
+Determine escalation routing requirements"""
         return {
             'auto_escalate': alert_data.get('severity') == 'critical',
             'escalation_delay_minutes': 30,
@@ -1237,7 +1263,8 @@ class NotificationRoutingEngine:
         }
     
     async def _apply_compliance_routing(self, alert_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply compliance-based routing rules"""
+        """
+Apply compliance-based routing rules"""
         return {
             'audit_trail_required': True,
             'encryption_required': True,
@@ -1257,7 +1284,8 @@ class NotificationOrchestrator:
         self.orchestration_rules = {}
         
     async def initialize(self):
-        """Initialize orchestration engine"""
+        """
+Initialize orchestration engine"""
         await self._setup_delivery_engines()
         await self._load_orchestration_rules()
         
@@ -1267,7 +1295,8 @@ class NotificationOrchestrator:
         routing_result: Dict[str, Any],
         tenant_id: str
     ) -> Dict[str, Any]:
-        """Orchestrate multi-channel notification delivery"""
+        """
+Orchestrate multi-channel notification delivery"""
         try:
             orchestration_id = f"orch_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
             
@@ -1327,7 +1356,8 @@ class NotificationOrchestrator:
         delivery_plan: Dict[str, Any], 
         orchestration_id: str
     ) -> Dict[str, Any]:
-        """Execute the delivery plan with coordination"""
+        """
+Execute the delivery plan with coordination"""
         results = []
         successful_channels = []
         
@@ -1374,11 +1404,13 @@ class NotificationOrchestrator:
         }
     
     async def _setup_delivery_engines(self):
-        """Setup individual delivery engines"""
+        """
+Setup individual delivery engines"""
         pass
     
     async def _load_orchestration_rules(self):
-        """Load orchestration rules from configuration"""
+        """
+Load orchestration rules from configuration"""
         pass
 
 
@@ -1394,7 +1426,8 @@ class NotificationIntelligenceEngine:
         self.analytics_engine = None
         
     async def initialize(self):
-        """Initialize intelligence engine"""
+        """
+Initialize intelligence engine"""
         await self._load_ml_models()
         await self._initialize_analytics()
         
@@ -1403,7 +1436,8 @@ class NotificationIntelligenceEngine:
         alert_data: Dict[str, Any],
         delivery_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze delivery and optimize future notifications"""
+        """
+Analyze delivery and optimize future notifications"""
         try:
             # Analyze delivery effectiveness
             effectiveness_analysis = await self._analyze_delivery_effectiveness(
@@ -1462,7 +1496,8 @@ class NotificationIntelligenceEngine:
         }
     
     async def _generate_optimizations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         return [
             "Increase SMS delivery priority for critical alerts",
             "Optimize email templates for better engagement",
@@ -1490,7 +1525,8 @@ class NotificationIntelligenceEngine:
         alert_data: Dict[str, Any],
         delivery_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate business intelligence from notification data"""
+        """
+Generate business intelligence from notification data"""
         return {
             'cost_per_notification': 0.15,
             'revenue_impact_prevented': 2500.0,
@@ -1500,11 +1536,13 @@ class NotificationIntelligenceEngine:
         }
     
     async def _load_ml_models(self):
-        """Load ML models for intelligence analysis"""
+        """
+Load ML models for intelligence analysis"""
         pass
     
     async def _initialize_analytics(self):
-        """Initialize analytics engine"""
+        """
+Initialize analytics engine"""
         pass
 
 

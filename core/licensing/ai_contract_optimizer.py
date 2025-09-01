@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import numpy as np
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ from ..utils.legal_compliance import LegalComplianceValidator
 
 
 class OptimizationType(Enum):
-    """Contract optimization types"""
+    """
+Contract optimization types"""
+
     PRICING = "pricing"
     TERMS = "terms"
     CLAUSES = "clauses"
@@ -57,6 +60,7 @@ class OptimizationType(Enum):
 
 class ClauseCategory(Enum):
     """Legal clause categories"""
+
     PAYMENT_TERMS = "payment_terms"
     INTELLECTUAL_PROPERTY = "intellectual_property"
     TERRITORIAL_RIGHTS = "territorial_rights"
@@ -73,6 +77,7 @@ class ClauseCategory(Enum):
 
 class PricingStrategy(Enum):
     """AI pricing optimization strategies"""
+
     DYNAMIC = "dynamic"
     COMPETITIVE = "competitive"
     VALUE_BASED = "value_based"
@@ -108,7 +113,8 @@ class SmartClauseGeneration:
 
 @dataclass
 class PricingOptimization:
-    """AI-powered pricing optimization results"""
+    """
+AI-powered pricing optimization results"""
     optimization_id: str
     content_type: str
     market_segment: str
@@ -132,7 +138,8 @@ class PricingOptimization:
 
 @dataclass
 class ContractOptimizationResult:
-    """Comprehensive contract optimization result"""
+    """
+Comprehensive contract optimization result"""
     optimization_id: str
     original_contract_id: str
     optimized_contract_id: str
@@ -178,7 +185,8 @@ class AIContractOptimizer:
         self.market_data: Dict[str, Any] = {}
         
     async def initialize_ai_models(self):
-        """Initialize AI/ML models for contract optimization"""
+        """
+Initialize AI/ML models for contract optimization"""
         try:
             # Initialize language model for text processing
             self.tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -591,7 +599,8 @@ class AIContractOptimizer:
         jurisdiction: str,
         compliance_priority: float
     ) -> List[SmartClauseGeneration]:
-        """Optimize legal compliance aspects"""
+        """
+Optimize legal compliance aspects"""
         return []  # Implementation would generate compliance optimizations
     
     async def _calculate_risk_reduction(
@@ -599,7 +608,8 @@ class AIContractOptimizer:
         original_contract: Dict[str, Any],
         optimizations: List[SmartClauseGeneration]
     ) -> float:
-        """Calculate risk reduction percentage"""
+        """
+Calculate risk reduction percentage"""
         return 25.0  # Example risk reduction
     
     async def _calculate_compliance_improvement(
@@ -607,11 +617,13 @@ class AIContractOptimizer:
         original_contract: Dict[str, Any],
         optimizations: List[SmartClauseGeneration]
     ) -> float:
-        """Calculate compliance improvement"""
+        """
+Calculate compliance improvement"""
         return 15.0  # Example compliance improvement
     
     async def _estimate_revenue_impact(self, optimization_result: ContractOptimizationResult) -> Decimal:
-        """Estimate revenue impact of optimizations"""
+        """
+Estimate revenue impact of optimizations"""
         return Decimal("5000.0")  # Example revenue impact
     
     async def _generate_optimization_recommendations(
@@ -634,13 +646,15 @@ class AIContractOptimizer:
         return optimization_result.risk_reduction_percentage > 20.0
     
     async def _save_optimization_result(self, optimization_result: ContractOptimizationResult):
-        """Save optimization result to database"""
+        """
+Save optimization result to database"""
         # Implementation would save to database
         pass
     
     # Clause generation helper methods
     async def _get_clause_templates(self, category: ClauseCategory, jurisdiction: str) -> List[str]:
-        """Get clause templates for category and jurisdiction"""
+        """
+Get clause templates for category and jurisdiction"""
         return [self.legal_templates.get(category.value, "Default template")]
     
     async def _get_legal_precedents(self, category: ClauseCategory, jurisdiction: str) -> List[Dict[str, Any]]:
@@ -653,7 +667,8 @@ class AIContractOptimizer:
         content_type: str,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Analyze market standards for clause category"""
+        """
+Analyze market standards for clause category"""
         return {"standard_terms": [], "market_practices": []}
     
     async def _generate_base_clause(
@@ -681,15 +696,18 @@ class AIContractOptimizer:
         return 0.3  # Example risk score
     
     async def _calculate_compliance_score(self, clause: str, jurisdiction: str) -> float:
-        """Calculate compliance score for clause"""
+        """
+Calculate compliance score for clause"""
         return 0.9  # Example compliance score
     
     async def _calculate_enforceability_score(self, clause: str, jurisdiction: str) -> float:
-        """Calculate enforceability score for clause"""
+        """
+Calculate enforceability score for clause"""
         return 0.85  # Example enforceability score
     
     async def _calculate_clarity_score(self, clause: str) -> float:
-        """Calculate clarity score for clause"""
+        """
+Calculate clarity score for clause"""
         return 0.8  # Example clarity score
     
     async def _generate_clause_alternatives(
@@ -698,7 +716,8 @@ class AIContractOptimizer:
         category: ClauseCategory,
         risk_level: float
     ) -> List[str]:
-        """Generate alternative clause versions"""
+        """
+Generate alternative clause versions"""
         return [f"Alternative 1 for {category.value}", f"Alternative 2 for {category.value}"]
     
     async def _identify_clause_risks(self, clause: str) -> List[str]:
@@ -759,7 +778,8 @@ class AIContractOptimizer:
         demand_elasticity: float,
         optimization_goals: List[str]
     ) -> PricingStrategy:
-        """Determine optimal pricing strategy"""
+        """
+Determine optimal pricing strategy"""
         return PricingStrategy.DYNAMIC
     
     async def _calculate_optimized_price(
@@ -769,7 +789,8 @@ class AIContractOptimizer:
         market_analysis: Dict[str, Any],
         demand_elasticity: float
     ) -> Decimal:
-        """Calculate optimized price"""
+        """
+Calculate optimized price"""
         return base_price * Decimal("1.15")  # 15% increase
     
     async def _generate_revenue_projections(

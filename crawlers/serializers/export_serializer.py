@@ -29,6 +29,7 @@ Expertise combinée:
 - DevOps: Automation et scaling pour génération de rapports
 - IA Prompt Engineer: Génération automatique de rapports narratifs par IA
 """
+
 import logging
 import io
 import csv
@@ -43,7 +44,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class ExportFormat(Enum):
-    """Supported export formats."""
+    """
+Supported export formats."""
+
     CSV = "csv"
     EXCEL = "excel"
     JSON = "json"
@@ -57,6 +60,7 @@ class ExportFormat(Enum):
 
 class DataGrouping(Enum):
     """Data grouping strategies."""
+
     NONE = "none"
     BY_DATE = "by_date"
     BY_PLATFORM = "by_platform"
@@ -67,6 +71,7 @@ class DataGrouping(Enum):
 
 class AggregationMethod(Enum):
     """Data aggregation methods."""
+
     SUM = "sum"
     COUNT = "count"
     AVERAGE = "average"
@@ -79,6 +84,7 @@ class AggregationMethod(Enum):
 
 class ReportTemplate(Enum):
     """Predefined report templates."""
+
     STANDARD = "standard"
     EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYSIS = "detailed_analysis"
@@ -199,7 +205,8 @@ class ExportSerializer:
     """
     
     def __init__(self):
-        """Initialize export serializer."""
+        """
+Initialize export serializer."""
         self.format_handlers = {
             ExportFormat.CSV: self._export_to_csv,
             ExportFormat.JSON: self._export_to_json,
@@ -416,7 +423,8 @@ class ExportSerializer:
         return output.getvalue()
     
     def _export_to_json(self, export_data: ExportData) -> str:
-        """Export data to JSON format."""
+        """
+Export data to JSON format."""
         output_data = {
             'metadata': export_data.metadata,
             'headers': export_data.headers,
@@ -443,7 +451,8 @@ class ExportSerializer:
         return json.dumps(output_data, indent=2, default=self._json_serializer)
     
     def _export_to_xml(self, export_data: ExportData) -> str:
-        """Export data to XML format."""
+        """
+Export data to XML format."""
         lines = ['<?xml version="1.0" encoding="utf-8"?>']
         lines.append('<export>')
         
@@ -570,7 +579,8 @@ class ExportSerializer:
         return '\n'.join(lines)
     
     def _export_to_yaml(self, export_data: ExportData) -> str:
-        """Export data to YAML format."""
+        """
+Export data to YAML format."""
         import yaml
         
         output_data = {
@@ -596,7 +606,8 @@ class ExportSerializer:
         return yaml.dump(output_data, default_flow_style=False, allow_unicode=True)
     
     def _export_to_tsv(self, export_data: ExportData) -> str:
-        """Export data to TSV (Tab-Separated Values) format."""
+        """
+Export data to TSV (Tab-Separated Values) format."""
         # Temporarily change delimiter to tab
         original_delimiter = export_data.configuration.delimiter
         export_data.configuration.delimiter = '\t'
@@ -609,7 +620,8 @@ class ExportSerializer:
         return result
     
     def _handle_external_format(self, export_data: ExportData) -> Union[str, bytes]:
-        """Handle external format exports (Excel, PDF, Parquet)."""
+        """
+Handle external format exports (Excel, PDF, Parquet)."""
         if export_data.export_format == ExportFormat.EXCEL:
             return self._export_to_excel(export_data)
         elif export_data.export_format == ExportFormat.PDF:
@@ -770,13 +782,15 @@ class ExportSerializer:
         }
     
     def _deserialize_export_configuration(self, data: Dict[str, Any]) -> ExportConfiguration:
-        """Deserialize export configuration."""
+        """
+Deserialize export configuration."""
         if 'format' in data:
             data['format'] = ExportFormat(data['format'])
         return ExportConfiguration(**data)
     
     def _serialize_export_metrics(self, metrics: ExportMetrics) -> Dict[str, Any]:
-        """Serialize export metrics."""
+        """
+Serialize export metrics."""
         return {
             'total_records': metrics.total_records,
             'exported_records': metrics.exported_records,
@@ -790,11 +804,13 @@ class ExportSerializer:
         }
     
     def _deserialize_export_metrics(self, data: Dict[str, Any]) -> ExportMetrics:
-        """Deserialize export metrics."""
+        """
+Deserialize export metrics."""
         return ExportMetrics(**data)
     
     def _format_row_values(self, row: List[Any], config: ExportConfiguration) -> List[str]:
-        """Format row values according to configuration."""
+        """
+Format row values according to configuration."""
         formatted_row = []
         
         for value in row:
@@ -825,7 +841,8 @@ class ExportSerializer:
         return str(obj)
     
     def _sanitize_xml_name(self, name: str) -> str:
-        """Sanitize XML element name."""
+        """
+Sanitize XML element name."""
         import re
         # Remove invalid characters and ensure it starts with letter
         sanitized = re.sub(r'[^a-zA-Z0-9_-]', '_', name)
@@ -834,7 +851,8 @@ class ExportSerializer:
         return sanitized
     
     def _escape_xml_value(self, value: str) -> str:
-        """Escape XML value."""
+        """
+Escape XML value."""
         return (value.replace('&', '&amp;')
                     .replace('<', '&lt;')
                     .replace('>', '&gt;')
@@ -875,7 +893,8 @@ class ExportSerializer:
         return export_data  # No special processing for standard template
     
     def _process_executive_template(self, export_data: ExportData) -> ExportData:
-        """Process executive summary template."""
+        """
+Process executive summary template."""
         # Add summary statistics
         if export_data.data_rows:
             export_data.summary_statistics = {
@@ -886,7 +905,8 @@ class ExportSerializer:
         return export_data
     
     def _process_detailed_template(self, export_data: ExportData) -> ExportData:
-        """Process detailed analysis template."""
+        """
+Process detailed analysis template."""
         # Include additional metadata and statistics
         export_data.metadata.update({
             'analysis_depth': 'detailed',
@@ -896,7 +916,8 @@ class ExportSerializer:
         return export_data
     
     def _process_compliance_template(self, export_data: ExportData) -> ExportData:
-        """Process compliance report template."""
+        """
+Process compliance report template."""
         # Add compliance-specific metadata
         export_data.metadata.update({
             'compliance_framework': 'GDPR',
@@ -916,7 +937,8 @@ class ExportSerializer:
         return export_data
     
     def _process_security_template(self, export_data: ExportData) -> ExportData:
-        """Process security audit template."""
+        """
+Process security audit template."""
         # Add security-specific metadata
         export_data.metadata.update({
             'security_classification': export_data.data_classification,
@@ -926,7 +948,8 @@ class ExportSerializer:
         return export_data
     
     def _process_financial_template(self, export_data: ExportData) -> ExportData:
-        """Process financial summary template."""
+        """
+Process financial summary template."""
         # Add financial formatting
         export_data.configuration.decimal_precision = 2
         export_data.metadata.update({
@@ -936,7 +959,8 @@ class ExportSerializer:
         return export_data
     
     def _process_technical_template(self, export_data: ExportData) -> ExportData:
-        """Process technical report template."""
+        """
+Process technical report template."""
         # Add technical metadata
         export_data.metadata.update({
             'technical_details': True,

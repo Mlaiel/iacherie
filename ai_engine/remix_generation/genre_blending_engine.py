@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Engine de fusion de genres musicaux ultra-avancé avec IA
 TECHNOLOGIES: Deep Learning, Neural Genre Classification, Spectral Analysis, Genre Morphing
 LOGIQUE MÉTIER: Genre analysis → Fusion algorithms → Style interpolation → Quality validation
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ import scipy.signal as signal
 logger = logging.getLogger(__name__)
 
 class MusicGenre(Enum):
-    """Music genre classifications"""
+    """
+Music genre classifications"""
+
     ROCK = "rock"
     POP = "pop"
     JAZZ = "jazz"
@@ -57,6 +60,7 @@ class MusicGenre(Enum):
 
 class BlendingMethod(Enum):
     """Genre blending methods"""
+
     LINEAR_INTERPOLATION = "linear"
     HARMONIC_MIXING = "harmonic"
     SPECTRAL_MORPHING = "spectral"
@@ -79,7 +83,8 @@ class GenreCharacteristics:
 
 @dataclass
 class BlendingParameters:
-    """Parameters for genre blending"""
+    """
+Parameters for genre blending"""
     primary_genre: MusicGenre
     secondary_genre: MusicGenre
     blend_ratio: float  # 0.0 to 1.0
@@ -91,7 +96,8 @@ class BlendingParameters:
     quality_threshold: float
 
 class GenreClassificationNetwork(nn.Module):
-    """Deep learning model for genre classification"""
+    """
+Deep learning model for genre classification"""
     
     def __init__(self, input_features: int = 128, num_genres: int = 15):
         super(GenreClassificationNetwork, self).__init__()
@@ -129,7 +135,8 @@ class GenreClassificationNetwork(nn.Module):
         return classification, confidence
 
 class GenreBlendingNetwork(nn.Module):
-    """Neural network for intelligent genre blending"""
+    """
+Neural network for intelligent genre blending"""
     
     def __init__(self, feature_dim: int = 128):
         super(GenreBlendingNetwork, self).__init__()
@@ -171,7 +178,8 @@ class GenreBlendingNetwork(nn.Module):
         return output
 
 class GenreAnalyzer:
-    """Advanced genre analysis system"""
+    """
+Advanced genre analysis system"""
     
     def __init__(self):
         self.classification_model = GenreClassificationNetwork()
@@ -180,7 +188,8 @@ class GenreAnalyzer:
         self.genre_database = self._initialize_genre_database()
     
     def _initialize_genre_database(self) -> Dict[MusicGenre, GenreCharacteristics]:
-        """Initialize comprehensive genre database"""
+        """
+Initialize comprehensive genre database"""
         return {
             MusicGenre.ROCK: GenreCharacteristics(
                 genre=MusicGenre.ROCK,
@@ -297,12 +306,14 @@ class GenreFusionProcessor:
     
     async def _linear_interpolation(self, audio1: np.ndarray, audio2: np.ndarray, 
                                   ratio: float) -> np.ndarray:
-        """Linear interpolation between two audio signals"""
+        """
+Linear interpolation between two audio signals"""
         return (1 - ratio) * audio1 + ratio * audio2
     
     async def _harmonic_mixing(self, audio1: np.ndarray, audio2: np.ndarray, 
                              ratio: float) -> np.ndarray:
-        """Harmonic mixing using spectral analysis"""
+        """
+Harmonic mixing using spectral analysis"""
         # Get spectrograms
         stft1 = librosa.stft(audio1)
         stft2 = librosa.stft(audio2)
@@ -321,7 +332,8 @@ class GenreFusionProcessor:
     
     async def _spectral_morphing(self, audio1: np.ndarray, audio2: np.ndarray, 
                                ratio: float) -> np.ndarray:
-        """Advanced spectral morphing"""
+        """
+Advanced spectral morphing"""
         # Phase vocoder for time-stretching
         stft1 = librosa.stft(audio1)
         stft2 = librosa.stft(audio2)
@@ -343,7 +355,8 @@ class GenreFusionProcessor:
     
     async def _neural_synthesis(self, audio1: np.ndarray, audio2: np.ndarray, 
                               ratio: float) -> np.ndarray:
-        """Neural network-based synthesis"""
+        """
+Neural network-based synthesis"""
         # Extract features from both audio signals
         features1 = await self._extract_neural_features(audio1)
         features2 = await self._extract_neural_features(audio2)
@@ -361,7 +374,8 @@ class GenreFusionProcessor:
     
     async def _rhythmic_fusion(self, audio1: np.ndarray, audio2: np.ndarray, 
                              ratio: float) -> np.ndarray:
-        """Fusion focusing on rhythmic elements"""
+        """
+Fusion focusing on rhythmic elements"""
         # Beat tracking
         tempo1, beats1 = librosa.beat.beat_track(y=audio1)
         tempo2, beats2 = librosa.beat.beat_track(y=audio2)
@@ -382,7 +396,8 @@ class GenreFusionProcessor:
     
     async def _timbral_blending(self, audio1: np.ndarray, audio2: np.ndarray, 
                               ratio: float) -> np.ndarray:
-        """Timbral characteristic blending"""
+        """
+Timbral characteristic blending"""
         # Spectral envelope extraction
         spec1 = np.abs(librosa.stft(audio1))
         spec2 = np.abs(librosa.stft(audio2))
@@ -407,17 +422,20 @@ class GenreFusionProcessor:
         return librosa.istft(mixed_spec * np.exp(1j * np.angle(librosa.stft(audio1))))
     
     async def _extract_neural_features(self, audio: np.ndarray) -> np.ndarray:
-        """Extract features for neural processing"""
+        """
+Extract features for neural processing"""
         mfccs = librosa.feature.mfcc(y=audio, n_mfcc=13)
         return np.mean(mfccs, axis=1)
     
     async def _features_to_audio(self, features: np.ndarray) -> np.ndarray:
-        """Convert features back to audio (simplified)"""
+        """
+Convert features back to audio (simplified)"""
         # This is a placeholder - real implementation would need a trained decoder
         return np.random.normal(0, 0.1, 44100)  # 1 second of audio
 
 class GenreBlendingEngine:
-    """Main genre blending engine"""
+    """
+Main genre blending engine"""
     
     def __init__(self):
         self.analyzer = GenreAnalyzer()
@@ -560,7 +578,8 @@ class GenreBlendingEngine:
     
     def _select_best_method(self, genre1: MusicGenre, genre2: MusicGenre, 
                            target: MusicGenre) -> BlendingMethod:
-        """Select the best blending method for genre combination"""
+        """
+Select the best blending method for genre combination"""
         # Method selection logic based on genre characteristics
         electronic_genres = {MusicGenre.ELECTRONIC, MusicGenre.TECHNO, MusicGenre.HOUSE, MusicGenre.DUBSTEP}
         acoustic_genres = {MusicGenre.JAZZ, MusicGenre.CLASSICAL, MusicGenre.COUNTRY, MusicGenre.BLUES}
@@ -575,7 +594,8 @@ class GenreBlendingEngine:
             return BlendingMethod.LINEAR_INTERPOLATION
     
     async def get_blend_recommendations(self, source_genre: MusicGenre) -> List[Dict[str, Any]]:
-        """Get recommendations for genre blending"""
+        """
+Get recommendations for genre blending"""
         try:
             recommendations = []
             
@@ -636,7 +656,8 @@ class GenreBlendingEngine:
         return score
     
     def _get_difficulty_level(self, genre1: MusicGenre, genre2: MusicGenre) -> str:
-        """Get difficulty level for blending two genres"""
+        """
+Get difficulty level for blending two genres"""
         compatibility = asyncio.run(self._calculate_compatibility(genre1, genre2))
         
         if compatibility >= 0.8:
@@ -721,7 +742,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_harmonic_consistency(self, audio: np.ndarray) -> float:
-        """Assess harmonic consistency"""
+        """
+Assess harmonic consistency"""
         try:
             # Chroma analysis for harmonic content
             chroma = librosa.feature.chroma_stft(y=audio)
@@ -736,7 +758,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_rhythmic_stability(self, audio: np.ndarray) -> float:
-        """Assess rhythmic stability"""
+        """
+Assess rhythmic stability"""
         try:
             # Onset detection and tempo analysis
             tempo, beats = librosa.beat.beat_track(y=audio)
@@ -755,7 +778,8 @@ class QualityValidator:
     
     async def _assess_timbral_balance(self, blended: np.ndarray, orig1: np.ndarray,
                                    orig2: np.ndarray, ratio: float) -> float:
-        """Assess timbral balance between original sources"""
+        """
+Assess timbral balance between original sources"""
         try:
             # MFCC analysis for timbral characteristics
             mfcc_blended = librosa.feature.mfcc(y=blended, n_mfcc=13)
@@ -775,7 +799,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_dynamic_range(self, audio: np.ndarray) -> float:
-        """Assess dynamic range of audio"""
+        """
+Assess dynamic range of audio"""
         try:
             # Calculate RMS energy
             rms = librosa.feature.rms(y=audio)[0]
@@ -792,7 +817,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_stereo_imaging(self, audio: np.ndarray) -> float:
-        """Assess stereo imaging quality"""
+        """
+Assess stereo imaging quality"""
         try:
             if audio.ndim == 1:
                 return 1.0  # Mono audio, no stereo issues

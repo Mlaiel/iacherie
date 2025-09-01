@@ -28,6 +28,7 @@ Business Logic Flow:
 Creator Registration → Multi-Factor Setup → Token Generation → Content Upload → 
 AI Protection → Fingerprinting → Distribution → Monetization Tracking
 """
+
 import asyncio
 import hashlib
 import secrets
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TokenType(Enum):
-    """Token type classifications"""
+    """
+Token type classifications"""
+
     ACCESS = "access"
     REFRESH = "refresh"
     RESET_PASSWORD = "reset_password"
@@ -66,6 +69,7 @@ class TokenType(Enum):
 
 class TokenStatus(Enum):
     """Token status states"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -74,6 +78,7 @@ class TokenStatus(Enum):
 
 class OAuthProvider(Enum):
     """OAuth provider types"""
+
     GOOGLE = "google"
     FACEBOOK = "facebook"
     SPOTIFY = "spotify"
@@ -140,7 +145,8 @@ class TokenDatabase(Base):
     )
 
 class BlacklistedToken(Base):
-    """Database model for blacklisted tokens"""
+    """
+Database model for blacklisted tokens"""
     __tablename__ = 'blacklisted_tokens'
     
     id = Column(String, primary_key=True)
@@ -492,7 +498,8 @@ class TokenRepository:
         permissions: Optional[List[str]] = None,
         scopes: Optional[List[str]] = None
     ):
-        """Store token in database with encryption"""
+        """
+Store token in database with encryption"""
         try:
             token_hash = self._hash_token(token)
             encrypted_token = self.fernet.encrypt(token.encode()).decode()

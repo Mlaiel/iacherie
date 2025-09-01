@@ -16,6 +16,7 @@ Features:
 - Technical SEO auditing
 - Competitor analysis and tracking
 """
+
 import asyncio
 import logging
 from abc import abstractmethod
@@ -37,7 +38,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class SEOPlatform(Enum):
-    """Supported SEO platforms and tools."""
+    """
+Supported SEO platforms and tools."""
+
     GOOGLE_SEARCH_CONSOLE = "google_search_console"
     GOOGLE_ANALYTICS = "google_analytics"
     SEMRUSH = "semrush"
@@ -53,6 +56,7 @@ class SEOPlatform(Enum):
 
 class SEOMetricType(Enum):
     """Types of SEO metrics."""
+
     ORGANIC_TRAFFIC = "organic_traffic"
     KEYWORD_RANKINGS = "keyword_rankings"
     BACKLINKS = "backlinks"
@@ -68,6 +72,7 @@ class SEOMetricType(Enum):
 
 class KeywordDifficulty(Enum):
     """Keyword difficulty levels."""
+
     VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
@@ -92,7 +97,8 @@ class SEOKeyword:
 
 @dataclass
 class BacklinkProfile:
-    """Represents a backlink profile."""
+    """
+Represents a backlink profile."""
     referring_domains: int
     total_backlinks: int
     dofollow_links: int
@@ -108,7 +114,8 @@ class BacklinkProfile:
 
 @dataclass
 class TechnicalSEOIssue:
-    """Represents a technical SEO issue."""
+    """
+Represents a technical SEO issue."""
     issue_type: str
     severity: str  # critical, high, medium, low
     affected_pages: List[str]
@@ -132,7 +139,8 @@ class ContentOptimization:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor SEO analysis."""
+    """
+Competitor SEO analysis."""
     competitor_domain: str
     domain_authority: float
     organic_traffic: int
@@ -144,7 +152,8 @@ class CompetitorAnalysis:
     last_analyzed: datetime = field(default_factory=datetime.utcnow)
 
 class BaseSEOAdapter(BasePlatformAdapter):
-    """Base class for SEO platform adapters."""
+    """
+Base class for SEO platform adapters."""
     
     def __init__(
         self, 
@@ -172,27 +181,32 @@ class BaseSEOAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def track_domain(self, domain: str) -> bool:
-        """Add a domain for SEO tracking."""
+        """
+Add a domain for SEO tracking."""
         pass
     
     @abstractmethod
     async def get_keyword_rankings(self, domain: str, keywords: List[str]) -> List[SEOKeyword]:
-        """Get keyword rankings for a domain."""
+        """
+Get keyword rankings for a domain."""
         pass
     
     @abstractmethod
     async def get_backlink_profile(self, domain: str) -> Optional[BacklinkProfile]:
-        """Get backlink profile for a domain."""
+        """
+Get backlink profile for a domain."""
         pass
     
     @abstractmethod
     async def audit_technical_seo(self, domain: str) -> List[TechnicalSEOIssue]:
-        """Perform technical SEO audit."""
+        """
+Perform technical SEO audit."""
         pass
     
     @abstractmethod
     async def analyze_competitors(self, domain: str, competitors: List[str]) -> List[CompetitorAnalysis]:
-        """Analyze competitors for a domain."""
+        """
+Analyze competitors for a domain."""
         pass
     
     @abstractmethod
@@ -201,7 +215,8 @@ class BaseSEOAdapter(BasePlatformAdapter):
         pass
     
     async def calculate_keyword_opportunity(self, keyword: SEOKeyword) -> float:
-        """Calculate keyword opportunity score."""
+        """
+Calculate keyword opportunity score."""
         # Factors: search volume, difficulty, current position, trend
         volume_score = min(keyword.search_volume / 10000, 1.0) * 0.3
         
@@ -241,7 +256,8 @@ class BaseSEOAdapter(BasePlatformAdapter):
         return min(opportunity_score, 1.0)
     
     async def prioritize_keywords(self, keywords: List[SEOKeyword]) -> List[SEOKeyword]:
-        """Prioritize keywords based on opportunity score."""
+        """
+Prioritize keywords based on opportunity score."""
         keyword_scores = []
         
         for keyword in keywords:
@@ -254,7 +270,8 @@ class BaseSEOAdapter(BasePlatformAdapter):
         return [keyword for keyword, score in keyword_scores]
 
 class GoogleSearchConsoleAdapter(BaseSEOAdapter):
-    """Google Search Console API adapter."""
+    """
+Google Search Console API adapter."""
     
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
@@ -444,7 +461,8 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
         return related_keywords
 
 class SEMrushAdapter(BaseSEOAdapter):
-    """SEMrush API adapter implementation."""
+    """
+SEMrush API adapter implementation."""
     
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
@@ -577,7 +595,8 @@ class SEMrushAdapter(BaseSEOAdapter):
         return []
     
     async def analyze_competitors(self, domain: str, competitors: List[str]) -> List[CompetitorAnalysis]:
-        """Analyze competitors using SEMrush."""
+        """
+Analyze competitors using SEMrush."""
         analyses = []
         
         for competitor in competitors:
@@ -722,7 +741,8 @@ class SEOAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseSEOAdapter:
-        """Create an SEO adapter instance."""
+        """
+Create an SEO adapter instance."""
         adapter_class = cls._adapters.get(platform)
         if not adapter_class:
             raise ValueError(f"Unsupported SEO platform: {platform}")
@@ -735,7 +755,8 @@ class SEOAdapterFactory:
         return list(cls._adapters.keys())
 
 class SEOAdapterManager:
-    """Manager for SEO adapter instances and comprehensive analysis."""
+    """
+Manager for SEO adapter instances and comprehensive analysis."""
     
     def __init__(self):
         self.adapters: Dict[SEOPlatform, BaseSEOAdapter] = {}
@@ -743,7 +764,8 @@ class SEOAdapterManager:
         self.tracked_domains: Set[str] = set()
     
     def register_adapter(self, platform: SEOPlatform, adapter: BaseSEOAdapter):
-        """Register an SEO adapter."""
+        """
+Register an SEO adapter."""
         self.adapters[platform] = adapter
         logger.info(f"Registered SEO adapter for platform: {platform.value}")
     

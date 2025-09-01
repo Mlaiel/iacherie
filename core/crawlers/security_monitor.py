@@ -4,6 +4,7 @@ AI-Powered Security Monitoring and Threat Detection System
 This module provides comprehensive security monitoring with real-time threat detection,
 behavioral analysis, vulnerability scanning, and automated incident response.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(str, Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,6 +51,7 @@ class ThreatLevel(str, Enum):
 
 class ThreatType(str, Enum):
     """Types of security threats"""
+
     BRUTE_FORCE = "brute_force"
     DDoS = "ddos"
     SQL_INJECTION = "sql_injection"
@@ -67,6 +71,7 @@ class ThreatType(str, Enum):
 
 class SecurityEventType(str, Enum):
     """Types of security events"""
+
     LOGIN_ATTEMPT = "login_attempt"
     ACCESS_DENIED = "access_denied"
     PERMISSION_VIOLATION = "permission_violation"
@@ -81,6 +86,7 @@ class SecurityEventType(str, Enum):
 
 class IncidentStatus(str, Enum):
     """Security incident status"""
+
     OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
@@ -258,7 +264,8 @@ class ThreatIntelligence(BaseModel):
 
 
 class UserBehaviorProfile(BaseModel):
-    """User behavior profile for anomaly detection"""
+    """
+User behavior profile for anomaly detection"""
     user_id: str
     profile_id: str
     
@@ -289,7 +296,8 @@ class UserBehaviorProfile(BaseModel):
 
 
 class SecurityMetrics(BaseModel):
-    """Security monitoring metrics"""
+    """
+Security monitoring metrics"""
     period_start: datetime
     period_end: datetime
     
@@ -1315,7 +1323,8 @@ class AdvancedSecurityMonitor(BaseCrawler):
         }
 
     async def _load_threat_intelligence(self):
-        """Load threat intelligence from feeds"""
+        """
+Load threat intelligence from feeds"""
         try:
             # Load from configured threat feeds
             for feed_url in self.threat_feeds:
@@ -1361,7 +1370,8 @@ class AdvancedSecurityMonitor(BaseCrawler):
         pass
 
     async def _calculate_event_risk_score(self, event: SecurityEvent) -> float:
-        """Calculate risk score for security event"""
+        """
+Calculate risk score for security event"""
         try:
             risk_score = 0.0
             
@@ -1516,7 +1526,8 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return ThreatLevel.LOW
 
     async def _calculate_security_score(self) -> float:
-        """Calculate overall security score"""
+        """
+Calculate overall security score"""
         try:
             base_score = 100.0
             

@@ -8,7 +8,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
 
 class OAuthProvider(str, Enum):
-    """Supported OAuth providers for content platforms."""
+    """
+Supported OAuth providers for content platforms."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -25,6 +27,7 @@ class OAuthProvider(str, Enum):
 
 class OAuthEndpoints:
     """OAuth endpoints configuration for supported platforms."""
+
     
     ENDPOINTS = {
         OAuthProvider.APPLE: {
@@ -56,7 +59,8 @@ class OAuthEndpoints:
 
 
 def test_oauth_configuration():
-    """Test OAuth configuration for new providers"""
+    """
+Test OAuth configuration for new providers"""
     print("🔒 Testing OAuth2.0 Configuration...")
     
     # Test Apple Sign-In

@@ -1,7 +1,7 @@
 """Platform Revenue Management - Platform-specific revenue optimization and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -10,6 +10,7 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -46,6 +49,7 @@ class PlatformType(Enum):
 
 class RevenueModel(Enum):
     """Platform revenue models"""
+
     CPM = "cpm"  # Cost per mille (impressions)
     CPC = "cpc"  # Cost per click
     SUBSCRIPTION = "subscription"
@@ -71,7 +75,8 @@ class PlatformRevenueStrategy:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
+    """
+Platform performance metrics"""
     followers: int
     engagement_rate: float
     reach: int
@@ -85,26 +90,31 @@ class PlatformMetrics:
 
 
 class BasePlatformManager(ABC):
-    """Abstract base class for platform managers"""
+    """
+Abstract base class for platform managers"""
     
     @abstractmethod
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize platform manager"""
+        """
+Initialize platform manager"""
         pass
     
     @abstractmethod
     async def get_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get revenue data from platform"""
+        """
+Get revenue data from platform"""
         pass
     
     @abstractmethod
     async def optimize_strategy(self, current_metrics: PlatformMetrics) -> PlatformRevenueStrategy:
-        """Optimize revenue strategy for platform"""
+        """
+Optimize revenue strategy for platform"""
         pass
 
 
 class SpotifyRevenueManager(BasePlatformManager):
-    """Spotify-specific revenue management"""
+    """
+Spotify-specific revenue management"""
     
     def __init__(self):
         self.platform = PlatformType.SPOTIFY
@@ -112,7 +122,8 @@ class SpotifyRevenueManager(BasePlatformManager):
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize Spotify manager"""
+        """
+Initialize Spotify manager"""
         try:
             self.config = config
             # Initialize Spotify API client
@@ -214,7 +225,8 @@ class YouTubeRevenueManager(BasePlatformManager):
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize YouTube manager"""
+        """
+Initialize YouTube manager"""
         try:
             self.config = config
             await self._setup_youtube_api()
@@ -313,7 +325,8 @@ class InstagramRevenueManager(BasePlatformManager):
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize Instagram manager"""
+        """
+Initialize Instagram manager"""
         try:
             self.config = config
             await self._setup_instagram_api()
@@ -412,7 +425,8 @@ class TikTokRevenueManager(BasePlatformManager):
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize TikTok manager"""
+        """
+Initialize TikTok manager"""
         try:
             self.config = config
             await self._setup_tiktok_api()
@@ -509,7 +523,8 @@ class CrossPlatformOptimizer:
         self.optimization_history = []
         
     async def initialize(self, platform_configs: Dict[str, Dict[str, Any]]) -> None:
-        """Initialize cross-platform optimizer"""
+        """
+Initialize cross-platform optimizer"""
         try:
             # Initialize platform managers
             manager_classes = {
@@ -758,7 +773,8 @@ class PlatformRevenueManager:
         self.platform_managers = {}
         
     async def initialize(self) -> None:
-        """Initialize platform revenue manager"""
+        """
+Initialize platform revenue manager"""
         try:
             platform_configs = self.config.get('platforms', {})
             await self.cross_platform_optimizer.initialize(platform_configs)

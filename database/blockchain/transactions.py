@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Callable
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -43,7 +44,9 @@ from eth_typing import HexStr
 logger = logging.getLogger(__name__)
 
 class TransactionType(Enum):
-    """Types of blockchain transactions."""
+    """
+Types of blockchain transactions."""
+
     COPYRIGHT_REGISTRATION = "copyright_registration"
     NFT_MINT = "nft_mint"
     RIGHTS_TRANSFER = "rights_transfer"
@@ -54,6 +57,7 @@ class TransactionType(Enum):
 
 class TransactionStatus(Enum):
     """Status of blockchain transactions."""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -62,6 +66,7 @@ class TransactionStatus(Enum):
 
 class Priority(Enum):
     """Transaction priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -92,7 +97,8 @@ class TransactionRequest:
 
 @dataclass
 class TransactionResult:
-    """Result of a blockchain transaction."""
+    """
+Result of a blockchain transaction."""
     transaction_hash: str
     transaction_type: TransactionType
     from_address: str
@@ -113,7 +119,8 @@ class TransactionResult:
 
 @dataclass
 class PendingTransaction:
-    """Pending transaction tracking."""
+    """
+Pending transaction tracking."""
     request: TransactionRequest
     transaction_hash: str
     submitted_at: datetime
@@ -122,7 +129,8 @@ class PendingTransaction:
     nonce: int
 
 class GasEstimator:
-    """Gas price estimation and optimization."""
+    """
+Gas price estimation and optimization."""
     
     def __init__(self, web3_instances: Dict[str, Web3]):
         """
@@ -244,7 +252,8 @@ class TransactionProcessor:
         self._initialize_networks()
         
     def _initialize_networks(self) -> None:
-        """Initialize Web3 instances for supported networks."""
+        """
+Initialize Web3 instances for supported networks."""
         networks = self.config.get('networks', {})
         
         for network_name, network_config in networks.items():
@@ -534,7 +543,8 @@ class TransactionProcessor:
         self.callbacks[transaction_hash].append(callback)
 
     async def _execute_callbacks(self, transaction_hash: str, result: TransactionResult) -> None:
-        """Execute registered callbacks for a transaction."""
+        """
+Execute registered callbacks for a transaction."""
         callbacks = self.callbacks.pop(transaction_hash, [])
         for callback in callbacks:
             try:
@@ -550,14 +560,16 @@ class TransactionProcessor:
         return self.transaction_history.get(transaction_hash)
 
     def get_transactions_by_type(self, transaction_type: TransactionType) -> List[TransactionResult]:
-        """Get all transactions of a specific type."""
+        """
+Get all transactions of a specific type."""
         return [
             result for result in self.transaction_history.values()
             if result.transaction_type == transaction_type
         ]
 
     def get_transaction_statistics(self) -> Dict[str, Any]:
-        """Get transaction processing statistics."""
+        """
+Get transaction processing statistics."""
         total_transactions = len(self.transaction_history)
         successful_transactions = len([
             result for result in self.transaction_history.values()

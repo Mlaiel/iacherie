@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator
 from datetime import datetime, timedelta
@@ -62,7 +63,9 @@ from ...utils.gpu_accelerator import GPUAccelerator
 
 
 class OptimizationType(Enum):
-    """Types of content optimization"""
+    """
+Types of content optimization"""
+
     FORMAT_ADAPTATION = "format_adaptation"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     COMPRESSION = "compression"
@@ -77,6 +80,7 @@ class OptimizationType(Enum):
 
 class QualityLevel(Enum):
     """Quality levels for optimization"""
+
     ULTRA_LOW = "ultra_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -103,7 +107,8 @@ class OptimizationProfile:
 
 @dataclass
 class OptimizationMetrics:
-    """Metrics for optimization quality assessment"""
+    """
+Metrics for optimization quality assessment"""
     original_size: int
     optimized_size: int
     compression_ratio: float
@@ -1004,7 +1009,8 @@ class FormatAdapter:
         target_platforms: List[PlatformType],
         preserve_quality: bool = True
     ) -> Dict[str, Any]:
-        """Adapt content format from source platform to target platforms"""
+        """
+Adapt content format from source platform to target platforms"""
         try:
             adaptation_results = {
                 'source_content': content_path,

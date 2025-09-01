@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -52,7 +53,9 @@ from ...security.content_protection import ContentFingerprinter
 logger = logging.getLogger(__name__)
 
 class MarketingChannelType(Enum):
-    """Types of marketing channels"""
+    """
+Types of marketing channels"""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING_PLATFORMS = "streaming_platforms"
     EMAIL_MARKETING = "email_marketing"
@@ -66,6 +69,7 @@ class MarketingChannelType(Enum):
 
 class CampaignStatus(Enum):
     """Marketing campaign statuses"""
+
     PLANNING = "planning"
     ACTIVE = "active"
     OPTIMIZING = "optimizing"
@@ -75,6 +79,7 @@ class CampaignStatus(Enum):
 
 class ContentType(Enum):
     """Types of content for marketing"""
+
     MUSIC_VIDEO = "music_video"
     BEHIND_SCENES = "behind_scenes"
     LYRIC_VIDEO = "lyric_video"
@@ -108,7 +113,8 @@ class MarketingCampaign:
 
 @dataclass
 class AudienceSegment:
-    """Advanced audience segmentation data"""
+    """
+Advanced audience segmentation data"""
     segment_id: str
     name: str
     description: str
@@ -125,7 +131,8 @@ class AudienceSegment:
 
 @dataclass
 class MarketingInsight:
-    """Marketing intelligence insights"""
+    """
+Marketing intelligence insights"""
     insight_id: str
     insight_type: str
     title: str

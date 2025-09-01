@@ -22,6 +22,7 @@ Features:
 - Comprehensive guild analytics and member behavior analysis
 - Content fingerprinting for copyright protection
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
@@ -53,7 +54,8 @@ settings = get_settings()
 
 @dataclass
 class DiscordMessage:
-    """Discord message data structure with enhanced analysis."""
+    """
+Discord message data structure with enhanced analysis."""
     message_id: str
     content: str
     author_id: str
@@ -85,7 +87,8 @@ class DiscordMessage:
 
 @dataclass
 class DiscordGuild:
-    """Discord guild (server) data structure."""
+    """
+Discord guild (server) data structure."""
     guild_id: str
     name: str
     description: Optional[str]
@@ -113,7 +116,8 @@ class DiscordGuild:
 
 @dataclass
 class DiscordChannel:
-    """Discord channel data structure."""
+    """
+Discord channel data structure."""
     channel_id: str
     name: str
     channel_type: str  # text, voice, announcement, etc.
@@ -135,7 +139,8 @@ class DiscordChannel:
 
 @dataclass
 class DiscordUser:
-    """Discord user data structure."""
+    """
+Discord user data structure."""
     user_id: str
     username: str
     discriminator: str
@@ -215,11 +220,13 @@ class DiscordCrawler:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close()
         
     async def initialize(self):
-        """Initialize the crawler and Discord bot."""
+        """
+Initialize the crawler and Discord bot."""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers=self.user_agent_rotator.get_headers()
@@ -285,7 +292,8 @@ class DiscordCrawler:
     
     @tasks.loop(hours=1)
     async def _guild_analysis_task(self):
-        """Periodic guild analysis task."""
+        """
+Periodic guild analysis task."""
         try:
             for guild in self.bot.guilds:
                 if guild.id in self.monitored_guilds:
@@ -553,7 +561,8 @@ class DiscordCrawler:
         )
     
     async def _parse_guild_data(self, guild) -> DiscordGuild:
-        """Parse Discord guild into structured data."""
+        """
+Parse Discord guild into structured data."""
         return DiscordGuild(
             guild_id=str(guild.id),
             name=guild.name,
@@ -572,7 +581,8 @@ class DiscordCrawler:
         )
     
     async def _analyze_guild(self, guild) -> DiscordGuild:
-        """Perform comprehensive guild analysis."""
+        """
+Perform comprehensive guild analysis."""
         guild_data = await self._parse_guild_data(guild)
         
         # Calculate activity score
@@ -590,11 +600,13 @@ class DiscordCrawler:
         return guild_data
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between content fingerprints."""
+        """
+Calculate similarity between content fingerprints."""
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
-        """Get crawler statistics and status."""
+        """
+Get crawler statistics and status."""
         return {
             'platform': 'discord',
             'bot_connected': self.bot.is_ready(),
@@ -778,7 +790,8 @@ class DiscordChannel(BaseModel):
 
 
 class DiscordThread(BaseModel):
-    """Discord Thread data model"""
+    """
+Discord Thread data model"""
     thread_id: str
     name: str
     parent_id: str
@@ -895,7 +908,8 @@ class DiscordCrawler(BaseCrawler):
             await self.bot_client.close()
     
     async def get_guild_details(self, guild_id: str) -> Optional[DiscordGuild]:
-        """Get detailed information about a specific guild"""
+        """
+Get detailed information about a specific guild"""
         await self.rate_limiter.wait()
         
         try:
@@ -1608,7 +1622,8 @@ class DiscordCrawler(BaseCrawler):
         protected_content: Dict,
         message: DiscordMessage
     ) -> float:
-        """Calculate similarity between protected content and Discord message"""
+        """
+Calculate similarity between protected content and Discord message"""
         from difflib import SequenceMatcher
         
         similarity_scores = []
@@ -1632,7 +1647,8 @@ class DiscordCrawler(BaseCrawler):
     
     # Placeholder methods for complex analysis (would need more implementation)
     async def _get_guild_channels(self, guild_id: str) -> List[DiscordChannel]:
-        """Get all channels in a guild"""
+        """
+Get all channels in a guild"""
         try:
             endpoint = f"{self.api_base}/guilds/{guild_id}/channels"
             
@@ -1696,7 +1712,8 @@ class DiscordCrawler(BaseCrawler):
         return min((participation_rate + message_rate) / 2, 1.0)
     
     def _analyze_message_distribution(self, channel_activity: Dict) -> Dict:
-        """Analyze message distribution across channels"""
+        """
+Analyze message distribution across channels"""
         if not channel_activity:
             return {}
         
@@ -1709,7 +1726,8 @@ class DiscordCrawler(BaseCrawler):
         }
     
     def _calculate_activity_trend(self, channel_activity: Dict) -> str:
-        """Calculate activity trend"""
+        """
+Calculate activity trend"""
         if not channel_activity:
             return "unknown"
         
@@ -1756,7 +1774,8 @@ class DiscordCrawler(BaseCrawler):
         return len(messages) / max(time_span, 1)
     
     def _analyze_active_hours(self, messages: List[DiscordMessage]) -> Dict:
-        """Analyze user's active hours"""
+        """
+Analyze user's active hours"""
         hours = [msg.timestamp.hour for msg in messages]
         hour_counts = {}
         for hour in hours:
@@ -1768,21 +1787,26 @@ class DiscordCrawler(BaseCrawler):
         }
     
     async def _analyze_new_user_engagement(self, guild_id: str) -> Dict:
-        """Analyze new user engagement patterns"""
+        """
+Analyze new user engagement patterns"""
         return {'new_user_retention': 0.0, 'average_first_week_messages': 0}
     
     async def _analyze_retention_signals(self, guild_id: str) -> Dict:
-        """Analyze user retention signals"""
+        """
+Analyze user retention signals"""
         return {'retention_rate': 0.0, 'churn_indicators': []}
     
     async def _analyze_content_safety(self, guild_id: str) -> float:
-        """Analyze content safety score"""
+        """
+Analyze content safety score"""
         return 0.8  # Placeholder
     
     async def _analyze_spam_patterns(self, guild_id: str) -> float:
-        """Analyze spam detection score"""
+        """
+Analyze spam detection score"""
         return 0.1  # Placeholder
     
     async def _analyze_toxicity_indicators(self, guild_id: str) -> float:
-        """Analyze toxicity indicators"""
+        """
+Analyze toxicity indicators"""
         return 0.2  # Placeholder

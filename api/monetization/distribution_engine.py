@@ -24,6 +24,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -52,7 +53,9 @@ from ..core.exceptions import DistributionException, PayoutException
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms."""
+    """
+Supported distribution platforms."""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -72,6 +75,7 @@ class DistributionPlatform(Enum):
 
 class ContentType(Enum):
     """Types of content for distribution."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -87,6 +91,7 @@ class ContentType(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status tracking."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     UPLOADING = "uploading"
@@ -100,6 +105,7 @@ class DistributionStatus(Enum):
 
 class PayoutStatus(Enum):
     """Payout processing status."""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     APPROVED = "approved"
@@ -112,6 +118,7 @@ class PayoutStatus(Enum):
 
 class PayoutMethod(Enum):
     """Supported payout methods."""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE_CONNECT = "stripe_connect"
@@ -176,7 +183,8 @@ class DistributionJob:
 
 @dataclass
 class RevenueRecord:
-    """Revenue tracking record."""
+    """
+Revenue tracking record."""
     record_id: str
     creator_id: str
     platform: str
@@ -893,7 +901,7 @@ class AutomatedDistributionEngine:
                 "genres": metadata.get("genres", []),
                 "label": metadata.get("label", "Independent"),
                 "copyrights": [{
-                    "text": f"© {datetime.utcnow().year} {metadata.get('artist', 'Unknown')}",
+                    "text": f"(c) {datetime.utcnow().year} {metadata.get('artist', 'Unknown')}",
                     "type": "C"
                 }],
                 "external_urls": {

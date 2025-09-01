@@ -22,7 +22,8 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 def test_industrial_processor_file():
-    """Test that the industrial processor file exists and is valid Python"""
+    """
+Test that the industrial processor file exists and is valid Python"""
     print("🔍 Testing industrial processor file...")
     
     processor_file = project_root / "data_management" / "fingerprinting" / "industrial_image_processor.py"

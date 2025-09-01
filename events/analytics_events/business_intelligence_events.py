@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -43,7 +44,9 @@ logger = get_logger(__name__)
 
 
 class BusinessMetricType(Enum):
-    """Types of business metrics"""
+    """
+Types of business metrics"""
+
     REVENUE = "revenue"
     GROWTH_RATE = "growth_rate"
     MARKET_SHARE = "market_share"
@@ -60,6 +63,7 @@ class BusinessMetricType(Enum):
 
 class TrendDirection(Enum):
     """Trend direction indicators"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -70,6 +74,7 @@ class TrendDirection(Enum):
 
 class BusinessSegment(Enum):
     """Business segments for analysis"""
+
     MUSIC_CREATORS = "music_creators"
     VIDEO_CREATORS = "video_creators"
     PHOTOGRAPHY = "photography"
@@ -97,7 +102,8 @@ class BusinessIntelligenceEvent(BaseEvent):
     competitive_data: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert BI event to dictionary"""
+        """
+Convert BI event to dictionary"""
         return {
             **asdict(self),
             'business_segment': self.business_segment.value,
@@ -108,7 +114,8 @@ class BusinessIntelligenceEvent(BaseEvent):
 
 @dataclass
 class MarketInsight:
-    """Represents a market insight"""
+    """
+Represents a market insight"""
     insight_id: str
     insight_type: str
     title: str
@@ -122,7 +129,8 @@ class MarketInsight:
 
 
 class BusinessIntelligenceEventHandler(BaseEventHandler):
-    """Handles business intelligence events with advanced analytics"""
+    """
+Handles business intelligence events with advanced analytics"""
     
     def __init__(self):
         super().__init__()
@@ -134,7 +142,8 @@ class BusinessIntelligenceEventHandler(BaseEventHandler):
         self.insights_engine = MarketInsightsEngine()
         
     async def handle(self, event: BusinessIntelligenceEvent) -> Dict[str, Any]:
-        """Process business intelligence event with comprehensive analysis"""
+        """
+Process business intelligence event with comprehensive analysis"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -219,7 +228,8 @@ class BusinessIntelligenceEventHandler(BaseEventHandler):
             )
     
     async def _calculate_business_health_score(self, event: BusinessIntelligenceEvent) -> Dict[str, float]:
-        """Calculate comprehensive business health score"""
+        """
+Calculate comprehensive business health score"""
         # Get historical metrics for comparison
         historical_data = await self._get_historical_metrics(event.creator_id, event.business_segment)
         
@@ -259,7 +269,8 @@ class BusinessIntelligenceEventHandler(BaseEventHandler):
     
     async def _generate_strategic_recommendations(self, event: BusinessIntelligenceEvent, 
                                                 metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate strategic business recommendations"""
+        """
+Generate strategic business recommendations"""
         recommendations = []
         
         # Analyze metrics for recommendations
@@ -312,7 +323,8 @@ class BusinessIntelligenceEventHandler(BaseEventHandler):
 
 
 class BusinessMetricsTracker:
-    """Tracks and analyzes business metrics"""
+    """
+Tracks and analyzes business metrics"""
     
     def __init__(self):
         self.cache_manager = CacheManager()
@@ -320,7 +332,8 @@ class BusinessMetricsTracker:
         self.data_processor = DataProcessor()
         
     async def track_metrics(self, event: BusinessIntelligenceEvent) -> Dict[str, Any]:
-        """Track comprehensive business metrics"""
+        """
+Track comprehensive business metrics"""
         # Calculate revenue metrics
         revenue_metrics = await self._calculate_revenue_metrics(event)
         
@@ -350,7 +363,8 @@ class BusinessMetricsTracker:
         }
     
     async def _calculate_revenue_metrics(self, event: BusinessIntelligenceEvent) -> Dict[str, float]:
-        """Calculate comprehensive revenue metrics"""
+        """
+Calculate comprehensive revenue metrics"""
         creator_id = event.creator_id
         
         # Get revenue data for different time periods
@@ -384,7 +398,8 @@ class BusinessMetricsTracker:
         }
     
     async def _calculate_growth_metrics(self, event: BusinessIntelligenceEvent) -> Dict[str, float]:
-        """Calculate growth-related metrics"""
+        """
+Calculate growth-related metrics"""
         creator_id = event.creator_id
         
         # User growth metrics
@@ -410,7 +425,8 @@ class BusinessMetricsTracker:
 
 
 class BusinessTrendAnalyzer:
-    """Analyzes business trends and patterns"""
+    """
+Analyzes business trends and patterns"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -418,7 +434,8 @@ class BusinessTrendAnalyzer:
         self.time_series_analyzer = TimeSeriesAnalyzer()
         
     async def analyze_trends(self, event: BusinessIntelligenceEvent) -> Dict[str, Any]:
-        """Analyze business trends and patterns"""
+        """
+Analyze business trends and patterns"""
         # Get historical data for trend analysis
         historical_data = await self._get_historical_business_data(event.creator_id)
         
@@ -452,7 +469,8 @@ class BusinessTrendAnalyzer:
     
     async def _detect_trend_direction(self, data: pd.DataFrame, 
                                     metric_type: BusinessMetricType) -> TrendDirection:
-        """Detect the direction of business trends"""
+        """
+Detect the direction of business trends"""
         if data.empty:
             return TrendDirection.STABLE
         
@@ -476,7 +494,8 @@ class BusinessTrendAnalyzer:
 
 
 class CompetitiveAnalysisEngine:
-    """Analyzes competitive landscape and positioning"""
+    """
+Analyzes competitive landscape and positioning"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -484,7 +503,8 @@ class CompetitiveAnalysisEngine:
         self.benchmark_engine = BenchmarkEngine()
         
     async def analyze_competition(self, event: BusinessIntelligenceEvent) -> Dict[str, Any]:
-        """Perform comprehensive competitive analysis"""
+        """
+Perform comprehensive competitive analysis"""
         # Get competitor data
         competitors = await self._identify_competitors(event.creator_id, event.business_segment)
         
@@ -519,7 +539,8 @@ class CompetitiveAnalysisEngine:
 
 
 class MarketInsightsEngine:
-    """Generates actionable market insights"""
+    """
+Generates actionable market insights"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -556,7 +577,8 @@ class MarketInsightsEngine:
         return insights[:10]  # Return top 10 insights
     
     async def _generate_revenue_insights(self, event: BusinessIntelligenceEvent) -> List[MarketInsight]:
-        """Generate revenue-related insights"""
+        """
+Generate revenue-related insights"""
         insights = []
         
         # Analyze revenue patterns

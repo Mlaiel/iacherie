@@ -4,6 +4,7 @@ Advanced analytics and reporting for payment data in IA Influencer Agent platfor
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
+
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -32,6 +35,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Types of payment metrics"""
+
     REVENUE = "revenue"
     TRANSACTION_COUNT = "transaction_count"
     SUCCESS_RATE = "success_rate"
@@ -55,7 +59,8 @@ class PaymentMetric:
 
 @dataclass
 class RevenueBreakdown:
-    """Revenue breakdown structure"""
+    """
+Revenue breakdown structure"""
     total_revenue: Decimal
     gross_revenue: Decimal
     net_revenue: Decimal
@@ -68,7 +73,8 @@ class RevenueBreakdown:
 
 @dataclass
 class TransactionAnalytics:
-    """Transaction analytics structure"""
+    """
+Transaction analytics structure"""
     total_transactions: int
     successful_transactions: int
     failed_transactions: int
@@ -80,7 +86,8 @@ class TransactionAnalytics:
 
 
 class PaymentAnalyticsEngine:
-    """Core analytics engine for payment data"""
+    """
+Core analytics engine for payment data"""
     
     def __init__(self):
         self.cache_duration = timedelta(minutes=15)
@@ -93,7 +100,8 @@ class PaymentAnalyticsEngine:
         timeframe: AnalyticsTimeframe,
         currency: str = 'USD'
     ) -> RevenueBreakdown:
-        """Calculate comprehensive revenue metrics"""
+        """
+Calculate comprehensive revenue metrics"""
         
         # Filter transactions by currency and successful status
         currency_transactions = [
@@ -143,7 +151,8 @@ class PaymentAnalyticsEngine:
         transactions: List[PaymentTransaction],
         timeframe: AnalyticsTimeframe
     ) -> TransactionAnalytics:
-        """Calculate transaction analytics"""
+        """
+Calculate transaction analytics"""
         
         total_count = len(transactions)
         
@@ -193,7 +202,8 @@ class PaymentAnalyticsEngine:
         transactions: List[PaymentTransaction],
         timeframe: AnalyticsTimeframe
     ) -> Dict[PaymentProvider, Dict[str, Any]]:
-        """Calculate performance metrics by payment provider"""
+        """
+Calculate performance metrics by payment provider"""
         
         provider_metrics = {}
         
@@ -244,7 +254,8 @@ class PaymentAnalyticsEngine:
         transactions: List[PaymentTransaction],
         cohort_period: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY
     ) -> Dict[str, Any]:
-        """Perform cohort analysis on customer payment behavior"""
+        """
+Perform cohort analysis on customer payment behavior"""
         
         # Group transactions by user and time periods
         user_transactions = defaultdict(list)
@@ -324,7 +335,8 @@ class PaymentAnalyticsEngine:
         transactions: List[PaymentTransaction],
         lookback_days: int = 30
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in payment patterns"""
+        """
+Detect anomalies in payment patterns"""
         
         anomalies = []
         
@@ -428,7 +440,8 @@ class PaymentAnalyticsEngine:
         transactions: List[PaymentTransaction],
         forecast_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate revenue forecasting data"""
+        """
+Generate revenue forecasting data"""
         
         # Group successful transactions by day
         daily_revenue = defaultdict(lambda: Decimal('0'))
@@ -499,7 +512,8 @@ class PaymentAnalyticsEngine:
         }
     
     def _estimate_transaction_fee(self, amount: Decimal, provider: PaymentProvider) -> Decimal:
-        """Estimate transaction fee based on provider"""
+        """
+Estimate transaction fee based on provider"""
         fee_rates = {
             PaymentProvider.STRIPE: Decimal('0.029'),  # 2.9% + $0.30
             PaymentProvider.PAYPAL: Decimal('0.034'),  # 3.4% + $0.30
@@ -518,7 +532,8 @@ class PaymentAnalyticsEngine:
         return (amount * rate) + base
     
     def _get_period_key(self, date: datetime, period: AnalyticsTimeframe) -> str:
-        """Get period key for grouping"""
+        """
+Get period key for grouping"""
         if period == AnalyticsTimeframe.DAILY:
             return date.strftime('%Y-%m-%d')
         elif period == AnalyticsTimeframe.WEEKLY:
@@ -554,7 +569,8 @@ class PaymentAnalyticsEngine:
 
 
 class PaymentReportsGenerator:
-    """Generate comprehensive payment reports"""
+    """
+Generate comprehensive payment reports"""
     
     def __init__(self, analytics_engine: PaymentAnalyticsEngine):
         self.analytics = analytics_engine
@@ -564,7 +580,8 @@ class PaymentReportsGenerator:
         transactions: List[PaymentTransaction],
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY
     ) -> Dict[str, Any]:
-        """Generate executive summary report"""
+        """
+Generate executive summary report"""
         
         # Calculate key metrics
         revenue_breakdown = await self.analytics.calculate_revenue_metrics(
@@ -630,7 +647,8 @@ class PaymentReportsGenerator:
         transactions: List[PaymentTransaction],
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY
     ) -> Dict[str, Any]:
-        """Generate detailed financial report"""
+        """
+Generate detailed financial report"""
         
         # Group transactions by currency
         currencies = set(t.currency for t in transactions)
@@ -679,7 +697,8 @@ class PaymentReportsGenerator:
         transactions: List[PaymentTransaction],
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY
     ) -> Dict[str, Any]:
-        """Generate operational performance report"""
+        """
+Generate operational performance report"""
         
         provider_performance = await self.analytics.calculate_provider_performance(
             transactions, timeframe
@@ -736,7 +755,8 @@ class PaymentReportsGenerator:
         anomalies: List[Dict[str, Any]],
         failure_reasons: Dict[str, int]
     ) -> List[str]:
-        """Generate operational recommendations"""
+        """
+Generate operational recommendations"""
         
         recommendations = []
         

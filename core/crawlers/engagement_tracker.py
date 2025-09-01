@@ -4,6 +4,7 @@ AI-Powered Social Media Engagement Monitoring and Analytics System
 This module provides comprehensive engagement tracking capabilities including
 real-time monitoring, sentiment analysis, influencer identification, and engagement optimization.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementType(str, Enum):
-    """Types of engagement interactions"""
+    """
+Types of engagement interactions"""
+
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -48,6 +51,7 @@ class EngagementType(str, Enum):
 
 class EngagementSentiment(str, Enum):
     """Sentiment of engagement"""
+
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
@@ -57,6 +61,7 @@ class EngagementSentiment(str, Enum):
 
 class EngagementSource(str, Enum):
     """Source platforms for engagement"""
+
     TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -71,6 +76,7 @@ class EngagementSource(str, Enum):
 
 class UserType(str, Enum):
     """Types of engaging users"""
+
     REGULAR = "regular"
     VERIFIED = "verified"
     INFLUENCER = "influencer"
@@ -82,6 +88,7 @@ class UserType(str, Enum):
 
 class EngagementQuality(str, Enum):
     """Quality levels of engagement"""
+
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -107,7 +114,8 @@ class EngagementUser(BaseModel):
 
 
 class EngagementInteraction(BaseModel):
-    """Individual engagement interaction"""
+    """
+Individual engagement interaction"""
     interaction_id: str
     engagement_type: EngagementType
     user: EngagementUser
@@ -139,7 +147,8 @@ class EngagementInteraction(BaseModel):
 
 
 class EngagementMetrics(BaseModel):
-    """Engagement metrics for a specific period"""
+    """
+Engagement metrics for a specific period"""
     period_start: datetime
     period_end: datetime
     total_engagements: int
@@ -168,7 +177,8 @@ class EngagementMetrics(BaseModel):
 
 
 class EngagementTrend(BaseModel):
-    """Engagement trend analysis"""
+    """
+Engagement trend analysis"""
     trend_id: str
     trend_period: str
     trend_direction: str  # "increasing", "decreasing", "stable"
@@ -694,12 +704,14 @@ class AdvancedEngagementTracker(BaseCrawler):
         return await self._create_sample_engagements(EngagementSource.TWITTER, content_ids)
 
     async def _fetch_instagram_engagements(self, content_ids: List[str]) -> List[EngagementInteraction]:
-        """Fetch Instagram engagements (simplified implementation)"""
+        """
+Fetch Instagram engagements (simplified implementation)"""
         # Simulate Instagram API response
         return await self._create_sample_engagements(EngagementSource.INSTAGRAM, content_ids)
 
     async def _fetch_facebook_engagements(self, content_ids: List[str]) -> List[EngagementInteraction]:
-        """Fetch Facebook engagements (simplified implementation)"""
+        """
+Fetch Facebook engagements (simplified implementation)"""
         # Simulate Facebook API response
         return await self._create_sample_engagements(EngagementSource.FACEBOOK, content_ids)
 
@@ -708,7 +720,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource,
         content_ids: List[str]
     ) -> List[EngagementInteraction]:
-        """Create sample engagements for testing"""
+        """
+Create sample engagements for testing"""
         engagements = []
         
         engagement_types = [EngagementType.LIKE, EngagementType.COMMENT, EngagementType.SHARE]
@@ -803,7 +816,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> EngagementMetrics:
-        """Calculate comprehensive engagement metrics"""
+        """
+Calculate comprehensive engagement metrics"""
         if not engagements:
             return EngagementMetrics(
                 period_start=start_time,
@@ -870,7 +884,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource,
         period: str
     ) -> List[Dict[str, Any]]:
-        """Get historical engagement data for trend analysis"""
+        """
+Get historical engagement data for trend analysis"""
         # Simplified historical data generation
         hours = self._parse_period_hours(period)
         data_points = []
@@ -889,7 +904,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         return data_points
 
     async def _analyze_trends(self, historical_data: List[Dict[str, Any]]) -> List[EngagementTrend]:
-        """Analyze engagement trends from historical data"""
+        """
+Analyze engagement trends from historical data"""
         if len(historical_data) < 3:
             return []
         
@@ -957,7 +973,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[Dict[str, Any]]:
-        """Analyze influencer engagement patterns"""
+        """
+Analyze influencer engagement patterns"""
         influencer_analysis = []
         
         for user_id, user_data in self.user_profiles.items():
@@ -988,7 +1005,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         metrics: EngagementMetrics,
         trends: List[EngagementTrend]
     ) -> List[str]:
-        """Generate key insights from metrics and trends"""
+        """
+Generate key insights from metrics and trends"""
         insights = []
         
         if metrics.total_engagements > 1000:
@@ -1054,57 +1072,68 @@ class AdvancedEngagementTracker(BaseCrawler):
             return 24  # Default to 24 hours
 
     async def _perform_real_time_analysis(self):
-        """Perform real-time engagement analysis"""
+        """
+Perform real-time engagement analysis"""
         # Implementation for real-time analysis
         pass
 
     async def _check_alert_conditions(self):
-        """Check for alert conditions"""
+        """
+Check for alert conditions"""
         # Implementation for alert checking
         pass
 
     async def _update_real_time_metrics(self):
-        """Update real-time metrics"""
+        """
+Update real-time metrics"""
         # Implementation for real-time metrics updates
         pass
 
     async def _get_recent_engagements(self, content_id: str = None) -> List[EngagementInteraction]:
-        """Get recent engagements for anomaly detection"""
+        """
+Get recent engagements for anomaly detection"""
         recent_time = datetime.utcnow() - timedelta(hours=1)
         return await self._filter_engagements(content_id, None, recent_time, datetime.utcnow())
 
     async def _detect_engagement_spikes(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect engagement spikes"""
+        """
+Detect engagement spikes"""
         # Implementation for spike detection
         return []
 
     async def _detect_bot_activity(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect bot activity"""
+        """
+Detect bot activity"""
         # Implementation for bot detection
         return []
 
     async def _detect_sentiment_anomalies(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect sentiment anomalies"""
+        """
+Detect sentiment anomalies"""
         # Implementation for sentiment anomaly detection
         return []
 
     async def _detect_spam_patterns(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect spam patterns"""
+        """
+Detect spam patterns"""
         # Implementation for spam detection
         return []
 
     async def _get_active_alerts(self) -> List[EngagementAlert]:
-        """Get currently active alerts"""
+        """
+Get currently active alerts"""
         # Implementation for active alerts
         return []
 
     async def _get_resolved_alerts(self, start_time: datetime, end_time: datetime) -> List[EngagementAlert]:
-        """Get resolved alerts in period"""
+        """
+Get resolved alerts in period"""
         # Implementation for resolved alerts
         return []
 
     async def close(self):
-        """Close tracker and cleanup resources"""
+        """
+Close tracker and cleanup resources"""
         try:
             await self.stop_tracking()
             await self.cache_manager.close()

@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
+    """
+Validation strictness levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -59,6 +62,7 @@ class ValidationLevel(Enum):
 
 class ValidationResult(Enum):
     """Validation result status"""
+
     VALID = "valid"
     INVALID = "invalid"
     SUSPICIOUS = "suspicious"
@@ -82,7 +86,8 @@ class ValidationReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage/transmission"""
+        """
+Convert to dictionary for storage/transmission"""
         return {
             "validation_id": self.validation_id,
             "timestamp": self.timestamp.isoformat(),
@@ -112,7 +117,8 @@ class ContentIntegrityCheck:
 
 @dataclass
 class BlockchainTransactionValidation:
-    """Blockchain transaction validation result"""
+    """
+Blockchain transaction validation result"""
     transaction_hash: str
     network: str
     is_valid: bool
@@ -140,19 +146,22 @@ class BlockchainValidator:
         self._init_connections()
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         if self.ipfs_client:
             self.ipfs_client.close()
     
     def _init_connections(self):
-        """Initialize blockchain and storage connections"""
+        """
+Initialize blockchain and storage connections"""
         try:
             # Initialize Web3 connections for different networks
             networks = self.config.get("networks", {})
@@ -697,7 +706,8 @@ class BlockchainValidator:
             return False
     
     def _validate_content_hash(self, content_hash: str) -> bool:
-        """Validate content hash format"""
+        """
+Validate content hash format"""
         try:
             # Check if it's a valid SHA-256 hash
             if len(content_hash) != 64:
@@ -711,7 +721,8 @@ class BlockchainValidator:
             return False
     
     async def _validate_blockchain_proof_data(self, proof: TimestampProof) -> bool:
-        """Validate blockchain-specific proof data"""
+        """
+Validate blockchain-specific proof data"""
         try:
             if not proof.transaction_hash:
                 return False
@@ -741,7 +752,8 @@ class BlockchainValidator:
             return False
     
     async def _cross_reference_proof(self, proof: TimestampProof) -> bool:
-        """Cross-reference proof with external sources"""
+        """
+Cross-reference proof with external sources"""
         try:
             # This would implement cross-referencing with:
             # - Blockchain explorers

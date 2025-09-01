@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import asyncio
 import logging
 import time
@@ -69,7 +70,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class StreamType(Enum):
-    """Types de flux supportés"""
+    """
+Types de flux supportés"""
+
     AUDIO_REALTIME = "audio_realtime"
     VIDEO_REALTIME = "video_realtime"
     WEBCAM_STREAM = "webcam_stream"
@@ -81,6 +84,7 @@ class StreamType(Enum):
 
 class ProcessingMode(Enum):
     """Modes de traitement"""
+
     REALTIME = "realtime"
     BUFFERED = "buffered"
     BATCH = "batch"
@@ -88,6 +92,7 @@ class ProcessingMode(Enum):
 
 class StreamFormat(Enum):
     """Formats de flux"""
+
     RAW_AUDIO = "raw_audio"
     WAV = "wav"
     MP3 = "mp3"
@@ -133,7 +138,8 @@ class StreamProcessingResult:
     warnings: List[str]
 
 class AudioStreamProcessor:
-    """Processeur de flux audio en temps réel"""
+    """
+Processeur de flux audio en temps réel"""
     
     def __init__(self, config: StreamConfig):
         self.config = config
@@ -160,7 +166,8 @@ class AudioStreamProcessor:
         }
     
     async def start_stream(self, source: Optional[str] = None) -> str:
-        """Démarre le flux audio"""
+        """
+Démarre le flux audio"""
         
         try:
             stream_id = f"audio_stream_{uuid.uuid4().hex[:8]}"
@@ -327,7 +334,8 @@ class AudioStreamProcessor:
             )
     
     def _calculate_audio_quality(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Calcule les métriques de qualité audio"""
+        """
+Calcule les métriques de qualité audio"""
         
         if len(audio_data) == 0:
             return {}
@@ -354,7 +362,8 @@ class AudioStreamProcessor:
         }
     
     def stop_stream(self):
-        """Arrête le flux audio"""
+        """
+Arrête le flux audio"""
         
         self.is_processing = False
         
@@ -370,7 +379,8 @@ class AudioStreamProcessor:
         return self.metrics.copy()
 
 class VideoStreamProcessor:
-    """Processeur de flux vidéo en temps réel"""
+    """
+Processeur de flux vidéo en temps réel"""
     
     def __init__(self, config: StreamConfig):
         self.config = config
@@ -396,7 +406,8 @@ class VideoStreamProcessor:
         }
     
     async def start_stream(self, source: Union[int, str] = 0) -> str:
-        """Démarre le flux vidéo"""
+        """
+Démarre le flux vidéo"""
         
         try:
             stream_id = f"video_stream_{uuid.uuid4().hex[:8]}"
@@ -546,7 +557,8 @@ class VideoStreamProcessor:
         self.metrics['max_latency'] = max(self.metrics['max_latency'], latency)
     
     def _calculate_video_quality(self, frame: np.ndarray) -> Dict[str, float]:
-        """Calcule les métriques de qualité vidéo"""
+        """
+Calcule les métriques de qualité vidéo"""
         
         if frame is None or frame.size == 0:
             return {}
@@ -580,7 +592,8 @@ class VideoStreamProcessor:
         }
     
     def stop_stream(self):
-        """Arrête le flux vidéo"""
+        """
+Arrête le flux vidéo"""
         
         self.is_processing = False
         
@@ -594,7 +607,8 @@ class VideoStreamProcessor:
         return self.metrics.copy()
 
 class WebSocketStreamProcessor:
-    """Processeur de flux WebSocket en temps réel"""
+    """
+Processeur de flux WebSocket en temps réel"""
     
     def __init__(self, config: StreamConfig):
         self.config = config
@@ -745,7 +759,8 @@ class WebSocketStreamProcessor:
         )
     
     async def stop_server(self):
-        """Arrête le serveur WebSocket"""
+        """
+Arrête le serveur WebSocket"""
         
         self.is_processing = False
         
@@ -760,7 +775,8 @@ class WebSocketStreamProcessor:
         return self.metrics.copy()
 
 class KafkaStreamProcessor:
-    """Processeur de flux Kafka en temps réel"""
+    """
+Processeur de flux Kafka en temps réel"""
     
     def __init__(self, config: StreamConfig):
         self.config = config
@@ -785,7 +801,8 @@ class KafkaStreamProcessor:
         }
     
     async def start_producer(self) -> str:
-        """Démarre le producteur Kafka"""
+        """
+Démarre le producteur Kafka"""
         
         try:
             stream_id = f"kafka_producer_{uuid.uuid4().hex[:8]}"
@@ -952,7 +969,8 @@ class KafkaStreamProcessor:
             )
     
     def stop_kafka(self):
-        """Arrête les composants Kafka"""
+        """
+Arrête les composants Kafka"""
         
         self.is_processing = False
         
@@ -969,7 +987,8 @@ class KafkaStreamProcessor:
         return self.metrics.copy()
 
 class StreamTransformer:
-    """Gestionnaire principal des flux en temps réel"""
+    """
+Gestionnaire principal des flux en temps réel"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -1013,7 +1032,8 @@ class StreamTransformer:
         self,
         stream_config: StreamConfig
     ) -> Union[AudioStreamProcessor, VideoStreamProcessor, WebSocketStreamProcessor, KafkaStreamProcessor]:
-        """Crée le processeur de flux approprié"""
+        """
+Crée le processeur de flux approprié"""
         
         if stream_config.stream_type in [StreamType.AUDIO_REALTIME, StreamType.MICROPHONE_STREAM]:
             return AudioStreamProcessor(stream_config)
@@ -1144,7 +1164,8 @@ class StreamTransformer:
         return metrics
     
     def get_all_streams_status(self) -> Dict[str, Dict[str, Any]]:
-        """Retourne le statut de tous les flux actifs"""
+        """
+Retourne le statut de tous les flux actifs"""
         
         status = {}
         
@@ -1154,7 +1175,8 @@ class StreamTransformer:
         return status
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """Arrête un flux spécifique"""
+        """
+Arrête un flux spécifique"""
         
         if stream_id not in self.active_streams:
             logger.warning(f"Flux non trouvé: {stream_id}")

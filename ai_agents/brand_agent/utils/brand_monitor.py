@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -52,7 +53,9 @@ from ...utils.notification_service import NotificationService
 logger = logging.getLogger(__name__)
 
 class MonitoringSource(Enum):
-    """Sources for brand monitoring"""
+    """
+Sources for brand monitoring"""
+
     GOOGLE_NEWS = "google_news"
     SOCIAL_MEDIA = "social_media"
     WEB_SEARCH = "web_search"
@@ -68,6 +71,7 @@ class MonitoringSource(Enum):
 
 class SentimentType(Enum):
     """Sentiment analysis categories"""
+
     HIGHLY_POSITIVE = "highly_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
@@ -76,6 +80,7 @@ class SentimentType(Enum):
     
 class AlertPriority(Enum):
     """Alert priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -132,6 +137,7 @@ class ReputationMetrics:
 
 class SentimentScore(Enum):
     """Sentiment classification levels"""
+
     VERY_NEGATIVE = "very_negative"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -140,6 +146,7 @@ class SentimentScore(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -388,7 +395,8 @@ class BrandMonitor:
         return intervals.get(source, 3600)
 
     async def _monitor_google_news(self) -> List[BrandMention]:
-        """Monitor Google News for brand mentions"""
+        """
+Monitor Google News for brand mentions"""
         mentions = []
         
         try:

@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive model deployment capabilities including
 model serving, auto-scaling, load balancing, and deployment orchestration.
 """
+
 import logging
 import os
 import json
@@ -21,7 +22,9 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class DeploymentStatus(Enum):
-    """Deployment status states"""
+    """
+Deployment status states"""
+
     PENDING = "pending"
     DEPLOYING = "deploying"
     DEPLOYED = "deployed"
@@ -33,6 +36,7 @@ class DeploymentStatus(Enum):
 
 class ScalingPolicy(Enum):
     """Auto-scaling policies"""
+
     FIXED = "fixed"
     AUTO_CPU = "auto_cpu"
     AUTO_MEMORY = "auto_memory"
@@ -67,7 +71,8 @@ class DeploymentInfo:
     metadata: Dict[str, Any]
 
 class ModelDeployer:
-    """Main class for deploying ML models"""
+    """
+Main class for deploying ML models"""
     
     def __init__(self, config_path: Optional[str] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -190,11 +195,13 @@ class ModelDeployer:
         return self.deployments.get(deployment_id)
     
     def list_deployments(self) -> List[DeploymentInfo]:
-        """List all deployments"""
+        """
+List all deployments"""
         return list(self.deployments.values())
     
     def update_deployment(self, deployment_id: str, config: DeploymentConfig) -> bool:
-        """Update an existing deployment"""
+        """
+Update an existing deployment"""
         try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")
@@ -374,11 +381,13 @@ class ModelServer:
         return self.models.get(model_id)
     
     def list_models(self) -> List[str]:
-        """List all loaded models"""
+        """
+List all loaded models"""
         return list(self.models.keys())
 
 class ModelScaler:
-    """Auto-scaling manager for deployed models"""
+    """
+Auto-scaling manager for deployed models"""
     
     def __init__(self, deployer: ModelDeployer):
         self.deployer = deployer

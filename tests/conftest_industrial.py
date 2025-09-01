@@ -91,7 +91,8 @@ def event_loop():
 # Performance monitoring
 @pytest.fixture
 def performance_monitor():
-    """Monitor performance during tests."""
+    """
+Monitor performance during tests."""
     import time
     import psutil
     

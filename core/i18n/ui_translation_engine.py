@@ -8,7 +8,7 @@ Technologies: Python, Translation APIs, Quality Metrics, Batch Processing, Cachi
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 UI content → Language detection → Multi-provider translation → Quality assessment → 
 Context preservation → Batch optimization → Cache management → Real-time delivery
 """
+
 import logging
 import asyncio
 import hashlib
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class TranslationProvider(Enum):
-    """Supported translation providers"""
+    """
+Supported translation providers"""
+
     GOOGLE_TRANSLATE = "google_translate"
     DEEPL = "deepl"
     MICROSOFT_TRANSLATOR = "microsoft_translator"
@@ -42,6 +45,7 @@ class TranslationProvider(Enum):
 
 class TranslationQuality(Enum):
     """Translation quality levels"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -51,6 +55,7 @@ class TranslationQuality(Enum):
 
 class ContentType(Enum):
     """Types of content for translation"""
+
     TEXT = "text"
     UI_ELEMENT = "ui_element"
     BUTTON = "button"
@@ -66,6 +71,7 @@ class ContentType(Enum):
 
 class TranslationStatus(Enum):
     """Translation job status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -89,7 +95,8 @@ class TranslationContext:
 
 @dataclass
 class TranslationResult:
-    """Translation result with quality metrics"""
+    """
+Translation result with quality metrics"""
     original_text: str
     translated_text: str
     source_language: str
@@ -107,7 +114,8 @@ class TranslationResult:
 
 @dataclass
 class BatchTranslationJob:
-    """Batch translation job"""
+    """
+Batch translation job"""
     job_id: str
     items: List[Dict[str, Any]]
     source_language: str
@@ -122,7 +130,8 @@ class BatchTranslationJob:
 
 
 class UITranslationEngine:
-    """Advanced UI translation engine with multi-provider support"""
+    """
+Advanced UI translation engine with multi-provider support"""
     
     def __init__(self):
         self.providers: Dict[TranslationProvider, Any] = {}
@@ -149,7 +158,8 @@ class UITranslationEngine:
         }
     
     def _initialize_provider_preferences(self):
-        """Initialize provider preferences by language pair"""
+        """
+Initialize provider preferences by language pair"""
         self.provider_preferences = {
             # European languages - DeepL preferred
             "en_de": [TranslationProvider.DEEPL, TranslationProvider.GOOGLE_TRANSLATE],
@@ -530,7 +540,8 @@ class UITranslationEngine:
         target_language: str,
         component_contexts: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> Dict[str, TranslationResult]:
-        """Translate UI components with specific contexts"""
+        """
+Translate UI components with specific contexts"""
         results = {}
         
         for component_id, text in components.items():
@@ -602,7 +613,8 @@ class UITranslationEngine:
         return total_time / len(self.translation_cache)
     
     async def clear_cache(self, max_age_hours: int = 24):
-        """Clear old cache entries"""
+        """
+Clear old cache entries"""
         cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
         
         keys_to_remove = [

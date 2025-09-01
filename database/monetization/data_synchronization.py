@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 import asyncio
 import json
 import logging
@@ -56,7 +57,9 @@ logger = logging.getLogger(__name__)
 
 
 class SyncConflictType(Enum):
-    """Types of data synchronization conflicts"""
+    """
+Types of data synchronization conflicts"""
+
     DUPLICATE_RECORD = "duplicate_record"
     VERSION_MISMATCH = "version_mismatch"
     DATA_INCONSISTENCY = "data_inconsistency"
@@ -67,6 +70,7 @@ class SyncConflictType(Enum):
 
 class SyncStrategy(Enum):
     """Data synchronization strategies"""
+
     MERGE_LATEST = "merge_latest"
     PLATFORM_PRIORITY = "platform_priority"
     MANUAL_REVIEW = "manual_review"
@@ -90,7 +94,8 @@ class SyncConflict:
 
 @dataclass
 class SyncResult:
-    """Synchronization operation result"""
+    """
+Synchronization operation result"""
     success: bool
     records_processed: int
     records_created: int
@@ -120,7 +125,8 @@ class DataSynchronizationEngine:
         self._initialize_data_validators()
     
     async def initialize(self):
-        """Initialize Redis connection and other async resources"""
+        """
+Initialize Redis connection and other async resources"""
         self.redis_client = redis.from_url(
             settings.REDIS_URL,
             encoding="utf-8",
@@ -139,7 +145,8 @@ class DataSynchronizationEngine:
         }
     
     def _initialize_data_validators(self):
-        """Initialize data validation rules"""
+        """
+Initialize data validation rules"""
         self.data_validators = {
             "analytics": self._validate_analytics_data,
             "revenue": self._validate_revenue_data,
@@ -405,7 +412,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve a data synchronization conflict"""
+        """
+Resolve a data synchronization conflict"""
         
         resolver = self.conflict_resolvers.get(conflict.conflict_type)
         if not resolver:
@@ -631,7 +639,8 @@ class DataSynchronizationEngine:
         data_type: str,
         record_data: Dict[str, Any]
     ) -> bool:
-        """Create or update a record in the database"""
+        """
+Create or update a record in the database"""
         
         try:
             if data_type == "analytics":

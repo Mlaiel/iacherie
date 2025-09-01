@@ -30,6 +30,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -465,7 +466,8 @@ class MongoDBConnectionPool(IConnectionPool):
         return collection
     
     async def insert_content_fingerprint(self, fingerprint_data: Dict[str, Any]) -> bson.ObjectId:
-        """Insert content fingerprint with validation"""
+        """
+Insert content fingerprint with validation"""
         try:
             collection = await self.get_collection("content_fingerprints")
             result = await collection.insert_one(fingerprint_data)

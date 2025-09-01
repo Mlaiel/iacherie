@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides advanced monitoring capabilities for API performance,
 health checks, error tracking, and alerting systems.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -20,7 +21,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class MonitoringLevel(Enum):
-    """Monitoring levels"""
+    """
+Monitoring levels"""
+
     BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
@@ -28,6 +31,7 @@ class MonitoringLevel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -35,6 +39,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Metric types for monitoring"""
+
     RESPONSE_TIME = "response_time"
     SUCCESS_RATE = "success_rate"
     ERROR_RATE = "error_rate"
@@ -54,7 +59,8 @@ class APIMetric:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration"""
+    """
+Health check configuration"""
     api_name: str
     endpoint: str
     method: str = "HEAD"
@@ -94,7 +100,8 @@ class Alert:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class PerformanceTracker:
-    """Tracks API performance metrics"""
+    """
+Tracks API performance metrics"""
     
     def __init__(self, max_samples: int = 1000):
         self.max_samples = max_samples
@@ -107,7 +114,8 @@ class PerformanceTracker:
     
     def record_request(self, api_name: str, response_time: float, success: bool, 
                       status_code: Optional[int] = None, error_message: Optional[str] = None):
-        """Record API request metrics"""
+        """
+Record API request metrics"""
         self.response_times[api_name].append(response_time)
         self.request_counts[api_name] += 1
         self.last_request_time[api_name] = datetime.utcnow()
@@ -129,7 +137,8 @@ class PerformanceTracker:
                 self.error_details[api_name] = self.error_details[api_name][-100:]
     
     def get_metrics(self, api_name: str, time_window_minutes: int = 60) -> Dict[str, float]:
-        """Get performance metrics for API within time window"""
+        """
+Get performance metrics for API within time window"""
         now = datetime.utcnow()
         cutoff_time = now - timedelta(minutes=time_window_minutes)
         
@@ -174,7 +183,8 @@ class PerformanceTracker:
         }
     
     def get_error_summary(self, api_name: str) -> Dict[str, Any]:
-        """Get error summary for API"""
+        """
+Get error summary for API"""
         errors = self.error_details.get(api_name, [])
         if not errors:
             return {'total_errors': 0, 'error_types': {}, 'recent_errors': []}
@@ -202,7 +212,8 @@ class PerformanceTracker:
         }
 
 class HealthChecker:
-    """Performs health checks on APIs"""
+    """
+Performs health checks on APIs"""
     
     def __init__(self):
         self.health_configs: Dict[str, HealthCheckConfig] = {}
@@ -212,7 +223,8 @@ class HealthChecker:
         self.last_check_times: Dict[str, datetime] = {}
     
     def register_health_check(self, config: HealthCheckConfig):
-        """Register health check configuration"""
+        """
+Register health check configuration"""
         self.health_configs[config.api_name] = config
         self.health_status[config.api_name] = {
             'status': 'unknown',
@@ -276,7 +288,8 @@ class HealthChecker:
             return await self._record_failure(api_name, response_time, str(e))
     
     async def _record_success(self, api_name: str, response_time: float, status_code: int) -> Dict[str, Any]:
-        """Record successful health check"""
+        """
+Record successful health check"""
         now = datetime.utcnow()
         self.success_counts[api_name] += 1
         self.failure_counts[api_name] = 0  # Reset failure count
@@ -297,7 +310,8 @@ class HealthChecker:
         }
     
     async def _record_failure(self, api_name: str, response_time: float, error_message: str) -> Dict[str, Any]:
-        """Record failed health check"""
+        """
+Record failed health check"""
         now = datetime.utcnow()
         self.failure_counts[api_name] += 1
         self.success_counts[api_name] = 0  # Reset success count
@@ -325,7 +339,8 @@ class HealthChecker:
         }
     
     async def check_all_apis(self) -> Dict[str, Dict[str, Any]]:
-        """Perform health checks on all registered APIs"""
+        """
+Perform health checks on all registered APIs"""
         tasks = []
         api_names = []
         
@@ -353,15 +368,18 @@ class HealthChecker:
         return health_results
     
     def get_health_status(self, api_name: str) -> Dict[str, Any]:
-        """Get current health status for API"""
+        """
+Get current health status for API"""
         return self.health_status.get(api_name, {'status': 'unknown'})
     
     def get_all_health_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get health status for all APIs"""
+        """
+Get health status for all APIs"""
         return self.health_status.copy()
 
 class AlertManager:
-    """Manages monitoring alerts"""
+    """
+Manages monitoring alerts"""
     
     def __init__(self):
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -371,7 +389,8 @@ class AlertManager:
         self.metric_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
     
     def register_alert_rule(self, rule: AlertRule):
-        """Register alert rule"""
+        """
+Register alert rule"""
         self.alert_rules[rule.rule_name] = rule
         logger.info(f"Registered alert rule: {rule.rule_name}")
     
@@ -442,7 +461,8 @@ class AlertManager:
         return True
     
     def _check_alert_cooldown(self, rule_name: str, current_time: datetime) -> bool:
-        """Check if alert is not in cooldown period"""
+        """
+Check if alert is not in cooldown period"""
         if rule_name not in self.last_alert_times:
             return True
         
@@ -453,7 +473,8 @@ class AlertManager:
         return current_time >= cooldown_end
     
     def _trigger_alert(self, rule: AlertRule, value: float, timestamp: datetime):
-        """Trigger new alert"""
+        """
+Trigger new alert"""
         alert_id = f"{rule.rule_name}_{int(timestamp.timestamp())}"
         
         message = (
@@ -506,11 +527,13 @@ class AlertManager:
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[Alert]:
-        """Get alert history"""
+        """
+Get alert history"""
         return self.alert_history[-limit:]
 
 class APIMonitoringManager:
-    """Main API monitoring manager"""
+    """
+Main API monitoring manager"""
     
     def __init__(self, monitoring_level: MonitoringLevel = MonitoringLevel.DETAILED):
         self.monitoring_level = monitoring_level
@@ -520,7 +543,8 @@ class APIMonitoringManager:
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
     
     def register_api_monitoring(self, api_name: str, config: Dict[str, Any]):
-        """Register API for monitoring"""
+        """
+Register API for monitoring"""
         # Register health check if endpoint provided
         if 'health_endpoint' in config:
             health_config = HealthCheckConfig(
@@ -580,7 +604,8 @@ class APIMonitoringManager:
         )
     
     async def get_monitoring_summary(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring summary"""
+        """
+Get comprehensive monitoring summary"""
         # Get performance metrics for all APIs
         performance_metrics = {}
         for api_name in self.performance_tracker.request_counts.keys():
@@ -621,7 +646,8 @@ class APIMonitoringManager:
     
     def _calculate_overall_health(self, health_status: Dict[str, Any], 
                                 performance_metrics: Dict[str, Any]) -> str:
-        """Calculate overall system health score"""
+        """
+Calculate overall system health score"""
         if not health_status:
             return 'unknown'
         
@@ -653,7 +679,8 @@ class APIMonitoringManager:
             return 'critical'
     
     async def start_continuous_monitoring(self):
-        """Start continuous monitoring tasks"""
+        """
+Start continuous monitoring tasks"""
         # Start health check monitoring
         async def health_check_loop():
             while True:

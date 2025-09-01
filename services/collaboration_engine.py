@@ -4,6 +4,7 @@ Creator matching and collaboration management system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationStatus(Enum):
-    """Collaboration status"""
+    """
+Collaboration status"""
+
     PROPOSED = "proposed"
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -47,7 +50,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal structure"""
+    """
+Collaboration proposal structure"""
     id: str
     proposer_id: str
     target_id: str
@@ -64,7 +68,8 @@ class CollaborationProposal:
 
 @dataclass
 class CompatibilityScore:
-    """Creator compatibility scoring"""
+    """
+Creator compatibility scoring"""
     total_score: float
     genre_match: float
     skill_complement: float
@@ -75,7 +80,8 @@ class CompatibilityScore:
 
 
 class CollaborationEngine:
-    """Advanced creator collaboration and matching system"""
+    """
+Advanced creator collaboration and matching system"""
     
     def __init__(self):
         self.creator_profiles = {}
@@ -88,7 +94,8 @@ class CollaborationEngine:
         username: str,
         creator_data: Dict[str, Any]
     ) -> CreatorProfile:
-        """Register or update creator profile for collaboration matching"""
+        """
+Register or update creator profile for collaboration matching"""
         try:
             profile = CreatorProfile(
                 user_id=user_id,

@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Callable, Awaitable
@@ -30,7 +31,9 @@ from .access import AccessController
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -40,6 +43,7 @@ class AlertSeverity(Enum):
 
 class MonitoringScope(Enum):
     """Monitoring scope types"""
+
     GLOBAL = "global"
     CONTENT_TYPE = "content_type"
     USER_GROUP = "user_group"
@@ -49,6 +53,7 @@ class MonitoringScope(Enum):
 
 class MetricType(Enum):
     """Types of governance metrics"""
+
     POLICY_VIOLATIONS = "policy_violations"
     COMPLIANCE_SCORE = "compliance_score"
     ACCESS_VIOLATIONS = "access_violations"
@@ -79,7 +84,8 @@ class GovernanceAlert:
 
 @dataclass
 class MonitoringThreshold:
-    """Monitoring threshold configuration"""
+    """
+Monitoring threshold configuration"""
     threshold_id: str
     name: str
     metric_type: MetricType
@@ -104,7 +110,8 @@ class MetricSnapshot:
 
 @dataclass
 class GovernanceDashboard:
-    """Governance monitoring dashboard data"""
+    """
+Governance monitoring dashboard data"""
     total_policies: int
     active_violations: int
     compliance_score: float
@@ -147,14 +154,16 @@ class MetricsCollector:
         privacy_manager: PrivacyManager,
         access_controller: AccessController
     ) -> None:
-        """Set references to governance components"""
+        """
+Set references to governance components"""
         self.policy_manager = policy_manager
         self.compliance_manager = compliance_manager
         self.privacy_manager = privacy_manager
         self.access_controller = access_controller
     
     async def collect_all_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Collect all governance metrics"""
+        """
+Collect all governance metrics"""
         try:
             metrics = {}
             
@@ -342,11 +351,13 @@ class AlertManager:
         self,
         handler: Callable[[GovernanceAlert], Awaitable[None]]
     ) -> None:
-        """Add an alert handler"""
+        """
+Add an alert handler"""
         self.alert_handlers.append(handler)
     
     async def configure_threshold(self, threshold: MonitoringThreshold) -> None:
-        """Configure a monitoring threshold"""
+        """
+Configure a monitoring threshold"""
         try:
             # Validate threshold
             await self._validate_threshold(threshold)
@@ -490,7 +501,8 @@ class AlertManager:
         return sorted(alerts, key=lambda a: a.created_at, reverse=True)
     
     def _should_skip_alert(self, threshold: MonitoringThreshold) -> bool:
-        """Check if alert should be skipped due to frequency limits"""
+        """
+Check if alert should be skipped due to frequency limits"""
         if not threshold.last_alerted:
             return False
         
@@ -498,7 +510,8 @@ class AlertManager:
         return time_since_last.total_seconds() < threshold.alert_frequency
     
     def _evaluate_threshold(self, threshold: MonitoringThreshold, value: float) -> bool:
-        """Evaluate if threshold is violated"""
+        """
+Evaluate if threshold is violated"""
         if threshold.operator == "gt":
             return value > threshold.value
         elif threshold.operator == "gte":
@@ -571,7 +584,8 @@ class GovernanceMonitor(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the governance monitor"""
+        """
+Initialize the governance monitor"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -627,7 +641,8 @@ class GovernanceMonitor(BaseManager):
         )
     
     async def start_monitoring(self) -> None:
-        """Start continuous governance monitoring"""
+        """
+Start continuous governance monitoring"""
         if self.is_monitoring:
             self.logger.warning("Monitoring is already running")
             return
@@ -663,7 +678,8 @@ class GovernanceMonitor(BaseManager):
         source_component: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> GovernanceAlert:
-        """Create a manual alert"""
+        """
+Create a manual alert"""
         return await self.alert_manager.create_alert(
             title=title,
             description=description,
@@ -674,7 +690,8 @@ class GovernanceMonitor(BaseManager):
         )
     
     async def get_dashboard_data(self) -> GovernanceDashboard:
-        """Get current governance dashboard data"""
+        """
+Get current governance dashboard data"""
         try:
             # Collect latest metrics
             metrics = await self.collect_metrics()

@@ -4,10 +4,11 @@ Enterprise-grade AI model and engine performance monitoring for industrial conte
 Supports real-time tracking of AI processing pipelines for multi-format content creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import threading
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """Types of AI models in the platform"""
+    """
+Types of AI models in the platform"""
+
     CONTENT_GENERATOR = "content_generator"
     CONTENT_PROTECTOR = "content_protector"
     SEO_OPTIMIZER = "seo_optimizer"
@@ -50,6 +53,7 @@ class AIModelType(Enum):
 
 class ProcessingStage(Enum):
     """Content processing pipeline stages"""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     AI_ANALYSIS = "ai_analysis"
@@ -81,7 +85,8 @@ class AIModelMetrics:
 
 @dataclass
 class PipelineMetrics:
-    """Content processing pipeline metrics"""
+    """
+Content processing pipeline metrics"""
     pipeline_id: str
     stage: ProcessingStage
     start_time: datetime
@@ -452,7 +457,8 @@ class AIPerformanceMonitor:
         self.alert_callbacks.append(callback)
         
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for continuous performance tracking"""
+        """
+Main monitoring loop for continuous performance tracking"""
         while self.is_monitoring:
             try:
                 # Collect system metrics
@@ -578,7 +584,8 @@ class AIPerformanceMonitor:
         return 0
         
     def _infer_processing_stage(self, model_type: AIModelType) -> ProcessingStage:
-        """Infer processing stage from model type"""
+        """
+Infer processing stage from model type"""
         stage_mapping = {
             AIModelType.CONTENT_GENERATOR: ProcessingStage.AI_ANALYSIS,
             AIModelType.CONTENT_PROTECTOR: ProcessingStage.PROTECTION,
@@ -589,7 +596,8 @@ class AIPerformanceMonitor:
         return stage_mapping.get(model_type, ProcessingStage.AI_ANALYSIS)
         
     def _calculate_output_size(self, result: Any) -> int:
-        """Calculate output size from result"""
+        """
+Calculate output size from result"""
         if isinstance(result, (str, bytes)):
             return len(result)
         elif isinstance(result, dict):
@@ -597,7 +605,8 @@ class AIPerformanceMonitor:
         return 0
         
     def _update_statistics(self, metrics: AIModelMetrics, success: bool) -> None:
-        """Update global statistics"""
+        """
+Update global statistics"""
         self.stats["total_inferences"] += 1
         
         if success:
@@ -718,7 +727,8 @@ async def track_ai_inference(
     user_id: Optional[str] = None,
     content_type: Optional[str] = None
 ):
-    """Context manager for tracking AI inference performance"""
+    """
+Context manager for tracking AI inference performance"""
     start_time = time.time()
     
     try:

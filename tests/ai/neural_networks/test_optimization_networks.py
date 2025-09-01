@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Optimization Networks
+"""
+Comprehensive Test Suite for Optimization Networks
 
 Ultra-advanced industrial-grade tests for AI optimization networks,
 covering SEO, monetization, engagement, and performance optimization
@@ -39,6 +41,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -64,7 +67,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def optimization_config():
-    """Configuration for optimization networks"""
+    """
+Configuration for optimization networks"""
     return TransformerConfig(
         input_dim=512,
         hidden_dims=[512, 768, 1024, 768, 512],
@@ -81,7 +85,8 @@ def optimization_config():
 
 @pytest.fixture
 def content_metadata():
-    """Sample content metadata for optimization testing"""
+    """
+Sample content metadata for optimization testing"""
     random.seed(42)
     np.random.seed(42)
     
@@ -248,7 +253,8 @@ class TestSEOOptimizationNetwork:
     """Test SEO Optimization Network functionality"""
     
     def test_seo_network_initialization(self, optimization_config):
-        """Test SEO network initialization"""
+        """
+Test SEO network initialization"""
         network = SEOOptimizationNetwork(optimization_config)
         
         assert hasattr(network, 'keyword_analyzer')
@@ -258,7 +264,8 @@ class TestSEOOptimizationNetwork:
         assert hasattr(network, 'semantic_matcher')
     
     def test_keyword_optimization(self, optimization_config, content_metadata, seo_data):
-        """Test keyword optimization functionality"""
+        """
+Test keyword optimization functionality"""
         network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
@@ -434,7 +441,8 @@ class TestMonetizationOptimizationNetwork:
     """Test Monetization Optimization Network functionality"""
     
     def test_monetization_network_initialization(self, optimization_config):
-        """Test monetization network initialization"""
+        """
+Test monetization network initialization"""
         network = MonetizationOptimizationNetwork(optimization_config)
         
         assert hasattr(network, 'revenue_predictor')
@@ -444,7 +452,8 @@ class TestMonetizationOptimizationNetwork:
         assert hasattr(network, 'roi_calculator')
     
     def test_revenue_stream_optimization(self, optimization_config, monetization_data, engagement_metrics):
-        """Test revenue stream optimization"""
+        """
+Test revenue stream optimization"""
         network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
@@ -616,7 +625,8 @@ class TestEngagementOptimizationNetwork:
     """Test Engagement Optimization Network functionality"""
     
     def test_engagement_network_initialization(self, optimization_config):
-        """Test engagement network initialization"""
+        """
+Test engagement network initialization"""
         network = EngagementOptimizationNetwork(optimization_config)
         
         assert hasattr(network, 'engagement_predictor')
@@ -626,7 +636,8 @@ class TestEngagementOptimizationNetwork:
         assert hasattr(network, 'viral_predictor')
     
     def test_engagement_prediction(self, optimization_config, content_metadata, engagement_metrics):
-        """Test engagement prediction"""
+        """
+Test engagement prediction"""
         network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
@@ -823,7 +834,8 @@ class TestPerformancePredictionNetwork:
     """Test Performance Prediction Network functionality"""
     
     def test_performance_network_initialization(self, optimization_config):
-        """Test performance network initialization"""
+        """
+Test performance network initialization"""
         network = PerformancePredictionNetwork(optimization_config)
         
         assert hasattr(network, 'performance_predictor')
@@ -833,7 +845,8 @@ class TestPerformancePredictionNetwork:
         assert hasattr(network, 'growth_forecaster')
     
     def test_performance_forecasting(self, optimization_config, engagement_metrics, content_metadata):
-        """Test performance forecasting"""
+        """
+Test performance forecasting"""
         network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
@@ -1003,7 +1016,8 @@ class TestOptimizationNetworksPerformance:
     """Performance tests for optimization networks"""
     
     def test_seo_optimization_speed(self, optimization_config, content_metadata, seo_data):
-        """Test SEO optimization speed"""
+        """
+Test SEO optimization speed"""
         network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
@@ -1132,7 +1146,8 @@ class TestOptimizationNetworksIntegration:
     """Integration tests for optimization networks"""
     
     def test_comprehensive_content_optimization_pipeline(self, optimization_config, content_metadata, seo_data, engagement_metrics, monetization_data):
-        """Test complete content optimization pipeline"""
+        """
+Test complete content optimization pipeline"""
         # Initialize all optimization networks
         seo_net = SEOOptimizationNetwork(optimization_config)
         engagement_net = EngagementOptimizationNetwork(optimization_config)

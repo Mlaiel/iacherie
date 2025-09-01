@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -47,7 +48,9 @@ from ...integrations.legal_databases import LegalDatabaseConnector
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -59,6 +62,7 @@ class ViolationType(Enum):
 
 class ViolationSeverity(Enum):
     """Severity levels for violations"""
+
     CRITICAL = "critical"        # Immediate legal action required
     HIGH = "high"               # Legal action recommended
     MEDIUM = "medium"           # Monitoring and warning
@@ -67,6 +71,7 @@ class ViolationSeverity(Enum):
 
 class ViolationStatus(Enum):
     """Status of violation handling"""
+
     DETECTED = "detected"
     ANALYZED = "analyzed"
     EVIDENCE_COLLECTED = "evidence_collected"
@@ -77,6 +82,7 @@ class ViolationStatus(Enum):
 
 class ActionType(Enum):
     """Types of actions that can be taken"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_STRIKE = "copyright_strike"
@@ -100,7 +106,8 @@ class ViolationEvidence:
 
 @dataclass
 class LegalAssessment:
-    """Legal assessment of a violation"""
+    """
+Legal assessment of a violation"""
     assessment_id: str
     violation_id: str
     copyright_strength: float  # 0.0 - 1.0
@@ -115,7 +122,8 @@ class LegalAssessment:
 
 @dataclass
 class ViolationAnalysis:
-    """Comprehensive violation analysis result"""
+    """
+Comprehensive violation analysis result"""
     analysis_id: str
     target_fingerprint_id: str
     violating_content_url: str
@@ -198,7 +206,8 @@ class ViolationAnalyzer:
         }
     
     async def initialize(self):
-        """Initialize violation analyzer components"""
+        """
+Initialize violation analyzer components"""
         try:
             start_time = time.time()
             

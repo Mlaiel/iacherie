@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import uuid
@@ -56,7 +57,9 @@ from ...utils.retention_manager import RetentionManager
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -68,6 +71,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -76,6 +80,7 @@ class ComplianceStatus(Enum):
 
 class DataCategory(Enum):
     """Personal data categories for GDPR classification"""
+
     PERSONAL_IDENTIFIERS = "personal_identifiers"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
@@ -87,6 +92,7 @@ class DataCategory(Enum):
 
 class ProcessingLawfulBasis(Enum):
     """GDPR lawful basis for processing"""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -109,7 +115,8 @@ class ComplianceConfiguration:
 
 @dataclass
 class ComplianceMetrics:
-    """Comprehensive compliance metrics"""
+    """
+Comprehensive compliance metrics"""
     compliance_score_by_framework: Dict[str, float] = field(default_factory=dict)
     active_violations: int = 0
     data_subject_requests_pending: int = 0
@@ -885,7 +892,8 @@ class ComplianceTracker:
             return ComplianceStatus.NON_COMPLIANT.value
 
     def _get_client_ip(self) -> str:
-        """Extract client IP from request context"""
+        """
+Extract client IP from request context"""
         # Implementation depends on web framework
         return "127.0.0.1"  # Placeholder
 

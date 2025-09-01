@@ -7,7 +7,7 @@ Responsibility: Unified image fingerprinting with ALL required algorithms
 ================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -195,7 +195,8 @@ class IndustrialImageProcessor:
     """🏭 Processeur d'images industriel - Multi-algorithmes production"""
     
     def __init__(self, config: IndustrialImageConfig):
-        """Initialise le processeur avec configuration industrielle"""
+        """
+Initialise le processeur avec configuration industrielle"""
         self.config = config
         self.clip_model = None
         self.clip_processor = None
@@ -741,7 +742,8 @@ def create_industrial_processor(
 
 # Example usage and testing
 async def test_industrial_processor():
-    """Test function for the industrial processor"""
+    """
+Test function for the industrial processor"""
     logger.info("Testing Industrial Image Processor...")
     
     # Create processor with all algorithms enabled

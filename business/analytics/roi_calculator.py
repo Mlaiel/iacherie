@@ -7,6 +7,7 @@ time investment, content performance, revenue generation, and optimization strat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class ROICategory(Enum):
-    """ROI calculation categories"""
+    """
+ROI calculation categories"""
+
     CONTENT_CREATION = "content_creation"
     ADVERTISING_SPEND = "advertising_spend"
     EQUIPMENT_INVESTMENT = "equipment_investment"
@@ -32,6 +35,7 @@ class ROICategory(Enum):
 
 class ROITimeframe(Enum):
     """ROI calculation timeframes"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -64,7 +68,8 @@ class ROICalculatorEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize ROI calculator engine"""
+        """
+Initialize ROI calculator engine"""
         try:
             await self._setup_database_tables()
             logger.info("ROI Calculator Engine initialized successfully")
@@ -98,7 +103,8 @@ class ROICalculatorEngine:
             """)
 
     async def calculate_comprehensive_roi(self, creator_id: str, timeframe: ROITimeframe) -> List[ROIData]:
-        """Calculate comprehensive ROI across all categories"""
+        """
+Calculate comprehensive ROI across all categories"""
         try:
             roi_results = []
             
@@ -184,7 +190,8 @@ class ROICalculatorEngine:
             return end_date - timedelta(days=30)
 
     async def _get_investment_amount(self, creator_id: str, category: ROICategory, start_date: datetime.date, end_date: datetime.date) -> float:
-        """Get investment amount for specific category and timeframe"""
+        """
+Get investment amount for specific category and timeframe"""
         try:
             async with self.db_pool.acquire() as conn:
                 if category == ROICategory.CONTENT_CREATION:

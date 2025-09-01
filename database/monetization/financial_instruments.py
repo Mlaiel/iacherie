@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -43,7 +44,8 @@ Base = declarative_base()
 
 
 class InvestmentType(Enum):
-    """Types of financial investments available to creators"""
+    """
+Types of financial investments available to creators"""
     # Traditional investments
     STOCKS = "stocks"
     BONDS = "bonds"
@@ -78,6 +80,7 @@ class InvestmentType(Enum):
 
 class RiskLevel(Enum):
     """Investment risk levels"""
+
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -86,6 +89,7 @@ class RiskLevel(Enum):
 
 class TaxCategory(Enum):
     """Tax categories for different income types"""
+
     ORDINARY_INCOME = "ordinary_income"
     CAPITAL_GAINS_SHORT = "capital_gains_short"
     CAPITAL_GAINS_LONG = "capital_gains_long"
@@ -556,7 +560,8 @@ def investment_before_update(mapper, connection, target):
 @event.listens_for(PortfolioAllocation, 'before_insert')
 @event.listens_for(PortfolioAllocation, 'before_update')
 def portfolio_allocation_validation(mapper, connection, target):
-    """Validate portfolio allocation percentages"""
+    """
+Validate portfolio allocation percentages"""
     total_allocation = (
         (target.stocks_allocation or 0) +
         (target.bonds_allocation or 0) +

@@ -63,7 +63,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonetizationSystemConfig:
-    """Complete monetization system configuration."""
+    """
+Complete monetization system configuration."""
     
     # Core system settings
     enable_revenue_optimization: bool = True
@@ -103,7 +104,8 @@ class MonetizationSystemConfig:
 
 
 class MonetizationSystemManager:
-    """Central manager for the complete monetization system."""
+    """
+Central manager for the complete monetization system."""
     
     def __init__(self, config: MonetizationSystemConfig = None):
         self.config = config or MonetizationSystemConfig()
@@ -122,7 +124,8 @@ class MonetizationSystemManager:
         }
     
     async def initialize(self) -> bool:
-        """Initialize the complete monetization system."""
+        """
+Initialize the complete monetization system."""
         try:
             logger.info("Initializing Professional Monetization System...")
             
@@ -386,11 +389,13 @@ class MonetizationSystemManager:
         return self.engines.get(engine_name)
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get current system metrics."""
+        """
+Get current system metrics."""
         return self.system_metrics.copy()
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the monetization system."""
+        """
+Gracefully shutdown the monetization system."""
         try:
             logger.info("Shutting down monetization system...")
             
@@ -425,14 +430,16 @@ async def get_monetization_system(config: MonetizationSystemConfig = None) -> Mo
 
 
 async def initialize_monetization_system(config: MonetizationSystemConfig = None) -> bool:
-    """Initialize the global monetization system."""
+    """
+Initialize the global monetization system."""
     system = await get_monetization_system(config)
     return system.is_initialized
 
 
 # Convenience functions for easy access
 async def process_payment(payment_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process a payment through the monetization system."""
+    """
+Process a payment through the monetization system."""
     system = await get_monetization_system()
     payment_engine = system.get_engine('payment')
     

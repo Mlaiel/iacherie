@@ -38,6 +38,7 @@ Enterprise Features:
 - Automated recommendation engine for optimal collaborations
 - Advanced analytics dashboard for collaboration managers
 """
+
 import asyncio
 import logging
 import uuid
@@ -73,7 +74,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Professional collaboration types for multi-format creators."""
+    """
+Professional collaboration types for multi-format creators."""
+
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     BLOG_COLLABORATION = "blog_collaboration"
@@ -88,6 +91,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration lifecycle status tracking."""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
@@ -99,6 +103,7 @@ class CollaborationStatus(Enum):
 
 class SuccessLevel(Enum):
     """Collaboration success assessment levels."""
+
     EXCEPTIONAL = "exceptional"
     HIGHLY_SUCCESSFUL = "highly_successful"
     SUCCESSFUL = "successful"
@@ -109,6 +114,7 @@ class SuccessLevel(Enum):
 
 class RiskLevel(Enum):
     """Collaboration risk assessment levels."""
+
     MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
@@ -143,7 +149,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """AI-identified collaboration opportunity."""
+    """
+AI-identified collaboration opportunity."""
     opportunity_id: str
     creator_1: str
     creator_2: str
@@ -164,7 +171,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationMetrics:
-    """Comprehensive collaboration performance metrics."""
+    """
+Comprehensive collaboration performance metrics."""
     collaboration_id: str
     creators_involved: List[str]
     collaboration_type: CollaborationType
@@ -209,7 +217,8 @@ class CollaborationMetrics:
 
 @dataclass
 class CollaborationInsights:
-    """AI-generated collaboration insights and recommendations."""
+    """
+AI-generated collaboration insights and recommendations."""
     insight_id: str
     collaboration_id: str
     insight_category: str

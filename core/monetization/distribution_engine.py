@@ -2,8 +2,9 @@
 Automated revenue distribution and payout management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from ...ai.collaboration.revenue_optimizer import RevenueOptimizer
 
 
 class PayoutStatus(Enum):
-    """Payout processing status"""
+    """
+Payout processing status"""
+
     PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -35,6 +38,7 @@ class PayoutStatus(Enum):
 
 class PayoutMethod(Enum):
     """Payout delivery methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -45,6 +49,7 @@ class PayoutMethod(Enum):
 
 class CollaborationType(Enum):
     """Types of collaboration agreements"""
+
     SPLIT_REVENUE = "split_revenue"
     PERCENTAGE_BASED = "percentage_based"
     FIXED_AMOUNT = "fixed_amount"
@@ -105,7 +110,8 @@ class PayoutCalculation:
     breakdown: Dict[str, Decimal] = field(default_factory=dict)
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get calculation summary"""
+        """
+Get calculation summary"""
         return {
             "user_id": self.user_id,
             "total_revenue": float(self.total_revenue),
@@ -155,7 +161,8 @@ class DistributionEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> PayoutCalculation:
-        """Calculate comprehensive payout for user"""
+        """
+Calculate comprehensive payout for user"""
         try:
             # Get user's total revenue for period
             total_revenue = await self._get_user_revenue(
@@ -610,7 +617,8 @@ class DistributionEngine:
         user_id: int,
         session: AsyncSession
     ) -> Optional[datetime]:
-        """Get date of last payout for user"""
+        """
+Get date of last payout for user"""
         result = await session.execute(
             select(func.max(Payout.created_at)).where(
                 Payout.user_id == user_id,
@@ -626,7 +634,8 @@ class DistributionEngine:
         calculation: PayoutCalculation,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Process a single automated payout"""
+        """
+Process a single automated payout"""
         try:
             # Create payout record
             payout = Payout(
@@ -768,7 +777,8 @@ class PayoutManager:
         session: AsyncSession,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get user's payout history"""
+        """
+Get user's payout history"""
         result = await session.execute(
             select(Payout).where(
                 Payout.user_id == user_id

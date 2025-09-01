@@ -24,6 +24,7 @@ Advanced Revenue Monetization System for content creators implementing:
 - Advanced fraud detection and prevention
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class RevenueSource(Enum):
-    """Sources de revenus"""
+    """
+Sources de revenus"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -63,6 +66,7 @@ class RevenueSource(Enum):
 
 class PaymentMethod(Enum):
     """Méthodes de paiement supportées"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -73,6 +77,7 @@ class PaymentMethod(Enum):
 
 class Currency(Enum):
     """Devises supportées"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -84,6 +89,7 @@ class Currency(Enum):
 
 class PaymentStatus(Enum):
     """Statuts de paiement"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -93,6 +99,7 @@ class PaymentStatus(Enum):
 
 class PlatformRevenue(Enum):
     """Plateformes de revenus"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -168,7 +175,8 @@ class RevenueMonetizationConfig:
 # =============== SERVICE INTERFACES ===============
 
 class IRevenueMonetizationService(ABC):
-    """Interface pour le service de monétisation des revenus"""
+    """
+Interface pour le service de monétisation des revenus"""
     
     @abstractmethod
     async def track_revenue(
@@ -180,7 +188,8 @@ class IRevenueMonetizationService(ABC):
         currency: Currency,
         metadata: Optional[Dict[str, Any]] = None
     ) -> RevenueRecord:
-        """Enregistrer des revenus"""
+        """
+Enregistrer des revenus"""
         pass
     
     @abstractmethod
@@ -191,7 +200,8 @@ class IRevenueMonetizationService(ABC):
         currency: Currency,
         method: PaymentMethod
     ) -> PaymentTransaction:
-        """Traiter un paiement"""
+        """
+Traiter un paiement"""
         pass
     
     @abstractmethod
@@ -201,7 +211,8 @@ class IRevenueMonetizationService(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> RevenueAnalytics:
-        """Obtenir les analytiques de revenus"""
+        """
+Obtenir les analytiques de revenus"""
         pass
     
     @abstractmethod
@@ -210,7 +221,8 @@ class IRevenueMonetizationService(ABC):
         creator_id: str,
         forecast_days: int = 30
     ) -> Dict[str, Any]:
-        """Prédire les revenus futurs"""
+        """
+Prédire les revenus futurs"""
         pass
     
     @abstractmethod
@@ -218,13 +230,15 @@ class IRevenueMonetizationService(ABC):
         self, 
         creator_id: str
     ) -> Dict[str, Any]:
-        """Optimiser les stratégies de monétisation"""
+        """
+Optimiser les stratégies de monétisation"""
         pass
 
 # =============== CORE MANAGER ===============
 
 class RevenueMonetizationManager:
-    """Gestionnaire avancé de monétisation des revenus"""
+    """
+Gestionnaire avancé de monétisation des revenus"""
     
     def __init__(self, config: Optional[RevenueMonetizationConfig] = None):
         self.config = config or RevenueMonetizationConfig()
@@ -385,7 +399,8 @@ class RevenueMonetizationManager:
         return [r for r in self.revenue_records.values() if r.creator_id == creator_id]
     
     async def _update_analytics_cache(self, creator_id: str):
-        """Mettre à jour le cache d'analytiques"""
+        """
+Mettre à jour le cache d'analytiques"""
         try:
             # Calculer les analytiques actuelles
             end_date = datetime.utcnow()
@@ -514,7 +529,8 @@ class RevenueMonetizationManager:
         return data
     
     async def _check_auto_payout_trigger(self, creator_id: str):
-        """Vérifier si un paiement automatique doit être déclenché"""
+        """
+Vérifier si un paiement automatique doit être déclenché"""
         try:
             # Calculer le montant total disponible pour paiement
             available_amount = await self._calculate_available_payout(creator_id)
@@ -578,7 +594,8 @@ class RevenueMonetizationManager:
         currency: Currency,
         method: PaymentMethod
     ) -> PaymentTransaction:
-        """Traiter un paiement"""
+        """
+Traiter un paiement"""
         try:
             # Calculer les frais
             processor_fee = self._calculate_payment_fees(amount, method)
@@ -623,7 +640,8 @@ class RevenueMonetizationManager:
         return fee_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _process_payment_async(self, transaction: PaymentTransaction):
-        """Traitement asynchrone du paiement"""
+        """
+Traitement asynchrone du paiement"""
         try:
             # Simulation de traitement par l'API du processeur
             await asyncio.sleep(2)  # Simule le délai de traitement
@@ -697,7 +715,8 @@ class RevenueMonetizationManager:
         return eligible
     
     async def _get_last_payout_date(self, creator_id: str) -> Optional[datetime]:
-        """Obtenir la date du dernier paiement d'un créateur"""
+        """
+Obtenir la date du dernier paiement d'un créateur"""
         creator_transactions = [
             t for t in self.payment_transactions.values()
             if t.creator_id == creator_id and t.status == PaymentStatus.COMPLETED
@@ -711,7 +730,8 @@ class RevenueMonetizationManager:
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class RevenueMonetizationService(IRevenueMonetizationService):
-    """Service principal de monétisation des revenus"""
+    """
+Service principal de monétisation des revenus"""
     
     def __init__(self, config: Optional[RevenueMonetizationConfig] = None):
         self.config = config or RevenueMonetizationConfig()
@@ -731,7 +751,8 @@ class RevenueMonetizationService(IRevenueMonetizationService):
         currency: Currency,
         metadata: Optional[Dict[str, Any]] = None
     ) -> RevenueRecord:
-        """Enregistrer des revenus"""
+        """
+Enregistrer des revenus"""
         return await self.manager.record_revenue(
             creator_id, platform, source, amount, currency, metadata
         )
@@ -743,7 +764,8 @@ class RevenueMonetizationService(IRevenueMonetizationService):
         currency: Currency,
         method: PaymentMethod
     ) -> PaymentTransaction:
-        """Traiter un paiement"""
+        """
+Traiter un paiement"""
         return await self.manager.process_payout(creator_id, amount, currency, method)
     
     async def get_revenue_analytics(
@@ -752,7 +774,8 @@ class RevenueMonetizationService(IRevenueMonetizationService):
         start_date: datetime,
         end_date: datetime
     ) -> RevenueAnalytics:
-        """Obtenir les analytiques de revenus"""
+        """
+Obtenir les analytiques de revenus"""
         return await self.manager._calculate_revenue_analytics(creator_id, start_date, end_date)
     
     async def forecast_revenue(
@@ -760,7 +783,8 @@ class RevenueMonetizationService(IRevenueMonetizationService):
         creator_id: str,
         forecast_days: int = 30
     ) -> Dict[str, Any]:
-        """Prédire les revenus futurs"""
+        """
+Prédire les revenus futurs"""
         try:
             forecast_amount = await self.manager._forecast_revenue(creator_id, forecast_days)
             
@@ -847,7 +871,8 @@ def create_revenue_monetization_service(config: Optional[RevenueMonetizationConf
     return RevenueMonetizationService(config)
 
 def create_revenue_monetization_manager(config: Optional[RevenueMonetizationConfig] = None) -> RevenueMonetizationManager:
-    """Factory pour créer un gestionnaire de monétisation"""
+    """
+Factory pour créer un gestionnaire de monétisation"""
     return RevenueMonetizationManager(config)
 
 # =============== MODULE EXPORTS ===============

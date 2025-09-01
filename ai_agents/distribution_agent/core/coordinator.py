@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ from ....integrations.notification import NotificationManager
 logger = logging.getLogger(__name__)
 
 class CampaignType(Enum):
-    """Campaign types for different distribution strategies"""
+    """
+Campaign types for different distribution strategies"""
+
     SINGLE_RELEASE = "single_release"        # One-time content release
     ALBUM_ROLLOUT = "album_rollout"          # Sequential album release
     SERIES_CAMPAIGN = "series_campaign"       # Content series over time
@@ -56,6 +59,7 @@ class CampaignType(Enum):
 
 class CampaignStatus(Enum):
     """Campaign execution status"""
+
     DRAFT = "draft"
     PLANNING = "planning"
     SCHEDULED = "scheduled"
@@ -68,6 +72,7 @@ class CampaignStatus(Enum):
 
 class SyncStrategy(Enum):
     """Cross-platform synchronization strategies"""
+
     SIMULTANEOUS = "simultaneous"      # All platforms at once
     SEQUENTIAL = "sequential"          # One after another
     CASCADING = "cascading"            # Timed cascade across platforms
@@ -104,7 +109,8 @@ class PlatformStrategy:
 
 @dataclass
 class CollaborationSpec:
-    """Collaboration specification for campaign"""
+    """
+Collaboration specification for campaign"""
     collaboration_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     collaborator_users: List[str] = field(default_factory=list)
     collaboration_type: str = ""  # e.g., "remix", "duet", "feature", "playlist"
@@ -493,7 +499,8 @@ class CampaignCoordinator:
         return execution_plan
 
     async def _plan_simultaneous_execution(self, config: CampaignConfig) -> List[Dict[str, Any]]:
-        """Plan simultaneous execution across all platforms"""
+        """
+Plan simultaneous execution across all platforms"""
         start_time = config.start_date or datetime.now()
         
         phases = [{
@@ -511,7 +518,8 @@ class CampaignCoordinator:
         return phases
 
     async def _plan_sequential_execution(self, config: CampaignConfig) -> List[Dict[str, Any]]:
-        """Plan sequential execution across platforms"""
+        """
+Plan sequential execution across platforms"""
         phases = []
         current_time = config.start_date or datetime.now()
         
@@ -543,7 +551,8 @@ class CampaignCoordinator:
         return phases
 
     async def _plan_cascading_execution(self, config: CampaignConfig) -> List[Dict[str, Any]]:
-        """Plan cascading execution with strategic timing"""
+        """
+Plan cascading execution with strategic timing"""
         phases = []
         
         # Group platforms by cascade tier
@@ -574,7 +583,8 @@ class CampaignCoordinator:
         return phases
 
     async def _plan_staggered_execution(self, config: CampaignConfig) -> List[Dict[str, Any]]:
-        """Plan staggered execution for optimal engagement"""
+        """
+Plan staggered execution for optimal engagement"""
         phases = []
         
         # Calculate optimal stagger timing
@@ -602,7 +612,8 @@ class CampaignCoordinator:
         return phases
 
     async def _plan_adaptive_execution(self, config: CampaignConfig) -> List[Dict[str, Any]]:
-        """Plan adaptive execution with AI-driven optimization"""
+        """
+Plan adaptive execution with AI-driven optimization"""
         # Start with initial simultaneous phase
         initial_phase = {
             'phase_id': 'adaptive_initial',
@@ -650,7 +661,8 @@ class CampaignCoordinator:
         return phases
 
     async def _prepare_platform_job(self, content_item: DistributionJob, platform: PlatformType, config: CampaignConfig) -> Dict[str, Any]:
-        """Prepare platform-specific job configuration"""
+        """
+Prepare platform-specific job configuration"""
         strategy = config.platform_strategies[platform]
         
         # Clone and modify content item for platform
@@ -787,7 +799,8 @@ class CampaignCoordinator:
                 await asyncio.sleep(10)  # Check every 10 seconds
 
     async def _apply_adaptive_optimizations(self, execution_id: str, phase: Dict[str, Any]) -> None:
-        """Apply adaptive optimizations based on real-time performance"""
+        """
+Apply adaptive optimizations based on real-time performance"""
         execution = self.active_campaigns[execution_id]
         config = self.campaign_configs[execution.campaign_id]
         
@@ -810,7 +823,8 @@ class CampaignCoordinator:
             await self._scale_successful_platforms(execution_id, performance_data)
 
     async def _monitor_campaign_execution(self, execution_id: str) -> None:
-        """Real-time monitoring of campaign execution"""
+        """
+Real-time monitoring of campaign execution"""
         execution = self.active_campaigns[execution_id]
         
         while execution.status == CampaignStatus.RUNNING:
@@ -859,7 +873,8 @@ class CampaignCoordinator:
         execution.current_revenue.update(revenue_metrics)
 
     async def _check_goal_progress(self, execution_id: str) -> None:
-        """Check progress towards campaign goals"""
+        """
+Check progress towards campaign goals"""
         execution = self.active_campaigns[execution_id]
         config = self.campaign_configs[execution.campaign_id]
         
@@ -884,7 +899,8 @@ class CampaignCoordinator:
                 )
 
     async def _detect_campaign_issues(self, execution_id: str) -> None:
-        """Detect and handle campaign issues"""
+        """
+Detect and handle campaign issues"""
         execution = self.active_campaigns[execution_id]
         config = self.campaign_configs[execution.campaign_id]
         
@@ -935,7 +951,8 @@ class CampaignCoordinator:
                 await self._handle_campaign_issue(execution_id, issue)
 
     async def _handle_campaign_issue(self, execution_id: str, issue: Dict[str, Any]) -> None:
-        """Handle detected campaign issues"""
+        """
+Handle detected campaign issues"""
         execution = self.active_campaigns[execution_id]
         config = self.campaign_configs[execution.campaign_id]
         
@@ -1019,7 +1036,8 @@ class CampaignCoordinator:
         return self.active_campaigns.get(execution_id)
 
     async def get_campaign_analytics(self, execution_id: str) -> Dict[str, Any]:
-        """Get comprehensive campaign analytics"""
+        """
+Get comprehensive campaign analytics"""
         execution = self.active_campaigns.get(execution_id)
         if not execution:
             return {}
@@ -1048,7 +1066,8 @@ class CampaignCoordinator:
         return analytics
 
     def _calculate_campaign_duration(self, execution: CampaignExecution) -> Optional[float]:
-        """Calculate campaign duration in hours"""
+        """
+Calculate campaign duration in hours"""
         if execution.started_at:
             end_time = execution.completed_at or datetime.now()
             return (end_time - execution.started_at).total_seconds() / 3600
@@ -1059,7 +1078,8 @@ class CampaignCoordinator:
     # analytics aggregation, crisis monitoring, etc.]
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the campaign coordinator"""
+        """
+Graceful shutdown of the campaign coordinator"""
         logger.info("Shutting down CampaignCoordinator...")
         
         self.is_running = False

@@ -11,6 +11,7 @@ Features:
 - Configuration versioning and rollback
 - Integration with Kubernetes ConfigMaps and Secrets
 """
+
 import asyncio
 import logging
 import json
@@ -32,9 +33,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class EncryptionManager:
-    """Mock encryption manager."""
+    """
+Mock encryption manager."""
     def __init__(self):
-        """Initialize encryption manager with security protocols"""
+        """
+Initialize encryption manager with security protocols"""
         self.logger = logging.getLogger(f"{__name__}.EncryptionManager")
         self.encryption_algorithms = ['AES-256-GCM', 'ChaCha20-Poly1305', 'XSalsa20-Poly1305']
         self.key_derivation = 'PBKDF2-SHA512'
@@ -60,7 +63,8 @@ class EncryptionManager:
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        """Initialize configuration metrics collector"""
+        """
+Initialize configuration metrics collector"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.config_metrics = ['config_changes', 'secret_rotations', 'access_frequency']
         self.security_metrics = ['unauthorized_access', 'encryption_status', 'key_rotation_status']
@@ -73,6 +77,7 @@ class MetricsCollector:
 
 class ConfigType(Enum):
     """Configuration types."""
+
     APPLICATION = "application"
     DATABASE = "database"
     API_KEYS = "api_keys"
@@ -85,6 +90,7 @@ class ConfigType(Enum):
 
 class SecretType(Enum):
     """Secret types."""
+
     PASSWORD = "password"
     API_KEY = "api_key"
     TOKEN = "token"
@@ -96,6 +102,7 @@ class SecretType(Enum):
 
 class Environment(Enum):
     """Environment types."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -120,7 +127,8 @@ class ConfigEntry:
 
 @dataclass
 class SecretEntry:
-    """Secret entry."""
+    """
+Secret entry."""
     key: str
     value: str
     secret_type: SecretType
@@ -137,7 +145,8 @@ class SecretEntry:
 
 @dataclass
 class ConfigTemplate:
-    """Configuration template."""
+    """
+Configuration template."""
     name: str
     config_type: ConfigType
     template: Dict[str, Any]
@@ -190,7 +199,8 @@ class ConfigurationManager(BaseDeploymentManager):
         )
 
     def _get_platform_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Get default platform configurations."""
+        """
+Get default platform configurations."""
         return {
             "api_gateway": {
                 "port": 8000,

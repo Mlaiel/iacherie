@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
@@ -25,7 +26,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of content fingerprints."""
+    """
+Types of content fingerprints."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -36,6 +39,7 @@ class FingerprintType(Enum):
 
 class FingerprintAlgorithm(Enum):
     """Fingerprinting algorithms."""
+
     CHROMAPRINT = "chromaprint"
     PHASH = "phash"
     DHASH = "dhash"
@@ -51,6 +55,7 @@ class FingerprintAlgorithm(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity measurement metrics."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -84,7 +89,8 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintMetrics:
-    """Fingerprint performance metrics."""
+    """
+Fingerprint performance metrics."""
     generation_time: float = 0.0
     vector_size_bytes: int = 0
     compression_ratio: float = 1.0
@@ -172,7 +178,8 @@ class FingerprintSerializer:
     """
     
     def __init__(self):
-        """Initialize fingerprint serializer."""
+        """
+Initialize fingerprint serializer."""
         self.vector_compression_threshold = 1000  # Compress vectors larger than 1000 elements
         self.max_vector_dimension = 10000  # Maximum vector dimension
         
@@ -553,11 +560,13 @@ class FingerprintSerializer:
         }
     
     def _deserialize_fingerprint_metrics(self, data: Dict[str, Any]) -> FingerprintMetrics:
-        """Deserialize fingerprint metrics."""
+        """
+Deserialize fingerprint metrics."""
         return FingerprintMetrics(**data)
     
     def calculate_fingerprint_signature(self, fingerprint: FingerprintData) -> str:
-        """Calculate unique signature for fingerprint verification."""
+        """
+Calculate unique signature for fingerprint verification."""
         try:
             # Create signature from key fingerprint properties
             signature_data = {

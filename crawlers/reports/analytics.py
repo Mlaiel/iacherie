@@ -37,6 +37,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import warnings
@@ -126,6 +127,7 @@ logger = logging.getLogger(__name__)
 
 class AnalyticsType(Enum):
     """Analytics type enumeration with comprehensive categories."""
+
     DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
@@ -134,6 +136,7 @@ class AnalyticsType(Enum):
 
 class MetricType(Enum):
     """Metric type enumeration."""
+
     COUNT = "count"
     RATE = "rate"
     AVERAGE = "average"
@@ -144,6 +147,7 @@ class MetricType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics."""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -166,7 +170,8 @@ class AnalyticsConfiguration:
 
 
 class AnalyticsResult(BaseModel):
-    """Analytics result model."""
+    """
+Analytics result model."""
     metric_name: str
     metric_type: MetricType
     value: Union[float, int, str, List, Dict]
@@ -201,7 +206,8 @@ class AnalyticsEngine(ABC):
         pass
     
     async def calculate_descriptive_stats(self, values: List[Union[int, float]]) -> Dict[str, float]:
-        """Calculate descriptive statistics for numerical data."""
+        """
+Calculate descriptive statistics for numerical data."""
         if not values:
             return {}
         
@@ -435,7 +441,8 @@ class AnalyticsEngine(ABC):
             return (0.0, 0.0)
     
     async def _analyze_cluster_characteristics(self, cluster_data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze characteristics of a cluster."""
+        """
+Analyze characteristics of a cluster."""
         characteristics = {}
         
         for column in cluster_data.columns:
@@ -463,7 +470,8 @@ class PerformanceAnalytics(AnalyticsEngine):
     """
     
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform performance analytics analysis."""
+        """
+Perform performance analytics analysis."""
         results = []
         
         try:
@@ -642,7 +650,8 @@ class ContentAnalytics(AnalyticsEngine):
     """
     
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform content analytics analysis."""
+        """
+Perform content analytics analysis."""
         results = []
         
         try:
@@ -807,7 +816,8 @@ class ProtectionAnalytics(AnalyticsEngine):
     """
     
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform protection analytics analysis."""
+        """
+Perform protection analytics analysis."""
         results = []
         
         try:
@@ -990,7 +1000,8 @@ class PlatformAnalytics(AnalyticsEngine):
     """
     
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform platform analytics analysis."""
+        """
+Perform platform analytics analysis."""
         results = []
         
         try:
@@ -1191,7 +1202,8 @@ class RevenueAnalytics(AnalyticsEngine):
     """
     
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform revenue analytics analysis."""
+        """
+Perform revenue analytics analysis."""
         results = []
         
         try:

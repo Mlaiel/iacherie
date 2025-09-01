@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ from pathlib import Path
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms - Enhanced for data protection requirements."""
+    """
+Supported encryption algorithms - Enhanced for data protection requirements."""
     # Required for Repository Encryption (Requirement 1)
     AES_256_GCM = "aes-256-gcm"  # Primary algorithm for repos
     AES_256_CBC = "aes-256-cbc"  # Alternative for repos
@@ -44,6 +46,7 @@ class EncryptionAlgorithm(Enum):
 
 class TransitSecurityLevel(Enum):
     """Transit security levels for TLS requirements"""
+
     TLS_1_2 = "tls-1.2"
     TLS_1_3 = "tls-1.3"  # Required for Requirement 2
     TLS_1_3_STRICT = "tls-1.3-strict"
@@ -51,6 +54,7 @@ class TransitSecurityLevel(Enum):
 
 class HSMComplianceLevel(Enum):
     """HSM compliance levels for key management"""
+
     FIPS_140_2_LEVEL_2 = "fips-140-2-level-2"
     FIPS_140_2_LEVEL_3 = "fips-140-2-level-3"
     FIPS_140_2_LEVEL_4 = "fips-140-2-level-4"  # Required for Requirement 4
@@ -58,6 +62,7 @@ class HSMComplianceLevel(Enum):
 
 class KeyType(Enum):
     """Encryption key types with data protection categories."""
+
     MASTER_KEY = "master"
     DATA_KEY = "data"
     CONTENT_KEY = "content"
@@ -103,7 +108,9 @@ class DataProtectionEncryptionConfig:
 
 
 class KeyDerivationFunction(Enum):
-    """Key derivation functions."""
+    """
+Key derivation functions."""
+
     PBKDF2_SHA256 = "pbkdf2-sha256"
     SCRYPT = "scrypt"
     ARGON2ID = "argon2id"
@@ -133,7 +140,8 @@ class KeyConfiguration:
 
 @dataclass
 class ContentEncryptionConfig:
-    """Content-specific encryption configuration."""
+    """
+Content-specific encryption configuration."""
     
     # File encryption settings
     file_encryption_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
@@ -384,7 +392,8 @@ class ComplianceEncryptionConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Encryption performance optimization configuration."""
+    """
+Encryption performance optimization configuration."""
     
     # Hardware acceleration
     hardware_acceleration: bool = True
@@ -409,7 +418,8 @@ class PerformanceConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Main encryption configuration container."""
+    """
+Main encryption configuration container."""
     
     # Core configurations
     content_encryption: ContentEncryptionConfig = field(default_factory=ContentEncryptionConfig)
@@ -468,12 +478,14 @@ encryption_config = EncryptionConfig()
 
 
 def get_encryption_config() -> EncryptionConfig:
-    """Get the encryption configuration instance."""
+    """
+Get the encryption configuration instance."""
     return encryption_config
 
 
 def get_content_encryption_config(content_type: str, tier: str) -> Dict[str, Any]:
-    """Get encryption configuration for specific content type and tier."""
+    """
+Get encryption configuration for specific content type and tier."""
     config = get_encryption_config()
     
     # Get content type specific config

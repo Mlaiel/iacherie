@@ -2,6 +2,7 @@
 """Monetization Platform Deployment Manager
 Handles deployment of revenue tracking, payment processing, and licensing automation
 """
+
 import os
 import sys
 import time
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Payment provider enumeration"""
+    """
+Payment provider enumeration"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -47,6 +50,7 @@ class PaymentProvider(Enum):
 
 class RevenueStream(Enum):
     """Revenue stream types"""
+
     SPOTIFY_ROYALTIES = "spotify_royalties"
     YOUTUBE_MONETIZATION = "youtube_monetization"
     INSTAGRAM_CREATOR_FUND = "instagram_creator_fund"
@@ -58,6 +62,7 @@ class RevenueStream(Enum):
 
 class LicensingType(Enum):
     """Content licensing types"""
+
     SYNC_LICENSE = "sync_license"
     MECHANICAL_LICENSE = "mechanical_license"
     PERFORMANCE_LICENSE = "performance_license"
@@ -68,6 +73,7 @@ class LicensingType(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization deployment strategy"""
+
     IMMEDIATE_ACTIVATION = "immediate_activation"
     GRADUAL_ROLLOUT = "gradual_rollout"
     PLATFORM_BY_PLATFORM = "platform_by_platform"
@@ -90,7 +96,8 @@ class MonetizationDeploymentConfig:
 
 @dataclass
 class RevenueStreamStatus:
-    """Status of revenue stream"""
+    """
+Status of revenue stream"""
     stream_type: RevenueStream
     platform: str
     status: str
@@ -102,7 +109,8 @@ class RevenueStreamStatus:
 
 @dataclass
 class PaymentProviderStatus:
-    """Payment provider status"""
+    """
+Payment provider status"""
     provider: PaymentProvider
     status: str
     transaction_volume: Decimal
@@ -119,7 +127,8 @@ class MonetizationDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize monetization deployment manager"""
+        """
+Initialize monetization deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/monetization-deployment.yaml"
         self.config = self._load_configuration()
         self.docker_client = docker.from_env()
@@ -230,7 +239,8 @@ class MonetizationDeploymentManager:
         }
     
     def _initialize_payment_providers(self) -> None:
-        """Initialize payment provider connections"""
+        """
+Initialize payment provider connections"""
         providers_config = self.config.get('payment_providers', {})
         
         # Initialize Stripe
@@ -543,7 +553,8 @@ class MonetizationDeploymentManager:
         }
     
     def _create_payment_provider_manifest(self, provider: PaymentProvider) -> Dict[str, Any]:
-        """Create payment provider deployment manifest"""
+        """
+Create payment provider deployment manifest"""
         provider_name = provider.value.replace('_', '-')
         
         return {
@@ -599,7 +610,8 @@ class MonetizationDeploymentManager:
         }
     
     def _create_platform_integration_manifest(self, platform: str, api_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create platform integration deployment manifest"""
+        """
+Create platform integration deployment manifest"""
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -654,7 +666,8 @@ class MonetizationDeploymentManager:
         }
     
     def _create_licensing_automation_manifest(self, licensing_types: List[LicensingType]) -> Dict[str, Any]:
-        """Create licensing automation deployment manifest"""
+        """
+Create licensing automation deployment manifest"""
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -708,7 +721,8 @@ class MonetizationDeploymentManager:
         }
     
     def get_monetization_status(self) -> Dict[str, Any]:
-        """Get comprehensive monetization system status"""
+        """
+Get comprehensive monetization system status"""
         status = {
             'timestamp': datetime.now().isoformat(),
             'revenue_tracking': self._get_revenue_tracking_status(),
@@ -732,7 +746,8 @@ class MonetizationDeploymentManager:
         return status
     
     def _get_revenue_tracking_status(self) -> Dict[str, Any]:
-        """Get revenue tracking system status"""
+        """
+Get revenue tracking system status"""
         try:
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name='revenue-tracking-engine',
@@ -760,7 +775,8 @@ class MonetizationDeploymentManager:
             }
     
     def _get_payment_providers_status(self) -> Dict[str, Any]:
-        """Get payment providers status"""
+        """
+Get payment providers status"""
         providers_status = {}
         
         for provider in PaymentProvider:
@@ -797,7 +813,8 @@ class MonetizationDeploymentManager:
         return providers_status
     
     def _get_platform_integrations_status(self) -> Dict[str, Any]:
-        """Get platform integrations status"""
+        """
+Get platform integrations status"""
         platforms_status = {}
         platforms = ['spotify', 'youtube', 'instagram', 'tiktok']
         
@@ -833,7 +850,8 @@ class MonetizationDeploymentManager:
         return platforms_status
     
     def _verify_monetization_deployment(self, deployment_id: str) -> bool:
-        """Verify monetization system deployment"""
+        """
+Verify monetization system deployment"""
         logger.info(f"Verifying monetization deployment: {deployment_id}")
         
         try:

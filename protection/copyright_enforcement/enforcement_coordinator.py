@@ -7,6 +7,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementStrategy(str, Enum):
-    """Enforcement strategy types"""
+    """
+Enforcement strategy types"""
+
     IMMEDIATE_DMCA = "immediate_dmca"
     ESCALATED_LEGAL = "escalated_legal"
     REVENUE_FOCUS = "revenue_focus"
@@ -42,6 +45,7 @@ class EnforcementStrategy(str, Enum):
 
 class ViolationSeverity(str, Enum):
     """Violation severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -51,6 +55,7 @@ class ViolationSeverity(str, Enum):
 
 class ActionPriority(str, Enum):
     """Action priority levels"""
+
     IMMEDIATE = "immediate"
     HIGH = "high"
     MEDIUM = "medium"
@@ -77,7 +82,8 @@ class ViolationReport:
 
 @dataclass
 class EnforcementPlan:
-    """Comprehensive enforcement plan"""
+    """
+Comprehensive enforcement plan"""
     violation_id: str
     strategy: EnforcementStrategy
     priority: ActionPriority
@@ -90,7 +96,8 @@ class EnforcementPlan:
 
 
 class ViolationProcessor:
-    """Advanced violation processing and analysis system"""
+    """
+Advanced violation processing and analysis system"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -436,7 +443,8 @@ class ViolationProcessor:
         return min(base_score, 100.0)
     
     def _calculate_reputation_impact(self, report: ViolationReport) -> float:
-        """Calculate reputation impact score (0-100)"""
+        """
+Calculate reputation impact score (0-100)"""
         base_score = 40.0
         
         # Public platforms have higher reputation impact
@@ -715,7 +723,8 @@ class EnforcementCoordinator:
         strategy: EnforcementStrategy,
         session: AsyncSession
     ) -> EnforcementPlan:
-        """Generate comprehensive enforcement plan"""
+        """
+Generate comprehensive enforcement plan"""
         plan_actions = []
         timeline = {}
         
@@ -1012,7 +1021,8 @@ class EnforcementCoordinator:
         plan: EnforcementPlan,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Setup progress tracking for enforcement"""
+        """
+Setup progress tracking for enforcement"""
         tracking_config = {
             "violation_id": violation_id,
             "tracking_enabled": True,
@@ -1065,7 +1075,8 @@ class EnforcementCoordinator:
         return result.scalars().all()
     
     async def _check_action_status(self, action: EnforcementAction) -> Dict[str, Any]:
-        """Check status of enforcement action"""
+        """
+Check status of enforcement action"""
         # This would implement actual status checking logic
         return {
             "action_id": str(action.id),

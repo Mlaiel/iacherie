@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional monetization engine Docker configuration for revenue
 tracking, payment processing, and automated payout systems.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonetizationEngineDockerConfig:
-    """Enterprise Monetization Engine Docker configuration"""
+    """
+Enterprise Monetization Engine Docker configuration"""
     
     # Container Configuration
     image_name: str = "ia-influencer/monetization-engine"
@@ -267,7 +269,8 @@ CMD ["gunicorn", \\
      "main:app"]
 """
     def _generate_feature_env_vars(self) -> str:
-        """Generate feature-specific environment variables"""
+        """
+Generate feature-specific environment variables"""
         env_vars = []
         for feature, enabled in self.enabled_features.items():
             env_vars.append(f"ENV FEATURE_{feature.upper()}={str(enabled).lower()}")
@@ -574,7 +577,8 @@ isort==5.12.0
 flake8==6.1.0
 """
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
+        """
+Save all configuration files to output directory"""
         import os
         from pathlib import Path
         

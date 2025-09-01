@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -27,7 +28,8 @@ from collections import defaultdict
 
 @dataclass
 class ApiConfig:
-    """API configuration settings."""
+    """
+API configuration settings."""
     base_url: str
     api_key: Optional[str] = None
     secret_key: Optional[str] = None
@@ -41,7 +43,8 @@ class ApiConfig:
 
 @dataclass
 class ApiEndpoint:
-    """API endpoint definition."""
+    """
+API endpoint definition."""
     name: str
     path: str
     method: str = 'GET'
@@ -88,17 +91,20 @@ class ApiScraper:
         }
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
             
     async def _initialize_session(self):
-        """Initialize HTTP session with authentication."""
+        """
+Initialize HTTP session with authentication."""
         headers = {
             'User-Agent': 'IA-Influencer-Agent/1.0',
             'Accept': 'application/json',
@@ -132,7 +138,8 @@ class ApiScraper:
         )
         
     async def _get_auth_headers(self) -> Dict[str, str]:
-        """Generate authentication headers."""
+        """
+Generate authentication headers."""
         headers = {}
         
         if self.config.auth_type == 'api_key':
@@ -163,7 +170,8 @@ class ApiScraper:
         return headers
         
     async def _check_rate_limit(self, endpoint: str):
-        """Check and enforce rate limiting."""
+        """
+Check and enforce rate limiting."""
         now = time.time()
         
         # Clean old requests (older than 1 minute)
@@ -304,7 +312,8 @@ class ApiScraper:
                              page_param: str = 'page',
                              limit_param: str = 'limit',
                              max_pages: int = 10) -> List[Dict[str, Any]]:
-        """Handle paginated API requests."""
+        """
+Handle paginated API requests."""
         all_results = []
         page = 1
         
@@ -386,7 +395,8 @@ class ApiScraper:
         return results
         
     async def webhook_handler(self, webhook_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle incoming webhook data."""
+        """
+Handle incoming webhook data."""
         try:
             # Validate webhook (implement signature verification if needed)
             if not self._validate_webhook(webhook_data):
@@ -407,12 +417,14 @@ class ApiScraper:
         return True  # Placeholder
         
     async def _process_webhook_data(self, webhook_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process incoming webhook data."""
+        """
+Process incoming webhook data."""
         # Implement webhook data processing logic
         return webhook_data
         
     async def get_api_status(self) -> Dict[str, Any]:
-        """Get API health and status information."""
+        """
+Get API health and status information."""
         try:
             # Create a simple health check endpoint
             health_endpoint = ApiEndpoint(
@@ -438,7 +450,8 @@ class ApiScraper:
             }
             
     def get_stats(self) -> Dict[str, Any]:
-        """Get API scraper statistics."""
+        """
+Get API scraper statistics."""
         return {
             **self.stats,
             'cache_size': len(self.cache),
@@ -448,7 +461,8 @@ class ApiScraper:
         }
         
     def _get_remaining_rate_limit(self) -> int:
-        """Get remaining rate limit for current minute."""
+        """
+Get remaining rate limit for current minute."""
         now = time.time()
         cutoff = now - 60
         
@@ -460,7 +474,8 @@ class ApiScraper:
         return max(0, self.config.rate_limit - total_recent_requests)
         
     def clear_cache(self):
-        """Clear response cache."""
+        """
+Clear response cache."""
         self.cache.clear()
         self.logger.info("API response cache cleared")
         

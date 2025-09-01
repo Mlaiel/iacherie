@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources of revenue"""
+    """
+Sources of revenue"""
+
     CONTENT_VIEWS = "content_views"
     PREMIUM_SUBSCRIPTIONS = "premium_subscriptions"
     ADVERTISING = "advertising"
@@ -54,6 +57,7 @@ class RevenueSource(Enum):
 
 class PaymentProvider(Enum):
     """Supported payment providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -63,6 +67,7 @@ class PaymentProvider(Enum):
 
 class RevenueStatus(Enum):
     """Revenue status tracking"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
@@ -74,6 +79,7 @@ class RevenueStatus(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequency options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -102,7 +108,8 @@ class RevenueRecord:
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization performance metrics"""
+    """
+Monetization performance metrics"""
     content_id: str
     content_type: str
     total_revenue: Decimal
@@ -116,7 +123,8 @@ class MonetizationMetrics:
 
 @dataclass
 class UserRevenueProfile:
-    """User revenue and earning profile"""
+    """
+User revenue and earning profile"""
     user_id: str
     total_earnings: Decimal
     pending_earnings: Decimal

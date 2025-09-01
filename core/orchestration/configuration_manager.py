@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -29,7 +30,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ConfigScope(Enum):
-    """Configuration scope levels."""
+    """
+Configuration scope levels."""
+
     GLOBAL = "global"
     ENVIRONMENT = "environment"
     SERVICE = "service"
@@ -39,6 +42,7 @@ class ConfigScope(Enum):
 
 class ConfigType(Enum):
     """Configuration value types."""
+
     STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
@@ -53,6 +57,7 @@ class ConfigType(Enum):
 
 class ConfigSource(Enum):
     """Configuration sources."""
+
     FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -64,6 +69,7 @@ class ConfigSource(Enum):
 
 class ValidationLevel(Enum):
     """Configuration validation levels."""
+
     NONE = "none"
     BASIC = "basic"
     STRICT = "strict"
@@ -135,7 +141,8 @@ class ConfigWatcher:
 
 @dataclass
 class ConfigValidationResult:
-    """Configuration validation result."""
+    """
+Configuration validation result."""
     config_id: str
     valid: bool
     errors: List[str] = field(default_factory=list)
@@ -788,7 +795,8 @@ class ConfigurationManager:
         component: Optional[str],
         user: Optional[str]
     ) -> Any:
-        """Resolve configuration value through scope hierarchy."""
+        """
+Resolve configuration value through scope hierarchy."""
         # Define search order (most specific to least specific)
         search_scopes = []
         
@@ -828,7 +836,8 @@ class ConfigurationManager:
         return None
     
     async def _validate_config_value(self, definition: ConfigDefinition, value: Any) -> ConfigValidationResult:
-        """Validate configuration value against definition."""
+        """
+Validate configuration value against definition."""
         result = ConfigValidationResult(config_id=definition.config_id, valid=True)
         
         try:
@@ -879,7 +888,8 @@ class ConfigurationManager:
             return False
     
     async def _apply_validation_rule(self, rule_name: str, rule_config: Any, value: Any) -> Dict[str, Any]:
-        """Apply specific validation rule."""
+        """
+Apply specific validation rule."""
         result = {'valid': True, 'errors': [], 'warnings': []}
         
         try:
@@ -999,7 +1009,8 @@ class ConfigurationManager:
         return hashlib.md5(value_str.encode()).hexdigest()
     
     async def _encrypt_value(self, value: Any) -> str:
-        """Encrypt sensitive configuration value."""
+        """
+Encrypt sensitive configuration value."""
         # Simple encryption placeholder
         # In production, use proper encryption libraries
         if self.encryption_key:
@@ -1028,7 +1039,8 @@ class ConfigurationManager:
             del self.config_cache[key]
     
     async def _refresh_cache(self) -> None:
-        """Refresh configuration cache."""
+        """
+Refresh configuration cache."""
         self.config_cache.clear()
     
     async def _record_config_change(
@@ -1037,7 +1049,8 @@ class ConfigurationManager:
         new_value: ConfigValue,
         old_value: Optional[ConfigValue]
     ) -> None:
-        """Record configuration change for auditing."""
+        """
+Record configuration change for auditing."""
         change_record = {
             'config_id': config_id,
             'timestamp': datetime.now().isoformat(),
@@ -1060,7 +1073,8 @@ class ConfigurationManager:
             self.config_history = self.config_history[-1000:]
     
     async def _validate_all_configurations(self) -> None:
-        """Validate all loaded configurations."""
+        """
+Validate all loaded configurations."""
         for scope_values in self.config_values.values():
             for config_id, config_value in scope_values.items():
                 definition = self.config_definitions.get(config_id)
@@ -1114,7 +1128,8 @@ class ConfigurationManager:
         return bool(definition.config_id and definition.name)
     
     async def get_config_summary(self) -> Dict[str, Any]:
-        """Get configuration summary."""
+        """
+Get configuration summary."""
         total_configs = sum(len(configs) for configs in self.config_values.values())
         
         return {
@@ -1131,7 +1146,8 @@ class ConfigurationManager:
         }
     
     async def get_manager_stats(self) -> Dict[str, Any]:
-        """Get configuration manager statistics."""
+        """
+Get configuration manager statistics."""
         return {
             **self.manager_stats,
             'config_definitions': len(self.config_definitions),

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Business Logic Core
+"""
+Comprehensive Test Suite for Business Logic Core
 Tests the complete integration of 53 AI agents
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -42,18 +45,21 @@ logger = logging.getLogger(__name__)
 
 
 class TestBusinessLogicCore:
-    """Comprehensive test suite for business logic core with 53 agents"""
+    """
+Comprehensive test suite for business logic core with 53 agents"""
     
     @pytest_asyncio.fixture
     async def initialized_core(self):
-        """Initialize business logic core for testing"""
+        """
+Initialize business logic core for testing"""
         core = BusinessLogicCore()
         await core.initialize()
         return core
     
     @pytest.fixture
     def sample_content_musician(self):
-        """Sample musician content for testing"""
+        """
+Sample musician content for testing"""
         return ContentUpload(
             content_id="music_001",
             creator_id="musician_test",

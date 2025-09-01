@@ -7,6 +7,7 @@ customizable templates, and automated validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import hashlib
 import json
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContractType(Enum):
-    """Types of licensing contracts"""
+    """
+Types of licensing contracts"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -34,6 +37,7 @@ class ContractType(Enum):
 
 class ContractStatus(Enum):
     """Contract status"""
+
     DRAFT = "draft"
     GENERATED = "generated"
     REVIEWED = "reviewed"
@@ -57,7 +61,8 @@ class ContractClause:
 
 @dataclass
 class ContractTemplate:
-    """Contract template definition"""
+    """
+Contract template definition"""
     template_id: str
     name: str
     description: str
@@ -74,7 +79,8 @@ class ContractTemplate:
 
 @dataclass
 class GeneratedContract:
-    """Generated contract instance"""
+    """
+Generated contract instance"""
     contract_id: str
     template_id: str
     contract_type: ContractType
@@ -103,7 +109,8 @@ class ContractGenerator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize contract generator"""
+        """
+Initialize contract generator"""
         self.config = config or {}
         
         # Template storage
@@ -557,7 +564,7 @@ class ContractGenerator:
         if not variables.get("copyright_notice"):
             logger.warning("DMCA: Copyright notice missing, adding default")
             variables["copyright_notice"] = (
-                f"© {datetime.now().year} {variables.get('licensor_name', 'Content Owner')}. "
+                f"(c) {datetime.now().year} {variables.get('licensor_name', 'Content Owner')}. "
                 "All rights reserved. Unauthorized use is prohibited."
             )
         
@@ -671,7 +678,8 @@ class ContractGenerator:
         template: ContractTemplate,
         terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check legal compliance of contract terms"""
+        """
+Check legal compliance of contract terms"""
         try:
             compliance_result = {
                 "compliant": True,

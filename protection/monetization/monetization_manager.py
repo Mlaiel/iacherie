@@ -4,6 +4,7 @@ Coordinates revenue engine, payments, subscriptions, commissions, analytics, and
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationEvent(Enum):
-    """Monetization system events."""
+    """
+Monetization system events."""
+
     REVENUE_GENERATED = "revenue_generated"
     PAYMENT_PROCESSED = "payment_processed"
     SUBSCRIPTION_CREATED = "subscription_created"
@@ -75,7 +78,8 @@ class MonetizationStats:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert stats to dictionary."""
+        """
+Convert stats to dictionary."""
         return {
             "total_revenue": float(self.total_revenue),
             "active_subscriptions": self.active_subscriptions,
@@ -117,7 +121,8 @@ class MonetizationManager:
         self.background_tasks: List[asyncio.Task] = []
     
     async def initialize(self, gateway_configs: Dict[GatewayType, Dict[str, str]] = None) -> bool:
-        """Initialize all monetization components."""
+        """
+Initialize all monetization components."""
         try:
             logger.info("Initializing monetization manager...")
             
@@ -601,7 +606,8 @@ class MonetizationManager:
         self.event_handlers[event].append(handler)
     
     async def shutdown(self) -> None:
-        """Shutdown monetization manager and cleanup resources."""
+        """
+Shutdown monetization manager and cleanup resources."""
         try:
             # Cancel background tasks
             for task in self.background_tasks:

@@ -4,6 +4,7 @@ Advanced monitoring, alerting, and observability for cache systems
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ import traceback
 logger = logging.getLogger(__name__)
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -29,6 +32,7 @@ class AlertLevel(Enum):
 
 class MetricType(Enum):
     """Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -37,6 +41,7 @@ class MetricType(Enum):
 
 class MonitoringEvent(Enum):
     """Cache monitoring events"""
+
     CACHE_HIT = "cache_hit"
     CACHE_MISS = "cache_miss"
     CACHE_EVICTION = "cache_eviction"
@@ -59,7 +64,8 @@ class MetricValue:
 
 @dataclass
 class Alert:
-    """Cache alert information"""
+    """
+Cache alert information"""
     id: str
     level: AlertLevel
     title: str
@@ -73,7 +79,8 @@ class Alert:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         if self.resolved_at:
@@ -83,7 +90,8 @@ class Alert:
 
 @dataclass
 class CacheHealthStatus:
-    """Overall cache health status"""
+    """
+Overall cache health status"""
     cache_name: str
     status: str  # healthy, warning, error, critical
     hit_rate: float
@@ -96,7 +104,8 @@ class CacheHealthStatus:
     recommendations: List[str]
 
 class MetricCollector:
-    """Collect and store cache metrics"""
+    """
+Collect and store cache metrics"""
     
     def __init__(self, retention_hours: int = 24):
         self.retention_hours = retention_hours
@@ -112,7 +121,8 @@ class MetricCollector:
                      metric_type: MetricType = MetricType.GAUGE,
                      labels: Optional[Dict[str, str]] = None,
                      timestamp: Optional[datetime] = None):
-        """Record a metric value"""
+        """
+Record a metric value"""
         
         if timestamp is None:
             timestamp = datetime.utcnow()
@@ -135,7 +145,8 @@ class MetricCollector:
             self._cleanup_old_metrics()
     
     def _generate_metric_key(self, name: str, labels: Optional[Dict[str, str]]) -> str:
-        """Generate unique key for metric with labels"""
+        """
+Generate unique key for metric with labels"""
         if not labels:
             return name
         
@@ -164,7 +175,8 @@ class MetricCollector:
                          labels: Optional[Dict[str, str]] = None,
                          start_time: Optional[datetime] = None,
                          end_time: Optional[datetime] = None) -> List[MetricValue]:
-        """Get metric values for time range"""
+        """
+Get metric values for time range"""
         
         metric_key = self._generate_metric_key(name, labels)
         
@@ -188,7 +200,8 @@ class MetricCollector:
             return values
     
     def get_latest_value(self, name: str, labels: Optional[Dict[str, str]] = None) -> Optional[MetricValue]:
-        """Get latest value for metric"""
+        """
+Get latest value for metric"""
         metric_key = self._generate_metric_key(name, labels)
         
         with self.lock:
@@ -201,7 +214,8 @@ class MetricCollector:
                             name: str,
                             labels: Optional[Dict[str, str]] = None,
                             window_minutes: int = 60) -> Dict[str, float]:
-        """Get statistical summary for metric"""
+        """
+Get statistical summary for metric"""
         
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
@@ -225,7 +239,8 @@ class MetricCollector:
         }
     
     def _percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile"""
+        """
+Calculate percentile"""
         if not values:
             return 0.0
         
@@ -240,7 +255,8 @@ class MetricCollector:
             return lower + (upper - lower) * (index - int(index))
 
 class AlertManager:
-    """Manage cache alerts and notifications"""
+    """
+Manage cache alerts and notifications"""
     
     def __init__(self):
         self.alerts = {}  # alert_id -> Alert
@@ -252,7 +268,8 @@ class AlertManager:
         self._setup_default_rules()
     
     def _setup_default_rules(self):
-        """Setup default alerting rules"""
+        """
+Setup default alerting rules"""
         
         self.add_alert_rule(
             name="low_hit_rate",
@@ -333,11 +350,13 @@ class AlertManager:
                 del self.alert_rules[name]
     
     def add_alert_handler(self, handler: Callable[[Alert], None]):
-        """Add alert handler function"""
+        """
+Add alert handler function"""
         self.alert_handlers.append(handler)
     
     def check_alerts(self, metric_collector: MetricCollector, cache_name: str):
-        """Check all alert rules against current metrics"""
+        """
+Check all alert rules against current metrics"""
         
         with self.lock:
             for rule_name, rule in self.alert_rules.items():
@@ -430,7 +449,8 @@ class AlertManager:
     def get_alert_history(self,
                          cache_name: Optional[str] = None,
                          hours: int = 24) -> List[Alert]:
-        """Get alert history"""
+        """
+Get alert history"""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         with self.lock:
@@ -445,7 +465,8 @@ class AlertManager:
             return sorted(alerts, key=lambda a: a.timestamp, reverse=True)
 
 class CacheMonitor:
-    """Main cache monitoring class"""
+    """
+Main cache monitoring class"""
     
     def __init__(self, monitoring_interval: int = 30):
         self.monitoring_interval = monitoring_interval
@@ -713,7 +734,8 @@ class CacheMonitor:
         }
     
     def export_metrics_prometheus(self) -> str:
-        """Export metrics in Prometheus format"""
+        """
+Export metrics in Prometheus format"""
         lines = []
         
         # Export all metrics

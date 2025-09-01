@@ -5,20 +5,23 @@ Comprehensive exception hierarchy for multi-modal content fingerprinting,
 providing detailed error handling and diagnostic information.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import traceback
 from datetime import datetime
 
 class ErrorSeverity(str, Enum):
-    """Error severity levels."""
+    """
+Error severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -26,6 +29,7 @@ class ErrorSeverity(str, Enum):
 
 class ErrorCategory(str, Enum):
     """Error categories for classification."""
+
     FILE_IO = "file_io"
     CONTENT_PROCESSING = "content_processing"
     ALGORITHM_FAILURE = "algorithm_failure"
@@ -72,7 +76,8 @@ class FingerprintingBaseException(Exception):
         self.traceback_info = traceback.format_exc() if original_exception else None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for serialization."""
+        """
+Convert exception to dictionary for serialization."""
         return {
             'error_code': self.error_code,
             'message': self.message,
@@ -86,7 +91,8 @@ class FingerprintingBaseException(Exception):
         }
     
     def __str__(self) -> str:
-        """String representation of the exception."""
+        """
+String representation of the exception."""
         return f"[{self.error_code}] {self.message}"
     
     def __repr__(self) -> str:

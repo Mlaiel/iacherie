@@ -6,6 +6,7 @@ ROI optimization workflows, performance analysis, and strategic recommendations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -18,7 +19,9 @@ from .core.optimization_engine import CampaignOptimizationEngine, OptimizationJo
 logger = logging.getLogger(__name__)
 
 class CampaignOptimizationSystemStatus(Enum):
-    """System status levels"""
+    """
+System status levels"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -180,11 +183,13 @@ class CampaignOptimizationManager:
         return analysis
 
     async def get_system_metrics(self) -> SystemMetrics:
-        """Get current system metrics"""
+        """
+Get current system metrics"""
         return self.system_metrics
 
     async def get_optimization_history(self, campaign_id: str) -> List[Dict[str, Any]]:
-        """Get optimization history for a campaign"""
+        """
+Get optimization history for a campaign"""
         return self.optimization_history.get(campaign_id, [])
 
     async def get_roi_predictions(
@@ -192,7 +197,8 @@ class CampaignOptimizationManager:
         campaign_id: str,
         proposed_changes: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict ROI impact of proposed campaign changes"""
+        """
+Predict ROI impact of proposed campaign changes"""
         
         # Simulate ROI prediction based on proposed changes
         budget_change = proposed_changes.get('budget_change', 0)

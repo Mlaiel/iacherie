@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class OptimizationGoal(Enum):
-    """Revenue optimization objectives"""
+    """
+Revenue optimization objectives"""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_PROFIT = "maximize_profit"
     MAXIMIZE_VOLUME = "maximize_volume"
@@ -54,6 +57,7 @@ class OptimizationGoal(Enum):
 
 class OptimizationStrategy(Enum):
     """Optimization strategy types"""
+
     AGGRESSIVE_GROWTH = "aggressive_growth"
     CONSERVATIVE_STABILITY = "conservative_stability"
     BALANCED_APPROACH = "balanced_approach"
@@ -64,6 +68,7 @@ class OptimizationStrategy(Enum):
 
 class OptimizationStatus(Enum):
     """Optimization process status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -131,7 +136,8 @@ class RevenueOptimizationProfile(Base):
     )
 
 class OptimizationRecommendation(Base):
-    """AI-generated optimization recommendations"""
+    """
+AI-generated optimization recommendations"""
     __tablename__ = 'optimization_recommendations'
     
     # Primary identification
@@ -366,7 +372,8 @@ class RevenueOpportunity(Base):
     )
 
 class OptimizationMetrics(Base):
-    """Optimization performance metrics and KPIs"""
+    """
+Optimization performance metrics and KPIs"""
     __tablename__ = 'optimization_metrics'
     
     # Primary identification
@@ -444,7 +451,8 @@ class OptimizationMetrics(Base):
 
 @dataclass
 class OptimizationInsight:
-    """Optimization insight data structure"""
+    """
+Optimization insight data structure"""
     insight_type: str
     title: str
     description: str
@@ -456,7 +464,8 @@ class OptimizationInsight:
     implementation_timeline: str
 
 class OptimizationAlert(Base):
-    """Optimization alerts and notifications"""
+    """
+Optimization alerts and notifications"""
     __tablename__ = 'optimization_alerts'
     
     # Primary identification

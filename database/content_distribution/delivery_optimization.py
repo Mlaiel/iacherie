@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Performance Engineer + ML Engineer + CDN Specialist + Network Optimization Expert
 """
+
 import asyncio
 import json
 import uuid
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OptimizationStrategy(str, Enum):
-    """Content delivery optimization strategies"""
+    """
+Content delivery optimization strategies"""
+
     SPEED_FIRST = "speed_first"
     COST_EFFICIENT = "cost_efficient"
     QUALITY_FOCUSED = "quality_focused"
@@ -53,6 +56,7 @@ class OptimizationStrategy(str, Enum):
 
 class DeliveryMethod(str, Enum):
     """Content delivery methods"""
+
     DIRECT_API = "direct_api"
     CDN_DELIVERY = "cdn_delivery"
     P2P_DISTRIBUTION = "p2p_distribution"
@@ -62,6 +66,7 @@ class DeliveryMethod(str, Enum):
 
 class OptimizationLevel(str, Enum):
     """Optimization processing levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -70,6 +75,7 @@ class OptimizationLevel(str, Enum):
 
 class DeliveryStatus(str, Enum):
     """Delivery operation status"""
+
     QUEUED = "queued"
     OPTIMIZING = "optimizing"
     UPLOADING = "uploading"
@@ -112,7 +118,8 @@ class CostOptimization:
     cost_tracking_enabled: bool = True
 
 class DeliveryOptimization(Base):
-    """Delivery optimization database model"""
+    """
+Delivery optimization database model"""
     __tablename__ = "delivery_optimizations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -348,7 +355,8 @@ class OptimizationRequest(BaseModel):
     delivery_deadline: Optional[datetime] = None
 
 class RouteConfiguration(BaseModel):
-    """Route configuration model"""
+    """
+Route configuration model"""
     platform_name: str
     source_region: str
     target_region: str
@@ -358,7 +366,8 @@ class RouteConfiguration(BaseModel):
     priority_order: int = 1
 
 class OptimizationResponse(BaseModel):
-    """Response model for optimization results"""
+    """
+Response model for optimization results"""
     optimization_id: str
     status: str
     predicted_delivery_time_sec: Optional[int]
@@ -369,7 +378,8 @@ class OptimizationResponse(BaseModel):
     estimated_completion: Optional[datetime]
 
 class DeliveryOptimizationManager:
-    """Enterprise delivery optimization management system"""
+    """
+Enterprise delivery optimization management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -381,7 +391,8 @@ class DeliveryOptimizationManager:
         user_id: str,
         optimization_request: OptimizationRequest
     ) -> DeliveryOptimization:
-        """Create new delivery optimization"""
+        """
+Create new delivery optimization"""
         try:
             # Analyze content requirements
             content_analysis = await self._analyze_content_requirements(
@@ -632,7 +643,8 @@ class DeliveryOptimizationManager:
         request: OptimizationRequest,
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate ML-powered optimization predictions"""
+        """
+Generate ML-powered optimization predictions"""
         # This would use ML models to predict performance
         # For now, return calculated estimates
         base_delivery_time = content_analysis['file_size_mb'] * 2  # 2 seconds per MB
@@ -651,7 +663,8 @@ class DeliveryOptimizationManager:
         optimization: DeliveryOptimization,
         content_analysis: Dict[str, Any]
     ) -> int:
-        """Calculate optimization priority score"""
+        """
+Calculate optimization priority score"""
         score = 50  # Base score
         
         # Adjust based on deadline
@@ -678,7 +691,8 @@ class DeliveryOptimizationManager:
         return min(100, max(0, score))
     
     async def _cache_optimization(self, optimization: DeliveryOptimization):
-        """Cache optimization data in Redis"""
+        """
+Cache optimization data in Redis"""
         try:
             cache_key = f"optimization:{optimization.id}"
             optimization_data = {

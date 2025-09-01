@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Notification Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class NotificationType(str, Enum):
-    """Types of notifications."""
+    """
+Types of notifications."""
+
     VIOLATION_DETECTED = "violation_detected"
     DMCA_SENT = "dmca_sent"
     COMPLIANCE_UPDATE = "compliance_update"
@@ -54,6 +57,7 @@ class NotificationType(str, Enum):
 
 class NotificationChannel(str, Enum):
     """Notification delivery channels."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -67,6 +71,7 @@ class NotificationChannel(str, Enum):
 
 class NotificationPriority(str, Enum):
     """Notification priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -76,6 +81,7 @@ class NotificationPriority(str, Enum):
 
 class NotificationStatus(str, Enum):
     """Notification delivery status."""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -105,7 +111,8 @@ class NotificationData:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template structure."""
+    """
+Notification template structure."""
     template_id: str
     type: NotificationType
     title_template: str
@@ -116,7 +123,8 @@ class NotificationTemplate:
 
 
 class EmailNotificationHandler:
-    """Email notification handler."""
+    """
+Email notification handler."""
     
     def __init__(self):
         self.smtp_host = settings.SMTP_HOST
@@ -126,7 +134,8 @@ class EmailNotificationHandler:
         self.smtp_use_tls = settings.SMTP_USE_TLS
     
     async def send_notification(self, notification: NotificationData, recipient: str) -> bool:
-        """Send email notification."""
+        """
+Send email notification."""
         try:
             # Create email message
             msg = MIMEMultipart()
@@ -200,7 +209,7 @@ class EmailNotificationHandler:
                 </div>
                 <div class="footer">
                     <p>IA Influencer Agent - Enterprise Content Protection Platform</p>
-                    <p>© 2025 Fahed Mlaiel. All rights reserved.</p>
+                    <p>(c) 2025 Fahed Mlaiel. All rights reserved.</p>
                     <p><strong>⚠️ This software is proprietary. Unauthorized use is prohibited.</strong></p>
                 </div>
             </div>
@@ -210,7 +219,8 @@ class EmailNotificationHandler:
         return html
     
     def _format_notification_data(self, data: Dict[str, Any]) -> str:
-        """Format notification data as HTML table."""
+        """
+Format notification data as HTML table."""
         if not data:
             return ""
         
@@ -234,7 +244,8 @@ class SMSNotificationHandler:
         self.client = TwilioClient(self.account_sid, self.auth_token)
     
     async def send_notification(self, notification: NotificationData, recipient: str) -> bool:
-        """Send SMS notification."""
+        """
+Send SMS notification."""
         try:
             # Format message for SMS
             sms_message = self._format_sms_message(notification)
@@ -292,7 +303,8 @@ class PushNotificationHandler:
             firebase_admin.initialize_app(cred)
     
     async def send_notification(self, notification: NotificationData, device_token: str) -> bool:
-        """Send push notification."""
+        """
+Send push notification."""
         try:
             # Create push notification message
             message = messaging.Message(
@@ -357,12 +369,14 @@ class WebhookNotificationHandler:
         self.session = None
     
     async def setup_session(self):
-        """Setup HTTP session."""
+        """
+Setup HTTP session."""
         if not self.session:
             self.session = aiohttp.ClientSession()
     
     async def send_notification(self, notification: NotificationData, webhook_url: str) -> bool:
-        """Send webhook notification."""
+        """
+Send webhook notification."""
         await self.setup_session()
         
         try:
@@ -407,13 +421,15 @@ class WebhookNotificationHandler:
 
 
 class SlackNotificationHandler:
-    """Slack notification handler."""
+    """
+Slack notification handler."""
     
     def __init__(self):
         self.client = AsyncWebClient(token=settings.SLACK_BOT_TOKEN)
     
     async def send_notification(self, notification: NotificationData, channel: str) -> bool:
-        """Send Slack notification."""
+        """
+Send Slack notification."""
         try:
             # Create Slack message blocks
             blocks = self._create_slack_blocks(notification)
@@ -498,7 +514,8 @@ class WebSocketNotificationHandler:
         self.user_connections: Dict[str, List[str]] = {}
     
     async def register_connection(self, user_id: str, websocket: websockets.WebSocketServerProtocol):
-        """Register WebSocket connection for user."""
+        """
+Register WebSocket connection for user."""
         connection_id = f"{user_id}_{id(websocket)}"
         self.connections[connection_id] = websocket
         
@@ -574,7 +591,8 @@ class NotificationEngine:
         self.processing_task = None
     
     def _initialize_handlers(self) -> Dict[NotificationChannel, Any]:
-        """Initialize notification handlers."""
+        """
+Initialize notification handlers."""
         return {
             NotificationChannel.EMAIL: EmailNotificationHandler(),
             NotificationChannel.SMS: SMSNotificationHandler(),
@@ -585,7 +603,8 @@ class NotificationEngine:
         }
     
     def _load_templates(self) -> Dict[NotificationType, NotificationTemplate]:
-        """Load notification templates."""
+        """
+Load notification templates."""
         return {
             NotificationType.VIOLATION_DETECTED: NotificationTemplate(
                 template_id="violation_detected",
@@ -813,7 +832,8 @@ class NotificationEngine:
         return str(uuid.uuid4())[:16]
     
     async def _get_user_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user notification preferences."""
+        """
+Get user notification preferences."""
         # Implementation would fetch from database
         # For now, return defaults
         return {
@@ -875,7 +895,8 @@ class NotificationEngine:
         return stats
     
     async def cleanup(self):
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         await self.stop_processing()
         
         # Cleanup handlers

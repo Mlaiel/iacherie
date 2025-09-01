@@ -4,6 +4,7 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 Advanced performance optimization for ML models, fingerprinting engines,
 caching systems, and database queries.
 """
+
 import asyncio
 import time
 import psutil
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OptimizationMetrics:
-    """Performance optimization metrics"""
+    """
+Performance optimization metrics"""
     execution_time: float
     memory_usage: float
     cpu_usage: float
@@ -35,7 +37,8 @@ class OptimizationMetrics:
 
 
 class ModelOptimizer(BaseEngine):
-    """Advanced ML model optimization engine"""
+    """
+Advanced ML model optimization engine"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -255,11 +258,13 @@ class ModelOptimizer(BaseEngine):
         return results
     
     async def _single_inference(self, model: Any, data: Any, device: str) -> Any:
-        """Optimized single inference"""
+        """
+Optimized single inference"""
         return await self._process_batch(model, [data], device)
     
     async def _process_batch(self, model: Any, batch: List[Any], device: str) -> List[Any]:
-        """Process a single batch with actual model inference"""
+        """
+Process a single batch with actual model inference"""
         try:
             # Convert batch to appropriate format
             if hasattr(model, 'predict'):
@@ -390,7 +395,8 @@ class ModelOptimizer(BaseEngine):
         cpu_usage: float, 
         throughput: float
     ) -> float:
-        """Calculate overall efficiency score (0-100)"""
+        """
+Calculate overall efficiency score (0-100)"""
         
         # Normalize metrics to 0-1 scale
         time_score = max(0, 1 - (execution_time / 10))  # Assume 10s is very slow
@@ -410,7 +416,8 @@ class ModelOptimizer(BaseEngine):
 
 
 class FingerprintingOptimizer(BaseEngine):
-    """Specialized optimizer for fingerprinting operations"""
+    """
+Specialized optimizer for fingerprinting operations"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -488,7 +495,8 @@ class FingerprintingOptimizer(BaseEngine):
         return results, metrics
     
     async def _extract_audio_fingerprint_optimized(self, audio_data: bytes) -> np.ndarray:
-        """Optimized audio fingerprint extraction using advanced algorithms"""
+        """
+Optimized audio fingerprint extraction using advanced algorithms"""
         try:
             import librosa
             import io
@@ -720,7 +728,8 @@ class FingerprintingOptimizer(BaseEngine):
         query: np.ndarray, 
         database: List[np.ndarray]
     ) -> List[Tuple[int, float]]:
-        """Batch similarity search for large databases"""
+        """
+Batch similarity search for large databases"""
         
         # Convert to numpy array for vectorized operations
         db_matrix = np.array(database)
@@ -749,7 +758,8 @@ class FingerprintingOptimizer(BaseEngine):
         query: np.ndarray, 
         database: List[np.ndarray]
     ) -> List[Tuple[int, float]]:
-        """Linear similarity search for smaller databases"""
+        """
+Linear similarity search for smaller databases"""
         results = []
         
         for i, fingerprint in enumerate(database):
@@ -764,12 +774,14 @@ class FingerprintingOptimizer(BaseEngine):
         return results
     
     def _generate_content_hash(self, content_data: bytes) -> str:
-        """Generate hash for content caching"""
+        """
+Generate hash for content caching"""
         import hashlib
         return hashlib.md5(content_data[:1024]).hexdigest()  # Use first 1KB for speed
     
     def _calculate_fingerprint_efficiency(self, execution_time: float, data_size: int) -> float:
-        """Calculate fingerprinting efficiency score"""
+        """
+Calculate fingerprinting efficiency score"""
         # MB per second processing rate
         processing_rate = (data_size / (1024 * 1024)) / execution_time if execution_time > 0 else 0
         
@@ -778,7 +790,8 @@ class FingerprintingOptimizer(BaseEngine):
         return round(efficiency, 2)
     
     def _calculate_search_efficiency(self, execution_time: float, database_size: int) -> float:
-        """Calculate search efficiency score"""
+        """
+Calculate search efficiency score"""
         # Items searched per second
         search_rate = database_size / execution_time if execution_time > 0 else 0
         
@@ -788,7 +801,8 @@ class FingerprintingOptimizer(BaseEngine):
 
 
 class CacheOptimizer(BaseEngine):
-    """Advanced caching optimization system"""
+    """
+Advanced caching optimization system"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -815,7 +829,8 @@ class CacheOptimizer(BaseEngine):
         return success
     
     def _determine_optimal_cache_level(self, key: str, access_pattern: str) -> str:
-        """Determine optimal cache level based on access pattern"""
+        """
+Determine optimal cache level based on access pattern"""
         
         pattern_config = {
             "hot": "l1",      # Frequently accessed
@@ -875,7 +890,8 @@ class QueryOptimizer(BaseEngine):
         self.execution_plans = {}
         
     async def optimize_query(self, query: str, parameters: Dict[str, Any] = None) -> Tuple[str, Dict[str, Any]]:
-        """Optimize database query for better performance"""
+        """
+Optimize database query for better performance"""
         
         # Generate query signature for caching
         query_signature = self._generate_query_signature(query, parameters)
@@ -894,7 +910,8 @@ class QueryOptimizer(BaseEngine):
         return optimized_query, optimized_params
     
     async def _analyze_and_optimize(self, query: str) -> str:
-        """Analyze and optimize SQL query"""
+        """
+Analyze and optimize SQL query"""
         
         # Add LIMIT if missing for potentially large result sets
         if "SELECT" in query.upper() and "LIMIT" not in query.upper():

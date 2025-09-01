@@ -8,7 +8,7 @@ Responsibility: Centralized repository management and dependency injection
 ============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ GAMIFICATION INDEX ARCHITECTURE:
 Repository Factory → Service Locator → Dependency Management → 
 Configuration Registry → Connection Pooling → Performance Monitoring
 """
+
 from typing import Dict, List, Optional, Any, Type, TypeVar
 import logging
 from dataclasses import dataclass
@@ -34,7 +35,9 @@ from .reward_repository import RewardRepository
 T = TypeVar('T')
 
 class GamificationRepositoryType(Enum):
-    """Available gamification repository types"""
+    """
+Available gamification repository types"""
+
     ACHIEVEMENT = "achievement"
     CHALLENGE = "challenge"
     LEADERBOARD = "leaderboard"
@@ -54,14 +57,16 @@ class RepositoryConfig:
     timeout_seconds: int = 30
 
 class GamificationRepositoryRegistry:
-    """Centralized registry for gamification repositories"""
+    """
+Centralized registry for gamification repositories"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
                  payment_service=None, virtual_economy_service=None,
                  gamification_service=None, user_service=None,
                  reward_service=None):
-        """Initialize repository registry with dependencies"""
+        """
+Initialize repository registry with dependencies"""
         self.db_connection = db_connection
         self.cache_manager = cache_manager
         self.analytics_service = analytics_service
@@ -92,7 +97,8 @@ class GamificationRepositoryRegistry:
         self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default repository configurations"""
+        """
+Initialize default repository configurations"""
         # Achievement repository config
         self._repository_configs[GamificationRepositoryType.ACHIEVEMENT] = RepositoryConfig(
             repository_type=GamificationRepositoryType.ACHIEVEMENT,
@@ -142,7 +148,8 @@ class GamificationRepositoryRegistry:
         repository_type: GamificationRepositoryType,
         force_new: bool = False
     ) -> Any:
-        """Get repository instance with lazy loading"""
+        """
+Get repository instance with lazy loading"""
         try:
             # Return cached instance if available and not forcing new
             if not force_new and repository_type in self._repository_cache:
@@ -246,15 +253,18 @@ class GamificationRepositoryRegistry:
         return self.get_repository(GamificationRepositoryType.ACHIEVEMENT)
     
     def get_challenge_repository(self) -> ChallengeRepository:
-        """Get challenge repository instance"""
+        """
+Get challenge repository instance"""
         return self.get_repository(GamificationRepositoryType.CHALLENGE)
     
     def get_leaderboard_repository(self) -> LeaderboardRepository:
-        """Get leaderboard repository instance"""
+        """
+Get leaderboard repository instance"""
         return self.get_repository(GamificationRepositoryType.LEADERBOARD)
     
     def get_reward_repository(self) -> RewardRepository:
-        """Get reward repository instance"""
+        """
+Get reward repository instance"""
         return self.get_repository(GamificationRepositoryType.REWARD)
     
     def configure_repository(
@@ -262,7 +272,8 @@ class GamificationRepositoryRegistry:
         repository_type: GamificationRepositoryType,
         config: RepositoryConfig
     ):
-        """Configure specific repository"""
+        """
+Configure specific repository"""
         try:
             self._repository_configs[repository_type] = config
             
@@ -434,30 +445,36 @@ def create_gamification_registry(
 _default_registry: Optional[GamificationRepositoryRegistry] = None
 
 def get_default_registry() -> GamificationRepositoryRegistry:
-    """Get default registry instance"""
+    """
+Get default registry instance"""
     global _default_registry
     if _default_registry is None:
         _default_registry = create_gamification_registry()
     return _default_registry
 
 def set_default_registry(registry: GamificationRepositoryRegistry):
-    """Set default registry instance"""
+    """
+Set default registry instance"""
     global _default_registry
     _default_registry = registry
 
 # Convenience functions
 def get_achievement_repository() -> AchievementRepository:
-    """Get achievement repository from default registry"""
+    """
+Get achievement repository from default registry"""
     return get_default_registry().get_achievement_repository()
 
 def get_challenge_repository() -> ChallengeRepository:
-    """Get challenge repository from default registry"""
+    """
+Get challenge repository from default registry"""
     return get_default_registry().get_challenge_repository()
 
 def get_leaderboard_repository() -> LeaderboardRepository:
-    """Get leaderboard repository from default registry"""
+    """
+Get leaderboard repository from default registry"""
     return get_default_registry().get_leaderboard_repository()
 
 def get_reward_repository() -> RewardRepository:
-    """Get reward repository from default registry"""
+    """
+Get reward repository from default registry"""
     return get_default_registry().get_reward_repository()

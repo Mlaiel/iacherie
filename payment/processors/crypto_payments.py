@@ -5,8 +5,9 @@ Advanced cryptocurrency payment processor supporting multiple digital currencies
 including Bitcoin, Ethereum, and popular stablecoins with DeFi integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class CryptoCurrency(Enum):
-    """Supported cryptocurrencies"""
+    """
+Supported cryptocurrencies"""
+
     BITCOIN = "BTC"
     ETHEREUM = "ETH"
     USDC = "USDC"
@@ -43,6 +46,7 @@ class CryptoCurrency(Enum):
 
 class BlockchainNetwork(Enum):
     """Supported blockchain networks"""
+
     BITCOIN = "bitcoin"
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
@@ -55,6 +59,7 @@ class BlockchainNetwork(Enum):
 
 class TransactionStatus(Enum):
     """Cryptocurrency transaction status"""
+
     PENDING = "pending"
     CONFIRMING = "confirming"
     CONFIRMED = "confirmed"
@@ -64,6 +69,7 @@ class TransactionStatus(Enum):
 
 class WalletType(Enum):
     """Wallet types"""
+
     HOT_WALLET = "hot"
     COLD_WALLET = "cold"
     MULTI_SIG = "multisig"
@@ -88,7 +94,8 @@ class CryptoWallet:
 
 @dataclass
 class CryptoTransaction:
-    """Cryptocurrency transaction details"""
+    """
+Cryptocurrency transaction details"""
     id: str
     from_address: str
     to_address: str
@@ -107,7 +114,8 @@ class CryptoTransaction:
 
 @dataclass
 class ExchangeRate:
-    """Cryptocurrency exchange rate"""
+    """
+Cryptocurrency exchange rate"""
     base_currency: CryptoCurrency
     quote_currency: str  # Fiat currency
     rate: Decimal
@@ -129,7 +137,8 @@ class CryptoPaymentsProcessor:
         webhook_secret: Optional[str] = None,
         testnet: bool = False
     ):
-        """Initialize cryptocurrency processor"""
+        """
+Initialize cryptocurrency processor"""
         self.api_keys = api_keys
         self.webhook_secret = webhook_secret
         self.testnet = testnet
@@ -628,14 +637,16 @@ class CryptoPaymentsProcessor:
             return [BlockchainNetwork.ETHEREUM.value]
     
     def _get_currency_decimals(self, currency: CryptoCurrency) -> int:
-        """Get decimal places for a currency"""
+        """
+Get decimal places for a currency"""
         if currency == CryptoCurrency.BITCOIN:
             return 8
         else:
             return 18  # Most ERC-20 tokens use 18 decimals
     
     def _get_currency_type(self, currency: CryptoCurrency) -> str:
-        """Get currency type"""
+        """
+Get currency type"""
         stablecoins = [CryptoCurrency.USDC, CryptoCurrency.USDT, CryptoCurrency.DAI, CryptoCurrency.BUSD]
         if currency in stablecoins:
             return "stablecoin"

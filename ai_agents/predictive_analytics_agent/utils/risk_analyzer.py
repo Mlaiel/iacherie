@@ -11,6 +11,7 @@ This risk analysis system and its algorithms are the exclusive intellectual prop
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -34,7 +35,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class RiskCategory(Enum):
-    """Categories of risks"""
+    """
+Categories of risks"""
+
     CONTENT_PERFORMANCE = "content_performance"
     PLATFORM_DEPENDENCY = "platform_dependency"
     BRAND_REPUTATION = "brand_reputation"
@@ -48,6 +51,7 @@ class RiskCategory(Enum):
 
 class RiskSeverity(Enum):
     """Risk severity levels"""
+
     CRITICAL = "critical"      # 0.8-1.0
     HIGH = "high"             # 0.6-0.8
     MEDIUM = "medium"         # 0.4-0.6
@@ -56,6 +60,7 @@ class RiskSeverity(Enum):
 
 class RiskImpact(Enum):
     """Risk impact types"""
+
     FINANCIAL = "financial"
     OPERATIONAL = "operational"
     REPUTATIONAL = "reputational"
@@ -64,6 +69,7 @@ class RiskImpact(Enum):
 
 class RiskTimeframe(Enum):
     """Risk timeframe horizons"""
+
     IMMEDIATE = "immediate"    # 0-7 days
     SHORT_TERM = "short_term"  # 1-4 weeks
     MEDIUM_TERM = "medium_term" # 1-6 months
@@ -168,7 +174,8 @@ class RiskAnalyzer:
     """
     
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the risk analyzer"""
+        """
+Initialize the risk analyzer"""
         self.cache_manager = cache_manager or CacheManager("risk_analyzer")
         
         # Risk assessment configuration
@@ -573,7 +580,8 @@ class RiskAnalyzer:
         return all_risks
 
     async def _calculate_overall_risk_score(self, risk_factors: List[RiskFactor]) -> float:
-        """Calculate weighted overall risk score"""
+        """
+Calculate weighted overall risk score"""
         if not risk_factors:
             return 0.0
         
@@ -610,7 +618,8 @@ class RiskAnalyzer:
         return min(max(overall_score, 0.0), 1.0)
 
     async def _determine_risk_level(self, risk_score: float) -> RiskSeverity:
-        """Determine risk level based on score"""
+        """
+Determine risk level based on score"""
         if risk_score >= self.risk_config['risk_threshold_critical']:
             return RiskSeverity.CRITICAL
         elif risk_score >= self.risk_config['risk_threshold_high']:
@@ -623,7 +632,8 @@ class RiskAnalyzer:
             return RiskSeverity.MINIMAL
 
     async def _assess_content_quality_risk(self, content_data: Dict[str, Any]) -> Optional[RiskFactor]:
-        """Assess risk related to content quality"""
+        """
+Assess risk related to content quality"""
         quality_score = content_data.get('quality_score', 0.7)
         
         if quality_score < 0.5:
@@ -751,13 +761,15 @@ class RiskAnalyzer:
 
 
 class ContentRiskAssessor:
-    """Specialized content risk assessment component"""
+    """
+Specialized content risk assessment component"""
     
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def assess_viral_risk(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess risks specific to viral content attempts"""
+        """
+Assess risks specific to viral content attempts"""
         return {
             'algorithm_risk': 0.3,
             'audience_backlash_risk': 0.2,
@@ -766,13 +778,15 @@ class ContentRiskAssessor:
         }
 
 class PlatformRiskAnalyzer:
-    """Specialized platform risk analysis component"""
+    """
+Specialized platform risk analysis component"""
     
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def analyze_policy_change_risk(self, platform: str) -> Dict[str, Any]:
-        """Analyze risk of platform policy changes"""
+        """
+Analyze risk of platform policy changes"""
         return {
             'monetization_policy_change_risk': 0.4,
             'content_policy_change_risk': 0.3,
@@ -781,13 +795,15 @@ class PlatformRiskAnalyzer:
         }
 
 class MarketRiskEvaluator:
-    """Specialized market risk evaluation component"""
+    """
+Specialized market risk evaluation component"""
     
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def evaluate_economic_risks(self, market_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Evaluate economic risks affecting creator economy"""
+        """
+Evaluate economic risks affecting creator economy"""
         return {
             'recession_risk': 0.3,
             'inflation_impact_risk': 0.4,
@@ -796,13 +812,15 @@ class MarketRiskEvaluator:
         }
 
 class ReputationRiskPredictor:
-    """Specialized reputation risk prediction component"""
+    """
+Specialized reputation risk prediction component"""
     
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def predict_reputation_threats(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Predict potential reputation threats"""
+        """
+Predict potential reputation threats"""
         return [
             {
                 'threat_type': 'content_controversy',

@@ -41,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure"""
+    """
+Audio fingerprint data structure"""
     fingerprint_id: str
     chromaprint_hash: str
     feature_vector: List[float]
@@ -53,7 +54,8 @@ class AudioFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Audio similarity match result"""
+    """
+Audio similarity match result"""
     match_id: str
     source_fingerprint_id: str
     target_fingerprint_id: str
@@ -65,7 +67,8 @@ class SimilarityMatch:
 
 @dataclass
 class CopyrightMonitoringResult:
-    """Copyright monitoring analysis result"""
+    """
+Copyright monitoring analysis result"""
     content_id: str
     is_violation: bool
     violation_confidence: float
@@ -263,7 +266,8 @@ class AudioFingerprintingAgent:
         return features[:self.vector_dimension]
     
     async def _calculate_fingerprint_confidence(self, audio_array: np.ndarray, features: List[float]) -> float:
-        """Calculate confidence score for the fingerprint"""
+        """
+Calculate confidence score for the fingerprint"""
         try:
             confidence = 0.0
             
@@ -291,7 +295,8 @@ class AudioFingerprintingAgent:
             return 0.5
     
     async def _store_fingerprint(self, fingerprint: AudioFingerprint):
-        """Store fingerprint in database and vector index"""
+        """
+Store fingerprint in database and vector index"""
         # Store in memory database
         self.fingerprint_database[fingerprint.fingerprint_id] = fingerprint
         
@@ -386,7 +391,8 @@ class AudioFingerprintingAgent:
         return common_chars / max_length if max_length > 0 else 0.0
     
     def _classify_match_type(self, similarity: float) -> str:
-        """Classify the type of match based on similarity score"""
+        """
+Classify the type of match based on similarity score"""
         if similarity >= 0.95:
             return "exact"
         elif similarity >= 0.85:

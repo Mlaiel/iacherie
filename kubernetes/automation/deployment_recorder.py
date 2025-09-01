@@ -7,6 +7,7 @@ analytics for deployment automation workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from ..monitoring.metrics_collector import MetricsCollector
 
 
 class DeploymentStatus(Enum):
-    """Deployment status values"""
+    """
+Deployment status values"""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     IN_PROGRESS = "in_progress"
@@ -40,6 +43,7 @@ class DeploymentStatus(Enum):
 
 class DeploymentStrategy(Enum):
     """Deployment strategy types"""
+
     ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -48,6 +52,7 @@ class DeploymentStrategy(Enum):
 
 class RecordType(Enum):
     """Record types for different aspects of deployment"""
+
     DEPLOYMENT = "deployment"
     STEP = "step"
     HEALTH_CHECK = "health_check"
@@ -89,7 +94,8 @@ class DeploymentEnvironment:
 
 @dataclass
 class DeploymentArtifact:
-    """Deployment artifact information"""
+    """
+Deployment artifact information"""
     artifact_id: str
     artifact_type: str  # docker_image, helm_chart, config_file, etc.
     name: str
@@ -103,7 +109,8 @@ class DeploymentArtifact:
 
 @dataclass
 class DeploymentRecord:
-    """Comprehensive deployment record"""
+    """
+Comprehensive deployment record"""
     deployment_id: str
     workflow_id: str
     environment: DeploymentEnvironment
@@ -196,7 +203,8 @@ class DeploymentRecorder(BaseComponent):
         asyncio.create_task(self._initialize_storage())
 
     async def _initialize_storage(self) -> None:
-        """Initialize storage structure and load recent records"""
+        """
+Initialize storage structure and load recent records"""
         
         try:
             # Create storage directories
@@ -627,7 +635,8 @@ class DeploymentRecorder(BaseComponent):
             return data
 
     async def _load_recent_records(self) -> None:
-        """Load recent deployment records into cache"""
+        """
+Load recent deployment records into cache"""
         
         try:
             # Load records from the last 7 days
@@ -830,7 +839,8 @@ class DeploymentRecorder(BaseComponent):
             return 'other'
 
     async def _update_real_time_analytics(self, deployment_record: DeploymentRecord) -> None:
-        """Update real-time analytics with new deployment"""
+        """
+Update real-time analytics with new deployment"""
         
         try:
             # Update analytics for current time periods
@@ -1074,7 +1084,8 @@ class DeploymentRecorder(BaseComponent):
         return filtered_records
 
     async def _export_json(self, records: List[DeploymentRecord], export_path: Path) -> None:
-        """Export records to JSON format"""
+        """
+Export records to JSON format"""
         
         # Convert records to dictionaries
         export_data = []
@@ -1088,7 +1099,8 @@ class DeploymentRecorder(BaseComponent):
             json.dump(export_data, f, indent=2)
 
     async def _export_csv(self, records: List[DeploymentRecord], export_path: Path) -> None:
-        """Export records to CSV format"""
+        """
+Export records to CSV format"""
         
         import csv
         

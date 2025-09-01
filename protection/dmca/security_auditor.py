@@ -4,7 +4,7 @@
 Enterprise-grade security and compliance validation system for DMCA operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -30,6 +30,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceLevel(IntEnum):
-    """Compliance validation levels"""
+    """
+Compliance validation levels"""
+
     BASIC = 1           # Basic DMCA compliance
     STANDARD = 2        # Standard legal requirements
     ENHANCED = 3        # Enhanced enterprise compliance
@@ -62,7 +65,9 @@ class ComplianceLevel(IntEnum):
 
 
 class SecurityAuditResult(Enum):
-    """Security audit results"""
+    """
+Security audit results"""
+
     PASSED = "passed"
     WARNING = "warning"
     FAILED = "failed"
@@ -71,6 +76,7 @@ class SecurityAuditResult(Enum):
 
 class ComplianceFramework(Enum):
     """Legal compliance frameworks"""
+
     DMCA_512C = "dmca_512c"
     GDPR_EU = "gdpr_eu"
     CCPA_CALIFORNIA = "ccpa_california"
@@ -101,7 +107,8 @@ class SecurityAuditReport:
 
 @dataclass
 class ComplianceValidation:
-    """Compliance validation results"""
+    """
+Compliance validation results"""
     framework: ComplianceFramework
     is_compliant: bool
     compliance_score: float
@@ -112,7 +119,8 @@ class ComplianceValidation:
 
 
 class DMCASecurityAuditor:
-    """Enterprise security auditor for DMCA operations"""
+    """
+Enterprise security auditor for DMCA operations"""
     
     def __init__(self, encryption_key: Optional[str] = None):
         self.encryption_key = encryption_key or self._generate_encryption_key()
@@ -120,11 +128,13 @@ class DMCASecurityAuditor:
         self.audit_history: List[SecurityAuditReport] = []
         
     def _generate_encryption_key(self) -> str:
-        """Generate secure encryption key"""
+        """
+Generate secure encryption key"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _initialize_encryption(self) -> Fernet:
-        """Initialize encryption cipher"""
+        """
+Initialize encryption cipher"""
         key = base64.urlsafe_b64decode(self.encryption_key.encode())
         return Fernet(key)
     
@@ -133,7 +143,8 @@ class DMCASecurityAuditor:
         dmca_case_data: Dict[str, Any],
         compliance_level: ComplianceLevel = ComplianceLevel.ENHANCED
     ) -> SecurityAuditReport:
-        """Perform comprehensive security and compliance audit"""
+        """
+Perform comprehensive security and compliance audit"""
         audit_id = f"AUDIT_{secrets.token_hex(8).upper()}"
         timestamp = datetime.utcnow()
         
@@ -263,7 +274,8 @@ class DMCASecurityAuditor:
         report.security_scores['data_security'] = security_score / max_score * 100
     
     async def _validate_legal_compliance(self, case_data: Dict[str, Any], report: SecurityAuditReport):
-        """Validate legal compliance requirements"""
+        """
+Validate legal compliance requirements"""
         compliance_frameworks = [
             ComplianceFramework.DMCA_512C,
             ComplianceFramework.GDPR_EU,
@@ -286,7 +298,8 @@ class DMCASecurityAuditor:
         report.security_scores['legal_compliance'] = total_score / len(compliance_frameworks)
     
     async def _assess_privacy_protection(self, case_data: Dict[str, Any], report: SecurityAuditReport):
-        """Assess privacy protection measures"""
+        """
+Assess privacy protection measures"""
         privacy_score = 0.0
         max_score = 100.0
         
@@ -325,7 +338,8 @@ class DMCASecurityAuditor:
         report.security_scores['privacy_protection'] = privacy_score / max_score * 100
     
     async def _verify_evidence_integrity(self, case_data: Dict[str, Any], report: SecurityAuditReport):
-        """Verify evidence integrity and chain of custody"""
+        """
+Verify evidence integrity and chain of custody"""
         integrity_score = 0.0
         max_score = 100.0
         
@@ -441,7 +455,8 @@ class DMCASecurityAuditor:
         report.security_scores['communication_security'] = comm_score / max_score * 100
     
     async def _validate_access_controls(self, case_data: Dict[str, Any], report: SecurityAuditReport):
-        """Validate access control implementation"""
+        """
+Validate access control implementation"""
         access_score = 0.0
         max_score = 100.0
         
@@ -492,7 +507,8 @@ class DMCASecurityAuditor:
         report.security_scores['access_control'] = access_score / max_score * 100
     
     async def _verify_encryption_standards(self, case_data: Dict[str, Any], report: SecurityAuditReport):
-        """Verify encryption standards compliance"""
+        """
+Verify encryption standards compliance"""
         encryption_score = 0.0
         max_score = 100.0
         
@@ -540,7 +556,8 @@ class DMCASecurityAuditor:
         report.security_scores['encryption_standards'] = encryption_score / max_score * 100
     
     async def _verify_audit_trail(self, case_data: Dict[str, Any], report: SecurityAuditReport):
-        """Verify audit trail completeness and integrity"""
+        """
+Verify audit trail completeness and integrity"""
         audit_score = 0.0
         max_score = 100.0
         
@@ -582,7 +599,8 @@ class DMCASecurityAuditor:
         report.security_scores['audit_trail'] = audit_score / max_score * 100
     
     def _calculate_overall_result(self, report: SecurityAuditReport) -> SecurityAuditResult:
-        """Calculate overall security audit result"""
+        """
+Calculate overall security audit result"""
         if not report.security_scores:
             return SecurityAuditResult.CRITICAL
         
@@ -606,7 +624,8 @@ class DMCASecurityAuditor:
             return SecurityAuditResult.FAILED
     
     def _generate_security_recommendations(self, report: SecurityAuditReport):
-        """Generate security recommendations based on audit results"""
+        """
+Generate security recommendations based on audit results"""
         if report.overall_result in [SecurityAuditResult.FAILED, SecurityAuditResult.CRITICAL]:
             report.recommendations.extend([
                 "Immediate security review and remediation required",
@@ -629,21 +648,25 @@ class DMCASecurityAuditor:
         return True  # Placeholder
     
     def _is_data_sanitized(self, data: Dict[str, Any]) -> bool:
-        """Check if input data is properly sanitized"""
+        """
+Check if input data is properly sanitized"""
         # Implementation would check for XSS, SQL injection patterns, etc.
         return True  # Placeholder
     
     def _is_pii_protected(self, data: Dict[str, Any]) -> bool:
-        """Check if PII is properly protected"""
+        """
+Check if PII is properly protected"""
         # Implementation would check for exposed PII patterns
         return True  # Placeholder
     
     def _has_proper_retention_policy(self, data: Dict[str, Any]) -> bool:
-        """Check if proper data retention policies are implemented"""
+        """
+Check if proper data retention policies are implemented"""
         return True  # Placeholder
     
     def _verify_data_integrity(self, data: Dict[str, Any]) -> bool:
-        """Verify data integrity using checksums"""
+        """
+Verify data integrity using checksums"""
         return True  # Placeholder
     
     async def _validate_framework_compliance(
@@ -651,7 +674,8 @@ class DMCASecurityAuditor:
         data: Dict[str, Any], 
         framework: ComplianceFramework
     ) -> ComplianceValidation:
-        """Validate compliance with specific framework"""
+        """
+Validate compliance with specific framework"""
         # Placeholder implementation
         return ComplianceValidation(
             framework=framework,
@@ -664,7 +688,8 @@ class DMCASecurityAuditor:
         )
     
     async def _get_framework_score(self, data: Dict[str, Any], framework: ComplianceFramework) -> float:
-        """Get compliance score for specific framework"""
+        """
+Get compliance score for specific framework"""
         return 95.0  # Placeholder
     
     # Additional helper methods would be implemented here...
@@ -746,5 +771,6 @@ class DMCASecurityAuditor:
 
 # Factory function
 def create_security_auditor(encryption_key: Optional[str] = None) -> DMCASecurityAuditor:
-    """Factory function to create DMCA security auditor"""
+    """
+Factory function to create DMCA security auditor"""
     return DMCASecurityAuditor(encryption_key)

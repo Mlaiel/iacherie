@@ -20,7 +20,7 @@ Expert Team Specialties:
 - DevOps Engineer - Infrastructure and deployment
 - IA Prompt Engineer - Advanced AI prompt optimization
 
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -38,6 +38,7 @@ Event Detection → Context Analysis → User Behavior Analysis → Personalizat
 Timing Optimization → Channel Selection → Content Generation → Delivery Scheduling → 
 Engagement Tracking → Performance Analytics → Feedback Learning
 """
+
 import asyncio
 import logging
 import json
@@ -83,7 +84,9 @@ settings = get_settings()
 
 
 class NotificationType(Enum):
-    """Types of notifications"""
+    """
+Types of notifications"""
+
     COLLABORATION_REQUEST = "collaboration_request"
     PROJECT_UPDATE = "project_update"
     REVENUE_MILESTONE = "revenue_milestone"
@@ -103,6 +106,7 @@ class NotificationType(Enum):
 
 class NotificationChannel(Enum):
     """Available notification channels"""
+
     IN_APP = "in_app"
     EMAIL = "email"
     SMS = "sms"
@@ -116,6 +120,7 @@ class NotificationChannel(Enum):
 
 class Priority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -125,6 +130,7 @@ class Priority(Enum):
 
 class DeliveryStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     SENT = "sent"
@@ -186,7 +192,8 @@ class NotificationContext:
 
 @dataclass
 class IntelligentNotification:
-    """AI-generated intelligent notification"""
+    """
+AI-generated intelligent notification"""
     notification_id: str
     user_id: str
     notification_type: NotificationType
@@ -252,7 +259,8 @@ class IntelligentNotificationEngine:
         }
 
     async def initialize_notification_engine(self):
-        """Initialize the notification engine with AI models and external services"""
+        """
+Initialize the notification engine with AI models and external services"""
         
         try:
             logger.info("Initializing intelligent notification engine")
@@ -472,7 +480,8 @@ class IntelligentNotificationEngine:
                                            context: NotificationContext,
                                            preferences: NotificationPreferences,
                                            channels: List[NotificationChannel]) -> Dict[str, Any]:
-        """Generate personalized notification content using AI"""
+        """
+Generate personalized notification content using AI"""
         
         try:
             # Get user profile for personalization
@@ -703,12 +712,14 @@ class IntelligentNotificationEngine:
         pass
 
     async def _initialize_ai_models(self):
-        """Initialize and train AI models"""
+        """
+Initialize and train AI models"""
         # Load historical data and train models
         pass
 
     async def _start_processing_workers(self):
-        """Start background workers for notification processing"""
+        """
+Start background workers for notification processing"""
         # Start async workers
         pass
 
@@ -717,7 +728,8 @@ class IntelligentNotificationEngine:
     async def get_user_notification_history(self, 
                                           user_id: str,
                                           limit: int = 50) -> List[Dict[str, Any]]:
-        """Get user's notification history"""
+        """
+Get user's notification history"""
         
         cache_key = f"notification_history:{user_id}"
         cached_history = await self.cache_manager.get(cache_key)
@@ -772,7 +784,8 @@ class IntelligentNotificationEngine:
     # Placeholder methods for implementation details
     
     def _get_default_behavioral_profile(self) -> Dict[str, Any]:
-        """Get default behavioral profile for new users"""
+        """
+Get default behavioral profile for new users"""
         return {
             'engagement_score': 0.5,
             'open_rate': 0.4,
@@ -786,20 +799,24 @@ class IntelligentNotificationEngine:
         }
 
     async def _get_user_preferences(self, user_id: str) -> NotificationPreferences:
-        """Get user notification preferences"""
+        """
+Get user notification preferences"""
         # Implementation to fetch from database/cache
         return NotificationPreferences(user_id=user_id)
 
     def _prepare_channel_features(self, context, preferences, behavioral_analysis, channel) -> List[float]:
-        """Prepare features for channel effectiveness prediction"""
+        """
+Prepare features for channel effectiveness prediction"""
         return [1.0, 0.5, 0.8]  # Simplified features
 
     def _prepare_timing_features(self, context, preferences, behavioral_analysis) -> List[float]:
-        """Prepare features for timing optimization"""
+        """
+Prepare features for timing optimization"""
         return [1.0, 0.5, 0.8]  # Simplified features
 
     def _prepare_engagement_features(self, context, content, timing, channels) -> List[float]:
-        """Prepare features for engagement prediction"""
+        """
+Prepare features for engagement prediction"""
         return [1.0, 0.5, 0.8]  # Simplified features
 
 

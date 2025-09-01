@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalysisReport:
-    """Report generated from fingerprint analysis"""
+    """
+Report generated from fingerprint analysis"""
     report_id: str
     analysis_type: str
     target_fingerprint: str
@@ -35,7 +37,8 @@ class AnalysisReport:
 
 @dataclass
 class SimilarityCluster:
-    """Cluster of similar fingerprints"""
+    """
+Cluster of similar fingerprints"""
     cluster_id: str
     representative_fingerprint: FingerprintResult
     members: List[FingerprintResult]
@@ -51,7 +54,8 @@ class FingerprintAnalyzer:
     """
     
     def __init__(self):
-        """Initialize the fingerprint analyzer"""
+        """
+Initialize the fingerprint analyzer"""
         self.analysis_cache = {}
         self.clustering_cache = {}
         self.pattern_database = defaultdict(list)
@@ -741,7 +745,8 @@ class FingerprintAnalyzer:
         return self.analysis_cache.get(report_id)
     
     def clear_analysis_cache(self, older_than_hours: Optional[int] = None):
-        """Clear analysis cache"""
+        """
+Clear analysis cache"""
         try:
             if older_than_hours is None:
                 self.analysis_cache.clear()

@@ -8,7 +8,7 @@ Technologies: Python, NLP, Linguistic Models, Regional Dialect Analysis
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Text input → Dialect detection → Regional analysis → Variant identification → 
 Linguistic features → Cultural markers → Processing recommendations
 """
+
 import logging
 import asyncio
 import re
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class DialectFamily(Enum):
-    """Major dialect families"""
+    """
+Major dialect families"""
+
     ARABIC = "arabic"
     ENGLISH = "english"
     SPANISH = "spanish"
@@ -45,6 +48,7 @@ class DialectFamily(Enum):
 
 class RegionalVariant(Enum):
     """Regional variants for dialects"""
+
     NORTHERN = "northern"
     SOUTHERN = "southern"
     EASTERN = "eastern"
@@ -58,6 +62,7 @@ class RegionalVariant(Enum):
 
 class LinguisticFeature(Enum):
     """Linguistic features for dialect identification"""
+
     PHONETIC = "phonetic"
     LEXICAL = "lexical"
     GRAMMATICAL = "grammatical"
@@ -99,7 +104,8 @@ class DialectVariant:
 
 @dataclass
 class DialectDetection:
-    """Dialect detection result"""
+    """
+Dialect detection result"""
     detected_dialect: str
     confidence_score: float
     detected_features: List[LinguisticFeature]
@@ -111,7 +117,8 @@ class DialectDetection:
 
 
 class DialectProcessor:
-    """Advanced dialect processing and detection engine"""
+    """
+Advanced dialect processing and detection engine"""
     
     def __init__(self):
         self.dialect_variants: Dict[str, DialectVariant] = {}
@@ -749,7 +756,8 @@ class DialectProcessor:
         family: DialectFamily = None,
         region: str = None
     ) -> List[DialectVariant]:
-        """List supported dialects with optional filtering"""
+        """
+List supported dialects with optional filtering"""
         dialects = list(self.dialect_variants.values())
         
         if family:
@@ -765,7 +773,8 @@ class DialectProcessor:
         text: str,
         expected_languages: List[str] = None
     ) -> Dict[str, Any]:
-        """Process text that may contain multiple dialects"""
+        """
+Process text that may contain multiple dialects"""
         try:
             # Split text into segments (simple sentence-based splitting)
             sentences = re.split(r'[.!?]+', text)

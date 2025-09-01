@@ -18,6 +18,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set, Callable
@@ -65,7 +66,9 @@ settings = get_settings()
 
 
 class LicenseType(Enum):
-    """Types of content licenses with detailed specifications."""
+    """
+Types of content licenses with detailed specifications."""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -90,6 +93,7 @@ class LicenseType(Enum):
 
 class UsageType(Enum):
     """Types of content usage with granular permissions."""
+
     COMMERCIAL_USE = "commercial_use"
     NON_COMMERCIAL_USE = "non_commercial_use"
     ADVERTISING = "advertising"
@@ -124,6 +128,7 @@ class UsageType(Enum):
 
 class LicenseStatus(Enum):
     """License status types with detailed tracking."""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     PENDING_PAYMENT = "pending_payment"
@@ -141,6 +146,7 @@ class LicenseStatus(Enum):
 
 class RightsScope(Enum):
     """Scope of rights granted in license."""
+
     WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     COUNTRY_SPECIFIC = "country_specific"
@@ -155,6 +161,7 @@ class RightsScope(Enum):
 
 class PricingModel(Enum):
     """Pricing models for licensing."""
+
     FLAT_FEE = "flat_fee"
     PERCENTAGE_REVENUE = "percentage_revenue"
     PER_USE = "per_use"
@@ -418,7 +425,8 @@ class LicensingEngine:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the licensing engine with enterprise capabilities."""
+        """
+Initialize the licensing engine with enterprise capabilities."""
         self.config = config or get_monetization_config()
         
         # Core services
@@ -469,7 +477,8 @@ class LicensingEngine:
         self._is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the licensing engine with all dependencies."""
+        """
+Initialize the licensing engine with all dependencies."""
         try:
             logger.info("Initializing licensing engine...")
             
@@ -538,14 +547,16 @@ class LicensingEngine:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the licensing engine."""
+        """
+Initialize the licensing engine."""
         self.config = config or MonetizationConfig()
         self._blockchain_service = BlockchainService()
         self._legal_api_manager = LegalAPIManager()
         self._license_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize the licensing engine."""
+        """
+Initialize the licensing engine."""
         try:
             await self._blockchain_service.initialize()
             await self._legal_api_manager.initialize()
@@ -929,40 +940,47 @@ class LicensingEngine:
     async def _verify_copyright_ownership(
         self, creator_id: str, content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify copyright ownership."""
+        """
+Verify copyright ownership."""
         # Implementation for copyright verification
         pass
     
     async def _store_content_asset(self, asset: ContentAsset) -> None:
-        """Store content asset in database."""
+        """
+Store content asset in database."""
         # Implementation for asset storage
         pass
     
     async def _register_on_blockchain(self, asset: ContentAsset) -> str:
-        """Register asset on blockchain."""
+        """
+Register asset on blockchain."""
         # Implementation for blockchain registration
         pass
     
     async def _get_content_asset(self, asset_id: str) -> ContentAsset:
-        """Get content asset by ID."""
+        """
+Get content asset by ID."""
         # Implementation for asset retrieval
         pass
     
     async def _validate_license_requirements(
         self, asset: ContentAsset, requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate license requirements."""
+        """
+Validate license requirements."""
         # Implementation for requirements validation
         pass
     
     async def _calculate_license_pricing(
         self, asset: ContentAsset, requirements: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate license pricing."""
+        """
+Calculate license pricing."""
         # Implementation for pricing calculation
         pass
     
     async def _load_license_templates(self) -> None:
-        """Load license templates."""
+        """
+Load license templates."""
         # Implementation for template loading
         pass

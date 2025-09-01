@@ -18,6 +18,7 @@ Key Features:
 - Real-time similarity detection with FAISS vector search
 - Multi-platform content monitoring and protection
 """
+
 import asyncio
 import json
 import time
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(str, Enum):
-    """Supported fingerprint types"""
+    """
+Supported fingerprint types"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -70,6 +73,7 @@ class FingerprintType(str, Enum):
 
 class ContentProtectionLevel(str, Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -109,7 +113,8 @@ class AudioFingerprinter:
         self.cache = CacheManager()
         
     async def generate_chromaprint(self, audio_data: bytes) -> Tuple[str, List[float]]:
-        """Generate Chromaprint fingerprint"""
+        """
+Generate Chromaprint fingerprint"""
         try:
             import tempfile
             from pathlib import Path
@@ -212,7 +217,8 @@ class VideoFingerprinter:
         self.supported_formats = ['.mp4', '.avi', '.mov', '.mkv', '.webm']
         
     async def generate_perceptual_fingerprint(self, video_data: bytes) -> Tuple[str, List[float]]:
-        """Generate perceptual hash fingerprint"""
+        """
+Generate perceptual hash fingerprint"""
         try:
             import tempfile
             from pathlib import Path
@@ -376,7 +382,8 @@ class ImageFingerprinter:
         self.supported_formats = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']
         
     async def generate_perceptual_hash(self, image_data: bytes) -> Tuple[str, List[float]]:
-        """Generate perceptual hash fingerprint"""
+        """
+Generate perceptual hash fingerprint"""
         try:
             from io import BytesIO
             
@@ -782,7 +789,8 @@ class FingerprintingMiddleware:
     async def enhance_fingerprint_metadata(self, request: FingerprintRequest,
                                          fingerprints: Dict[str, str],
                                          confidence_scores: Dict[str, float]) -> Dict[str, Any]:
-        """Enhance metadata with fingerprinting information"""
+        """
+Enhance metadata with fingerprinting information"""
         enhanced = request.metadata.copy()
         
         enhanced.update({
@@ -877,7 +885,8 @@ class FingerprintingMiddleware:
 
 # Factory function for dependency injection
 def get_fingerprinting_middleware() -> FingerprintingMiddleware:
-    """Get fingerprinting middleware instance"""
+    """
+Get fingerprinting middleware instance"""
     return FingerprintingMiddleware()
 
 
@@ -904,6 +913,7 @@ async def generate_content_fingerprint(content_data: Union[str, bytes], content_
 async def find_duplicate_content(fingerprints: Dict[str, str],
                                similarity_vectors: Dict[str, List[float]],
                                threshold: float = 0.9) -> List[Dict[str, Any]]:
-    """Convenience function for duplicate content detection"""
+    """
+Convenience function for duplicate content detection"""
     middleware = get_fingerprinting_middleware()
     return await middleware.find_similar_content(fingerprints, similarity_vectors, threshold)

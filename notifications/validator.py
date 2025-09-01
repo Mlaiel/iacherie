@@ -4,8 +4,9 @@ This module provides validation functions to ensure the notification system
 is properly configured and operational.
 
 Built by Fahed Mlaiel and the IA Influencer Agent Team.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -17,13 +18,15 @@ from .index import create_notification_system
 
 
 class NotificationSystemValidator:
-    """Comprehensive validation and health checks for the notification system."""
+    """
+Comprehensive validation and health checks for the notification system."""
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.notification_system = create_notification_system()
 
     async def validate_system(self) -> Dict[str, Any]:
-        """Run comprehensive system validation."""
+        """
+Run comprehensive system validation."""
         results = {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_status": "unknown",
@@ -341,7 +344,8 @@ async def validate_notification_system() -> Dict[str, Any]:
 
 
 async def health_check() -> bool:
-    """Quick health check."""
+    """
+Quick health check."""
     validator = NotificationSystemValidator()
     return await validator.quick_health_check()
 

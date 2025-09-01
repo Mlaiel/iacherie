@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -41,7 +42,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class DiscordUser:
-    """Discord user information"""
+    """
+Discord user information"""
     user_id: str
     username: str
     discriminator: str
@@ -78,7 +80,8 @@ class DiscordUser:
 
 @dataclass
 class DiscordMessage:
-    """Discord message information"""
+    """
+Discord message information"""
     message_id: str
     channel_id: str
     guild_id: Optional[str]
@@ -116,7 +119,8 @@ class DiscordMessage:
 
 @dataclass
 class DiscordChannel:
-    """Discord channel information"""
+    """
+Discord channel information"""
     channel_id: str
     guild_id: Optional[str]
     name: str
@@ -153,7 +157,8 @@ class DiscordChannel:
 
 @dataclass
 class DiscordGuild:
-    """Discord guild/server information"""
+    """
+Discord guild/server information"""
     guild_id: str
     name: str
     icon: Optional[str]
@@ -209,7 +214,8 @@ class DiscordGuild:
 
 @dataclass
 class DiscordRole:
-    """Discord role information"""
+    """
+Discord role information"""
     role_id: str
     guild_id: str
     name: str

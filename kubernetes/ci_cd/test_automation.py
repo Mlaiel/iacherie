@@ -22,6 +22,7 @@ Business Logic Testing:
 - Multi-platform distribution integrity
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -43,7 +44,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 logger = logging.getLogger(__name__)
 
 class TestType(Enum):
-    """Test type enumeration for IA Influencer platform"""
+    """
+Test type enumeration for IA Influencer platform"""
+
     UNIT = "unit"
     INTEGRATION = "integration"
     END_TO_END = "end_to_end"
@@ -61,6 +64,7 @@ class TestType(Enum):
 
 class TestStatus(Enum):
     """Test execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
@@ -71,6 +75,7 @@ class TestStatus(Enum):
 
 class TestSeverity(Enum):
     """Test failure severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -124,7 +129,8 @@ class TestResult:
 
 @dataclass
 class TestSuite:
-    """Test suite configuration"""
+    """
+Test suite configuration"""
     name: str
     description: str
     test_cases: List[TestCase]
@@ -143,7 +149,8 @@ class TestSuite:
 
 @dataclass
 class TestExecutionReport:
-    """Comprehensive test execution report"""
+    """
+Comprehensive test execution report"""
     suite_name: str
     execution_id: str
     start_time: datetime
@@ -171,7 +178,8 @@ class TestExecutionReport:
     deployment_approved: bool
 
 class CreatorContentTestValidator:
-    """Validator for creator content processing tests"""
+    """
+Validator for creator content processing tests"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -384,7 +392,8 @@ class AIModelTestValidator:
         return np.random.uniform(0.7, 1.0)
     
     def _simulate_revenue_prediction(self, scenario: Dict[str, Any]) -> float:
-        """Simulate revenue prediction for testing"""
+        """
+Simulate revenue prediction for testing"""
         # This would integrate with actual revenue prediction model in production
         base_revenue = scenario.get("content_value", 1000.0)
         return base_revenue * np.random.uniform(0.95, 1.05)
@@ -538,7 +547,8 @@ class TestAutomationEngine:
     """Enterprise test automation engine for IA Influencer platform"""
     
     def __init__(self):
-        """Initialize test automation engine"""
+        """
+Initialize test automation engine"""
         self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.execution_history: List[TestExecutionReport] = []

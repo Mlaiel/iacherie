@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ import time
 
 
 class QuotaStatus(Enum):
-    """API quota status levels"""
+    """
+API quota status levels"""
+
     AVAILABLE = "available"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -44,6 +47,7 @@ class QuotaStatus(Enum):
 
 class QuotaPeriod(Enum):
     """Quota reset periods"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -70,7 +74,8 @@ class PlatformQuotas:
 
 @dataclass
 class QuotaAlert:
-    """Alert for quota threshold breach"""
+    """
+Alert for quota threshold breach"""
     alert_id: str
     platform: str
     quota_type: str  # requests, cost
@@ -84,7 +89,8 @@ class QuotaAlert:
 
 @dataclass
 class UsageMetrics:
-    """Usage metrics for analytics"""
+    """
+Usage metrics for analytics"""
     platform: str
     time_period: str
     requests_made: int

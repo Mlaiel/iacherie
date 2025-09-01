@@ -2,7 +2,7 @@
 ===============================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 Unauthorized use, copying or distribution prohibited.
@@ -11,13 +11,16 @@ Professional configuration management for web crawling operations.
 Handles platform-specific settings, rate limiting, API credentials,
 and monitoring thresholds for optimal crawling performance.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
 
 class CrawlerType(Enum):
-    """Supported crawler types for content monitoring."""
+    """
+Supported crawler types for content monitoring."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -26,6 +29,7 @@ class CrawlerType(Enum):
 
 class ContentType(Enum):
     """Content types for fingerprint matching."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -95,7 +99,8 @@ class CrawlerConfig:
             self._initialize_default_platforms()
     
     def _initialize_default_platforms(self):
-        """Set up default configurations for supported platforms."""
+        """
+Set up default configurations for supported platforms."""
         
         # YouTube configuration
         self.platforms[CrawlerType.YOUTUBE.value] = PlatformConfig(
@@ -176,12 +181,14 @@ class CrawlerConfig:
         return self.platforms.get(platform.value)
     
     def is_platform_enabled(self, platform: CrawlerType) -> bool:
-        """Check if a platform crawler is enabled."""
+        """
+Check if a platform crawler is enabled."""
         config = self.get_platform_config(platform)
         return config.enabled if config else False
     
     def get_similarity_threshold(self, platform: CrawlerType, content_type: ContentType) -> float:
-        """Get similarity threshold for platform and content type combination."""
+        """
+Get similarity threshold for platform and content type combination."""
         config = self.get_platform_config(platform)
         if not config:
             return 0.80  # Default threshold
@@ -199,7 +206,8 @@ class CrawlerConfig:
     
     @classmethod
     def from_environment(cls) -> 'CrawlerConfig':
-        """Create configuration from environment variables."""
+        """
+Create configuration from environment variables."""
         return cls(
             concurrent_crawlers=int(os.getenv("CRAWLER_CONCURRENT_CRAWLERS", "5")),
             max_workers_per_crawler=int(os.getenv("CRAWLER_MAX_WORKERS", "10")),

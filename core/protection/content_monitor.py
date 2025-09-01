@@ -8,8 +8,9 @@ This module provides comprehensive content monitoring capabilities:
 - Integration with external APIs and web scraping
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Set, Any, Callable
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class MonitoringPlatform(Enum):
-    """Supported platforms for content monitoring"""
+    """
+Supported platforms for content monitoring"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -60,6 +63,7 @@ class MonitoringPlatform(Enum):
 
 class MonitoringStatus(Enum):
     """Status of monitoring tasks"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -81,7 +85,8 @@ class MonitoringResult:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for content monitoring"""
+    """
+Configuration for content monitoring"""
     platform: MonitoringPlatform
     search_terms: List[str]
     interval_minutes: int = 60
@@ -93,7 +98,8 @@ class MonitoringConfig:
 
 
 class PlatformMonitor:
-    """Base class for platform-specific monitoring"""
+    """
+Base class for platform-specific monitoring"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -101,7 +107,8 @@ class PlatformMonitor:
         self.driver = None
         
     async def initialize(self):
-        """Initialize monitoring resources"""
+        """
+Initialize monitoring resources"""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers={
@@ -110,14 +117,16 @@ class PlatformMonitor:
         )
     
     async def cleanup(self):
-        """Cleanup monitoring resources"""
+        """
+Cleanup monitoring resources"""
         if self.session:
             await self.session.close()
         if self.driver:
             self.driver.quit()
     
     async def scan_content(self) -> MonitoringResult:
-        """Perform content scan on platform"""
+        """
+Perform content scan on platform"""
         start_time = datetime.utcnow()
         result = MonitoringResult(platform=self.config.platform)
         
@@ -158,7 +167,8 @@ class PlatformMonitor:
         return driver
 
     async def _scan_youtube(self) -> MonitoringResult:
-        """Scan YouTube for content"""
+        """
+Scan YouTube for content"""
         result = MonitoringResult(platform=MonitoringPlatform.YOUTUBE)
         
         for search_term in self.config.search_terms:
@@ -278,7 +288,8 @@ class PlatformMonitor:
 
 
 class YouTubeMonitor(PlatformMonitor):
-    """YouTube content monitoring implementation"""
+    """
+YouTube content monitoring implementation"""
     
     def __init__(self, config: MonitoringConfig):
         super().__init__(config)
@@ -371,7 +382,8 @@ class InstagramMonitor(PlatformMonitor):
     """Instagram content monitoring implementation"""
     
     async def scan_content(self) -> MonitoringResult:
-        """Scan Instagram for protected content"""
+        """
+Scan Instagram for protected content"""
         start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.INSTAGRAM)
         
@@ -443,7 +455,8 @@ class TikTokMonitor(PlatformMonitor):
     """TikTok content monitoring implementation"""
     
     async def scan_content(self) -> MonitoringResult:
-        """Scan TikTok for protected content"""
+        """
+Scan TikTok for protected content"""
         start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.TIKTOK)
         
@@ -500,7 +513,8 @@ class TwitterMonitor(PlatformMonitor):
     """Twitter/X content monitoring implementation"""
     
     async def scan_content(self) -> MonitoringResult:
-        """Scan Twitter for protected content"""
+        """
+Scan Twitter for protected content"""
         start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.TWITTER)
         
@@ -545,7 +559,8 @@ class GenericWebMonitor(PlatformMonitor):
     """Generic web monitoring for any website"""
     
     async def scan_content(self) -> MonitoringResult:
-        """Scan generic websites for protected content"""
+        """
+Scan generic websites for protected content"""
         start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.GENERIC_WEB)
         
@@ -589,7 +604,8 @@ class GenericWebMonitor(PlatformMonitor):
 
 
 class ContentMonitor:
-    """Main content monitoring coordinator"""
+    """
+Main content monitoring coordinator"""
     
     def __init__(self):
         self.fingerprint_engine = FingerprintEngine()
@@ -598,7 +614,8 @@ class ContentMonitor:
         self.results_cache: Dict[str, List[MonitoringResult]] = {}
         
     def create_monitor(self, config: MonitoringConfig) -> str:
-        """Create a new content monitor"""
+        """
+Create a new content monitor"""
         monitor_id = hashlib.md5(
             f"{config.platform.value}_{config.search_terms}_{datetime.utcnow().isoformat()}".encode()
         ).hexdigest()[:16]
@@ -699,7 +716,8 @@ class ContentMonitor:
         return self.results_cache[monitor_id][-limit:]
     
     def get_all_detected_urls(self, hours: int = 24) -> List[str]:
-        """Get all URLs detected in the last N hours"""
+        """
+Get all URLs detected in the last N hours"""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         all_urls = []
         
@@ -711,7 +729,8 @@ class ContentMonitor:
         return list(set(all_urls))  # Remove duplicates
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring system statistics"""
+        """
+Get monitoring system statistics"""
         return {
             'active_monitors': len(self.active_monitors),
             'running_tasks': len(self.monitoring_tasks),

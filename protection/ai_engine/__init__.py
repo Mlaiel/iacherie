@@ -11,7 +11,7 @@ State-of-the-art artificial intelligence orchestration engine providing:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 This proprietary AI system contains advanced algorithms, trade secrets, and intellectual property
@@ -26,6 +26,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 import time
@@ -68,7 +69,7 @@ __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __status__ = "Production"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Prometheus metrics
 ENGINE_REQUESTS = Counter('ai_engine_requests_total', 'Total AI engine requests', ['operation', 'status'])
@@ -77,6 +78,7 @@ ENGINE_ACTIVE_SESSIONS = Gauge('ai_engine_active_sessions', 'Active AI engine se
 
 class EngineStatus(Enum):
     """AI Engine operational status"""
+
     INITIALIZING = "initializing"
     READY = "ready"  
     PROCESSING = "processing"
@@ -453,7 +455,8 @@ class EnterpriseAIProtectionEngine:
         }
     
     async def shutdown(self):
-        """Graceful shutdown of all engine components"""
+        """
+Graceful shutdown of all engine components"""
         try:
             logger.info("Initiating AI Engine shutdown sequence")
             self.status = EngineStatus.MAINTENANCE
@@ -538,7 +541,8 @@ def create_ai_engine(config_dict: Dict[str, Any] = None) -> EnterpriseAIProtecti
 _engine_instance: Optional[EnterpriseAIProtectionEngine] = None
 
 def get_engine() -> EnterpriseAIProtectionEngine:
-    """Get singleton engine instance"""
+    """
+Get singleton engine instance"""
     global _engine_instance
     if _engine_instance is None:
         _engine_instance = create_ai_engine()

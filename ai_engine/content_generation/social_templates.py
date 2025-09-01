@@ -4,11 +4,12 @@ Comprehensive template system for creating high-quality social media content
 across all major platforms with professional design patterns.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -30,7 +31,8 @@ class SocialMediaTemplates:
     """
     
     def __init__(self):
-        """Initialize social media templates"""
+        """
+Initialize social media templates"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Instagram Templates
@@ -359,7 +361,8 @@ class SocialMediaTemplates:
         return content
     
     def _fill_ctas(self, content: str, template: Dict[str, Any]) -> str:
-        """Fill call-to-action placeholders"""
+        """
+Fill call-to-action placeholders"""
         cta_placeholders = ['{call_to_action}', '{cta}', '{engagement_question}', '{question}']
         
         for placeholder in cta_placeholders:
@@ -371,7 +374,8 @@ class SocialMediaTemplates:
         return content
     
     def _fill_hashtags(self, content: str, template: Dict[str, Any]) -> str:
-        """Fill hashtag placeholders"""
+        """
+Fill hashtag placeholders"""
         if '{hashtags}' in content:
             hashtags = template.get('hashtags', '#content #social #media')
             content = content.replace('{hashtags}', hashtags)
@@ -384,7 +388,8 @@ class SocialMediaTemplates:
         template: Dict[str, Any], 
         content_data: Dict[str, Any]
     ) -> str:
-        """Fill dynamic elements based on content type"""
+        """
+Fill dynamic elements based on content type"""
         # Fill timestamps for YouTube
         if '{timestamps}' in content:
             timestamps = template.get('timestamps_example', '0:00 Introduction')
@@ -561,13 +566,15 @@ class SocialMediaTemplates:
 
 
 class TemplateEngine:
-    """Template engine for social media content"""
+    """
+Template engine for social media content"""
     
     def __init__(self):
         self.variables = {}
     
     def substitute_variables(self, template: str, variables: Dict[str, Any]) -> str:
-        """Substitute variables in template"""
+        """
+Substitute variables in template"""
         result = template
         for key, value in variables.items():
             result = result.replace(f"{{{key}}}", str(value))
@@ -579,7 +586,8 @@ class TemplateEngine:
 
 
 class InstagramTemplate:
-    """Instagram-specific template class"""
+    """
+Instagram-specific template class"""
     
     def __init__(self, template_type: str = "post", **kwargs):
         self.template_type = template_type
@@ -599,18 +607,21 @@ class InstagramTemplate:
 
 
 class TemplateEngine:
-    """Template rendering engine for social media content"""
+    """
+Template rendering engine for social media content"""
     
     def __init__(self):
         self.templates = {}
         self.variables = {}
     
     def register_template(self, name: str, template: str) -> None:
-        """Register a new template"""
+        """
+Register a new template"""
         self.templates[name] = template
     
     def render_template(self, template_name: str, variables: Dict[str, Any]) -> str:
-        """Render template with variables"""
+        """
+Render template with variables"""
         template = self.templates.get(template_name, "")
         return template.format(**variables)
     
@@ -619,7 +630,8 @@ class TemplateEngine:
         self.variables[key] = value
     
     def process_conditionals(self, template: str, conditions: Dict[str, bool]) -> str:
-        """Process conditional logic in templates"""
+        """
+Process conditional logic in templates"""
         # Simplified conditional processing
         for condition, value in conditions.items():
             if value:

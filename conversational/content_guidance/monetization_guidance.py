@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -36,7 +37,9 @@ settings = get_settings()
 
 
 class RevenueStream(Enum):
-    """Different types of revenue streams available to creators."""
+    """
+Different types of revenue streams available to creators."""
+
     PLATFORM_MONETIZATION = "platform_monetization"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -51,6 +54,7 @@ class RevenueStream(Enum):
 
 class MonetizationGoal(Enum):
     """Monetization goal types for creators."""
+
     QUICK_WINS = "quick_wins"
     SUSTAINABLE_GROWTH = "sustainable_growth"
     PASSIVE_INCOME = "passive_income"
@@ -61,6 +65,7 @@ class MonetizationGoal(Enum):
 
 class PlatformMonetization(Enum):
     """Platform-specific monetization programs."""
+
     YOUTUBE_PARTNER = "youtube_partner"
     INSTAGRAM_CREATOR = "instagram_creator"
     TIKTOK_CREATOR = "tiktok_creator"
@@ -84,7 +89,8 @@ class RevenueAnalysis:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity recommendation."""
+    """
+Monetization opportunity recommendation."""
     opportunity_id: str
     revenue_stream: RevenueStream
     title: str
@@ -102,7 +108,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueOptimizationPlan:
-    """Comprehensive revenue optimization plan."""
+    """
+Comprehensive revenue optimization plan."""
     plan_id: str
     creator_id: str
     current_analysis: RevenueAnalysis
@@ -117,7 +124,8 @@ class RevenueOptimizationPlan:
 
 @dataclass
 class BrandPartnershipProfile:
-    """Brand partnership matching profile."""
+    """
+Brand partnership matching profile."""
     creator_id: str
     niche_categories: List[str]
     audience_demographics: Dict[str, Any]
@@ -136,7 +144,8 @@ class MonetizationGuidanceEngine:
     """
     
     def __init__(self):
-        """Initialize the monetization guidance engine."""
+        """
+Initialize the monetization guidance engine."""
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         self.analytics_service = MonetizationAnalyticsService()
         self.revenue_predictor = RevenuePredictionEngine()
@@ -749,7 +758,8 @@ class MonetizationGuidanceEngine:
         }
     
     def _initialize_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific monetization requirements."""
+        """
+Initialize platform-specific monetization requirements."""
         
         return {
             'youtube': {
@@ -816,7 +826,8 @@ class MonetizationGuidanceEngine:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models."""
+        """
+Load historical data and train ML models."""
         try:
             # Generate synthetic training data for revenue prediction
             n_samples = 15000
@@ -1033,7 +1044,8 @@ class MonetizationGuidanceEngine:
     async def _predict_revenue_by_stream(
         self, platform_data: Dict[str, Any], content_analysis: Dict[str, Any]
     ) -> Dict[RevenueStream, Decimal]:
-        """Predict potential revenue for each revenue stream."""
+        """
+Predict potential revenue for each revenue stream."""
         
         revenue_predictions = {}
         
@@ -1060,7 +1072,8 @@ class MonetizationGuidanceEngine:
     def _extract_monetization_features(
         self, platform_data: Dict[str, Any], content_analysis: Dict[str, Any]
     ) -> np.ndarray:
-        """Extract features for monetization ML models."""
+        """
+Extract features for monetization ML models."""
         
         features = []
         
@@ -1098,7 +1111,8 @@ class MonetizationGuidanceEngine:
     def _predict_stream_revenue(
         self, features: np.ndarray, revenue_stream: RevenueStream, stream_data: Dict[str, Any]
     ) -> float:
-        """Predict revenue for a specific revenue stream."""
+        """
+Predict revenue for a specific revenue stream."""
         
         try:
             # Scale features
@@ -1346,7 +1360,8 @@ class MonetizationGuidanceEngine:
         stream_data: Dict[str, Any],
         platform_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate step-by-step implementation guide."""
+        """
+Generate step-by-step implementation guide."""
         
         steps_templates = {
             RevenueStream.PLATFORM_MONETIZATION: [
@@ -1416,7 +1431,8 @@ class MonetizationGuidanceEngine:
     def _assess_opportunity_risk(
         self, revenue_stream: RevenueStream, stream_data: Dict[str, Any]
     ) -> str:
-        """Assess risk level for monetization opportunity."""
+        """
+Assess risk level for monetization opportunity."""
         
         risk_levels = {
             RevenueStream.PLATFORM_MONETIZATION: 'low',     # Platform dependent but stable
@@ -1438,7 +1454,8 @@ class MonetizationGuidanceEngine:
         platform_data: Dict[str, Any],
         stream_data: Dict[str, Any]
     ) -> float:
-        """Calculate probability of success for revenue stream."""
+        """
+Calculate probability of success for revenue stream."""
         
         base_probability = 0.6  # Base success rate
         
@@ -1468,7 +1485,8 @@ class RevenueOptimizer:
     """
     
     def __init__(self):
-        """Initialize the revenue optimizer."""
+        """
+Initialize the revenue optimizer."""
         self.guidance_engine = MonetizationGuidanceEngine()
         self.optimization_history = {}
         logger.info("Revenue optimizer initialized")
@@ -1589,7 +1607,8 @@ class RevenueOptimizer:
     def _calculate_budget_requirements(
         self, opportunities: List[MonetizationOpportunity]
     ) -> Dict[str, Decimal]:
-        """Calculate budget requirements by category."""
+        """
+Calculate budget requirements by category."""
         
         budget_req = {
             'immediate': Decimal('0'),
@@ -1621,7 +1640,8 @@ class RevenueOptimizer:
         revenue_analysis: RevenueAnalysis,
         opportunities: List[MonetizationOpportunity]
     ) -> Dict[str, float]:
-        """Define success metrics for optimization plan."""
+        """
+Define success metrics for optimization plan."""
         
         # Calculate total potential revenue increase
         total_potential_monthly = sum(
@@ -1644,7 +1664,8 @@ class RevenueOptimizer:
     def _calculate_roi_projections(
         self, opportunities: List[MonetizationOpportunity]
     ) -> Dict[str, float]:
-        """Calculate ROI projections for optimization plan."""
+        """
+Calculate ROI projections for optimization plan."""
         
         total_investment = sum(opp.investment_required for opp in opportunities)
         total_monthly_revenue = sum(opp.expected_revenue['monthly'] for opp in opportunities)
@@ -1679,7 +1700,8 @@ class RevenueOptimizer:
         opportunities: List[MonetizationOpportunity],
         goals: List[MonetizationGoal]
     ) -> List[Dict[str, Any]]:
-        """Generate specific recommended actions for revenue optimization."""
+        """
+Generate specific recommended actions for revenue optimization."""
         
         actions = []
         

@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class WindowFunction(Enum):
-    """Window functions for spectral analysis"""
+    """
+Window functions for spectral analysis"""
+
     HANN = "hann"
     HAMMING = "hamming"
     BLACKMAN = "blackman"
@@ -42,6 +45,7 @@ class WindowFunction(Enum):
 
 class SpectralFeatureType(Enum):
     """Types of spectral features"""
+
     CENTROID = "spectral_centroid"
     BANDWIDTH = "spectral_bandwidth"
     ROLLOFF = "spectral_rolloff"
@@ -58,6 +62,7 @@ class SpectralFeatureType(Enum):
 
 class FrequencyScale(Enum):
     """Frequency scaling methods"""
+
     LINEAR = "linear"
     MEL = "mel"
     BARK = "bark"
@@ -68,6 +73,7 @@ class FrequencyScale(Enum):
 
 class AnalysisMode(Enum):
     """Spectral analysis modes"""
+
     MAGNITUDE = "magnitude"
     POWER = "power"
     PHASE = "phase"
@@ -78,6 +84,7 @@ class AnalysisMode(Enum):
 
 class FrequencyBandType(Enum):
     """Frequency band types"""
+
     OCTAVE = "octave"
     THIRD_OCTAVE = "third_octave"
     BARK = "bark"
@@ -114,7 +121,8 @@ class FrequencyAnalysisConfig:
 
 @dataclass
 class MelSpectrogramConfig:
-    """Mel-spectrogram specific configuration"""
+    """
+Mel-spectrogram specific configuration"""
     n_mels: int = 128
     fmin: float = 0.0
     fmax: Optional[float] = None
@@ -171,7 +179,8 @@ class SpectralAnalysisConfig:
     """
     
     def __init__(self):
-        """Initialize spectral analysis configuration"""
+        """
+Initialize spectral analysis configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core parameters
@@ -251,7 +260,8 @@ class SpectralAnalysisConfig:
         return bands
     
     def _initialize_analysis_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize analysis profiles for different use cases"""
+        """
+Initialize analysis profiles for different use cases"""
         return {
             "music_analysis": {
                 "description": "Optimized for music analysis",
@@ -440,7 +450,8 @@ class SpectralAnalysisConfig:
         return window
     
     def _gaussian_window(self, window_length: int, std: float) -> np.ndarray:
-        """Generate Gaussian window"""
+        """
+Generate Gaussian window"""
         n = np.arange(window_length) - (window_length - 1) / 2
         return np.exp(-0.5 * (n / std) ** 2)
     
@@ -508,15 +519,18 @@ class SpectralAnalysisConfig:
         return 2595.0 * np.log10(1.0 + hz / 700.0)
     
     def _mel_to_hz(self, mel: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert mel scale to frequency in Hz"""
+        """
+Convert mel scale to frequency in Hz"""
         return 700.0 * (10.0 ** (mel / 2595.0) - 1.0)
     
     def _hz_to_bark(self, hz: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert frequency in Hz to Bark scale"""
+        """
+Convert frequency in Hz to Bark scale"""
         return 13.0 * np.arctan(0.00076 * hz) + 3.5 * np.arctan((hz / 7500.0) ** 2)
     
     def _bark_to_hz(self, bark: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert Bark scale to frequency in Hz (approximation)"""
+        """
+Convert Bark scale to frequency in Hz (approximation)"""
         return 600.0 * np.sinh(bark / 4.0)
     
     def get_analysis_profile(self, profile_name: str) -> Dict[str, Any]:
@@ -690,7 +704,8 @@ class SpectralAnalysisConfig:
         return closest
     
     def _estimate_memory_usage(self, n_fft: int, hop_length: int, sample_rate: int) -> float:
-        """Estimate memory usage for spectral analysis"""
+        """
+Estimate memory usage for spectral analysis"""
         # Complex FFT output: n_fft/2 + 1 complex values
         fft_memory = (n_fft // 2 + 1) * 8 * 2  # 8 bytes per float, complex
         

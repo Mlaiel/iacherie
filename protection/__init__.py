@@ -18,7 +18,7 @@ Technical Stack:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING:
 This software, including all concepts, algorithms, and implementations, is protected 
@@ -34,6 +34,7 @@ action including but not limited to:
 Contact Fahed Mlaiel at mlaiel@live.de for ANY usage authorization.
 All activities are logged and monitored for legal compliance.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional
@@ -179,7 +180,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 # Legal notice

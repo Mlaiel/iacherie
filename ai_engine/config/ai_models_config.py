@@ -4,7 +4,7 @@
 =============================================
 
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
-Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
+Copyright (c) 2025 Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This software and its source code are the exclusive property of Fahed Mlaiel.
@@ -34,6 +34,7 @@ Ultra-advanced configuration management for AI models supporting multi-format co
 copyright protection, SEO optimization, and monetization workflows with enterprise-grade
 performance, scalability, and reliability features.
 """
+
 import os
 import json
 import asyncio
@@ -67,7 +68,9 @@ logger.setLevel(logging.INFO)
 
 
 class ModelProvider(Enum):
-    """Ultra-advanced AI model providers with enterprise capabilities"""
+    """
+Ultra-advanced AI model providers with enterprise capabilities"""
+
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE = "google"
@@ -134,6 +137,7 @@ class ModelType(Enum):
 
 class QualityLevel(IntEnum):
     """Quality levels for model outputs with precise scoring"""
+
     BASIC = 1
     STANDARD = 2
     PREMIUM = 3
@@ -143,7 +147,9 @@ class QualityLevel(IntEnum):
 
 
 class ModelStatus(Enum):
-    """Model operational status"""
+    """
+Model operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -155,6 +161,7 @@ class ModelStatus(Enum):
 
 class ScalingStrategy(Enum):
     """Model scaling strategies"""
+
     FIXED = "fixed"
     AUTO_SCALE = "auto_scale"
     LOAD_BALANCED = "load_balanced"
@@ -165,6 +172,7 @@ class ScalingStrategy(Enum):
 
 class ModelCapability(Enum):
     """Advanced model capabilities"""
+
     STREAMING = "streaming"
     BATCH_PROCESSING = "batch_processing"
     REAL_TIME = "real_time"
@@ -218,7 +226,8 @@ class ModelPerformanceMetrics:
     measurement_period_hours: float = 1.0
     
     def calculate_overall_score(self) -> float:
-        """Calculate overall model performance score"""
+        """
+Calculate overall model performance score"""
         weights = {
             'accuracy_score': 0.25,
             'quality_score': 0.20,
@@ -247,7 +256,8 @@ class ModelPerformanceMetrics:
 
 @dataclass
 class ModelResourceRequirements:
-    """Ultra-detailed resource requirements for models"""
+    """
+Ultra-detailed resource requirements for models"""
     min_memory_gb: float = 1.0
     max_memory_gb: float = 8.0
     min_cpu_cores: int = 1
@@ -379,7 +389,8 @@ class ModelConfig:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ModelConfig':
-        """Create from dictionary with enum parsing"""
+        """
+Create from dictionary with enum parsing"""
         # Parse enums
         data['provider'] = ModelProvider(data['provider'])
         data['model_type'] = ModelType(data['model_type'])
@@ -403,7 +414,8 @@ class ModelConfig:
         return cls(**data)
     
     def is_healthy(self) -> bool:
-        """Check if model is healthy based on metrics"""
+        """
+Check if model is healthy based on metrics"""
         metrics = self.performance_metrics
         return (
             self.enabled and
@@ -414,11 +426,13 @@ class ModelConfig:
         )
     
     def get_cost_estimate(self, token_count: int) -> float:
-        """Estimate cost for given token count"""
+        """
+Estimate cost for given token count"""
         return (token_count * self.cost_per_token) + self.cost_per_request
     
     def update_metrics(self, new_metrics: Dict[str, Any]) -> None:
-        """Update performance metrics"""
+        """
+Update performance metrics"""
         for key, value in new_metrics.items():
             if hasattr(self.performance_metrics, key):
                 setattr(self.performance_metrics, key, value)
@@ -431,6 +445,7 @@ class ModelConfig:
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -452,7 +467,8 @@ class ModelEndpoint:
 
 @dataclass
 class ModelParameters:
-    """Model-specific parameters"""
+    """
+Model-specific parameters"""
     temperature: float = 0.7
     max_tokens: int = 4000
     top_p: float = 0.9
@@ -482,12 +498,14 @@ class ModelConfig:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ModelConfig':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         endpoint_data = data.pop('endpoint', {})
         parameters_data = data.pop('parameters', {})
         
@@ -503,7 +521,8 @@ class ModelConfig:
 
 @dataclass
 class AIModelsConfig:
-    """Main AI models configuration"""
+    """
+Main AI models configuration"""
     default_provider: ModelProvider = ModelProvider.OPENAI
     fallback_providers: List[ModelProvider] = field(default_factory=lambda: [ModelProvider.ANTHROPIC, ModelProvider.GOOGLE])
     
@@ -543,7 +562,8 @@ class AIModelsConfig:
     quality_thresholds: Dict[str, float] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize default configurations"""
+        """
+Initialize default configurations"""
         if not self.models:
             self._setup_default_models()
         if not self.provider_settings:
@@ -554,7 +574,8 @@ class AIModelsConfig:
             self._setup_quality_thresholds()
 
     def _setup_default_models(self):
-        """Setup default model configurations"""
+        """
+Setup default model configurations"""
         # OpenAI GPT-4 Turbo for text generation
         self.models["gpt-4-turbo"] = ModelConfig(
             name="GPT-4 Turbo",
@@ -714,20 +735,24 @@ class AIModelsConfig:
         return suitable_models[0]
 
     def get_models_for_content_type(self, content_type: str) -> List[ModelConfig]:
-        """Get models suitable for specific content type"""
+        """
+Get models suitable for specific content type"""
         model_names = self.content_type_models.get(content_type, [])
         return [self.models[name] for name in model_names if name in self.models]
 
     def add_custom_model(self, model_config: ModelConfig):
-        """Add custom model configuration"""
+        """
+Add custom model configuration"""
         self.models[model_config.name] = model_config
 
     def update_api_key(self, provider: str, api_key: str):
-        """Update API key for provider"""
+        """
+Update API key for provider"""
         self.api_keys[provider] = api_key
 
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of issues"""
+        """
+Validate configuration and return list of issues"""
         issues = []
         
         # Check required API keys
@@ -821,7 +846,8 @@ class AIModelsConfig:
         return estimated_tokens * primary_model.cost_per_token
 
     def optimize_for_cost(self, max_cost_per_request: float):
-        """Optimize model selection for cost constraints"""
+        """
+Optimize model selection for cost constraints"""
         for model in self.models.values():
             if model.cost_per_token > max_cost_per_request / 1000:  # Assume 1000 tokens avg
                 model.enabled = False
@@ -891,7 +917,8 @@ class ModelLoadBalancer:
         return True
     
     def _select_balanced_model(self, models: List[ModelConfig]) -> ModelConfig:
-        """Select model using weighted score algorithm"""
+        """
+Select model using weighted score algorithm"""
         scores = {}
         
         for model in models:
@@ -910,7 +937,8 @@ class ModelLoadBalancer:
         return next(m for m in models if m.name == best_model_name)
     
     def record_request_result(self, model_name: str, success: bool, latency: float):
-        """Record request result for learning and optimization"""
+        """
+Record request result for learning and optimization"""
         with self._lock:
             self.request_history.append({
                 'model': model_name,
@@ -937,7 +965,8 @@ class ModelLoadBalancer:
 
 
 class ModelVersionManager:
-    """Ultra-advanced version management with A/B testing capabilities"""
+    """
+Ultra-advanced version management with A/B testing capabilities"""
     
     def __init__(self):
         self.versions = defaultdict(list)
@@ -946,7 +975,8 @@ class ModelVersionManager:
         self._lock = threading.RLock()
     
     def register_version(self, model_config: ModelConfig):
-        """Register a new model version"""
+        """
+Register a new model version"""
         with self._lock:
             self.versions[model_config.name].append(model_config)
             # Keep only last 5 versions
@@ -954,7 +984,8 @@ class ModelVersionManager:
                 self.versions[model_config.name] = self.versions[model_config.name][-5:]
     
     def start_ab_test(self, model_name: str, traffic_split: float = 0.1):
-        """Start A/B test between current and new version"""
+        """
+Start A/B test between current and new version"""
         with self._lock:
             versions = self.versions[model_name]
             if len(versions) >= 2:
@@ -988,7 +1019,8 @@ class ModelVersionManager:
 
 
 class ModelRegistry:
-    """Enterprise-grade model registry with advanced cataloging"""
+    """
+Enterprise-grade model registry with advanced cataloging"""
     
     def __init__(self):
         self.models = {}
@@ -998,7 +1030,8 @@ class ModelRegistry:
         self._lock = threading.RLock()
     
     def register_model(self, model: ModelConfig, metadata: Dict[str, Any] = None):
-        """Register model with advanced indexing"""
+        """
+Register model with advanced indexing"""
         with self._lock:
             self.models[model.name] = model
             
@@ -1043,7 +1076,8 @@ class ModelRegistry:
 
 
 class ModelOptimizer:
-    """Ultra-advanced model optimization engine"""
+    """
+Ultra-advanced model optimization engine"""
     
     def __init__(self):
         self.optimization_history = defaultdict(list)
@@ -1057,7 +1091,8 @@ class ModelOptimizer:
         }
     
     def optimize_model(self, model: ModelConfig, strategy: str = 'auto') -> ModelConfig:
-        """Apply optimization strategy to model"""
+        """
+Apply optimization strategy to model"""
         if strategy == 'auto':
             strategy = self._select_optimization_strategy(model)
         
@@ -1069,7 +1104,8 @@ class ModelOptimizer:
         return model
     
     def _select_optimization_strategy(self, model: ModelConfig) -> str:
-        """Auto-select optimization strategy based on model characteristics"""
+        """
+Auto-select optimization strategy based on model characteristics"""
         metrics = model.performance_metrics
         
         if metrics.latency_p95 > 5.0:  # High latency
@@ -1082,7 +1118,8 @@ class ModelOptimizer:
             return 'batching'
     
     def _apply_quantization(self, model: ModelConfig) -> ModelConfig:
-        """Apply model quantization optimization"""
+        """
+Apply model quantization optimization"""
         optimized = ModelConfig.from_dict(model.to_dict())
         optimized.name = f"{model.name}_quantized"
         optimized.performance_metrics.memory_usage_mb *= 0.5
@@ -1133,7 +1170,8 @@ class ModelOptimizer:
 
 
 class ModelScaler:
-    """Ultra-advanced model scaling with predictive capabilities"""
+    """
+Ultra-advanced model scaling with predictive capabilities"""
     
     def __init__(self):
         self.scaling_history = defaultdict(list)
@@ -1142,7 +1180,8 @@ class ModelScaler:
         self.resource_pool = defaultdict(int)
     
     def predict_load(self, model_name: str, time_horizon_minutes: int = 60) -> Dict[str, float]:
-        """Predict future load using historical patterns"""
+        """
+Predict future load using historical patterns"""
         history = self.scaling_history[model_name]
         
         if not history:
@@ -1162,7 +1201,8 @@ class ModelScaler:
         }
     
     def auto_scale(self, model: ModelConfig, current_load: float) -> Dict[str, Any]:
-        """Automatically scale model based on current load and predictions"""
+        """
+Automatically scale model based on current load and predictions"""
         prediction = self.predict_load(model.name)
         predicted_load = prediction['predicted_rps']
         
@@ -1207,7 +1247,8 @@ class ModelScaler:
 
 
 class InferenceEngine:
-    """Ultra-advanced inference engine with sophisticated request handling"""
+    """
+Ultra-advanced inference engine with sophisticated request handling"""
     
     def __init__(self):
         self.result_cache = {}
@@ -1218,7 +1259,8 @@ class InferenceEngine:
                              model: ModelConfig, 
                              input_data: Dict[str, Any],
                              options: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Process inference request with advanced features"""
+        """
+Process inference request with advanced features"""
         options = options or {}
         request_id = str(uuid.uuid4())
         
@@ -1270,7 +1312,8 @@ class InferenceEngine:
             raise
     
     def _generate_cache_key(self, model_name: str, input_data: Dict[str, Any]) -> str:
-        """Generate cache key for request"""
+        """
+Generate cache key for request"""
         content = json.dumps(input_data, sort_keys=True)
         return hashlib.sha256(f"{model_name}:{content}".encode()).hexdigest()
     
@@ -1289,12 +1332,14 @@ class InferenceEngine:
         return True
     
     def _record_success(self, model_name: str, latency: float):
-        """Record successful request"""
+        """
+Record successful request"""
         if self.circuit_breakers[model_name]['failures'] > 0:
             self.circuit_breakers[model_name]['failures'] = max(0,
                 self.circuit_breakers[model_name]['failures'] - 1)
     
     def _record_failure(self, model_name: str):
-        """Record failed request"""
+        """
+Record failed request"""
         self.circuit_breakers[model_name]['failures'] += 1
         self.circuit_breakers[model_name]['last_failure'] = datetime.now()

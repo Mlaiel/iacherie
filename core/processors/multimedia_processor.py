@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import hashlib
@@ -63,7 +64,9 @@ logger = logging.getLogger(__name__)
 
 
 class MultimediaType(str, Enum):
-    """Types of multimedia content"""
+    """
+Types of multimedia content"""
+
     VIDEO_WITH_AUDIO = "video_with_audio"
     IMAGE_GALLERY = "image_gallery"
     AUDIO_SLIDESHOW = "audio_slideshow"
@@ -80,6 +83,7 @@ class MultimediaType(str, Enum):
 
 class ProcessingMode(str, Enum):
     """Multimedia processing modes"""
+
     BASIC_ANALYSIS = "basic_analysis"
     DEEP_ANALYSIS = "deep_analysis"
     CROSS_MODAL = "cross_modal"
@@ -90,6 +94,7 @@ class ProcessingMode(str, Enum):
 
 class ContentQuality(str, Enum):
     """Content quality levels"""
+
     LOW = "low"
     STANDARD = "standard"
     HIGH = "high"
@@ -124,7 +129,8 @@ class MultimediaProcessingConfig:
 
 @dataclass
 class MultimediaMetadata:
-    """Comprehensive multimedia metadata"""
+    """
+Comprehensive multimedia metadata"""
     content_type: Optional[MultimediaType] = None
     total_duration: Optional[float] = None
     total_size: Optional[int] = None
@@ -152,7 +158,8 @@ class MultimediaMetadata:
 
 @dataclass
 class CrossModalAnalysis:
-    """Cross-modal analysis results"""
+    """
+Cross-modal analysis results"""
     audio_visual_sync: Optional[float] = None  # Synchronization score
     content_coherence: Optional[float] = None  # How well content matches across modalities
     emotion_consistency: Optional[float] = None  # Emotional consistency across modalities
@@ -166,7 +173,8 @@ class CrossModalAnalysis:
 
 @dataclass
 class ContentSynchronization:
-    """Content synchronization analysis"""
+    """
+Content synchronization analysis"""
     audio_video_offset: Optional[float] = None
     subtitle_sync: Optional[float] = None
     scene_audio_correlation: List[Dict[str, Any]] = field(default_factory=list)
@@ -178,7 +186,8 @@ class ContentSynchronization:
 
 @dataclass
 class QualityAssessment:
-    """Multimedia quality assessment"""
+    """
+Multimedia quality assessment"""
     overall_quality: Optional[float] = None
     technical_quality: Optional[float] = None
     content_quality: Optional[float] = None
@@ -193,7 +202,8 @@ class QualityAssessment:
 
 @dataclass
 class MultimediaFeatures:
-    """Advanced multimedia features"""
+    """
+Advanced multimedia features"""
     audio_analysis: Optional[AudioAnalysisResult] = None
     video_analysis: Optional[VideoAnalysisResult] = None
     image_analysis: List[ImageAnalysisResult] = field(default_factory=list)
@@ -214,7 +224,8 @@ class MultimediaFeatures:
 
 @dataclass
 class MultimediaAnalysisResult:
-    """Result of multimedia analysis"""
+    """
+Result of multimedia analysis"""
     success: bool
     metadata: Optional[MultimediaMetadata] = None
     features: Optional[MultimediaFeatures] = None

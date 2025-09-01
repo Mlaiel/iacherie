@@ -38,6 +38,7 @@ Enterprise Features:
 - Revenue risk assessment and diversification strategies
 - Automated monetization opportunity detection and optimization
 """
+
 import asyncio
 import logging
 import uuid
@@ -76,7 +77,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Professional revenue source types for comprehensive monetization tracking."""
+    """
+Professional revenue source types for comprehensive monetization tracking."""
     # Direct Revenue Streams
     DIRECT_SALES = "direct_sales"
     SUBSCRIPTION = "subscription"
@@ -127,6 +129,7 @@ class RevenueSource(Enum):
 
 class RevenueCategory(Enum):
     """Revenue categorization for analysis"""
+
     ACTIVE_INCOME = "active_income"
     PASSIVE_INCOME = "passive_income"
     RECURRING_REVENUE = "recurring_revenue"
@@ -137,6 +140,7 @@ class RevenueCategory(Enum):
 
 class RevenuePeriod(Enum):
     """Revenue analysis time periods with enterprise granularity"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -150,6 +154,7 @@ class RevenuePeriod(Enum):
 
 class RevenuePerformance(Enum):
     """Revenue performance assessment levels"""
+
     EXCEPTIONAL = "exceptional"
     EXCELLENT = "excellent"
     ABOVE_AVERAGE = "above_average"
@@ -250,7 +255,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueInsight:
-    """AI-generated revenue insights with actionable recommendations."""
+    """
+AI-generated revenue insights with actionable recommendations."""
     insight_id: str
     user_id: str
     insight_category: str
@@ -287,7 +293,8 @@ class RevenueInsight:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendations with detailed implementation guidance."""
+    """
+Revenue optimization recommendations with detailed implementation guidance."""
     optimization_id: str
     user_id: str
     optimization_type: str
@@ -323,7 +330,8 @@ class RevenueOptimization:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendations"""
+    """
+Revenue optimization recommendations"""
     optimization_id: str
     user_id: str
     strategy: str
@@ -711,7 +719,8 @@ class RevenueAnalytics:
         self,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate core revenue metrics"""
+        """
+Calculate core revenue metrics"""
         # Implementation for core revenue metrics
         pass
     
@@ -720,7 +729,8 @@ class RevenueAnalytics:
         revenue_data: Dict[str, Any],
         core_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate advanced revenue metrics"""
+        """
+Calculate advanced revenue metrics"""
         # Implementation for advanced revenue metrics
         pass
     
@@ -730,7 +740,8 @@ class RevenueAnalytics:
         user_id: str,
         period: RevenuePeriod
     ) -> Dict[str, Any]:
-        """Calculate customer-related metrics"""
+        """
+Calculate customer-related metrics"""
         # Implementation for customer metrics
         pass
     
@@ -738,23 +749,27 @@ class RevenueAnalytics:
         self,
         current_metrics: RevenueMetrics
     ) -> Dict[str, Any]:
-        """Generate revenue projections"""
+        """
+Generate revenue projections"""
         # Implementation for revenue projections
         pass
 
 
 # Revenue Analytics Factory
 class RevenueAnalyticsFactory:
-    """Factory for creating revenue analytics instances"""
+    """
+Factory for creating revenue analytics instances"""
     
     @staticmethod
     def create_analytics_engine() -> RevenueAnalytics:
-        """Create a new revenue analytics engine"""
+        """
+Create a new revenue analytics engine"""
         return RevenueAnalytics()
     
     @staticmethod
     def create_real_time_engine() -> 'RealTimeRevenueAnalytics':
-        """Create real-time revenue analytics engine"""
+        """
+Create real-time revenue analytics engine"""
         from .real_time_revenue_analytics import RealTimeRevenueAnalytics
         return RealTimeRevenueAnalytics()
 

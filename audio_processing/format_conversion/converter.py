@@ -6,6 +6,7 @@ batch processing, and intelligent optimization capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import tempfile
@@ -61,7 +62,8 @@ class AudioFormatConverter:
     def __init__(self, 
                  config: Optional[ConversionConfig] = None,
                  metrics: Optional[MetricsCollector] = None):
-        """Initialize the audio format converter"""
+        """
+Initialize the audio format converter"""
         self.config = config or ConversionConfig()
         self.metrics = metrics or MetricsCollector()
         self.format_registry = FormatRegistry()
@@ -80,7 +82,8 @@ class AudioFormatConverter:
         self._init_conversion_engines()
     
     def _init_conversion_engines(self) -> None:
-        """Initialize specialized conversion engines"""
+        """
+Initialize specialized conversion engines"""
         self.engines = {
             'lossless': self._create_lossless_engine(),
             'lossy': self._create_lossy_engine(), 
@@ -89,22 +92,26 @@ class AudioFormatConverter:
         }
     
     def _create_lossless_engine(self) -> 'LosslessEngine':
-        """Create engine for lossless format conversions"""
+        """
+Create engine for lossless format conversions"""
         from .engines.lossless import LosslessEngine
         return LosslessEngine(self.config)
     
     def _create_lossy_engine(self) -> 'LossyEngine':
-        """Create engine for lossy format conversions"""
+        """
+Create engine for lossy format conversions"""
         from .engines.lossy import LossyEngine
         return LossyEngine(self.config)
     
     def _create_professional_engine(self) -> 'ProfessionalEngine':
-        """Create engine for professional format conversions"""
+        """
+Create engine for professional format conversions"""
         from .engines.professional import ProfessionalEngine
         return ProfessionalEngine(self.config)
     
     def _create_streaming_engine(self) -> 'StreamingEngine':
-        """Create engine for streaming format conversions"""
+        """
+Create engine for streaming format conversions"""
         from .engines.streaming import StreamingEngine
         return StreamingEngine(self.config)
     
@@ -295,7 +302,8 @@ class AudioFormatConverter:
     # Private methods for internal processing
     
     def _generate_conversion_id(self) -> str:
-        """Generate unique conversion identifier"""
+        """
+Generate unique conversion identifier"""
         return f"conv_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{np.random.randint(1000, 9999)}"
     
     def _generate_batch_id(self) -> str:
@@ -351,12 +359,14 @@ class AudioFormatConverter:
         return data, sr
     
     async def _load_with_librosa(self, input_path: Path) -> Tuple[np.ndarray, int]:
-        """Load audio using librosa library"""
+        """
+Load audio using librosa library"""
         data, sr = librosa.load(str(input_path), sr=None, mono=False)
         return data, sr
     
     async def _load_with_ffmpeg(self, input_path: Path) -> Tuple[np.ndarray, int]:
-        """Load audio using FFmpeg as fallback"""
+        """
+Load audio using FFmpeg as fallback"""
         with tempfile.NamedTemporaryFile(suffix='.wav') as temp_file:
             # Convert to WAV using FFmpeg
             cmd = [
@@ -400,7 +410,8 @@ class AudioFormatConverter:
                                             audio_data: np.ndarray,
                                             sample_rate: int,
                                             metadata: Dict) -> 'OptimizedParameters':
-        """Optimize conversion parameters based on audio analysis"""
+        """
+Optimize conversion parameters based on audio analysis"""
         from .optimization import ParameterOptimizer
         
         optimizer = ParameterOptimizer(self.config)
@@ -409,7 +420,8 @@ class AudioFormatConverter:
     async def _apply_post_processing(self,
                                    audio_data: np.ndarray,
                                    params: 'OptimizedParameters') -> np.ndarray:
-        """Apply post-processing effects and optimizations"""
+        """
+Apply post-processing effects and optimizations"""
         processed_data = audio_data.copy()
         
         # Apply processing chain based on parameters
@@ -429,7 +441,8 @@ class AudioFormatConverter:
                                   params: 'OptimizedParameters',
                                   metadata: Dict,
                                   output_path: Path) -> Path:
-        """Save converted audio with metadata preservation"""
+        """
+Save converted audio with metadata preservation"""
         try:
             # Ensure output directory exists
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -460,7 +473,8 @@ class AudioFormatConverter:
         return audio_data
     
     async def _apply_limiter(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply soft limiter to prevent clipping"""
+        """
+Apply soft limiter to prevent clipping"""
         # Simple soft limiter implementation
         threshold = 0.95
         ratio = 0.1
@@ -473,7 +487,8 @@ class AudioFormatConverter:
         return limited_data
     
     async def _apply_dithering(self, audio_data: np.ndarray, bit_depth: int) -> np.ndarray:
-        """Apply dithering for bit depth reduction"""
+        """
+Apply dithering for bit depth reduction"""
         if bit_depth >= 24:
             return audio_data
         
@@ -493,14 +508,16 @@ class ConversionEngine:
     """
     
     def __init__(self, config: ConversionConfig):
-        """Initialize conversion engine manager"""
+        """
+Initialize conversion engine manager"""
         self.config = config
         self.converters = {}
         self.load_balancer = self._create_load_balancer()
         
     async def process_conversion(self, 
                                request: ConversionRequest) -> ConversionResult:
-        """Process conversion request through optimal engine"""
+        """
+Process conversion request through optimal engine"""
         # Select optimal converter
         converter = await self._select_converter(request)
         
@@ -508,12 +525,14 @@ class ConversionEngine:
         return await converter.convert_audio(request)
     
     def _create_load_balancer(self) -> 'LoadBalancer':
-        """Create load balancer for conversion engines"""
+        """
+Create load balancer for conversion engines"""
         from .load_balancing import LoadBalancer
         return LoadBalancer(self.config)
     
     async def _select_converter(self, request: ConversionRequest) -> AudioFormatConverter:
-        """Select optimal converter based on request and system load"""
+        """
+Select optimal converter based on request and system load"""
         return await self.load_balancer.get_optimal_converter(request)
 
 
@@ -528,7 +547,8 @@ class BatchConverter:
     def __init__(self, 
                  config: ConversionConfig,
                  max_concurrent: int = 4):
-        """Initialize batch converter"""
+        """
+Initialize batch converter"""
         self.config = config
         self.max_concurrent = max_concurrent
         self.converter = AudioFormatConverter(config)
@@ -539,7 +559,8 @@ class BatchConverter:
                               output_dir: Path,
                               output_format: str,
                               recursive: bool = True) -> List[ConversionResult]:
-        """Convert all audio files in directory"""
+        """
+Convert all audio files in directory"""
         # Find all audio files
         audio_files = await self._find_audio_files(input_dir, recursive)
         

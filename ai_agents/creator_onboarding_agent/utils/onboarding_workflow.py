@@ -5,6 +5,7 @@ progress tracking, conditional logic, and multi-stage validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -44,7 +45,9 @@ from .verification_engine import VerificationEngine
 logger = logging.getLogger(__name__)
 
 class WorkflowStage(Enum):
-    """Onboarding workflow stages"""
+    """
+Onboarding workflow stages"""
+
     INITIALIZATION = "initialization"
     PROFILE_CREATION = "profile_creation"
     CONTENT_UPLOAD = "content_upload"
@@ -60,6 +63,7 @@ class WorkflowStage(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"
     WAITING_USER_INPUT = "waiting_user_input"
@@ -71,6 +75,7 @@ class WorkflowStatus(Enum):
 
 class StageStatus(Enum):
     """Individual stage status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -80,6 +85,7 @@ class StageStatus(Enum):
 
 class ValidationSeverity(Enum):
     """Validation issue severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -111,7 +117,8 @@ class StageConfiguration:
 
 @dataclass
 class StageResult:
-    """Result of a workflow stage execution"""
+    """
+Result of a workflow stage execution"""
     stage: WorkflowStage
     status: StageStatus
     
@@ -326,7 +333,8 @@ class OnboardingWorkflow:
         }
     
     def _initialize_creator_type_configurations(self) -> Dict[str, Dict[WorkflowStage, StageConfiguration]]:
-        """Initialize creator type specific configurations."""
+        """
+Initialize creator type specific configurations."""
         return {
             'musician': {
                 WorkflowStage.RIGHTS_VALIDATION: StageConfiguration(
@@ -768,7 +776,8 @@ class OnboardingWorkflow:
         return None
     
     async def _check_stage_dependencies(self, session: WorkflowSession, stage: WorkflowStage) -> bool:
-        """Check if stage dependencies are satisfied."""
+        """
+Check if stage dependencies are satisfied."""
         stage_config = session.workflow_configuration.get(stage)
         if not stage_config or not stage_config.depends_on:
             return True
@@ -781,7 +790,8 @@ class OnboardingWorkflow:
         return True
     
     async def _should_execute_optional_stage(self, session: WorkflowSession, stage: WorkflowStage) -> bool:
-        """Determine if an optional stage should be executed."""
+        """
+Determine if an optional stage should be executed."""
         # Optional stage execution logic based on workflow data and user preferences
         
         if stage == WorkflowStage.MONETIZATION_SETUP:
@@ -797,7 +807,8 @@ class OnboardingWorkflow:
         return True  # Default: execute optional stages
     
     async def _complete_workflow(self, session: WorkflowSession) -> None:
-        """Complete the workflow session."""
+        """
+Complete the workflow session."""
         try:
             session.workflow_status = WorkflowStatus.COMPLETED
             session.end_time = datetime.utcnow()
@@ -838,7 +849,8 @@ class OnboardingWorkflow:
         return configuration
     
     def _estimate_completion_time(self, session: WorkflowSession) -> datetime:
-        """Estimate workflow completion time."""
+        """
+Estimate workflow completion time."""
         total_minutes = 0
         
         for stage_config in session.workflow_configuration.values():
@@ -851,7 +863,8 @@ class OnboardingWorkflow:
         return session.start_time + timedelta(minutes=total_minutes)
     
     async def _has_required_user_input(self, session: WorkflowSession, stage: WorkflowStage) -> bool:
-        """Check if required user input is available for stage."""
+        """
+Check if required user input is available for stage."""
         required_inputs = {
             WorkflowStage.PROFILE_CREATION: ['profile_data'],
             WorkflowStage.CONTENT_UPLOAD: ['content_uploads'],
@@ -869,7 +882,8 @@ class OnboardingWorkflow:
         return True
     
     async def _request_user_input(self, session: WorkflowSession, stage: WorkflowStage) -> None:
-        """Request required user input for stage."""
+        """
+Request required user input for stage."""
         input_requests = {
             WorkflowStage.PROFILE_CREATION: {
                 'type': 'profile_form',
@@ -906,7 +920,8 @@ class OnboardingWorkflow:
     
     async def _validate_stage_output(self, session: WorkflowSession, stage: WorkflowStage,
                                    stage_result: StageResult) -> None:
-        """Validate stage output and add any validation issues."""
+        """
+Validate stage output and add any validation issues."""
         validation_issues = []
         
         # Stage-specific validation logic
@@ -989,7 +1004,8 @@ class OnboardingWorkflow:
         }
     
     async def _finalize_onboarding(self, session: WorkflowSession) -> Dict[str, Any]:
-        """Finalize the onboarding process."""
+        """
+Finalize the onboarding process."""
         # Create final onboarding summary
         summary = {
             'success': session.workflow_status == WorkflowStatus.COMPLETED,
@@ -1018,7 +1034,8 @@ class OnboardingWorkflow:
         return summary
     
     async def _store_onboarding_results(self, session: WorkflowSession, summary: Dict[str, Any]) -> None:
-        """Store onboarding results in persistent storage."""
+        """
+Store onboarding results in persistent storage."""
         # Placeholder - would implement database storage
         logger.info(f"Storing onboarding results for session {session.session_id}")
     
@@ -1041,7 +1058,8 @@ class OnboardingWorkflow:
         }
     
     async def pause_workflow(self, session_id: str) -> bool:
-        """Pause an active workflow."""
+        """
+Pause an active workflow."""
         session = self.active_sessions.get(session_id)
         if session and session.workflow_status == WorkflowStatus.IN_PROGRESS:
             session.workflow_status = WorkflowStatus.PAUSED
@@ -1049,7 +1067,8 @@ class OnboardingWorkflow:
         return False
     
     async def resume_workflow(self, session_id: str) -> bool:
-        """Resume a paused workflow."""
+        """
+Resume a paused workflow."""
         session = self.active_sessions.get(session_id)
         if session and session.workflow_status == WorkflowStatus.PAUSED:
             session.workflow_status = WorkflowStatus.IN_PROGRESS
@@ -1057,7 +1076,8 @@ class OnboardingWorkflow:
         return False
     
     async def cancel_workflow(self, session_id: str) -> bool:
-        """Cancel an active workflow."""
+        """
+Cancel an active workflow."""
         session = self.active_sessions.get(session_id)
         if session:
             session.workflow_status = WorkflowStatus.CANCELLED

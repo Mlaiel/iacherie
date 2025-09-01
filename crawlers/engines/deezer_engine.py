@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioQuality(str, Enum):
-    """Audio quality enumeration"""
+    """
+Audio quality enumeration"""
+
     FLAC = "flac"
     LOSSLESS = "lossless"
     HIGH = "320"
@@ -55,6 +58,7 @@ class AudioQuality(str, Enum):
 
 class ContentType(str, Enum):
     """Content type enumeration"""
+
     TRACK = "track"
     ALBUM = "album"
     PLAYLIST = "playlist"
@@ -65,6 +69,7 @@ class ContentType(str, Enum):
 
 class ExtractionMode(str, Enum):
     """Extraction mode enumeration"""
+
     FAST = "fast"
     COMPLETE = "complete"
     METADATA_ONLY = "metadata_only"
@@ -295,7 +300,8 @@ class DeezerEngine:
     """
     
     def __init__(self, config: ExtractionConfig = None):
-        """Initialize Deezer extraction engine"""
+        """
+Initialize Deezer extraction engine"""
         self.config = config or ExtractionConfig()
         self.session: Optional[aiohttp.ClientSession] = None
         self.selenium_driver: Optional[webdriver.Chrome] = None
@@ -376,7 +382,8 @@ class DeezerEngine:
         return self.session
     
     def _get_selenium_driver(self) -> webdriver.Chrome:
-        """Get or create Selenium WebDriver with stealth configuration"""
+        """
+Get or create Selenium WebDriver with stealth configuration"""
         if not self.selenium_driver:
             options = Options()
             if self.config.headless_browser:
@@ -413,7 +420,8 @@ class DeezerEngine:
         return datetime.utcnow() - cache_time < self.cache_ttl
     
     def _get_cached_result(self, key: str) -> Optional[Any]:
-        """Get result from cache if valid"""
+        """
+Get result from cache if valid"""
         if key in self.cache:
             result, cache_time = self.cache[key]
             if self._is_cache_valid(cache_time):
@@ -424,11 +432,13 @@ class DeezerEngine:
         return None
     
     def _cache_result(self, key: str, result: Any):
-        """Cache extraction result"""
+        """
+Cache extraction result"""
         self.cache[key] = (result, datetime.utcnow())
     
     async def _rate_limit(self):
-        """Implement intelligent rate limiting"""
+        """
+Implement intelligent rate limiting"""
         current_time = time.time()
         time_since_last = current_time - self.last_request_time
         
@@ -439,7 +449,8 @@ class DeezerEngine:
         self.last_request_time = time.time()
     
     async def _make_request(self, url: str, **kwargs) -> aiohttp.ClientResponse:
-        """Make HTTP request with rate limiting and retry logic"""
+        """
+Make HTTP request with rate limiting and retry logic"""
         async with self.request_semaphore:
             await self._rate_limit()
             
@@ -485,7 +496,8 @@ class DeezerEngine:
         return None
     
     def _extract_album_id(self, url: str) -> Optional[str]:
-        """Extract album ID from Deezer URL"""
+        """
+Extract album ID from Deezer URL"""
         patterns = [
             r'deezer\.com/album/(\d+)',
             r'deezer\.com/.+/album/(\d+)',
@@ -500,7 +512,8 @@ class DeezerEngine:
         return None
     
     def _extract_playlist_id(self, url: str) -> Optional[str]:
-        """Extract playlist ID from Deezer URL"""
+        """
+Extract playlist ID from Deezer URL"""
         patterns = [
             r'deezer\.com/playlist/(\d+)',
             r'deezer\.com/.+/playlist/(\d+)',
@@ -515,7 +528,8 @@ class DeezerEngine:
         return None
     
     def _extract_artist_id(self, url: str) -> Optional[str]:
-        """Extract artist ID from Deezer URL"""
+        """
+Extract artist ID from Deezer URL"""
         patterns = [
             r'deezer\.com/artist/(\d+)',
             r'deezer\.com/.+/artist/(\d+)',
@@ -530,7 +544,8 @@ class DeezerEngine:
         return None
     
     def _extract_podcast_id(self, url: str) -> Optional[str]:
-        """Extract podcast ID from Deezer URL"""
+        """
+Extract podcast ID from Deezer URL"""
         patterns = [
             r'deezer\.com/show/(\d+)',
             r'deezer\.com/.+/show/(\d+)',
@@ -545,7 +560,8 @@ class DeezerEngine:
         return None
     
     def _extract_radio_id(self, url: str) -> Optional[str]:
-        """Extract radio ID from Deezer URL"""
+        """
+Extract radio ID from Deezer URL"""
         patterns = [
             r'deezer\.com/radio/(\d+)',
             r'deezer\.com/.+/radio/(\d+)',
@@ -560,7 +576,8 @@ class DeezerEngine:
         return None
     
     def _determine_content_type(self, url: str) -> ContentType:
-        """Determine content type from URL"""
+        """
+Determine content type from URL"""
         if '/track/' in url:
             return ContentType.TRACK
         elif '/album/' in url:
@@ -577,7 +594,8 @@ class DeezerEngine:
             return ContentType.TRACK  # Default assumption
     
     async def _get_api_token(self) -> Optional[str]:
-        """Get API token for authenticated requests"""
+        """
+Get API token for authenticated requests"""
         if self.api_token:
             return self.api_token
         
@@ -677,7 +695,8 @@ class DeezerEngine:
         return sizes.get(size, (250, 250))
     
     async def _extract_track_formats(self, track_id: str) -> List[TrackFormat]:
-        """Extract track audio formats"""
+        """
+Extract track audio formats"""
         formats = []
         
         try:
@@ -1132,7 +1151,8 @@ class DeezerEngine:
         return await asyncio.gather(*tasks, return_exceptions=False)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get extraction statistics"""
+        """
+Get extraction statistics"""
         uptime = (datetime.utcnow() - self.stats['start_time']).total_seconds()
         
         return {
@@ -1150,7 +1170,8 @@ class DeezerEngine:
         }
     
     async def clear_cache(self):
-        """Clear extraction cache"""
+        """
+Clear extraction cache"""
         self.cache.clear()
         self.logger.info("Extraction cache cleared")
     
@@ -1188,7 +1209,8 @@ def create_deezer_engine(
 
 # Example usage and testing
 async def main():
-    """Example usage of DeezerEngine"""
+    """
+Example usage of DeezerEngine"""
     
     # Create engine with custom configuration
     config = ExtractionConfig(

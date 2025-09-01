@@ -20,7 +20,7 @@ Expert Team Specialties:
 - DevOps Engineer - Infrastructure and deployment
 - IA Prompt Engineer - Advanced AI prompt optimization
 
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -38,6 +38,7 @@ Content Upload → Format Detection → AI Processing → Quality Enhancement �
 Protection Fingerprinting → Metadata Extraction → SEO Optimization → 
 Multi-Platform Distribution → Performance Analytics → Monetization Integration
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -90,7 +91,9 @@ settings = get_settings()
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -101,6 +104,7 @@ class ContentFormat(Enum):
 
 class ProcessingStatus(Enum):
     """Content processing status"""
+
     UPLOADED = "uploaded"
     ANALYZING = "analyzing"
     ENHANCING = "enhancing" 
@@ -113,6 +117,7 @@ class ProcessingStatus(Enum):
 
 class CreatorType(Enum):
     """Creator types as per business requirements"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -146,7 +151,8 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Processing result structure"""
+    """
+Processing result structure"""
     content_id: str
     status: ProcessingStatus
     original_file_path: str
@@ -526,7 +532,8 @@ class MultiFormatContentProcessor:
             return ContentFormat.DOCUMENT
 
     async def _store_original_content(self, upload_file: UploadFile, content_id: str) -> str:
-        """Store original content in secure storage"""
+        """
+Store original content in secure storage"""
         
         # Generate secure file path
         file_extension = Path(upload_file.filename).suffix
@@ -617,7 +624,8 @@ class MultiFormatContentProcessor:
                                 content_path: str,
                                 metadata: ContentMetadata,
                                 creator_type: CreatorType) -> Dict[str, str]:
-        """Setup multi-platform distribution"""
+        """
+Setup multi-platform distribution"""
         
         distribution_urls = {}
         
@@ -699,7 +707,8 @@ class MultiFormatContentProcessor:
             pass
 
     def _generate_seo_title(self, metadata: ContentMetadata) -> str:
-        """Generate SEO-optimized title"""
+        """
+Generate SEO-optimized title"""
         base_title = Path(metadata.file_name).stem
         creator_type_title = metadata.creator_type.value.replace('_', ' ').title()
         return f"{base_title} | {creator_type_title} Content | IA Influencer Agent"
@@ -729,7 +738,8 @@ class MultiFormatContentProcessor:
         return list(set(keywords))  # Remove duplicates
 
     def _generate_og_tags(self, metadata: ContentMetadata) -> Dict[str, str]:
-        """Generate Open Graph tags"""
+        """
+Generate Open Graph tags"""
         return {
             'og:title': self._generate_seo_title(metadata),
             'og:description': self._generate_seo_description(metadata, {}),
@@ -738,7 +748,8 @@ class MultiFormatContentProcessor:
         }
 
     def _generate_schema_markup(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Generate Schema.org markup"""
+        """
+Generate Schema.org markup"""
         return {
             '@context': 'https://schema.org',
             '@type': 'CreativeWork',
@@ -752,7 +763,8 @@ class MultiFormatContentProcessor:
         }
 
     async def get_processing_status(self, content_id: str) -> Dict[str, Any]:
-        """Get current processing status"""
+        """
+Get current processing status"""
         cache_key = f"content_processing:{content_id}"
         status_data = await self.cache_manager.get(cache_key)
         
@@ -778,7 +790,8 @@ class MultiFormatContentProcessor:
         return self.processing_stats.copy()
 
     async def cleanup_temp_files(self):
-        """Cleanup temporary files and optimize performance"""
+        """
+Cleanup temporary files and optimize performance"""
         # Implementation for cleanup
         pass
 

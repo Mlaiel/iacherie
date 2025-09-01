@@ -6,8 +6,9 @@ for image recognition, video analysis, visual content understanding,
 object detection, scene analysis, and visual AI applications.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComputerVisionAIType(Enum):
-    """Computer vision AI model types"""
+    """
+Computer vision AI model types"""
+
     IMAGE_CLASSIFICATION = "image_classification"
     OBJECT_DETECTION = "object_detection"
     SEMANTIC_SEGMENTATION = "semantic_segmentation"
@@ -51,6 +54,7 @@ class ComputerVisionAIType(Enum):
 
 class VisualModality(Enum):
     """Visual content modalities"""
+
     STATIC_IMAGE = "static_image"
     VIDEO_STREAM = "video_stream"
     LIVE_CAMERA = "live_camera"
@@ -65,6 +69,7 @@ class VisualModality(Enum):
 
 class ProcessingMode(Enum):
     """Visual processing modes"""
+
     REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     STREAMING = "streaming"
@@ -75,6 +80,7 @@ class ProcessingMode(Enum):
 
 class QualityLevel(Enum):
     """Visual processing quality levels"""
+
     FAST = "fast"
     BALANCED = "balanced"
     ACCURATE = "accurate"
@@ -84,6 +90,7 @@ class QualityLevel(Enum):
 
 class OutputFormat(Enum):
     """Output format types"""
+
     BOUNDING_BOXES = "bounding_boxes"
     SEGMENTATION_MASKS = "segmentation_masks"
     KEYPOINTS = "keypoints"
@@ -1160,7 +1167,8 @@ class ComputerVisionAIDeployment:
         pass
     
     async def _optimize_vision_model(self, config: ComputerVisionAIConfig) -> Dict[str, Any]:
-        """Optimize model for vision workload"""
+        """
+Optimize model for vision workload"""
         return {"optimized": True}
     
     async def _create_computer_vision_deployment_spec(self, config: ComputerVisionAIConfig, deployment_id: str) -> Dict[str, Any]:

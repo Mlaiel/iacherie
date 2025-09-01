@@ -7,6 +7,7 @@ and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ from .deployment_recorder import DeploymentRecorder
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy types"""
+    """
+Deployment strategy types"""
+
     BLUE_GREEN = "blue_green"
     ROLLING = "rolling"
     CANARY = "canary"
@@ -39,6 +42,7 @@ class DeploymentStrategy(Enum):
 
 class DeploymentPhase(Enum):
     """Deployment phase status"""
+
     PENDING = "pending"
     PREPARING = "preparing"
     DEPLOYING = "deploying"
@@ -65,7 +69,8 @@ class WorkflowStep:
 
 @dataclass
 class DeploymentWorkflow:
-    """Complete deployment workflow definition"""
+    """
+Complete deployment workflow definition"""
     workflow_id: str
     name: str
     strategy: DeploymentStrategy
@@ -446,7 +451,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate deployment success"""
+        """
+Validate deployment success"""
         validation_results = {}
         
         # Health validation
@@ -490,7 +496,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> None:
-        """Promote deployment to production traffic"""
+        """
+Promote deployment to production traffic"""
         if workflow.strategy == DeploymentStrategy.BLUE_GREEN:
             # Update load balancer configuration
             await self.cluster_manager.update_load_balancer(
@@ -512,7 +519,8 @@ class WorkflowOrchestrator(BaseComponent):
         context: Dict[str, Any],
         reason: str
     ) -> None:
-        """Trigger automated rollback"""
+        """
+Trigger automated rollback"""
         self.logger.warning(f"Triggering rollback for workflow {workflow.workflow_id}: {reason}")
         
         context['phase'] = DeploymentPhase.ROLLED_BACK

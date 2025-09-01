@@ -15,6 +15,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -94,6 +95,7 @@ class IndustrialEmbeddingModel(Enum):
 
 class ContextualAnalysisType(Enum):
     """Types of contextual analysis for embeddings"""
+
     SEMANTIC_SIMILARITY = "semantic_similarity"
     SYNTACTIC_STRUCTURE = "syntactic_structure" 
     DISCOURSE_COHERENCE = "discourse_coherence"
@@ -104,6 +106,7 @@ class ContextualAnalysisType(Enum):
 
 class ProcessingStrategy(Enum):
     """Processing strategies for industrial scale"""
+
     BATCH_PARALLEL = "batch_parallel"
     STREAMING = "streaming"
     DISTRIBUTED = "distributed"
@@ -171,7 +174,8 @@ class ContextualEmbedding:
 
 @dataclass
 class SemanticSimilarityResult:
-    """Result of semantic similarity analysis"""
+    """
+Result of semantic similarity analysis"""
     query_id: str
     similar_items: List[Tuple[str, float, Dict[str, float]]] = field(default_factory=list)
     similarity_breakdown: Dict[str, float] = field(default_factory=dict)
@@ -186,7 +190,8 @@ class IndustrialEmbeddingsEngine:
     """
     
     def __init__(self, config: Optional[IndustrialEmbeddingConfig] = None):
-        """Initialize Industrial Embeddings Engine"""
+        """
+Initialize Industrial Embeddings Engine"""
         self.config = config or IndustrialEmbeddingConfig()
         
         # Model storage
@@ -216,7 +221,8 @@ class IndustrialEmbeddingsEngine:
         self._setup_monitoring()
     
     def _initialize_models(self):
-        """Initialize all embedding models"""
+        """
+Initialize all embedding models"""
         logger.info("Initializing industrial-grade embedding models...")
         
         try:
@@ -505,7 +511,8 @@ class IndustrialEmbeddingsEngine:
         return embeddings
     
     async def _analyze_context(self, embedding: ContextualEmbedding, hidden_states: torch.Tensor, text_index: int):
-        """Perform detailed contextual analysis"""
+        """
+Perform detailed contextual analysis"""
         
         try:
             # Extract different types of contextual information
@@ -632,7 +639,8 @@ class IndustrialEmbeddingsEngine:
         )
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for the engine"""
+        """
+Get performance metrics for the engine"""
         uptime = time.time() - self.start_time
         
         return {
@@ -647,7 +655,8 @@ class IndustrialEmbeddingsEngine:
         }
     
     def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             self.thread_pool.shutdown(wait=True)
             self.process_pool.shutdown(wait=True)

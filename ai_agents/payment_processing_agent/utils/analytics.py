@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsPeriod(str, Enum):
-    """Analytics time periods"""
+    """
+Analytics time periods"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -45,6 +48,7 @@ class AnalyticsPeriod(str, Enum):
 
 class RevenueMetric(str, Enum):
     """Revenue metrics types"""
+
     TOTAL_REVENUE = "total_revenue"
     NET_REVENUE = "net_revenue"
     GROSS_REVENUE = "gross_revenue"
@@ -83,7 +87,8 @@ class RevenueInsight:
 
 @dataclass
 class ForecastResult:
-    """Revenue forecasting result"""
+    """
+Revenue forecasting result"""
     period: str
     predicted_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
@@ -105,7 +110,8 @@ class PaymentAnalytics:
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None
     ):
-        """Initialize analytics engine"""
+        """
+Initialize analytics engine"""
         self.config = config or PaymentConfig()
         self.db_session = db_session
         

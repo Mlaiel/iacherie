@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -41,7 +42,9 @@ settings = get_settings()
 
 
 class ContentType(Enum):
-    """Content types supported by the optimization engine."""
+    """
+Content types supported by the optimization engine."""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -52,6 +55,7 @@ class ContentType(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization intensity levels."""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -75,7 +79,8 @@ class OptimizationMetrics:
 
 @dataclass
 class ContentOptimizationRequest:
-    """Request structure for content optimization."""
+    """
+Request structure for content optimization."""
     content_id: str
     content_type: ContentType
     content_data: Union[str, bytes, Dict[str, Any]]
@@ -89,7 +94,8 @@ class ContentOptimizationRequest:
 
 @dataclass
 class OptimizationResult:
-    """Result structure for content optimization."""
+    """
+Result structure for content optimization."""
     request_id: str
     content_id: str
     original_metrics: OptimizationMetrics
@@ -114,7 +120,8 @@ class ContentOptimizer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the content optimizer with advanced AI models."""
+        """
+Initialize the content optimizer with advanced AI models."""
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         
@@ -403,7 +410,8 @@ class OptimizationEngine:
     """
     
     def __init__(self):
-        """Initialize the optimization engine with AI models and processors."""
+        """
+Initialize the optimization engine with AI models and processors."""
         self.text_processor = TextProcessor()
         self.image_analyzer = ImageAnalyzer()
         self.audio_processor = AudioProcessor()
@@ -556,7 +564,8 @@ class OptimizationEngine:
     async def _analyze_text_metrics(
         self, text: str, target_platforms: List[str]
     ) -> OptimizationMetrics:
-        """Analyze text content metrics."""
+        """
+Analyze text content metrics."""
         
         # Text quality analysis
         word_count = len(text.split())
@@ -594,7 +603,8 @@ class OptimizationEngine:
     async def _analyze_image_metrics(
         self, image_data: bytes, target_platforms: List[str]
     ) -> OptimizationMetrics:
-        """Analyze image content metrics."""
+        """
+Analyze image content metrics."""
         
         # Load and analyze image
         image = Image.open(io.BytesIO(image_data))
@@ -632,7 +642,8 @@ class OptimizationEngine:
         request: ContentOptimizationRequest,
         metrics: OptimizationMetrics
     ) -> List[Dict[str, Any]]:
-        """Generate comprehensive optimization recommendations."""
+        """
+Generate comprehensive optimization recommendations."""
         
         recommendations = []
         
@@ -671,7 +682,8 @@ class OptimizationEngine:
         return recommendations
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate text readability score using Flesch Reading Ease."""
+        """
+Calculate text readability score using Flesch Reading Ease."""
         words = text.split()
         sentences = text.split('.')
         syllables = sum([self._count_syllables(word) for word in words])
@@ -688,7 +700,8 @@ class OptimizationEngine:
         return max(0, min(1, flesch_score / 100))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simple heuristic)."""
+        """
+Count syllables in a word (simple heuristic)."""
         word = word.lower()
         vowels = 'aeiouy'
         count = sum(1 for char in word if char in vowels)
@@ -697,7 +710,8 @@ class OptimizationEngine:
         return max(1, count)
     
     def _calculate_seo_score(self, text: str) -> float:
-        """Calculate SEO optimization score for text content."""
+        """
+Calculate SEO optimization score for text content."""
         score = 0.5  # Base score
         
         # Check for keywords density
@@ -730,7 +744,8 @@ class OptimizationEngine:
         return min(1.0, score)
     
     async def _analyze_brand_safety(self, content: Union[str, Any]) -> float:
-        """Analyze content for brand safety compliance."""
+        """
+Analyze content for brand safety compliance."""
         # Implement brand safety scoring using AI models
         # This would integrate with content moderation APIs
         
@@ -753,7 +768,8 @@ class OptimizationEngine:
     def _calculate_monetization_potential(
         self, content: Any, content_type: ContentType
     ) -> float:
-        """Calculate monetization potential based on content analysis."""
+        """
+Calculate monetization potential based on content analysis."""
         
         base_score = 0.5
         
@@ -775,7 +791,8 @@ class OptimizationEngine:
     def _calculate_viral_potential(
         self, content: Any, target_platforms: List[str]
     ) -> float:
-        """Calculate viral potential based on content and platform analysis."""
+        """
+Calculate viral potential based on content and platform analysis."""
         
         viral_score = 0.5  # Base score
         
@@ -800,7 +817,8 @@ class OptimizationEngine:
     def _calculate_accessibility_score(
         self, content: Any, content_type: ContentType
     ) -> float:
-        """Calculate accessibility score for content."""
+        """
+Calculate accessibility score for content."""
         
         # Default accessibility scores by content type
         accessibility_scores = {
@@ -817,7 +835,8 @@ class OptimizationEngine:
     def _check_platform_compliance(
         self, content: str, platform: str, content_type: ContentType
     ) -> float:
-        """Check content compliance with platform-specific rules."""
+        """
+Check content compliance with platform-specific rules."""
         
         if platform not in self.platform_rules:
             return 0.8  # Default compliance score
@@ -837,7 +856,8 @@ class OptimizationEngine:
         return max(0.0, compliance_score)
     
     def _check_image_platform_compliance(self, image: Image.Image, platform: str) -> float:
-        """Check image compliance with platform-specific requirements."""
+        """
+Check image compliance with platform-specific requirements."""
         
         if platform not in self.platform_rules:
             return 0.8
@@ -868,7 +888,8 @@ class OptimizationEngine:
         return max(0.0, compliance_score)
     
     def _predict_text_engagement(self, text: str, platforms: List[str]) -> float:
-        """Predict engagement potential for text content."""
+        """
+Predict engagement potential for text content."""
         
         engagement_score = 0.5  # Base score
         
@@ -899,7 +920,8 @@ class OptimizationEngine:
         return min(1.0, engagement_score)
     
     def _predict_image_engagement(self, image: Image.Image, platforms: List[str]) -> float:
-        """Predict engagement potential for image content."""
+        """
+Predict engagement potential for image content."""
         
         engagement_score = 0.5  # Base score
         
@@ -919,7 +941,8 @@ class OptimizationEngine:
         return min(1.0, engagement_score)
     
     def _score_visual_appeal(self, image: Image.Image) -> float:
-        """Score visual appeal of an image using computer vision."""
+        """
+Score visual appeal of an image using computer vision."""
         
         # Convert to OpenCV format
         cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -955,7 +978,8 @@ class OptimizationEngine:
         original_metrics: OptimizationMetrics,
         recommendations: List[Dict[str, Any]]
     ) -> OptimizationMetrics:
-        """Calculate projected metrics after applying optimizations."""
+        """
+Calculate projected metrics after applying optimizations."""
         
         # Start with original metrics
         optimized = OptimizationMetrics(
@@ -989,7 +1013,8 @@ class OptimizationEngine:
 
 
 class ContentQualityAnalyzer:
-    """Advanced content quality analysis engine."""
+    """
+Advanced content quality analysis engine."""
     
     def __init__(self):
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
@@ -1026,7 +1051,8 @@ class ContentQualityAnalyzer:
         return max(0.0, min(1.0, readability))
     
     def _check_grammar_quality(self, text: str) -> float:
-        """Basic grammar quality assessment."""
+        """
+Basic grammar quality assessment."""
         
         # Simple grammar checks
         quality_score = 1.0
@@ -1045,7 +1071,8 @@ class ContentQualityAnalyzer:
         return max(0.0, quality_score)
     
     def _analyze_coherence(self, text: str) -> float:
-        """Analyze text coherence and flow."""
+        """
+Analyze text coherence and flow."""
         
         sentences = [s.strip() for s in text.split('.') if s.strip()]
         
@@ -1065,7 +1092,8 @@ class ContentQualityAnalyzer:
         return min(1.0, coherence_score)
     
     def _assess_informativeness(self, text: str) -> float:
-        """Assess how informative the content is."""
+        """
+Assess how informative the content is."""
         
         words = text.split()
         unique_words = set(word.lower() for word in words)
@@ -1082,7 +1110,8 @@ class ContentQualityAnalyzer:
         return min(1.0, info_score)
     
     def _predict_engagement(self, text: str) -> float:
-        """Predict engagement potential of text content."""
+        """
+Predict engagement potential of text content."""
         
         engagement_indicators = [
             ('?', 0.1),  # Questions
@@ -1107,7 +1136,8 @@ class ContentQualityAnalyzer:
 
 
 class SEOOptimizer:
-    """SEO optimization engine for content."""
+    """
+SEO optimization engine for content."""
     
     def __init__(self):
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
@@ -1148,7 +1178,8 @@ class SEOOptimizer:
         return keyword_density
     
     def _optimize_title(self, content: str, keywords: List[str]) -> str:
-        """Generate optimized title with keywords."""
+        """
+Generate optimized title with keywords."""
         
         # Extract first sentence as potential title
         sentences = content.split('.')
@@ -1203,7 +1234,8 @@ class SEOOptimizer:
         return readability_score
     
     def _analyze_content_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze content structure for SEO."""
+        """
+Analyze content structure for SEO."""
         
         structure = {
             "has_headings": bool(re.search(r'^#+ ', content, re.MULTILINE)),
@@ -1319,7 +1351,8 @@ class BrandSafetyValidator:
         return safety_score
     
     def _identify_risk_factors(self, content: str) -> List[str]:
-        """Identify specific risk factors in content."""
+        """
+Identify specific risk factors in content."""
         
         risk_factors = []
         content_lower = content.lower()
@@ -1439,7 +1472,8 @@ class MonetizationAdvisor:
         platform: str, 
         content_type: ContentType
     ) -> List[Dict[str, Any]]:
-        """Get monetization options for specific platform."""
+        """
+Get monetization options for specific platform."""
         
         options = []
         
@@ -1623,7 +1657,8 @@ class ContentOptimizer:
     """
     
     def __init__(self):
-        """Initialize the content optimizer."""
+        """
+Initialize the content optimizer."""
         self.engine = OptimizationEngine()
         self.optimization_history = {}
         logger.info("Content optimizer initialized")
@@ -1669,7 +1704,8 @@ class ContentOptimizer:
         content_type: ContentType,
         target_platforms: List[str]
     ) -> List[Dict[str, Any]]:
-        """Get general optimization suggestions for content type and platforms."""
+        """
+Get general optimization suggestions for content type and platforms."""
         
         suggestions = []
         
@@ -1685,7 +1721,8 @@ class ContentOptimizer:
         return suggestions
     
     def _get_platform_suggestions(self, platform: str, content_type: ContentType) -> List[Dict[str, Any]]:
-        """Get platform-specific optimization suggestions."""
+        """
+Get platform-specific optimization suggestions."""
         
         suggestions = []
         
@@ -1728,7 +1765,8 @@ class ContentOptimizer:
         return suggestions
     
     def _get_content_type_suggestions(self, content_type: ContentType) -> List[Dict[str, Any]]:
-        """Get content type specific suggestions."""
+        """
+Get content type specific suggestions."""
         
         suggestions = []
         
@@ -1775,7 +1813,8 @@ class ContentOptimizer:
         competitor_content: List[Dict[str, Any]],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze competitor content to identify optimization opportunities."""
+        """
+Analyze competitor content to identify optimization opportunities."""
         
         analysis = {
             'average_engagement': 0.0,
@@ -1824,7 +1863,8 @@ class ContentOptimizer:
         return analysis
     
     async def get_optimization_history(self, content_id: str) -> Optional[OptimizationResult]:
-        """Get optimization history for specific content."""
+        """
+Get optimization history for specific content."""
         return self.optimization_history.get(content_id)
     
     async def bulk_optimize(
@@ -1832,7 +1872,8 @@ class ContentOptimizer:
         content_items: List[Dict[str, Any]],
         optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
     ) -> List[OptimizationResult]:
-        """Optimize multiple content items in bulk."""
+        """
+Optimize multiple content items in bulk."""
         
         results = []
         

@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import re
 from datetime import datetime, timedelta
@@ -100,7 +101,8 @@ class TwitterCrawler(PlatformCrawler):
         asyncio.create_task(self._initialize_api_client())
     
     async def _initialize_api_client(self):
-        """Initialize Twitter API client"""
+        """
+Initialize Twitter API client"""
         try:
             # Initialize Tweepy client with API v2
             self.twitter_api = tweepy.Client(
@@ -524,7 +526,8 @@ class TwitterCrawler(PlatformCrawler):
         return metadata
     
     def _extract_tweet_id_from_url(self, url: str) -> Optional[str]:
-        """Extract tweet ID from Twitter URL"""
+        """
+Extract tweet ID from Twitter URL"""
         try:
             # Pattern for Twitter URLs
             pattern = r'(?:twitter\.com|x\.com)/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)'
@@ -586,7 +589,8 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
         self.start_time = datetime.utcnow()
     
     async def on_tweet(self, tweet):
-        """Handle incoming tweets"""
+        """
+Handle incoming tweets"""
         try:
             self.tweet_count += 1
             

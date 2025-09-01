@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set, Union
@@ -63,7 +64,8 @@ settings = get_settings()
 
 @dataclass
 class WebPageData:
-    """Web page data structure"""
+    """
+Web page data structure"""
     url: str
     title: str
     content: str
@@ -144,7 +146,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize generic web crawler engine"""
+        """
+Initialize generic web crawler engine"""
         super().__init__(config)
         self.session = None
         self.crawler_runner = None
@@ -166,7 +169,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         self._setup_scrapy_runner()
     
     def _setup_session(self) -> None:
-        """Setup HTTP session with comprehensive headers"""
+        """
+Setup HTTP session with comprehensive headers"""
         self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -716,7 +720,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return 'requests'  # Default fallback
     
     async def _extract_key_phrases(self, content: str) -> List[str]:
-        """Extract key phrases from content for searching"""
+        """
+Extract key phrases from content for searching"""
         # Simple implementation - could be enhanced with NLP
         sentences = re.split(r'[.!?]+', content)
         phrases = []
@@ -732,7 +737,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         return phrases[:10]  # Return top 10 phrases
     
     async def _calculate_content_similarity(self, content1: str, content2: str) -> float:
-        """Calculate similarity between two pieces of content"""
+        """
+Calculate similarity between two pieces of content"""
         try:
             # Simple word-based similarity
             words1 = set(content1.lower().split())
@@ -750,7 +756,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _classify_match_type(self, similarity_score: float) -> str:
-        """Classify the type of content match"""
+        """
+Classify the type of content match"""
         if similarity_score >= 0.9:
             return "exact"
         elif similarity_score >= 0.7:

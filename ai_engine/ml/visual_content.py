@@ -17,6 +17,7 @@ Features:
 - High-quality image enhancement
 - Brand-consistent visual creation
 """
+
 import logging
 import numpy as np
 import torch
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Visual content types"""
+    """
+Visual content types"""
+
     IMAGE = "image"
     GRAPHIC = "graphic"
     THUMBNAIL = "thumbnail"
@@ -46,6 +49,7 @@ class ContentType(Enum):
 
 class StyleType(Enum):
     """Style transfer types"""
+
     ARTISTIC = "artistic"
     PHOTOREALISTIC = "photorealistic"
     ABSTRACT = "abstract"
@@ -56,6 +60,7 @@ class StyleType(Enum):
 
 class EnhancementType(Enum):
     """Image enhancement types"""
+
     BRIGHTNESS = "brightness"
     CONTRAST = "contrast"
     SATURATION = "saturation"
@@ -97,7 +102,8 @@ class StyleTransferResult:
 
 @dataclass
 class EnhancementResult:
-    """Result from image enhancement"""
+    """
+Result from image enhancement"""
     original_image: Image.Image
     enhanced_image: Image.Image
     enhancement_type: EnhancementType
@@ -107,7 +113,8 @@ class EnhancementResult:
 
 
 class BaseVisualProcessor(ABC):
-    """Base class for visual processing operations"""
+    """
+Base class for visual processing operations"""
     
     def __init__(self, processor_name: str = "base_visual"):
         self.processor_name = processor_name
@@ -121,7 +128,8 @@ class BaseVisualProcessor(ABC):
         pass
         
     def _convert_to_pil(self, image: Union[np.ndarray, Image.Image]) -> Image.Image:
-        """Convert input to PIL Image"""
+        """
+Convert input to PIL Image"""
         if isinstance(image, np.ndarray):
             if len(image.shape) == 3 and image.shape[2] == 3:
                 # BGR to RGB for OpenCV images
@@ -131,7 +139,8 @@ class BaseVisualProcessor(ABC):
 
 
 class VisualContentGenerator(BaseVisualProcessor):
-    """Advanced visual content generator"""
+    """
+Advanced visual content generator"""
     
     def __init__(self, model_name: str = "visual_gen_v1"):
         super().__init__(f"generator_{model_name}")
@@ -540,7 +549,8 @@ class ImageEnhancer(BaseVisualProcessor):
         return enhanced
     
     def _calculate_quality_improvement(self, original: Image.Image, enhanced: Image.Image) -> float:
-        """Calculate quality improvement score (simplified)"""
+        """
+Calculate quality improvement score (simplified)"""
         try:
             # Simple quality metric based on contrast and sharpness
             original_np = np.array(original.convert('L'))
@@ -557,7 +567,8 @@ class ImageEnhancer(BaseVisualProcessor):
             return 0.0
     
     def auto_enhance(self, image: Union[np.ndarray, Image.Image]) -> EnhancementResult:
-        """Automatically enhance image using multiple techniques"""
+        """
+Automatically enhance image using multiple techniques"""
         # Apply multiple enhancements in sequence
         current_image = self._convert_to_pil(image)
         
@@ -577,7 +588,8 @@ class ImageEnhancer(BaseVisualProcessor):
     def batch_enhance(self, images: List[Union[np.ndarray, Image.Image]], 
                      enhancement_type: EnhancementType = EnhancementType.BRIGHTNESS,
                      factor: float = 1.2) -> List[EnhancementResult]:
-        """Enhance multiple images with the same settings"""
+        """
+Enhance multiple images with the same settings"""
         results = []
         for image in images:
             result = self.enhance_image(image, enhancement_type, factor)

@@ -8,7 +8,7 @@ Responsibility: Traitement avancé des images pour créateurs multi-format
 ===========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER IMAGE PROCESSOR:
 Image Upload → Format Detection → Quality Analysis → Metadata Extraction → 
 Fingerprinting → Watermark Detection → Content Analysis → Optimization → Protection
 """
+
 import cv2
 import numpy as np
 from PIL import Image, ImageStat, ExifTags
@@ -36,7 +37,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class ImageProcessor(BaseProcessor):
-    """Processeur avancé pour images - Production Enterprise"""
+    """
+Processeur avancé pour images - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -60,7 +62,8 @@ class ImageProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_ai_models(self):
-        """Initialize AI models for content analysis"""
+        """
+Initialize AI models for content analysis"""
         try:
             # CLIP model for semantic analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -92,7 +95,8 @@ class ImageProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite une image complètement"""
+        """
+Traite une image complètement"""
         try:
             # Load image
             image_data = self._load_image(input_data)
@@ -165,7 +169,8 @@ class ImageProcessor(BaseProcessor):
         return cv_image, pil_image
     
     def _extract_metadata(self, image_data: Tuple[np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Extrait les métadonnées complètes"""
+        """
+Extrait les métadonnées complètes"""
         cv_image, pil_image = image_data
         
         metadata = {
@@ -340,7 +345,8 @@ class ImageProcessor(BaseProcessor):
     
     def _calculate_quality_score(self, sharpness: float, brightness: float, 
                                 contrast: float, noise: float) -> float:
-        """Calcule un score de qualité global"""
+        """
+Calcule un score de qualité global"""
         # Normalize and weight different factors
         sharpness_score = min(sharpness / 1000, 1.0) * 0.4
         brightness_score = (1.0 - abs(brightness - 128) / 128) * 0.2
@@ -350,7 +356,8 @@ class ImageProcessor(BaseProcessor):
         return sharpness_score + brightness_score + contrast_score + noise_score
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating"""
+        """
+Convertit le score en rating"""
         for rating, threshold in self.quality_thresholds.items():
             if score >= threshold:
                 return rating
@@ -403,7 +410,8 @@ class ImageProcessor(BaseProcessor):
         return hist_normalized.tolist()[:64]  # Reduce dimensionality
     
     def _generate_edge_fingerprint(self, cv_image: np.ndarray) -> List[float]:
-        """Génère une empreinte basée sur les contours"""
+        """
+Génère une empreinte basée sur les contours"""
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         edges = cv2.Canny(gray, 50, 150)
         
@@ -414,7 +422,8 @@ class ImageProcessor(BaseProcessor):
         return edge_normalized.tolist()[:32]  # Reduce dimensionality
     
     def _extract_dominant_colors(self, pil_image: Image.Image) -> List[Dict[str, Any]]:
-        """Extrait les couleurs dominantes"""
+        """
+Extrait les couleurs dominantes"""
         # Convert to numpy for K-means
         img_array = np.array(pil_image.resize((100, 100)))  # Resize for performance
         img_reshaped = img_array.reshape(-1, 3)
@@ -541,7 +550,8 @@ class ImageProcessor(BaseProcessor):
         return 0.95  # Placeholder score
     
     def _detect_steganography_risk(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détecte les risques de stéganographie"""
+        """
+Détecte les risques de stéganographie"""
         # Basic steganography detection using statistical analysis
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         
@@ -626,7 +636,8 @@ class AsyncImageProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
+        """
+Version asynchrone de la validation"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -635,7 +646,8 @@ class AsyncImageProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
+        """
+Version asynchrone du traitement"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -644,6 +656,7 @@ class AsyncImageProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
+        """
+Traitement en lot asynchrone"""
         tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)

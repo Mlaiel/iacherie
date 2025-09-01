@@ -5,8 +5,9 @@ Enterprise-grade real-time quality monitoring service for continuous quality ove
 Provides real-time alerts, trend analysis, and automated quality monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Callable, Set
 import asyncio
 import logging
@@ -19,7 +20,9 @@ from collections import deque
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -28,6 +31,7 @@ class AlertSeverity(Enum):
 
 class MonitoringMetric(Enum):
     """Monitoring metrics"""
+
     QUALITY_SCORE = "quality_score"
     ERROR_RATE = "error_rate"
     PROCESSING_TIME = "processing_time"
@@ -53,7 +57,8 @@ class QualityAlert:
 
 @dataclass
 class MonitoringRule:
-    """Monitoring rule configuration"""
+    """
+Monitoring rule configuration"""
     name: str
     metric: MonitoringMetric
     threshold: float
@@ -285,7 +290,8 @@ class QualityMonitoringService:
         })
     
     async def _check_monitoring_rules(self):
-        """Check all monitoring rules against current metrics"""
+        """
+Check all monitoring rules against current metrics"""
         
         for rule in self.monitoring_rules:
             if not rule.enabled:
@@ -322,7 +328,8 @@ class QualityMonitoringService:
         data: deque,
         content_types: Optional[List[str]] = None
     ) -> float:
-        """Calculate current value for a metric"""
+        """
+Calculate current value for a metric"""
         
         # Filter by content types if specified
         filtered_data = []
@@ -351,7 +358,8 @@ class QualityMonitoringService:
             return 0.0
     
     def _check_rule_condition(self, rule: MonitoringRule, current_value: float) -> bool:
-        """Check if rule condition is met"""
+        """
+Check if rule condition is met"""
         
         if rule.comparison == 'lt':
             return current_value < rule.threshold
@@ -363,7 +371,8 @@ class QualityMonitoringService:
             return False
     
     def _is_in_cooldown(self, rule: MonitoringRule) -> bool:
-        """Check if rule is in cooldown period"""
+        """
+Check if rule is in cooldown period"""
         
         cooldown_key = f"rule_{rule.name}"
         
@@ -442,7 +451,8 @@ class QualityMonitoringService:
         self.performance_metrics['current_throughput'] = len(recent_assessments) / 5.0  # per minute
     
     async def _cleanup_old_data(self):
-        """Clean up old monitoring data"""
+        """
+Clean up old monitoring data"""
         
         retention_hours = self.config.get('retention_hours', 24)
         cutoff_time = datetime.utcnow() - timedelta(hours=retention_hours)
@@ -463,11 +473,13 @@ class QualityMonitoringService:
             del self.active_alerts[alert_id]
     
     def add_alert_callback(self, callback: Callable):
-        """Add a callback for alert notifications"""
+        """
+Add a callback for alert notifications"""
         self.alert_callbacks.append(callback)
     
     def remove_alert_callback(self, callback: Callable):
-        """Remove an alert callback"""
+        """
+Remove an alert callback"""
         if callback in self.alert_callbacks:
             self.alert_callbacks.remove(callback)
     
@@ -520,7 +532,8 @@ class QualityMonitoringService:
         severity: Optional[AlertSeverity] = None,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Get alerts with optional filtering"""
+        """
+Get alerts with optional filtering"""
         
         alerts = list(self.active_alerts.values()) if active_only else self.alert_history
         
@@ -559,7 +572,8 @@ class QualityMonitoringService:
         ]
     
     def add_monitoring_rule(self, rule: MonitoringRule):
-        """Add a custom monitoring rule"""
+        """
+Add a custom monitoring rule"""
         self.monitoring_rules.append(rule)
         self.logger.info(f"Added monitoring rule: {rule.name}")
     

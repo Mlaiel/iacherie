@@ -9,11 +9,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ExperimentType(str, Enum):
-    """Types of optimization experiments"""
+    """
+Types of optimization experiments"""
+
     AB_TEST = "ab_test"
     MULTIVARIATE_TEST = "multivariate_test"
     BANDIT_OPTIMIZATION = "bandit_optimization"
@@ -49,6 +52,7 @@ class ExperimentType(str, Enum):
 
 class OptimizationMetric(str, Enum):
     """Metrics for optimization"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     CONVERSION_RATE = "conversion_rate"
     SESSION_DURATION = "session_duration"
@@ -63,6 +67,7 @@ class OptimizationMetric(str, Enum):
 
 class ExperimentStatus(str, Enum):
     """Experiment status values"""
+
     DRAFT = "draft"
     RUNNING = "running"
     PAUSED = "paused"
@@ -73,6 +78,7 @@ class ExperimentStatus(str, Enum):
 
 class OptimizationScope(str, Enum):
     """Scope of optimization"""
+
     UI_LAYOUT = "ui_layout"
     CONTENT_RECOMMENDATION = "content_recommendation"
     FEATURE_CONFIGURATION = "feature_configuration"
@@ -97,7 +103,8 @@ class ExperimentVariant:
 
 @dataclass
 class ExperimentConfig:
-    """Experiment configuration"""
+    """
+Experiment configuration"""
     experiment_id: str
     experiment_name: str
     experiment_type: ExperimentType
@@ -118,7 +125,8 @@ class ExperimentConfig:
 
 @dataclass
 class ExperimentResult:
-    """Experiment result data"""
+    """
+Experiment result data"""
     experiment_id: str
     variant_id: str
     metric: OptimizationMetric
@@ -133,7 +141,8 @@ class ExperimentResult:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation"""
+    """
+Optimization recommendation"""
     recommendation_id: str
     experiment_id: str
     recommended_variant: str
@@ -769,7 +778,8 @@ def create_experience_optimizer(
 
 
 def validate_experiment_config(config: ExperimentConfig) -> bool:
-    """Validate experiment configuration"""
+    """
+Validate experiment configuration"""
     if not config.experiment_id or not isinstance(config.experiment_id, str):
         return False
     

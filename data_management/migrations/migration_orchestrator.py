@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -39,6 +39,7 @@ Business Logic Flow:
 Migration Request → Dependency Analysis → Resource Planning → Execution Scheduling → 
 Parallel Coordination → Progress Monitoring → Adaptive Optimization → Completion Verification
 """
+
 import asyncio
 import logging
 import threading
@@ -68,7 +69,9 @@ logger = logging.getLogger(__name__)
 
 
 class OrchestrationStatus(Enum):
-    """Orchestration execution status"""
+    """
+Orchestration execution status"""
+
     PENDING = "pending"
     PLANNING = "planning"
     SCHEDULED = "scheduled"
@@ -82,6 +85,7 @@ class OrchestrationStatus(Enum):
 
 class ExecutionStrategy(Enum):
     """Migration execution strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     BATCH = "batch"
@@ -93,6 +97,7 @@ class ExecutionStrategy(Enum):
 
 class WorkflowTrigger(Enum):
     """Workflow trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -143,7 +148,8 @@ class OrchestrationExecution:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition for complex migration scenarios"""
+    """
+Workflow definition for complex migration scenarios"""
     workflow_id: str
     name: str
     description: str
@@ -161,14 +167,16 @@ class WorkflowDefinition:
 
 
 class DependencyAnalyzer:
-    """Advanced dependency analysis and resolution"""
+    """
+Advanced dependency analysis and resolution"""
     
     def __init__(self):
         self.dependency_graph = nx.DiGraph()
         self.circular_dependencies = []
     
     def analyze_dependencies(self, migrations: List[BaseMigration]) -> Dict[str, Any]:
-        """Analyze migration dependencies and create execution plan"""
+        """
+Analyze migration dependencies and create execution plan"""
         self.dependency_graph.clear()
         self.circular_dependencies = []
         
@@ -242,7 +250,8 @@ class DependencyAnalyzer:
         return batches
     
     def _find_orphaned_migrations(self) -> List[str]:
-        """Find migrations with no dependencies"""
+        """
+Find migrations with no dependencies"""
         orphaned = []
         for node in self.dependency_graph.nodes():
             if self.dependency_graph.in_degree(node) == 0:
@@ -250,7 +259,8 @@ class DependencyAnalyzer:
         return orphaned
     
     def _calculate_critical_path(self, migrations: List[BaseMigration]) -> List[str]:
-        """Calculate critical path for migration execution"""
+        """
+Calculate critical path for migration execution"""
         if not self.dependency_graph.nodes():
             return []
         
@@ -278,7 +288,8 @@ class DependencyAnalyzer:
                 return list(self.dependency_graph.nodes())
     
     def _calculate_complexity_score(self) -> float:
-        """Calculate overall complexity score"""
+        """
+Calculate overall complexity score"""
         if not self.dependency_graph.nodes():
             return 0.0
         
@@ -303,7 +314,8 @@ class DependencyAnalyzer:
         return total_complexity
     
     def _resolve_circular_dependencies(self):
-        """Attempt to resolve circular dependencies"""
+        """
+Attempt to resolve circular dependencies"""
         for cycle in self.circular_dependencies:
             if len(cycle) == 2:
                 # Simple two-node cycle - remove one edge
@@ -337,7 +349,8 @@ class ResourcePlanner:
     def create_execution_plan(self, migrations: List[BaseMigration], 
                             dependency_analysis: Dict[str, Any],
                             strategy: ExecutionStrategy = ExecutionStrategy.ADAPTIVE) -> ExecutionPlan:
-        """Create optimized execution plan"""
+        """
+Create optimized execution plan"""
         plan_id = str(uuid.uuid4())
         
         # Get execution batches from dependency analysis
@@ -404,7 +417,8 @@ class ResourcePlanner:
     
     def _optimize_for_priority(self, migrations: List[BaseMigration], 
                               batches: List[List[str]]) -> List[List[str]]:
-        """Optimize execution order for priority"""
+        """
+Optimize execution order for priority"""
         migration_map = {m.migration_id: m for m in migrations}
         optimized_batches = []
         
@@ -421,7 +435,8 @@ class ResourcePlanner:
     
     def _adaptive_optimization(self, migrations: List[BaseMigration], 
                               batches: List[List[str]]) -> List[List[str]]:
-        """Adaptive optimization combining multiple strategies"""
+        """
+Adaptive optimization combining multiple strategies"""
         # Combine resource optimization and priority optimization
         resource_optimized = self._optimize_for_resources(migrations, batches)
         priority_optimized = self._optimize_for_priority(migrations, batches)
@@ -451,7 +466,8 @@ class ResourcePlanner:
         return optimized_batches
     
     def _calculate_migration_resource_score(self, migration: BaseMigration) -> float:
-        """Calculate resource usage score for migration"""
+        """
+Calculate resource usage score for migration"""
         score = 0.0
         
         # CPU score
@@ -486,7 +502,8 @@ class ResourcePlanner:
     
     def _calculate_resource_requirements(self, migrations: List[BaseMigration], 
                                        execution_batches: List[List[str]]) -> Dict[str, Any]:
-        """Calculate total resource requirements"""
+        """
+Calculate total resource requirements"""
         migration_map = {m.migration_id: m for m in migrations}
         
         requirements = {
@@ -533,7 +550,8 @@ class ResourcePlanner:
     
     def _estimate_total_duration(self, migrations: List[BaseMigration], 
                                execution_batches: List[List[str]]) -> timedelta:
-        """Estimate total execution duration"""
+        """
+Estimate total execution duration"""
         migration_map = {m.migration_id: m for m in migrations}
         total_minutes = 0.0
         
@@ -552,7 +570,8 @@ class ResourcePlanner:
         return timedelta(minutes=total_minutes)
     
     def _calculate_optimal_parallel_limit(self, resource_requirements: Dict[str, Any]) -> int:
-        """Calculate optimal parallel execution limit"""
+        """
+Calculate optimal parallel execution limit"""
         # Start with system limits
         cpu_limit = int(self.resource_limits['max_cpu_usage'] / 
                        max(20.0, resource_requirements.get('peak_cpu_usage', 20.0)))
@@ -566,7 +585,8 @@ class ResourcePlanner:
         return max(1, optimal_limit)
     
     def _estimate_cpu_usage(self, migration: BaseMigration) -> float:
-        """Estimate CPU usage percentage for migration"""
+        """
+Estimate CPU usage percentage for migration"""
         cpu_intensive_categories = ['fingerprint', 'content', 'analytics']
         if migration.category in cpu_intensive_categories:
             return 25.0  # 25% CPU per migration
@@ -574,7 +594,8 @@ class ResourcePlanner:
             return 10.0  # 10% CPU per migration
     
     def _estimate_memory_usage(self, migration: BaseMigration) -> float:
-        """Estimate memory usage percentage for migration"""
+        """
+Estimate memory usage percentage for migration"""
         memory_intensive_categories = ['content', 'user', 'fingerprint']
         if migration.category in memory_intensive_categories:
             return 20.0  # 20% memory per migration
@@ -582,7 +603,8 @@ class ResourcePlanner:
             return 8.0   # 8% memory per migration
     
     def _estimate_disk_io(self, migration: BaseMigration) -> float:
-        """Estimate disk I/O in MB/s for migration"""
+        """
+Estimate disk I/O in MB/s for migration"""
         disk_intensive_categories = ['content', 'backup', 'analytics']
         if migration.category in disk_intensive_categories:
             return 100.0  # 100 MB/s
@@ -590,7 +612,8 @@ class ResourcePlanner:
             return 20.0   # 20 MB/s
     
     def _estimate_network_io(self, migration: BaseMigration) -> float:
-        """Estimate network I/O in MB/s for migration"""
+        """
+Estimate network I/O in MB/s for migration"""
         network_intensive_categories = ['backup', 'sync', 'content']
         if migration.category in network_intensive_categories:
             return 50.0   # 50 MB/s
@@ -598,7 +621,8 @@ class ResourcePlanner:
             return 5.0    # 5 MB/s
     
     def _estimate_storage_requirements(self, migration: BaseMigration) -> float:
-        """Estimate storage requirements in GB for migration"""
+        """
+Estimate storage requirements in GB for migration"""
         storage_intensive_categories = ['content', 'backup', 'fingerprint']
         if migration.category in storage_intensive_categories:
             return 2.0    # 2 GB
@@ -607,7 +631,8 @@ class ResourcePlanner:
 
 
 class MigrationOrchestrator:
-    """Main orchestration engine for migration execution"""
+    """
+Main orchestration engine for migration execution"""
     
     def __init__(self, database_url: str):
         self.database_url = database_url
@@ -629,7 +654,8 @@ class MigrationOrchestrator:
         self.is_running = False
     
     def start_orchestrator(self):
-        """Start the orchestration engine"""
+        """
+Start the orchestration engine"""
         if self.is_running:
             return
         
@@ -857,7 +883,8 @@ class MigrationOrchestrator:
         return False
     
     async def _trigger_rollback(self, execution: OrchestrationExecution, plan: ExecutionPlan):
-        """Trigger rollback process"""
+        """
+Trigger rollback process"""
         logger.warning(f"Triggering rollback for execution {execution.execution_id}")
         
         execution.status = OrchestrationStatus.ROLLING_BACK
@@ -920,7 +947,8 @@ class MigrationOrchestrator:
         return False
     
     def _cleanup_completed_executions(self):
-        """Clean up old completed executions"""
+        """
+Clean up old completed executions"""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=24)
         
         completed_executions = []
@@ -937,11 +965,13 @@ class MigrationOrchestrator:
         self.execution_history = self.execution_history[-100:]
     
     def get_execution_status(self, execution_id: str) -> Optional[OrchestrationExecution]:
-        """Get execution status"""
+        """
+Get execution status"""
         return self.active_executions.get(execution_id)
     
     def get_orchestration_dashboard(self) -> Dict[str, Any]:
-        """Get orchestration dashboard data"""
+        """
+Get orchestration dashboard data"""
         dashboard = {
             'active_executions': len(self.active_executions),
             'active_workflows': len([w for w in self.workflow_definitions.values() if w.is_active]),
@@ -969,7 +999,8 @@ class MigrationOrchestrator:
         return dashboard
     
     def _count_migrations_today(self) -> int:
-        """Count migrations executed today"""
+        """
+Count migrations executed today"""
         today = datetime.now(timezone.utc).date()
         count = 0
         
@@ -980,7 +1011,8 @@ class MigrationOrchestrator:
         return count
     
     def _calculate_success_rate_today(self) -> float:
-        """Calculate success rate for today's migrations"""
+        """
+Calculate success rate for today's migrations"""
         today = datetime.now(timezone.utc).date()
         total_migrations = 0
         successful_migrations = 0

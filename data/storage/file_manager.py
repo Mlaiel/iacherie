@@ -8,7 +8,7 @@ Technologies: Python, FastAPI, Multi-cloud, Content-aware optimization
 ========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ Content Upload → File Validation → Format Detection →
 Security Scan → Storage Optimization → Fingerprint Generation → 
 Metadata Extraction → Multi-provider Storage → Access Control
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Professional content type enumeration for multi-format platform"""
+    """
+Professional content type enumeration for multi-format platform"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -74,6 +77,7 @@ class ContentType(Enum):
 
 class FileStatus(Enum):
     """File processing status enumeration"""
+
     UPLOADED = "uploaded"
     VALIDATING = "validating"
     PROCESSING = "processing"
@@ -86,6 +90,7 @@ class FileStatus(Enum):
 
 class CompressionLevel(Enum):
     """Compression optimization levels"""
+
     NONE = "none"
     LIGHT = "light"
     STANDARD = "standard"
@@ -157,7 +162,8 @@ class FileValidationResult:
 
 @dataclass
 class FileProcessingResult:
-    """File processing operation result"""
+    """
+File processing operation result"""
     success: bool
     file_id: str
     processed_path: Optional[str] = None
@@ -169,7 +175,8 @@ class FileProcessingResult:
 
 
 class FileValidationConfig(BaseModel):
-    """Configuration for file validation rules"""
+    """
+Configuration for file validation rules"""
     max_file_size: int = 500 * 1024 * 1024  # 500MB default
     allowed_mime_types: List[str] = [
         # Audio
@@ -470,7 +477,8 @@ class FileManager:
             return ContentType.UNKNOWN
     
     async def _verify_media_mime_type(self, file_path: Path, detected_mime: str) -> Optional[str]:
-        """Verify MIME type for media files using content analysis"""
+        """
+Verify MIME type for media files using content analysis"""
         try:
             if detected_mime.startswith('audio/'):
                 return await self._verify_audio_mime(file_path)
@@ -503,7 +511,8 @@ class FileManager:
             return None
     
     async def _verify_video_mime(self, file_path: Path) -> Optional[str]:
-        """Verify video file MIME type using OpenCV"""
+        """
+Verify video file MIME type using OpenCV"""
         try:
             cap = cv2.VideoCapture(str(file_path))
             if cap.isOpened():
@@ -528,7 +537,8 @@ class FileManager:
             return None
     
     async def _verify_image_mime(self, file_path: Path) -> Optional[str]:
-        """Verify image file MIME type using PIL"""
+        """
+Verify image file MIME type using PIL"""
         try:
             with Image.open(file_path) as img:
                 format_lower = img.format.lower()
@@ -549,7 +559,8 @@ class FileManager:
             return None
     
     async def _scan_for_malware(self, file_path: Path) -> Dict[str, Any]:
-        """Malware scanning simulation (integrate with real scanner in production)"""
+        """
+Malware scanning simulation (integrate with real scanner in production)"""
         try:
             # In production, integrate with ClamAV, VirusTotal API, or similar
             # For now, implement basic suspicious pattern detection
@@ -853,7 +864,8 @@ class FileManager:
         return metadata
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""
+        """
+Calculate SHA-256 hash of file"""
         hash_sha256 = hashlib.sha256()
         
         async with aiofiles.open(file_path, 'rb') as f:
@@ -863,7 +875,8 @@ class FileManager:
         return hash_sha256.hexdigest()
     
     async def _extract_audio_metadata(self, file_path: Path, metadata: FileMetadata):
-        """Extract audio-specific metadata"""
+        """
+Extract audio-specific metadata"""
         try:
             # Use soundfile for basic audio info
             info = sf.info(str(file_path))

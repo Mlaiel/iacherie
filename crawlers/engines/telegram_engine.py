@@ -21,6 +21,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -64,7 +65,8 @@ settings = get_settings()
 
 @dataclass
 class TelegramMessageData:
-    """Telegram message data structure"""
+    """
+Telegram message data structure"""
     message_id: int
     channel_id: int
     channel_username: str
@@ -105,7 +107,8 @@ class TelegramMessageData:
 
 @dataclass
 class TelegramChannelData:
-    """Telegram channel data structure"""
+    """
+Telegram channel data structure"""
     channel_id: int
     username: str
     title: str
@@ -148,7 +151,8 @@ class TelegramChannelData:
 
 @dataclass
 class TelegramChatData:
-    """Telegram chat/group data structure"""
+    """
+Telegram chat/group data structure"""
     chat_id: int
     title: str
     participants_count: int
@@ -236,7 +240,8 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
         self.proxy_config = proxy_config
 
     async def authenticate(self) -> bool:
-        """Authenticate with Telegram API"""
+        """
+Authenticate with Telegram API"""
         try:
             # Initialize client
             if self.proxy_config:
@@ -730,7 +735,8 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
             await self.client.disconnect()
 
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.client:
                 asyncio.create_task(self.close())

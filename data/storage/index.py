@@ -8,7 +8,7 @@ Technologies: Python, Async/await, Multi-cloud orchestration
 ==========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ Content Request → Storage Orchestration → Multi-Manager Coordination →
 File Processing + Version Control + Backup Protection → 
 Unified Response → Performance Metrics → Security Compliance
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -69,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class StorageOperation:
-    """Unified storage operation result"""
+    """
+Unified storage operation result"""
     operation_id: str
     operation_type: str
     success: bool
@@ -102,7 +104,8 @@ class StorageOperation:
 
 @dataclass
 class StorageIndexConfig:
-    """Configuration for storage index orchestrator"""
+    """
+Configuration for storage index orchestrator"""
     # Base paths
     storage_base_path: str = "/data/storage"
     temp_path: str = "/tmp/ia_storage"

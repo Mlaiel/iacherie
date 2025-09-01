@@ -5,12 +5,13 @@ Manages the complete lifecycle of marketing campaigns for multi-format content c
 Handles campaign creation, execution, monitoring, and optimization with AI-powered insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from enum import Enum
@@ -30,7 +31,9 @@ from backend.business.monetization.revenue_calculator import RevenueCalculator
 
 
 class CampaignStatus(str, Enum):
-    """Campaign status enumeration"""
+    """
+Campaign status enumeration"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -41,6 +44,7 @@ class CampaignStatus(str, Enum):
 
 class CampaignType(str, Enum):
     """Campaign type enumeration"""
+
     MUSIC_PROMOTION = "music_promotion"
     CONTENT_DISCOVERY = "content_discovery"
     BRAND_COLLABORATION = "brand_collaboration"
@@ -51,6 +55,7 @@ class CampaignType(str, Enum):
 
 class CampaignPriority(str, Enum):
     """Campaign priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -72,7 +77,8 @@ class CampaignMetrics:
 
 @dataclass
 class CampaignTarget:
-    """Campaign targeting configuration"""
+    """
+Campaign targeting configuration"""
     demographics: Dict[str, Any]
     interests: List[str]
     platforms: List[str]
@@ -82,7 +88,8 @@ class CampaignTarget:
 
 
 class CampaignConfiguration(BaseModel):
-    """Campaign configuration model"""
+    """
+Campaign configuration model"""
     name: str = Field(..., description="Campaign name")
     description: str = Field(..., description="Campaign description")
     campaign_type: CampaignType = Field(..., description="Type of campaign")
@@ -507,7 +514,8 @@ class CampaignManager:
         target_config: CampaignTarget,
         creator_id: str
     ) -> Dict[str, float]:
-        """AI-powered budget optimization"""
+        """
+AI-powered budget optimization"""
         # Implementation for budget optimization
         return {"optimized_allocation": budget}
     
@@ -521,7 +529,8 @@ class CampaignManager:
         campaign_id: str, 
         config: CampaignConfiguration
     ) -> None:
-        """Initialize AI optimization models"""
+        """
+Initialize AI optimization models"""
         # Implementation for AI optimization setup
         pass
     
@@ -530,7 +539,8 @@ class CampaignManager:
         campaign_id: str, 
         content_ids: List[str]
     ) -> None:
-        """Setup content protection for campaign"""
+        """
+Setup content protection for campaign"""
         # Implementation for content protection setup
         pass
     
@@ -540,7 +550,8 @@ class CampaignManager:
         creator_id: str, 
         session: AsyncSession
     ) -> Optional[Dict]:
-        """Retrieve campaign from database"""
+        """
+Retrieve campaign from database"""
         # Implementation for campaign retrieval
         return {"id": campaign_id, "creator_id": creator_id, "status": "draft"}
     
@@ -559,7 +570,8 @@ class CampaignManager:
         pass
     
     async def _setup_real_time_monitoring(self, campaign: Dict) -> Dict[str, Any]:
-        """Setup real-time monitoring configuration"""
+        """
+Setup real-time monitoring configuration"""
         return {"estimated_reach": 10000}
     
     async def _start_ai_optimization(self, campaign_id: str, campaign: Dict) -> None:
@@ -571,7 +583,8 @@ class CampaignManager:
         campaign_id: str, 
         content_ids: List[str]
     ) -> None:
-        """Activate content protection"""
+        """
+Activate content protection"""
         pass
     
     async def _initialize_performance_tracking(
@@ -579,11 +592,13 @@ class CampaignManager:
         campaign_id: str, 
         campaign: Dict
     ) -> None:
-        """Initialize performance tracking"""
+        """
+Initialize performance tracking"""
         pass
     
     async def _get_real_time_metrics(self, campaign_id: str) -> CampaignMetrics:
-        """Get real-time campaign metrics"""
+        """
+Get real-time campaign metrics"""
         return CampaignMetrics(
             reach=5000,
             impressions=15000,
@@ -596,7 +611,8 @@ class CampaignManager:
         )
     
     async def _get_protection_status(self, content_ids: List[str]) -> Dict[str, Any]:
-        """Get content protection status"""
+        """
+Get content protection status"""
         return {"protected": True, "violations_detected": 0}
     
     async def _get_campaign_alerts(self, campaign_id: str) -> List[Dict]:
@@ -608,7 +624,8 @@ class CampaignManager:
         campaign_id: str, 
         reallocation: Dict
     ) -> None:
-        """Apply budget optimization changes"""
+        """
+Apply budget optimization changes"""
         pass
     
     async def _apply_targeting_optimization(
@@ -616,7 +633,8 @@ class CampaignManager:
         campaign_id: str, 
         targeting_updates: Dict
     ) -> None:
-        """Apply targeting optimization changes"""
+        """
+Apply targeting optimization changes"""
         pass
     
     async def _apply_content_optimization(
@@ -624,7 +642,8 @@ class CampaignManager:
         campaign_id: str, 
         content_optimization: Dict
     ) -> None:
-        """Apply content optimization changes"""
+        """
+Apply content optimization changes"""
         pass
     
     async def _update_campaign_config(
@@ -632,19 +651,23 @@ class CampaignManager:
         campaign_id: str, 
         updated_config: Dict
     ) -> None:
-        """Update campaign configuration"""
+        """
+Update campaign configuration"""
         pass
     
     async def _pause_campaign_processes(self, campaign_id: str) -> None:
-        """Pause all campaign processes"""
+        """
+Pause all campaign processes"""
         pass
     
     async def _resume_campaign_processes(self, campaign_id: str) -> None:
-        """Resume all campaign processes"""
+        """
+Resume all campaign processes"""
         pass
     
     async def _cleanup_campaign_processes(self, campaign_id: str) -> None:
-        """Cleanup campaign processes after completion"""
+        """
+Cleanup campaign processes after completion"""
         pass
     
     async def _generate_final_report(
@@ -652,7 +675,8 @@ class CampaignManager:
         campaign_id: str, 
         creator_id: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive final campaign report"""
+        """
+Generate comprehensive final campaign report"""
         return {
             "total_reach": 50000,
             "total_revenue": 2500.0,

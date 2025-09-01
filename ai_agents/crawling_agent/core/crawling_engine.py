@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlingJob:
-    """Job configuration for crawling operations"""
+    """
+Job configuration for crawling operations"""
     job_id: str
     data: Dict[str, Any]
     priority: int = 5
@@ -24,7 +26,8 @@ class CrawlingJob:
 
 @dataclass 
 class CrawlingResult:
-    """Result of crawling operations"""
+    """
+Result of crawling operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None

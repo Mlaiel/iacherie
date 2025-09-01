@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Optional, List, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,7 +26,8 @@ from pydantic import BaseModel, validator
 
 
 class VectorType(str, Enum):
-    """Types of vectors used in content protection"""
+    """
+Types of vectors used in content protection"""
     # Audio vectors
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
@@ -55,6 +57,7 @@ class VectorType(str, Enum):
 
 class SimilarityMetric(str, Enum):
     """Similarity metrics for vector comparison"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -65,6 +68,7 @@ class SimilarityMetric(str, Enum):
 
 class IndexType(str, Enum):
     """FAISS index types for different use cases"""
+
     FLAT = "flat"                    # Exact search, brute force
     IVF_FLAT = "ivf_flat"           # Inverted file with flat quantizer
     IVF_PQ = "ivf_pq"               # Inverted file with product quantizer
@@ -283,7 +287,8 @@ class ContentVectorCacheConfig:
         return all_settings
     
     def estimate_memory_usage(self) -> Dict[str, float]:
-        """Estimate memory usage for all vector types"""
+        """
+Estimate memory usage for all vector types"""
         memory_usage = {}
         total_memory = 0
         
@@ -313,7 +318,8 @@ class ContentVectorCacheManager:
     
     def calculate_similarity_threshold(self, vector_type: VectorType, 
                                      confidence_level: float = 0.95) -> float:
-        """Calculate dynamic similarity threshold based on vector type and confidence"""
+        """
+Calculate dynamic similarity threshold based on vector type and confidence"""
         base_settings = None
         for settings in self.config.get_all_vector_settings().values():
             if settings.vector_type == vector_type:
@@ -336,7 +342,8 @@ class ContentVectorCacheManager:
             return max(base_threshold - 0.10, 0.50)  # Minimum threshold
     
     def validate_vector_quality(self, vector: np.ndarray, vector_type: VectorType) -> Dict[str, Any]:
-        """Validate vector quality and characteristics"""
+        """
+Validate vector quality and characteristics"""
         quality_report = {
             "is_valid": True,
             "issues": [],

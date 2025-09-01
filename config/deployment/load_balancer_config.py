@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import yaml
 
 
 class LoadBalancerType(Enum):
-    """Load balancer types"""
+    """
+Load balancer types"""
+
     NGINX = "nginx"
     HAPROXY = "haproxy"
     AWS_ALB = "aws_alb"
@@ -37,6 +40,7 @@ class LoadBalancerType(Enum):
 
 class RoutingStrategy(Enum):
     """Load balancing algorithms"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_conn"
     IP_HASH = "ip_hash"
@@ -47,6 +51,7 @@ class RoutingStrategy(Enum):
 
 class HealthCheckType(Enum):
     """Health check types"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -70,7 +75,8 @@ class BackendServer:
 
 @dataclass
 class HealthCheck:
-    """Health check configuration"""
+    """
+Health check configuration"""
     type: HealthCheckType
     path: str = "/health"
     port: Optional[int] = None
@@ -98,7 +104,8 @@ class UpstreamConfig:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration"""
+    """
+Rate limiting configuration"""
     zone_name: str
     zone_size: str = "10m"
     rate: str = "10r/s"
@@ -723,7 +730,8 @@ http {{
         return config
     
     def generate_haproxy_config(self) -> str:
-        """Generate HAProxy load balancer configuration"""
+        """
+Generate HAProxy load balancer configuration"""
         upstreams = self.get_upstream_configs()
         
         config = f"""# HAProxy Load Balancer Configuration for IA-Influencer Agent Platform
@@ -867,7 +875,8 @@ backend health_backend
         return config
     
     def get_aws_alb_config(self) -> Dict[str, Any]:
-        """Get AWS Application Load Balancer configuration"""
+        """
+Get AWS Application Load Balancer configuration"""
         return {
             "load_balancer": {
                 "name": f"{self.project_name}-{self.environment}-alb",

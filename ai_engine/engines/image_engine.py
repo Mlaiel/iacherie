@@ -4,7 +4,7 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 Advanced AI-powered image processing engine for photographers, visual artists, and content creators.
 
 PROPRIETARY CODE - CONFIDENTIAL
-© 2025 IA-Influencer-Agent Team. All Rights Reserved.
+(c) 2025 IA-Influencer-Agent Team. All Rights Reserved.
 
 Team Development:
 - Lead AI Engineer: Dr. Alexandra Chen
@@ -19,6 +19,7 @@ Any violation will be prosecuted to the full extent of the law.
 
 Business Logic: User Upload → AI Analysis → Style Detection → Quality Assessment → Enhancement Recommendations
 """
+
 import asyncio
 import numpy as np
 import logging
@@ -36,7 +37,9 @@ from pathlib import Path
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class ImageFormat(Enum):
-    """Supported image formats"""
+    """
+Supported image formats"""
+
     JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
@@ -47,6 +50,7 @@ class ImageFormat(Enum):
 
 class ImageQuality(Enum):
     """Image quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,6 +59,7 @@ class ImageQuality(Enum):
 
 class ColorSpace(Enum):
     """Color space options"""
+
     SRGB = "sRGB"
     ADOBE_RGB = "Adobe RGB"
     PROPHOTO = "ProPhoto RGB"
@@ -242,7 +247,8 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive image protection"""
+        """
+Apply comprehensive image protection"""
         # Generate image fingerprint
         fingerprint = await self._generate_image_fingerprint(content)
         
@@ -263,7 +269,8 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _load_image_models(self):
-        """Load image processing AI models"""
+        """
+Load image processing AI models"""
         self.logger.info("Loading image processing models...")
         await asyncio.sleep(0.3)
         
@@ -454,7 +461,8 @@ class ImageProcessingEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _extract_image_seo_features(self, content: Any) -> Dict[str, Any]:
-        """Extract features for SEO optimization"""
+        """
+Extract features for SEO optimization"""
         return {
             'scene_type': 'professional_portrait',
             'objects': ['person', 'business', 'professional'],
@@ -466,7 +474,8 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_alt_text(self, features: Dict, keywords: List[str]) -> str:
-        """Generate SEO-optimized alt text"""
+        """
+Generate SEO-optimized alt text"""
         scene = features.get('scene_type', 'image')
         objects = features.get('objects', ['content'])
         keyword = keywords[0] if keywords else 'professional'
@@ -498,7 +507,8 @@ class ImageProcessingEngine(BaseContentEngine):
         return list(set(base_tags + keywords[:7]))
     
     async def _generate_image_schema(self, features: Dict) -> Dict[str, Any]:
-        """Generate schema.org markup for image"""
+        """
+Generate schema.org markup for image"""
         return {
             "@context": "https://schema.org",
             "@type": "ImageObject",
@@ -652,11 +662,13 @@ class PhotoEnhancementEngine(BaseContentEngine):
         return {}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Photo protection"""
+        """
+Photo protection"""
         return {'protected': True, 'professional_watermark': True}
     
     async def _load_photo_models(self):
-        """Load photo enhancement models"""
+        """
+Load photo enhancement models"""
         self.logger.info("Loading photo enhancement models...")
         await asyncio.sleep(0.3)
         
@@ -846,7 +858,8 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """NFT content protection through blockchain"""
+        """
+NFT content protection through blockchain"""
         return {
             'blockchain_protected': True,
             'immutable_record': True,
@@ -854,7 +867,8 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _load_nft_models(self):
-        """Load NFT generation models"""
+        """
+Load NFT generation models"""
         self.logger.info("Loading NFT models...")
         await asyncio.sleep(0.2)
         

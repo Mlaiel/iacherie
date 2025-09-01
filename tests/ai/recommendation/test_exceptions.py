@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for AI Recommendation Exception Handling
+"""
+Comprehensive Tests for AI Recommendation Exception Handling
 Testing error conditions, edge cases, and exception hierarchies
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -44,10 +47,12 @@ from ai.recommendation.models import CreatorProfile, ContentRecommendation, Plat
 
 
 class TestRecommendationErrorHierarchy:
-    """Test the exception hierarchy and inheritance"""
+    """
+Test the exception hierarchy and inheritance"""
     
     def test_base_recommendation_error(self):
-        """Test base RecommendationError functionality"""
+        """
+Test base RecommendationError functionality"""
         error = RecommendationError("Test error message")
         
         assert str(error) == "Test error message"
@@ -139,7 +144,8 @@ class TestValidationErrors:
     """Test validation error scenarios"""
     
     def test_model_initialization_error(self):
-        """Test ModelInitializationError"""
+        """
+Test ModelInitializationError"""
         error = ModelInitializationError(
             message="Failed to initialize content analyzer",
             model_name="content_analyzer",
@@ -196,7 +202,8 @@ class TestServiceErrors:
     """Test service-related error scenarios"""
     
     def test_authentication_error(self):
-        """Test AuthenticationError"""
+        """
+Test AuthenticationError"""
         error = AuthenticationError(
             message="Invalid API credentials",
             auth_method="api_key",
@@ -276,12 +283,14 @@ class TestValidationFunctions:
     """Test validation utility functions"""
     
     def test_validate_creator_profile_valid(self, sample_creator_musician):
-        """Test validation of valid creator profile"""
+        """
+Test validation of valid creator profile"""
         # Should not raise exception for valid profile
         validate_creator_profile(sample_creator_musician)
     
     def test_validate_creator_profile_missing_id(self):
-        """Test validation with missing creator ID"""
+        """
+Test validation with missing creator ID"""
         invalid_profile = CreatorProfile(
             creator_id="",  # Invalid: empty
             display_name="Test Creator",
@@ -378,7 +387,8 @@ class TestInputSanitization:
     """Test input sanitization functions"""
     
     def test_sanitize_user_input_basic(self):
-        """Test basic input sanitization"""
+        """
+Test basic input sanitization"""
         dirty_input = "<script>alert('xss')</script>Hello World"
         clean_input = sanitize_user_input(dirty_input)
         
@@ -426,7 +436,8 @@ class TestErrorLogging:
     """Test error logging and context management"""
     
     def test_log_error_with_context(self):
-        """Test error logging with context"""
+        """
+Test error logging with context"""
         error = RecommendationError("Test error")
         context = {
             "user_id": "user_001",
@@ -497,7 +508,8 @@ class TestErrorRecovery:
     """Test error recovery and retry mechanisms"""
     
     def test_error_with_retry_suggestion(self):
-        """Test errors that suggest retry mechanisms"""
+        """
+Test errors that suggest retry mechanisms"""
         error = RateLimitError(
             message="Rate limit exceeded",
             limit=100,
@@ -535,7 +547,8 @@ class TestErrorChaining:
     """Test error chaining and cause tracking"""
     
     def test_error_chain_basic(self):
-        """Test basic error chaining"""
+        """
+Test basic error chaining"""
         root_cause = ValueError("Invalid JSON format")
         
         wrapped_error = DataProcessingError(
@@ -578,7 +591,8 @@ class TestErrorMetrics:
     """Test error metrics and monitoring"""
     
     def test_error_categorization(self):
-        """Test error categorization for metrics"""
+        """
+Test error categorization for metrics"""
         errors = [
             ValidationError("Invalid input"),
             ExternalServiceError("API down"),
@@ -618,7 +632,8 @@ class TestExceptionPerformance:
     
     @pytest.mark.benchmark
     def test_exception_creation_performance(self, benchmark):
-        """Benchmark exception creation performance"""
+        """
+Benchmark exception creation performance"""
         def create_exception():
             return RecommendationError(
                 message="Performance test error",

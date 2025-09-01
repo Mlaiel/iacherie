@@ -11,6 +11,7 @@ Centralized factory for creating and configuring database connections:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, Type, Union, List
@@ -43,7 +44,8 @@ from .config_manager import (
 
 @dataclass
 class ConnectionSpec:
-    """Connection specification for factory"""
+    """
+Connection specification for factory"""
     handler_type: str
     config: Dict[str, Any]
     tenant_id: Optional[str] = None
@@ -236,7 +238,8 @@ class DatabaseConnectionFactory:
             pass
     
     async def create_tenant_connections(self, tenant_id: str) -> Dict[str, Any]:
-        """Create all connections for a specific tenant"""
+        """
+Create all connections for a specific tenant"""
         
         if not self.config_manager:
             raise RuntimeError("Factory not initialized")
@@ -283,7 +286,8 @@ class DatabaseConnectionFactory:
         return list(self.handlers.keys())
     
     async def validate_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> bool:
-        """Validate a connection"""
+        """
+Validate a connection"""
         
         handler = self.get_connection(handler_type, tenant_id)
         if not handler:
@@ -513,7 +517,8 @@ async def get_factory(environment: Environment = Environment.DEVELOPMENT) -> Dat
 
 
 async def shutdown_factory() -> None:
-    """Shutdown global factory instance"""
+    """
+Shutdown global factory instance"""
     global _factory_instance
     
     if _factory_instance:

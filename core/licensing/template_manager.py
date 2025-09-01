@@ -14,6 +14,7 @@ Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
 """
+
 from typing import Dict, Any, List, Optional
 import json
 import logging
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types de licences disponibles."""
+    """
+Types de licences disponibles."""
+
     CREATIVE_COMMONS = "creative_commons"
     COMMERCIAL = "commercial"
     EXCLUSIVE = "exclusive"
@@ -39,6 +42,7 @@ class LicenseType(Enum):
 
 class ContentFormat(Enum):
     """Formats de contenu supportés."""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
@@ -53,6 +57,7 @@ class ContentFormat(Enum):
 
 class UsageScope(Enum):
     """Portées d'utilisation."""
+
     PERSONAL = "personal"
     COMMERCIAL = "commercial"
     BROADCAST = "broadcast"

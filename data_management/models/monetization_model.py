@@ -8,7 +8,7 @@ Responsibility: Advanced revenue tracking, optimization, and multi-platform mone
 ==========================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC MONETIZATION PIPELINE:
 Content Creation → Revenue Eligibility → Multi-Platform Distribution → 
 Real-Time Analytics → AI Revenue Optimization → Automated Payouts → Tax Reporting
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
@@ -25,7 +26,9 @@ import uuid
 import hashlib
 
 class RevenueSource(Enum):
-    """Advanced revenue sources across platforms"""
+    """
+Advanced revenue sources across platforms"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
@@ -49,6 +52,7 @@ class RevenueSource(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -60,6 +64,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -70,6 +75,7 @@ class PaymentStatus(Enum):
 
 class TaxStatus(Enum):
     """Tax reporting status"""
+
     EXEMPT = "exempt"
     DOMESTIC = "domestic"
     FOREIGN = "foreign"
@@ -78,6 +84,7 @@ class TaxStatus(Enum):
 
 class RevenueCategory(Enum):
     """Revenue categorization for reporting"""
+
     PRIMARY = "primary"  # Main content revenue
     SECONDARY = "secondary"  # Derivative revenue
     PASSIVE = "passive"  # Ongoing royalties
@@ -155,7 +162,8 @@ class RevenueTrackingModel:
         return self.net_amount
     
     def calculate_revenue_metrics(self) -> Dict[str, Decimal]:
-        """Calculate revenue performance metrics"""
+        """
+Calculate revenue performance metrics"""
         total_engagement = self.views_count + self.plays_count + self.downloads_count
         
         if total_engagement > 0:
@@ -266,23 +274,27 @@ class PaymentModel:
         return self.net_amount
     
     def mark_completed(self, provider_transaction_id: str) -> None:
-        """Mark payment as completed"""
+        """
+Mark payment as completed"""
         self.payment_status = PaymentStatus.COMPLETED
         self.provider_transaction_id = provider_transaction_id
         self.completed_at = datetime.now(timezone.utc)
     
     def mark_failed(self, reason: str) -> None:
-        """Mark payment as failed with reason"""
+        """
+Mark payment as failed with reason"""
         self.payment_status = PaymentStatus.FAILED
         self.failure_reason = reason
         self.retry_count += 1
     
     def can_retry(self) -> bool:
-        """Check if payment can be retried"""
+        """
+Check if payment can be retried"""
         return self.retry_count < self.max_retries and self.payment_status == PaymentStatus.FAILED
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert to dictionary with optional sensitive data"""
+        """
+Convert to dictionary with optional sensitive data"""
         base_data = {
             "payment_id": self.payment_id,
             "creator_id": self.creator_id,
@@ -371,18 +383,21 @@ class MonetizationModel:
         return gross_amount * self.creator_percentage
     
     def calculate_platform_share(self, gross_amount: Decimal) -> Decimal:
-        """Calculate platform's share of revenue"""
+        """
+Calculate platform's share of revenue"""
         return gross_amount * self.platform_commission
     
     def update_settings(self, new_settings: Dict[str, Any]) -> None:
-        """Update monetization settings"""
+        """
+Update monetization settings"""
         for key, value in new_settings.items():
             if hasattr(self, key):
                 setattr(self, key, value)
         self.updated_at = datetime.now(timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             "monetization_id": self.monetization_id,
             "creator_id": self.creator_id,
@@ -427,7 +442,8 @@ def optimize_payout_schedule(
     revenue_history: List[Decimal], 
     minimum_payout: Decimal
 ) -> str:
-    """Optimize payout frequency based on revenue patterns"""
+    """
+Optimize payout frequency based on revenue patterns"""
     avg_monthly = sum(revenue_history) / len(revenue_history) if revenue_history else Decimal('0')
     
     if avg_monthly >= minimum_payout * 4:

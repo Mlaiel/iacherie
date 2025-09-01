@@ -16,6 +16,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -37,7 +38,9 @@ from ...models.users import User
 
 
 class ContentCategory(Enum):
-    """Content analytics categories."""
+    """
+Content analytics categories."""
+
     PERFORMANCE = "performance"
     PROTECTION = "protection"
     DISCOVERY = "discovery"
@@ -48,6 +51,7 @@ class ContentCategory(Enum):
 
 class ContentType(Enum):
     """Supported content types."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -69,7 +73,8 @@ class ContentMetric:
 
 @dataclass
 class ContentPerformanceProfile:
-    """Comprehensive content performance profile."""
+    """
+Comprehensive content performance profile."""
     content_id: str
     title: str
     content_type: str
@@ -313,7 +318,8 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content protection effectiveness metrics."""
+        """
+Collect content protection effectiveness metrics."""
         
         async with get_database_session() as session:
             # Protection events query
@@ -557,7 +563,8 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content monetization performance metrics."""
+        """
+Collect content monetization performance metrics."""
         
         async with get_database_session() as session:
             # Monetization query
@@ -678,7 +685,8 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content quality and technical metrics."""
+        """
+Collect content quality and technical metrics."""
         
         async with get_database_session() as session:
             # Quality metrics query
@@ -838,7 +846,8 @@ class ContentAnalyticsCollector:
         self,
         content_ids: Optional[List[str]] = None
     ) -> List[ContentPerformanceProfile]:
-        """Generate comprehensive content performance profiles."""
+        """
+Generate comprehensive content performance profiles."""
         
         try:
             # Collect all content metrics
@@ -918,7 +927,8 @@ class ContentAnalyticsCollector:
             return None
             
     def _extract_metric_value(self, metrics: List[ContentMetric], metric_name: str) -> float:
-        """Extract specific metric value from metrics list."""
+        """
+Extract specific metric value from metrics list."""
         
         for metric in metrics:
             if metric.metric_name == metric_name:
@@ -929,7 +939,8 @@ class ContentAnalyticsCollector:
         self,
         metrics: List[ContentMetric]
     ) -> List[str]:
-        """Generate optimization recommendations based on metrics."""
+        """
+Generate optimization recommendations based on metrics."""
         
         recommendations = []
         

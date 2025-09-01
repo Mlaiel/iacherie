@@ -5,7 +5,7 @@ Advanced collaboration engine for cross-platform DMCA intelligence sharing.
 Enables collective protection through verified content creator networks.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -31,6 +31,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
@@ -56,7 +57,9 @@ Base = declarative_base()
 
 
 class CollaborationType(Enum):
-    """Types of DMCA collaboration"""
+    """
+Types of DMCA collaboration"""
+
     SHARED_INTELLIGENCE = "shared_intelligence"
     COLLECTIVE_ACTION = "collective_action"
     EVIDENCE_SHARING = "evidence_sharing"
@@ -68,6 +71,7 @@ class CollaborationType(Enum):
 
 class TrustLevel(IntEnum):
     """Trust levels for collaboration partners"""
+
     UNVERIFIED = 0      # New or unverified partners
     VERIFIED = 1        # Basic verification completed
     TRUSTED = 2         # Established track record
@@ -76,7 +80,9 @@ class TrustLevel(IntEnum):
 
 
 class AlertSeverity(IntEnum):
-    """Severity levels for threat alerts"""
+    """
+Severity levels for threat alerts"""
+
     INFO = 1            # Informational
     LOW = 2             # Low priority threat
     MEDIUM = 3          # Medium priority threat
@@ -86,7 +92,8 @@ class AlertSeverity(IntEnum):
 
 @dataclass
 class CollaborationPartner:
-    """Collaboration partner profile"""
+    """
+Collaboration partner profile"""
     partner_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     organization_name: str = ""
     contact_email: str = ""
@@ -199,7 +206,8 @@ class DMCACollaborationEngine:
         asyncio.create_task(self._load_collaboration_network())
     
     async def _load_collaboration_network(self):
-        """Load existing collaboration network and intelligence"""
+        """
+Load existing collaboration network and intelligence"""
         # Implementation for loading partners and intelligence from database
         logger.info(f"Loading collaboration network for user {self.user_id}")
         
@@ -457,7 +465,8 @@ class DMCACollaborationEngine:
         return distribution
     
     def _analyze_platform_distribution(self, threats: List[ThreatIntelligence]) -> Dict[str, int]:
-        """Analyze distribution of threats by platform"""
+        """
+Analyze distribution of threats by platform"""
         distribution = {}
         for threat in threats:
             platform = threat.infringing_platform.value
@@ -465,7 +474,8 @@ class DMCACollaborationEngine:
         return distribution
     
     def _analyze_threat_type_distribution(self, threats: List[ThreatIntelligence]) -> Dict[str, int]:
-        """Analyze distribution of threat types"""
+        """
+Analyze distribution of threat types"""
         distribution = {}
         for threat in threats:
             threat_type = threat.threat_type
@@ -473,7 +483,8 @@ class DMCACollaborationEngine:
         return distribution
     
     async def _identify_trending_patterns(self, threats: List[ThreatIntelligence]) -> List[Dict[str, Any]]:
-        """Identify trending threat patterns"""
+        """
+Identify trending threat patterns"""
         # Implementation for pattern analysis
         patterns = []
         
@@ -483,7 +494,8 @@ class DMCACollaborationEngine:
         return patterns
     
     async def _identify_high_risk_actors(self, threats: List[ThreatIntelligence]) -> List[Dict[str, Any]]:
-        """Identify high-risk threat actors"""
+        """
+Identify high-risk threat actors"""
         actor_analysis = {}
         
         for threat in threats:
@@ -523,7 +535,8 @@ class DMCACollaborationEngine:
         return high_risk_actors[:10]  # Return top 10 high-risk actors
     
     async def _generate_threat_recommendations(self, threats: List[ThreatIntelligence]) -> List[str]:
-        """Generate actionable recommendations based on threat analysis"""
+        """
+Generate actionable recommendations based on threat analysis"""
         recommendations = []
         
         # Analyze threat patterns and generate recommendations
@@ -551,42 +564,50 @@ class DMCACollaborationEngine:
         pass
     
     async def _store_partner_profile(self, partner: CollaborationPartner):
-        """Store partner profile in database"""
+        """
+Store partner profile in database"""
         # Implementation for database storage
         pass
     
     async def _analyze_threat_confidence(self, threat: ThreatIntelligence) -> float:
-        """Analyze and calculate threat confidence score"""
+        """
+Analyze and calculate threat confidence score"""
         # Implementation for threat confidence analysis
         return 0.8  # Placeholder
     
     async def _distribute_threat_intelligence(self, threat: ThreatIntelligence):
-        """Distribute threat intelligence to relevant partners"""
+        """
+Distribute threat intelligence to relevant partners"""
         # Implementation for intelligence distribution
         pass
     
     async def _store_threat_intelligence(self, threat: ThreatIntelligence):
-        """Store threat intelligence in database"""
+        """
+Store threat intelligence in database"""
         # Implementation for database storage
         pass
     
     async def _send_collaboration_request(self, request: CollaborationRequest):
-        """Send collaboration request to partner"""
+        """
+Send collaboration request to partner"""
         # Implementation for sending collaboration requests
         pass
     
     async def _store_collaboration_request(self, request: CollaborationRequest):
-        """Store collaboration request in database"""
+        """
+Store collaboration request in database"""
         # Implementation for database storage
         pass
     
     async def _notify_collaboration_response(self, request: CollaborationRequest):
-        """Notify requesting partner of collaboration response"""
+        """
+Notify requesting partner of collaboration response"""
         # Implementation for response notification
         pass
     
     async def _update_partner_metrics(self, request: CollaborationRequest):
-        """Update partner reliability metrics"""
+        """
+Update partner reliability metrics"""
         # Implementation for metrics updates
         pass
 

@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Advanced container monitoring and observability for IA-Influencer-Agent platform.
 Includes metrics collection, alerting, health checks, and performance monitoring.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
@@ -32,7 +33,9 @@ from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry, gene
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric types for monitoring"""
+    """
+Metric types for monitoring"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -40,6 +43,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
@@ -47,6 +51,7 @@ class AlertSeverity(Enum):
 
 class HealthStatus(Enum):
     """Health check status"""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
@@ -75,7 +80,8 @@ class AlertRule:
 
 @dataclass
 class HealthCheck:
-    """Health check configuration"""
+    """
+Health check configuration"""
     name: str
     endpoint: str
     method: str = "GET"

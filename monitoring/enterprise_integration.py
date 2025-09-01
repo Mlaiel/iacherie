@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -29,7 +30,9 @@ import ssl
 
 
 class IntegrationType(Enum):
-    """Types of enterprise integrations"""
+    """
+Types of enterprise integrations"""
+
     SLACK = "slack"
     TEAMS = "teams"
     JIRA = "jira"
@@ -45,6 +48,7 @@ class IntegrationType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels for enterprise systems"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -69,7 +73,8 @@ class EnterpriseAlert:
 
 @dataclass
 class IntegrationConfig:
-    """Configuration for enterprise integrations"""
+    """
+Configuration for enterprise integrations"""
     integration_type: IntegrationType
     enabled: bool
     credentials: Dict[str, str]
@@ -78,7 +83,8 @@ class IntegrationConfig:
 
 
 class BaseEnterpriseIntegration:
-    """Base class for enterprise integrations"""
+    """
+Base class for enterprise integrations"""
     
     def __init__(self, config: IntegrationConfig):
         self.config = config
@@ -94,7 +100,8 @@ class BaseEnterpriseIntegration:
             await self.session.close()
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to enterprise system"""
+        """
+Send alert to enterprise system"""
         self.logger.warning(f"Base implementation called for {self.__class__.__name__}")
         return False
     
@@ -118,7 +125,8 @@ class SlackIntegration(BaseEnterpriseIntegration):
     """Slack integration for alerts and notifications"""
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to Slack"""
+        """
+Send alert to Slack"""
         try:
             webhook_url = self.config.endpoints.get("webhook_url")
             if not webhook_url:
@@ -202,7 +210,8 @@ class DatadogIntegration(BaseEnterpriseIntegration):
     """Datadog integration for metrics and alerts"""
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to Datadog as event"""
+        """
+Send alert to Datadog as event"""
         try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
@@ -311,7 +320,8 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
     """PagerDuty integration for incident management"""
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to PagerDuty as incident"""
+        """
+Send alert to PagerDuty as incident"""
         try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
@@ -427,7 +437,8 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
         self._initialize_aws_client()
     
     def _initialize_aws_client(self):
-        """Initialize AWS CloudWatch client"""
+        """
+Initialize AWS CloudWatch client"""
         try:
             aws_access_key = self.config.credentials.get("aws_access_key_id")
             aws_secret_key = self.config.credentials.get("aws_secret_access_key")

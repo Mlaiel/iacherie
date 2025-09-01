@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import time
 import threading
 import psutil
@@ -34,7 +35,8 @@ import numpy as np
 
 
 class MetricType(str, Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
     # Timing metrics
     RESPONSE_TIME = "response_time"
     PROCESSING_TIME = "processing_time"
@@ -78,6 +80,7 @@ class MetricType(str, Enum):
 
 class PerformanceLevel(str, Enum):
     """Performance alert levels"""
+
     OPTIMAL = "optimal"
     GOOD = "good"
     WARNING = "warning"
@@ -112,7 +115,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert data structure"""
+    """
+Performance alert data structure"""
     alert_id: str
     timestamp: datetime
     metric_type: MetricType
@@ -391,7 +395,8 @@ class PerformanceLoggingConfig:
             return False
     
     def start_monitoring(self) -> None:
-        """Start performance monitoring"""
+        """
+Start performance monitoring"""
         if self._monitoring_thread and self._monitoring_thread.is_alive():
             return
         
@@ -503,7 +508,8 @@ class PerformanceLoggingConfig:
             return self._get_cached_metric_value(metric_type, component)
     
     def _get_metric_unit(self, metric_type: MetricType) -> str:
-        """Get unit for metric type"""
+        """
+Get unit for metric type"""
         units = {
             MetricType.RESPONSE_TIME: "ms",
             MetricType.PROCESSING_TIME: "ms",
@@ -545,7 +551,8 @@ class PerformanceLoggingConfig:
         return 0.0
     
     def _get_cached_metric_value(self, metric_type: MetricType, component: str) -> Optional[float]:
-        """Get cached metric value from recent measurements"""
+        """
+Get cached metric value from recent measurements"""
         key = f"{component}_{metric_type.value}"
         with self._lock:
             if key in self._metrics_buffer:
@@ -608,7 +615,8 @@ class PerformanceLoggingConfig:
                     }
     
     def _check_thresholds(self) -> None:
-        """Check metric thresholds and generate alerts"""
+        """
+Check metric thresholds and generate alerts"""
         current_time = datetime.now(timezone.utc)
         
         with self._lock:
@@ -660,7 +668,8 @@ class PerformanceLoggingConfig:
         return float('inf')
     
     def _is_alert_in_cooldown(self, alert_key: str) -> bool:
-        """Check if alert is in cooldown period"""
+        """
+Check if alert is in cooldown period"""
         if alert_key in self._active_alerts:
             alert = self._active_alerts[alert_key]
             if not alert.resolved:
@@ -676,7 +685,8 @@ class PerformanceLoggingConfig:
         threshold: MetricThreshold,
         component: str
     ) -> PerformanceAlert:
-        """Create a performance alert"""
+        """
+Create a performance alert"""
         alert_id = f"PERF_{datetime.now().strftime('%Y%m%d%H%M%S')}_{component}_{metric_type.value}"
         
         threshold_value = (
@@ -980,12 +990,14 @@ class PerformanceLoggingConfig:
         return filtered_metrics
     
     def get_active_alerts(self) -> List[PerformanceAlert]:
-        """Get active performance alerts"""
+        """
+Get active performance alerts"""
         with self._lock:
             return [alert for alert in self._active_alerts.values() if not alert.resolved]
     
     def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve a performance alert"""
+        """
+Resolve a performance alert"""
         with self._lock:
             for alert in self._active_alerts.values():
                 if alert.alert_id == alert_id and not alert.resolved:
@@ -1014,7 +1026,8 @@ class PerformanceLoggingConfig:
         return stats
     
     def add_component_profile(self, profile: ComponentProfile) -> None:
-        """Add component performance profile"""
+        """
+Add component performance profile"""
         self.component_profiles[profile.name] = profile
         logging.info(f"Added performance profile for component: {profile.name}")
     
@@ -1072,7 +1085,8 @@ def initialize_performance_logging(
 
 
 def get_performance_config() -> PerformanceLoggingConfig:
-    """Get the global performance logging configuration"""
+    """
+Get the global performance logging configuration"""
     if not _performance_config:
         initialize_performance_logging()
     

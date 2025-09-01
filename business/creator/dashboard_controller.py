@@ -5,7 +5,7 @@ and intelligent insights for content creators across all platforms.
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class MetricType(Enum):
-    """Dashboard metric types"""
+    """
+Dashboard metric types"""
+
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     GROWTH = "growth"
@@ -53,7 +56,8 @@ class RealTimeAnalytics:
         self.logger = get_logger(self.__class__.__name__)
     
     async def get_real_time_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get real-time metrics for creator"""
+        """
+Get real-time metrics for creator"""
         return {
             'views_today': 1250,
             'engagement_rate': 4.2,
@@ -64,26 +68,30 @@ class RealTimeAnalytics:
 
 
 class PerformanceMetrics:
-    """Performance metrics calculator"""
+    """
+Performance metrics calculator"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def calculate_performance_score(self, creator_id: str) -> float:
-        """Calculate overall performance score"""
+        """
+Calculate overall performance score"""
         return 87.5  # Placeholder
 
 
 class InsightEngine:
-    """AI-powered insight generation engine"""
+    """
+AI-powered insight generation engine"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def generate_insights(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Generate AI insights for creator"""
+        """
+Generate AI insights for creator"""
         return [
             {
                 'type': 'growth_opportunity',

@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from .backup_storage import BackupStorage
 
 
 class BackupType(Enum):
-    """Backup type enumeration."""
+    """
+Backup type enumeration."""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -36,6 +39,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup status enumeration."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -537,7 +541,8 @@ class BackupManager:
         backup_id: str, 
         backup_data: bytes
     ) -> Dict[str, Any]:
-        """Process restore data with decryption and decompression."""
+        """
+Process restore data with decryption and decompression."""
         import json
         import gzip
         
@@ -554,7 +559,8 @@ class BackupManager:
         return data
 
     async def _get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Get backup metadata by ID."""
+        """
+Get backup metadata by ID."""
         for metadata in self.backup_history:
             if metadata.backup_id == backup_id:
                 return metadata

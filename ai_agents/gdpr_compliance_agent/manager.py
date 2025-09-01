@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -51,7 +52,9 @@ from .reporting_engine import ComplianceReportingEngine
 logger = get_logger(__name__)
 
 class ComplianceLevel(Enum):
-    """GDPR compliance levels for different processing types"""
+    """
+GDPR compliance levels for different processing types"""
+
     STRICT = "strict"
     STANDARD = "standard"
     MINIMAL = "minimal"
@@ -59,6 +62,7 @@ class ComplianceLevel(Enum):
 
 class ProcessingPurpose(Enum):
     """Data processing purposes according to GDPR"""
+
     CONTENT_PROTECTION = "content_protection"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
@@ -692,7 +696,8 @@ class GDPRComplianceManager:
         return retention_periods.get(purpose, 365)  # Default 1 year
     
     async def _get_security_measures(self, purpose: ProcessingPurpose) -> List[str]:
-        """Get required security measures for processing purpose"""
+        """
+Get required security measures for processing purpose"""
         base_measures = [
             "encryption_at_rest",
             "encryption_in_transit",

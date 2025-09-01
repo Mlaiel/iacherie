@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaskPriority(Enum):
-    """Task priority levels"""
+    """
+Task priority levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -33,7 +36,9 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
+    """
+Task execution status"""
+
     PENDING = "pending"
     QUEUED = "queued"
     ASSIGNED = "assigned"
@@ -48,6 +53,7 @@ class TaskStatus(Enum):
 
 class TaskType(Enum):
     """Categories of tasks"""
+
     CONTENT_CREATION = "content_creation"
     CONTENT_ANALYSIS = "content_analysis"
     SOCIAL_MEDIA = "social_media"
@@ -113,19 +119,22 @@ class Task:
     
     @property
     def is_overdue(self) -> bool:
-        """Check if task is overdue"""
+        """
+Check if task is overdue"""
         if not self.deadline:
             return False
         return datetime.utcnow() > self.deadline
     
     @property
     def is_ready(self) -> bool:
-        """Check if task is ready to execute (dependencies satisfied)"""
+        """
+Check if task is ready to execute (dependencies satisfied)"""
         return self.status == TaskStatus.QUEUED and not self.depends_on
     
     @property
     def priority_score(self) -> float:
-        """Calculate priority score for scheduling"""
+        """
+Calculate priority score for scheduling"""
         base_score = self.priority.value * 100
         
         # Urgency bonus
@@ -143,7 +152,8 @@ class Task:
 
 @dataclass
 class TaskBatch:
-    """Batch of related tasks"""
+    """
+Batch of related tasks"""
     batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -162,7 +172,8 @@ class TaskBatch:
 
 @dataclass
 class ResourceConstraint:
-    """Resource constraints for task execution"""
+    """
+Resource constraints for task execution"""
     max_memory_mb: Optional[int] = None
     max_cpu_percent: Optional[int] = None
     max_concurrent_tasks: Optional[int] = None
@@ -455,7 +466,8 @@ class TaskManager:
         return suitable_agents[0][0]
     
     async def _assign_and_start_task(self, task: Task, agent_id: str) -> None:
-        """Assign task to agent and start execution"""
+        """
+Assign task to agent and start execution"""
         try:
             # Update task status
             task.status = TaskStatus.ASSIGNED

@@ -25,6 +25,7 @@ ENTERPRISE UTILITY FEATURES:
 - International payment format validation
 - Performance optimization tools
 """
+
 import re
 import hashlib
 import hmac
@@ -76,22 +77,26 @@ getcontext().prec = 28
 
 
 class PaymentValidationError(Exception):
-    """Exception for payment validation errors"""
+    """
+Exception for payment validation errors"""
     pass
 
 
 class CurrencyConversionError(Exception):
-    """Exception for currency conversion errors"""
+    """
+Exception for currency conversion errors"""
     pass
 
 
 class ReportGenerationError(Exception):
-    """Exception for report generation errors"""
+    """
+Exception for report generation errors"""
     pass
 
 
 class CurrencyCode(Enum):
-    """Extended ISO 4217 Currency Codes with crypto support"""
+    """
+Extended ISO 4217 Currency Codes with crypto support"""
     # Major Fiat Currencies
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
@@ -129,6 +134,7 @@ class CurrencyCode(Enum):
 
 class PaymentMethodType(Enum):
     """Extended payment method types"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -150,6 +156,7 @@ class PaymentMethodType(Enum):
 
 class ReportFormat(Enum):
     """Supported report formats"""
+
     JSON = "json"
     CSV = "csv"
     PDF = "pdf"
@@ -169,7 +176,8 @@ class ValidationResult:
 
 @dataclass
 class CurrencyRate:
-    """Currency exchange rate container"""
+    """
+Currency exchange rate container"""
     from_currency: str
     to_currency: str
     rate: Decimal
@@ -180,7 +188,8 @@ class CurrencyRate:
 
 @dataclass
 class FinancialSummary:
-    """Financial summary container"""
+    """
+Financial summary container"""
     total_amount: Decimal
     currency: str
     transaction_count: int
@@ -194,7 +203,8 @@ class FinancialSummary:
 
 
 def performance_monitor(func):
-    """Decorator to monitor function performance"""
+    """
+Decorator to monitor function performance"""
     @wraps(func)
     async def async_wrapper(*args, **kwargs):
         start_time = datetime.utcnow()
@@ -241,7 +251,8 @@ class PaymentUtils:
     
     @staticmethod
     def mask_card_number(card_number: str) -> str:
-        """Mask credit card number for display"""
+        """
+Mask credit card number for display"""
         if not card_number:
             return ""
         
@@ -319,7 +330,8 @@ class PaymentUtils:
     
     @staticmethod
     def calculate_tiered_fee(amount: Decimal, fee_tiers: List[Dict[str, Any]]) -> Decimal:
-        """Calculate tiered fee based on amount"""
+        """
+Calculate tiered fee based on amount"""
         total_fee = Decimal('0')
         remaining_amount = amount
         
@@ -340,12 +352,14 @@ class PaymentUtils:
     
     @staticmethod
     def is_weekend(date: datetime) -> bool:
-        """Check if date falls on weekend"""
+        """
+Check if date falls on weekend"""
         return date.weekday() >= 5  # Saturday = 5, Sunday = 6
     
     @staticmethod
     def is_business_day(date: datetime, holidays: Optional[List[datetime]] = None) -> bool:
-        """Check if date is a business day"""
+        """
+Check if date is a business day"""
         if PaymentUtils.is_weekend(date):
             return False
         
@@ -359,7 +373,8 @@ class PaymentUtils:
     
     @staticmethod
     def next_business_day(date: datetime, holidays: Optional[List[datetime]] = None) -> datetime:
-        """Get next business day"""
+        """
+Get next business day"""
         next_day = date + timedelta(days=1)
         
         while not PaymentUtils.is_business_day(next_day, holidays):
@@ -369,7 +384,8 @@ class PaymentUtils:
     
     @staticmethod
     def generate_payment_qr_code(payment_data: Dict[str, Any]) -> Optional[bytes]:
-        """Generate QR code for payment data"""
+        """
+Generate QR code for payment data"""
         if not QR_CODE_AVAILABLE:
             logger.warning("QR code generation not available - qrcode library not installed")
             return None
@@ -593,7 +609,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_swift_code(swift_code: str) -> ValidationResult:
-        """Validate SWIFT/BIC code"""
+        """
+Validate SWIFT/BIC code"""
         try:
             clean_swift = swift_code.upper().strip()
             
@@ -754,7 +771,8 @@ class CurrencyConverter:
         return [currency.value for currency in CurrencyCode]
     
     def clear_cache(self):
-        """Clear exchange rate cache"""
+        """
+Clear exchange rate cache"""
         self.cache.clear()
         logger.info("Currency conversion cache cleared")
 
@@ -769,7 +787,8 @@ class FinancialCalculator:
         compounding_frequency: int,
         years: Decimal
     ) -> Decimal:
-        """Calculate compound interest"""
+        """
+Calculate compound interest"""
         try:
             # A = P(1 + r/n)^(nt)
             rate_per_period = annual_rate / (100 * compounding_frequency)
@@ -1051,7 +1070,8 @@ class PaymentFormatter:
     
     @staticmethod
     def format_transaction_for_display(transaction: Dict[str, Any]) -> Dict[str, str]:
-        """Format transaction data for display purposes"""
+        """
+Format transaction data for display purposes"""
         formatted = {}
         
         # Format amount
@@ -1134,6 +1154,7 @@ class PaymentFormatter:
 
 class CardType(Enum):
     """Credit card types"""
+
     VISA = "visa"
     MASTERCARD = "mastercard"
     AMERICAN_EXPRESS = "amex"
@@ -1148,7 +1169,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_card_number(card_number: str) -> bool:
-        """Validate credit card number using Luhn algorithm"""
+        """
+Validate credit card number using Luhn algorithm"""
         if not card_number:
             return False
         
@@ -1175,7 +1197,8 @@ class PaymentValidator:
     
     @staticmethod
     def get_card_type(card_number: str) -> CardType:
-        """Identify credit card type from card number"""
+        """
+Identify credit card type from card number"""
         if not card_number:
             return CardType.UNKNOWN
         
@@ -1204,7 +1227,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_expiry_date(month: int, year: int) -> bool:
-        """Validate credit card expiry date"""
+        """
+Validate credit card expiry date"""
         try:
             if not (1 <= month <= 12):
                 return False
@@ -1227,7 +1251,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_cvv(cvv: str, card_type: CardType) -> bool:
-        """Validate CVV code"""
+        """
+Validate CVV code"""
         if not cvv or not cvv.isdigit():
             return False
         
@@ -1239,7 +1264,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_amount(amount: Union[str, int, float, Decimal]) -> bool:
-        """Validate payment amount"""
+        """
+Validate payment amount"""
         try:
             decimal_amount = Decimal(str(amount))
             return decimal_amount > 0 and decimal_amount <= Decimal('999999.99')
@@ -1248,7 +1274,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_currency(currency: str) -> bool:
-        """Validate currency code"""
+        """
+Validate currency code"""
         try:
             CurrencyCode(currency.upper())
             return True
@@ -1257,7 +1284,8 @@ class PaymentValidator:
 
 
 class PaymentIDGenerator:
-    """Generate unique payment-related IDs"""
+    """
+Generate unique payment-related IDs"""
     
     @staticmethod
     def generate_transaction_id(prefix: str = "txn") -> str:
@@ -1291,7 +1319,8 @@ class PaymentDataMasker:
     
     @staticmethod
     def mask_card_number(card_number: str) -> str:
-        """Mask credit card number showing only last 4 digits"""
+        """
+Mask credit card number showing only last 4 digits"""
         if not card_number:
             return ""
         
@@ -1417,7 +1446,8 @@ class CurrencyConverter:
 
 
 class PaymentValidator:
-    """Validation utilities for payment data"""
+    """
+Validation utilities for payment data"""
     
     @staticmethod
     def validate_credit_card_number(card_number: str) -> Dict[str, Any]:
@@ -1475,7 +1505,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_expiry_date(exp_month: int, exp_year: int) -> Dict[str, Any]:
-        """Validate credit card expiry date"""
+        """
+Validate credit card expiry date"""
         if not (1 <= exp_month <= 12):
             return {'valid': False, 'error': 'Invalid expiry month'}
         
@@ -1497,7 +1528,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_cvv(cvv: str, card_type: str) -> Dict[str, Any]:
-        """Validate CVV/CVC code"""
+        """
+Validate CVV/CVC code"""
         if not cvv.isdigit():
             return {'valid': False, 'error': 'CVV must contain only digits'}
         
@@ -1510,7 +1542,8 @@ class PaymentValidator:
     
     @staticmethod
     def validate_iban(iban: str) -> Dict[str, Any]:
-        """Validate International Bank Account Number (IBAN)"""
+        """
+Validate International Bank Account Number (IBAN)"""
         # Remove spaces and convert to uppercase
         iban = re.sub(r'[^A-Z0-9]', '', iban.upper())
         
@@ -1568,12 +1601,14 @@ class PaymentSecurityUtils:
     
     @staticmethod
     def generate_payment_token(length: int = 32) -> str:
-        """Generate secure payment token"""
+        """
+Generate secure payment token"""
         return secrets.token_urlsafe(length)
     
     @staticmethod
     def hash_payment_data(data: str, salt: Optional[str] = None) -> str:
-        """Hash sensitive payment data"""
+        """
+Hash sensitive payment data"""
         if salt is None:
             salt = secrets.token_hex(16)
         
@@ -1591,7 +1626,8 @@ class PaymentSecurityUtils:
         secret: str,
         algorithm: str = 'sha256'
     ) -> bool:
-        """Verify webhook signature from payment processor"""
+        """
+Verify webhook signature from payment processor"""
         try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
@@ -1615,14 +1651,16 @@ class PaymentSecurityUtils:
     
     @staticmethod
     def generate_fingerprint(data: Dict[str, Any]) -> str:
-        """Generate fingerprint for payment method"""
+        """
+Generate fingerprint for payment method"""
         # Sort keys for consistent hashing
         sorted_data = json.dumps(data, sort_keys=True)
         return hashlib.sha256(sorted_data.encode('utf-8')).hexdigest()
 
 
 class PaymentFormatter:
-    """Formatting utilities for payment display"""
+    """
+Formatting utilities for payment display"""
     
     @staticmethod
     def format_amount(
@@ -1630,7 +1668,8 @@ class PaymentFormatter:
         currency: str,
         locale: str = 'en_US'
     ) -> str:
-        """Format amount for display with currency symbol"""
+        """
+Format amount for display with currency symbol"""
         try:
             symbol = CurrencyConverter.get_currency_symbol(currency)
             
@@ -1683,7 +1722,8 @@ class PaymentAnalytics:
         successful_transactions: int,
         total_attempts: int
     ) -> Decimal:
-        """Calculate payment conversion rate"""
+        """
+Calculate payment conversion rate"""
         if total_attempts == 0:
             return Decimal('0')
         
@@ -1695,7 +1735,8 @@ class PaymentAnalytics:
     def calculate_average_transaction_value(
         transactions: List[Dict[str, Any]]
     ) -> Decimal:
-        """Calculate average transaction value"""
+        """
+Calculate average transaction value"""
         if not transactions:
             return Decimal('0')
         
@@ -1711,7 +1752,8 @@ class PaymentAnalytics:
         current_period_revenue: Decimal,
         previous_period_revenue: Decimal
     ) -> Decimal:
-        """Calculate revenue growth percentage"""
+        """
+Calculate revenue growth percentage"""
         if previous_period_revenue == 0:
             return Decimal('0') if current_period_revenue == 0 else Decimal('100')
         
@@ -1720,14 +1762,16 @@ class PaymentAnalytics:
 
 
 class PaymentIntegrationHelpers:
-    """Helper functions for payment processor integrations"""
+    """
+Helper functions for payment processor integrations"""
     
     @staticmethod
     def normalize_processor_response(
         response: Dict[str, Any],
         processor: str
     ) -> Dict[str, Any]:
-        """Normalize response from different payment processors"""
+        """
+Normalize response from different payment processors"""
         normalized = {
             'transaction_id': '',
             'status': 'unknown',
@@ -1762,7 +1806,8 @@ class PaymentIntegrationHelpers:
     
     @staticmethod
     def _map_stripe_status(stripe_status: str) -> str:
-        """Map Stripe status to internal status"""
+        """
+Map Stripe status to internal status"""
         mapping = {
             'succeeded': 'completed',
             'pending': 'processing',
@@ -1776,7 +1821,8 @@ class PaymentIntegrationHelpers:
     
     @staticmethod
     def _map_paypal_status(paypal_status: str) -> str:
-        """Map PayPal status to internal status"""
+        """
+Map PayPal status to internal status"""
         mapping = {
             'approved': 'completed',
             'created': 'pending',
@@ -1789,7 +1835,8 @@ class PaymentIntegrationHelpers:
 
 # Decorator for payment operation logging
 def log_payment_operation(operation_name: str):
-    """Decorator to log payment operations"""
+    """
+Decorator to log payment operations"""
     def decorator(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
@@ -1860,7 +1907,8 @@ def calculate_processing_time_estimate(
     processor: str,
     payment_method_type: str
 ) -> timedelta:
-    """Estimate processing time for different payment methods"""
+    """
+Estimate processing time for different payment methods"""
     estimates = {
         'stripe': {
             'credit_card': timedelta(seconds=30),

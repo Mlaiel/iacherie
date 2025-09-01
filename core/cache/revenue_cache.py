@@ -4,6 +4,7 @@ Specialized caching for monetization, revenue tracking, and financial analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -20,7 +21,9 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Revenue sources"""
+    """
+Revenue sources"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -36,6 +39,7 @@ class RevenueSource(Enum):
 
 class RevenueType(Enum):
     """Types of revenue"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING_FEES = "licensing_fees"
@@ -48,6 +52,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -94,7 +99,8 @@ class RevenueEntry:
             self.net_amount = self.amount - self.processing_fee
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         # Convert Decimal and datetime objects for JSON serialization
         data['amount'] = str(self.amount)
@@ -112,7 +118,8 @@ class RevenueEntry:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'RevenueEntry':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         # Convert string values back to appropriate types
         data['amount'] = Decimal(data['amount'])
         data['processing_fee'] = Decimal(data['processing_fee'])
@@ -129,7 +136,8 @@ class RevenueEntry:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics summary"""
+    """
+Revenue analytics summary"""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -207,7 +215,8 @@ class RevenueCache:
         await self.redis_cache.connect()
     
     def _generate_entry_id(self, user_id: str, timestamp: datetime) -> str:
-        """Generate unique revenue entry ID"""
+        """
+Generate unique revenue entry ID"""
         timestamp_str = timestamp.strftime("%Y%m%d_%H%M%S")
         return f"{user_id}_{timestamp_str}_{hash(str(timestamp.microsecond)) % 10000:04d}"
     
@@ -779,7 +788,8 @@ class RevenueCache:
         }
     
     async def close(self):
-        """Close cache connections"""
+        """
+Close cache connections"""
         await self.redis_cache.close()
         self.memory_cache.close()
 

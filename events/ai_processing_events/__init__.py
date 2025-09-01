@@ -22,8 +22,9 @@ Business Logic Flow:
 User (Creator Multi-format) → Upload Content → AI Processing → 
 Protection → SEO Pro → Collaboration Matching → Multi-platform Distribution
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -43,7 +44,7 @@ logger = logging.getLogger(__name__)
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "Copyright © 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 
 # AI Processing Event Types
 class AIProcessingEventType(Enum):
@@ -129,7 +130,8 @@ class AIProcessingEvent(BaseEvent):
         self.ai_event_data = event_data
     
     def validate_event_data(self) -> bool:
-        """Validate AI processing event data structure and content"""
+        """
+Validate AI processing event data structure and content"""
         try:
             required_fields = ['content_id', 'content_type', 'creator_id', 'processing_stage']
             for field in required_fields:
@@ -154,7 +156,8 @@ class AIProcessingEvent(BaseEvent):
         return self.ai_event_data.performance_metrics or {}
     
     def get_business_context(self) -> Dict[str, Any]:
-        """Extract business logic context for workflow routing"""
+        """
+Extract business logic context for workflow routing"""
         return {
             'creator_id': self.ai_event_data.creator_id,
             'content_type': self.ai_event_data.content_type,
@@ -215,7 +218,8 @@ def get_handler_class(handler_name: str):
     return None
 
 def create_event_processing_pipeline(ai_engine):
-    """Create a complete event processing pipeline with all handlers"""
+    """
+Create a complete event processing pipeline with all handlers"""
     try:
         return EventProcessingPipeline(ai_engine)
     except Exception as e:

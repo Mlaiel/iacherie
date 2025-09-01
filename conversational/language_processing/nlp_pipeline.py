@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
@@ -61,7 +62,9 @@ logger = get_logger(__name__)
 
 
 class ProcessingStage(Enum):
-    """NLP pipeline processing stages"""
+    """
+NLP pipeline processing stages"""
+
     PREPROCESSING = "preprocessing"
     TOKENIZATION = "tokenization"
     LINGUISTIC_ANALYSIS = "linguistic_analysis"
@@ -73,6 +76,7 @@ class ProcessingStage(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     SOCIAL_POST = "social_post"
     BLOG_ARTICLE = "blog_article"
     VIDEO_CAPTION = "video_caption"
@@ -85,6 +89,7 @@ class ContentFormat(Enum):
 
 class QualityMetric(Enum):
     """Content quality metrics"""
+
     READABILITY = "readability"
     ENGAGEMENT = "engagement"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -110,7 +115,8 @@ class ProcessingStep:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline processing result"""
+    """
+Complete pipeline processing result"""
     original_text: str
     processed_text: str
     processing_steps: List[ProcessingStep]
@@ -125,7 +131,8 @@ class PipelineResult:
 
 @dataclass
 class ContentProfile:
-    """Content optimization profile"""
+    """
+Content optimization profile"""
     content_format: ContentFormat
     target_audience: str
     language: str
@@ -136,7 +143,8 @@ class ContentProfile:
 
 
 class NLPPipeline:
-    """Advanced NLP processing pipeline"""
+    """
+Advanced NLP processing pipeline"""
     
     def __init__(self):
         self.processors = {}
@@ -145,7 +153,8 @@ class NLPPipeline:
         self._setup_pipeline()
         
     def _initialize_processors(self):
-        """Initialize all NLP processors"""
+        """
+Initialize all NLP processors"""
         try:
             # Core processors
             self.processors['text_analyzer'] = TextAnalyzer()
@@ -314,7 +323,8 @@ class NLPPipeline:
             return {}
             
     async def _preprocessing_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
-        """Preprocessing stage: cleaning and normalization"""
+        """
+Preprocessing stage: cleaning and normalization"""
         try:
             # Text cleaning
             cleaned_text = clean_text(text)
@@ -391,7 +401,8 @@ class NLPPipeline:
         return sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
         
     async def _linguistic_analysis_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
-        """Linguistic analysis stage: detailed language analysis"""
+        """
+Linguistic analysis stage: detailed language analysis"""
         try:
             # POS tagging
             words = word_tokenize(text)
@@ -438,7 +449,8 @@ class NLPPipeline:
         return pos_count
         
     async def _analyze_grammar_patterns(self, pos_tags: List[Tuple[str, str]]) -> Dict[str, Any]:
-        """Analyze grammar patterns"""
+        """
+Analyze grammar patterns"""
         try:
             patterns = {
                 'passive_voice_count': 0,

@@ -2,8 +2,9 @@
 Automated content licensing, rights management, and legal compliance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from ...ai.content_analysis import ContentAnalyzer
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -37,6 +40,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License agreement status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -48,6 +52,7 @@ class LicenseStatus(Enum):
 
 class UsageRights(Enum):
     """Content usage rights"""
+
     COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     BROADCAST = "broadcast"
@@ -62,6 +67,7 @@ class UsageRights(Enum):
 
 class Territory(Enum):
     """Geographic territories"""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -116,7 +122,8 @@ class LicenseeInfo:
 
 
 class LicenseRequest(BaseModel):
-    """License request data model"""
+    """
+License request data model"""
     content_id: str
     licensee_info: Dict[str, Any]
     license_terms: Dict[str, Any]
@@ -146,7 +153,8 @@ class LicenseAgreementResponse(BaseModel):
 
 
 class LicensingEngine:
-    """Advanced content licensing and rights management engine"""
+    """
+Advanced content licensing and rights management engine"""
     
     def __init__(
         self,
@@ -161,7 +169,8 @@ class LicensingEngine:
         self.pricing_rules = self._initialize_pricing_rules()
         
     def _initialize_pricing_rules(self) -> Dict[str, Any]:
-        """Initialize dynamic pricing rules"""
+        """
+Initialize dynamic pricing rules"""
         return {
             "base_prices": {
                 LicenseType.NON_EXCLUSIVE: {
@@ -427,7 +436,8 @@ class LicensingEngine:
         return agreement
     
     def _generate_terms_hash(self, license_terms: LicenseTerms) -> str:
-        """Generate hash of license terms for integrity verification"""
+        """
+Generate hash of license terms for integrity verification"""
         import hashlib
         import json
         
@@ -585,7 +595,8 @@ class LicensingEngine:
         return await session.get(Content, content_id)
     
     async def _send_license_confirmation(self, agreement: LicenseAgreement) -> None:
-        """Send license confirmation notifications"""
+        """
+Send license confirmation notifications"""
         # Send email to licensee and licensor
         # Implementation would use email service
         self.logger.info(f"License confirmation sent for {agreement.id}")
@@ -611,7 +622,8 @@ class LicenseManager:
         licensee_email: str,
         session: AsyncSession
     ) -> Optional[str]:
-        """Create instant license for simple use cases"""
+        """
+Create instant license for simple use cases"""
         try:
             # Create simplified license request
             license_request = LicenseRequest(

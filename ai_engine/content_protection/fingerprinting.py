@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import numpy as np
@@ -65,7 +66,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintAlgorithm:
-    """Fingerprint algorithm constants"""
+    """
+Fingerprint algorithm constants"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     DCT_HASH = "dct_hash"
     SSIM = "ssim"
@@ -77,6 +80,7 @@ class FingerprintAlgorithm:
 
 class FingerprintType(Enum):
     """Types of content fingerprints"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_FRAME = "video_frame"
@@ -100,7 +104,8 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint matching result"""
+    """
+Fingerprint matching result"""
     match_id: str
     original_fingerprint_id: str
     matched_fingerprint_id: str
@@ -119,7 +124,8 @@ class ContentFingerprinter:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content fingerprinter"""
+        """
+Initialize content fingerprinter"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -148,7 +154,8 @@ class ContentFingerprinter:
         }
     
     async def initialize(self):
-        """Initialize the content fingerprinter asynchronously"""
+        """
+Initialize the content fingerprinter asynchronously"""
         self.logger.info("Initializing ContentFingerprinter")
         # Initialize ML models and feature extractors
         self._is_initialized = True
@@ -712,7 +719,8 @@ class ContentFingerprinter:
             return 0.5
     
     def _calculate_image_confidence(self, image_array: np.ndarray) -> float:
-        """Calculate confidence score for image fingerprint"""
+        """
+Calculate confidence score for image fingerprint"""
         try:
             # Simplified but robust confidence calculation for industrial use
             
@@ -744,7 +752,8 @@ class ContentFingerprinter:
     
     # Alias for backward compatibility
     async def generate_fingerprint(self, content_id: str, content_data: bytes, content_type: str, metadata: Optional[Dict[str, Any]] = None) -> ContentFingerprint:
-        """Alias for create_fingerprint for backward compatibility"""
+        """
+Alias for create_fingerprint for backward compatibility"""
         return await self.create_fingerprint(content_id, content_data, content_type, metadata)
     
     async def generate_image_fingerprint(
@@ -1132,7 +1141,8 @@ class FingerprintMatcher:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize fingerprint matcher"""
+        """
+Initialize fingerprint matcher"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -1149,7 +1159,8 @@ class FingerprintMatcher:
         }
     
     async def store_fingerprint(self, fingerprint) -> Dict[str, Any]:
-        """Store a fingerprint in the database"""
+        """
+Store a fingerprint in the database"""
         try:
             fp_id = getattr(fingerprint, 'fingerprint_id', f"stored_{len(self.fingerprint_storage)}")
             self.fingerprint_storage[fp_id] = fingerprint
@@ -1179,16 +1190,19 @@ class FingerprintMatcher:
             return {'success': False, 'error': str(e)}
     
     async def get_fingerprint(self, fingerprint_id: str) -> Optional[Any]:
-        """Retrieve a fingerprint by ID"""
+        """
+Retrieve a fingerprint by ID"""
         return self.fingerprint_storage.get(fingerprint_id)
     
     async def get_content_fingerprints(self, content_id: str) -> List[Any]:
-        """Get all fingerprints for a specific content ID"""
+        """
+Get all fingerprints for a specific content ID"""
         return [fp for fp in self.fingerprint_storage.values() 
                 if getattr(fp, 'content_id', None) == content_id]
     
     async def find_matches_batch(self, query_fingerprints: List, **kwargs) -> Dict[str, List]:
-        """Batch find matches for multiple fingerprints"""
+        """
+Batch find matches for multiple fingerprints"""
         results = {}
         for query_fp in query_fingerprints:
             matches = await self.find_matches(query_fp, **kwargs)
@@ -1197,7 +1211,8 @@ class FingerprintMatcher:
         return results
     
     async def delete_fingerprint(self, fingerprint_id: str) -> Dict[str, Any]:
-        """Delete a fingerprint from storage"""
+        """
+Delete a fingerprint from storage"""
         try:
             if fingerprint_id in self.fingerprint_storage:
                 del self.fingerprint_storage[fingerprint_id]
@@ -1208,7 +1223,8 @@ class FingerprintMatcher:
             return {'success': False, 'error': str(e)}
     
     async def get_database_statistics(self) -> Dict[str, Any]:
-        """Get database statistics"""
+        """
+Get database statistics"""
         try:
             total_count = len(self.fingerprint_storage)
             content_types = {}
@@ -1235,7 +1251,8 @@ class FingerprintMatcher:
     async def find_fuzzy_matches(self, query_fingerprint, threshold: float = 0.7, 
                                 similarity_threshold: Optional[float] = None, 
                                 fuzzy_tolerance: Optional[float] = None, **kwargs) -> List:
-        """Find fuzzy matches with lower threshold"""
+        """
+Find fuzzy matches with lower threshold"""
         # Use the most restrictive threshold available
         effective_threshold = min(filter(None, [similarity_threshold, threshold, fuzzy_tolerance, 0.7]))
         return await self.find_matches(query_fingerprint, threshold=effective_threshold, **kwargs)
@@ -1249,7 +1266,8 @@ class FingerprintMatcher:
         max_results: Optional[int] = None,
         **kwargs
     ) -> List:
-        """Find matching fingerprints in database"""
+        """
+Find matching fingerprints in database"""
         try:
             # Use stored fingerprints if no database provided
             if fingerprint_database is None:
@@ -1412,6 +1430,7 @@ class FingerprintMatcher:
 
 class FingerprintAlgorithm(Enum):
     """Fingerprinting algorithm types"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     CONTENT_HASH = "content_hash"
     SPECTRAL_HASH = "spectral_hash"
@@ -1610,7 +1629,8 @@ class FingerprintResult:
     metadata: Dict[str, Any]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             'fingerprint_id': self.fingerprint_id,
             'content_id': self.content_id,

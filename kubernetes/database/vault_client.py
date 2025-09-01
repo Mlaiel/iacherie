@@ -63,6 +63,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Error rate monitoring
 - Alert integration
 """
+
 import asyncio
 import aiohttp
 import json
@@ -83,7 +84,9 @@ from backend.core.logging import get_logger
 
 
 class AuthMethod(Enum):
-    """Méthodes d'authentification Vault"""
+    """
+Méthodes d'authentification Vault"""
+
     TOKEN = "token"
     AWS_IAM = "aws"
     KUBERNETES = "kubernetes"
@@ -95,6 +98,7 @@ class AuthMethod(Enum):
 
 class SecretEngine(Enum):
     """Types de secret engines"""
+
     KV_V2 = "kv-v2"
     TRANSIT = "transit"
     PKI = "pki"
@@ -119,7 +123,8 @@ class VaultSecret:
 
 @dataclass
 class VaultToken:
-    """Token d'authentification Vault"""
+    """
+Token d'authentification Vault"""
     token: str
     accessor: str
     policies: List[str]

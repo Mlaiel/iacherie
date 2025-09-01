@@ -4,11 +4,12 @@ Professional SEO optimization engine that enhances content for better
 search engine visibility and ranking performance.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import re
@@ -36,7 +37,8 @@ class SEOOptimizer:
     """
     
     def __init__(self):
-        """Initialize the SEO optimizer"""
+        """
+Initialize the SEO optimizer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # SEO configuration
@@ -62,7 +64,8 @@ class SEOOptimizer:
         }
     
     def _initialize_nlp(self) -> None:
-        """Initialize NLP components"""
+        """
+Initialize NLP components"""
         try:
             # Download required NLTK data
             import ssl
@@ -177,7 +180,8 @@ class SEOOptimizer:
             return str(content)
     
     def _extract_target_keywords(self, context: ContentGenerationContext) -> List[str]:
-        """Extract target keywords from context"""
+        """
+Extract target keywords from context"""
         keywords = []
         
         # From metadata
@@ -199,7 +203,8 @@ class SEOOptimizer:
         return list(set(keywords))  # Remove duplicates
     
     async def _analyze_seo(self, content: str, keywords: List[str]) -> Dict[str, Any]:
-        """Perform comprehensive SEO analysis"""
+        """
+Perform comprehensive SEO analysis"""
         analysis = {}
         
         # Content length analysis
@@ -222,7 +227,8 @@ class SEOOptimizer:
         return analysis
     
     def _score_content_length(self, word_count: int) -> float:
-        """Score content based on length"""
+        """
+Score content based on length"""
         if word_count < self.min_content_length:
             return word_count / self.min_content_length * 0.5
         elif word_count > self.optimal_content_length:
@@ -236,7 +242,8 @@ class SEOOptimizer:
             return 0.5 + (progress * 0.5)
     
     async def _analyze_keywords(self, content: str, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze keyword usage and density"""
+        """
+Analyze keyword usage and density"""
         content_lower = content.lower()
         total_words = len(content.split())
         
@@ -275,7 +282,8 @@ class SEOOptimizer:
         return keyword_analysis
     
     def _find_keyword_positions(self, content: str, keyword: str) -> List[int]:
-        """Find positions of keyword in content"""
+        """
+Find positions of keyword in content"""
         positions = []
         start = 0
         
@@ -289,7 +297,8 @@ class SEOOptimizer:
         return positions
     
     async def _analyze_readability(self, content: str) -> Dict[str, Any]:
-        """Analyze content readability"""
+        """
+Analyze content readability"""
         try:
             # Flesch Reading Ease
             reading_ease = flesch_reading_ease(content)
@@ -362,7 +371,8 @@ class SEOOptimizer:
         }
     
     async def _analyze_links(self, content: str) -> Dict[str, Any]:
-        """Analyze links in content"""
+        """
+Analyze links in content"""
         # Find markdown links
         markdown_links = re.findall(r'\[([^\]]*)\]\(([^)]*)\)', content)
         
@@ -484,7 +494,8 @@ class SEOOptimizer:
         return optimized_content
     
     async def _optimize_keyword_placement(self, content: str, keywords: List[str]) -> str:
-        """Optimize keyword placement in content"""
+        """
+Optimize keyword placement in content"""
         if not keywords:
             return content
         
@@ -537,7 +548,8 @@ class SEOOptimizer:
         return ' '.join(hashtags[:8])  # Max 8 hashtags
     
     async def _improve_content_structure(self, content: str) -> str:
-        """Improve content structure"""
+        """
+Improve content structure"""
         # Split into paragraphs
         paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         
@@ -580,7 +592,8 @@ class SEOOptimizer:
         keywords: List[str],
         metadata: Dict[str, str]
     ) -> float:
-        """Calculate overall SEO score"""
+        """
+Calculate overall SEO score"""
         # Reanalyze optimized content
         analysis = await self._analyze_seo(content, keywords)
         
@@ -618,7 +631,8 @@ class SEOOptimizer:
         return min(1.0, max(0.0, score))
     
     async def _generate_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         recommendations = []
         
         # Content length recommendations

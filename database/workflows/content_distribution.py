@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStrategy(Enum):
-    """Content distribution strategies"""
+    """
+Content distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     OPTIMIZED_TIMING = "optimized_timing"
@@ -57,6 +60,7 @@ class DistributionStrategy(Enum):
 
 class ContentAdaptationType(Enum):
     """Types of content adaptation"""
+
     FORMAT_CONVERSION = "format_conversion"
     RESOLUTION_SCALING = "resolution_scaling"
     ASPECT_RATIO_ADJUSTMENT = "aspect_ratio_adjustment"
@@ -71,6 +75,7 @@ class ContentAdaptationType(Enum):
 
 class DistributionStatus(Enum):
     """Distribution workflow status"""
+
     DRAFT = "draft"
     PREPARING = "preparing"
     ADAPTING_CONTENT = "adapting_content"
@@ -87,6 +92,7 @@ class DistributionStatus(Enum):
 
 class PlatformStatus(Enum):
     """Individual platform publishing status"""
+
     PENDING = "pending"
     PREPARING = "preparing"
     UPLOADING = "uploading"
@@ -100,6 +106,7 @@ class PlatformStatus(Enum):
 
 class SynchronizationType(Enum):
     """Content synchronization types"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
@@ -538,7 +545,8 @@ class ContentDistributionManager:
         self.analytics_engine = CrossPlatformAnalyticsEngine(db_session)
     
     def _initialize_platform_adapters(self) -> Dict[str, Any]:
-        """Initialize platform-specific adapters"""
+        """
+Initialize platform-specific adapters"""
         return {
             'youtube': YouTubePlatformAdapter(),
             'tiktok': TikTokPlatformAdapter(),
@@ -795,7 +803,8 @@ class ContentDistributionManager:
         return self._aggregate_analytics_data(analytics)
     
     async def _validate_platform_configs(self, platform_configs: Dict[str, Any]):
-        """Validate platform configurations"""
+        """
+Validate platform configurations"""
         for platform, config in platform_configs.items():
             if platform not in self.platform_adapters:
                 raise ValueError(f"Unsupported platform: {platform}")
@@ -824,12 +833,14 @@ class ContentDistributionManager:
         self.db_session.commit()
     
     async def _start_workflow_execution(self, workflow_id: str):
-        """Start immediate workflow execution"""
+        """
+Start immediate workflow execution"""
         # Implementation would start async execution
         await self.execute_distribution_workflow(workflow_id)
     
     async def _adapt_content_for_platforms(self, workflow_id: str):
-        """Adapt content for each target platform"""
+        """
+Adapt content for each target platform"""
         workflow = self.db_session.query(ContentDistributionWorkflow).filter(
             ContentDistributionWorkflow.id == workflow_id
         ).first()
@@ -870,7 +881,8 @@ class ContentDistributionManager:
         pass
     
     async def _publish_to_platforms(self, workflow_id: str) -> Dict[str, Any]:
-        """Publish content to all platforms"""
+        """
+Publish content to all platforms"""
         publications = self.db_session.query(PlatformPublication).filter(
             PlatformPublication.distribution_workflow_id == workflow_id,
             PlatformPublication.status == "prepared"
@@ -926,12 +938,14 @@ class ContentDistributionManager:
         pass
     
     async def _schedule_next_sync(self, sync_id: str):
-        """Schedule next synchronization"""
+        """
+Schedule next synchronization"""
         # Implementation would schedule sync based on frequency
         pass
     
     def _aggregate_analytics_data(self, analytics: List[CrossPlatformAnalytics]) -> Dict[str, Any]:
-        """Aggregate analytics data from multiple records"""
+        """
+Aggregate analytics data from multiple records"""
         if not analytics:
             return {}
         
@@ -956,7 +970,8 @@ class ContentDistributionManager:
 
 
 class ContentProcessor:
-    """Content processing and adaptation engine"""
+    """
+Content processing and adaptation engine"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -967,7 +982,8 @@ class ContentProcessor:
         platform: str,
         adaptation_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process and adapt content for specific platform"""
+        """
+Process and adapt content for specific platform"""
         # Implementation would handle content processing
         return {
             'processed_path': content_path,
@@ -977,7 +993,8 @@ class ContentProcessor:
 
 
 class DistributionScheduler:
-    """Content distribution scheduling system"""
+    """
+Content distribution scheduling system"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -987,7 +1004,8 @@ class DistributionScheduler:
         workflow_id: str,
         scheduled_time: datetime
     ):
-        """Schedule workflow for future execution"""
+        """
+Schedule workflow for future execution"""
         # Implementation would add to scheduler
         logger.info(f"Scheduled workflow {workflow_id} for {scheduled_time}")
 
@@ -1005,7 +1023,8 @@ class CrossPlatformAnalyticsEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate cross-platform analytics for content"""
+        """
+Generate cross-platform analytics for content"""
         # Implementation would collect and analyze platform data
         return {
             'total_views': 10000,
@@ -1018,7 +1037,8 @@ class CrossPlatformAnalyticsEngine:
 # Platform adapter implementations (simplified interfaces)
 class YouTubePlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate YouTube-specific configuration"""
+        """
+Validate YouTube-specific configuration"""
         required_fields = ['api_key', 'channel_id', 'privacy_status']
         for field in required_fields:
             if field not in config:

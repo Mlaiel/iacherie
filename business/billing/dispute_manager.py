@@ -7,6 +7,7 @@ arbitration, and automated resolution processes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class DisputeType(Enum):
-    """Types of payment disputes"""
+    """
+Types of payment disputes"""
+
     CHARGEBACK = "chargeback"
     FRAUD = "fraud"
     UNAUTHORIZED = "unauthorized"
@@ -34,6 +37,7 @@ class DisputeType(Enum):
 
 class DisputeStatus(Enum):
     """Dispute resolution status"""
+
     RECEIVED = "received"
     UNDER_REVIEW = "under_review"
     RESPONSE_NEEDED = "response_needed"
@@ -45,6 +49,7 @@ class DisputeStatus(Enum):
 
 class DisputeStage(Enum):
     """Dispute process stages"""
+
     INQUIRY = "inquiry"
     CHARGEBACK = "chargeback"
     PRE_ARBITRATION = "pre_arbitration"
@@ -79,7 +84,8 @@ class DisputeManagerEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize dispute manager engine"""
+        """
+Initialize dispute manager engine"""
         try:
             await self._setup_database_tables()
             await self._setup_dispute_rules()
@@ -156,7 +162,8 @@ class DisputeManagerEngine:
             """)
 
     async def _setup_dispute_rules(self) -> None:
-        """Setup dispute handling rules"""
+        """
+Setup dispute handling rules"""
         try:
             # Define evidence requirements by dispute type
             evidence_requirements = {
@@ -423,7 +430,8 @@ class DisputeManagerEngine:
         return min(risk_score, Decimal('1.0'))
 
     def _calculate_win_probability(self, dispute: DisputeData, risk_score: Decimal) -> Decimal:
-        """Calculate probability of winning dispute"""
+        """
+Calculate probability of winning dispute"""
         base_probability = Decimal('0.7')  # Base win rate
         
         # Lower probability for high-risk disputes
@@ -443,7 +451,8 @@ class DisputeManagerEngine:
         return max(min(probability, Decimal('0.95')), Decimal('0.05'))
 
     async def _collect_evidence(self, dispute: DisputeData) -> None:
-        """Collect evidence for dispute response"""
+        """
+Collect evidence for dispute response"""
         try:
             async with self.db_pool.acquire() as conn:
                 # Get transaction details

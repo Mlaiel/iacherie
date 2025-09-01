@@ -5,7 +5,7 @@ Master orchestration system for end-to-end DMCA automation workflow.
 Coordinates validation, generation, sending, tracking, and compliance verification.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -31,6 +31,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
@@ -61,7 +62,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStage(Enum):
-    """DMCA workflow stages"""
+    """
+DMCA workflow stages"""
+
     INITIALIZATION = "initialization"
     EVIDENCE_ANALYSIS = "evidence_analysis"
     VALIDATION = "validation"
@@ -77,6 +80,7 @@ class WorkflowStage(Enum):
 
 class WorkflowDecision(Enum):
     """Automated workflow decisions"""
+
     PROCEED = "proceed"
     MANUAL_REVIEW = "manual_review"
     REJECT = "reject"
@@ -157,7 +161,8 @@ class DMCAOrchestrationEngine:
         }
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default orchestration configuration"""
+        """
+Get default orchestration configuration"""
         return {
             'automation_thresholds': {
                 'validation_confidence': 0.7,
@@ -562,7 +567,8 @@ class DMCAOrchestrationEngine:
         }
     
     async def get_orchestration_metrics(self) -> Dict[str, Any]:
-        """Get orchestration engine performance metrics"""
+        """
+Get orchestration engine performance metrics"""
         return {
             'performance': self.metrics,
             'active_workflows': len(self.active_workflows),
@@ -577,7 +583,8 @@ class DMCAOrchestrationEngine:
     
     # Helper methods (implementation details)
     async def _generate_case_id(self, user_id: int, content: DMCAContentInfo) -> str:
-        """Generate unique case ID"""
+        """
+Generate unique case ID"""
         timestamp = datetime.utcnow().strftime("%Y%m%d")
         content_hash = hashlib.md5(content.content_id.encode()).hexdigest()[:8]
         return f"DMCA-{timestamp}-{user_id}-{content_hash}"
@@ -589,7 +596,8 @@ class DMCAOrchestrationEngine:
     
     async def _make_validation_decision(self, validation_report: ValidationReport, 
                                        workflow: WorkflowContext) -> WorkflowDecision:
-        """Make automated decision based on validation results"""
+        """
+Make automated decision based on validation results"""
         confidence_threshold = self.config['automation_thresholds']['validation_confidence']
         
         if validation_report.result == ValidationResult.APPROVED:
@@ -605,22 +613,26 @@ class DMCAOrchestrationEngine:
             return WorkflowDecision.REJECT
     
     async def _verify_evidence_admissibility(self, evidence) -> bool:
-        """Verify if evidence is legally admissible"""
+        """
+Verify if evidence is legally admissible"""
         # Implementation for evidence verification
         return True
     
     async def _generate_timestamp_evidence(self, workflow: WorkflowContext):
-        """Generate timestamp evidence for the claim"""
+        """
+Generate timestamp evidence for the claim"""
         # Implementation for timestamp evidence generation
         return None
     
     async def _handle_stage_error(self, workflow: WorkflowContext, stage: WorkflowStage, error: Exception):
-        """Handle errors in workflow stages"""
+        """
+Handle errors in workflow stages"""
         # Implementation for error handling
         pass
     
     async def _handle_workflow_error(self, workflow: WorkflowContext, error: Exception):
-        """Handle fatal workflow errors"""
+        """
+Handle fatal workflow errors"""
         # Implementation for workflow error handling
         pass
 

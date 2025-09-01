@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -28,7 +29,9 @@ from .utils import DeviceManager, PerformanceProfiler
 
 
 class DeploymentStatus(Enum):
-    """Deployment status states"""
+    """
+Deployment status states"""
+
     INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -39,6 +42,7 @@ class DeploymentStatus(Enum):
 
 class ServiceTier(Enum):
     """Service tier levels"""
+
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -116,7 +120,8 @@ class ProductionDeploymentManager:
         )
         
     async def initialize_deployment(self) -> bool:
-        """Initialize production deployment"""
+        """
+Initialize production deployment"""
         
         try:
             self.logger.info("Initializing neural networks deployment...")
@@ -219,7 +224,8 @@ class ProductionDeploymentManager:
         return instance_counts[self.service_tier]
     
     def _create_model_instance(self, model_class: str) -> BaseNeuralNetwork:
-        """Create model instance from class name"""
+        """
+Create model instance from class name"""
         
         # This is a placeholder - in production, would load actual trained models
         # For now, return a mock model that simulates the interface
@@ -240,7 +246,8 @@ class ProductionDeploymentManager:
         model: BaseNeuralNetwork,
         model_name: str
     ) -> BaseNeuralNetwork:
-        """Apply production optimizations to model"""
+        """
+Apply production optimizations to model"""
         
         try:
             # Set to evaluation mode
@@ -427,7 +434,8 @@ class ProductionDeploymentManager:
             await self._scale_down()
     
     async def _scale_up(self):
-        """Scale up model instances"""
+        """
+Scale up model instances"""
         
         self.logger.info("Scaling up model instances...")
         self.status = DeploymentStatus.SCALING

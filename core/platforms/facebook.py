@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -25,10 +26,12 @@ logger = logging.getLogger(__name__)
 
 
 class FacebookPlatform(PlatformBase):
-    """Facebook platform integration"""
+    """
+Facebook platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Facebook platform"""
+        """
+Initialize Facebook platform"""
         super().__init__(config)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -42,7 +45,8 @@ class FacebookPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Facebook using OAuth2"""
+        """
+Authenticate with Facebook using OAuth2"""
         try:
             if self.config.credentials.access_token:
                 if await self._validate_token():
@@ -373,7 +377,8 @@ class FacebookPlatform(PlatformBase):
         return (engaged_users / impressions) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Facebook (limited by API)"""
+        """
+Search content on Facebook (limited by API)"""
         # Facebook Graph API doesn't support public content search
         logger.warning("Facebook content search not available with Graph API")
         return []

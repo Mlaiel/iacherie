@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -84,12 +85,14 @@ class TestObjectDetector(unittest.TestCase):
     """Test suite for ObjectDetector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.detector = ObjectDetector()
         self.test_image = self._create_test_image_with_objects()
     
     def _create_test_image_with_objects(self) -> np.ndarray:
-        """Create a test image with recognizable objects"""
+        """
+Create a test image with recognizable objects"""
         # Create a 640x480 RGB image
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
@@ -114,7 +117,8 @@ class TestObjectDetector(unittest.TestCase):
         self.assertIsInstance(self.detector, ObjectDetector)
     
     def test_detect_objects_basic(self):
-        """Test basic object detection"""
+        """
+Test basic object detection"""
         try:
             detections = self.detector.detect_objects(self.test_image)
             self.assertIsInstance(detections, list)
@@ -196,12 +200,14 @@ class TestFaceDetector(unittest.TestCase):
     """Test suite for FaceDetector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.detector = FaceDetector()
         self.test_image = self._create_test_image_with_faces()
     
     def _create_test_image_with_faces(self) -> np.ndarray:
-        """Create a test image with face-like structures"""
+        """
+Create a test image with face-like structures"""
         # Create a simple face representation
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
@@ -224,11 +230,13 @@ class TestFaceDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test FaceDetector initialization"""
+        """
+Test FaceDetector initialization"""
         self.assertIsInstance(self.detector, FaceDetector)
     
     def test_detect_faces_basic(self):
-        """Test basic face detection"""
+        """
+Test basic face detection"""
         try:
             detections = self.detector.detect_faces(self.test_image)
             self.assertIsInstance(detections, list)
@@ -339,15 +347,18 @@ class TestFaceDetector(unittest.TestCase):
         return image
 
 class TestTextDetector(unittest.TestCase):
-    """Test suite for TextDetector class"""
+    """
+Test suite for TextDetector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.detector = TextDetector()
         self.test_image = self._create_test_image_with_text()
     
     def _create_test_image_with_text(self) -> np.ndarray:
-        """Create a test image with text"""
+        """
+Create a test image with text"""
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Add white background for better text visibility
@@ -366,7 +377,8 @@ class TestTextDetector(unittest.TestCase):
         self.assertIsInstance(self.detector, TextDetector)
     
     def test_detect_text_basic(self):
-        """Test basic text detection"""
+        """
+Test basic text detection"""
         try:
             detections = self.detector.detect_text(self.test_image)
             self.assertIsInstance(detections, list)
@@ -457,12 +469,14 @@ class TestGestureDetector(unittest.TestCase):
     """Test suite for GestureDetector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.detector = GestureDetector()
         self.test_image = self._create_test_image_with_gestures()
     
     def _create_test_image_with_gestures(self) -> np.ndarray:
-        """Create test image with gesture-like shapes"""
+        """
+Create test image with gesture-like shapes"""
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Simulate a hand gesture with simple shapes
@@ -478,11 +492,13 @@ class TestGestureDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test GestureDetector initialization"""
+        """
+Test GestureDetector initialization"""
         self.assertIsInstance(self.detector, GestureDetector)
     
     def test_detect_gestures_basic(self):
-        """Test basic gesture detection"""
+        """
+Test basic gesture detection"""
         try:
             detections = self.detector.detect_gestures(self.test_image)
             self.assertIsInstance(detections, list)
@@ -544,7 +560,8 @@ class TestGestureDetector(unittest.TestCase):
         return image
     
     def test_gesture_classification(self):
-        """Test gesture classification"""
+        """
+Test gesture classification"""
         try:
             classification = self.detector.classify_gesture(self.test_image)
             self.assertIsNotNone(classification)
@@ -560,7 +577,8 @@ class TestSceneDetector(unittest.TestCase):
     """Test suite for SceneDetector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.detector = SceneDetector()
         self.test_images = {
             'indoor': self._create_indoor_scene(),
@@ -569,7 +587,8 @@ class TestSceneDetector(unittest.TestCase):
         }
     
     def _create_indoor_scene(self) -> np.ndarray:
-        """Create test image representing indoor scene"""
+        """
+Create test image representing indoor scene"""
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Floor
@@ -590,7 +609,8 @@ class TestSceneDetector(unittest.TestCase):
         return image
     
     def _create_outdoor_scene(self) -> np.ndarray:
-        """Create test image representing outdoor scene"""
+        """
+Create test image representing outdoor scene"""
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Sky
@@ -609,7 +629,8 @@ class TestSceneDetector(unittest.TestCase):
         return image
     
     def _create_office_scene(self) -> np.ndarray:
-        """Create test image representing office scene"""
+        """
+Create test image representing office scene"""
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Background
@@ -628,11 +649,13 @@ class TestSceneDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test SceneDetector initialization"""
+        """
+Test SceneDetector initialization"""
         self.assertIsInstance(self.detector, SceneDetector)
     
     def test_classify_scene_basic(self):
-        """Test basic scene classification"""
+        """
+Test basic scene classification"""
         try:
             for scene_type, image in self.test_images.items():
                 classification = self.detector.classify_scene(image)
@@ -696,7 +719,8 @@ class TestDetectionIntegration(unittest.TestCase):
     """Test suite for detection module integration"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.object_detector = ObjectDetector()
         self.face_detector = FaceDetector()
         self.text_detector = TextDetector()
@@ -706,7 +730,8 @@ class TestDetectionIntegration(unittest.TestCase):
         self.complex_test_image = self._create_complex_test_image()
     
     def _create_complex_test_image(self) -> np.ndarray:
-        """Create complex test image with multiple detection targets"""
+        """
+Create complex test image with multiple detection targets"""
         image = np.ones((480, 640, 3), dtype=np.uint8) * 255
         
         # Add a face

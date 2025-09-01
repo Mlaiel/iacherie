@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ from ...monitoring.priority_monitoring import PriorityMonitoringService
 
 
 class UrgencyLevel(Enum):
-    """Extended urgency levels for fine-grained priority control"""
+    """
+Extended urgency levels for fine-grained priority control"""
+
     CRITICAL = "critical"          # Immediate action required (security, legal)
     URGENT = "urgent"              # Action required within minutes
     HIGH = "high"                  # Action required within hours
@@ -51,6 +54,7 @@ class UrgencyLevel(Enum):
 
 class PriorityContext(Enum):
     """Context categories that influence priority scoring"""
+
     CONTENT_PROTECTION = "content_protection"
     SECURITY_INCIDENT = "security_incident"
     COLLABORATION_OPPORTUNITY = "collaboration_opportunity"
@@ -78,7 +82,8 @@ class PriorityFactors:
 
 @dataclass
 class PriorityDecision:
-    """Priority decision with detailed reasoning"""
+    """
+Priority decision with detailed reasoning"""
     final_priority: NotificationPriority
     urgency_level: UrgencyLevel
     priority_score: float
@@ -92,7 +97,8 @@ class PriorityDecision:
 
 @dataclass
 class PriorityQueue:
-    """Advanced priority queue with time-aware scheduling"""
+    """
+Advanced priority queue with time-aware scheduling"""
     queue_id: str
     priority_level: NotificationPriority
     notifications: List[Tuple[float, NotificationModel]]  # (priority_score, notification)
@@ -105,7 +111,8 @@ class PriorityQueue:
         heapq.heapify(self.notifications)
         
     def add_notification(self, priority_score: float, notification: NotificationModel):
-        """Add notification to priority queue"""
+        """
+Add notification to priority queue"""
         if len(self.notifications) >= self.max_size:
             # Remove lowest priority notification if queue is full
             heapq.heappushpop(self.notifications, (priority_score, notification))
@@ -113,7 +120,8 @@ class PriorityQueue:
             heapq.heappush(self.notifications, (priority_score, notification))
             
     def get_next_notification(self) -> Optional[NotificationModel]:
-        """Get next highest priority notification"""
+        """
+Get next highest priority notification"""
         if self.notifications:
             priority_score, notification = heapq.heappop(self.notifications)
             self.last_processed = datetime.utcnow()
@@ -121,15 +129,18 @@ class PriorityQueue:
         return None
         
     def peek_next(self) -> Optional[Tuple[float, NotificationModel]]:
-        """Peek at next notification without removing it"""
+        """
+Peek at next notification without removing it"""
         return self.notifications[0] if self.notifications else None
         
     def size(self) -> int:
-        """Get current queue size"""
+        """
+Get current queue size"""
         return len(self.notifications)
         
     def is_empty(self) -> bool:
-        """Check if queue is empty"""
+        """
+Check if queue is empty"""
         return len(self.notifications) == 0
 
 
@@ -170,12 +181,14 @@ class UrgencyClassifier:
         }
         
     def _initialize_historical_analyzer(self):
-        """Initialize historical pattern analysis"""
+        """
+Initialize historical pattern analysis"""
         from ...ai.analytics.historical_analyzer import HistoricalPatternAnalyzer
         return HistoricalPatternAnalyzer(self.config.get('historical_analysis', {}))
         
     def _initialize_context_analyzer(self):
-        """Initialize real-time context analysis"""
+        """
+Initialize real-time context analysis"""
         from ...ai.context.context_analyzer import RealTimeContextAnalyzer
         return RealTimeContextAnalyzer(self.config.get('context_analysis', {}))
         
@@ -418,7 +431,8 @@ class PriorityHandler:
         self.is_running = False
         
     def _initialize_priority_queues(self) -> Dict[NotificationPriority, PriorityQueue]:
-        """Initialize priority queues for different levels"""
+        """
+Initialize priority queues for different levels"""
         queues = {}
         
         for priority in NotificationPriority:
@@ -439,12 +453,14 @@ class PriorityHandler:
         return PriorityProcessingScheduler(self.config.get('scheduler', {}))
         
     def _initialize_queue_balancer(self):
-        """Initialize queue balancing system"""
+        """
+Initialize queue balancing system"""
         from ...infrastructure.queue_balancer import QueueBalancer
         return QueueBalancer(self.config.get('queue_balancer', {}))
         
     def _load_priority_rules(self) -> List[PriorityRule]:
-        """Load priority rules from configuration"""
+        """
+Load priority rules from configuration"""
         try:
             rules_config = self.config.get('priority_rules', [])
             rules = []
@@ -474,7 +490,8 @@ class PriorityHandler:
         })
         
     async def start_processing(self):
-        """Start priority-based notification processing"""
+        """
+Start priority-based notification processing"""
         try:
             self.logger.info("Starting PriorityHandler processing")
             self.is_running = True
@@ -649,7 +666,8 @@ class PriorityHandler:
         urgency_level: UrgencyLevel,
         context: Optional[Dict[str, Any]]
     ) -> PriorityFactors:
-        """Calculate comprehensive priority factors"""
+        """
+Calculate comprehensive priority factors"""
         try:
             # Base urgency score
             urgency_score = self._urgency_level_to_score(urgency_level)
@@ -714,7 +732,8 @@ class PriorityHandler:
         notification: NotificationModel,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Assess business impact of notification"""
+        """
+Assess business impact of notification"""
         try:
             impact_score = 0.5  # Default
             
@@ -808,7 +827,8 @@ class PriorityHandler:
         notification: NotificationModel,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Assess collaboration value of notification"""
+        """
+Assess collaboration value of notification"""
         try:
             if 'collaboration' not in notification.type.lower():
                 return 0.0
@@ -1371,7 +1391,8 @@ class PriorityHandler:
         self.system_load_factor = 1.0
         
     async def initialize_handler(self):
-        """Initialize the priority handler with all components"""
+        """
+Initialize the priority handler with all components"""
         try:
             self.logger.info("Initializing PriorityHandler with AI-driven classification")
             
@@ -1823,7 +1844,8 @@ class PriorityHandler:
         notification: NotificationModel,
         context: Dict[str, Any]
     ) -> float:
-        """Analyze business impact of the notification"""
+        """
+Analyze business impact of the notification"""
         try:
             business_impact = 50.0  # Base impact
             
@@ -2018,7 +2040,8 @@ class UrgencyClassifier:
         self.training_data = deque(maxlen=10000)
         
     async def initialize_classifier(self):
-        """Initialize the urgency classification system"""
+        """
+Initialize the urgency classification system"""
         try:
             # Load pre-trained model if available
             await self._load_classification_model()

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Format Optimizer Tests
+"""
+Format Optimizer Tests
 
 Comprehensive tests for the FormatOptimizer class that handles
 platform-specific content formatting and optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -48,12 +51,14 @@ class TestFormatOptimizer:
     
     @pytest.fixture
     def optimizer(self):
-        """Create a format optimizer instance"""
+        """
+Create a format optimizer instance"""
         return FormatOptimizer()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for formatting"""
+        """
+Create sample content for formatting"""
         return """
         # The Future of AI Technology
         
@@ -81,7 +86,8 @@ class TestFormatOptimizer:
     
     @pytest.fixture
     def blog_content(self):
-        """Create blog content for formatting"""
+        """
+Create blog content for formatting"""
         return """
         # Complete Guide to AI in Business
         
@@ -124,7 +130,8 @@ class TestFormatOptimizer:
         """
     
     def test_optimizer_initialization(self, optimizer):
-        """Test format optimizer initialization"""
+        """
+Test format optimizer initialization"""
         assert optimizer is not None
         assert hasattr(optimizer, 'platform_rules')
         assert hasattr(optimizer, 'formatting_engine')
@@ -138,7 +145,8 @@ class TestFormatOptimizer:
     
     @pytest.mark.asyncio
     async def test_instagram_formatting(self, optimizer, sample_content):
-        """Test Instagram-specific formatting"""
+        """
+Test Instagram-specific formatting"""
         with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
@@ -689,7 +697,8 @@ class TestPlatformFormat:
     """Test suite for PlatformFormat model"""
     
     def test_platform_format_creation(self):
-        """Test platform format creation"""
+        """
+Test platform format creation"""
         format_config = PlatformFormat(
             platform=Platform.INSTAGRAM,
             max_characters=2200,
@@ -707,10 +716,12 @@ class TestPlatformFormat:
 
 
 class TestOptimizationRule:
-    """Test suite for OptimizationRule model"""
+    """
+Test suite for OptimizationRule model"""
     
     def test_optimization_rule_creation(self):
-        """Test optimization rule creation"""
+        """
+Test optimization rule creation"""
         rule = OptimizationRule(
             rule_id="emoji_limit",
             description="Limit emoji usage",

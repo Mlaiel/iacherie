@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import hashlib
@@ -61,7 +62,9 @@ from ...content_protection.fingerprinting import VisualFingerprinter
 logger = logging.getLogger(__name__)
 
 class BrandThreatLevel(Enum):
-    """Brand threat severity levels"""
+    """
+Brand threat severity levels"""
+
     NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
@@ -70,6 +73,7 @@ class BrandThreatLevel(Enum):
 
 class BrandAssetType(Enum):
     """Types of brand assets to protect"""
+
     LOGO = "logo"
     TRADEMARK = "trademark"
     SLOGAN = "slogan"
@@ -82,6 +86,7 @@ class BrandAssetType(Enum):
 
 class BrandViolationType(Enum):
     """Types of brand violations detected"""
+
     LOGO_MISUSE = "logo_misuse"
     TRADEMARK_INFRINGEMENT = "trademark_infringement"
     COUNTERFEITING = "counterfeiting"
@@ -128,7 +133,8 @@ class BrandViolation:
 
 @dataclass
 class BrandMetrics:
-    """Comprehensive brand performance metrics"""
+    """
+Comprehensive brand performance metrics"""
     brand_id: str
     recognition_score: float = 0.0
     sentiment_score: float = 0.0
@@ -145,7 +151,8 @@ class BrandMetrics:
 
 @dataclass
 class BrandViolation:
-    """Brand violation detection result"""
+    """
+Brand violation detection result"""
     violation_id: str
     asset_id: str
     violation_type: BrandViolationType
@@ -162,7 +169,8 @@ class BrandViolation:
 
 @dataclass
 class BrandConsistencyReport:
-    """Brand consistency analysis report"""
+    """
+Brand consistency analysis report"""
     report_id: str
     brand_id: str
     analyzed_assets: List[str]
@@ -243,7 +251,8 @@ class BrandAgent(BaseAgent):
                 self.kmeans = KMeans(n_clusters=5, random_state=42)
                 
             def extract_dominant_colors(self, image_path: str) -> List[str]:
-                """Extract dominant colors from image"""
+                """
+Extract dominant colors from image"""
                 try:
                     image = cv2.imread(image_path)
                     image = cv2.cvtColor(image, cv2.COLOR_BGR_RGB)
@@ -285,12 +294,14 @@ class BrandAgent(BaseAgent):
                     return 0.0
                     
             def _hex_to_rgb(self, hex_color: str) -> Tuple[int, int, int]:
-                """Convert hex color to RGB"""
+                """
+Convert hex color to RGB"""
                 hex_color = hex_color.lstrip('#')
                 return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
                 
             def _color_distance(self, rgb1: Tuple[int, int, int], rgb2: Tuple[int, int, int]) -> float:
-                """Calculate color distance (inverse similarity)"""
+                """
+Calculate color distance (inverse similarity)"""
                 distance = sum((a - b) ** 2 for a, b in zip(rgb1, rgb2)) ** 0.5
                 max_distance = (3 * 255 ** 2) ** 0.5
                 return 1.0 - (distance / max_distance)
@@ -298,7 +309,8 @@ class BrandAgent(BaseAgent):
         return ColorExtractor()
 
     def _initialize_font_detector(self):
-        """Initialize font detection and analysis"""
+        """
+Initialize font detection and analysis"""
         class FontDetector:
             def __init__(self):
                 # Common font families for detection
@@ -309,7 +321,8 @@ class BrandAgent(BaseAgent):
                 ]
                 
             def detect_font_family(self, text_image_path: str) -> Optional[str]:
-                """Detect font family from text image"""
+                """
+Detect font family from text image"""
                 try:
                     # This would use OCR and font recognition
                     # For now, return detected font or None
@@ -837,7 +850,8 @@ class BrandAgent(BaseAgent):
             return BrandThreatLevel.NONE
 
     def _calculate_legal_risk(self, violation_score: float, platform: str) -> float:
-        """Calculate legal risk score based on violation and platform"""
+        """
+Calculate legal risk score based on violation and platform"""
         base_risk = violation_score * 0.8
         
         # Platform-specific risk multipliers

@@ -4,6 +4,7 @@ High-performance similarity search using FAISS with intelligent indexing.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import os
 import pickle
@@ -22,7 +23,8 @@ from ..core.cache import cache_manager
 
 
 class VectorIndex:
-    """Manages a single FAISS vector index for a specific content type"""
+    """
+Manages a single FAISS vector index for a specific content type"""
     
     def __init__(self, content_type: str, dimension: int):
         self.content_type = content_type
@@ -429,7 +431,8 @@ class VectorDatabase:
         return vector
     
     async def remove_content(self, content_type: str, content_id: str) -> bool:
-        """Remove content from the vector database"""
+        """
+Remove content from the vector database"""
         try:
             if content_type not in self.indexes:
                 return False

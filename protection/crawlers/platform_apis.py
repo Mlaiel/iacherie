@@ -30,12 +30,13 @@ Supported Platforms:
 - Reddit API
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import json
@@ -58,7 +59,9 @@ import certifi
 logger = logging.getLogger(__name__)
 
 class APIStatus(str, Enum):
-    """Comprehensive API connection status enumeration."""
+    """
+Comprehensive API connection status enumeration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -72,6 +75,7 @@ class APIStatus(str, Enum):
 
 class AuthType(str, Enum):
     """Authentication type enumeration."""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
@@ -83,6 +87,7 @@ class AuthType(str, Enum):
 
 class RequestMethod(str, Enum):
     """HTTP request methods."""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -119,14 +124,16 @@ class APICredentials:
         return datetime.utcnow() >= self.token_expires_at
     
     def time_until_expiry(self) -> Optional[timedelta]:
-        """Get time until token expiry."""
+        """
+Get time until token expiry."""
         if not self.token_expires_at:
             return None
         return self.token_expires_at - datetime.utcnow()
 
 @dataclass
 class APIRequest:
-    """Enhanced API request structure with enterprise features."""
+    """
+Enhanced API request structure with enterprise features."""
     method: RequestMethod
     endpoint: str
     params: Optional[Dict[str, Any]] = None
@@ -151,7 +158,8 @@ class APIRequest:
             self.request_id = self._generate_request_id()
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID."""
+        """
+Generate unique request ID."""
         timestamp = str(int(time.time() * 1000))
         random_part = hashlib.md5(f"{self.method}{self.endpoint}{timestamp}".encode()).hexdigest()[:8]
         return f"{timestamp}-{random_part}"
@@ -187,22 +195,26 @@ class APIResponse:
     
     @property
     def is_success(self) -> bool:
-        """Check if response indicates success."""
+        """
+Check if response indicates success."""
         return 200 <= self.status_code < 300
     
     @property
     def is_rate_limited(self) -> bool:
-        """Check if response indicates rate limiting."""
+        """
+Check if response indicates rate limiting."""
         return self.status_code == 429
     
     @property
     def is_unauthorized(self) -> bool:
-        """Check if response indicates authentication issues."""
+        """
+Check if response indicates authentication issues."""
         return self.status_code in [401, 403]
 
 @dataclass
 class RateLimitPolicy:
-    """Rate limiting policy configuration."""
+    """
+Rate limiting policy configuration."""
     requests_per_second: Optional[int] = None
     requests_per_minute: Optional[int] = None
     requests_per_hour: Optional[int] = None
@@ -261,7 +273,8 @@ class RequestCache:
         self.access_times: Dict[str, datetime] = {}
     
     def get(self, key: str) -> Optional[APIResponse]:
-        """Get cached response."""
+        """
+Get cached response."""
         if key in self.cache:
             cache_data = self.cache[key]
             if datetime.utcnow() < cache_data['expires_at']:
@@ -275,7 +288,8 @@ class RequestCache:
         return None
     
     def put(self, key: str, response: APIResponse, duration: int):
-        """Cache response."""
+        """
+Cache response."""
         if len(self.cache) >= self.max_size:
             self._evict_oldest()
         
@@ -286,18 +300,21 @@ class RequestCache:
         self.access_times[key] = datetime.utcnow()
     
     def _remove(self, key: str):
-        """Remove entry from cache."""
+        """
+Remove entry from cache."""
         self.cache.pop(key, None)
         self.access_times.pop(key, None)
     
     def _evict_oldest(self):
-        """Evict least recently used entry."""
+        """
+Evict least recently used entry."""
         if self.access_times:
             oldest_key = min(self.access_times.keys(), key=lambda k: self.access_times[k])
             self._remove(oldest_key)
     
     def generate_key(self, platform: str, endpoint: str, params: Optional[Dict] = None) -> str:
-        """Generate cache key."""
+        """
+Generate cache key."""
         key_data = f"{platform}:{endpoint}"
         if params:
             sorted_params = sorted(params.items())
@@ -313,7 +330,8 @@ class PerformanceMonitor:
         self.alert_callbacks: List[Callable] = []
     
     def record_request(self, platform: str, endpoint: str, response: APIResponse):
-        """Record request metrics."""
+        """
+Record request metrics."""
         if platform not in self.metrics:
             self.metrics[platform] = {
                 'total_requests': 0,
@@ -369,22 +387,26 @@ class PerformanceMonitor:
         self._check_alerts(platform, response)
     
     def get_platform_metrics(self, platform: str) -> Dict[str, Any]:
-        """Get metrics for specific platform."""
+        """
+Get metrics for specific platform."""
         return self.metrics.get(platform, {})
     
     def get_success_rate(self, platform: str) -> float:
-        """Get success rate for platform."""
+        """
+Get success rate for platform."""
         metrics = self.metrics.get(platform, {})
         total = metrics.get('total_requests', 0)
         successful = metrics.get('successful_requests', 0)
         return (successful / total * 100) if total > 0 else 0.0
     
     def register_alert_callback(self, callback: Callable):
-        """Register callback for performance alerts."""
+        """
+Register callback for performance alerts."""
         self.alert_callbacks.append(callback)
     
     def _check_alerts(self, platform: str, response: APIResponse):
-        """Check for performance alert conditions."""
+        """
+Check for performance alert conditions."""
         # Check high response time
         if response.response_time > 5.0:  # 5 seconds threshold
             self._trigger_alert('high_response_time', {
@@ -402,7 +424,8 @@ class PerformanceMonitor:
             })
     
     def _trigger_alert(self, alert_type: str, data: Dict[str, Any]):
-        """Trigger performance alert."""
+        """
+Trigger performance alert."""
         alert_data = {
             'type': alert_type,
             'timestamp': datetime.utcnow(),
@@ -434,7 +457,8 @@ class APIResponse:
 
 @dataclass
 class RateLimitInfo:
-    """Rate limiting information."""
+    """
+Rate limiting information."""
     requests_per_hour: int
     requests_per_day: int
     requests_remaining: int
@@ -454,7 +478,8 @@ class BasePlatformAPI(ABC):
     """
     
     def __init__(self, platform: str, credentials: APICredentials, config: Dict[str, Any] = None):
-        """Initialize base platform API."""
+        """
+Initialize base platform API."""
         self.platform = platform
         self.credentials = credentials
         self.config = config or {}
@@ -482,7 +507,8 @@ class BasePlatformAPI(ABC):
     
     @abstractmethod
     async def refresh_credentials(self) -> bool:
-        """Refresh API credentials if possible."""
+        """
+Refresh API credentials if possible."""
         pass
     
     @abstractmethod
@@ -494,11 +520,13 @@ class BasePlatformAPI(ABC):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated API request."""
+        """
+Make authenticated API request."""
         pass
     
     async def check_authentication(self) -> bool:
-        """Check if current authentication is valid."""
+        """
+Check if current authentication is valid."""
         if not self.last_auth_check:
             return False
         
@@ -506,13 +534,15 @@ class BasePlatformAPI(ABC):
         return time_since_check < self.auth_valid_duration
     
     async def ensure_authentication(self) -> bool:
-        """Ensure API is authenticated."""
+        """
+Ensure API is authenticated."""
         if not await self.check_authentication():
             return await self.authenticate()
         return True
     
     def _update_rate_limit_info(self, headers: Dict[str, str]):
-        """Update rate limit information from response headers."""
+        """
+Update rate limit information from response headers."""
         try:
             # Common rate limit header patterns
             remaining = None
@@ -561,7 +591,8 @@ class BasePlatformAPI(ABC):
         return self.rate_limit_info.requests_remaining > 0
     
     async def _handle_rate_limit(self):
-        """Handle rate limiting by waiting."""
+        """
+Handle rate limiting by waiting."""
         if not self.rate_limit_info:
             return
         
@@ -624,7 +655,8 @@ class YouTubeAPI(BasePlatformAPI):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated YouTube API request."""
+        """
+Make authenticated YouTube API request."""
         if not await self.ensure_authentication():
             return APIResponse(
                 success=False,
@@ -739,7 +771,8 @@ class InstagramAPI(BasePlatformAPI):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated Instagram API request."""
+        """
+Make authenticated Instagram API request."""
         if not await self.ensure_authentication():
             return APIResponse(
                 success=False,
@@ -845,7 +878,8 @@ class TwitterAPI(BasePlatformAPI):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated Twitter API request."""
+        """
+Make authenticated Twitter API request."""
         if not await self.ensure_authentication():
             return APIResponse(
                 success=False,
@@ -919,7 +953,8 @@ class PlatformAPIManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize platform API manager."""
+        """
+Initialize platform API manager."""
         self.config = config
         self.apis: Dict[str, BasePlatformAPI] = {}
         self.credentials_store: Dict[str, APICredentials] = {}
@@ -1113,7 +1148,8 @@ class PlatformAPIManager:
         return list(self.apis.keys())
     
     def is_platform_available(self, platform: str) -> bool:
-        """Check if platform is available and active."""
+        """
+Check if platform is available and active."""
         if platform not in self.apis:
             return False
         
@@ -1121,7 +1157,8 @@ class PlatformAPIManager:
         return api.status == APIStatus.ACTIVE
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all APIs."""
+        """
+Perform health check on all APIs."""
         health_status = {
             "overall_health": "healthy",
             "total_apis": len(self.apis),

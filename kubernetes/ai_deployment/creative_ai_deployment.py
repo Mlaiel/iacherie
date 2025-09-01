@@ -6,8 +6,9 @@ for multi-modal content creation, enhancement, and optimization
 tailored for musicians, influencers, photographers, and content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreativeAIType(Enum):
-    """Creative AI model types"""
+    """
+Creative AI model types"""
+
     MUSIC_GENERATION = "music_generation"
     AUDIO_ENHANCEMENT = "audio_enhancement"
     IMAGE_GENERATION = "image_generation"
@@ -44,6 +47,7 @@ class CreativeAIType(Enum):
 
 class CreativeModality(Enum):
     """Content modalities"""
+
     AUDIO = "audio"
     IMAGE = "image"
     VIDEO = "video"
@@ -53,6 +57,7 @@ class CreativeModality(Enum):
 
 class CreativeQuality(Enum):
     """Content quality levels"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -62,6 +67,7 @@ class CreativeQuality(Enum):
 
 class CreativeStyle(Enum):
     """Creative style categories"""
+
     REALISTIC = "realistic"
     ARTISTIC = "artistic"
     ABSTRACT = "abstract"

@@ -23,6 +23,7 @@ Expert Development Team Specialties:
 - AI Prompt Engineering Expert - Natural language workflow processing and automation
 - Content Protection Specialist - Automated content protection and monitoring workflows
 """
+
 import asyncio
 from typing import Dict, Any, List, Optional, Callable, Union, Type
 from dataclasses import dataclass, field, asdict
@@ -38,7 +39,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class TriggerType(Enum):
-    """Comprehensive automation trigger types"""
+    """
+Comprehensive automation trigger types"""
     # Time-Based Triggers
     TIME_BASED = "time_based"
     SCHEDULED = "scheduled"
@@ -158,6 +160,7 @@ class ActionType(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -168,6 +171,7 @@ class WorkflowStatus(Enum):
 
 class WorkflowPriority(Enum):
     """Workflow execution priority"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -176,6 +180,7 @@ class WorkflowPriority(Enum):
 
 class ConditionOperator(Enum):
     """Conditional logic operators"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -205,6 +210,7 @@ class ConditionOperator(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -213,6 +219,7 @@ class WorkflowStatus(Enum):
 
 class ExecutionMode(Enum):
     """Workflow execution modes"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     CONDITIONAL = "conditional"
@@ -242,7 +249,8 @@ class WorkflowAction:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     id: str
     name: str
     description: str
@@ -269,7 +277,8 @@ class WorkflowExecution:
     execution_context: Dict[str, Any] = field(default_factory=dict)
 
 class WorkflowTrigger(ABC):
-    """Abstract base class for workflow triggers"""
+    """
+Abstract base class for workflow triggers"""
     
     def __init__(self, condition: TriggerCondition):
         self.condition = condition
@@ -277,19 +286,23 @@ class WorkflowTrigger(ABC):
     
     @abstractmethod
     async def check_trigger(self, context: Dict[str, Any]) -> bool:
-        """Check if trigger condition is met"""
+        """
+Check if trigger condition is met"""
         pass
     
     @abstractmethod
     async def get_trigger_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data associated with trigger activation"""
+        """
+Get data associated with trigger activation"""
         pass
 
 class TimeBasedTrigger(WorkflowTrigger):
-    """Time-based trigger (cron-like scheduling)"""
+    """
+Time-based trigger (cron-like scheduling)"""
     
     async def check_trigger(self, context: Dict[str, Any]) -> bool:
-        """Check if scheduled time has arrived"""
+        """
+Check if scheduled time has arrived"""
         now = datetime.utcnow()
         
         # Get schedule parameters
@@ -322,17 +335,20 @@ class TimeBasedTrigger(WorkflowTrigger):
         return False
     
     async def get_trigger_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Get trigger data for time-based triggers"""
+        """
+Get trigger data for time-based triggers"""
         return {
             'trigger_time': datetime.utcnow().isoformat(),
             'schedule_type': self.condition.parameters.get('schedule_type', 'once')
         }
 
 class MetricThresholdTrigger(WorkflowTrigger):
-    """Trigger based on metric thresholds"""
+    """
+Trigger based on metric thresholds"""
     
     async def check_trigger(self, context: Dict[str, Any]) -> bool:
-        """Check if metric threshold is met"""
+        """
+Check if metric threshold is met"""
         metric_name = self.condition.parameters.get('metric_name')
         platform = self.condition.parameters.get('platform', 'all')
         
@@ -367,7 +383,8 @@ class MetricThresholdTrigger(WorkflowTrigger):
         return False
     
     async def get_trigger_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Get metric data that triggered the workflow"""
+        """
+Get metric data that triggered the workflow"""
         metric_name = self.condition.parameters.get('metric_name')
         platform = self.condition.parameters.get('platform', 'all')
         metrics = context.get('metrics', {})
@@ -389,10 +406,12 @@ class MetricThresholdTrigger(WorkflowTrigger):
         }
 
 class EventBasedTrigger(WorkflowTrigger):
-    """Trigger based on specific events"""
+    """
+Trigger based on specific events"""
     
     async def check_trigger(self, context: Dict[str, Any]) -> bool:
-        """Check if specified event occurred"""
+        """
+Check if specified event occurred"""
         event_type = self.condition.parameters.get('event_type')
         recent_events = context.get('recent_events', [])
         
@@ -408,7 +427,8 @@ class EventBasedTrigger(WorkflowTrigger):
         return False
     
     async def get_trigger_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Get event data that triggered the workflow"""
+        """
+Get event data that triggered the workflow"""
         event_type = self.condition.parameters.get('event_type')
         recent_events = context.get('recent_events', [])
         
@@ -427,22 +447,27 @@ class EventBasedTrigger(WorkflowTrigger):
         }
 
 class WorkflowActionExecutor(ABC):
-    """Abstract base class for workflow action executors"""
+    """
+Abstract base class for workflow action executors"""
     
     @abstractmethod
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute the workflow action"""
+        """
+Execute the workflow action"""
         pass
     
     def validate_parameters(self, action: WorkflowAction) -> bool:
-        """Validate action parameters"""
+        """
+Validate action parameters"""
         return True
 
 class PublishContentExecutor(WorkflowActionExecutor):
-    """Executor for publishing content"""
+    """
+Executor for publishing content"""
     
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content publishing action"""
+        """
+Execute content publishing action"""
         try:
             content_data = action.parameters.get('content', {})
             platforms = action.parameters.get('platforms', ['instagram'])
@@ -467,7 +492,8 @@ class PublishContentExecutor(WorkflowActionExecutor):
     
     async def _publish_content(self, content_data: Dict[str, Any], platforms: List[str], 
                              context: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate content publishing"""
+        """
+Simulate content publishing"""
         # This would interface with the actual social media posting system
         await asyncio.sleep(1)  # Simulate API call
         
@@ -478,10 +504,12 @@ class PublishContentExecutor(WorkflowActionExecutor):
         }
 
 class NotificationExecutor(WorkflowActionExecutor):
-    """Executor for sending notifications"""
+    """
+Executor for sending notifications"""
     
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute notification sending action"""
+        """
+Execute notification sending action"""
         try:
             message = action.parameters.get('message', 'Workflow notification')
             recipients = action.parameters.get('recipients', [])
@@ -509,7 +537,8 @@ class NotificationExecutor(WorkflowActionExecutor):
             }
     
     async def _process_message_template(self, message: str, context: Dict[str, Any]) -> str:
-        """Process message template with context variables"""
+        """
+Process message template with context variables"""
         # Simple template processing
         processed = message
         
@@ -525,7 +554,8 @@ class NotificationExecutor(WorkflowActionExecutor):
     
     async def _send_notification(self, message: str, recipients: List[str], 
                                notification_type: str) -> Dict[str, Any]:
-        """Simulate notification sending"""
+        """
+Simulate notification sending"""
         await asyncio.sleep(0.5)  # Simulate sending
         
         logger.info(f"Notification sent to {len(recipients)} recipients: {message}")
@@ -540,7 +570,8 @@ class WebhookExecutor(WorkflowActionExecutor):
     """Executor for calling webhooks"""
     
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute webhook call action"""
+        """
+Execute webhook call action"""
         try:
             url = action.parameters.get('url')
             method = action.parameters.get('method', 'POST')
@@ -569,7 +600,8 @@ class WebhookExecutor(WorkflowActionExecutor):
             }
     
     async def _process_payload(self, payload: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payload with context variables"""
+        """
+Process payload with context variables"""
         processed = payload.copy()
         
         # Add context data
@@ -583,7 +615,8 @@ class WebhookExecutor(WorkflowActionExecutor):
     
     async def _make_webhook_call(self, url: str, method: str, headers: Dict[str, str], 
                                payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate webhook call"""
+        """
+Simulate webhook call"""
         await asyncio.sleep(0.2)  # Simulate HTTP request
         
         logger.info(f"Webhook called: {method} {url}")
@@ -609,7 +642,8 @@ class ConditionalEvaluator:
         }
     
     async def evaluate_condition(self, condition: str, context: Dict[str, Any]) -> bool:
-        """Evaluate JavaScript-like condition string"""
+        """
+Evaluate JavaScript-like condition string"""
         if not condition:
             return True
         
@@ -640,7 +674,8 @@ class ConditionalEvaluator:
         return re.sub(r'\{\{([^}]+)\}\}', replace_var, condition)
     
     def _get_nested_value(self, data: Dict[str, Any], path: str) -> Any:
-        """Get nested value from dictionary using dot notation"""
+        """
+Get nested value from dictionary using dot notation"""
         keys = path.split('.')
         current = data
         
@@ -653,7 +688,8 @@ class ConditionalEvaluator:
         return current
     
     def _evaluate_simple_condition(self, condition: str) -> bool:
-        """Evaluate simple conditions safely"""
+        """
+Evaluate simple conditions safely"""
         # Remove potentially dangerous operations
         dangerous_keywords = ['import', 'exec', 'eval', '__', 'open', 'file']
         
@@ -694,7 +730,8 @@ class AutomationWorkflows:
         self.automation_task: Optional[asyncio.Task] = None
         
     async def start_automation_engine(self):
-        """Start the automation engine"""
+        """
+Start the automation engine"""
         if self.running:
             return
         
@@ -743,7 +780,8 @@ class AutomationWorkflows:
                 await self._start_workflow_execution(workflow, context)
     
     async def _get_automation_context(self) -> Dict[str, Any]:
-        """Get current automation context data"""
+        """
+Get current automation context data"""
         # This would integrate with various data sources
         # For now, return simulated context
         
@@ -768,7 +806,8 @@ class AutomationWorkflows:
     
     async def _evaluate_workflow_triggers(self, workflow: WorkflowDefinition, 
                                         context: Dict[str, Any]) -> bool:
-        """Evaluate if workflow should be triggered"""
+        """
+Evaluate if workflow should be triggered"""
         for trigger_condition in workflow.triggers:
             if not trigger_condition.active:
                 continue
@@ -893,7 +932,8 @@ class AutomationWorkflows:
             }
     
     async def _process_active_executions(self):
-        """Process and monitor active executions"""
+        """
+Process and monitor active executions"""
         # Check for stuck executions
         timeout_threshold = datetime.utcnow() - timedelta(hours=1)
         
@@ -947,7 +987,8 @@ class AutomationWorkflows:
         return self.workflows.get(workflow_id)
     
     def list_workflows(self, active_only: bool = False) -> List[WorkflowDefinition]:
-        """List all workflows"""
+        """
+List all workflows"""
         workflows = list(self.workflows.values())
         
         if active_only:
@@ -957,7 +998,8 @@ class AutomationWorkflows:
     
     async def trigger_workflow_manually(self, workflow_id: str, 
                                       custom_context: Optional[Dict[str, Any]] = None) -> str:
-        """Manually trigger a workflow"""
+        """
+Manually trigger a workflow"""
         workflow = self.workflows.get(workflow_id)
         if not workflow:
             raise ValueError(f"Workflow {workflow_id} not found")
@@ -1007,7 +1049,8 @@ class AutomationWorkflows:
     
     def get_workflow_analytics(self, workflow_id: Optional[str] = None, 
                              days_back: int = 30) -> Dict[str, Any]:
-        """Get workflow execution analytics"""
+        """
+Get workflow execution analytics"""
         cutoff_date = datetime.utcnow() - timedelta(days=days_back)
         
         # Filter executions
@@ -1049,7 +1092,8 @@ class AutomationWorkflows:
         }
     
     def register_custom_trigger(self, trigger_type: TriggerType, trigger_class: Type[WorkflowTrigger]):
-        """Register custom trigger type"""
+        """
+Register custom trigger type"""
         self.trigger_registry[trigger_type] = trigger_class
         logger.info(f"Registered custom trigger: {trigger_type.value}")
     

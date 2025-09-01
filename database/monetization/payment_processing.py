@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -72,7 +73,8 @@ class PaymentProcessingEngine:
         self._initialize_gateways()
     
     def _initialize_gateways(self):
-        """Initialize payment gateway clients with configuration"""
+        """
+Initialize payment gateway clients with configuration"""
         try:
             # Stripe configuration
             stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -511,7 +513,8 @@ class PaymentProcessingEngine:
         currency: Currency,
         payment_type: PaymentType
     ):
-        """Validate payment request against account limits and policies"""
+        """
+Validate payment request against account limits and policies"""
         
         # Check currency support
         if currency not in payment_account.supported_currencies:
@@ -679,7 +682,8 @@ class PaymentProcessingEngine:
         transaction: PaymentTransaction,
         gateway_response: Dict[str, Any]
     ):
-        """Send internal webhook notifications for payment events"""
+        """
+Send internal webhook notifications for payment events"""
         
         webhook_data = {
             "event_type": "payment.processed",

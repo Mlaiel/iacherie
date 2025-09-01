@@ -8,6 +8,7 @@ This provides functional verification that the crawlers can be imported and init
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import sys
 import os
 import importlib.util
@@ -21,13 +22,15 @@ project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
 class CrawlerImportTester:
-    """Test crawler imports and basic functionality with mocks."""
+    """
+Test crawler imports and basic functionality with mocks."""
     
     def __init__(self):
         self.results = []
         
     def mock_dependencies(self):
-        """Mock common dependencies that might not be available."""
+        """
+Mock common dependencies that might not be available."""
         # Mock external libraries
         mocks = {
             'aiohttp': MagicMock(),
@@ -50,7 +53,8 @@ class CrawlerImportTester:
             sys.modules[module_name] = mock_obj
     
     def test_spotify_crawler(self) -> Dict[str, Any]:
-        """Test Spotify crawler import and initialization."""
+        """
+Test Spotify crawler import and initialization."""
         try:
             self.mock_dependencies()
             

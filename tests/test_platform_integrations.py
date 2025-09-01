@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests for Platform APIs Integration
+"""
+Tests for Platform APIs Integration
 ===================================
 
 Basic tests to validate the platform integration modules work correctly.
@@ -20,6 +22,7 @@ Basic tests to validate the platform integration modules work correctly.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -34,11 +37,13 @@ from integrations.platforms.platform_coordinator import PlatformCoordinator, Pla
 
 
 class TestAPIRateLimiter:
-    """Test API Rate Limiter functionality"""
+    """
+Test API Rate Limiter functionality"""
     
     @pytest.mark.asyncio
     async def test_rate_limit_check(self):
-        """Test basic rate limit checking"""
+        """
+Test basic rate limit checking"""
         async with APIRateLimiter() as limiter:
             # First request should be allowed
             status = await limiter.check_rate_limit("youtube", "search")
@@ -72,7 +77,8 @@ class TestPlatformOAuthManager:
     
     @pytest.mark.asyncio
     async def test_oauth_manager_initialization(self):
-        """Test OAuth manager initialization"""
+        """
+Test OAuth manager initialization"""
         async with PlatformOAuthManager() as oauth_manager:
             supported_platforms = oauth_manager.get_supported_platforms()
             assert "youtube" in supported_platforms
@@ -148,7 +154,8 @@ class TestPlatformCoordinator:
     
     @pytest.mark.asyncio
     async def test_coordinator_initialization(self):
-        """Test coordinator initialization"""
+        """
+Test coordinator initialization"""
         async with PlatformCoordinator() as coordinator:
             assert coordinator.oauth_manager is not None
             assert coordinator.rate_limiter is not None
@@ -162,7 +169,8 @@ class TestPlatformCoordinator:
             
     @pytest.mark.asyncio
     async def test_platform_oauth_configuration(self):
-        """Test platform OAuth configuration through coordinator"""
+        """
+Test platform OAuth configuration through coordinator"""
         async with PlatformCoordinator() as coordinator:
             coordinator.configure_platform_oauth(
                 "youtube",

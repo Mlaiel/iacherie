@@ -7,7 +7,7 @@ and monetization capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 This proprietary AI orchestration system contains advanced algorithms and enterprise architectures
@@ -22,6 +22,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
@@ -123,7 +124,8 @@ class AIEngineOrchestrator:
         return await analytics_engine.generate_comprehensive_analytics(user_id, time_range)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status across all components"""
+        """
+Get comprehensive system status across all components"""
         if not self.initialized or not self.ai_engine:
             return {
                 'status': 'not_initialized',
@@ -153,7 +155,8 @@ class AIEngineOrchestrator:
 _orchestrator: Optional[AIEngineOrchestrator] = None
 
 def get_orchestrator(config: Dict[str, Any] = None) -> AIEngineOrchestrator:
-    """Get global AI engine orchestrator instance"""
+    """
+Get global AI engine orchestrator instance"""
     global _orchestrator
     if _orchestrator is None:
         _orchestrator = AIEngineOrchestrator(config)
@@ -161,17 +164,20 @@ def get_orchestrator(config: Dict[str, Any] = None) -> AIEngineOrchestrator:
 
 # Convenience functions for direct access
 async def process_content(content_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Direct content processing through the AI engine"""
+    """
+Direct content processing through the AI engine"""
     orchestrator = get_orchestrator()
     return await orchestrator.process_content_comprehensive(content_data)
 
 async def generate_business_report(user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-    """Generate comprehensive business intelligence report"""
+    """
+Generate comprehensive business intelligence report"""
     orchestrator = get_orchestrator()
     return await orchestrator.get_business_intelligence(user_id, (start_date, end_date))
 
 def get_ai_status() -> Dict[str, Any]:
-    """Get current AI engine system status"""
+    """
+Get current AI engine system status"""
     orchestrator = get_orchestrator()
     return orchestrator.get_system_status()
 
@@ -181,7 +187,7 @@ __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __status__ = "Production"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Export all public interfaces
 __all__ = [

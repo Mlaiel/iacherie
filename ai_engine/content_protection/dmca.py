@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import uuid
@@ -23,14 +24,17 @@ import re
 from urllib.parse import urlparse
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
+    """
+Get current UTC datetime in a timezone-aware manner"""
     return datetime.now(timezone.utc)
 
 logger = logging.getLogger(__name__)
 
 
 class NoticeType(Enum):
-    """Types of legal notices"""
+    """
+Types of legal notices"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     COUNTER_NOTICE = "counter_notice"
     CEASE_DESIST = "cease_desist"
@@ -40,6 +44,7 @@ class NoticeType(Enum):
 
 class NoticeStatus(Enum):
     """Status of legal notices"""
+
     DRAFT = "draft"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
@@ -52,6 +57,7 @@ class NoticeStatus(Enum):
 
 class InfringementType(Enum):
     """Types of copyright infringement"""
+
     UNAUTHORIZED_COPY = "unauthorized_copy"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     UNAUTHORIZED_MODIFICATION = "unauthorized_modification"
@@ -75,7 +81,8 @@ class InfringementEvidence:
 
 @dataclass
 class TakedownNotice:
-    """DMCA takedown notice"""
+    """
+DMCA takedown notice"""
     notice_id: str
     notice_type: NoticeType
     content_id: str
@@ -100,7 +107,8 @@ class TakedownNotice:
 
 @dataclass
 class LegalContact:
-    """Legal contact information"""
+    """
+Legal contact information"""
     contact_id: str
     platform_name: str
     platform_domain: str
@@ -115,7 +123,8 @@ class LegalContact:
 
 @dataclass
 class ComplianceTracking:
-    """Tracking of notice compliance"""
+    """
+Tracking of notice compliance"""
     tracking_id: str
     notice_id: str
     platform: str
@@ -129,7 +138,8 @@ class ComplianceTracking:
 
 @dataclass
 class InfringementReport:
-    """Infringement report data structure"""
+    """
+Infringement report data structure"""
     report_id: str
     content_id: str
     copyright_holder: str
@@ -156,7 +166,8 @@ class DMCAManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize DMCA manager"""
+        """
+Initialize DMCA manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -179,7 +190,8 @@ class DMCAManager:
         monitoring_urls: List[str],
         search_terms: List[str]
     ) -> List[Dict[str, Any]]:
-        """Detect potential copyright infringement across platforms"""
+        """
+Detect potential copyright infringement across platforms"""
         try:
             self.logger.info(f"Detecting infringement for content: {content_id}")
             
@@ -574,9 +586,11 @@ class DMCAManager:
         }
     
     def _initialize_legal_templates(self) -> Dict[str, str]:
-        """Initialize legal notice templates"""
+        """
+Initialize legal notice templates"""
         return {
-            'dmca_takedown': """DMCA TAKEDOWN NOTICE
+            'dmca_takedown': """
+DMCA TAKEDOWN NOTICE
 
 To: {platform_contact}
 From: {copyright_owner}
@@ -616,7 +630,8 @@ Sincerely,
 {copyright_owner}
             """,
             
-            'counter_notice': """DMCA COUNTER-NOTICE
+            'counter_notice': """
+DMCA COUNTER-NOTICE
 
 To: {original_complainant}
 CC: {platform}
@@ -651,7 +666,8 @@ Sincerely,
         search_terms: List[str],
         content_id: str
     ) -> List[Dict[str, Any]]:
-        """Search specific platform for potential infringement"""
+        """
+Search specific platform for potential infringement"""
         infringements = []
         
         # This would integrate with platform APIs or web scraping
@@ -723,7 +739,8 @@ Sincerely,
         self,
         infringements: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Filter and rank infringements by confidence and severity"""
+        """
+Filter and rank infringements by confidence and severity"""
         # Remove duplicates
         unique_infringements = {}
         for infringement in infringements:
@@ -748,7 +765,8 @@ Sincerely,
         infringing_url: str,
         content_id: str
     ) -> List[InfringementEvidence]:
-        """Collect evidence of copyright infringement"""
+        """
+Collect evidence of copyright infringement"""
         evidence = []
         
         # Screenshot evidence
@@ -803,22 +821,29 @@ Sincerely,
         }
     
     def _generate_legal_basis(self, infringement_details: Dict[str, Any]) -> str:
-        """Generate legal basis for takedown notice"""
-        return """I have a good faith belief that the use of the copyrighted material described above is not authorized by the copyright owner, its agent, or the law. The information in this notification is accurate, and under penalty of perjury, I am authorized to act on behalf of the copyright owner.
+        """
+Generate legal basis for takedown notice"""
+        return """
+I have a good faith belief that the use of the copyrighted material described above is not authorized by the copyright owner, its agent, or the law. The information in this notification is accurate, and under penalty of perjury, I am authorized to act on behalf of the copyright owner.
         """.strip()
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate good faith statement"""
-        return """I have a good faith belief that use of the copyrighted materials described above as allegedly infringing is not authorized by the copyright owner, its agent, or the law.
+        """
+Generate good faith statement"""
+        return """
+I have a good faith belief that use of the copyrighted materials described above as allegedly infringing is not authorized by the copyright owner, its agent, or the law.
         """.strip()
     
     def _generate_penalty_statement(self) -> str:
-        """Generate penalty of perjury statement"""
-        return """I swear, under penalty of perjury, that the information in the notification is accurate and that I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.
+        """
+Generate penalty of perjury statement"""
+        return """
+I swear, under penalty of perjury, that the information in the notification is accurate and that I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.
         """.strip()
     
     async def _format_notice_for_delivery(self, notice: TakedownNotice) -> str:
-        """Format notice for delivery"""
+        """
+Format notice for delivery"""
         template = self._legal_templates['dmca_takedown']
         
         return template.format(
@@ -841,7 +866,8 @@ Sincerely,
         notice: TakedownNotice,
         formatted_notice: str
     ) -> Dict[str, Any]:
-        """Send notice via email"""
+        """
+Send notice via email"""
         # This would integrate with email service (SMTP, SendGrid, etc.)
         # Simplified implementation
         return {
@@ -857,7 +883,8 @@ Sincerely,
         notice: TakedownNotice,
         formatted_notice: str
     ) -> Dict[str, Any]:
-        """Send notice via platform web form"""
+        """
+Send notice via platform web form"""
         # This would integrate with platform web forms
         # Simplified implementation
         return {
@@ -868,7 +895,8 @@ Sincerely,
         }
     
     async def _check_content_accessibility(self, url: str) -> bool:
-        """Check if infringing content is still accessible"""
+        """
+Check if infringing content is still accessible"""
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url) as response:
@@ -877,7 +905,8 @@ Sincerely,
             return False
     
     async def _check_platform_response(self, notice: TakedownNotice) -> Optional[Dict[str, Any]]:
-        """Check for platform response to notice"""
+        """
+Check for platform response to notice"""
         # This would check email, platform APIs, etc.
         # Simplified implementation
         return None
@@ -887,7 +916,8 @@ Sincerely,
         notice: TakedownNotice,
         tracking: ComplianceTracking
     ) -> Dict[str, Any]:
-        """Prepare comprehensive legal package for counsel"""
+        """
+Prepare comprehensive legal package for counsel"""
         return {
             'notice_details': {
                 'notice_id': notice.notice_id,
@@ -914,7 +944,8 @@ Sincerely,
         }
     
     async def _create_follow_up_notice(self, original_notice: TakedownNotice) -> TakedownNotice:
-        """Create follow-up notice with stronger language"""
+        """
+Create follow-up notice with stronger language"""
         follow_up_id = str(uuid.uuid4())
         
         follow_up_notice = TakedownNotice(
@@ -957,7 +988,8 @@ Sincerely,
         platform_stats: Dict[str, Any],
         overall_compliance_rate: float
     ) -> List[str]:
-        """Generate recommendations based on compliance analysis"""
+        """
+Generate recommendations based on compliance analysis"""
         recommendations = []
         
         if overall_compliance_rate < 0.7:

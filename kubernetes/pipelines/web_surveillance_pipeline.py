@@ -2,7 +2,7 @@
 Enterprise-Grade Automated Content Monitoring and Violation Detection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive web surveillance and crawling capabilities for the IA Influencer Agent
 platform, enabling real-time monitoring of digital platforms for unauthorized content usage and
@@ -27,6 +27,7 @@ Platforms Supported:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import json
@@ -71,7 +72,9 @@ except ImportError:
     BEAUTIFULSOUP_AVAILABLE = False
 
 class Platform(Enum):
-    """Supported platform enumeration"""
+    """
+Supported platform enumeration"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -84,6 +87,7 @@ class Platform(Enum):
 
 class CrawlingMethod(Enum):
     """Crawling method types"""
+
     API_OFFICIAL = "api_official"
     WEB_SCRAPING = "web_scraping"
     SELENIUM_AUTOMATION = "selenium_automation"
@@ -92,6 +96,7 @@ class CrawlingMethod(Enum):
 
 class ViolationType(Enum):
     """Content violation types"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
@@ -101,6 +106,7 @@ class ViolationType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -124,7 +130,8 @@ class SurveillanceTarget:
 
 @dataclass
 class ContentMatch:
-    """Detected content match result"""
+    """
+Detected content match result"""
     match_id: str
     target_id: str
     platform: Platform
@@ -145,7 +152,8 @@ class ContentMatch:
 
 @dataclass
 class CrawlingJob:
-    """Web crawling job configuration"""
+    """
+Web crawling job configuration"""
     job_id: str
     platform: Platform
     method: CrawlingMethod
@@ -162,7 +170,8 @@ class CrawlingJob:
             self.metadata = {}
 
 class YouTubeCrawler:
-    """YouTube platform crawler and monitor"""
+    """
+YouTube platform crawler and monitor"""
     
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key
@@ -177,7 +186,8 @@ class YouTubeCrawler:
             return await self._web_search(query, max_results)
             
     async def _api_search(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Search using YouTube Data API"""
+        """
+Search using YouTube Data API"""
         url = f"{self.base_url}/search"
         params = {
             'part': 'snippet',
@@ -385,7 +395,8 @@ class InstagramCrawler:
             return await self._web_search(query, max_results)
             
     async def _api_search(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Search using Instagram Basic Display API"""
+        """
+Search using Instagram Basic Display API"""
         # Note: Instagram API has limited search capabilities
         # This is a simplified implementation
         results = []
@@ -643,7 +654,8 @@ class WebSurveillancePipelineManager:
         }
         
     async def add_surveillance_target(self, target: SurveillanceTarget) -> str:
-        """Add new content surveillance target"""
+        """
+Add new content surveillance target"""
         self.active_targets[target.target_id] = target
         self.surveillance_stats['active_targets'] = len(self.active_targets)
         
@@ -700,7 +712,8 @@ class WebSurveillancePipelineManager:
         
     async def _crawl_platform(self, platform: Platform, query: str, 
                              max_results: int = 100) -> List[Dict[str, Any]]:
-        """Crawl specific platform for content"""
+        """
+Crawl specific platform for content"""
         crawler = self._get_platform_crawler(platform)
         
         if not crawler:
@@ -789,7 +802,8 @@ class WebSurveillancePipelineManager:
                 return datetime.utcnow()
                 
     async def _process_detected_match(self, match: ContentMatch):
-        """Process detected content match"""
+        """
+Process detected content match"""
         self.detected_matches.append(match)
         self.surveillance_stats['matches_detected'] += 1
         
@@ -863,7 +877,8 @@ class WebSurveillancePipelineManager:
             return AlertSeverity.LOW
             
     def _get_recommended_actions(self, match: ContentMatch) -> List[str]:
-        """Get recommended actions for violation"""
+        """
+Get recommended actions for violation"""
         actions = [
             "Review detected content for copyright infringement",
             "Collect additional evidence if needed",
@@ -889,7 +904,8 @@ class WebSurveillancePipelineManager:
         }
         
     def _get_platform_distribution(self) -> Dict[str, int]:
-        """Get distribution of matches by platform"""
+        """
+Get distribution of matches by platform"""
         distribution = {}
         for match in self.detected_matches:
             platform = match.platform.value
@@ -897,7 +913,8 @@ class WebSurveillancePipelineManager:
         return distribution
         
     def _get_system_capabilities(self) -> Dict[str, bool]:
-        """Get system capabilities status"""
+        """
+Get system capabilities status"""
         return {
             'selenium_available': SELENIUM_AVAILABLE,
             'scrapy_available': SCRAPY_AVAILABLE,
@@ -911,5 +928,6 @@ class WebSurveillancePipelineManager:
 surveillance_pipeline_manager = WebSurveillancePipelineManager()
 
 def get_surveillance_pipeline_manager() -> WebSurveillancePipelineManager:
-    """Get global surveillance pipeline manager instance"""
+    """
+Get global surveillance pipeline manager instance"""
     return surveillance_pipeline_manager

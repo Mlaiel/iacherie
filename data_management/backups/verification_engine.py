@@ -8,10 +8,11 @@ Responsibility: Vérification intégrité et validation sauvegardes
 ===============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class VerificationLevel(Enum):
-    """Niveaux de vérification d'intégrité"""
+    """
+Niveaux de vérification d'intégrité"""
+
     BASIC = "basic"              # Checksum simple
     STANDARD = "standard"        # Checksum + métadonnées
     ADVANCED = "advanced"        # Checksum + structure + contenu
@@ -43,6 +46,7 @@ class VerificationLevel(Enum):
 
 class HashAlgorithm(Enum):
     """Algorithmes de hachage disponibles"""
+
     MD5 = "md5"
     SHA1 = "sha1"
     SHA256 = "sha256"
@@ -62,7 +66,8 @@ class IntegrityChecksum:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "file_path": self.file_path,
             "algorithm": self.algorithm.value,
@@ -99,7 +104,8 @@ class VerificationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "file_path": self.file_path,
             "is_valid": self.is_valid,
@@ -126,7 +132,8 @@ class VerificationConfig:
     deep_scan: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "level": self.level.value,
             "algorithms": [a.value for a in self.algorithms],
@@ -429,7 +436,8 @@ class VerificationEngine:
         reference_checksums: Optional[List[IntegrityChecksum]],
         result: VerificationResult
     ):
-        """Vérification paranoïaque : vérification complète + tests"""
+        """
+Vérification paranoïaque : vérification complète + tests"""
         # Vérification avancée
         await self._verify_advanced(file_path, current_checksums, reference_checksums, result)
         
@@ -444,7 +452,8 @@ class VerificationEngine:
         await self._additional_tests(file_path, result)
     
     async def _verify_file_integrity(self, file_path: Path, result: VerificationResult):
-        """Vérifie l'intégrité basique du fichier"""
+        """
+Vérifie l'intégrité basique du fichier"""
         try:
             # Test de lecture
             with open(file_path, 'rb') as f:
@@ -742,7 +751,8 @@ class VerificationEngine:
         return entropy
     
     async def _additional_tests(self, file_path: Path, result: VerificationResult):
-        """Tests supplémentaires pour vérification paranoïaque"""
+        """
+Tests supplémentaires pour vérification paranoïaque"""
         try:
             # Test accès concurrent
             try:
@@ -974,11 +984,13 @@ class IntegrityDatabase:
         self.save_database()
     
     def get_checksums(self, file_path: str) -> Optional[List[IntegrityChecksum]]:
-        """Récupère les checksums d'un fichier"""
+        """
+Récupère les checksums d'un fichier"""
         return self.checksums.get(file_path)
     
     def store_verification_result(self, result: VerificationResult):
-        """Stocke un résultat de vérification"""
+        """
+Stocke un résultat de vérification"""
         self.verification_history.append(result)
         
         # Limitation historique
@@ -988,7 +1000,8 @@ class IntegrityDatabase:
         self.save_database()
     
     def load_database(self):
-        """Charge la base de données depuis le disque"""
+        """
+Charge la base de données depuis le disque"""
         try:
             if self.db_path.exists():
                 with open(self.db_path, 'r') as f:

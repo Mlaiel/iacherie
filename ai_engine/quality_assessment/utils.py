@@ -4,7 +4,7 @@ Utility functions and helpers for the quality assessment module.
 Provides common functionality, data processing, and helper methods.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import os
 import re
 import hashlib
@@ -754,22 +755,26 @@ class SystemUtils:
 
 # Utility function shortcuts
 def detect_content_type(file_path: Union[str, Path]) -> str:
-    """Shortcut for FileValidator.detect_file_type"""
+    """
+Shortcut for FileValidator.detect_file_type"""
     return FileValidator.detect_file_type(file_path)
 
 
 def validate_file(file_path: Union[str, Path]) -> bool:
-    """Shortcut for FileValidator.validate_file_integrity"""
+    """
+Shortcut for FileValidator.validate_file_integrity"""
     return FileValidator.validate_file_integrity(file_path)
 
 
 def normalize_score(value: float, min_val: float = 0.0, max_val: float = 100.0) -> float:
-    """Shortcut for DataProcessor.normalize_score"""
+    """
+Shortcut for DataProcessor.normalize_score"""
     return DataProcessor.normalize_score(value, min_val, max_val)
 
 
 def clean_text(text: str) -> str:
-    """Shortcut for TextProcessor.clean_text"""
+    """
+Shortcut for TextProcessor.clean_text"""
     return TextProcessor.clean_text(text)
 
 

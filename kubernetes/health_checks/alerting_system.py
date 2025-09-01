@@ -19,6 +19,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import json
 import time
@@ -39,7 +40,9 @@ from .core_health import HealthStatus, HealthCheckResult
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,6 +51,7 @@ class AlertSeverity(str, Enum):
 
 class AlertChannel(str, Enum):
     """Alert notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -58,6 +62,7 @@ class AlertChannel(str, Enum):
 
 class AlertStatus(str, Enum):
     """Alert status enumeration"""
+
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -81,7 +86,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance representation"""
+    """
+Alert instance representation"""
     id: str
     rule_name: str
     service: str
@@ -101,7 +107,8 @@ class Alert:
 
 @dataclass
 class NotificationTemplate:
-    """Notification message templates"""
+    """
+Notification message templates"""
     subject_template: str
     body_template: str
     format_type: str = "text"  # text, html, markdown
@@ -450,7 +457,8 @@ class HealthAlertingSystem:
             await self._create_and_trigger_alert(rule, result)
 
     def _matches_pattern(self, service_name: str, pattern: str) -> bool:
-        """Check if service name matches pattern (supports wildcards)"""
+        """
+Check if service name matches pattern (supports wildcards)"""
         if pattern == "*":
             return True
         
@@ -479,7 +487,8 @@ class HealthAlertingSystem:
         return status_levels[current_status] >= status_levels[threshold]
 
     def _evaluate_conditions(self, result: HealthCheckResult, conditions: Dict[str, Any]) -> bool:
-        """Evaluate additional alert conditions"""
+        """
+Evaluate additional alert conditions"""
         try:
             # Response time threshold
             if "max_response_time_ms" in conditions:
@@ -839,7 +848,8 @@ class HealthAlertingSystem:
                 await self._escalate_alert(alert, rule)
 
     async def _escalate_alert(self, alert: Alert, rule: AlertRule):
-        """Escalate alert to higher severity channels"""
+        """
+Escalate alert to higher severity channels"""
         
         # Mark as escalated
         alert.escalated = True
@@ -955,11 +965,13 @@ class HealthAlertingSystem:
         return [asdict(alert) for alert in self._active_alerts.values()]
 
     async def get_alert_metrics(self) -> Dict[str, Any]:
-        """Get alert system metrics"""
+        """
+Get alert system metrics"""
         return self._alert_metrics.copy()
 
     async def get_alert_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get alert history for specified time period"""
+        """
+Get alert history for specified time period"""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         filtered_alerts = [
@@ -970,7 +982,8 @@ class HealthAlertingSystem:
         return [asdict(alert) for alert in filtered_alerts]
 
     async def cleanup_resources(self):
-        """Clean up alerting system resources"""
+        """
+Clean up alerting system resources"""
         try:
             # Close any open connections
             if hasattr(self, '_smtp_connections'):
@@ -1005,7 +1018,8 @@ class HealthAlertingSystem:
         """Get all configured alert rules"""
         return [asdict(rule) for rule in self._alert_rules]
 
-"""Professional Health Alerting System Implementation Notes:
+"""
+Professional Health Alerting System Implementation Notes:
 
 This module provides enterprise-grade alerting capabilities including:
 

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,10 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for utils.performance_monitor module
+"""
+Unit tests for utils.performance_monitor module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -27,21 +30,25 @@ from utils.performance_monitor import PerformanceMonitor, RateLimiter, CircuitBr
 
 
 class TestPerformanceMonitor:
-    """Test cases for PerformanceMonitor class"""
+    """
+Test cases for PerformanceMonitor class"""
     def test_init(self):
-        """Test PerformanceMonitor initialization"""
+        """
+Test PerformanceMonitor initialization"""
         monitor = PerformanceMonitor()
         assert monitor.memory_limit is None
 
     def test_set_memory_limit(self):
-        """Test setting memory limit"""
+        """
+Test setting memory limit"""
         monitor = PerformanceMonitor()
         limit = 1024 * 1024  # 1MB
         monitor.set_memory_limit(limit)
         assert monitor.memory_limit == limit
 
     def test_check_memory_usage(self):
-        """Test memory usage check"""
+        """
+Test memory usage check"""
         monitor = PerformanceMonitor()
         usage = monitor.check_memory_usage()
         assert isinstance(usage, float)
@@ -49,16 +56,19 @@ class TestPerformanceMonitor:
 
 
 class TestRateLimiter:
-    """Test cases for RateLimiter class"""
+    """
+Test cases for RateLimiter class"""
     def test_init_default_params(self):
-        """Test RateLimiter initialization with default parameters"""
+        """
+Test RateLimiter initialization with default parameters"""
         limiter = RateLimiter()
         assert limiter.max_requests == 100
         assert limiter.window_seconds == 60
         assert limiter.requests == {}
 
     def test_init_custom_params(self):
-        """Test RateLimiter initialization with custom parameters"""
+        """
+Test RateLimiter initialization with custom parameters"""
         max_req = 50
         window = 30
         limiter = RateLimiter(max_req, window)
@@ -67,7 +77,8 @@ class TestRateLimiter:
 
     @pytest.mark.asyncio
     async def test_check_rate_limit_first_request(self):
-        """Test rate limit check for first request"""
+        """
+Test rate limit check for first request"""
         limiter = RateLimiter(max_requests=5, window_seconds=60)
         result = await limiter.check_rate_limit("user1")
         assert result is True
@@ -143,7 +154,8 @@ class TestRateLimiter:
 class TestCircuitBreaker:
     """Test cases for CircuitBreaker class"""
     def test_init_default_params(self):
-        """Test CircuitBreaker initialization with default parameters"""
+        """
+Test CircuitBreaker initialization with default parameters"""
         breaker = CircuitBreaker()
         assert breaker.failure_threshold == 5
         assert breaker.recovery_timeout == 60
@@ -161,7 +173,8 @@ class TestCircuitBreaker:
 
     @pytest.mark.asyncio
     async def test_call_successful_function(self):
-        """Test circuit breaker with successful function"""
+        """
+Test circuit breaker with successful function"""
         breaker = CircuitBreaker()
         
         def test_func():

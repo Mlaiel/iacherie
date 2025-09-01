@@ -30,6 +30,7 @@ class StorageProvider(Enum):
     """
 Storage provider enumeration"""
 
+
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -39,6 +40,7 @@ Storage provider enumeration"""
 
 class StorageClass(Enum):
     """Storage class for cost optimization"""
+
 
     STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"

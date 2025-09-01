@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -80,7 +81,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -90,6 +93,7 @@ class ProtectionLevel(Enum):
 
 class InfringementType(Enum):
     """Types of content infringement"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
@@ -102,6 +106,7 @@ class InfringementType(Enum):
 
 class ProtectionAction(Enum):
     """Actions to take when infringement is detected"""
+
     MONITOR_ONLY = "monitor_only"
     NOTIFY_OWNER = "notify_owner"
     DMCA_TAKEDOWN = "dmca_takedown"
@@ -565,7 +570,8 @@ class ContentProtectionExtractor(BaseExtractor):
 
 
 class DigitalWatermarkExtractor(BaseExtractor):
-    """Advanced digital watermarking for content protection"""
+    """
+Advanced digital watermarking for content protection"""
     
     def __init__(self):
         super().__init__("DigitalWatermarkExtractor")
@@ -671,29 +677,34 @@ class DigitalWatermarkExtractor(BaseExtractor):
         return None
     
     async def _audio_steganography_watermark(self, request: ExtractionRequest, operation: str) -> Any:
-        """Audio steganography watermarking"""
+        """
+Audio steganography watermarking"""
         # Implementation would go here
         return None
     
     async def _video_frame_watermark(self, request: ExtractionRequest, operation: str) -> Any:
-        """Video frame watermarking"""
+        """
+Video frame watermarking"""
         # Implementation would go here
         return None
     
     async def _text_linguistic_watermark(self, request: ExtractionRequest, operation: str) -> Any:
-        """Text linguistic watermarking"""
+        """
+Text linguistic watermarking"""
         # Implementation would go here
         return None
     
     async def _blockchain_proof_watermark(self, request: ExtractionRequest, operation: str) -> Any:
-        """Blockchain-based proof watermarking"""
+        """
+Blockchain-based proof watermarking"""
         # Implementation would go here
         return None
 
 
 # Factory function for protection extractors
 def create_protection_extractor_suite() -> Dict[str, BaseExtractor]:
-    """Create a complete suite of protection extractors"""
+    """
+Create a complete suite of protection extractors"""
     return {
         'content_protection': ContentProtectionExtractor(),
         'digital_watermark': DigitalWatermarkExtractor()

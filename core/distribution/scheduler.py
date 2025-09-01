@@ -5,8 +5,9 @@ Advanced scheduling system for content distribution with optimization algorithms
 timezone management, and audience analytics integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -23,7 +24,9 @@ from ..events.event_emitter import EventEmitter
 
 
 class SchedulingStrategy(Enum):
-    """Scheduling strategy types."""
+    """
+Scheduling strategy types."""
+
     IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     CUSTOM_TIME = "custom_time"
@@ -35,6 +38,7 @@ class SchedulingStrategy(Enum):
 
 class SchedulingPriority(Enum):
     """Scheduling priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -43,7 +47,9 @@ class SchedulingPriority(Enum):
 
 
 class RecurrencePattern(Enum):
-    """Recurrence pattern types."""
+    """
+Recurrence pattern types."""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -128,7 +134,8 @@ class DistributionScheduler:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution scheduler."""
+        """
+Initialize distribution scheduler."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.event_emitter = EventEmitter()
@@ -401,7 +408,8 @@ class DistributionScheduler:
         request: SchedulingRequest,
         audience_analysis: Dict[str, Any]
     ) -> Dict[str, datetime]:
-        """Calculate optimal times for each platform."""
+        """
+Calculate optimal times for each platform."""
         optimal_times = {}
         
         for platform in request.platforms:
@@ -453,7 +461,8 @@ class DistributionScheduler:
         audience_analysis: Dict[str, Any],
         request: SchedulingRequest
     ) -> datetime:
-        """Calculate optimal time for a specific platform."""
+        """
+Calculate optimal time for a specific platform."""
         # Get platform analytics
         platform_data = self.platform_analytics.get(platform, {})
         audience_data = audience_analysis.get('platform_audiences', {}).get(platform, {})
@@ -507,7 +516,8 @@ class DistributionScheduler:
         audience_analysis: Dict[str, Any],
         request: SchedulingRequest
     ) -> datetime:
-        """Calculate optimal time based purely on audience activity."""
+        """
+Calculate optimal time based purely on audience activity."""
         audience_data = audience_analysis.get('platform_audiences', {}).get(platform, {})
         activity_patterns = audience_data.get('activity_patterns', {})
         
@@ -546,7 +556,8 @@ class DistributionScheduler:
         platform: str,
         audience_data: Dict[str, Any]
     ) -> List[Tuple[datetime, datetime]]:
-        """Get optimal time windows for platform."""
+        """
+Get optimal time windows for platform."""
         # This would analyze historical performance data
         # For now, return mock optimal windows based on general best practices
         
@@ -615,7 +626,8 @@ class DistributionScheduler:
         audience_data: Dict[str, Any],
         request: SchedulingRequest
     ) -> float:
-        """Calculate score for a time window."""
+        """
+Calculate score for a time window."""
         score = 0.0
         
         # Audience activity score (0-40 points)
@@ -642,7 +654,8 @@ class DistributionScheduler:
         time: datetime,
         audience_data: Dict[str, Any]
     ) -> float:
-        """Calculate audience activity score for given time."""
+        """
+Calculate audience activity score for given time."""
         # This would analyze actual audience activity patterns
         # For now, return mock scores based on time of day
         
@@ -681,7 +694,8 @@ class DistributionScheduler:
         return min(base_score * multiplier, 1.0)
     
     async def _calculate_competition_score(self, platform: str, time: datetime) -> float:
-        """Calculate competition score for given time."""
+        """
+Calculate competition score for given time."""
         # This would analyze actual posting volumes and competition
         # For now, return mock scores
         
@@ -707,7 +721,8 @@ class DistributionScheduler:
             return 0.3  # Low competition
     
     async def _calculate_engagement_score(self, platform: str, time: datetime) -> float:
-        """Calculate platform engagement score for given time."""
+        """
+Calculate platform engagement score for given time."""
         # This would analyze historical engagement rates
         # For now, return mock scores based on platform characteristics
         
@@ -747,7 +762,8 @@ class DistributionScheduler:
         request: SchedulingRequest,
         optimal_times: Dict[str, datetime]
     ) -> List[ScheduledItem]:
-        """Create scheduled items from request and optimal times."""
+        """
+Create scheduled items from request and optimal times."""
         scheduled_items = []
         
         for platform, scheduled_time in optimal_times.items():
@@ -773,7 +789,8 @@ class DistributionScheduler:
         scheduled_items: List[ScheduledItem],
         request: SchedulingRequest
     ) -> List[ScheduledItem]:
-        """Apply optimization algorithms to scheduled items."""
+        """
+Apply optimization algorithms to scheduled items."""
         optimized_items = []
         
         for item in scheduled_items:
@@ -823,7 +840,8 @@ class DistributionScheduler:
         self,
         items: List[ScheduledItem]
     ) -> List[ScheduledItem]:
-        """Apply cross-platform optimization to minimize conflicts."""
+        """
+Apply cross-platform optimization to minimize conflicts."""
         # Sort by optimal score (highest first)
         items.sort(key=lambda x: x.optimal_score, reverse=True)
         
@@ -882,7 +900,8 @@ class DistributionScheduler:
         used_slots: List[datetime],
         min_gap: timedelta
     ) -> Optional[datetime]:
-        """Find alternative time slot that doesn't conflict."""
+        """
+Find alternative time slot that doesn't conflict."""
         original_time = item.scheduled_time
         
         # Try slots within 2 hours of original time
@@ -906,7 +925,8 @@ class DistributionScheduler:
         item: ScheduledItem,
         request: SchedulingRequest
     ) -> Dict[str, Any]:
-        """Predict content performance for scheduled item."""
+        """
+Predict content performance for scheduled item."""
         # This would use ML models to predict performance
         # For now, return mock predictions based on scores
         
@@ -944,7 +964,8 @@ class DistributionScheduler:
         }
     
     async def _store_scheduled_items(self, items: List[ScheduledItem]) -> None:
-        """Store scheduled items in system."""
+        """
+Store scheduled items in system."""
         for item in items:
             self.scheduled_items[item.item_id] = item
             self.scheduling_queue.append(item)
@@ -957,7 +978,8 @@ class DistributionScheduler:
         request: SchedulingRequest,
         base_items: List[ScheduledItem]
     ) -> None:
-        """Setup recurring schedules."""
+        """
+Setup recurring schedules."""
         if not request.recurrence_pattern:
             return
         
@@ -1008,7 +1030,8 @@ class DistributionScheduler:
         self.scheduling_queue.sort(key=lambda x: x.scheduled_time)
     
     async def _start_background_tasks(self) -> None:
-        """Start background processing tasks."""
+        """
+Start background processing tasks."""
         # Start scheduler execution task
         asyncio.create_task(self._execute_scheduled_items())
         
@@ -1019,7 +1042,8 @@ class DistributionScheduler:
         asyncio.create_task(self._update_analytics_continuously())
     
     async def _execute_scheduled_items(self) -> None:
-        """Execute scheduled items when their time arrives."""
+        """
+Execute scheduled items when their time arrives."""
         while self.is_running:
             try:
                 current_time = datetime.utcnow()
@@ -1171,7 +1195,8 @@ class DistributionScheduler:
         }
     
     async def _load_audience_insights(self) -> None:
-        """Load audience insights from analytics."""
+        """
+Load audience insights from analytics."""
         # Mock implementation
         self.audience_insights = {
             'global': {
@@ -1182,12 +1207,14 @@ class DistributionScheduler:
         }
     
     async def _load_performance_history(self) -> None:
-        """Load historical performance data."""
+        """
+Load historical performance data."""
         # Mock implementation
         self.performance_history = {}
     
     async def _initialize_timezone_cache(self) -> None:
-        """Initialize timezone cache with common timezones."""
+        """
+Initialize timezone cache with common timezones."""
         common_timezones = [
             'UTC', 'US/Eastern', 'US/Central', 'US/Mountain', 'US/Pacific',
             'Europe/London', 'Europe/Paris', 'Europe/Berlin', 'Europe/Rome',
@@ -1218,7 +1245,8 @@ class DistributionScheduler:
         return True
     
     async def _platform_supported(self, platform: str) -> bool:
-        """Check if platform is supported."""
+        """
+Check if platform is supported."""
         supported_platforms = ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook', 'spotify']
         return platform in supported_platforms
     
@@ -1231,7 +1259,8 @@ class DistributionScheduler:
         status: Optional[str] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get scheduled items with optional filtering."""
+        """
+Get scheduled items with optional filtering."""
         items = list(self.scheduled_items.values())
         
         # Apply filters
@@ -1263,7 +1292,8 @@ class DistributionScheduler:
         ]
     
     def get_scheduling_metrics(self) -> Dict[str, Any]:
-        """Get current scheduling metrics."""
+        """
+Get current scheduling metrics."""
         return {
             **self.metrics,
             'timestamp': datetime.utcnow().isoformat(),
@@ -1279,7 +1309,8 @@ class DistributionScheduler:
         }
     
     async def cancel_scheduled_item(self, item_id: UUID) -> bool:
-        """Cancel a scheduled item."""
+        """
+Cancel a scheduled item."""
         if item_id in self.scheduled_items:
             item = self.scheduled_items[item_id]
             

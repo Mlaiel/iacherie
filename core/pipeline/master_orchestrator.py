@@ -15,6 +15,7 @@ Business Logic Flow:
 6. Analytics & Performance Tracking
 7. Monetization & Revenue Optimization
 """
+
 import asyncio
 import logging
 import time
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -45,6 +48,7 @@ class PipelineStatus(Enum):
 
 class PipelineStage(Enum):
     """Pipeline execution stages"""
+
     INITIALIZATION = "initialization"
     CONTENT_INGESTION = "content_ingestion"
     PROTECTION_PROCESSING = "protection_processing"
@@ -61,6 +65,7 @@ class PipelineStage(Enum):
 
 class ExecutionPriority(Enum):
     """Execution priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -70,7 +75,8 @@ class ExecutionPriority(Enum):
 
 @dataclass
 class PipelineRequest:
-    """Pipeline execution request"""
+    """
+Pipeline execution request"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_data: Dict[str, Any] = field(default_factory=dict)
@@ -109,7 +115,8 @@ class StageResult:
 
 @dataclass
 class WorkflowMetrics:
-    """Comprehensive workflow metrics"""
+    """
+Comprehensive workflow metrics"""
     total_execution_time: float = 0.0
     stage_execution_times: Dict[str, float] = field(default_factory=dict)
     memory_peak: float = 0.0
@@ -126,7 +133,8 @@ class WorkflowMetrics:
 
 @dataclass
 class PipelineResponse:
-    """Pipeline execution response"""
+    """
+Pipeline execution response"""
     request_id: str
     status: PipelineStatus
     current_stage: Optional[PipelineStage] = None
@@ -144,7 +152,8 @@ class PipelineResponse:
 
 @dataclass
 class ExecutionContext:
-    """Pipeline execution context"""
+    """
+Pipeline execution context"""
     request: PipelineRequest
     config: Dict[str, Any] = field(default_factory=dict)
     resources: Dict[str, Any] = field(default_factory=dict)
@@ -247,7 +256,8 @@ class MasterPipelineOrchestrator:
         }
     
     def _initialize_stage_dependencies(self):
-        """Initialize stage dependencies"""
+        """
+Initialize stage dependencies"""
         self.stage_dependencies = {
             PipelineStage.INITIALIZATION: [],
             PipelineStage.CONTENT_INGESTION: [PipelineStage.INITIALIZATION],
@@ -264,7 +274,8 @@ class MasterPipelineOrchestrator:
         }
     
     def _initialize_monitoring(self):
-        """Initialize monitoring systems"""
+        """
+Initialize monitoring systems"""
         if self.config.get("enable_monitoring", True):
             # Initialize monitoring components
             self.logger.info("Monitoring systems initialized")
@@ -468,7 +479,8 @@ class MasterPipelineOrchestrator:
         return True
     
     async def _validate_quality_gate(self, stage: PipelineStage, result: StageResult) -> bool:
-        """Validate quality gate for stage"""
+        """
+Validate quality gate for stage"""
         quality_threshold = self.config.get("quality_threshold", 0.8)
         
         if result.quality_score > 0 and result.quality_score < quality_threshold:
@@ -891,11 +903,13 @@ class MasterPipelineOrchestrator:
         return self.active_pipelines.get(request_id) or self.completed_pipelines.get(request_id)
     
     def get_active_pipelines(self) -> Dict[str, PipelineResponse]:
-        """Get all active pipelines"""
+        """
+Get all active pipelines"""
         return self.active_pipelines.copy()
     
     def get_pipeline_metrics(self) -> Dict[str, Any]:
-        """Get pipeline metrics"""
+        """
+Get pipeline metrics"""
         return {
             "active_pipelines": len(self.active_pipelines),
             "completed_pipelines": len(self.completed_pipelines),

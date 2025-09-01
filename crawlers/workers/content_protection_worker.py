@@ -8,7 +8,7 @@ Technologies: Deep Learning, Computer Vision, NLP, Blockchain Timestamping, DMCA
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Content intake → Multi-modal fingerprinting → Vector similarity search → 
 Piracy detection → DMCA automation → Revenue protection → Blockchain timestamping
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for protection"""
+    """
+Content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -63,6 +66,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -71,6 +75,7 @@ class ProtectionLevel(Enum):
 
 class FingerprintType(Enum):
     """Fingerprint types"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"
     VISUAL_HASH = "visual_hash"
@@ -81,6 +86,7 @@ class FingerprintType(Enum):
 
 class DetectionStatus(Enum):
     """Detection status"""
+
     SCANNING = "scanning"
     FOUND_MATCH = "found_match"
     FALSE_POSITIVE = "false_positive"
@@ -123,7 +129,8 @@ class PiracyDetection:
 
 @dataclass
 class ProtectionTask:
-    """Content protection task"""
+    """
+Content protection task"""
     task_id: str
     content_path: str
     content_type: ContentType
@@ -137,7 +144,8 @@ class ProtectionTask:
 
 
 class ContentProtectionWorker:
-    """Advanced content protection worker with AI-powered security"""
+    """
+Advanced content protection worker with AI-powered security"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -957,7 +965,8 @@ async def get_content_protection_worker() -> Optional[ContentProtectionWorker]:
 
 
 async def initialize_content_protection_worker(config: Dict[str, Any] = None) -> bool:
-    """Initialize the content protection worker"""
+    """
+Initialize the content protection worker"""
     global _content_protection_worker
     
     try:

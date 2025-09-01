@@ -15,8 +15,9 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de)
 is strictly prohibited and may result in legal action.
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import json
@@ -51,7 +52,9 @@ from ...distribution.release_scheduler import ReleaseScheduler
 logger = logging.getLogger(__name__)
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     APPLE_MUSIC = "apple_music"
@@ -67,6 +70,7 @@ class DistributionPlatform(Enum):
 
 class ContentFormat(Enum):
     """Content format types for distribution"""
+
     AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     LYRIC_VIDEO = "lyric_video"
@@ -80,6 +84,7 @@ class ContentFormat(Enum):
 
 class ReleaseStrategy(Enum):
     """Release strategy types"""
+
     IMMEDIATE_RELEASE = "immediate_release"
     SCHEDULED_RELEASE = "scheduled_release"
     STAGGERED_RELEASE = "staggered_release"
@@ -101,7 +106,8 @@ class PlatformRequirements:
     release_restrictions: Dict[str, Any]
     
     def validate_content(self, content_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate content against platform requirements"""
+        """
+Validate content against platform requirements"""
         validation_errors = []
         
         # Check file format
@@ -138,7 +144,8 @@ class DistributionPlan:
     estimated_reach: Dict[str, int]
     
     def get_next_release(self) -> Optional[Tuple[DistributionPlatform, datetime]]:
-        """Get the next scheduled release"""
+        """
+Get the next scheduled release"""
         now = datetime.now(timezone.utc)
         upcoming_releases = [
             (DistributionPlatform(platform), release_time)
@@ -152,7 +159,8 @@ class DistributionPlan:
         return None
     
     def get_platform_status(self) -> Dict[str, str]:
-        """Get distribution status for each platform"""
+        """
+Get distribution status for each platform"""
         now = datetime.now(timezone.utc)
         status = {}
         
@@ -182,7 +190,8 @@ class DistributionResult:
     next_actions: List[Dict[str, Any]]
     
     def get_success_probability(self) -> float:
-        """Calculate overall success probability"""
+        """
+Calculate overall success probability"""
         platform_scores = []
         
         for platform in self.distribution_plan.target_platforms:
@@ -206,7 +215,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     """
     
     def __init__(self, ai_engine: Any):
-        """Initialize distribution preparation handler"""
+        """
+Initialize distribution preparation handler"""
         super().__init__()
         self.ai_engine = ai_engine
         self.platform_manager = PlatformManager()
@@ -222,7 +232,8 @@ class DistributionPreparationHandler(BaseEventHandler):
         self.distribution_stats = defaultdict(int)
     
     def _initialize_platform_configs(self) -> Dict[str, PlatformRequirements]:
-        """Initialize platform-specific configurations"""
+        """
+Initialize platform-specific configurations"""
         return {
             "spotify": PlatformRequirements(
                 platform=DistributionPlatform.SPOTIFY,
@@ -517,7 +528,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     async def _generate_platform_optimizations(self, content_data: Dict[str, Any],
                                               target_platforms: List[DistributionPlatform]) -> Dict[str, Dict[str, Any]]:
-        """Generate platform-specific optimizations"""
+        """
+Generate platform-specific optimizations"""
         optimizations = {}
         
         for platform in target_platforms:
@@ -540,7 +552,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _get_audio_optimization(self, content_data: Dict[str, Any], 
                                platform_config: PlatformRequirements) -> Dict[str, Any]:
-        """Get audio optimization settings for platform"""
+        """
+Get audio optimization settings for platform"""
         audio_req = platform_config.audio_quality_requirements
         
         return {
@@ -555,7 +568,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _get_video_optimization(self, content_data: Dict[str, Any],
                                platform_config: PlatformRequirements) -> Dict[str, Any]:
-        """Get video optimization settings for platform"""
+        """
+Get video optimization settings for platform"""
         video_req = platform_config.video_quality_requirements
         
         if not video_req:
@@ -572,7 +586,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _get_metadata_optimization(self, content_data: Dict[str, Any],
                                   platform_config: PlatformRequirements) -> Dict[str, Any]:
-        """Get metadata optimization for platform"""
+        """
+Get metadata optimization for platform"""
         original_metadata = content_data.get('metadata', {})
         
         # Platform-specific metadata adjustments
@@ -608,7 +623,8 @@ class DistributionPreparationHandler(BaseEventHandler):
         return original_metadata
     
     def _optimize_youtube_title(self, title: str) -> str:
-        """Optimize title for YouTube"""
+        """
+Optimize title for YouTube"""
         if len(title) > 60:
             return title[:57] + "..."
         return title
@@ -636,7 +652,8 @@ class DistributionPreparationHandler(BaseEventHandler):
         return youtube_tags
     
     def _optimize_instagram_caption(self, metadata: Dict[str, Any]) -> str:
-        """Optimize caption for Instagram"""
+        """
+Optimize caption for Instagram"""
         title = metadata.get('title', '')
         description = metadata.get('description', '')
         
@@ -692,7 +709,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _check_duration_requirements(self, content_data: Dict[str, Any], 
                                    guidelines: Dict[str, Any]) -> Dict[str, Any]:
-        """Check if content meets duration requirements"""
+        """
+Check if content meets duration requirements"""
         duration = content_data.get('duration_seconds', 0)
         min_duration = guidelines.get('minimum_duration', 0)
         max_duration = guidelines.get('maximum_duration', float('inf'))
@@ -707,7 +725,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _check_content_filters(self, content_data: Dict[str, Any],
                               guidelines: Dict[str, Any]) -> Dict[str, Any]:
-        """Check content against platform guidelines"""
+        """
+Check content against platform guidelines"""
         explicit_allowed = guidelines.get('explicit_content_allowed', True)
         is_explicit = content_data.get('explicit', False)
         
@@ -720,7 +739,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _check_quality_requirements(self, content_data: Dict[str, Any],
                                    platform_config: PlatformRequirements) -> Dict[str, Any]:
-        """Check if content meets quality requirements"""
+        """
+Check if content meets quality requirements"""
         file_size_mb = content_data.get('file_size_mb', 0)
         
         return {
@@ -732,7 +752,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _create_metadata_variations(self, content_data: Dict[str, Any],
                                    target_platforms: List[DistributionPlatform]) -> Dict[str, Dict[str, Any]]:
-        """Create platform-specific metadata variations"""
+        """
+Create platform-specific metadata variations"""
         variations = {}
         base_metadata = content_data.get('metadata', {})
         
@@ -749,7 +770,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     async def _generate_promotional_assets(self, content_data: Dict[str, Any],
                                           target_platforms: List[DistributionPlatform]) -> Dict[str, List[str]]:
-        """Generate promotional assets for each platform"""
+        """
+Generate promotional assets for each platform"""
         assets = {}
         
         for platform in target_platforms:
@@ -787,7 +809,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _create_distribution_timeline(self, release_schedule: Dict[str, datetime],
                                      target_platforms: List[DistributionPlatform]) -> List[Dict[str, Any]]:
-        """Create detailed distribution timeline"""
+        """
+Create detailed distribution timeline"""
         timeline = []
         
         # Sort releases by time
@@ -836,7 +859,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _calculate_success_metrics(self, content_data: Dict[str, Any],
                                   target_platforms: List[DistributionPlatform]) -> Dict[str, float]:
-        """Calculate expected success metrics"""
+        """
+Calculate expected success metrics"""
         # Simplified success metric calculation
         base_quality_score = content_data.get('quality_score', 70.0)
         creator_influence = content_data.get('creator_influence_score', 50.0)
@@ -853,7 +877,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     def _estimate_platform_reach(self, content_data: Dict[str, Any],
                                 target_platforms: List[DistributionPlatform]) -> Dict[str, int]:
-        """Estimate reach for each platform"""
+        """
+Estimate reach for each platform"""
         base_followers = content_data.get('creator_followers', 1000)
         
         # Platform-specific reach multipliers
@@ -875,7 +900,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     
     async def _prepare_platform_assets(self, content_data: Dict[str, Any],
                                       target_platforms: List[DistributionPlatform]) -> Dict[str, Dict[str, Any]]:
-        """Prepare platform-specific content assets"""
+        """
+Prepare platform-specific content assets"""
         prepared_assets = {}
         
         for platform in target_platforms:
@@ -937,7 +963,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     async def _optimize_platform_content(self, prepared_assets: Dict[str, Dict[str, Any]],
                                         target_platforms: List[DistributionPlatform],
                                         original_content: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-        """Optimize content for each platform"""
+        """
+Optimize content for each platform"""
         optimization_results = {}
         
         for platform in target_platforms:
@@ -1010,7 +1037,8 @@ class DistributionPreparationHandler(BaseEventHandler):
     async def _generate_distribution_recommendations(self, distribution_plan: DistributionPlan,
                                                    validation_results: Dict[str, Tuple[bool, List[str]]],
                                                    optimization_results: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Generate distribution recommendations"""
+        """
+Generate distribution recommendations"""
         recommendations = []
         
         # Validation-based recommendations
@@ -1086,7 +1114,8 @@ class DistributionPreparationHandler(BaseEventHandler):
         return actions
     
     def get_distribution_statistics(self) -> Dict[str, Any]:
-        """Get handler performance statistics"""
+        """
+Get handler performance statistics"""
         return {
             'distribution_counts': dict(self.distribution_stats),
             'average_processing_time': np.mean(self.processing_metrics['processing_time']) if self.processing_metrics['processing_time'] else 0,
@@ -1097,7 +1126,8 @@ class DistributionPreparationHandler(BaseEventHandler):
         }
     
     async def cleanup(self):
-        """Cleanup handler resources"""
+        """
+Cleanup handler resources"""
         logger.info("Cleaning up distribution preparation handler resources")
         self.distribution_queue.clear()
         self.processing_metrics.clear()

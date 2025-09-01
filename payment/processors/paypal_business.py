@@ -5,8 +5,9 @@ Comprehensive PayPal Business payment processor with marketplace features,
 multi-currency support, and advanced business tools.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,13 +24,16 @@ logger = logging.getLogger(__name__)
 
 
 class PayPalEnvironment(Enum):
-    """PayPal environment types"""
+    """
+PayPal environment types"""
+
     SANDBOX = "sandbox"
     LIVE = "live"
 
 
 class PayPalAccountType(Enum):
     """PayPal account types"""
+
     PERSONAL = "personal"
     BUSINESS = "business"
     PREMIER = "premier"
@@ -37,6 +41,7 @@ class PayPalAccountType(Enum):
 
 class PayPalPaymentMethod(Enum):
     """PayPal payment methods"""
+
     PAYPAL_WALLET = "paypal_wallet"
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
@@ -97,7 +102,8 @@ class PayPalBusinessProcessor:
         environment: PayPalEnvironment = PayPalEnvironment.SANDBOX,
         webhook_id: Optional[str] = None
     ):
-        """Initialize PayPal Business processor"""
+        """
+Initialize PayPal Business processor"""
         self.client_id = client_id
         self.client_secret = client_secret
         self.environment = environment

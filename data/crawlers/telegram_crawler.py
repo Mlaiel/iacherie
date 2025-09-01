@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -48,7 +49,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class TelegramMessage:
-    """Telegram message information"""
+    """
+Telegram message information"""
     message_id: int
     chat_id: int
     chat_username: Optional[str]
@@ -94,7 +96,8 @@ class TelegramMessage:
 
 @dataclass
 class TelegramChannel:
-    """Telegram channel information"""
+    """
+Telegram channel information"""
     channel_id: int
     username: Optional[str]
     title: str
@@ -140,7 +143,8 @@ class TelegramChannel:
 
 @dataclass
 class TelegramUser:
-    """Telegram user information"""
+    """
+Telegram user information"""
     user_id: int
     username: Optional[str]
     first_name: str

@@ -10,6 +10,7 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -33,7 +34,9 @@ Base = declarative_base()
 
 
 class CompetitorTier(Enum):
-    """Competitor classification tiers"""
+    """
+Competitor classification tiers"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     ASPIRATIONAL = "aspirational"
@@ -43,6 +46,7 @@ class CompetitorTier(Enum):
 
 class AnalysisType(Enum):
     """Types of competitive analysis"""
+
     CONTENT_STRATEGY = "content_strategy"
     ENGAGEMENT_PATTERNS = "engagement_patterns"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -55,6 +59,7 @@ class AnalysisType(Enum):
 
 class MarketPosition(Enum):
     """Market positioning categories"""
+
     LEADER = "leader"
     CHALLENGER = "challenger"
     FOLLOWER = "follower"
@@ -92,7 +97,8 @@ class CompetitorProfile:
     last_analyzed: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             "competitor_id": self.competitor_id,
             "name": self.name,
@@ -237,7 +243,8 @@ class CompetitiveIntelligenceEngine:
         asyncio.create_task(self._initialize_models())
     
     async def _initialize_models(self):
-        """Initialize machine learning models for competitive analysis"""
+        """
+Initialize machine learning models for competitive analysis"""
         try:
             # Initialize clustering model for competitor segmentation
             self.ml_models['competitor_clustering'] = KMeans(n_clusters=5, random_state=42)
@@ -380,7 +387,8 @@ class CompetitiveIntelligenceEngine:
         return []
     
     async def _discover_by_platform(self, platforms: List[str], niche: str) -> List[CompetitorProfile]:
-        """Discover competitors on same platforms and niche"""
+        """
+Discover competitors on same platforms and niche"""
         competitors = []
         
         # Mock platform-specific discovery

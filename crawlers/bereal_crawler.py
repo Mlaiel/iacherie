@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class BeRealContentType(str, Enum):
-    """BeReal content types for classification"""
+    """
+BeReal content types for classification"""
+
     BEREAL_POST = "bereal_post"
     LATE_BEREAL = "late_bereal"
     MEMORY = "memory"
@@ -47,6 +50,7 @@ class BeRealContentType(str, Enum):
 
 class BeRealVisibility(str, Enum):
     """BeReal post visibility settings"""
+
     FRIENDS = "friends"
     FRIENDS_OF_FRIENDS = "friends_of_friends"
     DISCOVERY = "discovery"
@@ -65,7 +69,8 @@ class BeRealLocation(BaseModel):
 
 
 class BeRealPhoto(BaseModel):
-    """BeReal photo data model"""
+    """
+BeReal photo data model"""
     front_camera_url: str
     back_camera_url: str
     front_camera_width: int
@@ -81,7 +86,8 @@ class BeRealPhoto(BaseModel):
 
 
 class BeRealUser(BaseModel):
-    """BeReal user data model"""
+    """
+BeReal user data model"""
     user_id: str
     username: str
     display_name: str
@@ -99,7 +105,8 @@ class BeRealUser(BaseModel):
 
 
 class BeRealReaction(BaseModel):
-    """BeReal reaction data model"""
+    """
+BeReal reaction data model"""
     reaction_id: str
     user: BeRealUser
     emoji: str
@@ -108,7 +115,8 @@ class BeRealReaction(BaseModel):
 
 
 class BeRealComment(BaseModel):
-    """BeReal comment data model"""
+    """
+BeReal comment data model"""
     comment_id: str
     user: BeRealUser
     content: str
@@ -120,7 +128,8 @@ class BeRealComment(BaseModel):
 
 
 class BeRealContent(BaseModel):
-    """Main BeReal content data model"""
+    """
+Main BeReal content data model"""
     post_id: str
     user: BeRealUser
     content_type: BeRealContentType
@@ -156,7 +165,8 @@ class BeRealSearchResults(BaseModel):
 
 
 class BeRealAnalytics(BaseModel):
-    """BeReal analytics data model"""
+    """
+BeReal analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int

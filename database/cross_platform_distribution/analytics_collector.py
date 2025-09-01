@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MetricType(str, Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     REACH = "reach"
     IMPRESSIONS = "impressions"
     VIEWS = "views"
@@ -54,6 +57,7 @@ class MetricType(str, Enum):
 
 class AnalyticsTimeframe(str, Enum):
     """Analytics timeframe options"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -64,6 +68,7 @@ class AnalyticsTimeframe(str, Enum):
 
 class DataSource(str, Enum):
     """Data source types"""
+
     PLATFORM_API = "platform_api"
     WEBHOOK = "webhook"
     MANUAL_ENTRY = "manual_entry"
@@ -84,7 +89,8 @@ class MetricData:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     content_id: str
     report_id: str
     timeframe: AnalyticsTimeframe
@@ -98,7 +104,8 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class DistributionMetrics(Base):
-    """Database model for distribution performance metrics"""
+    """
+Database model for distribution performance metrics"""
     __tablename__ = "distribution_metrics"
     
     id = Column(Integer, primary_key=True, index=True)

@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
@@ -59,7 +60,8 @@ settings = get_settings()
 
 @dataclass
 class TikTokVideoData:
-    """TikTok video data structure"""
+    """
+TikTok video data structure"""
     video_id: str
     url: str
     description: str
@@ -92,7 +94,8 @@ class TikTokVideoData:
 
 @dataclass
 class TikTokUserData:
-    """TikTok user data structure"""
+    """
+TikTok user data structure"""
     user_id: str
     unique_id: str
     nickname: str
@@ -124,7 +127,8 @@ class TikTokUserData:
 
 @dataclass
 class TikTokChallengeData:
-    """TikTok challenge/hashtag data structure"""
+    """
+TikTok challenge/hashtag data structure"""
     challenge_id: str
     title: str
     description: str
@@ -154,7 +158,8 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize TikTok crawler engine"""
+        """
+Initialize TikTok crawler engine"""
         super().__init__(config)
         self.session = None
         self.playwright_page = None
@@ -173,7 +178,8 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_session(self) -> None:
-        """Setup HTTP session with TikTok-specific headers"""
+        """
+Setup HTTP session with TikTok-specific headers"""
         self.session = requests.Session()
         
         # TikTok-specific headers
@@ -717,7 +723,8 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             return 0
     
     async def _calculate_virality_score(self, video: TikTokVideoData) -> float:
-        """Calculate virality score based on engagement metrics"""
+        """
+Calculate virality score based on engagement metrics"""
         try:
             # Basic virality factors
             total_engagements = video.likes_count + video.comments_count + video.shares_count

@@ -6,7 +6,7 @@ platform policy compliance, and creator guidelines validation for multi-format
 content across social media and streaming platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and
@@ -21,6 +21,7 @@ Features:
 - Brand safety and advertiser-friendly content validation
 - Age restriction and content rating assessment
 """
+
 import re
 import json
 from enum import Enum
@@ -51,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 class Platform(Enum):
     """Supported platforms for compliance validation"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -65,6 +67,7 @@ class Platform(Enum):
 
 class ContentType(Enum):
     """Content types for compliance validation"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -79,6 +82,7 @@ class ContentType(Enum):
 
 class ComplianceLevel(Enum):
     """Compliance validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -87,6 +91,7 @@ class ComplianceLevel(Enum):
 
 class ViolationType(Enum):
     """Types of policy violations"""
+
     HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
     VIOLENCE = "violence"
@@ -106,6 +111,7 @@ class ViolationType(Enum):
 
 class SeverityLevel(Enum):
     """Violation severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -115,6 +121,7 @@ class SeverityLevel(Enum):
 
 class AgeRating(Enum):
     """Content age rating categories"""
+
     ALL_AGES = "all_ages"
     TEENS_13_PLUS = "teens_13_plus"
     MATURE_17_PLUS = "mature_17_plus"
@@ -178,7 +185,8 @@ class CreatorProfile:
 
 @dataclass
 class ComplianceValidationResult:
-    """Result of compliance validation"""
+    """
+Result of compliance validation"""
     validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_metadata: ContentMetadata
     creator_profile: CreatorProfile
@@ -942,7 +950,8 @@ class CreatorContentComplianceValidator:
         return 0.1  # Low default score
     
     def _detect_profanity(self, text: str) -> float:
-        """Detect profanity in text"""
+        """
+Detect profanity in text"""
         profanity_words = [
             "damn", "hell", "shit", "fuck", "bitch", "ass", "crap"
         ]
@@ -1019,52 +1028,64 @@ class CreatorContentComplianceValidator:
         return lambda text: self._detect_profanity(text)
     
     def _create_hate_speech_detector(self):
-        """Create hate speech detector"""
+        """
+Create hate speech detector"""
         return lambda text: self._detect_hate_speech(text)
     
     def _create_spam_detector(self):
-        """Create spam detector"""
+        """
+Create spam detector"""
         return lambda text: self._detect_spam_indicators(text)
     
     def _create_nsfw_detector(self):
-        """Create NSFW detector"""
+        """
+Create NSFW detector"""
         return lambda content: self._detect_nsfw_content(content)
     
     def _create_text_extractor(self):
-        """Create text extractor"""
+        """
+Create text extractor"""
         return lambda image: self._extract_text_from_image(image)
     
     def _create_face_detector(self):
-        """Create face detector"""
+        """
+Create face detector"""
         return lambda image: 0  # Placeholder
     
     def _create_frame_analyzer(self):
-        """Create video frame analyzer"""
+        """
+Create video frame analyzer"""
         return lambda video: {}  # Placeholder
     
     def _create_audio_analyzer(self):
-        """Create audio analyzer"""
+        """
+Create audio analyzer"""
         return lambda audio: {}  # Placeholder
     
     def _create_motion_detector(self):
-        """Create motion detector"""
+        """
+Create motion detector"""
         return lambda video: {}  # Placeholder
     
     def _create_audio_classifier(self):
-        """Create audio classifier"""
+        """
+Create audio classifier"""
         return lambda audio: {}  # Placeholder
     
     def _create_copyright_detector(self):
-        """Create copyright detector"""
+        """
+Create copyright detector"""
         return lambda audio: 0.2  # Placeholder
     
     def _create_quality_analyzer(self):
-        """Create quality analyzer"""
+        """
+Create quality analyzer"""
         return lambda audio: 0.8  # Placeholder
     
     # Result processing methods
     def _calculate_compliance_score(self, result: ComplianceValidationResult) -> float:
-        """Calculate overall compliance score"""
+        """
+Calculate overall compliance score"""
         if not result.violations:
             return 1.0
         
@@ -1087,7 +1108,8 @@ class CreatorContentComplianceValidator:
         return round(compliance_score, 3)
     
     def _determine_age_rating(self, result: ComplianceValidationResult) -> AgeRating:
-        """Determine appropriate age rating"""
+        """
+Determine appropriate age rating"""
         has_mature_content = any(
             violation.violation_type in [
                 ViolationType.SEXUAL_CONTENT,
@@ -1115,7 +1137,8 @@ class CreatorContentComplianceValidator:
             return AgeRating.ALL_AGES
     
     def _check_monetization_safety(self, result: ComplianceValidationResult) -> bool:
-        """Check if content is safe for monetization"""
+        """
+Check if content is safe for monetization"""
         blocking_violations = [
             ViolationType.HATE_SPEECH,
             ViolationType.HARASSMENT,
@@ -1130,7 +1153,8 @@ class CreatorContentComplianceValidator:
         )
     
     def _check_brand_safety(self, result: ComplianceValidationResult) -> bool:
-        """Check if content is brand safe"""
+        """
+Check if content is brand safe"""
         brand_unsafe_violations = [
             ViolationType.HATE_SPEECH,
             ViolationType.HARASSMENT,
@@ -1146,7 +1170,8 @@ class CreatorContentComplianceValidator:
         )
     
     def _generate_compliance_recommendations(self, result: ComplianceValidationResult) -> List[str]:
-        """Generate compliance improvement recommendations"""
+        """
+Generate compliance improvement recommendations"""
         recommendations = []
         
         if not result.is_compliant:
@@ -1184,7 +1209,8 @@ class CreatorContentComplianceValidator:
         )
     
     def _get_appeal_options(self, result: ComplianceValidationResult) -> List[str]:
-        """Get available appeal options"""
+        """
+Get available appeal options"""
         appeal_options = []
         
         if result.violations:
@@ -1247,7 +1273,8 @@ def validate_creator_content_batch(
     creator_profile: CreatorProfile,
     target_platforms: List[Platform]
 ) -> List[ComplianceValidationResult]:
-    """Validate multiple content items in batch"""
+    """
+Validate multiple content items in batch"""
     validator = create_creator_compliance_validator()
     results = []
     

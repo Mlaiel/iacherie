@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import sys
 import asyncio
 import importlib
@@ -35,7 +36,8 @@ sys.path.insert(0, str(current_dir))
 
 
 class ObservabilityValidator:
-    """Comprehensive validation suite for the observability module"""
+    """
+Comprehensive validation suite for the observability module"""
     
     def __init__(self):
         self.results = {

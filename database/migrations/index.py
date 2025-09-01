@@ -8,7 +8,7 @@ Responsibility: Central orchestration and coordination of all database migration
 ==================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -29,6 +29,7 @@ Migration Modules Included:
 7. Content Protection Migrations - Advanced fingerprinting and monitoring
 8. Monetization Migrations - Revenue tracking and optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -59,7 +60,9 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationScope(Enum):
-    """Scope of migration execution"""
+    """
+Scope of migration execution"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -122,7 +125,8 @@ class CompleteMigrationOrchestrator:
         self._initialize_migration_modules()
     
     def _initialize_migration_modules(self):
-        """Initialize all migration modules with proper configuration"""
+        """
+Initialize all migration modules with proper configuration"""
         try:
             # Creator management migrations
             if self.config.enable_creator_management:
@@ -272,7 +276,8 @@ class CompleteMigrationOrchestrator:
         )
     
     def _create_video_migration_config(self) -> VideoMigrationConfiguration:
-        """Create video migration configuration"""
+        """
+Create video migration configuration"""
         return VideoMigrationConfiguration(
             enable_frame_analysis=self.config.enable_ai_analysis,
             enable_object_detection=self.config.enable_ai_analysis,
@@ -284,7 +289,8 @@ class CompleteMigrationOrchestrator:
         )
     
     def _create_image_migration_config(self) -> ImageMigrationConfiguration:
-        """Create image migration configuration"""
+        """
+Create image migration configuration"""
         return ImageMigrationConfiguration(
             enable_object_detection=self.config.enable_ai_analysis,
             enable_face_recognition=self.config.enable_ai_analysis,
@@ -296,7 +302,8 @@ class CompleteMigrationOrchestrator:
         )
     
     def _create_text_migration_config(self) -> TextMigrationConfiguration:
-        """Create text migration configuration"""
+        """
+Create text migration configuration"""
         return TextMigrationConfiguration(
             enable_nlp_analysis=self.config.enable_ai_analysis,
             enable_sentiment_analysis=self.config.enable_ai_analysis,
@@ -308,7 +315,8 @@ class CompleteMigrationOrchestrator:
         )
     
     def _create_integration_migration_config(self) -> IntegrationMigrationConfiguration:
-        """Create integration migration configuration"""
+        """
+Create integration migration configuration"""
         return IntegrationMigrationConfiguration(
             enable_real_time_sync=True,
             enable_analytics_collection=self.config.enable_analytics,
@@ -319,7 +327,8 @@ class CompleteMigrationOrchestrator:
         )
     
     async def _execute_audio_migrations(self, config: AudioMigrationConfiguration) -> List[str]:
-        """Execute audio migrations with error handling"""
+        """
+Execute audio migrations with error handling"""
         try:
             return await self.audio_migrations.execute_full_audio_migration(config)
         except Exception as e:

@@ -3,9 +3,10 @@
 Advanced Mixcloud crawler with comprehensive DJ mix analysis, podcast monitoring,
 and music curation tracking capabilities for the IA Influencer Agent platform.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized reproduction or distribution of this code is strictly prohibited.
 """
+
 import asyncio
 import logging
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MixcloudShow:
-    """Comprehensive Mixcloud show/mix data structure."""
+    """
+Comprehensive Mixcloud show/mix data structure."""
     show_id: str
     key: str
     name: str
@@ -59,7 +61,8 @@ class MixcloudShow:
 
 @dataclass
 class MixcloudUser:
-    """Mixcloud user profile data structure."""
+    """
+Mixcloud user profile data structure."""
     user_id: str
     username: str
     display_name: str
@@ -88,7 +91,8 @@ class MixcloudUser:
 
 @dataclass
 class MixcloudSearchResult:
-    """Mixcloud search result data structure."""
+    """
+Mixcloud search result data structure."""
     query: str
     total_results: int
     shows: List[MixcloudShow]
@@ -102,7 +106,8 @@ class MixcloudSearchResult:
 
 @dataclass
 class MixcloudAnalytics:
-    """Mixcloud analytics and insights data."""
+    """
+Mixcloud analytics and insights data."""
     period_start: datetime
     period_end: datetime
     total_plays: int
@@ -168,11 +173,13 @@ class MixcloudCrawler:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.cleanup()
         
     async def initialize(self):
-        """Initialize crawler with authentication and configuration."""
+        """
+Initialize crawler with authentication and configuration."""
         connector = aiohttp.TCPConnector(limit=50, limit_per_host=10)
         timeout = aiohttp.ClientTimeout(total=30, connect=10)
         
@@ -198,7 +205,8 @@ class MixcloudCrawler:
             await self.session.close()
             
     async def _make_request(self, endpoint: str, params: Dict = None) -> Dict:
-        """Make authenticated API request with rate limiting."""
+        """
+Make authenticated API request with rate limiting."""
         await self.rate_limiter.acquire()
         
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
@@ -274,7 +282,8 @@ class MixcloudCrawler:
         )
         
     async def get_show_details(self, show_key: str) -> Optional[MixcloudShow]:
-        """Get detailed information about a specific show."""
+        """
+Get detailed information about a specific show."""
         try:
             data = await self._make_request(show_key)
             return await self._parse_show_data(data)
@@ -435,7 +444,8 @@ class MixcloudCrawler:
         return violations
         
     async def _parse_show_data(self, data: Dict) -> Optional[MixcloudShow]:
-        """Parse Mixcloud API show data into structured format."""
+        """
+Parse Mixcloud API show data into structured format."""
         try:
             return MixcloudShow(
                 show_id=data.get('slug', ''),
@@ -606,7 +616,8 @@ class MixcloudCrawler:
         return sorted(genre_counts.keys(), key=genre_counts.get, reverse=True)[:10]
         
     async def _extract_trending_tags(self, shows: List[MixcloudShow]) -> List[str]:
-        """Extract trending tags from show collection."""
+        """
+Extract trending tags from show collection."""
         tag_counts = {}
         
         for show in shows:
@@ -617,7 +628,8 @@ class MixcloudCrawler:
         return [tag for tag, count in trending[:20]]
         
     async def _find_similar_content(self, content_id: str) -> List[MixcloudShow]:
-        """Find content similar to protected content."""
+        """
+Find content similar to protected content."""
         return []
         
     async def _calculate_violation_score(
@@ -625,7 +637,8 @@ class MixcloudCrawler:
         original_content_id: str, 
         show: MixcloudShow
     ) -> float:
-        """Calculate violation score between original content and show."""
+        """
+Calculate violation score between original content and show."""
         return 0.0
         
     async def _generate_section_fingerprint(
@@ -634,7 +647,8 @@ class MixcloudCrawler:
         start_time: int, 
         end_time: int
     ) -> str:
-        """Generate fingerprint for specific audio section."""
+        """
+Generate fingerprint for specific audio section."""
         return ""
         
     async def _check_track_copyright(self, track_info: Dict) -> Dict:
@@ -642,7 +656,8 @@ class MixcloudCrawler:
         return {'is_copyrighted': False}
         
     def get_performance_metrics(self) -> Dict:
-        """Get crawler performance metrics."""
+        """
+Get crawler performance metrics."""
         return {
             'requests_made': self.requests_made,
             'content_analyzed': self.content_analyzed,

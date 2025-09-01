@@ -7,6 +7,7 @@ Handles artist data, track analytics, playlist management, and fan insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track information"""
+    """
+Spotify track information"""
     track_id: str
     name: str
     artists: List[str]
@@ -41,7 +43,8 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyArtist:
-    """Spotify artist information"""
+    """
+Spotify artist information"""
     artist_id: str
     name: str
     genres: List[str]
@@ -54,7 +57,8 @@ class SpotifyArtist:
 
 @dataclass
 class SpotifyAlbum:
-    """Spotify album information"""
+    """
+Spotify album information"""
     album_id: str
     name: str
     album_type: str  # "album", "single", "compilation"
@@ -98,7 +102,8 @@ class SpotifyArtistsAPI:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -112,7 +117,8 @@ class SpotifyArtistsAPI:
         data: Optional[Dict[str, Any]] = None,
         base_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("spotify", endpoint)

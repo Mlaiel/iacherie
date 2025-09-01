@@ -30,6 +30,7 @@ Features:
 - Collaboration opportunity metrics
 - Creator success measurement
 """
+
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -48,7 +49,8 @@ metrics_config = get_metrics_config()
 
 
 class BusinessEventType(Enum):
-    """Business event types for metrics collection"""
+    """
+Business event types for metrics collection"""
     # Content Protection Events
     CONTENT_UPLOADED = "content_uploaded"
     FINGERPRINT_CREATED = "fingerprint_created"
@@ -122,7 +124,8 @@ class BusinessEventsCollector:
         duration: Optional[float] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track content upload event"""
+        """
+Track content upload event"""
         event = BusinessEvent(
             event_type=BusinessEventType.CONTENT_UPLOADED,
             tenant_id=tenant_id,
@@ -325,7 +328,8 @@ class BusinessEventsCollector:
                 await self._flush_events()
     
     async def _flush_events(self) -> None:
-        """Flush events buffer to storage and processing"""
+        """
+Flush events buffer to storage and processing"""
         if not self.event_buffer:
             return
         

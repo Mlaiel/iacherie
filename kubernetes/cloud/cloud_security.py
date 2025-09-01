@@ -14,6 +14,7 @@ This module provides comprehensive security management for the IA Influencer
 Agent platform across multiple cloud providers, including threat detection,
 compliance monitoring, identity management, and security automation.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -36,7 +37,9 @@ import ipaddress
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -45,6 +48,7 @@ class ThreatLevel(Enum):
 
 class SecurityEventType(Enum):
     """Security event types"""
+
     AUTHENTICATION_FAILURE = "auth_failure"
     AUTHORIZATION_VIOLATION = "authz_violation"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
@@ -58,6 +62,7 @@ class SecurityEventType(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks"""
+
     SOC2 = "soc2"
     GDPR = "gdpr"
     HIPAA = "hipaa"
@@ -69,6 +74,7 @@ class ComplianceFramework(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
@@ -92,7 +98,8 @@ class SecurityEvent:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data"""
+    """
+Threat intelligence data"""
     indicator: str
     indicator_type: str  # ip, domain, hash, etc.
     threat_level: ThreatLevel
@@ -105,7 +112,8 @@ class ThreatIntelligence:
 
 @dataclass
 class SecurityPolicy:
-    """Security policy definition"""
+    """
+Security policy definition"""
     policy_id: str
     name: str
     description: str
@@ -117,7 +125,8 @@ class SecurityPolicy:
 
 @dataclass
 class IdentityProfile:
-    """User/service identity profile"""
+    """
+User/service identity profile"""
     identity_id: str
     identity_type: str  # user, service, admin
     permissions: Set[str]
@@ -130,7 +139,8 @@ class IdentityProfile:
 
 @dataclass
 class VulnerabilityAssessment:
-    """Vulnerability assessment result"""
+    """
+Vulnerability assessment result"""
     vulnerability_id: str
     cve_id: Optional[str]
     severity: ThreatLevel
@@ -142,10 +152,12 @@ class VulnerabilityAssessment:
     patched_at: Optional[datetime] = None
 
 class CloudSecurityManager:
-    """Enterprise cloud security management system"""
+    """
+Enterprise cloud security management system"""
     
     def __init__(self):
-        """Initialize cloud security manager"""
+        """
+Initialize cloud security manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.security_events: List[SecurityEvent] = []
         self.threat_intelligence: List[ThreatIntelligence] = []
@@ -170,7 +182,8 @@ class CloudSecurityManager:
         self.compliance_status: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize security manager"""
+        """
+Initialize security manager"""
         try:
             self.logger.info("Initializing cloud security manager")
             
@@ -841,7 +854,8 @@ class CloudSecurityManager:
             profile.permissions.clear()  # Revoke all permissions
     
     async def _high_threat_response(self, event: SecurityEvent) -> None:
-        """Handle high threat"""
+        """
+Handle high threat"""
         # Increase monitoring for source IP
         if event.source_ip:
             await self._increase_monitoring(event.source_ip)
@@ -852,19 +866,22 @@ class CloudSecurityManager:
             profile.mfa_enabled = True
     
     async def _verify_credentials(self, identity_id: str, credentials: Any) -> bool:
-        """Verify user credentials"""
+        """
+Verify user credentials"""
         # Simplified credential verification
         # Real implementation would use proper password hashing
         return credentials is not None
     
     async def _verify_mfa(self, identity_id: str, mfa_code: str) -> bool:
-        """Verify MFA code"""
+        """
+Verify MFA code"""
         # Simplified MFA verification
         # Real implementation would verify TOTP/SMS codes
         return mfa_code is not None and len(mfa_code) == 6
     
     async def _update_risk_score(self, profile: IdentityProfile, login_data: Dict[str, Any]) -> None:
-        """Update user risk score based on login behavior"""
+        """
+Update user risk score based on login behavior"""
         risk_factors = 0
         
         # Check for unusual login time
@@ -883,7 +900,8 @@ class CloudSecurityManager:
         profile.risk_score = min(1.0, risk_factors)
     
     async def _scan_network_vulnerabilities(self, target: str) -> List[VulnerabilityAssessment]:
-        """Scan for network vulnerabilities"""
+        """
+Scan for network vulnerabilities"""
         vulnerabilities = []
         
         # Simulate network vulnerability scan
@@ -892,7 +910,8 @@ class CloudSecurityManager:
         return vulnerabilities
     
     async def _scan_application_vulnerabilities(self, target: str) -> List[VulnerabilityAssessment]:
-        """Scan for application vulnerabilities"""
+        """
+Scan for application vulnerabilities"""
         vulnerabilities = []
         
         # Simulate application vulnerability scan
@@ -901,7 +920,8 @@ class CloudSecurityManager:
         return vulnerabilities
     
     async def _scan_configuration_vulnerabilities(self, target: str) -> List[VulnerabilityAssessment]:
-        """Scan for configuration vulnerabilities"""
+        """
+Scan for configuration vulnerabilities"""
         vulnerabilities = []
         
         # Check for common misconfigurations
@@ -951,7 +971,8 @@ class CloudSecurityManager:
         pass
     
     async def _get_compliance_rules(self, framework: ComplianceFramework) -> List[Dict[str, Any]]:
-        """Get compliance rules for framework"""
+        """
+Get compliance rules for framework"""
         rules = {
             ComplianceFramework.SOC2: [
                 {
@@ -991,7 +1012,8 @@ class CloudSecurityManager:
         pass
     
     async def _generate_security_recommendations(self) -> List[str]:
-        """Generate security recommendations"""
+        """
+Generate security recommendations"""
         recommendations = []
         
         # Check for high-risk identities
@@ -1022,7 +1044,8 @@ class CloudSecurityManager:
             return False
     
     async def _block_ip_address(self, ip: str) -> None:
-        """Block IP address"""
+        """
+Block IP address"""
         self.logger.info(f"Blocking IP address: {ip}")
         # Implementation would add IP to firewall blacklist
     

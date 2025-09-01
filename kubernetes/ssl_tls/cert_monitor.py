@@ -13,6 +13,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import os
 import ssl
 import time
@@ -39,7 +40,9 @@ import psutil
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -48,6 +51,7 @@ class AlertLevel(Enum):
 
 class MonitoringStatus(Enum):
     """Certificate monitoring status"""
+
     VALID = "valid"
     EXPIRING_SOON = "expiring_soon"
     EXPIRED = "expired"
@@ -75,7 +79,8 @@ class CertificateEndpoint:
 
 @dataclass
 class CertificateStatus:
-    """Certificate status information"""
+    """
+Certificate status information"""
     endpoint: str
     hostname: str
     port: int
@@ -91,7 +96,8 @@ class CertificateStatus:
 
 @dataclass
 class AlertConfig:
-    """Alert configuration"""
+    """
+Alert configuration"""
     email_enabled: bool = True
     email_recipients: List[str] = None
     email_smtp_server: str = "localhost"
@@ -438,7 +444,8 @@ class CertificateMonitor:
         }
     
     def _verify_hostname_match(self, cert: x509.Certificate, hostname: str) -> bool:
-        """Verify certificate matches hostname"""
+        """
+Verify certificate matches hostname"""
         try:
             # Check common name
             subject = cert.subject
@@ -465,7 +472,8 @@ class CertificateMonitor:
             return False
     
     def _match_hostname(self, cert_hostname: str, request_hostname: str) -> bool:
-        """Match hostname with wildcard support"""
+        """
+Match hostname with wildcard support"""
         if cert_hostname == request_hostname:
             return True
         
@@ -479,7 +487,8 @@ class CertificateMonitor:
         return False
     
     def _verify_certificate_chain(self, cert: x509.Certificate, ssl_socket: ssl.SSLSocket) -> List[str]:
-        """Verify certificate chain"""
+        """
+Verify certificate chain"""
         issues = []
         try:
             # Get certificate chain
@@ -823,7 +832,8 @@ class CertificateMonitor:
         }
     
     def get_detailed_status(self) -> List[Dict[str, Any]]:
-        """Get detailed status for all endpoints"""
+        """
+Get detailed status for all endpoints"""
         return [asdict(status) for status in self.certificate_statuses.values()]
     
     def generate_report(self, output_path: Path, format_type: str = "json") -> None:
@@ -927,7 +937,8 @@ class CertificateMonitor:
             f.write(html_content)
     
     def _generate_csv_report(self, report_data: Dict[str, Any], output_path: Path) -> None:
-        """Generate CSV report"""
+        """
+Generate CSV report"""
         import csv
         
         with open(output_path, 'w', newline='') as csvfile:

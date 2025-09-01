@@ -11,6 +11,7 @@ Advanced load balancing for database connections:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -24,7 +25,9 @@ import statistics
 
 
 class LoadBalancingAlgorithm(Enum):
-    """Load balancing algorithms"""
+    """
+Load balancing algorithms"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -38,6 +41,7 @@ class LoadBalancingAlgorithm(Enum):
 
 class ServerStatus(Enum):
     """Server status for load balancing"""
+
     ACTIVE = "active"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -58,19 +62,22 @@ class ServerMetrics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def success_rate(self) -> float:
-        """Calculate success rate"""
+        """
+Calculate success rate"""
         if self.total_requests == 0:
             return 1.0
         return self.successful_requests / self.total_requests
     
     def error_rate(self) -> float:
-        """Calculate error rate"""
+        """
+Calculate error rate"""
         return 1.0 - self.success_rate()
 
 
 @dataclass
 class DatabaseServer:
-    """Database server configuration"""
+    """
+Database server configuration"""
     server_id: str
     host: str
     port: int
@@ -98,7 +105,8 @@ class DatabaseServer:
         )
     
     def load_factor(self) -> float:
-        """Calculate current load factor (0.0 = no load, 1.0 = full load)"""
+        """
+Calculate current load factor (0.0 = no load, 1.0 = full load)"""
         if self.max_connections == 0:
             return 0.0
         return self.metrics.active_connections / self.max_connections
@@ -285,7 +293,8 @@ class DatabaseLoadBalancer:
         server.metrics.last_updated = datetime.utcnow()
     
     def _check_circuit_breaker(self, server: DatabaseServer) -> None:
-        """Check and update circuit breaker status"""
+        """
+Check and update circuit breaker status"""
         now = datetime.utcnow()
         
         # Reset circuit breaker if timeout exceeded
@@ -394,7 +403,8 @@ class DatabaseLoadBalancer:
                           session_id: Optional[str] = None,
                           routing_key: Optional[str] = None,
                           preferred_region: Optional[str] = None) -> Optional[DatabaseServer]:
-        """Select best server using configured algorithm"""
+        """
+Select best server using configured algorithm"""
         
         if group_name not in self.server_groups:
             return None
@@ -485,7 +495,8 @@ class DatabaseLoadBalancer:
         return servers[index]
     
     def _weighted_round_robin_select(self, group_name: str, servers: List[DatabaseServer]) -> DatabaseServer:
-        """Weighted round robin server selection"""
+        """
+Weighted round robin server selection"""
         if not servers:
             return None
         
@@ -504,7 +515,8 @@ class DatabaseLoadBalancer:
         return weighted_servers[index]
     
     def _hash_based_select(self, group_name: str, key: str) -> Optional[DatabaseServer]:
-        """Consistent hash-based server selection"""
+        """
+Consistent hash-based server selection"""
         if group_name not in self.hash_ring or not self.hash_ring[group_name]:
             return None
         
@@ -525,7 +537,8 @@ class DatabaseLoadBalancer:
         return server if server and server.is_available() else None
     
     def _geographic_select(self, servers: List[DatabaseServer], preferred_region: Optional[str]) -> DatabaseServer:
-        """Geographic-aware server selection"""
+        """
+Geographic-aware server selection"""
         if preferred_region:
             # First try servers in preferred region
             region_servers = [s for s in servers if s.region == preferred_region]
@@ -537,7 +550,8 @@ class DatabaseLoadBalancer:
         return min(servers, key=lambda s: s.metrics.active_connections)
     
     async def report_connection_start(self, server_id: str) -> None:
-        """Report that a connection has started to a server"""
+        """
+Report that a connection has started to a server"""
         server = self.servers.get(server_id)
         if server:
             server.metrics.active_connections += 1
@@ -547,7 +561,8 @@ class DatabaseLoadBalancer:
                                   server_id: str, 
                                   success: bool, 
                                   response_time: float) -> None:
-        """Report that a connection has ended"""
+        """
+Report that a connection has ended"""
         server = self.servers.get(server_id)
         if not server:
             return
@@ -575,7 +590,8 @@ class DatabaseLoadBalancer:
             )
     
     def add_server(self, group_name: str, server_config: Dict[str, Any]) -> bool:
-        """Add a new server to the load balancer"""
+        """
+Add a new server to the load balancer"""
         try:
             server = DatabaseServer(**server_config)
             

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -55,22 +56,26 @@ class IndexingInterface(ABC):
     
     @abstractmethod
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """Index a conversation"""
+        """
+Index a conversation"""
         pass
     
     @abstractmethod
     async def search_index(self, query: Dict[str, Any]) -> List[str]:
-        """Search the index"""
+        """
+Search the index"""
         pass
     
     @abstractmethod
     async def update_index(self, conversation_id: str, conversation: ConversationRecord) -> bool:
-        """Update index for a conversation"""
+        """
+Update index for a conversation"""
         pass
     
     @abstractmethod
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from index"""
+        """
+Remove conversation from index"""
         pass
 
 
@@ -448,7 +453,8 @@ class TopicIndexer(IndexingInterface):
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from topic index"""
+        """
+Remove conversation from topic index"""
         try:
             # Remove from conversation topics
             if conversation_id in self.conversation_topics:
@@ -477,7 +483,8 @@ class TopicIndexer(IndexingInterface):
         self,
         conversation_id: str
     ) -> List[Tuple[int, float, List[str]]]:
-        """Get topics for a conversation with terms"""
+        """
+Get topics for a conversation with terms"""
         if conversation_id not in self.conversation_topics:
             return []
         
@@ -489,7 +496,8 @@ class TopicIndexer(IndexingInterface):
         return topics_with_terms
     
     def _extract_text_content(self, conversation: ConversationRecord) -> str:
-        """Extract and preprocess text content"""
+        """
+Extract and preprocess text content"""
         text_parts = []
         
         if conversation.conversation_data:
@@ -717,7 +725,8 @@ class SemanticIndexer(IndexingInterface):
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from semantic index"""
+        """
+Remove conversation from semantic index"""
         try:
             if conversation_id in self.conversation_clusters:
                 cluster_id = self.conversation_clusters[conversation_id]
@@ -976,7 +985,8 @@ class ContentIndexer(IndexingInterface):
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from content index"""
+        """
+Remove conversation from content index"""
         try:
             # Remove from all indexes
             # This is a simplified approach - in production would track relationships
@@ -1259,7 +1269,8 @@ class TemporalIndexer(IndexingInterface):
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from temporal index"""
+        """
+Remove conversation from temporal index"""
         try:
             # Remove from all temporal indexes
             # This is a simplified approach
@@ -1406,7 +1417,8 @@ class TextProcessor:
         return text
     
     def _tokenize(self, text: str) -> List[str]:
-        """Tokenize text into words"""
+        """
+Tokenize text into words"""
         try:
             if nltk:
                 return word_tokenize(text)
@@ -1416,14 +1428,16 @@ class TextProcessor:
             return text.split()
     
     def _remove_stop_words(self, tokens: List[str]) -> List[str]:
-        """Remove stop words from tokens"""
+        """
+Remove stop words from tokens"""
         if self.stop_words:
             return [token for token in tokens if token not in self.stop_words and len(token) > 2]
         else:
             return [token for token in tokens if len(token) > 2]
     
     def _lemmatize_tokens(self, tokens: List[str]) -> List[str]:
-        """Lemmatize tokens to their root forms"""
+        """
+Lemmatize tokens to their root forms"""
         if self.lemmatizer:
             try:
                 return [self.lemmatizer.lemmatize(token) for token in tokens]

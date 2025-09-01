@@ -2,12 +2,14 @@
 
 This provides a basic configuration when the complex config module is not available.
 """
+
 import os
 from typing import Dict, Any, Optional
 
 
 class Settings:
-    """Basic application settings"""
+    """
+Basic application settings"""
     
     def __init__(self):
         self.environment = os.getenv('ENVIRONMENT', 'development')
@@ -44,7 +46,8 @@ def get_settings() -> Settings:
 
 
 def get_config() -> Dict[str, Any]:
-    """Get configuration as dictionary"""
+    """
+Get configuration as dictionary"""
     return {
         'environment': settings.environment,
         'debug': settings.debug,
@@ -76,7 +79,8 @@ except ImportError:
 
 
 async def initialize_configuration() -> bool:
-    """Initialize configuration system"""
+    """
+Initialize configuration system"""
     if COMPLEX_CONFIG_AVAILABLE:
         try:
             from config import initialize_configuration as init_complex

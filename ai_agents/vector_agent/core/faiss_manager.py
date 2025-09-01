@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -440,7 +441,8 @@ class FAISSManager:
     
     async def cross_modal_search(self, query_vector: np.ndarray, content_types: List[str],
                                max_results_per_type: int = 10, similarity_threshold: float = 0.75) -> Dict[str, List[Dict[str, Any]]]:
-        """Search across multiple content types"""
+        """
+Search across multiple content types"""
         results = {}
         
         search_tasks = []
@@ -511,7 +513,8 @@ class FAISSManager:
         return await self.optimize_indices(list(self.indices.keys()))
     
     async def auto_optimize(self):
-        """Automatic optimization based on usage patterns"""
+        """
+Automatic optimization based on usage patterns"""
         try:
             # Get statistics for all indices
             stats = await self.get_statistics()
@@ -632,7 +635,8 @@ class FAISSManager:
         return self.metrics
     
     async def shutdown(self):
-        """Graceful shutdown with persistence"""
+        """
+Graceful shutdown with persistence"""
         try:
             # Save all indices
             await self.save_all_indices()

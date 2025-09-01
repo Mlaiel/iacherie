@@ -11,6 +11,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lo
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyCode(Enum):
-    """Codes de devises supportées"""
+    """
+Codes de devises supportées"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -45,6 +48,7 @@ class CurrencyCode(Enum):
 
 class RoyaltyType(Enum):
     """Types de redevances"""
+
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -59,6 +63,7 @@ class RoyaltyType(Enum):
 
 class PaymentFrequency(Enum):
     """Fréquences de paiement"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -70,6 +75,7 @@ class PaymentFrequency(Enum):
 
 class TaxJurisdiction(Enum):
     """Juridictions fiscales"""
+
     US = "US"
     EU = "EU"
     UK = "UK"
@@ -238,7 +244,8 @@ class RoyaltyCalculator:
             asyncio.create_task(self._initialize_exchange_rates())
     
     async def _load_default_rules(self):
-        """Charge les règles de redevances par défaut"""
+        """
+Charge les règles de redevances par défaut"""
         try:
             # Règle streaming standard
             streaming_rule = RoyaltyRule(
@@ -807,7 +814,8 @@ class RoyaltyCalculator:
         usage_count: int,
         usage_data: Dict[str, Any]
     ) -> Decimal:
-        """Calcule la redevance de base selon la règle"""
+        """
+Calcule la redevance de base selon la règle"""
         if rule.rate_type == "percentage":
             return gross_revenue * rule.base_rate
         
@@ -853,7 +861,8 @@ class RoyaltyCalculator:
         return slope
     
     def _generate_calculation_id(self) -> str:
-        """Génère un ID unique pour le calcul"""
+        """
+Génère un ID unique pour le calcul"""
         return f"CALC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_payment_id(self) -> str:
@@ -925,7 +934,8 @@ async def _apply_volume_bonuses(
     usage_count: int,
     gross_revenue: Decimal
 ) -> Dict[str, Decimal]:
-    """Applique les bonus de volume"""
+    """
+Applique les bonus de volume"""
     bonuses = {}
     
     for threshold_name, bonus_rate in rule.volume_bonuses.items():
@@ -941,7 +951,8 @@ async def _calculate_tax_withholding(
     territory: str,
     rule: RoyaltyRule
 ) -> Decimal:
-    """Calcule la retenue fiscale"""
+    """
+Calcule la retenue fiscale"""
     withholding_rate = rule.tax_withholding.get(territory, 0.0)
     return gross_amount * Decimal(str(withholding_rate))
 
@@ -950,7 +961,8 @@ async def _get_exchange_rate(
     from_currency: CurrencyCode,
     to_currency: CurrencyCode
 ) -> Optional[ExchangeRate]:
-    """Récupère le taux de change"""
+    """
+Récupère le taux de change"""
     rate_key = (from_currency, to_currency)
     return self.exchange_rates.get(rate_key)
 
@@ -958,7 +970,8 @@ async def _ai_optimize_calculation(
     calculation: RoyaltyCalculation,
     usage_data: Dict[str, Any]
 ) -> RoyaltyCalculation:
-    """Optimise le calcul avec l'IA"""
+    """
+Optimise le calcul avec l'IA"""
     # Optimisations IA simples
     # Dans un environnement réel, intégrer des modèles ML pour optimisation
     
@@ -993,7 +1006,8 @@ async def _calculate_processing_fee(
     payment_method: str,
     currency: CurrencyCode
 ) -> Decimal:
-    """Calcule les frais de traitement"""
+    """
+Calcule les frais de traitement"""
     # Frais de traitement simples
     if payment_method == "bank_transfer":
         return min(Decimal('5.00'), amount * Decimal('0.01'))  # 1% max 5€

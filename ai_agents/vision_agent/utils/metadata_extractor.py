@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import os
@@ -649,14 +650,16 @@ class MetadataExtractor(BaseAgent):
             return False
 
     async def _validate_gps_coordinates(self, lat: float, lon: float) -> bool:
-        """Validate GPS coordinates"""
+        """
+Validate GPS coordinates"""
         try:
             return -90 <= lat <= 90 and -180 <= lon <= 180
         except:
             return False
 
     async def _validate_camera_info(self, camera_info: Dict) -> bool:
-        """Validate camera information"""
+        """
+Validate camera information"""
         try:
             required_fields = ['camera_make', 'camera_model']
             return all(field in camera_info for field in required_fields)
@@ -668,7 +671,8 @@ class MetadataExtractor(BaseAgent):
         file_paths: List[str],
         max_concurrent: int = 3
     ) -> List[Dict[str, Any]]:
-        """Extract metadata from multiple files concurrently"""
+        """
+Extract metadata from multiple files concurrently"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def extract_single(file_path):
@@ -683,15 +687,18 @@ class MetadataExtractor(BaseAgent):
                 for i, result in enumerate(results)]
 
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported file formats"""
+        """
+Get supported file formats"""
         return self.supported_formats.copy()
 
     def get_metadata_categories(self) -> Dict[str, List[str]]:
-        """Get metadata categories"""
+        """
+Get metadata categories"""
         return self.metadata_categories.copy()
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             await self.performance_monitor.close()
             await self.data_sanitizer.cleanup()

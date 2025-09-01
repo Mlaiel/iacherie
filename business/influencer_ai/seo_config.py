@@ -12,7 +12,8 @@ from dataclasses import dataclass, field
 
 @dataclass
 class UltraAdvancedSEOConfig:
-    """Configuration pour les APIs SEO ultra-avancées"""
+    """
+Configuration pour les APIs SEO ultra-avancées"""
     
     # Google Ads / Keyword Planner API
     google_ads_api_key: str = ""
@@ -72,7 +73,8 @@ class UltraAdvancedSEOConfig:
         )
     
     def get_api_keys_dict(self) -> Dict[str, str]:
-        """Obtenir les clés API dans un format dict"""
+        """
+Obtenir les clés API dans un format dict"""
         return {
             'google_ads_api_key': self.google_ads_api_key,
             'google_ads_developer_token': self.google_ads_developer_token,
@@ -85,7 +87,8 @@ class UltraAdvancedSEOConfig:
         }
     
     def is_api_configured(self, api_name: str) -> bool:
-        """Vérifier si une API spécifique est configurée"""
+        """
+Vérifier si une API spécifique est configurée"""
         api_keys = {
             'google_ads': self.google_ads_api_key,
             'semrush': self.semrush_api_key,
@@ -94,7 +97,8 @@ class UltraAdvancedSEOConfig:
         return bool(api_keys.get(api_name, ''))
     
     def get_configured_apis(self) -> List[str]:
-        """Obtenir la liste des APIs configurées"""
+        """
+Obtenir la liste des APIs configurées"""
         configured = []
         if self.google_ads_api_key:
             configured.append('google_ads')
@@ -105,11 +109,13 @@ class UltraAdvancedSEOConfig:
         return configured
 
 def load_seo_config() -> UltraAdvancedSEOConfig:
-    """Charger la configuration SEO"""
+    """
+Charger la configuration SEO"""
     return UltraAdvancedSEOConfig()
 
 def validate_api_config(config: UltraAdvancedSEOConfig) -> Dict[str, bool]:
-    """Valider la configuration des APIs"""
+    """
+Valider la configuration des APIs"""
     validation_results = {
         'google_ads': bool(config.google_ads_api_key and config.google_ads_developer_token),
         'semrush': bool(config.semrush_api_key),

@@ -8,7 +8,7 @@ Technologies: Python, ML Strategy Models, Market APIs, Blockchain, Advanced Anal
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Contenu protégé → Analyse marché IA → Stratégies monétisation → 
 Optimisation prix → Matching partenaires → Licensing automatique → Revenus maximisés
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationStrategy(Enum):
-    """Stratégies de monétisation disponibles"""
+    """
+Stratégies de monétisation disponibles"""
+
     SUBSCRIPTION = "subscription"  # Modèle d'abonnement
     PAY_PER_USE = "pay_per_use"  # Paiement à l'utilisation
     LICENSING = "licensing"  # Licensing de contenu
@@ -52,6 +55,7 @@ class MonetizationStrategy(Enum):
 
 class PricingModel(Enum):
     """Modèles de tarification"""
+
     FIXED = "fixed"  # Prix fixe
     DYNAMIC = "dynamic"  # Prix dynamique
     TIERED = "tiered"  # Prix par paliers
@@ -64,6 +68,7 @@ class PricingModel(Enum):
 
 class MarketSegment(Enum):
     """Segments de marché cibles"""
+
     INDIVIDUAL_CREATORS = "individual_creators"
     SMALL_BUSINESSES = "small_businesses"
     ENTERPRISES = "enterprises"
@@ -76,6 +81,7 @@ class MarketSegment(Enum):
 
 class PartnershipType(Enum):
     """Types de partenariats"""
+
     BRAND_COLLABORATION = "brand_collaboration"
     CONTENT_LICENSING = "content_licensing"
     CROSS_PROMOTION = "cross_promotion"
@@ -729,7 +735,8 @@ class MonetizationManager(ABC):
         price: Decimal,
         market_intel: MarketIntelligence
     ) -> str:
-        """Determine competitive position based on price and market"""
+        """
+Determine competitive position based on price and market"""
         if price < market_intel.price_range[0]:
             return "low"
         elif price > market_intel.price_range[1]:
@@ -835,7 +842,8 @@ class MonetizationManager(ABC):
     
     @asynccontextmanager
     async def get_monetization_session(self):
-        """Context manager for monetization operations"""
+        """
+Context manager for monetization operations"""
         session_id = str(uuid.uuid4())
         try:
             logger.info(f"💎 Monetization session started: {session_id}")

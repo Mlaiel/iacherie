@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols"""
+    """
+Supported DeFi protocols"""
+
     UNISWAP_V3 = "uniswap_v3"
     COMPOUND = "compound"
     AAVE = "aave"
@@ -59,6 +62,7 @@ class DeFiProtocol(Enum):
 
 class LiquidityStrategy(Enum):
     """Liquidity provision strategies"""
+
     CONSERVATIVE = "conservative"  # Low risk, stable returns
     BALANCED = "balanced"  # Moderate risk/reward
     AGGRESSIVE = "aggressive"  # High risk, high reward
@@ -68,6 +72,7 @@ class LiquidityStrategy(Enum):
 
 class StakingType(Enum):
     """Types of staking available"""
+
     LIQUID_STAKING = "liquid_staking"  # Lido, Rocket Pool
     GOVERNANCE_STAKING = "governance_staking"  # Platform governance
     YIELD_STAKING = "yield_staking"  # Yield farming rewards
@@ -107,7 +112,8 @@ class LiquidityPosition:
 
 @dataclass
 class StakingPosition:
-    """Staking position tracking"""
+    """
+Staking position tracking"""
     position_id: str
     protocol: DeFiProtocol
     staking_type: StakingType
@@ -319,7 +325,8 @@ class UniswapV3Manager:
         return tick_lower, tick_upper
     
     def _extract_token_id_from_receipt(self, receipt) -> int:
-        """Extract NFT token ID from transaction receipt"""
+        """
+Extract NFT token ID from transaction receipt"""
         # Parse logs to find IncreaseLiquidity event
         for log in receipt.logs:
             # Simplified - in production, properly decode logs
@@ -327,23 +334,27 @@ class UniswapV3Manager:
         return 1  # Placeholder
     
     def _extract_collected_fees(self, receipt) -> Tuple[Decimal, Decimal]:
-        """Extract collected fee amounts from receipt"""
+        """
+Extract collected fee amounts from receipt"""
         # Parse logs to find Collect event
         return Decimal('0'), Decimal('0')  # Placeholder
     
     def _get_uniswap_router_abi(self) -> List[Dict[str, Any]]:
-        """Get Uniswap V3 router ABI"""
+        """
+Get Uniswap V3 router ABI"""
         # Simplified ABI - in production, load complete ABI
         return []
     
     def _get_position_manager_abi(self) -> List[Dict[str, Any]]:
-        """Get Uniswap V3 position manager ABI"""
+        """
+Get Uniswap V3 position manager ABI"""
         # Simplified ABI - in production, load complete ABI
         return []
 
 
 class CompoundManager:
-    """Professional Compound lending protocol integration"""
+    """
+Professional Compound lending protocol integration"""
     
     def __init__(self, web3_client: Web3, private_key: str):
         self.w3 = web3_client
@@ -457,7 +468,8 @@ class YieldOptimizer:
         self.performance_history: List[Dict[str, Any]] = []
     
     async def initialize(self) -> bool:
-        """Initialize all protocol managers"""
+        """
+Initialize all protocol managers"""
         try:
             success_count = 0
             
@@ -527,7 +539,8 @@ class YieldOptimizer:
         assets: Dict[str, Decimal],
         yields: Dict[DeFiProtocol, Decimal]
     ) -> Dict[str, Any]:
-        """Conservative allocation strategy"""
+        """
+Conservative allocation strategy"""
         return {
             'compound': 0.6,  # 60% to Compound
             'aave': 0.4,      # 40% to Aave
@@ -539,7 +552,8 @@ class YieldOptimizer:
         assets: Dict[str, Decimal],
         yields: Dict[DeFiProtocol, Decimal]
     ) -> Dict[str, Any]:
-        """Aggressive allocation strategy"""
+        """
+Aggressive allocation strategy"""
         return {
             'compound': 0.2,  # 20% to Compound
             'aave': 0.2,      # 20% to Aave
@@ -551,7 +565,8 @@ class YieldOptimizer:
         assets: Dict[str, Decimal],
         yields: Dict[DeFiProtocol, Decimal]
     ) -> Dict[str, Any]:
-        """Balanced allocation strategy"""
+        """
+Balanced allocation strategy"""
         return {
             'compound': 0.4,  # 40% to Compound
             'aave': 0.3,      # 30% to Aave

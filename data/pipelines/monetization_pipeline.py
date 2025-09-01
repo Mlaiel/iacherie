@@ -12,13 +12,14 @@ Team Specialties:
 - Business Intelligence: Revenue strategy and platform optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This proprietary monetization technology and revenue algorithms belong exclusively
 to Fahed Mlaiel. Any unauthorized use, copying, or commercial exploitation without
 explicit written permission will result in immediate legal action and financial penalties.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -66,7 +67,9 @@ settings = get_settings()
 
 
 class RevenueType(str, Enum):
-    """Types of revenue sources"""
+    """
+Types of revenue sources"""
+
     STREAMING = "streaming"           # Spotify, Apple Music
     AD_REVENUE = "ad_revenue"        # YouTube, Instagram ads
     BRAND_DEALS = "brand_deals"      # Sponsored content
@@ -79,6 +82,7 @@ class RevenueType(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     STRIPE = "stripe"
     PAYPAL = "paypal"
@@ -88,6 +92,7 @@ class PaymentMethod(str, Enum):
 
 class PayoutStatus(str, Enum):
     """Payout processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -635,7 +640,8 @@ class RevenueCalculatorEngine:
     async def _generate_optimization_recommendations(
         self, content_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered optimization recommendations"""
+        """
+Generate AI-powered optimization recommendations"""
         recommendations = []
         
         # Revenue per view optimization
@@ -1409,21 +1415,24 @@ class MonetizationPipeline:
     async def _calculate_revenue_summary(
         self, platform_revenues: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate comprehensive revenue summary"""
+        """
+Calculate comprehensive revenue summary"""
         # Implementation would summarize revenue data
         pass
 
     async def _apply_revenue_sharing(
         self, user_id: int, revenue_summary: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply revenue sharing rules"""
+        """
+Apply revenue sharing rules"""
         # Implementation would apply sharing rules
         pass
 
     async def _process_automatic_payout(
         self, user_id: int, net_revenue: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process automatic payout if conditions met"""
+        """
+Process automatic payout if conditions met"""
         # Implementation would process payments
         pass
 
@@ -1435,7 +1444,8 @@ class MonetizationPipeline:
         revenue_summary: Dict[str, Any],
         net_revenue: Dict[str, Any]
     ):
-        """Update revenue records in database"""
+        """
+Update revenue records in database"""
         # Implementation would update database records
         pass
 
@@ -1445,20 +1455,23 @@ class MonetizationPipeline:
         revenue_summary: Dict[str, Any],
         payout_result: Dict[str, Any]
     ):
-        """Send revenue report to user"""
+        """
+Send revenue report to user"""
         # Implementation would send notifications
         pass
 
     async def _generate_revenue_predictions(
         self, user_id: int, historical_revenues: List[RevenueModel]
     ) -> Dict[str, Any]:
-        """Generate revenue predictions using ML"""
+        """
+Generate revenue predictions using ML"""
         # Implementation would generate predictions
         pass
 
     async def _calculate_growth_rate(
         self, user_id: int, period_days: int
     ) -> float:
-        """Calculate revenue growth rate"""
+        """
+Calculate revenue growth rate"""
         # Implementation would calculate growth
         pass

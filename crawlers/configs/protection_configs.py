@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
+    """
+Content protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -68,6 +71,7 @@ class ContentFormat(Enum):
 
 class ViolationType(Enum):
     """Types of content violations."""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX = "remix"
@@ -82,6 +86,7 @@ class ViolationType(Enum):
 
 class ProtectionMethod(Enum):
     """Protection methods for content."""
+
     FINGERPRINTING = "fingerprinting"
     WATERMARKING = "watermarking"
     BLOCKCHAIN = "blockchain"
@@ -93,6 +98,7 @@ class ProtectionMethod(Enum):
 
 class MatchingAlgorithm(Enum):
     """Algorithms for content matching."""
+
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     LIBROSA = "librosa"
@@ -158,7 +164,8 @@ class AudioProtectionConfig:
 
 @dataclass
 class VideoProtectionConfig:
-    """Configuration for video content protection."""
+    """
+Configuration for video content protection."""
     enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
@@ -205,7 +212,8 @@ class VideoProtectionConfig:
 
 @dataclass
 class ImageProtectionConfig:
-    """Configuration for image content protection."""
+    """
+Configuration for image content protection."""
     enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
@@ -248,7 +256,8 @@ class ImageProtectionConfig:
 
 @dataclass
 class TextProtectionConfig:
-    """Configuration for text content protection."""
+    """
+Configuration for text content protection."""
     enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
@@ -424,10 +433,12 @@ class ProtectionConfig:
     batch_processing: bool = True
 
 class ProtectionConfigManager:
-    """Manager for content protection configurations."""
+    """
+Manager for content protection configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize protection config manager."""
+        """
+Initialize protection config manager."""
         self.config_dir = Path(config_dir or os.getenv("PROTECTION_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
@@ -478,32 +489,39 @@ class ProtectionConfigManager:
         )
     
     def get_config(self) -> ProtectionConfig:
-        """Get current protection configuration."""
+        """
+Get current protection configuration."""
         return self.config
     
     def get_audio_config(self) -> AudioProtectionConfig:
-        """Get audio protection configuration."""
+        """
+Get audio protection configuration."""
         return self.config.audio
     
     def get_video_config(self) -> VideoProtectionConfig:
-        """Get video protection configuration."""
+        """
+Get video protection configuration."""
         return self.config.video
     
     def get_image_config(self) -> ImageProtectionConfig:
-        """Get image protection configuration."""
+        """
+Get image protection configuration."""
         return self.config.image
     
     def get_text_config(self) -> TextProtectionConfig:
-        """Get text protection configuration."""
+        """
+Get text protection configuration."""
         return self.config.text
     
     def update_config(self, config: ProtectionConfig) -> None:
-        """Update protection configuration."""
+        """
+Update protection configuration."""
         self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         config_file = self.config_dir / "protection_config.json"
         with open(config_file, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
@@ -522,7 +540,8 @@ class ProtectionConfigManager:
         pass
     
     def validate_config(self) -> List[str]:
-        """Validate protection configuration."""
+        """
+Validate protection configuration."""
         errors = []
         
         if not self.config.enabled:

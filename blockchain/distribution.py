@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -24,7 +25,9 @@ from .copyright_registry import CopyrightRegistryManager
 
 
 class Platform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -49,6 +52,7 @@ class Platform(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status states"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     LIVE = "live"
@@ -60,6 +64,7 @@ class DistributionStatus(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -89,7 +94,8 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionJob:
-    """Content distribution job"""
+    """
+Content distribution job"""
     job_id: str
     asset_id: str
     creator_id: str
@@ -111,7 +117,8 @@ class DistributionJob:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
+    """
+Platform performance metrics"""
     platform: Platform
     asset_id: str
     views: int
@@ -133,7 +140,8 @@ class PlatformMetrics:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform analytics aggregation"""
+    """
+Cross-platform analytics aggregation"""
     asset_id: str
     creator_id: str
     time_period: Tuple[datetime, datetime]
@@ -619,7 +627,8 @@ class DistributionManager:
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def _generate_content_optimization_suggestions(self, metrics: List[PlatformMetrics]) -> List[str]:
-        """Generate content optimization suggestions"""
+        """
+Generate content optimization suggestions"""
         suggestions = []
         
         avg_engagement = sum(m.engagement_rate for m in metrics) / len(metrics) if metrics else 0

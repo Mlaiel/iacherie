@@ -4,11 +4,12 @@ Central hub for subscription-related operations and services.
 Provides unified access to all subscription management functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -32,7 +33,8 @@ class SubscriptionIndex:
     """
     
     def __init__(self):
-        """Initialize subscription management hub."""
+        """
+Initialize subscription management hub."""
         self.service = SubscriptionService()
         self.manager = SubscriptionManager()
         self.billing = BillingEngine()
@@ -43,7 +45,8 @@ class SubscriptionIndex:
         self.usage_tracker = UsageTracker()
     
     async def get_user_subscription_status(self, user_id: int) -> Dict[str, Any]:
-        """Get complete subscription status for user."""
+        """
+Get complete subscription status for user."""
         subscription = await self.manager.get_active_subscription(user_id)
         usage = await self.usage_tracker.get_current_usage(user_id)
         features = await self.tier_controller.get_available_features(user_id)
@@ -68,7 +71,8 @@ class SubscriptionIndex:
         )
     
     async def handle_payment_webhook(self, webhook_data: Dict[str, Any]) -> bool:
-        """Handle payment processor webhooks."""
+        """
+Handle payment processor webhooks."""
         return await self.payment.process_webhook(webhook_data)
     
     async def generate_subscription_analytics(
@@ -76,11 +80,13 @@ class SubscriptionIndex:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive subscription analytics."""
+        """
+Generate comprehensive subscription analytics."""
         return await self.analytics.generate_analytics_report(start_date, end_date)
     
     async def check_feature_access(self, user_id: int, feature_name: str) -> bool:
-        """Check if user has access to specific feature."""
+        """
+Check if user has access to specific feature."""
         return await self.tier_controller.check_feature_access(user_id, feature_name)
     
     async def track_feature_usage(
@@ -89,7 +95,8 @@ class SubscriptionIndex:
         feature_name: str,
         usage_amount: int = 1
     ) -> Dict[str, Any]:
-        """Track feature usage and check limits."""
+        """
+Track feature usage and check limits."""
         return await self.usage_tracker.track_usage(
             user_id, feature_name, usage_amount
         )

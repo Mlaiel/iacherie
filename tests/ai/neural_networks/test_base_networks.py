@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Base Neural Networks
+"""
+Comprehensive Test Suite for Base Neural Networks
 
 Ultra-advanced industrial-grade tests for all base neural network functionality,
 covering all scenarios, edge cases, performance, security, and business logic.
@@ -38,6 +40,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -70,7 +73,8 @@ from ai.neural_networks.base_networks import (
 
 
 class TestNetworkImplementation(BaseNeuralNetwork):
-    """Test implementation of BaseNeuralNetwork for testing"""
+    """
+Test implementation of BaseNeuralNetwork for testing"""
     
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
@@ -93,7 +97,8 @@ class TestNetworkImplementation(BaseNeuralNetwork):
         self._initialize_weights()
     
     def _initialize_weights(self):
-        """Initialize network weights"""
+        """
+Initialize network weights"""
         for module in self.modules():
             if isinstance(module, nn.Linear):
                 nn.init.xavier_uniform_(module.weight)
@@ -141,7 +146,8 @@ def basic_network_config():
 
 @pytest.fixture
 def regression_network_config():
-    """Regression network configuration"""
+    """
+Regression network configuration"""
     return NetworkConfig(
         input_dim=50,
         hidden_dims=[32, 16],
@@ -155,7 +161,8 @@ def regression_network_config():
 
 @pytest.fixture
 def training_config():
-    """Training configuration for tests"""
+    """
+Training configuration for tests"""
     return TrainingConfig(
         train_split=0.7,
         validation_split=0.15,
@@ -198,7 +205,8 @@ class TestNetworkConfig:
     """Test NetworkConfig functionality"""
     
     def test_config_creation(self):
-        """Test basic config creation"""
+        """
+Test basic config creation"""
         config = NetworkConfig(
             input_dim=128,
             hidden_dims=[64, 32],
@@ -214,7 +222,8 @@ class TestNetworkConfig:
         assert config.batch_size == 32  # Default value
     
     def test_config_validation(self):
-        """Test config parameter validation"""
+        """
+Test config parameter validation"""
         # Valid config
         valid_config = NetworkConfig(
             input_dim=100,
@@ -228,7 +237,8 @@ class TestNetworkConfig:
         assert valid_config.dropout_rate == 0.2
     
     def test_device_type_enum(self):
-        """Test DeviceType enum functionality"""
+        """
+Test DeviceType enum functionality"""
         assert DeviceType.CPU.value == "cpu"
         assert DeviceType.CUDA.value == "cuda"
         assert DeviceType.MPS.value == "mps"
@@ -245,7 +255,8 @@ class TestTrainingConfig:
     """Test TrainingConfig functionality"""
     
     def test_training_config_creation(self):
-        """Test training config creation with defaults"""
+        """
+Test training config creation with defaults"""
         config = TrainingConfig()
         
         assert config.train_split == 0.8
@@ -290,10 +301,12 @@ class TestTrainingConfig:
 
 
 class TestBaseNeuralNetwork:
-    """Test BaseNeuralNetwork functionality"""
+    """
+Test BaseNeuralNetwork functionality"""
     
     def test_network_initialization(self, basic_network_config):
-        """Test basic network initialization"""
+        """
+Test basic network initialization"""
         network = TestNetworkImplementation(basic_network_config)
         
         assert network.config == basic_network_config
@@ -547,7 +560,8 @@ class TestModelRegistry:
     """Test ModelRegistry functionality"""
     
     def test_registry_creation(self, temp_model_directory):
-        """Test registry creation"""
+        """
+Test registry creation"""
         registry_path = temp_model_directory / "test_registry"
         registry = ModelRegistry(registry_path)
         
@@ -627,7 +641,8 @@ class TestInferenceEngine:
     """Test InferenceEngine functionality"""
     
     def test_engine_creation(self, basic_network_config, sample_data):
-        """Test inference engine creation"""
+        """
+Test inference engine creation"""
         network = TestNetworkImplementation(basic_network_config)
         
         # Train network briefly to have meaningful weights
@@ -708,7 +723,8 @@ class TestPerformance:
     """Performance and benchmark tests"""
     
     def test_forward_pass_performance(self, basic_network_config, sample_data):
-        """Test forward pass performance"""
+        """
+Test forward pass performance"""
         network = TestNetworkImplementation(basic_network_config)
         network.eval()
         
@@ -816,7 +832,8 @@ class TestEdgeCases:
     """Test edge cases and error handling"""
     
     def test_empty_input(self, basic_network_config):
-        """Test behavior with empty input"""
+        """
+Test behavior with empty input"""
         network = TestNetworkImplementation(basic_network_config)
         
         # Empty tensor should raise appropriate error
@@ -825,7 +842,8 @@ class TestEdgeCases:
             network.forward(empty_input)
     
     def test_mismatched_dimensions(self, basic_network_config):
-        """Test behavior with incorrect input dimensions"""
+        """
+Test behavior with incorrect input dimensions"""
         network = TestNetworkImplementation(basic_network_config)
         
         # Wrong input dimension
@@ -834,7 +852,8 @@ class TestEdgeCases:
             network.forward(wrong_input)
     
     def test_nan_input(self, basic_network_config):
-        """Test behavior with NaN input"""
+        """
+Test behavior with NaN input"""
         network = TestNetworkImplementation(basic_network_config)
         
         # Input with NaN values
@@ -846,7 +865,8 @@ class TestEdgeCases:
         assert torch.isnan(output).any()
     
     def test_infinite_input(self, basic_network_config):
-        """Test behavior with infinite input"""
+        """
+Test behavior with infinite input"""
         network = TestNetworkImplementation(basic_network_config)
         
         # Input with infinite values
@@ -858,7 +878,8 @@ class TestEdgeCases:
         assert output.shape == (16, basic_network_config.output_dim)
     
     def test_extreme_learning_rates(self, basic_network_config, sample_data):
-        """Test with extreme learning rates"""
+        """
+Test with extreme learning rates"""
         X, y = sample_data["classification"]
         batch_X, batch_y = X[:16], y[:16]
         
@@ -896,10 +917,12 @@ class TestEdgeCases:
 
 
 class TestSecurityAndRobustness:
-    """Security and robustness tests"""
+    """
+Security and robustness tests"""
     
     def test_model_file_integrity(self, basic_network_config, temp_model_directory):
-        """Test model file integrity checks"""
+        """
+Test model file integrity checks"""
         network = TestNetworkImplementation(basic_network_config)
         save_path = temp_model_directory / "integrity_test"
         
@@ -937,7 +960,8 @@ class TestSecurityAndRobustness:
         assert output.shape == (16, basic_network_config.output_dim)
     
     def test_concurrent_access(self, basic_network_config, sample_data):
-        """Test concurrent access to model"""
+        """
+Test concurrent access to model"""
         network = TestNetworkImplementation(basic_network_config)
         network.eval()
         
@@ -974,7 +998,8 @@ class TestIntegration:
     """Integration tests combining multiple components"""
     
     def test_end_to_end_training_pipeline(self, basic_network_config, sample_data, temp_model_directory):
-        """Test complete training pipeline"""
+        """
+Test complete training pipeline"""
         # Setup
         network = TestNetworkImplementation(basic_network_config)
         optimizer = network.configure_optimizer()

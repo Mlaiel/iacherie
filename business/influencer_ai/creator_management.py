@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 936 classes et 3428 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class CreatorManagementStatus(Enum):
-    """Statuts du module Creator Management"""
+    """
+Statuts du module Creator Management"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -39,27 +42,32 @@ class CreatorManagementConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class ICreatorManagementService(ABC):
-    """Interface du service Creator Management"""
+    """
+Interface du service Creator Management"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class CreatorManagementManager:
-    """Gestionnaire principal Creator Management"""
+    """
+Gestionnaire principal Creator Management"""
     
     def __init__(self, config: CreatorManagementConfig):
         self.config = config
@@ -134,7 +142,8 @@ class CreatorManagementService(ICreatorManagementService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
+        """
+Exécution de la logique métier spécifique"""
         try:
             # Gestion complète des créateurs de contenu
             result = {
@@ -334,7 +343,8 @@ async def create_creatormanagement_service(config: Optional[CreatorManagementCon
     return service
 
 def get_creatormanagement_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Creator Management",
         "version": "1.0.0",
@@ -352,7 +362,8 @@ class CreatorManagementAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Creator Management",

@@ -29,17 +29,20 @@ from core.challenges.specialized_challenges import (
 
 
 class TestSpecializedChallenges:
-    """Test specialized challenge functionality"""
+    """
+Test specialized challenge functionality"""
     
     @pytest.fixture
     async def challenge_manager(self):
-        """Create a challenge manager for testing"""
+        """
+Create a challenge manager for testing"""
         manager = SpecializedChallengeManager()
         return manager
     
     @pytest.mark.asyncio
     async def test_monthly_creative_challenge_creation(self, challenge_manager):
-        """Test creating monthly creative challenges"""
+        """
+Test creating monthly creative challenges"""
         challenge = await challenge_manager.create_monthly_creative_challenge(
             title="Test Monthly Creative Challenge",
             theme="Innovation Test",
@@ -235,7 +238,8 @@ class TestDefaultChallengeCreation:
     
     @pytest.mark.asyncio
     async def test_create_default_specialized_challenges(self):
-        """Test creating default specialized challenges"""
+        """
+Test creating default specialized challenges"""
         manager = await create_default_specialized_challenges()
         
         # Verify monthly challenges
@@ -278,7 +282,8 @@ class TestChallengeIntegration:
     
     @pytest.mark.asyncio
     async def test_challenge_type_integration(self):
-        """Test that different challenge types work together"""
+        """
+Test that different challenge types work together"""
         manager = SpecializedChallengeManager()
         
         # Create one of each type

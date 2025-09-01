@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc
@@ -51,7 +52,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize protection alert repository"""
+        """
+Initialize protection alert repository"""
         super().__init__(db_session, ProtectionAlert)
         
     def create_alert(self,

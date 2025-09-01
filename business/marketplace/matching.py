@@ -9,6 +9,7 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...ml.matching_algorithms import MatchingEngine
 
 
 class MatchingStrategy(Enum):
-    """Matching strategy enumeration."""
+    """
+Matching strategy enumeration."""
+
     CONTENT_BASED = "content_based"
     COLLABORATIVE = "collaborative"
     HYBRID = "hybrid"
@@ -38,6 +41,7 @@ class MatchingStrategy(Enum):
 
 class CollaborationType(Enum):
     """Collaboration type enumeration."""
+
     JOINT_CONTENT = "joint_content"
     CROSS_PROMOTION = "cross_promotion"
     SKILL_EXCHANGE = "skill_exchange"
@@ -59,7 +63,8 @@ class MatchingCriteria:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration request structure."""
+    """
+Collaboration request structure."""
     requester_id: str
     collaboration_type: CollaborationType
     project_description: str
@@ -314,7 +319,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Content-based matching using content similarity."""
+        """
+Content-based matching using content similarity."""
         # Analyze requester's content characteristics
         content_profile = await self._analyze_creator_content(request.requester_id)
         
@@ -330,7 +336,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Collaborative filtering based on past collaborations."""
+        """
+Collaborative filtering based on past collaborations."""
         # Get collaboration history
         collaboration_history = await self._get_collaboration_history(request.requester_id)
         
@@ -346,7 +353,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """AI-powered matching using machine learning models."""
+        """
+AI-powered matching using machine learning models."""
         # Use ML model for matching
         ml_matches = await self.matching_engine.predict_matches(
             requester_profile=requester_profile,
@@ -360,7 +368,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Personality-based matching using creator personality profiles."""
+        """
+Personality-based matching using creator personality profiles."""
         # Get personality profile
         personality_profile = await self._get_personality_profile(request.requester_id)
         
@@ -376,7 +385,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Hybrid matching combining multiple strategies."""
+        """
+Hybrid matching combining multiple strategies."""
         # Run multiple matching strategies
         matching_results = await asyncio.gather(
             self._content_based_matching(request, requester_profile),
@@ -398,7 +408,8 @@ class CollaborationMatcher:
         potential_matches: List[Dict[str, Any]],
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Calculate detailed compatibility scores for matches."""
+        """
+Calculate detailed compatibility scores for matches."""
         scored_matches = []
         
         for match in potential_matches:
@@ -452,7 +463,8 @@ class CollaborationMatcher:
         scored_matches: List[Dict[str, Any]],
         criteria: MatchingCriteria
     ) -> List[Dict[str, Any]]:
-        """Apply filters to matching results."""
+        """
+Apply filters to matching results."""
         filtered_matches = []
         
         for match in scored_matches:
@@ -485,7 +497,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Add explanations for why matches were suggested."""
+        """
+Add explanations for why matches were suggested."""
         for match in matches:
             explanations = []
             
@@ -546,7 +559,8 @@ class CollaborationMatcher:
         self, 
         collaboration_type: CollaborationType
     ) -> Dict[str, float]:
-        """Get weights for different collaboration types."""
+        """
+Get weights for different collaboration types."""
         weights_map = {
             CollaborationType.JOINT_CONTENT: {
                 'content': 0.4, 'brand': 0.3, 'communication': 0.2, 'workflow': 0.1

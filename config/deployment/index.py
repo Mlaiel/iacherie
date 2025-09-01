@@ -21,6 +21,7 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
+
 import os
 import yaml
 from typing import Dict, List, Optional, Any, Type, Union
@@ -50,7 +51,9 @@ from .security_compliance_config import SecurityComplianceConfig
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     STAGING = "staging" 
     PRODUCTION = "production"
@@ -60,6 +63,7 @@ class DeploymentEnvironment(Enum):
 
 class ConfigurationType(Enum):
     """Configuration types"""
+
     INFRASTRUCTURE = "infrastructure"
     CLOUD = "cloud"
     SECURITY = "security"

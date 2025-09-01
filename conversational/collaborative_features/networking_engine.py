@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionType(Enum):
-    """Types of professional connections"""
+    """
+Types of professional connections"""
+
     COLLABORATOR = "collaborator"
     MENTOR = "mentor"
     MENTEE = "mentee"
@@ -53,6 +56,7 @@ class ConnectionType(Enum):
 
 class ConnectionStatus(Enum):
     """Status of connection requests"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -62,6 +66,7 @@ class ConnectionStatus(Enum):
 
 class NetworkingGoal(Enum):
     """Networking objectives"""
+
     COLLABORATION = "collaboration"
     MENTORSHIP = "mentorship"
     BUSINESS_DEVELOPMENT = "business_development"
@@ -74,6 +79,7 @@ class NetworkingGoal(Enum):
 
 class CommunityType(Enum):
     """Types of communities"""
+
     INTEREST_BASED = "interest_based"
     SKILL_BASED = "skill_based"
     INDUSTRY_BASED = "industry_based"
@@ -86,6 +92,7 @@ class CommunityType(Enum):
 
 class EventType(Enum):
     """Types of networking events"""
+
     VIRTUAL_MEETUP = "virtual_meetup"
     WEBINAR = "webinar"
     WORKSHOP = "workshop"
@@ -120,7 +127,8 @@ class NetworkingProfile:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert profile to dictionary"""
+        """
+Convert profile to dictionary"""
         return {
             "profile_id": self.profile_id,
             "user_id": self.user_id,
@@ -162,7 +170,8 @@ class Connection:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert connection to dictionary"""
+        """
+Convert connection to dictionary"""
         return {
             "connection_id": self.connection_id,
             "requester_id": self.requester_id,
@@ -204,7 +213,8 @@ class Community:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert community to dictionary"""
+        """
+Convert community to dictionary"""
         return {
             "community_id": self.community_id,
             "name": self.name,
@@ -243,7 +253,8 @@ class ProfessionalNetworkingManager:
         user_id: str,
         profile_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create comprehensive networking profile"""
+        """
+Create comprehensive networking profile"""
         try:
             profile_id = str(uuid.uuid4())
             
@@ -591,12 +602,14 @@ class ProfessionalNetworkingManager:
         return []
     
     async def _search_by_industries(self, industries: List[str]) -> List[Dict[str, Any]]:
-        """Search profiles by industries"""
+        """
+Search profiles by industries"""
         # Implementation would search indexed profiles
         return []
     
     async def _search_by_goals(self, goals: List[str]) -> List[Dict[str, Any]]:
-        """Search profiles by networking goals"""
+        """
+Search profiles by networking goals"""
         # Implementation would search indexed profiles
         return []
     
@@ -605,7 +618,8 @@ class ProfessionalNetworkingManager:
         user_profile: Dict[str, Any],
         candidates: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Score and rank connection candidates"""
+        """
+Score and rank connection candidates"""
         scored_candidates = []
         
         for candidate in candidates:
@@ -692,7 +706,8 @@ class ProfessionalNetworkingManager:
         user1_id: str,
         user2_id: str
     ) -> List[str]:
-        """Find mutual connections between two users"""
+        """
+Find mutual connections between two users"""
         # Implementation would find overlapping connections
         return []
     
@@ -701,12 +716,14 @@ class ProfessionalNetworkingManager:
         user1_id: str,
         user2_id: str
     ) -> int:
-        """Count mutual connections between two users"""
+        """
+Count mutual connections between two users"""
         mutual = await self._find_mutual_connections(user1_id, user2_id)
         return len(mutual)
     
     async def _get_recent_activity(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get recent activity for user"""
+        """
+Get recent activity for user"""
         # Implementation would fetch recent activity
         return []
     
@@ -716,7 +733,8 @@ class ProfessionalNetworkingManager:
         connection_id: str,
         connection_type: str
     ):
-        """Add connection to user's connection list"""
+        """
+Add connection to user's connection list"""
         user_connections_key = f"user_connections:{user_id}"
         connections_data = await self.cache.get(user_connections_key)
         
@@ -766,7 +784,8 @@ class ProfessionalNetworkingManager:
         user1_id: str,
         user2_id: str
     ) -> float:
-        """Calculate connection strength score"""
+        """
+Calculate connection strength score"""
         # Implementation would analyze interaction patterns, mutual connections, etc.
         return 0.5  # Default strength
     
@@ -775,7 +794,8 @@ class ProfessionalNetworkingManager:
         user1_id: str,
         user2_id: str
     ) -> List[Dict[str, Any]]:
-        """Find collaboration opportunities between connected users"""
+        """
+Find collaboration opportunities between connected users"""
         opportunities = []
         
         # Get both profiles
@@ -825,7 +845,8 @@ class InfluencerDiscoveryEngine:
         search_criteria: Dict[str, Any],
         limit: int = 50
     ) -> Dict[str, Any]:
-        """Discover influencers based on criteria"""
+        """
+Discover influencers based on criteria"""
         try:
             # Extract search parameters
             niches = search_criteria.get("niches", [])
@@ -879,7 +900,8 @@ class InfluencerDiscoveryEngine:
         self,
         influencer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze influencer profile and metrics"""
+        """
+Analyze influencer profile and metrics"""
         analysis = influencer_data.copy()
         
         # Calculate relevance score
@@ -912,7 +934,8 @@ class InfluencerDiscoveryEngine:
         self,
         influencer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze audience quality metrics"""
+        """
+Analyze audience quality metrics"""
         return {
             "authenticity_score": 0.85,
             "engagement_quality": 0.78,
@@ -954,7 +977,8 @@ class CommunityManager:
         creator_id: str,
         community_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create new professional community"""
+        """
+Create new professional community"""
         try:
             community_id = str(uuid.uuid4())
             
@@ -1168,7 +1192,8 @@ class NetworkingEventManager:
         organizer_id: str,
         event_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create networking event"""
+        """
+Create networking event"""
         try:
             event_id = str(uuid.uuid4())
             event_type = EventType(event_data.get("type", "virtual_meetup"))

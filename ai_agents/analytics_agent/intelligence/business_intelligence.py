@@ -8,6 +8,7 @@ WARNING: This code and concept are protected intellectual property of Fahed Mlai
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -17,7 +18,9 @@ import numpy as np
 from abc import ABC, abstractmethod
 
 class KPICategory(Enum):
-    """Key Performance Indicator categories"""
+    """
+Key Performance Indicator categories"""
+
     REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
@@ -27,6 +30,7 @@ class KPICategory(Enum):
 
 class RevenueStream(Enum):
     """Revenue stream types"""
+
     SUBSCRIPTION = "subscription"
     SPONSORED_CONTENT = "sponsored_content"
     DIGITAL_SALES = "digital_sales"
@@ -66,7 +70,8 @@ class RevenueMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """User engagement business metrics"""
+    """
+User engagement business metrics"""
     active_users_daily: int
     active_users_monthly: int
     session_duration_avg: float
@@ -79,7 +84,8 @@ class UserEngagementMetrics:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class BusinessIntelligenceEngine:
-    """Enterprise business intelligence and analytics engine"""
+    """
+Enterprise business intelligence and analytics engine"""
     
     def __init__(self):
         self.kpis: List[BusinessKPI] = []
@@ -88,7 +94,8 @@ class BusinessIntelligenceEngine:
         self.forecasting_models = {}
     
     def calculate_business_health_score(self) -> Dict[str, Any]:
-        """Calculate comprehensive business health score"""
+        """
+Calculate comprehensive business health score"""
         if not self.kpis:
             return {"health_score": 0, "status": "no_data"}
         
@@ -279,7 +286,8 @@ class BusinessIntelligenceEngine:
         return np.mean(scores)
     
     def _generate_health_recommendations(self, category_scores: Dict[str, float]) -> List[str]:
-        """Generate business health improvement recommendations"""
+        """
+Generate business health improvement recommendations"""
         recommendations = []
         
         for category, score in category_scores.items():
@@ -660,7 +668,8 @@ class BusinessIntelligenceEngine:
         return (current_users - previous_users) / previous_users
     
     def _calculate_revenue_growth_rate(self) -> float:
-        """Calculate revenue growth rate"""
+        """
+Calculate revenue growth rate"""
         if len(self.revenue_history) < 2:
             return 0.0
         
@@ -673,13 +682,15 @@ class BusinessIntelligenceEngine:
         return (current_revenue - previous_revenue) / previous_revenue
     
     def _get_latest_revenue_streams(self) -> Dict[RevenueStream, float]:
-        """Get latest revenue streams data"""
+        """
+Get latest revenue streams data"""
         if not self.revenue_history:
             return {}
         return self.revenue_history[-1].revenue_streams
     
     def _calculate_stream_growth(self, amounts: List[float]) -> str:
-        """Calculate growth trend for revenue stream"""
+        """
+Calculate growth trend for revenue stream"""
         if len(amounts) < 2:
             return "stable"
         
@@ -843,7 +854,8 @@ class EnterpriseKPIManager:
         self._initialize_default_kpis()
     
     def _initialize_default_kpis(self):
-        """Initialize default KPI definitions"""
+        """
+Initialize default KPI definitions"""
         self.kpi_definitions = {
             "monthly_recurring_revenue": {
                 "category": KPICategory.REVENUE,
@@ -1400,7 +1412,8 @@ class EnterpriseKPIManager:
         return (end_value - start_value) / start_value
     
     def _calculate_period_volatility(self, kpi_history: List[BusinessKPI]) -> float:
-        """Calculate volatility over period"""
+        """
+Calculate volatility over period"""
         if len(kpi_history) < 2:
             return 0.0
         
@@ -1413,7 +1426,8 @@ class EnterpriseKPIManager:
         return np.std(values) / mean_value
     
     def _analyze_detailed_trend(self, kpi_history: List[BusinessKPI]) -> str:
-        """Analyze detailed trend direction"""
+        """
+Analyze detailed trend direction"""
         if len(kpi_history) < 3:
             return "stable"
         
@@ -1452,7 +1466,8 @@ class EnterpriseKPIManager:
         return max_drawdown
     
     def _estimate_improvement_impact(self, kpi_name: str, improvement_potential: float) -> str:
-        """Estimate impact of KPI improvement"""
+        """
+Estimate impact of KPI improvement"""
         kpi_def = self.kpi_definitions.get(kpi_name, {})
         category = kpi_def.get("category")
         

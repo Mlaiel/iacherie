@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive performance analysis, monitoring, and optimization
 recommendations for the IA Influencer Agent platform.
 """
+
 import logging
 import time
 import psutil
@@ -20,7 +21,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
@@ -39,6 +42,7 @@ class PerformanceMetric(Enum):
 
 class PerformanceLevel(Enum):
     """Performance level classifications"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -47,6 +51,7 @@ class PerformanceLevel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -65,7 +70,8 @@ class PerformanceData:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
+    """
+Performance threshold configuration"""
     metric: PerformanceMetric
     warning_threshold: float
     critical_threshold: float
@@ -91,7 +97,8 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report"""
+    """
+Performance analysis report"""
     report_id: str
     analysis_period: Dict[str, datetime]
     overall_performance_level: PerformanceLevel
@@ -104,7 +111,8 @@ class PerformanceReport:
 
 @dataclass
 class SystemResource:
-    """System resource information"""
+    """
+System resource information"""
     cpu_count: int
     cpu_frequency: Dict[str, float]
     memory_total: int
@@ -121,7 +129,8 @@ class SystemResource:
     process_count: int = 0
 
 class PerformanceAnalyzer:
-    """Main performance analysis engine"""
+    """
+Main performance analysis engine"""
     
     def __init__(self, history_size: int = 10000, monitoring_interval: int = 30):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -370,7 +379,8 @@ class PerformanceAnalyzer:
         return [d for d in data if d.timestamp >= cutoff]
     
     def _evaluate_threshold(self, value: float, threshold: float, operator: str) -> bool:
-        """Evaluate if a value crosses a threshold"""
+        """
+Evaluate if a value crosses a threshold"""
         try:
             if operator == ">":
                 return value > threshold
@@ -613,7 +623,8 @@ class PerformanceAnalyzer:
         return 'average'
     
     def _summarize_alerts(self, start_time: datetime, end_time: datetime) -> Dict[str, int]:
-        """Summarize alerts within time period"""
+        """
+Summarize alerts within time period"""
         try:
             period_alerts = [
                 a for a in self.alert_history
@@ -655,7 +666,8 @@ class PerformanceAnalyzer:
         return self.system_resources
     
     def add_threshold(self, threshold: PerformanceThreshold) -> bool:
-        """Add or update a performance threshold"""
+        """
+Add or update a performance threshold"""
         try:
             self.thresholds[threshold.metric] = threshold
             self.logger.info(f"Added threshold for {threshold.metric.value}")
@@ -711,7 +723,8 @@ class TrendAnalyzer:
     """Analyzes performance trends"""
     
     def analyze_trends(self, performance_data: Dict, start_time: datetime, end_time: datetime) -> Dict[str, str]:
-        """Analyze performance trends"""
+        """
+Analyze performance trends"""
         trends = {}
         
         for metric, data in performance_data.items():
@@ -756,7 +769,8 @@ class BottleneckDetector:
     """Detects performance bottlenecks"""
     
     def detect_bottlenecks(self, metric_summaries: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect performance bottlenecks"""
+        """
+Detect performance bottlenecks"""
         bottlenecks = []
         
         # Check for high resource utilization
@@ -772,7 +786,8 @@ class RecommendationEngine:
     def generate_recommendations(self, metric_summaries: Dict[str, Dict[str, Any]], 
                                bottlenecks: List[str], 
                                system_resources: Optional[SystemResource]) -> List[str]:
-        """Generate performance optimization recommendations"""
+        """
+Generate performance optimization recommendations"""
         recommendations = []
         
         try:

@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class OptimizationType(str, Enum):
-    """Content optimization types"""
+    """
+Content optimization types"""
+
     SEO_KEYWORDS = "seo_keywords"
     HASHTAGS = "hashtags"
     TITLE_OPTIMIZATION = "title_optimization"
@@ -40,6 +43,7 @@ class OptimizationType(str, Enum):
 
 class ContentType(str, Enum):
     """Content types for optimization"""
+
     MUSIC_TRACK = "music_track"
     MUSIC_ALBUM = "music_album"
     VIDEO_CONTENT = "video_content"
@@ -51,6 +55,7 @@ class ContentType(str, Enum):
 
 class PlatformTarget(str, Enum):
     """Target platforms for optimization"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -94,7 +99,8 @@ class OptimizationResult:
 
 @dataclass
 class PlatformConstraints:
-    """Platform-specific constraints and requirements"""
+    """
+Platform-specific constraints and requirements"""
     max_title_length: int
     max_description_length: int
     max_tags_count: int
@@ -617,7 +623,8 @@ class ContentOptimizer:
         content: Dict[str, Any],
         platform: PlatformTarget
     ) -> Tuple[bool, List[str]]:
-        """Validate content against platform constraints"""
+        """
+Validate content against platform constraints"""
         
         constraints = self.PLATFORM_CONSTRAINTS.get(platform)
         if not constraints:

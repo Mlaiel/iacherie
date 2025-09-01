@@ -8,7 +8,7 @@ Technologies: Python, AI/ML Orchestration, Multi-Agent Systems, Task Distributio
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Requête utilisateur → Analyse intention → Routing intelligent → 
 Orchestration agents → Coordination tâches → Agrégation résultats → Réponse optimisée
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class AgentType(Enum):
-    """Types d'agents IA disponibles"""
+    """
+Types d'agents IA disponibles"""
     # Content agents
     CONTENT_AGENT = "content_agent"
     AUDIO_AGENT = "audio_agent"
@@ -68,6 +70,7 @@ class AgentType(Enum):
 
 class TaskPriority(Enum):
     """Priorités des tâches"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -77,6 +80,7 @@ class TaskPriority(Enum):
 
 class AgentStatus(Enum):
     """Statuts des agents"""
+
     IDLE = "idle"
     BUSY = "busy"
     PROCESSING = "processing"
@@ -87,6 +91,7 @@ class AgentStatus(Enum):
 
 class TaskStatus(Enum):
     """Statuts des tâches"""
+
     PENDING = "pending"
     ASSIGNED = "assigned"
     PROCESSING = "processing"
@@ -131,7 +136,8 @@ class AiAgentConfig:
 
 @dataclass
 class AgentInfo:
-    """Informations d'un agent IA"""
+    """
+Informations d'un agent IA"""
     id: str
     agent_type: AgentType
     name: str
@@ -758,7 +764,8 @@ class AiAgentManager(ABC):
         objective: str,
         workflow_config: Dict[str, Any]
     ) -> List[AgentTask]:
-        """Generate task breakdown from high-level objective"""
+        """
+Generate task breakdown from high-level objective"""
         # Placeholder for AI-powered task breakdown
         # Real implementation would use NLP to analyze objective and create tasks
         tasks = []
@@ -806,7 +813,8 @@ class AiAgentManager(ABC):
         tasks: List[AgentTask],
         dependencies: Dict[str, List[str]]
     ) -> List[List[str]]:
-        """Create parallel execution groups"""
+        """
+Create parallel execution groups"""
         # Group tasks that can run in parallel
         parallel_groups = []
         
@@ -823,7 +831,8 @@ class AiAgentManager(ABC):
         return parallel_groups
     
     async def _execute_orchestration_plan(self, plan_id: str) -> None:
-        """Execute orchestration plan"""
+        """
+Execute orchestration plan"""
         try:
             plan = self._orchestration_plans.get(plan_id)
             if not plan:
@@ -873,7 +882,8 @@ class AiAgentManager(ABC):
         await self._task_queue.put((priority_value, time.time(), task))
     
     async def _aggregate_orchestration_results(self, plan: OrchestrationPlan) -> Dict[str, Any]:
-        """Aggregate results from orchestration tasks"""
+        """
+Aggregate results from orchestration tasks"""
         results = {}
         
         for task in plan.tasks:
@@ -883,7 +893,8 @@ class AiAgentManager(ABC):
         return results
     
     def _calculate_routing_accuracy(self) -> float:
-        """Calculate routing accuracy based on historical data"""
+        """
+Calculate routing accuracy based on historical data"""
         # Simplified routing accuracy calculation
         if not self._routing_history:
             return 0.0

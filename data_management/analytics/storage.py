@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -36,7 +37,9 @@ from ...core.config import get_settings
 
 
 class StorageTier(Enum):
-    """Storage tier classification."""
+    """
+Storage tier classification."""
+
     HOT = "hot"          # Real-time access, high performance
     WARM = "warm"        # Frequent access, good performance  
     COLD = "cold"        # Infrequent access, cost optimized
@@ -45,6 +48,7 @@ class StorageTier(Enum):
 
 class DataFormat(Enum):
     """Data storage formats."""
+
     JSON = "json"
     PARQUET = "parquet"
     CSV = "csv"
@@ -65,7 +69,8 @@ class StorageConfig:
 
 @dataclass
 class StorageMetadata:
-    """Metadata for stored analytics data."""
+    """
+Metadata for stored analytics data."""
     data_id: str
     data_type: str
     storage_tier: StorageTier
@@ -93,7 +98,8 @@ class AnalyticsStorage:
         self._storage_configs = self._initialize_storage_configs()
         
     def _initialize_storage_configs(self) -> Dict[StorageTier, StorageConfig]:
-        """Initialize storage tier configurations."""
+        """
+Initialize storage tier configurations."""
         
         return {
             StorageTier.HOT: StorageConfig(
@@ -222,7 +228,8 @@ class AnalyticsStorage:
         format: DataFormat,
         tier: StorageTier
     ) -> Union[str, bytes]:
-        """Serialize data according to format and tier requirements."""
+        """
+Serialize data according to format and tier requirements."""
         
         config = self._storage_configs[tier]
         
@@ -261,7 +268,8 @@ class AnalyticsStorage:
         data: Union[str, bytes],
         metadata: StorageMetadata
     ) -> None:
-        """Store data in hot tier (Redis for fast access)."""
+        """
+Store data in hot tier (Redis for fast access)."""
         
         redis_client = await self._get_redis_client()
         
@@ -320,7 +328,8 @@ class AnalyticsStorage:
         data: Union[str, bytes],
         metadata: StorageMetadata
     ) -> None:
-        """Store data in cold tier (File system with compression)."""
+        """
+Store data in cold tier (File system with compression)."""
         
         # Create cold storage directory
         cold_storage_path = Path("storage/cold")
@@ -488,7 +497,8 @@ class AnalyticsStorage:
             return None
             
     async def _retrieve_hot_data(self, data_id: str) -> Optional[Union[str, bytes]]:
-        """Retrieve data from hot tier (Redis)."""
+        """
+Retrieve data from hot tier (Redis)."""
         
         redis_client = await self._get_redis_client()
         data = await redis_client.get(f"analytics:hot:{data_id}")
@@ -511,7 +521,8 @@ class AnalyticsStorage:
         data_id: str,
         metadata: StorageMetadata
     ) -> Optional[Union[str, bytes]]:
-        """Retrieve data from cold tier (File system)."""
+        """
+Retrieve data from cold tier (File system)."""
         
         # Find file path from metadata tags
         file_path = None
@@ -618,7 +629,8 @@ class AnalyticsStorage:
         data_id: str,
         metadata: StorageMetadata
     ) -> None:
-        """Consider promoting data to higher tier based on access patterns."""
+        """
+Consider promoting data to higher tier based on access patterns."""
         
         # Simple promotion logic based on access frequency
         access_frequency = metadata.access_count / max(
@@ -636,7 +648,8 @@ class AnalyticsStorage:
             await self._promote_data_tier(data_id, promote_to_tier)
             
     async def _promote_data_tier(self, data_id: str, new_tier: StorageTier) -> None:
-        """Promote data to higher performance tier."""
+        """
+Promote data to higher performance tier."""
         
         try:
             # Retrieve current data
@@ -883,7 +896,8 @@ class TimeSeriesStore:
         value: float,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Store time-series data point."""
+        """
+Store time-series data point."""
         
         try:
             async with get_database_session() as session:
@@ -995,7 +1009,8 @@ class CacheManager:
         }
         
     async def get_cached_data(self, cache_key: str) -> Optional[Any]:
-        """Retrieve data from cache."""
+        """
+Retrieve data from cache."""
         
         try:
             redis_client = redis.Redis()  # Use sync Redis for caching

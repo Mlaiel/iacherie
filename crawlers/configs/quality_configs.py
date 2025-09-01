@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Any, Callable
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class QualityLevel(Enum):
-    """Quality levels for different validation requirements."""
+    """
+Quality levels for different validation requirements."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -33,6 +36,7 @@ class QualityLevel(Enum):
 
 class ValidationSeverity(Enum):
     """Severity levels for validation issues."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -41,6 +45,7 @@ class ValidationSeverity(Enum):
 
 class DataQualityMetric(Enum):
     """Data quality metrics."""
+
     COMPLETENESS = "completeness"
     ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
@@ -52,6 +57,7 @@ class DataQualityMetric(Enum):
 
 class ValidationRule(Enum):
     """Types of validation rules."""
+
     REQUIRED_FIELD = "required_field"
     DATA_TYPE = "data_type"
     FORMAT_PATTERN = "format_pattern"
@@ -184,7 +190,8 @@ class DataIntegrityConfig:
 
 @dataclass
 class PerformanceQualityConfig:
-    """Configuration for performance quality monitoring."""
+    """
+Configuration for performance quality monitoring."""
     enabled: bool = True
     
     # Response time monitoring
@@ -215,7 +222,8 @@ class PerformanceQualityConfig:
 
 @dataclass
 class QualityReportConfig:
-    """Configuration for quality reporting."""
+    """
+Configuration for quality reporting."""
     enabled: bool = True
     
     # Report types
@@ -249,7 +257,8 @@ class QualityConfigManager:
     """Manager for quality assurance configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize quality configuration manager."""
+        """
+Initialize quality configuration manager."""
         self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.quality_metrics: Dict[str, QualityMetric] = {}
         self.validation_rules: Dict[str, ValidationRuleConfig] = {}
@@ -262,7 +271,8 @@ class QualityConfigManager:
         self._setup_default_rules()
     
     def _load_configurations(self) -> None:
-        """Load quality configurations from files."""
+        """
+Load quality configurations from files."""
         try:
             config_file = self.config_dir / "quality_config.json"
             if config_file.exists():
@@ -351,26 +361,30 @@ class QualityConfigManager:
         self._save_configurations()
     
     def add_validation_rule(self, rule: ValidationRuleConfig) -> None:
-        """Add a new validation rule."""
+        """
+Add a new validation rule."""
         self.validation_rules[rule.rule_id] = rule
         self._save_configurations()
     
     def get_quality_metrics(self, enabled_only: bool = True) -> List[QualityMetric]:
-        """Get quality metrics."""
+        """
+Get quality metrics."""
         metrics = list(self.quality_metrics.values())
         if enabled_only:
             metrics = [m for m in metrics if m.enabled]
         return metrics
     
     def get_validation_rules(self, field_name: Optional[str] = None) -> List[ValidationRuleConfig]:
-        """Get validation rules, optionally filtered by field name."""
+        """
+Get validation rules, optionally filtered by field name."""
         rules = list(self.validation_rules.values())
         if field_name:
             rules = [r for r in rules if r.field_name == field_name]
         return [r for r in rules if r.enabled]
     
     def validate_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data against configured rules."""
+        """
+Validate data against configured rules."""
         validation_result = {
             "valid": True,
             "errors": [],
@@ -445,7 +459,8 @@ class QualityConfigManager:
         return weighted_score / total_weight
     
     def get_quality_report(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate comprehensive quality report."""
+        """
+Generate comprehensive quality report."""
         report = {
             "period": {
                 "start": start_date.isoformat(),

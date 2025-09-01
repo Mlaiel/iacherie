@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -40,7 +41,9 @@ from ..utils.analytics_tracker import AnalyticsTracker
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Distribution status enumeration."""
+    """
+Distribution status enumeration."""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
@@ -51,6 +54,7 @@ class DistributionStatus(Enum):
 
 class PlatformType(Enum):
     """Supported platform types."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -64,6 +68,7 @@ class PlatformType(Enum):
 
 class ContentAdaptationType(Enum):
     """Content adaptation types for different platforms."""
+
     FORMAT_CONVERSION = "format_conversion"
     RESOLUTION_OPTIMIZATION = "resolution_optimization"
     DURATION_ADJUSTMENT = "duration_adjustment"
@@ -84,7 +89,8 @@ class DistributionTarget:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result."""
+    """
+Distribution operation result."""
     platform: PlatformType
     status: DistributionStatus
     platform_post_id: Optional[str]
@@ -95,7 +101,8 @@ class DistributionResult:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform distribution strategy."""
+    """
+Cross-platform distribution strategy."""
     primary_platform: PlatformType
     secondary_platforms: List[PlatformType]
     staggered_release: bool = True

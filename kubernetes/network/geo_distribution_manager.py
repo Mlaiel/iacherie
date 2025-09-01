@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class GeographicRegion(Enum):
-    """Geographic regions for content distribution"""
+    """
+Geographic regions for content distribution"""
     # Primary regions as per global deployment requirements
     US_EAST = "us-east"  # N. Virginia - Primary region
     US_WEST = "us-west"  # Oregon - Backup + West Coast users
@@ -69,6 +71,7 @@ class GeographicRegion(Enum):
 
 class ContentDistributionStrategy(Enum):
     """Content distribution strategies"""
+
     GLOBAL = "global"           # Distribute to all regions
     SELECTIVE = "selective"     # Distribute to specific regions based on demand
     PROXIMITY = "proximity"     # Distribute based on user proximity
@@ -79,6 +82,7 @@ class ContentDistributionStrategy(Enum):
 
 class RegionPriority(Enum):
     """Region priority levels"""
+
     CRITICAL = "critical"    # Must have content immediately
     HIGH = "high"           # Should have content quickly
     MEDIUM = "medium"       # Can wait for content
@@ -99,7 +103,8 @@ class GeographicPoint:
 
 @dataclass
 class RegionMetrics:
-    """Regional performance metrics"""
+    """
+Regional performance metrics"""
     region: GeographicRegion
     user_count: int
     request_count: int
@@ -114,7 +119,8 @@ class RegionMetrics:
 
 @dataclass
 class ContentGeoDistribution:
-    """Content geographic distribution configuration"""
+    """
+Content geographic distribution configuration"""
     content_id: str
     content_type: str
     strategy: ContentDistributionStrategy
@@ -128,7 +134,8 @@ class ContentGeoDistribution:
 
 @dataclass
 class GeoOptimizationRule:
-    """Geographic optimization rule"""
+    """
+Geographic optimization rule"""
     name: str
     condition: str
     action: str

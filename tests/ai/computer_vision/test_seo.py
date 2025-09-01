@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -84,14 +85,16 @@ class TestSEOOptimizer(unittest.TestCase):
     """Test suite for SEOOptimizer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.seo_optimizer = SEOOptimizer()
         self.test_image = self._create_test_image()
         self.seo_config = self._create_seo_config()
         self.content_data = self._create_content_data()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for SEO optimization"""
+        """
+Create a test image for SEO optimization"""
         image = np.zeros((400, 600, 3), dtype=np.uint8)
         
         # Add content that should generate good SEO
@@ -126,7 +129,8 @@ class TestSEOOptimizer(unittest.TestCase):
             }
     
     def _create_content_data(self) -> Dict[str, Any]:
-        """Create content data for SEO optimization"""
+        """
+Create content data for SEO optimization"""
         return {
             'title': 'Premium Product Showcase',
             'description': 'High-quality professional product display',
@@ -137,11 +141,13 @@ class TestSEOOptimizer(unittest.TestCase):
         }
     
     def test_optimizer_initialization(self):
-        """Test SEOOptimizer initialization"""
+        """
+Test SEOOptimizer initialization"""
         self.assertIsInstance(self.seo_optimizer, SEOOptimizer)
     
     def test_image_seo_analysis(self):
-        """Test comprehensive image SEO analysis"""
+        """
+Test comprehensive image SEO analysis"""
         try:
             seo_analysis = self.seo_optimizer.analyze_image_seo(
                 image=self.test_image,
@@ -279,13 +285,15 @@ class TestMetadataGenerator(unittest.TestCase):
     """Test suite for MetadataGenerator class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.metadata_generator = MetadataGenerator()
         self.test_image = self._create_test_image()
         self.base_metadata = self._create_base_metadata()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for metadata generation"""
+        """
+Create a test image for metadata generation"""
         image = np.zeros((300, 400, 3), dtype=np.uint8)
         
         # Add identifiable content
@@ -301,17 +309,19 @@ class TestMetadataGenerator(unittest.TestCase):
             'title': 'Test Image',
             'description': 'A test image for metadata generation',
             'author': 'Fahed Mlaiel',
-            'copyright': '© 2024 Fahed Mlaiel',
+            'copyright': '(c) 2024 Fahed Mlaiel',
             'keywords': ['test', 'metadata'],
             'creation_date': '2024-01-01T00:00:00Z'
         }
     
     def test_metadata_generator_initialization(self):
-        """Test MetadataGenerator initialization"""
+        """
+Test MetadataGenerator initialization"""
         self.assertIsInstance(self.metadata_generator, MetadataGenerator)
     
     def test_comprehensive_metadata_generation(self):
-        """Test comprehensive metadata generation"""
+        """
+Test comprehensive metadata generation"""
         try:
             comprehensive_metadata = self.metadata_generator.generate_comprehensive_metadata(
                 image=self.test_image,
@@ -460,13 +470,15 @@ class TestTagGenerator(unittest.TestCase):
     """Test suite for TagGenerator class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.tag_generator = TagGenerator()
         self.test_image = self._create_test_image()
         self.context = self._create_context()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for tag generation"""
+        """
+Create a test image for tag generation"""
         image = np.zeros((250, 350, 3), dtype=np.uint8)
         
         # Add content that should generate meaningful tags
@@ -491,11 +503,13 @@ class TestTagGenerator(unittest.TestCase):
         }
     
     def test_tag_generator_initialization(self):
-        """Test TagGenerator initialization"""
+        """
+Test TagGenerator initialization"""
         self.assertIsInstance(self.tag_generator, TagGenerator)
     
     def test_visual_tag_generation(self):
-        """Test visual tag generation from image analysis"""
+        """
+Test visual tag generation from image analysis"""
         try:
             visual_tags = self.tag_generator.generate_visual_tags(
                 image=self.test_image,
@@ -656,13 +670,15 @@ class TestImageAnalyzer(unittest.TestCase):
     """Test suite for ImageAnalyzer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.image_analyzer = ImageAnalyzer()
         self.test_image = self._create_test_image()
         self.complex_image = self._create_complex_image()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for analysis"""
+        """
+Create a test image for analysis"""
         image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Add various elements for analysis
@@ -695,7 +711,8 @@ class TestImageAnalyzer(unittest.TestCase):
         self.assertIsInstance(self.image_analyzer, ImageAnalyzer)
     
     def test_composition_analysis(self):
-        """Test image composition analysis"""
+        """
+Test image composition analysis"""
         try:
             composition_analysis = self.image_analyzer.analyze_composition(
                 image=self.test_image,
@@ -827,7 +844,8 @@ class TestSEOIntegration(unittest.TestCase):
     """Test suite for SEO integration and workflows"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.seo_optimizer = SEOOptimizer()
         self.metadata_generator = MetadataGenerator()
         self.tag_generator = TagGenerator()
@@ -837,7 +855,8 @@ class TestSEOIntegration(unittest.TestCase):
         self.content_context = self._create_content_context()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image for integration testing"""
+        """
+Create comprehensive test image for integration testing"""
         image = np.zeros((500, 800, 3), dtype=np.uint8)
         
         # Add rich content for comprehensive SEO analysis
@@ -848,7 +867,7 @@ class TestSEOIntegration(unittest.TestCase):
         # Add text content
         cv2.putText(image, "PREMIUM PRODUCT", (120, 180), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 255, 255), 2)
         cv2.putText(image, "Professional Quality", (120, 220), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1)
-        cv2.putText(image, "© 2024 Fahed Mlaiel", (50, 470), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 1)
+        cv2.putText(image, "(c) 2024 Fahed Mlaiel", (50, 470), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 1)
         
         # Add texture and patterns
         for i in range(0, 800, 50):
@@ -872,7 +891,8 @@ class TestSEOIntegration(unittest.TestCase):
         }
     
     def test_complete_seo_optimization_workflow(self):
-        """Test complete SEO optimization workflow"""
+        """
+Test complete SEO optimization workflow"""
         try:
             # Step 1: Analyze image
             image_analysis = self.image_analyzer.analyze_composition(self.test_image)

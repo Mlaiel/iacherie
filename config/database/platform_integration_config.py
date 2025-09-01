@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,7 +35,9 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
@@ -91,6 +94,7 @@ class Platform(Enum):
 
 class IntegrationStatus(Enum):
     """Platform integration status"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -103,6 +107,7 @@ class IntegrationStatus(Enum):
 
 class SyncFrequency(Enum):
     """Data synchronization frequency"""
+
     REAL_TIME = "real_time"
     EVERY_15_MIN = "15_minutes"
     EVERY_HOUR = "1_hour"
@@ -114,6 +119,7 @@ class SyncFrequency(Enum):
 
 class DataType(Enum):
     """Types of data synchronized"""
+
     CONTENT_METADATA = "content_metadata"
     ANALYTICS_DATA = "analytics_data"
     REVENUE_DATA = "revenue_data"
@@ -264,7 +270,8 @@ class PlatformIntegration(Base):
 
 
 class SyncHistory(Base):
-    """Synchronization history tracking"""
+    """
+Synchronization history tracking"""
     __tablename__ = 'platform_sync_history'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -300,7 +307,8 @@ class SyncHistory(Base):
 
 
 class PlatformData(Base):
-    """Cached platform data"""
+    """
+Cached platform data"""
     __tablename__ = 'platform_data_cache'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -334,7 +342,8 @@ class PlatformData(Base):
 
 
 class WebhookEvent(Base):
-    """Webhook events from platforms"""
+    """
+Webhook events from platforms"""
     __tablename__ = 'platform_webhook_events'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -367,7 +376,8 @@ class WebhookEvent(Base):
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Professional platform integration configuration"""
+    """
+Professional platform integration configuration"""
     
     # Database credentials
     credentials: PlatformCredentials = field(default_factory=PlatformCredentials)
@@ -401,12 +411,14 @@ class PlatformIntegrationConfig:
     error_reporting: bool = True
     
     def __post_init__(self):
-        """Initialize default platform configurations"""
+        """
+Initialize default platform configurations"""
         if not self.platform_configs:
             self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default platform configurations"""
+        """
+Initialize default platform configurations"""
         # YouTube configuration
         self.platform_configs[Platform.YOUTUBE] = PlatformConfig(
             platform=Platform.YOUTUBE,
@@ -477,7 +489,8 @@ class PlatformIntegrationManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize platform integration database connections"""
+        """
+Initialize platform integration database connections"""
         try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
@@ -758,7 +771,8 @@ def create_platform_integration_config() -> PlatformIntegrationConfig:
 
 
 def create_platform_integration_manager(config: Optional[PlatformIntegrationConfig] = None) -> PlatformIntegrationManager:
-    """Create platform integration manager with configuration"""
+    """
+Create platform integration manager with configuration"""
     if config is None:
         config = create_platform_integration_config()
     return PlatformIntegrationManager(config)

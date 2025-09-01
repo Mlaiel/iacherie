@@ -2,7 +2,7 @@
 ==========================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 Unauthorized use, copying or distribution prohibited.
@@ -11,6 +11,7 @@ Professional evidence collection system for content violation cases.
 Captures screenshots, metadata, timestamps, and legal documentation
 for copyright protection and legal proceedings.
 """
+
 import os
 import logging
 import hashlib
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EvidencePackage:
-    """Complete evidence package for a violation case."""
+    """
+Complete evidence package for a violation case."""
     
     violation_id: str
     detected_url: str
@@ -553,7 +555,8 @@ class EvidenceCollector:
             return 0.0
     
     async def cleanup_old_evidence(self, days_old: int = None):
-        """Clean up evidence older than specified days."""
+        """
+Clean up evidence older than specified days."""
         
         if days_old is None:
             days_old = self.evidence_retention_days

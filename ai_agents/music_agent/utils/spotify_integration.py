@@ -15,6 +15,7 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,7 +43,9 @@ settings = get_settings()
 
 
 class SpotifyReleaseType(Enum):
-    """Spotify release type enumeration"""
+    """
+Spotify release type enumeration"""
+
     SINGLE = "single"
     ALBUM = "album"
     EP = "ep"
@@ -51,6 +54,7 @@ class SpotifyReleaseType(Enum):
 
 class SpotifyMarket(Enum):
     """Spotify market codes"""
+
     GLOBAL = "global"
     US = "US"
     DE = "DE" 
@@ -82,7 +86,8 @@ class SpotifyArtistProfile:
 
 @dataclass
 class SpotifyTrackAnalysis:
-    """Comprehensive Spotify track analysis"""
+    """
+Comprehensive Spotify track analysis"""
     track_id: str
     audio_features: Dict[str, float]
     audio_analysis: Dict[str, Any]
@@ -101,7 +106,8 @@ class SpotifyIntegration:
     and release strategy recommendations for music content creators.
     """
     def __init__(self):
-        """Initialize Spotify integration with enhanced capabilities"""
+        """
+Initialize Spotify integration with enhanced capabilities"""
         self.security_manager = SecurityManager()
         self.spotify_agent = SpotifyAgent()
         
@@ -664,7 +670,8 @@ class SpotifyIntegration:
         audio_features: Dict[str, float], 
         track_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze potential for playlist inclusion"""
+        """
+Analyze potential for playlist inclusion"""
         # Analyze audio features for playlist compatibility
         energy = audio_features.get('energy', 0.5)
         danceability = audio_features.get('danceability', 0.5)
@@ -689,7 +696,8 @@ class SpotifyIntegration:
         track_info: Dict[str, Any], 
         audio_features: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Analyze competitive landscape"""
+        """
+Analyze competitive landscape"""
         # This would analyze similar tracks and artists
         return {
             'competitive_density': 'medium',
@@ -708,7 +716,8 @@ class SpotifyIntegration:
         audio_features: Dict[str, float],
         market_performance: Dict[str, Any]
     ) -> List[str]:
-        """Generate track optimization suggestions"""
+        """
+Generate track optimization suggestions"""
         suggestions = []
         
         # Analyze audio features for optimization
@@ -752,7 +761,8 @@ class SpotifyIntegration:
         playlist_id: str, 
         track_analysis: SpotifyTrackAnalysis
     ) -> Dict[str, Any]:
-        """Analyze compatibility with specific playlist"""
+        """
+Analyze compatibility with specific playlist"""
         try:
             # Get playlist tracks sample
             playlist_tracks = self.sp_client.playlist_tracks(playlist_id, limit=50)
@@ -809,7 +819,8 @@ class SpotifyIntegration:
         return sum(similarity_scores) / len(similarity_scores)
 
     async def _get_playlist_contact_method(self, playlist: Dict[str, Any]) -> Dict[str, Any]:
-        """Get contact method for playlist owner"""
+        """
+Get contact method for playlist owner"""
         # This would be enhanced with real contact discovery
         return {
             'method': 'spotify_message',
@@ -823,7 +834,8 @@ class SpotifyIntegration:
         track_analysis: SpotifyTrackAnalysis,
         target_markets: List[SpotifyMarket]
     ) -> Dict[str, Any]:
-        """Analyze optimal release timing"""
+        """
+Analyze optimal release timing"""
         # This would use market data and trends
         return {
             'optimal_date': (datetime.utcnow() + timedelta(days=14)).isoformat(),
@@ -839,7 +851,8 @@ class SpotifyIntegration:
         track_analysis: SpotifyTrackAnalysis,
         release_type: SpotifyReleaseType
     ) -> Dict[str, Any]:
-        """Create comprehensive marketing strategy"""
+        """
+Create comprehensive marketing strategy"""
         return {
             'pre_release': {
                 'teaser_campaign': {'duration': '2 weeks', 'platforms': ['Instagram', 'TikTok']},
@@ -863,7 +876,8 @@ class SpotifyIntegration:
         track_analysis: SpotifyTrackAnalysis, 
         artist_followers: int
     ) -> Dict[str, Any]:
-        """Plan playlist submission strategy"""
+        """
+Plan playlist submission strategy"""
         # Determine submission tier based on follower count
         if artist_followers > 100000:
             tier = 'major'
@@ -895,7 +909,8 @@ class SpotifyIntegration:
         target_markets: List[SpotifyMarket],
         release_type: SpotifyReleaseType
     ) -> Dict[str, Any]:
-        """Calculate recommended promotional budget"""
+        """
+Calculate recommended promotional budget"""
         base_budget = {
             SpotifyReleaseType.SINGLE: 500,
             SpotifyReleaseType.EP: 1500,
@@ -963,7 +978,8 @@ class SpotifyIntegration:
         artist_profile: SpotifyArtistProfile, 
         track_analysis: SpotifyTrackAnalysis
     ) -> int:
-        """Predict initial streams based on profile and track analysis"""
+        """
+Predict initial streams based on profile and track analysis"""
         base_streams = artist_profile.followers * 0.1  # 10% of followers typically stream new releases
         
         # Adjust based on track potential
@@ -976,7 +992,8 @@ class SpotifyIntegration:
         return max(predicted_streams, 100)  # Minimum prediction
 
     def _predict_playlist_additions(self, track_analysis: SpotifyTrackAnalysis) -> int:
-        """Predict number of playlist additions"""
+        """
+Predict number of playlist additions"""
         potential_score = track_analysis.playlist_potential.get('overall_playlist_potential', 0.5)
         base_additions = 10
         
@@ -987,7 +1004,8 @@ class SpotifyIntegration:
         target_markets: List[SpotifyMarket], 
         artist_profile: SpotifyArtistProfile
     ) -> Dict[str, float]:
-        """Forecast market penetration by region"""
+        """
+Forecast market penetration by region"""
         base_penetration = 0.05  # 5% base market penetration
         
         penetration_forecast = {}
@@ -1007,7 +1025,8 @@ class SpotifyIntegration:
         return penetration_forecast
 
     async def _track_playlist_performance(self, track_id: str) -> Dict[str, Any]:
-        """Track playlist performance for a specific track"""
+        """
+Track playlist performance for a specific track"""
         # This would require more advanced API calls or web scraping
         return {
             'total_adds': 15,
@@ -1017,7 +1036,8 @@ class SpotifyIntegration:
         }
 
     def _estimate_streams_from_popularity(self, popularity_score: int) -> int:
-        """Estimate streams from popularity score"""
+        """
+Estimate streams from popularity score"""
         # This is a rough estimation - would need real data correlation
         if popularity_score > 80:
             return 1000000
@@ -1031,7 +1051,8 @@ class SpotifyIntegration:
             return 5000
 
     async def _calculate_growth_trajectory(self, track_id: str, release_date: datetime) -> Dict[str, Any]:
-        """Calculate growth trajectory since release"""
+        """
+Calculate growth trajectory since release"""
         # This would track growth over time
         return {
             'trend': 'increasing',
@@ -1041,7 +1062,8 @@ class SpotifyIntegration:
         }
 
     async def _calculate_market_penetration(self, track_id: str) -> Dict[str, float]:
-        """Calculate current market penetration by region"""
+        """
+Calculate current market penetration by region"""
         # This would use geographic listening data
         return {
             'US': 0.45,
@@ -1056,7 +1078,8 @@ class SpotifyIntegration:
         performance_metrics: Dict[str, Any], 
         kpi_performance: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate performance-based recommendations"""
+        """
+Generate performance-based recommendations"""
         recommendations = []
         
         # Check each KPI and generate recommendations
@@ -1087,7 +1110,8 @@ class SpotifyIntegration:
         return recommendations
 
     def _calculate_overall_performance_status(self, kpi_performance: Dict[str, Any]) -> str:
-        """Calculate overall performance status"""
+        """
+Calculate overall performance status"""
         on_track_count = sum(1 for perf in kpi_performance.values() if perf['status'] == 'on_track')
         total_kpis = len(kpi_performance)
         
@@ -1103,7 +1127,8 @@ class SpotifyIntegration:
             return 'needs_improvement'
 
     async def _analyze_profile_completeness(self, profile: SpotifyArtistProfile) -> Dict[str, Any]:
-        """Analyze artist profile completeness"""
+        """
+Analyze artist profile completeness"""
         completeness_factors = {
             'has_bio': len(profile.external_urls) > 1,
             'has_images': len(profile.images) > 0,
@@ -1121,7 +1146,8 @@ class SpotifyIntegration:
         }
 
     async def _analyze_branding_consistency(self, profile: SpotifyArtistProfile) -> Dict[str, Any]:
-        """Analyze branding consistency across releases"""
+        """
+Analyze branding consistency across releases"""
         # This would analyze visual and musical consistency
         return {
             'visual_consistency_score': 0.75,
@@ -1135,7 +1161,8 @@ class SpotifyIntegration:
         }
 
     async def _analyze_content_strategy(self, profile: SpotifyArtistProfile) -> Dict[str, Any]:
-        """Analyze content release strategy"""
+        """
+Analyze content release strategy"""
         return {
             'release_frequency': 'optimal',  # Based on analysis of top_albums
             'genre_focus': len(set(profile.genres)) <= 3,  # Good if focused on 3 or fewer genres
@@ -1148,7 +1175,8 @@ class SpotifyIntegration:
         }
 
     async def _generate_visibility_optimizations(self, profile: SpotifyArtistProfile) -> List[Dict[str, str]]:
-        """Generate visibility optimization recommendations"""
+        """
+Generate visibility optimization recommendations"""
         return [
             {
                 'optimization': 'Complete Spotify for Artists profile',
@@ -1171,7 +1199,8 @@ class SpotifyIntegration:
         ]
 
     async def _generate_engagement_optimizations(self, profile: SpotifyArtistProfile) -> List[Dict[str, str]]:
-        """Generate engagement optimization recommendations"""
+        """
+Generate engagement optimization recommendations"""
         return [
             {
                 'optimization': 'Interactive social content',
@@ -1188,7 +1217,8 @@ class SpotifyIntegration:
         ]
 
     async def _generate_discoverability_optimizations(self, profile: SpotifyArtistProfile) -> List[Dict[str, str]]:
-        """Generate discoverability optimization recommendations"""
+        """
+Generate discoverability optimization recommendations"""
         return [
             {
                 'optimization': 'Genre tag optimization',
@@ -1209,7 +1239,8 @@ class SpotifyIntegration:
         profile: SpotifyArtistProfile, 
         branding_analysis: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate branding optimization recommendations"""
+        """
+Generate branding optimization recommendations"""
         recommendations = []
         
         if branding_analysis['visual_consistency_score'] < 0.8:
@@ -1231,7 +1262,8 @@ class SpotifyIntegration:
         return recommendations
 
     async def _create_optimization_roadmap(self, optimizations: Dict[str, List[Dict[str, str]]]) -> Dict[str, Any]:
-        """Create implementation roadmap for optimizations"""
+        """
+Create implementation roadmap for optimizations"""
         all_optimizations = []
         for category, opts in optimizations.items():
             for opt in opts:
@@ -1259,7 +1291,8 @@ class SpotifyIntegration:
         return roadmap
 
     async def get_integration_health(self) -> Dict[str, Any]:
-        """Get health status of Spotify integration"""
+        """
+Get health status of Spotify integration"""
         return {
             'api_status': 'operational',
             'cache_performance': {
@@ -1277,7 +1310,8 @@ class SpotifyIntegration:
         }
 
     async def clear_cache(self, cache_type: str = 'all') -> Dict[str, Any]:
-        """Clear integration caches"""
+        """
+Clear integration caches"""
         cleared = {}
         
         if cache_type in ['all', 'artist']:

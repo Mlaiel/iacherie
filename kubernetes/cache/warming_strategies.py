@@ -36,6 +36,7 @@ Key Warming Features:
 - Real-time adaptation to viral content patterns
 - Cross-platform warming for seamless content distribution
 """
+
 import asyncio
 import logging
 import time
@@ -58,7 +59,9 @@ import asyncpg
 
 
 class WarmingStrategy(Enum):
-    """Advanced cache warming strategies for content creators"""
+    """
+Advanced cache warming strategies for content creators"""
+
     POPULARITY_BASED = "popularity_based"           # Based on content popularity trends
     TIME_BASED = "time_based"                      # Time-sensitive content warming
     USER_BEHAVIOR = "user_behavior"                # Creator and fan behavior patterns
@@ -74,6 +77,7 @@ class WarmingStrategy(Enum):
 
 class WarmingPriority(Enum):
     """Cache warming priority levels based on business impact"""
+
     CRITICAL = "critical"      # Revenue-generating content, verified creators
     HIGH = "high"             # Popular content, premium creators
     MEDIUM = "medium"         # Standard content, regular creators
@@ -83,6 +87,7 @@ class WarmingPriority(Enum):
 
 class ContentTrendLevel(Enum):
     """Content trending levels for warming decisions"""
+
     VIRAL = "viral"           # Rapidly spreading content
     TRENDING = "trending"     # Growing in popularity
     POPULAR = "popular"       # Consistently accessed
@@ -92,6 +97,7 @@ class ContentTrendLevel(Enum):
 
 class CreatorTier(Enum):
     """Creator tier levels for warming prioritization"""
+
     PLATINUM = "platinum"     # Top-tier creators with massive following
     GOLD = "gold"            # Verified creators with large audience
     SILVER = "silver"        # Growing creators with engaged audience
@@ -119,7 +125,8 @@ class WarmingTarget:
 
 @dataclass
 class WarmingResult:
-    """Result of cache warming operation"""
+    """
+Result of cache warming operation"""
     target: WarmingTarget
     success: bool
     warming_time_seconds: float
@@ -132,7 +139,8 @@ class WarmingResult:
 
 @dataclass
 class CreatorBehaviorPattern:
-    """Creator behavior pattern analysis"""
+    """
+Creator behavior pattern analysis"""
     creator_id: str
     creator_tier: CreatorTier
     upload_frequency: float
@@ -147,7 +155,8 @@ class CreatorBehaviorPattern:
 
 
 class AITrendPredictor:
-    """AI-powered trend prediction for cache warming"""
+    """
+AI-powered trend prediction for cache warming"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -159,7 +168,8 @@ class AITrendPredictor:
         self._initialize_prediction_models()
     
     def _initialize_prediction_models(self):
-        """Initialize machine learning models for trend prediction"""
+        """
+Initialize machine learning models for trend prediction"""
         
         # Content popularity prediction model
         self.models["popularity"] = RandomForestRegressor(
@@ -378,7 +388,8 @@ class AITrendPredictor:
             return 1.0
     
     def _calculate_platform_momentum(self, historical_data: List[Dict]) -> float:
-        """Calculate platform momentum based on recent activity"""
+        """
+Calculate platform momentum based on recent activity"""
         
         if not historical_data:
             return 0.0
@@ -397,7 +408,8 @@ class AITrendPredictor:
 
 
 class CollaborationNetworkAnalyzer:
-    """Analyze creator collaboration networks for warming optimization"""
+    """
+Analyze creator collaboration networks for warming optimization"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
@@ -410,7 +422,8 @@ class CollaborationNetworkAnalyzer:
         creator_id: str,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze collaboration patterns for warming decisions"""
+        """
+Analyze collaboration patterns for warming decisions"""
         
         try:
             # Update collaboration graph if needed
@@ -557,7 +570,8 @@ class GeographicWarmingOptimizer:
         self._initialize_geographic_data()
     
     def _initialize_geographic_data(self):
-        """Initialize geographic preferences and timezone patterns"""
+        """
+Initialize geographic preferences and timezone patterns"""
         
         # Regional content preferences (example data)
         self.regional_preferences = {
@@ -691,6 +705,7 @@ class CacheWarmingStrategies:
 
 class ContentCategory(Enum):
     """Content categories for warming strategies"""
+
     TRENDING = "trending"
     POPULAR = "popular"
     NEW_RELEASE = "new_release"
@@ -717,7 +732,8 @@ class WarmingTarget:
 
 @dataclass
 class WarmingSession:
-    """Cache warming session information"""
+    """
+Cache warming session information"""
     session_id: str
     strategy: WarmingStrategy
     started_at: datetime
@@ -733,7 +749,8 @@ class WarmingSession:
 
 @dataclass
 class UserAccessPattern:
-    """User access pattern analysis"""
+    """
+User access pattern analysis"""
     user_id: str
     content_preferences: Dict[ContentType, float]
     access_times: List[datetime]

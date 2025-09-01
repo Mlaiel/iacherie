@@ -18,6 +18,7 @@ Features:
 - Infrastructure and application monitoring
 - Business metrics and KPI tracking
 """
+
 import asyncio
 import json
 import logging
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics"""
+    """
+Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -45,6 +48,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -54,6 +58,7 @@ class AlertSeverity(Enum):
 
 class AlertState(Enum):
     """Alert states"""
+
     FIRING = "firing"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
@@ -62,6 +67,7 @@ class AlertState(Enum):
 
 class NotificationChannel(Enum):
     """Notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -81,7 +87,8 @@ class MetricDataPoint:
 
 @dataclass
 class Metric:
-    """Metric definition and data"""
+    """
+Metric definition and data"""
     name: str
     metric_type: MetricType
     description: str
@@ -131,7 +138,8 @@ class Alert:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
+    """
+Dashboard widget configuration"""
     widget_id: str
     widget_type: str  # chart, gauge, table, status
     title: str
@@ -166,7 +174,8 @@ class MetricsCollector:
         self.max_buffer_size = 1000
         
     def register_metric(self, metric: Metric) -> None:
-        """Register a new metric"""
+        """
+Register a new metric"""
         self.metrics[metric.name] = metric
         self.metric_buffer[metric.name] = []
         logger.info(f"Registered metric: {metric.name} ({metric.metric_type.value})")
@@ -218,7 +227,8 @@ class MetricsCollector:
         self.collectors.append(collector_func)
     
     async def start_collection(self) -> None:
-        """Start automatic metric collection"""
+        """
+Start automatic metric collection"""
         while True:
             try:
                 # Run all registered collectors
@@ -313,7 +323,8 @@ class AnomalyDetector:
         self.detection_sensitivity = 0.95  # confidence threshold
     
     async def train_model(self, metric_name: str, data_points: List[MetricDataPoint]) -> None:
-        """Train anomaly detection model for metric"""
+        """
+Train anomaly detection model for metric"""
         if len(data_points) < 100:  # Need sufficient data
             return
         
@@ -397,7 +408,8 @@ class AlertManager:
         self.evaluation_interval = 30  # seconds
         
     def register_alert_rule(self, rule: AlertRule) -> None:
-        """Register an alert rule"""
+        """
+Register an alert rule"""
         self.rules[rule.rule_id] = rule
         logger.info(f"Registered alert rule: {rule.name}")
     
@@ -420,7 +432,8 @@ class AlertManager:
                 await self._evaluate_rule(rule)
     
     async def _evaluate_rule(self, rule: AlertRule) -> None:
-        """Evaluate a single alert rule"""
+        """
+Evaluate a single alert rule"""
         try:
             # Get current metric value
             current_value = self.metrics_collector.get_metric_value(
@@ -623,7 +636,8 @@ class MonitoringSystem:
         self._setup_default_alerts()
     
     def _setup_default_metrics(self) -> None:
-        """Setup default system metrics"""
+        """
+Setup default system metrics"""
         default_metrics = [
             Metric("system_cpu_percent", MetricType.GAUGE, "CPU usage percentage", "%"),
             Metric("system_memory_percent", MetricType.GAUGE, "Memory usage percentage", "%"),

@@ -19,12 +19,14 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 from typing import Optional, Dict, Any, Union, List
 from datetime import datetime
 
 
 class RecommendationError(Exception):
-    """Base exception for recommendation system errors"""
+    """
+Base exception for recommendation system errors"""
     
     def __init__(
         self,
@@ -595,7 +597,8 @@ def validate_recommendation_scores(scores: Dict[str, float]) -> None:
 
 
 def validate_engagement_metrics(metrics: Dict[str, Any]) -> None:
-    """Validate engagement metrics"""
+    """
+Validate engagement metrics"""
     numeric_fields = ["likes", "comments", "shares", "views"]
     for field in numeric_fields:
         if field in metrics:
@@ -616,7 +619,8 @@ def sanitize_user_input(input_data: Any) -> Any:
 
 
 def log_error_with_context(error: RecommendationError, context: Dict[str, Any]) -> None:
-    """Log error with additional context"""
+    """
+Log error with additional context"""
     import logging
     logger = logging.getLogger(__name__)
     

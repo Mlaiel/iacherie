@@ -5,8 +5,9 @@ The ContentAggregator collects, normalizes, and aggregates content
 from multiple sources for unified management and distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set
@@ -25,7 +26,8 @@ from ..integrations.platform_apis import PlatformAPIManager
 
 @dataclass
 class AggregationSource:
-    """Content aggregation source configuration"""
+    """
+Content aggregation source configuration"""
     source_id: str
     source_type: str  # platform, rss, api, webhook
     source_name: str
@@ -37,7 +39,8 @@ class AggregationSource:
 
 @dataclass
 class AggregationRule:
-    """Content aggregation rule definition"""
+    """
+Content aggregation rule definition"""
     rule_id: str
     source_ids: List[str]
     content_filters: Dict[str, Any]
@@ -49,7 +52,8 @@ class AggregationRule:
 
 @dataclass
 class AggregationResult:
-    """Content aggregation result container"""
+    """
+Content aggregation result container"""
     aggregation_id: str
     source_id: str
     items_processed: int
@@ -615,7 +619,8 @@ class ContentAggregator:
         return self.active_sources.get(source_id)
 
     async def _should_aggregate_source(self, source_config: AggregationSource) -> bool:
-        """Check if source should be aggregated based on frequency"""
+        """
+Check if source should be aggregated based on frequency"""
         if not source_config.last_sync:
             return True
         
@@ -625,7 +630,8 @@ class ContentAggregator:
         return time_since_sync >= sync_interval
 
     async def _is_duplicate_content(self, content_item: Dict[str, Any]) -> bool:
-        """Check if content is a duplicate"""
+        """
+Check if content is a duplicate"""
         # Generate content fingerprint
         fingerprint = await self._generate_content_fingerprint(content_item)
         
@@ -645,7 +651,8 @@ class ContentAggregator:
         return False
 
     async def _generate_content_fingerprint(self, content_item: Dict[str, Any]) -> str:
-        """Generate unique fingerprint for content deduplication"""
+        """
+Generate unique fingerprint for content deduplication"""
         import hashlib
         
         # Use title, description, and source URL for fingerprint
@@ -674,55 +681,68 @@ class ContentAggregator:
 
     # Placeholder methods for actual implementations
     async def _get_enabled_sources(self, source_filter: Dict[str, Any] = None) -> List[AggregationSource]:
-        """Get all enabled aggregation sources"""
+        """
+Get all enabled aggregation sources"""
         return list(self.active_sources.values())
 
     async def _aggregate_youtube_content(self, api_client: Any, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Aggregate content from YouTube"""
+        """
+Aggregate content from YouTube"""
         return []
 
     async def _aggregate_instagram_content(self, api_client: Any, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Aggregate content from Instagram"""
+        """
+Aggregate content from Instagram"""
         return []
 
     async def _normalize_platform_content(self, item: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Normalize platform content to standard format"""
+        """
+Normalize platform content to standard format"""
         return item
 
     async def _normalize_rss_content(self, entry: Any, feed: Any) -> Dict[str, Any]:
-        """Normalize RSS content to standard format"""
+        """
+Normalize RSS content to standard format"""
         return {}
 
     async def _normalize_api_content(self, item: Dict[str, Any], api_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize API content to standard format"""
+        """
+Normalize API content to standard format"""
         return item
 
     async def _passes_content_filters(self, content: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if content passes aggregation filters"""
+        """
+Check if content passes aggregation filters"""
         return True
 
     async def _find_existing_content(self, content: Dict[str, Any]) -> Optional[Any]:
-        """Find existing content in database"""
+        """
+Find existing content in database"""
         return None
 
     async def _create_new_content(self, content: Dict[str, Any], source_id: str) -> Optional[Any]:
-        """Create new content record"""
+        """
+Create new content record"""
         return None
 
     async def _update_existing_content(self, existing: Any, new_content: Dict[str, Any]) -> Optional[Any]:
-        """Update existing content record"""
+        """
+Update existing content record"""
         return None
 
     async def _update_source_sync_status(self, source_id: str, result: AggregationResult) -> None:
-        """Update source synchronization status"""
+        """
+Update source synchronization status"""
         pass
 
     async def _update_aggregation_stats(self, source_id: str, result: AggregationResult) -> None:
-        """Update aggregation statistics"""
+        """
+Update aggregation statistics"""
         pass
 
     def _serialize_aggregation_result(self, result: AggregationResult) -> Dict[str, Any]:
-        """Convert aggregation result to serializable format"""
+        """
+Convert aggregation result to serializable format"""
         return {
             "aggregation_id": result.aggregation_id,
             "source_id": result.source_id,

@@ -2,7 +2,7 @@
 Enterprise-Grade Metrics Collection and Performance Monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive metrics collection and monitoring capabilities for pipeline
 execution, performance tracking, and system observability.
@@ -17,6 +17,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -40,7 +41,9 @@ except ImportError:
 from .pipeline_manager import PipelineExecution, PipelineStatus
 
 class MetricType(Enum):
-    """Metric type definitions"""
+    """
+Metric type definitions"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -57,7 +60,8 @@ class MetricDefinition:
     
 @dataclass
 class MetricData:
-    """Metric data point"""
+    """
+Metric data point"""
     name: str
     value: float
     labels: Dict[str, str] = None
@@ -70,7 +74,8 @@ class MetricData:
             self.labels = {}
 
 class PipelineMetrics:
-    """Pipeline-specific metrics collection"""
+    """
+Pipeline-specific metrics collection"""
     
     def __init__(self):
         self.execution_start_times: Dict[str, datetime] = {}
@@ -79,7 +84,8 @@ class PipelineMetrics:
         self.logger = logging.getLogger(__name__)
         
     def record_pipeline_start(self, execution_id: str, config: Any):
-        """Record pipeline start event"""
+        """
+Record pipeline start event"""
         self.execution_start_times[execution_id] = datetime.utcnow()
         
         # Record start metric
@@ -145,7 +151,8 @@ class PipelineMetrics:
         
     def record_step_end(self, execution_id: str, step_name: str, 
                        success: bool, config: Any):
-        """Record pipeline step completion"""
+        """
+Record pipeline step completion"""
         if (execution_id in self.step_start_times and 
             step_name in self.step_start_times[execution_id]):
             
@@ -261,7 +268,8 @@ class PrometheusExporter:
         )
         
     def record_metric(self, metric_data: MetricData):
-        """Record metric data point to Prometheus"""
+        """
+Record metric data point to Prometheus"""
         if not PROMETHEUS_AVAILABLE:
             return
             
@@ -407,7 +415,8 @@ class MetricsAnalyzer:
         self._set_default_thresholds()
         
     def _set_default_thresholds(self):
-        """Set default alert thresholds"""
+        """
+Set default alert thresholds"""
         self.alert_thresholds = {
             'pipeline_failure_rate': {
                 'threshold': 0.1,  # 10% failure rate
@@ -428,7 +437,8 @@ class MetricsAnalyzer:
         
     def set_alert_threshold(self, metric_name: str, threshold: float,
                           window_minutes: int = 60, severity: str = 'warning'):
-        """Set custom alert threshold"""
+        """
+Set custom alert threshold"""
         self.alert_thresholds[metric_name] = {
             'threshold': threshold,
             'window_minutes': window_minutes,
@@ -438,7 +448,8 @@ class MetricsAnalyzer:
     def analyze_pipeline_performance(self, pipeline_name: str, 
                                    environment: str,
                                    hours: int = 24) -> Dict[str, Any]:
-        """Analyze pipeline performance over specified time period"""
+        """
+Analyze pipeline performance over specified time period"""
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=hours)
         
@@ -503,7 +514,8 @@ class MetricsAnalyzer:
         }
         
     def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check for alert conditions"""
+        """
+Check for alert conditions"""
         alerts = []
         current_time = datetime.utcnow()
         
@@ -519,7 +531,8 @@ class MetricsAnalyzer:
         
     def _check_failure_rate_alert(self, start_time: datetime, end_time: datetime,
                                 config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for pipeline failure rate alerts"""
+        """
+Check for pipeline failure rate alerts"""
         alerts = []
         
         # Get all pipeline executions in window
@@ -625,7 +638,8 @@ class PipelineMonitoringManager:
         self.metrics_queue.append(metric_data)
         
     def record_pipeline_event(self, event_type: str, execution: PipelineExecution):
-        """Record pipeline event with automatic metric generation"""
+        """
+Record pipeline event with automatic metric generation"""
         if event_type == 'start':
             self.pipeline_metrics.record_pipeline_start(
                 execution.execution_id, 
@@ -643,28 +657,33 @@ class PipelineMonitoringManager:
         
     def get_pipeline_analytics(self, pipeline_name: str, environment: str,
                              hours: int = 24) -> Dict[str, Any]:
-        """Get comprehensive pipeline analytics"""
+        """
+Get comprehensive pipeline analytics"""
         return self.analyzer.analyze_pipeline_performance(
             pipeline_name, environment, hours
         )
         
     def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check for active alerts"""
+        """
+Check for active alerts"""
         return self.analyzer.check_alerts()
         
     def set_alert_threshold(self, metric_name: str, threshold: float,
                           window_minutes: int = 60, severity: str = 'warning'):
-        """Configure alert threshold"""
+        """
+Configure alert threshold"""
         self.analyzer.set_alert_threshold(
             metric_name, threshold, window_minutes, severity
         )
         
     def cleanup_old_data(self, retention_days: int = 30):
-        """Clean up old metrics data"""
+        """
+Clean up old metrics data"""
         self.storage.cleanup_old_metrics(retention_days)
         
     def shutdown(self):
-        """Shutdown monitoring manager"""
+        """
+Shutdown monitoring manager"""
         self.stop_processing.set()
         if self.processing_thread:
             self.processing_thread.join(timeout=5)

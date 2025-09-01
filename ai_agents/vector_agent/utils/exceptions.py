@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import traceback
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone

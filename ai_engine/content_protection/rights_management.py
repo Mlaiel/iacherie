@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import json
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -40,6 +43,7 @@ class LicenseType(Enum):
 
 class UsageRight(Enum):
     """Specific usage rights"""
+
     VIEW = "view"
     DOWNLOAD = "download"
     DISTRIBUTE = "distribute"
@@ -54,6 +58,7 @@ class UsageRight(Enum):
 
 class LicenseStatus(Enum):
     """License status states"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
@@ -73,7 +78,8 @@ class UsageRestriction:
 
 @dataclass
 class RoyaltyStructure:
-    """Royalty payment structure"""
+    """
+Royalty payment structure"""
     rate_type: str  # percentage, fixed, tiered
     base_rate: Decimal
     minimum_payment: Optional[Decimal] = None
@@ -105,7 +111,8 @@ class License:
 
 @dataclass
 class RightsBundle:
-    """Collection of rights for content"""
+    """
+Collection of rights for content"""
     bundle_id: str
     content_id: str
     owner_id: str
@@ -122,7 +129,8 @@ class RightsBundle:
 
 @dataclass
 class UsageReport:
-    """Content usage tracking report"""
+    """
+Content usage tracking report"""
     report_id: str
     content_id: str
     license_id: str
@@ -145,7 +153,8 @@ class RightsManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize rights manager"""
+        """
+Initialize rights manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -161,7 +170,8 @@ class RightsManager:
         self._validation_rules = self._initialize_validation_rules()
     
     async def initialize(self):
-        """Initialize the rights manager asynchronously"""
+        """
+Initialize the rights manager asynchronously"""
         self.logger.info("Initializing RightsManager")
         # Initialize rights database connections and validation systems
         self._is_initialized = True
@@ -506,7 +516,8 @@ class RightsManager:
         }
     
     def _initialize_validation_rules(self) -> Dict[str, Any]:
-        """Initialize rights validation rules"""
+        """
+Initialize rights validation rules"""
         return {
             'exclusive_license_conflicts': True,
             'territory_overlap_check': True,
@@ -516,7 +527,8 @@ class RightsManager:
         }
     
     async def _validate_licensing_rights(self, content_id: str, licensor_id: str) -> bool:
-        """Validate that licensor has rights to license content"""
+        """
+Validate that licensor has rights to license content"""
         rights_bundle = self._rights_database.get(content_id)
         if not rights_bundle:
             raise ValueError(f"No rights found for content: {content_id}")
@@ -545,7 +557,8 @@ class RightsManager:
         return license
     
     async def _validate_license(self, license: License) -> bool:
-        """Validate license terms against business rules"""
+        """
+Validate license terms against business rules"""
         # Check for conflicting exclusive licenses
         if license.license_type == LicenseType.EXCLUSIVE:
             existing_exclusive = [
@@ -601,7 +614,8 @@ class RightsManager:
         requested_usage: UsageRight,
         context: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Check if license permits requested usage"""
+        """
+Check if license permits requested usage"""
         if requested_usage not in license.granted_rights:
             return False
         
@@ -618,7 +632,8 @@ class RightsManager:
         usage: UsageRight,
         context: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Evaluate if restriction allows usage"""
+        """
+Evaluate if restriction allows usage"""
         if not restriction.enforced:
             return True
         
@@ -641,7 +656,8 @@ class RightsManager:
         license: License,
         usage: UsageRight
     ) -> List[Dict[str, Any]]:
-        """Get restrictions applicable to specific usage"""
+        """
+Get restrictions applicable to specific usage"""
         applicable = []
         
         for restriction in license.restrictions:
@@ -660,7 +676,8 @@ class RightsManager:
         usage: UsageRight,
         context: Optional[Dict[str, Any]] = None
     ) -> Optional[Dict[str, Any]]:
-        """Calculate royalty payment for usage"""
+        """
+Calculate royalty payment for usage"""
         if not license.royalty_structure:
             return None
         
@@ -692,7 +709,8 @@ class RightsManager:
         license: License,
         usage_report: UsageReport
     ) -> None:
-        """Process royalty payment for usage"""
+        """
+Process royalty payment for usage"""
         # This would integrate with payment processing system
         self.logger.info(f"Processing royalty payment for license: {license.license_id}")
         # Implementation would depend on payment provider
@@ -706,7 +724,8 @@ class RightsManager:
         return counts
     
     def _count_content_by_owner(self) -> Dict[str, int]:
-        """Count content by owner"""
+        """
+Count content by owner"""
         counts = {}
         for rights_bundle in self._rights_database.values():
             owner_id = rights_bundle.owner_id
@@ -722,7 +741,8 @@ class RightsManager:
         content_data: Optional[Dict[str, Any]] = None,
         ownership_details: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Register comprehensive rights with advanced features"""
+        """
+Register comprehensive rights with advanced features"""
         try:
             # Extract content data from profile if provided
             if profile:
@@ -870,12 +890,14 @@ class LicenseManager:
     """
     
     def __init__(self, rights_manager: RightsManager):
-        """Initialize license manager"""
+        """
+Initialize license manager"""
         self.rights_manager = rights_manager
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self):
-        """Initialize the license manager asynchronously"""
+        """
+Initialize the license manager asynchronously"""
         self.logger.info("Initializing LicenseManager")
         # Initialize licensing systems and templates
         self._is_initialized = True

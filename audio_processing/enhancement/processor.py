@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
+
 import numpy as np
 import librosa
 import soundfile as sf
@@ -34,7 +35,9 @@ from ..core.utils import AudioUtil
 
 
 class EnhancementType(Enum):
-    """Audio enhancement processing types"""
+    """
+Audio enhancement processing types"""
+
     NOISE_REDUCTION = "noise_reduction"
     SPECTRAL_ENHANCEMENT = "spectral_enhancement"
     DYNAMIC_RANGE_OPTIMIZATION = "dynamic_range_optimization"
@@ -47,6 +50,7 @@ class EnhancementType(Enum):
 
 class ContentType(Enum):
     """Audio content classification"""
+
     MUSIC = "music"
     SPEECH = "speech"
     PODCAST = "podcast"
@@ -76,7 +80,8 @@ class EnhancementParameters:
 
 @dataclass
 class EnhancementResult:
-    """Complete enhancement processing results"""
+    """
+Complete enhancement processing results"""
     enhanced_audio: np.ndarray
     sample_rate: int
     enhancement_gain_db: float
@@ -88,7 +93,8 @@ class EnhancementResult:
 
 
 class SpectralEnhancer:
-    """Advanced spectral enhancement processor"""
+    """
+Advanced spectral enhancement processor"""
     
     def __init__(self):
         self.fft_size = 2048
@@ -96,7 +102,8 @@ class SpectralEnhancer:
         self.enhancement_curve = self._create_enhancement_curve()
     
     def _create_enhancement_curve(self) -> np.ndarray:
-        """Create frequency-dependent enhancement curve"""
+        """
+Create frequency-dependent enhancement curve"""
         # Professional enhancement curve for music production
         freqs = np.logspace(np.log10(20), np.log10(20000), 1000)
         curve = np.ones_like(freqs)
@@ -117,7 +124,8 @@ class SpectralEnhancer:
     
     def enhance(self, audio: np.ndarray, sample_rate: int, 
                 strength: float = 0.5) -> np.ndarray:
-        """Apply spectral enhancement to audio"""
+        """
+Apply spectral enhancement to audio"""
         if len(audio.shape) == 1:
             return self._enhance_mono(audio, sample_rate, strength)
         else:
@@ -130,7 +138,8 @@ class SpectralEnhancer:
     
     def _enhance_mono(self, audio: np.ndarray, sample_rate: int, 
                      strength: float) -> np.ndarray:
-        """Enhance mono audio signal"""
+        """
+Enhance mono audio signal"""
         # Short-time Fourier transform
         stft = librosa.stft(audio, n_fft=self.fft_size, 
                            hop_length=self.hop_length)
@@ -158,7 +167,8 @@ class SpectralEnhancer:
 
 
 class NoiseReducer:
-    """Professional noise reduction processor"""
+    """
+Professional noise reduction processor"""
     
     def __init__(self):
         self.noise_gate_threshold = -40.0  # dB
@@ -166,7 +176,8 @@ class NoiseReducer:
         
     def reduce(self, audio: np.ndarray, sample_rate: int, 
                strength: float = 0.5) -> np.ndarray:
-        """Advanced noise reduction using spectral gating and ML techniques"""
+        """
+Advanced noise reduction using spectral gating and ML techniques"""
         if len(audio.shape) == 1:
             return self._reduce_mono(audio, sample_rate, strength)
         else:
@@ -179,7 +190,8 @@ class NoiseReducer:
     
     def _reduce_mono(self, audio: np.ndarray, sample_rate: int, 
                     strength: float) -> np.ndarray:
-        """Noise reduction for mono audio"""
+        """
+Noise reduction for mono audio"""
         # Estimate noise profile from quiet sections
         noise_profile = self._estimate_noise_profile(audio, sample_rate)
         
@@ -212,7 +224,8 @@ class NoiseReducer:
     
     def _estimate_noise_profile(self, audio: np.ndarray, 
                                sample_rate: int) -> np.ndarray:
-        """Estimate noise profile from quiet sections"""
+        """
+Estimate noise profile from quiet sections"""
         # Find quiet sections using energy-based detection
         frame_length = int(0.025 * sample_rate)  # 25ms frames
         hop_length = frame_length // 2
@@ -247,7 +260,8 @@ class NoiseReducer:
     
     def _smooth_gain(self, gain: np.ndarray, 
                     smoothing_frames: int = 3) -> np.ndarray:
-        """Smooth gain function to reduce musical noise"""
+        """
+Smooth gain function to reduce musical noise"""
         # Temporal smoothing
         for i in range(gain.shape[0]):
             gain[i, :] = uniform_filter1d(gain[i, :], size=smoothing_frames)
@@ -260,7 +274,8 @@ class NoiseReducer:
     
     def _apply_noise_gate(self, audio: np.ndarray, 
                          sample_rate: int) -> float:
-        """Apply noise gate based on signal level"""
+        """
+Apply noise gate based on signal level"""
         # Compute RMS level in dB
         rms = np.sqrt(np.mean(audio ** 2))
         rms_db = 20 * np.log10(rms + 1e-10)
@@ -277,7 +292,8 @@ class NoiseReducer:
 
 
 class DynamicRangeOptimizer:
-    """Professional dynamic range optimization processor"""
+    """
+Professional dynamic range optimization processor"""
     
     def __init__(self):
         self.compressor_ratio = 4.0
@@ -287,7 +303,8 @@ class DynamicRangeOptimizer:
     
     def optimize(self, audio: np.ndarray, sample_rate: int, 
                 target_range: float = 0.7) -> np.ndarray:
-        """Optimize dynamic range with multiband compression"""
+        """
+Optimize dynamic range with multiband compression"""
         if len(audio.shape) == 1:
             return self._optimize_mono(audio, sample_rate, target_range)
         else:
@@ -301,7 +318,8 @@ class DynamicRangeOptimizer:
     
     def _optimize_mono(self, audio: np.ndarray, sample_rate: int, 
                       target_range: float) -> np.ndarray:
-        """Dynamic range optimization for mono audio"""
+        """
+Dynamic range optimization for mono audio"""
         # Multiband processing
         bands = self._split_into_bands(audio, sample_rate)
         processed_bands = []
@@ -327,7 +345,8 @@ class DynamicRangeOptimizer:
     
     def _split_into_bands(self, audio: np.ndarray, 
                          sample_rate: int) -> List[Tuple[np.ndarray, Tuple[int, int]]]:
-        """Split audio into frequency bands for multiband processing"""
+        """
+Split audio into frequency bands for multiband processing"""
         crossover_freqs = [200, 1000, 4000]  # Hz
         bands = []
         
@@ -353,7 +372,8 @@ class DynamicRangeOptimizer:
         return bands
     
     def _calculate_band_threshold(self, low_freq: int, high_freq: int) -> float:
-        """Calculate compression threshold for frequency band"""
+        """
+Calculate compression threshold for frequency band"""
         # Lower threshold for low frequencies, higher for highs
         if high_freq <= 200:
             return -18.0  # dB
@@ -364,7 +384,8 @@ class DynamicRangeOptimizer:
     
     def _apply_compression(self, audio: np.ndarray, sample_rate: int, 
                           threshold_db: float, ratio: float) -> np.ndarray:
-        """Apply dynamic range compression"""
+        """
+Apply dynamic range compression"""
         # Convert to dB scale for processing
         audio_db = 20 * np.log10(np.abs(audio) + 1e-10)
         
@@ -387,7 +408,8 @@ class DynamicRangeOptimizer:
     def _apply_envelope_smoothing(self, gain_reduction: np.ndarray, 
                                  sample_rate: int, attack: float, 
                                  release: float) -> np.ndarray:
-        """Apply attack and release envelope smoothing"""
+        """
+Apply attack and release envelope smoothing"""
         attack_coef = np.exp(-1.0 / (attack * sample_rate))
         release_coef = np.exp(-1.0 / (release * sample_rate))
         
@@ -408,13 +430,15 @@ class DynamicRangeOptimizer:
     
     def _combine_bands(self, bands: List[np.ndarray], 
                       sample_rate: int) -> np.ndarray:
-        """Combine processed frequency bands"""
+        """
+Combine processed frequency bands"""
         # Simply sum the bands (linear phase reconstruction)
         combined = np.sum(bands, axis=0)
         return combined
     
     def _apply_limiter(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply soft limiter to prevent clipping"""
+        """
+Apply soft limiter to prevent clipping"""
         threshold_linear = 10 ** (self.limiter_threshold / 20)
         
         # Soft knee limiting
@@ -429,7 +453,8 @@ class DynamicRangeOptimizer:
     
     def _normalize_dynamic_range(self, audio: np.ndarray, 
                                target_range: float) -> np.ndarray:
-        """Normalize audio to target dynamic range"""
+        """
+Normalize audio to target dynamic range"""
         current_peak = np.max(np.abs(audio))
         target_peak = target_range
         
@@ -449,7 +474,8 @@ class AudioEnhancementProcessor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the audio enhancement processor"""
+        """
+Initialize the audio enhancement processor"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -641,7 +667,8 @@ class AudioEnhancementProcessor:
         return adapted
     
     def _enhance_stereo(self, audio: np.ndarray, width: float) -> np.ndarray:
-        """Enhance stereo width and imaging"""
+        """
+Enhance stereo width and imaging"""
         if len(audio.shape) != 2 or audio.shape[1] != 2:
             return audio
         
@@ -668,7 +695,8 @@ class AudioEnhancementProcessor:
     
     def _calculate_audio_metrics(self, audio: np.ndarray, 
                                 sample_rate: int) -> Dict[str, float]:
-        """Calculate comprehensive audio quality metrics"""
+        """
+Calculate comprehensive audio quality metrics"""
         metrics = {}
         
         # Basic metrics
@@ -704,7 +732,8 @@ class AudioEnhancementProcessor:
     
     def _compare_metrics(self, original: Dict[str, float], 
                         enhanced: Dict[str, float]) -> Dict[str, float]:
-        """Compare original and enhanced audio metrics"""
+        """
+Compare original and enhanced audio metrics"""
         comparison = {}
         
         for key in original:
@@ -763,7 +792,8 @@ class AudioEnhancementProcessor:
         self.processing_stats['average_enhancement_gain'] = new_avg
     
     def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get processor performance statistics"""
+        """
+Get processor performance statistics"""
         stats = self.processing_stats.copy()
         if stats['total_processed'] > 0:
             stats['average_processing_time'] = stats['total_processing_time'] / stats['total_processed']
@@ -773,7 +803,8 @@ class AudioEnhancementProcessor:
         return stats
     
     def reset_statistics(self):
-        """Reset processing statistics"""
+        """
+Reset processing statistics"""
         self.processing_stats = {
             'total_processed': 0,
             'total_processing_time': 0.0,
@@ -781,7 +812,8 @@ class AudioEnhancementProcessor:
         }
     
     def export_configuration(self, file_path: Union[str, Path]):
-        """Export current processor configuration"""
+        """
+Export current processor configuration"""
         config = {
             'processor_config': self.config,
             'statistics': self.get_processing_statistics(),
@@ -792,7 +824,8 @@ class AudioEnhancementProcessor:
             json.dump(config, f, indent=2)
     
     def import_configuration(self, file_path: Union[str, Path]):
-        """Import processor configuration"""
+        """
+Import processor configuration"""
         with open(file_path, 'r') as f:
             config = json.load(f)
         

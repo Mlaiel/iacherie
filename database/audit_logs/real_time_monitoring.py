@@ -19,6 +19,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set, Callable
 import logging
 from datetime import datetime, timezone, timedelta
@@ -63,7 +64,8 @@ Base = declarative_base()
 
 
 class MonitoringMetricType(Enum):
-    """Comprehensive monitoring metric types for platform observability."""
+    """
+Comprehensive monitoring metric types for platform observability."""
     
     # System Performance Metrics
     CPU_UTILIZATION = "cpu_utilization"
@@ -114,6 +116,7 @@ class MonitoringMetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels for intelligent alerting."""
+
     
     CRITICAL = "critical"
     HIGH = "high"
@@ -124,6 +127,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status for tracking and resolution."""
+
     
     TRIGGERED = "triggered"
     ACKNOWLEDGED = "acknowledged"
@@ -146,7 +150,8 @@ class MetricDataPoint:
 
 @dataclass
 class AlertRule:
-    """Comprehensive alert rule definition."""
+    """
+Comprehensive alert rule definition."""
     
     rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rule_name: str = ""
@@ -311,7 +316,8 @@ class RealTimeMonitoringEngine:
     """Ultra-advanced real-time monitoring and observability engine."""
     
     def __init__(self, db_session: Session, redis_client=None):
-        """Initialize the real-time monitoring engine."""
+        """
+Initialize the real-time monitoring engine."""
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -343,7 +349,8 @@ class RealTimeMonitoringEngine:
         self.monitoring_thread = None
         
     def start_monitoring(self):
-        """Start real-time monitoring collection."""
+        """
+Start real-time monitoring collection."""
         if self.monitoring_active:
             self.logger.warning("Monitoring already active")
             return

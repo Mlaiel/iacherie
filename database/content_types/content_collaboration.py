@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CollaborationType(Enum):
-    """Types of collaboration between creators"""
+    """
+Types of collaboration between creators"""
+
     REMIX = "remix"
     FEATURE = "feature"
     DUET = "duet"
@@ -51,6 +54,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration projects"""
+
     PROPOSED = "proposed"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
@@ -64,6 +68,7 @@ class CollaborationStatus(Enum):
 
 class RoleType(Enum):
     """Roles in collaborative projects"""
+
     INITIATOR = "initiator"
     COLLABORATOR = "collaborator"
     PRODUCER = "producer"
@@ -79,6 +84,7 @@ class RoleType(Enum):
 
 class RevenueShareType(Enum):
     """Types of revenue sharing models"""
+
     EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     PERFORMANCE_BASED = "performance_based"
@@ -89,6 +95,7 @@ class RevenueShareType(Enum):
 
 class ContributionType(Enum):
     """Types of contributions to collaborative content"""
+
     COMPOSITION = "composition"
     LYRICS = "lyrics"
     VOCAL_PERFORMANCE = "vocal_performance"
@@ -311,7 +318,8 @@ class ContributionRecord:
     peer_ratings: List[float] = field(default_factory=list)
 
 class CollaborationManager:
-    """Manager class for collaboration operations"""
+    """
+Manager class for collaboration operations"""
     
     def __init__(self):
         self.active_collaborations = {}
@@ -322,7 +330,8 @@ class CollaborationManager:
         initiator_id: str,
         collaboration_data: Dict[str, Any]
     ) -> str:
-        """Create a new collaboration project"""
+        """
+Create a new collaboration project"""
         try:
             collaboration_id = str(uuid.uuid4())
             
@@ -553,7 +562,8 @@ class CollaborationManager:
         self,
         contribution: ContributionRecord
     ) -> float:
-        """Calculate weighted contribution value"""
+        """
+Calculate weighted contribution value"""
         base_weights = {
             ContributionType.COMPOSITION: 0.3,
             ContributionType.LYRICS: 0.2,
@@ -583,7 +593,8 @@ class CollaborationManager:
         return base_weight * quality_multiplier * peer_multiplier
     
     async def _send_invitation_notification(self, invitation_data: Dict[str, Any]):
-        """Send invitation notification to invitee"""
+        """
+Send invitation notification to invitee"""
         # Implementation would integrate with notification system
         pass
     
@@ -594,7 +605,8 @@ class CollaborationManager:
         role: str,
         terms: Optional[Dict[str, Any]]
     ):
-        """Add participant to collaboration"""
+        """
+Add participant to collaboration"""
         # Implementation would update database
         pass
     
@@ -603,17 +615,20 @@ class CollaborationManager:
         collaboration_id: str,
         file_references: List[str]
     ) -> List[str]:
-        """Process and validate contribution files"""
+        """
+Process and validate contribution files"""
         # Implementation would handle file processing
         return file_references
     
     async def _update_collaboration_progress(self, collaboration_id: str):
-        """Update collaboration progress based on contributions"""
+        """
+Update collaboration progress based on contributions"""
         # Implementation would update collaboration status
         pass
     
     async def _get_collaboration(self, collaboration_id: str):
-        """Get collaboration details from database"""
+        """
+Get collaboration details from database"""
         # Implementation would query database
         pass
     
@@ -623,7 +638,8 @@ class CollaborationManager:
         start: datetime,
         end: datetime
     ) -> List[ContributionRecord]:
-        """Get contributions for a specific period"""
+        """
+Get contributions for a specific period"""
         # Implementation would query contribution records
         return []
 

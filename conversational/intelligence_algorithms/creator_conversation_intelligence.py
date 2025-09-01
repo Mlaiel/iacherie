@@ -28,6 +28,7 @@ for creator-specific optimization and industry expertise. Unauthorized use,
 copying, or reverse engineering is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     BLOGGER = "blogger"
@@ -68,6 +71,7 @@ class CreatorType(Enum):
 
 class ContentCategory(Enum):
     """Content categories for creators"""
+
     MUSIC = "music"
     LIFESTYLE = "lifestyle"
     TECHNOLOGY = "technology"
@@ -82,6 +86,7 @@ class ContentCategory(Enum):
 
 class ConversationObjective(Enum):
     """Creator conversation objectives"""
+
     AUDIENCE_GROWTH = "audience_growth"
     MONETIZATION = "monetization"
     COLLABORATION = "collaboration"
@@ -345,7 +350,8 @@ class MusicianConversationEngine:
                                  conversation_text: str,
                                  creator_profile: CreatorProfile,
                                  objective: ConversationObjective) -> Dict[str, Any]:
-        """Analyze conversation with music industry expertise"""
+        """
+Analyze conversation with music industry expertise"""
         try:
             # Music industry context analysis
             industry_context = await self._analyze_music_industry_context(
@@ -450,7 +456,8 @@ class InfluencerConversationOptimizer:
                                  conversation_text: str,
                                  creator_profile: CreatorProfile,
                                  objective: ConversationObjective) -> Dict[str, Any]:
-        """Analyze conversation with influencer marketing expertise"""
+        """
+Analyze conversation with influencer marketing expertise"""
         try:
             # Social media platform analysis
             platform_analysis = await self._analyze_social_media_platforms(
@@ -511,7 +518,8 @@ class BloggerConversationAssistant:
                                  conversation_text: str,
                                  creator_profile: CreatorProfile,
                                  objective: ConversationObjective) -> Dict[str, Any]:
-        """Analyze conversation with blogging and content expertise"""
+        """
+Analyze conversation with blogging and content expertise"""
         try:
             # Content strategy analysis
             content_analysis = await self._analyze_content_strategy(
@@ -572,7 +580,8 @@ class PhotographerConversationGuide:
                                  conversation_text: str,
                                  creator_profile: CreatorProfile,
                                  objective: ConversationObjective) -> Dict[str, Any]:
-        """Analyze conversation with photography business expertise"""
+        """
+Analyze conversation with photography business expertise"""
         try:
             # Photography business analysis
             business_analysis = await self._analyze_photography_business(
@@ -633,7 +642,8 @@ class ComedianConversationEnhancer:
                                  conversation_text: str,
                                  creator_profile: CreatorProfile,
                                  objective: ConversationObjective) -> Dict[str, Any]:
-        """Analyze conversation with comedy and entertainment expertise"""
+        """
+Analyze conversation with comedy and entertainment expertise"""
         try:
             # Comedy industry analysis
             industry_analysis = await self._analyze_comedy_industry(

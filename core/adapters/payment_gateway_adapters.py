@@ -19,6 +19,7 @@ Supported Gateways:
 - Apple Pay: In-app payments, Subscriptions
 - Google Pay: Payment processing, Subscriptions
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -39,7 +40,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class PaymentGateway(Enum):
-    """Supported payment gateways."""
+    """
+Supported payment gateways."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -53,6 +56,7 @@ class PaymentGateway(Enum):
 
 class PaymentMethod(Enum):
     """Payment method types."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -65,6 +69,7 @@ class PaymentMethod(Enum):
 
 class TransactionType(Enum):
     """Transaction types."""
+
     PAYMENT = "payment"
     REFUND = "refund"
     PAYOUT = "payout"
@@ -77,6 +82,7 @@ class TransactionType(Enum):
 
 class TransactionStatus(Enum):
     """Transaction status types."""
+
     PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -106,7 +112,8 @@ class PaymentTransaction:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics and financial metrics."""
+    """
+Revenue analytics and financial metrics."""
     total_revenue: Decimal = Decimal('0.00')
     net_revenue: Decimal = Decimal('0.00')
     total_fees: Decimal = Decimal('0.00')
@@ -655,7 +662,8 @@ class PaymentAdapterFactory:
     
     @classmethod
     def create_adapter(cls, gateway: PaymentGateway, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified payment gateway."""
+        """
+Create adapter for specified payment gateway."""
         if gateway not in cls._adapters:
             raise AdapterError(f"Unsupported payment gateway: {gateway}")
         

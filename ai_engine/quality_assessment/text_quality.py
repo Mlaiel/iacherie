@@ -4,7 +4,7 @@ Advanced text quality analysis for writers, content creators, and digital market
 Implements professional text metrics and industry-standard content quality assessment.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 import re
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class TextType(Enum):
-    """Text content types"""
+    """
+Text content types"""
+
     ARTICLE = "article"
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
@@ -53,6 +56,7 @@ class TextType(Enum):
 
 class WritingTone(Enum):
     """Writing tone categories"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     FORMAL = "formal"
@@ -65,6 +69,7 @@ class WritingTone(Enum):
 
 class ReadabilityLevel(Enum):
     """Text readability levels"""
+
     VERY_EASY = "very_easy"
     EASY = "easy"
     FAIRLY_EASY = "fairly_easy"
@@ -143,7 +148,8 @@ class ContentStructure:
 
 @dataclass
 class SentimentAnalysis:
-    """Text sentiment and emotion analysis"""
+    """
+Text sentiment and emotion analysis"""
     polarity: float = field(default=0.0)  # -1 to 1
     subjectivity: float = field(default=0.0)  # 0 to 1
     
@@ -180,7 +186,8 @@ class StyleAnalysis:
 
 @dataclass
 class TextQualityProfile:
-    """Comprehensive text quality profile"""
+    """
+Comprehensive text quality profile"""
     # Basic properties
     content_type: TextType = field(default=TextType.ARTICLE)
     text_length: int = field(default=0)
@@ -254,7 +261,8 @@ class TextQualityAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize text quality analyzer"""
+        """
+Initialize text quality analyzer"""
         super().__init__(config or ModelConfig(
             name="text_quality_analyzer",
             model_type=ModelType.TEXT_MODEL,
@@ -512,16 +520,19 @@ class TextQualityAnalyzer(BaseAIModel):
         return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from text processing services."""
+        """
+Disconnect from text processing services."""
         return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text quality assessment."""
+        """
+Process text quality assessment."""
         return await self.analyze_text_quality(data.get('text', ''), 
                                               data.get('profile', TextQualityProfile()))
     
     def _detect_content_type(self, text: str) -> TextType:
-        """Detect content type based on text characteristics"""
+        """
+Detect content type based on text characteristics"""
         try:
             text_lower = text.lower()
             
@@ -554,7 +565,8 @@ class TextQualityAnalyzer(BaseAIModel):
             return TextType.ARTICLE
     
     def _estimate_reading_time(self, text: str) -> float:
-        """Estimate reading time in minutes"""
+        """
+Estimate reading time in minutes"""
         try:
             words = len(text.split())
             # Average reading speed: 225 words per minute
@@ -563,7 +575,8 @@ class TextQualityAnalyzer(BaseAIModel):
             return 0.0
     
     async def _analyze_grammar_and_language(self, text: str, profile: TextQualityProfile):
-        """Analyze grammar and language quality"""
+        """
+Analyze grammar and language quality"""
         try:
             # Language detection using TextBlob
             blob = TextBlob(text)
@@ -713,7 +726,8 @@ class TextQualityAnalyzer(BaseAIModel):
             return 1
     
     async def _analyze_content_structure(self, text: str, profile: TextQualityProfile):
-        """Analyze content structure and organization"""
+        """
+Analyze content structure and organization"""
         try:
             structure = profile.structure
             
@@ -964,7 +978,8 @@ class TextQualityAnalyzer(BaseAIModel):
             return WritingTone.INFORMATIVE
     
     def _calculate_formality_score(self, text: str, style: StyleAnalysis) -> float:
-        """Calculate formality score"""
+        """
+Calculate formality score"""
         try:
             formality_factors = []
             

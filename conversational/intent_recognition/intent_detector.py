@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import time
 from typing import Dict, List, Optional, Callable, AsyncGenerator, Any
@@ -36,7 +37,9 @@ from .exceptions import ClassificationError
 
 
 class DetectionMode(Enum):
-    """Intent detection operation modes"""
+    """
+Intent detection operation modes"""
+
     REALTIME = "realtime"           # Sub-100ms response time
     BATCH = "batch"                 # Optimized for throughput
     STREAMING = "streaming"         # Continuous processing
@@ -375,13 +378,15 @@ class RealTimeIntentProcessor:
         self._result_store[request_id] = response
     
     def _get_stored_result(self, request_id: str) -> Optional[DetectionResponse]:
-        """Retrieve stored processing result"""
+        """
+Retrieve stored processing result"""
         if hasattr(self, '_result_store'):
             return self._result_store.get(request_id)
         return None
     
     async def _cleanup_cache(self) -> None:
-        """Background task to clean up expired cache entries"""
+        """
+Background task to clean up expired cache entries"""
         while True:
             try:
                 await asyncio.sleep(self.config.cache_cleanup_interval_seconds)
@@ -481,7 +486,8 @@ class IntentDetector(BaseService):
         self.is_initialized = False
         
     async def initialize(self) -> None:
-        """Initialize the intent detection service"""
+        """
+Initialize the intent detection service"""
         try:
             self.logger.info("Initializing Intent Detection Service...")
             
@@ -714,7 +720,8 @@ class IntentDetector(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform service health check"""
+        """
+Perform service health check"""
         try:
             # Test basic classification
             test_response = await self.detect_intent(

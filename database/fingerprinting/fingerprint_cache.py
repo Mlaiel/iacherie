@@ -6,6 +6,7 @@ intelligent invalidation, and enterprise-grade performance optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import json
 import hashlib
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class CacheLevel(Enum):
-    """Cache levels for different data types"""
+    """
+Cache levels for different data types"""
+
     L1_MEMORY = "l1_memory"      # In-memory cache for hot data
     L2_REDIS = "l2_redis"        # Redis cache for warm data
     L3_DISK = "l3_disk"          # Disk cache for cold data
@@ -40,6 +43,7 @@ class CacheLevel(Enum):
 
 class CacheStrategy(Enum):
     """Cache strategies for different access patterns"""
+
     LRU = "lru"                  # Least Recently Used
     LFU = "lfu"                  # Least Frequently Used
     TTL = "ttl"                  # Time To Live
@@ -98,19 +102,22 @@ class CacheMetrics:
     cache_size_bytes: int = 0
     
     def hit_rate(self) -> float:
-        """Calculate overall hit rate"""
+        """
+Calculate overall hit rate"""
         total_hits = self.l1_hits + self.l2_hits + self.l3_hits
         total_requests = total_hits + self.l1_misses + self.l2_misses + self.l3_misses
         return total_hits / total_requests if total_requests > 0 else 0.0
     
     def l1_hit_rate(self) -> float:
-        """Calculate L1 cache hit rate"""
+        """
+Calculate L1 cache hit rate"""
         total_l1 = self.l1_hits + self.l1_misses
         return self.l1_hits / total_l1 if total_l1 > 0 else 0.0
 
 
 class MemoryCache:
-    """High-performance in-memory cache with LRU/LFU support"""
+    """
+High-performance in-memory cache with LRU/LFU support"""
     
     def __init__(self, max_size: int, strategy: CacheStrategy, ttl: int = 300):
         self.max_size = max_size
@@ -197,7 +204,8 @@ class MemoryCache:
         self._access_order.clear()
     
     def _update_access(self, key: str) -> None:
-        """Update access patterns for cache strategy"""
+        """
+Update access patterns for cache strategy"""
         self._access_counts[key] = self._access_counts.get(key, 0) + 1
         
         if self.strategy == CacheStrategy.LRU:
@@ -206,7 +214,8 @@ class MemoryCache:
             self._access_order.append(key)
     
     def _evict_item(self) -> None:
-        """Evict item based on cache strategy"""
+        """
+Evict item based on cache strategy"""
         if not self._cache:
             return
         
@@ -223,7 +232,8 @@ class MemoryCache:
         self._remove_key(key_to_remove)
     
     def _remove_key(self, key: str) -> None:
-        """Remove key from all data structures"""
+        """
+Remove key from all data structures"""
         self._cache.pop(key, None)
         self._timestamps.pop(key, None)
         self._access_counts.pop(key, None)
@@ -231,17 +241,20 @@ class MemoryCache:
             self._access_order.remove(key)
     
     def size(self) -> int:
-        """Get current cache size"""
+        """
+Get current cache size"""
         return len(self._cache)
     
     def hit_rate(self) -> float:
-        """Get cache hit rate"""
+        """
+Get cache hit rate"""
         total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
 
 
 class RedisCache:
-    """High-performance Redis cache with advanced features"""
+    """
+High-performance Redis cache with advanced features"""
     
     def __init__(self, redis_client: Redis, config: CacheConfiguration):
         self.redis = redis_client
@@ -787,7 +800,8 @@ class FingerprintCacheManager:
         return self.metrics
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get detailed cache statistics"""
+        """
+Get detailed cache statistics"""
         try:
             metrics = self.get_cache_metrics()
             

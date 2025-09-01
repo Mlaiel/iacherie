@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP Translation Module
+"""
+Comprehensive Tests for NLP Translation Module
 
 Industrial-grade tests for AdvancedTranslationEngine covering multilingual translation,
 cultural adaptation, and localization with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -46,11 +49,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedTranslator:
-    """Comprehensive tests for AdvancedTranslator"""
+    """
+Comprehensive tests for AdvancedTranslator"""
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, translation_engine):
-        """Test translation engine initialization"""
+        """
+Test translation engine initialization"""
         assert translation_engine is not None
         assert hasattr(translation_engine, 'config')
         assert hasattr(translation_engine, 'multilingual_translator')
@@ -65,7 +70,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_basic_translation(self, translation_engine):
-        """Test basic text translation"""
+        """
+Test basic text translation"""
         test_cases = [
             {
                 'text': "Hello, how are you today?",
@@ -161,7 +167,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_cultural_adaptation(self, translation_engine):
-        """Test cultural adaptation features"""
+        """
+Test cultural adaptation features"""
         cultural_test_cases = [
             {
                 'text': "It's as American as apple pie!",
@@ -255,7 +262,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_localization_features(self, translation_engine):
-        """Test content localization features"""
+        """
+Test content localization features"""
         content = """
         Our product launches on March 15th, 2024 at 2:00 PM EST.
         The price is $299.99 with free shipping.
@@ -319,7 +327,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_translation_quality_assessment(self, translation_engine):
-        """Test translation quality assessment"""
+        """
+Test translation quality assessment"""
         test_translations = [
             {
                 'source': "The quick brown fox jumps over the lazy dog.",
@@ -677,36 +686,43 @@ class TestMultilingualTranslator:
     
     @pytest.mark.asyncio
     async def test_translator_initialization(self):
-        """Test multilingual translator initialization"""
+        """
+Test multilingual translator initialization"""
         translator = MultilingualTranslator()
         assert translator is not None
         assert hasattr(translator, 'translate')
 
 class TestCulturalAdapter:
-    """Test cultural adapter component"""
+    """
+Test cultural adapter component"""
     
     @pytest.mark.asyncio
     async def test_cultural_adapter_initialization(self):
-        """Test cultural adapter initialization"""
+        """
+Test cultural adapter initialization"""
         adapter = CulturalAdapter()
         assert adapter is not None
         assert hasattr(adapter, 'adapt_content')
 
 class TestLocalizationEngine:
-    """Test localization engine component"""
+    """
+Test localization engine component"""
     
     @pytest.mark.asyncio
     async def test_localization_engine_initialization(self):
-        """Test localization engine initialization"""
+        """
+Test localization engine initialization"""
         engine = LocalizationEngine()
         assert engine is not None
         assert hasattr(engine, 'localize_content')
 
 class TestTranslationConfig:
-    """Test translation configuration"""
+    """
+Test translation configuration"""
     
     def test_config_creation(self):
-        """Test translation configuration creation"""
+        """
+Test translation configuration creation"""
         config = TranslationConfig(
             supported_languages=[Language.ENGLISH, Language.GERMAN, Language.FRENCH],
             translation_quality='high',

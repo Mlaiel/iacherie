@@ -8,7 +8,7 @@ Responsibility: Advanced dependency resolution for content protection and moneti
 ================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ DEPENDENCY RESOLUTION LOGIC:
 Migration Discovery → Dependency Analysis → Conflict Detection → 
 Resolution Planning → Execution Ordering → Parallel Optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class DependencyType(Enum):
-    """Types of dependencies between migrations"""
+    """
+Types of dependencies between migrations"""
+
     HARD_DEPENDENCY = "hard_dependency"      # Must run before
     SOFT_DEPENDENCY = "soft_dependency"      # Should run before
     CONFLICT = "conflict"                    # Cannot run together
@@ -53,6 +56,7 @@ class DependencyType(Enum):
 
 class ResolutionStrategy(Enum):
     """Strategies for dependency resolution"""
+
     CONSERVATIVE = "conservative"            # Minimize parallelism, ensure safety
     OPTIMIZED = "optimized"                 # Maximize parallelism, optimize time
     BALANCED = "balanced"                   # Balance safety and performance
@@ -500,7 +504,8 @@ class MigrationDependencyResolver:
         strategy: ResolutionStrategy,
         conflicts: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Resolve dependencies and create execution plan"""
+        """
+Resolve dependencies and create execution plan"""
         
         if conflicts:
             # Handle conflicts based on strategy
@@ -580,7 +585,8 @@ class MigrationDependencyResolver:
         resolution: Dict[str, Any],
         strategy: ResolutionStrategy
     ) -> Dict[str, Any]:
-        """Optimize execution plan based on strategy"""
+        """
+Optimize execution plan based on strategy"""
         
         if not resolution.get("success", False):
             return resolution
@@ -684,23 +690,28 @@ class MigrationDependencyResolver:
         conflicts: List[Dict[str, Any]],
         strategy: ResolutionStrategy
     ) -> nx.DiGraph:
-        """Resolve detected conflicts"""
+        """
+Resolve detected conflicts"""
         return graph
     
     async def _break_cycles(self, graph: nx.DiGraph, strategy: ResolutionStrategy) -> nx.DiGraph:
-        """Break cycles in dependency graph"""
+        """
+Break cycles in dependency graph"""
         return graph
     
     async def _maximize_parallelism(self, levels: List[List[str]]) -> List[List[str]]:
-        """Maximize parallel execution opportunities"""
+        """
+Maximize parallel execution opportunities"""
         return levels
     
     async def _minimize_parallelism(self, levels: List[List[str]]) -> List[List[str]]:
-        """Minimize parallel execution for safety"""
+        """
+Minimize parallel execution for safety"""
         return [[item] for level in levels for item in level]
     
     async def _balance_execution(self, levels: List[List[str]]) -> List[List[str]]:
-        """Balance parallelism and safety"""
+        """
+Balance parallelism and safety"""
         return levels
     
     async def _apply_execution_constraints(
@@ -708,7 +719,8 @@ class MigrationDependencyResolver:
         resolution: ResolutionResult,
         constraints: Dict[str, Any]
     ) -> ResolutionResult:
-        """Apply execution constraints to resolution"""
+        """
+Apply execution constraints to resolution"""
         return resolution
 
 

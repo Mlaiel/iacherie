@@ -8,7 +8,7 @@ Technologies: Python, Performance Monitoring, Auto-scaling, Resource Optimizatio
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Monitoring continu → Analyse performance → Détection anomalies → 
 Optimisation automatique → Scaling intelligent → Alertes proactives → Rapports performance
 """
+
 from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types de métriques de performance"""
+    """
+Types de métriques de performance"""
     # System metrics
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
@@ -74,6 +76,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Niveaux de sévérité des alertes"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -82,6 +85,7 @@ class AlertSeverity(Enum):
 
 class OptimizationAction(Enum):
     """Actions d'optimisation automatique"""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     CACHE_OPTIMIZATION = "cache_optimization"
@@ -94,6 +98,7 @@ class OptimizationAction(Enum):
 
 class PerformanceStatus(Enum):
     """Statuts de performance"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -845,7 +850,8 @@ class PerformanceManager(ABC):
                 self._performance_baselines[metric_type] = alpha * value + (1 - alpha) * current_baseline
     
     def _calculate_overall_health_score(self) -> float:
-        """Calculate overall system health score"""
+        """
+Calculate overall system health score"""
         if not self._health_checks:
             return 100.0
         
@@ -853,14 +859,16 @@ class PerformanceManager(ABC):
         return total_score / len(self._health_checks)
     
     def _calculate_system_uptime(self) -> float:
-        """Calculate system uptime in hours"""
+        """
+Calculate system uptime in hours"""
         try:
             return time.time() - psutil.boot_time()
         except:
             return 0.0
     
     def _get_metric_status(self, metric_type: MetricType, value: float) -> str:
-        """Get status for metric value"""
+        """
+Get status for metric value"""
         # Define status thresholds based on metric type
         if metric_type in [MetricType.CPU_USAGE, MetricType.MEMORY_USAGE]:
             if value < 70:
@@ -923,7 +931,8 @@ class PerformanceManager(ABC):
         return dict(counts)
     
     def _calculate_average_optimization_impact(self, optimizations: List[OptimizationAction]) -> Dict[str, float]:
-        """Calculate average optimization impact"""
+        """
+Calculate average optimization impact"""
         # Simplified impact calculation
         return {
             "cpu_improvement": 5.0,
@@ -953,14 +962,16 @@ class PerformanceManager(ABC):
         return dict(counts)
     
     def _count_alerts_by_component(self, alerts: List[PerformanceAlert]) -> Dict[str, int]:
-        """Count alerts by component"""
+        """
+Count alerts by component"""
         counts = defaultdict(int)
         for alert in alerts:
             counts[alert.affected_component] += 1
         return dict(counts)
     
     async def _analyze_performance_gaps(self, targets: Dict[MetricType, float]) -> Dict[MetricType, float]:
-        """Analyze performance gaps vs targets"""
+        """
+Analyze performance gaps vs targets"""
         gaps = {}
         
         with self._lock:
@@ -974,7 +985,8 @@ class PerformanceManager(ABC):
         return gaps
     
     async def _generate_optimization_actions(self, performance_gaps: Dict[MetricType, float]) -> List[OptimizationAction]:
-        """Generate optimization actions based on performance gaps"""
+        """
+Generate optimization actions based on performance gaps"""
         actions = []
         
         for metric_type, gap in performance_gaps.items():

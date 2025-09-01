@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import hashlib
@@ -54,7 +55,9 @@ from ...monitoring.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class StorageStrategy(str, Enum):
-    """Storage strategy definitions"""
+    """
+Storage strategy definitions"""
+
     PERFORMANCE = "performance"
     COST_EFFECTIVE = "cost_effective"
     HIGH_AVAILABILITY = "high_availability"
@@ -63,6 +66,7 @@ class StorageStrategy(str, Enum):
 
 class FileCategory(str, Enum):
     """File category classifications"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -662,7 +666,8 @@ class StorageOrchestrator:
         request: StorageRequest,
         strategy_config: Dict[str, Any]
     ) -> str:
-        """Process and optimize file based on category and strategy"""
+        """
+Process and optimize file based on category and strategy"""
         try:
             # Prepare processing options
             processing_options = ProcessingOptions(
@@ -742,7 +747,8 @@ class StorageOrchestrator:
         file_info: Dict[str, Any],
         request: StorageRequest
     ) -> List[str]:
-        """Store file in backup backends"""
+        """
+Store file in backup backends"""
         backup_urls = []
         backup_backends = strategy_config.get('backup_backends', [])
         
@@ -796,7 +802,8 @@ class StorageOrchestrator:
         category: FileCategory,
         retention_days: Optional[int]
     ) -> float:
-        """Calculate estimated storage cost"""
+        """
+Calculate estimated storage cost"""
         # Base cost per GB per month
         base_cost_per_gb = 0.023  # AWS S3 Standard IA pricing
         
@@ -822,7 +829,8 @@ class StorageOrchestrator:
         file_id: str,
         file_info: Dict[str, Any]
     ) -> Optional[str]:
-        """Setup CDN distribution for file"""
+        """
+Setup CDN distribution for file"""
         try:
             # This would integrate with CDN providers like CloudFlare, AWS CloudFront
             # For now, return a mock CDN URL
@@ -849,12 +857,14 @@ class StorageOrchestrator:
         pass
     
     async def _get_file_record(self, file_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve file record from database"""
+        """
+Retrieve file record from database"""
         # Mock implementation - would query database
         return None
     
     async def _update_statistics(self, category: FileCategory, stats: Dict[str, Any]):
-        """Update storage statistics"""
+        """
+Update storage statistics"""
         self.stats['total_files_stored'] += 1
         self.stats['total_bytes_stored'] += stats['final_size']
         self.stats['total_bytes_saved'] += stats['original_size'] - stats['final_size']
@@ -872,7 +882,8 @@ class StorageOrchestrator:
         )
     
     async def _cleanup_temp_files(self, file_paths: List[str]):
-        """Clean up temporary files"""
+        """
+Clean up temporary files"""
         for file_path in file_paths:
             try:
                 path = Path(file_path)
@@ -906,7 +917,8 @@ class StorageOrchestrator:
         }
     
     async def _test_url_availability(self, file_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Test URL availability and return accessible URLs"""
+        """
+Test URL availability and return accessible URLs"""
         # Mock implementation - would test actual URLs
         return {
             'primary_url': file_record.get('primary_url'),
@@ -915,12 +927,14 @@ class StorageOrchestrator:
         }
     
     async def _test_backup_urls(self, file_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Test backup URL availability"""
+        """
+Test backup URL availability"""
         # Mock implementation
         return {}
     
     async def _get_system_health(self) -> Dict[str, Any]:
-        """Get system health metrics"""
+        """
+Get system health metrics"""
         return {
             'backends_healthy': await self.backend_manager.health_check(),
             'processing_queue_size': 0,
@@ -930,7 +944,8 @@ class StorageOrchestrator:
         }
     
     async def _get_cost_analysis(self) -> Dict[str, Any]:
-        """Get storage cost analysis"""
+        """
+Get storage cost analysis"""
         return {
             'monthly_storage_cost': 125.50,
             'monthly_bandwidth_cost': 45.30,
@@ -940,7 +955,8 @@ class StorageOrchestrator:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             await self.backend_manager.cleanup()
             await self.file_processor.cleanup()

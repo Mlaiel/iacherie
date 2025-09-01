@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Collaboration & Analytics Prompts Tests
+"""
+Advanced Collaboration & Analytics Prompts Tests
 Ultra-professional test suite for Collaboration & Analytics Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -42,11 +45,13 @@ from ai.prompts.collaboration_analytics_prompts import (
 
 
 class TestCollaborationAnalyticsPrompts:
-    """Ultra-comprehensive test suite for Collaboration & Analytics Prompts"""
+    """
+Ultra-comprehensive test suite for Collaboration & Analytics Prompts"""
     
     @pytest.fixture
     async def collaboration_analytics_prompts(self):
-        """Create a fresh CollaborationAnalyticsPrompts instance for each test"""
+        """
+Create a fresh CollaborationAnalyticsPrompts instance for each test"""
         prompts = CollaborationAnalyticsPrompts()
         await prompts.initialize()
         yield prompts
@@ -54,7 +59,8 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.fixture
     def sample_music_collaboration_context(self):
-        """Create sample music collaboration context for testing"""
+        """
+Create sample music collaboration context for testing"""
         return CollaborationContext(
             collaboration_type=CollaborationType.MUSIC_COLLABORATION,
             stage=CollaborationStage.PLANNING,
@@ -214,7 +220,8 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_collaboration_analytics_registry_loading(self, collaboration_analytics_prompts):
-        """Test that collaboration analytics registry is properly loaded"""
+        """
+Test that collaboration analytics registry is properly loaded"""
         registry = COLLABORATION_ANALYTICS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)

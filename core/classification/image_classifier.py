@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import cv2
 import numpy as np
 import torch
@@ -59,7 +60,8 @@ class ImageContentClassifier:
     """
     
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize image classifier with ML models."""
+        """
+Initialize image classifier with ML models."""
         self.settings = get_settings()
         self.ml_engine = MLEngine()
         self.image_processor = ImageProcessor()
@@ -80,7 +82,8 @@ class ImageContentClassifier:
         }
 
     def _load_models(self, model_path: Optional[str]):
-        """Load and initialize ML models."""
+        """
+Load and initialize ML models."""
         try:
             # CLIP model for general image understanding
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -228,7 +231,8 @@ class ImageContentClassifier:
         }
 
     def _classify_content_type(self, image: np.ndarray) -> Dict[str, Any]:
-        """Classify the type of content in the image."""
+        """
+Classify the type of content in the image."""
         try:
             # Convert to PIL for CLIP processing
             pil_image = Image.fromarray(image)
@@ -676,7 +680,8 @@ class ImageContentClassifier:
         return any(keyword in content_type.lower() for keyword in music_keywords)
 
     def _calculate_aesthetic_score(self, image: np.ndarray) -> float:
-        """Calculate aesthetic appeal score based on composition rules."""
+        """
+Calculate aesthetic appeal score based on composition rules."""
         try:
             # Rule of thirds
             height, width = image.shape[:2]
@@ -701,7 +706,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_resolution_score(self, image: np.ndarray) -> float:
-        """Calculate resolution quality score."""
+        """
+Calculate resolution quality score."""
         height, width = image.shape[:2]
         total_pixels = height * width
         
@@ -718,7 +724,8 @@ class ImageContentClassifier:
             return 0.2
 
     def _calculate_sharpness(self, pil_image: Image.Image) -> float:
-        """Calculate image sharpness using variance of Laplacian."""
+        """
+Calculate image sharpness using variance of Laplacian."""
         try:
             # Convert to grayscale
             gray = pil_image.convert('L')
@@ -734,7 +741,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_brightness(self, pil_image: Image.Image) -> float:
-        """Calculate optimal brightness score."""
+        """
+Calculate optimal brightness score."""
         try:
             stat = ImageStat.Stat(pil_image)
             mean_brightness = sum(stat.mean) / len(stat.mean)
@@ -749,7 +757,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_contrast(self, pil_image: Image.Image) -> float:
-        """Calculate image contrast score."""
+        """
+Calculate image contrast score."""
         try:
             stat = ImageStat.Stat(pil_image)
             contrast = sum(stat.stddev) / len(stat.stddev)
@@ -761,7 +770,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_saturation(self, pil_image: Image.Image) -> float:
-        """Calculate color saturation score."""
+        """
+Calculate color saturation score."""
         try:
             # Convert to HSV to get saturation
             hsv_image = pil_image.convert('HSV')
@@ -777,7 +787,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _estimate_noise_level(self, image: np.ndarray) -> float:
-        """Estimate noise level in the image."""
+        """
+Estimate noise level in the image."""
         try:
             # Convert to grayscale
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -795,7 +806,8 @@ class ImageContentClassifier:
             return 0.1
 
     def _get_quality_grade(self, score: float) -> str:
-        """Convert quality score to letter grade."""
+        """
+Convert quality score to letter grade."""
         if score >= 0.9:
             return 'A+'
         elif score >= 0.8:
@@ -812,13 +824,15 @@ class ImageContentClassifier:
             return 'D'
 
     def _rgb_to_hsl(self, r: int, g: int, b: int) -> Tuple[int, int, int]:
-        """Convert RGB to HSL color space."""
+        """
+Convert RGB to HSL color space."""
         r, g, b = r/255.0, g/255.0, b/255.0
         h, l, s = colorsys.rgb_to_hls(r, g, b)
         return (int(h*360), int(s*100), int(l*100))
 
     def _calculate_color_harmony(self, colors: np.ndarray) -> float:
-        """Calculate color harmony score based on color theory."""
+        """
+Calculate color harmony score based on color theory."""
         try:
             if len(colors) < 2:
                 return 0.5
@@ -859,7 +873,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_color_temperature(self, colors: np.ndarray) -> str:
-        """Determine overall color temperature."""
+        """
+Determine overall color temperature."""
         try:
             # Calculate average color
             avg_color = np.mean(colors, axis=0)
@@ -877,7 +892,8 @@ class ImageContentClassifier:
             return 'neutral'
 
     def _extract_semantic_features(self, caption: str) -> Dict[str, Any]:
-        """Extract semantic features from image caption."""
+        """
+Extract semantic features from image caption."""
         try:
             # Simple keyword extraction
             music_keywords = ['music', 'song', 'guitar', 'piano', 'drum', 'singer', 'band', 'concert']
@@ -898,7 +914,8 @@ class ImageContentClassifier:
             return {'contains_music_terms': False, 'word_count': 0}
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
+        """
+Get current timestamp."""
         from datetime import datetime
         return datetime.now().isoformat()
 
@@ -984,7 +1001,8 @@ class ImageContentClassifier:
             return 0.0
 
     def get_classification_summary(self, results: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of classification results."""
+        """
+Generate a human-readable summary of classification results."""
         try:
             summary_parts = []
             

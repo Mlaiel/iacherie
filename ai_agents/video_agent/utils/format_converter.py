@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import os
@@ -47,7 +48,8 @@ from ...models.video_models import ConversionJob, FormatProfile
 logger = logging.getLogger(__name__)
 
 class SupportedFormat:
-    """Comprehensive list of supported video formats"""
+    """
+Comprehensive list of supported video formats"""
     # Standard formats
     MP4 = "mp4"
     AVI = "avi" 
@@ -73,6 +75,7 @@ class SupportedFormat:
 
 class VideoCodecProfile:
     """Video codec profiles with optimized settings"""
+
     
     H264_BASELINE = {
         "codec": "libx264",
@@ -124,6 +127,7 @@ class VideoCodecProfile:
 
 class AudioCodecProfile:
     """Audio codec profiles for different use cases"""
+
     
     AAC_LC = {
         "codec": "aac",
@@ -168,6 +172,7 @@ class AudioCodecProfile:
 
 class ConversionPreset:
     """Pre-configured conversion presets for common use cases"""
+
     
     SOCIAL_MEDIA = {
         "name": "Social Media",
@@ -939,7 +944,8 @@ class CompressionOptimizer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize CompressionOptimizer"""
+        """
+Initialize CompressionOptimizer"""
         self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "compression_optimizer" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
@@ -1081,7 +1087,8 @@ class CompressionOptimizer:
     
     async def _optimize_for_size(self, input_path: str, output_path: str, 
                                target_size_mb: float, video_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize video for specific target file size"""
+        """
+Optimize video for specific target file size"""
         
         try:
             duration = video_info.get("duration", 0)

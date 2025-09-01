@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive AI Engine Management Tests
+"""
+Comprehensive AI Engine Management Tests
 
 Ultra-advanced enterprise-grade test suite for AI engine orchestration and lifecycle management.
 Tests model loading, inference caching, memory optimization, and multi-format AI processing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
@@ -34,6 +36,7 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -81,7 +84,8 @@ class TestAIModelType:
     """Test suite for AIModelType enumeration"""
     
     def test_ai_model_type_values(self):
-        """Test AI model type enum values"""
+        """
+Test AI model type enum values"""
         assert AIModelType.TRANSFORMER.value == "transformer"
         assert AIModelType.CNN.value == "cnn"
         assert AIModelType.RNN.value == "rnn"
@@ -124,10 +128,12 @@ class TestAIModelType:
 
 
 class TestModelStatus:
-    """Test suite for ModelStatus enumeration"""
+    """
+Test suite for ModelStatus enumeration"""
     
     def test_model_status_values(self):
-        """Test model status enum values"""
+        """
+Test model status enum values"""
         assert ModelStatus.UNLOADED.value == "unloaded"
         assert ModelStatus.LOADING.value == "loading"
         assert ModelStatus.LOADED.value == "loaded"
@@ -156,10 +162,12 @@ class TestModelStatus:
 
 
 class TestDeviceType:
-    """Test suite for DeviceType enumeration"""
+    """
+Test suite for DeviceType enumeration"""
     
     def test_device_type_values(self):
-        """Test device type enum values"""
+        """
+Test device type enum values"""
         assert DeviceType.CPU.value == "cpu"
         assert DeviceType.CUDA.value == "cuda"
         assert DeviceType.MPS.value == "mps"
@@ -179,7 +187,8 @@ class TestModelConfig:
     """Test suite for ModelConfig data class"""
     
     def test_model_config_creation(self):
-        """Test model configuration creation"""
+        """
+Test model configuration creation"""
         config = ModelConfig(
             name="test-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
@@ -285,7 +294,8 @@ class TestModelMetrics:
     """Test suite for ModelMetrics data class"""
     
     def test_model_metrics_creation(self):
-        """Test model metrics creation"""
+        """
+Test model metrics creation"""
         metrics = ModelMetrics(model_name="test-model")
         
         assert metrics.model_name == "test-model"
@@ -368,18 +378,21 @@ class TestModelCache:
     """Test suite for ModelCache class"""
     
     def setup_method(self):
-        """Setup model cache for testing"""
+        """
+Setup model cache for testing"""
         self.cache = ModelCache(max_size=5, ttl_seconds=2)
     
     def test_cache_initialization(self):
-        """Test cache initialization"""
+        """
+Test cache initialization"""
         assert self.cache.max_size == 5
         assert self.cache.ttl_seconds == 2
         assert isinstance(self.cache.cache, dict)
         assert len(self.cache.cache) == 0
     
     def test_cache_key_generation(self):
-        """Test cache key generation"""
+        """
+Test cache key generation"""
         input_data = "test input"
         config = {"model": "test", "param": "value"}
         
@@ -528,7 +541,8 @@ class TestAIModel:
     """Test suite for AIModel class"""
     
     def setup_method(self):
-        """Setup AI model for testing"""
+        """
+Setup AI model for testing"""
         self.config = ModelConfig(
             name="test-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
@@ -583,7 +597,8 @@ class TestAIModel:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_loading_failure(self, mock_pipeline):
-        """Test model loading failure"""
+        """
+Test model loading failure"""
         # Mock pipeline creation failure
         mock_pipeline.side_effect = Exception("Model loading failed")
         
@@ -603,7 +618,8 @@ class TestAIModel:
         assert self.model.status == ModelStatus.ERROR
     
     def test_model_unloading(self):
-        """Test model unloading"""
+        """
+Test model unloading"""
         # Set up loaded state
         self.model.pipeline = Mock()
         self.model.model = Mock()
@@ -621,7 +637,8 @@ class TestAIModel:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_prediction_success(self, mock_pipeline):
-        """Test successful model prediction"""
+        """
+Test successful model prediction"""
         # Setup mock pipeline
         mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"label": "positive", "score": 0.95}
@@ -687,7 +704,8 @@ class TestAIModel:
         assert self.model.is_idle
     
     def test_model_metrics_collection(self):
-        """Test model metrics collection"""
+        """
+Test model metrics collection"""
         # Update some metrics
         self.model.metrics.update_inference_stats(0.1)
         self.model.metrics.update_inference_stats(0.2)
@@ -709,16 +727,19 @@ class TestAIEngineManager:
     """Test suite for AIEngineManager class"""
     
     def setup_method(self):
-        """Setup AI engine manager for testing"""
+        """
+Setup AI engine manager for testing"""
         self.engine = AIEngineManager(max_concurrent_models=3)
     
     def teardown_method(self):
-        """Cleanup after tests"""
+        """
+Cleanup after tests"""
         # Clear all models
         self.engine.models.clear()
     
     def test_engine_initialization(self):
-        """Test AI engine manager initialization"""
+        """
+Test AI engine manager initialization"""
         assert self.engine.max_concurrent_models == 3
         assert isinstance(self.engine.models, dict)
         assert len(self.engine.models) == 0
@@ -726,7 +747,8 @@ class TestAIEngineManager:
         assert hasattr(self.engine, '_cleanup_thread')
     
     def test_register_model(self):
-        """Test model registration"""
+        """
+Test model registration"""
         config = ModelConfig(
             name="registered-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
@@ -1067,7 +1089,8 @@ class TestModelContext:
     """Test suite for AI model context manager"""
     
     def setup_method(self):
-        """Setup for context manager tests"""
+        """
+Setup for context manager tests"""
         self.config = ModelConfig(
             "context-test",
             AIModelType.TEXT_CLASSIFIER,
@@ -1121,7 +1144,8 @@ class TestInferenceDecorator:
     """Test suite for AI inference decorator"""
     
     def setup_method(self):
-        """Setup for decorator tests"""
+        """
+Setup for decorator tests"""
         self.config = ModelConfig(
             "decorator-test",
             AIModelType.TEXT_CLASSIFIER,
@@ -1187,14 +1211,16 @@ class TestAIEngineIntegration:
     """Integration tests for AI engine with real-world scenarios"""
     
     def setup_method(self):
-        """Setup integration testing"""
+        """
+Setup integration testing"""
         self.engine = AIEngineManager()
         
         # Register models for different creator types
         self.register_creator_models()
     
     def register_creator_models(self):
-        """Register models for different creator types"""
+        """
+Register models for different creator types"""
         # Musician models
         self.engine.register_model(ModelConfig(
             "audio-content-classifier",
@@ -1386,12 +1412,14 @@ class TestGlobalAIEngine:
     """Test suite for global AI engine instance"""
     
     def test_global_engine_instance(self):
-        """Test global AI engine instance"""
+        """
+Test global AI engine instance"""
         assert ai_engine is not None
         assert isinstance(ai_engine, AIEngineManager)
     
     def test_global_engine_functionality(self):
-        """Test global engine functionality"""
+        """
+Test global engine functionality"""
         # Register a test model
         config = ModelConfig(
             "global-test",

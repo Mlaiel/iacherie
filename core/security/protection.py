@@ -12,6 +12,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import hashlib
 import hmac
 import secrets
@@ -37,7 +38,9 @@ from backend.core.security.encryption import EncryptionManager
 
 
 class ContentType(Enum):
-    """Types of content for protection"""
+    """
+Types of content for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -47,6 +50,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = 1
     STANDARD = 2
     PREMIUM = 3
@@ -54,7 +58,9 @@ class ProtectionLevel(Enum):
 
 
 class WatermarkType(Enum):
-    """Types of watermarks"""
+    """
+Types of watermarks"""
+
     VISIBLE = "visible"
     INVISIBLE = "invisible"
     DIGITAL = "digital"
@@ -79,7 +85,8 @@ class ContentFingerprint:
 
 @dataclass
 class ContentWatermark:
-    """Content watermark information"""
+    """
+Content watermark information"""
     watermark_id: str
     content_id: str
     watermark_type: WatermarkType
@@ -92,7 +99,8 @@ class ContentWatermark:
 
 @dataclass
 class ContentVerification:
-    """Content verification result"""
+    """
+Content verification result"""
     is_valid: bool
     content_id: str
     verification_type: str
@@ -101,7 +109,8 @@ class ContentVerification:
 
 
 class FingerprintSecurity:
-    """Security manager for content fingerprints"""
+    """
+Security manager for content fingerprints"""
     
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
@@ -421,7 +430,8 @@ class AntiTamper:
         return True
     
     def _generate_tamper_markers(self, data: bytes, content_id: str) -> List[Dict[str, Any]]:
-        """Generate tamper detection markers"""
+        """
+Generate tamper detection markers"""
         markers = []
         
         # Marker 1: Hash of specific byte ranges
@@ -476,7 +486,8 @@ class AntiTamper:
         return data
     
     def _add_encryption_layer(self, data: bytes, content_id: str) -> bytes:
-        """Add encryption layer for premium protection"""
+        """
+Add encryption layer for premium protection"""
         # Simple XOR encryption for demonstration
         key = hashlib.sha256(content_id.encode()).digest()
         encrypted = bytearray()
@@ -487,7 +498,8 @@ class AntiTamper:
         return bytes(encrypted)
     
     def _add_obfuscation(self, data: bytes) -> bytes:
-        """Add obfuscation for enterprise protection"""
+        """
+Add obfuscation for enterprise protection"""
         # Simple byte shuffling for demonstration
         obfuscated = bytearray(data)
         
@@ -499,7 +511,8 @@ class AntiTamper:
         return bytes(obfuscated)
     
     def _detect_modifications(self, data: bytes, metadata: Dict[str, Any]) -> bool:
-        """Detect unauthorized modifications"""
+        """
+Detect unauthorized modifications"""
         # Check for suspicious patterns
         # This is a simplified detection
         
@@ -616,13 +629,15 @@ class CopyrightProtection:
         pass
     
     async def _get_copyright_registration(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get copyright registration"""
+        """
+Get copyright registration"""
         # Implementation depends on your copyright registry model
         pass
 
 
 class WatermarkingSecurity:
-    """Security for digital watermarking systems"""
+    """
+Security for digital watermarking systems"""
     
     def __init__(self):
         self.logger = SecurityLogger("WatermarkingSecurity")
@@ -758,7 +773,8 @@ class WatermarkingSecurity:
         return watermarked_image
     
     def _apply_visible_watermark(self, image: Image.Image, watermark_text: str) -> Image.Image:
-        """Apply visible text watermark"""
+        """
+Apply visible text watermark"""
         # Create a copy of the image
         watermarked = image.copy()
         draw = ImageDraw.Draw(watermarked)
@@ -800,7 +816,8 @@ class WatermarkingSecurity:
         return audio_data
     
     async def _watermark_video(self, video_data: bytes, watermark_text: str, invisible: bool) -> bytes:
-        """Apply watermark to video"""
+        """
+Apply watermark to video"""
         # Placeholder for video watermarking
         # Real implementation would use video processing libraries
         return video_data
@@ -810,7 +827,8 @@ class WatermarkingSecurity:
         image_data: bytes, 
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from image"""
+        """
+Extract watermark from image"""
         # Placeholder for watermark extraction
         # Real implementation would reverse the watermarking process
         return None
@@ -820,7 +838,8 @@ class WatermarkingSecurity:
         audio_data: bytes, 
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from audio"""
+        """
+Extract watermark from audio"""
         return None
     
     async def _extract_video_watermark(
@@ -828,12 +847,14 @@ class WatermarkingSecurity:
         video_data: bytes, 
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from video"""
+        """
+Extract watermark from video"""
         return None
 
 
 class ContentProtection:
-    """Main content protection orchestrator"""
+    """
+Main content protection orchestrator"""
     
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
@@ -882,7 +903,7 @@ class ContentProtection:
             
             # 4. Apply watermark
             if enable_watermark:
-                watermark_text = f"© {owner_id} - {content_id}"
+                watermark_text = f"(c) {owner_id} - {content_id}"
                 watermarked_data, watermark = await self.watermarking_security.apply_digital_watermark(
                     protected_data, content_type, watermark_text, invisible=True
                 )

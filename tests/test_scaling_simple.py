@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import pytest
 import asyncio
 import sys
@@ -34,7 +35,8 @@ class TestProductionScalingConfiguration:
     """Test production scaling configuration values"""
     
     def test_cluster_autoscaler_spec_production_defaults(self):
-        """Test ClusterAutoscalerSpec has correct production defaults"""
+        """
+Test ClusterAutoscalerSpec has correct production defaults"""
         spec = ClusterAutoscalerSpec(name="test-ca")
         
         # Verify new production features
@@ -141,12 +143,14 @@ class TestProductionScalingManager:
     
     @pytest.fixture
     def scaling_manager(self):
-        """Create ResourceScalingManager instance"""
+        """
+Create ResourceScalingManager instance"""
         return ResourceScalingManager()
     
     @pytest.mark.asyncio
     async def test_production_hpa_method_signature(self, scaling_manager):
-        """Test production HPA method exists with correct signature"""
+        """
+Test production HPA method exists with correct signature"""
         # Verify method exists
         assert hasattr(scaling_manager, 'create_production_hpa_with_custom_metrics')
         
@@ -183,7 +187,8 @@ class TestProductionScalingRequirements:
     """Test specific production scaling requirements"""
     
     def test_cpu_70_percent_requirement(self):
-        """Test CPU 70% requirement is met"""
+        """
+Test CPU 70% requirement is met"""
         metric = MetricSpec(
             name="cpu",
             metric_type=MetricType.CPU_UTILIZATION,
@@ -248,7 +253,8 @@ class TestProductionDeploymentScript:
     """Test production deployment script"""
     
     def test_deployment_script_exists(self):
-        """Test deployment script exists"""
+        """
+Test deployment script exists"""
         script_path = Path(__file__).parent.parent / "scripts" / "deploy_production_scaling.py"
         assert script_path.exists()
         assert script_path.is_file()

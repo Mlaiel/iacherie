@@ -5,8 +5,9 @@ predictive analytics, and advanced resource optimization strategies.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-© 2025 All Rights Reserved
+(c) 2025 All Rights Reserved
 """
+
 import asyncio
 import logging
 import time
@@ -39,7 +40,9 @@ from ...core.monitoring import get_metrics_client
 
 
 class ScalingStrategy(Enum):
-    """Scaling strategy types"""
+    """
+Scaling strategy types"""
+
     REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     PROACTIVE = "proactive"
@@ -50,6 +53,7 @@ class ScalingStrategy(Enum):
 
 class ScalingDirection(Enum):
     """Scaling direction"""
+
     UP = "up"
     DOWN = "down"
     MAINTAIN = "maintain"
@@ -74,7 +78,8 @@ class ScalingDecision:
 
 @dataclass
 class ScalingModel:
-    """Machine learning model for scaling decisions"""
+    """
+Machine learning model for scaling decisions"""
     model_id: str
     service_name: str
     model_type: str
@@ -86,7 +91,8 @@ class ScalingModel:
 
 @dataclass
 class ResourcePrediction:
-    """Resource usage prediction"""
+    """
+Resource usage prediction"""
     metric_name: str
     predicted_value: float
     confidence_interval: Tuple[float, float]
@@ -255,7 +261,8 @@ class ScalingEngine(BaseAgent):
     async def _reactive_scaling(self, service_name: str, 
                                metrics: Dict[str, float],
                                current_instances: int) -> ScalingDecision:
-        """Reactive scaling based on current metrics"""
+        """
+Reactive scaling based on current metrics"""
         try:
             # Define scaling thresholds
             scale_up_score = 0

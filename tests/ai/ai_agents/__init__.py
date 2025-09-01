@@ -5,7 +5,7 @@ IA-Influencer-Agent system. It provides test utilities, fixtures, and configurat
 for ultra-advanced industrial-level testing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -44,6 +44,7 @@ Any unauthorized use is strictly prohibited.
 • Documentation compliance
 • Legal protection implementation
 """
+
 import pytest
 import asyncio
 import logging
@@ -75,7 +76,7 @@ __test_coverage__ = "100%"
 __quality_standard__ = "Industrial Grade - Zero Error Tolerance"
 
 # Legal protection
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use strictly prohibited"
 __legal_warning__ = """⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -272,7 +273,7 @@ COPYRIGHT_INFO = {
     This code, concepts, architecture, and intellectual property are the EXCLUSIVE 
     property of Fahed Mlaiel <mlaiel@live.de>.
     
-    COPYRIGHT © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+    COPYRIGHT (c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
     
     ⚠️  UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
     
@@ -295,15 +296,18 @@ def get_test_config():
     return TEST_CONFIG.copy()
 
 def get_expert_team_info():
-    """Get expert team information"""
+    """
+Get expert team information"""
     return EXPERT_TEAM.copy()
 
 def get_copyright_info():
-    """Get copyright and legal information"""
+    """
+Get copyright and legal information"""
     return COPYRIGHT_INFO.copy()
 
 def setup_test_environment():
-    """Setup the test environment"""
+    """
+Setup the test environment"""
     # Create test directories if they don't exist
     test_dirs = [
         Path(__file__).parent / "fixtures",
@@ -331,88 +335,111 @@ class ContentCreationAgentTests(unittest.TestCase):
     """Tests for Content Creation Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_content_creation_basic(self):
-        """Test basic content creation functionality"""
+        """
+Test basic content creation functionality"""
         pass
 
 class AudienceDevelopmentAgentTests(unittest.TestCase):
-    """Tests for Audience Development Agent"""
+    """
+Tests for Audience Development Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_audience_analysis(self):
-        """Test audience analysis functionality"""
+        """
+Test audience analysis functionality"""
         pass
 
 class BrandConsultingAgentTests(unittest.TestCase):
-    """Tests for Brand Consulting Agent"""
+    """
+Tests for Brand Consulting Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_brand_strategy(self):
-        """Test brand strategy functionality"""
+        """
+Test brand strategy functionality"""
         pass
 
 class MonetizationAgentTests(unittest.TestCase):
-    """Tests for Monetization Agent"""
+    """
+Tests for Monetization Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_revenue_optimization(self):
-        """Test revenue optimization functionality"""
+        """
+Test revenue optimization functionality"""
         pass
 
 class SEOOptimizationAgentTests(unittest.TestCase):
-    """Tests for SEO Optimization Agent"""
+    """
+Tests for SEO Optimization Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_keyword_optimization(self):
-        """Test keyword optimization functionality"""
+        """
+Test keyword optimization functionality"""
         pass
 
 class ProtectionAgentTests(unittest.TestCase):
-    """Tests for Protection Agent"""
+    """
+Tests for Protection Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_content_protection(self):
-        """Test content protection functionality"""
+        """
+Test content protection functionality"""
         pass
 
 class CollaborationAgentTests(unittest.TestCase):
-    """Tests for Collaboration Agent"""
+    """
+Tests for Collaboration Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_collaboration_matching(self):
-        """Test collaboration matching functionality"""
+        """
+Test collaboration matching functionality"""
         pass
 
 class DistributionAgentTests(unittest.TestCase):
-    """Tests for Distribution Agent"""
+    """
+Tests for Distribution Agent"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.agent = None  # Will be implemented
     
     def test_content_distribution(self):
-        """Test content distribution functionality"""
+        """
+Test content distribution functionality"""
         pass
 
 # Export main testing utilities

@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -27,7 +28,9 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class VideoQuality(Enum):
-    """Video quality levels"""
+    """
+Video quality levels"""
+
     LOW = "240p"
     MEDIUM = "480p"
     HIGH = "720p"
@@ -38,6 +41,7 @@ class VideoQuality(Enum):
 
 class ContentCategory(Enum):
     """Rumble content categories"""
+
     NEWS = "news"
     POLITICS = "politics"
     ENTERTAINMENT = "entertainment"
@@ -266,7 +270,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return True
         
     def _determine_video_category(self, video: Dict[str, Any]) -> ContentCategory:
-        """Determine video category from metadata"""
+        """
+Determine video category from metadata"""
         
         title = video.get('title', '').lower()
         description = video.get('description', '').lower()
@@ -316,7 +321,8 @@ class RumbleEngine(BaseCrawlerEngine):
         raw_video: Dict[str, Any],
         channel_info: Dict[str, Any]
     ) -> Optional[RumbleVideo]:
-        """Process and analyze video with advanced metrics"""
+        """
+Process and analyze video with advanced metrics"""
         
         try:
             video_id = raw_video.get('id')
@@ -441,7 +447,8 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_info: Dict[str, Any],
         quality_score: float
     ) -> float:
-        """Calculate monetization potential for the video"""
+        """
+Calculate monetization potential for the video"""
         
         if not self.enable_monetization_analysis:
             return 0.5
@@ -466,7 +473,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return min(monetization_potential, 1.0)
         
     async def _calculate_viral_score(self, video: Dict[str, Any]) -> float:
-        """Calculate viral potential score"""
+        """
+Calculate viral potential score"""
         
         # Factors: rapid view growth, high engagement, shares
         views = video.get('views', 0)
@@ -496,7 +504,8 @@ class RumbleEngine(BaseCrawlerEngine):
         video: Dict[str, Any],
         monetization_potential: float
     ) -> float:
-        """Estimate potential revenue for the video"""
+        """
+Estimate potential revenue for the video"""
         
         views = video.get('views', 0)
         
@@ -517,7 +526,8 @@ class RumbleEngine(BaseCrawlerEngine):
         category: Optional[ContentCategory] = None,
         limit: int = 100
     ) -> List[RumbleVideo]:
-        """Crawl trending videos on Rumble"""
+        """
+Crawl trending videos on Rumble"""
         
         self.logger.info(f"Crawling trending videos, category: {category}, limit: {limit}")
         
@@ -653,7 +663,8 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_id: str,
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Monitor channel performance metrics"""
+        """
+Monitor channel performance metrics"""
         
         self.logger.info(f"Monitoring channel performance: {channel_id}")
         
@@ -720,7 +731,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return distribution
         
     def _analyze_content_performance(self, videos_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze content performance patterns"""
+        """
+Analyze content performance patterns"""
         
         if not videos_metrics:
             return {}
@@ -740,7 +752,8 @@ class RumbleEngine(BaseCrawlerEngine):
         }
         
     def _get_top_categories(self, high_performers: List[Dict[str, Any]]) -> List[str]:
-        """Get top performing categories"""
+        """
+Get top performing categories"""
         
         if not high_performers:
             return []
@@ -753,7 +766,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return sorted(category_counts.keys(), key=lambda x: category_counts[x], reverse=True)
         
     def _calculate_optimal_duration(self, high_performers: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Calculate optimal video duration range"""
+        """
+Calculate optimal video duration range"""
         
         if not high_performers:
             return {'min': 0, 'max': 0}
@@ -771,7 +785,8 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_info: Dict[str, Any],
         videos_metrics: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate channel growth metrics"""
+        """
+Calculate channel growth metrics"""
         
         if not videos_metrics:
             return {}
@@ -793,7 +808,8 @@ class RumbleEngine(BaseCrawlerEngine):
         }
         
     def _calculate_consistency_score(self, videos_metrics: List[Dict[str, Any]]) -> float:
-        """Calculate content consistency score"""
+        """
+Calculate content consistency score"""
         
         if len(videos_metrics) < 3:
             return 0.5
@@ -808,7 +824,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return min(consistency_score, 1.0)
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
+        """
+Get authenticated headers for API requests"""
         
         return {
             'User-Agent': 'Rumble/1.0',
@@ -833,6 +850,7 @@ class RumbleEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
+        """
+Apply rate limiting to prevent API abuse"""
         
         await asyncio.sleep(60 / self.rate_limit_per_minute)

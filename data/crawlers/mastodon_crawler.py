@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class MastodonPost:
-    """Mastodon post (toot) information"""
+    """
+Mastodon post (toot) information"""
     post_id: str
     uri: str
     url: str
@@ -77,7 +79,8 @@ class MastodonPost:
 
 @dataclass
 class MastodonAccount:
-    """Mastodon account information"""
+    """
+Mastodon account information"""
     account_id: str
     username: str
     acct: str  # username@domain for remote accounts
@@ -111,7 +114,8 @@ class MastodonAccount:
 
 @dataclass
 class MastodonInstance:
-    """Mastodon instance information"""
+    """
+Mastodon instance information"""
     domain: str
     title: str
     short_description: str
@@ -141,7 +145,8 @@ class MastodonInstance:
 
 @dataclass
 class MastodonNotification:
-    """Mastodon notification information"""
+    """
+Mastodon notification information"""
     notification_id: str
     type: str  # mention, status, reblog, follow, follow_request, favourite, poll, update
     created_at: datetime
@@ -155,7 +160,8 @@ class MastodonNotification:
 
 @dataclass
 class MastodonHashtag:
-    """Mastodon hashtag information"""
+    """
+Mastodon hashtag information"""
     name: str
     url: str
     history: List[Dict[str, Any]]  # usage statistics
@@ -758,7 +764,8 @@ class MastodonCrawler(PlatformCrawler):
         return notifications
     
     async def _get_federated_timeline(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get federated timeline content"""
+        """
+Get federated timeline content"""
         content = []
         
         for i in range(min(max_results, 15)):
@@ -773,7 +780,8 @@ class MastodonCrawler(PlatformCrawler):
         return content
     
     async def _get_local_timeline(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get local timeline content"""
+        """
+Get local timeline content"""
         content = []
         
         for i in range(min(max_results, 15)):
@@ -788,7 +796,8 @@ class MastodonCrawler(PlatformCrawler):
         return content
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
+        """
+Get trending content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -805,7 +814,8 @@ class MastodonCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[MastodonPost]:
-        """Parse post data"""
+        """
+Parse post data"""
         try:
             created_at = datetime.fromisoformat(post_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

@@ -2,6 +2,7 @@
 """Health Monitoring System
 Comprehensive health monitoring and alerting for the IA Influencer Agent platform
 """
+
 import os
 import sys
 import time
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status enumeration"""
+    """
+Health status enumeration"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -39,6 +42,7 @@ class HealthStatus(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity enumeration"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -58,7 +62,8 @@ class HealthCheck:
 
 @dataclass
 class Alert:
-    """Alert data class"""
+    """
+Alert data class"""
     id: str
     title: str
     description: str
@@ -77,7 +82,8 @@ class HealthMonitor:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize health monitor"""
+        """
+Initialize health monitor"""
         self.config_path = config_path or "/etc/monitoring/health_config.json"
         self.checks = {}
         self.alerts = []
@@ -913,7 +919,8 @@ class HealthMonitor:
         return HealthStatus.UNKNOWN
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get current health status"""
+        """
+Get current health status"""
         try:
             # Execute all checks once
             health_results = {}

@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Système IA ultra-avancé d'amélioration de qualité audio professionn
 TECHNOLOGIES: Deep Learning, Signal Processing, Quality Metrics, Professional Audio
 LOGIQUE MÉTIER: Audio input → Quality analysis → Enhancement processing → Professional output
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -36,7 +37,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class QualityMetric(Enum):
-    """Audio quality metrics"""
+    """
+Audio quality metrics"""
+
     SNR = "signal_to_noise_ratio"
     THD = "total_harmonic_distortion"
     DYNAMIC_RANGE = "dynamic_range"
@@ -50,6 +53,7 @@ class QualityMetric(Enum):
 
 class EnhancementType(Enum):
     """Types of audio enhancement"""
+
     NOISE_REDUCTION = "noise_reduction"
     DYNAMIC_ENHANCEMENT = "dynamic_enhancement"
     FREQUENCY_ENHANCEMENT = "frequency_enhancement"
@@ -72,7 +76,8 @@ class QualityAnalysisResult:
 
 @dataclass
 class EnhancementRequest:
-    """Request for audio enhancement"""
+    """
+Request for audio enhancement"""
     input_audio_path: str
     target_quality_score: float = 0.95
     enhancement_types: List[EnhancementType] = None
@@ -88,7 +93,8 @@ class EnhancementRequest:
 
 @dataclass
 class EnhancementResult:
-    """Result of audio enhancement"""
+    """
+Result of audio enhancement"""
     output_audio_path: str
     quality_improvement: float
     final_quality_score: float
@@ -366,7 +372,8 @@ class AudioQualityAnalyzer:
             return 0.5
     
     async def _generate_processing_suggestions(self, metrics: Dict[QualityMetric, float]) -> Dict[str, Any]:
-        """Generate specific processing parameter suggestions"""
+        """
+Generate specific processing parameter suggestions"""
         try:
             suggestions = {}
             
@@ -695,7 +702,8 @@ class QualityMetricsCalculator:
         self.logger = logger
     
     async def calculate_all_metrics(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
-        """Calculate comprehensive quality metrics"""
+        """
+Calculate comprehensive quality metrics"""
         try:
             analyzer = AudioQualityAnalyzer()
             

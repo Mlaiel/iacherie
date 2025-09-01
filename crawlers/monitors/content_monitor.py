@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
@@ -50,7 +51,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration, MonitoringMe
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration."""
+    """
+Content type enumeration."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -60,6 +63,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection level."""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     PREMIUM = "premium"
@@ -68,6 +72,7 @@ class ProtectionLevel(Enum):
 
 class InfringementSeverity(Enum):
     """Infringement severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -76,6 +81,7 @@ class InfringementSeverity(Enum):
 
 class DetectionMethod(Enum):
     """Content detection methods."""
+
     FINGERPRINT = "fingerprint"
     HASH_MATCHING = "hash_matching"
     VISUAL_SIMILARITY = "visual_similarity"
@@ -157,7 +163,8 @@ class ContentMonitor(MonitorEngine):
         self._initialize_ml_models()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for content analysis."""
+        """
+Initialize machine learning models for content analysis."""
         try:
             # Text similarity model
             self.ml_models['text_encoder'] = SentenceTransformer('all-MiniLM-L6-v2')
@@ -558,7 +565,8 @@ class ContentMonitor(MonitorEngine):
                 await self._take_protective_action(detection)
     
     async def _verify_infringement(self, detection: InfringementDetection):
-        """Verify if detected infringement is genuine."""
+        """
+Verify if detected infringement is genuine."""
         try:
             # Implement verification logic here
             # For now, mark as verified if confidence is high
@@ -631,7 +639,8 @@ class ProtectionMonitor(ContentMonitor):
         self.blacklist: Set[str] = set()
     
     async def add_protection_policy(self, policy_name: str, policy_config: Dict[str, Any]):
-        """Add custom protection policy."""
+        """
+Add custom protection policy."""
         self.protection_policies[policy_name] = policy_config
         logger.info(f"Added protection policy: {policy_name}")
     

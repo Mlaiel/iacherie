@@ -7,6 +7,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Centralized alert management service for AI Influencer Agent content protection.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Callable
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 
 class AlertManagerConfig(BaseModel):
-    """Comprehensive alert manager configuration."""
+    """
+Comprehensive alert manager configuration."""
     max_concurrent_alerts: int = Field(default=1000, ge=1)
     default_retention_days: int = Field(default=90, ge=1)
     escalation_timeout_minutes: int = Field(default=30, ge=1)
@@ -66,7 +68,8 @@ class AlertManagerConfig(BaseModel):
 
 
 class AlertProcessingResult(BaseModel):
-    """Result of alert processing operation."""
+    """
+Result of alert processing operation."""
     success: bool
     alert_id: str
     message: str
@@ -77,7 +80,8 @@ class AlertProcessingResult(BaseModel):
 
 
 class AlertStatistics(BaseModel):
-    """Comprehensive alert system statistics."""
+    """
+Comprehensive alert system statistics."""
     total_alerts_created: int = 0
     total_alerts_resolved: int = 0
     total_alerts_pending: int = 0
@@ -106,7 +110,8 @@ class AlertStatistics(BaseModel):
 
 
 class BulkOperationResult(BaseModel):
-    """Result of bulk operations on alerts."""
+    """
+Result of bulk operations on alerts."""
     total_processed: int
     successful_count: int
     failed_count: int
@@ -117,7 +122,8 @@ class BulkOperationResult(BaseModel):
 
 
 class AlertConfiguration(BaseModel):
-    """Alert system configuration."""
+    """
+Alert system configuration."""
     max_concurrent_alerts: int = Field(default=1000, ge=1)
     default_retention_days: int = Field(default=90, ge=1)
     escalation_timeout_minutes: int = Field(default=30, ge=1)
@@ -128,7 +134,8 @@ class AlertConfiguration(BaseModel):
 
 
 class AlertMetrics(BaseModel):
-    """Alert system performance metrics."""
+    """
+Alert system performance metrics."""
     total_alerts_created: int = 0
     total_alerts_resolved: int = 0
     average_resolution_time: float = 0.0
@@ -138,7 +145,8 @@ class AlertMetrics(BaseModel):
 
 @dataclass
 class AlertContext:
-    """Context information for alert processing."""
+    """
+Context information for alert processing."""
     user_id: str
     content_id: str
     violation_type: str
@@ -425,7 +433,8 @@ class AlertManager:
         resolved_by: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """Resolve an alert."""
+        """
+Resolve an alert."""
         return await self.update_alert_status(
             alert_id=alert_id,
             status=AlertStatus.RESOLVED,
@@ -439,7 +448,8 @@ class AlertManager:
         escalation_reason: str,
         escalated_by: Optional[str] = None
     ) -> bool:
-        """Escalate an alert to higher priority."""
+        """
+Escalate an alert to higher priority."""
         try:
             alert = await self.get_alert(alert_id)
             if not alert:
@@ -707,12 +717,14 @@ class AlertManager:
         """Register default alert handlers."""
         
         async def handle_violation_detected(alert: Alert) -> None:
-            """Handle copyright violation detection."""
+            """
+Handle copyright violation detection."""
             # Mark as high priority for immediate action
             await self._update_alert_priority(alert.id, AlertPriority.HIGH)
             
         async def handle_massive_infringement(alert: Alert) -> None:
-            """Handle massive copyright infringement."""
+            """
+Handle massive copyright infringement."""
             # Immediate escalation for massive infringement
             await self.escalate_alert(
                 alert_id=alert.id,
@@ -846,7 +858,8 @@ class AlertManager:
     # Additional enterprise methods for comprehensive alert management
 
     async def bulk_acknowledge_alerts(self, alert_ids: List[str], actor: str) -> BulkOperationResult:
-        """Bulk acknowledge multiple alerts."""
+        """
+Bulk acknowledge multiple alerts."""
         successful = []
         failed = []
         
@@ -1031,21 +1044,24 @@ class AlertManager:
         return groups
 
     def _group_by_category(self, alerts: List[ContentProtectionAlert]) -> Dict[str, int]:
-        """Group alerts by category."""
+        """
+Group alerts by category."""
         groups = {}
         for alert in alerts:
             groups[alert.category.value] = groups.get(alert.category.value, 0) + 1
         return groups
 
     def _group_by_status(self, alerts: List[ContentProtectionAlert]) -> Dict[str, int]:
-        """Group alerts by status."""
+        """
+Group alerts by status."""
         groups = {}
         for alert in alerts:
             groups[alert.status.value] = groups.get(alert.status.value, 0) + 1
         return groups
 
     def _group_by_platform(self, alerts: List[ContentProtectionAlert]) -> Dict[str, int]:
-        """Group alerts by source platform."""
+        """
+Group alerts by source platform."""
         groups = {}
         for alert in alerts:
             platform = alert.source_platform or "unknown"
@@ -1127,7 +1143,8 @@ class EnterpriseAlertOrchestrator:
         self.workflow_engine = None
         
     async def initialize_enterprise_features(self):
-        """Initialize enterprise-specific features"""
+        """
+Initialize enterprise-specific features"""
         await self._setup_threat_intelligence()
         await self._setup_compliance_tracking()
         await self._setup_workflow_engine()
@@ -1139,7 +1156,8 @@ class EnterpriseAlertOrchestrator:
         tenant_id: str,
         compliance_requirements: List[str] = None
     ) -> Dict[str, Any]:
-        """Process alert with enterprise features"""
+        """
+Process alert with enterprise features"""
         try:
             # Enrich alert with threat intelligence
             enriched_alert = await self._enrich_with_threat_intelligence(alert_data)
@@ -1206,7 +1224,8 @@ class EnterpriseAlertOrchestrator:
         alert_data: Dict[str, Any], 
         requirements: List[str]
     ) -> Dict[str, Any]:
-        """Apply compliance tracking and requirements"""
+        """
+Apply compliance tracking and requirements"""
         return {
             'status': 'compliant',
             'frameworks_applied': requirements,
@@ -1221,7 +1240,8 @@ class EnterpriseAlertOrchestrator:
         alert_data: Dict[str, Any], 
         tenant_id: str
     ) -> Dict[str, Any]:
-        """Execute enterprise workflow for alert"""
+        """
+Execute enterprise workflow for alert"""
         return {
             'success': True,
             'workflow_id': f"workflow_{uuid.uuid4().hex[:8]}",
@@ -1256,7 +1276,8 @@ class AlertIntelligenceEngine:
         self.pattern_analyzers = {}
         
     async def analyze_alert_patterns(self, alerts: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in alert data using advanced ML"""
+        """
+Analyze patterns in alert data using advanced ML"""
         try:
             analysis_result = {
                 'patterns_detected': [],
@@ -1317,7 +1338,8 @@ class AlertIntelligenceEngine:
         return patterns
     
     async def _detect_anomalies(self, alerts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in alert behavior"""
+        """
+Detect anomalies in alert behavior"""
         anomalies = []
         
         anomalies.append({
@@ -1331,7 +1353,8 @@ class AlertIntelligenceEngine:
         return anomalies
     
     async def _analyze_trends(self, alerts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Analyze trends in alert data"""
+        """
+Analyze trends in alert data"""
         trends = []
         
         trends.append({
@@ -1345,7 +1368,8 @@ class AlertIntelligenceEngine:
         return trends
     
     async def _generate_predictions(self, alerts: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate predictive insights"""
+        """
+Generate predictive insights"""
         return {
             'next_24h_volume': {
                 'predicted_count': 145,
@@ -1364,7 +1388,8 @@ class AlertIntelligenceEngine:
         }
     
     async def _generate_intelligence_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate actionable intelligence recommendations"""
+        """
+Generate actionable intelligence recommendations"""
         recommendations = [
             "Implement automated response for detected pattern types",
             "Increase monitoring during identified high-risk time periods",
@@ -1397,7 +1422,8 @@ class AlertComplianceManager:
         alert_data: Dict[str, Any], 
         frameworks: List[str]
     ) -> Dict[str, Any]:
-        """Ensure alert processing complies with specified frameworks"""
+        """
+Ensure alert processing complies with specified frameworks"""
         try:
             compliance_result = {
                 'compliant': True,
@@ -1450,7 +1476,8 @@ class AlertComplianceManager:
         }
     
     async def _generate_audit_trail(self, alert_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate comprehensive audit trail"""
+        """
+Generate comprehensive audit trail"""
         return [
             {
                 'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1470,7 +1497,8 @@ class AlertComplianceManager:
         ]
     
     async def _determine_retention_policy(self, frameworks: List[str]) -> Dict[str, Any]:
-        """Determine retention policy based on applicable frameworks"""
+        """
+Determine retention policy based on applicable frameworks"""
         max_retention_days = 365  # Default
         
         for framework in frameworks:
@@ -1486,7 +1514,8 @@ class AlertComplianceManager:
         }
     
     async def _assess_privacy_impact(self, alert_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess privacy impact of alert data"""
+        """
+Assess privacy impact of alert data"""
         return {
             'contains_pii': False,
             'contains_sensitive_data': True,

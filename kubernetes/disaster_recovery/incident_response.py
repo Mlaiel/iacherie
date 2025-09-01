@@ -11,6 +11,7 @@ This module provides comprehensive incident response capabilities:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from backend.deployment.disaster_recovery.business_continuity import BusinessCon
 
 
 class IncidentSeverity(Enum):
-    """Incident severity levels"""
+    """
+Incident severity levels"""
+
     LOW = 1           # Minor issues, no service impact
     MEDIUM = 2        # Moderate impact, some features affected
     HIGH = 3          # Significant impact, core features degraded
@@ -38,7 +41,9 @@ class IncidentSeverity(Enum):
 
 
 class IncidentStatus(Enum):
-    """Incident lifecycle status"""
+    """
+Incident lifecycle status"""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -51,6 +56,7 @@ class IncidentStatus(Enum):
 
 class IncidentCategory(Enum):
     """Incident categories"""
+
     SYSTEM_OUTAGE = "system_outage"
     PERFORMANCE_DEGRADATION = "performance_degradation"
     SECURITY_BREACH = "security_breach"
@@ -80,7 +86,8 @@ class IncidentRule:
 
 @dataclass
 class Incident:
-    """Incident record and tracking"""
+    """
+Incident record and tracking"""
     incident_id: str
     title: str
     description: str
@@ -166,7 +173,8 @@ class IncidentResponseSystem:
         self._initialize_response_actions()
 
     def _initialize_core_incident_rules(self):
-        """Initialize core incident detection rules"""
+        """
+Initialize core incident detection rules"""
         core_rules = [
             {
                 'rule_id': 'api_response_time_high',
@@ -296,7 +304,8 @@ class IncidentResponseSystem:
             self.incident_rules[rule_config['rule_id']] = incident_rule
 
     def _initialize_response_actions(self):
-        """Initialize automated response actions"""
+        """
+Initialize automated response actions"""
         response_actions = [
             {
                 'action_id': 'scale_up_instances',
@@ -677,7 +686,8 @@ class IncidentResponseSystem:
             }
 
     def _update_incident_metrics(self, incident: Incident):
-        """Update incident response metrics"""
+        """
+Update incident response metrics"""
         self.incident_metrics['total_incidents'] += 1
         
         severity_name = incident.severity.name.lower()

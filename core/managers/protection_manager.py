@@ -8,7 +8,7 @@ Technologies: Python, FastAPI, TensorFlow, PyTorch, OpenCV, ChromaPrint, FAISS
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Upload créateur → Analyse IA multi-format → Protection automatisée → 
 Surveillance continue → Détection violations → Action légale automatique
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types de contenu supportés pour la protection"""
+    """
+Types de contenu supportés pour la protection"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -46,6 +49,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Niveaux de protection disponibles"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -55,6 +59,7 @@ class ProtectionLevel(Enum):
 
 class ViolationSeverity(Enum):
     """Sévérité des violations détectées"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"

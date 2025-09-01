@@ -46,6 +46,7 @@ Core Licensing Components:
 - Advanced Analytics & Intelligence: Predictive insights and performance metrics
 - Cross-Platform Distribution: Automated multi-channel deployment
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
@@ -106,7 +107,9 @@ from .index import (
 
 # Global licensing configuration
 class LicensingConfig:
-    """Central configuration for licensing system"""
+    """
+Central configuration for licensing system"""
+
     DEFAULT_LICENSE_DURATION = 365  # days
     MAX_ROYALTY_PERCENTAGE = 50.0
     MIN_REVENUE_THRESHOLD = 100.0  # USD

@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -498,7 +499,8 @@ class HybridRecommendationEngine(IRecommendationEngine):
     
     # Helper methods
     async def _get_user_profile(self, user_id: str) -> Optional[UserProfile]:
-        """Retrieve user profile from storage"""
+        """
+Retrieve user profile from storage"""
         try:
             cache_key = f"user_profile:{user_id}"
             cached_profile = self.redis_client.get(cache_key)

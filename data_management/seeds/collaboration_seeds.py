@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations."""
+    """
+Types of creator collaborations."""
+
     JOINT_CONTENT = "joint_content"
     REMIX_COLLABORATION = "remix_collaboration"
     SERIES_COLLABORATION = "series_collaboration"
@@ -30,6 +33,7 @@ class CollaborationType(str, Enum):
 
 class RevenueSplitType(str, Enum):
     """Revenue splitting methodologies."""
+
     EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     VIEWERSHIP_BASED = "viewership_based"
@@ -41,6 +45,7 @@ class RevenueSplitType(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Status of collaboration projects."""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     APPROVED = "approved"
@@ -54,6 +59,7 @@ class CollaborationStatus(str, Enum):
 
 class TeamRole(str, Enum):
     """Roles within collaboration teams."""
+
     PROJECT_LEAD = "project_lead"
     CREATIVE_DIRECTOR = "creative_director"
     CONTENT_CREATOR = "content_creator"
@@ -66,6 +72,7 @@ class TeamRole(str, Enum):
 
 class CollaborationModel(str, Enum):
     """Collaboration business models."""
+
     ONE_TIME_PROJECT = "one_time_project"
     ONGOING_PARTNERSHIP = "ongoing_partnership"
     REVENUE_SHARE = "revenue_share"
@@ -77,6 +84,7 @@ class CollaborationModel(str, Enum):
 
 class MatchingCriteria(str, Enum):
     """Creator matching criteria."""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     PERFORMANCE_METRICS = "performance_metrics"
@@ -105,7 +113,8 @@ class CollaborationAgreement:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for matching algorithm."""
+    """
+Creator profile for matching algorithm."""
     creator_id: str
     content_categories: List[str] = field(default_factory=list)
     audience_demographics: Dict[str, Any] = field(default_factory=dict)
@@ -132,7 +141,8 @@ class CollaborationSeedsManager:
     """
     
     def __init__(self):
-        """Initialize collaboration seeds manager with enterprise configurations."""
+        """
+Initialize collaboration seeds manager with enterprise configurations."""
         self.collaboration_types = {}
         self.revenue_models = {}
         self.team_management = {}
@@ -145,7 +155,8 @@ class CollaborationSeedsManager:
         self.dispute_resolution = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all collaboration-related seed data with full enterprise support."""
+        """
+Initialize all collaboration-related seed data with full enterprise support."""
         logger.info("Initializing comprehensive collaboration seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -528,7 +539,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_revenue_models(self) -> Dict[str, Any]:
-        """Initialize comprehensive revenue sharing models and calculations."""
+        """
+Initialize comprehensive revenue sharing models and calculations."""
         revenue_models = {
             'equal_split_model': {
                 'model_name': 'Equal Revenue Split',
@@ -799,7 +811,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_team_management(self) -> Dict[str, Any]:
-        """Initialize team management and coordination tools."""
+        """
+Initialize team management and coordination tools."""
         team_management = {
             'team_formation': {
                 'team_discovery': {
@@ -1012,7 +1025,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_partnership_tools(self) -> Dict[str, Any]:
-        """Initialize partnership tools and collaboration utilities."""
+        """
+Initialize partnership tools and collaboration utilities."""
         partnership_tools = {
             'project_management_tools': {
                 'integrated_project_dashboard': {
@@ -1224,7 +1238,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_collaboration_workflows(self) -> Dict[str, Any]:
-        """Initialize collaboration workflows and process management."""
+        """
+Initialize collaboration workflows and process management."""
         workflows = {
             'project_initiation_workflow': {
                 'workflow_stages': [
@@ -1325,7 +1340,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_dispute_resolution(self) -> Dict[str, Any]:
-        """Initialize dispute resolution mechanisms and procedures."""
+        """
+Initialize dispute resolution mechanisms and procedures."""
         dispute_resolution = {
             'dispute_types': {
                 'creative_disputes': [
@@ -1393,7 +1409,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_legal_frameworks(self) -> Dict[str, Any]:
-        """Initialize legal frameworks for collaborations."""
+        """
+Initialize legal frameworks for collaborations."""
         legal_frameworks = {
             'intellectual_property_management': {
                 'copyright_frameworks': {
@@ -1429,7 +1446,8 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_performance_tracking(self) -> Dict[str, Any]:
-        """Initialize performance tracking and analytics."""
+        """
+Initialize performance tracking and analytics."""
         performance_tracking = {
             'collaboration_metrics': {
                 'project_success_indicators': [
@@ -1466,7 +1484,8 @@ class CollaborationSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all collaboration seed data (use with caution)."""
+        """
+Reset all collaboration seed data (use with caution)."""
         logger.warning("Resetting collaboration seeds data...")
         
         self.collaboration_types.clear()

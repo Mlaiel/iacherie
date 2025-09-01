@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 import asyncio
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """All supported database types in the platform"""
+    """
+All supported database types in the platform"""
+
     POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
@@ -53,6 +56,7 @@ class DatabaseType(Enum):
 
 class DatabaseStatus(Enum):
     """Database connection status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
@@ -74,7 +78,8 @@ class DatabaseHealth:
 
 @dataclass
 class MasterDatabaseConfig:
-    """Master configuration for all database systems"""
+    """
+Master configuration for all database systems"""
     # Environment configuration
     environment: str = "development"
     
@@ -123,7 +128,8 @@ class MasterDatabaseManager:
         self._monitoring_task = None
         
     async def initialize_all_databases(self) -> Dict[str, bool]:
-        """Initialize all configured database systems"""
+        """
+Initialize all configured database systems"""
         results = {}
         
         try:

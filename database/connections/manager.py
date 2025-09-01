@@ -6,6 +6,7 @@ Manages PostgreSQL, Redis, MongoDB, Elasticsearch, Vector stores, and Object sto
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Type
@@ -26,7 +27,9 @@ from .tenant_manager import TenantConnectionManager
 
 
 class DatabaseType(Enum):
-    """Supported database types in the platform"""
+    """
+Supported database types in the platform"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -82,7 +85,8 @@ class DatabaseConnectionManager:
         self._connections_healthy = False
         
     async def initialize(self) -> None:
-        """Initialize all database connections and components"""
+        """
+Initialize all database connections and components"""
         if self._initialized:
             return
             
@@ -218,12 +222,14 @@ class DatabaseConnectionManager:
                           query: str, 
                           params: Optional[Dict] = None,
                           tenant_id: Optional[str] = None) -> Any:
-        """Execute a query on the specified database"""
+        """
+Execute a query on the specified database"""
         connection = await self.get_connection(db_type, tenant_id)
         return await connection.execute(query, params)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get connection metrics for all databases"""
+        """
+Get connection metrics for all databases"""
         metrics = {}
         
         for db_type, handler in self.handlers.items():
@@ -239,11 +245,13 @@ class DatabaseConnectionManager:
         return metrics
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for all database connections"""
+        """
+Comprehensive health check for all database connections"""
         return await self.health_monitor.comprehensive_health_check()
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all database connections"""
+        """
+Gracefully shutdown all database connections"""
         if not self._initialized:
             return
         

@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class OnlyFansCreator:
-    """OnlyFans creator information"""
+    """
+OnlyFans creator information"""
     creator_id: str
     username: str
     name: str
@@ -88,7 +90,8 @@ class OnlyFansCreator:
 
 @dataclass
 class OnlyFansPost:
-    """OnlyFans post information"""
+    """
+OnlyFans post information"""
     post_id: str
     creator_id: str
     creator_username: str
@@ -134,7 +137,8 @@ class OnlyFansPost:
 
 @dataclass
 class OnlyFansMessage:
-    """OnlyFans private message information"""
+    """
+OnlyFans private message information"""
     message_id: str
     from_user_id: str
     to_user_id: str
@@ -165,7 +169,8 @@ class OnlyFansMessage:
 
 @dataclass
 class OnlyFansSubscription:
-    """OnlyFans subscription information"""
+    """
+OnlyFans subscription information"""
     subscription_id: str
     user_id: str
     creator_id: str
@@ -195,7 +200,8 @@ class OnlyFansSubscription:
 
 @dataclass
 class OnlyFansStream:
-    """OnlyFans live stream information"""
+    """
+OnlyFans live stream information"""
     stream_id: str
     creator_id: str
     creator_username: str
@@ -664,24 +670,28 @@ class OnlyFansCrawler(PlatformCrawler):
         return True
     
     def _check_content_access_permissions(self) -> bool:
-        """Check permissions for content access"""
+        """
+Check permissions for content access"""
         # In real implementation, verify subscription and access rights
         return True
     
     def _check_message_access_permissions(self) -> bool:
-        """Check permissions for message access"""
+        """
+Check permissions for message access"""
         # In real implementation, verify user owns the messages
         return False  # Default to restricted for privacy
     
     def _check_subscription_access_permissions(self) -> bool:
-        """Check permissions for subscription access"""
+        """
+Check permissions for subscription access"""
         # In real implementation, verify user owns the subscription data
         return True
     
     # Mock data generators (privacy-compliant)
     
     async def _get_mock_creators(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock creator data"""
+        """
+Generate mock creator data"""
         creators = []
         
         for i in range(min(max_results, 15)):
@@ -775,7 +785,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return messages
     
     async def _get_mock_subscriptions(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock subscription data"""
+        """
+Generate mock subscription data"""
         subscriptions = []
         
         for i in range(min(max_results, 10)):
@@ -849,7 +860,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""
+        """
+Get featured content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -866,7 +878,8 @@ class OnlyFansCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_creator_data(self, creator_data: Dict[str, Any]) -> Optional[OnlyFansCreator]:
-        """Parse creator data"""
+        """
+Parse creator data"""
         try:
             joined_at = datetime.fromisoformat(creator_data.get('joined_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import base64
 import hashlib
 import logging
@@ -35,7 +36,8 @@ settings = get_settings()
 
 
 class SecurityConfig(BaseModel):
-    """Security configuration for messaging"""
+    """
+Security configuration for messaging"""
     encryption_enabled: bool = Field(default=True, description="Enable message encryption")
     signing_enabled: bool = Field(default=True, description="Enable message signing")
     key_rotation_interval: int = Field(default=86400, description="Key rotation interval in seconds")
@@ -62,7 +64,8 @@ class MessageSecurityManager:
         self._initialize_security()
 
     def _initialize_security(self) -> None:
-        """Initialize security components"""
+        """
+Initialize security components"""
         try:
             # Generate or load encryption key
             self._setup_encryption_key()

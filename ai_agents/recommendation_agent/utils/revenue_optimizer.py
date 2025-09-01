@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -555,6 +556,7 @@ class RevenueOptimizer(IRevenueOptimizer):
         return None
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve creator profile from storage"""
+        """
+Retrieve creator profile from storage"""
         # Mock implementation - would query database
         return None

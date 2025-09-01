@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -20,6 +20,7 @@ legal action. Contact mlaiel@live.de for licensing.
 This module provides enterprise-grade compliance monitoring for content
 protection operations across all creator types and platforms.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Tuple
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""
+    """
+Supported compliance frameworks."""
+
     GDPR = "gdpr"                      # General Data Protection Regulation
     CCPA = "ccpa"                      # California Consumer Privacy Act
     DMCA = "dmca"                      # Digital Millennium Copyright Act
@@ -52,6 +55,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels."""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -63,6 +67,7 @@ class ComplianceStatus(Enum):
 
 class ViolationType(Enum):
     """Types of compliance violations."""
+
     DATA_PRIVACY = "data_privacy"
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
@@ -77,6 +82,7 @@ class ViolationType(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels."""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -695,7 +701,8 @@ class ComplianceMonitor:
         return platform_configs.get(violation.platform.lower(), False)
     
     async def _contains_personal_data(self, violation: ViolationAlert) -> bool:
-        """Check if violation involves personal data."""
+        """
+Check if violation involves personal data."""
         # Simplified check - would use NLP to identify personal data
         personal_data_indicators = ['email', 'phone', 'address', 'name', 'id']
         
@@ -703,37 +710,44 @@ class ComplianceMonitor:
         return any(indicator in content_text for indicator in personal_data_indicators)
     
     async def _check_processing_consent(self, violation: ViolationAlert) -> bool:
-        """Check if proper consent exists for data processing."""
+        """
+Check if proper consent exists for data processing."""
         # Simplified check - would verify actual consent records
         return False  # Assume no consent by default for demonstration
     
     async def _identify_personal_data(self, violation: ViolationAlert) -> List[str]:
-        """Identify specific personal data elements."""
+        """
+Identify specific personal data elements."""
         # Simplified identification
         return ['email_address', 'user_id', 'profile_data']
     
     async def _check_retention_compliance(self, violation: ViolationAlert) -> bool:
-        """Check data retention compliance."""
+        """
+Check data retention compliance."""
         # Simplified check - would verify against retention policies
         return True  # Assume compliant for demonstration
     
     async def _affects_california_residents(self, violation: ViolationAlert) -> bool:
-        """Check if violation affects California residents."""
+        """
+Check if violation affects California residents."""
         # Simplified check - would use geolocation and user data
         return True  # Assume affects CA residents for demonstration
     
     async def _check_privacy_notice_compliance(self, violation: ViolationAlert) -> bool:
-        """Check privacy notice compliance."""
+        """
+Check privacy notice compliance."""
         # Simplified check - would verify actual privacy notices
         return False  # Assume non-compliant for demonstration
     
     async def _check_opt_out_compliance(self, violation: ViolationAlert) -> bool:
-        """Check opt-out mechanism compliance."""
+        """
+Check opt-out mechanism compliance."""
         # Simplified check - would verify opt-out mechanisms
         return False  # Assume non-compliant for demonstration
     
     async def _assess_requirement_compliance(self, requirement: ComplianceRequirement) -> ComplianceStatus:
-        """Assess compliance status for specific requirement."""
+        """
+Assess compliance status for specific requirement."""
         # Simplified assessment - would use actual compliance data
         import random
         statuses = [
@@ -749,7 +763,8 @@ class ComplianceMonitor:
         frameworks: List[ComplianceFramework], 
         period_start: datetime
     ) -> Dict[str, Any]:
-        """Generate executive summary for compliance report."""
+        """
+Generate executive summary for compliance report."""
         summary = {
             'overall_compliance_score': 0.0,
             'frameworks_assessed': len(frameworks),
@@ -847,7 +862,8 @@ class ComplianceMonitor:
         return analysis
     
     async def _assess_compliance_risks(self, frameworks: List[ComplianceFramework]) -> Dict[str, Any]:
-        """Assess compliance risks."""
+        """
+Assess compliance risks."""
         risk_assessment = {
             'overall_risk_level': RiskLevel.MEDIUM.value,
             'risk_factors': [],
@@ -887,7 +903,8 @@ class ComplianceMonitor:
         frameworks: List[ComplianceFramework], 
         period_start: datetime
     ) -> Dict[str, Any]:
-        """Analyze remediation status."""
+        """
+Analyze remediation status."""
         remediation = {
             'total_remediations': 0,
             'completed_remediations': 0,
@@ -935,7 +952,8 @@ class ComplianceMonitor:
         critical_violations: int,
         high_risk_violations: int
     ) -> List[str]:
-        """Generate compliance recommendations."""
+        """
+Generate compliance recommendations."""
         recommendations = []
         
         if compliance_score < 0.7:
@@ -1169,7 +1187,8 @@ class ComplianceMonitor:
         return None
     
     async def _is_assessment_due(self, framework: ComplianceFramework) -> bool:
-        """Check if assessment is due for framework."""
+        """
+Check if assessment is due for framework."""
         latest_assessment = await self._get_latest_assessment(framework)
         
         if not latest_assessment:
@@ -1182,23 +1201,27 @@ class ComplianceMonitor:
     
     # Storage methods (placeholders)
     async def _load_compliance_requirements(self) -> None:
-        """Load compliance requirements from storage."""
+        """
+Load compliance requirements from storage."""
         # Placeholder - would load from database
         pass
     
     async def _load_existing_violations(self) -> None:
-        """Load existing violations from storage."""
+        """
+Load existing violations from storage."""
         # Placeholder - would load from database
         pass
     
     async def _load_assessment_history(self) -> None:
-        """Load assessment history from storage."""
+        """
+Load assessment history from storage."""
         # Placeholder - would load from database
         pass
     
     # Public API methods
     def get_compliance_status(self, framework: Optional[ComplianceFramework] = None) -> Dict[str, Any]:
-        """Get current compliance status."""
+        """
+Get current compliance status."""
         if framework:
             assessment = asyncio.create_task(self._get_latest_assessment(framework))
             return {
@@ -1220,7 +1243,8 @@ class ComplianceMonitor:
         status: Optional[ComplianceStatus] = None,
         limit: int = 100
     ) -> List[ComplianceViolation]:
-        """Get compliance violations with filtering."""
+        """
+Get compliance violations with filtering."""
         violations = list(self.violations.values())
         
         if framework:
@@ -1235,11 +1259,13 @@ class ComplianceMonitor:
         return violations[:limit]
     
     def get_compliance_metrics(self) -> ComplianceMetrics:
-        """Get current compliance metrics."""
+        """
+Get current compliance metrics."""
         return self.metrics
     
     async def shutdown(self) -> None:
-        """Shutdown compliance monitor gracefully."""
+        """
+Shutdown compliance monitor gracefully."""
         self._logger.info("Shutting down Compliance Monitor...")
         
         self.monitoring_active = False

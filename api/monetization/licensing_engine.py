@@ -24,6 +24,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -49,7 +50,9 @@ from ..core.exceptions import LicensingException, ContractException
 
 
 class LicenseType(Enum):
-    """Types of content licenses available."""
+    """
+Types of content licenses available."""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC_LICENSE = "sync_license"
@@ -66,6 +69,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License agreement status."""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -77,6 +81,7 @@ class LicenseStatus(Enum):
 
 class Territory(Enum):
     """Geographic territories for licensing."""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -95,6 +100,7 @@ class Territory(Enum):
 
 class UsageType(Enum):
     """Types of licensed content usage."""
+
     COMMERCIAL_ADVERTISING = "commercial_advertising"
     FILM_TV = "film_tv"
     DOCUMENTARY = "documentary"
@@ -135,7 +141,8 @@ class LicenseTerms:
 
 @dataclass
 class RevenueShare:
-    """Revenue sharing configuration."""
+    """
+Revenue sharing configuration."""
     creator_percentage: Decimal
     platform_percentage: Decimal
     publisher_percentage: Decimal
@@ -814,7 +821,8 @@ class AutomatedLicensingEngine:
         return contract_template
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
-        """Store license agreement in database."""
+        """
+Store license agreement in database."""
         try:
             query = """
             INSERT INTO license_agreements (
@@ -1251,7 +1259,8 @@ class AutomatedLicensingEngine:
         return min(1.0, completeness_score)
     
     def _evaluate_urgency_factor(self, urgency_level: str) -> float:
-        """Evaluate urgency factor impact on approval."""
+        """
+Evaluate urgency factor impact on approval."""
         urgency_scores = {
             "low": 0.7,      # Standard processing, slight bonus
             "normal": 0.8,   # Normal processing

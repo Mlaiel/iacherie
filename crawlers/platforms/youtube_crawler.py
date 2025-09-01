@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -39,7 +40,8 @@ settings = get_settings()
 
 @dataclass
 class YouTubeVideo:
-    """YouTube video data structure."""
+    """
+YouTube video data structure."""
     video_id: str
     title: str
     description: str
@@ -60,7 +62,8 @@ class YouTubeVideo:
 
 @dataclass
 class YouTubeChannel:
-    """YouTube channel data structure."""
+    """
+YouTube channel data structure."""
     channel_id: str
     title: str
     description: str
@@ -90,7 +93,8 @@ class YouTubeCrawler:
     """
     
     def __init__(self):
-        """Initialize YouTube crawler."""
+        """
+Initialize YouTube crawler."""
         self.api_key = settings.YOUTUBE_API_KEY
         self.service = None
         self.rate_limiter = YouTubeRateLimiter()
@@ -118,7 +122,8 @@ class YouTubeCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -455,7 +460,8 @@ class YouTubeCrawler:
         return similarity
     
     def _duration_to_seconds(self, duration_str: str) -> int:
-        """Convert duration string to seconds."""
+        """
+Convert duration string to seconds."""
         try:
             parts = duration_str.split(':')
             if len(parts) == 3:  # HH:MM:SS
@@ -470,7 +476,8 @@ class YouTubeCrawler:
             return 0
     
     async def scrape_with_selenium(self, url: str) -> Dict:
-        """Fallback scraping using Selenium when API limits are reached."""
+        """
+Fallback scraping using Selenium when API limits are reached."""
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(url)

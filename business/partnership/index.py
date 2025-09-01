@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional
 import logging
 
@@ -48,7 +49,8 @@ class PartnershipBusinessModule:
     Provides unified access to all partnership management capabilities.
     """
     def __init__(self):
-        """Initialize the Partnership Business Module with all services"""
+        """
+Initialize the Partnership Business Module with all services"""
         self.logger = logger
         self._initialize_services()
         self.logger.info("Partnership Business Module initialized successfully")
@@ -98,7 +100,7 @@ class PartnershipBusinessModule:
                 'market_intelligence_and_insights',
                 'opportunity_discovery_and_matching'
             ],
-            'copyright': '© 2025 Fahed Mlaiel - All Rights Reserved',
+            'copyright': '(c) 2025 Fahed Mlaiel - All Rights Reserved',
             'contact': 'mlaiel@live.de'
         }
 
@@ -108,7 +110,8 @@ class PartnershipBusinessModule:
         partner_data: Dict[str, Any],
         partnership_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Complete partnership creation workflow"""
+        """
+Complete partnership creation workflow"""
         try:
             # Step 1: Create partnership
             partnership = await self.partnership_manager.create_partnership(
@@ -334,7 +337,8 @@ class PartnershipBusinessModule:
         portfolio_analytics: Dict[str, Any],
         market_insights: Dict[str, Any]
     ) -> float:
-        """Calculate overall portfolio health score"""
+        """
+Calculate overall portfolio health score"""
         performance_score = portfolio_analytics.get('overall_performance_score', 0.5)
         diversification_score = portfolio_analytics.get('diversification_score', 0.5)
         market_position_score = market_insights.get('market_position_score', 0.5)
@@ -352,7 +356,8 @@ class PartnershipBusinessModule:
         self,
         insights: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate strategic recommendations based on insights"""
+        """
+Generate strategic recommendations based on insights"""
         recommendations = []
 
         performance = insights.get('performance_insights', {})
@@ -380,7 +385,8 @@ class PartnershipBusinessModule:
         return recommendations
 
     async def _generate_action_items(self, insights: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate specific action items from insights"""
+        """
+Generate specific action items from insights"""
         action_items = []
 
         # From performance insights
@@ -418,7 +424,8 @@ class PartnershipBusinessModule:
 
 # Module factory function
 def create_partnership_module() -> PartnershipBusinessModule:
-    """Factory function to create Partnership Business Module instance"""
+    """
+Factory function to create Partnership Business Module instance"""
     return PartnershipBusinessModule()
 
 
@@ -428,7 +435,7 @@ MODULE_INFO = {
     'version': '1.0.0',
     'author': 'Fahed Mlaiel <mlaiel@live.de>',
     'description': 'Comprehensive AI-powered partnership management system',
-    'copyright': '© 2025 Fahed Mlaiel - All Rights Reserved',
+    'copyright': '(c) 2025 Fahed Mlaiel - All Rights Reserved',
     'components': [
         'PartnershipManager',
         'ContractEngine', 

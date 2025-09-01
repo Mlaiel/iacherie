@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -24,7 +25,8 @@ from .platform_scraper import PlatformScraper, PlatformContent, PlatformProfile
 
 @dataclass
 class SocialMetrics:
-    """Social media engagement metrics."""
+    """
+Social media engagement metrics."""
     likes: int = 0
     shares: int = 0
     comments: int = 0
@@ -37,7 +39,8 @@ class SocialMetrics:
 
 @dataclass
 class InfluencerProfile:
-    """Enhanced influencer profile data."""
+    """
+Enhanced influencer profile data."""
     platform: str
     username: str
     display_name: str
@@ -59,7 +62,8 @@ class InfluencerProfile:
 
 @dataclass
 class TrendingTopic:
-    """Trending topic or hashtag data."""
+    """
+Trending topic or hashtag data."""
     platform: str
     topic: str
     hashtag: str
@@ -93,7 +97,8 @@ class SocialScraper:
                                  min_followers: int = 1000,
                                  max_followers: int = 1000000,
                                  engagement_threshold: float = 2.0) -> List[InfluencerProfile]:
-        """Discover influencers in specific niche."""
+        """
+Discover influencers in specific niche."""
         self.logger.info(f"Discovering influencers in {niche} on {platform}")
         
         # Search for content in niche
@@ -221,7 +226,8 @@ class SocialScraper:
         return day_counts
         
     def _find_best_posting_times(self, content: List[PlatformContent]) -> List[str]:
-        """Find best posting times based on engagement."""
+        """
+Find best posting times based on engagement."""
         if not content:
             return []
             
@@ -475,7 +481,8 @@ class SocialScraper:
         return (engagement / followers) * 100 if followers > 0 else 0
         
     def _estimate_collaboration_cost(self, followers: int, budget_range: str) -> str:
-        """Estimate collaboration cost."""
+        """
+Estimate collaboration cost."""
         if not followers:
             return "Unknown"
             

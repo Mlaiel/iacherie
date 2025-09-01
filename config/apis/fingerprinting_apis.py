@@ -20,6 +20,7 @@ This module provides ultra-advanced AI fingerprinting configuration for multi-fo
 Business Logic: Content Upload → AI Fingerprint Generation → Vector Storage → 
 Similarity Matching → Copyright Protection → Automated DMCA → Revenue Tracking
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional, Tuple
@@ -27,7 +28,9 @@ from enum import Enum
 from decimal import Decimal
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithm types"""
+    """
+Fingerprinting algorithm types"""
+
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
@@ -41,6 +44,7 @@ class FingerprintAlgorithm(Enum):
 
 class ContentModalityType(Enum):
     """Content modality for fingerprinting"""
+
     AUDIO_WAVEFORM = "audio_waveform"
     AUDIO_SPECTROGRAM = "audio_spectrogram"
     VIDEO_FRAMES = "video_frames"
@@ -53,6 +57,7 @@ class ContentModalityType(Enum):
 
 class MatchingStrategy(Enum):
     """Fingerprint matching strategies"""
+
     EXACT_MATCH = "exact_match"
     FUZZY_MATCH = "fuzzy_match"
     SEMANTIC_SIMILARITY = "semantic_similarity"

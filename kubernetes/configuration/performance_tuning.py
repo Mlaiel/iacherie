@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade performance optimization and resource management.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
@@ -24,7 +25,9 @@ import json
 import psutil
 
 class ResourceProfile(Enum):
-    """Resource allocation profiles"""
+    """
+Resource allocation profiles"""
+
     MINIMAL = "minimal"
     DEVELOPMENT = "development"
     TESTING = "testing"
@@ -35,6 +38,7 @@ class ResourceProfile(Enum):
 
 class OptimizationTarget(Enum):
     """Performance optimization targets"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     MEMORY = "memory"
@@ -46,6 +50,7 @@ class OptimizationTarget(Enum):
 
 class CachingStrategy(Enum):
     """Caching strategies"""
+
     NONE = "none"
     BASIC = "basic"
     AGGRESSIVE = "aggressive"
@@ -171,7 +176,8 @@ class PerformanceTuningManager:
     """
     
     def __init__(self):
-        """Initialize performance tuning manager"""
+        """
+Initialize performance tuning manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Performance configurations

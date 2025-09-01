@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import hashlib
@@ -685,17 +686,20 @@ class UserAgentRotator:
         self.current_index = 0
     
     def get_random_user_agent(self) -> str:
-        """Get random user agent string"""
+        """
+Get random user agent string"""
         return random.choice(self.user_agents)
     
     def get_next_user_agent(self) -> str:
-        """Get next user agent in rotation"""
+        """
+Get next user agent in rotation"""
         ua = self.user_agents[self.current_index]
         self.current_index = (self.current_index + 1) % len(self.user_agents)
         return ua
     
     def add_user_agent(self, user_agent: str) -> None:
-        """Add custom user agent to rotation"""
+        """
+Add custom user agent to rotation"""
         if user_agent not in self.user_agents:
             self.user_agents.append(user_agent)
 

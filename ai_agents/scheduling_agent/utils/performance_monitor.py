@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -53,7 +54,9 @@ from .scheduling_agent import ScheduledJob, SchedulingPriority, ScheduleStatus
 logger = logging.getLogger(__name__)
 
 class AlertLevel(Enum):
-    """Performance alert levels"""
+    """
+Performance alert levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -61,6 +64,7 @@ class AlertLevel(Enum):
 
 class MetricType(Enum):
     """Performance metric types"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     REACH_RATE = "reach_rate"
     CLICK_THROUGH_RATE = "ctr"
@@ -234,7 +238,8 @@ class RealTimePerformanceMonitor:
         creator_id: Optional[str],
         platform: Optional[str]
     ):
-        """Trigger a performance alert"""
+        """
+Trigger a performance alert"""
         alert = PerformanceAlert(
             metric=metric_type,
             level=level,
@@ -323,7 +328,8 @@ class RealTimePerformanceMonitor:
         z_score: float,
         expected_value: float
     ):
-        """Handle detected anomaly"""
+        """
+Handle detected anomaly"""
         logger.warning(
             f"Anomaly detected in {metric_key}: "
             f"value={value}, expected≈{expected_value:.3f}, z_score={z_score:.2f}"

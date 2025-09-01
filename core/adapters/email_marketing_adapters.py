@@ -16,6 +16,7 @@ Features:
 - Behavioral trigger automation
 - Comprehensive analytics and reporting
 """
+
 import asyncio
 import logging
 from abc import abstractmethod
@@ -39,7 +40,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class EmailPlatform(Enum):
-    """Supported email marketing platforms."""
+    """
+Supported email marketing platforms."""
+
     MAILCHIMP = "mailchimp"
     SENDGRID = "sendgrid"
     KLAVIYO = "klaviyo"
@@ -54,6 +57,7 @@ class EmailPlatform(Enum):
 
 class CampaignType(Enum):
     """Types of email campaigns."""
+
     NEWSLETTER = "newsletter"
     PROMOTIONAL = "promotional"
     TRANSACTIONAL = "transactional"
@@ -68,6 +72,7 @@ class CampaignType(Enum):
 
 class SegmentCriteria(Enum):
     """Audience segmentation criteria."""
+
     DEMOGRAPHIC = "demographic"
     BEHAVIORAL = "behavioral"
     GEOGRAPHIC = "geographic"
@@ -111,7 +116,8 @@ class EmailTemplate:
 
 @dataclass
 class EmailCampaign:
-    """Email campaign configuration."""
+    """
+Email campaign configuration."""
     campaign_id: str
     name: str
     subject: str
@@ -153,7 +159,8 @@ class CampaignStats:
     last_updated: datetime = field(default_factory=datetime.utcnow)
 
 class BaseEmailAdapter(BasePlatformAdapter):
-    """Base class for email marketing platform adapters."""
+    """
+Base class for email marketing platform adapters."""
     
     def __init__(
         self, 
@@ -181,42 +188,50 @@ class BaseEmailAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def create_contact(self, contact: EmailContact) -> bool:
-        """Create or update a contact in the email platform."""
+        """
+Create or update a contact in the email platform."""
         pass
     
     @abstractmethod
     async def create_template(self, template: EmailTemplate) -> bool:
-        """Create an email template."""
+        """
+Create an email template."""
         pass
     
     @abstractmethod
     async def create_campaign(self, campaign: EmailCampaign) -> bool:
-        """Create an email campaign."""
+        """
+Create an email campaign."""
         pass
     
     @abstractmethod
     async def send_campaign(self, campaign_id: str) -> bool:
-        """Send an email campaign."""
+        """
+Send an email campaign."""
         pass
     
     @abstractmethod
     async def get_campaign_stats(self, campaign_id: str) -> Optional[CampaignStats]:
-        """Get campaign performance statistics."""
+        """
+Get campaign performance statistics."""
         pass
     
     @abstractmethod
     async def create_audience_segment(self, name: str, criteria: Dict[str, Any]) -> str:
-        """Create an audience segment based on criteria."""
+        """
+Create an audience segment based on criteria."""
         pass
     
     async def validate_email(self, email: str) -> bool:
-        """Validate email address format."""
+        """
+Validate email address format."""
         import re
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
     
     async def calculate_engagement_score(self, contact: EmailContact) -> float:
-        """Calculate engagement score for a contact."""
+        """
+Calculate engagement score for a contact."""
         score = 0.0
         
         # Recent engagement bonus
@@ -255,7 +270,8 @@ class BaseEmailAdapter(BasePlatformAdapter):
         return min(score, 1.0)
     
     async def personalize_content(self, content: str, contact: EmailContact) -> str:
-        """Personalize email content for a specific contact."""
+        """
+Personalize email content for a specific contact."""
         personalized = content
         
         # Basic personalization
@@ -275,7 +291,8 @@ class BaseEmailAdapter(BasePlatformAdapter):
         return personalized
 
 class MailchimpAdapter(BaseEmailAdapter):
-    """Mailchimp API adapter implementation."""
+    """
+Mailchimp API adapter implementation."""
     
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
@@ -862,7 +879,8 @@ class EmailAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseEmailAdapter:
-        """Create an email adapter instance."""
+        """
+Create an email adapter instance."""
         adapter_class = cls._adapters.get(platform)
         if not adapter_class:
             raise ValueError(f"Unsupported email platform: {platform}")
@@ -875,7 +893,8 @@ class EmailAdapterFactory:
         return list(cls._adapters.keys())
 
 class EmailAdapterManager:
-    """Manager for email marketing adapter instances and campaign orchestration."""
+    """
+Manager for email marketing adapter instances and campaign orchestration."""
     
     def __init__(self):
         self.adapters: Dict[EmailPlatform, BaseEmailAdapter] = {}
@@ -883,7 +902,8 @@ class EmailAdapterManager:
         self.backup_platforms = [EmailPlatform.SENDGRID]
     
     def register_adapter(self, platform: EmailPlatform, adapter: BaseEmailAdapter):
-        """Register an email adapter."""
+        """
+Register an email adapter."""
         self.adapters[platform] = adapter
         logger.info(f"Registered email adapter for platform: {platform.value}")
     

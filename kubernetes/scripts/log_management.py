@@ -11,7 +11,7 @@ fortgeschrittener forensischer Analyse, Echtzeit-Anomalieerkennung und prädikti
 Log-Analytics für die gesamte IA Influencer Agent Plattform.
 
 Autor: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2024-2025 IA Influencer Agent - Ultra-Enterprise Development Team
+Copyright: (c) 2024-2025 IA Influencer Agent - Ultra-Enterprise Development Team
 Lizenz: Strikt Proprietär - Unbefugte Nutzung strengstens verboten
 
 🎯 ULTRA-ERWEITERTE FUNKTIONEN:
@@ -24,6 +24,7 @@ Lizenz: Strikt Proprietär - Unbefugte Nutzung strengstens verboten
 - 📈 Prädiktive Leistungsanalyse durch Log-Mining
 - 🌐 Multi-Tenant Log-Segregation mit Sicherheitsebenen
 """
+
 import asyncio
 import json
 import logging
@@ -83,6 +84,7 @@ logger = logging.getLogger(__name__)
 
 class LogLevel(Enum):
     """Log level enumeration"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -92,6 +94,7 @@ class LogLevel(Enum):
 
 class LogSource(Enum):
     """Log source enumeration"""
+
     APPLICATION = "application"
     DATABASE = "database"
     NGINX = "nginx"
@@ -121,7 +124,8 @@ class LogManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize log manager"""
+        """
+Initialize log manager"""
         self.config_path = config_path or "/etc/logging/config.yaml"
         self.log_buffer = []
         self.buffer_lock = threading.Lock()

@@ -4,6 +4,7 @@ Core AI-powered protection engines for content rights management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import numpy as np
 import tensorflow as tf
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProtectionRule:
-    """Content protection rule definition"""
+    """
+Content protection rule definition"""
     rule_id: str
     rule_name: str
     content_types: List[str]
@@ -50,7 +52,8 @@ class ProtectionRule:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data"""
+    """
+Threat intelligence data"""
     threat_id: str
     threat_type: str
     indicators: List[str]
@@ -62,7 +65,8 @@ class ThreatIntelligence:
 
 
 class ContentHashingEngine:
-    """Advanced content hashing for protection"""
+    """
+Advanced content hashing for protection"""
     
     def __init__(self):
         self.hash_algorithms = ['md5', 'sha256', 'perceptual', 'semantic']
@@ -70,7 +74,8 @@ class ContentHashingEngine:
         self.initialize_extractors()
     
     def initialize_extractors(self):
-        """Initialize feature extraction models"""
+        """
+Initialize feature extraction models"""
         try:
             # Initialize text embeddings model
             self.text_tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2', local_files_only=False)
@@ -296,7 +301,8 @@ class ContentHashingEngine:
 
 
 class AnomalyDetectionEngine:
-    """ML-based anomaly detection for suspicious activities"""
+    """
+ML-based anomaly detection for suspicious activities"""
     
     def __init__(self):
         self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
@@ -309,7 +315,8 @@ class AnomalyDetectionEngine:
         ]
     
     def train_model(self, normal_behavior_data: List[Dict[str, float]]):
-        """Train anomaly detection model on normal behavior"""
+        """
+Train anomaly detection model on normal behavior"""
         try:
             if not normal_behavior_data:
                 raise ValueError("No training data provided")
@@ -378,13 +385,15 @@ class AnomalyDetectionEngine:
         return np.array(feature_matrix)
     
     def _calculate_confidence(self, anomaly_score: float) -> float:
-        """Calculate confidence score for anomaly detection"""
+        """
+Calculate confidence score for anomaly detection"""
         # Normalize anomaly score to 0-1 confidence
         normalized_score = 1 / (1 + np.exp(anomaly_score * 5))  # Sigmoid transformation
         return float(normalized_score)
     
     def _identify_suspicious_features(self, behavior: Dict[str, float]) -> List[str]:
-        """Identify which features contribute to anomalous behavior"""
+        """
+Identify which features contribute to anomalous behavior"""
         suspicious_features = []
         
         # Define thresholds for suspicious behavior
@@ -406,7 +415,8 @@ class AnomalyDetectionEngine:
 
 
 class ContentSimilarityEngine:
-    """Advanced content similarity detection"""
+    """
+Advanced content similarity detection"""
     
     def __init__(self):
         self.similarity_thresholds = {
@@ -422,7 +432,8 @@ class ContentSimilarityEngine:
         }
     
     def compare_content(self, content1: Dict[str, Any], content2: Dict[str, Any]) -> Dict[str, float]:
-        """Compare two pieces of content for similarity"""
+        """
+Compare two pieces of content for similarity"""
         try:
             content_type = content1.get('type', 'unknown')
             
@@ -645,7 +656,8 @@ class ContentSimilarityEngine:
         return self._compare_image_features(features1, features2)  # Same logic
     
     def _compare_ngrams(self, ngrams1: Dict[str, str], ngrams2: Dict[str, str]) -> float:
-        """Compare n-gram hashes"""
+        """
+Compare n-gram hashes"""
         try:
             similarities = []
             
@@ -669,36 +681,44 @@ class ContentSimilarityEngine:
     
     # Placeholder methods for advanced comparison features
     def _compare_image_structure(self, struct1: Dict, struct2: Dict) -> float:
-        """Compare structural features of images"""
+        """
+Compare structural features of images"""
         return 0.5  # Placeholder
     
     def _compare_temporal_patterns(self, temp1: Dict, temp2: Dict) -> float:
-        """Compare temporal patterns in audio"""
+        """
+Compare temporal patterns in audio"""
         return 0.5  # Placeholder
     
     def _compare_audio_hashes(self, hashes1: Dict, hashes2: Dict) -> float:
-        """Compare audio-specific hashes"""
+        """
+Compare audio-specific hashes"""
         return self._compare_image_hashes(hashes1, hashes2)  # Reuse logic
     
     def _compare_video_frames(self, frames1: List, frames2: List) -> float:
-        """Compare video frame sequences"""
+        """
+Compare video frame sequences"""
         return 0.5  # Placeholder
     
     def _compare_motion_patterns(self, motion1: Dict, motion2: Dict) -> float:
-        """Compare motion patterns in video"""
+        """
+Compare motion patterns in video"""
         return 0.5  # Placeholder
     
     def _compare_semantic_features(self, sem1: Dict, sem2: Dict) -> float:
-        """Compare semantic text features"""
+        """
+Compare semantic text features"""
         return 0.5  # Placeholder
     
     def _compare_text_structure(self, struct1: Dict, struct2: Dict) -> float:
-        """Compare text structural features"""
+        """
+Compare text structural features"""
         return 0.5  # Placeholder
 
 
 class ThreatIntelligenceEngine:
-    """Threat intelligence gathering and analysis"""
+    """
+Threat intelligence gathering and analysis"""
     
     def __init__(self):
         self.threat_database: List[ThreatIntelligence] = []
@@ -706,7 +726,8 @@ class ThreatIntelligenceEngine:
         self.suspicious_patterns = {}
     
     def add_threat_intelligence(self, threat: ThreatIntelligence):
-        """Add new threat intelligence"""
+        """
+Add new threat intelligence"""
         self.threat_database.append(threat)
         
         # Update known infringers
@@ -763,7 +784,8 @@ class ThreatIntelligenceEngine:
             return False
     
     def _analyze_match(self, content_data: Dict[str, Any], indicator: str) -> Dict[str, Any]:
-        """Analyze details of threat indicator match"""
+        """
+Analyze details of threat indicator match"""
         return {
             'matched_fields': [
                 field for field in content_data.keys() 
@@ -774,7 +796,8 @@ class ThreatIntelligenceEngine:
 
 
 class AdvancedProtectionEngine:
-    """Main protection engine coordinating all protection mechanisms"""
+    """
+Main protection engine coordinating all protection mechanisms"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -792,7 +815,8 @@ class AdvancedProtectionEngine:
         }
     
     async def analyze_content_protection(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive content protection analysis"""
+        """
+Comprehensive content protection analysis"""
         try:
             analysis_results = {
                 'content_id': content_data.get('content_id'),
@@ -879,7 +903,8 @@ class AdvancedProtectionEngine:
         return rule_matches
     
     def _evaluate_protection_rule(self, rule: ProtectionRule, content_data: Dict[str, Any], analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Evaluate if content matches protection rule"""
+        """
+Evaluate if content matches protection rule"""
         # Simplified rule evaluation - can be extended with complex rule engine
         matches = False
         details = {}
@@ -902,7 +927,8 @@ class AdvancedProtectionEngine:
         }
     
     def _generate_recommendations(self, analysis_results: Dict[str, Any]) -> List[str]:
-        """Generate protection recommendations"""
+        """
+Generate protection recommendations"""
         recommendations = []
         
         if analysis_results['threat_level'] in ['HIGH', 'CRITICAL']:

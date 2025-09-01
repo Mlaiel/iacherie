@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import logging
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for content processors"""
+    """
+Configuration for content processors"""
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     audio_sample_rate: int = 22050
     image_max_dimension: int = 2048
@@ -65,21 +67,25 @@ class BaseContentProcessor(ABC):
     
     @abstractmethod
     async def initialize(self) -> None:
-        """Initialize the processor"""
+        """
+Initialize the processor"""
         pass
     
     @abstractmethod
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process content and extract features"""
+        """
+Process content and extract features"""
         pass
     
     @abstractmethod
     def supports_format(self, file_path: str) -> bool:
-        """Check if the processor supports the file format"""
+        """
+Check if the processor supports the file format"""
         pass
     
     async def validate_file(self, file_path: str) -> bool:
-        """Validate file before processing"""
+        """
+Validate file before processing"""
         try:
             path = Path(file_path)
             if not path.exists():
@@ -140,7 +146,8 @@ class AudioIndexProcessor(BaseContentProcessor):
         return Path(file_path).suffix.lower() in self.config.supported_audio_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process audio file and extract comprehensive features"""
+        """
+Process audio file and extract comprehensive features"""
         try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid audio file: {file_path}")
@@ -420,7 +427,8 @@ class VideoIndexProcessor(BaseContentProcessor):
         return Path(file_path).suffix.lower() in self.config.supported_video_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process video file and extract comprehensive features"""
+        """
+Process video file and extract comprehensive features"""
         try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid video file: {file_path}")
@@ -716,7 +724,8 @@ class ImageIndexProcessor(BaseContentProcessor):
         return Path(file_path).suffix.lower() in self.config.supported_image_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process image file and extract comprehensive features"""
+        """
+Process image file and extract comprehensive features"""
         try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid image file: {file_path}")
@@ -1062,7 +1071,8 @@ class TextIndexProcessor(BaseContentProcessor):
         self.nlp = None
         
     async def initialize(self) -> None:
-        """Initialize text processing components"""
+        """
+Initialize text processing components"""
         try:
             # Load spaCy model
             try:
@@ -1267,7 +1277,8 @@ class MultiFormatProcessor:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all processors"""
+        """
+Initialize all processors"""
         try:
             await asyncio.gather(
                 self.audio_processor.initialize(),

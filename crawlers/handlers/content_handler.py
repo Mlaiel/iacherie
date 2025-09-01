@@ -28,6 +28,7 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -64,7 +65,9 @@ logger = get_logger(__name__)
 
 
 class ContentTypeDetector:
-    """Professional content type detection and validation system."""
+    """
+Professional content type detection and validation system."""
+
     
     SUPPORTED_FORMATS = {
         'audio': {
@@ -461,7 +464,8 @@ class ContentProcessor:
         return await loop.run_in_executor(self.executor, extract_features)
     
     async def _process_video(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video content for fingerprinting."""
+        """
+Process video content for fingerprinting."""
         loop = asyncio.get_event_loop()
         
         def extract_frames():
@@ -496,7 +500,8 @@ class ContentProcessor:
         return await loop.run_in_executor(self.executor, extract_frames)
     
     async def _process_image(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image content for fingerprinting."""
+        """
+Process image content for fingerprinting."""
         loop = asyncio.get_event_loop()
         
         def extract_image_features():
@@ -524,7 +529,8 @@ class ContentProcessor:
         return await loop.run_in_executor(self.executor, extract_image_features)
     
     async def _process_text(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text content for fingerprinting."""
+        """
+Process text content for fingerprinting."""
         try:
             # Read text content
             encoding = metadata.get('encoding', 'utf-8')
@@ -664,5 +670,6 @@ class ContentHandler:
 
 # Factory function for easy instantiation
 def create_content_handler() -> ContentHandler:
-    """Create and return a ContentHandler instance."""
+    """
+Create and return a ContentHandler instance."""
     return ContentHandler()

@@ -5,7 +5,7 @@ Professional multi-tier escalation management for non-compliant DMCA notices.
 Advanced legal progression workflows with AI-powered decision making.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -39,6 +39,7 @@ This module provides:
 - Legal action preparation and filing
 - Settlement negotiation automation
 """
+
 import asyncio
 import logging
 import secrets
@@ -67,7 +68,9 @@ Base = declarative_base()
 
 
 class EscalationLevel(Enum):
-    """Escalation progression levels"""
+    """
+Escalation progression levels"""
+
     INITIAL_NOTICE = "initial_notice"
     FORMAL_REMINDER = "formal_reminder"
     ESCALATION_WARNING = "escalation_warning"
@@ -79,6 +82,7 @@ class EscalationLevel(Enum):
 
 class EscalationReason(Enum):
     """Reasons for escalation"""
+
     NO_RESPONSE = "no_response"
     INADEQUATE_RESPONSE = "inadequate_response"
     PARTIAL_COMPLIANCE = "partial_compliance"
@@ -91,6 +95,7 @@ class EscalationReason(Enum):
 
 class EscalationStatus(Enum):
     """Current escalation status"""
+
     PENDING = "pending"
     ACTIVE = "active"
     SCHEDULED = "scheduled"
@@ -104,6 +109,7 @@ class EscalationStatus(Enum):
 
 class EscalationUrgency(Enum):
     """Urgency levels for escalation"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -126,7 +132,8 @@ class EscalationTrigger:
 
 @dataclass
 class LegalAction:
-    """Legal action details"""
+    """
+Legal action details"""
     action_type: str
     jurisdiction: str
     court_name: Optional[str] = None
@@ -142,7 +149,8 @@ class LegalAction:
 
 @dataclass
 class EscalationRecord:
-    """Complete escalation record"""
+    """
+Complete escalation record"""
     escalation_id: str
     notice_id: str
     platform: str
@@ -195,7 +203,8 @@ class EscalationWorkflow:
         self.legal_templates = self._load_legal_templates()
     
     def _define_default_workflow(self) -> Dict[EscalationLevel, Dict[str, Any]]:
-        """Define the default escalation workflow"""
+        """
+Define the default escalation workflow"""
         return {
             EscalationLevel.INITIAL_NOTICE: {
                 'description': 'Initial DMCA takedown notice',
@@ -242,7 +251,8 @@ class EscalationWorkflow:
         }
     
     def _define_trigger_rules(self) -> List[EscalationTrigger]:
-        """Define escalation trigger rules"""
+        """
+Define escalation trigger rules"""
         return [
             EscalationTrigger(
                 reason=EscalationReason.NO_RESPONSE,
@@ -285,9 +295,11 @@ class EscalationWorkflow:
         ]
     
     def _load_legal_templates(self) -> Dict[str, str]:
-        """Load legal escalation templates"""
+        """
+Load legal escalation templates"""
         return {
-            'formal_reminder': """Subject: FORMAL REMINDER - DMCA Compliance Required
+            'formal_reminder': """
+Subject: FORMAL REMINDER - DMCA Compliance Required
 
 Dear Platform Representative,
 
@@ -307,7 +319,8 @@ This is a final courtesy notice before formal escalation.
 {{ signature_block }}
             """,
             
-            'escalation_warning': """Subject: ESCALATION WARNING - Legal Action Imminent
+            'escalation_warning': """
+Subject: ESCALATION WARNING - Legal Action Imminent
 
 **⚠️ LEGAL ESCALATION WARNING ⚠️**
 
@@ -337,7 +350,8 @@ This represents your final opportunity to resolve this matter without litigation
 **WARNING: Legal action will commence if compliance is not achieved within the specified timeframe.**
             """,
             
-            'legal_threat': """Subject: NOTICE OF INTENT TO PURSUE LEGAL ACTION
+            'legal_threat': """
+Subject: NOTICE OF INTENT TO PURSUE LEGAL ACTION
 
 **⚖️ FORMAL LEGAL NOTICE ⚖️**
 
@@ -376,7 +390,8 @@ We remain open to resolving this matter outside of litigation. Contact our legal
 **This constitutes a final notice before commencement of legal proceedings.**
             """,
             
-            'litigation_notice': """Subject: LITIGATION NOTICE - Legal Proceedings Imminent
+            'litigation_notice': """
+Subject: LITIGATION NOTICE - Legal Proceedings Imminent
 
 **⚖️ LITIGATION PROCEEDING NOTICE ⚖️**
 
@@ -419,7 +434,8 @@ This represents the final 72-hour window for settlement negotiation. After this 
     
     def get_next_escalation_level(self, current_level: EscalationLevel, 
                                  reason: EscalationReason) -> Optional[EscalationLevel]:
-        """Determine next escalation level"""
+        """
+Determine next escalation level"""
         
         # Check trigger rules first
         for trigger in self.trigger_rules:
@@ -435,7 +451,8 @@ This represents the final 72-hour window for settlement negotiation. After this 
     
     def should_auto_escalate(self, current_level: EscalationLevel, 
                            reason: EscalationReason) -> bool:
-        """Check if escalation should be automatic"""
+        """
+Check if escalation should be automatic"""
         
         # Check trigger rules
         for trigger in self.trigger_rules:
@@ -450,7 +467,8 @@ This represents the final 72-hour window for settlement negotiation. After this 
         return False
     
     def get_escalation_template(self, level: EscalationLevel) -> str:
-        """Get template for escalation level"""
+        """
+Get template for escalation level"""
         
         workflow_step = self.workflow_steps.get(level)
         if workflow_step:
@@ -676,7 +694,8 @@ class EscalationManager:
         }
     
     async def get_notice_escalations(self, notice_id: str) -> List[Dict[str, Any]]:
-        """Get all escalations for a notice"""
+        """
+Get all escalations for a notice"""
         
         escalations = [
             esc for esc in self.active_escalations.values()
@@ -689,7 +708,8 @@ class EscalationManager:
         return [await self.get_escalation_status(esc.escalation_id) for esc in escalations]
     
     async def _generate_escalation_content(self, escalation: EscalationRecord) -> str:
-        """Generate escalation notice content"""
+        """
+Generate escalation notice content"""
         
         template = self.workflow.get_escalation_template(escalation.level)
         if not template:
@@ -797,7 +817,8 @@ class EscalationManager:
         return EscalationUrgency.MEDIUM
     
     async def _schedule_escalation(self, escalation: EscalationRecord):
-        """Schedule automatic escalation"""
+        """
+Schedule automatic escalation"""
         
         if not escalation.deadline:
             return
@@ -1141,7 +1162,8 @@ class EscalationManager:
         }
     
     async def cleanup(self):
-        """Clean up escalation manager resources"""
+        """
+Clean up escalation manager resources"""
         
         # Cancel all active tasks
         for task in self.escalation_tasks.values():

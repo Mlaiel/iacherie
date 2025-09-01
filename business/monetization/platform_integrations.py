@@ -6,7 +6,7 @@ all major content platforms. Real-time sync with Spotify, YouTube, Instagram,
 TikTok, OnlyFans, Patreon, and 20+ other platforms.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Platform Connection → Data Sync → Revenue Aggregation → Performance Analytics
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""
+    """
+Supported monetization platforms"""
     # Music Platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
@@ -82,6 +84,7 @@ class PlatformType(Enum):
 
 class PlatformStatus(Enum):
     """Platform connection status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     SYNC_IN_PROGRESS = "sync_in_progress"
@@ -93,6 +96,7 @@ class PlatformStatus(Enum):
 
 class RevenueDataType(Enum):
     """Types of revenue data from platforms"""
+
     STREAMING_REVENUE = "streaming_revenue"
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
@@ -122,7 +126,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformRevenue:
-    """Revenue data from a specific platform"""
+    """
+Revenue data from a specific platform"""
     revenue_id: str
     platform: PlatformType
     user_id: str
@@ -141,7 +146,8 @@ class PlatformRevenue:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
+    """
+Platform performance metrics"""
     platform: PlatformType
     user_id: str
     period_start: datetime
@@ -164,7 +170,8 @@ class PlatformMetrics:
 
 
 class BasePlatformConnector(ABC):
-    """Abstract base class for platform connectors"""
+    """
+Abstract base class for platform connectors"""
     
     def __init__(
         self,
@@ -187,7 +194,8 @@ class BasePlatformConnector(ABC):
         period_start: datetime,
         period_end: datetime
     ) -> List[PlatformRevenue]:
-        """Fetch revenue data from platform"""
+        """
+Fetch revenue data from platform"""
         pass
     
     @abstractmethod
@@ -197,16 +205,19 @@ class BasePlatformConnector(ABC):
         period_start: datetime,
         period_end: datetime
     ) -> PlatformMetrics:
-        """Fetch performance metrics from platform"""
+        """
+Fetch performance metrics from platform"""
         pass
     
     @abstractmethod
     async def refresh_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Refresh authentication token"""
+        """
+Refresh authentication token"""
         pass
     
     def _decrypt_credentials(self, credentials: PlatformCredentials) -> Dict[str, str]:
-        """Decrypt stored credentials"""
+        """
+Decrypt stored credentials"""
         try:
             decrypted = {}
             if credentials.access_token:
@@ -1143,7 +1154,8 @@ class PlatformIntegrations:
         user_id: str,
         platform: PlatformType
     ) -> Dict[str, Any]:
-        """Disconnect platform integration"""
+        """
+Disconnect platform integration"""
         try:
             # Remove stored credentials
             await self._remove_platform_credentials(user_id, platform)
@@ -1192,7 +1204,8 @@ class PlatformIntegrations:
         return datetime.utcnow() >= credentials.token_expires_at
     
     async def _refresh_platform_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Refresh platform token"""
+        """
+Refresh platform token"""
         try:
             if credentials.platform not in self.connectors:
                 return {'success': False, 'error': 'Platform not supported'}

@@ -22,6 +22,7 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
+
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types de services externes."""
+    """
+Types de services externes."""
+
     SOCIAL_MEDIA_API = "social_media_api"
     MUSIC_STREAMING_API = "music_streaming_api"
     VIDEO_PLATFORM_API = "video_platform_api"
@@ -64,6 +67,7 @@ class ServiceType(Enum):
 
 class ServiceStatus(Enum):
     """Statuts des services externes."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -77,6 +81,7 @@ class ServiceStatus(Enum):
 
 class IntegrationComplexity(Enum):
     """Niveaux de complexité d'intégration."""
+
     SIMPLE = "simple"  # Configuration minimale
     MODERATE = "moderate"  # Configuration standard
     COMPLEX = "complex"  # Configuration avancée

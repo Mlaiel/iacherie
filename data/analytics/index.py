@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Optional, Any, List
@@ -110,7 +111,8 @@ class AnalyticsServiceFactory:
         return self._services['content_analytics']
     
     def get_performance_metrics(self) -> PerformanceMetrics:
-        """Get PerformanceMetrics service instance"""
+        """
+Get PerformanceMetrics service instance"""
         if 'performance_metrics' not in self._services:
             self._services['performance_metrics'] = PerformanceMetrics(
                 db_session=self.db_session,
@@ -119,7 +121,8 @@ class AnalyticsServiceFactory:
         return self._services['performance_metrics']
     
     def get_revenue_analytics(self) -> RevenueAnalytics:
-        """Get RevenueAnalytics service instance"""
+        """
+Get RevenueAnalytics service instance"""
         if 'revenue_analytics' not in self._services:
             self._services['revenue_analytics'] = RevenueAnalytics(
                 db_session=self.db_session,
@@ -130,7 +133,8 @@ class AnalyticsServiceFactory:
     
     # NEW ADVANCED SERVICES - INDUSTRIAL GRADE
     def get_ai_insights_analytics(self) -> AIInsightsAnalytics:
-        """Get AIInsightsAnalytics service instance"""
+        """
+Get AIInsightsAnalytics service instance"""
         if 'ai_insights_analytics' not in self._services:
             self._services['ai_insights_analytics'] = AIInsightsAnalytics(
                 db_session=self.db_session,
@@ -141,7 +145,8 @@ class AnalyticsServiceFactory:
         return self._services['ai_insights_analytics']
     
     def get_cross_platform_analytics(self) -> CrossPlatformAnalytics:
-        """Get CrossPlatformAnalytics service instance"""
+        """
+Get CrossPlatformAnalytics service instance"""
         if 'cross_platform_analytics' not in self._services:
             self._services['cross_platform_analytics'] = CrossPlatformAnalytics(
                 db_session=self.db_session,
@@ -152,7 +157,8 @@ class AnalyticsServiceFactory:
         return self._services['cross_platform_analytics']
     
     def get_platform_integration_analytics(self) -> PlatformIntegrationAnalytics:
-        """Get PlatformIntegrationAnalytics service instance"""
+        """
+Get PlatformIntegrationAnalytics service instance"""
         if 'platform_integration_analytics' not in self._services:
             self._services['platform_integration_analytics'] = PlatformIntegrationAnalytics(
                 db_session=self.db_session,
@@ -163,7 +169,8 @@ class AnalyticsServiceFactory:
         return self._services['platform_integration_analytics']
     
     def get_competition_intelligence_analytics(self) -> CompetitionIntelligenceAnalytics:
-        """Get CompetitionIntelligenceAnalytics service instance"""
+        """
+Get CompetitionIntelligenceAnalytics service instance"""
         if 'competition_intelligence_analytics' not in self._services:
             self._services['competition_intelligence_analytics'] = CompetitionIntelligenceAnalytics(
                 db_session=self.db_session,
@@ -175,7 +182,8 @@ class AnalyticsServiceFactory:
     
     # ENHANCED FACTORY METHODS
     def create_full_analytics_suite(self) -> Dict[str, Any]:
-        """Create complete analytics suite with all 15 engines"""
+        """
+Create complete analytics suite with all 15 engines"""
         return {
             "content_analytics": self.get_content_analytics(),
             "performance_metrics": self.get_performance_metrics(),
@@ -212,7 +220,8 @@ class AnalyticsServiceFactory:
         return list(self._engine_registry.keys())
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get status of all analytics engines"""
+        """
+Get status of all analytics engines"""
         return {
             "total_engines": len(self._engine_registry),
             "loaded_engines": len(self._services),
@@ -716,7 +725,8 @@ def get_analytics_factory() -> Optional[AnalyticsServiceFactory]:
 
 
 def get_analytics_manager() -> Optional[AnalyticsManager]:
-    """Get the global analytics manager instance."""
+    """
+Get the global analytics manager instance."""
     return analytics_manager
 
 

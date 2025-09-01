@@ -14,6 +14,7 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -25,7 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Creator specialization types"""
+    """
+Creator specialization types"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -39,6 +42,7 @@ class CreatorType(Enum):
 
 class VerificationStatus(Enum):
     """Creator verification levels"""
+
     UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
@@ -203,7 +207,8 @@ class CreatorProfileManager:
         return None
     
     async def update_profile(self, creator_id: str, updates: Dict[str, Any]) -> CreatorProfile:
-        """Update creator profile with validation"""
+        """
+Update creator profile with validation"""
         try:
             # Get existing profile
             profile = await self.get_profile(creator_id)
@@ -243,7 +248,8 @@ class CreatorProfileManager:
         return current_level
     
     def _meets_verification_criteria(self, profile: CreatorProfile, criteria: Dict[str, Any]) -> bool:
-        """Check if profile meets verification criteria"""
+        """
+Check if profile meets verification criteria"""
         for criterion, requirement in criteria.items():
             if criterion == "email_confirmed":
                 # This would check actual email confirmation status
@@ -309,7 +315,8 @@ class CreatorProfileManager:
         return (required_score * 0.8) + (optional_score * 0.2)
     
     def _verification_score(self, verification_status: VerificationStatus) -> float:
-        """Convert verification status to score"""
+        """
+Convert verification status to score"""
         scores = {
             VerificationStatus.UNVERIFIED: 0.0,
             VerificationStatus.EMAIL_VERIFIED: 0.2,
@@ -321,13 +328,15 @@ class CreatorProfileManager:
         return scores.get(verification_status, 0.0)
     
     def _account_age_score(self, created_at: datetime) -> float:
-        """Calculate score based on account age"""
+        """
+Calculate score based on account age"""
         age_days = (datetime.utcnow() - created_at).days
         # Score increases with age, max at 365 days
         return min(age_days / 365.0, 1.0)
     
     def _activity_score(self, last_active: datetime) -> float:
-        """Calculate score based on recent activity"""
+        """
+Calculate score based on recent activity"""
         days_inactive = (datetime.utcnow() - last_active).days
         # Score decreases with inactivity
         if days_inactive == 0:
@@ -342,7 +351,8 @@ class CreatorProfileManager:
             return 0.2
     
     async def _assign_badges(self, profile: CreatorProfile) -> List[str]:
-        """Assign badges based on achievements"""
+        """
+Assign badges based on achievements"""
         badges = []
         
         for badge_name, criteria in self.badge_criteria.items():
@@ -352,7 +362,8 @@ class CreatorProfileManager:
         return badges
     
     def _meets_badge_criteria(self, profile: CreatorProfile, criteria: Dict[str, Any]) -> bool:
-        """Check if profile meets badge criteria"""
+        """
+Check if profile meets badge criteria"""
         for criterion, requirement in criteria.items():
             if criterion == "min_content" and profile.total_content < requirement:
                 return False
@@ -375,7 +386,8 @@ class CreatorProfileManager:
         return []
     
     async def get_creator_statistics(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive creator statistics"""
+        """
+Get comprehensive creator statistics"""
         profile = await self.get_profile(creator_id)
         if not profile:
             return {}

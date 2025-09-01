@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
@@ -44,7 +45,8 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize Audio Analytics Repository"""
+        """
+Initialize Audio Analytics Repository"""
         super().__init__(db_session, AudioAnalytics)
         
     def record_audio_analytics(self, 
@@ -457,7 +459,8 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
     def _generate_trend_insights(self, 
                                overall_trend: str,
                                platform_trends: Dict[str, Any]) -> List[str]:
-        """Generate insights based on trend analysis"""
+        """
+Generate insights based on trend analysis"""
         insights = []
         
         if overall_trend == 'growing':
@@ -599,7 +602,8 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             return 'Very Fast (> 140 BPM)'
             
     def _get_energy_range(self, energy: float) -> str:
-        """Categorize energy level"""
+        """
+Categorize energy level"""
         if energy < 0.3:
             return 'Low Energy'
         elif energy < 0.7:
@@ -608,7 +612,8 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             return 'High Energy'
             
     def _calculate_performance_insights(self, performance_data: Dict[str, Dict[str, int]]) -> Dict[str, Any]:
-        """Calculate performance insights for technical characteristics"""
+        """
+Calculate performance insights for technical characteristics"""
         if not performance_data:
             return {'best_performing': None, 'data': {}}
             
@@ -639,7 +644,8 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
                                           key_insights: Dict[str, Any],
                                           energy_insights: Dict[str, Any],
                                           genre_insights: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on technical analysis"""
+        """
+Generate recommendations based on technical analysis"""
         recommendations = []
         
         if tempo_insights.get('best_performing'):

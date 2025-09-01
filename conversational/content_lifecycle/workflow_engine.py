@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -44,6 +47,7 @@ class WorkflowStatus(Enum):
 
 class StepStatus(Enum):
     """Workflow step status"""
+
     WAITING = "waiting"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -54,6 +58,7 @@ class StepStatus(Enum):
 
 class WorkflowPriority(Enum):
     """Workflow execution priority"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -80,7 +85,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution instance"""
+    """
+Workflow execution instance"""
     execution_id: str
     workflow_id: str
     content_id: str
@@ -101,7 +107,8 @@ class WorkflowExecution:
 
 @dataclass
 class StepExecution:
-    """Step execution details"""
+    """
+Step execution details"""
     step_id: str
     execution_id: str
     status: StepStatus
@@ -115,7 +122,8 @@ class StepExecution:
 
 
 class WorkflowEngine:
-    """Advanced workflow management and execution engine"""
+    """
+Advanced workflow management and execution engine"""
     
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
@@ -128,7 +136,8 @@ class WorkflowEngine:
         self.default_timeout = 300  # 5 minutes
         
     def _initialize_workflows(self) -> Dict[str, WorkflowDefinition]:
-        """Initialize predefined workflows"""
+        """
+Initialize predefined workflows"""
         workflows = {}
         
         # Content Creation Workflow
@@ -702,17 +711,20 @@ class WorkflowEngine:
     
     # Database interaction methods
     async def _store_execution_in_db(self, execution: WorkflowExecution) -> None:
-        """Store workflow execution in database"""
+        """
+Store workflow execution in database"""
         # Placeholder implementation
         pass
     
     async def _update_execution_in_db(self, execution: WorkflowExecution) -> None:
-        """Update workflow execution in database"""
+        """
+Update workflow execution in database"""
         # Placeholder implementation
         pass
     
     async def _fetch_execution_from_db(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Fetch workflow execution from database"""
+        """
+Fetch workflow execution from database"""
         # Placeholder implementation
         return None
     
@@ -722,13 +734,15 @@ class WorkflowEngine:
         status: Optional[WorkflowStatus], 
         limit: int
     ) -> List[WorkflowExecution]:
-        """Fetch user workflow executions from database"""
+        """
+Fetch user workflow executions from database"""
         # Placeholder implementation
         return []
     
     # Step handler implementations (placeholders)
     async def _handle_content_validation(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Handle content validation step"""
+        """
+Handle content validation step"""
         return {"validated": True, "quality_score": 0.85}
     
     async def _handle_quality_check(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:

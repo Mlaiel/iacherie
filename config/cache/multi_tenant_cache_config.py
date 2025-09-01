@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Optional, List, Any, Union, Set
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,7 +26,9 @@ from pydantic import BaseModel, validator
 
 
 class TenantType(str, Enum):
-    """Types of tenants in the platform"""
+    """
+Types of tenants in the platform"""
+
     INDIVIDUAL_CREATOR = "individual_creator"    # Solo musicians, artists
     MUSIC_LABEL = "music_label"                 # Record labels
     CONTENT_AGENCY = "content_agency"           # Marketing agencies
@@ -36,6 +39,7 @@ class TenantType(str, Enum):
 
 class IsolationLevel(str, Enum):
     """Data isolation levels for tenants"""
+
     STRICT = "strict"           # Complete isolation
     SHARED_CACHE = "shared_cache"  # Shared cache with tenant prefixes
     HYBRID = "hybrid"           # Mixed approach based on data sensitivity
@@ -43,6 +47,7 @@ class IsolationLevel(str, Enum):
 
 class ResourceTier(str, Enum):
     """Resource allocation tiers"""
+
     BASIC = "basic"            # Limited resources
     STANDARD = "standard"      # Standard resources
     PREMIUM = "premium"        # Enhanced resources
@@ -62,7 +67,8 @@ class TenantResourceLimits:
 
 @dataclass
 class TenantCacheSettings:
-    """Cache settings for individual tenant"""
+    """
+Cache settings for individual tenant"""
     tenant_id: str
     tenant_name: str
     tenant_type: TenantType
@@ -189,12 +195,14 @@ class MultiTenantCacheConfig:
         return True
     
     def get_tenant_cache_key(self, tenant_id: str, cache_key: str) -> str:
-        """Generate tenant-specific cache key"""
+        """
+Generate tenant-specific cache key"""
         components = [self.global_prefix, self.namespace, tenant_id, cache_key]
         return self.tenant_key_separator.join(components)
     
     def get_available_cache_size(self) -> int:
-        """Get available cache size for new tenants"""
+        """
+Get available cache size for new tenants"""
         used_cache = sum(
             settings.resource_limits.max_cache_size_mb 
             for settings in self.configured_tenants.values()
@@ -203,7 +211,8 @@ class MultiTenantCacheConfig:
         return max(0, available)
     
     def validate_tenant_access(self, tenant_id: str, api_key: Optional[str] = None) -> bool:
-        """Validate tenant access permissions"""
+        """
+Validate tenant access permissions"""
         if tenant_id not in self.configured_tenants:
             return False
             
@@ -221,7 +230,8 @@ class MultiTenantCacheConfig:
 
 
 class MultiTenantCacheManager:
-    """Manager for multi-tenant cache operations"""
+    """
+Manager for multi-tenant cache operations"""
     
     def __init__(self, config: MultiTenantCacheConfig):
         self.config = config
@@ -231,7 +241,8 @@ class MultiTenantCacheManager:
     
     def create_tenant(self, tenant_name: str, tenant_type: TenantType, 
                      resource_tier: ResourceTier = ResourceTier.STANDARD) -> Optional[TenantCacheSettings]:
-        """Create new tenant with generated ID"""
+        """
+Create new tenant with generated ID"""
         tenant_id = str(uuid.uuid4())
         
         tenant_settings = TenantCacheSettings(
@@ -248,7 +259,8 @@ class MultiTenantCacheManager:
         return None
     
     def get_tenant_resource_usage(self, tenant_id: str) -> Dict[str, Any]:
-        """Get current resource usage for tenant"""
+        """
+Get current resource usage for tenant"""
         if tenant_id not in self._resource_usage:
             return {}
             

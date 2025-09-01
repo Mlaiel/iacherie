@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class SurveillanceMode(Enum):
-    """Surveillance operation modes."""
+    """
+Surveillance operation modes."""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -33,6 +36,7 @@ class SurveillanceMode(Enum):
 
 class MonitoringType(Enum):
     """Types of content monitoring."""
+
     FINGERPRINT_MATCHING = "fingerprint_matching"
     METADATA_ANALYSIS = "metadata_analysis"
     VISUAL_SIMILARITY = "visual_similarity"
@@ -44,6 +48,7 @@ class MonitoringType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -52,6 +57,7 @@ class AlertSeverity(Enum):
 
 class AlertChannel(Enum):
     """Alert notification channels."""
+
     EMAIL = "email"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -63,6 +69,7 @@ class AlertChannel(Enum):
 
 class FingerprintEngine(Enum):
     """Fingerprinting engines for content analysis."""
+
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     ESSENTIA = "essentia"        # Advanced audio analysis
     OPENCV = "opencv"            # Video frame analysis
@@ -195,7 +202,8 @@ class ViolationAction:
 
 @dataclass
 class PerformanceConfig:
-    """Performance monitoring configuration."""
+    """
+Performance monitoring configuration."""
     enabled: bool = True
     metrics_collection: bool = True
     detailed_logging: bool = True
@@ -219,7 +227,8 @@ class PerformanceConfig:
 
 @dataclass
 class StorageConfig:
-    """Storage configuration for surveillance data."""
+    """
+Storage configuration for surveillance data."""
     enabled: bool = True
     storage_backend: str = "s3"  # s3, gcs, azure, local
     
@@ -270,7 +279,8 @@ class PrivacyConfig:
 
 @dataclass
 class SurveillanceConfig:
-    """Complete surveillance system configuration."""
+    """
+Complete surveillance system configuration."""
     enabled: bool = True
     mode: SurveillanceMode = SurveillanceMode.REAL_TIME
     monitoring_types: List[MonitoringType] = field(default_factory=lambda: [
@@ -315,7 +325,8 @@ class SurveillanceConfigManager:
     """Manager for surveillance system configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize surveillance config manager."""
+        """
+Initialize surveillance config manager."""
         self.config_dir = Path(config_dir or os.getenv("SURVEILLANCE_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
@@ -383,12 +394,14 @@ class SurveillanceConfigManager:
         return self.config
     
     def update_config(self, config: SurveillanceConfig) -> None:
-        """Update surveillance configuration."""
+        """
+Update surveillance configuration."""
         self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         config_file = self.config_dir / "surveillance_config.json"
         with open(config_file, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
@@ -409,7 +422,8 @@ class SurveillanceConfigManager:
         pass
     
     def validate_config(self) -> List[str]:
-        """Validate surveillance configuration."""
+        """
+Validate surveillance configuration."""
         errors = []
         
         if not self.config.enabled:
@@ -443,20 +457,24 @@ class SurveillanceConfigManager:
         return self.config.fingerprinting
     
     def get_alert_config(self) -> AlertConfig:
-        """Get alert configuration."""
+        """
+Get alert configuration."""
         return self.config.alerts
     
     def get_performance_config(self) -> PerformanceConfig:
-        """Get performance configuration."""
+        """
+Get performance configuration."""
         return self.config.performance
     
     def export_config(self, file_path: str) -> None:
-        """Export configuration to file."""
+        """
+Export configuration to file."""
         with open(file_path, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
     
     def import_config(self, file_path: str) -> None:
-        """Import configuration from file."""
+        """
+Import configuration from file."""
         with open(file_path, 'r') as f:
             data = json.load(f)
             self.config = self._deserialize_config(data)

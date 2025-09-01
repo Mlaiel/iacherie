@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc
@@ -50,7 +51,8 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize monetization rule repository"""
+        """
+Initialize monetization rule repository"""
         super().__init__(db_session, MonetizationRule)
         
     def create_rule(self,
@@ -514,7 +516,8 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_pricing_adjustment(self,
                                   action: Dict[str, Any],
                                   context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute pricing adjustment action"""
+        """
+Execute pricing adjustment action"""
         try:
             adjustment_percentage = action.get('adjustment_percentage', 0)
             target_content = context.get('content_id')
@@ -536,7 +539,8 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_tag_update(self,
                           action: Dict[str, Any],
                           context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute tag update action"""
+        """
+Execute tag update action"""
         try:
             new_tags = action.get('tags', [])
             target_content = context.get('content_id')
@@ -559,7 +563,8 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                                  action: Dict[str, Any],
                                  context: Dict[str, Any],
                                  rule: MonetizationRule) -> Dict[str, Any]:
-        """Execute user notification action"""
+        """
+Execute user notification action"""
         try:
             message_template = action.get('message', 'Monetization rule triggered')
             notification_type = action.get('notification_type', 'info')
@@ -582,7 +587,8 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_content_distribution(self,
                                     action: Dict[str, Any],
                                     context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content distribution action"""
+        """
+Execute content distribution action"""
         try:
             target_platforms = action.get('platforms', [])
             content_id = context.get('content_id')
@@ -604,7 +610,8 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_analytics_trigger(self,
                                  action: Dict[str, Any],
                                  context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute analytics trigger action"""
+        """
+Execute analytics trigger action"""
         try:
             analytics_type = action.get('analytics_type', 'performance_report')
             

@@ -23,6 +23,7 @@ Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -83,7 +84,9 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerType(str, Enum):
-    """Types of crawlers"""
+    """
+Types of crawlers"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -96,6 +99,7 @@ class CrawlerType(str, Enum):
 
 class CrawlMethod(str, Enum):
     """Crawling methods"""
+
     API = "api"
     SELENIUM = "selenium"
     REQUESTS = "requests"
@@ -105,6 +109,7 @@ class CrawlMethod(str, Enum):
 
 class DetectionType(str, Enum):
     """Content detection types"""
+
     EXACT_MATCH = "exact_match"
     SIMILARITY_MATCH = "similarity_match"
     HASH_MATCH = "hash_match"
@@ -115,6 +120,7 @@ class DetectionType(str, Enum):
 
 class CrawlStatus(str, Enum):
     """Crawl operation status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -126,6 +132,7 @@ class CrawlStatus(str, Enum):
 
 class MatchConfidence(str, Enum):
     """Match confidence levels"""
+
     VERY_HIGH = "very_high"    # 95%+
     HIGH = "high"              # 85%+
     MEDIUM = "medium"          # 70%+
@@ -210,7 +217,8 @@ class CrawlTarget:
 
 @dataclass
 class CrawlResult:
-    """Result of a crawl operation"""
+    """
+Result of a crawl operation"""
     result_id: str
     target_id: str
     url: str
@@ -230,7 +238,8 @@ class CrawlResult:
 
 @dataclass
 class CrawlSession:
-    """Represents a crawling session"""
+    """
+Represents a crawling session"""
     session_id: str
     crawler_type: CrawlerType
     crawl_method: CrawlMethod
@@ -244,7 +253,8 @@ class CrawlSession:
 
 
 class YouTubeCrawler:
-    """YouTube content crawler and monitor"""
+    """
+YouTube content crawler and monitor"""
     
     def __init__(self, api_key: str, config: CrawlerConfig):
         self.api_key = api_key
@@ -496,7 +506,8 @@ class YouTubeCrawler:
 
 
 class InstagramCrawler:
-    """Instagram content crawler and monitor"""
+    """
+Instagram content crawler and monitor"""
     
     def __init__(self, api_key: str, config: CrawlerConfig):
         self.api_key = api_key
@@ -646,7 +657,8 @@ class InstagramCrawler:
 
 
 class TikTokCrawler:
-    """TikTok content crawler and monitor"""
+    """
+TikTok content crawler and monitor"""
     
     def __init__(self, api_key: str, config: CrawlerConfig):
         self.api_key = api_key
@@ -786,7 +798,8 @@ class TikTokCrawler:
 
 
 class GenericWebCrawler:
-    """Generic web crawler for any website"""
+    """
+Generic web crawler for any website"""
     
     def __init__(self, config: CrawlerConfig):
         self.config = config
@@ -892,7 +905,8 @@ class GenericWebCrawler:
             return True
     
     async def _analyze_page_content(self, soup, target: CrawlTarget) -> float:
-        """Analyze page content for similarity"""
+        """
+Analyze page content for similarity"""
         try:
             # Extract text content
             text_content = soup.get_text().lower()
@@ -927,7 +941,8 @@ class GenericWebCrawler:
             return False
     
     def _get_match_confidence(self, score: float) -> MatchConfidence:
-        """Convert similarity score to match confidence"""
+        """
+Convert similarity score to match confidence"""
         if score >= 0.95:
             return MatchConfidence.VERY_HIGH
         elif score >= 0.85:
@@ -1116,7 +1131,8 @@ class CrawlerProcessor:
         return datetime.utcnow() >= next_crawl
     
     async def _store_crawl_target(self, target: CrawlTarget):
-        """Store crawl target in database and cache"""
+        """
+Store crawl target in database and cache"""
         try:
             target_data = {
                 "target_id": target.target_id,
@@ -1300,7 +1316,8 @@ class CrawlerProcessor:
             return False
     
     async def _test_database_connection(self) -> bool:
-        """Test database connection"""
+        """
+Test database connection"""
         try:
             # Would test actual database connection
             return True

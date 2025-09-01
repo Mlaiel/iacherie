@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class CoordinationStrategy(Enum):
-    """Stratégies de coordination des agents"""
+    """
+Stratégies de coordination des agents"""
+
     SEQUENTIAL = "sequential"        # Séquentiel
     PARALLEL = "parallel"            # Parallèle
     PIPELINE = "pipeline"            # Pipeline
@@ -57,7 +60,8 @@ class AgentCoordination:
 
 @dataclass
 class CoordinationResult:
-    """Résultat de coordination multi-agents"""
+    """
+Résultat de coordination multi-agents"""
     success: bool
     coordination_id: str
     results: Dict[str, Any] = field(default_factory=dict)
@@ -424,11 +428,13 @@ class AgentCoordinator:
         return performance_scores
     
     async def get_coordination_status(self, coordination_id: str) -> Optional[CoordinationResult]:
-        """Récupère le statut d'une coordination"""
+        """
+Récupère le statut d'une coordination"""
         return self.coordinations.get(coordination_id)
     
     async def get_agent_health(self, agent_name: str) -> Dict[str, Any]:
-        """Vérifie la santé d'un agent spécifique"""
+        """
+Vérifie la santé d'un agent spécifique"""
         if agent_name not in self.agents:
             return {'status': 'not_found', 'message': f'Agent {agent_name} not found'}
         
@@ -453,7 +459,8 @@ class AgentCoordinator:
             }
     
     async def get_system_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques système du coordinateur"""
+        """
+Retourne les statistiques système du coordinateur"""
         uptime = datetime.now(timezone.utc) - self.started_at
         
         return {
@@ -466,7 +473,8 @@ class AgentCoordinator:
         }
     
     async def shutdown(self):
-        """Arrêt gracieux du coordinateur"""
+        """
+Arrêt gracieux du coordinateur"""
         logger.info("Shutting down AgentCoordinator...")
         
         # Arrêt de l'orchestrateur

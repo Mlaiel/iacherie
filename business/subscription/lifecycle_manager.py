@@ -4,10 +4,11 @@ Subscription lifecycle management orchestrator handling state transitions,
 automated workflows, and business rule enforcement throughout subscription lifecycle.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List
@@ -35,7 +36,9 @@ logger = get_logger(__name__)
 
 
 class LifecycleEvent(Enum):
-    """Subscription lifecycle events."""
+    """
+Subscription lifecycle events."""
+
     SUBSCRIPTION_CREATED = "subscription_created"
     TRIAL_STARTED = "trial_started"
     TRIAL_ENDING_SOON = "trial_ending_soon"
@@ -69,7 +72,8 @@ class LifecycleManager:
     """
     
     def __init__(self):
-        """Initialize lifecycle manager."""
+        """
+Initialize lifecycle manager."""
         self.logger = get_logger(__name__)
         self.subscription_service = SubscriptionService()
         self.billing_engine = BillingEngine()
@@ -632,7 +636,8 @@ class LifecycleManager:
         user_id: int,
         subscription: UserSubscription
     ) -> None:
-        """Schedule cancellation survey."""
+        """
+Schedule cancellation survey."""
         # Implementation would schedule a cancellation survey
         # to understand why the user cancelled
         pass

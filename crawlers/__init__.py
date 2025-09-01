@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -68,7 +69,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerConfig:
-    """Crawler system configuration."""
+    """
+Crawler system configuration."""
     max_concurrent_crawlers: int = 50
     default_rate_limit: float = 1.0
     enable_proxy_rotation: bool = True
@@ -94,7 +96,8 @@ class CrawlerOrchestrator:
     """
     
     def __init__(self, config: Optional[CrawlerConfig] = None):
-        """Initialize crawler orchestrator."""
+        """
+Initialize crawler orchestrator."""
         self.config = config or CrawlerConfig()
         
         # Setup logging
@@ -334,15 +337,18 @@ class CrawlerOrchestrator:
         self.violation_callbacks.append(callback)
     
     def add_analysis_callback(self, callback: Callable) -> None:
-        """Add callback for analysis events."""
+        """
+Add callback for analysis events."""
         self.analysis_callbacks.append(callback)
     
     def add_monitoring_callback(self, callback: Callable) -> None:
-        """Add callback for monitoring events."""
+        """
+Add callback for monitoring events."""
         self.monitoring_callbacks.append(callback)
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
+        """
+Get comprehensive system status."""
         status = {
             'timestamp': datetime.now().isoformat(),
             'orchestrator': {
@@ -372,7 +378,8 @@ class CrawlerOrchestrator:
         return status
     
     async def shutdown(self) -> None:
-        """Shutdown orchestrator gracefully."""
+        """
+Shutdown orchestrator gracefully."""
         logger.info("Shutting down crawler orchestrator...")
         
         if self.surveillance_engine:

@@ -18,6 +18,7 @@ for IA-Influencer-Agent platform. Includes intelligent image building, comprehen
 security scanning, automated versioning, multi-registry distribution, artifact 
 management, and optimized content delivery for AI processing workloads.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -40,7 +41,9 @@ from azure.identity import DefaultAzureCredential
 logger = logging.getLogger(__name__)
 
 class RegistryType(Enum):
-    """Container registry types"""
+    """
+Container registry types"""
+
     DOCKER_HUB = "docker_hub"
     AWS_ECR = "aws_ecr"
     AZURE_ACR = "azure_acr"
@@ -51,6 +54,7 @@ class RegistryType(Enum):
 
 class ImageBuildStatus(Enum):
     """Image build status"""
+
     PENDING = "pending"
     BUILDING = "building"
     SUCCESS = "success"
@@ -59,6 +63,7 @@ class ImageBuildStatus(Enum):
 
 class ImageScanStatus(Enum):
     """Image security scan status"""
+
     NOT_SCANNED = "not_scanned"
     SCANNING = "scanning"
     PASSED = "passed"
@@ -81,7 +86,8 @@ class RegistryConfig:
 
 @dataclass
 class ImageManifest:
-    """Container image manifest"""
+    """
+Container image manifest"""
     name: str
     tag: str
     digest: str
@@ -96,7 +102,8 @@ class ImageManifest:
 
 @dataclass
 class BuildConfiguration:
-    """Image build configuration"""
+    """
+Image build configuration"""
     name: str
     dockerfile_path: str
     context_path: str
@@ -122,7 +129,8 @@ class PipelineStage:
     continue_on_error: bool = False
 
 class ContainerRegistryManager:
-    """Professional container registry manager"""
+    """
+Professional container registry manager"""
     
     def __init__(self, config_path: str = "/app/config/registry"):
         self.config_path = Path(config_path)

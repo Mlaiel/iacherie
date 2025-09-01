@@ -7,6 +7,7 @@ comprehensive CRUD operations, metadata handling, and analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -20,7 +21,8 @@ class BaseRepository:
         self.db_connection = db_connection
         
     async def execute_query(self, query: str, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Execute database query (mock implementation)"""
+        """
+Execute database query (mock implementation)"""
         # This would normally execute the query against the database
         # For now, return empty list
         return []
@@ -37,7 +39,8 @@ class ContentRepository(BaseRepository):
     """
     
     def __init__(self, db_connection=None):
-        """Initialize content repository"""
+        """
+Initialize content repository"""
         super().__init__(db_connection)
         self.table_name = "content"
         
@@ -660,7 +663,8 @@ class ContentRepository(BaseRepository):
         return cache_age < self.cache_ttl
     
     def _format_content_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format content data for consumption"""
+        """
+Format content data for consumption"""
         try:
             formatted_data = raw_data.copy()
             

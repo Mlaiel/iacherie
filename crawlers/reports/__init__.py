@@ -34,6 +34,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import logging
 import warnings
 from typing import Dict, List, Any, Optional, Union, Type
@@ -555,7 +556,8 @@ class ReportsModuleManager:
         return self.available_components.get(component_type, False)
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information."""
+        """
+Get comprehensive module information."""
         return {
             "version": __version__,
             "author": __author__,
@@ -585,7 +587,8 @@ def create_report(
     configuration: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Any:
-    """Create a report using the specified generator."""
+    """
+Create a report using the specified generator."""
     if not GENERATORS_AVAILABLE:
         raise RuntimeError("Report generators are not available")
     

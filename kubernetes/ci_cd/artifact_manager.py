@@ -8,6 +8,7 @@ Enterprise artifact management system for multi-format content platform.
 Handles storage, versioning, distribution, and lifecycle management of build artifacts.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -28,7 +29,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 class ArtifactType(Enum):
-    """Artifact type enumeration"""
+    """
+Artifact type enumeration"""
+
     DOCKER_IMAGE = "docker_image"
     AI_MODEL = "ai_model"
     CONTENT_FINGERPRINT = "content_fingerprint"
@@ -42,6 +45,7 @@ class ArtifactType(Enum):
 
 class StorageBackend(Enum):
     """Storage backend enumeration"""
+
     LOCAL = "local"
     AWS_S3 = "aws_s3"
     MINIO = "minio"
@@ -74,7 +78,8 @@ class ArtifactMetadata:
 
 @dataclass
 class ArtifactStorageConfig:
-    """Artifact storage configuration"""
+    """
+Artifact storage configuration"""
     backend: StorageBackend
     bucket_name: str
     region: str = "eu-central-1"
@@ -97,7 +102,8 @@ class ArtifactManager:
     """Enterprise artifact management system"""
     
     def __init__(self, storage_config: ArtifactStorageConfig):
-        """Initialize artifact manager"""
+        """
+Initialize artifact manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.storage_config = storage_config
         self.storage_client = None
@@ -286,7 +292,8 @@ class ArtifactManager:
         return artifacts
     
     async def delete_artifact(self, artifact_id: str) -> bool:
-        """Delete artifact and its metadata"""
+        """
+Delete artifact and its metadata"""
         try:
             if artifact_id not in self.metadata_store:
                 return False
@@ -330,7 +337,8 @@ class ArtifactManager:
         return self.metadata_store.get(artifact_id)
     
     async def update_artifact_tags(self, artifact_id: str, tags: List[str]) -> bool:
-        """Update artifact tags"""
+        """
+Update artifact tags"""
         try:
             if artifact_id not in self.metadata_store:
                 return False
@@ -421,7 +429,8 @@ class ArtifactManager:
         return decrypted_path
     
     async def _upload_to_storage(self, file_path: str, artifact_id: str) -> str:
-        """Upload file to storage backend"""
+        """
+Upload file to storage backend"""
         if self.storage_config.backend == StorageBackend.LOCAL:
             storage_path = Path(self.storage_config.bucket_name) / artifact_id
             shutil.copy2(file_path, storage_path)
@@ -467,7 +476,8 @@ class ArtifactManager:
             )
     
     async def _delete_from_storage(self, storage_path: str) -> None:
-        """Delete file from storage backend"""
+        """
+Delete file from storage backend"""
         if self.storage_config.backend == StorageBackend.LOCAL:
             if os.path.exists(storage_path):
                 os.unlink(storage_path)
@@ -485,7 +495,8 @@ class ArtifactManager:
             )
     
     async def _load_metadata(self) -> None:
-        """Load artifact metadata from storage"""
+        """
+Load artifact metadata from storage"""
         metadata_file = self.local_cache_dir / "artifacts_metadata.json"
         if metadata_file.exists():
             try:

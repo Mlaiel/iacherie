@@ -5,8 +5,9 @@ health-aware routing, and dynamic endpoint management for optimal performance.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-© 2025 All Rights Reserved
+(c) 2025 All Rights Reserved
 """
+
 import asyncio
 import logging
 import time
@@ -38,7 +39,9 @@ from ...core.monitoring import get_metrics_client
 
 
 class LoadBalancingAlgorithm(Enum):
-    """Load balancing algorithms"""
+    """
+Load balancing algorithms"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -51,6 +54,7 @@ class LoadBalancingAlgorithm(Enum):
 
 class EndpointStatus(Enum):
     """Endpoint health status"""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
@@ -76,7 +80,8 @@ class ServiceEndpoint:
 
 @dataclass
 class LoadBalancingRequest:
-    """Load balancing request context"""
+    """
+Load balancing request context"""
     request_id: str
     client_ip: str
     service_name: str
@@ -90,7 +95,8 @@ class LoadBalancingRequest:
 
 @dataclass
 class RoutingDecision:
-    """Routing decision result"""
+    """
+Routing decision result"""
     selected_endpoint: ServiceEndpoint
     algorithm_used: LoadBalancingAlgorithm
     decision_time_ms: float
@@ -315,11 +321,13 @@ class IntelligentLoadBalancer(BaseAgent):
         return min(endpoints, key=lambda ep: ep.current_connections)
 
     def _least_response_time_selection(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Least response time endpoint selection"""
+        """
+Least response time endpoint selection"""
         return min(endpoints, key=lambda ep: ep.response_time_ms)
 
     def _weighted_least_connections_selection(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Weighted least connections endpoint selection"""
+        """
+Weighted least connections endpoint selection"""
         def connection_ratio(endpoint: ServiceEndpoint) -> float:
             if endpoint.weight == 0:
                 return float('inf')
@@ -328,12 +336,14 @@ class IntelligentLoadBalancer(BaseAgent):
         return min(endpoints, key=connection_ratio)
 
     def _ip_hash_selection(self, client_ip: str, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """IP hash-based endpoint selection for session affinity"""
+        """
+IP hash-based endpoint selection for session affinity"""
         hash_value = int(hashlib.md5(client_ip.encode()).hexdigest(), 16)
         return endpoints[hash_value % len(endpoints)]
 
     def _consistent_hash_selection(self, request: LoadBalancingRequest, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Consistent hash endpoint selection"""
+        """
+Consistent hash endpoint selection"""
         hash_key = f"{request.client_ip}:{request.user_id or ''}"
         hash_value = int(hashlib.sha256(hash_key.encode()).hexdigest(), 16)
         return endpoints[hash_value % len(endpoints)]
@@ -407,7 +417,8 @@ class IntelligentLoadBalancer(BaseAgent):
         return [ep for ep in endpoints if ep.status == EndpointStatus.HEALTHY]
 
     async def _track_request(self, request: LoadBalancingRequest, decision: RoutingDecision):
-        """Track request for analytics and optimization"""
+        """
+Track request for analytics and optimization"""
         try:
             request_record = {
                 "timestamp": request.timestamp.isoformat(),
@@ -496,7 +507,8 @@ class IntelligentLoadBalancer(BaseAgent):
                     await self._check_endpoint_health(endpoint)
 
     async def _check_endpoint_health(self, endpoint: ServiceEndpoint):
-        """Check health of a single endpoint"""
+        """
+Check health of a single endpoint"""
         try:
             # Simulate health check (in production, this would make HTTP requests)
             start_time = time.time()

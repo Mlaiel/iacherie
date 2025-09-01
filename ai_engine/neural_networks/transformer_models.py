@@ -6,6 +6,7 @@ understanding, and generation for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -19,7 +20,9 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig, NetworkType
 
 
 class TransformerType(Enum):
-    """Transformer architecture variants"""
+    """
+Transformer architecture variants"""
+
     ENCODER_ONLY = "encoder_only"
     DECODER_ONLY = "decoder_only"
     ENCODER_DECODER = "encoder_decoder"
@@ -78,7 +81,8 @@ class PositionalEncoding(nn.Module):
 
 
 class RotaryPositionalEmbedding(nn.Module):
-    """Rotary Position Embedding (RoPE)"""
+    """
+Rotary Position Embedding (RoPE)"""
     
     def __init__(self, dim: int, max_position_embeddings: int = 2048):
         super().__init__()
@@ -161,7 +165,8 @@ class MultiHeadAttention(nn.Module):
 
 
 class FeedForward(nn.Module):
-    """Position-wise feed-forward network"""
+    """
+Position-wise feed-forward network"""
     
     def __init__(self, d_model: int, d_ff: int, dropout: float = 0.1):
         super().__init__()
@@ -175,7 +180,8 @@ class FeedForward(nn.Module):
 
 
 class TransformerLayer(nn.Module):
-    """Single transformer layer"""
+    """
+Single transformer layer"""
     
     def __init__(
         self,
@@ -540,7 +546,8 @@ class AudioTransformer(ContentTransformer):
 
 
 class VideoTransformer(ContentTransformer):
-    """Specialized transformer for video content processing"""
+    """
+Specialized transformer for video content processing"""
     
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
@@ -579,7 +586,8 @@ class VideoTransformer(ContentTransformer):
 
 
 class TextTransformer(ContentTransformer):
-    """Specialized transformer for text content processing"""
+    """
+Specialized transformer for text content processing"""
     
     def __init__(self, config: TransformerConfig, vocab_size: int = 50000):
         super().__init__(config)

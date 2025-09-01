@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class RedditPlatform(PlatformBase):
-    """Reddit platform integration"""
+    """
+Reddit platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Reddit platform"""
+        """
+Initialize Reddit platform"""
         super().__init__(config)
         self.api_base = "https://oauth.reddit.com"
         self.auth_url = "https://www.reddit.com/api/v1/access_token"
@@ -41,7 +44,8 @@ class RedditPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Reddit OAuth2"""
+        """
+Authenticate with Reddit OAuth2"""
         try:
             session = await self._get_session()
             
@@ -100,7 +104,8 @@ class RedditPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Reddit API"""
+        """
+Make authenticated request to Reddit API"""
         try:
             session = await self._get_session()
             

@@ -4,8 +4,9 @@ Defines interfaces for revenue tracking, payment processing,
 licensing, revenue sharing and financial reporting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
@@ -14,7 +15,9 @@ from enum import Enum
 
 
 class CurrencyType(Enum):
-    """Supported currency types."""
+    """
+Supported currency types."""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -25,6 +28,7 @@ class CurrencyType(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -34,6 +38,7 @@ class PaymentMethod(Enum):
 
 class LicenseType(Enum):
     """Content licensing types."""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -43,6 +48,7 @@ class LicenseType(Enum):
 
 class RevenueSource(Enum):
     """Revenue source types."""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     COLLABORATION = "collaboration"
@@ -87,7 +93,8 @@ class RevenueTrackerInterface(ABC):
         timeframe: str,
         currency: CurrencyType = CurrencyType.EUR
     ) -> Dict[str, Decimal]:
-        """Calculate total revenue for user across all sources."""
+        """
+Calculate total revenue for user across all sources."""
         pass
     
     @abstractmethod
@@ -96,7 +103,8 @@ class RevenueTrackerInterface(ABC):
         user_id: str,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Get detailed revenue breakdown by source and platform."""
+        """
+Get detailed revenue breakdown by source and platform."""
         pass
     
     @abstractmethod
@@ -105,7 +113,8 @@ class RevenueTrackerInterface(ABC):
         user_id: str,
         prediction_months: int
     ) -> Dict[str, Decimal]:
-        """Predict future revenue based on historical data."""
+        """
+Predict future revenue based on historical data."""
         pass
     
     @abstractmethod
@@ -114,12 +123,14 @@ class RevenueTrackerInterface(ABC):
         user_id: str,
         comparison_period: str
     ) -> Dict[str, float]:
-        """Track revenue growth metrics and trends."""
+        """
+Track revenue growth metrics and trends."""
         pass
 
 
 class PaymentProcessorInterface(ABC):
-    """Interface for payment processing operations."""
+    """
+Interface for payment processing operations."""
     
     @abstractmethod
     async def setup_payment_account(
@@ -150,7 +161,8 @@ class PaymentProcessorInterface(ABC):
         recipient_id: str,
         payment_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment to recipient."""
+        """
+Process payment to recipient."""
         pass
     
     @abstractmethod
@@ -163,7 +175,8 @@ class PaymentProcessorInterface(ABC):
         frequency: str,
         start_date: datetime
     ) -> str:
-        """Schedule recurring payment setup."""
+        """
+Schedule recurring payment setup."""
         pass
     
     @abstractmethod
@@ -172,7 +185,8 @@ class PaymentProcessorInterface(ABC):
         payment_method: PaymentMethod,
         payment_details: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Validate payment method details."""
+        """
+Validate payment method details."""
         pass
     
     @abstractmethod
@@ -182,7 +196,8 @@ class PaymentProcessorInterface(ABC):
         dispute_reason: str,
         evidence: Dict[str, Any]
     ) -> str:
-        """Handle payment dispute resolution."""
+        """
+Handle payment dispute resolution."""
         pass
     
     @abstractmethod
@@ -192,12 +207,14 @@ class PaymentProcessorInterface(ABC):
         currency: CurrencyType,
         payment_method: PaymentMethod
     ) -> Dict[str, Decimal]:
-        """Calculate payment processing fees."""
+        """
+Calculate payment processing fees."""
         pass
 
 
 class LicensingInterface(ABC):
-    """Interface for content licensing management."""
+    """
+Interface for content licensing management."""
     
     @abstractmethod
     async def create_license_agreement(
@@ -226,7 +243,8 @@ class LicensingInterface(ABC):
         buyer_id: str,
         payment_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Purchase license for content usage."""
+        """
+Purchase license for content usage."""
         pass
     
     @abstractmethod
@@ -235,7 +253,8 @@ class LicensingInterface(ABC):
         license_id: str,
         usage_details: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Validate if usage complies with license terms."""
+        """
+Validate if usage complies with license terms."""
         pass
     
     @abstractmethod
@@ -243,7 +262,8 @@ class LicensingInterface(ABC):
         self,
         license_id: str
     ) -> str:
-        """Generate digital license certificate."""
+        """
+Generate digital license certificate."""
         pass
     
     @abstractmethod
@@ -252,7 +272,8 @@ class LicensingInterface(ABC):
         license_id: str,
         usage_data: Dict[str, Any]
     ) -> bool:
-        """Track and log license usage for compliance."""
+        """
+Track and log license usage for compliance."""
         pass
     
     @abstractmethod
@@ -261,12 +282,14 @@ class LicensingInterface(ABC):
         license_id: str,
         violation_details: Dict[str, Any]
     ) -> str:
-        """Handle license violation and enforcement."""
+        """
+Handle license violation and enforcement."""
         pass
 
 
 class RevenueSharingInterface(ABC):
-    """Interface for revenue sharing in collaborations."""
+    """
+Interface for revenue sharing in collaborations."""
     
     @abstractmethod
     async def setup_revenue_sharing(
@@ -295,7 +318,8 @@ class RevenueSharingInterface(ABC):
         total_revenue: Decimal,
         currency: CurrencyType
     ) -> Dict[str, Decimal]:
-        """Calculate revenue distribution among participants."""
+        """
+Calculate revenue distribution among participants."""
         pass
     
     @abstractmethod
@@ -304,7 +328,8 @@ class RevenueSharingInterface(ABC):
         sharing_agreement_id: str,
         revenue_period: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Process and distribute revenue to participants."""
+        """
+Process and distribute revenue to participants."""
         pass
     
     @abstractmethod
@@ -314,7 +339,8 @@ class RevenueSharingInterface(ABC):
         new_terms: Dict[str, Any],
         approval_required: bool = True
     ) -> bool:
-        """Update revenue sharing terms with participant approval."""
+        """
+Update revenue sharing terms with participant approval."""
         pass
     
     @abstractmethod
@@ -323,12 +349,14 @@ class RevenueSharingInterface(ABC):
         sharing_agreement_id: str,
         audit_period: str
     ) -> Dict[str, Any]:
-        """Audit revenue sharing calculations and distributions."""
+        """
+Audit revenue sharing calculations and distributions."""
         pass
 
 
 class FinancialReportingInterface(ABC):
-    """Interface for financial reporting and analytics."""
+    """
+Interface for financial reporting and analytics."""
     
     @abstractmethod
     async def generate_income_statement(
@@ -359,7 +387,8 @@ class FinancialReportingInterface(ABC):
         tax_year: int,
         tax_jurisdiction: str
     ) -> Dict[str, Any]:
-        """Generate tax report for specific jurisdiction."""
+        """
+Generate tax report for specific jurisdiction."""
         pass
     
     @abstractmethod
@@ -368,7 +397,8 @@ class FinancialReportingInterface(ABC):
         user_id: str,
         timeframe: str
     ) -> Dict[str, float]:
-        """Calculate profit margins by content and platform."""
+        """
+Calculate profit margins by content and platform."""
         pass
     
     @abstractmethod
@@ -378,7 +408,8 @@ class FinancialReportingInterface(ABC):
         investment_categories: List[str],
         timeframe: str
     ) -> Dict[str, Any]:
-        """Generate return on investment analysis."""
+        """
+Generate return on investment analysis."""
         pass
     
     @abstractmethod
@@ -386,7 +417,8 @@ class FinancialReportingInterface(ABC):
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """Create comprehensive financial dashboard data."""
+        """
+Create comprehensive financial dashboard data."""
         pass
     
     @abstractmethod
@@ -396,5 +428,6 @@ class FinancialReportingInterface(ABC):
         export_format: str,
         date_range: Dict[str, datetime]
     ) -> str:
-        """Export financial data in specified format (CSV, PDF, Excel)."""
+        """
+Export financial data in specified format (CSV, PDF, Excel)."""
         pass

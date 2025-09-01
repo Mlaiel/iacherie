@@ -11,8 +11,9 @@ This optimization system and methodologies are the exclusive intellectual proper
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 """
+
 import asyncio
 import logging
 import time
@@ -97,7 +98,9 @@ from prometheus_client import Counter, Histogram, Gauge
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Model optimization strategies"""
+    """
+Model optimization strategies"""
+
     PERFORMANCE = "performance"
     MEMORY = "memory"
     SPEED = "speed"
@@ -109,6 +112,7 @@ class OptimizationType(Enum):
 
 class CompressionMethod(Enum):
     """Model compression techniques"""
+
     QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
@@ -118,6 +122,7 @@ class CompressionMethod(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -212,7 +217,8 @@ class OptimizationMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Complete optimization result"""
+    """
+Complete optimization result"""
     optimization_id: str
     model_name: str
     status: str  # success, failed, partial

@@ -3,11 +3,12 @@
 Specialized agents for SEO optimization, content discoverability, and search ranking improvement.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in SEO optimization, keyword research,
 content discoverability, and search engine ranking improvement for creators.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -23,7 +24,8 @@ from ..neural_networks.optimization_networks import SEOOptimizationNetwork
 
 @dataclass
 class SEOAnalysis:
-    """SEO analysis results"""
+    """
+SEO analysis results"""
     seo_score: float
     keyword_performance: Dict[str, float]
     optimization_opportunities: List[str]
@@ -35,7 +37,8 @@ class SEOAnalysis:
 
 @dataclass
 class KeywordOpportunity:
-    """Keyword opportunity structure"""
+    """
+Keyword opportunity structure"""
     keyword: str
     search_volume: int
     competition: float
@@ -474,7 +477,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(score, 1.0)
 
     def _analyze_engagement_signals(self, performance_data: Dict[str, Any]) -> float:
-        """Analyze engagement signals that affect SEO"""
+        """
+Analyze engagement signals that affect SEO"""
         if not performance_data:
             return 0.5  # Default score
         
@@ -510,7 +514,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return engagement_score
 
     def _analyze_technical_factors(self, content_data: Dict[str, Any]) -> float:
-        """Analyze technical SEO factors"""
+        """
+Analyze technical SEO factors"""
         score = 0.0
         
         # Thumbnail quality
@@ -547,7 +552,8 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def _analyze_competitive_positioning(self, keywords: List[str], 
                                              niche: str) -> Dict[str, Any]:
-        """Analyze competitive positioning for keywords"""
+        """
+Analyze competitive positioning for keywords"""
         # Simulate competitive analysis
         # In production, this would query actual search results and competitor data
         
@@ -647,7 +653,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(max(ranking_potential, 0.0), 1.0)
 
     def _identify_technical_issues(self, content_data: Dict[str, Any]) -> List[str]:
-        """Identify technical SEO issues"""
+        """
+Identify technical SEO issues"""
         issues = []
         
         if not content_data.get('has_custom_thumbnail'):
@@ -770,7 +777,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return max(volume, 100)  # Minimum volume
 
     async def _analyze_keyword_competition(self, keyword: str, niche: str) -> float:
-        """Analyze competition level for keyword"""
+        """
+Analyze competition level for keyword"""
         # Simulate competition analysis
         # In production, this would analyze actual SERP data
         
@@ -793,7 +801,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(max(competition, 0.1), 1.0)
 
     def _calculate_keyword_difficulty(self, keyword: str, competition: float) -> float:
-        """Calculate keyword ranking difficulty"""
+        """
+Calculate keyword ranking difficulty"""
         # Basic difficulty calculation
         word_count = len(keyword.split())
         
@@ -806,7 +815,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(max(difficulty, 0.1), 1.0)
 
     def _calculate_keyword_relevance(self, keyword: str, creator_profile: Dict[str, Any]) -> float:
-        """Calculate keyword relevance to creator's content"""
+        """
+Calculate keyword relevance to creator's content"""
         niche = creator_profile.get('niche', 'general')
         content_themes = creator_profile.get('content_themes', [])
         
@@ -826,7 +836,8 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _estimate_potential_traffic(self, search_volume: int, competition: float, 
                                   authority_score: float) -> int:
-        """Estimate potential traffic from ranking for keyword"""
+        """
+Estimate potential traffic from ranking for keyword"""
         # Click-through rates by position (simplified)
         ctr_by_position = {1: 0.32, 2: 0.24, 3: 0.18, 4: 0.12, 5: 0.09}
         
@@ -841,7 +852,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return max(potential_traffic, 10)  # Minimum traffic estimate
 
     async def _analyze_content_gap(self, keyword: str, creator_profile: Dict[str, Any]) -> float:
-        """Analyze content gap for keyword opportunity"""
+        """
+Analyze content gap for keyword opportunity"""
         existing_content = creator_profile.get('content_portfolio', [])
         
         # Check if creator already has content targeting this keyword
@@ -864,7 +876,8 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _determine_keyword_action(self, difficulty: float, relevance: float,
                                 content_gap: float, potential_traffic: int) -> str:
-        """Determine recommended action for keyword"""
+        """
+Determine recommended action for keyword"""
         score = (relevance * 0.4 + content_gap * 0.3 + 
                 (1 - difficulty) * 0.2 + min(potential_traffic / 1000, 1) * 0.1)
         
@@ -1132,7 +1145,8 @@ class SEOOptimizerAgent(BaseAIAgent):
         return np.random.randint(1, 20)  # Random ranking between 1-20
 
     async def _get_historical_ranking(self, keyword: str, content_id: str, period: str) -> int:
-        """Get historical ranking for comparison"""
+        """
+Get historical ranking for comparison"""
         # Simulate historical data
         current_ranking = await self._get_current_ranking(keyword, content_id)
         # Add some variation for historical data
@@ -1140,7 +1154,8 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def _analyze_traffic_trends(self, creator_profile: Dict[str, Any],
                                     period: str) -> Dict[str, Any]:
-        """Analyze traffic trends over period"""
+        """
+Analyze traffic trends over period"""
         # Simulate traffic analysis
         return {
             "organic_traffic_change": np.random.uniform(-0.2, 0.3),  # -20% to +30%

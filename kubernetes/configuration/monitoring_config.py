@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade monitoring and observability configuration.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
@@ -23,7 +24,9 @@ from datetime import datetime, timedelta
 import json
 
 class ObservabilityLevel(Enum):
-    """Observability configuration levels"""
+    """
+Observability configuration levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -31,6 +34,7 @@ class ObservabilityLevel(Enum):
 
 class MetricType(Enum):
     """Types of metrics to collect"""
+
     SYSTEM = "system"
     APPLICATION = "application"
     BUSINESS = "business"
@@ -42,6 +46,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -122,7 +127,8 @@ class MetricsConfig:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration"""
+    """
+Health check configuration"""
     enabled: bool = True
     interval: int = 30
     timeout: int = 10
@@ -132,7 +138,8 @@ class HealthCheckConfig:
 
 @dataclass
 class MonitoringConfiguration:
-    """Complete monitoring configuration"""
+    """
+Complete monitoring configuration"""
     level: ObservabilityLevel
     prometheus: PrometheusConfig
     grafana: GrafanaConfig
@@ -161,7 +168,8 @@ class MonitoringConfigManager:
     """
     
     def __init__(self):
-        """Initialize monitoring configuration manager"""
+        """
+Initialize monitoring configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Monitoring configurations
@@ -829,7 +837,8 @@ class MonitoringConfigManager:
         pass
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring status"""
+        """
+Get comprehensive monitoring status"""
         return {
             "level": self.current_level.value,
             "prometheus_enabled": self.active_config.prometheus.enabled if self.active_config else False,

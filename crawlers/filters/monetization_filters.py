@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -43,7 +44,9 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class MonetizationTier(Enum):
-    """Monetization tier levels."""
+    """
+Monetization tier levels."""
+
     PREMIUM = "premium"        # 80-100% potential
     STANDARD = "standard"      # 60-79% potential  
     BASIC = "basic"           # 40-59% potential
@@ -53,6 +56,7 @@ class MonetizationTier(Enum):
 
 class RevenueModel(Enum):
     """Revenue generation models."""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     SYNC_RIGHTS = "sync_rights"
@@ -67,6 +71,7 @@ class RevenueModel(Enum):
 
 class Platform(Enum):
     """Monetization platforms."""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -109,10 +114,12 @@ class MonetizationMetrics:
 
 
 class MarketAnalyzer:
-    """Analyzes market potential and trends."""
+    """
+Analyzes market potential and trends."""
     
     def __init__(self):
-        """Initialize market analyzer."""
+        """
+Initialize market analyzer."""
         self.logger = logging.getLogger(__name__)
         
         # Market data for different content types and genres
@@ -387,13 +394,15 @@ class RevenueEstimator:
     """Estimates potential revenue from content."""
     
     def __init__(self, market_analyzer: MarketAnalyzer):
-        """Initialize revenue estimator."""
+        """
+Initialize revenue estimator."""
         self.logger = logging.getLogger(__name__)
         self.market_analyzer = market_analyzer
     
     async def estimate_revenue_potential(self, content_item: ContentItem, 
                                        market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Estimate revenue potential across different models."""
+        """
+Estimate revenue potential across different models."""
         try:
             revenue_estimates = {}
             
@@ -536,14 +545,16 @@ class MonetizationEngine:
     """Main monetization assessment engine."""
     
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize monetization engine."""
+        """
+Initialize monetization engine."""
         self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.market_analyzer = MarketAnalyzer()
         self.revenue_estimator = RevenueEstimator(self.market_analyzer)
     
     async def assess_monetization_potential(self, content_item: ContentItem) -> MonetizationMetrics:
-        """Assess comprehensive monetization potential."""
+        """
+Assess comprehensive monetization potential."""
         try:
             start_time = time.time()
             
@@ -609,7 +620,8 @@ class MonetizationEngine:
     
     async def _recommend_revenue_models(self, content_item: ContentItem, 
                                       market_analysis: Dict[str, Any]) -> List[RevenueModel]:
-        """Recommend optimal revenue models."""
+        """
+Recommend optimal revenue models."""
         models = []
         
         try:

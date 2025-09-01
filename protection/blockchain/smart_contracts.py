@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Any unauthorized use, reproduction, or distribution
 of this code without explicit written permission is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContractType(Enum):
-    """Types of smart contracts for content protection"""
+    """
+Types of smart contracts for content protection"""
+
     COPYRIGHT_REGISTRY = "copyright_registry"
     CONTENT_AUTHENTICITY = "content_authenticity"
     USAGE_LICENSE = "usage_license"
@@ -46,6 +49,7 @@ class ContractType(Enum):
 
 class NetworkConfig:
     """Blockchain network configuration"""
+
     
     ETHEREUM_MAINNET = {
         'name': 'Ethereum Mainnet',
@@ -86,7 +90,8 @@ class NetworkConfig:
 
 @dataclass
 class ContractDeploymentConfig:
-    """Configuration for smart contract deployment"""
+    """
+Configuration for smart contract deployment"""
     contract_type: ContractType
     network_config: Dict[str, Any]
     deployer_private_key: str
@@ -100,7 +105,8 @@ class ContractDeploymentConfig:
 
 
 class SmartContractManager:
-    """Professional smart contract management system"""
+    """
+Professional smart contract management system"""
     
     def __init__(self, network_config: Dict[str, Any], private_key: Optional[str] = None):
         self.network_config = network_config
@@ -117,7 +123,8 @@ class SmartContractManager:
         self.gas_estimates: Dict[str, int] = {}
     
     async def initialize(self) -> bool:
-        """Initialize blockchain connection and account"""
+        """
+Initialize blockchain connection and account"""
         try:
             # Initialize Web3 connection
             rpc_url = self.network_config['rpc_url']
@@ -158,7 +165,8 @@ class SmartContractManager:
         }
     
     async def _load_deployed_contracts(self):
-        """Load deployed contract addresses from configuration"""
+        """
+Load deployed contract addresses from configuration"""
         try:
             # In production, load from database or configuration file
             deployed_contracts = {
@@ -416,7 +424,8 @@ class SmartContractManager:
             return 0
     
     def _extract_license_id(self, receipt) -> int:
-        """Extract license ID from transaction receipt"""
+        """
+Extract license ID from transaction receipt"""
         try:
             # Parse logs to extract license ID
             for log in receipt.logs:
@@ -427,7 +436,8 @@ class SmartContractManager:
             return 0
     
     def _get_contract_bytecode(self, contract_type: ContractType) -> str:
-        """Get contract bytecode for deployment"""
+        """
+Get contract bytecode for deployment"""
         # In production, load from compiled contract artifacts
         bytecodes = {
             ContractType.COPYRIGHT_REGISTRY: "0x608060405234801561001057600080fd5b50...",
@@ -502,16 +512,19 @@ class SmartContractManager:
         return []
     
     def _get_ownership_transfer_abi(self) -> List[Dict[str, Any]]:
-        """Get Ownership Transfer contract ABI"""
+        """
+Get Ownership Transfer contract ABI"""
         return []
     
     def _get_access_control_abi(self) -> List[Dict[str, Any]]:
-        """Get Access Control contract ABI"""
+        """
+Get Access Control contract ABI"""
         return []
 
 
 class GasOptimizer:
-    """Gas optimization utilities for smart contracts"""
+    """
+Gas optimization utilities for smart contracts"""
     
     @staticmethod
     def estimate_optimal_gas_price(w3: Web3, priority: str = "standard") -> int:

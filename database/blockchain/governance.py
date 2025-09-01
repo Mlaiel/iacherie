@@ -26,6 +26,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -43,7 +44,9 @@ from eth_account import Account
 logger = logging.getLogger(__name__)
 
 class ProposalType(Enum):
-    """Types of governance proposals."""
+    """
+Types of governance proposals."""
+
     PARAMETER_CHANGE = "parameter_change"
     TREASURY_ALLOCATION = "treasury_allocation"
     PROTOCOL_UPGRADE = "protocol_upgrade"
@@ -53,6 +56,7 @@ class ProposalType(Enum):
 
 class ProposalStatus(Enum):
     """Status of governance proposals."""
+
     DRAFT = "draft"
     ACTIVE = "active"
     SUCCEEDED = "succeeded"
@@ -64,6 +68,7 @@ class ProposalStatus(Enum):
 
 class VotingMechanism(Enum):
     """Different voting mechanisms supported."""
+
     SIMPLE_MAJORITY = "simple_majority"
     SUPERMAJORITY = "supermajority"
     QUADRATIC_VOTING = "quadratic_voting"
@@ -72,6 +77,7 @@ class VotingMechanism(Enum):
 
 class VoteChoice(Enum):
     """Voting choices."""
+
     FOR = "for"
     AGAINST = "against"
     ABSTAIN = "abstain"
@@ -108,7 +114,8 @@ class Proposal:
 
 @dataclass
 class Vote:
-    """Individual vote record."""
+    """
+Individual vote record."""
     vote_id: str
     proposal_id: str
     voter_address: str
@@ -121,7 +128,8 @@ class Vote:
 
 @dataclass
 class VotingPower:
-    """Voting power calculation for an address."""
+    """
+Voting power calculation for an address."""
     address: str
     token_balance: Decimal
     delegated_power: Decimal
@@ -131,7 +139,8 @@ class VotingPower:
 
 @dataclass
 class GovernanceMetrics:
-    """Governance participation and health metrics."""
+    """
+Governance participation and health metrics."""
     total_proposals: int
     active_proposals: int
     total_voters: int
@@ -163,7 +172,8 @@ class GovernanceSystem:
         self._initialize_governance_tokens()
     
     def _initialize_governance_tokens(self) -> None:
-        """Initialize governance tokens from configuration."""
+        """
+Initialize governance tokens from configuration."""
         token_configs = self.config.get("governance_tokens", [])
         
         for token_config in token_configs:
@@ -467,7 +477,8 @@ class GovernanceSystem:
         delegate_address: str,
         snapshot_block: Optional[int]
     ) -> Decimal:
-        """Calculate total power delegated to an address."""
+        """
+Calculate total power delegated to an address."""
         delegated_power = Decimal("0")
         
         for delegator, delegate in self.delegations.items():
@@ -544,7 +555,8 @@ class GovernanceSystem:
         return False
     
     async def update_proposal_status(self) -> None:
-        """Update status of all proposals based on current state."""
+        """
+Update status of all proposals based on current state."""
         now = datetime.utcnow()
         
         for proposal in self.proposals.values():
@@ -662,7 +674,8 @@ class GovernanceSystem:
         return True
     
     async def _execute_parameter_change(self, proposal: Proposal) -> bool:
-        """Execute a parameter change proposal."""
+        """
+Execute a parameter change proposal."""
         # Mock implementation
         logger.info(f"Executing parameter change for proposal {proposal.proposal_id}")
         return True
@@ -786,7 +799,8 @@ class GovernanceSystem:
         return min(total_score, 100.0)
     
     def get_user_governance_activity(self, address: str) -> Dict[str, Any]:
-        """Get governance activity summary for a specific address."""
+        """
+Get governance activity summary for a specific address."""
         # Count proposals created
         proposals_created = len([
             p for p in self.proposals.values()

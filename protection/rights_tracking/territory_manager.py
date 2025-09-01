@@ -11,6 +11,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lo
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class TerritoryType(Enum):
-    """Types de territoires"""
+    """
+Types de territoires"""
+
     COUNTRY = "country"
     REGION = "region"
     CONTINENT = "continent"
@@ -40,6 +43,7 @@ class TerritoryType(Enum):
 
 class LegalFramework(Enum):
     """Cadres légaux"""
+
     COMMON_LAW = "common_law"
     CIVIL_LAW = "civil_law"
     RELIGIOUS_LAW = "religious_law"
@@ -49,6 +53,7 @@ class LegalFramework(Enum):
 
 class CopyrightTerm(Enum):
     """Durées de protection des droits d'auteur"""
+
     LIFE_PLUS_50 = "life_plus_50"
     LIFE_PLUS_60 = "life_plus_60"
     LIFE_PLUS_70 = "life_plus_70"
@@ -214,7 +219,8 @@ class TerritoryManager:
             asyncio.create_task(self._start_conflict_monitoring())
     
     async def _initialize_global_territories(self):
-        """Initialise les territoires globaux de base"""
+        """
+Initialise les territoires globaux de base"""
         try:
             # Territoire mondial
             worldwide = TerritoryDefinition(
@@ -948,22 +954,26 @@ async def _resolve_by_priority(conflict: TerritorialConflict, resolution_data: D
     return True
 
 async def _resolve_by_temporal_segmentation(conflict: TerritorialConflict, resolution_data: Dict[str, Any]) -> bool:
-    """Résolution par segmentation temporelle"""
+    """
+Résolution par segmentation temporelle"""
     # Implémentation de segmentation temporelle
     return True
 
 async def _resolve_by_geographic_subdivision(conflict: TerritorialConflict, resolution_data: Dict[str, Any]) -> bool:
-    """Résolution par subdivision géographique"""
+    """
+Résolution par subdivision géographique"""
     # Implémentation de subdivision géographique
     return True
 
 async def _resolve_by_revenue_sharing(conflict: TerritorialConflict, resolution_data: Dict[str, Any]) -> bool:
-    """Résolution par partage de revenus"""
+    """
+Résolution par partage de revenus"""
     # Implémentation de partage de revenus
     return True
 
 async def _resolve_by_manual_decision(conflict: TerritorialConflict, resolution_data: Dict[str, Any]) -> bool:
-    """Résolution manuelle"""
+    """
+Résolution manuelle"""
     # Implémentation de décision manuelle
     return True
 
@@ -978,7 +988,8 @@ async def _assess_market_attractiveness(territory_id: str) -> Dict[str, Any]:
     }
 
 async def _estimate_licensing_cost(territory_id: str, rights: List[str], content_id: str) -> Dict[str, float]:
-    """Estime le coût de licence"""
+    """
+Estime le coût de licence"""
     # Implémentation d'estimation de coût
     return {
         'base_cost': 500.0,
@@ -987,7 +998,8 @@ async def _estimate_licensing_cost(territory_id: str, rights: List[str], content
     }
 
 async def _generate_territory_recommendations(availability_report: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Génère des recommandations IA pour les territoires"""
+    """
+Génère des recommandations IA pour les territoires"""
     # Implémentation de recommandations IA
     return [
         {
@@ -999,7 +1011,8 @@ async def _generate_territory_recommendations(availability_report: Dict[str, Any
     ]
 
 async def _get_registration_process(territory_id: str) -> Dict[str, Any]:
-    """Récupère le processus d'enregistrement"""
+    """
+Récupère le processus d'enregistrement"""
     # Implémentation du processus d'enregistrement
     return {
         'required': True,
@@ -1009,7 +1022,8 @@ async def _get_registration_process(territory_id: str) -> Dict[str, Any]:
     }
 
 async def _generate_compliance_recommendations(territory: TerritoryDefinition, content_type: str) -> List[str]:
-    """Génère des recommandations de conformité"""
+    """
+Génère des recommandations de conformité"""
     # Implémentation de recommandations de conformité
     return [
         'Register with local copyright office',
@@ -1018,7 +1032,8 @@ async def _generate_compliance_recommendations(territory: TerritoryDefinition, c
     ]
 
 async def _analyze_territory_opportunity(territory_id: str, content_id: str, objectives: Dict[str, Any]) -> Dict[str, Any]:
-    """Analyse l'opportunité d'un territoire"""
+    """
+Analyse l'opportunité d'un territoire"""
     # Implémentation d'analyse d'opportunité
     return {
         'opportunity_score': 8.2,
@@ -1029,7 +1044,8 @@ async def _analyze_territory_opportunity(territory_id: str, content_id: str, obj
     }
 
 async def _generate_deployment_phases(territories: List[Tuple[str, Dict[str, Any]]], objectives: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Génère les phases de déploiement"""
+    """
+Génère les phases de déploiement"""
     # Implémentation des phases de déploiement
     return [
         {
@@ -1052,7 +1068,8 @@ async def _assess_territorial_risks(territories: List[str], content_id: str) -> 
     }
 
 async def _project_territorial_revenues(territories: List[Tuple[str, Dict[str, Any]]], objectives: Dict[str, Any]) -> Dict[str, Any]:
-    """Projette les revenus territoriaux"""
+    """
+Projette les revenus territoriaux"""
     # Implémentation de projection de revenus
     return {
         'year_1_projection': 50000,
@@ -1062,7 +1079,8 @@ async def _project_territorial_revenues(territories: List[Tuple[str, Dict[str, A
     }
 
 async def _start_conflict_monitoring():
-    """Démarre la surveillance des conflits"""
+    """
+Démarre la surveillance des conflits"""
     # Implémentation de surveillance des conflits
     pass
 

@@ -12,6 +12,7 @@ the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
 """
+
 import asyncio
 import time
 import statistics
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric type enumeration"""
+    """
+Metric type enumeration"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -39,6 +42,7 @@ class MetricType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -123,7 +127,8 @@ class AggregatedMetrics:
     cache_hit_rate: float = 0.0
     
     def calculate_percentiles(self, durations: List[float]) -> None:
-        """Calculate duration percentiles"""
+        """
+Calculate duration percentiles"""
         if durations:
             sorted_durations = sorted(durations)
             self.p50_duration = statistics.median(sorted_durations)
@@ -132,7 +137,8 @@ class AggregatedMetrics:
 
 
 class AlertRule:
-    """Performance alert rule definition"""
+    """
+Performance alert rule definition"""
     
     def __init__(
         self,
@@ -166,7 +172,8 @@ class AlertRule:
         return False
     
     def format_message(self, metrics: AggregatedMetrics) -> str:
-        """Format alert message"""
+        """
+Format alert message"""
         return self.message_template.format(
             name=self.name,
             metrics=metrics,
@@ -304,12 +311,14 @@ class PerformanceMonitor:
             self.counters[name] += value
     
     def set_gauge(self, name: str, value: float) -> None:
-        """Set a gauge metric value"""
+        """
+Set a gauge metric value"""
         with self.lock:
             self.gauges[name] = value
     
     def record_histogram(self, name: str, value: float) -> None:
-        """Record a histogram value"""
+        """
+Record a histogram value"""
         with self.lock:
             self.histograms[name].append(value)
             
@@ -318,7 +327,8 @@ class PerformanceMonitor:
                 self.histograms[name] = self.histograms[name][-1000:]
     
     def add_alert_rule(self, alert_rule: AlertRule) -> None:
-        """Add performance alert rule"""
+        """
+Add performance alert rule"""
         with self.lock:
             self.alert_rules.append(alert_rule)
         
@@ -329,7 +339,8 @@ class PerformanceMonitor:
         self.alert_callbacks.append(callback)
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get current real-time metrics"""
+        """
+Get current real-time metrics"""
         
         with self.lock:
             active_count = len(self.active_transactions)
@@ -553,7 +564,8 @@ class PerformanceMonitor:
                     self.histograms[name] = values[-1000:]
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of performance monitor"""
+        """
+Graceful shutdown of performance monitor"""
         logger.info("Shutting down PerformanceMonitor...")
         
         self._shutdown = True

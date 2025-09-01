@@ -1,6 +1,7 @@
 """Watermarking Service Manager
 Central orchestration and management for all watermarking operations
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, BinaryIO
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for watermarking"""
+    """
+Supported content types for watermarking"""
+
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -35,6 +38,7 @@ class ContentType(Enum):
 
 class WatermarkOperation(Enum):
     """Watermarking operations"""
+
     EMBED = "embed"
     DETECT = "detect"
     VERIFY = "verify"
@@ -102,7 +106,8 @@ class WatermarkServiceManager:
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize all watermarking engines"""
+        """
+Initialize all watermarking engines"""
         try:
             # Initialize content-specific engines
             self.engines[ContentType.IMAGE] = ImageWatermarkEngine()
@@ -656,7 +661,8 @@ class WatermarkServiceManager:
             return {'valid': False, 'error': str(e)}
     
     async def _log_operation(self, request: WatermarkRequest, response: WatermarkResponse, processing_time: float):
-        """Logs watermark operation"""
+        """
+Logs watermark operation"""
         try:
             log_entry = {
                 'timestamp': datetime.now().isoformat(),

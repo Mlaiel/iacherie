@@ -4,11 +4,12 @@ Advanced Natural Language Processing core functionality with enterprise-grade fe
 for content creators, influencers, and multi-format content processing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NLPTask:
-    """Represents an NLP processing task"""
+    """
+Represents an NLP processing task"""
     task_id: str
     content: str
     content_type: str  # 'text', 'audio_transcript', 'video_caption', 'image_description'
@@ -43,7 +45,8 @@ class NLPTask:
 
 @dataclass
 class NLPResult:
-    """Represents NLP processing results"""
+    """
+Represents NLP processing results"""
     task_id: str
     results: Dict[str, Any]
     confidence_scores: Dict[str, float]
@@ -79,7 +82,8 @@ class AdvancedNLPEngine:
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all NLP models and processors"""
+        """
+Initialize all NLP models and processors"""
         try:
             logger.info("Initializing Advanced NLP Engine...")
             
@@ -183,7 +187,8 @@ class AdvancedNLPEngine:
         )
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'max_content_length': 10000,
             'supported_languages': ['en', 'de', 'fr', 'es', 'it'],
@@ -277,7 +282,8 @@ class AdvancedNLPEngine:
             return 'en'  # Default to English
     
     async def _preprocess_content(self, content: str) -> str:
-        """Clean and preprocess content"""
+        """
+Clean and preprocess content"""
         # Remove extra whitespace
         content = ' '.join(content.split())
         
@@ -288,7 +294,8 @@ class AdvancedNLPEngine:
         return content.strip()
     
     async def _linguistic_analysis(self, content: str, language: str) -> Dict[str, Any]:
-        """Perform linguistic analysis using SpaCy"""
+        """
+Perform linguistic analysis using SpaCy"""
         if language not in self.nlp_processors:
             language = 'en'  # Default to English
         
@@ -306,7 +313,8 @@ class AdvancedNLPEngine:
         }
     
     async def _semantic_analysis(self, content: str) -> Dict[str, Any]:
-        """Perform semantic analysis"""
+        """
+Perform semantic analysis"""
         try:
             # Generate embeddings
             embeddings = self.pipelines['feature_extraction'](content)
@@ -379,7 +387,8 @@ class AdvancedNLPEngine:
         }
     
     async def _analyze_brand_voice(self, content: str) -> Dict[str, Any]:
-        """Analyze brand voice characteristics"""
+        """
+Analyze brand voice characteristics"""
         try:
             # Sentiment analysis
             sentiment_result = self.pipelines['sentiment'](content)
@@ -441,7 +450,8 @@ class AdvancedNLPEngine:
         }
     
     async def _generate_content_fingerprint(self, content: str) -> Dict[str, Any]:
-        """Generate unique content fingerprint for protection"""
+        """
+Generate unique content fingerprint for protection"""
         import hashlib
         
         # Create multiple hash types for robust fingerprinting
@@ -459,7 +469,8 @@ class AdvancedNLPEngine:
         return fingerprints
     
     async def _extract_topics(self, content: str) -> List[str]:
-        """Extract main topics from content"""
+        """
+Extract main topics from content"""
         # Simplified topic extraction - can be enhanced with LDA or other methods
         words = content.lower().split()
         
@@ -475,7 +486,8 @@ class AdvancedNLPEngine:
         return topics
     
     def _calculate_readability(self, doc) -> float:
-        """Calculate readability score (simplified Flesch Reading Ease)"""
+        """
+Calculate readability score (simplified Flesch Reading Ease)"""
         sentences = len(list(doc.sents))
         words = len([token for token in doc if token.is_alpha])
         syllables = sum(self._count_syllables(token.text) for token in doc if token.is_alpha)
@@ -488,7 +500,8 @@ class AdvancedNLPEngine:
         return max(0.0, min(100.0, score))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         vowels = 'aeiouy'
         count = 0
         prev_was_vowel = False
@@ -502,7 +515,8 @@ class AdvancedNLPEngine:
         return max(1, count)
     
     def _calculate_quality_grade(self, avg_sentence_length: float, word_variety: float, engagement_score: float) -> str:
-        """Calculate overall content quality grade"""
+        """
+Calculate overall content quality grade"""
         # Scoring system
         sentence_score = min(10, max(0, 10 - abs(avg_sentence_length - 15) / 2))
         variety_score = word_variety * 10
@@ -532,7 +546,8 @@ class AdvancedNLPEngine:
         return min(1.0, personal_score + phrase_score)
     
     def _suggest_partnerships(self, collab_scores: Dict[str, float]) -> List[str]:
-        """Suggest partnership types based on collaboration scores"""
+        """
+Suggest partnership types based on collaboration scores"""
         suggestions = []
         
         if collab_scores.get('brand_mention', 0) > 0.03:
@@ -547,7 +562,8 @@ class AdvancedNLPEngine:
         return suggestions if suggestions else ['General content collaboration']
     
     def _calculate_char_frequency(self, content: str) -> Dict[str, float]:
-        """Calculate character frequency distribution"""
+        """
+Calculate character frequency distribution"""
         from collections import Counter
         char_count = Counter(content.lower())
         total_chars = sum(char_count.values())
@@ -555,7 +571,8 @@ class AdvancedNLPEngine:
         return {char: count/total_chars for char, count in char_count.most_common(10)}
     
     def _calculate_structural_hash(self, content: str) -> str:
-        """Calculate structural hash based on content pattern"""
+        """
+Calculate structural hash based on content pattern"""
         import hashlib
         
         # Create structural signature
@@ -574,7 +591,8 @@ class AdvancedNLPEngine:
         return hashlib.md5(structure_str.encode()).hexdigest()
     
     def _get_model_versions(self) -> Dict[str, str]:
-        """Get versions of loaded models"""
+        """
+Get versions of loaded models"""
         return {
             'spacy_version': spacy.__version__,
             'transformers_version': transformers.__version__,
@@ -584,7 +602,8 @@ class AdvancedNLPEngine:
         }
     
     async def batch_process(self, tasks: List[NLPTask]) -> List[NLPResult]:
-        """Process multiple tasks in batch"""
+        """
+Process multiple tasks in batch"""
         results = []
         
         # Process in batches to manage memory
@@ -627,7 +646,8 @@ async def get_nlp_engine() -> AdvancedNLPEngine:
     return _nlp_engine
 
 async def process_content_quick(content: str, content_type: str = 'text', language: str = 'auto') -> Dict[str, Any]:
-    """Quick content processing function"""
+    """
+Quick content processing function"""
     engine = await get_nlp_engine()
     task = NLPTask(
         task_id=f"quick_{datetime.utcnow().timestamp()}",

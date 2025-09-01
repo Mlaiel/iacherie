@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import hashlib
 import logging
 import mimetypes
@@ -35,11 +36,13 @@ logger = logging.getLogger(__name__)
 
 
 class ImageMetrics:
-    """Image quality and analysis metrics calculator"""
+    """
+Image quality and analysis metrics calculator"""
     
     @staticmethod
     def calculate_sharpness(image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
+        """
+Calculate image sharpness using Laplacian variance"""
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -129,7 +132,8 @@ class ImageHashGenerator:
     
     @staticmethod
     def generate_perceptual_hash(image_path: str) -> str:
-        """Generate perceptual hash using pHash algorithm"""
+        """
+Generate perceptual hash using pHash algorithm"""
         try:
             with Image.open(image_path) as img:
                 phash = imagehash.phash(img)
@@ -209,6 +213,7 @@ class ImageHashGenerator:
 
 class FileUtils:
     """File handling and validation utilities"""
+
     
     SUPPORTED_IMAGE_FORMATS = {
         '.jpg', '.jpeg', '.png', '.webp', '.avif', '.heic', '.heif',
@@ -219,7 +224,8 @@ class FileUtils:
     
     @staticmethod
     def validate_image_file(file_path: str) -> Dict[str, Any]:
-        """Comprehensive image file validation"""
+        """
+Comprehensive image file validation"""
         result = {
             "valid": False,
             "errors": [],
@@ -477,7 +483,8 @@ class PerformanceTracker:
         self.metrics = {}
     
     def start_operation(self, operation_name: str):
-        """Start tracking an operation"""
+        """
+Start tracking an operation"""
         self.start_time = time.perf_counter()
         self.metrics[operation_name] = {
             "start_time": self.start_time,
@@ -504,16 +511,19 @@ class PerformanceTracker:
         return self.metrics.copy()
     
     def clear_metrics(self):
-        """Clear all metrics"""
+        """
+Clear all metrics"""
         self.metrics.clear()
 
 
 class BatchProcessor:
-    """Utilities for batch processing operations"""
+    """
+Utilities for batch processing operations"""
     
     @staticmethod
     def validate_batch_files(file_paths: List[str]) -> Dict[str, Any]:
-        """Validate multiple files for batch processing"""
+        """
+Validate multiple files for batch processing"""
         results = {
             "valid_files": [],
             "invalid_files": [],

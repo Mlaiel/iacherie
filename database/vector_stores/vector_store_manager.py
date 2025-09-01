@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class VectorStoreType(Enum):
-    """Vector store implementation types"""
+    """
+Vector store implementation types"""
+
     FAISS = "faiss"
     ELASTICSEARCH = "elasticsearch"
     PINECONE = "pinecone"
@@ -47,6 +50,7 @@ class VectorStoreType(Enum):
 
 class SearchStrategy(Enum):
     """Search strategy options"""
+
     SINGLE_STORE = "single_store"
     PARALLEL_SEARCH = "parallel_search"
     CASCADING_SEARCH = "cascading_search"
@@ -68,7 +72,8 @@ class UnifiedSearchResult:
 
 @dataclass
 class VectorStoreHealth:
-    """Health status of vector store"""
+    """
+Health status of vector store"""
     store_type: str
     is_healthy: bool
     response_time_ms: float
@@ -80,7 +85,8 @@ class VectorStoreHealth:
 
 @dataclass
 class SearchPerformanceMetrics:
-    """Performance metrics for search operations"""
+    """
+Performance metrics for search operations"""
     total_searches: int
     avg_response_time_ms: float
     success_rate: float
@@ -469,7 +475,8 @@ class VectorStoreManager:
         return self.search_metrics.copy()
     
     async def optimize_stores(self) -> Dict[str, bool]:
-        """Optimize all vector stores"""
+        """
+Optimize all vector stores"""
         try:
             optimization_results = {}
             
@@ -745,7 +752,8 @@ class VectorStoreManager:
         return merged_results[:k]
     
     def _get_target_stores(self, strategy: str) -> List[VectorStoreType]:
-        """Get target stores based on strategy"""
+        """
+Get target stores based on strategy"""
         if strategy == "primary_only":
             return [self.primary_store]
         elif strategy == "primary_with_backup":
@@ -810,7 +818,8 @@ class VectorStoreManager:
             metrics.success_rate = success_count / metrics.total_searches
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring task"""
+        """
+Background health monitoring task"""
         while True:
             try:
                 await asyncio.sleep(self.health_check_interval)

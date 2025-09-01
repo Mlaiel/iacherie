@@ -14,6 +14,7 @@ Professional Docker configuration for enterprise Nginx reverse proxy
 supporting high-performance load balancing, SSL termination, and
 advanced routing for IA-Influencer multi-service architecture.
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NginxProxyDockerConfig:
-    """Enterprise Nginx Proxy Docker Configuration"""
+    """
+Enterprise Nginx Proxy Docker Configuration"""
     
     # Image Configuration
     image_name: str = "nginx"
@@ -101,7 +103,8 @@ class NginxProxyDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate Dockerfile for Nginx proxy"""
-        return f"""FROM {self.image_name}:{self.image_tag}
+        return f"""
+FROM {self.image_name}:{self.image_tag}
 
 # Install additional packages
 RUN apk add --no-cache \\
@@ -163,7 +166,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \\
 CMD ["nginx", "-g", "daemon off;"]
 """
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Docker Compose service configuration"""
+        """
+Generate Docker Compose service configuration"""
         return {
             "build": {
                 "context": ".",
@@ -347,7 +351,8 @@ http {{
 }}
 """
     def generate_upstream_config(self) -> str:
-        """Generate upstream configuration"""
+        """
+Generate upstream configuration"""
         upstream_blocks = []
         
         for service_name, config in self.upstream_services.items():
@@ -376,7 +381,8 @@ http {{
 {"".join(upstream_blocks)}
 """
     def generate_server_config(self) -> str:
-        """Generate main server configuration"""
+        """
+Generate main server configuration"""
         return f"""# IA-Influencer Main Server Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -593,7 +599,8 @@ server {{
 }}
 """
     def generate_security_config(self) -> str:
-        """Generate security configuration"""
+        """
+Generate security configuration"""
         return """# IA-Influencer Nginx Security Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -707,7 +714,8 @@ server {
 }
 """
     def generate_monitoring_config(self) -> str:
-        """Generate monitoring configuration"""
+        """
+Generate monitoring configuration"""
         return """# IA-Influencer Nginx Monitoring Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -742,7 +750,8 @@ server {
 }
 """
     def generate_scripts(self) -> Dict[str, str]:
-        """Generate Nginx scripts"""
+        """
+Generate Nginx scripts"""
         scripts = {}
         
         # SSL certificate generator
@@ -884,7 +893,8 @@ tail -n "$LINES" "$LOG_FILE" | awk '$9 >= 400 {print $0}' | tail -20
         return scripts
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all Nginx configuration files"""
+        """
+Save all Nginx configuration files"""
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         

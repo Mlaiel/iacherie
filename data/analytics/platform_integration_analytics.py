@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,7 +46,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class IntegrationType(Enum):
-    """Platform integration types"""
+    """
+Platform integration types"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     WEBHOOK = "webhook"
@@ -56,6 +59,7 @@ class IntegrationType(Enum):
 
 class DataSyncStatus(Enum):
     """Data synchronization status"""
+
     CONNECTED = "connected"
     SYNCING = "syncing"
     ERROR = "error"
@@ -66,6 +70,7 @@ class DataSyncStatus(Enum):
 
 class PlatformCapability(Enum):
     """Platform capability types"""
+
     READ_ANALYTICS = "read_analytics"
     WRITE_CONTENT = "write_content"
     MANAGE_ACCOUNT = "manage_account"
@@ -92,7 +97,8 @@ class PlatformConnection:
 
 @dataclass
 class SyncResult:
-    """Data synchronization result"""
+    """
+Data synchronization result"""
     platform: str
     status: DataSyncStatus
     records_processed: int
@@ -105,7 +111,8 @@ class SyncResult:
 
 @dataclass
 class PlatformHealthCheck:
-    """Platform health monitoring result"""
+    """
+Platform health monitoring result"""
     platform: str
     is_healthy: bool
     response_time: float
@@ -166,7 +173,8 @@ class PlatformIntegrationAnalytics:
         self.connection_cache_ttl = 3600  # 1 hour for connections
         
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         connector = aiohttp.TCPConnector(
             limit=100,
             limit_per_host=30,

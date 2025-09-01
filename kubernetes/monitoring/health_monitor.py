@@ -17,6 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import time
 import logging
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status enumeration with business impact levels"""
+    """
+Health status enumeration with business impact levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -51,6 +54,7 @@ class HealthStatus(Enum):
 
 class ServiceType(Enum):
     """Service type classification for specialized monitoring"""
+
     CORE_API = "core_api"
     AI_ENGINE = "ai_engine"
     FINGERPRINT_SERVICE = "fingerprint_service"
@@ -199,7 +203,8 @@ class HealthMonitor:
         self._register_default_health_checks()
         
     def _register_default_health_checks(self):
-        """Register default health checks for IA Influencer Agent Platform"""
+        """
+Register default health checks for IA Influencer Agent Platform"""
         
         # Core API health
         self.register_health_check(HealthCheck(
@@ -994,7 +999,8 @@ class HealthMonitor:
             return HealthStatus.HEALTHY
             
     def _check_dependencies(self, health_check: HealthCheck) -> bool:
-        """Check if all dependencies are satisfied"""
+        """
+Check if all dependencies are satisfied"""
         for dep_name in health_check.dependencies:
             if dep_name not in self._health_results:
                 return False
@@ -1003,7 +1009,8 @@ class HealthMonitor:
         return True
         
     def _is_circuit_breaker_open(self, check_name: str) -> bool:
-        """Check if circuit breaker is open for a health check"""
+        """
+Check if circuit breaker is open for a health check"""
         if check_name not in self._circuit_breakers:
             return False
             
@@ -1094,16 +1101,19 @@ class HealthMonitor:
         return psutil.cpu_percent(interval=1)
         
     async def _check_memory_usage(self) -> float:
-        """Check memory usage"""
+        """
+Check memory usage"""
         return psutil.virtual_memory().percent
         
     async def _check_disk_usage(self) -> float:
-        """Check disk usage"""
+        """
+Check disk usage"""
         disk_usage = psutil.disk_usage('/')
         return (disk_usage.used / disk_usage.total) * 100
         
     async def _check_database_health(self) -> HealthResult:
-        """Check database connection and performance"""
+        """
+Check database connection and performance"""
         if not self.db_engine:
             return HealthResult(
                 name="database_connection",
@@ -1383,7 +1393,8 @@ class HealthMonitor:
             return HealthStatus.HEALTHY
             
     def get_health_summary(self) -> Dict[str, Any]:
-        """Get comprehensive health summary"""
+        """
+Get comprehensive health summary"""
         overall_status = self.get_overall_status()
         
         status_counts = {

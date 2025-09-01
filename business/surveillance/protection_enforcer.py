@@ -5,8 +5,9 @@ Advanced protection enforcement system that coordinates all protective measures,
 automated responses, and content safeguarding strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Protection enforcement levels"""
+    """
+Protection enforcement levels"""
+
     PASSIVE = "passive"          # Monitor only
     DEFENSIVE = "defensive"      # Basic automated protection
     AGGRESSIVE = "aggressive"    # Active enforcement
@@ -32,6 +35,7 @@ class ProtectionLevel(Enum):
 
 class ProtectionAction(Enum):
     """Available protection actions"""
+
     MONITOR = "monitor"
     ALERT = "alert"
     TAKEDOWN_REQUEST = "takedown_request"
@@ -50,6 +54,7 @@ class ProtectionAction(Enum):
 
 class ThreatLevel(Enum):
     """Threat assessment levels"""
+
     MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
@@ -91,7 +96,8 @@ class ProtectionRule:
 
 @dataclass
 class ProtectionIncident:
-    """Protection incident tracking"""
+    """
+Protection incident tracking"""
     incident_id: str
     creator_id: str
     content_id: Optional[str] = None
@@ -153,7 +159,8 @@ class ProtectionMetrics:
 
 
 class BaseProtectionAction:
-    """Base class for protection actions"""
+    """
+Base class for protection actions"""
     
     def __init__(self, action_type: ProtectionAction, config: Dict[str, Any]):
         self.action_type = action_type
@@ -198,7 +205,8 @@ class TakedownRequestAction(BaseProtectionAction):
         super().__init__(ProtectionAction.TAKEDOWN_REQUEST, config)
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute takedown request"""
+        """
+Execute takedown request"""
         try:
             # Get takedown manager from context
             takedown_manager = context.get("takedown_manager")
@@ -267,13 +275,15 @@ class TakedownRequestAction(BaseProtectionAction):
 
 
 class AlertAction(BaseProtectionAction):
-    """Alert notification action"""
+    """
+Alert notification action"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(ProtectionAction.ALERT, config)
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute alert action"""
+        """
+Execute alert action"""
         try:
             alert_system = context.get("alert_system")
             if not alert_system:
@@ -325,7 +335,8 @@ class ContentBlockAction(BaseProtectionAction):
         super().__init__(ProtectionAction.CONTENT_BLOCK, config)
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content blocking"""
+        """
+Execute content blocking"""
         try:
             # In production, this would interface with CDN/firewall systems
             blocked_urls = []
@@ -364,7 +375,8 @@ class FingerprintProtectionAction(BaseProtectionAction):
         super().__init__(ProtectionAction.FINGERPRINT_PROTECTION, config)
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute fingerprint protection enhancement"""
+        """
+Execute fingerprint protection enhancement"""
         try:
             # Simulate enhancing fingerprint protection
             if incident.content_id:
@@ -419,7 +431,8 @@ class ProtectionEnforcer:
         self.rule_execution_counts: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
     
     async def initialize(self) -> None:
-        """Initialize protection enforcer"""
+        """
+Initialize protection enforcer"""
         try:
             # Initialize action handlers
             action_config = self.surveillance_system.config.get("protection_actions", {})
@@ -685,7 +698,8 @@ class ProtectionEnforcer:
         return matching_rules
     
     async def _check_trigger_conditions(self, rule: ProtectionRule, incident: ProtectionIncident) -> bool:
-        """Check if incident meets rule trigger conditions"""
+        """
+Check if incident meets rule trigger conditions"""
         for condition_key, condition_value in rule.trigger_conditions.items():
             # Get incident value
             incident_value = await self._get_incident_value(incident, condition_key)
@@ -744,7 +758,8 @@ class ProtectionEnforcer:
         return recent_executions < rule.max_executions_per_hour
     
     async def _check_cooldown(self, rule: ProtectionRule) -> bool:
-        """Check if rule is in cooldown period"""
+        """
+Check if rule is in cooldown period"""
         if not rule.cooldown_minutes or not rule.last_executed:
             return True
         
@@ -752,7 +767,8 @@ class ProtectionEnforcer:
         return datetime.now(timezone.utc) > cooldown_end
     
     async def _execute_rule_actions(self, rule: ProtectionRule, incident: ProtectionIncident) -> List[ProtectionAction]:
-        """Execute all actions for a rule"""
+        """
+Execute all actions for a rule"""
         executed_actions = []
         
         # Prepare context for actions
@@ -822,7 +838,8 @@ class ProtectionEnforcer:
         return base_effectiveness * multiplier
     
     async def _update_protection_metrics(self, incident: ProtectionIncident, executed_actions: List[ProtectionAction]) -> None:
-        """Update protection system metrics"""
+        """
+Update protection system metrics"""
         metrics = self.current_metrics
         
         # Update incident counts
@@ -853,7 +870,8 @@ class ProtectionEnforcer:
         metrics.estimated_damage_prevented += incident.estimated_damage * incident.protection_effectiveness
     
     async def get_incident_status(self, incident_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a protection incident"""
+        """
+Get status of a protection incident"""
         if incident_id not in self.active_incidents:
             return None
         
@@ -924,7 +942,8 @@ class ProtectionEnforcer:
         return metrics
     
     async def update_protection_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
-        """Update a protection rule"""
+        """
+Update a protection rule"""
         if rule_id not in self.protection_rules:
             return False
         

@@ -29,6 +29,7 @@ Features:
 - Multi-modal content analysis metrics
 - AI model performance optimization
 """
+
 import time
 import asyncio
 import logging
@@ -46,7 +47,9 @@ logger = get_logger(__name__)
 
 
 class FingerprintAlgorithm(Enum):
-    """Supported fingerprinting algorithms"""
+    """
+Supported fingerprinting algorithms"""
+
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     CLIP_IMAGE = "clip_image"
@@ -62,6 +65,7 @@ class FingerprintAlgorithm(Enum):
 
 class ContentType(Enum):
     """Content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -73,6 +77,7 @@ class ContentType(Enum):
 
 class ProcessingStage(Enum):
     """Fingerprinting processing stages"""
+
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
     VECTORIZATION = "vectorization"
@@ -82,6 +87,7 @@ class ProcessingStage(Enum):
 
 class MatchQuality(Enum):
     """Quality of content matches"""
+
     EXACT = "exact"
     HIGH = "high"
     MEDIUM = "medium"
@@ -104,7 +110,8 @@ class FingerprintingJob:
 
 @dataclass
 class MatchResult:
-    """Content matching result"""
+    """
+Content matching result"""
     match_id: str
     original_fingerprint_id: str
     candidate_fingerprint_id: str
@@ -137,7 +144,8 @@ class FingerprintingPerformanceMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize comprehensive fingerprinting metrics"""
+        """
+Initialize comprehensive fingerprinting metrics"""
         
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
@@ -605,7 +613,8 @@ class FingerprintingPerformanceMetricsCollector:
         gpu_percent: Optional[float] = None,
         gpu_id: Optional[str] = None
     ) -> None:
-        """Update resource utilization metrics"""
+        """
+Update resource utilization metrics"""
         
         self.fingerprinting_cpu_usage.labels(
             algorithm=algorithm.value,
@@ -633,7 +642,8 @@ class FingerprintingPerformanceMetricsCollector:
         throughput_per_second: float,
         worker_count: int
     ) -> None:
-        """Update throughput metrics"""
+        """
+Update throughput metrics"""
         
         self.fingerprinting_throughput.labels(
             algorithm=algorithm.value,
@@ -646,7 +656,8 @@ class FingerprintingPerformanceMetricsCollector:
         job: FingerprintingJob,
         duration: float
     ) -> None:
-        """Update performance cache for trend analysis"""
+        """
+Update performance cache for trend analysis"""
         
         cache_key = f"{job.algorithm.value}:{job.content_type.value}"
         

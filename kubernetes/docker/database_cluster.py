@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional database cluster Docker configuration for high-availability
 PostgreSQL with read replicas and performance optimization.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DatabaseClusterDockerConfig:
-    """Enterprise Database Cluster Docker configuration"""
+    """
+Enterprise Database Cluster Docker configuration"""
     
     # Container Configuration
     postgres_image: str = "postgres:15-alpine"
@@ -171,7 +173,8 @@ ENTRYPOINT ["custom-entrypoint.sh"]
 CMD ["postgres"]
 """
     def generate_replica_dockerfile(self) -> str:
-        """Generate Dockerfile for PostgreSQL replica"""
+        """
+Generate Dockerfile for PostgreSQL replica"""
         return f"""# IA-Influencer PostgreSQL Replica - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Read-only replica with streaming replication
@@ -231,7 +234,8 @@ ENTRYPOINT ["replica-entrypoint.sh"]
 CMD ["postgres"]
 """
     def generate_docker_compose_services(self) -> Dict[str, Any]:
-        """Generate docker-compose services for database cluster"""
+        """
+Generate docker-compose services for database cluster"""
         services = {}
         
         # PostgreSQL Master
@@ -487,7 +491,8 @@ track_io_timing = on
 track_functions = all
 """
     def generate_init_script(self) -> str:
-        """Generate database initialization script"""
+        """
+Generate database initialization script"""
         return f"""#!/bin/bash
 # IA-Influencer Database Initialization Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -553,7 +558,8 @@ EOSQL
 echo "Database initialization completed successfully."
 """
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
+        """
+Save all configuration files to output directory"""
         import os
         from pathlib import Path
         

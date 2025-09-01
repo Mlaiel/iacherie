@@ -42,7 +42,7 @@ __all__ = [
 # Metadata du Module
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Contact mlaiel@live.de"
 
 # Configuration par défaut
@@ -82,5 +82,6 @@ def get_module_info():
     return MODULE_INFO.copy()
 
 def get_default_config():
-    """Get default configuration"""
+    """
+Get default configuration"""
     return DEFAULT_CONFIG.copy()

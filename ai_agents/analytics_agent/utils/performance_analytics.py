@@ -8,6 +8,7 @@ WARNING: This code and concept are protected intellectual property of Fahed Mlai
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,7 +20,9 @@ import asyncio
 import time
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
+
     SYSTEM = "system"
     APPLICATION = "application"
     DATABASE = "database"
@@ -29,6 +32,7 @@ class PerformanceMetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -52,7 +56,8 @@ class PerformanceMetric:
 
 @dataclass
 class SystemPerformanceSnapshot:
-    """Comprehensive system performance snapshot"""
+    """
+Comprehensive system performance snapshot"""
     timestamp: datetime = field(default_factory=datetime.now)
     
     # CPU Metrics
@@ -93,7 +98,8 @@ class SystemPerformanceSnapshot:
 
 @dataclass
 class ApplicationPerformanceMetrics:
-    """Application-level performance metrics"""
+    """
+Application-level performance metrics"""
     timestamp: datetime = field(default_factory=datetime.now)
     
     # Request Metrics
@@ -131,7 +137,8 @@ class ApplicationPerformanceMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert data model"""
+    """
+Performance alert data model"""
     alert_id: str
     metric_name: str
     severity: AlertSeverity
@@ -182,7 +189,8 @@ class EnterprisePerformanceAnalyticsEngine:
         self.metric_collection_interval = 60  # seconds
         
     async def collect_real_time_metrics(self) -> Dict[str, Any]:
-        """Collect comprehensive real-time performance metrics"""
+        """
+Collect comprehensive real-time performance metrics"""
         try:
             # System metrics collection
             system_snapshot = await self._collect_system_metrics()
@@ -451,7 +459,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return snapshot
     
     async def _collect_application_metrics(self) -> ApplicationPerformanceMetrics:
-        """Collect application-specific performance metrics"""
+        """
+Collect application-specific performance metrics"""
         metrics = ApplicationPerformanceMetrics(
             # Request Metrics
             request_rate_per_second=np.random.uniform(10, 100),
@@ -489,7 +498,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return metrics
     
     def _cleanup_old_metrics(self):
-        """Clean up old metric data to prevent memory bloat"""
+        """
+Clean up old metric data to prevent memory bloat"""
         cutoff_time = datetime.now() - timedelta(days=self.performance_history_days)
         
         # Clean system snapshots
@@ -507,7 +517,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     async def _analyze_current_performance(self, system_snapshot: SystemPerformanceSnapshot, 
                                          app_metrics: ApplicationPerformanceMetrics) -> Dict[str, Any]:
-        """Analyze current performance state"""
+        """
+Analyze current performance state"""
         analysis = {
             "system_health_score": self._calculate_system_health_score(system_snapshot),
             "application_health_score": self._calculate_application_health_score(app_metrics),
@@ -668,7 +679,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return max(0, min(100, health_score))
     
     def _calculate_application_health_score(self, metrics: ApplicationPerformanceMetrics) -> float:
-        """Calculate application health score"""
+        """
+Calculate application health score"""
         response_time_score = max(0, 100 - (metrics.response_time_avg_ms / 10))  # 1000ms = 0 score
         error_rate_score = max(0, 100 - (metrics.error_rate_percent * 10))  # 10% error = 0 score
         cache_score = metrics.cache_hit_rate_percent
@@ -680,14 +692,16 @@ class EnterprisePerformanceAnalyticsEngine:
     
     def _calculate_overall_health_score(self, system_snapshot: SystemPerformanceSnapshot,
                                       app_metrics: ApplicationPerformanceMetrics) -> float:
-        """Calculate overall system health score"""
+        """
+Calculate overall system health score"""
         system_score = self._calculate_system_health_score(system_snapshot)
         app_score = self._calculate_application_health_score(app_metrics)
         
         return (system_score * 0.5 + app_score * 0.5)
     
     def _assess_resource_utilization(self, snapshot: SystemPerformanceSnapshot) -> Dict[str, str]:
-        """Assess resource utilization status"""
+        """
+Assess resource utilization status"""
         def get_status(usage_percent: float) -> str:
             if usage_percent > 95:
                 return "critical"
@@ -920,7 +934,8 @@ class PerformanceMonitor:
         self.baseline_metrics: Dict[str, float] = {}
     
     async def collect_system_metrics(self) -> SystemPerformance:
-        """Collect current system performance metrics"""
+        """
+Collect current system performance metrics"""
         # Simulated system metrics collection
         system_perf = SystemPerformance(
             cpu_usage=np.random.uniform(10, 80),
@@ -939,7 +954,8 @@ class PerformanceMonitor:
         return system_perf
     
     async def collect_application_metrics(self) -> ApplicationPerformance:
-        """Collect current application performance metrics"""
+        """
+Collect current application performance metrics"""
         # Simulated application metrics collection
         app_perf = ApplicationPerformance(
             request_count=np.random.randint(100, 2000),
@@ -959,7 +975,8 @@ class PerformanceMonitor:
         return app_perf
     
     def analyze_performance_trends(self, hours_back: int = 24) -> Dict[str, Any]:
-        """Analyze performance trends over specified time period"""
+        """
+Analyze performance trends over specified time period"""
         cutoff_time = datetime.now() - timedelta(hours=hours_back)
         
         # Filter recent metrics
@@ -1320,7 +1337,8 @@ class PerformanceMonitor:
     
     def _identify_bottlenecks(self, system_metrics: List[SystemPerformance], 
                             app_metrics: List[ApplicationPerformance]) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""
+        """
+Identify performance bottlenecks"""
         bottlenecks = []
         
         latest_system = system_metrics[-1]
@@ -1968,7 +1986,8 @@ class PerformanceMonitor:
     def _identify_sla_breaches(self, system_metrics: List[SystemPerformance], 
                              app_metrics: List[ApplicationPerformance], 
                              sla_thresholds: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Identify SLA breaches"""
+        """
+Identify SLA breaches"""
         breaches = []
         
         for system_metric in system_metrics:

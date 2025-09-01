@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import os
 import json
 import logging
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HAProxyServer:
-    """HAProxy server configuration"""
+    """
+HAProxy server configuration"""
     name: str
     address: str
     port: int
@@ -103,7 +105,8 @@ class HAProxyConfigGenerator:
         }
     
     def generate_global_section(self) -> str:
-        """Generate global configuration section"""
+        """
+Generate global configuration section"""
         lines = ["global"]
         
         for key, value in self.global_config.items():

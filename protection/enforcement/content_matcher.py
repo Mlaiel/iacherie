@@ -1,6 +1,7 @@
 """Advanced Content Matching Engine for Copyright Enforcement
 Sophisticated algorithms for detecting content violations across multiple media types
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class MatchingAlgorithm(Enum):
-    """Content matching algorithms"""
+    """
+Content matching algorithms"""
+
     EXACT_HASH = "exact_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     AUDIO_FINGERPRINT = "audio_fingerprint"
@@ -33,6 +36,7 @@ class MatchingAlgorithm(Enum):
 
 class MatchConfidence(Enum):
     """Confidence levels for content matches"""
+
     VERY_LOW = "very_low"      # 0.0 - 0.3
     LOW = "low"                # 0.3 - 0.5
     MEDIUM = "medium"          # 0.5 - 0.7
@@ -73,7 +77,8 @@ class ContentSignature:
 
 @dataclass
 class MatchResult:
-    """Result of content matching operation"""
+    """
+Result of content matching operation"""
     original_signature: ContentSignature
     matched_signature: ContentSignature
     algorithm_used: MatchingAlgorithm
@@ -85,7 +90,8 @@ class MatchResult:
 
 
 class AudioMatcher:
-    """Advanced audio content matching using multiple algorithms"""
+    """
+Advanced audio content matching using multiple algorithms"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -94,7 +100,8 @@ class AudioMatcher:
         self.ml_enabled = self.config.get('ml_enabled', False)
         
     async def generate_signature(self, audio_data: bytes, metadata: Dict[str, Any]) -> ContentSignature:
-        """Generate comprehensive audio signature"""
+        """
+Generate comprehensive audio signature"""
         try:
             # Basic hash
             content_hash = hashlib.sha256(audio_data).hexdigest()
@@ -222,7 +229,8 @@ class AudioMatcher:
             return 0.0
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
-        """Compare feature vectors using cosine similarity"""
+        """
+Compare feature vectors using cosine similarity"""
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -257,7 +265,8 @@ class AudioMatcher:
 
 
 class VideoMatcher:
-    """Advanced video content matching"""
+    """
+Advanced video content matching"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -266,7 +275,8 @@ class VideoMatcher:
         self.object_detection_enabled = self.config.get('object_detection_enabled', False)
     
     async def generate_signature(self, video_data: bytes, metadata: Dict[str, Any]) -> ContentSignature:
-        """Generate comprehensive video signature"""
+        """
+Generate comprehensive video signature"""
         try:
             content_hash = hashlib.sha256(video_data).hexdigest()
             
@@ -390,7 +400,8 @@ class VideoMatcher:
             return 0.0
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
-        """Compare video feature vectors"""
+        """
+Compare video feature vectors"""
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -425,7 +436,8 @@ class VideoMatcher:
 
 
 class TextMatcher:
-    """Advanced text content matching"""
+    """
+Advanced text content matching"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -433,7 +445,8 @@ class TextMatcher:
         self.language_detection_enabled = self.config.get('language_detection_enabled', True)
     
     async def generate_signature(self, text_content: str, metadata: Dict[str, Any]) -> ContentSignature:
-        """Generate comprehensive text signature"""
+        """
+Generate comprehensive text signature"""
         try:
             content_hash = hashlib.sha256(text_content.encode()).hexdigest()
             
@@ -613,7 +626,8 @@ class TextMatcher:
             return 0.0
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
-        """Compare text feature vectors"""
+        """
+Compare text feature vectors"""
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -666,7 +680,8 @@ class TextMatcher:
 
 
 class ContentMatchingEngine:
-    """Central engine for content matching across all media types"""
+    """
+Central engine for content matching across all media types"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -690,7 +705,8 @@ class ContentMatchingEngine:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentSignature:
-        """Generate content signature based on type"""
+        """
+Generate content signature based on type"""
         try:
             metadata = metadata or {}
             
@@ -847,7 +863,8 @@ class ContentMatchingEngine:
         return self.signature_cache.get(content_id)
     
     def clear_cache(self):
-        """Clear signature cache"""
+        """
+Clear signature cache"""
         self.signature_cache.clear()
         logger.info("Signature cache cleared")
     

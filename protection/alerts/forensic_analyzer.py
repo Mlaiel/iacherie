@@ -10,6 +10,7 @@ Ultra-advanced forensic analysis engine for content protection incidents,
 digital evidence collection, chain of custody management, and legal documentation.
 Business Logic: Content violation → forensic investigation → evidence collection → legal action
 """
+
 import asyncio
 import hashlib
 import logging
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Types of digital evidence"""
+    """
+Types of digital evidence"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_RECORDING = "audio_recording"
@@ -61,6 +64,7 @@ class EvidenceType(Enum):
 
 class ForensicSeverity(Enum):
     """Forensic investigation severity levels"""
+
     ROUTINE = "routine"
     ENHANCED = "enhanced"
     COMPREHENSIVE = "comprehensive"
@@ -121,7 +125,8 @@ class AdvancedForensicAnalyzer:
         self.evidence_storage_path.mkdir(parents=True, exist_ok=True)
         
     async def initialize(self):
-        """Initialize forensic analysis engine"""
+        """
+Initialize forensic analysis engine"""
         await self.blockchain_recorder.initialize()
         await self.content_fingerprinter.initialize()
         self.logger.info("Advanced Forensic Analyzer initialized")
@@ -1068,7 +1073,8 @@ class AdvancedForensicAnalyzer:
             return 'low'
     
     def _calculate_timeline_span(self, timeline_events: List[Dict[str, Any]]) -> float:
-        """Calculate timeline span in hours"""
+        """
+Calculate timeline span in hours"""
         if len(timeline_events) < 2:
             return 0.0
         
@@ -1081,7 +1087,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         timeline_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform comprehensive legal assessment"""
+        """
+Perform comprehensive legal assessment"""
         try:
             legal_assessment = {
                 'admissibility_score': 0.0,

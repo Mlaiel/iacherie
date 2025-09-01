@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsType(Enum):
-    """Communication analytics types"""
+    """
+Communication analytics types"""
+
     MESSAGE_DELIVERY = "message_delivery"
     COLLABORATION_ENGAGEMENT = "collaboration_engagement"
     PLATFORM_PERFORMANCE = "platform_performance"
@@ -58,6 +61,7 @@ class AnalyticsType(Enum):
 
 class MetricType(Enum):
     """Metric types for analytics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -69,6 +73,7 @@ class MetricType(Enum):
 
 class AggregationPeriod(Enum):
     """Data aggregation periods"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -96,7 +101,8 @@ class AnalyticsMetric:
 
 @dataclass
 class EngagementAnalysis:
-    """Collaboration engagement analysis"""
+    """
+Collaboration engagement analysis"""
     collaboration_id: str
     total_participants: int
     active_participants: int
@@ -111,7 +117,8 @@ class EngagementAnalysis:
 
 
 class CommunicationMetrics(Base):
-    """Database model for communication metrics"""
+    """
+Database model for communication metrics"""
     __tablename__ = "communication_metrics"
     __table_args__ = (
         Index('idx_metrics_user_id', 'user_id'),
@@ -205,7 +212,8 @@ class CommunicationAnalyticsEngine:
         self.alert_thresholds = {}
         
     async def initialize_analytics_engine(self) -> bool:
-        """Initialize communication analytics engine"""
+        """
+Initialize communication analytics engine"""
         try:
             # Setup metric processors
             await self._setup_metric_processors()

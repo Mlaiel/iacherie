@@ -4,6 +4,7 @@ Integration with various platform APIs for monetization data.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials structure"""
+    """
+Platform API credentials structure"""
     platform: str
     access_token: str
     refresh_token: Optional[str] = None
@@ -30,7 +32,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformAnalytics:
-    """Platform analytics data structure"""
+    """
+Platform analytics data structure"""
     platform: str
     content_id: str
     views: int = 0
@@ -43,7 +46,8 @@ class PlatformAnalytics:
 
 
 class PlatformAPIManager:
-    """Manages integrations with platform APIs"""
+    """
+Manages integrations with platform APIs"""
     
     def __init__(self):
         self.session = None
@@ -64,7 +68,8 @@ class PlatformAPIManager:
         client_secret: str,
         authorization_code: str
     ) -> PlatformCredentials:
-        """Authenticate with YouTube API"""
+        """
+Authenticate with YouTube API"""
         try:
             token_url = "https://oauth2.googleapis.com/token"
             

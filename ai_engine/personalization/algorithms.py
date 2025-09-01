@@ -18,7 +18,7 @@ Advanced Features:
 - Temporal-Aware Learning & Concept Drift Detection
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -37,6 +37,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable, Set
@@ -67,7 +68,9 @@ from .exceptions import PersonalizationError, ModelTrainingError, AlgorithmError
 
 
 class LearningStrategy(Enum):
-    """Online learning strategies"""
+    """
+Online learning strategies"""
+
     GRADIENT_DESCENT = "gradient_descent"
     BANDIT_EPSILON_GREEDY = "bandit_epsilon_greedy"
     BANDIT_UCB = "bandit_ucb"
@@ -80,6 +83,7 @@ class LearningStrategy(Enum):
 
 class FeedbackType(Enum):
     """Types of user feedback"""
+
     EXPLICIT = "explicit"  # Direct ratings, likes/dislikes
     IMPLICIT = "implicit"  # Views, time spent, clicks
     NEGATIVE = "negative"  # Skips, dislikes, reports
@@ -113,7 +117,8 @@ class FeedbackEvent:
 
 @dataclass
 class LearningState:
-    """State of an adaptive learning algorithm"""
+    """
+State of an adaptive learning algorithm"""
     
     algorithm_id: str
     strategy: LearningStrategy
@@ -190,7 +195,8 @@ class AdaptiveAlgorithm(ABC):
     
     @abstractmethod
     async def update_from_feedback(self, feedback: FeedbackEvent) -> None:
-        """Update algorithm state based on feedback"""
+        """
+Update algorithm state based on feedback"""
         pass
     
     @abstractmethod
@@ -199,11 +205,13 @@ class AdaptiveAlgorithm(ABC):
         context: Dict[str, Any],
         actions: List[str]
     ) -> Dict[str, float]:
-        """Get scores for all possible actions"""
+        """
+Get scores for all possible actions"""
         pass
     
     async def process_feedback_batch(self, feedback_batch: List[FeedbackEvent]) -> None:
-        """Process a batch of feedback events"""
+        """
+Process a batch of feedback events"""
         for feedback in feedback_batch:
             await self.update_from_feedback(feedback)
             self.feedback_history.append(feedback)
@@ -212,7 +220,8 @@ class AdaptiveAlgorithm(ABC):
         await self._update_performance_metrics()
     
     async def _update_performance_metrics(self) -> None:
-        """Update algorithm performance metrics"""
+        """
+Update algorithm performance metrics"""
         if not self.feedback_history:
             return
         
@@ -233,11 +242,13 @@ class AdaptiveAlgorithm(ABC):
         self.state.last_updated = datetime.utcnow()
     
     def get_state(self) -> LearningState:
-        """Get current learning state"""
+        """
+Get current learning state"""
         return self.state
     
     def get_metrics(self) -> Dict[str, float]:
-        """Get performance metrics"""
+        """
+Get performance metrics"""
         return self.metrics.copy()
 
 
@@ -262,7 +273,8 @@ class EpsilonGreedyBandit(AdaptiveAlgorithm):
         context: Dict[str, Any],
         available_actions: List[str]
     ) -> Tuple[str, float]:
-        """Select action using epsilon-greedy strategy"""
+        """
+Select action using epsilon-greedy strategy"""
         
         # Decay epsilon over time
         current_epsilon = max(
@@ -286,7 +298,8 @@ class EpsilonGreedyBandit(AdaptiveAlgorithm):
         return selected_action, confidence
     
     async def update_from_feedback(self, feedback: FeedbackEvent) -> None:
-        """Update action values based on feedback"""
+        """
+Update action values based on feedback"""
         
         action = feedback.recommendation_strategy
         if not action:
@@ -331,7 +344,8 @@ class UCBBandit(AdaptiveAlgorithm):
         context: Dict[str, Any],
         available_actions: List[str]
     ) -> Tuple[str, float]:
-        """Select action using UCB strategy"""
+        """
+Select action using UCB strategy"""
         
         total_time = self.state.total_actions + 1
         
@@ -356,7 +370,8 @@ class UCBBandit(AdaptiveAlgorithm):
         return selected_action, confidence
     
     async def update_from_feedback(self, feedback: FeedbackEvent) -> None:
-        """Update action values based on feedback"""
+        """
+Update action values based on feedback"""
         
         action = feedback.recommendation_strategy
         if not action:
@@ -412,7 +427,8 @@ class ThompsonSamplingBandit(AdaptiveAlgorithm):
         context: Dict[str, Any],
         available_actions: List[str]
     ) -> Tuple[str, float]:
-        """Select action using Thompson Sampling"""
+        """
+Select action using Thompson Sampling"""
         
         sampled_values = {}
         
@@ -434,7 +450,8 @@ class ThompsonSamplingBandit(AdaptiveAlgorithm):
         return selected_action, confidence
     
     async def update_from_feedback(self, feedback: FeedbackEvent) -> None:
-        """Update Beta distribution parameters"""
+        """
+Update Beta distribution parameters"""
         
         action = feedback.recommendation_strategy
         if not action:
@@ -485,7 +502,8 @@ class ContextualBandit(AdaptiveAlgorithm):
         context: Dict[str, Any],
         available_actions: List[str]
     ) -> Tuple[str, float]:
-        """Select action based on context"""
+        """
+Select action based on context"""
         
         context_vector = self._extract_context_features(context)
         
@@ -522,7 +540,8 @@ class ContextualBandit(AdaptiveAlgorithm):
         return selected_action, confidence
     
     async def update_from_feedback(self, feedback: FeedbackEvent) -> None:
-        """Update contextual model"""
+        """
+Update contextual model"""
         
         action = feedback.recommendation_strategy
         if not action or action not in self.action_models:
@@ -585,7 +604,8 @@ class ContextualBandit(AdaptiveAlgorithm):
         context: Dict[str, Any],
         actions: List[str]
     ) -> Dict[str, float]:
-        """Get predicted scores for all actions"""
+        """
+Get predicted scores for all actions"""
         
         context_vector = self._extract_context_features(context)
         scores = {}
@@ -622,7 +642,8 @@ class OnlineLearningEngine:
         self._initialize_algorithms()
     
     def _initialize_algorithms(self):
-        """Initialize different adaptive algorithms"""
+        """
+Initialize different adaptive algorithms"""
         
         # Epsilon-greedy bandit
         self.algorithms['epsilon_greedy'] = EpsilonGreedyBandit(
@@ -688,7 +709,8 @@ class OnlineLearningEngine:
         return selected_algorithm_name, strategy, combined_confidence
     
     async def process_feedback(self, feedback: FeedbackEvent) -> None:
-        """Process feedback for all relevant algorithms"""
+        """
+Process feedback for all relevant algorithms"""
         
         # Update the algorithm that made the recommendation
         algorithm_id = feedback.context.get('algorithm_id')
@@ -748,7 +770,8 @@ class OnlineLearningEngine:
         algorithm_id: str,
         feedback: FeedbackEvent
     ) -> None:
-        """Update performance tracking for algorithm"""
+        """
+Update performance tracking for algorithm"""
         
         if algorithm_id not in self.algorithm_performance:
             self.algorithm_performance[algorithm_id] = {
@@ -765,7 +788,8 @@ class OnlineLearningEngine:
         perf['last_updated'] = datetime.utcnow()
     
     def get_algorithm_performance(self) -> Dict[str, Dict[str, Any]]:
-        """Get performance summary for all algorithms"""
+        """
+Get performance summary for all algorithms"""
         
         performance_summary = {}
         
@@ -787,7 +811,8 @@ class OnlineLearningEngine:
         return performance_summary
     
     async def optimize_algorithms(self) -> None:
-        """Optimize algorithm parameters based on performance"""
+        """
+Optimize algorithm parameters based on performance"""
         
         # Analyze performance trends
         performance = self.get_algorithm_performance()
@@ -943,7 +968,8 @@ class FeedbackProcessor:
         return None, 0.0
     
     def _calculate_reliability(self, interaction_data: Dict[str, Any]) -> float:
-        """Calculate reliability score for feedback"""
+        """
+Calculate reliability score for feedback"""
         
         reliability = 1.0
         
@@ -1118,7 +1144,8 @@ class PersonalizationOptimizer:
         gap: float,
         algorithm_performance: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate specific optimization actions for a metric"""
+        """
+Generate specific optimization actions for a metric"""
         
         actions = []
         
@@ -1164,7 +1191,8 @@ class PersonalizationOptimizer:
         return actions
     
     async def _analyze_feedback_patterns(self, feedback_events: List[FeedbackEvent]) -> Dict[str, Any]:
-        """Analyze patterns in user feedback"""
+        """
+Analyze patterns in user feedback"""
         
         if not feedback_events:
             return {}
@@ -1214,7 +1242,8 @@ class PersonalizationOptimizer:
         feedback_insights: Dict[str, Any],
         algorithm_performance: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate specific parameter adjustments"""
+        """
+Generate specific parameter adjustments"""
         
         adjustments = {
             'learning_rates': {},
@@ -1245,7 +1274,8 @@ class PersonalizationOptimizer:
         return adjustments
     
     def _estimate_improvements(self, parameter_adjustments: Dict[str, Any]) -> Dict[str, float]:
-        """Estimate expected performance improvements"""
+        """
+Estimate expected performance improvements"""
         
         improvements = {}
         
@@ -1377,7 +1407,8 @@ class RecommendationRanker:
         recommendation: Dict[str, Any],
         context: Dict[str, Any] = None
     ) -> float:
-        """Calculate temporal relevance score"""
+        """
+Calculate temporal relevance score"""
         
         # Simple temporal scoring based on content age
         if 'created_at' in recommendation:
@@ -1404,7 +1435,8 @@ class RecommendationRanker:
         ranked_recommendations: List[Dict[str, Any]],
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """Apply diversity constraints to ranking"""
+        """
+Apply diversity constraints to ranking"""
         
         if len(ranked_recommendations) <= 1:
             return ranked_recommendations
@@ -1437,7 +1469,8 @@ class RecommendationRanker:
         user_id: str,
         feedback: FeedbackEvent
     ) -> None:
-        """Update user-specific ranking weights based on feedback"""
+        """
+Update user-specific ranking weights based on feedback"""
         
         try:
             # Extract ranking factors from feedback context
@@ -1484,7 +1517,8 @@ class PersonalityMatcher:
         self.compatibility_matrix = self._initialize_compatibility_matrix()
     
     def _initialize_compatibility_matrix(self) -> Dict[str, Dict[str, float]]:
-        """Initialize personality compatibility matrix"""
+        """
+Initialize personality compatibility matrix"""
         
         # Simplified compatibility rules
         # In practice, this would be learned from data
@@ -1518,7 +1552,8 @@ class PersonalityMatcher:
         user1_profile: UserProfile,
         user2_profile: UserProfile
     ) -> float:
-        """Calculate personality compatibility between two users"""
+        """
+Calculate personality compatibility between two users"""
         
         try:
             user1_traits = user1_profile.personality_traits
@@ -1580,7 +1615,8 @@ class PersonalityMatcher:
         user_profile: UserProfile,
         content_items: List[Dict[str, Any]]
     ) -> List[Tuple[Dict[str, Any], float]]:
-        """Recommend content based on personality fit"""
+        """
+Recommend content based on personality fit"""
         
         recommendations = []
         user_traits = user_profile.personality_traits
@@ -1604,7 +1640,8 @@ class PersonalityMatcher:
         user_traits: Dict[str, float],
         content: Dict[str, Any]
     ) -> float:
-        """Calculate how well content fits user's personality"""
+        """
+Calculate how well content fits user's personality"""
         
         # Extract content personality indicators
         content_tags = content.get('tags', [])

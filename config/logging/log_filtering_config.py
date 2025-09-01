@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import re
 import json
 import hashlib
@@ -30,7 +31,9 @@ import base64
 
 
 class FilterAction(str, Enum):
-    """Actions to take when filter matches"""
+    """
+Actions to take when filter matches"""
+
     REDACT = "redact"           # Replace with [REDACTED]
     MASK = "mask"               # Replace with asterisks
     HASH = "hash"               # Replace with hash
@@ -42,6 +45,7 @@ class FilterAction(str, Enum):
 
 class FilterScope(str, Enum):
     """Scope of filtering application"""
+
     MESSAGE = "message"         # Filter only message field
     FIELD = "field"            # Filter specific field
     ALL_FIELDS = "all_fields"  # Filter all string fields
@@ -50,6 +54,7 @@ class FilterScope(str, Enum):
 
 class SensitiveDataType(str, Enum):
     """Types of sensitive data to detect"""
+
     CREDIT_CARD = "credit_card"
     SSN = "ssn"
     EMAIL = "email"
@@ -197,7 +202,8 @@ class LogFilteringConfig:
         self._stats_lock = threading.Lock()
     
     def _initialize_encryption(self, key: str) -> None:
-        """Initialize encryption for sensitive data"""
+        """
+Initialize encryption for sensitive data"""
         try:
             if len(key) == 32:
                 # Assume it's already a proper key
@@ -542,7 +548,8 @@ class LogFilteringConfig:
         return False
     
     def _check_blacklist(self, log_data: Dict[str, Any]) -> bool:
-        """Check if log data matches blacklist patterns"""
+        """
+Check if log data matches blacklist patterns"""
         if not self.blacklist_patterns:
             return False
         
@@ -559,7 +566,8 @@ class LogFilteringConfig:
         return False
     
     def _apply_filter_rules(self, log_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Apply all filtering rules to log data"""
+        """
+Apply all filtering rules to log data"""
         for rule in self.rules:
             if not rule.enabled:
                 continue
@@ -599,7 +607,8 @@ class LogFilteringConfig:
         return True
     
     def _apply_rule(self, rule: FilterRule, log_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Apply a single filtering rule to log data"""
+        """
+Apply a single filtering rule to log data"""
         if rule.scope == FilterScope.MESSAGE:
             # Filter only the message field
             message = str(log_data.get('message', ''))
@@ -647,7 +656,8 @@ class LogFilteringConfig:
         return log_data
     
     def _apply_rule_to_text(self, rule: FilterRule, text: str) -> Optional[str]:
-        """Apply a filtering rule to a text string"""
+        """
+Apply a filtering rule to a text string"""
         if not self._pattern_matches(rule.pattern, text):
             return text
         
@@ -678,7 +688,8 @@ class LogFilteringConfig:
         return text
     
     def _pattern_matches(self, pattern: Union[str, Pattern], text: str) -> bool:
-        """Check if pattern matches text"""
+        """
+Check if pattern matches text"""
         if self.enable_pattern_caching:
             cache_key = f"{hash(str(pattern))}_{hash(text)}"
             
@@ -714,7 +725,8 @@ class LogFilteringConfig:
         self, pattern: Union[str, Pattern], text: str, mask_char: str,
         preserve_start: int, preserve_end: int
     ) -> str:
-        """Mask pattern matches with specified character"""
+        """
+Mask pattern matches with specified character"""
         def mask_function(match):
             matched_text = match.group(0)
             start_len = min(preserve_start, len(matched_text))
@@ -740,7 +752,8 @@ class LogFilteringConfig:
             return pattern.sub(mask_function, text)
     
     def _hash_matches(self, pattern: Union[str, Pattern], text: str, algorithm: str) -> str:
-        """Replace pattern matches with hash values"""
+        """
+Replace pattern matches with hash values"""
         def hash_function(match):
             matched_text = match.group(0)
             
@@ -819,7 +832,8 @@ class LogFilteringConfig:
                     self._filter_stats['rules_matched'].get(rule_name, 0) + 1
     
     def add_rule(self, rule: FilterRule) -> None:
-        """Add a new filtering rule"""
+        """
+Add a new filtering rule"""
         self.rules.append(rule)
         self._compile_patterns()
         logging.info(f"Added filtering rule: {rule.name}")
@@ -851,16 +865,19 @@ class LogFilteringConfig:
         return self.update_rule(rule_name, enabled=True)
     
     def disable_rule(self, rule_name: str) -> bool:
-        """Disable a filtering rule"""
+        """
+Disable a filtering rule"""
         return self.update_rule(rule_name, enabled=False)
     
     def get_filter_stats(self) -> Dict[str, Any]:
-        """Get filtering statistics"""
+        """
+Get filtering statistics"""
         with self._stats_lock:
             return self._filter_stats.copy()
     
     def reset_stats(self) -> None:
-        """Reset filtering statistics"""
+        """
+Reset filtering statistics"""
         with self._stats_lock:
             self._filter_stats = {
                 'total_processed': 0,
@@ -870,12 +887,14 @@ class LogFilteringConfig:
             }
     
     def clear_cache(self) -> None:
-        """Clear pattern matching cache"""
+        """
+Clear pattern matching cache"""
         with self._cache_lock:
             self._pattern_cache.clear()
     
     def get_config_status(self) -> Dict[str, Any]:
-        """Get current configuration status"""
+        """
+Get current configuration status"""
         return {
             "enabled": self.enabled,
             "total_rules": len(self.rules),
@@ -900,7 +919,8 @@ class SecurityLogFilter(logging.Filter):
         self.filtering_config = filtering_config
     
     def filter(self, record: logging.LogRecord) -> bool:
-        """Filter security log records"""
+        """
+Filter security log records"""
         # Only process security-related logs
         if not record.name.startswith('ia_influencer_security'):
             return True
@@ -910,14 +930,16 @@ class SecurityLogFilter(logging.Filter):
 
 
 class PerformanceLogFilter(logging.Filter):
-    """Logging filter for performance-related logs"""
+    """
+Logging filter for performance-related logs"""
     
     def __init__(self, filtering_config: LogFilteringConfig):
         super().__init__()
         self.filtering_config = filtering_config
     
     def filter(self, record: logging.LogRecord) -> bool:
-        """Filter performance log records"""
+        """
+Filter performance log records"""
         # Only process performance-related logs
         if not record.name.startswith('ia_influencer_performance'):
             return True
@@ -927,14 +949,16 @@ class PerformanceLogFilter(logging.Filter):
 
 
 class AuditLogFilter(logging.Filter):
-    """Logging filter for audit-related logs"""
+    """
+Logging filter for audit-related logs"""
     
     def __init__(self, filtering_config: LogFilteringConfig):
         super().__init__()
         self.filtering_config = filtering_config
     
     def filter(self, record: logging.LogRecord) -> bool:
-        """Filter audit log records"""
+        """
+Filter audit log records"""
         # Only process audit-related logs
         if not record.name.startswith('ia_influencer_audit'):
             return True
@@ -970,7 +994,8 @@ def initialize_log_filtering(
 
 
 def get_filtering_config() -> LogFilteringConfig:
-    """Get the global log filtering configuration"""
+    """
+Get the global log filtering configuration"""
     if not _filtering_config:
         initialize_log_filtering()
     

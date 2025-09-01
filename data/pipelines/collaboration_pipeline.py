@@ -12,13 +12,14 @@ Team Specialties:
 - Content Strategy: Collaborative content optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This proprietary collaboration technology and matching algorithms belong
 exclusively to Fahed Mlaiel. Any unauthorized use, copying, or competitive
 implementation without explicit permission will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -70,7 +71,9 @@ settings = get_settings()
 
 
 class CollaborationType(str, Enum):
-    """Types of collaboration opportunities"""
+    """
+Types of collaboration opportunities"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -85,6 +88,7 @@ class CollaborationType(str, Enum):
 
 class CompatibilityFactor(str, Enum):
     """Factors for measuring creator compatibility"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     BRAND_VALUES = "brand_values"
@@ -99,6 +103,7 @@ class CompatibilityFactor(str, Enum):
 
 class PartnershipStatus(str, Enum):
     """Status of partnership requests"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -110,6 +115,7 @@ class PartnershipStatus(str, Enum):
 
 class MatchingAlgorithm(str, Enum):
     """Available matching algorithms"""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -919,7 +925,8 @@ class CreatorMatchingEngine:
         collaboration_type: CollaborationType,
         filters: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Get potential collaboration candidates"""
+        """
+Get potential collaboration candidates"""
         # Implementation would query database for potential matches
         pass
 
@@ -928,7 +935,8 @@ class CreatorMatchingEngine:
         creator_profile: Dict[str, Any],
         candidate_profile: Dict[str, Any]
     ) -> float:
-        """Estimate audience overlap percentage"""
+        """
+Estimate audience overlap percentage"""
         # Implementation would calculate estimated overlap
         return 0.2  # Placeholder
 
@@ -1067,12 +1075,14 @@ class CollaborationPipeline:
         self,
         matches: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate actionable collaboration recommendations"""
+        """
+Generate actionable collaboration recommendations"""
         # Implementation would analyze matches and generate recommendations
         pass
 
     async def _get_partnership(self, partnership_id: str) -> Dict[str, Any]:
-        """Get partnership details from database"""
+        """
+Get partnership details from database"""
         # Implementation would retrieve partnership data
         pass
 
@@ -1081,7 +1091,8 @@ class CollaborationPipeline:
         partnership: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle partnership acceptance"""
+        """
+Handle partnership acceptance"""
         # Implementation would handle acceptance workflow
         pass
 
@@ -1095,7 +1106,9 @@ settings = get_settings()
 
 
 class CollaborationType(str, Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     DUET = "duet"                    # Two creators
     GROUP = "group"                  # Multiple creators
     BRAND_PARTNERSHIP = "brand_partnership"  # Brand collaboration
@@ -1108,6 +1121,7 @@ class CollaborationType(str, Enum):
 
 class MatchingCriteria(str, Enum):
     """Criteria for creator matching"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_SIMILARITY = "content_similarity"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -1120,6 +1134,7 @@ class MatchingCriteria(str, Enum):
 
 class PartnershipStatus(str, Enum):
     """Partnership status"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -1600,7 +1615,8 @@ class MatchingEngine:
         collaborator_profile: Dict[str, Any],
         collaboration_type: CollaborationType
     ) -> float:
-        """Predict collaboration success probability using ML"""
+        """
+Predict collaboration success probability using ML"""
         try:
             success_indicators = []
             
@@ -1685,7 +1701,8 @@ class MatchingEngine:
         collaboration_type: CollaborationType,
         filters: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Get pool of potential collaborators"""
+        """
+Get pool of potential collaborators"""
         # Implementation would query database for potential collaborators
         pass
 
@@ -1696,7 +1713,8 @@ class MatchingEngine:
         creator_profile: Dict[str, Any],
         collaborator_profile: Dict[str, Any]
     ) -> float:
-        """Apply collaboration type specific score adjustments"""
+        """
+Apply collaboration type specific score adjustments"""
         # Implementation would apply type-specific adjustments
         return base_score
 
@@ -1705,7 +1723,8 @@ class MatchingEngine:
         creator_profile: Dict[str, Any],
         collaborator_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Get detailed compatibility breakdown"""
+        """
+Get detailed compatibility breakdown"""
         # Implementation would provide detailed breakdown
         pass
 
@@ -1715,7 +1734,8 @@ class MatchingEngine:
         collaborator_profile: Dict[str, Any],
         collaboration_type: CollaborationType
     ) -> List[str]:
-        """Generate specific collaboration recommendations"""
+        """
+Generate specific collaboration recommendations"""
         # Implementation would generate recommendations
         pass
 
@@ -1724,7 +1744,8 @@ class MatchingEngine:
         creator_profile: Dict[str, Any],
         collaborator_profile: Dict[str, Any]
     ) -> Dict[str, int]:
-        """Estimate potential collaboration reach"""
+        """
+Estimate potential collaboration reach"""
         # Implementation would estimate reach
         pass
 
@@ -2021,27 +2042,31 @@ class CollaborationPipeline:
         matches: Dict[str, List[Dict[str, Any]]],
         opportunities: List[Dict[str, Any]]
     ) -> str:
-        """Save discovery results to database"""
+        """
+Save discovery results to database"""
         # Implementation would save results
         pass
 
     async def _validate_collaboration_participants(
         self, sender_id: int, recipient_id: int
     ):
-        """Validate collaboration participants"""
+        """
+Validate collaboration participants"""
         # Implementation would validate users
         pass
 
     async def _create_partnership(
         self, request: CollaborationRequest
     ) -> Partnership:
-        """Create partnership from accepted request"""
+        """
+Create partnership from accepted request"""
         # Implementation would create partnership
         pass
 
     async def _generate_completion_analytics(
         self, partnership: Partnership
     ) -> Dict[str, Any]:
-        """Generate partnership completion analytics"""
+        """
+Generate partnership completion analytics"""
         # Implementation would generate analytics
         pass

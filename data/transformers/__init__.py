@@ -5,9 +5,10 @@ Advanced data transformation layer providing industrial-grade content processing
 capabilities for creator workflows and enterprise content management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import logging
 from typing import Dict, List, Optional, Any
 
@@ -15,7 +16,7 @@ from typing import Dict, List, Optional, Any
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 logger = logging.getLogger(__name__)
 
@@ -134,7 +135,8 @@ if not _CORE_MODULES_AVAILABLE:
             self.options = kwargs.get('options', {})
     
     class TransformationResult:
-        """Functional placeholder for TransformationResult when imports fail."""
+        """
+Functional placeholder for TransformationResult when imports fail."""
         def __init__(self, success=False, error_message="", processing_time=0, **kwargs):
             self.success = success
             self.error_message = error_message
@@ -231,7 +233,8 @@ if not _ADVANCED_MODULES_AVAILABLE:
             self.error = 'BatchProcessor not available'
     
     class StreamConfiguration:
-        """Functional placeholder for StreamConfiguration when imports fail."""
+        """
+Functional placeholder for StreamConfiguration when imports fail."""
         def __init__(self, **kwargs):
             self.format = kwargs.get('format', 'webm')
             self.chunk_size = kwargs.get('chunk_size', 1024)
@@ -247,7 +250,8 @@ if not _ADVANCED_MODULES_AVAILABLE:
             self.size = len(self.data) if data else 0
     
     class QualityMetrics:
-        """Functional placeholder for QualityMetrics when imports fail."""
+        """
+Functional placeholder for QualityMetrics when imports fail."""
         def __init__(self, **kwargs):
             self.resolution = kwargs.get('resolution', '1080p')
             self.bitrate = kwargs.get('bitrate', '0')
@@ -255,7 +259,8 @@ if not _ADVANCED_MODULES_AVAILABLE:
             self.audio_quality = kwargs.get('audio_quality', 'unknown')
     
     class OptimizationResult:
-        """Functional placeholder for OptimizationResult when imports fail."""
+        """
+Functional placeholder for OptimizationResult when imports fail."""
         def __init__(self, success=False, **kwargs):
             self.success = success
             self.original_size = kwargs.get('original_size', 0)
@@ -264,7 +269,8 @@ if not _ADVANCED_MODULES_AVAILABLE:
             self.error = kwargs.get('error', 'QualityOptimizer not available')
     
     class ModuleInfo:
-        """Functional placeholder for ModuleInfo when imports fail."""
+        """
+Functional placeholder for ModuleInfo when imports fail."""
         def __init__(self, module_name, **kwargs):
             self.module_name = module_name
             self.version = '0.0.0'
@@ -273,7 +279,8 @@ if not _ADVANCED_MODULES_AVAILABLE:
             self.error = 'Module index not available'
     
     def get_module_index():
-        """Functional placeholder function when index module fails to import."""
+        """
+Functional placeholder function when index module fails to import."""
         logger.warning("ModuleIndex not available - returning basic info")
         return {
             "status": "unavailable",
@@ -506,7 +513,7 @@ from .index import TransformerIndexManager
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 # Core transformer classes
 __all__ = [
@@ -586,9 +593,11 @@ def get_transformer_info():
     return __module_info__
 
 def list_transformers():
-    """List all available transformer classes."""
+    """
+List all available transformer classes."""
     return __all__
 
 def get_version():
-    """Get module version."""
+    """
+Get module version."""
     return __version__

@@ -9,6 +9,7 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
+
 import hashlib
 import numpy as np
 import librosa
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintResult:
-    """Result container for audio fingerprinting operations."""
+    """
+Result container for audio fingerprinting operations."""
     
     fingerprint_hash: str
     chromaprint: Optional[str]
@@ -41,7 +43,8 @@ class FingerprintResult:
 
 @dataclass
 class MatchResult:
-    """Result container for fingerprint matching operations."""
+    """
+Result container for fingerprint matching operations."""
     
     similarity_score: float
     match_confidence: float
@@ -58,7 +61,8 @@ class AudioFingerprintCore:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the core fingerprinting engine."""
+        """
+Initialize the core fingerprinting engine."""
         self.config = config or self._default_config()
         self.executor = ThreadPoolExecutor(max_workers=self.config['max_workers'])
         
@@ -158,7 +162,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _chromaprint_sync)
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extract advanced spectral features for robust matching."""
+        """
+Extract advanced spectral features for robust matching."""
         loop = asyncio.get_event_loop()
         
         def _extract_sync():
@@ -207,7 +212,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _extract_sync)
     
     async def _generate_perceptual_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate perceptual hash based on audio characteristics."""
+        """
+Generate perceptual hash based on audio characteristics."""
         loop = asyncio.get_event_loop()
         
         def _hash_sync():
@@ -229,7 +235,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _hash_sync)
     
     def _calculate_file_hash(self, filepath: str) -> str:
-        """Calculate SHA-256 hash of the audio file."""
+        """
+Calculate SHA-256 hash of the audio file."""
         hasher = hashlib.sha256()
         
         with open(filepath, 'rb') as f:
@@ -337,7 +344,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _similarity_sync)
     
     def _chromaprint_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate similarity between two chromaprint fingerprints."""
+        """
+Calculate similarity between two chromaprint fingerprints."""
         try:
             # Decode fingerprints
             raw_fp1 = chromaprint.decode(fp1)

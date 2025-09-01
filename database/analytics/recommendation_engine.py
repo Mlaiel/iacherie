@@ -23,6 +23,7 @@ Specialties of Project Team:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -36,7 +37,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class RecommendationType(str, Enum):
-    """Types of recommendations available"""
+    """
+Types of recommendations available"""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     POSTING_SCHEDULE = "posting_schedule"
     COLLABORATION = "collaboration"
@@ -50,6 +53,7 @@ class RecommendationType(str, Enum):
 
 class RecommendationPriority(str, Enum):
     """Recommendation priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -57,6 +61,7 @@ class RecommendationPriority(str, Enum):
 
 class RecommendationCategory(str, Enum):
     """Recommendation categories"""
+
     PERFORMANCE = "performance"
     GROWTH = "growth"
     MONETIZATION = "monetization"
@@ -88,7 +93,8 @@ class Recommendation:
 
 @dataclass
 class RecommendationResult:
-    """Result of recommendation analysis"""
+    """
+Result of recommendation analysis"""
     user_id: int
     analysis_date: datetime
     total_recommendations: int
@@ -808,7 +814,8 @@ class RecommendationEngine:
         self,
         recommendations: List[Recommendation]
     ) -> Dict[RecommendationPriority, int]:
-        """Calculate distribution of recommendations by priority"""
+        """
+Calculate distribution of recommendations by priority"""
         
         distribution = {priority: 0 for priority in RecommendationPriority}
         
@@ -821,7 +828,8 @@ class RecommendationEngine:
         self,
         recommendations: List[Recommendation]
     ) -> Dict[RecommendationCategory, int]:
-        """Calculate distribution of recommendations by category"""
+        """
+Calculate distribution of recommendations by category"""
         
         distribution = {category: 0 for category in RecommendationCategory}
         
@@ -834,7 +842,8 @@ class RecommendationEngine:
         self,
         recommendations: List[Recommendation]
     ) -> float:
-        """Calculate overall score based on recommendations"""
+        """
+Calculate overall score based on recommendations"""
         
         if not recommendations:
             return 0.0
@@ -862,7 +871,8 @@ class RecommendationEngine:
         user_id: int,
         analysis_period_days: int
     ) -> Dict[str, Any]:
-        """Get comprehensive user analytics data for recommendations"""
+        """
+Get comprehensive user analytics data for recommendations"""
         
         # This would fetch real data from various analytics tables
         # For now, returning mock data structure
@@ -1101,7 +1111,8 @@ class ContentOptimizer:
         return performance_score
     
     def _is_optimal_posting_time(self, posting_time: datetime, user_id: int) -> bool:
-        """Check if posting time is optimal for user's audience"""
+        """
+Check if posting time is optimal for user's audience"""
         
         # This would analyze user's audience activity patterns
         # For now, using general optimal times
@@ -1110,7 +1121,8 @@ class ContentOptimizer:
         return posting_time.hour in optimal_hours
     
     def _prioritize_optimizations(self, optimizations: List[Dict[str, Any]]) -> List[str]:
-        """Prioritize optimization actions by impact"""
+        """
+Prioritize optimization actions by impact"""
         
         # Priority order based on typical impact
         priority_order = {

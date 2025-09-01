@@ -21,6 +21,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceCategory(Enum):
-    """Business intelligence categories"""
+    """
+Business intelligence categories"""
+
     CONTENT_PROTECTION = "content_protection"
     AI_PERFORMANCE = "ai_performance"
     REVENUE_OPTIMIZATION = "revenue_optimization"
@@ -52,6 +55,7 @@ class IntelligenceCategory(Enum):
 
 class InsightPriority(Enum):
     """Priority levels for business insights"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -61,6 +65,7 @@ class InsightPriority(Enum):
 
 class ActionType(Enum):
     """Types of recommended actions"""
+
     OPTIMIZE = "optimize"
     INVESTIGATE = "investigate"
     ALERT = "alert"
@@ -94,7 +99,8 @@ class BusinessInsight:
 
 @dataclass
 class PerformanceAnalytics:
-    """Comprehensive performance analytics"""
+    """
+Comprehensive performance analytics"""
     category: str
     metrics: Dict[str, float]
     trends: Dict[str, Dict[str, float]]  # metric_name -> {daily, weekly, monthly}
@@ -107,7 +113,8 @@ class PerformanceAnalytics:
 
 @dataclass
 class RevenueIntelligence:
-    """Revenue intelligence and optimization insights"""
+    """
+Revenue intelligence and optimization insights"""
     total_revenue: float
     revenue_streams: Dict[str, float]
     growth_rates: Dict[str, float]
@@ -122,7 +129,8 @@ class RevenueIntelligence:
 
 @dataclass
 class ContentProtectionIntelligence:
-    """Content protection intelligence analytics"""
+    """
+Content protection intelligence analytics"""
     protection_rate: float
     fingerprint_accuracy: float
     detection_speed: float
@@ -746,14 +754,16 @@ class PlatformIntelligenceEngine:
         ]
     
     async def get_high_priority_insights(self) -> List[BusinessInsight]:
-        """Get high priority insights requiring attention"""
+        """
+Get high priority insights requiring attention"""
         return [
             insight for insight in self._insights_cache.values()
             if insight.priority in [InsightPriority.HIGH, InsightPriority.CRITICAL, InsightPriority.URGENT]
         ]
     
     async def mark_insight_acted_upon(self, insight_id: str):
-        """Mark insight as acted upon"""
+        """
+Mark insight as acted upon"""
         if insight_id in self._insights_cache:
             self._insights_cache[insight_id].acted_upon = True
             
@@ -771,7 +781,8 @@ class ContentProtectionAnalyzer:
     """Analyzer for content protection intelligence"""
     
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze content protection data and generate insights"""
+        """
+Analyze content protection data and generate insights"""
         insights = []
         
         if len(data) < 2:
@@ -814,7 +825,8 @@ class RevenueAnalyzer:
     """Analyzer for revenue intelligence"""
     
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze revenue data and generate insights"""
+        """
+Analyze revenue data and generate insights"""
         insights = []
         
         if len(data) < 5:
@@ -858,7 +870,8 @@ class AIPerformanceAnalyzer:
     """Analyzer for AI performance intelligence"""
     
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze AI performance data and generate insights"""
+        """
+Analyze AI performance data and generate insights"""
         insights = []
         
         if len(data) < 3:
@@ -901,7 +914,8 @@ class CreatorSuccessAnalyzer:
     """Analyzer for creator success metrics"""
     
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze creator success data and generate insights"""
+        """
+Analyze creator success data and generate insights"""
         insights = []
         
         if len(data) < 2:
@@ -944,7 +958,8 @@ class EngagementAnalyzer:
     """Analyzer for user engagement intelligence"""
     
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze user engagement data and generate insights"""
+        """
+Analyze user engagement data and generate insights"""
         insights = []
         
         if len(data) < 3:

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import uuid
@@ -74,7 +75,9 @@ from ...services.audit import AuditService
 logger = logging.getLogger(__name__)
 
 class PaymentGateway(Enum):
-    """Supported payment gateways"""
+    """
+Supported payment gateways"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -83,6 +86,7 @@ class PaymentGateway(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -93,6 +97,7 @@ class PaymentStatus(Enum):
 
 class PayoutFrequency(Enum):
     """Automated payout frequency options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -101,6 +106,7 @@ class PayoutFrequency(Enum):
 
 class FraudRiskLevel(Enum):
     """Fraud detection risk levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -120,7 +126,8 @@ class PaymentRequest:
 
 @dataclass
 class PayoutConfiguration:
-    """Automated payout configuration"""
+    """
+Automated payout configuration"""
     user_id: str
     minimum_threshold: Decimal
     frequency: PayoutFrequency
@@ -133,7 +140,8 @@ class PayoutConfiguration:
 
 @dataclass
 class FraudAssessment:
-    """Fraud detection assessment results"""
+    """
+Fraud detection assessment results"""
     transaction_id: str
     risk_level: FraudRiskLevel
     risk_score: float  # 0.0 to 1.0
@@ -618,7 +626,8 @@ class PaymentProcessor:
         payment_request: PaymentRequest,
         transaction_id: str
     ) -> FraudAssessment:
-        """Perform fraud detection on payment request"""
+        """
+Perform fraud detection on payment request"""
         transaction_data = {
             'transaction_id': transaction_id,
             'user_id': payment_request.user_id,
@@ -637,7 +646,8 @@ class PaymentProcessor:
         payment_request: PaymentRequest,
         transaction_id: str
     ) -> Dict[str, Any]:
-        """Process payment through specific gateway"""
+        """
+Process payment through specific gateway"""
         if payment_request.gateway == PaymentGateway.STRIPE:
             return await self._process_stripe_payment(payment_request, transaction_id)
         elif payment_request.gateway == PaymentGateway.PAYPAL:
@@ -742,7 +752,8 @@ class PaymentProcessor:
         }
 
     def _determine_risk_level(self, risk_score: float) -> FraudRiskLevel:
-        """Determine fraud risk level from risk score"""
+        """
+Determine fraud risk level from risk score"""
         if risk_score >= 0.8:
             return FraudRiskLevel.CRITICAL
         elif risk_score >= 0.6:
@@ -802,12 +813,14 @@ class AutoPayout:
         return []  # Placeholder
 
     async def _is_payout_due(self, config: Dict[str, Any]) -> bool:
-        """Check if payout is due for configuration"""
+        """
+Check if payout is due for configuration"""
         # Implementation would check payout schedule and thresholds
         return False  # Placeholder
 
     async def _process_automatic_payout(self, config: Dict[str, Any]) -> None:
-        """Process automatic payout for configuration"""
+        """
+Process automatic payout for configuration"""
         try:
             # Calculate payout amount
             payout_amount = await self._calculate_payout_amount(config['user_id'])

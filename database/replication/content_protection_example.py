@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Usage:
     python content_protection_example.py
 """
+
 import asyncio
 import logging
 import os
@@ -61,7 +62,8 @@ class ContentProtectionDemo:
         self.demo_content = []
         
     async def initialize(self):
-        """Initialize the content protection replication demo"""
+        """
+Initialize the content protection replication demo"""
         try:
             logger.info("Initializing Content Protection Replication Demo")
             
@@ -215,7 +217,8 @@ class ContentProtectionDemo:
         return hashlib.sha256(str(uuid.uuid4()).encode()).hexdigest()
     
     async def run_demo(self):
-        """Run the complete content protection replication demo"""
+        """
+Run the complete content protection replication demo"""
         try:
             logger.info("Starting Content Protection Replication Demo")
             

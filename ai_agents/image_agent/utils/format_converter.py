@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -50,7 +51,9 @@ register_heif_opener()
 
 
 class ImageFormat(Enum):
-    """Supported image formats"""
+    """
+Supported image formats"""
+
     JPEG = "jpeg"
     JPG = "jpg"
     PNG = "png"
@@ -70,6 +73,7 @@ class ImageFormat(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization levels for different use cases"""
+
     MINIMAL = "minimal"           # Preserve maximum quality
     BALANCED = "balanced"         # Balance quality and size
     WEB_OPTIMIZED = "web_optimized"   # Optimized for web delivery
@@ -80,6 +84,7 @@ class OptimizationLevel(Enum):
 
 class CompressionMethod(Enum):
     """Compression methods"""
+
     LOSSLESS = "lossless"
     LOSSY = "lossy"
     HYBRID = "hybrid"
@@ -106,7 +111,8 @@ class ConversionParams:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result metrics"""
+    """
+Optimization result metrics"""
     original_format: str
     target_format: str
     original_size: int  # File size in bytes
@@ -124,7 +130,8 @@ class OptimizationResult:
 
 @dataclass
 class FormatInfo:
-    """Information about image format capabilities"""
+    """
+Information about image format capabilities"""
     supports_transparency: bool
     supports_animation: bool
     supports_metadata: bool
@@ -642,7 +649,8 @@ class ImageFormatConverter:
         return quality_map.get(params.optimization_level, 85)
 
     async def _determine_png_compression(self, params: ConversionParams) -> int:
-        """Determine PNG compression level (0-9)"""
+        """
+Determine PNG compression level (0-9)"""
         compression_map = {
             OptimizationLevel.MINIMAL: 1,
             OptimizationLevel.BALANCED: 6,
@@ -655,7 +663,8 @@ class ImageFormatConverter:
         return compression_map.get(params.optimization_level, 6)
 
     async def _determine_webp_quality(self, params: ConversionParams) -> int:
-        """Determine WebP quality"""
+        """
+Determine WebP quality"""
         if params.quality is not None:
             return max(0, min(100, params.quality))
         
@@ -671,7 +680,8 @@ class ImageFormatConverter:
         return quality_map.get(params.optimization_level, 80)
 
     async def _determine_avif_quality(self, params: ConversionParams) -> int:
-        """Determine AVIF quality (0-63)"""
+        """
+Determine AVIF quality (0-63)"""
         if params.quality is not None:
             return max(0, min(63, params.quality))
         
@@ -691,7 +701,8 @@ class ImageFormatConverter:
         image: Image.Image, 
         optimization_level: OptimizationLevel
     ) -> ImageFormat:
-        """Auto-detect best format for given image and optimization level"""
+        """
+Auto-detect best format for given image and optimization level"""
         try:
             # Analyze image characteristics
             has_transparency = image.mode in ['RGBA', 'LA'] or 'transparency' in image.info
@@ -1099,7 +1110,8 @@ class OptimizationEngine:
     """
     
     def __init__(self):
-        """Initialize Optimization Engine"""
+        """
+Initialize Optimization Engine"""
         self.converter = ImageFormatConverter()
         
         logger.info("OptimizationEngine initialized")

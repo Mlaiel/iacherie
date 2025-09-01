@@ -6,8 +6,9 @@ through AI-driven optimization techniques according to platform requirements
 and user preferences.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,8 @@ from ..platforms.requirements import PlatformRequirements
 
 @dataclass
 class OptimizationResult:
-    """Content optimization result container"""
+    """
+Content optimization result container"""
     content_id: str
     optimization_type: str
     optimized_files: List[str]
@@ -48,7 +50,8 @@ class OptimizationResult:
 
 @dataclass
 class OptimizationConfig:
-    """Content optimization configuration"""
+    """
+Content optimization configuration"""
     enable_seo_optimization: bool = True
     enable_quality_enhancement: bool = True
     enable_format_optimization: bool = True
@@ -669,7 +672,8 @@ class ContentOptimizer:
         pass
 
     def _get_optimized_file_path(self, content_id: str, filename: str) -> str:
-        """Generate path for optimized file"""
+        """
+Generate path for optimized file"""
         optimized_dir = f"/tmp/optimized/{content_id}"
         import os
         os.makedirs(optimized_dir, exist_ok=True)
@@ -691,7 +695,8 @@ class ContentOptimizer:
         return enhanced
 
     async def _enhance_image_quality(self, img: Image.Image, config: OptimizationConfig) -> Image.Image:
-        """Apply AI-based image enhancement"""
+        """
+Apply AI-based image enhancement"""
         enhanced = img.copy()
         
         # Sharpen image
@@ -714,30 +719,35 @@ class ContentOptimizer:
         original: np.ndarray,
         enhanced: np.ndarray
     ) -> float:
-        """Calculate quality improvement percentage"""
+        """
+Calculate quality improvement percentage"""
         # Simplified quality metric based on SNR improvement
         original_snr = self._calculate_snr(original)
         enhanced_snr = self._calculate_snr(enhanced)
         return max(0.0, (enhanced_snr - original_snr) / max(original_snr, 1.0))
 
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio"""
+        """
+Calculate signal-to-noise ratio"""
         signal_power = np.mean(audio_data**2)
         noise_estimate = np.var(audio_data) * 0.1
         return 10 * np.log10(signal_power / max(noise_estimate, 1e-10))
 
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes"""
+        """
+Get file size in bytes"""
         import os
         return os.path.getsize(file_path)
 
     async def _save_optimization_result(self, content_id: str, result: OptimizationResult) -> None:
-        """Save optimization result to database"""
+        """
+Save optimization result to database"""
         # This would save to the actual database
         pass
 
     def _serialize_optimization_result(self, result: OptimizationResult) -> Dict[str, Any]:
-        """Convert optimization result to serializable format"""
+        """
+Convert optimization result to serializable format"""
         return {
             "content_id": result.content_id,
             "optimization_type": result.optimization_type,

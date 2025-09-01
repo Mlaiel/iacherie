@@ -8,7 +8,7 @@ Responsibility: Advanced web crawling for content protection and monitoring
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ WEB CRAWLER REPOSITORY ARCHITECTURE:
 Crawl Scheduling → Multi-Platform Monitoring → Content Fingerprinting → 
 Violation Detection → Evidence Collection → Alert Generation → Takedown Processing
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
 import logging
 import asyncio
@@ -37,7 +38,9 @@ from bs4 import BeautifulSoup
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class CrawlStatus(Enum):
-    """Crawl job status"""
+    """
+Crawl job status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -47,6 +50,7 @@ class CrawlStatus(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for crawling"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -62,6 +66,7 @@ class PlatformType(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -71,6 +76,7 @@ class ViolationType(Enum):
 
 class EvidenceType(Enum):
     """Types of evidence collected"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_SAMPLE = "audio_sample"
@@ -105,7 +111,8 @@ class CrawlJob:
 
 @dataclass
 class DetectedContent:
-    """Content detected during crawling"""
+    """
+Content detected during crawling"""
     detection_id: str
     job_id: str
     creator_id: str
@@ -131,7 +138,8 @@ class DetectedContent:
 
 @dataclass
 class Evidence:
-    """Evidence collected for violations"""
+    """
+Evidence collected for violations"""
     evidence_id: str
     detection_id: str
     evidence_type: EvidenceType
@@ -145,7 +153,8 @@ class Evidence:
 
 @dataclass
 class CrawlMetrics:
-    """Crawl performance metrics"""
+    """
+Crawl performance metrics"""
     job_id: str
     pages_crawled: int
     pages_failed: int
@@ -317,7 +326,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return None
     
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page description"""
+        """
+Extract page description"""
         desc_tag = soup.find('meta', attrs={'name': 'description'})
         if desc_tag:
             return desc_tag.get('content', '').strip()
@@ -330,7 +340,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return None
     
     def _extract_canonical_url(self, soup: BeautifulSoup, fallback_url: str) -> str:
-        """Extract canonical URL"""
+        """
+Extract canonical URL"""
         canonical = soup.find('link', rel='canonical')
         if canonical:
             return canonical.get('href', fallback_url)
@@ -343,7 +354,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return fallback_url
     
     def _extract_opengraph_data(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract Open Graph metadata"""
+        """
+Extract Open Graph metadata"""
         og_data = {}
         og_tags = soup.find_all('meta', property=lambda x: x and x.startswith('og:'))
         
@@ -356,7 +368,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return og_data
     
     def _extract_twitter_data(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract Twitter Card metadata"""
+        """
+Extract Twitter Card metadata"""
         twitter_data = {}
         twitter_tags = soup.find_all('meta', attrs={'name': lambda x: x and x.startswith('twitter:')})
         
@@ -369,7 +382,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return twitter_data
     
     def _extract_schema_data(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract structured data (JSON-LD, microdata)"""
+        """
+Extract structured data (JSON-LD, microdata)"""
         schema_data = {}
         
         # Extract JSON-LD
@@ -389,7 +403,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return schema_data
     
     def _extract_youtube_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract YouTube-specific metadata"""
+        """
+Extract YouTube-specific metadata"""
         youtube_data = {}
         
         # Video ID extraction
@@ -409,7 +424,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return youtube_data
     
     def _extract_tiktok_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract TikTok-specific metadata"""
+        """
+Extract TikTok-specific metadata"""
         tiktok_data = {}
         
         # TikTok video ID
@@ -426,7 +442,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return tiktok_data
     
     def _extract_instagram_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract Instagram-specific metadata"""
+        """
+Extract Instagram-specific metadata"""
         instagram_data = {}
         
         # Instagram media ID
@@ -438,7 +455,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return instagram_data
     
     def _extract_soundcloud_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract SoundCloud-specific metadata"""
+        """
+Extract SoundCloud-specific metadata"""
         soundcloud_data = {}
         
         # Track URL pattern
@@ -452,7 +470,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _check_content_similarity(self, content_metadata: Dict[str, Any],
                                 fingerprints: List[str]) -> Tuple[float, List[str]]:
-        """Check content similarity against known fingerprints"""
+        """
+Check content similarity against known fingerprints"""
         try:
             if not self.fingerprint_service:
                 return 0.0, []
@@ -638,7 +657,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             return 0
     
     def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file"""
+        """
+Calculate SHA-256 hash of file"""
         try:
             import hashlib
             hash_sha256 = hashlib.sha256()
@@ -725,7 +745,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _calculate_confidence_level(self, similarity_score: float,
                                   matching_fingerprints: List[str],
                                   content_metadata: Dict[str, Any]) -> float:
-        """Calculate confidence level for the detection"""
+        """
+Calculate confidence level for the detection"""
         # Base confidence from similarity score
         confidence = similarity_score
         
@@ -741,12 +762,14 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return confidence
     
     def _parse_upload_date(self, content_metadata: Dict[str, Any]) -> Optional[datetime]:
-        """Parse upload date from metadata"""
+        """
+Parse upload date from metadata"""
         # This would implement date parsing logic
         return None
     
     def _parse_int_metadata(self, content_metadata: Dict[str, Any], key: str) -> Optional[int]:
-        """Parse integer metadata fields"""
+        """
+Parse integer metadata fields"""
         try:
             value = content_metadata.get(key)
             if value:
@@ -756,7 +779,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return None
     
     def _estimate_revenue_loss(self, content_metadata: Dict[str, Any]) -> Optional[float]:
-        """Estimate potential revenue loss from violation"""
+        """
+Estimate potential revenue loss from violation"""
         try:
             # This would implement revenue estimation logic based on views, platform, etc.
             view_count = self._parse_int_metadata(content_metadata, 'view_count')
@@ -769,7 +793,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     # Base Repository Implementation
     def create(self, entity: CrawlJob, **kwargs) -> CrawlJob:
-        """Create new crawl job"""
+        """
+Create new crawl job"""
         try:
             self._validate_entity(entity)
             
@@ -955,7 +980,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def get_jobs_by_creator(self, creator_id: str, 
                            status: CrawlStatus = None) -> List[CrawlJob]:
-        """Get crawl jobs for a specific creator"""
+        """
+Get crawl jobs for a specific creator"""
         filters = {'creator_id': creator_id}
         if status:
             filters['status'] = status.value
@@ -964,7 +990,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def get_jobs_by_platform(self, platform: PlatformType,
                            status: CrawlStatus = None) -> List[CrawlJob]:
-        """Get crawl jobs for a specific platform"""
+        """
+Get crawl jobs for a specific platform"""
         filters = {'platform': platform.value}
         if status:
             filters['status'] = status.value
@@ -973,7 +1000,8 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
 
 
 class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
-    """Asynchronous web crawler repository for high-performance operations"""
+    """
+Asynchronous web crawler repository for high-performance operations"""
     
     def __init__(self, db_connection=None, cache_manager=None, 
                  fingerprint_service=None, evidence_service=None,

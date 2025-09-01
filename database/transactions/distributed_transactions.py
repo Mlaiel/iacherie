@@ -13,6 +13,7 @@ the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
 """
+
 import asyncio
 import uuid
 import json
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributedTransactionState(Enum):
-    """Distributed transaction state enumeration"""
+    """
+Distributed transaction state enumeration"""
+
     INIT = "initialized"
     COORDINATING = "coordinating"
     PREPARING = "preparing"
@@ -44,6 +47,7 @@ class DistributedTransactionState(Enum):
 
 class ParticipantState(Enum):
     """Participant state in distributed transaction"""
+
     PENDING = "pending"
     PREPARED = "prepared"
     COMMITTED = "committed"
@@ -69,7 +73,8 @@ class ServiceParticipant:
 
 @dataclass
 class DistributedTransaction:
-    """Distributed transaction context"""
+    """
+Distributed transaction context"""
     transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     state: DistributedTransactionState = DistributedTransactionState.INIT
     participants: List[ServiceParticipant] = field(default_factory=list)
@@ -92,7 +97,8 @@ class DistributedTransaction:
     
     @property
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""
+        """
+Check if transaction has expired"""
         if self.started_at:
             elapsed = (datetime.now(timezone.utc) - self.started_at).total_seconds()
             return elapsed > self.timeout
@@ -100,7 +106,8 @@ class DistributedTransaction:
 
 
 class SagaOrchestrator:
-    """Saga pattern orchestrator for long-running distributed transactions"""
+    """
+Saga pattern orchestrator for long-running distributed transactions"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -108,7 +115,8 @@ class SagaOrchestrator:
         self.compensation_handlers: Dict[str, Callable] = {}
     
     async def execute_saga(self, transaction: DistributedTransaction) -> bool:
-        """Execute saga pattern with compensation"""
+        """
+Execute saga pattern with compensation"""
         try:
             transaction.state = DistributedTransactionState.COORDINATING
             self.active_sagas[transaction.transaction_id] = transaction

@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Advanced content matching engine for copyright protection and similarity detection.
 Provides sophisticated content analysis, fingerprinting, and matching capabilities.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union, Tuple
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration."""
+    """
+Content type enumeration."""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -39,6 +42,7 @@ class ContentType(Enum):
 
 class MatchType(Enum):
     """Content match type."""
+
     EXACT = "exact"
     SIMILARITY = "similarity"
     DERIVATIVE = "derivative"
@@ -63,7 +67,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectedContent:
-    """Protected content entry."""
+    """
+Protected content entry."""
     content_id: str
     owner_id: str
     owner_name: str
@@ -150,7 +155,8 @@ class ContentMatchingEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content matching engine."""
+        """
+Initialize content matching engine."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -840,7 +846,8 @@ class ContentMatchingEngine:
         fp1: ContentFingerprint,
         fp2: ContentFingerprint
     ) -> float:
-        """Calculate similarity between two fingerprints."""
+        """
+Calculate similarity between two fingerprints."""
         try:
             # Exact hash match
             if fp1.hash_value == fp2.hash_value:
@@ -941,7 +948,8 @@ class ContentMatchingEngine:
         fp1: ContentFingerprint,
         fp2: ContentFingerprint
     ) -> float:
-        """Calculate confidence score for the match."""
+        """
+Calculate confidence score for the match."""
         # Base confidence on similarity score
         confidence = similarity_score
         
@@ -958,11 +966,13 @@ class ContentMatchingEngine:
     
     # Fingerprinting algorithm implementations (placeholders)
     async def _compute_text_hash(self, text: str) -> str:
-        """Compute text hash."""
+        """
+Compute text hash."""
         return hashlib.sha256(text.encode()).hexdigest()
     
     async def _compute_text_shingles(self, text: str, k: int = 3) -> List[str]:
-        """Compute text shingles."""
+        """
+Compute text shingles."""
         words = text.lower().split()
         shingles = []
         
@@ -973,42 +983,49 @@ class ContentMatchingEngine:
         return shingles
     
     async def _compute_image_perceptual_hash(self, image_data: bytes) -> str:
-        """Compute image perceptual hash."""
+        """
+Compute image perceptual hash."""
         # Placeholder implementation
         hash_value = hashlib.md5(image_data).hexdigest()[:16]
         return hash_value
     
     async def _compute_image_difference_hash(self, image_data: bytes) -> str:
-        """Compute image difference hash."""
+        """
+Compute image difference hash."""
         # Placeholder implementation
         hash_value = hashlib.md5(image_data).hexdigest()[16:]
         return hash_value
     
     async def _compute_video_temporal_hash(self, video_data: bytes) -> str:
-        """Compute video temporal hash."""
+        """
+Compute video temporal hash."""
         # Placeholder implementation
         hash_value = hashlib.sha1(video_data).hexdigest()[:20]
         return hash_value
     
     async def _compute_video_frame_hash(self, video_data: bytes) -> str:
-        """Compute video frame hash."""
+        """
+Compute video frame hash."""
         # Placeholder implementation
         hash_value = hashlib.sha1(video_data).hexdigest()[20:]
         return hash_value
     
     async def _compute_audio_chromaprint(self, audio_data: bytes) -> str:
-        """Compute audio chromaprint."""
+        """
+Compute audio chromaprint."""
         # Placeholder implementation
         hash_value = hashlib.sha1(audio_data).hexdigest()[:24]
         return hash_value
     
     async def _compute_audio_mfcc(self, audio_data: bytes) -> List[float]:
-        """Compute audio MFCC features."""
+        """
+Compute audio MFCC features."""
         # Placeholder implementation
         return [0.1 * i for i in range(13)]
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get engine status."""
+        """
+Get engine status."""
         uptime_seconds = (datetime.now() - self._start_time).total_seconds()
         self.metrics.system_uptime_seconds = uptime_seconds
         
@@ -1039,7 +1056,8 @@ class ContentMatchingEngine:
         }
     
     def get_recent_matches(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent content matches."""
+        """
+Get recent content matches."""
         recent_matches = sorted(
             self.content_matches.values(),
             key=lambda m: m.detected_at,
@@ -1065,7 +1083,8 @@ class ContentMatchingEngine:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the content matching engine."""
+        """
+Shutdown the content matching engine."""
         try:
             self._logger.info("Shutting down content matching engine...")
             

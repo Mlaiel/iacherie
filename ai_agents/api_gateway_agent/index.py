@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -37,7 +38,8 @@ class APIGatewayManager:
     """
     
     def __init__(self, config: Optional[APIGatewayConfig] = None):
-        """Initialize API Gateway Manager"""
+        """
+Initialize API Gateway Manager"""
         self.config = config or APIGatewayConfig()
         
         # Initialize main gateway agent
@@ -178,7 +180,8 @@ class APIGatewayManager:
         return await self.gateway_agent._get_services_health()
     
     async def _update_component_status(self):
-        """Update component status tracking"""
+        """
+Update component status tracking"""
         try:
             current_time = datetime.utcnow().isoformat()
             
@@ -203,7 +206,8 @@ class APIGatewayManager:
         return self.config.dict()
     
     async def update_configuration(self, config_updates: Dict[str, Any]) -> bool:
-        """Update configuration dynamically"""
+        """
+Update configuration dynamically"""
         try:
             # Update configuration
             for key, value in config_updates.items():
@@ -328,7 +332,8 @@ def get_gateway_manager() -> Optional[APIGatewayManager]:
 
 # Health check endpoint for external monitoring
 async def health_check() -> Dict[str, Any]:
-    """Health check endpoint"""
+    """
+Health check endpoint"""
     if not gateway_manager:
         return {
             "status": "not_initialized",
@@ -357,7 +362,8 @@ def get_service_list() -> List[str]:
 
 
 def get_gateway_stats() -> Dict[str, Any]:
-    """Get gateway statistics"""
+    """
+Get gateway statistics"""
     if not gateway_manager:
         return {}
     

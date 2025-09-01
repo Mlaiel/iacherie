@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
@@ -58,7 +59,9 @@ from ..adapters.ontology_adapter import OntologyAdapter
 
 
 class KnowledgeType(Enum):
-    """Knowledge representation types"""
+    """
+Knowledge representation types"""
+
     FACTUAL = "factual"
     PROCEDURAL = "procedural"
     CONCEPTUAL = "conceptual"
@@ -71,6 +74,7 @@ class KnowledgeType(Enum):
 
 class RelationType(Enum):
     """Relationship types in knowledge graph"""
+
     IS_A = "is_a"
     HAS_PROPERTY = "has_property"
     RELATED_TO = "related_to"
@@ -98,7 +102,8 @@ class KnowledgeEntity:
 
 @dataclass
 class KnowledgeRelation:
-    """Knowledge relationship representation"""
+    """
+Knowledge relationship representation"""
     relation_id: str
     source_entity: str
     target_entity: str
@@ -110,7 +115,8 @@ class KnowledgeRelation:
 
 @dataclass
 class QueryResult:
-    """Knowledge query result"""
+    """
+Knowledge query result"""
     entities: List[KnowledgeEntity]
     relations: List[KnowledgeRelation]
     query_time: float
@@ -119,7 +125,8 @@ class QueryResult:
 
 
 class SemanticMemory:
-    """Semantic memory for concept storage and retrieval"""
+    """
+Semantic memory for concept storage and retrieval"""
     
     def __init__(self, embedding_model: str = "all-MiniLM-L6-v2"):
         self.embedding_model = SentenceTransformer(embedding_model)
@@ -199,7 +206,8 @@ class SemanticMemory:
         top_k: int = 10,
         threshold: float = 0.5
     ) -> List[Tuple[str, float]]:
-        """Search for similar concepts"""
+        """
+Search for similar concepts"""
         try:
             if not self.concept_store or self.concept_index is None:
                 return []
@@ -248,7 +256,8 @@ class KnowledgeGraph:
         self.relation_cache = {}
         
     def add_entity(self, entity: KnowledgeEntity) -> bool:
-        """Add entity to knowledge graph"""
+        """
+Add entity to knowledge graph"""
         try:
             if self.use_neo4j:
                 # Neo4j implementation
@@ -420,7 +429,8 @@ class KnowledgeGraph:
         source_id: str,
         target_id: str
     ) -> List[str]:
-        """Find shortest path between entities"""
+        """
+Find shortest path between entities"""
         try:
             if self.use_neo4j:
                 query = """
@@ -759,7 +769,8 @@ class KnowledgeBase:
         return success1 or success2
     
     async def _add_procedural_knowledge(self, data: Dict[str, Any], source: str) -> bool:
-        """Add procedural knowledge (processes and workflows)"""
+        """
+Add procedural knowledge (processes and workflows)"""
         try:
             # Procedural knowledge as a sequence of steps
             process_id = data.get('process_id', f"process_{int(datetime.now().timestamp())}")
@@ -1014,7 +1025,8 @@ class KnowledgeBase:
             """
     
     def _sparql_result_to_entity(self, result: Dict[str, Any]) -> Optional[KnowledgeEntity]:
-        """Convert SPARQL result to KnowledgeEntity"""
+        """
+Convert SPARQL result to KnowledgeEntity"""
         try:
             # Extract entity information from SPARQL result
             entity_id = str(result.get('s', result.get('content', 'unknown')))

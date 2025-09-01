@@ -12,6 +12,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 async def demo_basic_setup():
-    """Demonstrate basic workflow agent setup."""
+    """
+Demonstrate basic workflow agent setup."""
     print("\n" + "="*60)
     print("🚀 DEMO: Basic Workflow Agent Setup")
     print("="*60)

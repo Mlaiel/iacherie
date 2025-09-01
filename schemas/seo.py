@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class SEOAnalysis(UUIDSchema, TimestampSchema):
-    """SEO analysis results schema."""
+    """
+SEO analysis results schema."""
     
     content_id: UUID = Field(description="Analyzed content")
     analysis_type: str = Field(description="Type of SEO analysis")

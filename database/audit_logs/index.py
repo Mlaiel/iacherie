@@ -18,6 +18,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import Dict, Any, List, Optional
 import logging
 from datetime import datetime, timezone, timedelta

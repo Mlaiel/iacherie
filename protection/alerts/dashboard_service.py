@@ -5,8 +5,9 @@ Real-time dashboard service for alert visualization, monitoring, and management.
 Provides WebSocket connections, real-time updates, and interactive analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class WidgetType(str, Enum):
-    """Dashboard widget types."""
+    """
+Dashboard widget types."""
+
     ALERT_COUNT = "alert_count"
     SEVERITY_DISTRIBUTION = "severity_distribution"
     PLATFORM_BREAKDOWN = "platform_breakdown"
@@ -48,6 +51,7 @@ class WidgetType(str, Enum):
 
 class UpdateType(str, Enum):
     """Real-time update types."""
+
     NEW_ALERT = "new_alert"
     ALERT_UPDATE = "alert_update"
     ALERT_RESOLVED = "alert_resolved"
@@ -65,7 +69,8 @@ class DashboardConfig:
 
 @dataclass
 class ConnectionInfo:
-    """WebSocket connection information."""
+    """
+WebSocket connection information."""
     websocket: WebSocket
     user_id: str
     connection_id: str
@@ -73,7 +78,8 @@ class ConnectionInfo:
     last_activity: datetime = field(default_factory=datetime.utcnow)
 
 class WebSocketManager:
-    """Manages WebSocket connections for real-time updates."""
+    """
+Manages WebSocket connections for real-time updates."""
     
     def __init__(self):
         self.active_connections: Dict[str, ConnectionInfo] = {}
@@ -81,7 +87,8 @@ class WebSocketManager:
         self._connection_lock = asyncio.Lock()
     
     async def connect(self, websocket: WebSocket, user_id: str) -> str:
-        """Connect a new WebSocket client."""
+        """
+Connect a new WebSocket client."""
         await websocket.accept()
         
         connection_id = str(uuid4())
@@ -138,23 +145,27 @@ class WebSocketManager:
                 await self.send_personal_message(connection_id, message)
     
     async def broadcast(self, message: Dict[str, Any]) -> None:
-        """Broadcast message to all connections."""
+        """
+Broadcast message to all connections."""
         connection_ids = list(self.active_connections.keys())
         for connection_id in connection_ids:
             await self.send_personal_message(connection_id, message)
     
     async def subscribe_to_widget(self, connection_id: str, widget_id: str) -> None:
-        """Subscribe connection to widget updates."""
+        """
+Subscribe connection to widget updates."""
         if connection_id in self.active_connections:
             self.active_connections[connection_id].subscribed_widgets.add(widget_id)
     
     async def unsubscribe_from_widget(self, connection_id: str, widget_id: str) -> None:
-        """Unsubscribe connection from widget updates."""
+        """
+Unsubscribe connection from widget updates."""
         if connection_id in self.active_connections:
             self.active_connections[connection_id].subscribed_widgets.discard(widget_id)
     
     async def send_widget_update(self, widget_id: str, data: Dict[str, Any]) -> None:
-        """Send update to all connections subscribed to a widget."""
+        """
+Send update to all connections subscribed to a widget."""
         message = {
             "type": "widget_update",
             "widget_id": widget_id,
@@ -192,7 +203,8 @@ class MetricsCalculator:
         user_id: Optional[str] = None,
         time_range: timedelta = timedelta(hours=24)
     ) -> AlertMetrics:
-        """Calculate alert metrics."""
+        """
+Calculate alert metrics."""
         try:
             cache_key = f"alert_metrics:{user_id or 'all'}:{time_range.total_seconds()}"
             cached_metrics = await self.cache_manager.get(cache_key)

@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -35,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 class SystemStatus(str, Enum):
     """Status du système core"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     DEGRADED = "degraded"
@@ -43,6 +44,7 @@ class SystemStatus(str, Enum):
 
 class ModuleHealth(str, Enum):
     """État de santé des modules"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -385,15 +387,18 @@ async def initialize_core_system() -> bool:
     return await core_system_manager.initialize_system()
 
 def get_core_status() -> Dict[str, Any]:
-    """Get current core system status"""
+    """
+Get current core system status"""
     return core_system_manager.get_system_status()
 
 async def get_system_health() -> Dict[str, Any]:
-    """Get detailed system health report"""
+    """
+Get detailed system health report"""
     return await core_system_manager.perform_health_check()
 
 def get_module_info(module_name: Optional[str] = None) -> Union[Dict[str, Any], CoreModuleInfo]:
-    """Get information about core modules"""
+    """
+Get information about core modules"""
     return core_system_manager.get_module_info(module_name)
 
 def validate_core_installation() -> Dict[str, Any]:

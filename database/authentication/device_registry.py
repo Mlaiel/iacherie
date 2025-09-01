@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import hashlib
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeviceType(Enum):
-    """Device type classifications"""
+    """
+Device type classifications"""
+
     MOBILE = "mobile"
     DESKTOP = "desktop"
     TABLET = "tablet"
@@ -57,6 +60,7 @@ class DeviceType(Enum):
 
 class DeviceStatus(Enum):
     """Device status states"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPICIOUS = "suspicious"
@@ -67,6 +71,7 @@ class DeviceStatus(Enum):
 
 class TrustLevel(Enum):
     """Device trust levels"""
+
     UNKNOWN = "unknown"
     LOW = "low"
     MEDIUM = "medium"
@@ -92,7 +97,8 @@ class DeviceCapabilities:
 
 
 class DeviceFingerprint(Base):
-    """Device fingerprinting data"""
+    """
+Device fingerprinting data"""
     __tablename__ = "device_fingerprints"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -400,7 +406,8 @@ class DeviceRegistry:
         ip_address: str,
         verification_token: Optional[str] = None
     ) -> str:
-        """Establish trust relationship with device"""
+        """
+Establish trust relationship with device"""
         try:
             # Get location info
             location_info = self._get_location_info(ip_address)

@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Digital Fingerprinting Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -42,7 +43,9 @@ settings = get_settings()
 
 
 class FingerprintType(str, Enum):
-    """Supported fingerprint types."""
+    """
+Supported fingerprint types."""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     SEMANTIC_VECTOR = "semantic_vector"
     ACOUSTIC_FINGERPRINT = "acoustic_fingerprint"
@@ -66,23 +69,27 @@ class FingerprintResult:
 
 
 class BaseFingerprintEngine(ABC):
-    """Abstract base class for content fingerprinting engines."""
+    """
+Abstract base class for content fingerprinting engines."""
     
     @abstractmethod
     async def generate_fingerprint(self, content_data: bytes) -> FingerprintResult:
-        """Generate fingerprint for content."""
+        """
+Generate fingerprint for content."""
         pass
     
     @abstractmethod
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """Compare two fingerprints and return similarity score."""
+        """
+Compare two fingerprints and return similarity score."""
         pass
 
 
 class AudioFingerprintEngine(BaseFingerprintEngine):
-    """High-precision audio fingerprinting using Chromaprint and spectral analysis."""
+    """
+High-precision audio fingerprinting using Chromaprint and spectral analysis."""
     
     def __init__(self):
         self.sample_rate = 22050
@@ -215,7 +222,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
     async def _calculate_audio_confidence(
         self, audio_data: np.ndarray, spectral_features: np.ndarray
     ) -> float:
-        """Calculate confidence score based on audio quality."""
+        """
+Calculate confidence score based on audio quality."""
         # Signal-to-noise ratio estimation
         signal_power = np.mean(audio_data ** 2)
         noise_floor = np.percentile(np.abs(audio_data), 10)
@@ -237,7 +245,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
         return confidence
     
     async def _compare_chromaprint(self, hash1: str, hash2: str) -> float:
-        """Compare Chromaprint hashes for similarity."""
+        """
+Compare Chromaprint hashes for similarity."""
         # Implementation of Chromaprint similarity calculation
         # This is a simplified version - real implementation would use
         # proper Chromaprint comparison algorithms
@@ -254,7 +263,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
 
 
 class VideoFingerprintEngine(BaseFingerprintEngine):
-    """Advanced video fingerprinting using frame analysis and motion vectors."""
+    """
+Advanced video fingerprinting using frame analysis and motion vectors."""
     
     def __init__(self):
         self.algorithm_version = "opencv_v4.8_yolo_v8"
@@ -447,7 +457,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         motion_vectors: List[np.ndarray], 
         duration: float
     ) -> float:
-        """Calculate confidence score for video fingerprint."""
+        """
+Calculate confidence score for video fingerprint."""
         # Descriptor quality
         descriptor_quality = len(frame_descriptors) / max(1, duration * self.frame_sample_rate)
         
@@ -471,7 +482,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
     async def _compare_frame_hashes(
         self, hashes1: List[str], hashes2: List[str]
     ) -> float:
-        """Compare lists of frame hashes."""
+        """
+Compare lists of frame hashes."""
         if not hashes1 or not hashes2:
             return 0.0
         
@@ -495,7 +507,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
 
 
 class ImageFingerprintEngine(BaseFingerprintEngine):
-    """High-precision image fingerprinting using CLIP and perceptual hashing."""
+    """
+High-precision image fingerprinting using CLIP and perceptual hashing."""
     
     def __init__(self):
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -651,7 +664,8 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
 
 
 class TextFingerprintEngine(BaseFingerprintEngine):
-    """Advanced text fingerprinting using BERT embeddings and n-gram analysis."""
+    """
+Advanced text fingerprinting using BERT embeddings and n-gram analysis."""
     
     def __init__(self):
         self.tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
@@ -814,7 +828,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
         return np.concatenate([char_freq, additional_features])
     
     async def _generate_ngram_hashes(self, text: str, n: int = 3) -> List[str]:
-        """Generate n-gram hashes for text similarity comparison."""
+        """
+Generate n-gram hashes for text similarity comparison."""
         words = text.lower().split()
         ngrams = []
         
@@ -828,7 +843,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
     async def _calculate_text_confidence(
         self, text: str, embeddings: np.ndarray, structural_features: np.ndarray
     ) -> float:
-        """Calculate confidence score for text fingerprint."""
+        """
+Calculate confidence score for text fingerprint."""
         # Text length factor
         length_factor = min(1.0, len(text) / 1000.0)  # Optimal at 1000+ chars
         
@@ -862,7 +878,8 @@ class DigitalFingerprintEngine:
     """
     
     def __init__(self):
-        """Initialize all fingerprinting engines."""
+        """
+Initialize all fingerprinting engines."""
         self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
         self.image_engine = ImageFingerprintEngine()
@@ -979,7 +996,8 @@ class DigitalFingerprintEngine:
         return similar_content
     
     def get_engine_info(self) -> Dict[str, Dict[str, Any]]:
-        """Get information about all available engines."""
+        """
+Get information about all available engines."""
         return {
             content_type: {
                 "algorithm_version": engine.algorithm_version,

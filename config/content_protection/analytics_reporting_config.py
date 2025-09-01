@@ -16,6 +16,7 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, List, Set, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,7 +25,9 @@ import os
 
 
 class AnalyticsScope(str, Enum):
-    """Scope of analytics data collection."""
+    """
+Scope of analytics data collection."""
+
     USER = "user"
     CONTENT = "content"
     PLATFORM = "platform"
@@ -34,6 +37,7 @@ class AnalyticsScope(str, Enum):
 
 class MetricType(str, Enum):
     """Types of metrics to track."""
+
     PROTECTION_EFFECTIVENESS = "protection_effectiveness"
     CONTENT_MONITORING = "content_monitoring"
     REVENUE_IMPACT = "revenue_impact"
@@ -46,6 +50,7 @@ class MetricType(str, Enum):
 
 class ReportType(str, Enum):
     """Types of reports to generate."""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     TECHNICAL_DETAILED = "technical_detailed"
     COMPLIANCE_AUDIT = "compliance_audit"
@@ -58,6 +63,7 @@ class ReportType(str, Enum):
 
 class ReportFormat(str, Enum):
     """Available report formats."""
+
     PDF = "pdf"
     HTML = "html"
     EXCEL = "excel"
@@ -69,6 +75,7 @@ class ReportFormat(str, Enum):
 
 class AggregationLevel(str, Enum):
     """Data aggregation levels."""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -80,6 +87,7 @@ class AggregationLevel(str, Enum):
 
 class VisualizationType(str, Enum):
     """Types of data visualizations."""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -255,7 +263,8 @@ class PerformanceMetricsConfig:
 
 @dataclass
 class ComplianceReportingConfig:
-    """Configuration for compliance and audit reporting."""
+    """
+Configuration for compliance and audit reporting."""
     # Regulatory compliance
     enable_gdpr_reporting: bool = True
     enable_ccpa_reporting: bool = True
@@ -313,7 +322,8 @@ class AdvancedAnalyticsConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for analytics and reporting."""
+    """
+Security configuration for analytics and reporting."""
     # Access control
     require_authentication: bool = True
     enable_role_based_access: bool = True
@@ -384,7 +394,8 @@ class AnalyticsReportingConfig:
     cache_ttl_minutes: int = 60
     
     def __post_init__(self):
-        """Initialize default configurations."""
+        """
+Initialize default configurations."""
         if not self.dashboard_configs:
             self._create_default_dashboards()
         
@@ -395,7 +406,8 @@ class AnalyticsReportingConfig:
             self._create_default_data_sources()
     
     def _create_default_dashboards(self):
-        """Create default dashboard configurations."""
+        """
+Create default dashboard configurations."""
         # Executive dashboard
         self.dashboard_configs["executive"] = DashboardConfig(
             dashboard_name="Executive Overview",
@@ -474,15 +486,18 @@ class AnalyticsReportingConfig:
         self.metric_configs[metric_name] = metric_config
     
     def add_dashboard(self, dashboard_name: str, dashboard_config: DashboardConfig):
-        """Add a custom dashboard configuration."""
+        """
+Add a custom dashboard configuration."""
         self.dashboard_configs[dashboard_name] = dashboard_config
     
     def schedule_report(self, report_config: ReportScheduleConfig):
-        """Schedule a new report."""
+        """
+Schedule a new report."""
         self.report_schedules.append(report_config)
     
     def validate_config(self) -> bool:
-        """Validate the analytics and reporting configuration."""
+        """
+Validate the analytics and reporting configuration."""
         try:
             if not self.enabled_metrics:
                 raise ValueError("At least one metric must be enabled")
@@ -542,7 +557,8 @@ class AnalyticsReportingConfig:
 # Factory functions for different environments
 
 def create_enterprise_analytics_config() -> AnalyticsReportingConfig:
-    """Create enterprise-grade analytics configuration."""
+    """
+Create enterprise-grade analytics configuration."""
     config = AnalyticsReportingConfig()
     
     # Enterprise features
@@ -572,7 +588,8 @@ def create_enterprise_analytics_config() -> AnalyticsReportingConfig:
 
 
 def create_basic_analytics_config() -> AnalyticsReportingConfig:
-    """Create basic analytics configuration."""
+    """
+Create basic analytics configuration."""
     config = AnalyticsReportingConfig()
     
     # Basic features only

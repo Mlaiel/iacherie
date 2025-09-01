@@ -12,6 +12,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import uuid
@@ -34,7 +35,8 @@ from backend.core.orchestration.performance_optimizer import PerformanceOptimize
 
 @dataclass
 class OrchestrationSystemConfig:
-    """Complete orchestration system configuration."""
+    """
+Complete orchestration system configuration."""
     # System Configuration
     environment: str = "production"
     debug_mode: bool = False
@@ -88,7 +90,8 @@ class OrchestrationSystem:
     - Graceful shutdown handling
     """
     def __init__(self, config: Optional[OrchestrationSystemConfig] = None):
-        """Initialize the orchestration system."""
+        """
+Initialize the orchestration system."""
         self.config = config or OrchestrationSystemConfig()
         self.logger = self._setup_logging()
         
@@ -108,7 +111,8 @@ class OrchestrationSystem:
         self.component_health: Dict[str, bool] = {}
 
     def _setup_logging(self) -> logging.Logger:
-        """Set up logging configuration."""
+        """
+Set up logging configuration."""
         logging.basicConfig(
             level=getattr(logging, self.config.log_level.upper()),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -178,7 +182,8 @@ class OrchestrationSystem:
             )
 
     async def _initialize_components(self):
-        """Initialize all orchestration components."""
+        """
+Initialize all orchestration components."""
         try:
             # Initialize Resource Manager first (other components depend on it)
             self.logger.info("Initializing Resource Manager...")
@@ -504,11 +509,13 @@ class OrchestrationSystem:
                     pass  # Ignore errors during cleanup
 
     def is_healthy(self) -> bool:
-        """Check if the orchestration system is healthy."""
+        """
+Check if the orchestration system is healthy."""
         return self.initialized and self.running and all(self.component_health.values())
 
     def get_component_status(self) -> Dict[str, Any]:
-        """Get detailed status of all components."""
+        """
+Get detailed status of all components."""
         return {
             "initialized": self.initialized,
             "running": self.running,
@@ -555,7 +562,8 @@ def get_orchestration_system() -> Optional[OrchestrationSystem]:
 
 
 async def shutdown_orchestration_system():
-    """Shutdown the global orchestration system."""
+    """
+Shutdown the global orchestration system."""
     global _orchestration_system
     
     if _orchestration_system:

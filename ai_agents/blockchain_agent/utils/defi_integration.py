@@ -16,6 +16,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ from .blockchain_agent import BlockchainNetwork, CurrencyType
 
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols."""
+    """
+Supported DeFi protocols."""
+
     UNISWAP_V3 = "uniswap_v3"
     SUSHISWAP = "sushiswap"
     PANCAKESWAP = "pancakeswap"
@@ -56,6 +59,7 @@ class DeFiProtocol(Enum):
 
 class StrategyType(Enum):
     """DeFi investment strategies."""
+
     YIELD_FARMING = "yield_farming"
     LIQUIDITY_MINING = "liquidity_mining"
     LENDING = "lending"
@@ -67,6 +71,7 @@ class StrategyType(Enum):
 
 class RiskLevel(Enum):
     """Risk levels for DeFi strategies."""
+
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -93,7 +98,8 @@ class DeFiPool:
 
 @dataclass
 class YieldPosition:
-    """Active yield farming position."""
+    """
+Active yield farming position."""
     id: str
     user_address: str
     protocol: DeFiProtocol
@@ -113,7 +119,8 @@ class YieldPosition:
 
 @dataclass
 class LendingPosition:
-    """Active lending position."""
+    """
+Active lending position."""
     id: str
     user_address: str
     protocol: DeFiProtocol
@@ -129,7 +136,8 @@ class LendingPosition:
 
 @dataclass
 class DeFiStrategy:
-    """Automated DeFi investment strategy."""
+    """
+Automated DeFi investment strategy."""
     id: str
     name: str
     strategy_type: StrategyType
@@ -158,7 +166,8 @@ class DeFiIntegration:
     """
     
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the DeFi Integration system."""
+        """
+Initialize the DeFi Integration system."""
         self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
@@ -754,7 +763,8 @@ class DeFiIntegration:
         return mock_prices.get(token, Decimal('1.00'))
     
     async def _get_lending_rate(self, asset: str, protocol: DeFiProtocol, network: BlockchainNetwork) -> Decimal:
-        """Get current lending rate for asset on protocol."""
+        """
+Get current lending rate for asset on protocol."""
         # Mock lending rates - in real implementation would query protocol
         base_rates = {
             'USDC': Decimal('4.5'),
@@ -773,7 +783,8 @@ class DeFiIntegration:
         price_a: Decimal,
         price_b: Decimal
     ) -> Decimal:
-        """Calculate LP tokens received for liquidity provision."""
+        """
+Calculate LP tokens received for liquidity provision."""
         # Simplified LP token calculation
         total_value_usd = amount_a * price_a + amount_b * price_b
         
@@ -781,7 +792,8 @@ class DeFiIntegration:
         return total_value_usd
     
     async def _estimate_defi_gas_cost(self, protocol: DeFiProtocol, network: BlockchainNetwork) -> Decimal:
-        """Estimate gas costs for DeFi operations."""
+        """
+Estimate gas costs for DeFi operations."""
         gas_estimates = {
             (DeFiProtocol.UNISWAP_V3, BlockchainNetwork.ETHEREUM): Decimal('150'),
             (DeFiProtocol.UNISWAP_V3, BlockchainNetwork.POLYGON): Decimal('5'),
@@ -792,7 +804,8 @@ class DeFiIntegration:
         return gas_estimates.get((protocol, network), Decimal('50'))
     
     async def get_defi_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive DeFi analytics."""
+        """
+Get comprehensive DeFi analytics."""
         total_pools = len(self.pools)
         total_positions = len(self.yield_positions) + len(self.lending_positions)
         

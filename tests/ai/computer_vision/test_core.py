@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -84,18 +85,21 @@ class TestVisionProcessor(unittest.TestCase):
     """Test suite for VisionProcessor class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.processor = VisionProcessor()
         self.test_image = self._create_test_image()
         self.test_video_path = self._create_test_video()
         
     def tearDown(self):
-        """Clean up test fixtures"""
+        """
+Clean up test fixtures"""
         if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for testing"""
+        """
+Create a test image for testing"""
         # Create a simple RGB image with some patterns
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
@@ -133,7 +137,8 @@ class TestVisionProcessor(unittest.TestCase):
         self.assertIsInstance(self.processor, VisionProcessor)
         
     def test_process_image_with_array(self):
-        """Test processing image from numpy array"""
+        """
+Test processing image from numpy array"""
         try:
             result = self.processor.process_image(self.test_image)
             self.assertIsNotNone(result)
@@ -202,12 +207,14 @@ class TestImageAnalyzer(unittest.TestCase):
     """Test suite for ImageAnalyzer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.analyzer = ImageAnalyzer()
         self.test_image = self._create_test_image()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for analysis"""
+        """
+Create a test image for analysis"""
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Create a more complex image for composition analysis
@@ -219,11 +226,13 @@ class TestImageAnalyzer(unittest.TestCase):
         return image
     
     def test_analyzer_initialization(self):
-        """Test ImageAnalyzer initialization"""
+        """
+Test ImageAnalyzer initialization"""
         self.assertIsInstance(self.analyzer, ImageAnalyzer)
     
     def test_analyze_composition(self):
-        """Test composition analysis"""
+        """
+Test composition analysis"""
         try:
             metrics = self.analyzer.analyze_composition(self.test_image)
             self.assertIsNotNone(metrics)
@@ -278,17 +287,20 @@ class TestVideoAnalyzer(unittest.TestCase):
     """Test suite for VideoAnalyzer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.analyzer = VideoAnalyzer()
         self.test_video_path = self._create_test_video()
     
     def tearDown(self):
-        """Clean up test fixtures"""
+        """
+Clean up test fixtures"""
         if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
+        """
+Create a test video file"""
         temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
@@ -318,7 +330,8 @@ class TestVideoAnalyzer(unittest.TestCase):
         self.assertIsInstance(self.analyzer, VideoAnalyzer)
     
     def test_analyze_video(self):
-        """Test video analysis"""
+        """
+Test video analysis"""
         try:
             result = self.analyzer.analyze_video(self.test_video_path)
             self.assertIsNotNone(result)
@@ -354,17 +367,20 @@ class TestMetadataExtractor(unittest.TestCase):
     """Test suite for MetadataExtractor class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.extractor = MetadataExtractor()
         self.test_image_path = self._create_test_image_with_metadata()
     
     def tearDown(self):
-        """Clean up test fixtures"""
+        """
+Clean up test fixtures"""
         if hasattr(self, 'test_image_path') and os.path.exists(self.test_image_path):
             os.remove(self.test_image_path)
     
     def _create_test_image_with_metadata(self) -> str:
-        """Create a test image with metadata"""
+        """
+Create a test image with metadata"""
         temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
         temp_path = temp_file.name
         temp_file.close()
@@ -376,11 +392,13 @@ class TestMetadataExtractor(unittest.TestCase):
         return temp_path
     
     def test_extractor_initialization(self):
-        """Test MetadataExtractor initialization"""
+        """
+Test MetadataExtractor initialization"""
         self.assertIsInstance(self.extractor, MetadataExtractor)
     
     def test_extract_basic_metadata(self):
-        """Test basic metadata extraction"""
+        """
+Test basic metadata extraction"""
         try:
             metadata = self.extractor.extract_metadata(self.test_image_path)
             self.assertIsNotNone(metadata)
@@ -411,16 +429,19 @@ class TestPerformanceMetrics(unittest.TestCase):
     """Test suite for performance metrics and benchmarking"""
     
     def setUp(self):
-        """Set up performance test fixtures"""
+        """
+Set up performance test fixtures"""
         self.processor = VisionProcessor()
         self.test_images = [self._create_test_image() for _ in range(10)]
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image"""
+        """
+Create a test image"""
         return np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
     
     def test_processing_speed_benchmark(self):
-        """Benchmark processing speed"""
+        """
+Benchmark processing speed"""
         try:
             start_time = time.time()
             
@@ -467,11 +488,13 @@ class TestErrorHandling(unittest.TestCase):
     """Test suite for error handling and edge cases"""
     
     def setUp(self):
-        """Set up error handling test fixtures"""
+        """
+Set up error handling test fixtures"""
         self.processor = VisionProcessor()
     
     def test_corrupted_image_handling(self):
-        """Test handling of corrupted images"""
+        """
+Test handling of corrupted images"""
         try:
             # Create a corrupted image file
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
@@ -538,13 +561,15 @@ class TestIntegrationScenarios(unittest.TestCase):
     """Test suite for integration scenarios and workflows"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.processor = VisionProcessor()
         self.analyzer = ImageAnalyzer()
         self.extractor = MetadataExtractor()
     
     def test_complete_image_processing_workflow(self):
-        """Test complete image processing workflow"""
+        """
+Test complete image processing workflow"""
         try:
             # Create test image
             test_image = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)

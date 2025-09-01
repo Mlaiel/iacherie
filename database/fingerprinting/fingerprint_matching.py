@@ -36,6 +36,7 @@ Development Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: Infrastructure automation and monitoring
 """
+
 import asyncio
 import hashlib
 import json
@@ -72,7 +73,9 @@ logger = logging.getLogger(__name__)
 
 
 class MatchType(Enum):
-    """Advanced types of fingerprint matches"""
+    """
+Advanced types of fingerprint matches"""
+
     EXACT = "exact"
     NEAR_EXACT = "near_exact"
     SIMILAR = "similar"
@@ -118,6 +121,7 @@ class MatchAlgorithm(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for matches"""
+
     VERY_HIGH = "very_high"  # 95-100%
     HIGH = "high"            # 85-95%
     MEDIUM = "medium"        # 70-85%
@@ -127,6 +131,7 @@ class ConfidenceLevel(Enum):
 
 class MatchStatus(Enum):
     """Status of match processing"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -190,7 +195,8 @@ class MatchResult:
         }
     
     def get_confidence_score(self) -> float:
-        """Calculate normalized confidence score"""
+        """
+Calculate normalized confidence score"""
         confidence_map = {
             ConfidenceLevel.VERY_HIGH: 0.975,
             ConfidenceLevel.HIGH: 0.9,
@@ -203,7 +209,8 @@ class MatchResult:
 
 @dataclass
 class MatchConfiguration:
-    """Comprehensive configuration for matching algorithms"""
+    """
+Comprehensive configuration for matching algorithms"""
     # General thresholds
     exact_match_threshold: float = 0.99
     near_exact_threshold: float = 0.95
@@ -251,7 +258,8 @@ class MatchConfiguration:
 
 @dataclass 
 class MatchQuery:
-    """Comprehensive match query specification"""
+    """
+Comprehensive match query specification"""
     query_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Query fingerprint data
@@ -296,7 +304,8 @@ class MatchQuery:
 
 
 class HashMatcher:
-    """High-performance hash-based matching engine"""
+    """
+High-performance hash-based matching engine"""
     
     def __init__(self, config: MatchConfiguration):
         self.config = config
@@ -390,7 +399,8 @@ class HashMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float, algorithm: MatchAlgorithm) -> str:
-        """Calculate confidence level based on similarity and algorithm"""
+        """
+Calculate confidence level based on similarity and algorithm"""
         if similarity >= 0.9:
             return "high"
         elif similarity >= 0.7:
@@ -525,7 +535,8 @@ class VectorMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float, algorithm: MatchAlgorithm) -> str:
-        """Calculate confidence level"""
+        """
+Calculate confidence level"""
         if similarity >= 0.9:
             return "high"
         elif similarity >= 0.7:
@@ -662,7 +673,8 @@ class PerceptualMatcher:
             return 0.0
     
     def _determine_match_type(self, similarity: float) -> MatchType:
-        """Determine match type based on similarity"""
+        """
+Determine match type based on similarity"""
         if similarity >= 0.9:
             return MatchType.EXACT
         elif similarity >= 0.75:
@@ -673,7 +685,8 @@ class PerceptualMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float) -> str:
-        """Calculate confidence level"""
+        """
+Calculate confidence level"""
         if similarity >= 0.85:
             return "high"
         elif similarity >= 0.7:
@@ -771,7 +784,8 @@ class SemanticMatcher:
         return len(intersection) / len(union) if union else 0.0
     
     def _determine_match_type(self, similarity: float) -> MatchType:
-        """Determine match type based on similarity"""
+        """
+Determine match type based on similarity"""
         if similarity >= 0.9:
             return MatchType.EXACT
         elif similarity >= 0.7:
@@ -782,7 +796,8 @@ class SemanticMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float) -> str:
-        """Calculate confidence level"""
+        """
+Calculate confidence level"""
         if similarity >= 0.8:
             return "high"
         elif similarity >= 0.6:
@@ -1087,7 +1102,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> List[MatchResult]:
-        """Execute a specific matching algorithm"""
+        """
+Execute a specific matching algorithm"""
         try:
             if algorithm == MatchAlgorithm.HASH_EXACT:
                 return await self._execute_hash_exact_matching(
@@ -1329,7 +1345,8 @@ class FingerprintMatchingEngine:
         return list(merged.values())
     
     def _determine_match_type_from_similarity(self, similarity: float) -> MatchType:
-        """Determine match type from similarity score"""
+        """
+Determine match type from similarity score"""
         if similarity >= self.config.exact_match_threshold:
             return MatchType.EXACT
         elif similarity >= self.config.similar_match_threshold:
@@ -1340,7 +1357,8 @@ class FingerprintMatchingEngine:
             return MatchType.VARIANT
     
     def _calculate_confidence_from_similarity(self, similarity: float) -> str:
-        """Calculate confidence level from similarity score"""
+        """
+Calculate confidence level from similarity score"""
         if similarity >= 0.9:
             return "high"
         elif similarity >= 0.7:

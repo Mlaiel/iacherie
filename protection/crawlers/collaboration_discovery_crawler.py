@@ -28,12 +28,13 @@ Supported Collaboration Types:
 - Social media cross-promotion
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import json
@@ -55,7 +56,9 @@ from .platform_apis import PlatformAPIManager, APIResponse, PlatformType
 logger = logging.getLogger(__name__)
 
 class CollaborationType(str, Enum):
-    """Collaboration type classification."""
+    """
+Collaboration type classification."""
+
     MUSIC_FEATURE = "music_feature"
     MUSIC_REMIX = "music_remix"
     MUSIC_COVER = "music_cover"
@@ -73,6 +76,7 @@ class CollaborationType(str, Enum):
 
 class CreatorTier(str, Enum):
     """Creator tier classification based on reach and engagement."""
+
     NANO = "nano"           # 1K-10K followers
     MICRO = "micro"         # 10K-100K followers
     MID_TIER = "mid_tier"   # 100K-1M followers
@@ -82,6 +86,7 @@ class CreatorTier(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Collaboration opportunity status."""
+
     DISCOVERED = "discovered"
     ANALYZED = "analyzed"
     RECOMMENDED = "recommended"
@@ -95,6 +100,7 @@ class CollaborationStatus(str, Enum):
 
 class MatchQuality(str, Enum):
     """Match quality assessment."""
+
     PERFECT = "perfect"     # 90-100% compatibility
     EXCELLENT = "excellent" # 80-89% compatibility
     GOOD = "good"          # 70-79% compatibility
@@ -150,7 +156,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class BrandPartnershipOpportunity:
-    """Brand partnership opportunity structure."""
+    """
+Brand partnership opportunity structure."""
     partnership_id: str
     brand_name: str
     brand_category: str
@@ -175,7 +182,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any], platform_apis: PlatformAPIManager):
-        """Initialize collaboration discovery crawler with advanced matching."""
+        """
+Initialize collaboration discovery crawler with advanced matching."""
         super().__init__(config)
         self.platform_apis = platform_apis
         self.supported_platforms = [
@@ -270,7 +278,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return creators
     
     async def _discover_youtube_creators(self, criteria: Dict[str, Any]) -> List[CreatorProfile]:
-        """Discover YouTube creators based on criteria."""
+        """
+Discover YouTube creators based on criteria."""
         creators = []
         
         try:
@@ -684,7 +693,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return True
     
     def _determine_creator_tier(self, follower_count: int) -> CreatorTier:
-        """Determine creator tier based on follower count."""
+        """
+Determine creator tier based on follower count."""
         if follower_count < 1000:
             return CreatorTier.NANO
         elif follower_count < 10000:
@@ -733,7 +743,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return opportunities[:50]  # Return top 50 opportunities
     
     async def _find_potential_collaborators(self, creator: CreatorProfile) -> List[CreatorProfile]:
-        """Find potential collaborators based on creator profile."""
+        """
+Find potential collaborators based on creator profile."""
         # Search criteria based on creator's profile
         search_criteria = {
             'categories': creator.content_categories,
@@ -757,7 +768,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
                                                primary: CreatorProfile, 
                                                collaborator: CreatorProfile,
                                                collab_type: CollaborationType) -> Optional[CollaborationOpportunity]:
-        """Analyze potential collaboration between two creators."""
+        """
+Analyze potential collaboration between two creators."""
         # Calculate compatibility score
         compatibility = await self._calculate_compatibility_score(primary, collaborator, collab_type)
         
@@ -843,7 +855,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
     async def _calculate_geographic_compatibility(self, 
                                                 primary: CreatorProfile, 
                                                 collaborator: CreatorProfile) -> float:
-        """Calculate geographic compatibility score."""
+        """
+Calculate geographic compatibility score."""
         primary_country = primary.geographic_data.get('country')
         collaborator_country = collaborator.geographic_data.get('country')
         
@@ -871,7 +884,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return 0.3  # Different continents
     
     def _determine_match_quality(self, compatibility_score: float) -> MatchQuality:
-        """Determine match quality based on compatibility score."""
+        """
+Determine match quality based on compatibility score."""
         if compatibility_score >= 0.9:
             return MatchQuality.PERFECT
         elif compatibility_score >= 0.8:
@@ -886,7 +900,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
     async def _estimate_collaboration_reach(self, 
                                           primary: CreatorProfile, 
                                           collaborator: CreatorProfile) -> int:
-        """Estimate combined reach of collaboration."""
+        """
+Estimate combined reach of collaboration."""
         primary_reach = sum(p.get('follower_count', 0) for p in primary.platforms.values())
         collaborator_reach = sum(p.get('follower_count', 0) for p in collaborator.platforms.values())
         
@@ -899,7 +914,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
     async def _estimate_collaboration_engagement(self, 
                                                primary: CreatorProfile, 
                                                collaborator: CreatorProfile) -> float:
-        """Estimate collaboration engagement rate."""
+        """
+Estimate collaboration engagement rate."""
         primary_engagement = sum(primary.engagement_metrics.values()) / max(len(primary.engagement_metrics), 1)
         collaborator_engagement = sum(collaborator.engagement_metrics.values()) / max(len(collaborator.engagement_metrics), 1)
         
@@ -913,7 +929,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
                                         primary: CreatorProfile, 
                                         collaborator: CreatorProfile,
                                         collab_type: CollaborationType) -> float:
-        """Estimate revenue potential of collaboration."""
+        """
+Estimate revenue potential of collaboration."""
         base_revenue = 1000.0  # Base revenue estimate
         
         # Factor in combined reach
@@ -941,7 +958,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
                                              primary: CreatorProfile, 
                                              collaborator: CreatorProfile,
                                              collab_type: CollaborationType) -> List[str]:
-        """Identify potential benefits of collaboration."""
+        """
+Identify potential benefits of collaboration."""
         benefits = []
         
         # Audience expansion
@@ -1046,7 +1064,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
                                 primary: CreatorProfile, 
                                 collaborator: CreatorProfile,
                                 collab_type: CollaborationType) -> str:
-        """Recommend approach for initiating collaboration."""
+        """
+Recommend approach for initiating collaboration."""
         primary_tier = primary.creator_tier
         collaborator_tier = collaborator.creator_tier
         
@@ -1066,7 +1085,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
                                           primary: CreatorProfile, 
                                           collaborator: CreatorProfile,
                                           collab_type: CollaborationType) -> float:
-        """Estimate probability of successful collaboration."""
+        """
+Estimate probability of successful collaboration."""
         base_probability = 0.3  # 30% base success rate
         
         # Adjust based on compatibility
@@ -1190,7 +1210,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return unique_creators
     
     async def _enrich_creator_profile(self, creator: CreatorProfile) -> CreatorProfile:
-        """Enrich creator profile with additional data."""
+        """
+Enrich creator profile with additional data."""
         # Calculate profile completeness
         creator.profile_completeness = await self._calculate_profile_completeness(creator)
         
@@ -1200,7 +1221,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return creator
     
     async def _calculate_profile_completeness(self, creator: CreatorProfile) -> float:
-        """Calculate how complete the creator profile is."""
+        """
+Calculate how complete the creator profile is."""
         total_fields = 15
         completed_fields = 0
         
@@ -1221,7 +1243,8 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return completed_fields / total_fields
     
     async def _calculate_reputation_score(self, creator: CreatorProfile) -> float:
-        """Calculate creator reputation score."""
+        """
+Calculate creator reputation score."""
         score = 0.5  # Base score
         
         # Verification bonus
@@ -1235,13 +1258,15 @@ class CollaborationDiscoveryCrawler(BasePlatformCrawler):
         return min(score, 1.0)
 
 class CreatorAnalyzer:
-    """Advanced creator analysis and profiling system."""
+    """
+Advanced creator analysis and profiling system."""
     
     def __init__(self):
         self.analysis_models = {}
         
     async def analyze_creator(self, creator: CreatorProfile) -> Dict[str, Any]:
-        """Perform comprehensive creator analysis."""
+        """
+Perform comprehensive creator analysis."""
         return {"analysis": "complete"}
 
 class MatchmakingEngine:
@@ -1251,37 +1276,44 @@ class MatchmakingEngine:
         self.matching_algorithms = {}
         
     async def find_matches(self, creator: CreatorProfile) -> List[CreatorProfile]:
-        """Find optimal collaboration matches."""
+        """
+Find optimal collaboration matches."""
         return []
 
 class OpportunityGenerator:
-    """Collaboration opportunity generation and optimization system."""
+    """
+Collaboration opportunity generation and optimization system."""
     
     def __init__(self):
         self.generation_models = {}
         
     async def generate_opportunities(self, creator: CreatorProfile) -> List[CollaborationOpportunity]:
-        """Generate collaboration opportunities."""
+        """
+Generate collaboration opportunities."""
         return []
 
 class BrandMatcher:
-    """Brand partnership matching and opportunity identification system."""
+    """
+Brand partnership matching and opportunity identification system."""
     
     def __init__(self):
         self.brand_database = {}
         
     async def find_brand_opportunities(self, creator: CreatorProfile) -> List[BrandPartnershipOpportunity]:
-        """Find brand partnership opportunities."""
+        """
+Find brand partnership opportunities."""
         return []
 
 class CollaborationTracker:
-    """Collaboration tracking and performance monitoring system."""
+    """
+Collaboration tracking and performance monitoring system."""
     
     def __init__(self):
         self.tracking_metrics = {}
         
     async def track_collaboration(self, opportunity: CollaborationOpportunity) -> Dict[str, Any]:
-        """Track collaboration performance."""
+        """
+Track collaboration performance."""
         return {"tracking": "active"}
 
 class CreatorDatabase:
@@ -1291,19 +1323,23 @@ class CreatorDatabase:
         self.creators = {}
         
     async def store_creator(self, creator: CreatorProfile) -> bool:
-        """Store creator profile in database."""
+        """
+Store creator profile in database."""
         return True
     
     async def get_creator(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve creator profile from database."""
+        """
+Retrieve creator profile from database."""
         return None
 
 class CollaborationAnalytics:
-    """Collaboration analytics and reporting system."""
+    """
+Collaboration analytics and reporting system."""
     
     def __init__(self):
         self.analytics_data = {}
         
     async def generate_analytics(self, opportunities: List[CollaborationOpportunity]) -> Dict[str, Any]:
-        """Generate collaboration analytics report."""
+        """
+Generate collaboration analytics report."""
         return {"analytics": "generated"}

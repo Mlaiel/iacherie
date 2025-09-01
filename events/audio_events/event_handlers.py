@@ -8,6 +8,7 @@ workflow orchestration, and business logic execution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -69,7 +70,8 @@ class AudioUploadEventHandler(BaseEventHandler):
         self.register_handler(AudioUploadQuotaExceededEvent, self.handle_quota_exceeded)
     
     async def handle_upload_started(self, event: AudioUploadStartedEvent) -> None:
-        """Process upload initialization and setup tracking."""
+        """
+Process upload initialization and setup tracking."""
         try:
             logger.info(f"Starting audio upload processing for user {event.user_id}, file: {event.filename}")
             
@@ -139,7 +141,8 @@ class AudioUploadEventHandler(BaseEventHandler):
         await asyncio.gather(*workflows, return_exceptions=True)
     
     async def trigger_fingerprinting_workflow(self, event: AudioUploadCompletedEvent) -> None:
-        """Trigger audio fingerprinting workflow."""
+        """
+Trigger audio fingerprinting workflow."""
         fingerprinting_event = AudioFingerprintingStartedEvent(
             user_id=event.user_id,
             file_id=event.file_id,
@@ -186,7 +189,8 @@ class AudioProcessingEventHandler(BaseEventHandler):
         self.register_handler(AudioFormatConversionEvent, self.handle_format_conversion)
     
     async def handle_processing_started(self, event: AudioProcessingStartedEvent) -> None:
-        """Initialize audio processing pipeline."""
+        """
+Initialize audio processing pipeline."""
         try:
             logger.info(f"Starting audio processing for file {event.file_id}")
             
@@ -255,7 +259,8 @@ class AudioFingerprintingEventHandler(BaseEventHandler):
         self.register_handler(AudioCopyrightViolationEvent, self.handle_copyright_violation)
     
     async def handle_fingerprinting_started(self, event: AudioFingerprintingStartedEvent) -> None:
-        """Initialize fingerprinting process."""
+        """
+Initialize fingerprinting process."""
         try:
             logger.info(f"Starting fingerprinting for file {event.file_id}")
             
@@ -337,7 +342,8 @@ class AudioAnalysisEventHandler(BaseEventHandler):
         self.register_handler(AudioKeyDetectionEvent, self.handle_key_detection)
     
     async def handle_analysis_completed(self, event: AudioAnalysisCompletedEvent) -> None:
-        """Process completed analysis and generate recommendations."""
+        """
+Process completed analysis and generate recommendations."""
         try:
             logger.info(f"Audio analysis completed for file {event.file_id}")
             
@@ -393,7 +399,8 @@ class AudioEnhancementEventHandler(BaseEventHandler):
         self.register_handler(AudioRestorationEvent, self.handle_restoration)
     
     async def handle_enhancement_completed(self, event: AudioEnhancementCompletedEvent) -> None:
-        """Process completed enhancement and update file versions."""
+        """
+Process completed enhancement and update file versions."""
         try:
             logger.info(f"Audio enhancement completed for file {event.file_id}")
             
@@ -443,7 +450,8 @@ class AudioCollaborationEventHandler(BaseEventHandler):
         self.register_handler(AudioCollaborationCompletedEvent, self.handle_collaboration_completed)
     
     async def handle_collaboration_accepted(self, event: AudioCollaborationAcceptedEvent) -> None:
-        """Setup collaboration workspace and initialize workflows."""
+        """
+Setup collaboration workspace and initialize workflows."""
         try:
             logger.info(f"Collaboration accepted for {event.collaboration_id}")
             
@@ -497,7 +505,8 @@ class AudioMonetizationEventHandler(BaseEventHandler):
         self.register_handler(AudioSyncLicenseRequestEvent, self.handle_sync_license_request)
     
     async def handle_revenue_generated(self, event: AudioRevenueGeneratedEvent) -> None:
-        """Process revenue generation and trigger distribution workflows."""
+        """
+Process revenue generation and trigger distribution workflows."""
         try:
             logger.info(f"Revenue generated for file {event.file_id}: {event.net_amount} {event.currency}")
             
@@ -549,7 +558,8 @@ class AudioStreamingEventHandler(BaseEventHandler):
         self.register_handler(AudioStreamListenerLeftEvent, self.handle_listener_left)
     
     async def handle_stream_ended(self, event: AudioStreamEndedEvent) -> None:
-        """Process stream completion and generate analytics."""
+        """
+Process stream completion and generate analytics."""
         try:
             logger.info(f"Stream ended for file {event.file_id}, duration: {event.stream_duration}s")
             

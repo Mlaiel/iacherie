@@ -6,6 +6,7 @@ ROI analysis and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -16,7 +17,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class OptimizationGoal(Enum):
-    """Campaign optimization goals"""
+    """
+Campaign optimization goals"""
+
     MAXIMIZE_ROI = "maximize_roi"
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
@@ -38,7 +41,8 @@ class CampaignMetrics:
 
 @dataclass
 class OptimizationJob:
-    """Campaign optimization job definition"""
+    """
+Campaign optimization job definition"""
     job_id: str
     campaign_id: str
     optimization_goals: List[OptimizationGoal]
@@ -182,7 +186,8 @@ class CampaignOptimizationEngine:
         return strategies
 
     async def _calculate_projected_improvements(self, strategies: List[Dict[str, Any]], metrics: CampaignMetrics) -> Dict[str, float]:
-        """Calculate projected improvements from optimization strategies"""
+        """
+Calculate projected improvements from optimization strategies"""
         improvements = {
             'roi_improvement': 0.0,
             'ctr_improvement': 0.0,
@@ -199,7 +204,8 @@ class CampaignOptimizationEngine:
         return improvements
 
     async def _generate_budget_recommendations(self, strategies: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Generate budget allocation recommendations"""
+        """
+Generate budget allocation recommendations"""
         recommendations = {
             'total_budget_change': 0.0,
             'platform_reallocations': {}
@@ -215,7 +221,8 @@ class CampaignOptimizationEngine:
         return recommendations
 
     async def _generate_content_recommendations(self) -> List[str]:
-        """Generate content optimization recommendations"""
+        """
+Generate content optimization recommendations"""
         return [
             'Test more compelling headlines and calls-to-action',
             'Experiment with different visual elements',
@@ -224,5 +231,6 @@ class CampaignOptimizationEngine:
         ]
 
     async def get_job_result(self, job_id: str) -> OptimizationResult:
-        """Get the result of a completed optimization job"""
+        """
+Get the result of a completed optimization job"""
         return self.job_results.get(job_id)

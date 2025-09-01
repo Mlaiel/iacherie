@@ -20,6 +20,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -62,6 +63,7 @@ from ..core.config import get_settings
 
 class VectorType(Enum):
     """Types of content vectors."""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -71,6 +73,7 @@ class VectorType(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity metrics for vector comparison."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -89,7 +92,8 @@ class VectorRecord:
     updated_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "vector_id": self.vector_id,
             "content_id": self.content_id,
@@ -113,7 +117,8 @@ class SimilarityResult:
     distance: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "content_id": self.content_id,
             "vector_id": self.vector_id,
@@ -152,7 +157,8 @@ class FAISSIndexManager:
         return index
         
     def add_vector(self, vector_id: str, embedding: np.ndarray, metadata: Dict[str, Any]):
-        """Add vector to FAISS index."""
+        """
+Add vector to FAISS index."""
         if embedding.shape[0] != self.dimension:
             raise VectorSearchException(f"Vector dimension {embedding.shape[0]} doesn't match index dimension {self.dimension}")
             
@@ -212,11 +218,13 @@ class FAISSIndexManager:
         return False
         
     def get_total_vectors(self) -> int:
-        """Get total number of vectors in index."""
+        """
+Get total number of vectors in index."""
         return self.index.ntotal
         
     def save_index(self, filepath: Path):
-        """Save FAISS index to disk."""
+        """
+Save FAISS index to disk."""
         faiss.write_index(self.index, str(filepath))
         
         # Save metadata separately
@@ -229,7 +237,8 @@ class FAISSIndexManager:
             }, f)
             
     def load_index(self, filepath: Path):
-        """Load FAISS index from disk."""
+        """
+Load FAISS index from disk."""
         self.index = faiss.read_index(str(filepath))
         
         # Load metadata
@@ -243,7 +252,8 @@ class FAISSIndexManager:
 
 
 class VectorSearchService:
-    """Professional vector search service with FAISS and Elasticsearch integration."""
+    """
+Professional vector search service with FAISS and Elasticsearch integration."""
     
     def __init__(self):
         self.settings = get_settings()
@@ -262,7 +272,8 @@ class VectorSearchService:
         asyncio.create_task(self._initialize_services())
         
     async def _initialize_services(self):
-        """Initialize external services."""
+        """
+Initialize external services."""
         try:
             # Initialize Elasticsearch
             if AsyncElasticsearch and hasattr(self.settings, 'ELASTICSEARCH_URL'):
@@ -327,7 +338,8 @@ class VectorSearchService:
         vector_type: VectorType,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store content fingerprint vector."""
+        """
+Store content fingerprint vector."""
         try:
             vector_id = str(uuid.uuid4())
             

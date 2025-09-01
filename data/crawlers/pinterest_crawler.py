@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -47,7 +48,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class PinterestPin:
-    """Pinterest pin information"""
+    """
+Pinterest pin information"""
     pin_id: str
     title: str
     description: str
@@ -92,7 +94,8 @@ class PinterestPin:
 
 @dataclass
 class PinterestBoard:
-    """Pinterest board information"""
+    """
+Pinterest board information"""
     board_id: str
     name: str
     description: str
@@ -127,7 +130,8 @@ class PinterestBoard:
 
 @dataclass
 class PinterestUser:
-    """Pinterest user information"""
+    """
+Pinterest user information"""
     user_id: str
     username: str
     first_name: str

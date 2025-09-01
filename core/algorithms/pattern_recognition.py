@@ -14,6 +14,7 @@ Industrial-grade pattern recognition engine for multi-modal content analysis pro
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import numpy as np
 import cv2
 import librosa
@@ -35,7 +36,9 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class PatternType(Enum):
-    """Types of patterns that can be detected"""
+    """
+Types of patterns that can be detected"""
+
     TEMPORAL = "temporal"           # Time-based patterns
     SPATIAL = "spatial"             # Space-based patterns  
     FREQUENCY = "frequency"         # Frequency domain patterns
@@ -47,6 +50,7 @@ class PatternType(Enum):
 
 class ContentModality(Enum):
     """Content modalities for pattern analysis"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -67,7 +71,8 @@ class PatternConfig:
 
 @dataclass
 class DetectedPattern:
-    """Detected pattern information"""
+    """
+Detected pattern information"""
     pattern_id: str
     pattern_type: PatternType
     modality: ContentModality
@@ -80,7 +85,8 @@ class DetectedPattern:
 
 @dataclass
 class PatternAnalysisResult:
-    """Result of pattern analysis"""
+    """
+Result of pattern analysis"""
     content_id: str
     detected_patterns: List[DetectedPattern]
     pattern_statistics: Dict[str, Any]
@@ -329,7 +335,8 @@ class PatternRecognitionEngine:
         return np.array(features)
     
     def _extract_image_pattern_features(self, image_data: Any) -> Dict[str, np.ndarray]:
-        """Extract image features for pattern analysis"""
+        """
+Extract image features for pattern analysis"""
         try:
             if isinstance(image_data, str):
                 image = cv2.imread(image_data)
@@ -635,7 +642,8 @@ class PatternRecognitionEngine:
     
     def _detect_structural_patterns(self, features: Dict[str, np.ndarray], 
                                    modality: ContentModality, config: PatternConfig) -> List[DetectedPattern]:
-        """Detect structural patterns in content"""
+        """
+Detect structural patterns in content"""
         patterns = []
         
         try:
@@ -860,7 +868,8 @@ class PatternRecognitionEngine:
         return stats
     
     def compare_patterns(self, content_id1: str, content_id2: str) -> Dict[str, Any]:
-        """Compare patterns between two pieces of content"""
+        """
+Compare patterns between two pieces of content"""
         try:
             if content_id1 not in self.pattern_database or content_id2 not in self.pattern_database:
                 return {'error': 'Content not found in pattern database'}

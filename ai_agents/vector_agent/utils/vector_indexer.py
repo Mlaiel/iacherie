@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexStatistics:
-    """Statistics for vector index performance"""
+    """
+Statistics for vector index performance"""
     total_documents: int = 0
     total_vectors: int = 0
     average_dimension: float = 0.0
@@ -46,7 +48,8 @@ class IndexStatistics:
 
 
 class VectorDocumentStore:
-    """High-performance vector document storage backend"""
+    """
+High-performance vector document storage backend"""
     
     def __init__(self, storage_path: str):
         self.storage_path = storage_path
@@ -60,7 +63,8 @@ class VectorDocumentStore:
         os.makedirs(self.storage_path, exist_ok=True)
     
     def _initialize_database(self):
-        """Initialize SQLite database for vector metadata"""
+        """
+Initialize SQLite database for vector metadata"""
         with self.lock:
             conn = sqlite3.connect(self.db_path)
             try:
@@ -98,7 +102,8 @@ class VectorDocumentStore:
                 conn.close()
     
     def store_document(self, document: VectorDocument) -> IndexingResult:
-        """Store vector document with metadata"""
+        """
+Store vector document with metadata"""
         with self.lock:
             try:
                 # Generate vector data file path
@@ -642,7 +647,8 @@ class VectorIndexer:
         return self.processing_results.get(task_id)
     
     async def cleanup_old_documents(self, max_age_days: int = 90) -> Dict[str, Any]:
-        """Cleanup old documents"""
+        """
+Cleanup old documents"""
         try:
             start_time = time.time()
             
@@ -690,7 +696,8 @@ class VectorIndexer:
         return self.metrics
     
     def _validate_document(self, document: VectorDocument) -> bool:
-        """Validate document before indexing"""
+        """
+Validate document before indexing"""
         try:
             # Check required fields
             if not document.document_id or not document.content_type:
@@ -758,7 +765,8 @@ class VectorIndexer:
         )
     
     async def shutdown(self):
-        """Graceful shutdown of vector indexer"""
+        """
+Graceful shutdown of vector indexer"""
         try:
             # Complete pending operations
             if self.processing_results:

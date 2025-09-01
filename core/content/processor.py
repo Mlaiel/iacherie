@@ -6,8 +6,9 @@ including audio, video, image, and text content according to the business
 specifications for the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -39,7 +40,8 @@ from ..ml.text_analysis import TextAnalyzer
 
 @dataclass
 class ProcessingResult:
-    """Content processing result container"""
+    """
+Content processing result container"""
     success: bool
     content_id: str
     processed_files: List[str]
@@ -51,7 +53,8 @@ class ProcessingResult:
 
 @dataclass
 class ProcessingConfig:
-    """Content processing configuration"""
+    """
+Content processing configuration"""
     enable_thumbnails: bool = True
     enable_previews: bool = True
     enable_compression: bool = True
@@ -589,7 +592,8 @@ class ContentProcessor:
         return mime_type in self.supported_types.get(content_type, [])
 
     def _get_processed_file_path(self, content_id: str, filename: str) -> str:
-        """Generate path for processed file"""
+        """
+Generate path for processed file"""
         processed_dir = f"/tmp/processed/{content_id}"
         Path(processed_dir).mkdir(parents=True, exist_ok=True)
         return f"{processed_dir}/{filename}"
@@ -602,7 +606,8 @@ class ContentProcessor:
         return fingerprint_hash
 
     async def _generate_video_fingerprint(self, file_path: str) -> str:
-        """Generate video fingerprint for similarity matching"""
+        """
+Generate video fingerprint for similarity matching"""
         # Simplified fingerprint generation - in production, use perceptual hashing
         cap = cv2.VideoCapture(file_path)
         frames_hash = []
@@ -644,14 +649,16 @@ class ContentProcessor:
         return fingerprint_hash
 
     async def _generate_text_fingerprint(self, content: str) -> str:
-        """Generate text fingerprint for similarity matching"""
+        """
+Generate text fingerprint for similarity matching"""
         # Normalize text for fingerprinting
         normalized = ' '.join(content.lower().split())
         fingerprint_hash = hashlib.sha256(normalized.encode('utf-8')).hexdigest()
         return fingerprint_hash
 
     async def _enhance_audio(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply audio enhancement algorithms"""
+        """
+Apply audio enhancement algorithms"""
         # Noise reduction (simplified)
         enhanced = audio_data.copy()
         
@@ -663,7 +670,8 @@ class ContentProcessor:
         return enhanced
 
     async def _enhance_image(self, img: Image.Image) -> Image.Image:
-        """Apply image enhancement algorithms"""
+        """
+Apply image enhancement algorithms"""
         enhanced = img.copy()
         
         # Auto contrast enhancement
@@ -679,7 +687,8 @@ class ContentProcessor:
         return enhanced
 
     async def _cache_processing_result(self, content_id: str, result: ProcessingResult) -> None:
-        """Cache processing result for quick retrieval"""
+        """
+Cache processing result for quick retrieval"""
         cache_data = {
             "success": result.success,
             "processed_files": result.processed_files,

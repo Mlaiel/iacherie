@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -58,7 +59,9 @@ settings = get_settings()
 
 
 class TemplateType(str, Enum):
-    """Types of content templates"""
+    """
+Types of content templates"""
+
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA_POST = "social_media_post"
     EMAIL_NEWSLETTER = "email_newsletter"
@@ -78,6 +81,7 @@ class TemplateType(str, Enum):
 
 class OutputFormat(str, Enum):
     """Output format options"""
+
     HTML = "html"
     MARKDOWN = "markdown"
     PLAIN_TEXT = "plain_text"
@@ -92,6 +96,7 @@ class OutputFormat(str, Enum):
 
 class Platform(str, Enum):
     """Target platforms for content"""
+
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -159,7 +164,8 @@ class TemplateRenderContext:
 
 
 class TemplateEngine:
-    """Advanced content template engine with intelligent adaptation"""
+    """
+Advanced content template engine with intelligent adaptation"""
     
     def __init__(self):
         # Initialize Jinja2 environment
@@ -191,7 +197,8 @@ class TemplateEngine:
         
         @self.jinja_env.filter('truncate_words')
         def truncate_words(text: str, count: int = 50, suffix: str = '...') -> str:
-            """Truncate text to specified word count"""
+            """
+Truncate text to specified word count"""
             words = text.split()
             if len(words) <= count:
                 return text
@@ -199,12 +206,14 @@ class TemplateEngine:
         
         @self.jinja_env.filter('title_case')
         def title_case(text: str) -> str:
-            """Convert text to title case"""
+            """
+Convert text to title case"""
             return text.title()
         
         @self.jinja_env.filter('hashtags')
         def hashtags(text: str, max_tags: int = 10) -> str:
-            """Extract and format hashtags"""
+            """
+Extract and format hashtags"""
             words = re.findall(r'\b\w+\b', text.lower())
             unique_words = list(dict.fromkeys(words))  # Preserve order, remove duplicates
             tags = ['#' + word for word in unique_words[:max_tags] if len(word) > 3]
@@ -212,13 +221,15 @@ class TemplateEngine:
         
         @self.jinja_env.filter('markdown_to_html')
         def markdown_to_html(text: str) -> Markup:
-            """Convert markdown to HTML"""
+            """
+Convert markdown to HTML"""
             html = markdown.markdown(text, extensions=['extra', 'codehilite'])
             return Markup(html)
         
         @self.jinja_env.filter('platform_optimize')
         def platform_optimize(text: str, platform: str) -> str:
-            """Optimize text for specific platform"""
+            """
+Optimize text for specific platform"""
             platform_limits = {
                 'twitter': 280,
                 'instagram': 2200,
@@ -234,7 +245,8 @@ class TemplateEngine:
         
         @self.jinja_env.filter('seo_optimize')
         def seo_optimize(text: str, keywords: List[str] = None) -> str:
-            """Basic SEO optimization of text"""
+            """
+Basic SEO optimization of text"""
             if not keywords:
                 return text
             
@@ -251,22 +263,26 @@ class TemplateEngine:
         
         @self.jinja_env.global_function
         def current_date(format: str = '%Y-%m-%d') -> str:
-            """Get current date in specified format"""
+            """
+Get current date in specified format"""
             return datetime.now().strftime(format)
         
         @self.jinja_env.global_function
         def word_count(text: str) -> int:
-            """Count words in text"""
+            """
+Count words in text"""
             return len(text.split())
         
         @self.jinja_env.global_function
         def reading_time(text: str, wpm: int = 200) -> int:
-            """Estimate reading time in minutes"""
+            """
+Estimate reading time in minutes"""
             return max(1, len(text.split()) // wpm)
         
         @self.jinja_env.global_function
         def generate_id(prefix: str = 'item') -> str:
-            """Generate unique ID"""
+            """
+Generate unique ID"""
             return f"{prefix}_{uuid.uuid4().hex[:8]}"
 
     def _load_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
@@ -321,7 +337,8 @@ class TemplateEngine:
         }
 
     def _load_builtin_templates(self):
-        """Load built-in content templates"""
+        """
+Load built-in content templates"""
         
         # Blog Post Template
         blog_template = ContentTemplate(
@@ -481,7 +498,7 @@ class TemplateEngine:
         </div>
         
         <div class="footer">
-            <p>© {{ current_date('%Y') }} {{ company_name }}. All rights reserved.</p>
+            <p>(c) {{ current_date('%Y') }} {{ company_name }}. All rights reserved.</p>
             <p>You're receiving this email because you subscribed to our newsletter.</p>
             <p><a href="{{ unsubscribe_url }}">Unsubscribe</a> | <a href="{{ preferences_url }}">Update Preferences</a></p>
         </div>
@@ -642,7 +659,8 @@ class TemplateEngine:
 
     def _apply_platform_optimizations(self, content: str, platform: Platform, 
                                     template: ContentTemplate) -> str:
-        """Apply platform-specific optimizations"""
+        """
+Apply platform-specific optimizations"""
         platform_config = self.platform_configs.get(platform, {})
         
         # Apply platform-specific settings from template
@@ -664,7 +682,8 @@ class TemplateEngine:
 
     def _apply_output_format(self, content: str, output_format: OutputFormat, 
                            context: TemplateRenderContext) -> str:
-        """Apply output format transformation"""
+        """
+Apply output format transformation"""
         if output_format == OutputFormat.HTML:
             return self._ensure_html_format(content)
         elif output_format == OutputFormat.MARKDOWN:
@@ -681,14 +700,16 @@ class TemplateEngine:
             return content
 
     def _ensure_html_format(self, content: str) -> str:
-        """Ensure content is in proper HTML format"""
+        """
+Ensure content is in proper HTML format"""
         if not content.strip().startswith('<'):
             # Convert markdown-like content to HTML
             content = markdown.markdown(content, extensions=['extra', 'codehilite'])
         return content
 
     def _convert_to_markdown(self, content: str) -> str:
-        """Convert HTML content to markdown"""
+        """
+Convert HTML content to markdown"""
         if '<' in content:
             # Use BeautifulSoup to parse HTML and convert to markdown
             soup = BeautifulSoup(content, 'html.parser')
@@ -696,7 +717,8 @@ class TemplateEngine:
         return content
 
     def _html_to_markdown(self, soup: BeautifulSoup) -> str:
-        """Convert BeautifulSoup HTML to markdown"""
+        """
+Convert BeautifulSoup HTML to markdown"""
         # Basic HTML to Markdown conversion
         text = soup.get_text()
         
@@ -709,14 +731,16 @@ class TemplateEngine:
         return text
 
     def _convert_to_plain_text(self, content: str) -> str:
-        """Convert content to plain text"""
+        """
+Convert content to plain text"""
         if '<' in content:
             soup = BeautifulSoup(content, 'html.parser')
             return soup.get_text().strip()
         return content
 
     def _convert_to_json(self, content: str, context: TemplateRenderContext) -> str:
-        """Convert content to JSON format"""
+        """
+Convert content to JSON format"""
         return json.dumps({
             'content': content,
             'metadata': {
@@ -729,7 +753,8 @@ class TemplateEngine:
         }, indent=2)
 
     def _optimize_for_email(self, content: str) -> str:
-        """Optimize HTML content for email clients"""
+        """
+Optimize HTML content for email clients"""
         # Add email-specific optimizations
         if not content.startswith('<!DOCTYPE'):
             # Wrap in basic email structure if needed
@@ -755,7 +780,8 @@ class TemplateEngine:
         return content
 
     def _optimize_for_mobile(self, content: str) -> str:
-        """Optimize content for mobile devices"""
+        """
+Optimize content for mobile devices"""
         # Add mobile-specific optimizations
         if '<' in content:  # HTML content
             # Add mobile viewport and responsive CSS
@@ -778,7 +804,8 @@ class TemplateEngine:
         return content
 
     async def _update_template_usage(self, template_id: str):
-        """Update template usage statistics"""
+        """
+Update template usage statistics"""
         try:
             if template_id in self.templates:
                 self.templates[template_id].usage_count += 1
@@ -997,7 +1024,8 @@ class FormatAdapter:
         }
 
     def _create_html_processor(self):
-        """Create HTML format processor"""
+        """
+Create HTML format processor"""
         def process_html(content: str, options: Dict[str, Any] = None) -> str:
             # Add semantic HTML structure
             if not content.startswith('<'):
@@ -1044,7 +1072,8 @@ class FormatAdapter:
         return process_markdown
 
     def _create_social_processor(self):
-        """Create social media format processor"""
+        """
+Create social media format processor"""
         def process_social(content: str, platform: Platform, options: Dict[str, Any] = None) -> str:
             platform_config = self.template_engine.platform_configs.get(platform, {})
             
@@ -1069,7 +1098,8 @@ class FormatAdapter:
         return process_social
 
     def _create_email_processor(self):
-        """Create email format processor"""
+        """
+Create email format processor"""
         def process_email(content: str, options: Dict[str, Any] = None) -> str:
             # Email-specific optimizations
             if '<html>' not in content.lower():
@@ -1100,7 +1130,8 @@ class FormatAdapter:
         return process_email
 
     def _optimize_for_twitter(self, content: str) -> str:
-        """Optimize content for Twitter"""
+        """
+Optimize content for Twitter"""
         # Add Twitter-specific optimizations
         # Ensure hashtags are properly formatted
         content = re.sub(r'#(\w+)', r'#\1', content)
@@ -1111,7 +1142,8 @@ class FormatAdapter:
         return content
 
     def _optimize_for_instagram(self, content: str) -> str:
-        """Optimize content for Instagram"""
+        """
+Optimize content for Instagram"""
         # Add Instagram-specific optimizations
         # Ensure proper line breaks for readability
         lines = content.split('\n')
@@ -1135,7 +1167,8 @@ class FormatAdapter:
         return '\n'.join(optimized_lines)
 
     def _optimize_for_linkedin(self, content: str) -> str:
-        """Optimize content for LinkedIn"""
+        """
+Optimize content for LinkedIn"""
         # Add LinkedIn-specific optimizations
         # Ensure professional tone and structure
         return content
@@ -1143,7 +1176,8 @@ class FormatAdapter:
     async def adapt_content(self, content: str, source_format: OutputFormat,
                           target_format: OutputFormat, platform: Optional[Platform] = None,
                           options: Optional[Dict[str, Any]] = None) -> str:
-        """Adapt content from one format to another"""
+        """
+Adapt content from one format to another"""
         try:
             adapted_content = content
             
@@ -1184,7 +1218,8 @@ class FormatAdapter:
             return content
 
     def _convert_from_markdown(self, content: str, target_format: OutputFormat) -> str:
-        """Convert Markdown content to other formats"""
+        """
+Convert Markdown content to other formats"""
         if target_format == OutputFormat.HTML:
             return markdown.markdown(content, extensions=['extra', 'codehilite'])
         elif target_format == OutputFormat.PLAIN_TEXT:

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -55,7 +56,9 @@ from ...utils.market_data import MarketDataProvider, CompetitorTracker
 logger = logging.getLogger(__name__)
 
 class IntelligenceType(Enum):
-    """Types of brand intelligence analysis"""
+    """
+Types of brand intelligence analysis"""
+
     COMPETITIVE = "competitive"
     MARKET_TRENDS = "market_trends"
     CONSUMER_BEHAVIOR = "consumer_behavior"
@@ -67,6 +70,7 @@ class IntelligenceType(Enum):
 
 class MarketSegment(Enum):
     """Market segments for analysis"""
+
     LUXURY = "luxury"
     MASS_MARKET = "mass_market"
     NICHE = "niche"
@@ -77,6 +81,7 @@ class MarketSegment(Enum):
 
 class CompetitiveAdvantage(Enum):
     """Types of competitive advantages"""
+
     COST_LEADERSHIP = "cost_leadership"
     DIFFERENTIATION = "differentiation"
     FOCUS_NICHE = "focus_niche"
@@ -108,7 +113,8 @@ class CompetitorProfile:
 
 @dataclass
 class MarketTrend:
-    """Market trend analysis with predictions"""
+    """
+Market trend analysis with predictions"""
     trend_id: str
     category: str
     description: str

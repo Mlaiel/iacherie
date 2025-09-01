@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
@@ -43,7 +44,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Metric type enumeration."""
+    """
+Metric type enumeration."""
+
     ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
@@ -60,6 +63,7 @@ class MetricType(str, Enum):
 
 class DriftType(str, Enum):
     """Drift type enumeration."""
+
     DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
@@ -67,6 +71,7 @@ class DriftType(str, Enum):
 
 class AlertLevel(str, Enum):
     """Alert level enumeration."""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -86,7 +91,8 @@ class PerformanceMetric:
 
 @dataclass
 class InferenceMetrics:
-    """Inference metrics structure."""
+    """
+Inference metrics structure."""
     request_id: str
     model_id: str
     latency_ms: float
@@ -103,7 +109,8 @@ class InferenceMetrics:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics structure."""
+    """
+Training metrics structure."""
     job_id: str
     model_id: str
     epoch: int
@@ -120,7 +127,8 @@ class TrainingMetrics:
 
 @dataclass
 class DriftAlert:
-    """Drift detection alert structure."""
+    """
+Drift detection alert structure."""
     alert_id: str
     model_id: str
     drift_type: DriftType
@@ -141,7 +149,8 @@ class ModelPerformanceTracker:
     """
     
     def __init__(self):
-        """Initialize the model performance tracker."""
+        """
+Initialize the model performance tracker."""
         self.performance_history = defaultdict(list)
         self.alert_thresholds = {}
         self.active_alerts = {}
@@ -550,7 +559,8 @@ class ModelPerformanceTracker:
             ]
     
     async def _aggregate_performance_data(self):
-        """Aggregate performance data for reporting."""
+        """
+Aggregate performance data for reporting."""
         # Implement performance data aggregation
         logger.debug("Aggregating performance data")
 
@@ -563,7 +573,8 @@ class InferenceMetricsCollector:
     """
     
     def __init__(self):
-        """Initialize the inference metrics collector."""
+        """
+Initialize the inference metrics collector."""
         self.inference_metrics = defaultdict(list)
         self.latency_buckets = defaultdict(lambda: defaultdict(int))
         self.throughput_data = defaultdict(list)
@@ -719,7 +730,8 @@ class TrainingMetricsStore:
     """
     
     def __init__(self):
-        """Initialize the training metrics store."""
+        """
+Initialize the training metrics store."""
         self.training_metrics = defaultdict(list)
         self.loss_curves = defaultdict(list)
         self.validation_curves = defaultdict(list)
@@ -853,7 +865,8 @@ class ModelDriftDetector:
     """
     
     def __init__(self):
-        """Initialize the drift detector."""
+        """
+Initialize the drift detector."""
         self.reference_data = {}
         self.drift_history = defaultdict(list)
         self.drift_thresholds = {}
@@ -1046,7 +1059,8 @@ class PerformanceBenchmark:
     """
     
     def __init__(self):
-        """Initialize the performance benchmark."""
+        """
+Initialize the performance benchmark."""
         self.benchmarks = {}
         self.benchmark_results = defaultdict(list)
         

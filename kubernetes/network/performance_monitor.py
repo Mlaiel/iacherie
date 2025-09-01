@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkInterface(Enum):
-    """Network interface types"""
+    """
+Network interface types"""
+
     ETHERNET = "ethernet"
     WIFI = "wifi"
     VPN = "vpn"
@@ -51,6 +54,7 @@ class NetworkInterface(Enum):
 
 class PerformanceMetric(Enum):
     """Network performance metrics"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     PACKET_LOSS = "packet_loss"
@@ -62,6 +66,7 @@ class PerformanceMetric(Enum):
 
 class OptimizationStrategy(Enum):
     """Network optimization strategies"""
+
     BANDWIDTH_OPTIMIZATION = "bandwidth_optimization"
     LATENCY_REDUCTION = "latency_reduction"
     RELIABILITY_IMPROVEMENT = "reliability_improvement"
@@ -86,7 +91,8 @@ class NetworkPerformanceData:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
+    """
+Performance threshold configuration"""
     metric: PerformanceMetric
     warning_threshold: float
     critical_threshold: float
@@ -96,7 +102,8 @@ class PerformanceThreshold:
 
 @dataclass
 class OptimizationRecommendation:
-    """Network optimization recommendation"""
+    """
+Network optimization recommendation"""
     strategy: OptimizationStrategy
     priority: int  # 1 (highest) to 5 (lowest)
     impact_score: float  # 0.0 to 1.0

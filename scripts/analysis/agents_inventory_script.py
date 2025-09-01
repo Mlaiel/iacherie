@@ -5,6 +5,7 @@ Comprehensive analysis of all implemented agents in the Ainflue platform
 Author: GitHub Copilot Analysis
 Purpose: CRITIQUE - AGENTS IA verification
 """
+
 import os
 import ast
 import json
@@ -16,7 +17,8 @@ from datetime import datetime
 
 @dataclass
 class AgentInfo:
-    """Information about an implemented agent"""
+    """
+Information about an implemented agent"""
     name: str
     file_path: str
     directory: str
@@ -163,7 +165,8 @@ class AgentInventoryAnalyzer:
         return imports[:10]  # Limit to first 10 imports
         
     def _extract_dependencies(self, imports: List[str]) -> List[str]:
-        """Extract dependencies from imports"""
+        """
+Extract dependencies from imports"""
         dependencies = []
         for imp in imports:
             if 'agent' in imp.lower() or 'base' in imp.lower():
@@ -171,7 +174,8 @@ class AgentInventoryAnalyzer:
         return dependencies
         
     def _assess_implementation_quality(self, methods: List[str], line_count: int, content: str) -> str:
-        """Assess the quality/completeness of implementation"""
+        """
+Assess the quality/completeness of implementation"""
         
         # Count substantive methods (not just __init__, __str__, etc.)
         substantive_methods = [m for m in methods if not m.startswith('__') or m == '__init__']

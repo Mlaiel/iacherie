@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for AI Observability Module
+"""
+Ultra-Industrial Test Suite for AI Observability Module
 
 This module provides comprehensive testing for AI/ML model monitoring,
 performance tracking, bias detection, model drift analysis,
@@ -37,6 +39,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -67,10 +70,12 @@ from ai.observability.ai_observability import (
 
 
 class TestAIObservabilityComprehensive:
-    """Ultra-comprehensive test suite for AI Observability"""
+    """
+Ultra-comprehensive test suite for AI Observability"""
     @pytest.fixture
     def sample_model_config(self):
-        """Sample model configuration for testing"""
+        """
+Sample model configuration for testing"""
         return {
             'model_id': 'test_content_protection_model',
             'model_type': ModelType.CONTENT_PROTECTION,
@@ -83,7 +88,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.fixture
     def sample_training_data(self):
-        """Sample training data for testing"""
+        """
+Sample training data for testing"""
         np.random.seed(42)
         return {
             'features': np.random.randn(1000, 10),
@@ -96,7 +102,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.fixture
     def sample_predictions(self):
-        """Sample predictions for testing"""
+        """
+Sample predictions for testing"""
         np.random.seed(42)
         return {
             'predictions': np.random.rand(100),
@@ -107,7 +114,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.fixture
     async def ai_observability_manager(self):
-        """Create AI observability manager instance"""
+        """
+Create AI observability manager instance"""
         config = {
             'enable_bias_detection': True,
             'enable_drift_detection': True,
@@ -121,7 +129,8 @@ class TestAIObservabilityComprehensive:
         await manager.shutdown()
 
     def test_model_type_enum(self):
-        """Test ModelType enum completeness"""
+        """
+Test ModelType enum completeness"""
         expected_types = {
             'CLASSIFICATION', 'REGRESSION', 'CLUSTERING', 'RECOMMENDATION',
             'NLP', 'COMPUTER_VISION', 'CONTENT_PROTECTION', 'FINGERPRINTING',
@@ -142,7 +151,8 @@ class TestAIObservabilityComprehensive:
         assert actual_frameworks == expected_frameworks
 
     def test_model_status_enum(self):
-        """Test ModelStatus enum completeness"""
+        """
+Test ModelStatus enum completeness"""
         expected_statuses = {
             'TRAINING', 'VALIDATION', 'DEPLOYED', 'DEPRECATED', 'FAILED', 'MAINTENANCE'
         }
@@ -152,7 +162,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_model_registration(self, ai_observability_manager, sample_model_config):
-        """Test complete model registration process"""
+        """
+Test complete model registration process"""
         manager = ai_observability_manager
         
         # Register model
@@ -172,7 +183,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_model_metrics_collection(self, ai_observability_manager, sample_model_config, sample_predictions):
-        """Test comprehensive model metrics collection"""
+        """
+Test comprehensive model metrics collection"""
         manager = ai_observability_manager
         
         # Register model
@@ -217,7 +229,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_bias_detection_comprehensive(self, ai_observability_manager, sample_model_config):
-        """Test comprehensive bias detection"""
+        """
+Test comprehensive bias detection"""
         manager = ai_observability_manager
         
         # Register model
@@ -268,7 +281,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_model_drift_detection_comprehensive(self, ai_observability_manager, sample_model_config):
-        """Test comprehensive model drift detection"""
+        """
+Test comprehensive model drift detection"""
         manager = ai_observability_manager
         
         # Register model
@@ -317,7 +331,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_explainability_monitoring_comprehensive(self, ai_observability_manager, sample_model_config):
-        """Test comprehensive explainability monitoring"""
+        """
+Test comprehensive explainability monitoring"""
         manager = ai_observability_manager
         
         # Register model
@@ -357,7 +372,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_model_performance_degradation_detection(self, ai_observability_manager, sample_model_config):
-        """Test detection of model performance degradation over time"""
+        """
+Test detection of model performance degradation over time"""
         manager = ai_observability_manager
         
         # Register model
@@ -409,7 +425,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_model_lifecycle_management_comprehensive(self, ai_observability_manager, sample_model_config):
-        """Test comprehensive model lifecycle management"""
+        """
+Test comprehensive model lifecycle management"""
         manager = ai_observability_manager
         
         # Register model
@@ -449,7 +466,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_real_time_monitoring_alerts(self, ai_observability_manager, sample_model_config):
-        """Test real-time monitoring and alerting"""
+        """
+Test real-time monitoring and alerting"""
         manager = ai_observability_manager
         
         # Register model
@@ -497,7 +515,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_batch_inference_monitoring(self, ai_observability_manager, sample_model_config):
-        """Test monitoring of batch inference operations"""
+        """
+Test monitoring of batch inference operations"""
         manager = ai_observability_manager
         
         # Register model
@@ -562,7 +581,8 @@ class TestAIObservabilityComprehensive:
 
     @pytest.mark.asyncio
     async def test_model_comparison_analysis(self, ai_observability_manager):
-        """Test comprehensive model comparison analysis"""
+        """
+Test comprehensive model comparison analysis"""
         manager = ai_observability_manager
         
         # Register two models for comparison
@@ -635,7 +655,8 @@ class TestAIObservabilityComprehensive:
         assert comparison_report['winner'] in model_ids
 
     def test_thread_safety_comprehensive(self, sample_model_config):
-        """Test thread safety of AI observability operations"""
+        """
+Test thread safety of AI observability operations"""
         import concurrent.futures
         
         # This test would normally use the actual manager but for demo purposes
@@ -733,7 +754,8 @@ class TestAIObservabilityComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_performance_at_scale(self, ai_observability_manager, sample_model_config):
-        """Test performance with high volume data"""
+        """
+Test performance with high volume data"""
         manager = ai_observability_manager
         
         # Register model
@@ -867,11 +889,13 @@ class TestAIObservabilityComprehensive:
 # Additional test classes for specific components
 
 class TestBiasDetectorSpecialized:
-    """Specialized tests for bias detection algorithms"""
+    """
+Specialized tests for bias detection algorithms"""
     
     @pytest.fixture
     def bias_detector(self):
-        """Create bias detector instance"""
+        """
+Create bias detector instance"""
         config = {
             'fairness_metrics': ['demographic_parity', 'equalized_odds', 'calibration'],
             'sensitive_attributes': ['gender', 'age_group', 'ethnicity'],
@@ -880,7 +904,8 @@ class TestBiasDetectorSpecialized:
         return BiasDetector(config)
     
     def test_demographic_parity_calculation(self, bias_detector):
-        """Test demographic parity bias metric calculation"""
+        """
+Test demographic parity bias metric calculation"""
         # Create test data with clear bias
         predictions_data = {
             'group_a': {'predictions': [0.8, 0.9, 0.85, 0.88], 'labels': [1, 1, 1, 1]},
@@ -894,7 +919,8 @@ class TestBiasDetectorSpecialized:
         assert isinstance(parity_score, float)
     
     def test_equalized_odds_calculation(self, bias_detector):
-        """Test equalized odds bias metric calculation"""
+        """
+Test equalized odds bias metric calculation"""
         predictions_data = {
             'group_a': {
                 'predictions': [0.8, 0.9, 0.2, 0.1] * 10,  # Consistent performance
@@ -914,11 +940,13 @@ class TestBiasDetectorSpecialized:
 
 
 class TestModelDriftDetectorSpecialized:
-    """Specialized tests for model drift detection"""
+    """
+Specialized tests for model drift detection"""
     
     @pytest.fixture
     def drift_detector(self):
-        """Create drift detector instance"""
+        """
+Create drift detector instance"""
         config = {
             'statistical_tests': ['ks_test', 'chi_square', 'psi'],
             'drift_threshold': 0.1,
@@ -927,7 +955,8 @@ class TestModelDriftDetectorSpecialized:
         return ModelDriftDetector(config)
     
     def test_kolmogorov_smirnov_drift_detection(self, drift_detector):
-        """Test KS test for drift detection"""
+        """
+Test KS test for drift detection"""
         # Reference distribution (training data)
         reference_data = np.random.normal(0, 1, 1000)
         
@@ -948,11 +977,13 @@ class TestModelDriftDetectorSpecialized:
 # Performance benchmarks
 @pytest.mark.benchmark
 class TestAIObservabilityBenchmarks:
-    """Performance benchmarks for AI observability"""
+    """
+Performance benchmarks for AI observability"""
     
     @pytest.mark.asyncio
     async def test_prediction_recording_benchmark(self, benchmark):
-        """Benchmark prediction recording performance"""
+        """
+Benchmark prediction recording performance"""
         from ai.observability.ai_observability import AIObservabilityManager
         
         manager = AIObservabilityManager({})
@@ -980,7 +1011,8 @@ class TestAIObservabilityBenchmarks:
         await manager.shutdown()
     
     def test_metrics_calculation_benchmark(self, benchmark):
-        """Benchmark metrics calculation performance"""
+        """
+Benchmark metrics calculation performance"""
         # Generate large dataset
         n_samples = 10000
         predictions = np.random.rand(n_samples)

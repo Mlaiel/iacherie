@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -25,10 +26,12 @@ logger = logging.getLogger(__name__)
 
 
 class InstagramPlatform(PlatformBase):
-    """Instagram platform integration"""
+    """
+Instagram platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Instagram platform"""
+        """
+Initialize Instagram platform"""
         super().__init__(config)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.auth_base = "https://api.instagram.com"
@@ -43,7 +46,8 @@ class InstagramPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram using OAuth2"""
+        """
+Authenticate with Instagram using OAuth2"""
         try:
             # If we have a long-lived token, validate it
             if self.config.credentials.access_token:
@@ -343,7 +347,8 @@ class InstagramPlatform(PlatformBase):
         return ((likes + comments) / impressions) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Instagram (limited by API)"""
+        """
+Search content on Instagram (limited by API)"""
         # Instagram Basic Display API doesn't support content search
         # This would require Instagram Graph API with appropriate permissions
         logger.warning("Instagram content search not available with Basic Display API")

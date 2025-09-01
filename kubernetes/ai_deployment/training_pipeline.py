@@ -6,8 +6,9 @@ including distributed training, hyperparameter optimization,
 experiment tracking, and automated model deployment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrainingFramework(Enum):
-    """Supported training frameworks"""
+    """
+Supported training frameworks"""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     PYTORCH_LIGHTNING = "pytorch_lightning"
@@ -40,6 +43,7 @@ class TrainingFramework(Enum):
 
 class TrainingType(Enum):
     """Training job types"""
+
     SINGLE_NODE = "single_node"
     MULTI_NODE = "multi_node"
     DISTRIBUTED = "distributed"
@@ -51,6 +55,7 @@ class TrainingType(Enum):
 
 class OptimizationStrategy(Enum):
     """Hyperparameter optimization strategies"""
+
     GRID_SEARCH = "grid_search"
     RANDOM_SEARCH = "random_search"
     BAYESIAN_OPTIMIZATION = "bayesian_optimization"

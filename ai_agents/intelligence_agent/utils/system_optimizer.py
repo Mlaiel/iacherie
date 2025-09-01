@@ -19,6 +19,7 @@ Expert Team Specializations:
 - Resource Optimization Engineer
 - Predictive Analytics Expert
 """
+
 import asyncio
 import logging
 import psutil
@@ -47,7 +48,9 @@ from ...database.connection import get_database_pool
 
 
 class OptimizationLevel(Enum):
-    """Levels of system optimization."""
+    """
+Levels of system optimization."""
+
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -56,6 +59,7 @@ class OptimizationLevel(Enum):
 
 class ResourceType(Enum):
     """Types of system resources to optimize."""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -67,6 +71,7 @@ class ResourceType(Enum):
 
 class OptimizationAction(Enum):
     """Types of optimization actions."""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     LOAD_BALANCE = "load_balance"
@@ -93,7 +98,8 @@ class ResourceMetrics:
 
 @dataclass
 class OptimizationRule:
-    """Rule for system optimization."""
+    """
+Rule for system optimization."""
     rule_id: str
     name: str
     condition: str
@@ -111,7 +117,8 @@ class OptimizationRule:
 
 @dataclass
 class OptimizationResult:
-    """Result of an optimization operation."""
+    """
+Result of an optimization operation."""
     optimization_id: str
     rule_applied: OptimizationRule
     before_metrics: Dict[str, float]
@@ -138,7 +145,8 @@ class SystemOptimizer:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the System Optimizer with advanced analytics."""
+        """
+Initialize the System Optimizer with advanced analytics."""
         self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -308,7 +316,8 @@ class SystemOptimizer:
         )
     
     async def _continuous_monitoring(self):
-        """Continuously monitor system resources and performance."""
+        """
+Continuously monitor system resources and performance."""
         while True:
             try:
                 # Collect system metrics
@@ -405,7 +414,8 @@ class SystemOptimizer:
         return metrics
     
     def _calculate_memory_fragmentation(self) -> float:
-        """Calculate memory fragmentation score."""
+        """
+Calculate memory fragmentation score."""
         try:
             # Simplified fragmentation calculation
             memory = psutil.virtual_memory()
@@ -415,7 +425,8 @@ class SystemOptimizer:
             return 0.0
     
     async def _collect_database_metrics(self) -> Dict[str, float]:
-        """Collect database performance metrics."""
+        """
+Collect database performance metrics."""
         if not self.database_pool:
             try:
                 self.database_pool = await get_database_pool()
@@ -435,7 +446,8 @@ class SystemOptimizer:
             return {'error': str(e), 'available': 0.0}
     
     async def _collect_cache_metrics(self) -> Dict[str, float]:
-        """Collect cache (Redis) performance metrics."""
+        """
+Collect cache (Redis) performance metrics."""
         if not self.redis_client:
             try:
                 self.redis_client = redis.Redis(
@@ -460,7 +472,8 @@ class SystemOptimizer:
             return {'error': str(e), 'available': 0.0}
     
     async def _calculate_derived_metrics(self, system_metrics: Dict[str, Dict[str, float]]) -> Dict[str, float]:
-        """Calculate derived performance metrics."""
+        """
+Calculate derived performance metrics."""
         derived = {}
         
         # Overall system efficiency
@@ -485,7 +498,8 @@ class SystemOptimizer:
         return derived
     
     async def _continuous_optimization(self):
-        """Continuously analyze and apply optimizations."""
+        """
+Continuously analyze and apply optimizations."""
         while True:
             try:
                 # Check if enough data is collected
@@ -529,7 +543,8 @@ class SystemOptimizer:
         rule: OptimizationRule,
         current_metrics: Dict[str, Dict[str, float]]
     ) -> bool:
-        """Evaluate if an optimization rule should be triggered."""
+        """
+Evaluate if an optimization rule should be triggered."""
         try:
             # Check cooldown period
             if rule.last_applied:
@@ -618,7 +633,8 @@ class SystemOptimizer:
         rule: OptimizationRule,
         current_metrics: Dict[str, Dict[str, float]]
     ) -> bool:
-        """Check if applying optimization rule is safe."""
+        """
+Check if applying optimization rule is safe."""
         if not self.safety_mode:
             return True
         
@@ -637,7 +653,8 @@ class SystemOptimizer:
         return True
     
     async def _should_apply_optimization(self, rule: OptimizationRule) -> bool:
-        """Determine if optimization should be applied based on level and risk."""
+        """
+Determine if optimization should be applied based on level and risk."""
         risk_tolerance = {
             OptimizationLevel.CONSERVATIVE: 0.1,
             OptimizationLevel.MODERATE: 0.3,
@@ -648,7 +665,8 @@ class SystemOptimizer:
         return rule.risk_level <= risk_tolerance[self.optimization_level]
     
     async def _apply_optimization(self, rule: OptimizationRule) -> OptimizationResult:
-        """Apply an optimization rule and track results."""
+        """
+Apply an optimization rule and track results."""
         optimization_id = f"opt_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{rule.rule_id}"
         start_time = datetime.now()
         

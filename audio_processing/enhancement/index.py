@@ -16,6 +16,7 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
+
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
@@ -410,7 +411,8 @@ class AudioEnhancementSystem:
         return self.realtime_processor.get_processed_audio(num_samples)
     
     def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time processing performance metrics"""
+        """
+Get real-time processing performance metrics"""
         if not self.realtime_processor:
             return {'status': 'not_running'}
         
@@ -515,7 +517,8 @@ class AudioEnhancementSystem:
         }
     
     def _map_content_type(self, content_type: str) -> ContentType:
-        """Map string content type to enum"""
+        """
+Map string content type to enum"""
         mapping = {
             'music': ContentType.MUSIC,
             'speech': ContentType.SPEECH,
@@ -529,7 +532,8 @@ class AudioEnhancementSystem:
         return mapping.get(content_type.lower(), ContentType.GENERAL)
     
     def _map_processing_mode(self, mode: str) -> ProcessingMode:
-        """Map string processing mode to enum"""
+        """
+Map string processing mode to enum"""
         mapping = {
             'low_latency': ProcessingMode.LOW_LATENCY,
             'balanced': ProcessingMode.BALANCED,
@@ -539,7 +543,8 @@ class AudioEnhancementSystem:
         return mapping.get(mode.lower(), ProcessingMode.BALANCED)
     
     def _get_preset_for_quality(self, quality: str, content_type: ContentType) -> EnhancementPreset:
-        """Get appropriate preset for quality level and content type"""
+        """
+Get appropriate preset for quality level and content type"""
         quality_mapping = {
             'fast': QualityLevel.FAIR,
             'balanced': QualityLevel.GOOD,
@@ -607,7 +612,8 @@ class AudioEnhancementSystem:
 
 # Factory functions for easy instantiation
 def create_enhancement_system(config_dir: Optional[Union[str, Path]] = None) -> AudioEnhancementSystem:
-    """Create a new audio enhancement system instance"""
+    """
+Create a new audio enhancement system instance"""
     return AudioEnhancementSystem(config_dir)
 
 
@@ -649,17 +655,20 @@ def analyze_audio_quick(audio: np.ndarray,
 
 # Module-level convenience functions
 def get_version() -> str:
-    """Get module version"""
+    """
+Get module version"""
     return __version__
 
 
 def get_author() -> str:
-    """Get module author"""
+    """
+Get module author"""
     return __author__
 
 
 def get_supported_formats() -> List[str]:
-    """Get list of supported audio formats"""
+    """
+Get list of supported audio formats"""
     return [
         "WAV", "FLAC", "MP3", "AAC", "OGG", "M4A", "WMA",
         "AIFF", "AU", "CAF", "RF64", "BWF"
@@ -672,12 +681,14 @@ def get_supported_sample_rates() -> Tuple[int, int]:
 
 
 def get_supported_bit_depths() -> List[int]:
-    """Get supported bit depths"""
+    """
+Get supported bit depths"""
     return [16, 24, 32]
 
 
 def get_processing_modes() -> List[str]:
-    """Get available processing modes"""
+    """
+Get available processing modes"""
     return ["low_latency", "balanced", "high_quality", "ultra_quality"]
 
 

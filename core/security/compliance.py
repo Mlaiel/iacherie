@@ -19,6 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 import json
 import hashlib
 import asyncio
@@ -36,7 +37,9 @@ from backend.core.logging import SecurityLogger
 
 
 class PrivacyRight(Enum):
-    """Privacy rights under various regulations"""
+    """
+Privacy rights under various regulations"""
+
     ACCESS = "access"                    # Right to access personal data
     RECTIFICATION = "rectification"      # Right to correct data
     ERASURE = "erasure"                  # Right to be forgotten
@@ -51,6 +54,7 @@ class PrivacyRight(Enum):
 
 class DataCategory(Enum):
     """Categories of personal data with sensitivity levels"""
+
     IDENTITY = "identity"                # Name, email, ID numbers
     CONTACT = "contact"                  # Address, phone, email
     DEMOGRAPHIC = "demographic"          # Age, gender, location
@@ -67,6 +71,7 @@ class DataCategory(Enum):
 
 class ComplianceFramework(Enum):
     """Supported compliance frameworks"""
+
     GDPR = "gdpr"                        # General Data Protection Regulation
     CCPA = "ccpa"                        # California Consumer Privacy Act
     CPRA = "cpra"                        # California Privacy Rights Act
@@ -81,6 +86,7 @@ class ComplianceFramework(Enum):
 
 class LegalBasis(Enum):
     """Legal basis for data processing (GDPR)"""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -91,6 +97,7 @@ class LegalBasis(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING = "pending"
@@ -115,7 +122,8 @@ class DataProcessingRecord:
 
 @dataclass
 class PrivacyRequest:
-    """Privacy rights request"""
+    """
+Privacy rights request"""
     request_id: str
     user_id: str
     request_type: PrivacyRight
@@ -157,7 +165,8 @@ class AuditLogEntry:
 
 
 class GDPRCompliance:
-    """GDPR compliance implementation"""
+    """
+GDPR compliance implementation"""
     
     def __init__(self):
         self.logger = SecurityLogger("GDPRCompliance")
@@ -485,17 +494,20 @@ class GDPRCompliance:
         pass
     
     async def _get_user_content_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user content data"""
+        """
+Get user content data"""
         # Implementation depends on your content model
         pass
     
     async def _get_user_usage_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user usage/analytics data"""
+        """
+Get user usage/analytics data"""
         # Implementation depends on your analytics model
         pass
     
     async def _can_delete_data_category(self, user_id: str, category: DataCategory) -> Tuple[bool, str]:
-        """Check if data category can be deleted"""
+        """
+Check if data category can be deleted"""
         # Check legal obligations, contracts, etc.
         if category == DataCategory.FINANCIAL:
             return False, "Financial data must be retained for tax purposes"
@@ -514,18 +526,21 @@ class GDPRCompliance:
         pass
     
     async def _store_consent_record(self, consent: ConsentRecord):
-        """Store consent record"""
+        """
+Store consent record"""
         # Implementation depends on your consent storage model
         pass
     
     async def _log_compliance_action(self, user_id: str, action: str, details: Dict[str, Any]):
-        """Log compliance action for audit trail"""
+        """
+Log compliance action for audit trail"""
         # Implementation depends on your audit logging model
         pass
 
 
 class CCPACompliance:
-    """CCPA compliance for California residents"""
+    """
+CCPA compliance for California residents"""
     
     def __init__(self):
         self.logger = SecurityLogger("CCPACompliance")
@@ -656,7 +671,8 @@ class CCPACompliance:
         pass
     
     async def _can_delete_ccpa_category(self, user_id: str, category: str) -> Tuple[bool, str]:
-        """Check if CCPA category can be deleted"""
+        """
+Check if CCPA category can be deleted"""
         # CCPA allows more exceptions than GDPR
         if category == "commercial":
             return False, "Commercial information retained for business records"
@@ -670,7 +686,8 @@ class CCPACompliance:
 
 
 class DMCACompliance:
-    """DMCA takedown and copyright compliance"""
+    """
+DMCA takedown and copyright compliance"""
     
     def __init__(self):
         self.logger = SecurityLogger("DMCACompliance")
@@ -821,13 +838,15 @@ class DMCACompliance:
         complainant_info: Dict[str, str], 
         infringement_details: Dict[str, str]
     ):
-        """Store DMCA takedown record"""
+        """
+Store DMCA takedown record"""
         # Implementation depends on your DMCA storage model
         pass
 
 
 class AuditCompliance:
-    """Audit trail and compliance reporting"""
+    """
+Audit trail and compliance reporting"""
     
     def __init__(self):
         self.logger = SecurityLogger("AuditCompliance")
@@ -912,12 +931,14 @@ class AuditCompliance:
         pass
     
     async def _update_audit_metrics(self, action: str, resource_type: str):
-        """Update audit metrics"""
+        """
+Update audit metrics"""
         # Implementation depends on your metrics system
         pass
     
     async def _generate_gdpr_report(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate GDPR compliance report"""
+        """
+Generate GDPR compliance report"""
         # Implementation depends on your data models
         return {
             "privacy_requests": {},

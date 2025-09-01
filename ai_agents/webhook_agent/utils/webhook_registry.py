@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WebhookEndpointModel(Base):
-    """Database model for webhook endpoints"""
+    """
+Database model for webhook endpoints"""
     __tablename__ = "webhook_registry_endpoints"
     
     endpoint_id = Column(String, primary_key=True)
@@ -73,6 +75,7 @@ class WebhookEndpointModel(Base):
 
 class EndpointStatus(Enum):
     """Webhook endpoint status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     VERIFICATION_PENDING = "verification_pending" 
@@ -113,7 +116,8 @@ class EndpointMetrics:
 
 @dataclass
 class RegistryMetrics:
-    """Webhook registry metrics"""
+    """
+Webhook registry metrics"""
     total_endpoints: int = 0
     active_endpoints: int = 0
     verified_endpoints: int = 0
@@ -608,7 +612,8 @@ class WebhookRegistry:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook registry"""
+        """
+Graceful shutdown of webhook registry"""
         try:
             logger.info("Shutting down WebhookRegistry")
             
@@ -671,7 +676,8 @@ class WebhookRegistry:
         return {'valid': True}
 
     async def _get_user_endpoint_count(self, user_id: str) -> int:
-        """Get count of active endpoints for user"""
+        """
+Get count of active endpoints for user"""
         try:
             count = 0
             for endpoint in self._endpoint_cache.values():
@@ -716,7 +722,8 @@ class WebhookRegistry:
         return None
 
     async def _verify_endpoint(self, endpoint: WebhookEndpointConfig) -> Dict[str, Any]:
-        """Verify endpoint connectivity and configuration"""
+        """
+Verify endpoint connectivity and configuration"""
         verification_id = str(uuid.uuid4())
         verification_token = str(uuid.uuid4())
         
@@ -787,7 +794,8 @@ class WebhookRegistry:
             self._verification_tokens.pop(verification_id, None)
 
     async def _store_endpoint_in_db(self, endpoint: WebhookEndpointConfig) -> None:
-        """Store endpoint configuration in database"""
+        """
+Store endpoint configuration in database"""
         try:
             # Encrypt secret if provided
             secret_hash = None
@@ -944,7 +952,8 @@ class WebhookRegistry:
         )
 
     async def _cache_endpoint_in_redis(self, endpoint: WebhookEndpointConfig) -> None:
-        """Cache endpoint configuration in Redis"""
+        """
+Cache endpoint configuration in Redis"""
         try:
             if self._redis_client:
                 endpoint_data = {
@@ -1043,7 +1052,8 @@ class WebhookRegistry:
         )
 
     async def _remove_endpoint_from_redis(self, endpoint_id: str) -> None:
-        """Remove endpoint configuration from Redis cache"""
+        """
+Remove endpoint configuration from Redis cache"""
         try:
             if self._redis_client:
                 cache_key = f"webhook_endpoint:{endpoint_id}"
@@ -1059,7 +1069,8 @@ class WebhookRegistry:
                 self._endpoint_metrics[endpoint_id] = EndpointMetrics()
 
     async def _update_registry_metrics(self) -> None:
-        """Update registry-wide metrics"""
+        """
+Update registry-wide metrics"""
         try:
             self._metrics.total_endpoints = len([e for e in self._endpoint_cache.values() if e.active])
             self._metrics.active_endpoints = len([e for e in self._endpoint_cache.values() if e.active])
@@ -1096,7 +1107,8 @@ class WebhookRegistry:
         self._cleanup_tasks.add(task)
 
     async def _cleanup_inactive_endpoints(self) -> None:
-        """Background task to clean up inactive endpoints"""
+        """
+Background task to clean up inactive endpoints"""
         while True:
             try:
                 cleanup_interval = self.cleanup_interval * 3600  # Convert to seconds

@@ -4,7 +4,7 @@ Enterprise-grade content protection systems for copyright protection,
 anti-piracy measures, and content fingerprinting for professional content creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -14,6 +14,7 @@ Violators will face legal action under international copyright law.
 
 Business Logic: Content Upload → Protection Analysis → Fingerprinting → Watermarking → Anti-Piracy → Distribution Ready
 """
+
 import asyncio
 import numpy as np
 import logging
@@ -30,7 +31,9 @@ import base64
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -39,6 +42,7 @@ class ProtectionLevel(Enum):
 
 class WatermarkType(Enum):
     """Types of watermarks"""
+
     VISIBLE = "visible"
     INVISIBLE = "invisible"
     DIGITAL = "digital"
@@ -47,6 +51,7 @@ class WatermarkType(Enum):
 
 class ThreatLevel(Enum):
     """Threat detection levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -71,7 +76,8 @@ class ProtectionMetadata:
 
 @dataclass
 class ThreatReport:
-    """Security threat analysis report"""
+    """
+Security threat analysis report"""
     threat_level: ThreatLevel
     detected_vulnerabilities: List[str]
     potential_attack_vectors: List[str]
@@ -236,7 +242,8 @@ class CopyrightProtectionEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive content protection"""
+        """
+Apply comprehensive content protection"""
         fingerprint = await self._generate_content_fingerprint(content)
         return {
             'copyright_protected': True,
@@ -246,7 +253,8 @@ class CopyrightProtectionEngine(BaseContentEngine):
         }
     
     async def _load_protection_algorithms(self):
-        """Load copyright protection algorithms"""
+        """
+Load copyright protection algorithms"""
         self.logger.info("Loading protection algorithms...")
         await asyncio.sleep(0.3)
         
@@ -508,7 +516,7 @@ class CopyrightProtectionEngine(BaseContentEngine):
                 'owner': 'Fahed Mlaiel',
                 'email': 'mlaiel@live.de',
                 'registration_date': datetime.now().isoformat(),
-                'copyright_notice': '© 2025 Fahed Mlaiel. All rights reserved.'
+                'copyright_notice': '(c) 2025 Fahed Mlaiel. All rights reserved.'
             },
             anti_piracy_measures=analysis.get('anti_piracy_measures', []),
             protection_timestamp=datetime.now(),
@@ -677,11 +685,13 @@ class FingerprintingEngine(BaseContentEngine):
         return {'fingerprint_seo_optimized': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Content protection through fingerprinting"""
+        """
+Content protection through fingerprinting"""
         return {'fingerprint_protected': True}
     
     async def _load_fingerprinting_algorithms(self):
-        """Load fingerprinting algorithms"""
+        """
+Load fingerprinting algorithms"""
         self.logger.info("Loading fingerprinting algorithms...")
         await asyncio.sleep(0.2)
         
@@ -808,7 +818,8 @@ class FingerprintingEngine(BaseContentEngine):
         }
     
     async def _calculate_fingerprint_quality_score(self, fingerprints: Dict[str, str]) -> float:
-        """Calculate fingerprint quality score"""
+        """
+Calculate fingerprint quality score"""
         base_score = 0.85
         
         # Multiple fingerprints factor
@@ -955,11 +966,13 @@ class AntiPiracyEngine(BaseContentEngine):
         return {'antipiracy_seo_optimized': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Content protection through anti-piracy measures"""
+        """
+Content protection through anti-piracy measures"""
         return {'anti_piracy_protected': True}
     
     async def _load_monitoring_systems(self):
-        """Load content monitoring systems"""
+        """
+Load content monitoring systems"""
         self.logger.info("Loading monitoring systems...")
         await asyncio.sleep(0.3)
         
@@ -1147,7 +1160,8 @@ class AntiPiracyEngine(BaseContentEngine):
         )
     
     async def _calculate_antipiracy_effectiveness_score(self, monitoring: Dict, detection: Dict, response: Dict) -> float:
-        """Calculate anti-piracy effectiveness score"""
+        """
+Calculate anti-piracy effectiveness score"""
         base_score = 0.8
         
         # Monitoring coverage factor

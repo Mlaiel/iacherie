@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 PROCESSEUR DE PAIEMENTS MULTI-GATEWAY
@@ -15,6 +15,7 @@ Gestion unifiée des paiements via multiple providers
 - Chiffrement end-to-end et compliance PCI
 - Webhook handling et reconciliation automatique
 """
+
 import asyncio
 import json
 import logging
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 class PaymentStatus(Enum):
     """États des paiements"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     SUCCEEDED = "succeeded"
@@ -48,6 +50,7 @@ class PaymentStatus(Enum):
 
 class PaymentMethod(Enum):
     """Méthodes de paiement"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -59,6 +62,7 @@ class PaymentMethod(Enum):
 
 class Currency(Enum):
     """Devises supportées"""
+
     USD = "usd"
     EUR = "eur"
     CAD = "cad"
@@ -113,7 +117,8 @@ class PaymentResponse:
     processed_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la réponse en dictionnaire"""
+        """
+Convertit la réponse en dictionnaire"""
         return {
             "payment_id": self.payment_id,
             "status": self.status.value,
@@ -334,7 +339,8 @@ class PaymentProcessor:
         return True
 
 class StripeProcessor(PaymentProcessor):
-    """Processeur de paiements Stripe"""
+    """
+Processeur de paiements Stripe"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -747,7 +753,8 @@ class PayPalProcessor(PaymentProcessor):
         )
         
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
-        """Récupère le statut d'un paiement PayPal"""
+        """
+Récupère le statut d'un paiement PayPal"""
         try:
             token = await self._get_access_token()
             

@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import time
 import asyncio
@@ -11,22 +12,26 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMonitor:
-    """Monitor performance metrics"""
+    """
+Monitor performance metrics"""
     
     def __init__(self):
         self.memory_limit = None
         
     def set_memory_limit(self, limit_bytes: int):
-        """Set memory limit"""
+        """
+Set memory limit"""
         self.memory_limit = limit_bytes
         
     def check_memory_usage(self) -> float:
-        """Check current memory usage"""
+        """
+Check current memory usage"""
         return 0.0  # Placeholder implementation
 
 
 class RateLimiter:
-    """Rate limiting implementation"""
+    """
+Rate limiting implementation"""
     
     def __init__(self, max_requests: int = 100, window_seconds: int = 60):
         self.max_requests = max_requests
@@ -34,7 +39,8 @@ class RateLimiter:
         self.requests = {}
     
     async def check_rate_limit(self, identifier: str) -> bool:
-        """Check if request is within rate limits"""
+        """
+Check if request is within rate limits"""
         current_time = time.time()
         if identifier not in self.requests:
             self.requests[identifier] = []
@@ -55,7 +61,8 @@ class RateLimiter:
 
 
 class CircuitBreaker:
-    """Circuit breaker pattern implementation"""
+    """
+Circuit breaker pattern implementation"""
     
     def __init__(self, failure_threshold: int = 5, recovery_timeout: int = 60):
         self.failure_threshold = failure_threshold

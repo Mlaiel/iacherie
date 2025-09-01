@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive music analysis capabilities.
 """
+
 import logging
 import numpy as np
 import time
@@ -16,7 +17,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class MusicGenre(Enum):
-    """Music genres"""
+    """
+Music genres"""
+
     POP = "pop"
     ROCK = "rock"
     HIP_HOP = "hip_hop"
@@ -35,6 +38,7 @@ class MusicGenre(Enum):
 
 class MusicKey(Enum):
     """Musical keys"""
+
     C_MAJOR = "C_major"
     C_SHARP_MAJOR = "C#_major"
     D_MAJOR = "D_major"
@@ -74,7 +78,8 @@ class MusicFeatures:
 
 @dataclass
 class MusicAnalysisResult:
-    """Complete music analysis result"""
+    """
+Complete music analysis result"""
     features: MusicFeatures
     confidence: float
     analysis_time: float
@@ -85,7 +90,8 @@ class MusicAnalysisResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MusicAnalyzer:
-    """Advanced music analysis engine"""
+    """
+Advanced music analysis engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -285,7 +291,8 @@ class MusicAnalyzer:
             return 0.5
     
     def _calculate_valence(self, samples: np.ndarray, sample_rate: int) -> float:
-        """Calculate valence (positivity) - simplified"""
+        """
+Calculate valence (positivity) - simplified"""
         try:
             # Placeholder implementation
             # Real implementation would analyze harmonic content, rhythm patterns, etc.
@@ -302,7 +309,8 @@ class MusicAnalyzer:
             return 0.5
     
     def _calculate_danceability(self, samples: np.ndarray, sample_rate: int, tempo: float) -> float:
-        """Calculate danceability score"""
+        """
+Calculate danceability score"""
         try:
             # Factors for danceability: tempo, rhythm regularity, bass content
             
@@ -327,7 +335,8 @@ class MusicAnalyzer:
             return 0.5
     
     def _calculate_loudness(self, samples: np.ndarray) -> float:
-        """Calculate loudness in dB"""
+        """
+Calculate loudness in dB"""
         try:
             rms = np.sqrt(np.mean(samples ** 2))
             if rms > 0:
@@ -339,7 +348,8 @@ class MusicAnalyzer:
             return -20.0
     
     def _analyze_speechiness(self, samples: np.ndarray, sample_rate: int) -> float:
-        """Analyze speechiness (vocal content)"""
+        """
+Analyze speechiness (vocal content)"""
         try:
             # Placeholder: analyze spectral characteristics typical of speech
             spectral_centroid = self._calculate_spectral_centroid(samples)
@@ -356,7 +366,8 @@ class MusicAnalyzer:
             return 0.3
     
     def _analyze_acousticness(self, samples: np.ndarray, sample_rate: int) -> float:
-        """Analyze acousticness vs electronic content"""
+        """
+Analyze acousticness vs electronic content"""
         try:
             # Placeholder: analyze harmonic vs percussive content
             energy = self._calculate_energy(samples)
@@ -370,7 +381,8 @@ class MusicAnalyzer:
             return 0.5
     
     def _analyze_instrumentalness(self, samples: np.ndarray, sample_rate: int) -> float:
-        """Analyze instrumental vs vocal content"""
+        """
+Analyze instrumental vs vocal content"""
         try:
             # Inverse of speechiness as approximation
             speechiness = self._analyze_speechiness(samples, sample_rate)
@@ -381,7 +393,8 @@ class MusicAnalyzer:
             return 0.7
     
     def _analyze_liveness(self, samples: np.ndarray, sample_rate: int) -> float:
-        """Analyze liveness (live performance characteristics)"""
+        """
+Analyze liveness (live performance characteristics)"""
         try:
             # Placeholder: analyze reverb, crowd noise, etc.
             # For now, use a random value with slight bias toward studio recordings
@@ -392,7 +405,8 @@ class MusicAnalyzer:
             return 0.2
     
     def _analyze_time_signature(self, samples: np.ndarray, sample_rate: int, tempo: float) -> int:
-        """Analyze time signature - simplified"""
+        """
+Analyze time signature - simplified"""
         try:
             # Placeholder: most music is in 4/4 time
             # Real implementation would analyze beat patterns
@@ -405,7 +419,8 @@ class MusicAnalyzer:
             return 4
     
     def _calculate_spectral_centroid(self, samples: np.ndarray) -> float:
-        """Calculate spectral centroid"""
+        """
+Calculate spectral centroid"""
         try:
             # Simple frequency domain analysis
             fft = np.fft.fft(samples[:8192])  # Use first 8192 samples
@@ -426,7 +441,8 @@ class MusicAnalyzer:
             return 1000.0
     
     def _extract_spectral_features(self, samples: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract spectral features"""
+        """
+Extract spectral features"""
         try:
             spectral_centroid = self._calculate_spectral_centroid(samples)
             

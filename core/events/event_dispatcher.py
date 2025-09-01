@@ -4,12 +4,13 @@ Architecture: Event Handler Orchestration and Routing
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Système de dispatch d'événements avec routage intelligent, gestion d'erreurs,
     retry automatique et orchestration des handlers pour la plateforme IA-Influencer-Agent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Type
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class HandlerType(Enum):
-    """Type de handler d'événement"""
+    """
+Type de handler d'événement"""
+
     SYNC = "sync"
     ASYNC = "async"
     BACKGROUND = "background"
@@ -34,6 +37,7 @@ class HandlerType(Enum):
 
 class RetryPolicy(Enum):
     """Politique de retry"""
+
     NONE = "none"
     LINEAR = "linear"
     EXPONENTIAL = "exponential"
@@ -78,7 +82,8 @@ class EventHandler(ABC):
         pass
     
     def can_handle(self, event: Event) -> bool:
-        """Vérifie si ce handler peut traiter l'événement"""
+        """
+Vérifie si ce handler peut traiter l'événement"""
         if not self.config.enabled:
             return False
         
@@ -167,7 +172,8 @@ class FunctionHandler(EventHandler):
         self.is_async = asyncio.iscoroutinefunction(func)
     
     async def handle(self, event: Event) -> Any:
-        """Exécute la fonction handler"""
+        """
+Exécute la fonction handler"""
         if self.is_async:
             return await self.func(event)
         else:
@@ -177,14 +183,16 @@ class FunctionHandler(EventHandler):
 
 
 class ClassHandler(EventHandler):
-    """Handler basé sur une classe avec méthode handle"""
+    """
+Handler basé sur une classe avec méthode handle"""
     
     def __init__(self, config: HandlerConfig, handler_class: Type, *args, **kwargs):
         super().__init__(config)
         self.handler_instance = handler_class(*args, **kwargs)
     
     async def handle(self, event: Event) -> Any:
-        """Délègue à l'instance de la classe"""
+        """
+Délègue à l'instance de la classe"""
         handle_method = getattr(self.handler_instance, 'handle', None)
         if not handle_method:
             raise ValueError(f"Handler class must have a 'handle' method")
@@ -452,7 +460,8 @@ class EventDispatcher:
         handler: EventHandler, 
         event: Event
     ) -> Dict[str, Any]:
-        """Exécute un handler avec retry selon sa politique"""
+        """
+Exécute un handler avec retry selon sa politique"""
         last_error = None
         
         for attempt in range(handler.config.max_retries + 1):
@@ -511,7 +520,8 @@ class EventDispatcher:
             return base_delay
     
     def get_handlers_info(self) -> List[Dict[str, Any]]:
-        """Retourne les informations sur tous les handlers"""
+        """
+Retourne les informations sur tous les handlers"""
         handlers_info = []
         
         for handler_id, handler in self._handlers.items():

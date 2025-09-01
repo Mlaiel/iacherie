@@ -4,8 +4,9 @@ Advanced tempo detection engine using multiple algorithms for accurate
 beat-per-minute estimation and tempo stability analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Tuple
@@ -13,7 +14,8 @@ import librosa
 
 
 class TempoDetector:
-    """Professional tempo detection engine"""
+    """
+Professional tempo detection engine"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)

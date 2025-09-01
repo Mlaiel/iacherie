@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -59,7 +60,9 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class RightsType(str, Enum):
-    """Comprehensive rights types for all creator content"""
+    """
+Comprehensive rights types for all creator content"""
+
     COPYRIGHT = "copyright"
     PERFORMANCE_RIGHTS = "performance_rights"
     MECHANICAL_RIGHTS = "mechanical_rights"
@@ -79,6 +82,7 @@ class RightsType(str, Enum):
 
 class CreatorRightsCategory(str, Enum):
     """Creator-specific rights categories"""
+
     MUSICIAN_RIGHTS = "musician_rights"
     BLOGGER_RIGHTS = "blogger_rights"
     PHOTOGRAPHER_RIGHTS = "photographer_rights"
@@ -91,6 +95,7 @@ class CreatorRightsCategory(str, Enum):
 
 class RightsStatus(str, Enum):
     """Rights registration and protection status"""
+
     PENDING_REGISTRATION = "pending_registration"
     REGISTERED = "registered"
     PROTECTED = "protected"
@@ -105,6 +110,7 @@ class RightsStatus(str, Enum):
 
 class LicenseType(str, Enum):
     """Comprehensive licensing types"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -119,6 +125,7 @@ class LicenseType(str, Enum):
 
 class InfringementSeverity(str, Enum):
     """Infringement severity levels for prioritization"""
+
     CRITICAL = "critical"      # Commercial use without permission
     HIGH = "high"             # Large-scale distribution
     MEDIUM = "medium"         # Moderate exposure
@@ -150,7 +157,8 @@ class RightsRegistration:
 
 @dataclass
 class InfringementAlert:
-    """Advanced infringement detection and alert system"""
+    """
+Advanced infringement detection and alert system"""
     alert_id: str
     content_id: str
     infringing_url: str
@@ -170,7 +178,8 @@ class InfringementAlert:
 
 @dataclass
 class LicenseAgreement:
-    """Comprehensive licensing agreement management"""
+    """
+Comprehensive licensing agreement management"""
     license_id: str
     content_id: str
     licensee_info: Dict[str, Any]
@@ -188,7 +197,8 @@ class LicenseAgreement:
 
 @dataclass
 class RightsRequest:
-    """Enterprise-grade rights management request"""
+    """
+Enterprise-grade rights management request"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -428,7 +438,7 @@ class RightsManager:
             creator_type=request.creator_type,
             rights_types=request.rights_types,
             creator_rights_category=CreatorRightsCategory.MUSICIAN_RIGHTS,
-            copyright_notice=f"© {datetime.utcnow().year} {request.creator_id}. All rights reserved.",
+            copyright_notice=f"(c) {datetime.utcnow().year} {request.creator_id}. All rights reserved.",
             registration_territories=request.protection_territories,
             protection_level=request.protection_level,
             license_terms={},

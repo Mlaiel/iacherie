@@ -8,8 +8,9 @@ Provides setup utilities for the AI core module including:
 - Database initialization
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import sys
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class SetupError(BaseAIException):
-    """Exception raised during module setup"""
+    """
+Exception raised during module setup"""
     pass
 
 
@@ -353,7 +355,8 @@ class ModuleSetup:
         return self.setup_log
         
     def save_setup_log(self, log_path: str) -> bool:
-        """Save setup log to file"""
+        """
+Save setup log to file"""
         try:
             log_path = Path(log_path)
             log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -395,7 +398,8 @@ def setup_ai_core(config: Optional[Dict[str, Any]] = None,
 
 
 def quick_setup() -> bool:
-    """Quick setup with default configuration"""
+    """
+Quick setup with default configuration"""
     return setup_ai_core(
         config={"environment": "development", "debug_mode": True},
         config_path="config/ai_core.json",

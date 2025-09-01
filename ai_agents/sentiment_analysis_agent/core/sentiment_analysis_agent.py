@@ -217,7 +217,8 @@ class SentimentAnalysisAgent(BaseAIAgent):
             return SentimentType.NEUTRAL
     
     async def _generate_emotion_profile(self, sentiment_result) -> EmotionProfile:
-        """Generate emotion profile from sentiment analysis."""
+        """
+Generate emotion profile from sentiment analysis."""
         emotions = sentiment_result.emotions if hasattr(sentiment_result, 'emotions') else {}
         
         # Convert to EmotionType enum and get primary emotion
@@ -256,7 +257,8 @@ class SentimentAnalysisAgent(BaseAIAgent):
         )
     
     async def _analyze_sentiment_trends(self, content_id: str) -> SentimentTrend:
-        """Analyze sentiment trends for content."""
+        """
+Analyze sentiment trends for content."""
         # In production, this would analyze historical data
         return SentimentTrend(
             time_period="7_days",
@@ -333,7 +335,8 @@ class SentimentAnalysisAgent(BaseAIAgent):
         }
     
     async def get_real_time_sentiment_metrics(self) -> Dict[str, Any]:
-        """Get real-time sentiment metrics."""
+        """
+Get real-time sentiment metrics."""
         return {
             'current_sentiment_score': 0.74,
             'sentiment_trend_24h': 'improving',

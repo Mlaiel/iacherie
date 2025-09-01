@@ -9,7 +9,7 @@ Platform Integration → Content Preferences → Monetization Setup → Go Live
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -17,6 +17,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -59,7 +60,9 @@ logger = get_logger(__name__)
 
 
 class RegistrationStage(Enum):
-    """Registration workflow stages"""
+    """
+Registration workflow stages"""
+
     INITIATED = "initiated"
     EMAIL_SENT = "email_sent"
     EMAIL_VERIFIED = "email_verified"
@@ -74,6 +77,7 @@ class RegistrationStage(Enum):
 
 class KYCStatus(Enum):
     """KYC verification status"""
+
     NOT_STARTED = "not_started"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
@@ -84,6 +88,7 @@ class KYCStatus(Enum):
 
 class OnboardingType(Enum):
     """Onboarding workflow types"""
+
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -119,7 +124,8 @@ class RegistrationData:
 
 @dataclass
 class OnboardingProgress:
-    """Onboarding progress tracking"""
+    """
+Onboarding progress tracking"""
     user_id: str
     creator_id: str
     current_stage: RegistrationStage
@@ -135,7 +141,8 @@ class OnboardingProgress:
 
 
 class RegistrationRequest(BaseModel):
-    """Registration request validation model"""
+    """
+Registration request validation model"""
     email: EmailStr
     username: str
     display_name: str
@@ -187,7 +194,8 @@ class RegistrationRequest(BaseModel):
 
 
 class PhoneVerificationRequest(BaseModel):
-    """Phone verification request model"""
+    """
+Phone verification request model"""
     phone_number: str
     country_code: Optional[str] = None
     
@@ -598,7 +606,8 @@ class OnboardingPipeline:
         return steps
     
     async def _calculate_progress_percentage(self, progress: OnboardingProgress) -> float:
-        """Calculate onboarding progress percentage"""
+        """
+Calculate onboarding progress percentage"""
         try:
             total_weight = sum(self.stage_weights.values())
             completed_weight = sum(
@@ -632,12 +641,14 @@ class OnboardingPipeline:
         return RegistrationStage.COMPLETED
     
     async def _get_remaining_stages(self, progress: OnboardingProgress) -> List[RegistrationStage]:
-        """Get remaining onboarding stages"""
+        """
+Get remaining onboarding stages"""
         all_stages = list(RegistrationStage)
         return [stage for stage in all_stages if stage.value not in progress.completed_stages]
     
     async def _get_next_steps(self, progress: OnboardingProgress) -> List[str]:
-        """Get next steps for onboarding"""
+        """
+Get next steps for onboarding"""
         next_steps = []
         
         if progress.current_stage == RegistrationStage.PROFILE_SETUP:
@@ -678,7 +689,8 @@ class OnboardingPipeline:
         progress: OnboardingProgress,
         profile: Optional[CreatorProfile]
     ) -> bool:
-        """Check if creator is eligible for monetization"""
+        """
+Check if creator is eligible for monetization"""
         if not profile:
             return False
         
@@ -695,7 +707,8 @@ class OnboardingPipeline:
         return all(stage in progress.completed_stages for stage in required_stages)
     
     async def _cache_onboarding_progress(self, progress: OnboardingProgress) -> None:
-        """Cache onboarding progress"""
+        """
+Cache onboarding progress"""
         try:
             await self.cache.set(
                 f"onboarding_progress:{progress.creator_id}",
@@ -1089,7 +1102,8 @@ class RegistrationWorkflow:
         return OnboardingType.STANDARD
     
     async def _generate_email_verification_token(self, user_id: str) -> str:
-        """Generate email verification token"""
+        """
+Generate email verification token"""
         payload = {
             'user_id': user_id,
             'type': 'email_verification',
@@ -1098,7 +1112,8 @@ class RegistrationWorkflow:
         return jwt.encode(payload, self.settings.SECRET_KEY, algorithm='HS256')
     
     async def _validate_verification_token(self, token: str) -> Dict[str, Any]:
-        """Validate and decode verification token"""
+        """
+Validate and decode verification token"""
         try:
             payload = jwt.decode(token, self.settings.SECRET_KEY, algorithms=['HS256'])
             return payload
@@ -1124,7 +1139,8 @@ class RegistrationWorkflow:
         return jwt.encode(payload, self.settings.SECRET_KEY, algorithm='HS256')
     
     async def _store_password_hash(self, user_id: str, password_hash: bytes) -> None:
-        """Store password hash securely"""
+        """
+Store password hash securely"""
         # In production, this would be stored in a separate auth service/table
         await self.cache.set(
             f"password_hash:{user_id}",
@@ -1174,11 +1190,13 @@ class CreatorRegistrationHandler:
         self,
         registration_data: RegistrationRequest
     ) -> Dict[str, Any]:
-        """Main creator registration entry point"""
+        """
+Main creator registration entry point"""
         return await self.registration_workflow.initiate_registration(registration_data)
     
     async def verify_email(self, verification_token: str) -> Dict[str, Any]:
-        """Verify creator email"""
+        """
+Verify creator email"""
         return await self.registration_workflow.verify_email(verification_token)
     
     async def initiate_phone_verification(
@@ -1186,7 +1204,8 @@ class CreatorRegistrationHandler:
         creator_id: str,
         phone_request: PhoneVerificationRequest
     ) -> Dict[str, Any]:
-        """Initiate phone verification"""
+        """
+Initiate phone verification"""
         return await self.registration_workflow.initiate_phone_verification(
             creator_id, phone_request
         )
@@ -1196,7 +1215,8 @@ class CreatorRegistrationHandler:
         creator_id: str,
         verification_code: str
     ) -> Dict[str, Any]:
-        """Verify phone number"""
+        """
+Verify phone number"""
         return await self.registration_workflow.verify_phone(creator_id, verification_code)
     
     async def initiate_kyc(
@@ -1205,13 +1225,15 @@ class CreatorRegistrationHandler:
         verification_level: VerificationLevel,
         documents: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initiate KYC verification"""
+        """
+Initiate KYC verification"""
         return await self.kyc_processor.initiate_kyc_verification(
             creator_id, verification_level, documents
         )
     
     async def get_onboarding_status(self, creator_id: str) -> Dict[str, Any]:
-        """Get onboarding status"""
+        """
+Get onboarding status"""
         return await self.onboarding_pipeline.get_onboarding_status(creator_id)
     
     async def update_onboarding_progress(
@@ -1220,7 +1242,8 @@ class CreatorRegistrationHandler:
         stage: RegistrationStage,
         stage_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Update onboarding progress"""
+        """
+Update onboarding progress"""
         progress = await self.onboarding_pipeline.update_onboarding_progress(
             creator_id, stage, stage_data
         )

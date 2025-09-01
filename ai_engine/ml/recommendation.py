@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
+    """
+Types of recommendations"""
+
     CONTENT = "content"
     CREATOR = "creator"
     COLLABORATION = "collaboration"
@@ -54,6 +57,7 @@ class RecommendationType(Enum):
 
 class RecommendationStrategy(Enum):
     """Recommendation strategies"""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -65,6 +69,7 @@ class RecommendationStrategy(Enum):
 
 class InteractionType(Enum):
     """User interaction types"""
+
     VIEW = "view"
     LIKE = "like"
     SHARE = "share"
@@ -90,7 +95,8 @@ class UserInteraction:
 
 @dataclass
 class RecommendationItem:
-    """Item to be recommended"""
+    """
+Item to be recommended"""
     item_id: str
     item_type: str
     title: str
@@ -104,7 +110,8 @@ class RecommendationItem:
 
 @dataclass
 class UserProfile:
-    """User profile for recommendations"""
+    """
+User profile for recommendations"""
     user_id: str
     demographics: Dict[str, Any] = field(default_factory=dict)
     preferences: Dict[str, float] = field(default_factory=dict)
@@ -117,7 +124,8 @@ class UserProfile:
 
 @dataclass
 class RecommendationResult:
-    """Result from recommendation engine"""
+    """
+Result from recommendation engine"""
     recommendations: List[Tuple[str, float]]  # (item_id, score)
     strategy_used: RecommendationStrategy
     confidence_score: float
@@ -144,7 +152,8 @@ class RecommendationConfig:
 
 
 class RecommendationEngine(ABC):
-    """Abstract base class for recommendation engines"""
+    """
+Abstract base class for recommendation engines"""
     
     def __init__(self, config: RecommendationConfig):
         self.config = config
@@ -167,11 +176,13 @@ class RecommendationEngine(ABC):
         user_profile: Optional[UserProfile] = None,
         exclude_items: Set[str] = None
     ) -> RecommendationResult:
-        """Generate recommendations for a user"""
+        """
+Generate recommendations for a user"""
         pass
     
     def _calculate_diversity_score(self, recommendations: List[str]) -> float:
-        """Calculate diversity score of recommendations"""
+        """
+Calculate diversity score of recommendations"""
         if len(recommendations) < 2:
             return 1.0
         
@@ -197,7 +208,8 @@ class RecommendationEngine(ABC):
         recommendations: List[Tuple[str, float]],
         user_profile: UserProfile
     ) -> List[Tuple[str, float]]:
-        """Apply business rules to filter/rerank recommendations"""
+        """
+Apply business rules to filter/rerank recommendations"""
         filtered = []
         
         for item_id, score in recommendations:
@@ -224,7 +236,8 @@ class RecommendationEngine(ABC):
 
 
 class CollaborativeFiltering(RecommendationEngine):
-    """Collaborative filtering recommendation engine"""
+    """
+Collaborative filtering recommendation engine"""
     
     def __init__(self, config: RecommendationConfig):
         super().__init__(config)
@@ -238,7 +251,8 @@ class CollaborativeFiltering(RecommendationEngine):
         self.idx_to_item = {}
     
     async def fit(self, interactions: List[UserInteraction], items: List[RecommendationItem]):
-        """Train collaborative filtering model"""
+        """
+Train collaborative filtering model"""
         self.logger.info("Training collaborative filtering model")
         
         try:
@@ -341,7 +355,8 @@ class CollaborativeFiltering(RecommendationEngine):
         )
     
     async def _train_matrix_factorization(self):
-        """Train SVD model for matrix factorization"""
+        """
+Train SVD model for matrix factorization"""
         if self.user_item_matrix is None:
             raise ValueError("User-item matrix not built")
         
@@ -471,7 +486,8 @@ class CollaborativeFiltering(RecommendationEngine):
         user_profile: Optional[UserProfile],
         exclude_items: Set[str]
     ) -> List[Tuple[str, float]]:
-        """Generate recommendations for new user (cold start)"""
+        """
+Generate recommendations for new user (cold start)"""
         recommendations = []
         
         # Use popularity-based recommendations
@@ -504,7 +520,8 @@ class CollaborativeFiltering(RecommendationEngine):
         return recommendations
     
     async def _ensure_diversity(self, recommendations: List[Tuple[str, float]]) -> List[Tuple[str, float]]:
-        """Ensure diversity in recommendations using MMR (Maximal Marginal Relevance)"""
+        """
+Ensure diversity in recommendations using MMR (Maximal Marginal Relevance)"""
         if len(recommendations) <= 1:
             return recommendations
         
@@ -548,7 +565,8 @@ class CollaborativeFiltering(RecommendationEngine):
         return diverse_recommendations
     
     def _calculate_item_similarity(self, item1_id: str, item2_id: str) -> float:
-        """Calculate similarity between two items"""
+        """
+Calculate similarity between two items"""
         if item1_id not in self.item_to_idx or item2_id not in self.item_to_idx:
             return 0.0
         
@@ -578,7 +596,8 @@ class CollaborativeFiltering(RecommendationEngine):
 
 
 class ContentBasedFiltering(RecommendationEngine):
-    """Content-based filtering recommendation engine"""
+    """
+Content-based filtering recommendation engine"""
     
     def __init__(self, config: RecommendationConfig):
         super().__init__(config)
@@ -589,7 +608,8 @@ class ContentBasedFiltering(RecommendationEngine):
         self.knn_model = None
     
     async def fit(self, interactions: List[UserInteraction], items: List[RecommendationItem]):
-        """Train content-based filtering model"""
+        """
+Train content-based filtering model"""
         self.logger.info("Training content-based filtering model")
         
         try:
@@ -649,7 +669,8 @@ class ContentBasedFiltering(RecommendationEngine):
             self.knn_model.fit(self.content_features_matrix)
     
     async def _build_user_preferences(self, interactions: List[UserInteraction]):
-        """Build user preference profiles from interactions"""
+        """
+Build user preference profiles from interactions"""
         user_preferences = defaultdict(lambda: defaultdict(float))
         
         # Weight different interaction types
@@ -701,7 +722,8 @@ class ContentBasedFiltering(RecommendationEngine):
         user_profile: Optional[UserProfile] = None,
         exclude_items: Set[str] = None
     ) -> RecommendationResult:
-        """Generate content-based recommendations"""
+        """
+Generate content-based recommendations"""
         if not self.is_trained:
             raise ValueError("Model not trained")
         
@@ -788,7 +810,8 @@ class ContentBasedFiltering(RecommendationEngine):
         return recommendations
     
     async def _recommend_popular_content(self, exclude_items: Set[str]) -> RecommendationResult:
-        """Recommend popular content for new users"""
+        """
+Recommend popular content for new users"""
         recommendations = []
         
         # Use simple popularity metrics
@@ -871,7 +894,8 @@ class ContentBasedFiltering(RecommendationEngine):
         return diverse_recommendations
     
     def _calculate_content_similarity(self, item1_id: str, item2_id: str) -> float:
-        """Calculate content similarity between two items"""
+        """
+Calculate content similarity between two items"""
         if (item1_id not in self.item_to_idx or 
             item2_id not in self.item_to_idx or 
             self.content_features_matrix.size == 0):
@@ -889,7 +913,8 @@ class ContentBasedFiltering(RecommendationEngine):
 
 
 class HybridRecommendationEngine(RecommendationEngine):
-    """Hybrid recommendation engine combining multiple strategies"""
+    """
+Hybrid recommendation engine combining multiple strategies"""
     
     def __init__(self, config: RecommendationConfig):
         super().__init__(config)
@@ -902,7 +927,8 @@ class HybridRecommendationEngine(RecommendationEngine):
         }
     
     async def fit(self, interactions: List[UserInteraction], items: List[RecommendationItem]):
-        """Train all sub-engines"""
+        """
+Train all sub-engines"""
         self.logger.info("Training hybrid recommendation engine")
         
         try:
@@ -1049,12 +1075,14 @@ class HybridRecommendationEngine(RecommendationEngine):
         self,
         recommendations: List[Tuple[str, float]]
     ) -> List[Tuple[str, float]]:
-        """Ensure diversity in hybrid recommendations"""
+        """
+Ensure diversity in hybrid recommendations"""
         # Use the content-based engine's diversity method as it's more sophisticated
         return await self.content_engine._ensure_content_diversity(recommendations)
     
     def update_weights(self, new_weights: Dict[str, float]):
-        """Update the weights for different recommendation strategies"""
+        """
+Update the weights for different recommendation strategies"""
         total_weight = sum(new_weights.values())
         if abs(total_weight - 1.0) > 0.01:
             # Normalize weights

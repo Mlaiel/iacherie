@@ -6,11 +6,12 @@ Handles DMCA compliance, copyright protection, tax reporting,
 legal documentation, and regulatory compliance for content creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from .revenue_calculator import Currency
 
 
 class ComplianceType(Enum):
-    """Types of compliance requirements"""
+    """
+Types of compliance requirements"""
+
     DMCA = "dmca"
     COPYRIGHT = "copyright"
     TAX_REPORTING = "tax_reporting"
@@ -44,6 +47,7 @@ class ComplianceType(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING = "pending"
@@ -54,6 +58,7 @@ class ComplianceStatus(Enum):
 
 class ViolationType(Enum):
     """Types of compliance violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     DMCA_VIOLATION = "dmca_violation"
     TAX_EVASION = "tax_evasion"
@@ -65,6 +70,7 @@ class ViolationType(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions"""
+
     US = "us"
     EU = "eu"
     DE = "de"
@@ -92,7 +98,8 @@ class ComplianceRequirement:
 
 @dataclass
 class ComplianceCheck:
-    """Compliance check result"""
+    """
+Compliance check result"""
     check_id: str
     user_id: str
     content_id: Optional[str]
@@ -108,7 +115,8 @@ class ComplianceCheck:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice"""
+    """
+DMCA takedown notice"""
     notice_id: str
     content_id: str
     claimant_info: Dict[str, str]
@@ -122,7 +130,8 @@ class DMCANotice:
 
 @dataclass
 class TaxReport:
-    """Tax reporting document"""
+    """
+Tax reporting document"""
     report_id: str
     user_id: str
     tax_year: int
@@ -138,7 +147,8 @@ class TaxReport:
 
 @dataclass
 class ComplianceAudit:
-    """Compliance audit report"""
+    """
+Compliance audit report"""
     audit_id: str
     user_id: str
     audit_date: datetime
@@ -623,7 +633,8 @@ class ComplianceManager:
     
     async def _check_compliance_requirement(self, user_id: str,
                                           requirement: ComplianceRequirement) -> ComplianceCheck:
-        """Check specific compliance requirement"""
+        """
+Check specific compliance requirement"""
         # Implementation would check specific requirement
         # Placeholder implementation
         return ComplianceCheck(
@@ -656,13 +667,15 @@ class ComplianceManager:
     
     async def _get_deductible_expenses(self, user_id: str, start_date: datetime,
                                      end_date: datetime) -> List[Dict]:
-        """Get deductible business expenses"""
+        """
+Get deductible business expenses"""
         # Implementation would query expense records
         return []  # Placeholder
     
     async def _get_tax_rate(self, jurisdiction: LegalJurisdiction,
                           taxable_income: Decimal) -> Decimal:
-        """Get applicable tax rate"""
+        """
+Get applicable tax rate"""
         # Simplified tax rate calculation
         tax_rates = {
             LegalJurisdiction.DE: Decimal('0.25'),  # 25%
@@ -673,7 +686,8 @@ class ComplianceManager:
         return tax_rates.get(jurisdiction, Decimal('0.20'))
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
+        """
+Get data from cache"""
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -681,7 +695,8 @@ class ComplianceManager:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

@@ -5,12 +5,13 @@ Professional generic web crawler for content monitoring across various platforms
 Implements advanced web scraping with comprehensive content detection capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
 """
+
 import asyncio
 import re
 import json
@@ -42,7 +43,8 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 @dataclass
 class CrawlTarget:
-    """Web crawl target specification"""
+    """
+Web crawl target specification"""
     url: str
     domain: str
     max_depth: int
@@ -55,7 +57,8 @@ class CrawlTarget:
 
 @dataclass
 class WebContent:
-    """Web content structure"""
+    """
+Web content structure"""
     url: str
     title: str
     content: str
@@ -123,7 +126,8 @@ class GenericWebCrawler(PlatformCrawler):
         self.selenium_driver = None
     
     async def add_crawl_target(self, target: CrawlTarget):
-        """Add a new crawl target"""
+        """
+Add a new crawl target"""
         self.crawl_targets.append(target)
         self.logger.info(f"Added crawl target: {target.domain}")
     
@@ -578,7 +582,8 @@ class GenericWebCrawler(PlatformCrawler):
         return any(term.lower() in content_lower for term in search_terms)
     
     async def _can_fetch_url(self, url: str) -> bool:
-        """Check if URL can be fetched according to robots.txt"""
+        """
+Check if URL can be fetched according to robots.txt"""
         try:
             parsed_url = urlparse(url)
             domain = parsed_url.netloc
@@ -656,7 +661,8 @@ class GenericWebCrawler(PlatformCrawler):
         return []
     
     async def _initialize_selenium(self):
-        """Initialize Selenium WebDriver"""
+        """
+Initialize Selenium WebDriver"""
         try:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
@@ -698,7 +704,8 @@ class GenericWebCrawler(PlatformCrawler):
         }
     
     async def close(self):
-        """Cleanup crawler resources"""
+        """
+Cleanup crawler resources"""
         await self._cleanup_selenium()
         await self.cleanup_session()
         self.visited_urls.clear()

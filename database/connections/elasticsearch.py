@@ -11,6 +11,7 @@ Manages Elasticsearch connections for search, indexing, and analytics:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -23,7 +24,8 @@ from elasticsearch.exceptions import ConnectionError, NotFoundError, RequestErro
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch connection configuration"""
+    """
+Elasticsearch connection configuration"""
     hosts: List[str]
     username: Optional[str] = None
     password: Optional[str] = None
@@ -76,7 +78,8 @@ class ElasticsearchConnectionHandler:
         self.index_mappings = self._get_index_mappings()
     
     async def initialize(self) -> None:
-        """Initialize Elasticsearch connection"""
+        """
+Initialize Elasticsearch connection"""
         try:
             self.logger.info("Initializing Elasticsearch connection...")
             

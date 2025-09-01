@@ -6,7 +6,7 @@ multi-currency transactions, tax withholdings, and complex revenue sharing
 across creators, collaborators, and platforms.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Distribution
 ==============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStatus(Enum):
-    """Revenue distribution status"""
+    """
+Revenue distribution status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -52,6 +55,7 @@ class DistributionStatus(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -62,6 +66,7 @@ class PaymentMethod(Enum):
 
 class DistributionFrequency(Enum):
     """Revenue distribution frequency options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -154,7 +159,8 @@ class RevenueDistributor:
         self._fraud_detection = {}
         
     async def initialize(self):
-        """Initialize the revenue distribution system"""
+        """
+Initialize the revenue distribution system"""
         try:
             # Initialize payment processors
             for processor in self.payment_processors.values():

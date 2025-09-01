@@ -26,6 +26,7 @@ and international copyright laws.
 
 Specialization: Financial Technology Integration & Payment Systems Architecture
 """
+
 import asyncio
 import logging
 import json
@@ -58,7 +59,9 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers."""
+    """
+Supported payment providers."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -71,6 +74,7 @@ class PaymentProvider(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -83,6 +87,7 @@ class PaymentMethod(Enum):
 
 class Currency(Enum):
     """Supported currencies."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -95,6 +100,7 @@ class Currency(Enum):
 
 class ComplianceStandard(Enum):
     """Financial compliance standards."""
+
     PCI_DSS = "pci_dss"
     SOX = "sox"
     GDPR = "gdpr"
@@ -121,7 +127,8 @@ class PaymentGatewayConfig:
 
 @dataclass
 class PayoutConfig:
-    """Configuration for automated payouts."""
+    """
+Configuration for automated payouts."""
     schedule: str  # daily, weekly, monthly
     minimum_amount: Decimal
     fee_percentage: Decimal
@@ -145,7 +152,8 @@ class PaymentGatewayDeploymentManager:
     - Advanced security measures
     """
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the payment gateway deployment manager."""
+        """
+Initialize the payment gateway deployment manager."""
         self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
@@ -1059,7 +1067,8 @@ class PaymentGatewayDeploymentManager:
         return list(self.active_deployments.values())
 
     def get_transaction_logs(self, deployment_id: str) -> List[Dict[str, Any]]:
-        """Get transaction logs for a deployment."""
+        """
+Get transaction logs for a deployment."""
         return [
             log for log in self.transaction_logs
             if log['deployment_id'] == deployment_id
@@ -1068,7 +1077,8 @@ class PaymentGatewayDeploymentManager:
 
 # Factory functions for common payment gateway configurations
 def create_stripe_gateway_config() -> PaymentGatewayConfig:
-    """Create Stripe payment gateway configuration."""
+    """
+Create Stripe payment gateway configuration."""
     return PaymentGatewayConfig(
         gateway_name="stripe-main",
         provider=PaymentProvider.STRIPE,

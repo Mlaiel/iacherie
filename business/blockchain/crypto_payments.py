@@ -4,9 +4,10 @@ This module handles cryptocurrency payments including Bitcoin, Ethereum, and oth
 digital currencies as specified in the cahier des charges for content licensing,
 creator payments, and platform transactions.
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
+(c) 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class CryptoCurrency(Enum):
-    """Supported cryptocurrencies"""
+    """
+Supported cryptocurrencies"""
+
     BITCOIN = "BTC"
     ETHEREUM = "ETH"
     POLYGON = "MATIC"
@@ -45,6 +48,7 @@ class CryptoCurrency(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     CONFIRMED = "confirmed"
@@ -69,7 +73,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""
+    """
+Payment processing result"""
     payment_id: str
     tx_hash: str
     network: str
@@ -346,7 +351,8 @@ class BitcoinProcessor:
         return sender_address  # Simplified: return to sender
     
     async def _monitor_bitcoin_transaction(self, tx_hash: str, payment_id: str) -> None:
-        """Monitor Bitcoin transaction for confirmations"""
+        """
+Monitor Bitcoin transaction for confirmations"""
         try:
             while True:
                 try:
@@ -965,7 +971,8 @@ class PaymentGateway:
         self.processing_payments: Dict[str, PaymentResult] = {}
     
     async def initialize(self) -> None:
-        """Initialize payment gateway"""
+        """
+Initialize payment gateway"""
         try:
             await self.bitcoin_processor.initialize()
             await self.ethereum_processor.initialize()

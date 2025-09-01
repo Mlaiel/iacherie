@@ -24,6 +24,7 @@ Features:
 - Quality Assurance
 - Project Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class ProjectStatus(Enum):
-    """Project status enumeration"""
+    """
+Project status enumeration"""
+
     DRAFT = "draft"
     PROPOSED = "proposed"
     APPROVED = "approved"
@@ -50,6 +53,7 @@ class ProjectStatus(Enum):
 
 class TaskStatus(Enum):
     """Task status enumeration"""
+
     TODO = "todo"
     IN_PROGRESS = "in_progress"
     UNDER_REVIEW = "under_review"
@@ -59,6 +63,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -67,6 +72,7 @@ class TaskPriority(Enum):
 
 class MilestoneType(Enum):
     """Milestone type enumeration"""
+
     PLANNING = "planning"
     DEVELOPMENT = "development"
     REVIEW = "review"
@@ -96,7 +102,8 @@ class ProjectTask:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone"""
+    """
+Project milestone"""
     milestone_id: str
     title: str
     description: str
@@ -112,7 +119,8 @@ class ProjectMilestone:
 
 @dataclass
 class CollaborationProject:
-    """Core collaboration project entity"""
+    """
+Core collaboration project entity"""
     project_id: str
     title: str
     description: str
@@ -154,7 +162,8 @@ class CollaborationManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> CollaborationProject:
-        """Create a new collaboration project"""
+        """
+Create a new collaboration project"""
         try:
             logger.info(f"Creating collaboration project: {title}")
             
@@ -630,7 +639,8 @@ class CollaborationManager:
         ))
         
     async def _get_project(self, project_id: str) -> CollaborationProject:
-        """Get project by ID"""
+        """
+Get project by ID"""
         query = "SELECT * FROM collaboration_projects WHERE project_id = %s"
         result = await self.db_session.execute(query, (project_id,))
         row = result.fetchone()
@@ -674,7 +684,8 @@ class CollaborationManager:
         return project
         
     async def _validate_project_access(self, project: CollaborationProject, user_id: str) -> None:
-        """Validate user has access to project"""
+        """
+Validate user has access to project"""
         if user_id not in project.participants:
             raise ValueError("User does not have access to this project")
             
@@ -1295,7 +1306,8 @@ class CollaborationManager:
         }
         
     def _milestone_to_dict(self, milestone: ProjectMilestone) -> Dict[str, Any]:
-        """Convert ProjectMilestone to dictionary"""
+        """
+Convert ProjectMilestone to dictionary"""
         return {
             'milestone_id': milestone.milestone_id,
             'title': milestone.title,
@@ -1313,7 +1325,8 @@ class CollaborationManager:
         
     # Advanced project workflow methods
     async def _create_project_workspace(self, project: CollaborationProject) -> None:
-        """Create project workspace structure"""
+        """
+Create project workspace structure"""
         workspace_structure = {
             'folders': [
                 f"projects/{project.project_id}/documents",
@@ -1366,34 +1379,42 @@ class CollaborationManager:
         
     # Additional helper methods for comprehensive project management
     async def _calculate_schedule_adherence(self, project: CollaborationProject) -> float:
-        """Calculate schedule adherence score"""
+        """
+Calculate schedule adherence score"""
         return 0.85  # Placeholder
         
     async def _identify_critical_path(self, project: CollaborationProject) -> List[str]:
-        """Identify critical path tasks"""
+        """
+Identify critical path tasks"""
         return []  # Placeholder
         
     async def _identify_schedule_risks(self, project: CollaborationProject) -> List[Dict[str, Any]]:
-        """Identify schedule risks"""
+        """
+Identify schedule risks"""
         return []  # Placeholder
         
     async def _predict_timeline_outcomes(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Predict timeline outcomes"""
+        """
+Predict timeline outcomes"""
         return {}  # Placeholder
         
     async def _calculate_actual_spending(self, project: CollaborationProject) -> float:
-        """Calculate actual project spending"""
+        """
+Calculate actual project spending"""
         return 0.0  # Placeholder
         
     async def _forecast_spending(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Forecast future spending"""
+        """
+Forecast future spending"""
         return {}  # Placeholder
         
     async def _analyze_cost_efficiency(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze cost efficiency"""
+        """
+Analyze cost efficiency"""
         return {}  # Placeholder
         
     async def _identify_budget_risks(self, project: CollaborationProject) -> List[str]:
-        """Identify budget risks"""
+        """
+Identify budget risks"""
         return []  # Placeholder
 

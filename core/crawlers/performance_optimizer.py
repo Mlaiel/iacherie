@@ -4,6 +4,7 @@ AI-Powered Performance Analysis and Optimization System
 This module provides comprehensive performance optimization including
 system monitoring, bottleneck detection, resource optimization, and intelligent scaling.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
@@ -50,6 +53,7 @@ class MetricType(str, Enum):
 
 class OptimizationType(str, Enum):
     """Types of optimizations"""
+
     RESOURCE_SCALING = "resource_scaling"
     CACHE_OPTIMIZATION = "cache_optimization"
     QUERY_OPTIMIZATION = "query_optimization"
@@ -64,6 +68,7 @@ class OptimizationType(str, Enum):
 
 class PerformanceLevel(str, Enum):
     """Performance levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -73,6 +78,7 @@ class PerformanceLevel(str, Enum):
 
 class OptimizationPriority(str, Enum):
     """Optimization priorities"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -201,7 +207,8 @@ class SystemSnapshot(BaseModel):
 
 
 class PerformanceAnalysis(BaseModel):
-    """Performance analysis results"""
+    """
+Performance analysis results"""
     analysis_id: str
     analysis_timestamp: datetime
     analysis_period: str
@@ -229,7 +236,8 @@ class PerformanceAnalysis(BaseModel):
 
 
 class ResourceUsagePattern(BaseModel):
-    """Resource usage pattern analysis"""
+    """
+Resource usage pattern analysis"""
     pattern_id: str
     pattern_type: str
     resource_type: str
@@ -947,7 +955,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             return PerformanceLevel.EXCELLENT
 
     async def _detect_bottlenecks(self, metrics_by_type: Dict) -> List[Dict[str, Any]]:
-        """Detect performance bottlenecks"""
+        """
+Detect performance bottlenecks"""
         bottlenecks = []
         
         # CPU bottleneck detection
@@ -1023,7 +1032,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         bottlenecks: List[Dict],
         trends: List[Dict]
     ) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         # CPU optimization recommendations
@@ -1100,7 +1110,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         performance_summary: Dict,
         recommendations: List[OptimizationRecommendation]
     ) -> float:
-        """Assess improvement potential"""
+        """
+Assess improvement potential"""
         if not recommendations:
             return 0.0
         
@@ -1108,7 +1119,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return min(total_improvement, 100.0)
 
     async def _enhance_analysis_with_ai(self, analysis: PerformanceAnalysis):
-        """Enhance analysis with AI insights"""
+        """
+Enhance analysis with AI insights"""
         try:
             if not self.performance_analysis_endpoint:
                 return
@@ -1162,7 +1174,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         }
 
     async def _optimize_cpu_usage(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate CPU usage optimizations"""
+        """
+Generate CPU usage optimizations"""
         recommendations = []
         
         if 'cpu_usage' in analysis.performance_summary:
@@ -1221,17 +1234,20 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return []
 
     async def _optimize_network_performance(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate network performance optimizations"""
+        """
+Generate network performance optimizations"""
         # Simplified network optimization recommendations
         return []
 
     async def _optimize_database_performance(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate database performance optimizations"""
+        """
+Generate database performance optimizations"""
         # Simplified database optimization recommendations
         return []
 
     async def _apply_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Apply optimization recommendation"""
+        """
+Apply optimization recommendation"""
         try:
             optimization_module = self.optimization_modules.get(recommendation.optimization_type)
             if optimization_module:
@@ -1359,7 +1375,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return slope
 
     async def _get_ai_predictions(self, predictions: Dict, forecast_period: timedelta) -> Dict:
-        """Get AI-powered predictions"""
+        """
+Get AI-powered predictions"""
         try:
             if not self.prediction_service_endpoint:
                 return {}
@@ -1439,7 +1456,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return summary
 
     async def close(self):
-        """Close performance optimizer and cleanup resources"""
+        """
+Close performance optimizer and cleanup resources"""
         try:
             await self.stop_monitoring()
             await self.cache_manager.close()

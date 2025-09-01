@@ -7,6 +7,7 @@ Manages memory, CPU, network bandwidth, and storage resources efficiently.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import psutil
 import logging
@@ -28,7 +29,9 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class ResourceType(Enum):
-    """Types of system resources to manage."""
+    """
+Types of system resources to manage."""
+
     CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
@@ -40,6 +43,7 @@ class ResourceType(Enum):
 
 class Priority(Enum):
     """Task priority levels for resource allocation."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -49,7 +53,8 @@ class Priority(Enum):
 
 @dataclass
 class ResourceLimit:
-    """Resource limit configuration."""
+    """
+Resource limit configuration."""
     max_value: float
     warning_threshold: float = 0.8
     critical_threshold: float = 0.95
@@ -72,7 +77,8 @@ class ResourceRequest:
 
 @dataclass
 class ResourceAllocation:
-    """Active resource allocation."""
+    """
+Active resource allocation."""
     request: ResourceRequest
     allocated_amount: float
     start_time: datetime
@@ -84,7 +90,8 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceMetrics:
-    """System resource metrics."""
+    """
+System resource metrics."""
     timestamp: datetime
     cpu_percent: float
     memory_percent: float
@@ -106,7 +113,8 @@ class ResourceAllocationManager:
     """
     
     def __init__(self, config: Optional[ResourceConfig] = None):
-        """Initialize the resource allocation manager."""
+        """
+Initialize the resource allocation manager."""
         self.config = config or ResourceConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
@@ -144,7 +152,8 @@ class ResourceAllocationManager:
         self._initialize_resource_limits()
         
     def _initialize_resource_limits(self):
-        """Initialize default resource limits based on system capabilities."""
+        """
+Initialize default resource limits based on system capabilities."""
         try:
             # CPU limits
             cpu_count = psutil.cpu_count()
@@ -548,7 +557,8 @@ class ResourceAllocationManager:
         return current_usage
         
     async def _allocate_resource(self, request: ResourceRequest) -> Optional[str]:
-        """Allocate resource to request."""
+        """
+Allocate resource to request."""
         try:
             allocation_id = f"{request.task_id}_{int(time.time())}"
             
@@ -608,7 +618,8 @@ class ResourceAllocationManager:
         return min(request.amount, fair_share)
         
     def _priority_based_allocation(self, request: ResourceRequest) -> float:
-        """Priority-based allocation strategy."""
+        """
+Priority-based allocation strategy."""
         resource_type = request.resource_type
         limit = self.resource_limits[resource_type]
         
@@ -627,7 +638,8 @@ class ResourceAllocationManager:
         return min(request.amount, max_allocation)
         
     def _adaptive_allocation(self, request: ResourceRequest) -> float:
-        """Adaptive allocation strategy based on historical usage."""
+        """
+Adaptive allocation strategy based on historical usage."""
         # Use historical data to predict optimal allocation
         base_allocation = self._fair_share_allocation(request)
         
@@ -647,13 +659,15 @@ class ResourceAllocationManager:
         return base_allocation
         
     def _predictive_allocation(self, request: ResourceRequest) -> float:
-        """Predictive allocation strategy using ML models."""
+        """
+Predictive allocation strategy using ML models."""
         # Placeholder for ML-based prediction
         # Would use historical data to predict optimal allocation
         return self._adaptive_allocation(request)
         
     async def _process_allocation_queue(self):
-        """Process queued allocation requests."""
+        """
+Process queued allocation requests."""
         if not self.allocation_queue:
             return
             
@@ -696,7 +710,8 @@ class ResourceAllocationManager:
         return self._release_allocation(allocation_id)
         
     def _release_allocation(self, allocation_id: str) -> bool:
-        """Internal method to release allocation."""
+        """
+Internal method to release allocation."""
         try:
             if allocation_id not in self.active_allocations:
                 self.logger.warning(f"Allocation not found: {allocation_id}")
@@ -789,13 +804,15 @@ class ResourceAllocationManager:
         return stats
         
     async def get_system_metrics(self) -> Optional[ResourceMetrics]:
-        """Get latest system metrics."""
+        """
+Get latest system metrics."""
         if self.metrics_history:
             return self.metrics_history[-1]
         return None
         
     def set_resource_limit(self, resource_type: ResourceType, limit: ResourceLimit):
-        """Set resource limit."""
+        """
+Set resource limit."""
         self.resource_limits[resource_type] = limit
         self.logger.info(f"Resource limit updated: {resource_type.value} = {limit.max_value}")
         
@@ -834,7 +851,8 @@ def create_resource_allocation_manager(config: Optional[ResourceConfig] = None) 
 
 # Utility functions
 async def monitor_resource_usage(duration_seconds: int = 60) -> List[ResourceMetrics]:
-    """Monitor resource usage for specified duration."""
+    """
+Monitor resource usage for specified duration."""
     metrics = []
     manager = create_resource_allocation_manager()
     
@@ -855,7 +873,8 @@ async def monitor_resource_usage(duration_seconds: int = 60) -> List[ResourceMet
 
 
 async def optimize_resource_allocation(manager: ResourceAllocationManager) -> Dict[str, Any]:
-    """Optimize resource allocation and return statistics."""
+    """
+Optimize resource allocation and return statistics."""
     initial_stats = await manager.get_allocation_stats()
     await manager._optimize_allocations()
     final_stats = await manager.get_allocation_stats()

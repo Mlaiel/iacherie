@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class MongoDBEnvironment(Enum):
-    """MongoDB environment configurations"""
+    """
+MongoDB environment configurations"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -40,6 +43,7 @@ class MongoDBEnvironment(Enum):
 
 class MongoDBClusterType(Enum):
     """MongoDB cluster deployment types"""
+
     STANDALONE = "standalone"
     REPLICA_SET = "replica_set"
     SHARDED = "sharded"
@@ -47,6 +51,7 @@ class MongoDBClusterType(Enum):
 
 class MongoDBWorkloadType(Enum):
     """MongoDB workload optimization types"""
+
     MEDIA_STORAGE = "media_storage"
     ANALYTICS = "analytics" 
     REAL_TIME = "real_time"
@@ -86,7 +91,8 @@ class MongoDBPoolConfig:
 
 @dataclass
 class MongoDBPerformanceConfig:
-    """MongoDB performance optimization settings"""
+    """
+MongoDB performance optimization settings"""
     read_preference: str = "secondaryPreferred"
     write_concern_w: Union[int, str] = "majority"
     write_concern_j: bool = True
@@ -144,7 +150,8 @@ class MongoDBConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup MongoDB-specific logging"""
+        """
+Setup MongoDB-specific logging"""
         self.logger = logging.getLogger(f"mongodb.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
@@ -203,7 +210,8 @@ class MongoDBConfig:
         return base_config
 
     def _get_performance_config(self) -> MongoDBPerformanceConfig:
-        """Get performance configuration based on workload type"""
+        """
+Get performance configuration based on workload type"""
         configs = {
             MongoDBWorkloadType.MEDIA_STORAGE: MongoDBPerformanceConfig(
                 read_preference="secondaryPreferred",

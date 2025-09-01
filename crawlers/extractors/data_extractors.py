@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -98,7 +99,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class StructuredDataMetadata:
-    """Structured data metadata container"""
+    """
+Structured data metadata container"""
     
     format_type: Optional[str] = None
     schema_version: Optional[str] = None
@@ -115,7 +117,8 @@ class StructuredDataMetadata:
 
 
 class BaseDataExtractor(BaseExtractor):
-    """Base class for structured data extractors"""
+    """
+Base class for structured data extractors"""
     
     def __init__(self, name: str, supported_formats: Set[str]):
         super().__init__(name)
@@ -124,20 +127,24 @@ class BaseDataExtractor(BaseExtractor):
         self.chunk_size = 10000
         
     async def validate_data_format(self, content: bytes, format_hint: Optional[str] = None) -> bool:
-        """Validate if content matches expected format"""
+        """
+Validate if content matches expected format"""
         return True
     
     async def extract_schema(self, data: Any) -> Dict[str, Any]:
-        """Extract data schema information"""
+        """
+Extract data schema information"""
         return {}
     
     async def validate_data_quality(self, data: Any) -> Tuple[float, List[str]]:
-        """Validate data quality and return score with errors"""
+        """
+Validate data quality and return score with errors"""
         return 1.0, []
 
 
 class JSONExtractor(BaseDataExtractor):
-    """Advanced JSON data extractor"""
+    """
+Advanced JSON data extractor"""
     
     def __init__(self):
         super().__init__("JSONExtractor", {'.json', '.jsonl', '.ndjson'})
@@ -158,7 +165,8 @@ class JSONExtractor(BaseDataExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract JSON data and metadata"""
+        """
+Extract JSON data and metadata"""
         try:
             # Get content
             if request.source_data:
@@ -234,7 +242,8 @@ class JSONExtractor(BaseDataExtractor):
         return result
     
     async def _process_json_lines(self, data: List[Dict]) -> Dict[str, Any]:
-        """Process JSON Lines data"""
+        """
+Process JSON Lines data"""
         result = {
             'type': 'jsonl',
             'records': data,
@@ -250,7 +259,8 @@ class JSONExtractor(BaseDataExtractor):
         return result
     
     def _analyze_json_structure(self, data: Any, max_depth: int = 10) -> Dict[str, Any]:
-        """Analyze JSON structure recursively"""
+        """
+Analyze JSON structure recursively"""
         if max_depth <= 0:
             return {'type': 'max_depth_reached'}
         
@@ -293,7 +303,8 @@ class JSONExtractor(BaseDataExtractor):
             }
     
     async def _calculate_json_stats(self, data: Any) -> Dict[str, Any]:
-        """Calculate JSON statistics"""
+        """
+Calculate JSON statistics"""
         stats = {
             'total_keys': 0,
             'total_values': 0,
@@ -345,7 +356,8 @@ class JSONExtractor(BaseDataExtractor):
             return current_level
     
     def _find_common_keys(self, data: List[Dict]) -> List[str]:
-        """Find keys common to all objects in array"""
+        """
+Find keys common to all objects in array"""
         if not data:
             return []
         
@@ -361,7 +373,8 @@ class JSONExtractor(BaseDataExtractor):
         return sorted(list(common_keys))
     
     def _calculate_key_frequency(self, data: List[Dict]) -> Dict[str, int]:
-        """Calculate frequency of keys across all objects"""
+        """
+Calculate frequency of keys across all objects"""
         frequency = {}
         
         for item in data:
@@ -372,7 +385,8 @@ class JSONExtractor(BaseDataExtractor):
         return frequency
     
     async def _extract_json_metadata(self, data: Any, content: str) -> StructuredDataMetadata:
-        """Extract JSON-specific metadata"""
+        """
+Extract JSON-specific metadata"""
         stats = await self._calculate_json_stats(data)
         
         return StructuredDataMetadata(
@@ -386,7 +400,8 @@ class JSONExtractor(BaseDataExtractor):
         )
     
     def _extract_data_types(self, data: Any) -> Dict[str, str]:
-        """Extract data types from JSON structure"""
+        """
+Extract data types from JSON structure"""
         types = {}
         
         def extract_types(obj, path="root"):
@@ -428,7 +443,8 @@ class JSONExtractor(BaseDataExtractor):
         return max(0.0, score)
     
     def _check_array_consistency(self, data: List) -> bool:
-        """Check if array objects have consistent structure"""
+        """
+Check if array objects have consistent structure"""
         if not data or not isinstance(data[0], dict):
             return True
         
@@ -442,7 +458,8 @@ class JSONExtractor(BaseDataExtractor):
 
 
 class CSVExtractor(BaseDataExtractor):
-    """Advanced CSV data extractor"""
+    """
+Advanced CSV data extractor"""
     
     def __init__(self):
         super().__init__("CSVExtractor", {'.csv', '.tsv', '.tab'})
@@ -463,7 +480,8 @@ class CSVExtractor(BaseDataExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract CSV data and metadata"""
+        """
+Extract CSV data and metadata"""
         try:
             # Get content
             if request.source_data:
@@ -547,7 +565,8 @@ class CSVExtractor(BaseDataExtractor):
         return best_config if best_score > 0.7 else None
     
     def _detect_header(self, rows: List[List[str]]) -> bool:
-        """Detect if first row is header"""
+        """
+Detect if first row is header"""
         if len(rows) < 2:
             return False
         
@@ -565,7 +584,8 @@ class CSVExtractor(BaseDataExtractor):
         return header_numeric_ratio < data_numeric_ratio * 0.5
     
     def _is_numeric(self, value: str) -> bool:
-        """Check if string represents a number"""
+        """
+Check if string represents a number"""
         try:
             float(value)
             return True
@@ -573,7 +593,8 @@ class CSVExtractor(BaseDataExtractor):
             return False
     
     async def _process_csv(self, content: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process CSV data"""
+        """
+Process CSV data"""
         reader = csv.reader(
             io.StringIO(content),
             delimiter=config['delimiter'],
@@ -641,7 +662,8 @@ class CSVExtractor(BaseDataExtractor):
         return analysis
     
     def _detect_column_type(self, column_data: List[str]) -> str:
-        """Detect column data type"""
+        """
+Detect column data type"""
         non_empty = [cell.strip() for cell in column_data if cell.strip()]
         
         if not non_empty:
@@ -675,7 +697,8 @@ class CSVExtractor(BaseDataExtractor):
         return 'string'
     
     def _is_date(self, value: str) -> bool:
-        """Check if string represents a date"""
+        """
+Check if string represents a date"""
         date_patterns = [
             r'\d{4}-\d{2}-\d{2}',  # YYYY-MM-DD
             r'\d{2}/\d{2}/\d{4}',  # MM/DD/YYYY
@@ -686,7 +709,8 @@ class CSVExtractor(BaseDataExtractor):
         return any(re.match(pattern, value.strip()) for pattern in date_patterns)
     
     async def _extract_csv_metadata(self, data: Dict, content: str, config: Dict) -> StructuredDataMetadata:
-        """Extract CSV-specific metadata"""
+        """
+Extract CSV-specific metadata"""
         return StructuredDataMetadata(
             format_type='csv',
             record_count=data.get('data_rows', 0),
@@ -700,7 +724,8 @@ class CSVExtractor(BaseDataExtractor):
         )
     
     async def _calculate_csv_quality(self, data: Dict) -> float:
-        """Calculate CSV data quality score"""
+        """
+Calculate CSV data quality score"""
         score = 1.0
         
         column_analysis = data.get('column_analysis', {})
@@ -722,7 +747,8 @@ class CSVExtractor(BaseDataExtractor):
 
 
 class XMLExtractor(BaseDataExtractor):
-    """Advanced XML data extractor"""
+    """
+Advanced XML data extractor"""
     
     def __init__(self):
         super().__init__("XMLExtractor", {'.xml', '.xsl', '.xsd', '.rss', '.atom'})
@@ -742,7 +768,8 @@ class XMLExtractor(BaseDataExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract XML data and metadata"""
+        """
+Extract XML data and metadata"""
         try:
             # Get content
             if request.source_data:
@@ -811,7 +838,8 @@ class XMLExtractor(BaseDataExtractor):
         return result
     
     def _extract_namespaces(self, content: str) -> Dict[str, str]:
-        """Extract XML namespaces"""
+        """
+Extract XML namespaces"""
         namespaces = {}
         namespace_pattern = r'xmlns(?::([^=]+))?="([^"]+)"'
         
@@ -851,7 +879,8 @@ class XMLExtractor(BaseDataExtractor):
         return structure
     
     async def _calculate_xml_stats(self, root: ET.Element) -> Dict[str, Any]:
-        """Calculate XML statistics"""
+        """
+Calculate XML statistics"""
         stats = {
             'total_elements': 0,
             'total_attributes': 0,
@@ -883,7 +912,8 @@ class XMLExtractor(BaseDataExtractor):
         return stats
     
     def _xml_to_dict(self, element: ET.Element) -> Dict[str, Any]:
-        """Convert XML element to dictionary"""
+        """
+Convert XML element to dictionary"""
         result = {}
         
         # Add attributes
@@ -914,7 +944,8 @@ class XMLExtractor(BaseDataExtractor):
         return result
     
     async def _extract_feed_data(self, root: ET.Element) -> Dict[str, Any]:
-        """Extract RSS/Atom feed specific data"""
+        """
+Extract RSS/Atom feed specific data"""
         feed_data = {}
         
         if 'rss' in root.tag.lower():
@@ -958,12 +989,14 @@ class XMLExtractor(BaseDataExtractor):
         return feed_data
     
     def _get_element_text(self, parent: ET.Element, tag: str) -> Optional[str]:
-        """Get text content of child element"""
+        """
+Get text content of child element"""
         element = parent.find(tag)
         return element.text if element is not None and element.text else None
     
     async def _extract_xml_metadata(self, data: Dict, content: str) -> StructuredDataMetadata:
-        """Extract XML-specific metadata"""
+        """
+Extract XML-specific metadata"""
         stats = data.get('statistics', {})
         
         return StructuredDataMetadata(
@@ -976,7 +1009,8 @@ class XMLExtractor(BaseDataExtractor):
         )
     
     async def _calculate_xml_quality(self, data: Dict) -> float:
-        """Calculate XML data quality score"""
+        """
+Calculate XML data quality score"""
         score = 1.0
         
         stats = data.get('statistics', {})
@@ -996,7 +1030,8 @@ class XMLExtractor(BaseDataExtractor):
 
 
 class ExcelExtractor(BaseDataExtractor):
-    """Advanced Excel data extractor"""
+    """
+Advanced Excel data extractor"""
     
     def __init__(self):
         super().__init__("ExcelExtractor", {'.xlsx', '.xls', '.xlsm'})
@@ -1012,7 +1047,8 @@ class ExcelExtractor(BaseDataExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract Excel data and metadata"""
+        """
+Extract Excel data and metadata"""
         if not HAS_EXCEL:
             return ExtractionResult(
                 request_id=request.request_id,
@@ -1125,7 +1161,8 @@ class ExcelExtractor(BaseDataExtractor):
             return result
     
     async def _extract_excel_metadata(self, data: Dict) -> StructuredDataMetadata:
-        """Extract Excel-specific metadata"""
+        """
+Extract Excel-specific metadata"""
         total_rows = sum(sheet.get('shape', [0, 0])[0] for sheet in data.get('sheets', {}).values())
         total_cols = sum(sheet.get('shape', [0, 0])[1] for sheet in data.get('sheets', {}).values())
         
@@ -1139,7 +1176,8 @@ class ExcelExtractor(BaseDataExtractor):
         )
     
     async def _calculate_excel_quality(self, data: Dict) -> float:
-        """Calculate Excel data quality score"""
+        """
+Calculate Excel data quality score"""
         score = 1.0
         
         sheets = data.get('sheets', {})
@@ -1159,18 +1197,21 @@ class ExcelExtractor(BaseDataExtractor):
 
 # Data Extractor Factory
 class DataExtractorFactory:
-    """Factory for creating data extractors"""
+    """
+Factory for creating data extractors"""
     
     _extractors: List[BaseDataExtractor] = []
     
     @classmethod
     def register_extractor(cls, extractor: BaseDataExtractor):
-        """Register a data extractor"""
+        """
+Register a data extractor"""
         cls._extractors.append(extractor)
     
     @classmethod
     def get_extractor(cls, request: ExtractionRequest) -> Optional[BaseDataExtractor]:
-        """Get appropriate extractor for request"""
+        """
+Get appropriate extractor for request"""
         for extractor in cls._extractors:
             if asyncio.run(extractor.can_handle(request)):
                 return extractor
@@ -1178,7 +1219,8 @@ class DataExtractorFactory:
     
     @classmethod
     def list_supported_formats(cls) -> Set[str]:
-        """List all supported data formats"""
+        """
+List all supported data formats"""
         formats = set()
         for extractor in cls._extractors:
             formats.update(extractor.supported_formats)
@@ -1187,7 +1229,8 @@ class DataExtractorFactory:
 
 # Register default extractors
 def register_default_data_extractors():
-    """Register all default data extractors"""
+    """
+Register all default data extractors"""
     factory = DataExtractorFactory
     
     factory.register_extractor(JSONExtractor())

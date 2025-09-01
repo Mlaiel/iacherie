@@ -24,6 +24,7 @@ ENTERPRISE FEATURES:
 - A/B testing framework for payment flows
 - Compliance reporting and audit trails
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta, date
@@ -60,7 +61,9 @@ settings = get_settings()
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -72,6 +75,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Metric types for analytics"""
+
     VOLUME = "volume"
     REVENUE = "revenue"
     COUNT = "count"
@@ -110,7 +114,8 @@ class AnalyticsResult:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analytics metrics"""
+    """
+Revenue analytics metrics"""
     total_revenue: Decimal
     gross_revenue: Decimal
     net_revenue: Decimal
@@ -126,7 +131,8 @@ class RevenueMetrics:
 
 @dataclass
 class CustomerSegment:
-    """Customer segment analysis"""
+    """
+Customer segment analysis"""
     segment_id: str
     segment_name: str
     customer_count: int
@@ -140,7 +146,8 @@ class CustomerSegment:
 
 @dataclass
 class PaymentMethodPerformance:
-    """Payment method performance metrics"""
+    """
+Payment method performance metrics"""
     payment_method: PaymentMethodType
     provider: PaymentProvider
     success_rate: float
@@ -564,32 +571,38 @@ class AdvancedTransactionAnalytics:
         return {'seasonal_patterns': 'detected'}
     
     async def _analyze_growth_patterns(self, revenue_data: List[Dict]) -> Dict[str, Any]:
-        """Analyze growth patterns"""
+        """
+Analyze growth patterns"""
         # Implementation for growth pattern analysis
         return {'growth_trend': 'stable'}
     
     async def _get_customer_analytics_data(self) -> List[Dict]:
-        """Get customer data for analytics"""
+        """
+Get customer data for analytics"""
         # Implementation to fetch customer analytics data
         return []
     
     async def _predict_segment_churn(self, customers: List[Dict]) -> float:
-        """Predict churn probability for segment"""
+        """
+Predict churn probability for segment"""
         # Implementation for churn prediction
         return 0.15
     
     async def _analyze_segment_characteristics(self, customers: List[Dict]) -> Dict[str, Any]:
-        """Analyze characteristics of customer segment"""
+        """
+Analyze characteristics of customer segment"""
         # Implementation for segment characteristic analysis
         return {'characteristics': 'high_value'}
     
     async def _generate_segment_recommendations(self, characteristics: Dict, churn_prob: float) -> List[str]:
-        """Generate recommendations for segment"""
+        """
+Generate recommendations for segment"""
         # Implementation for recommendation generation
         return ['Implement loyalty program', 'Personalized offers']
     
     def _generate_segment_name(self, characteristics: Dict[str, Any]) -> str:
-        """Generate descriptive name for segment"""
+        """
+Generate descriptive name for segment"""
         # Implementation for segment naming
         return "High Value Customers"
 
@@ -604,11 +617,13 @@ class RealtimeAnalyticsManager:
         self.alert_thresholds = {}
         
     async def start_real_time_monitoring(self, metrics: List[str]):
-        """Start real-time monitoring for specified metrics"""
+        """
+Start real-time monitoring for specified metrics"""
         pass
     
     async def handle_metric_alert(self, metric: str, value: float):
-        """Handle metric alert"""
+        """
+Handle metric alert"""
         pass
 
 
@@ -618,7 +633,8 @@ class VisualizationGenerator:
     """
     
     def __init__(self):
-        """Initialize visualization generator with chart libraries and templates"""
+        """
+Initialize visualization generator with chart libraries and templates"""
         self.logger = logging.getLogger(f"{__name__}.VisualizationGenerator")
         self.chart_templates = {
             'line': 'revenue_trend_template',
@@ -639,7 +655,8 @@ class VisualizationGenerator:
         return {}
     
     async def create_trend_chart(self, data: List[Dict]) -> str:
-        """Create trend visualization"""
+        """
+Create trend visualization"""
         return ""
 
 

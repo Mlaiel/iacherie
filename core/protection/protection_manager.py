@@ -8,8 +8,9 @@ This module serves as the main coordinator for all content protection activities
 - Manages protection lifecycle for content
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Set, Callable
@@ -38,7 +39,9 @@ settings = get_settings()
 
 
 class ProtectionLevel(Enum):
-    """Protection levels for content"""
+    """
+Protection levels for content"""
+
     BASIC = "basic"           # Fingerprinting only
     STANDARD = "standard"     # Fingerprinting + basic monitoring
     PREMIUM = "premium"       # Full monitoring + violation detection
@@ -47,6 +50,7 @@ class ProtectionLevel(Enum):
 
 class ProtectionPolicy(Enum):
     """Protection policies for different content types"""
+
     STRICT = "strict"         # Zero tolerance for any similarity
     BALANCED = "balanced"     # Standard thresholds with false positive filtering
     PERMISSIVE = "permissive" # High thresholds, educational use allowed
@@ -84,7 +88,8 @@ class ProtectionConfiguration:
 
 @dataclass
 class ProtectedContent:
-    """Represents content under protection"""
+    """
+Represents content under protection"""
     content_id: str
     content_type: ContentType
     file_path: Optional[Path] = None
@@ -105,7 +110,8 @@ class ProtectedContent:
 
 @dataclass
 class ProtectionJob:
-    """Represents a protection job/task"""
+    """
+Represents a protection job/task"""
     job_id: str
     content_id: str
     job_type: str  # fingerprint, monitor, detect, etc.
@@ -144,7 +150,8 @@ class ProtectionManager:
         self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default protection configurations"""
+        """
+Initialize default protection configurations"""
         # Basic protection config
         self.protection_configs['basic'] = ProtectionConfiguration(
             protection_level=ProtectionLevel.BASIC,
@@ -187,7 +194,8 @@ class ProtectionManager:
         )
     
     async def start_protection_service(self):
-        """Start the protection service background tasks"""
+        """
+Start the protection service background tasks"""
         try:
             # Start job processor
             job_processor_task = asyncio.create_task(self._process_job_queue())
@@ -577,7 +585,8 @@ class ProtectionManager:
         return search_terms[:10]  # Limit to 10 terms
     
     def _detect_content_type(self, file_path: Path) -> ContentType:
-        """Detect content type from file extension"""
+        """
+Detect content type from file extension"""
         suffix = file_path.suffix.lower()
         
         if suffix in ['.mp3', '.wav', '.flac', '.ogg', '.m4a']:
@@ -590,7 +599,8 @@ class ProtectionManager:
             return ContentType.TEXT
     
     def _get_protection_config_for_content(self, content_id: str) -> ProtectionConfiguration:
-        """Get protection configuration for specific content"""
+        """
+Get protection configuration for specific content"""
         # This would typically be stored per content
         # For now, return standard config
         return self.protection_configs['standard']
@@ -598,7 +608,8 @@ class ProtectionManager:
     # Public API methods
     
     async def get_protection_status(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get protection status for content"""
+        """
+Get protection status for content"""
         if content_id not in self.protected_content:
             return None
         
@@ -617,7 +628,8 @@ class ProtectionManager:
         }
     
     async def stop_protection(self, content_id: str) -> bool:
-        """Stop protection for specific content"""
+        """
+Stop protection for specific content"""
         try:
             if content_id not in self.protected_content:
                 return False

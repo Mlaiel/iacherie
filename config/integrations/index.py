@@ -109,7 +109,8 @@ class IntegrationsIndex:
         self.rate_limit_manager = rate_limit_manager
     
     async def initialize(self) -> bool:
-        """Initialize all integration services."""
+        """
+Initialize all integration services."""
         try:
             # Initialize API clients
             await self._initialize_api_clients()
@@ -158,7 +159,8 @@ class IntegrationsIndex:
                 self.monitoring_manager.update_health_status(provider.value, status)
     
     async def _initialize_data_sync(self):
-        """Initialize data synchronization services."""
+        """
+Initialize data synchronization services."""
         # Create default sync jobs if none exist
         if not self.data_sync_manager.sync_jobs:
             from .data_sync_config import DataSource, SyncStrategy, SyncDirection
@@ -253,27 +255,33 @@ def get_oauth_manager():
     return integrations_index.oauth_manager
 
 def get_api_client_manager():
-    """Get API client manager instance."""
+    """
+Get API client manager instance."""
     return integrations_index.api_client_manager
 
 def get_webhook_manager():
-    """Get webhook manager instance."""
+    """
+Get webhook manager instance."""
     return integrations_index.webhook_manager
 
 def get_monitoring_manager():
-    """Get monitoring manager instance."""
+    """
+Get monitoring manager instance."""
     return integrations_index.monitoring_manager
 
 async def initialize_integrations():
-    """Initialize all integration services."""
+    """
+Initialize all integration services."""
     return await integrations_index.initialize()
 
 async def health_check_integrations():
-    """Perform health check on all integrations."""
+    """
+Perform health check on all integrations."""
     return await integrations_index.health_check()
 
 async def shutdown_integrations():
-    """Shutdown all integration services."""
+    """
+Shutdown all integration services."""
     await integrations_index.shutdown()
 
 

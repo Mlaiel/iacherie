@@ -8,8 +8,9 @@ This module provides advanced content verification capabilities:
 - Ownership verification through blockchain integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import json
@@ -43,7 +44,9 @@ settings = get_settings()
 
 
 class VerificationStatus(Enum):
-    """Status of verification process"""
+    """
+Status of verification process"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     VERIFIED_VALID = "verified_valid"
@@ -55,6 +58,7 @@ class VerificationStatus(Enum):
 
 class VerificationMethod(Enum):
     """Methods used for verification"""
+
     AUTOMATED_ML = "automated_ml"
     CROWDSOURCE = "crowdsource"
     EXPERT_REVIEW = "expert_review"
@@ -103,7 +107,8 @@ class MLVerificationModel:
         self._initialize_model()
     
     def _initialize_model(self):
-        """Initialize ML model for verification"""
+        """
+Initialize ML model for verification"""
         try:
             # Try to load pre-trained model
             model_path = Path("models/verification_model.joblib")
@@ -204,7 +209,8 @@ class MLVerificationModel:
         return np.array(features)
     
     def _extract_url_features(self, url: str) -> List[float]:
-        """Extract features from URL"""
+        """
+Extract features from URL"""
         from urllib.parse import urlparse
         
         features = []
@@ -251,7 +257,8 @@ class MLVerificationModel:
         return features
     
     async def predict_verification(self, evidence: ViolationEvidence) -> Tuple[float, Dict[str, float]]:
-        """Predict verification result using ML model"""
+        """
+Predict verification result using ML model"""
         try:
             if not self.is_trained:
                 # Return conservative estimate if model not trained
@@ -325,7 +332,8 @@ class MetadataAnalyzer:
     """Analyzer for content metadata verification"""
     
     async def analyze_metadata(self, evidence: ViolationEvidence) -> Dict[str, float]:
-        """Analyze metadata for verification clues"""
+        """
+Analyze metadata for verification clues"""
         scores = {}
         
         try:
@@ -333,7 +341,7 @@ class MetadataAnalyzer:
             
             # Copyright indicators
             copyright_indicators = [
-                'copyright', '©', '(c)', 'all rights reserved',
+                'copyright', '(c)', '(c)', 'all rights reserved',
                 'unauthorized use', 'permission required'
             ]
             
@@ -392,7 +400,8 @@ class ReverseSearchAnalyzer:
     """Analyzer using reverse image/content search"""
     
     async def perform_reverse_search(self, evidence: ViolationEvidence) -> Dict[str, Any]:
-        """Perform reverse search analysis"""
+        """
+Perform reverse search analysis"""
         results = {}
         
         try:
@@ -483,10 +492,12 @@ class ReverseSearchAnalyzer:
 
 
 class BlockchainVerifier:
-    """Blockchain-based content verification (future implementation)"""
+    """
+Blockchain-based content verification (future implementation)"""
     
     async def verify_ownership(self, evidence: ViolationEvidence) -> Dict[str, Any]:
-        """Verify content ownership using blockchain records"""
+        """
+Verify content ownership using blockchain records"""
         # Placeholder for future blockchain integration
         return {
             'blockchain_verified': False,
@@ -495,13 +506,15 @@ class BlockchainVerifier:
         }
     
     def create_content_hash(self, content_data: bytes) -> str:
-        """Create blockchain-compatible content hash"""
+        """
+Create blockchain-compatible content hash"""
         sha256_hash = hashlib.sha256(content_data).hexdigest()
         return base64.b64encode(sha256_hash.encode()).decode()
 
 
 class VerificationService:
-    """Main verification service coordinating all verification methods"""
+    """
+Main verification service coordinating all verification methods"""
     
     def __init__(self):
         self.ml_model = MLVerificationModel()
@@ -518,7 +531,8 @@ class VerificationService:
         self.human_review_threshold = 0.60
     
     async def verify_violation(self, evidence: ViolationEvidence) -> VerificationResult:
-        """Perform comprehensive verification of violation evidence"""
+        """
+Perform comprehensive verification of violation evidence"""
         verification_id = f"verify_{evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
         
         try:
@@ -697,7 +711,8 @@ class VerificationService:
         return self.verification_results.get(verification_id)
     
     def get_verification_statistics(self) -> Dict[str, Any]:
-        """Get verification system statistics"""
+        """
+Get verification system statistics"""
         total_verifications = len(self.verification_results)
         
         if total_verifications == 0:

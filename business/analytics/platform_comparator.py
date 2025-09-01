@@ -7,6 +7,7 @@ and cross-platform optimization recommendations for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -56,7 +59,8 @@ class PlatformPerformanceComparator:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize platform comparator"""
+        """
+Initialize platform comparator"""
         try:
             await self._setup_database_tables()
             logger.info("Platform Performance Comparator initialized successfully")
@@ -86,7 +90,8 @@ class PlatformPerformanceComparator:
             """)
 
     async def compare_platform_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Compare performance across all creator's platforms"""
+        """
+Compare performance across all creator's platforms"""
         try:
             # Get latest metrics for all platforms
             platform_data = await self._get_platform_metrics(creator_id)
@@ -453,7 +458,8 @@ class PlatformPerformanceComparator:
 
     def _identify_competitive_opportunities(self, creator_metrics: List[PlatformMetrics], 
                                           competitor_data: Dict[str, List[PlatformMetrics]]) -> List[Dict[str, Any]]:
-        """Identify opportunities based on competitive analysis"""
+        """
+Identify opportunities based on competitive analysis"""
         opportunities = []
         
         try:

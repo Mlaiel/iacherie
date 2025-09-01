@@ -11,6 +11,7 @@ This badge generation AI and achievement algorithms are the exclusive intellectu
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -23,7 +24,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class BadgeType(Enum):
-    """Types of badges available"""
+    """
+Types of badges available"""
+
     ACHIEVEMENT = "achievement"
     MILESTONE = "milestone"
     SKILL = "skill"
@@ -36,6 +39,7 @@ class BadgeType(Enum):
 
 class BadgeRarity(Enum):
     """Badge rarity levels"""
+
     COMMON = "common"
     UNCOMMON = "uncommon"
     RARE = "rare"
@@ -54,7 +58,8 @@ class BadgeConfig:
 
 @dataclass
 class GeneratedBadge:
-    """Generated badge instance"""
+    """
+Generated badge instance"""
     badge_id: str
     user_id: str
     title: str
@@ -112,7 +117,8 @@ class BadgeGenerator:
         }
     
     def _initialize_badge_templates(self):
-        """Initialize badge templates for different achievements"""
+        """
+Initialize badge templates for different achievements"""
         self.badge_templates = {
             # Content Creation Badges
             'content_creator_novice': {
@@ -211,7 +217,8 @@ class BadgeGenerator:
         }
     
     def _initialize_achievement_criteria(self):
-        """Initialize dynamic achievement criteria"""
+        """
+Initialize dynamic achievement criteria"""
         self.achievement_criteria = {
             'milestone_levels': {
                 'content_uploads': [1, 5, 10, 25, 50, 100, 250, 500, 1000],
@@ -338,7 +345,8 @@ class BadgeGenerator:
         return analysis
     
     def _calculate_achievement_progress(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate progress towards various achievements"""
+        """
+Calculate progress towards various achievements"""
         progress = {}
         
         # Content milestones
@@ -372,7 +380,8 @@ class BadgeGenerator:
         return progress
     
     def _calculate_milestone_progress(self, current_value: int, milestones: List[int]) -> Dict[str, Any]:
-        """Calculate progress towards milestone achievements"""
+        """
+Calculate progress towards milestone achievements"""
         achieved_milestones = [m for m in milestones if current_value >= m]
         next_milestone = None
         
@@ -391,7 +400,8 @@ class BadgeGenerator:
         }
     
     def _calculate_threshold_progress(self, current_value: float, thresholds: List[float]) -> Dict[str, Any]:
-        """Calculate progress towards threshold achievements"""
+        """
+Calculate progress towards threshold achievements"""
         achieved_thresholds = [t for t in thresholds if current_value >= t]
         next_threshold = None
         
@@ -414,7 +424,8 @@ class BadgeGenerator:
         user_id: str,
         achievement_analysis: Dict[str, Any]
     ) -> List[GeneratedBadge]:
-        """Check for new badge unlocks based on achievements"""
+        """
+Check for new badge unlocks based on achievements"""
         new_badges = []
         existing_badges = [b.badge_id.split('_')[0] for b in self.user_badge_history.get(user_id, [])]
         
@@ -456,7 +467,8 @@ class BadgeGenerator:
         return True
     
     def _get_metric_value(self, metric_name: str, achievement_analysis: Dict[str, Any]) -> float:
-        """Get current value for a specific metric"""
+        """
+Get current value for a specific metric"""
         metric_mapping = {
             'content_uploads': achievement_analysis['content_metrics']['total_uploads'],
             'avg_quality': achievement_analysis['content_metrics']['avg_quality_rating'],
@@ -480,7 +492,8 @@ class BadgeGenerator:
         user_id: str,
         achievement_analysis: Dict[str, Any]
     ) -> List[GeneratedBadge]:
-        """Generate dynamic badges based on unique achievements"""
+        """
+Generate dynamic badges based on unique achievements"""
         dynamic_badges = []
         
         # Check for unique combinations or exceptional performance
@@ -598,7 +611,8 @@ class BadgeGenerator:
         return adjusted_badges
     
     def _get_lower_rarity(self, rarity: BadgeRarity) -> BadgeRarity:
-        """Get lower rarity level for balancing"""
+        """
+Get lower rarity level for balancing"""
         rarity_hierarchy = [
             BadgeRarity.COMMON,
             BadgeRarity.UNCOMMON,
@@ -613,7 +627,8 @@ class BadgeGenerator:
         return rarity
     
     async def _generate_visual_attributes(self, badge: GeneratedBadge) -> Dict[str, Any]:
-        """Generate visual attributes for badge"""
+        """
+Generate visual attributes for badge"""
         visual_attributes = badge.visual_attributes.copy() if badge.visual_attributes else {}
         
         # Add rarity-based visual enhancements
@@ -655,7 +670,8 @@ class BadgeGenerator:
         template: Dict[str, Any],
         achievement_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI insights for badge achievement"""
+        """
+Generate AI insights for badge achievement"""
         insights = {
             'achievement_significance': self._assess_achievement_significance(template),
             'user_performance_context': self._analyze_performance_context(achievement_analysis),
@@ -666,7 +682,8 @@ class BadgeGenerator:
         return insights
     
     def _assess_achievement_significance(self, template: Dict[str, Any]) -> str:
-        """Assess the significance of the achievement"""
+        """
+Assess the significance of the achievement"""
         rarity = template['rarity']
         
         if rarity == BadgeRarity.LEGENDARY:
@@ -769,7 +786,8 @@ class BadgeGenerator:
         return next_achievements[:3]  # Return top 3 next achievements
     
     async def _get_badge_collection_stats(self, user_id: str) -> Dict[str, Any]:
-        """Get user's badge collection statistics"""
+        """
+Get user's badge collection statistics"""
         user_badges = self.user_badge_history.get(user_id, [])
         
         if not user_badges:
@@ -807,14 +825,16 @@ class BadgeGenerator:
         }
     
     def _calculate_collection_completion(self, user_badges: List[GeneratedBadge]) -> float:
-        """Calculate collection completion percentage"""
+        """
+Calculate collection completion percentage"""
         total_possible_badges = len(self.badge_templates)
         unique_badge_types = len(set(badge.badge_id.split('_')[0] for badge in user_badges))
         
         return (unique_badge_types / total_possible_badges) * 100 if total_possible_badges > 0 else 0
     
     def _serialize_badge(self, badge: GeneratedBadge) -> Dict[str, Any]:
-        """Serialize badge for JSON response"""
+        """
+Serialize badge for JSON response"""
         return {
             'badge_id': badge.badge_id,
             'title': badge.title,
@@ -829,7 +849,8 @@ class BadgeGenerator:
         }
     
     def get_system_analytics(self) -> Dict[str, Any]:
-        """Get system-wide badge analytics"""
+        """
+Get system-wide badge analytics"""
         total_users = len(self.user_badge_history)
         total_badges = sum(len(badges) for badges in self.user_badge_history.values())
         
@@ -851,7 +872,8 @@ class BadgeGenerator:
         }
     
     def _get_most_popular_badge_types(self) -> Dict[str, int]:
-        """Get most popular badge types"""
+        """
+Get most popular badge types"""
         type_counts = {}
         
         for badges in self.user_badge_history.values():

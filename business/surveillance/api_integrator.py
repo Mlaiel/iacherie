@@ -5,8 +5,9 @@ Advanced API integration system for connecting with platform APIs,
 content detection services, and third-party surveillance tools.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class APIProvider(Enum):
-    """API providers"""
+    """
+API providers"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -47,6 +50,7 @@ class APIProvider(Enum):
 
 class APIMethod(Enum):
     """API HTTP methods"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -56,6 +60,7 @@ class APIMethod(Enum):
 
 class AuthType(Enum):
     """API authentication types"""
+
     NONE = "none"
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
@@ -145,7 +150,8 @@ class APIResponse:
 
 
 class BaseAPIConnector:
-    """Base class for API connectors"""
+    """
+Base class for API connectors"""
     
     def __init__(self, provider: APIProvider, credentials: APICredentials):
         self.provider = provider
@@ -154,7 +160,8 @@ class BaseAPIConnector:
         self.rate_limiter = RateLimiter(credentials.rate_limit or 100)
     
     async def initialize(self) -> None:
-        """Initialize connector"""
+        """
+Initialize connector"""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.credentials.timeout)
         )
@@ -164,7 +171,8 @@ class BaseAPIConnector:
             await self._refresh_oauth_token()
     
     async def _refresh_oauth_token(self) -> None:
-        """Refresh OAuth2 token if needed"""
+        """
+Refresh OAuth2 token if needed"""
         if not self.credentials.refresh_token:
             return
         
@@ -341,13 +349,15 @@ class BaseAPIConnector:
 
 
 class YouTubeAPIConnector(BaseAPIConnector):
-    """YouTube Data API connector"""
+    """
+YouTube Data API connector"""
     
     def __init__(self, credentials: APICredentials):
         super().__init__(APIProvider.YOUTUBE, credentials)
     
     async def search_videos(self, query: str, max_results: int = 50) -> APIResponse:
-        """Search for videos"""
+        """
+Search for videos"""
         request = APIRequest(
             request_id=f"yt_search_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
@@ -388,7 +398,8 @@ class InstagramAPIConnector(BaseAPIConnector):
         super().__init__(APIProvider.INSTAGRAM, credentials)
     
     async def get_user_media(self, user_id: str) -> APIResponse:
-        """Get user media"""
+        """
+Get user media"""
         request = APIRequest(
             request_id=f"ig_media_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
@@ -410,7 +421,8 @@ class TikTokAPIConnector(BaseAPIConnector):
         super().__init__(APIProvider.TIKTOK, credentials)
     
     async def search_videos(self, query: str, count: int = 20) -> APIResponse:
-        """Search for videos"""
+        """
+Search for videos"""
         request = APIRequest(
             request_id=f"tt_search_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
@@ -436,7 +448,8 @@ class SpotifyAPIConnector(BaseAPIConnector):
         super().__init__(APIProvider.SPOTIFY, credentials)
     
     async def search_tracks(self, query: str, limit: int = 50) -> APIResponse:
-        """Search for tracks"""
+        """
+Search for tracks"""
         request = APIRequest(
             request_id=f"spotify_search_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
@@ -461,7 +474,8 @@ class RateLimiter:
         self.lock = asyncio.Lock()
     
     async def wait_if_needed(self):
-        """Wait if rate limit would be exceeded"""
+        """
+Wait if rate limit would be exceeded"""
         async with self.lock:
             now = time.time()
             
@@ -495,7 +509,8 @@ class APIIntegrator:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize API integrator"""
+        """
+Initialize API integrator"""
         try:
             # Load credentials from config
             await self._load_credentials()

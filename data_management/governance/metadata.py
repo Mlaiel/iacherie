@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 import hashlib
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -26,7 +27,9 @@ from ...core.exceptions import MetadataError, ValidationError
 
 
 class DataType(Enum):
-    """Data type classifications"""
+    """
+Data type classifications"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -40,6 +43,7 @@ class DataType(Enum):
 
 class SchemaType(Enum):
     """Schema definition types"""
+
     JSON_SCHEMA = "json_schema"
     AVRO = "avro"
     PROTOBUF = "protobuf"
@@ -49,6 +53,7 @@ class SchemaType(Enum):
 
 class MetadataCategory(Enum):
     """Metadata categories"""
+
     TECHNICAL = "technical"
     BUSINESS = "business"
     OPERATIONAL = "operational"
@@ -60,6 +65,7 @@ class MetadataCategory(Enum):
 
 class SensitivityLevel(Enum):
     """Data sensitivity levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -100,7 +106,8 @@ class BusinessGlossaryTerm:
 
 @dataclass
 class DataAssetMetadata:
-    """Comprehensive data asset metadata"""
+    """
+Comprehensive data asset metadata"""
     asset_id: str
     name: str
     description: str
@@ -418,7 +425,8 @@ class SchemaManager:
         data: Any,
         schema_definition: Dict[str, Any]
     ) -> Tuple[bool, List[str]]:
-        """Validate data against JSON schema"""
+        """
+Validate data against JSON schema"""
         # Simplified validation - real implementation would use jsonschema library
         errors = []
         
@@ -555,7 +563,8 @@ class BusinessGlossaryManager:
         return results
     
     async def link_related_terms(self, term_id: str, related_term_ids: List[str]) -> None:
-        """Link related business terms"""
+        """
+Link related business terms"""
         term = self.terms.get(term_id)
         if not term:
             raise MetadataError(f"Term {term_id} not found")
@@ -897,7 +906,8 @@ class DataCatalogManager:
         return list(set([k for k in keywords if k and len(k) > 2]))
     
     async def _update_search_indexes(self, asset_metadata: DataAssetMetadata) -> None:
-        """Update search indexes for an asset"""
+        """
+Update search indexes for an asset"""
         asset_id = asset_metadata.asset_id
         
         # Update keyword index
@@ -928,7 +938,8 @@ class MetadataManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the metadata manager"""
+        """
+Initialize the metadata manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         

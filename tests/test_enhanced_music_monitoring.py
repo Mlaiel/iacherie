@@ -33,11 +33,13 @@ from protection.rights_tracking.usage_monitor import (
 
 
 class TestEnhancedMusicMonitoring:
-    """Test suite for enhanced music platform monitoring"""
+    """
+Test suite for enhanced music platform monitoring"""
     
     @pytest.fixture
     def sample_platform_monitor(self):
-        """Create a sample platform monitor for testing"""
+        """
+Create a sample platform monitor for testing"""
         return PlatformMonitor(
             platform_id="spotify",
             platform_name="Spotify",

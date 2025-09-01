@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import re
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ from ..integrations.social_platforms import SocialPlatformOptimizer
 logger = logging.getLogger(__name__)
 
 class SEOMetricType(Enum):
-    """SEO metric types for analysis."""
+    """
+SEO metric types for analysis."""
+
     KEYWORD_DENSITY = "keyword_density"
     READABILITY = "readability"
     META_OPTIMIZATION = "meta_optimization"
@@ -51,6 +54,7 @@ class SEOMetricType(Enum):
 
 class ContentOptimizationType(Enum):
     """Types of content optimization."""
+
     TITLE_OPTIMIZATION = "title_optimization"
     DESCRIPTION_OPTIMIZATION = "description_optimization"
     KEYWORD_OPTIMIZATION = "keyword_optimization"
@@ -72,7 +76,8 @@ class SEOScore:
 
 @dataclass
 class KeywordAnalysis:
-    """Keyword analysis result."""
+    """
+Keyword analysis result."""
     keyword: str
     search_volume: int
     competition_level: str
@@ -83,7 +88,8 @@ class KeywordAnalysis:
 
 @dataclass
 class ContentSEOOptimization:
-    """Content SEO optimization suggestions."""
+    """
+Content SEO optimization suggestions."""
     content_id: str
     current_score: float
     optimized_title: str

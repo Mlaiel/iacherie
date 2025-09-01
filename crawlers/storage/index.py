@@ -16,7 +16,7 @@ legal action. Contact mlaiel@live.de for licensing.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2025 IA Influencer Agent Development Team. All rights reserved.
+(c) 2025 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction, 
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -28,6 +28,7 @@ Author: Senior Backend Engineering Team
 Created: August 2024
 Version: 1.0.0 Enterprise Edition
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
@@ -588,7 +589,8 @@ async def create_provider(
     provider_id: str,
     config: Dict[str, Any]
 ) -> StorageProviderInterface:
-    """Create a single storage provider instance."""
+    """
+Create a single storage provider instance."""
     return await _enterprise_factory.create_provider(
         provider_type=provider_type,
         provider_id=provider_id,
@@ -597,12 +599,14 @@ async def create_provider(
 
 
 def get_available_provider_types() -> List[str]:
-    """Get list of available storage provider types."""
+    """
+Get list of available storage provider types."""
     return list(STORAGE_PROVIDER_REGISTRY.keys())
 
 
 def get_provider_class(provider_type: str) -> Type[StorageProviderInterface]:
-    """Get storage provider class by type."""
+    """
+Get storage provider class by type."""
     if provider_type not in STORAGE_PROVIDER_REGISTRY:
         raise ValueError(f"Unknown provider type: {provider_type}")
     return STORAGE_PROVIDER_REGISTRY[provider_type]

@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class EventPriority(Enum):
-    """Event priority levels for processing queue"""
+    """
+Event priority levels for processing queue"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -43,7 +46,9 @@ class EventPriority(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status"""
+    """
+Event processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -54,6 +59,7 @@ class EventStatus(Enum):
 
 class EventCategory(Enum):
     """Analytics event categories"""
+
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     CONTENT = "content"
@@ -90,7 +96,8 @@ class EventMetadata:
 
 
 class AnalyticsEvent(BaseModel):
-    """Base analytics event model with validation"""
+    """
+Base analytics event model with validation"""
     
     event_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     event_type: str = Field(..., description="Type of analytics event")
@@ -113,7 +120,8 @@ class AnalyticsEvent(BaseModel):
     
     @validator('timestamp', pre=True)
     def validate_timestamp(cls, v):
-        """Validate and normalize timestamp"""
+        """
+Validate and normalize timestamp"""
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         elif isinstance(v, datetime):
@@ -124,7 +132,8 @@ class AnalyticsEvent(BaseModel):
     
     @validator('data')
     def validate_data(cls, v):
-        """Validate event data"""
+        """
+Validate event data"""
         if not isinstance(v, dict):
             raise ValueError("Event data must be a dictionary")
         return v
@@ -135,28 +144,33 @@ class AnalyticsEvent(BaseModel):
             self.metadata.tags.append(tag)
     
     def set_custom_attribute(self, key: str, value: Any) -> None:
-        """Set custom attribute in metadata"""
+        """
+Set custom attribute in metadata"""
         self.metadata.custom_attributes[key] = value
     
     def mark_processing(self) -> None:
-        """Mark event as processing"""
+        """
+Mark event as processing"""
         self.status = EventStatus.PROCESSING
         self.processed_at = datetime.now(timezone.utc)
     
     def mark_completed(self, duration: float = None) -> None:
-        """Mark event as completed"""
+        """
+Mark event as completed"""
         self.status = EventStatus.COMPLETED
         if duration:
             self.processing_duration = duration
     
     def mark_failed(self, error: str) -> None:
-        """Mark event as failed"""
+        """
+Mark event as failed"""
         self.status = EventStatus.FAILED
         self.error_message = error
         self.retry_count += 1
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert event to dictionary"""
+        """
+Convert event to dictionary"""
         data = self.dict()
         data['timestamp'] = self.timestamp.isoformat()
         if self.processed_at:
@@ -165,7 +179,8 @@ class AnalyticsEvent(BaseModel):
 
 
 class BaseAnalyticsEventHandler(ABC):
-    """Abstract base class for analytics event handlers"""
+    """
+Abstract base class for analytics event handlers"""
     
     def __init__(self, 
                  name: str,
@@ -309,7 +324,8 @@ class BaseAnalyticsEventHandler(ABC):
         return processed_results
     
     async def start_background_processing(self, max_workers: int = 5) -> None:
-        """Start background event processing"""
+        """
+Start background event processing"""
         for i in range(max_workers):
             processor = asyncio.create_task(self._background_processor(f"worker-{i}"))
             self._processors.append(processor)
@@ -334,7 +350,8 @@ class BaseAnalyticsEventHandler(ABC):
         await self._event_queue.put(event)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get handler metrics"""
+        """
+Get handler metrics"""
         return {
             'handler_name': self.name,
             'is_active': self.is_active,
@@ -344,7 +361,8 @@ class BaseAnalyticsEventHandler(ABC):
         }
     
     async def _background_processor(self, worker_id: str) -> None:
-        """Background event processor"""
+        """
+Background event processor"""
         logger.info(f"Background processor {worker_id} started for {self.name}")
         
         while self.is_active:
@@ -382,7 +400,8 @@ class BaseAnalyticsEventHandler(ABC):
         self.metrics['last_processed'] = datetime.now(timezone.utc).isoformat()
     
     async def _cache_result(self, event_id: str, result: Dict[str, Any]) -> None:
-        """Cache processing result"""
+        """
+Cache processing result"""
         try:
             cache_key = f"analytics_result:{self.name}:{event_id}"
             cache_value = json.dumps(result, default=str)
@@ -395,7 +414,8 @@ class EventProcessor:
     """High-level event processor that coordinates multiple handlers"""
     
     def __init__(self):
-        """Initialize event processor"""
+        """
+Initialize event processor"""
         self.handlers: Dict[str, BaseAnalyticsEventHandler] = {}
         self.routes: Dict[EventCategory, List[str]] = {}
         self.middleware: List[Callable] = []
@@ -496,7 +516,8 @@ class EventProcessor:
         return batch_results
     
     async def get_processor_metrics(self) -> Dict[str, Any]:
-        """Get processor metrics"""
+        """
+Get processor metrics"""
         handler_metrics = {}
         for name, handler in self.handlers.items():
             handler_metrics[name] = await handler.get_metrics()
@@ -509,7 +530,8 @@ class EventProcessor:
         }
     
     async def _update_processor_metrics(self, event: AnalyticsEvent, processing_time: float) -> None:
-        """Update processor metrics"""
+        """
+Update processor metrics"""
         self.metrics['total_events'] += 1
         self.metrics['total_processing_time'] += processing_time
         
@@ -531,7 +553,8 @@ class EventProcessor:
 def create_engagement_event(user_id: str, content_id: str, 
                           engagement_type: str, platform: str,
                           additional_data: Dict[str, Any] = None) -> AnalyticsEvent:
-    """Create engagement analytics event"""
+    """
+Create engagement analytics event"""
     data = {
         'user_id': user_id,
         'content_id': content_id,
@@ -551,7 +574,8 @@ def create_engagement_event(user_id: str, content_id: str,
 def create_revenue_event(user_id: str, amount: float, currency: str,
                         transaction_type: str, platform: str,
                         additional_data: Dict[str, Any] = None) -> AnalyticsEvent:
-    """Create revenue analytics event"""
+    """
+Create revenue analytics event"""
     data = {
         'user_id': user_id,
         'amount': amount,
@@ -572,7 +596,8 @@ def create_revenue_event(user_id: str, amount: float, currency: str,
 def create_content_event(content_id: str, creator_id: str, 
                         content_type: str, platform: str,
                         additional_data: Dict[str, Any] = None) -> AnalyticsEvent:
-    """Create content analytics event"""
+    """
+Create content analytics event"""
     data = {
         'content_id': content_id,
         'creator_id': creator_id,
@@ -592,7 +617,8 @@ def create_content_event(content_id: str, creator_id: str,
 def create_protection_event(content_id: str, violation_type: str,
                           detected_platform: str, confidence_score: float,
                           additional_data: Dict[str, Any] = None) -> AnalyticsEvent:
-    """Create protection analytics event"""
+    """
+Create protection analytics event"""
     data = {
         'content_id': content_id,
         'violation_type': violation_type,

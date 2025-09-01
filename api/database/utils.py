@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import asyncio
 import json
 import hashlib
@@ -42,7 +43,9 @@ settings = get_settings()
 
 
 class IndexType(Enum):
-    """Database index types"""
+    """
+Database index types"""
+
     BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
@@ -53,6 +56,7 @@ class IndexType(Enum):
 
 class TableAnalysisType(Enum):
     """Table analysis types"""
+
     SIZE_ANALYSIS = "size"
     PERFORMANCE_ANALYSIS = "performance"
     CONSTRAINT_ANALYSIS = "constraints"
@@ -77,7 +81,8 @@ class TableInfo:
 
 @dataclass
 class IndexInfo:
-    """Index information structure"""
+    """
+Index information structure"""
     name: str
     table_name: str
     columns: List[str]
@@ -90,7 +95,8 @@ class IndexInfo:
 
 @dataclass
 class PerformanceMetrics:
-    """Database performance metrics"""
+    """
+Database performance metrics"""
     slow_queries: List[Dict[str, Any]]
     table_stats: List[Dict[str, Any]]
     index_usage: List[Dict[str, Any]]
@@ -114,13 +120,15 @@ class DatabaseUtils:
         self.metadata = MetaData()
         
     async def initialize(self):
-        """Initialize database utilities"""
+        """
+Initialize database utilities"""
         self.db_connection = await DatabaseConnection.get_instance()
         self.session_manager = SessionManager()
         await self.session_manager.initialize()
     
     async def get_database_version(self) -> Dict[str, Any]:
-        """Get database version information"""
+        """
+Get database version information"""
         try:
             async with self.session_manager.get_async_session() as session:
                 version_query = text("SELECT version()")
@@ -430,13 +438,15 @@ class TableUtils:
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize table utilities"""
+        """
+Initialize table utilities"""
         await self.db_utils.initialize()
     
     async def find_duplicate_rows(self, table_name: str, 
                                 columns: Optional[List[str]] = None,
                                 limit: int = 100) -> Dict[str, Any]:
-        """Find duplicate rows in a table"""
+        """
+Find duplicate rows in a table"""
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if columns:
@@ -670,11 +680,13 @@ class IndexUtils:
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize index utilities"""
+        """
+Initialize index utilities"""
         await self.db_utils.initialize()
     
     async def get_index_usage_stats(self, table_name: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get index usage statistics"""
+        """
+Get index usage statistics"""
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if table_name:
@@ -939,11 +951,13 @@ class ConstraintUtils:
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize constraint utilities"""
+        """
+Initialize constraint utilities"""
         await self.db_utils.initialize()
     
     async def validate_all_constraints(self, table_name: Optional[str] = None) -> Dict[str, Any]:
-        """Validate all constraints in database or specific table"""
+        """
+Validate all constraints in database or specific table"""
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if table_name:
@@ -1091,11 +1105,13 @@ class PerformanceAnalyzer:
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize performance analyzer"""
+        """
+Initialize performance analyzer"""
         await self.db_utils.initialize()
     
     async def get_slow_queries(self, limit: int = 50, min_duration_ms: int = 1000) -> List[Dict[str, Any]]:
-        """Get slow queries from pg_stat_statements"""
+        """
+Get slow queries from pg_stat_statements"""
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Check if pg_stat_statements extension is available

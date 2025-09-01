@@ -19,6 +19,7 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ from .user_agent_rotator import UserAgentRotator
 
 
 class AutomationMode(Enum):
-    """Automation execution modes"""
+    """
+Automation execution modes"""
+
     STEALTH = "stealth"
     PERFORMANCE = "performance"
     BALANCED = "balanced"
@@ -48,6 +51,7 @@ class AutomationMode(Enum):
 
 class TaskPriority(Enum):
     """Task execution priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -56,7 +60,9 @@ class TaskPriority(Enum):
 
 
 class AutomationStatus(Enum):
-    """Automation controller status"""
+    """
+Automation controller status"""
+
     IDLE = "idle"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -88,7 +94,8 @@ class AutomationTask:
 
 @dataclass
 class AutomationMetrics:
-    """Automation performance metrics"""
+    """
+Automation performance metrics"""
     tasks_total: int = 0
     tasks_completed: int = 0
     tasks_failed: int = 0
@@ -153,7 +160,8 @@ class AutomationController:
         self.logger = logging.getLogger(__name__)
         
     async def initialize(self) -> bool:
-        """Initialize automation controller and all managers"""
+        """
+Initialize automation controller and all managers"""
         try:
             self.status = AutomationStatus.INITIALIZING
             self.logger.info("Initializing automation controller...")
@@ -303,7 +311,8 @@ class AutomationController:
         return self.metrics
     
     def get_task_status(self, task_id: str) -> Optional[AutomationTask]:
-        """Get status of a specific task"""
+        """
+Get status of a specific task"""
         # Check active tasks
         if task_id in self.active_tasks:
             return self.active_tasks[task_id]
@@ -321,7 +330,8 @@ class AutomationController:
         return None
     
     async def _execution_loop(self):
-        """Main execution loop for processing tasks"""
+        """
+Main execution loop for processing tasks"""
         while not self.shutdown_event.is_set():
             try:
                 if self.status == AutomationStatus.PAUSED:
@@ -412,7 +422,8 @@ async def create_automation_controller(
     mode: AutomationMode = AutomationMode.BALANCED,
     **kwargs
 ) -> AutomationController:
-    """Create and initialize an automation controller"""
+    """
+Create and initialize an automation controller"""
     controller = AutomationController(mode=mode, **kwargs)
     await controller.initialize()
     return controller
@@ -423,7 +434,8 @@ async def automation_context(
     mode: AutomationMode = AutomationMode.BALANCED,
     **kwargs
 ):
-    """Context manager for automation controller"""
+    """
+Context manager for automation controller"""
     controller = await create_automation_controller(mode=mode, **kwargs)
     try:
         yield controller

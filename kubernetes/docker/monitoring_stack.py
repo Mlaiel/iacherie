@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional monitoring stack Docker configuration for comprehensive
 observability, metrics collection, and alerting systems.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonitoringStackDockerConfig:
-    """Enterprise Monitoring Stack Docker configuration"""
+    """
+Enterprise Monitoring Stack Docker configuration"""
     
     # Prometheus Configuration
     prometheus_image: str = "prom/prometheus:v2.48.0"
@@ -179,7 +181,8 @@ scrape_configs:
     scrape_interval: 30s
 """
     def generate_alert_rules(self) -> str:
-        """Generate Prometheus alert rules"""
+        """
+Generate Prometheus alert rules"""
         return """# IA-Influencer Alert Rules
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -313,7 +316,8 @@ groups:
           description: "{{ $value }} revenue tracking errors per second"
 """
     def generate_docker_compose_services(self) -> Dict[str, Any]:
-        """Generate docker-compose services for monitoring stack"""
+        """
+Generate docker-compose services for monitoring stack"""
         services = {
             # Prometheus
             "prometheus": {

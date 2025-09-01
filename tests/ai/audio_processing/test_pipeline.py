@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -22,8 +23,9 @@ Comprehensive testing for audio processing pipelines including:
 - Error handling and recovery
 
 Created by Expert Team: Pipeline Architect + DevOps Engineer + Backend Senior
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -75,7 +77,8 @@ class TestPipelineStage:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
@@ -222,7 +225,8 @@ class TestAudioPipeline:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         
@@ -432,11 +436,13 @@ class TestDataFlowManager:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_dataflow_initialization(self):
-        """Test DataFlowManager initialization"""
+        """
+Test DataFlowManager initialization"""
         manager = DataFlowManager()
         
         assert manager is not None
@@ -444,7 +450,8 @@ class TestDataFlowManager:
         assert hasattr(manager, 'transformation_rules')
     
     def test_register_transformation(self):
-        """Test registering data transformations"""
+        """
+Test registering data transformations"""
         manager = DataFlowManager()
         
         # Register transformation from numpy array to list
@@ -465,7 +472,8 @@ class TestDataFlowManager:
         assert result == [1, 2, 3, 4, 5]
     
     def test_automatic_type_conversion(self):
-        """Test automatic type conversion"""
+        """
+Test automatic type conversion"""
         manager = DataFlowManager()
         
         # Test built-in conversions
@@ -506,7 +514,8 @@ class TestDataFlowManager:
         assert manager.validate_data(invalid_array) is False
     
     def test_memory_efficient_transfer(self):
-        """Test memory-efficient data transfer"""
+        """
+Test memory-efficient data transfer"""
         manager = DataFlowManager()
         
         # Create large data
@@ -539,11 +548,13 @@ class TestPipelineOptimizer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_optimizer_initialization(self):
-        """Test PipelineOptimizer initialization"""
+        """
+Test PipelineOptimizer initialization"""
         optimizer = PipelineOptimizer()
         
         assert optimizer is not None
@@ -551,7 +562,8 @@ class TestPipelineOptimizer:
         assert hasattr(optimizer, 'performance_history')
     
     def test_stage_dependency_analysis(self):
-        """Test stage dependency analysis"""
+        """
+Test stage dependency analysis"""
         optimizer = PipelineOptimizer()
         
         # Create stages with dependencies
@@ -686,11 +698,13 @@ class TestErrorRecoveryManager:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_error_recovery_initialization(self):
-        """Test ErrorRecoveryManager initialization"""
+        """
+Test ErrorRecoveryManager initialization"""
         manager = ErrorRecoveryManager()
         
         assert manager is not None
@@ -699,7 +713,8 @@ class TestErrorRecoveryManager:
         assert hasattr(manager, 'circuit_breakers')
     
     def test_retry_strategy(self):
-        """Test retry strategy for transient errors"""
+        """
+Test retry strategy for transient errors"""
         manager = ErrorRecoveryManager()
         
         # Create a function that fails twice then succeeds
@@ -821,7 +836,8 @@ class TestPipelineConfig:
     """Test PipelineConfig data structure"""
     
     def test_config_creation(self):
-        """Test PipelineConfig creation"""
+        """
+Test PipelineConfig creation"""
         config = PipelineConfig(
             name="test_pipeline",
             parallel_execution=True,
@@ -864,7 +880,8 @@ class TestPipelineIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         

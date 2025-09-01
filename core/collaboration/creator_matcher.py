@@ -28,6 +28,7 @@ Features:
 - Real-time market trend analysis
 - Advanced ML recommendation algorithms
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Creator type enumeration"""
+    """
+Creator type enumeration"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger" 
     PHOTOGRAPHER = "photographer"
@@ -116,6 +119,7 @@ class GenreType(Enum):
 
 class CollaborationType(Enum):
     """Collaboration type enumeration"""
+
     CREATIVE_PROJECT = "creative_project"
     CONTENT_CREATION = "content_creation"
     MUSIC_COLLABORATION = "music_collaboration"
@@ -139,6 +143,7 @@ class CollaborationType(Enum):
 
 class PlatformType(Enum):
     """Platform enumeration"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -161,6 +166,7 @@ class PlatformType(Enum):
 
 class MatchingPriority(Enum):
     """Matching priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -169,6 +175,7 @@ class MatchingPriority(Enum):
 
 class MatchingDimension(Enum):
     """Matching dimension types"""
+
     GENRE_STYLE = "genre_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
@@ -208,7 +215,8 @@ class MatchingCriteria:
     
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
+    """
+Comprehensive creator profile"""
     creator_id: str
     creator_type: CreatorType
     username: str
@@ -232,7 +240,8 @@ class CreatorProfile:
     created_at: datetime
     
 class MatchingResult:
-    """Advanced result of creator matching process"""
+    """
+Advanced result of creator matching process"""
     
     def __init__(
         self,
@@ -263,7 +272,8 @@ class MatchingResult:
         self.match_id = str(uuid.uuid4())
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'match_id': self.match_id,
             'creator_id': self.creator_id,
@@ -281,7 +291,8 @@ class MatchingResult:
         }
 
 class CreatorMatcher:
-    """Advanced AI-powered creator matching system"""
+    """
+Advanced AI-powered creator matching system"""
     
     def __init__(self, db_session, vector_store, ml_models, cache_service, analytics_tracker):
         self.db_session = db_session
@@ -311,7 +322,8 @@ class CreatorMatcher:
         limit: int = 20,
         use_cache: bool = True
     ) -> List[MatchingResult]:
-        """Find compatible creators based on advanced criteria"""
+        """
+Find compatible creators based on advanced criteria"""
         try:
             logger.info(f"Finding matches for creator {creator_id} with criteria: {criteria}")
             
@@ -657,7 +669,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate audience overlap and compatibility"""
+        """
+Calculate audience overlap and compatibility"""
         demo1 = creator1.audience_demographics
         demo2 = creator2.audience_demographics
         
@@ -694,7 +707,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate skill complementarity"""
+        """
+Calculate skill complementarity"""
         skills1 = set(creator1.skills)
         skills2 = set(creator2.skills)
         
@@ -723,7 +737,8 @@ class CreatorMatcher:
         matches: List[MatchingResult],
         criteria: MatchingCriteria
     ) -> List[MatchingResult]:
-        """Apply machine learning ranking to improve match quality"""
+        """
+Apply machine learning ranking to improve match quality"""
         try:
             if not matches:
                 return matches
@@ -761,25 +776,30 @@ class CreatorMatcher:
         return 0.5
         
     async def _calculate_complementary_genre_bonus(self, genres1: List[str], genres2: List[str]) -> float:
-        """Calculate bonus for complementary genres"""
+        """
+Calculate bonus for complementary genres"""
         # Implementation would check for complementary genre pairs
         return 0.2
         
     async def _calculate_age_overlap(self, age_dist1: Dict, age_dist2: Dict) -> float:
-        """Calculate age distribution overlap"""
+        """
+Calculate age distribution overlap"""
         # Implementation would calculate distribution similarity
         return 0.7
         
     async def _calculate_gender_overlap(self, gender_dist1: Dict, gender_dist2: Dict) -> float:
-        """Calculate gender distribution overlap"""
+        """
+Calculate gender distribution overlap"""
         return 0.6
         
     async def _calculate_location_overlap(self, loc_dist1: Dict, loc_dist2: Dict) -> float:
-        """Calculate location distribution overlap"""
+        """
+Calculate location distribution overlap"""
         return 0.5
         
     async def _calculate_interest_overlap(self, interests1: List[str], interests2: List[str]) -> float:
-        """Calculate interest overlap"""
+        """
+Calculate interest overlap"""
         if not interests1 or not interests2:
             return 0.5
         common = set(interests1) & set(interests2)
@@ -787,16 +807,19 @@ class CreatorMatcher:
         return len(common) / len(total) if total else 0
         
     async def _find_complementary_skills(self, skills1: set, skills2: set) -> List[Tuple[str, str]]:
-        """Find complementary skill pairs"""
+        """
+Find complementary skill pairs"""
         # Implementation would identify complementary skills
         return []
         
     async def _calculate_platform_alignment(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate platform presence alignment"""
+        """
+Calculate platform presence alignment"""
         return 0.6
         
     async def _calculate_content_quality_match(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate content quality compatibility"""
+        """
+Calculate content quality compatibility"""
         quality1 = creator1.quality_scores.get('overall_score', 0.5)
         quality2 = creator2.quality_scores.get('overall_score', 0.5)
         # Similar quality levels are better for collaboration
@@ -809,7 +832,8 @@ class CreatorMatcher:
         creator2: CreatorProfile, 
         max_distance: Optional[float]
     ) -> float:
-        """Calculate geographic proximity score"""
+        """
+Calculate geographic proximity score"""
         if not creator1.location or not creator2.location:
             return 0.5
             
@@ -885,7 +909,8 @@ class CreatorMatcher:
         return {}
         
     async def _row_to_creator_profile(self, row: Dict[str, Any]) -> Optional[CreatorProfile]:
-        """Convert database row to CreatorProfile"""
+        """
+Convert database row to CreatorProfile"""
         try:
             return CreatorProfile(
                 creator_id=row['id'],
@@ -922,6 +947,7 @@ class CreatorMatcher:
 
 class MatchingDimension(Enum):
     """Matching dimension types"""
+
     GENRE_STYLE = "genre_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
@@ -946,7 +972,8 @@ class MatchingCriteria:
     exclude_previous_collaborators: bool = False
     
 class MatchingResult:
-    """Result of creator matching process"""
+    """
+Result of creator matching process"""
     
     def __init__(
         self,
@@ -970,7 +997,8 @@ class MatchingResult:
         self.timestamp = datetime.utcnow()
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'creator_id': self.creator_id,
             'matched_creator_id': self.matched_creator_id,
@@ -984,7 +1012,8 @@ class MatchingResult:
         }
 
 class CreatorMatcher:
-    """AI-powered creator matching system"""
+    """
+AI-powered creator matching system"""
     
     def __init__(self, db_session, vector_store, ml_models):
         self.db_session = db_session
@@ -998,7 +1027,8 @@ class CreatorMatcher:
         criteria: MatchingCriteria,
         limit: int = 20
     ) -> List[MatchingResult]:
-        """Find compatible creators based on criteria"""
+        """
+Find compatible creators based on criteria"""
         try:
             logger.info(f"Finding matches for creator {creator_id}")
             
@@ -1374,7 +1404,8 @@ class CreatorMatcher:
         location1: Dict[str, Any],
         location2: Dict[str, Any]
     ) -> float:
-        """Calculate geographic proximity score"""
+        """
+Calculate geographic proximity score"""
         try:
             if not all(k in location1 for k in ['latitude', 'longitude']) or \
                not all(k in location2 for k in ['latitude', 'longitude']):
@@ -1427,7 +1458,8 @@ class CreatorMatcher:
         skills1: List[str],
         skills2: List[str]
     ) -> float:
-        """Calculate skill complementarity score"""
+        """
+Calculate skill complementarity score"""
         try:
             if not skills1 or not skills2:
                 return 0.3
@@ -1470,7 +1502,8 @@ class CreatorMatcher:
         skill2: str, 
         complementary_pairs: Dict[str, List[str]]
     ) -> bool:
-        """Check if two skills are complementary"""
+        """
+Check if two skills are complementary"""
         return (
             skill2 in complementary_pairs.get(skill1, []) or
             skill1 in complementary_pairs.get(skill2, [])
@@ -1481,7 +1514,8 @@ class CreatorMatcher:
         schedule1: Dict[str, Any],
         schedule2: Dict[str, Any]
     ) -> float:
-        """Calculate schedule compatibility score"""
+        """
+Calculate schedule compatibility score"""
         try:
             if not schedule1 or not schedule2:
                 return 0.5

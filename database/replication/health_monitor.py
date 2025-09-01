@@ -7,6 +7,7 @@ for the content creator platform's multi-database infrastructure.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Callable
@@ -18,7 +19,9 @@ import json
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
+    """
+Health status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -27,6 +30,7 @@ class HealthStatus(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -47,7 +51,8 @@ class HealthMetric:
 
 @dataclass
 class HealthAlert:
-    """Health alert record"""
+    """
+Health alert record"""
     id: str
     severity: AlertSeverity
     component: str
@@ -63,7 +68,8 @@ class HealthAlert:
 
 @dataclass
 class ComponentHealth:
-    """Component health status"""
+    """
+Component health status"""
     component_name: str
     status: HealthStatus
     last_check: datetime
@@ -83,7 +89,8 @@ class ReplicationHealthMonitor:
     """
     
     def __init__(self, config):
-        """Initialize health monitor"""
+        """
+Initialize health monitor"""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationHealthMonitor")
         

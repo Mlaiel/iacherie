@@ -5,7 +5,7 @@ Advanced data quality assessment and validation system for the IA Influencer Age
 providing comprehensive quality metrics, scoring, and improvement recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -15,6 +15,7 @@ Features:
 - Quality scoring and benchmarking
 - Automated quality improvement suggestions
 """
+
 import re
 import math
 import statistics
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     COMPLETENESS = "completeness"
     CONSISTENCY = "consistency"
     ACCURACY = "accuracy"
@@ -43,6 +46,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Quality level classifications"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -89,12 +93,14 @@ class QualityProfile:
     
     @property
     def dimension_scores(self) -> Dict[str, float]:
-        """Get scores by dimension"""
+        """
+Get scores by dimension"""
         return {dim.value: metric.score for dim, metric in self.metrics.items()}
     
     @property
     def critical_issues(self) -> List[str]:
-        """Get all critical issues across metrics"""
+        """
+Get all critical issues across metrics"""
         issues = []
         for metric in self.metrics.values():
             if metric.score < 0.5:  # Critical threshold
@@ -103,7 +109,8 @@ class QualityProfile:
     
     @property
     def improvement_suggestions(self) -> List[str]:
-        """Get all improvement suggestions"""
+        """
+Get all improvement suggestions"""
         suggestions = []
         for metric in self.metrics.values():
             suggestions.extend(metric.suggestions)
@@ -852,7 +859,8 @@ class DataQualityValidator:
             profile.overall_score = 0.0
     
     def _calculate_statistics(self, profile: QualityProfile) -> None:
-        """Calculate quality statistics"""
+        """
+Calculate quality statistics"""
         profile.total_metrics = len(profile.metrics)
         profile.passed_metrics = sum(
             1 for metric in profile.metrics.values() 
@@ -865,7 +873,8 @@ class DataQualityValidator:
         profile.improvement_potential = max_possible_score - profile.overall_score
     
     def _determine_quality_level(self, profile: QualityProfile) -> None:
-        """Determine overall quality level"""
+        """
+Determine overall quality level"""
         score = profile.overall_score
         
         if score >= 0.9:
@@ -880,7 +889,8 @@ class DataQualityValidator:
             profile.quality_level = QualityLevel.UNACCEPTABLE
     
     def _apply_benchmarking(self, profile: QualityProfile, benchmark_name: str) -> None:
-        """Apply benchmarking against reference dataset"""
+        """
+Apply benchmarking against reference dataset"""
         benchmark_scores = self.benchmark_data.get(benchmark_name, {})
         
         for dimension, metric in profile.metrics.items():
@@ -890,7 +900,8 @@ class DataQualityValidator:
                 metric.threshold_passed = metric.score >= benchmark_score
     
     def _generate_cache_key(self, data: Any, content_type: str) -> str:
-        """Generate cache key for quality assessment"""
+        """
+Generate cache key for quality assessment"""
         import hashlib
         data_hash = hashlib.md5(str(data).encode()).hexdigest()[:16]
         return f"{content_type}_{data_hash}"
@@ -944,7 +955,8 @@ class DataQualityValidator:
         return passed_checks / total_checks if total_checks > 0 else 1.0
     
     def _check_accuracy_patterns(self, data_list: List[Dict[str, Any]], metric: QualityMetric) -> None:
-        """Check for known accuracy patterns and anomalies"""
+        """
+Check for known accuracy patterns and anomalies"""
         
         # Check for suspicious patterns
         for record in data_list:
@@ -988,7 +1000,8 @@ class DataQualityValidator:
         return True  # Unknown constraint type, pass by default
     
     def _check_relationship_rule(self, record: Dict[str, Any], rule: Dict[str, Any]) -> bool:
-        """Check relationship rule between fields"""
+        """
+Check relationship rule between fields"""
         rule_type = rule.get('type')
         
         if rule_type == 'field_dependency':
@@ -1019,7 +1032,8 @@ class DataQualityValidator:
         return True
     
     def _check_logical_constraint(self, record: Dict[str, Any], constraint: Dict[str, Any]) -> bool:
-        """Check logical constraint"""
+        """
+Check logical constraint"""
         constraint_function = constraint.get('function')
         
         if callable(constraint_function):
@@ -1031,7 +1045,8 @@ class DataQualityValidator:
         return True
     
     def _default_thresholds(self) -> Dict[str, float]:
-        """Default quality thresholds for each dimension"""
+        """
+Default quality thresholds for each dimension"""
         return {
             'completeness': 0.8,
             'consistency': 0.7,
@@ -1044,7 +1059,8 @@ class DataQualityValidator:
         }
     
     def _load_quality_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load quality rules for different content types"""
+        """
+Load quality rules for different content types"""
         return {
             'user_profile': {
                 'completeness': {
@@ -1105,7 +1121,8 @@ class DataQualityValidator:
         }
     
     def _load_scoring_weights(self) -> Dict[str, float]:
-        """Load scoring weights for quality dimensions"""
+        """
+Load scoring weights for quality dimensions"""
         return {
             'completeness': 1.2,
             'consistency': 1.0,
@@ -1118,7 +1135,8 @@ class DataQualityValidator:
         }
     
     def add_benchmark_data(self, benchmark_name: str, dimension_scores: Dict[str, float]) -> None:
-        """Add benchmark data for comparison"""
+        """
+Add benchmark data for comparison"""
         self.benchmark_data[benchmark_name] = dimension_scores
         logger.debug(f"Added benchmark data: {benchmark_name}")
     

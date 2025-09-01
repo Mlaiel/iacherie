@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class ProxyType(Enum):
-    """Types of proxy connections."""
+    """
+Types of proxy connections."""
+
     HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
@@ -35,6 +38,7 @@ class ProxyType(Enum):
 
 class UserAgentType(Enum):
     """Types of user agents."""
+
     CHROME = "chrome"
     FIREFOX = "firefox"
     SAFARI = "safari"
@@ -46,6 +50,7 @@ class UserAgentType(Enum):
 
 class RateLimitStrategy(Enum):
     """Rate limiting strategies."""
+
     FIXED = "fixed"
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
@@ -55,6 +60,7 @@ class RateLimitStrategy(Enum):
 
 class LoadBalancingStrategy(Enum):
     """Load balancing strategies."""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -64,6 +70,7 @@ class LoadBalancingStrategy(Enum):
 
 class CacheStrategy(Enum):
     """Caching strategies."""
+
     NO_CACHE = "no_cache"
     MEMORY_ONLY = "memory_only"
     DISK_ONLY = "disk_only"
@@ -92,7 +99,8 @@ class ProxyServerConfig:
 
 @dataclass
 class ProxyRotationConfig:
-    """Configuration for proxy rotation."""
+    """
+Configuration for proxy rotation."""
     enabled: bool = True
     rotation_strategy: str = "round_robin"  # round_robin, random, least_used
     rotation_interval_requests: int = 100
@@ -180,7 +188,8 @@ class RateLimitConfig:
 
 @dataclass
 class ConnectionConfig:
-    """Configuration for network connections."""
+    """
+Configuration for network connections."""
     # Timeouts
     connect_timeout_seconds: int = 30
     read_timeout_seconds: int = 60
@@ -320,7 +329,8 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization."""
+    """
+Configuration for performance optimization."""
     # Concurrency
     max_concurrent_requests: int = 50
     max_concurrent_requests_per_domain: int = 5
@@ -353,7 +363,8 @@ class PerformanceConfig:
 
 @dataclass
 class NetworkConfig:
-    """Complete network configuration."""
+    """
+Complete network configuration."""
     # Core configurations
     proxy_rotation: ProxyRotationConfig = field(default_factory=ProxyRotationConfig)
     user_agent_rotation: UserAgentRotationConfig = field(default_factory=UserAgentRotationConfig)
@@ -378,10 +389,12 @@ class NetworkConfig:
     testing_mode: bool = False
 
 class NetworkConfigManager:
-    """Manager for network configurations."""
+    """
+Manager for network configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize network config manager."""
+        """
+Initialize network config manager."""
         self.config_dir = Path(config_dir or os.getenv("NETWORK_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
@@ -440,7 +453,8 @@ class NetworkConfigManager:
         self.save_config()
     
     def remove_proxy_server(self, host: str, port: int) -> None:
-        """Remove proxy server from configuration."""
+        """
+Remove proxy server from configuration."""
         self.config.proxy_servers = [
             proxy for proxy in self.config.proxy_servers
             if not (proxy.host == host and proxy.port == port)
@@ -448,11 +462,13 @@ class NetworkConfigManager:
         self.save_config()
     
     def get_active_proxies(self) -> List[ProxyServerConfig]:
-        """Get list of active proxy servers."""
+        """
+Get list of active proxy servers."""
         return [proxy for proxy in self.config.proxy_servers if proxy.enabled]
     
     def update_proxy_stats(self, host: str, port: int, success: bool, response_time_ms: float) -> None:
-        """Update proxy statistics."""
+        """
+Update proxy statistics."""
         for proxy in self.config.proxy_servers:
             if proxy.host == host and proxy.port == port:
                 if success:
@@ -477,16 +493,19 @@ class NetworkConfigManager:
                 break
     
     def get_config(self) -> NetworkConfig:
-        """Get current network configuration."""
+        """
+Get current network configuration."""
         return self.config
     
     def update_config(self, config: NetworkConfig) -> None:
-        """Update network configuration."""
+        """
+Update network configuration."""
         self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         config_file = self.config_dir / "network_config.json"
         # Convert dataclass to dict, handling datetime objects
         config_dict = self._serialize_config(self.config)
@@ -508,12 +527,14 @@ class NetworkConfigManager:
         pass
     
     def _deserialize_config(self, data: dict) -> NetworkConfig:
-        """Deserialize configuration from dictionary."""
+        """
+Deserialize configuration from dictionary."""
         # Implementation for converting dict back to NetworkConfig
         pass
     
     def validate_config(self) -> List[str]:
-        """Validate network configuration."""
+        """
+Validate network configuration."""
         errors = []
         
         # Validate rate limiting

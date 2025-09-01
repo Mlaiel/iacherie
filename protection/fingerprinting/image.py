@@ -9,13 +9,14 @@ Enterprise-grade image fingerprinting with advanced computer vision:
 - Texture and edge detection
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -65,7 +66,8 @@ class ImageMetadata:
     texture_energy: Optional[float]
 
 class PerceptualImageHashing:
-    """Advanced perceptual hashing for images using multiple algorithms."""
+    """
+Advanced perceptual hashing for images using multiple algorithms."""
     
     def __init__(self, hash_size: int = 16):
         self.hash_size = hash_size
@@ -227,7 +229,8 @@ class CLIPEmbeddingExtractor:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
-        """Extract semantic features from embeddings."""
+        """
+Extract semantic features from embeddings."""
         return {
             "embedding_mean": float(np.mean(embeddings)),
             "embedding_std": float(np.std(embeddings)),
@@ -682,7 +685,8 @@ class ColorAnalyzer:
         return sum(harmony_scores) / len(harmony_scores) if harmony_scores else 0.0
     
     def _determine_color_scheme(self, hues: List[float]) -> str:
-        """Determine the color scheme type."""
+        """
+Determine the color scheme type."""
         if len(hues) < 2:
             return "monochromatic"
         
@@ -725,7 +729,8 @@ class ColorAnalyzer:
         return (h, s * 100, v * 100)
     
     def _rgb_to_lab(self, rgb: Tuple[int, int, int]) -> Tuple[float, float, float]:
-        """Convert RGB to LAB (simplified approximation)."""
+        """
+Convert RGB to LAB (simplified approximation)."""
         r, g, b = [x / 255.0 for x in rgb]
         
         # Simplified sRGB to XYZ conversion
@@ -742,7 +747,8 @@ class ColorAnalyzer:
     
     def _generate_color_fingerprint(self, color_histogram: Dict, dominant_colors: List, 
                                   color_stats: Dict) -> str:
-        """Generate fingerprint from color analysis."""
+        """
+Generate fingerprint from color analysis."""
         fingerprint_components = []
         
         # Add histogram hash
@@ -1181,31 +1187,36 @@ class ImageFingerprintingService:
         )
     
     async def _run_clip_extraction(self, image_path: str) -> Dict[str, Any]:
-        """Run CLIP embedding extraction."""
+        """
+Run CLIP embedding extraction."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.clip_extractor.extract_embeddings, image_path
         )
     
     async def _run_traditional_features(self, image_path: str) -> Dict[str, Any]:
-        """Run traditional feature extraction."""
+        """
+Run traditional feature extraction."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.traditional_extractor.extract_features, image_path
         )
     
     async def _run_color_analysis(self, image_path: str) -> Dict[str, Any]:
-        """Run color analysis."""
+        """
+Run color analysis."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.color_analyzer.analyze_colors, image_path
         )
     
     async def _run_texture_analysis(self, image_path: str) -> Dict[str, Any]:
-        """Run texture analysis."""
+        """
+Run texture analysis."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.texture_analyzer.analyze_texture, image_path
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""
+        """
+Generate combined hash from all fingerprint components."""
         hash_components = []
         
         # Extract key hash components
@@ -1306,7 +1317,8 @@ class ImageFingerprintingService:
             return 0.0
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
-        """Calculate cosine similarity between vectors."""
+        """
+Calculate cosine similarity between vectors."""
         try:
             vec1_array = np.array(vec1)
             vec2_array = np.array(vec2)
@@ -1316,7 +1328,8 @@ class ImageFingerprintingService:
             return 0.0
     
     def _hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate hash similarity."""
+        """
+Calculate hash similarity."""
         if len(hash1) != len(hash2):
             return 0.0
         

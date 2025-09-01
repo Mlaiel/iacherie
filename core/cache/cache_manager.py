@@ -4,6 +4,7 @@ Enterprise-grade cache orchestration with multi-backend support
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class CacheBackend(Enum):
-    """Cache backend types"""
+    """
+Cache backend types"""
+
     REDIS = "redis"
     REDIS_CLUSTER = "redis_cluster"
     MEMORY = "memory"
@@ -30,6 +33,7 @@ class CacheBackend(Enum):
 
 class CachePolicy(Enum):
     """Cache eviction policies"""
+
     LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
@@ -86,14 +90,16 @@ class CacheMetadata:
         
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
+        """
+Check if cache entry is expired"""
         if not self.ttl:
             return False
         expiry_time = self.created_at + timedelta(seconds=self.ttl)
         return datetime.utcnow() > expiry_time
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'key': self.key,
             'size': self.size,
@@ -143,7 +149,8 @@ class CacheManager(Generic[T]):
             self._init_hybrid()
     
     def _init_redis(self):
-        """Initialize Redis backend"""
+        """
+Initialize Redis backend"""
         try:
             self._backends['redis'] = redis.Redis(
                 host=self.config.host,
@@ -411,7 +418,8 @@ class CacheManager(Generic[T]):
                 )
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         total_keys = len(self._metadata)
         total_size = sum(meta.size for meta in self._metadata.values())
         
@@ -424,12 +432,14 @@ class CacheManager(Generic[T]):
         }
     
     async def get_metadata(self, key: str, tenant_id: Optional[str] = None) -> Optional[CacheMetadata]:
-        """Get metadata for cache key"""
+        """
+Get metadata for cache key"""
         cache_key = self._generate_key(key, tenant_id)
         return self._metadata.get(cache_key)
     
     async def cleanup_expired(self) -> int:
-        """Cleanup expired cache entries"""
+        """
+Cleanup expired cache entries"""
         expired_keys = []
         
         async with self._lock:
@@ -473,7 +483,8 @@ def get_cache_manager() -> CacheManager:
     return _cache_manager
 
 async def initialize_cache(config: CacheConfig) -> CacheManager:
-    """Initialize global cache manager"""
+    """
+Initialize global cache manager"""
     global _cache_manager
     _cache_manager = CacheManager(config)
     return _cache_manager

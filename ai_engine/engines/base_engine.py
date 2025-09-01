@@ -15,7 +15,7 @@ Provides enterprise-grade base classes, enums, and data structures.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import threading
 import logging
@@ -50,7 +51,9 @@ from pathlib import Path
 
 
 class EngineStatus(Enum):
-    """Engine operational status states"""
+    """
+Engine operational status states"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -62,6 +65,7 @@ class EngineStatus(Enum):
 
 class ProcessingPriority(Enum):
     """Content processing priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -70,7 +74,9 @@ class ProcessingPriority(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for multi-format processing"""
+    """
+Supported content types for multi-format processing"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -108,7 +114,8 @@ class EngineMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Comprehensive processing result with business intelligence"""
+    """
+Comprehensive processing result with business intelligence"""
     success: bool
     content_id: str
     processed_content: Any
@@ -338,7 +345,8 @@ class BaseContentEngine(ABC):
         return None
     
     async def shutdown(self):
-        """Gracefully shutdown the engine"""
+        """
+Gracefully shutdown the engine"""
         self.status = EngineStatus.SHUTDOWN
         self._thread_pool.shutdown(wait=True)
         self.logger.info(f"Engine {self.engine_name} shutdown completed")

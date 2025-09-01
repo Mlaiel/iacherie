@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -28,7 +29,9 @@ from sqlalchemy import create_engine, text
 logger = logging.getLogger(__name__)
 
 class VectorDatabaseType(Enum):
-    """Vector database types"""
+    """
+Vector database types"""
+
     FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
@@ -38,6 +41,7 @@ class VectorDatabaseType(Enum):
 
 class IndexType(Enum):
     """Vector index types"""
+
     FLAT = "flat"
     IVF_FLAT = "ivf_flat"
     IVF_PQ = "ivf_pq"
@@ -46,6 +50,7 @@ class IndexType(Enum):
 
 class DistanceMetric(Enum):
     """Distance metrics for similarity search"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -85,7 +90,8 @@ class EmbeddingConfig:
     normalize: bool = True
 
 class VectorDatabaseManager:
-    """Main vector database manager"""
+    """
+Main vector database manager"""
     
     def __init__(self, k8s_client=None, redis_client=None, postgres_client=None):
         self.k8s_client = k8s_client
@@ -101,7 +107,8 @@ class VectorDatabaseManager:
         self.weaviate_client = None
         
     async def deploy_vector_database(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy vector database infrastructure"""
+        """
+Deploy vector database infrastructure"""
         try:
             if config.database_type == VectorDatabaseType.FAISS:
                 return await self._deploy_faiss(config)

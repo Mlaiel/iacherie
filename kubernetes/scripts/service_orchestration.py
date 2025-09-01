@@ -2,6 +2,7 @@
 """Service Orchestration Manager
 Container orchestration and microservices management for the IA Influencer Agent platform
 """
+
 import os
 import sys
 import time
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Service status enumeration"""
+    """
+Service status enumeration"""
+
     PENDING = "pending"
     RUNNING = "running"
     FAILED = "failed"
@@ -41,6 +44,7 @@ class ServiceStatus(Enum):
 
 class OrchestrationAction(Enum):
     """Orchestration action enumeration"""
+
     DEPLOY = "deploy"
     SCALE = "scale"
     UPDATE = "update"
@@ -51,6 +55,7 @@ class OrchestrationAction(Enum):
 
 class HealthStatus(Enum):
     """Health status enumeration"""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
@@ -79,7 +84,8 @@ class ServiceDefinition:
 
 @dataclass
 class ServiceInstance:
-    """Service instance data class"""
+    """
+Service instance data class"""
     name: str
     definition: ServiceDefinition
     status: ServiceStatus
@@ -94,7 +100,8 @@ class ServiceInstance:
 
 @dataclass
 class OrchestrationTask:
-    """Orchestration task data class"""
+    """
+Orchestration task data class"""
     id: str
     action: OrchestrationAction
     service_name: str
@@ -113,7 +120,8 @@ class ServiceOrchestrator:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize service orchestrator"""
+        """
+Initialize service orchestrator"""
         self.config_path = config_path or "/etc/orchestration/config.yaml"
         self.services = {}
         self.tasks = {}

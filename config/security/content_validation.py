@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
@@ -27,7 +28,9 @@ from enum import Enum
 
 
 class ContentType(Enum):
-    """Supported content types for validation."""
+    """
+Supported content types for validation."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -39,6 +42,7 @@ class ContentType(Enum):
 
 class ValidationSeverity(Enum):
     """Validation result severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -48,6 +52,7 @@ class ValidationSeverity(Enum):
 
 class ThreatType(Enum):
     """Types of security threats to detect."""
+
     MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
@@ -62,6 +67,7 @@ class ThreatType(Enum):
 
 class ScanEngine(Enum):
     """Available scanning engines."""
+
     CLAMAV = "clamav"
     VIRUSTOTAL = "virustotal"
     WINDOWS_DEFENDER = "windows_defender"
@@ -91,7 +97,8 @@ class FileTypeValidation:
 
 @dataclass
 class AudioValidationConfig:
-    """Audio-specific validation configuration."""
+    """
+Audio-specific validation configuration."""
     allowed_formats: Set[str] = field(default_factory=lambda: {
         "mp3", "wav", "flac", "ogg", "m4a", "aac", "wma"
     })
@@ -399,7 +406,8 @@ class PerformanceOptimization:
 
 @dataclass
 class ValidationReporting:
-    """Validation results reporting configuration."""
+    """
+Validation results reporting configuration."""
     
     # Report generation
     detailed_reports: bool = True
@@ -506,7 +514,8 @@ def get_content_validation_config() -> ContentValidationConfig:
 
 
 def get_validation_config_for_content_type(content_type: ContentType) -> Any:
-    """Get validation configuration for specific content type."""
+    """
+Get validation configuration for specific content type."""
     config = get_content_validation_config()
     
     mapping = {
@@ -522,7 +531,8 @@ def get_validation_config_for_content_type(content_type: ContentType) -> Any:
 
 
 def get_tier_validation_settings(tier: str) -> Dict[str, Any]:
-    """Get validation settings for specific subscription tier."""
+    """
+Get validation settings for specific subscription tier."""
     config = get_content_validation_config()
     return config.tier_based_validation.get(tier, config.tier_based_validation["basic"])
 

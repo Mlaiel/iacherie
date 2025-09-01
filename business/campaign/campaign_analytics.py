@@ -5,12 +5,13 @@ Provides comprehensive analytics, reporting, and insights for campaign performan
 with AI-powered analysis and predictive modeling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -27,7 +28,9 @@ from backend.utils.data_processor import DataProcessor
 
 
 class AnalyticsTimeframe(str, Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly" 
     DAILY = "daily"
@@ -39,6 +42,7 @@ class AnalyticsTimeframe(str, Enum):
 
 class MetricType(str, Enum):
     """Available metric types"""
+
     REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
@@ -65,7 +69,8 @@ class AnalyticsFilter:
 
 @dataclass
 class MetricInsight:
-    """Individual metric insight"""
+    """
+Individual metric insight"""
     metric_name: str
     current_value: float
     previous_value: float
@@ -78,7 +83,8 @@ class MetricInsight:
 
 @dataclass
 class CampaignAnalyticsReport:
-    """Comprehensive campaign analytics report"""
+    """
+Comprehensive campaign analytics report"""
     campaign_id: str
     timeframe: AnalyticsTimeframe
     filter_config: AnalyticsFilter

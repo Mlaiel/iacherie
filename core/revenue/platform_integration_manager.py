@@ -1,7 +1,7 @@
 """Revenue Platform Integration Manager - Multi-Platform Revenue Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Platform Optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -69,6 +72,7 @@ class PlatformType(Enum):
 
 class PlatformStatus(Enum):
     """Platform integration status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     AUTHENTICATING = "authenticating"
@@ -80,6 +84,7 @@ class PlatformStatus(Enum):
 
 class RevenueStreamType(Enum):
     """Revenue stream types by platform"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION_FEES = "subscription_fees"
@@ -94,6 +99,7 @@ class RevenueStreamType(Enum):
 
 class DataSyncFrequency(Enum):
     """Data synchronization frequency"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -117,7 +123,8 @@ class PlatformCredentials:
     
     @property
     def is_expired(self) -> bool:
-        """Check if credentials are expired"""
+        """
+Check if credentials are expired"""
         if self.expires_at:
             return datetime.utcnow() >= self.expires_at
         return False
@@ -125,7 +132,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformConfiguration:
-    """Platform integration configuration"""
+    """
+Platform integration configuration"""
     platform_type: PlatformType
     name: str
     api_base_url: str
@@ -157,7 +165,8 @@ class PlatformRevenueData:
 
 @dataclass
 class PlatformConnection:
-    """Platform connection information"""
+    """
+Platform connection information"""
     connection_id: str
     platform_type: PlatformType
     user_id: str
@@ -171,7 +180,8 @@ class PlatformConnection:
 
 
 class BasePlatformConnector(ABC):
-    """Base class for platform connectors"""
+    """
+Base class for platform connectors"""
     
     def __init__(self, config: PlatformConfiguration, credentials: PlatformCredentials):
         self.config = config
@@ -180,18 +190,21 @@ class BasePlatformConnector(ABC):
         self.rate_limiter = {}
         
     async def initialize(self) -> None:
-        """Initialize platform connector"""
+        """
+Initialize platform connector"""
         self.session = aiohttp.ClientSession()
         await self._setup_authentication()
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if self.session:
             await self.session.close()
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with platform"""
+        """
+Authenticate with platform"""
         pass
     
     @abstractmethod
@@ -201,7 +214,8 @@ class BasePlatformConnector(ABC):
         start_date: datetime, 
         end_date: datetime
     ) -> PlatformRevenueData:
-        """Fetch revenue data from platform"""
+        """
+Fetch revenue data from platform"""
         pass
     
     @abstractmethod
@@ -212,15 +226,18 @@ class BasePlatformConnector(ABC):
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch analytics data from platform"""
+        """
+Fetch analytics data from platform"""
         pass
     
     async def _setup_authentication(self) -> None:
-        """Setup authentication headers"""
+        """
+Setup authentication headers"""
         pass
     
     async def _check_rate_limits(self, endpoint: str) -> bool:
-        """Check rate limits for endpoint"""
+        """
+Check rate limits for endpoint"""
         current_time = datetime.utcnow()
         endpoint_limit = self.config.rate_limits.get(endpoint, 100)
         
@@ -245,10 +262,12 @@ class BasePlatformConnector(ABC):
 
 
 class SpotifyConnector(BasePlatformConnector):
-    """Spotify platform connector"""
+    """
+Spotify platform connector"""
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""
+        """
+Authenticate with Spotify API"""
         try:
             if self.credentials.is_expired:
                 # Refresh token if needed
@@ -390,7 +409,8 @@ class SpotifyConnector(BasePlatformConnector):
         )
     
     async def _refresh_token(self) -> None:
-        """Refresh Spotify access token"""
+        """
+Refresh Spotify access token"""
         # Implementation for token refresh
         pass
     
@@ -400,7 +420,8 @@ class SpotifyConnector(BasePlatformConnector):
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch Spotify streams data"""
+        """
+Fetch Spotify streams data"""
         # Implementation for fetching streams data
         return {}
     
@@ -410,16 +431,19 @@ class SpotifyConnector(BasePlatformConnector):
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch Spotify listeners data"""
+        """
+Fetch Spotify listeners data"""
         # Implementation for fetching listeners data
         return {}
 
 
 class YouTubeConnector(BasePlatformConnector):
-    """YouTube platform connector"""
+    """
+YouTube platform connector"""
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API"""
+        """
+Authenticate with YouTube API"""
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -561,7 +585,8 @@ class YouTubeConnector(BasePlatformConnector):
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch YouTube views data"""
+        """
+Fetch YouTube views data"""
         # Implementation for fetching views data
         return {}
     
@@ -571,16 +596,19 @@ class YouTubeConnector(BasePlatformConnector):
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch YouTube engagement data"""
+        """
+Fetch YouTube engagement data"""
         # Implementation for fetching engagement data
         return {}
 
 
 class InstagramConnector(BasePlatformConnector):
-    """Instagram platform connector"""
+    """
+Instagram platform connector"""
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram API"""
+        """
+Authenticate with Instagram API"""
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -680,7 +708,8 @@ class InstagramConnector(BasePlatformConnector):
 
 
 class PlatformIntegrationManager:
-    """Comprehensive platform integration management system"""
+    """
+Comprehensive platform integration management system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -694,7 +723,8 @@ class PlatformIntegrationManager:
         self._initialize_platform_configs()
     
     async def initialize(self) -> None:
-        """Initialize platform integration manager"""
+        """
+Initialize platform integration manager"""
         try:
             await self._load_existing_connections()
             await self._setup_monitoring()
@@ -1129,7 +1159,8 @@ class PlatformIntegrationManager:
         pass
     
     async def _setup_monitoring(self) -> None:
-        """Setup platform monitoring"""
+        """
+Setup platform monitoring"""
         pass
     
     async def _record_sync_metrics(
@@ -1138,7 +1169,8 @@ class PlatformIntegrationManager:
         revenue_data: PlatformRevenueData,
         analytics_data: Dict[str, Any]
     ) -> None:
-        """Record sync metrics for monitoring"""
+        """
+Record sync metrics for monitoring"""
         metrics = {
             'connection_id': connection_id,
             'platform': revenue_data.platform_type.value,
@@ -1152,5 +1184,6 @@ class PlatformIntegrationManager:
 
 
 def create_platform_integration_manager(config: Optional[Dict[str, Any]] = None) -> PlatformIntegrationManager:
-    """Factory function to create platform integration manager"""
+    """
+Factory function to create platform integration manager"""
     return PlatformIntegrationManager(config)

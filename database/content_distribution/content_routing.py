@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Network Engineer + Traffic Management Expert + Load Balancing Specialist
 """
+
 import asyncio
 import json
 import uuid
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RoutingStrategy(str, Enum):
-    """Content routing strategies"""
+    """
+Content routing strategies"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -54,6 +57,7 @@ class RoutingStrategy(str, Enum):
 
 class RoutingMethod(str, Enum):
     """Content routing methods"""
+
     DIRECT = "direct"
     CDN = "cdn"
     PROXY = "proxy"
@@ -63,6 +67,7 @@ class RoutingMethod(str, Enum):
 
 class RouteStatus(str, Enum):
     """Route operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     DEGRADED = "degraded"
@@ -72,6 +77,7 @@ class RouteStatus(str, Enum):
 
 class TrafficType(str, Enum):
     """Traffic type classification"""
+
     UPLOAD = "upload"
     DOWNLOAD = "download"
     STREAMING = "streaming"
@@ -93,7 +99,8 @@ class RoutingMetrics:
 
 @dataclass
 class GeographicInfo:
-    """Geographic routing information"""
+    """
+Geographic routing information"""
     country_code: str = ""
     region: str = ""
     city: str = ""
@@ -394,7 +401,8 @@ class RouteConfigurationRequest(BaseModel):
     routing_rules: Optional[Dict[str, Any]] = None
 
 class RoutingDecisionRequest(BaseModel):
-    """Request model for routing decisions"""
+    """
+Request model for routing decisions"""
     content_id: str
     content_type: str
     request_size_bytes: int
@@ -405,7 +413,8 @@ class RoutingDecisionRequest(BaseModel):
     cost_constraints: Optional[Dict[str, Any]] = None
 
 class LoadBalancerPoolRequest(BaseModel):
-    """Request model for load balancer pools"""
+    """
+Request model for load balancer pools"""
     pool_name: str
     platform_name: str
     balancing_algorithm: str = "weighted_round_robin"
@@ -428,7 +437,8 @@ class RoutingRuleRequest(BaseModel):
     applies_to_regions: Optional[List[str]] = None
 
 class RoutingResponse(BaseModel):
-    """Response model for routing decisions"""
+    """
+Response model for routing decisions"""
     decision_id: str
     selected_route_id: str
     selected_endpoint: str
@@ -439,7 +449,8 @@ class RoutingResponse(BaseModel):
     alternative_routes: List[Dict[str, Any]]
 
 class ContentRoutingManager:
-    """Enterprise content routing management system"""
+    """
+Enterprise content routing management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -452,7 +463,8 @@ class ContentRoutingManager:
         user_id: str,
         route_request: RouteConfigurationRequest
     ) -> ContentRoute:
-        """Create new content route configuration"""
+        """
+Create new content route configuration"""
         try:
             # Validate route configuration
             await self._validate_route_configuration(route_request)

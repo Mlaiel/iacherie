@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROH
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -46,7 +47,8 @@ Base = declarative_base()
 
 
 class AnalyticsEventType(Enum):
-    """AI analytics event types."""
+    """
+AI analytics event types."""
     
     # Anomaly Detection
     ANOMALY_DETECTED = "anomaly_detected"
@@ -75,6 +77,7 @@ class AnalyticsEventType(Enum):
 
 class AnalyticsSeverity(Enum):
     """Analytics event severity levels."""
+
     
     CRITICAL = "critical"
     HIGH = "high"
@@ -85,6 +88,7 @@ class AnalyticsSeverity(Enum):
 
 class ModelType(Enum):
     """Machine learning model types."""
+
     
     ANOMALY_DETECTION = "anomaly_detection"
     BEHAVIORAL_CLUSTERING = "behavioral_clustering"
@@ -112,7 +116,8 @@ class AIAnalyticsContext:
 
 
 class AIAnalyticsLog(Base):
-    """AI analytics log model for audit trail."""
+    """
+AI analytics log model for audit trail."""
     
     __tablename__ = "ai_analytics_logs"
     
@@ -150,7 +155,8 @@ class AnomalyDetector:
     """Advanced anomaly detection using multiple ML algorithms."""
     
     def __init__(self, model_config: Dict[str, Any] = None):
-        """Initialize anomaly detector with configuration."""
+        """
+Initialize anomaly detector with configuration."""
         self.config = model_config or {}
         self.models = {}
         self.scalers = {}
@@ -341,7 +347,8 @@ class AnomalyDetector:
         return data[features].fillna(0)
     
     def _build_autoencoder(self, input_dim: int):
-        """Build autoencoder neural network for anomaly detection."""
+        """
+Build autoencoder neural network for anomaly detection."""
         if not HAS_ML_LIBS:
             return None
         
@@ -363,7 +370,8 @@ class AnomalyDetector:
         return autoencoder
     
     async def _evaluate_models(self, features: pd.DataFrame) -> Dict[str, float]:
-        """Evaluate model performance."""
+        """
+Evaluate model performance."""
         # Implementation for model evaluation
         return {
             'isolation_forest_score': 0.95,
@@ -372,7 +380,8 @@ class AnomalyDetector:
         }
     
     def _deduplicate_anomalies(self, anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate anomalies from different detection methods."""
+        """
+Remove duplicate anomalies from different detection methods."""
         unique_anomalies = []
         seen_indices = set()
         
@@ -385,10 +394,12 @@ class AnomalyDetector:
 
 
 class PredictiveAnalyzer:
-    """Advanced predictive analytics for audit logs and system behavior."""
+    """
+Advanced predictive analytics for audit logs and system behavior."""
     
     def __init__(self, model_config: Dict[str, Any] = None):
-        """Initialize predictive analyzer."""
+        """
+Initialize predictive analyzer."""
         self.config = model_config or {}
         self.models = {}
         self.is_trained = False
@@ -496,7 +507,8 @@ class PredictiveAnalyzer:
         return pd.Series()
     
     def _analyze_threat_patterns(self, timeline: pd.Series) -> Dict[str, Any]:
-        """Analyze patterns in threat timeline."""
+        """
+Analyze patterns in threat timeline."""
         patterns = {}
         
         if len(timeline) > 24:  # Need at least 24 hours of data
@@ -516,7 +528,8 @@ class PredictiveAnalyzer:
         patterns: Dict[str, Any], 
         horizon: int
     ) -> List[Dict[str, Any]]:
-        """Generate threat predictions."""
+        """
+Generate threat predictions."""
         predictions = []
         
         if 'daily_average' in patterns:
@@ -537,7 +550,8 @@ class PredictiveAnalyzer:
         return predictions
     
     def _forecast_metric(self, metric_data: pd.Series, forecast_days: int) -> Dict[str, Any]:
-        """Forecast a single performance metric."""
+        """
+Forecast a single performance metric."""
         # Simple exponential smoothing for demonstration
         # In production, would use more sophisticated methods like ARIMA, LSTM, etc.
         
@@ -567,7 +581,8 @@ class PredictiveAnalyzer:
         }
     
     def _calculate_prediction_confidence(self, patterns: Dict[str, Any]) -> float:
-        """Calculate confidence score for predictions."""
+        """
+Calculate confidence score for predictions."""
         # Base confidence on data quality and pattern stability
         base_confidence = 0.7
         
@@ -586,7 +601,8 @@ class PredictiveAnalyzer:
         return min(0.95, max(0.5, base_confidence))
     
     def _identify_risk_factors(self, data: pd.DataFrame) -> List[str]:
-        """Identify risk factors from historical data."""
+        """
+Identify risk factors from historical data."""
         risk_factors = []
         
         # High frequency of critical events
@@ -630,7 +646,8 @@ class PredictiveAnalyzer:
             return 'critical'
     
     def _generate_capacity_alerts(self, forecasts: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate capacity planning alerts."""
+        """
+Generate capacity planning alerts."""
         alerts = []
         
         for metric, forecast in forecasts.items():
@@ -665,7 +682,8 @@ class BehaviorProfiler:
     """Advanced user behavior profiling and analysis."""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize behavior profiler."""
+        """
+Initialize behavior profiler."""
         self.config = config or {}
         self.user_profiles = {}
         self.behavior_models = {}
@@ -772,7 +790,8 @@ class BehaviorProfiler:
         return patterns
     
     def _analyze_content_preferences(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user content preferences."""
+        """
+Analyze user content preferences."""
         preferences = {}
         
         # Content type analysis
@@ -795,7 +814,8 @@ class BehaviorProfiler:
         return preferences
     
     def _analyze_collaboration_behavior(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user collaboration behavior."""
+        """
+Analyze user collaboration behavior."""
         collaboration = {}
         
         # Collaboration frequency
@@ -814,7 +834,8 @@ class BehaviorProfiler:
         return collaboration
     
     def _analyze_security_behavior(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user security behavior."""
+        """
+Analyze user security behavior."""
         security = {}
         
         # Login patterns
@@ -835,7 +856,8 @@ class BehaviorProfiler:
         return security
     
     def _analyze_revenue_patterns(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user revenue patterns."""
+        """
+Analyze user revenue patterns."""
         revenue = {}
         
         # Revenue events
@@ -855,7 +877,8 @@ class BehaviorProfiler:
         return revenue
     
     def _assess_user_risk(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Assess user risk level."""
+        """
+Assess user risk level."""
         risk_factors = []
         risk_score = 0
         
@@ -910,7 +933,8 @@ class BehaviorProfiler:
         return baseline
     
     def _compare_patterns(self, current: Dict[str, Any], baseline: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Compare current patterns with baseline."""
+        """
+Compare current patterns with baseline."""
         anomalies = []
         
         # Compare activity frequency
@@ -988,7 +1012,8 @@ class AIAnalyticsEngine:
     """Main AI analytics engine orchestrating all analytics components."""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize AI analytics engine."""
+        """
+Initialize AI analytics engine."""
         self.config = config or {}
         self.anomaly_detector = AnomalyDetector(self.config.get('anomaly_detection', {}))
         self.predictive_analyzer = PredictiveAnalyzer(self.config.get('predictive_analysis', {}))
@@ -1123,7 +1148,8 @@ class AIAnalyticsEngine:
         return summary
     
     def _summarize_anomalies(self, anomalies: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Summarize detected anomalies."""
+        """
+Summarize detected anomalies."""
         if not anomalies:
             return {'total': 0, 'by_method': {}, 'severity_distribution': {}}
         
@@ -1154,7 +1180,8 @@ class AIAnalyticsEngine:
         return summary
     
     def _calculate_overall_risk(self, analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall system risk score."""
+        """
+Calculate overall system risk score."""
         risk_score = 0
         risk_factors = []
         
@@ -1274,7 +1301,8 @@ class AIAnalyticsEngine:
         return recommendations
     
     def _get_risk_mitigation_actions(self, risk_level: str) -> List[str]:
-        """Get risk mitigation actions based on risk level."""
+        """
+Get risk mitigation actions based on risk level."""
         actions = {
             'critical': [
                 "Implement immediate incident response protocols",
@@ -1331,12 +1359,14 @@ def create_anomaly_detector(config: Dict[str, Any] = None) -> AnomalyDetector:
 
 
 def create_predictive_analyzer(config: Dict[str, Any] = None) -> PredictiveAnalyzer:
-    """Create and configure predictive analyzer."""
+    """
+Create and configure predictive analyzer."""
     return PredictiveAnalyzer(config)
 
 
 def create_behavior_profiler(config: Dict[str, Any] = None) -> BehaviorProfiler:
-    """Create and configure behavior profiler."""
+    """
+Create and configure behavior profiler."""
     return BehaviorProfiler(config)
 
 

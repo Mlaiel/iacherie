@@ -4,11 +4,12 @@ Advanced content protection, copyright management, plagiarism detection,
 and intellectual property rights enforcement for creator content.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentSecurityLevel(Enum):
-    """Security levels for content protection."""
+    """
+Security levels for content protection."""
+
     PUBLIC = "public"
     WATERMARKED = "watermarked"
     ENCRYPTED = "encrypted"
@@ -45,6 +48,7 @@ class ContentSecurityLevel(Enum):
 
 class ProtectionType(Enum):
     """Types of content protection."""
+
     TEXT_FINGERPRINTING = "text_fingerprinting"
     IMAGE_WATERMARKING = "image_watermarking"
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
@@ -56,6 +60,7 @@ class ProtectionType(Enum):
 
 class ThreatLevel(Enum):
     """Threat levels for security assessment."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -80,7 +85,8 @@ class ContentFingerprint:
 
 @dataclass
 class SecurityThreat:
-    """Security threat detection result."""
+    """
+Security threat detection result."""
     threat_id: str
     threat_type: str
     threat_level: ThreatLevel
@@ -117,7 +123,8 @@ class ContentProtectionEngine:
     """
     
     def __init__(self):
-        """Initialize the content protection engine."""
+        """
+Initialize the content protection engine."""
         self.fingerprint_database: Dict[str, ContentFingerprint] = {}
         self.threat_database: Dict[str, SecurityThreat] = {}
         self.protection_policies: Dict[str, Dict[str, Any]] = {}
@@ -131,7 +138,8 @@ class ContentProtectionEngine:
         self._load_protection_policies()
     
     def _initialize_protection_algorithms(self):
-        """Initialize various protection algorithms."""
+        """
+Initialize various protection algorithms."""
         try:
             # Text similarity threshold
             self.text_similarity_threshold = 0.85
@@ -867,7 +875,7 @@ class ContentProtectionEngine:
             draw = ImageDraw.Draw(watermarked)
             
             # Watermark text
-            watermark_text = f"© {creator_id} - IA Influencer Agent"
+            watermark_text = f"(c) {creator_id} - IA Influencer Agent"
             
             # Get image dimensions
             width, height = watermarked.size
@@ -960,7 +968,7 @@ class ContentProtectionEngine:
             # Simplified implementation - in reality would use video processing library
             
             output_path = f"watermarked_{video_path}"
-            watermark_text = f"© {creator_id} - IA Influencer Agent"
+            watermark_text = f"(c) {creator_id} - IA Influencer Agent"
             
             # ffmpeg command for watermarking (pseudo-code)
             # ffmpeg -i input.mp4 -vf "drawtext=text='watermark':x=10:y=10:fontcolor=white@0.8" output.mp4
@@ -1012,7 +1020,8 @@ class ContentProtectionEngine:
             return ThreatLevel.LOW
     
     def _calculate_image_similarity(self, suspicious_hashes: List, fingerprint: ContentFingerprint) -> float:
-        """Calculate image similarity score."""
+        """
+Calculate image similarity score."""
         try:
             # Simplified similarity calculation
             # In reality, would compare actual hash values
@@ -1022,7 +1031,8 @@ class ContentProtectionEngine:
             return 0.0
     
     def _calculate_audio_similarity(self, suspicious_mfccs: np.ndarray, fingerprint: ContentFingerprint) -> float:
-        """Calculate audio similarity score."""
+        """
+Calculate audio similarity score."""
         try:
             # Simplified similarity calculation
             # In reality, would compare MFCC features
@@ -1032,7 +1042,8 @@ class ContentProtectionEngine:
             return 0.0
     
     def _calculate_video_similarity(self, suspicious_frames: List[str], fingerprint: ContentFingerprint) -> float:
-        """Calculate video similarity score."""
+        """
+Calculate video similarity score."""
         try:
             # Simplified similarity calculation
             # In reality, would compare frame hashes
@@ -1042,7 +1053,8 @@ class ContentProtectionEngine:
             return 0.0
     
     def _calculate_security_score(self, fingerprint: ContentFingerprint, threats: List[SecurityThreat]) -> float:
-        """Calculate overall security score for content."""
+        """
+Calculate overall security score for content."""
         try:
             base_score = 0.8  # Base security score
             
@@ -1067,7 +1079,8 @@ class ContentProtectionEngine:
             return 0.5
     
     def _determine_protection_status(self, fingerprint: ContentFingerprint, threats: List[SecurityThreat]) -> str:
-        """Determine overall protection status."""
+        """
+Determine overall protection status."""
         try:
             if len(threats) == 0:
                 return "protected"
@@ -1137,10 +1150,12 @@ class ContentProtectionEngine:
 
 
 class ContentRightsManager:
-    """Manage content rights, licensing, and usage permissions."""
+    """
+Manage content rights, licensing, and usage permissions."""
     
     def __init__(self, protection_engine: ContentProtectionEngine):
-        """Initialize rights manager."""
+        """
+Initialize rights manager."""
         self.protection_engine = protection_engine
         self.licensing_database: Dict[str, Dict[str, Any]] = {}
         self.usage_permissions: Dict[str, List[str]] = defaultdict(list)
@@ -1152,7 +1167,8 @@ class ContentRightsManager:
         terms: Dict[str, Any],
         creator_id: str
     ) -> str:
-        """Create content license with specific terms."""
+        """
+Create content license with specific terms."""
         try:
             license_id = f"license_{content_id}_{int(datetime.now().timestamp())}"
             

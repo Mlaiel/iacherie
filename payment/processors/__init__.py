@@ -5,7 +5,7 @@ Comprehensive payment processing suite with specialized processors for
 enterprise-grade payment handling, compliance, and financial operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Available Processors:
 - StripeConnectProcessor: Stripe Connect enterprise payment processing
@@ -19,6 +19,7 @@ Available Processors:
 - PayoutSchedulerProcessor: Automated payout scheduling and batch processing
 - FinancialReportingProcessor: Comprehensive financial reporting and analytics
 """
+
 from .stripe import (
     StripeConnectProcessor,
     StripeConnectAccount,

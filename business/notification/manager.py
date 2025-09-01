@@ -16,6 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Set
 import logging
 import asyncio
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Notification workflow statuses."""
+    """
+Notification workflow statuses."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     DELIVERED = "delivered"
@@ -67,7 +70,8 @@ class WorkflowMetrics:
 
 @dataclass
 class SystemHealth:
-    """System health metrics."""
+    """
+System health metrics."""
     overall_status: str = "healthy"
     notification_queue_size: int = 0
     active_workers: int = 0
@@ -979,15 +983,18 @@ class NotificationManager:
         return self.active_workflows.get(workflow_id)
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics."""
+        """
+Get performance metrics."""
         return self.performance_metrics.copy()
     
     def get_audit_log(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent audit log entries."""
+        """
+Get recent audit log entries."""
         return self.audit_log[-limit:] if len(self.audit_log) > limit else self.audit_log.copy()
     
     async def shutdown(self) -> bool:
-        """Graceful shutdown of notification manager."""
+        """
+Graceful shutdown of notification manager."""
         try:
             logger.info("Starting NotificationManager shutdown...")
             

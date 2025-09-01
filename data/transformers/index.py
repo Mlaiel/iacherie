@@ -5,9 +5,10 @@ Advanced indexing and discovery system for the transformers module ecosystem
 providing intelligent module management and dependency resolution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Type, Callable
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModuleType(Enum):
-    """Types of transformer modules."""
+    """
+Types of transformer modules."""
+
     CORE_TRANSFORMER = "core_transformer"
     SPECIALIZED_PROCESSOR = "specialized_processor"
     UTILITY_MODULE = "utility_module"
@@ -37,6 +40,7 @@ class ModuleType(Enum):
 
 class ModuleStatus(Enum):
     """Module availability status."""
+
     AVAILABLE = "available"
     LOADING = "loading"
     LOADED = "loaded"
@@ -318,7 +322,8 @@ class ModuleIndex:
         return self.capabilities.get(module_name, [])
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system overview."""
+        """
+Get comprehensive system overview."""
         try:
             # Module statistics
             total_modules = len(self.modules)
@@ -386,7 +391,8 @@ class ModuleIndex:
         return validation_results
     
     async def get_optimization_suggestions(self) -> List[str]:
-        """Get optimization suggestions for the transformer ecosystem."""
+        """
+Get optimization suggestions for the transformer ecosystem."""
         suggestions = []
         
         # Check for missing dependencies
@@ -617,7 +623,8 @@ class ModuleIndex:
                 await self.load_module(dep)
     
     def _get_transformer_score(self, module_name: str) -> int:
-        """Get transformer performance score for sorting."""
+        """
+Get transformer performance score for sorting."""
         module_info = self.modules.get(module_name)
         if not module_info:
             return 999
@@ -674,7 +681,8 @@ class ModuleIndex:
         return None
     
     async def _count_redundant_capabilities(self) -> int:
-        """Count redundant transformation capabilities."""
+        """
+Count redundant transformation capabilities."""
         capability_map = {}
         
         for module_name, capabilities in self.capabilities.items():
@@ -697,7 +705,8 @@ _global_index: Optional[ModuleIndex] = None
 
 
 def get_module_index() -> ModuleIndex:
-    """Get global module index instance."""
+    """
+Get global module index instance."""
     global _global_index
     
     if _global_index is None:
@@ -707,7 +716,8 @@ def get_module_index() -> ModuleIndex:
 
 
 async def initialize_index() -> ModuleIndex:
-    """Initialize and scan module index."""
+    """
+Initialize and scan module index."""
     index = get_module_index()
     await index.scan_modules()
     return index
@@ -715,20 +725,23 @@ async def initialize_index() -> ModuleIndex:
 
 # Convenience functions for common operations
 async def find_transformer(input_format: str, output_format: str) -> Optional[str]:
-    """Find best transformer for format conversion."""
+    """
+Find best transformer for format conversion."""
     index = get_module_index()
     transformers = await index.find_transformers_for_format(input_format, output_format)
     return transformers[0] if transformers else None
 
 
 async def load_transformer(module_name: str) -> Optional[Any]:
-    """Load a transformer module."""
+    """
+Load a transformer module."""
     index = get_module_index()
     return await index.load_module(module_name)
 
 
 async def get_available_formats() -> List[str]:
-    """Get all supported formats."""
+    """
+Get all supported formats."""
     index = get_module_index()
     formats = set()
     
@@ -739,7 +752,8 @@ async def get_available_formats() -> List[str]:
 
 
 async def export_module_documentation(output_dir: str) -> bool:
-    """Export comprehensive module documentation."""
+    """
+Export comprehensive module documentation."""
     try:
         index = get_module_index()
         overview = await index.get_system_overview()

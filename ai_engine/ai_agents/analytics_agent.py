@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsScope(Enum):
-    """Scope of analytics analysis"""
+    """
+Scope of analytics analysis"""
+
     CONTENT = "content"
     PLATFORM = "platform"
     AUDIENCE = "audience"
@@ -45,6 +48,7 @@ class AnalyticsScope(Enum):
 
 class TimeRange(Enum):
     """Time range for analytics"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"

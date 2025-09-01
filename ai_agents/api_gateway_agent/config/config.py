@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from pydantic import BaseSettings, validator
@@ -17,7 +18,9 @@ from enum import Enum
 
 
 class LoadBalancingStrategy(str, Enum):
-    """Load balancing strategies for service distribution"""
+    """
+Load balancing strategies for service distribution"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"  
     LEAST_CONNECTIONS = "least_connections"
@@ -28,6 +31,7 @@ class LoadBalancingStrategy(str, Enum):
 
 class RateLimitStrategy(str, Enum):
     """Rate limiting strategies for API protection"""
+
     TOKEN_BUCKET = "token_bucket"
     SLIDING_WINDOW = "sliding_window"
     FIXED_WINDOW = "fixed_window"

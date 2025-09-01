@@ -1,6 +1,7 @@
 """Legal Document Generation System
 Professional automated generation of legal documents for copyright enforcement
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class DocumentType(Enum):
-    """Types of legal documents that can be generated"""
+    """
+Types of legal documents that can be generated"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_NOTICE = "legal_notice"
@@ -35,6 +38,7 @@ class DocumentType(Enum):
 
 class DocumentStatus(Enum):
     """Status of generated documents"""
+
     DRAFT = "draft"
     REVIEW = "review"
     APPROVED = "approved"
@@ -46,6 +50,7 @@ class DocumentStatus(Enum):
 
 class JurisdictionType(Enum):
     """Legal jurisdictions supported"""
+
     US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GDPR = "eu_gdpr"
@@ -178,8 +183,10 @@ class DMCATemplateGenerator:
         self.template_content = self._get_dmca_template()
     
     def _get_dmca_template(self) -> str:
-        """DMCA takedown notice template"""
-        return """DMCA TAKEDOWN NOTICE
+        """
+DMCA takedown notice template"""
+        return """
+DMCA TAKEDOWN NOTICE
 
 To: {{ platform_operator.name }}
 {{ platform_operator.address_line1 }}
@@ -265,7 +272,8 @@ Generation Date: {{ generation_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}
         """.strip()
     
     async def generate(self, context: DocumentContext) -> GeneratedDocument:
-        """Generate DMCA takedown notice"""
+        """
+Generate DMCA takedown notice"""
         try:
             template = Template(self.template_content)
             
@@ -313,8 +321,10 @@ class CeaseDesistGenerator:
         self.template_content = self._get_cease_desist_template()
     
     def _get_cease_desist_template(self) -> str:
-        """Cease and desist letter template"""
-        return """CEASE AND DESIST LETTER
+        """
+Cease and desist letter template"""
+        return """
+CEASE AND DESIST LETTER
 
 {{ current_date }}
 
@@ -440,7 +450,8 @@ Generated: {{ generation_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}
         """.strip()
     
     async def generate(self, context: DocumentContext) -> GeneratedDocument:
-        """Generate cease and desist letter"""
+        """
+Generate cease and desist letter"""
         try:
             template = Template(self.template_content)
             
@@ -491,8 +502,10 @@ class LegalNoticeGenerator:
         self.template_content = self._get_legal_notice_template()
     
     def _get_legal_notice_template(self) -> str:
-        """Legal notice template"""
-        return """LEGAL NOTICE OF COPYRIGHT INFRINGEMENT
+        """
+Legal notice template"""
+        return """
+LEGAL NOTICE OF COPYRIGHT INFRINGEMENT
 
 {{ current_date }}
 
@@ -609,7 +622,8 @@ Timestamp: {{ generation_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}
         """.strip()
     
     async def generate(self, context: DocumentContext) -> GeneratedDocument:
-        """Generate legal notice"""
+        """
+Generate legal notice"""
         try:
             template = Template(self.template_content)
             

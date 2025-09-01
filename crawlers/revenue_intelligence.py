@@ -20,6 +20,7 @@ Business Logic Integration:
 - Creator collaboration revenue modeling
 - Multi-format content value assessment
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -40,7 +41,9 @@ from .intelligent_orchestration import ContentType, CreatorType
 logger = logging.getLogger(__name__)
 
 class RevenueStream(Enum):
-    """Revenue stream types."""
+    """
+Revenue stream types."""
+
     PLATFORM_ADVERTISING = "platform_advertising"
     DIRECT_MONETIZATION = "direct_monetization"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -54,6 +57,7 @@ class RevenueStream(Enum):
 
 class PerformanceMetric(Enum):
     """Performance metric types."""
+
     VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     CLICK_THROUGH_RATE = "click_through_rate"
@@ -78,7 +82,8 @@ class RevenueData:
 
 @dataclass
 class PerformanceData:
-    """Performance data structure."""
+    """
+Performance data structure."""
     content_id: str
     platform: str
     metric: PerformanceMetric
@@ -89,7 +94,8 @@ class PerformanceData:
 
 @dataclass
 class BusinessInsight:
-    """Business insight structure."""
+    """
+Business insight structure."""
     id: str
     type: str
     title: str
@@ -102,7 +108,8 @@ class BusinessInsight:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation."""
+    """
+Revenue optimization recommendation."""
     content_id: str
     current_revenue: Decimal
     optimized_revenue: Decimal
@@ -133,7 +140,8 @@ class AdvancedRevenueAnalyticsEngine:
     """
     
     def __init__(self):
-        """Initialize revenue analytics engine."""
+        """
+Initialize revenue analytics engine."""
         self.ml_engine = MLEngine()
         self.revenue_calculator = RevenueCalculator()
         self.analytics_repo = AnalyticsRepository()
@@ -772,7 +780,8 @@ class AdvancedRevenueAnalyticsEngine:
         period_start: Optional[datetime] = None,
         period_end: Optional[datetime] = None
     ) -> List[PerformanceData]:
-        """Get filtered performance data."""
+        """
+Get filtered performance data."""
         performance_data = self.performance_metrics.get(content_id, [])
         
         if period_start and period_end:
@@ -789,7 +798,8 @@ class AdvancedRevenueAnalyticsEngine:
         from_currency: str,
         to_currency: str
     ) -> Decimal:
-        """Convert currency (simplified implementation)."""
+        """
+Convert currency (simplified implementation)."""
         if from_currency == to_currency:
             return amount
         
@@ -811,7 +821,8 @@ class AdvancedRevenueAnalyticsEngine:
         return (current - previous) / previous
     
     async def _update_revenue_cache(self, content_id: str, platform: str):
-        """Update revenue cache for faster access."""
+        """
+Update revenue cache for faster access."""
         cache_key = f"{content_id}_{platform}"
         
         # Calculate aggregated metrics

@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class CollaborationRequest(BaseSchema):
-    """Collaboration request schema."""
+    """
+Collaboration request schema."""
     
     requester_id: UUID = Field(description="ID of the creator requesting collaboration")
     target_creator_id: UUID = Field(description="ID of the target creator")
@@ -122,7 +124,8 @@ class CollaborationOut(UUIDSchema, TimestampSchema):
 
 
 class CollaborationAgreement(UUIDSchema, TimestampSchema, AuditSchema):
-    """Legal collaboration agreement schema."""
+    """
+Legal collaboration agreement schema."""
     
     collaboration_id: UUID = Field(description="Associated collaboration ID")
     agreement_type: str = Field(description="Type of legal agreement")

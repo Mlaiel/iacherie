@@ -11,6 +11,7 @@ This forecasting engine and its algorithms are the exclusive intellectual proper
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -45,7 +46,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class ForecastModel(Enum):
-    """Available forecasting models"""
+    """
+Available forecasting models"""
+
     PROPHET = "prophet"
     LSTM = "lstm"
     ARIMA = "arima"
@@ -70,7 +73,8 @@ class ForecastResult:
 
 @dataclass 
 class TrainingData:
-    """Training data structure for forecasting models"""
+    """
+Training data structure for forecasting models"""
     timestamps: List[datetime]
     values: List[float]
     features: Optional[pd.DataFrame] = None
@@ -107,7 +111,8 @@ class ForecastingEngine:
     """
     
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the forecasting engine"""
+        """
+Initialize the forecasting engine"""
         self.cache_manager = cache_manager or CacheManager("forecasting_engine")
         self.models: Dict[str, Any] = {}
         self.scalers: Dict[str, MinMaxScaler] = {}
@@ -663,7 +668,8 @@ class ForecastingEngine:
         return np.array(X), np.array(y)
 
     def _create_feature_matrix(self, data: TrainingData) -> pd.DataFrame:
-        """Create feature matrix from time series data for ML models"""
+        """
+Create feature matrix from time series data for ML models"""
         df = pd.DataFrame({
             'timestamp': data.timestamps,
             'value': data.values
@@ -695,7 +701,8 @@ class ForecastingEngine:
         return df
 
     def _create_features_for_prediction(self, last_values: np.ndarray, period_ahead: int) -> List[float]:
-        """Create features for a future prediction"""
+        """
+Create features for a future prediction"""
         features = []
         
         # Add lag features
@@ -737,7 +744,8 @@ class ForecastingEngine:
         return features
 
     def _calculate_accuracy_metrics(self, actual: List[float], predicted: List[float]) -> Dict[str, float]:
-        """Calculate accuracy metrics for model evaluation"""
+        """
+Calculate accuracy metrics for model evaluation"""
         try:
             actual_arr = np.array(actual)
             predicted_arr = np.array(predicted)
@@ -812,7 +820,8 @@ class TimeSeriesForecaster:
         self.engine = forecasting_engine
         
     async def forecast_content_performance(self, historical_views: List[Tuple[datetime, int]], days_ahead: int = 30) -> ForecastResult:
-        """Forecast content performance metrics"""
+        """
+Forecast content performance metrics"""
         timestamps, values = zip(*historical_views) if historical_views else ([], [])
         
         data = TrainingData(
@@ -832,7 +841,8 @@ class ContentPerformancePredictor:
         self.engine = forecasting_engine
         
     async def predict_viral_potential(self, content_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict viral potential of content"""
+        """
+Predict viral potential of content"""
         # Implementation would include viral coefficient calculation
         # Algorithm favorability scoring, engagement prediction, etc.
         return {
@@ -842,13 +852,15 @@ class ContentPerformancePredictor:
         }
 
 class RevenueForecaster:
-    """Specialized revenue forecasting component"""
+    """
+Specialized revenue forecasting component"""
     
     def __init__(self, forecasting_engine: ForecastingEngine):
         self.engine = forecasting_engine
         
     async def forecast_monthly_revenue(self, historical_revenue: List[Tuple[datetime, float]], months_ahead: int = 6) -> ForecastResult:
-        """Forecast monthly revenue"""
+        """
+Forecast monthly revenue"""
         timestamps, values = zip(*historical_revenue) if historical_revenue else ([], [])
         
         data = TrainingData(
@@ -868,7 +880,8 @@ class AudienceGrowthPredictor:
         self.engine = forecasting_engine
         
     async def predict_subscriber_growth(self, historical_subscribers: List[Tuple[datetime, int]], days_ahead: int = 90) -> Dict[str, Any]:
-        """Predict subscriber growth with viral coefficient modeling"""
+        """
+Predict subscriber growth with viral coefficient modeling"""
         timestamps, values = zip(*historical_subscribers) if historical_subscribers else ([], [])
         
         # Calculate growth rate and viral coefficient
@@ -905,7 +918,8 @@ class CollaborationSuccessPredictor:
         self.engine = forecasting_engine
         
     async def predict_collaboration_outcome(self, collaboration_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict collaboration success probability and impact"""
+        """
+Predict collaboration success probability and impact"""
         # Extract key features
         audience_overlap = collaboration_features.get('audience_overlap', 0.3)
         engagement_compatibility = collaboration_features.get('engagement_compatibility', 0.7)
@@ -934,7 +948,8 @@ class CollaborationSuccessPredictor:
         }
     
     def _identify_collaboration_risks(self, features: Dict[str, Any]) -> List[str]:
-        """Identify risks in collaboration"""
+        """
+Identify risks in collaboration"""
         risks = []
         
         if features.get('audience_overlap', 0.3) < 0.2:

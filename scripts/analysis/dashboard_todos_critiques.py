@@ -5,12 +5,14 @@ Script de surveillance des TODOs par impact métier pour priorisation
 Usage: python dashboard_todos_critiques.py
 Output: Rapport priorité business + fichiers critiques
 """
+
 import json
 import os
 from pathlib import Path
 
 def load_audit_report():
-    """Charge le rapport d'audit existant"""
+    """
+Charge le rapport d'audit existant"""
     report_file = "AUDIT_CODE_BUSINESS_IMPACT_REPORT.json"
     
     if not os.path.exists(report_file):
@@ -41,7 +43,8 @@ def extract_critical_todos(report):
     return sorted(critical_files, key=lambda x: (x['score'], x['issues']), reverse=True)
 
 def display_dashboard(report):
-    """Affiche le dashboard de monitoring"""
+    """
+Affiche le dashboard de monitoring"""
     
     print("=" * 80)
     print("🚨 DASHBOARD TODOs CRITIQUES - MONITORING TEMPS RÉEL")

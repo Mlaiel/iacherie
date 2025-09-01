@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import logging
 import time
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class UserContext:
-    """User authentication context"""
+    """
+User authentication context"""
     user_id: str
     email: Optional[str] = None
     roles: List[str] = None
@@ -46,7 +48,8 @@ class UserContext:
 
 @dataclass
 class APIKey:
-    """API Key information"""
+    """
+API Key information"""
     key_id: str
     user_id: str
     key_hash: str
@@ -174,7 +177,8 @@ class AuthMiddleware:
         return False
     
     async def _authenticate_jwt(self, request: Request) -> Optional[UserContext]:
-        """Authenticate using JWT token"""
+        """
+Authenticate using JWT token"""
         try:
             # Extract token from Authorization header
             credentials: HTTPAuthorizationCredentials = await self.security(request)
@@ -289,7 +293,8 @@ class AuthMiddleware:
         return permissions
     
     async def _is_token_blacklisted(self, token: str) -> bool:
-        """Check if JWT token is blacklisted"""
+        """
+Check if JWT token is blacklisted"""
         if not self.redis:
             return False
         

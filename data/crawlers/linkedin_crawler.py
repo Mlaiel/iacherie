@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -44,7 +45,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class LinkedInProfile:
-    """LinkedIn profile information"""
+    """
+LinkedIn profile information"""
     profile_id: str
     username: str
     display_name: str
@@ -74,7 +76,8 @@ class LinkedInProfile:
 
 @dataclass
 class LinkedInPost:
-    """LinkedIn post information"""
+    """
+LinkedIn post information"""
     post_id: str
     author_profile: LinkedInProfile
     content: str
@@ -103,7 +106,8 @@ class LinkedInPost:
 
 @dataclass
 class LinkedInCompany:
-    """LinkedIn company page information"""
+    """
+LinkedIn company page information"""
     company_id: str
     name: str
     tagline: str

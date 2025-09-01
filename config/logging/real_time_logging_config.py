@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 import asyncio
@@ -32,7 +33,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class RealTimeEventType(str, Enum):
-    """Types of real-time events"""
+    """
+Types of real-time events"""
+
     LIVE_STREAM_START = "live_stream_start"
     LIVE_STREAM_END = "live_stream_end"
     VIEWER_JOIN = "viewer_join"
@@ -52,6 +55,7 @@ class RealTimeEventType(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -61,6 +65,7 @@ class AlertSeverity(str, Enum):
 
 class StreamingPlatform(str, Enum):
     """Streaming platforms for real-time events"""
+
     YOUTUBE_LIVE = "youtube_live"
     TWITCH = "twitch"
     INSTAGRAM_LIVE = "instagram_live"
@@ -110,7 +115,8 @@ class RealTimeLogConfig:
 
 
 class RealTimeLogger:
-    """Specialized logger for real-time operations"""
+    """
+Specialized logger for real-time operations"""
     
     def __init__(self, config: RealTimeLogConfig):
         self.config = config
@@ -125,7 +131,8 @@ class RealTimeLogger:
         }
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for real-time events"""
+        """
+Setup structured logger for real-time events"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -154,7 +161,8 @@ class RealTimeLogger:
         return event_dict
     
     def add_alert_callback(self, callback: Callable[[Dict[str, Any]], None]) -> None:
-        """Add callback for real-time alerts"""
+        """
+Add callback for real-time alerts"""
         self.alert_callbacks.append(callback)
     
     def log_live_stream_event(
@@ -168,7 +176,8 @@ class RealTimeLogger:
         technical_metrics: Dict[str, Any],
         event_data: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log live streaming events in real-time"""
+        """
+Log live streaming events in real-time"""
         if not self.config.enable_live_event_logging:
             return
             
@@ -504,7 +513,8 @@ class RealTimeLogger:
         )
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time logging system metrics"""
+        """
+Get real-time logging system metrics"""
         return {
             "live_event_logging": self.config.enable_live_event_logging,
             "streaming_analytics": self.config.enable_streaming_analytics,
@@ -526,12 +536,14 @@ class RealTimeLoggingConfig:
     
     @staticmethod
     def create_default_config() -> RealTimeLogConfig:
-        """Create default real-time logging configuration"""
+        """
+Create default real-time logging configuration"""
         return RealTimeLogConfig()
     
     @staticmethod
     def create_high_performance_config() -> RealTimeLogConfig:
-        """Create high-performance real-time logging configuration"""
+        """
+Create high-performance real-time logging configuration"""
         return RealTimeLogConfig(
             enable_live_event_logging=True,
             enable_streaming_analytics=True,

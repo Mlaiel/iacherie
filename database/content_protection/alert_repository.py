@@ -5,7 +5,7 @@ with real-time monitoring, advanced analytics, and automated response capabiliti
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertPriority(Enum):
-    """Alert priority levels"""
+    """
+Alert priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,6 +58,7 @@ class AlertPriority(Enum):
 
 class AlertStatus(Enum):
     """Alert status types"""
+
     PENDING = "pending"
     INVESTIGATING = "investigating"
     ESCALATED = "escalated"
@@ -65,6 +69,7 @@ class AlertStatus(Enum):
 
 class AlertCategory(Enum):
     """Alert categories"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_MANIPULATION = "content_manipulation"
@@ -767,7 +772,8 @@ class ProtectionAlertRepository:
             return base_priority
     
     async def _should_auto_escalate(self, alert: ProtectionAlert) -> bool:
-        """Determine if alert should be automatically escalated"""
+        """
+Determine if alert should be automatically escalated"""
         if alert.alert_priority in [AlertPriority.CRITICAL.value, AlertPriority.EMERGENCY.value]:
             return True
         
@@ -859,7 +865,8 @@ class ProtectionAlertRepository:
         return current_priority
     
     async def _calculate_escalation_rate(self) -> float:
-        """Calculate current escalation rate"""
+        """
+Calculate current escalation rate"""
         try:
             total_alerts = await self.db_session.query(ProtectionAlert).count()
             escalated_alerts = await self.db_session.query(ProtectionAlert).filter(
@@ -876,7 +883,8 @@ class ProtectionAlertRepository:
         start_date: datetime,
         group_by: str
     ) -> List[Dict[str, Any]]:
-        """Generate time series data for analytics"""
+        """
+Generate time series data for analytics"""
         try:
             time_format = {
                 "hour": "%Y-%m-%d %H:00:00",

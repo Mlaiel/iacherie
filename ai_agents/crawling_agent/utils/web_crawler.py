@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -76,7 +77,9 @@ from ...security.content_sanitizer import ContentSanitizer
 logger = logging.getLogger(__name__)
 
 class CrawlerMode(Enum):
-    """Web crawler operational modes"""
+    """
+Web crawler operational modes"""
+
     FAST = "fast"
     THOROUGH = "thorough"
     STEALTH = "stealth"
@@ -86,6 +89,7 @@ class CrawlerMode(Enum):
 
 class ContentExtractionMethod(Enum):
     """Content extraction methods"""
+
     BEAUTIFULSOUP = "beautifulsoup"
     NEWSPAPER = "newspaper"
     TRAFILATURA = "trafilatura"
@@ -95,6 +99,7 @@ class ContentExtractionMethod(Enum):
 
 class RobotsPolicyLevel(Enum):
     """Robots.txt compliance levels"""
+
     STRICT = "strict"
     MODERATE = "moderate"
     LENIENT = "lenient"
@@ -144,7 +149,8 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlResult:
-    """Comprehensive crawl result structure"""
+    """
+Comprehensive crawl result structure"""
     url: str
     status_code: int
     title: str
@@ -339,7 +345,8 @@ class WebCrawler:
         }
 
     async def crawl_url(self, url: str, **kwargs) -> Optional[CrawlResult]:
-        """Crawl single URL with comprehensive error handling"""
+        """
+Crawl single URL with comprehensive error handling"""
         start_time = time.time()
         
         try:
@@ -446,7 +453,8 @@ class WebCrawler:
             return await self._crawl_with_aiohttp(url, **kwargs)
 
     async def _crawl_with_aiohttp(self, url: str, **kwargs) -> Optional[CrawlResult]:
-        """Crawl URL using aiohttp for fast static content"""
+        """
+Crawl URL using aiohttp for fast static content"""
         headers = self._get_request_headers()
         proxy = None
         
@@ -559,7 +567,8 @@ class WebCrawler:
         return headers
 
     def _detect_encoding(self, content: bytes, headers: Dict[str, str]) -> str:
-        """Detect content encoding from headers and content"""
+        """
+Detect content encoding from headers and content"""
         # Check Content-Type header
         content_type = headers.get('content-type', '').lower()
         if 'charset=' in content_type:
@@ -592,7 +601,8 @@ class WebCrawler:
     async def _build_crawl_result(self, url: str, status_code: int, headers: Dict[str, str],
                                 html_content: str, final_url: str, redirect_chain: List[str],
                                 encoding: str, response_time: float, cookies: Dict[str, str] = None) -> CrawlResult:
-        """Build comprehensive crawl result from raw response data"""
+        """
+Build comprehensive crawl result from raw response data"""
         
         # Parse HTML
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -743,7 +753,8 @@ class WebCrawler:
         return self._find_largest_text_block(soup)
 
     def _find_largest_text_block(self, soup: BeautifulSoup) -> str:
-        """Find the largest text block in the document"""
+        """
+Find the largest text block in the document"""
         largest_block = ""
         largest_size = 0
         
@@ -855,7 +866,8 @@ class WebCrawler:
         return internal_links, external_links
 
     def _extract_images_with_metadata(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract images with comprehensive metadata"""
+        """
+Extract images with comprehensive metadata"""
         images = []
         
         for img in soup.find_all('img'):
@@ -880,7 +892,8 @@ class WebCrawler:
         return images[:50]  # Limit number of images
 
     def _extract_videos_with_metadata(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract videos with metadata"""
+        """
+Extract videos with metadata"""
         videos = []
         
         # Video tags
@@ -910,7 +923,8 @@ class WebCrawler:
         return videos[:20]  # Limit number of videos
 
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate readability score using Flesch-Kincaid"""
+        """
+Calculate readability score using Flesch-Kincaid"""
         if not content or len(content) < 100:
             return 0.0
         
@@ -932,7 +946,8 @@ class WebCrawler:
             return max(0.0, min(100.0, score))
 
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word"""
+        """
+Count syllables in a word"""
         word = word.lower()
         count = 0
         vowels = "aeiouy"
@@ -1007,7 +1022,8 @@ class WebCrawler:
         return min(score, 100.0)
 
     def _calculate_seo_score(self, soup: BeautifulSoup, metadata: Dict) -> float:
-        """Calculate SEO quality score"""
+        """
+Calculate SEO quality score"""
         score = 0.0
         
         # Title optimization (0-25 points)
@@ -1060,7 +1076,8 @@ class WebCrawler:
         return min(score, 100.0)
 
     def _detect_content_language(self, content: str) -> str:
-        """Detect content language"""
+        """
+Detect content language"""
         if not content or len(content) < 50:
             return 'unknown'
         
@@ -1076,7 +1093,8 @@ class WebCrawler:
             return 'unknown'
 
     def _normalize_url(self, url: str) -> str:
-        """Normalize URL for consistency"""
+        """
+Normalize URL for consistency"""
         url = url.strip()
         if not url.startswith(('http://', 'https://')):
             url = 'https://' + url
@@ -1120,7 +1138,8 @@ class WebCrawler:
             return False
 
     async def _check_robots_compliance(self, url: str) -> bool:
-        """Check robots.txt compliance"""
+        """
+Check robots.txt compliance"""
         if self.config.robots_policy == RobotsPolicyLevel.IGNORE:
             return True
         
@@ -1193,7 +1212,8 @@ class WebCrawler:
             await asyncio.sleep(delay)
 
     async def _post_process_result(self, result: CrawlResult) -> CrawlResult:
-        """Post-process crawl result for quality and consistency"""
+        """
+Post-process crawl result for quality and consistency"""
         try:
             # Validate content length constraints
             if len(result.cleaned_content) < self.config.min_content_length:
@@ -1269,7 +1289,8 @@ class WebCrawler:
         }
 
     async def cleanup(self) -> None:
-        """Clean up resources and connections"""
+        """
+Clean up resources and connections"""
         if self.session:
             await self.session.close()
         
@@ -1298,7 +1319,8 @@ class SiteMonitor:
         
     async def add_site(self, url: str, check_interval_minutes: int = 60, 
                       change_threshold: float = 0.1) -> str:
-        """Add site to monitoring list"""
+        """
+Add site to monitoring list"""
         site_id = hashlib.md5(url.encode()).hexdigest()[:12]
         
         # Initial crawl
@@ -1319,7 +1341,8 @@ class SiteMonitor:
         return site_id
     
     async def check_site_changes(self, site_id: str) -> Optional[Dict]:
-        """Check specific site for changes"""
+        """
+Check specific site for changes"""
         if site_id not in self.monitored_sites:
             return None
         
@@ -1355,7 +1378,8 @@ class SiteMonitor:
         return None
     
     def _detect_changes(self, old_result: CrawlResult, new_result: CrawlResult) -> Dict:
-        """Detect and analyze changes between crawl results"""
+        """
+Detect and analyze changes between crawl results"""
         changes = {
             'content_changed': False,
             'title_changed': False,
@@ -1435,7 +1459,8 @@ class SiteMonitor:
         return len(intersection) / len(union) if union else 0.0
     
     async def start_monitoring(self) -> None:
-        """Start continuous monitoring of all sites"""
+        """
+Start continuous monitoring of all sites"""
         self.monitoring_active = True
         
         while self.monitoring_active:
@@ -1459,7 +1484,8 @@ class SiteMonitor:
         self.monitoring_active = False
     
     def get_monitoring_report(self) -> Dict:
-        """Get comprehensive monitoring report"""
+        """
+Get comprehensive monitoring report"""
         return {
             'monitored_sites_count': len(self.monitored_sites),
             'total_checks': sum(site['check_count'] for site in self.monitored_sites.values()),

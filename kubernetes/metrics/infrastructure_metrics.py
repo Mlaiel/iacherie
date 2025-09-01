@@ -32,6 +32,7 @@ Features:
 - Auto-scaling metrics
 - Service mesh monitoring
 """
+
 import asyncio
 import psutil
 import time
@@ -57,7 +58,9 @@ metrics_config = get_metrics_config()
 
 
 class ServiceType(Enum):
-    """Infrastructure service types"""
+    """
+Infrastructure service types"""
+
     API_GATEWAY = "api_gateway"
     DATABASE = "database"
     REDIS_CACHE = "redis_cache"
@@ -72,6 +75,7 @@ class ServiceType(Enum):
 
 class ResourceType(Enum):
     """System resource types"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -81,6 +85,7 @@ class ResourceType(Enum):
 
 class PerformanceStatus(Enum):
     """Performance status levels"""
+
     OPTIMAL = "optimal"
     GOOD = "good"
     WARNING = "warning"
@@ -105,7 +110,8 @@ class SystemMetrics:
 
 @dataclass
 class ServiceMetrics:
-    """Service-specific metrics"""
+    """
+Service-specific metrics"""
     service_type: ServiceType
     timestamp: datetime
     response_time_ms: float
@@ -119,7 +125,8 @@ class ServiceMetrics:
 
 @dataclass
 class DatabaseMetrics:
-    """Database performance metrics"""
+    """
+Database performance metrics"""
     timestamp: datetime
     active_connections: int
     max_connections: int
@@ -163,7 +170,8 @@ class InfrastructureMetricsCollector:
         ]
     
     async def collect_system_metrics(self) -> SystemMetrics:
-        """Collect comprehensive system metrics"""
+        """
+Collect comprehensive system metrics"""
         
         try:
             # CPU metrics
@@ -534,7 +542,8 @@ class InfrastructureMetricsCollector:
         )
     
     async def _collect_redis_metrics(self) -> ServiceMetrics:
-        """Collect Redis cache metrics"""
+        """
+Collect Redis cache metrics"""
         try:
             # Get Redis info
             redis_info = await self.redis_manager.get_redis_info()
@@ -648,7 +657,8 @@ class InfrastructureMetricsCollector:
         critical_threshold: float,
         invert: bool = False
     ) -> float:
-        """Calculate health score based on value and thresholds"""
+        """
+Calculate health score based on value and thresholds"""
         if invert:
             if value >= critical_threshold:
                 return 0
@@ -665,7 +675,8 @@ class InfrastructureMetricsCollector:
                 return 100
     
     def _get_status_from_score(self, score: float) -> str:
-        """Get status string from health score"""
+        """
+Get status string from health score"""
         if score >= 80:
             return "optimal"
         elif score >= 60:

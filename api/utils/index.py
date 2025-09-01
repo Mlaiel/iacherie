@@ -71,12 +71,14 @@ from .content_helpers import (
 
 
 def get_file_manager():
-    """Get file management utilities"""
+    """
+Get file management utilities"""
     return FileManager()
 
 
 def get_security_utils():
-    """Get security utility collection"""
+    """
+Get security utility collection"""
     return {
         'password_manager': PasswordManager(),
         'token_generator': TokenGenerator(),
@@ -87,7 +89,8 @@ def get_security_utils():
 
 
 def get_performance_utils():
-    """Get performance utility collection"""
+    """
+Get performance utility collection"""
     return {
         'cache_manager': CacheManager(),
         'rate_limiter': RateLimiter(),
@@ -98,7 +101,8 @@ def get_performance_utils():
 
 
 def get_api_utils():
-    """Get API utility collection"""
+    """
+Get API utility collection"""
     return {
         'response_formatter': ResponseFormatter(),
         'request_validator': RequestValidator(),
@@ -109,7 +113,8 @@ def get_api_utils():
 
 
 def get_content_utils():
-    """Get content utility collection"""
+    """
+Get content utility collection"""
     return {
         'content_analyzer': ContentAnalyzer(),
         'metadata_extractor': MetadataExtractor(),
@@ -120,7 +125,8 @@ def get_content_utils():
 
 
 def get_data_utils():
-    """Get data processing utility collection"""
+    """
+Get data processing utility collection"""
     return {
         'transformer': DataTransformer(),
         'validator': DataValidator(),
@@ -131,7 +137,8 @@ def get_data_utils():
 
 
 def get_all_utilities():
-    """Get all utility collections organized by category"""
+    """
+Get all utility collections organized by category"""
     return {
         'file_manager': get_file_manager(),
         'security': get_security_utils(),

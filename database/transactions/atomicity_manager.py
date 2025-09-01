@@ -12,6 +12,7 @@ the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
 """
+
 import asyncio
 import uuid
 import logging
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class OperationState(Enum):
-    """Operation state enumeration"""
+    """
+Operation state enumeration"""
+
     PENDING = "pending"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -39,6 +42,7 @@ class OperationState(Enum):
 
 class AtomicOperationType(Enum):
     """Types of atomic operations"""
+
     DATABASE_WRITE = "database_write"
     FILE_OPERATION = "file_operation"
     EXTERNAL_API = "external_api"
@@ -68,25 +72,29 @@ class AtomicOperation:
     
     @property
     def duration(self) -> Optional[float]:
-        """Calculate operation duration"""
+        """
+Calculate operation duration"""
         if self.executed_at and self.completed_at:
             return (self.completed_at - self.executed_at).total_seconds()
         return None
     
     def is_executable(self) -> bool:
-        """Check if operation can be executed"""
+        """
+Check if operation can be executed"""
         return (self.state == OperationState.PENDING and 
                 self.execute_func is not None and
                 self.retry_count <= self.max_retries)
     
     def is_rollbackable(self) -> bool:
-        """Check if operation can be rolled back"""
+        """
+Check if operation can be rolled back"""
         return (self.state == OperationState.COMPLETED and 
                 self.rollback_func is not None)
 
 
 class AtomicOperationGroup:
-    """Group of operations that must execute atomically"""
+    """
+Group of operations that must execute atomically"""
     
     def __init__(self, group_id: str = None):
         self.group_id = group_id or str(uuid.uuid4())
@@ -96,7 +104,8 @@ class AtomicOperationGroup:
         self.lock = threading.RLock()
     
     def add_operation(self, operation: AtomicOperation, dependencies: Optional[List[str]] = None) -> None:
-        """Add operation to group with optional dependencies"""
+        """
+Add operation to group with optional dependencies"""
         with self.lock:
             self.operations.append(operation)
             if dependencies:
@@ -105,7 +114,8 @@ class AtomicOperationGroup:
                 self.dependencies[operation.operation_id] = set()
     
     def get_executable_operations(self) -> List[AtomicOperation]:
-        """Get operations that can be executed (dependencies satisfied)"""
+        """
+Get operations that can be executed (dependencies satisfied)"""
         with self.lock:
             completed_ops = {op.operation_id for op in self.operations 
                            if op.state == OperationState.COMPLETED}
@@ -119,7 +129,8 @@ class AtomicOperationGroup:
             return executable
     
     def get_rollback_operations(self) -> List[AtomicOperation]:
-        """Get operations that need to be rolled back (in reverse execution order)"""
+        """
+Get operations that need to be rolled back (in reverse execution order)"""
         with self.lock:
             rollbackable = [op for op in self.operations if op.is_rollbackable()]
             # Sort by completion time in reverse order
@@ -128,21 +139,24 @@ class AtomicOperationGroup:
 
 
 class CompensationRegistry:
-    """Registry for compensation actions for atomic operations"""
+    """
+Registry for compensation actions for atomic operations"""
     
     def __init__(self):
         self.compensations: Dict[str, List[Callable]] = {}
         self.lock = threading.RLock()
     
     def register_compensation(self, operation_id: str, compensation_func: Callable) -> None:
-        """Register compensation function for operation"""
+        """
+Register compensation function for operation"""
         with self.lock:
             if operation_id not in self.compensations:
                 self.compensations[operation_id] = []
             self.compensations[operation_id].append(compensation_func)
     
     async def execute_compensations(self, operation_id: str) -> None:
-        """Execute all compensation functions for operation"""
+        """
+Execute all compensation functions for operation"""
         with self.lock:
             compensations = self.compensations.get(operation_id, [])
         
@@ -375,7 +389,8 @@ class AtomicityManager:
         await self.compensation_registry.execute_compensations(operation.operation_id)
     
     async def _call_function(self, func: Callable, timeout: float) -> Any:
-        """Call function with proper async/sync handling and timeout"""
+        """
+Call function with proper async/sync handling and timeout"""
         
         try:
             if asyncio.iscoroutinefunction(func):
@@ -423,7 +438,8 @@ class AtomicityManager:
         self.compensation_registry.register_compensation(operation_id, compensation_func)
     
     async def get_group_status(self, group_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of operation group"""
+        """
+Get status of operation group"""
         
         group = self.active_groups.get(group_id)
         if not group:

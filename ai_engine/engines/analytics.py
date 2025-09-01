@@ -15,7 +15,7 @@ for the IA-Influencer platform AI content processing engines.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import json
@@ -48,7 +49,9 @@ from pathlib import Path
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     PERFORMANCE = "performance"
     BUSINESS = "business"
     QUALITY = "quality"
@@ -61,6 +64,7 @@ class MetricType(Enum):
 
 class AggregationPeriod(Enum):
     """Metric aggregation time periods"""
+
     REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
@@ -82,7 +86,8 @@ class MetricPoint:
 @dataclass
 @dataclass
 class PerformanceMetrics:
-    """Performance-related metrics"""
+    """
+Performance-related metrics"""
     processing_time: float = 0.0
     throughput: float = 0.0
     memory_usage_mb: float = 0.0
@@ -99,7 +104,8 @@ class PerformanceMetrics:
 
 @dataclass
 class BusinessMetrics:
-    """Business-related metrics"""
+    """
+Business-related metrics"""
     total_content_processed: int = 0
     revenue_generated: float = 0.0
     active_users: int = 0
@@ -116,7 +122,8 @@ class BusinessMetrics:
 
 @dataclass
 class QualityMetrics:
-    """Content quality metrics"""
+    """
+Content quality metrics"""
     avg_quality_score: float = 0.0
     content_approval_rate: float = 0.0
     user_satisfaction_score: float = 0.0
@@ -131,7 +138,8 @@ class QualityMetrics:
 
 @dataclass
 class SecurityMetrics:
-    """Security-related metrics"""
+    """
+Security-related metrics"""
     security_threats_detected: int = 0
     security_incidents: int = 0
     failed_auth_attempts: int = 0
@@ -146,7 +154,8 @@ class SecurityMetrics:
 
 @dataclass
 class CollaborationMetrics:
-    """Collaboration and networking metrics"""
+    """
+Collaboration and networking metrics"""
     collaboration_requests: int = 0
     successful_collaborations: int = 0
     collaboration_success_rate: float = 0.0
@@ -522,7 +531,8 @@ class MetricsCollector:
             return timestamp
             
     def _calculate_aggregated_value(self, points: List[MetricPoint]) -> float:
-        """Calculate aggregated value from points"""
+        """
+Calculate aggregated value from points"""
         numeric_values = [p.value for p in points if isinstance(p.value, (int, float))]
         
         if not numeric_values:
@@ -532,7 +542,8 @@ class MetricsCollector:
         return statistics.mean(numeric_values)
         
     def _cleanup_old_data(self):
-        """Remove old aggregated data beyond retention period"""
+        """
+Remove old aggregated data beyond retention period"""
         cutoff_date = datetime.now() - timedelta(days=self.retention_days)
         
         for metric_name in self.aggregated_metrics:
@@ -543,7 +554,8 @@ class MetricsCollector:
                 ]
                 
     def _get_system_status(self) -> str:
-        """Get overall system status"""
+        """
+Get overall system status"""
         if self.performance_metrics.error_rate > 10:
             return "critical"
         elif self.performance_metrics.error_rate > 5:
@@ -753,22 +765,26 @@ def record_metric(metric_name: str, value: Union[int, float, str, bool], **kwarg
 
 
 def record_processing_time(engine_name: str, processing_time: float, **kwargs):
-    """Record processing time"""
+    """
+Record processing time"""
     metrics_collector.record_processing_time(engine_name, processing_time, **kwargs)
 
 
 def record_revenue(engine_name: str, revenue: float, **kwargs):
-    """Record revenue"""
+    """
+Record revenue"""
     metrics_collector.record_revenue(engine_name, revenue, **kwargs)
 
 
 def get_dashboard_data() -> Dict[str, Any]:
-    """Get real-time dashboard data"""
+    """
+Get real-time dashboard data"""
     return metrics_collector.get_real_time_dashboard()
 
 
 def get_metrics_summary(**kwargs) -> Dict[str, Any]:
-    """Get metrics summary"""
+    """
+Get metrics summary"""
     return metrics_collector.get_metrics_summary(**kwargs)
 
 

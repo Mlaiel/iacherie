@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionStatus(Enum):
-    """WebSocket connection status"""
+    """
+WebSocket connection status"""
+
     CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATED = "authenticated"
@@ -56,6 +59,7 @@ class ConnectionStatus(Enum):
 
 class MessageType(Enum):
     """Real-time message types"""
+
     CHAT = "chat"
     COLLABORATION = "collaboration"
     NOTIFICATION = "notification"
@@ -70,6 +74,7 @@ class MessageType(Enum):
 
 class RoomType(Enum):
     """Collaboration room types"""
+
     PROJECT = "project"
     MUSIC_SESSION = "music_session"
     LIVE_STREAM = "live_stream"
@@ -267,7 +272,8 @@ class ConnectionPool:
         device_info: Dict[str, Any],
         location: Dict[str, Any]
     ):
-        """Add new WebSocket connection to pool"""
+        """
+Add new WebSocket connection to pool"""
         self.connections[connection_id] = websocket
         
         if user_id not in self.user_connections:
@@ -320,15 +326,18 @@ class ConnectionPool:
         return self.connections.get(connection_id)
     
     def get_user_connections(self, user_id: str) -> List[str]:
-        """Get all connection IDs for a user"""
+        """
+Get all connection IDs for a user"""
         return list(self.user_connections.get(user_id, set()))
     
     def get_room_connections(self, room_id: str) -> List[str]:
-        """Get all connection IDs in a room"""
+        """
+Get all connection IDs in a room"""
         return list(self.room_connections.get(room_id, set()))
     
     async def join_room(self, connection_id: str, room_id: str):
-        """Add connection to a collaboration room"""
+        """
+Add connection to a collaboration room"""
         if connection_id in self.connection_info:
             self.connection_info[connection_id].rooms.add(room_id)
             
@@ -337,7 +346,8 @@ class ConnectionPool:
             self.room_connections[room_id].add(connection_id)
     
     async def leave_room(self, connection_id: str, room_id: str):
-        """Remove connection from a collaboration room"""
+        """
+Remove connection from a collaboration room"""
         if connection_id in self.connection_info:
             self.connection_info[connection_id].rooms.discard(room_id)
             
@@ -347,16 +357,19 @@ class ConnectionPool:
                     del self.room_connections[room_id]
     
     def update_activity(self, connection_id: str):
-        """Update last activity timestamp"""
+        """
+Update last activity timestamp"""
         if connection_id in self.connection_info:
             self.connection_info[connection_id].last_activity = datetime.now(timezone.utc)
     
     def get_connection_count(self) -> int:
-        """Get total number of active connections"""
+        """
+Get total number of active connections"""
         return len(self.connections)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get connection pool statistics"""
+        """
+Get connection pool statistics"""
         creator_types = {}
         for info in self.connection_info.values():
             creator_type = info.creator_type
@@ -723,7 +736,8 @@ class WebSocketManager:
             )
     
     async def get_room_participants(self, room_id: str) -> List[Dict[str, Any]]:
-        """Get list of room participants with status"""
+        """
+Get list of room participants with status"""
         room_record = self.db_session.query(CollaborationRoom).filter(
             CollaborationRoom.room_id == room_id
         ).first()
@@ -753,7 +767,8 @@ class WebSocketManager:
         user_id: str,
         creator_type: str
     ):
-        """Cache connection info in Redis"""
+        """
+Cache connection info in Redis"""
         connection_data = {
             'user_id': user_id,
             'creator_type': creator_type,
@@ -815,7 +830,8 @@ class WebSocketManager:
         message_type: MessageType,
         handler: Callable
     ):
-        """Register message handler for specific message type"""
+        """
+Register message handler for specific message type"""
         if message_type not in self.message_handlers:
             self.message_handlers[message_type] = []
         self.message_handlers[message_type].append(handler)
@@ -825,7 +841,8 @@ class WebSocketManager:
         connection_id: str,
         raw_message: str
     ):
-        """Process incoming WebSocket message"""
+        """
+Process incoming WebSocket message"""
         try:
             message_data = json.loads(raw_message)
             message_type = MessageType(message_data.get('type'))

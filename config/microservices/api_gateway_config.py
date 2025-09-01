@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import re
 
 
 class AuthenticationType(str, Enum):
-    """Authentication types supported by the gateway."""
+    """
+Authentication types supported by the gateway."""
+
     NONE = "none"
     JWT = "jwt"
     OAUTH2 = "oauth2"
@@ -34,6 +37,7 @@ class AuthenticationType(str, Enum):
 
 class RateLimitType(str, Enum):
     """Rate limiting types."""
+
     FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
@@ -42,6 +46,7 @@ class RateLimitType(str, Enum):
 
 class LoadBalancingMethod(str, Enum):
     """Load balancing methods."""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -51,6 +56,7 @@ class LoadBalancingMethod(str, Enum):
 
 class CacheStrategy(str, Enum):
     """Cache strategies."""
+
     NO_CACHE = "no_cache"
     CACHE_ALL = "cache_all"
     CACHE_GET_ONLY = "cache_get_only"
@@ -95,7 +101,8 @@ class UpstreamConfig:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration."""
+    """
+Rate limiting configuration."""
     type: RateLimitType = RateLimitType.SLIDING_WINDOW
     requests: int = 1000
     window: int = 60  # seconds
@@ -252,7 +259,8 @@ class APIGatewayConfig(BaseSettings):
         )
     
     def get_global_cache_config(self) -> CacheConfig:
-        """Get global cache configuration."""
+        """
+Get global cache configuration."""
         return CacheConfig(
             ttl=self.default_cache_ttl,
             redis_host=self.cache_redis_host,
@@ -261,7 +269,8 @@ class APIGatewayConfig(BaseSettings):
         )
     
     def get_global_cors_config(self) -> CORSConfig:
-        """Get global CORS configuration."""
+        """
+Get global CORS configuration."""
         return CORSConfig(
             allowed_origins=self.cors_allowed_origins,
             allowed_methods=self.cors_allowed_methods,
@@ -269,7 +278,8 @@ class APIGatewayConfig(BaseSettings):
         )
     
     def get_security_config(self) -> SecurityConfig:
-        """Get security configuration."""
+        """
+Get security configuration."""
         return SecurityConfig(
             jwt_secret=self.jwt_secret_key,
             jwt_algorithm=self.jwt_algorithm,

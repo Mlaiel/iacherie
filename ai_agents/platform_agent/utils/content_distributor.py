@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator
 from datetime import datetime, timedelta
@@ -61,7 +62,9 @@ from ...utils.quality_analyzer import QualityAnalyzer
 
 
 class ContentType(Enum):
-    """Supported content types for distribution"""
+    """
+Supported content types for distribution"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -77,6 +80,7 @@ class ContentType(Enum):
 
 class OptimizationLevel(Enum):
     """Content optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -86,6 +90,7 @@ class OptimizationLevel(Enum):
 
 class DistributionStrategy(Enum):
     """Distribution strategies for content"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMIZED_TIMING = "optimized_timing"
@@ -114,7 +119,8 @@ class PlatformSpecification:
 
 @dataclass
 class DistributionConfig:
-    """Configuration for content distribution"""
+    """
+Configuration for content distribution"""
     target_platforms: List[PlatformType]
     strategy: DistributionStrategy = DistributionStrategy.IMMEDIATE
     optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
@@ -134,7 +140,8 @@ class DistributionConfig:
 
 @dataclass
 class ContentMetadata:
-    """Extended content metadata for optimization"""
+    """
+Extended content metadata for optimization"""
     title: str
     description: str
     tags: List[str]
@@ -475,7 +482,8 @@ class ContentDistributor:
         return enhanced_content
 
     async def _enhance_audio_content(self, content: ContentItem) -> ContentItem:
-        """AI-powered audio enhancement"""
+        """
+AI-powered audio enhancement"""
         enhanced_content = content.copy()
         
         audio_path = content.media_files[0].file_path
@@ -518,7 +526,8 @@ class ContentDistributor:
         target_platforms: List[PlatformType],
         optimization_level: OptimizationLevel
     ) -> Dict[PlatformType, OptimizedContent]:
-        """Optimize content for each target platform"""
+        """
+Optimize content for each target platform"""
         optimized_content = {}
         
         for platform in target_platforms:
@@ -587,7 +596,8 @@ class ContentDistributor:
         distribution_id: str,
         user_id: str
     ) -> Dict[PlatformType, DistributionResult]:
-        """Execute the chosen distribution strategy"""
+        """
+Execute the chosen distribution strategy"""
         
         match config.strategy:
             case DistributionStrategy.IMMEDIATE:
@@ -624,7 +634,8 @@ class ContentDistributor:
         optimized_content: Dict[PlatformType, OptimizedContent],
         user_id: str
     ) -> Dict[PlatformType, DistributionResult]:
-        """Execute immediate distribution to all platforms"""
+        """
+Execute immediate distribution to all platforms"""
         distribution_tasks = []
         
         for platform, content in optimized_content.items():
@@ -958,7 +969,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Publish video content across video platforms"""
+        """
+Publish video content across video platforms"""
         if platforms is None:
             platforms = [
                 PlatformType.YOUTUBE,
@@ -990,7 +1002,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Publish social media post across platforms"""
+        """
+Publish social media post across platforms"""
         if platforms is None:
             platforms = [
                 PlatformType.INSTAGRAM,
@@ -1030,7 +1043,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Schedule a series of content with intelligent timing"""
+        """
+Schedule a series of content with intelligent timing"""
         scheduling_results = []
         
         # Generate optimal schedule for the series

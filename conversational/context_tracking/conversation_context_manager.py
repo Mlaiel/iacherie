@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from ...utils.cache import CacheManager
 
 
 class ContextPriority(Enum):
-    """Context priority levels for intelligent management"""
+    """
+Context priority levels for intelligent management"""
+
     CRITICAL = "critical"        # User identity, security context
     HIGH = "high"               # Content protection, business data
     MEDIUM = "medium"           # Collaboration preferences, platform settings
@@ -39,6 +42,7 @@ class ContextPriority(Enum):
 
 class ContextScope(Enum):
     """Context scope definitions"""
+
     GLOBAL = "global"           # Cross-session persistent
     SESSION = "session"         # Session-specific
     CONVERSATION = "conversation"  # Conversation-specific
@@ -66,7 +70,8 @@ class ContextItem:
         return self.expires_at and datetime.utcnow() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
+        """
+Convert to dictionary representation"""
         return {
             "key": self.key,
             "value": self.value,
@@ -716,7 +721,8 @@ class ConversationContextManager:
             await self._remove_lru_contexts(total_items - self.max_context_items)
     
     async def _remove_lru_contexts(self, count_to_remove: int):
-        """Remove least recently used context items"""
+        """
+Remove least recently used context items"""
         # Implementation would analyze access_patterns and remove LRU items
         # This is a simplified version
         removed = 0

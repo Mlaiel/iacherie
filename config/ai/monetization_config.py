@@ -30,6 +30,7 @@ import os
 class RevenueModel(str, Enum):
     """
 Revenue generation models."""
+
     
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
@@ -45,6 +46,7 @@ Revenue generation models."""
 
 class PricingTier(str, Enum):
     """Pricing tiers for content monetization."""
+
     
     FREE = "free"
     BASIC = "basic"
@@ -55,6 +57,7 @@ class PricingTier(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods."""
+
     
     STRIPE = "stripe"
     PAYPAL = "paypal"
@@ -68,6 +71,7 @@ class PaymentMethod(str, Enum):
 
 class CurrencyCode(str, Enum):
     """Supported currencies."""
+
     
     EUR = "EUR"
     USD = "USD"

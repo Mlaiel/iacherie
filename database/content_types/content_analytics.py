@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics tracked"""
+    """
+Types of analytics metrics tracked"""
+
     VIEWS = "views"
     PLAYS = "plays"
     DOWNLOADS = "downloads"
@@ -50,6 +53,7 @@ class AnalyticsMetric(Enum):
 
 class TimeFrame(Enum):
     """Analytics time frame periods"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -61,6 +65,7 @@ class TimeFrame(Enum):
 
 class Platform(Enum):
     """Supported platforms for analytics tracking"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -158,7 +163,8 @@ class AnalyticsEngine:
         self.metric_calculators = self._initialize_calculators()
     
     def _initialize_calculators(self) -> Dict[str, callable]:
-        """Initialize metric calculation functions"""
+        """
+Initialize metric calculation functions"""
         return {
             'engagement_rate': self._calculate_engagement_rate,
             'conversion_rate': self._calculate_conversion_rate,
@@ -175,7 +181,8 @@ class AnalyticsEngine:
         content_id: str, 
         platform_data: Dict[Platform, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process comprehensive analytics for content across platforms"""
+        """
+Process comprehensive analytics for content across platforms"""
         try:
             analytics_results = {}
             
@@ -252,7 +259,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate conversion rate"""
+        """
+Calculate conversion rate"""
         if metrics.views == 0:
             return 0.0
         
@@ -264,7 +272,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate audience retention rate"""
+        """
+Calculate audience retention rate"""
         if metrics.plays == 0:
             return 0.0
         
@@ -275,7 +284,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate revenue per view"""
+        """
+Calculate revenue per view"""
         if metrics.views == 0:
             return 0.0
         
@@ -286,7 +296,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate growth rate compared to previous period"""
+        """
+Calculate growth rate compared to previous period"""
         # Implementation would compare with historical data
         return 0.0  # Placeholder
     
@@ -295,7 +306,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate audience quality score"""
+        """
+Calculate audience quality score"""
         quality_factors = []
         
         # Engagement quality
@@ -320,7 +332,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate overall content performance score"""
+        """
+Calculate overall content performance score"""
         scores = []
         
         # Engagement score (40% weight)
@@ -347,7 +360,8 @@ class AnalyticsEngine:
         metrics: ContentPerformanceMetrics, 
         raw_data: Dict[str, Any]
     ) -> float:
-        """Calculate viral potential score"""
+        """
+Calculate viral potential score"""
         viral_indicators = []
         
         # Share rate
@@ -373,7 +387,8 @@ class AnalyticsEngine:
         self, 
         platform_analytics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate metrics across all platforms"""
+        """
+Calculate metrics across all platforms"""
         total_views = sum(
             analytics.get('raw_metrics', {}).get('views', 0) 
             for analytics in platform_analytics.values()
@@ -407,14 +422,16 @@ class AnalyticsEngine:
         }
 
 class RealtimeAnalytics:
-    """Real-time analytics processing system"""
+    """
+Real-time analytics processing system"""
     
     def __init__(self):
         self.active_streams = {}
         self.metric_buffers = {}
     
     async def start_realtime_tracking(self, content_id: str, platforms: List[Platform]):
-        """Start real-time analytics tracking for content"""
+        """
+Start real-time analytics tracking for content"""
         for platform in platforms:
             stream_key = f"{content_id}_{platform.value}"
             self.active_streams[stream_key] = {

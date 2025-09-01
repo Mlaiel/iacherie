@@ -18,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceTestType(Enum):
-    """Types of performance tests."""
+    """
+Types of performance tests."""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     CONCURRENCY = "concurrency"
@@ -49,7 +51,8 @@ class PerformanceMetrics:
 
 @dataclass
 class PerformanceRequirement:
-    """Performance requirements for API endpoints."""
+    """
+Performance requirements for API endpoints."""
     endpoint: str
     max_response_time_ms: float = 100
     max_p95_response_time_ms: float = 150
@@ -86,12 +89,14 @@ class IndustrialAPIPerformanceTester:
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Cleanup session."""
+        """
+Cleanup session."""
         if self.session:
             await self.session.close()
 
     async def _make_timed_request(self, method: str, endpoint: str, **kwargs) -> Tuple[float, int, int]:
-        """Make a timed request and return response time, status, and content length."""
+        """
+Make a timed request and return response time, status, and content length."""
         url = f"{self.base_url}{endpoint}"
         start_time = time.perf_counter()
         
@@ -434,7 +439,8 @@ class TestIndustrialAPIPerformance:
 
     @pytest.fixture
     def performance_requirements(self):
-        """Define performance requirements for different endpoint types."""
+        """
+Define performance requirements for different endpoint types."""
         return {
             "/api/v1/health": PerformanceRequirement(
                 endpoint="/api/v1/health",

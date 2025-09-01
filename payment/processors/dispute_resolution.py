@@ -5,8 +5,9 @@ Advanced dispute resolution system for payment disputes, chargebacks,
 and customer conflicts with automated mediation and escalation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class DisputeType(Enum):
-    """Types of payment disputes"""
+    """
+Types of payment disputes"""
+
     CHARGEBACK = "chargeback"
     REFUND_REQUEST = "refund_request"
     BILLING_DISPUTE = "billing_dispute"
@@ -34,6 +37,7 @@ class DisputeType(Enum):
 
 class DisputeStatus(Enum):
     """Dispute resolution status"""
+
     OPEN = "open"
     INVESTIGATING = "investigating"
     AWAITING_RESPONSE = "awaiting_response"
@@ -46,6 +50,7 @@ class DisputeStatus(Enum):
 
 class DisputeResolution(Enum):
     """Dispute resolution outcomes"""
+
     FAVOR_CUSTOMER = "favor_customer"
     FAVOR_MERCHANT = "favor_merchant"
     PARTIAL_REFUND = "partial_refund"
@@ -56,6 +61,7 @@ class DisputeResolution(Enum):
 
 class EvidenceType(Enum):
     """Types of dispute evidence"""
+
     RECEIPT = "receipt"
     SHIPPING_PROOF = "shipping_proof"
     COMMUNICATION = "communication"
@@ -91,7 +97,8 @@ class DisputeCase:
 
 @dataclass
 class Evidence:
-    """Dispute evidence document"""
+    """
+Dispute evidence document"""
     id: str
     case_id: str
     evidence_type: EvidenceType
@@ -104,7 +111,8 @@ class Evidence:
 
 @dataclass
 class DisputeMessage:
-    """Dispute communication message"""
+    """
+Dispute communication message"""
     id: str
     case_id: str
     sender_id: str
@@ -127,7 +135,8 @@ class DisputeResolutionProcessor:
         config: Dict[str, Any],
         ai_mediation_enabled: bool = True
     ):
-        """Initialize dispute resolution processor"""
+        """
+Initialize dispute resolution processor"""
         self.config = config
         self.ai_mediation_enabled = ai_mediation_enabled
         self.logger = logging.getLogger(__name__)
@@ -499,17 +508,20 @@ class DisputeResolutionProcessor:
         return True
     
     async def _has_sufficient_evidence(self, case: DisputeCase) -> bool:
-        """Check if sufficient evidence has been collected"""
+        """
+Check if sufficient evidence has been collected"""
         # Mock check (in production, analyze evidence completeness)
         return len(case.evidence_submitted) >= 2
     
     async def _proceed_to_resolution(self, case: DisputeCase) -> None:
-        """Proceed case to resolution phase"""
+        """
+Proceed case to resolution phase"""
         case.status = DisputeStatus.INVESTIGATING
         case.updated_at = datetime.now()
     
     async def _ai_mediation(self, case: DisputeCase) -> Dict[str, Any]:
-        """AI-powered dispute mediation"""
+        """
+AI-powered dispute mediation"""
         # Mock AI mediation (in production, use ML models)
         return {
             "recommendation": DisputeResolution.PARTIAL_REFUND.value,

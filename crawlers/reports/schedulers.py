@@ -48,6 +48,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import warnings
@@ -121,6 +122,7 @@ if MONITORING_AVAILABLE:
 
 class ScheduleType(Enum):
     """Comprehensive schedule type enumeration."""
+
     ONCE = "once"
     RECURRING = "recurring"
     CONDITIONAL = "conditional"
@@ -134,6 +136,7 @@ class ScheduleType(Enum):
 
 class SchedulePriority(Enum):
     """Schedule priority levels."""
+
     CRITICAL = "critical"      # SLA: < 1 minute
     HIGH = "high"             # SLA: < 5 minutes
     MEDIUM = "medium"         # SLA: < 15 minutes
@@ -143,6 +146,7 @@ class SchedulePriority(Enum):
 
 class ScheduleStatus(Enum):
     """Schedule execution status."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -155,6 +159,7 @@ class ScheduleStatus(Enum):
 
 class TriggerType(Enum):
     """Event trigger types for real-time scheduling."""
+
     DATA_THRESHOLD = "data_threshold"
     TIME_INTERVAL = "time_interval"
     SYSTEM_EVENT = "system_event"
@@ -170,6 +175,7 @@ class TriggerType(Enum):
 
 class ScheduleStatus(Enum):
     """Schedule status enumeration."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -179,6 +185,7 @@ class ScheduleStatus(Enum):
 
 class TriggerType(Enum):
     """Trigger type enumeration."""
+
     TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     THRESHOLD_BASED = "threshold_based"
@@ -188,6 +195,7 @@ class TriggerType(Enum):
 
 class Priority(Enum):
     """Schedule priority levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -196,7 +204,8 @@ class Priority(Enum):
 
 @dataclass
 class ScheduleConfiguration:
-    """Schedule configuration dataclass."""
+    """
+Schedule configuration dataclass."""
     schedule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -275,21 +284,25 @@ class ReportScheduler(ABC):
     
     @abstractmethod
     async def stop(self):
-        """Stop the scheduler."""
+        """
+Stop the scheduler."""
         pass
     
     @abstractmethod
     async def add_schedule(self, config: ScheduleConfiguration) -> str:
-        """Add a new schedule."""
+        """
+Add a new schedule."""
         pass
     
     @abstractmethod
     async def remove_schedule(self, schedule_id: str) -> bool:
-        """Remove a schedule."""
+        """
+Remove a schedule."""
         pass
     
     async def update_schedule(self, schedule_id: str, config: ScheduleConfiguration) -> bool:
-        """Update an existing schedule."""
+        """
+Update an existing schedule."""
         try:
             with self._lock:
                 if schedule_id in self._schedules:
@@ -339,7 +352,8 @@ class ReportScheduler(ABC):
         return self._schedules.get(schedule_id)
     
     async def list_schedules(self, status: Optional[ScheduleStatus] = None) -> List[ScheduleConfiguration]:
-        """List all schedules, optionally filtered by status."""
+        """
+List all schedules, optionally filtered by status."""
         with self._lock:
             schedules = list(self._schedules.values())
             
@@ -350,7 +364,8 @@ class ReportScheduler(ABC):
             return schedules
     
     async def get_execution_history(self, schedule_id: str, limit: int = 50) -> List[ScheduleExecution]:
-        """Get execution history for a schedule."""
+        """
+Get execution history for a schedule."""
         executions = [
             exec for exec in self._executions.values()
             if exec.schedule_id == schedule_id
@@ -361,7 +376,8 @@ class ReportScheduler(ABC):
         return executions[:limit]
     
     async def execute_schedule(self, schedule_id: str, session: AsyncSession) -> ScheduleExecution:
-        """Execute a schedule manually."""
+        """
+Execute a schedule manually."""
         try:
             config = await self.get_schedule(schedule_id)
             if not config:
@@ -513,7 +529,8 @@ class AutomatedReportScheduler(ReportScheduler):
         self._resource_monitor = None
     
     async def start(self):
-        """Start the automated scheduler."""
+        """
+Start the automated scheduler."""
         self._running = True
         self.logger.info("Automated report scheduler started")
         
@@ -628,7 +645,8 @@ class AutomatedReportScheduler(ReportScheduler):
             loop.close()
     
     async def _is_schedule_due(self, schedule: ScheduleConfiguration, current_time: datetime) -> bool:
-        """Check if a schedule is due for execution."""
+        """
+Check if a schedule is due for execution."""
         try:
             if schedule.schedule_type == ScheduleType.ONCE:
                 return schedule.start_time and current_time >= schedule.start_time
@@ -673,13 +691,15 @@ class AutomatedReportScheduler(ReportScheduler):
         return None
     
     async def _check_conditions(self, schedule: ScheduleConfiguration) -> bool:
-        """Check if conditions are met for conditional scheduling."""
+        """
+Check if conditions are met for conditional scheduling."""
         # In a full implementation, this would check various conditions
         # such as data thresholds, system metrics, etc.
         return False
     
     async def _optimize_schedule(self, config: ScheduleConfiguration) -> ScheduleConfiguration:
-        """Optimize schedule timing based on ML analysis."""
+        """
+Optimize schedule timing based on ML analysis."""
         try:
             # In a full implementation, this would use ML to optimize timing
             # based on system load, data patterns, user activity, etc.
@@ -865,7 +885,8 @@ class RealTimeReportScheduler(ReportScheduler):
         self._real_time_enabled = True
     
     async def start(self):
-        """Start the real-time scheduler."""
+        """
+Start the real-time scheduler."""
         self._running = True
         self.logger.info("Real-time report scheduler started")
         
@@ -1039,7 +1060,8 @@ class RealTimeReportScheduler(ReportScheduler):
         return None
     
     def _execute_real_time_schedule(self, schedule: ScheduleConfiguration, context: Dict[str, Any]):
-        """Execute a real-time schedule synchronously."""
+        """
+Execute a real-time schedule synchronously."""
         try:
             # This would execute the schedule with real-time context
             self.logger.info(f"Executing real-time schedule: {schedule.schedule_id} with context: {context}")
@@ -1141,7 +1163,8 @@ class ReportLifecycleManager:
         return self._reports.get(report_id)
     
     async def update_access_tracking(self, report_id: str):
-        """Update access tracking for a report."""
+        """
+Update access tracking for a report."""
         try:
             if report_id in self._reports:
                 self._reports[report_id]["accessed_at"] = datetime.utcnow()

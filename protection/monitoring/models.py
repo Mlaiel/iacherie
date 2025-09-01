@@ -12,7 +12,7 @@ Technical Specifications:
 - Multi-tenant data isolation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import json
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -483,7 +484,8 @@ class MonitoringSessionCreate(BaseModel):
     custom_config: Dict[str, Any] = Field(default_factory=dict)
 
 class MonitoringSessionUpdate(BaseModel):
-    """Update monitoring session request."""
+    """
+Update monitoring session request."""
     session_name: Optional[str] = None
     priority: Optional[MonitoringPriorityEnum] = None
     platforms: Optional[List[str]] = None
@@ -492,7 +494,8 @@ class MonitoringSessionUpdate(BaseModel):
     custom_config: Optional[Dict[str, Any]] = None
 
 class ViolationDetectionResponse(BaseModel):
-    """Violation detection response."""
+    """
+Violation detection response."""
     id: str
     platform: str
     detected_url: str
@@ -508,7 +511,8 @@ class ViolationDetectionResponse(BaseModel):
         from_attributes = True
 
 class MonitoringMetricsResponse(BaseModel):
-    """Monitoring metrics response."""
+    """
+Monitoring metrics response."""
     session_id: Optional[str] = None
     metric_type: str
     platform: Optional[str] = None
@@ -521,7 +525,8 @@ class MonitoringMetricsResponse(BaseModel):
         from_attributes = True
 
 class SystemHealthResponse(BaseModel):
-    """System health metrics response."""
+    """
+System health metrics response."""
     cpu_usage_percent: Optional[float] = None
     memory_usage_percent: Optional[float] = None
     disk_usage_percent: Optional[float] = None
@@ -535,7 +540,8 @@ class SystemHealthResponse(BaseModel):
         from_attributes = True
 
 class PlatformConfigUpdate(BaseModel):
-    """Platform configuration update request."""
+    """
+Platform configuration update request."""
     enabled: Optional[bool] = None
     scan_interval_seconds: Optional[int] = Field(None, ge=30, le=3600)
     similarity_threshold: Optional[float] = Field(None, ge=0.0, le=1.0)
@@ -546,7 +552,8 @@ class PlatformConfigUpdate(BaseModel):
 # Database utility functions
 
 def create_monitoring_indexes(engine):
-    """Create additional database indexes for performance optimization."""
+    """
+Create additional database indexes for performance optimization."""
     from sqlalchemy import text
     
     # Time-series partitioning indexes
@@ -577,7 +584,8 @@ def setup_monitoring_database(engine):
     setup_time_series_partitioning(engine)
 
 def setup_time_series_partitioning(engine):
-    """Set up time-series partitioning for high-volume tables."""
+    """
+Set up time-series partitioning for high-volume tables."""
     from sqlalchemy import text
     
     # This would set up monthly partitioning for metrics tables

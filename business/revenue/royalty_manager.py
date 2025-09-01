@@ -5,7 +5,7 @@ Industrial-grade royalty management system handling complex royalty
 calculations, distributions, and rights management for content creators.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -16,6 +16,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Royalty Management
 ============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class RoyaltyType(Enum):
-    """Royalty types"""
+    """
+Royalty types"""
+
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -80,7 +83,8 @@ class RoyaltyManager:
         self.metrics = metrics_collector
         
     async def initialize(self):
-        """Initialize royalty manager"""
+        """
+Initialize royalty manager"""
         try:
             logger.info("Royalty manager initialized successfully")
             

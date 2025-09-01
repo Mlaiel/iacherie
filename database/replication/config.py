@@ -7,6 +7,7 @@ and topology configurations for the content creator platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import yaml
 import logging
@@ -20,7 +21,8 @@ import json
 
 @dataclass
 class DatabaseConfig:
-    """Database-specific configuration"""
+    """
+Database-specific configuration"""
     host: str
     port: int
     database: str

@@ -18,6 +18,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import time
 import threading
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceCategory(Enum):
-    """Performance monitoring categories"""
+    """
+Performance monitoring categories"""
+
     API_ENDPOINT = "api_endpoint"
     DATABASE_QUERY = "database_query"
     AI_PROCESSING = "ai_processing"
@@ -54,6 +57,7 @@ class PerformanceCategory(Enum):
 
 class PerformanceImpact(Enum):
     """Business impact levels for performance issues"""
+
     CRITICAL = "critical"  # Affects core business functions
     HIGH = "high"         # Affects user experience significantly
     MEDIUM = "medium"     # Noticeable but manageable
@@ -103,7 +107,8 @@ class PerformanceProfile:
 
 @dataclass
 class ResourceUsage:
-    """Enhanced system resource usage with trend analysis"""
+    """
+Enhanced system resource usage with trend analysis"""
     timestamp: datetime
     cpu_percent: float
     memory_percent: float
@@ -129,7 +134,8 @@ class ResourceUsage:
 
 @dataclass
 class PerformanceAlert:
-    """Enhanced performance alert with intelligent thresholds"""
+    """
+Enhanced performance alert with intelligent thresholds"""
     name: str
     metric: str
     threshold: float
@@ -179,7 +185,8 @@ class AIPerformanceAnalyzer:
         self.anomaly_thresholds: Dict[str, Tuple[float, float]] = {}
         
     def analyze_bottlenecks(self, profiles: Dict[str, PerformanceProfile]) -> List[BottleneckAnalysis]:
-        """Analyze performance profiles to identify bottlenecks"""
+        """
+Analyze performance profiles to identify bottlenecks"""
         bottlenecks = []
         
         for operation, profile in profiles.items():
@@ -218,7 +225,8 @@ class AIPerformanceAnalyzer:
         return sorted(bottlenecks, key=lambda x: x.confidence_score, reverse=True)
     
     def _get_time_threshold(self, category: PerformanceCategory) -> float:
-        """Get acceptable time thresholds by category"""
+        """
+Get acceptable time thresholds by category"""
         thresholds = {
             PerformanceCategory.API_ENDPOINT: 500.0,  # 500ms
             PerformanceCategory.DATABASE_QUERY: 100.0,  # 100ms
@@ -234,7 +242,8 @@ class AIPerformanceAnalyzer:
         return thresholds.get(category, 1000.0)
     
     def _identify_bottleneck_type(self, profile: PerformanceProfile) -> str:
-        """Identify the type of bottleneck based on performance patterns"""
+        """
+Identify the type of bottleneck based on performance patterns"""
         if profile.category == PerformanceCategory.DATABASE_QUERY:
             return "database"
         elif profile.category in [PerformanceCategory.AI_PROCESSING, PerformanceCategory.FINGERPRINT_GENERATION]:
@@ -267,7 +276,8 @@ class AIPerformanceAnalyzer:
             return PerformanceImpact.LOW
     
     def _calculate_confidence(self, profile: PerformanceProfile, *indicators: bool) -> float:
-        """Calculate confidence score for bottleneck detection"""
+        """
+Calculate confidence score for bottleneck detection"""
         base_confidence = 0.5
         
         # Sample size factor
@@ -279,7 +289,8 @@ class AIPerformanceAnalyzer:
         return min(base_confidence + sample_factor + indicator_factor, 1.0)
     
     def _determine_root_cause(self, profile: PerformanceProfile, bottleneck_type: str) -> str:
-        """Determine the root cause of the performance issue"""
+        """
+Determine the root cause of the performance issue"""
         causes = {
             "database": "Slow database queries or connection pool exhaustion",
             "ai_processing": "AI model processing overhead or insufficient GPU resources",
@@ -304,7 +315,8 @@ class AIPerformanceAnalyzer:
         return affected
     
     def _generate_recommendations(self, profile: PerformanceProfile, bottleneck_type: str) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = {
             "database": [
                 "Add database indexes for frequently queried columns",
@@ -365,7 +377,8 @@ class AIPerformanceAnalyzer:
             return 15.0
     
     def _describe_business_impact(self, profile: PerformanceProfile) -> str:
-        """Describe the business impact of the performance issue"""
+        """
+Describe the business impact of the performance issue"""
         impacts = {
             PerformanceCategory.API_ENDPOINT: "Affects user experience and platform responsiveness",
             PerformanceCategory.DATABASE_QUERY: "Impacts data access speed and system scalability",
@@ -428,7 +441,8 @@ class PerformanceTracker:
         self._optimizer = PerformanceOptimizer()
         
     async def start_tracking(self):
-        """Start performance tracking"""
+        """
+Start performance tracking"""
         if self._tracking:
             logger.warning("Performance tracking already running")
             return
@@ -573,7 +587,8 @@ class PerformanceTracker:
             self._record_performance_sync(operation, duration, labels)
             
     def track_function(self, operation: Optional[str] = None, **labels):
-        """Decorator for tracking function performance"""
+        """
+Decorator for tracking function performance"""
         def decorator(func):
             op_name = operation or f"{func.__module__}.{func.__name__}"
             
@@ -659,12 +674,14 @@ class PerformanceTracker:
                     profile.p99_time = sorted_samples[int(len(sorted_samples) * 0.99)]
                     
     async def _update_profiles(self):
-        """Update performance profiles with calculated metrics"""
+        """
+Update performance profiles with calculated metrics"""
         # This method is called periodically to update derived metrics
         pass
         
     async def _check_performance_alerts(self):
-        """Check performance thresholds and trigger alerts"""
+        """
+Check performance thresholds and trigger alerts"""
         for alert_name, alert in self._performance_alerts.items():
             if not alert.enabled:
                 continue
@@ -850,7 +867,8 @@ class PerformanceTracker:
         
     # Public interface methods
     def add_performance_alert(self, alert: PerformanceAlert):
-        """Add a performance alert"""
+        """
+Add a performance alert"""
         self._performance_alerts[alert.name] = alert
         logger.info(f"Added performance alert: {alert.name}")
         
@@ -957,7 +975,8 @@ class PerformanceTracker:
         return self._bottleneck_detector.get_current_bottlenecks()
         
     def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Get performance optimization recommendations"""
+        """
+Get performance optimization recommendations"""
         return self._optimizer.generate_recommendations(
             self._profiles,
             self._resource_history
@@ -965,13 +984,15 @@ class PerformanceTracker:
 
 
 class BottleneckDetector:
-    """Detect performance bottlenecks"""
+    """
+Detect performance bottlenecks"""
     
     def __init__(self):
         self._current_bottlenecks = []
         
     def analyze(self, profiles: Dict[str, PerformanceProfile], resource_history: deque) -> List[Dict[str, Any]]:
-        """Analyze for bottlenecks"""
+        """
+Analyze for bottlenecks"""
         bottlenecks = []
         
         # Analyze operation performance
@@ -1026,14 +1047,16 @@ class BottleneckDetector:
 
 
 class PerformanceOptimizer:
-    """Generate performance optimization recommendations"""
+    """
+Generate performance optimization recommendations"""
     
     def generate_recommendations(
         self,
         profiles: Dict[str, PerformanceProfile],
         resource_history: deque
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         # Analyze operation patterns

@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
 """
+
 import os
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
@@ -20,7 +21,9 @@ import json
 from pathlib import Path
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
+    """
+Environment types for configuration"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -28,6 +31,7 @@ class EnvironmentType(Enum):
 
 class LogLevel(Enum):
     """Logging levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"

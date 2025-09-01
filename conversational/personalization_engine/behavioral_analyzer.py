@@ -9,11 +9,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class BehaviorType(str, Enum):
-    """Types of user behaviors to analyze"""
+    """
+Types of user behaviors to analyze"""
+
     CONTENT_CONSUMPTION = "content_consumption"
     CREATION_PATTERN = "creation_pattern"
     ENGAGEMENT_STYLE = "engagement_style"
@@ -48,6 +51,7 @@ class BehaviorType(str, Enum):
 
 class EngagementLevel(str, Enum):
     """User engagement levels"""
+
     HIGH_ENGAGED = "high_engaged"
     MODERATELY_ENGAGED = "moderately_engaged"
     LOW_ENGAGED = "low_engaged"
@@ -57,6 +61,7 @@ class EngagementLevel(str, Enum):
 
 class ContentInteractionType(str, Enum):
     """Types of content interactions"""
+
     VIEW = "view"
     LIKE = "like"
     SHARE = "share"
@@ -84,7 +89,8 @@ class BehaviorPattern:
 
 @dataclass
 class EngagementMetrics:
-    """User engagement metrics"""
+    """
+User engagement metrics"""
     user_id: str
     engagement_level: EngagementLevel
     session_duration_avg: float
@@ -100,7 +106,8 @@ class EngagementMetrics:
 
 @dataclass
 class BehavioralInsight:
-    """Behavioral insight for personalization"""
+    """
+Behavioral insight for personalization"""
     insight_id: str
     user_id: str
     insight_type: str
@@ -692,7 +699,8 @@ def validate_behavior_analysis_request(
     user_id: str,
     analysis_period: Optional[Tuple[datetime, datetime]] = None
 ) -> bool:
-    """Validate behavior analysis request"""
+    """
+Validate behavior analysis request"""
     if not user_id or not isinstance(user_id, str):
         return False
     

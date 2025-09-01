@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -41,7 +42,9 @@ logger = get_logger(__name__)
 
 
 class CampaignType(Enum):
-    """Types of marketing campaigns"""
+    """
+Types of marketing campaigns"""
+
     CONTENT_PROMOTION = "content_promotion"
     BRAND_AWARENESS = "brand_awareness"
     AUDIENCE_GROWTH = "audience_growth"
@@ -56,6 +59,7 @@ class CampaignType(Enum):
 
 class CampaignStatus(Enum):
     """Campaign status types"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -66,6 +70,7 @@ class CampaignStatus(Enum):
 
 class AttributionModel(Enum):
     """Attribution model types"""
+
     FIRST_TOUCH = "first_touch"
     LAST_TOUCH = "last_touch"
     LINEAR = "linear"
@@ -92,7 +97,8 @@ class CampaignAnalyticsEvent(BaseEvent):
     cohort_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert campaign analytics event to dictionary"""
+        """
+Convert campaign analytics event to dictionary"""
         return {
             **asdict(self),
             'campaign_type': self.campaign_type.value,
@@ -104,7 +110,8 @@ class CampaignAnalyticsEvent(BaseEvent):
 
 @dataclass
 class CampaignPerformanceMetrics:
-    """Campaign performance metrics structure"""
+    """
+Campaign performance metrics structure"""
     impressions: int
     reach: int
     clicks: int
@@ -120,7 +127,8 @@ class CampaignPerformanceMetrics:
 
 
 class CampaignAnalyticsEventHandler(BaseEventHandler):
-    """Handles campaign analytics events with advanced processing"""
+    """
+Handles campaign analytics events with advanced processing"""
     
     def __init__(self):
         super().__init__()
@@ -132,7 +140,8 @@ class CampaignAnalyticsEventHandler(BaseEventHandler):
         self.attribution_analyzer = CampaignAttributionAnalyzer()
         
     async def handle(self, event: CampaignAnalyticsEvent) -> Dict[str, Any]:
-        """Process campaign analytics event comprehensively"""
+        """
+Process campaign analytics event comprehensively"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -219,7 +228,8 @@ class CampaignAnalyticsEventHandler(BaseEventHandler):
     
     async def _calculate_campaign_health_score(self, event: CampaignAnalyticsEvent,
                                              performance: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate comprehensive campaign health score"""
+        """
+Calculate comprehensive campaign health score"""
         # Performance health indicators
         engagement_health = min(performance.get('engagement_rate', 0) * 10, 10)
         conversion_health = min(performance.get('conversion_rate', 0) * 100, 10)
@@ -266,7 +276,8 @@ class CampaignAnalyticsEventHandler(BaseEventHandler):
     
     async def _generate_campaign_insights(self, event: CampaignAnalyticsEvent,
                                         performance: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable campaign insights"""
+        """
+Generate actionable campaign insights"""
         insights = []
         
         # Performance insights
@@ -329,7 +340,8 @@ class CampaignPerformanceTracker:
         self.statistical_analyzer = StatisticalAnalyzer()
         
     async def track_performance(self, event: CampaignAnalyticsEvent) -> Dict[str, Any]:
-        """Track comprehensive campaign performance"""
+        """
+Track comprehensive campaign performance"""
         # Extract performance metrics
         performance_metrics = await self._extract_performance_metrics(event)
         
@@ -363,7 +375,8 @@ class CampaignPerformanceTracker:
         }
     
     async def _extract_performance_metrics(self, event: CampaignAnalyticsEvent) -> Dict[str, float]:
-        """Extract and validate performance metrics"""
+        """
+Extract and validate performance metrics"""
         metrics = event.metrics_data
         
         # Basic metrics
@@ -400,7 +413,8 @@ class CampaignPerformanceTracker:
         }
     
     async def _calculate_engagement_metrics(self, event: CampaignAnalyticsEvent) -> Dict[str, float]:
-        """Calculate detailed engagement metrics"""
+        """
+Calculate detailed engagement metrics"""
         metrics = event.metrics_data
         
         # Individual engagement metrics
@@ -434,7 +448,8 @@ class CampaignPerformanceTracker:
 
 
 class CampaignOptimizationEngine:
-    """Optimizes campaign parameters using machine learning"""
+    """
+Optimizes campaign parameters using machine learning"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -442,7 +457,8 @@ class CampaignOptimizationEngine:
         self.scaler = StandardScaler()
         
     async def optimize_campaign(self, event: CampaignAnalyticsEvent) -> Dict[str, Any]:
-        """Optimize campaign parameters for better performance"""
+        """
+Optimize campaign parameters for better performance"""
         # Get historical campaign data
         historical_data = await self._get_historical_campaign_data(event.creator_id)
         
@@ -472,7 +488,8 @@ class CampaignOptimizationEngine:
     
     async def _generate_optimization_recommendations(self, event: CampaignAnalyticsEvent,
                                                    historical_data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Generate ML-based optimization recommendations"""
+        """
+Generate ML-based optimization recommendations"""
         recommendations = []
         
         # Analyze budget allocation
@@ -523,14 +540,16 @@ class CampaignOptimizationEngine:
 
 
 class CampaignROICalculator:
-    """Calculates campaign ROI and attribution"""
+    """
+Calculates campaign ROI and attribution"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.roi_calculator = ROICalculator()
         
     async def calculate_roi(self, event: CampaignAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate comprehensive ROI analysis"""
+        """
+Calculate comprehensive ROI analysis"""
         # Calculate direct ROI
         direct_roi = await self._calculate_direct_roi(event)
         
@@ -561,7 +580,8 @@ class CampaignROICalculator:
         }
     
     async def _calculate_direct_roi(self, event: CampaignAnalyticsEvent) -> Dict[str, float]:
-        """Calculate direct campaign ROI"""
+        """
+Calculate direct campaign ROI"""
         total_cost = event.cost_data.get('total_cost', 0) if event.cost_data else 0
         
         # Calculate direct revenue
@@ -585,14 +605,16 @@ class CampaignROICalculator:
 
 
 class CampaignAttributionAnalyzer:
-    """Analyzes campaign attribution across touchpoints"""
+    """
+Analyzes campaign attribution across touchpoints"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.attribution_engine = AttributionEngine()
         
     async def analyze_attribution(self, event: CampaignAnalyticsEvent) -> Dict[str, Any]:
-        """Analyze campaign attribution across multiple touchpoints"""
+        """
+Analyze campaign attribution across multiple touchpoints"""
         # Get user journey data
         user_journeys = await self._get_user_journey_data(event.campaign_id)
         

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import hashlib
@@ -71,7 +72,9 @@ from ...utils.preprocessing import TextPreprocessor
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for detection"""
+    """
+Supported content types for detection"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -82,6 +85,7 @@ class ContentType(Enum):
 
 class SimilarityMethod(Enum):
     """Similarity calculation methods"""
+
     COSINE = "cosine"
     JACCARD = "jaccard"
     EUCLIDEAN = "euclidean"
@@ -92,6 +96,7 @@ class SimilarityMethod(Enum):
 
 class DetectionLevel(Enum):
     """Detection sensitivity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -152,7 +157,8 @@ class SimilarityResult:
 
 @dataclass
 class DetectionConfig:
-    """Content detection configuration"""
+    """
+Content detection configuration"""
     detection_level: DetectionLevel = DetectionLevel.HIGH
     similarity_threshold: float = 0.7
     enable_semantic_analysis: bool = True
@@ -267,7 +273,8 @@ class ContentDetector:
 
     async def create_content_signature(self, content: Union[str, bytes], content_type: ContentType,
                                      content_id: Optional[str] = None, metadata: Dict = None) -> ContentSignature:
-        """Create comprehensive content signature"""
+        """
+Create comprehensive content signature"""
         start_time = time.time()
         
         try:
@@ -379,7 +386,8 @@ class ContentDetector:
         return features
 
     def _calculate_text_quality(self, text: str) -> float:
-        """Calculate text quality score"""
+        """
+Calculate text quality score"""
         if not text:
             return 0.0
         
@@ -419,7 +427,8 @@ class ContentDetector:
         return min(score, 1.0)
 
     async def _create_image_signature(self, image_data: bytes, signature: ContentSignature) -> None:
-        """Create image-specific signature components"""
+        """
+Create image-specific signature components"""
         try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
@@ -498,7 +507,8 @@ class ContentDetector:
             await self._create_audio_signature(content['audio'], signature)
 
     async def _add_to_indices(self, signature: ContentSignature) -> None:
-        """Add signature to FAISS indices for fast retrieval"""
+        """
+Add signature to FAISS indices for fast retrieval"""
         try:
             # Add text embeddings to index
             if signature.semantic_embedding is not None and self.text_index is not None:
@@ -624,7 +634,8 @@ class ContentDetector:
         return result
 
     def _calculate_structural_similarity(self, features1: Dict[str, float], features2: Dict[str, float]) -> float:
-        """Calculate structural similarity between text features"""
+        """
+Calculate structural similarity between text features"""
         if not features1 or not features2:
             return 0.0
         
@@ -652,7 +663,8 @@ class ContentDetector:
 
     async def _calculate_image_similarity(self, sig1: ContentSignature, sig2: ContentSignature,
                                         method: SimilarityMethod, result: SimilarityResult) -> SimilarityResult:
-        """Calculate image similarity"""
+        """
+Calculate image similarity"""
         
         # Perceptual hash similarity
         if sig1.image_hash and sig2.image_hash:
@@ -697,7 +709,8 @@ class ContentDetector:
 
     async def _calculate_audio_similarity(self, sig1: ContentSignature, sig2: ContentSignature,
                                         method: SimilarityMethod, result: SimilarityResult) -> SimilarityResult:
-        """Calculate audio similarity"""
+        """
+Calculate audio similarity"""
         
         # Fingerprint similarity (exact match)
         if sig1.audio_fingerprint and sig2.audio_fingerprint:
@@ -717,7 +730,8 @@ class ContentDetector:
         return result
 
     def _calculate_confidence_score(self, result: SimilarityResult) -> float:
-        """Calculate confidence score for similarity result"""
+        """
+Calculate confidence score for similarity result"""
         confidence = 0.0
         
         # Higher confidence for multiple similarity measures
@@ -746,7 +760,8 @@ class ContentDetector:
 
     async def find_similar_content(self, query_content_id: str, max_results: int = 10,
                                  similarity_threshold: float = None) -> List[SimilarityResult]:
-        """Find similar content using FAISS indices for fast search"""
+        """
+Find similar content using FAISS indices for fast search"""
         threshold = similarity_threshold or self.config.similarity_threshold
         
         query_signature = self.content_signatures.get(query_content_id)
@@ -864,7 +879,8 @@ class ContentDetector:
         return results
 
     def _update_average_processing_time(self, processing_time: float) -> None:
-        """Update average processing time statistics"""
+        """
+Update average processing time statistics"""
         total_operations = self.detection_stats['signatures_created'] + self.detection_stats['comparisons_performed']
         if total_operations > 0:
             self.detection_stats['average_processing_time'] = (
@@ -873,11 +889,13 @@ class ContentDetector:
             )
 
     def get_content_signature(self, content_id: str) -> Optional[ContentSignature]:
-        """Get content signature by ID"""
+        """
+Get content signature by ID"""
         return self.content_signatures.get(content_id)
 
     def remove_content_signature(self, content_id: str) -> bool:
-        """Remove content signature from storage"""
+        """
+Remove content signature from storage"""
         if content_id in self.content_signatures:
             del self.content_signatures[content_id]
             # Note: FAISS indices would need to be rebuilt to remove entries
@@ -885,7 +903,8 @@ class ContentDetector:
         return False
 
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection system statistics"""
+        """
+Get detection system statistics"""
         return {
             **self.detection_stats,
             'total_signatures': len(self.content_signatures),
@@ -897,7 +916,8 @@ class ContentDetector:
         }
 
     async def batch_similarity_detection(self, content_ids: List[str]) -> List[SimilarityResult]:
-        """Perform batch similarity detection across multiple content items"""
+        """
+Perform batch similarity detection across multiple content items"""
         results = []
         
         # Create all pairwise combinations
@@ -912,7 +932,8 @@ class ContentDetector:
         return results
 
     async def cleanup(self) -> None:
-        """Clean up resources and save state"""
+        """
+Clean up resources and save state"""
         # Save signatures to persistent storage if needed
         logger.info("Content Detector cleanup complete")
 
@@ -932,7 +953,8 @@ class SimilarityScanner:
         
     async def scan_for_violations(self, protected_content_id: str,
                                 search_content_ids: List[str]) -> Dict[str, Any]:
-        """Scan for potential content violations"""
+        """
+Scan for potential content violations"""
         violations = []
         suspicious_matches = []
         
@@ -974,7 +996,8 @@ class SimilarityScanner:
         return scan_report
     
     def _generate_threat_summary(self, violations: List, suspicious: List) -> Dict:
-        """Generate threat level summary"""
+        """
+Generate threat level summary"""
         total_threats = len(violations) + len(suspicious)
         
         if len(violations) >= 5:
@@ -1008,5 +1031,6 @@ class SimilarityScanner:
         return recommendations.get(threat_level, 'Unknown threat level')
     
     def get_scan_history(self) -> List[Dict]:
-        """Get historical scan results"""
+        """
+Get historical scan results"""
         return self.scan_history

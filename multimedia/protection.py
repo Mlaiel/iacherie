@@ -15,6 +15,7 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -52,7 +53,8 @@ settings = get_settings()
 
 @dataclass
 class WatermarkConfig:
-    """Watermark configuration"""
+    """
+Watermark configuration"""
     text: Optional[str] = None
     image_path: Optional[Path] = None
     position: str = "bottom_right"  # "center", "top_left", "top_right", "bottom_left", "bottom_right"
@@ -129,21 +131,25 @@ class BaseProtector(ABC):
     @abstractmethod
     async def apply_watermark(self, content_path: Path, watermark_config: WatermarkConfig,
                              output_path: Optional[Path] = None) -> ProtectionResult:
-        """Apply watermark to content"""
+        """
+Apply watermark to content"""
         pass
     
     @abstractmethod
     async def generate_fingerprint(self, content_path: Path, fingerprint_config: FingerprintConfig) -> str:
-        """Generate digital fingerprint for content"""
+        """
+Generate digital fingerprint for content"""
         pass
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if protector supports format"""
+        """
+Check if protector supports format"""
         pass
     
     def _generate_security_key(self, content_path: Path, salt: Optional[bytes] = None) -> bytes:
-        """Generate security key for content"""
+        """
+Generate security key for content"""
         if salt is None:
             salt = secrets.token_bytes(32)
         
@@ -174,23 +180,27 @@ class BaseProtector(ABC):
         return fernet.encrypt(data)
     
     def _decrypt_data(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using Fernet symmetric encryption"""
+        """
+Decrypt data using Fernet symmetric encryption"""
         fernet = Fernet(base64.urlsafe_b64encode(key))
         return fernet.decrypt(encrypted_data)
 
 
 class AudioProtector(BaseProtector):
-    """Professional audio content protector"""
+    """
+Professional audio content protector"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if protector supports audio format"""
+        """
+Check if protector supports audio format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.AUDIO
         return SupportedFormats.is_audio_format(format_type)
     
     async def apply_watermark(self, content_path: Path, watermark_config: WatermarkConfig,
                              output_path: Optional[Path] = None) -> ProtectionResult:
-        """Apply watermark to audio content"""
+        """
+Apply watermark to audio content"""
         start_time = datetime.now()
         
         result = ProtectionResult(
@@ -330,7 +340,8 @@ class AudioProtector(BaseProtector):
     
     async def _save_watermarked_audio(self, audio: np.ndarray, sr: int, 
                                     output_path: Path, output_format: str):
-        """Save watermarked audio"""
+        """
+Save watermarked audio"""
         if output_format in ['wav', 'flac']:
             sf.write(str(output_path), audio, sr)
         else:
@@ -393,14 +404,16 @@ class VideoProtector(BaseProtector):
     """Professional video content protector"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if protector supports video format"""
+        """
+Check if protector supports video format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.VIDEO
         return SupportedFormats.is_video_format(format_type)
     
     async def apply_watermark(self, content_path: Path, watermark_config: WatermarkConfig,
                              output_path: Optional[Path] = None) -> ProtectionResult:
-        """Apply watermark to video content"""
+        """
+Apply watermark to video content"""
         start_time = datetime.now()
         
         result = ProtectionResult(
@@ -557,7 +570,8 @@ class VideoProtector(BaseProtector):
         return watermarked_frame
     
     def _get_text_position(self, position: str) -> str:
-        """Get ffmpeg text position string"""
+        """
+Get ffmpeg text position string"""
         positions = {
             'top_left': 'x=10:y=10',
             'top_right': 'x=w-tw-10:y=10',
@@ -568,7 +582,8 @@ class VideoProtector(BaseProtector):
         return positions.get(position, positions['bottom_right'])
     
     def _get_overlay_position(self, position: str, margin: Tuple[int, int]) -> str:
-        """Get ffmpeg overlay position string"""
+        """
+Get ffmpeg overlay position string"""
         mx, my = margin
         positions = {
             'top_left': f'x={mx}:y={my}',
@@ -581,7 +596,8 @@ class VideoProtector(BaseProtector):
     
     async def generate_fingerprint(self, content_path: Path,
                                  fingerprint_config: FingerprintConfig) -> str:
-        """Generate video fingerprint"""
+        """
+Generate video fingerprint"""
         try:
             video_clip = VideoFileClip(str(content_path))
             duration = video_clip.duration
@@ -633,14 +649,16 @@ class ImageProtector(BaseProtector):
     """Professional image content protector"""
     
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if protector supports image format"""
+        """
+Check if protector supports image format"""
         if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.IMAGE
         return SupportedFormats.is_image_format(format_type)
     
     async def apply_watermark(self, content_path: Path, watermark_config: WatermarkConfig,
                              output_path: Optional[Path] = None) -> ProtectionResult:
-        """Apply watermark to image content"""
+        """
+Apply watermark to image content"""
         start_time = datetime.now()
         
         result = ProtectionResult(
@@ -804,7 +822,8 @@ class ImageProtector(BaseProtector):
     
     async def _apply_invisible_image_watermark(self, image: Image.Image, config: WatermarkConfig,
                                              result: ProtectionResult) -> Image.Image:
-        """Apply invisible watermark using LSB steganography"""
+        """
+Apply invisible watermark using LSB steganography"""
         watermarked = image.copy()
         
         # Convert to RGB if necessary
@@ -870,7 +889,8 @@ class ImageProtector(BaseProtector):
         return positions.get(position, positions['bottom_right'])
     
     def _get_color_with_opacity(self, color: str, opacity: float) -> Tuple[int, int, int, int]:
-        """Convert color string to RGBA tuple with opacity"""
+        """
+Convert color string to RGBA tuple with opacity"""
         color_map = {
             'white': (255, 255, 255),
             'black': (0, 0, 0),
@@ -889,7 +909,8 @@ class ImageProtector(BaseProtector):
     
     async def generate_fingerprint(self, content_path: Path,
                                  fingerprint_config: FingerprintConfig) -> str:
-        """Generate image fingerprint using perceptual hashing"""
+        """
+Generate image fingerprint using perceptual hashing"""
         try:
             with Image.open(content_path) as image:
                 fingerprint_components = []
@@ -943,7 +964,8 @@ class MediaProtector:
     async def apply_watermark(self, content_path: Path, watermark_config: WatermarkConfig,
                              output_path: Optional[Path] = None,
                              content_type: Optional[Union[str, ContentFormat]] = None) -> ProtectionResult:
-        """Apply watermark to multimedia content"""
+        """
+Apply watermark to multimedia content"""
         
         # Auto-detect content type if not provided
         if content_type is None:
@@ -1126,12 +1148,14 @@ class MediaProtector:
 # Convenience functions
 async def watermark_multimedia(content_path: Path, watermark_config: WatermarkConfig,
                               output_path: Optional[Path] = None) -> ProtectionResult:
-    """Convenient function for watermarking multimedia content"""
+    """
+Convenient function for watermarking multimedia content"""
     protector = MediaProtector()
     return await protector.apply_watermark(content_path, watermark_config, output_path)
 
 async def fingerprint_multimedia(content_path: Path, fingerprint_config: FingerprintConfig) -> str:
-    """Convenient function for generating multimedia fingerprints"""
+    """
+Convenient function for generating multimedia fingerprints"""
     protector = MediaProtector()
     return await protector.generate_fingerprint(content_path, fingerprint_config)
 

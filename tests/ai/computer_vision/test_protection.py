@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -84,19 +85,22 @@ class TestContentProtector(unittest.TestCase):
     """Test suite for ContentProtector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.protector = ContentProtector()
         self.test_image = self._create_test_image()
         self.test_video_path = self._create_test_video()
         self.protection_settings = self._create_protection_settings()
     
     def tearDown(self):
-        """Clean up test fixtures"""
+        """
+Clean up test fixtures"""
         if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for protection"""
+        """
+Create a test image for protection"""
         image = np.zeros((300, 400, 3), dtype=np.uint8)
         
         # Add some content worth protecting
@@ -132,7 +136,7 @@ class TestContentProtector(unittest.TestCase):
         """Create protection settings for testing"""
         try:
             return ProtectionSettings(
-                watermark_text="© 2024 Fahed Mlaiel",
+                watermark_text="(c) 2024 Fahed Mlaiel",
                 watermark_opacity=0.3,
                 fingerprint_enabled=True,
                 encryption_enabled=True,
@@ -141,7 +145,7 @@ class TestContentProtector(unittest.TestCase):
             )
         except:
             return {
-                'watermark_text': "© 2024 Fahed Mlaiel",
+                'watermark_text': "(c) 2024 Fahed Mlaiel",
                 'watermark_opacity': 0.3,
                 'fingerprint_enabled': True,
                 'encryption_enabled': True,
@@ -154,7 +158,8 @@ class TestContentProtector(unittest.TestCase):
         self.assertIsInstance(self.protector, ContentProtector)
     
     def test_protect_content_basic(self):
-        """Test basic content protection"""
+        """
+Test basic content protection"""
         try:
             protected_content = self.protector.protect_content(
                 self.test_image,
@@ -224,7 +229,8 @@ class TestContentProtector(unittest.TestCase):
         return hashlib.md5(image.tobytes()).hexdigest()
     
     def test_tamper_detection(self):
-        """Test tamper detection capabilities"""
+        """
+Test tamper detection capabilities"""
         try:
             # Protect the image
             protected_content = self.protector.protect_content(
@@ -255,13 +261,15 @@ class TestWatermarkGenerator(unittest.TestCase):
     """Test suite for WatermarkGenerator class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.generator = WatermarkGenerator()
         self.test_image = self._create_test_image()
         self.watermark_settings = self._create_watermark_settings()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for watermarking"""
+        """
+Create a test image for watermarking"""
         image = np.ones((200, 300, 3), dtype=np.uint8) * 128  # Gray background
         
         # Add some content
@@ -271,10 +279,11 @@ class TestWatermarkGenerator(unittest.TestCase):
         return image
     
     def _create_watermark_settings(self):
-        """Create watermark settings for testing"""
+        """
+Create watermark settings for testing"""
         try:
             return WatermarkSettings(
-                text="© Fahed Mlaiel",
+                text="(c) Fahed Mlaiel",
                 opacity=0.5,
                 position="bottom_right",
                 font_size=20,
@@ -283,7 +292,7 @@ class TestWatermarkGenerator(unittest.TestCase):
             )
         except:
             return {
-                'text': "© Fahed Mlaiel",
+                'text': "(c) Fahed Mlaiel",
                 'opacity': 0.5,
                 'position': 'bottom_right',
                 'font_size': 20,
@@ -296,11 +305,12 @@ class TestWatermarkGenerator(unittest.TestCase):
         self.assertIsInstance(self.generator, WatermarkGenerator)
     
     def test_text_watermark_generation(self):
-        """Test text watermark generation"""
+        """
+Test text watermark generation"""
         try:
             watermarked = self.generator.add_text_watermark(
                 self.test_image,
-                text="© Test Watermark",
+                text="(c) Test Watermark",
                 position="center",
                 opacity=0.7
             )
@@ -440,27 +450,32 @@ class TestWatermarkGenerator(unittest.TestCase):
                 os.remove(temp_path)
     
     def _add_noise(self, image: np.ndarray) -> np.ndarray:
-        """Add Gaussian noise"""
+        """
+Add Gaussian noise"""
         noise = np.random.normal(0, 10, image.shape).astype(np.int16)
         return np.clip(image.astype(np.int16) + noise, 0, 255).astype(np.uint8)
     
     def _rotate_image(self, image: np.ndarray, angle: float) -> np.ndarray:
-        """Rotate image by given angle"""
+        """
+Rotate image by given angle"""
         center = (image.shape[1] // 2, image.shape[0] // 2)
         rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
         return cv2.warpAffine(image, rotation_matrix, (image.shape[1], image.shape[0]))
 
 class TestFingerprintExtractor(unittest.TestCase):
-    """Test suite for FingerprintExtractor class"""
+    """
+Test suite for FingerprintExtractor class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.extractor = FingerprintExtractor()
         self.test_image = self._create_test_image()
         self.test_images = [self._create_test_image() for _ in range(5)]
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for fingerprinting"""
+        """
+Create a test image for fingerprinting"""
         image = np.random.randint(0, 255, (150, 200, 3), dtype=np.uint8)
         
         # Add some deterministic patterns
@@ -471,11 +486,13 @@ class TestFingerprintExtractor(unittest.TestCase):
         return image
     
     def test_extractor_initialization(self):
-        """Test FingerprintExtractor initialization"""
+        """
+Test FingerprintExtractor initialization"""
         self.assertIsInstance(self.extractor, FingerprintExtractor)
     
     def test_perceptual_hash_extraction(self):
-        """Test perceptual hash extraction"""
+        """
+Test perceptual hash extraction"""
         try:
             phash = self.extractor.extract_perceptual_hash(self.test_image)
             
@@ -605,17 +622,19 @@ class TestCopyrightValidator(unittest.TestCase):
     """Test suite for CopyrightValidator class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.validator = CopyrightValidator()
         self.test_image = self._create_test_image()
         self.copyright_database = self._create_mock_copyright_database()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for copyright validation"""
+        """
+Create a test image for copyright validation"""
         image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Add copyright notice
-        cv2.putText(image, "© 2024 Fahed Mlaiel", (10, 180), 
+        cv2.putText(image, "(c) 2024 Fahed Mlaiel", (10, 180), 
                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
         
         # Add some content
@@ -646,11 +665,13 @@ class TestCopyrightValidator(unittest.TestCase):
         }
     
     def test_validator_initialization(self):
-        """Test CopyrightValidator initialization"""
+        """
+Test CopyrightValidator initialization"""
         self.assertIsInstance(self.validator, CopyrightValidator)
     
     def test_copyright_notice_detection(self):
-        """Test copyright notice detection in images"""
+        """
+Test copyright notice detection in images"""
         try:
             copyright_info = self.validator.detect_copyright_notice(self.test_image)
             
@@ -761,18 +782,21 @@ class TestIntegrityValidator(unittest.TestCase):
     """Test suite for IntegrityValidator class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.validator = IntegrityValidator()
         self.test_image = self._create_test_image()
         self.test_video_path = self._create_test_video()
     
     def tearDown(self):
-        """Clean up test fixtures"""
+        """
+Clean up test fixtures"""
         if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for integrity validation"""
+        """
+Create a test image for integrity validation"""
         image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Add some deterministic content
@@ -804,7 +828,8 @@ class TestIntegrityValidator(unittest.TestCase):
         self.assertIsInstance(self.validator, IntegrityValidator)
     
     def test_image_integrity_validation(self):
-        """Test image integrity validation"""
+        """
+Test image integrity validation"""
         try:
             # Calculate original hash
             original_hash = self.validator.calculate_image_hash(self.test_image)
@@ -919,7 +944,8 @@ class TestProtectionIntegration(unittest.TestCase):
     """Test suite for protection integration and workflows"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.content_protector = ContentProtector()
         self.watermark_generator = WatermarkGenerator()
         self.fingerprint_extractor = FingerprintExtractor()
@@ -929,14 +955,15 @@ class TestProtectionIntegration(unittest.TestCase):
         self.test_image = self._create_comprehensive_test_image()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image for integration testing"""
+        """
+Create comprehensive test image for integration testing"""
         image = np.zeros((300, 400, 3), dtype=np.uint8)
         
         # Add rich content worth protecting
         cv2.rectangle(image, (50, 50), (200, 150), (100, 150, 200), -1)
         cv2.circle(image, (300, 200), 50, (200, 100, 100), -1)
         cv2.putText(image, "Premium Content", (50, 250), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        cv2.putText(image, "© 2024 Fahed Mlaiel", (10, 290), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+        cv2.putText(image, "(c) 2024 Fahed Mlaiel", (10, 290), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
         
         # Add complex patterns
         for i in range(0, 400, 30):
@@ -955,7 +982,7 @@ class TestProtectionIntegration(unittest.TestCase):
             # Step 2: Apply watermark
             watermarked = self.watermark_generator.add_text_watermark(
                 self.test_image,
-                text="© PROTECTED",
+                text="(c) PROTECTED",
                 position="center",
                 opacity=0.3
             )
@@ -1072,7 +1099,8 @@ class TestProtectionIntegration(unittest.TestCase):
             return None
     
     def _compression_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate compression attack"""
+        """
+Simulate compression attack"""
         try:
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
             temp_path = temp_file.name
@@ -1087,7 +1115,8 @@ class TestProtectionIntegration(unittest.TestCase):
             return None
     
     def _crop_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate cropping attack"""
+        """
+Simulate cropping attack"""
         try:
             h, w = image.shape[:2]
             crop_h, crop_w = int(h * 0.8), int(w * 0.8)
@@ -1098,7 +1127,8 @@ class TestProtectionIntegration(unittest.TestCase):
             return None
     
     def _brightness_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate brightness adjustment attack"""
+        """
+Simulate brightness adjustment attack"""
         try:
             bright_image = image.astype(np.float32) * 1.3
             return np.clip(bright_image, 0, 255).astype(np.uint8)
@@ -1106,7 +1136,8 @@ class TestProtectionIntegration(unittest.TestCase):
             return None
     
     def test_performance_integration(self):
-        """Test performance of integrated protection system"""
+        """
+Test performance of integrated protection system"""
         try:
             start_time = time.time()
             

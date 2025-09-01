@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import os
 import hashlib
 import hmac
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
+    """
+Supported encryption algorithms"""
+
     AES_256_GCM = "AES_256_GCM"         # AES-256 in GCM mode (authenticated encryption)
     AES_256_CBC = "AES_256_CBC"         # AES-256 in CBC mode
     CHACHA20_POLY1305 = "CHACHA20_POLY1305"  # ChaCha20-Poly1305 (modern AEAD)
@@ -62,6 +65,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyDerivationFunction(Enum):
     """Key derivation functions"""
+
     PBKDF2_SHA256 = "PBKDF2_SHA256"     # PBKDF2 with SHA-256
     SCRYPT = "SCRYPT"                   # Scrypt (memory-hard function)
     ARGON2 = "ARGON2"                   # Argon2 (winner of password hashing competition)
@@ -69,6 +73,7 @@ class KeyDerivationFunction(Enum):
 
 class SecurityLevel(Enum):
     """Security levels for different data types"""
+
     STANDARD = "STANDARD"               # Standard encryption for general data
     HIGH = "HIGH"                       # High security for sensitive data
     MILITARY = "MILITARY"               # Military-grade for critical data
@@ -90,7 +95,8 @@ class EncryptionConfig:
     
     @classmethod
     def get_config(cls, security_level: SecurityLevel) -> 'EncryptionConfig':
-        """Get recommended config for security level"""
+        """
+Get recommended config for security level"""
         configs = {
             SecurityLevel.STANDARD: cls(
                 algorithm=EncryptionAlgorithm.FERNET,
@@ -127,7 +133,8 @@ class EncryptionConfig:
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata"""
+    """
+Encryption key metadata"""
     key_id: str
     algorithm: EncryptionAlgorithm
     key_size: int
@@ -140,27 +147,31 @@ class EncryptionKey:
     
     @property
     def is_expired(self) -> bool:
-        """Check if key is expired"""
+        """
+Check if key is expired"""
         if self.expires_at is None:
             return False
         return datetime.now(timezone.utc) > self.expires_at
     
     @property
     def is_usage_exceeded(self) -> bool:
-        """Check if key usage limit is exceeded"""
+        """
+Check if key usage limit is exceeded"""
         if self.max_usage is None:
             return False
         return self.usage_count >= self.max_usage
     
     @property
     def is_valid(self) -> bool:
-        """Check if key is valid for use"""
+        """
+Check if key is valid for use"""
         return not self.is_expired and not self.is_usage_exceeded
 
 
 @dataclass
 class EncryptedData:
-    """Encrypted data container"""
+    """
+Encrypted data container"""
     ciphertext: bytes
     algorithm: EncryptionAlgorithm
     key_id: str
@@ -171,7 +182,8 @@ class EncryptedData:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'ciphertext': base64.b64encode(self.ciphertext).decode('utf-8'),
             'algorithm': self.algorithm.value,
@@ -185,7 +197,8 @@ class EncryptedData:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EncryptedData':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         return cls(
             ciphertext=base64.b64decode(data['ciphertext']),
             algorithm=EncryptionAlgorithm(data['algorithm']),
@@ -199,7 +212,8 @@ class EncryptedData:
 
 
 class KeyManager:
-    """Advanced cryptographic key management system"""
+    """
+Advanced cryptographic key management system"""
     
     def __init__(self, key_store_path: Optional[str] = None):
         self.key_store_path = Path(key_store_path) if key_store_path else Path("keys")
@@ -306,7 +320,8 @@ class KeyManager:
             return key_bytes
     
     def rotate_key(self, key_id: str) -> str:
-        """Rotate encryption key"""
+        """
+Rotate encryption key"""
         
         if key_id not in self.key_metadata:
             raise ValueError(f"Key not found: {key_id}")
@@ -406,7 +421,8 @@ class KeyManager:
             return keys
     
     def revoke_key(self, key_id: str) -> None:
-        """Revoke encryption key"""
+        """
+Revoke encryption key"""
         
         with self.lock:
             if key_id in self.key_metadata:
@@ -753,7 +769,8 @@ class TransactionEncryption:
         data: Union[str, bytes],
         private_key_id: str
     ) -> bytes:
-        """Generate digital signature for data integrity"""
+        """
+Generate digital signature for data integrity"""
         
         if isinstance(data, str):
             data = data.encode('utf-8')
@@ -845,7 +862,8 @@ class TransactionEncryption:
             }
     
     def _initialize_default_keys(self) -> None:
-        """Initialize default keys for different security levels"""
+        """
+Initialize default keys for different security levels"""
         
         for security_level in SecurityLevel:
             config = EncryptionConfig.get_config(security_level)
@@ -938,7 +956,8 @@ class TransactionEncryption:
         return plaintext
     
     def _encrypt_aes_cbc(self, data: bytes, key: bytes) -> EncryptedData:
-        """Encrypt using AES-256-CBC"""
+        """
+Encrypt using AES-256-CBC"""
         
         # Generate random IV
         iv = secrets.token_bytes(16)  # 128-bit IV for CBC
@@ -991,7 +1010,8 @@ class TransactionEncryption:
         key: bytes,
         additional_data: Optional[bytes] = None
     ) -> EncryptedData:
-        """Encrypt using ChaCha20-Poly1305"""
+        """
+Encrypt using ChaCha20-Poly1305"""
         
         # Generate random nonce
         nonce = secrets.token_bytes(12)  # 96-bit nonce for ChaCha20
@@ -1045,7 +1065,8 @@ class TransactionEncryption:
         return plaintext
     
     def _encrypt_fernet(self, data: bytes, key: bytes) -> EncryptedData:
-        """Encrypt using Fernet"""
+        """
+Encrypt using Fernet"""
         
         fernet = Fernet(key)
         ciphertext = fernet.encrypt(data)
@@ -1065,7 +1086,8 @@ class TransactionEncryption:
         return plaintext
     
     def _encrypt_rsa_oaep(self, data: bytes, private_key_bytes: bytes) -> EncryptedData:
-        """Encrypt using RSA-OAEP"""
+        """
+Encrypt using RSA-OAEP"""
         
         # Load private key and extract public key
         private_key = serialization.load_pem_private_key(
@@ -1121,7 +1143,8 @@ def encrypt_creator_data(
     data: Any,
     security_level: SecurityLevel = SecurityLevel.HIGH
 ) -> EncryptedData:
-    """Encrypt creator-specific data"""
+    """
+Encrypt creator-specific data"""
     
     return encryption_handler.encrypt_transaction_data(
         data=data,
@@ -1135,7 +1158,8 @@ def encrypt_revenue_data(
     revenue_data: Dict[str, Any],
     security_level: SecurityLevel = SecurityLevel.MILITARY
 ) -> EncryptedData:
-    """Encrypt revenue-related data with high security"""
+    """
+Encrypt revenue-related data with high security"""
     
     return encryption_handler.encrypt_transaction_data(
         data=revenue_data,
@@ -1148,7 +1172,8 @@ def encrypt_content_fingerprint(
     fingerprint: str,
     creator_id: str
 ) -> EncryptedData:
-    """Encrypt content fingerprint data"""
+    """
+Encrypt content fingerprint data"""
     
     return encryption_handler.encrypt_transaction_data(
         data=fingerprint,

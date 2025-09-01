@@ -29,6 +29,7 @@ Architecture Components:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
@@ -57,12 +58,14 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationEngineError(Exception):
-    """Custom exception for notification engine errors."""
+    """
+Custom exception for notification engine errors."""
     pass
 
 
 class ProcessingResult:
-    """Result container for notification processing stages."""
+    """
+Result container for notification processing stages."""
     
     def __init__(
         self,
@@ -446,7 +449,8 @@ class NotificationEngine:
     async def _process_template(
         self, request: NotificationRequest
     ) -> ProcessingResult:
-        """Process and optimize notification template."""
+        """
+Process and optimize notification template."""
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -506,7 +510,8 @@ class NotificationEngine:
     async def _select_and_optimize_channels(
         self, request: NotificationRequest
     ) -> ProcessingResult:
-        """Select and optimize delivery channels."""
+        """
+Select and optimize delivery channels."""
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -535,7 +540,8 @@ class NotificationEngine:
         template: NotificationTemplate,
         channels: List[str]
     ) -> ProcessingResult:
-        """Execute multi-channel delivery."""
+        """
+Execute multi-channel delivery."""
         try:
             start_time = datetime.now(timezone.utc)
             

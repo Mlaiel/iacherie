@@ -24,6 +24,7 @@ ENTERPRISE REPOSITORY FEATURES:
 - Advanced filtering and pagination
 - Audit trail and compliance tracking
 """
+
 from sqlalchemy.orm import Session, sessionmaker, joinedload, selectinload
 from sqlalchemy import and_, or_, func, desc, asc, text, case, distinct, exists
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError, OperationalError
@@ -53,7 +54,8 @@ T = TypeVar('T')
 
 @dataclass
 class QueryResult:
-    """Container for query results with metadata"""
+    """
+Container for query results with metadata"""
     data: List[Any]
     total_count: int
     page: int
@@ -64,7 +66,8 @@ class QueryResult:
 
 @dataclass
 class FilterCriteria:
-    """Container for complex filter criteria"""
+    """
+Container for complex filter criteria"""
     field: str
     operator: str  # eq, ne, gt, lt, gte, lte, in, like, between
     value: Any
@@ -82,7 +85,8 @@ class BaseRepository(ABC, Generic[T]):
     
     @contextmanager
     def get_session(self):
-        """Context manager for database sessions with error handling"""
+        """
+Context manager for database sessions with error handling"""
         session = self.session_factory()
         try:
             yield session
@@ -247,7 +251,8 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
         page_size: int = 50,
         status_filter: Optional[List[str]] = None
     ) -> QueryResult:
-        """Get transactions for a specific user"""
+        """
+Get transactions for a specific user"""
         try:
             with self.get_session() as session:
                 query = session.query(PaymentTransaction).filter(
@@ -421,7 +426,8 @@ class PaymentMethodRepository(BaseRepository[PaymentMethod]):
         super().__init__(session_factory, PaymentMethod)
     
     async def get_by_user_id(self, user_id: str, active_only: bool = True) -> List[PaymentMethod]:
-        """Get payment methods for a user"""
+        """
+Get payment methods for a user"""
         try:
             with self.get_session() as session:
                 query = session.query(PaymentMethod).filter(
@@ -506,7 +512,8 @@ class BillingRecordRepository(BaseRepository[BillingRecord]):
         super().__init__(session_factory, BillingRecord)
     
     async def get_by_subscription_id(self, subscription_id: str) -> List[BillingRecord]:
-        """Get billing records for subscription"""
+        """
+Get billing records for subscription"""
         try:
             with self.get_session() as session:
                 return session.query(BillingRecord).filter(
@@ -548,7 +555,8 @@ class FinancialRecordRepository(BaseRepository[FinancialRecord]):
         end_date: datetime,
         record_types: Optional[List[str]] = None
     ) -> List[FinancialRecord]:
-        """Get financial records for user within period"""
+        """
+Get financial records for user within period"""
         try:
             with self.get_session() as session:
                 query = session.query(FinancialRecord).filter(
@@ -577,7 +585,8 @@ class AutomatedPayoutRepository(BaseRepository[AutomatedPayout]):
         super().__init__(session_factory, AutomatedPayout)
     
     async def get_scheduled(self, due_before: Optional[datetime] = None) -> List[AutomatedPayout]:
-        """Get scheduled payouts"""
+        """
+Get scheduled payouts"""
         try:
             cutoff_time = due_before or datetime.utcnow()
             
@@ -632,7 +641,8 @@ class PaymentAnalyticsRepository(BaseRepository[PaymentAnalytics]):
         period_end: datetime,
         user_id: Optional[str] = None
     ) -> List[PaymentAnalytics]:
-        """Get analytics metrics for period"""
+        """
+Get analytics metrics for period"""
         try:
             with self.get_session() as session:
                 query = session.query(PaymentAnalytics).filter(
@@ -666,7 +676,8 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         period_start: datetime,
         period_end: datetime
     ) -> List[RevenueTracking]:
-        """Get revenue tracking records for user and period"""
+        """
+Get revenue tracking records for user and period"""
         try:
             with self.get_session() as session:
                 return session.query(RevenueTracking).filter(
@@ -690,7 +701,8 @@ class PaymentWebhookRepository(BaseRepository[PaymentWebhook]):
         super().__init__(session_factory, PaymentWebhook)
     
     async def get_unprocessed(self, limit: int = 100) -> List[PaymentWebhook]:
-        """Get unprocessed webhooks"""
+        """
+Get unprocessed webhooks"""
         try:
             with self.get_session() as session:
                 return session.query(PaymentWebhook).filter(
@@ -737,7 +749,8 @@ class PaymentConfigurationRepository(BaseRepository[PaymentConfiguration]):
         provider: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> Optional[PaymentConfiguration]:
-        """Get configuration by type and provider"""
+        """
+Get configuration by type and provider"""
         try:
             with self.get_session() as session:
                 query = session.query(PaymentConfiguration).filter(
@@ -778,7 +791,8 @@ class PaymentTransactionRepository(PaymentProcessingRepository):
         processor: str,
         **kwargs
     ) -> PaymentTransaction:
-        """Create a new payment transaction"""
+        """
+Create a new payment transaction"""
         with self.get_session() as session:
             transaction = PaymentTransaction(
                 user_id=user_id,
@@ -811,7 +825,8 @@ class PaymentTransactionRepository(PaymentProcessingRepository):
         limit: int = 100,
         offset: int = 0
     ) -> List[PaymentTransaction]:
-        """Get user transactions with optional filtering"""
+        """
+Get user transactions with optional filtering"""
         with self.get_session() as session:
             query = session.query(PaymentTransaction).filter(
                 PaymentTransaction.user_id == user_id
@@ -829,7 +844,8 @@ class PaymentTransactionRepository(PaymentProcessingRepository):
         status: str,
         processor_response: Optional[Dict] = None
     ) -> bool:
-        """Update transaction status"""
+        """
+Update transaction status"""
         with self.get_session() as session:
             transaction = session.query(PaymentTransaction).filter(
                 PaymentTransaction.id == transaction_id
@@ -868,7 +884,8 @@ class PaymentTransactionRepository(PaymentProcessingRepository):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get revenue analytics for a user"""
+        """
+Get revenue analytics for a user"""
         with self.get_session() as session:
             result = session.query(
                 func.sum(PaymentTransaction.net_amount).label('total_revenue'),
@@ -891,7 +908,8 @@ class PaymentTransactionRepository(PaymentProcessingRepository):
 
 
 class PaymentMethodRepository(PaymentProcessingRepository):
-    """Repository for payment method operations"""
+    """
+Repository for payment method operations"""
     
     def create_payment_method(
         self,
@@ -900,7 +918,8 @@ class PaymentMethodRepository(PaymentProcessingRepository):
         provider: str,
         **kwargs
     ) -> PaymentMethod:
-        """Create a new payment method"""
+        """
+Create a new payment method"""
         with self.get_session() as session:
             # Set as default if it's the first payment method
             is_first_method = not session.query(PaymentMethod).filter(
@@ -942,7 +961,8 @@ class PaymentMethodRepository(PaymentProcessingRepository):
         user_id: int,
         payment_method_id: uuid.UUID
     ) -> bool:
-        """Set a payment method as default"""
+        """
+Set a payment method as default"""
         with self.get_session() as session:
             # Remove default from all user's payment methods
             session.query(PaymentMethod).filter(
@@ -1013,7 +1033,8 @@ class BillingRecordRepository(PaymentProcessingRepository):
         billing_period_end: datetime,
         **kwargs
     ) -> BillingRecord:
-        """Create a new billing record"""
+        """
+Create a new billing record"""
         with self.get_session() as session:
             billing_record = BillingRecord(
                 user_id=user_id,
@@ -1048,7 +1069,8 @@ class BillingRecordRepository(PaymentProcessingRepository):
         user_id: int,
         limit: int = 50
     ) -> List[BillingRecord]:
-        """Get user billing history"""
+        """
+Get user billing history"""
         with self.get_session() as session:
             return session.query(BillingRecord).filter(
                 BillingRecord.user_id == user_id
@@ -1056,7 +1078,8 @@ class BillingRecordRepository(PaymentProcessingRepository):
 
 
 class FinancialRecordRepository(PaymentProcessingRepository):
-    """Repository for financial record operations"""
+    """
+Repository for financial record operations"""
     
     def create_financial_record(
         self,
@@ -1068,7 +1091,8 @@ class FinancialRecordRepository(PaymentProcessingRepository):
         transaction_date: datetime,
         **kwargs
     ) -> FinancialRecord:
-        """Create a new financial record"""
+        """
+Create a new financial record"""
         with self.get_session() as session:
             financial_record = FinancialRecord(
                 user_id=user_id,
@@ -1126,7 +1150,8 @@ class FinancialRecordRepository(PaymentProcessingRepository):
 
 
 class AutomatedPayoutRepository(PaymentProcessingRepository):
-    """Repository for automated payout operations"""
+    """
+Repository for automated payout operations"""
     
     def create_payout(
         self,
@@ -1137,7 +1162,8 @@ class AutomatedPayoutRepository(PaymentProcessingRepository):
         period_end: datetime,
         **kwargs
     ) -> AutomatedPayout:
-        """Create a new automated payout"""
+        """
+Create a new automated payout"""
         with self.get_session() as session:
             payout = AutomatedPayout(
                 user_id=user_id,
@@ -1173,7 +1199,8 @@ class AutomatedPayoutRepository(PaymentProcessingRepository):
         external_payout_id: Optional[str] = None,
         error_message: Optional[str] = None
     ) -> bool:
-        """Update payout status"""
+        """
+Update payout status"""
         with self.get_session() as session:
             payout = session.query(AutomatedPayout).filter(
                 AutomatedPayout.id == payout_id
@@ -1206,7 +1233,8 @@ class PaymentAnalyticsRepository(PaymentProcessingRepository):
         user_id: int,
         days: int = 30
     ) -> List[Dict[str, Any]]:
-        """Get revenue trends over time"""
+        """
+Get revenue trends over time"""
         with self.get_session() as session:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -1236,7 +1264,8 @@ class PaymentAnalyticsRepository(PaymentProcessingRepository):
         user_id: int,
         period_days: int = 30
     ) -> List[Dict[str, Any]]:
-        """Get revenue breakdown by platform"""
+        """
+Get revenue breakdown by platform"""
         with self.get_session() as session:
             start_date = datetime.utcnow() - timedelta(days=period_days)
             
@@ -1265,7 +1294,8 @@ class PaymentAnalyticsRepository(PaymentProcessingRepository):
 
 # Utility functions for repository operations
 def create_repository_manager(session_factory: sessionmaker) -> Dict[str, Any]:
-    """Create a repository manager with all repositories"""
+    """
+Create a repository manager with all repositories"""
     return {
         'transactions': PaymentTransactionRepository(session_factory),
         'payment_methods': PaymentMethodRepository(session_factory),

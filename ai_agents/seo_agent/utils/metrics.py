@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -25,7 +26,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of SEO metrics"""
+    """
+Types of SEO metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -34,6 +37,7 @@ class MetricType(Enum):
 
 class MetricCategory(Enum):
     """Categories of SEO metrics"""
+
     CONTENT = "content"
     KEYWORDS = "keywords"
     TECHNICAL = "technical"
@@ -53,7 +57,8 @@ class MetricPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric points"""
+    """
+Time series of metric points"""
     name: str
     metric_type: MetricType
     category: MetricCategory
@@ -114,7 +119,8 @@ class SEOMetricsCollector:
         }
         
     async def initialize(self):
-        """Initialize metrics collector"""
+        """
+Initialize metrics collector"""
         try:
             # Initialize core SEO metrics
             await self._initialize_core_metrics()
@@ -537,7 +543,8 @@ class SEOMetricsCollector:
             return 0.0
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for values"""
+        """
+Calculate trend direction for values"""
         if len(values) < 2:
             return 'stable'
         
@@ -553,7 +560,8 @@ class SEOMetricsCollector:
             return 'stable'
     
     def _check_alerts(self) -> List[Dict[str, Any]]:
-        """Check for metric-based alerts"""
+        """
+Check for metric-based alerts"""
         alerts = []
         
         try:

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -37,7 +38,9 @@ from ....core.cache import RedisCache
 logger = logging.getLogger(__name__)
 
 class AdapterStatus(Enum):
-    """Platform adapter status"""
+    """
+Platform adapter status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNAVAILABLE = "unavailable"
@@ -47,6 +50,7 @@ class AdapterStatus(Enum):
 
 class RequestMethod(Enum):
     """HTTP request methods"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -67,7 +71,8 @@ class PlatformCredentials:
 
 @dataclass
 class PublishRequest:
-    """Standardized content publishing request"""
+    """
+Standardized content publishing request"""
     content_metadata: ContentMetadata
     platform_specific_config: Dict[str, Any] = field(default_factory=dict)
     scheduling_config: Optional[Dict[str, Any]] = None
@@ -77,7 +82,8 @@ class PublishRequest:
 
 @dataclass
 class PublishResponse:
-    """Standardized content publishing response"""
+    """
+Standardized content publishing response"""
     success: bool
     platform_content_id: Optional[str] = None
     platform_url: Optional[str] = None
@@ -89,7 +95,8 @@ class PublishResponse:
 
 @dataclass
 class AnalyticsRequest:
-    """Analytics data request"""
+    """
+Analytics data request"""
     content_id: str
     metrics: List[str] = field(default_factory=list)
     date_range: Tuple[datetime, datetime] = field(default_factory=lambda: (datetime.now() - timedelta(days=7), datetime.now()))
@@ -167,21 +174,25 @@ class BasePlatformAdapter(ABC):
 
     @abstractmethod
     def _get_api_version(self) -> str:
-        """Get platform API version"""
+        """
+Get platform API version"""
         pass
 
     @abstractmethod
     def _get_supported_content_types(self) -> List[ContentType]:
-        """Get supported content types for this platform"""
+        """
+Get supported content types for this platform"""
         pass
 
     @abstractmethod
     def _get_max_file_size(self) -> int:
-        """Get maximum file size for uploads"""
+        """
+Get maximum file size for uploads"""
         pass
 
     async def initialize(self) -> None:
-        """Initialize the adapter and HTTP session"""
+        """
+Initialize the adapter and HTTP session"""
         if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             connector = aiohttp.TCPConnector(
@@ -210,7 +221,8 @@ class BasePlatformAdapter(ABC):
         }
 
     async def _validate_platform_connection(self) -> None:
-        """Validate connection to platform API"""
+        """
+Validate connection to platform API"""
         try:
             health_endpoint = self._get_health_check_endpoint()
             if health_endpoint:
@@ -275,21 +287,25 @@ class BasePlatformAdapter(ABC):
 
     @abstractmethod
     async def _needs_token_refresh(self, credentials: PlatformCredentials) -> bool:
-        """Check if access token needs refresh"""
+        """
+Check if access token needs refresh"""
         pass
 
     @abstractmethod
     async def _refresh_token(self, credentials: PlatformCredentials) -> PlatformCredentials:
-        """Refresh access token"""
+        """
+Refresh access token"""
         pass
 
     @abstractmethod
     async def _test_authentication(self, credentials: PlatformCredentials) -> bool:
-        """Test authentication with platform API"""
+        """
+Test authentication with platform API"""
         pass
 
     async def _cache_credentials(self, credentials: PlatformCredentials) -> None:
-        """Cache validated credentials"""
+        """
+Cache validated credentials"""
         cache_key = f"credentials:{credentials.user_id}:{self.platform.value}"
         cache_data = {
             'access_token': credentials.access_token,
@@ -379,7 +395,8 @@ class BasePlatformAdapter(ABC):
         pass
 
     async def _check_rate_limits(self) -> None:
-        """Check and enforce rate limits"""
+        """
+Check and enforce rate limits"""
         if not await self.rate_limiter.can_proceed():
             self.status = AdapterStatus.RATE_LIMITED
             raise RateLimitError("Rate limit exceeded")
@@ -398,12 +415,14 @@ class BasePlatformAdapter(ABC):
 
     @abstractmethod
     async def _upload_content(self, prepared_content: Dict[str, Any], credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Upload content to platform"""
+        """
+Upload content to platform"""
         pass
 
     @abstractmethod
     async def _publish_content_to_platform(self, upload_result: Dict[str, Any], request: PublishRequest, credentials: PlatformCredentials) -> PublishResponse:
-        """Publish uploaded content on platform"""
+        """
+Publish uploaded content on platform"""
         pass
 
     async def get_content_analytics(self, request: AnalyticsRequest, credentials: PlatformCredentials) -> AnalyticsResponse:
@@ -456,7 +475,8 @@ class BasePlatformAdapter(ABC):
 
     @abstractmethod
     async def _process_analytics_data(self, raw_data: Dict[str, Any], request: AnalyticsRequest) -> Dict[str, Any]:
-        """Process and normalize analytics data"""
+        """
+Process and normalize analytics data"""
         pass
 
     @backoff.on_exception(
@@ -557,7 +577,8 @@ class BasePlatformAdapter(ABC):
         pass
 
     async def _update_quota_from_headers(self, headers: aiohttp.ClientResponse.headers) -> None:
-        """Update quota usage from response headers"""
+        """
+Update quota usage from response headers"""
         # Common header names for quota information
         quota_headers = [
             'X-RateLimit-Remaining',
@@ -592,7 +613,8 @@ class BasePlatformAdapter(ABC):
                     pass
 
     async def _update_success_metrics(self, response_time: float) -> None:
-        """Update performance metrics for successful requests"""
+        """
+Update performance metrics for successful requests"""
         self.performance_metrics['total_requests'] += 1
         self.performance_metrics['successful_requests'] += 1
         
@@ -615,7 +637,8 @@ class BasePlatformAdapter(ABC):
         )
 
     async def _update_error_metrics(self, response_time: float, error_message: str) -> None:
-        """Update performance metrics for failed requests"""
+        """
+Update performance metrics for failed requests"""
         self.performance_metrics['total_requests'] += 1
         self.performance_metrics['failed_requests'] += 1
         self.last_error = error_message
@@ -635,7 +658,8 @@ class BasePlatformAdapter(ABC):
         )
 
     def _calculate_retry_delay(self, error: Exception) -> Optional[int]:
-        """Calculate retry delay based on error type"""
+        """
+Calculate retry delay based on error type"""
         if isinstance(error, RateLimitError):
             return 60  # 1 minute for rate limits
         elif isinstance(error, QuotaExceededError):
@@ -648,7 +672,8 @@ class BasePlatformAdapter(ABC):
             return 30  # 30 seconds for other errors
 
     async def _cache_publish_result(self, result: PublishResponse) -> None:
-        """Cache publishing result"""
+        """
+Cache publishing result"""
         if result.success and result.platform_content_id:
             cache_key = f"publish_result:{self.platform.value}:{result.platform_content_id}"
             await self.cache.set(
@@ -672,18 +697,21 @@ class BasePlatformAdapter(ABC):
         }
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get detailed performance metrics"""
+        """
+Get detailed performance metrics"""
         return self.performance_metrics.copy()
 
     async def reset_quota(self) -> None:
-        """Reset quota counters (for testing or manual reset)"""
+        """
+Reset quota counters (for testing or manual reset)"""
         self.quota_used = 0
         self.reset_time = None
         if self.status == AdapterStatus.QUOTA_EXCEEDED:
             self.status = AdapterStatus.HEALTHY
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the adapter"""
+        """
+Graceful shutdown of the adapter"""
         logger.info(f"Shutting down {self.platform.value} adapter...")
         
         if self.session:

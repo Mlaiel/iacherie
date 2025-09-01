@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Advanced Instagram detection system for content monitoring and violation identification.
 Provides sophisticated analysis of Instagram posts, stories, reels, and user activities.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramPost:
-    """Instagram post data."""
+    """
+Instagram post data."""
     post_id: str
     user_id: str
     username: str
@@ -49,7 +51,8 @@ class InstagramPost:
 
 @dataclass
 class InstagramStory:
-    """Instagram story data."""
+    """
+Instagram story data."""
     story_id: str
     user_id: str
     username: str
@@ -67,7 +70,8 @@ class InstagramStory:
 
 @dataclass
 class InstagramUser:
-    """Instagram user profile data."""
+    """
+Instagram user profile data."""
     user_id: str
     username: str
     full_name: str
@@ -86,7 +90,8 @@ class InstagramUser:
 
 @dataclass
 class InstagramReel:
-    """Instagram reel data."""
+    """
+Instagram reel data."""
     reel_id: str
     user_id: str
     username: str
@@ -109,7 +114,8 @@ class InstagramReel:
 
 @dataclass
 class InstagramViolation:
-    """Instagram content violation detection result."""
+    """
+Instagram content violation detection result."""
     violation_id: str
     content_type: str  # post, story, reel, user
     content_id: str
@@ -153,7 +159,8 @@ class InstagramDetector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Instagram detector."""
+        """
+Initialize Instagram detector."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -785,7 +792,8 @@ class InstagramDetector:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
+        """
+Get recent violations."""
         recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
@@ -810,7 +818,8 @@ class InstagramDetector:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Instagram detector."""
+        """
+Shutdown the Instagram detector."""
         try:
             self._logger.info("Shutting down Instagram detector...")
             

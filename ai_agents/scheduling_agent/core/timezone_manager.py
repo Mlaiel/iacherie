@@ -29,6 +29,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -61,7 +62,8 @@ Base = declarative_base()
 
 @dataclass
 class TimezoneInfo:
-    """Comprehensive timezone information structure"""
+    """
+Comprehensive timezone information structure"""
     timezone_id: str
     utc_offset: int  # Offset in minutes
     dst_active: bool
@@ -78,7 +80,8 @@ class TimezoneInfo:
 
 @dataclass
 class AudienceTimezoneProfile:
-    """Audience timezone distribution profile"""
+    """
+Audience timezone distribution profile"""
     user_id: str
     primary_timezone: str
     secondary_timezones: List[str]
@@ -89,7 +92,8 @@ class AudienceTimezoneProfile:
 
 @dataclass
 class GlobalSchedulingWindow:
-    """Global optimal scheduling window"""
+    """
+Global optimal scheduling window"""
     window_id: str
     start_time: datetime
     end_time: datetime
@@ -101,7 +105,9 @@ class GlobalSchedulingWindow:
     recommendations: List[str]
 
 class TimezoneDetectionMethod(Enum):
-    """Timezone detection methods"""
+    """
+Timezone detection methods"""
+
     IP_GEOLOCATION = "ip_geolocation"
     USER_PROFILE = "user_profile"
     ENGAGEMENT_PATTERN = "engagement_pattern"
@@ -110,6 +116,7 @@ class TimezoneDetectionMethod(Enum):
 
 class RegionType(Enum):
     """Geographic region types"""
+
     CONTINENT = "continent"
     COUNTRY = "country"
     STATE_PROVINCE = "state_province"
@@ -130,7 +137,8 @@ class TimezoneManager(BaseAgent):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize timezone manager with configuration"""
+        """
+Initialize timezone manager with configuration"""
         super().__init__(config or {})
         self.performance_monitor = PerformanceMonitor()
         
@@ -237,7 +245,8 @@ class TimezoneManager(BaseAgent):
         return 'UN'
     
     async def _estimate_business_hours(self, country_code: str, region: str) -> Tuple[int, int]:
-        """Estimate typical business hours for region"""
+        """
+Estimate typical business hours for region"""
         # Default business hours mapping by region/country
         business_hours_map = {
             'US': (9, 17),    # 9 AM - 5 PM
@@ -250,7 +259,8 @@ class TimezoneManager(BaseAgent):
         return business_hours_map.get(country_code, business_hours_map['default'])
     
     async def _get_weekend_pattern(self, country_code: str) -> List[int]:
-        """Get weekend days pattern for country"""
+        """
+Get weekend days pattern for country"""
         # Weekend patterns by country/region
         weekend_patterns = {
             'US': [5, 6],     # Saturday, Sunday
@@ -261,7 +271,8 @@ class TimezoneManager(BaseAgent):
         return weekend_patterns.get(country_code, weekend_patterns['default'])
     
     async def _estimate_timezone_population(self, timezone_id: str) -> int:
-        """Estimate population in timezone (rough approximation)"""
+        """
+Estimate population in timezone (rough approximation)"""
         # This is a simplified estimation - in production, you'd use actual demographic data
         major_timezone_populations = {
             'US/Eastern': 50000000,
@@ -279,7 +290,8 @@ class TimezoneManager(BaseAgent):
         return major_timezone_populations.get(timezone_id, 1000000)  # Default 1M
     
     async def _build_regional_mappings(self):
-        """Build regional timezone mappings"""
+        """
+Build regional timezone mappings"""
         for tz_id, tz_info in self.timezone_cache.items():
             # Map by country
             self.global_timezone_map[f"country:{tz_info.country_code}"].add(tz_id)
@@ -762,7 +774,8 @@ class GlobalScheduler:
     """
     
     def __init__(self, timezone_manager: TimezoneManager):
-        """Initialize global scheduler with timezone manager"""
+        """
+Initialize global scheduler with timezone manager"""
         self.timezone_manager = timezone_manager
         self.active_schedules: Dict[str, List[GlobalSchedulingWindow]] = {}
         self.performance_tracker: Dict[str, Dict[str, float]] = {}

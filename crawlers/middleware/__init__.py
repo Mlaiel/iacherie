@@ -21,6 +21,7 @@ Key Components:
 - Error Handling: Recovery strategies, circuit breakers, comprehensive reporting, business continuity
 - Validation: Schema validation, sanitization, quality analysis, compliance checks
 """
+
 from typing import Dict, List, Optional, Any, Callable, Union
 import logging
 from datetime import datetime
@@ -210,7 +211,8 @@ class MiddlewarePipeline:
                  enable_fingerprinting: bool = True,
                  enable_monitoring: bool = True,
                  enable_error_handling: bool = True):
-        """Initialize middleware pipeline with configurable components"""
+        """
+Initialize middleware pipeline with configurable components"""
         
         self.logger = logging.getLogger(__name__)
         self.components = {}
@@ -357,7 +359,8 @@ def create_full_pipeline(**kwargs) -> MiddlewarePipeline:
 
 
 def create_basic_pipeline() -> MiddlewarePipeline:
-    """Create a basic middleware pipeline with essential components only"""
+    """
+Create a basic middleware pipeline with essential components only"""
     return MiddlewarePipeline(
         enable_authentication=True,
         enable_rate_limiting=True,
@@ -371,7 +374,8 @@ def create_basic_pipeline() -> MiddlewarePipeline:
 
 
 def create_content_pipeline() -> MiddlewarePipeline:
-    """Create a content-focused pipeline for media processing"""
+    """
+Create a content-focused pipeline for media processing"""
     return MiddlewarePipeline(
         enable_authentication=True,
         enable_rate_limiting=True,
@@ -535,7 +539,8 @@ class MiddlewarePipeline:
     """
     
     def __init__(self):
-        """Initialize middleware pipeline with all components"""
+        """
+Initialize middleware pipeline with all components"""
         self.authentication = get_authentication_middleware()
         self.rate_limiting = get_rate_limiting_middleware()
         self.security = get_security_middleware()
@@ -738,19 +743,22 @@ def get_middleware_pipeline() -> MiddlewarePipeline:
 # High-level convenience functions
 async def process_crawler_request(request_data: Dict[str, Any],
                                 user_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """High-level function to process crawler request through full pipeline"""
+    """
+High-level function to process crawler request through full pipeline"""
     pipeline = get_middleware_pipeline()
     return await pipeline.process_request(request_data, user_context)
 
 
 async def get_middleware_status() -> Dict[str, Any]:
-    """Get comprehensive middleware status"""
+    """
+Get comprehensive middleware status"""
     pipeline = get_middleware_pipeline()
     return await pipeline.get_pipeline_status()
 
 
 async def configure_middleware(config: Dict[str, Any]):
-    """Configure middleware pipeline"""
+    """
+Configure middleware pipeline"""
     pipeline = get_middleware_pipeline()
     await pipeline.configure_pipeline(config)
 

@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -401,5 +402,5 @@ if __name__ == "__main__":
     results = asyncio.run(run_all_demos())
     
     print(f"\n📊 Demo Results: {results}")
-    print("\n© 2025 Fahed Mlaiel. All rights reserved.")
+    print("\n(c) 2025 Fahed Mlaiel. All rights reserved.")
     print("Contact: mlaiel@live.de")

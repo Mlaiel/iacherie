@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 import numpy as np
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class VectorIndexType(Enum):
-    """Vector index types for different use cases"""
+    """
+Vector index types for different use cases"""
+
     FLAT = "flat"  # Exact search
     IVF_FLAT = "ivf_flat"  # Fast approximate search
     IVF_PQ = "ivf_pq"  # Memory optimized
@@ -42,6 +45,7 @@ class VectorIndexType(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity metrics for vector comparison"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     INNER_PRODUCT = "inner_product"
@@ -50,6 +54,7 @@ class SimilarityMetric(Enum):
 
 class ContentType(Enum):
     """Content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -85,7 +90,8 @@ class IndexConfiguration:
 
 @dataclass
 class VectorDatabaseConfig:
-    """Professional vector database configuration"""
+    """
+Professional vector database configuration"""
     # Core configuration
     host: str = "localhost"
     port: int = 8000
@@ -176,7 +182,8 @@ class VectorDatabaseManager:
         self._setup_storage_directories()
         
     def _setup_storage_directories(self):
-        """Create necessary storage directories"""
+        """
+Create necessary storage directories"""
         for path in [
             self.config.index_storage_path,
             self.config.backup_storage_path,
@@ -185,7 +192,8 @@ class VectorDatabaseManager:
             Path(path).mkdir(parents=True, exist_ok=True)
             
     def _create_faiss_index(self, config: IndexConfiguration) -> faiss.Index:
-        """Create FAISS index based on configuration"""
+        """
+Create FAISS index based on configuration"""
         dimension = config.dimension
         
         if config.index_type == VectorIndexType.FLAT:
@@ -216,7 +224,8 @@ class VectorDatabaseManager:
         return index
         
     async def initialize_indexes(self) -> Dict[str, bool]:
-        """Initialize all vector indexes"""
+        """
+Initialize all vector indexes"""
         results = {}
         
         try:
@@ -435,7 +444,8 @@ class VectorDatabaseManager:
         return estimated_bytes / (1024 * 1024)  # Convert to MB
         
     async def backup_indexes(self) -> Dict[str, str]:
-        """Create backup of all indexes"""
+        """
+Create backup of all indexes"""
         results = {}
         timestamp = int(time.time())
         

@@ -4,6 +4,7 @@ AI-Powered Workflow Automation and Task Orchestration System
 This module provides comprehensive automation capabilities including
 workflow management, task scheduling, event-driven automation, and intelligent decision making.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(str, Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     RUNNING = "running"
@@ -43,6 +46,7 @@ class WorkflowStatus(str, Enum):
 
 class TaskType(str, Enum):
     """Types of automation tasks"""
+
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_GENERATION = "content_generation"
     SOCIAL_POSTING = "social_posting"
@@ -62,6 +66,7 @@ class TaskType(str, Enum):
 
 class TriggerType(str, Enum):
     """Types of workflow triggers"""
+
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
     MANUAL = "manual"
@@ -73,6 +78,7 @@ class TriggerType(str, Enum):
 
 class ExecutionMode(str, Enum):
     """Task execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -243,7 +249,8 @@ class AutomationEvent(BaseModel):
 
 
 class AutomationMetrics(BaseModel):
-    """Automation system metrics"""
+    """
+Automation system metrics"""
     collection_period: str
     timestamp: datetime
     
@@ -851,7 +858,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             context.progress_percentage = (len(context.completed_tasks) / context.total_tasks) * 100
 
     async def _execute_parallel_tasks(self, context: ExecutionContext, workflow: Workflow, task_graph: Dict):
-        """Execute tasks in parallel"""
+        """
+Execute tasks in parallel"""
         remaining_tasks = workflow.tasks.copy()
         
         while remaining_tasks:
@@ -891,12 +899,14 @@ class AdvancedAutomationEngine(BaseCrawler):
             context.progress_percentage = (len(context.completed_tasks) / context.total_tasks) * 100
 
     async def _execute_conditional_tasks(self, context: ExecutionContext, workflow: Workflow, task_graph: Dict):
-        """Execute tasks with conditional logic"""
+        """
+Execute tasks with conditional logic"""
         # Simplified conditional execution
         await self._execute_sequential_tasks(context, workflow, task_graph)
 
     async def _execute_single_task(self, task: WorkflowTask, context: ExecutionContext) -> bool:
-        """Execute a single task"""
+        """
+Execute a single task"""
         try:
             task.start_time = datetime.utcnow()
             task.status = "running"
@@ -975,11 +985,13 @@ class AdvancedAutomationEngine(BaseCrawler):
         return graph
 
     def _check_task_dependencies(self, task: WorkflowTask, completed_tasks: List[str]) -> bool:
-        """Check if task dependencies are satisfied"""
+        """
+Check if task dependencies are satisfied"""
         return all(dep in completed_tasks for dep in task.depends_on)
 
     async def _evaluate_task_conditions(self, task: WorkflowTask, context: ExecutionContext) -> bool:
-        """Evaluate task execution conditions"""
+        """
+Evaluate task execution conditions"""
         if not task.conditions:
             return True
         
@@ -990,7 +1002,8 @@ class AdvancedAutomationEngine(BaseCrawler):
         return True
 
     async def _evaluate_condition(self, condition: Dict[str, Any], context: ExecutionContext) -> bool:
-        """Evaluate a single condition"""
+        """
+Evaluate a single condition"""
         try:
             condition_type = condition.get('type', 'variable')
             
@@ -1134,7 +1147,8 @@ class AdvancedAutomationEngine(BaseCrawler):
                 rule.execution_count += 1
 
     async def _process_single_event(self, event: AutomationEvent) -> List[str]:
-        """Process a single automation event"""
+        """
+Process a single automation event"""
         triggered_executions = []
         
         try:
@@ -1186,7 +1200,8 @@ class AdvancedAutomationEngine(BaseCrawler):
         return True
 
     async def _evaluate_rule_conditions(self, rule: AutomationRule, event: AutomationEvent) -> bool:
-        """Evaluate rule conditions"""
+        """
+Evaluate rule conditions"""
         if not rule.conditions:
             return True
         
@@ -1197,7 +1212,8 @@ class AdvancedAutomationEngine(BaseCrawler):
         return True
 
     async def _evaluate_event_condition(self, condition: Dict[str, Any], event: AutomationEvent) -> bool:
-        """Evaluate event-based condition"""
+        """
+Evaluate event-based condition"""
         try:
             condition_type = condition.get('type', 'data')
             
@@ -1302,7 +1318,8 @@ class AdvancedAutomationEngine(BaseCrawler):
         }
 
     async def _handle_api_call_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle API call task"""
+        """
+Handle API call task"""
         try:
             url = config['url']
             method = config.get('method', 'GET')
@@ -1334,7 +1351,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     async def _handle_webhook_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle webhook task"""
+        """
+Handle webhook task"""
         try:
             url = config['url']
             payload = config.get('payload', {})
@@ -1361,7 +1379,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     async def _handle_delay_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle delay task"""
+        """
+Handle delay task"""
         try:
             delay_seconds = config.get('delay_seconds', 1)
             await asyncio.sleep(delay_seconds)
@@ -1378,7 +1397,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     async def _handle_conditional_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle conditional task"""
+        """
+Handle conditional task"""
         try:
             condition = config['condition']
             true_action = config.get('true_action', {})
@@ -1404,7 +1424,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     async def _handle_notification_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle notification task"""
+        """
+Handle notification task"""
         try:
             message = config.get('message', 'Task notification')
             
@@ -1456,7 +1477,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     async def _handle_content_analysis_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content analysis task"""
+        """
+Handle content analysis task"""
         try:
             content = parameters['context_variables'].get(config['content_variable'])
             
@@ -1482,7 +1504,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     async def _handle_social_posting_task(self, config: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle social media posting task"""
+        """
+Handle social media posting task"""
         try:
             platform = config['platform']
             content = config['content']
@@ -1510,7 +1533,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             }
 
     def _replace_variables(self, text: Any, variables: Dict[str, Any]) -> Any:
-        """Replace variables in text with actual values"""
+        """
+Replace variables in text with actual values"""
         if isinstance(text, str):
             for var_name, var_value in variables.items():
                 placeholder = f"{{{var_name}}}"
@@ -1536,7 +1560,8 @@ class AdvancedAutomationEngine(BaseCrawler):
             return datetime.utcnow() + timedelta(hours=1)
 
     async def _setup_workflow_trigger(self, workflow_id: str, trigger: Dict[str, Any]):
-        """Set up workflow trigger"""
+        """
+Set up workflow trigger"""
         try:
             trigger_type = TriggerType(trigger.get('type', TriggerType.MANUAL))
             

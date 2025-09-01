@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -31,7 +32,9 @@ from ..ai.integration_intelligence import IntegrationIntelligenceEngine
 
 
 class IntegrationType(Enum):
-    """Types of licensing integrations"""
+    """
+Types of licensing integrations"""
+
     COLLECTION_SOCIETY = "collection_society"
     DIGITAL_SERVICE_PROVIDER = "digital_service_provider"
     MECHANICAL_LICENSING = "mechanical_licensing"
@@ -44,6 +47,7 @@ class IntegrationType(Enum):
 
 class IntegrationStatus(Enum):
     """Integration connection status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING_SETUP = "pending_setup"
@@ -54,6 +58,7 @@ class IntegrationStatus(Enum):
 
 class SynchronizationMode(Enum):
     """Data synchronization modes"""
+
     REAL_TIME = "real_time"
     BATCH_HOURLY = "batch_hourly"
     BATCH_DAILY = "batch_daily"
@@ -77,7 +82,8 @@ class IntegrationCredentials:
 
 @dataclass
 class DataMappingRule:
-    """Data field mapping rules"""
+    """
+Data field mapping rules"""
     source_field: str
     target_field: str
     transformation_rule: Optional[str] = None
@@ -87,7 +93,8 @@ class DataMappingRule:
 
 @dataclass
 class IntegrationMetrics:
-    """Integration performance metrics"""
+    """
+Integration performance metrics"""
     total_api_calls: int
     successful_calls: int
     failed_calls: int
@@ -98,7 +105,8 @@ class IntegrationMetrics:
 
 
 class IntegrationRequest(BaseModel):
-    """Integration setup request"""
+    """
+Integration setup request"""
     integration_name: str = Field(..., description="Name of the integration")
     integration_type: IntegrationType = Field(..., description="Type of integration")
     credentials: IntegrationCredentials = Field(..., description="Authentication credentials")
@@ -626,7 +634,8 @@ class LicensingIntegrationHub:
         self, 
         request: IntegrationRequest
     ) -> Dict[str, Any]:
-        """Test connection to external integration"""
+        """
+Test connection to external integration"""
         # Implementation for connection testing
         pass
     
@@ -635,6 +644,7 @@ class LicensingIntegrationHub:
         integration_type: IntegrationType,
         api_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze external system data schema"""
+        """
+Analyze external system data schema"""
         # Implementation for schema analysis
         pass

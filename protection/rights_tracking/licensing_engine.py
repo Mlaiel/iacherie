@@ -2,6 +2,7 @@
 Moteur de licences avancé pour la génération et gestion automatisée
 Système professionnel de contrats intelligents et monétisation
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseComplexity(Enum):
-    """Niveaux de complexité de licence"""
+    """
+Niveaux de complexité de licence"""
+
     SIMPLE = "simple"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -30,6 +33,7 @@ class LicenseComplexity(Enum):
 
 class RevenueSharingModel(Enum):
     """Modèles de partage des revenus"""
+
     FLAT_RATE = "flat_rate"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
@@ -162,7 +166,8 @@ class LicensingEngine:
         asyncio.create_task(self._load_default_templates())
     
     async def _load_default_templates(self):
-        """Charge les templates de licence par défaut"""
+        """
+Charge les templates de licence par défaut"""
         try:
             # Template Musical Standard
             music_template = LicenseTemplate(
@@ -930,7 +935,8 @@ class LicensingEngine:
         }
     
     async def _analyze_revenue_performance(self, license_id: str, start_date: datetime) -> Dict[str, Any]:
-        """Analyse les performances de revenus d'une licence"""
+        """
+Analyse les performances de revenus d'une licence"""
         return {
             'total_revenue': 125000.00,
             'projected_revenue': 150000.00,
@@ -945,7 +951,8 @@ class LicensingEngine:
         }
     
     async def _analyze_territorial_performance(self, license_id: str) -> Dict[str, Any]:
-        """Analyse les performances par territoire"""
+        """
+Analyse les performances par territoire"""
         return {
             'territory_breakdown': {
                 'US': {'revenue': 50000, 'compliance': 99.1, 'market_share': 15.2},
@@ -958,7 +965,8 @@ class LicensingEngine:
         }
     
     async def _analyze_clause_effectiveness(self, license_id: str) -> Dict[str, Any]:
-        """Analyse l'efficacité des clauses d'une licence"""
+        """
+Analyse l'efficacité des clauses d'une licence"""
         return {
             'effective_clauses': ['payment_terms', 'usage_restrictions'],
             'problematic_clauses': ['territorial_restrictions'],
@@ -995,7 +1003,8 @@ class LicensingEngine:
         }
     
     async def _generate_optimization_recommendations(self, license_id: str) -> List[Dict[str, str]]:
-        """Génère des recommandations d'optimisation"""
+        """
+Génère des recommandations d'optimisation"""
         return [
             {
                 'category': 'pricing',
@@ -1018,7 +1027,8 @@ class LicensingEngine:
         ]
     
     async def _benchmark_against_industry(self, license_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare avec les standards de l'industrie"""
+        """
+Compare avec les standards de l'industrie"""
         return {
             'industry_averages': {
                 'royalty_rate': 12.5,  # %
@@ -1039,7 +1049,8 @@ class LicensingEngine:
         }
     
     async def _analyze_template_performance(self, template_id: str) -> Dict[str, Any]:
-        """Analyse les performances d'un template"""
+        """
+Analyse les performances d'un template"""
         return {
             'template_id': template_id,
             'usage_frequency': 156,
@@ -1062,7 +1073,8 @@ class LicensingEngine:
         content_type: str,
         territories: List[str]
     ) -> Dict[str, Any]:
-        """Analyse les conditions actuelles du marché"""
+        """
+Analyse les conditions actuelles du marché"""
         return {
             'content_type': content_type,
             'territories': territories,
@@ -1089,7 +1101,8 @@ class LicensingEngine:
         current_license: Dict[str, Any],
         performance: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimise la durée de la licence"""
+        """
+Optimise la durée de la licence"""
         current_duration = current_license.get('duration', 12)
         
         # Analyse basée sur les performances
@@ -1181,7 +1194,8 @@ class LicensingEngine:
         current_license: Dict[str, Any],
         performance: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimise les termes de la licence"""
+        """
+Optimise les termes de la licence"""
         clause_effectiveness = performance.get('clause_effectiveness', {})
         
         return {
@@ -1197,7 +1211,8 @@ class LicensingEngine:
         performance: Dict[str, Any],
         market_conditions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Génère les justifications pour les changements proposés"""
+        """
+Génère les justifications pour les changements proposés"""
         return {
             'performance_based': [
                 f"Taux de conformité de {performance.get('usage_compliance', {}).get('compliance_score', 0)}% justifie les ajustements",
@@ -1242,7 +1257,8 @@ class LicensingEngine:
         }
     
     async def _determine_pricing_strategy(self, recommended_rate: float, market_average: float) -> str:
-        """Détermine la stratégie tarifaire appropriée"""
+        """
+Détermine la stratégie tarifaire appropriée"""
         if recommended_rate > market_average * 1.1:
             return "premium_positioning"
         elif recommended_rate < market_average * 0.9:
@@ -1281,7 +1297,8 @@ class LicensingEngine:
         current_license: Dict[str, Any],
         performance: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimise les conditions de paiement"""
+        """
+Optimise les conditions de paiement"""
         payment_compliance = performance.get('revenue_performance', {}).get('payment_compliance', 100)
         
         if payment_compliance > 95:
@@ -1333,7 +1350,8 @@ class LicensingEngine:
     
     async def _generate_license_document_content(self, license_data: Dict[str, Any]) -> str:
         """Génère le contenu du document de licence"""
-        return f"""CONTRAT DE LICENCE DE DROITS D'AUTEUR
+        return f"""
+CONTRAT DE LICENCE DE DROITS D'AUTEUR
 
 Numéro de licence: {license_data.get('license_id')}
 Date de génération: {license_data.get('generation_timestamp')}
@@ -1355,7 +1373,8 @@ CONDITIONS PRINCIPALES:
 """
     
     async def _generate_license_appendices(self, license_data: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Génère les annexes du document de licence"""
+        """
+Génère les annexes du document de licence"""
         return [
             {
                 'title': 'Annexe A - Spécifications techniques',
@@ -1372,7 +1391,8 @@ CONDITIONS PRINCIPALES:
         ]
     
     async def _determine_governing_law(self, license_data: Dict[str, Any]) -> str:
-        """Détermine la loi applicable"""
+        """
+Détermine la loi applicable"""
         territories = license_data.get('territories', ['WW'])
         if 'US' in territories:
             return "Droit de l'État de New York, États-Unis"
@@ -1391,7 +1411,8 @@ CONDITIONS PRINCIPALES:
         }
     
     async def _generate_pdf_document(self, document_data: Dict[str, Any]) -> str:
-        """Génère un document PDF (simulation)"""
+        """
+Génère un document PDF (simulation)"""
         # Simulation - dans un vrai système, utiliser une bibliothèque comme reportlab
         filename = f"license_{document_data['license_id']}.pdf"
         return f"/tmp/exports/{filename}"
@@ -1434,7 +1455,8 @@ CONDITIONS PRINCIPALES:
         self,
         requirements: Dict[str, Any]
     ) -> LicenseTemplate:
-        """Sélectionne le template optimal basé sur les exigences"""
+        """
+Sélectionne le template optimal basé sur les exigences"""
         try:
             content_type = requirements.get('content_type', 'general')
             complexity = requirements.get('complexity_level', 'standard')
@@ -1674,7 +1696,8 @@ async def _generate_negotiation_suggestions(
 
 
 async def _analyze_negotiation_convergence(negotiation: LicenseNegotiation) -> Dict[str, Any]:
-    """Analyse la convergence de la négociation"""
+    """
+Analyse la convergence de la négociation"""
     # Calcul simplifié de convergence
     convergence_score = min(0.5 + (negotiation.current_round * 0.1), 0.95)
     
@@ -1686,7 +1709,8 @@ async def _analyze_negotiation_convergence(negotiation: LicenseNegotiation) -> D
 
 
 async def _merge_negotiation_terms(negotiation: LicenseNegotiation) -> Dict[str, Any]:
-    """Fusionne les termes de négociation en accord final"""
+    """
+Fusionne les termes de négociation en accord final"""
     # Logique simplifiée de fusion
     agreed_terms = {}
     
@@ -1708,7 +1732,8 @@ async def _calculate_usage_specific_pricing(
     base_rate: Decimal,
     market_factors: Optional[Dict[str, Any]]
 ) -> Dict[str, Any]:
-    """Calcule la tarification spécifique par usage"""
+    """
+Calcule la tarification spécifique par usage"""
     multipliers = {
         'streaming': 1.0,
         'download': 1.2,

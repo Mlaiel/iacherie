@@ -4,6 +4,7 @@ Supports 195+ languages with automatic translation and localization.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import logging
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class LanguageRegion(Enum):
-    """Language regions for proper localization"""
+    """
+Language regions for proper localization"""
+
     AFRICA = "africa"
     ASIA = "asia"
     EUROPE = "europe"
@@ -29,6 +32,7 @@ class LanguageRegion(Enum):
 
 class LanguageScript(Enum):
     """Writing system scripts"""
+
     LATIN = "latin"
     CYRILLIC = "cyrillic"
     ARABIC = "arabic"
@@ -614,7 +618,8 @@ class InternationalizationManager:
         return None
     
     def _apply_context(self, translation: str, context: Dict[str, Any]) -> str:
-        """Apply context variables to translation"""
+        """
+Apply context variables to translation"""
         try:
             # Simple variable substitution
             for key, value in context.items():
@@ -631,21 +636,25 @@ class InternationalizationManager:
         return self.languages.get(language)
     
     def get_supported_languages(self) -> List[LanguageInfo]:
-        """Get list of all supported languages"""
+        """
+Get list of all supported languages"""
         return [lang for lang in self.languages.values() if lang.enabled]
     
     def get_languages_by_region(self, region: LanguageRegion) -> List[LanguageInfo]:
-        """Get languages by region"""
+        """
+Get languages by region"""
         return [lang for lang in self.languages.values() 
                 if lang.region == region and lang.enabled]
     
     def get_rtl_languages(self) -> List[str]:
-        """Get list of right-to-left languages"""
+        """
+Get list of right-to-left languages"""
         return [code for code, lang in self.languages.items() 
                 if lang.rtl and lang.enabled]
     
     async def detect_language(self, text: str) -> Optional[str]:
-        """Detect language of given text"""
+        """
+Detect language of given text"""
         try:
             # This would integrate with language detection services
             # For now, return a simple heuristic

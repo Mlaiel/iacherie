@@ -4,8 +4,9 @@ Validates marketplace content for quality, authenticity, compliance,
 and appropriateness using advanced AI analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceListing
 
 
 class ValidationLevel(Enum):
-    """Content validation levels."""
+    """
+Content validation levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -27,6 +30,7 @@ class ValidationLevel(Enum):
 
 class ContentCategory(Enum):
     """Content categories for validation."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -38,6 +42,7 @@ class ContentCategory(Enum):
 
 class ValidationStatus(Enum):
     """Validation result status."""
+
     APPROVED = "approved"
     REJECTED = "rejected"
     PENDING_REVIEW = "pending_review"
@@ -78,7 +83,8 @@ class ValidationResult:
 
 @dataclass
 class QualityMetrics:
-    """Content quality assessment metrics."""
+    """
+Content quality assessment metrics."""
     technical_quality: float = 0.0
     artistic_quality: float = 0.0
     production_quality: float = 0.0

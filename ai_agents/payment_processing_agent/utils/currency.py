@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 import aiohttp
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyProvider(str, Enum):
-    """Currency exchange rate providers"""
+    """
+Currency exchange rate providers"""
+
     FIXER_IO = "fixer_io"
     EXCHANGE_RATES_API = "exchange_rates_api"
     OPENEXCHANGERATES = "openexchangerates"
@@ -93,12 +96,14 @@ class ExchangeRate:
         self.ask = Decimal(str(ask)) if ask else None
     
     def is_expired(self, max_age_minutes: int = 15) -> bool:
-        """Check if exchange rate is expired"""
+        """
+Check if exchange rate is expired"""
         age = datetime.utcnow() - self.timestamp
         return age > timedelta(minutes=max_age_minutes)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "from_currency": self.from_currency,
             "to_currency": self.to_currency,
@@ -572,7 +577,8 @@ class CurrencyConverter:
         return sorted(list(self.supported_currencies))
 
     async def validate_currency_pair(self, from_currency: str, to_currency: str) -> bool:
-        """Validate if currency pair is supported"""
+        """
+Validate if currency pair is supported"""
         try:
             await self.get_exchange_rate(from_currency, to_currency, use_cache=False)
             return True

@@ -4,13 +4,14 @@
 Comprehensive verification and integrity check for the complete parsers module.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import os
 import sys
 import hashlib
@@ -23,14 +24,16 @@ from datetime import datetime
 
 
 class ModuleIntegrityVerifier:
-    """Ultra-professional module integrity verification system"""
+    """
+Ultra-professional module integrity verification system"""
     
     def __init__(self, module_path: str):
         self.module_path = Path(module_path)
         self.verification_results = {}
         
     def verify_file_structure(self) -> Dict[str, Any]:
-        """Verify complete file structure"""
+        """
+Verify complete file structure"""
         required_files = {
             # Core infrastructure
             '__init__.py': 'Main module initialization',
@@ -102,7 +105,8 @@ class ModuleIntegrityVerifier:
         return verification_result
     
     def verify_code_quality(self) -> Dict[str, Any]:
-        """Verify code quality and syntax"""
+        """
+Verify code quality and syntax"""
         quality_result = {
             'status': 'PASSED',
             'syntax_errors': [],
@@ -167,7 +171,8 @@ class ModuleIntegrityVerifier:
         return quality_result
     
     def _calculate_complexity(self, tree: ast.AST) -> int:
-        """Calculate cyclomatic complexity of AST"""
+        """
+Calculate cyclomatic complexity of AST"""
         complexity = 1  # Base complexity
         
         for node in ast.walk(tree):
@@ -181,7 +186,8 @@ class ModuleIntegrityVerifier:
         return complexity
     
     def verify_copyright_compliance(self) -> Dict[str, Any]:
-        """Verify copyright and licensing compliance"""
+        """
+Verify copyright and licensing compliance"""
         copyright_result = {
             'status': 'PASSED',
             'files_without_copyright': [],
@@ -191,7 +197,7 @@ class ModuleIntegrityVerifier:
         required_copyright_elements = [
             "Author: Fahed Mlaiel",
             "mlaiel@live.de",
-            "© 2025 Fahed Mlaiel",
+            "(c) 2025 Fahed Mlaiel",
             "STRICT COPYRIGHT WARNING",
             "unauthorized use"
         ]
@@ -261,7 +267,8 @@ class ModuleIntegrityVerifier:
         return doc_result
     
     def _assess_doc_quality(self, content: str) -> str:
-        """Assess documentation quality"""
+        """
+Assess documentation quality"""
         word_count = len(content.split())
         
         if word_count > 1000:
@@ -336,7 +343,8 @@ class ModuleIntegrityVerifier:
         return completeness_result
     
     def generate_integrity_report(self) -> str:
-        """Generate comprehensive integrity report"""
+        """
+Generate comprehensive integrity report"""
         print("🔍 Running comprehensive module integrity verification...")
         
         # Run all verifications
@@ -352,7 +360,7 @@ class ModuleIntegrityVerifier:
         report.append("🚀 IA-INFLUENCER-AGENT PARSERS MODULE - INTEGRITY VERIFICATION REPORT")
         report.append("=" * 80)
         report.append(f"📧 Author: Fahed Mlaiel <mlaiel@live.de>")
-        report.append(f"⚖️ © 2025 Fahed Mlaiel. All rights reserved.")
+        report.append(f"⚖️ (c) 2025 Fahed Mlaiel. All rights reserved.")
         report.append(f"📅 Report Generated: {datetime.now().isoformat()}")
         report.append("=" * 80)
         

@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     DAILY = "daily"
     WEEKLY = "weekly" 
     MONTHLY = "monthly"
@@ -52,6 +55,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Partnership metric types"""
+
     REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
@@ -76,7 +80,8 @@ class PartnerAnalyticsService:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive partnership analytics dashboard"""
+        """
+Generate comprehensive partnership analytics dashboard"""
         try:
             dashboard = {
                 'partnership_id': partnership_id,
@@ -495,7 +500,8 @@ class PartnerAnalyticsService:
         partnership_id: str,
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Get comprehensive partnership data for analytics"""
+        """
+Get comprehensive partnership data for analytics"""
         # Mock data for demonstration
         return {
             'partnership_id': partnership_id,
@@ -517,7 +523,8 @@ class PartnerAnalyticsService:
         }
 
     async def _generate_overview_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate high-level overview metrics"""
+        """
+Generate high-level overview metrics"""
         total_revenue = sum(item['amount'] for item in data['revenue_data'])
         avg_engagement = sum(item['rate'] for item in data['engagement_data']) / len(data['engagement_data'])
         
@@ -535,7 +542,8 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         revenue_trend = 'increasing' if data['revenue_data'][-1]['amount'] > data['revenue_data'][0]['amount'] else 'stable'
         engagement_trend = 'increasing' if data['engagement_data'][-1]['rate'] > data['engagement_data'][0]['rate'] else 'stable'
         
@@ -552,7 +560,8 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Generate comprehensive revenue analytics"""
+        """
+Generate comprehensive revenue analytics"""
         revenue_by_source = {}
         for item in data['revenue_data']:
             source = item['source']
@@ -572,7 +581,8 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Analyze engagement metrics"""
+        """
+Analyze engagement metrics"""
         avg_engagement = sum(item['rate'] for item in data['engagement_data']) / len(data['engagement_data'])
         total_views = sum(item['views'] for item in data['engagement_data'])
         
@@ -590,7 +600,8 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         partnership_id: str
     ) -> Dict[str, Any]:
-        """Compare partnership performance against benchmarks"""
+        """
+Compare partnership performance against benchmarks"""
         current_roi = 0.28  # From data analysis
         benchmark_roi = self.benchmark_data['industry_averages']['roi']
         
@@ -612,7 +623,8 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         dashboard: Dict[str, Any]
     ) -> List[str]:
-        """Generate AI-powered insights"""
+        """
+Generate AI-powered insights"""
         return [
             "Revenue growth is accelerating with 18% month-over-month increase",
             "Engagement rates consistently outperform industry average by 15%",
@@ -661,7 +673,8 @@ class PartnerAnalyticsService:
         financial_data: Dict[str, Any],
         method: str
     ) -> Dict[str, float]:
-        """Calculate detailed ROI breakdown"""
+        """
+Calculate detailed ROI breakdown"""
         return {
             'financial_roi': 0.28,
             'strategic_roi': 0.35,
@@ -677,7 +690,8 @@ class PartnerAnalyticsService:
         metric: MetricType,
         comparison_period: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze specific performance metric"""
+        """
+Analyze specific performance metric"""
         base_score = 0.8  # Mock score
         
         return {
@@ -692,7 +706,8 @@ class PartnerAnalyticsService:
         self,
         metric_scores: Dict[str, Any]
     ) -> float:
-        """Calculate weighted overall performance score"""
+        """
+Calculate weighted overall performance score"""
         weights = {
             'revenue': 0.30,
             'engagement': 0.25,
@@ -713,7 +728,8 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         analysis: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """Perform SWOT analysis"""
+        """
+Perform SWOT analysis"""
         return {
             'strengths': [
                 'High engagement rates',

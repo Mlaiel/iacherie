@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Protection Engine Testing Module
+"""
+Protection Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all content protection engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -69,18 +72,21 @@ from .test_helpers import (
 )
 
 class TestCopyrightProtectionEngine:
-    """Comprehensive tests for CopyrightProtectionEngine"""
+    """
+Comprehensive tests for CopyrightProtectionEngine"""
     
     @pytest.fixture
     async def protection_engine(self):
-        """Create and initialize content protection engine"""
+        """
+Create and initialize content protection engine"""
         engine = ContentProtectionEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_protected_content(self):
-        """Provide sample content requiring protection"""
+        """
+Provide sample content requiring protection"""
         return {
             'text_content': "This is confidential business content created by Fahed Mlaiel for IA-Influencer-Agent platform.",
             'image_content': "sample_image_binary_data_placeholder",
@@ -91,7 +97,7 @@ class TestCopyrightProtectionEngine:
                 'creator': 'Fahed Mlaiel',
                 'organization': 'IA-Influencer-Agent',
                 'creation_date': '2025-01-31',
-                'copyright': '© 2025 Fahed Mlaiel',
+                'copyright': '(c) 2025 Fahed Mlaiel',
                 'classification': 'proprietary',
                 'sensitivity_level': 'high'
             }
@@ -115,7 +121,8 @@ class TestCopyrightProtectionEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, protection_engine):
-        """Test content protection engine initialization"""
+        """
+Test content protection engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(protection_engine)
@@ -180,7 +187,8 @@ class TestCopyrightProtectionEngine:
     
     @pytest.mark.asyncio
     async def test_encryption_levels(self, protection_engine, sample_protected_content):
-        """Test different encryption levels and standards"""
+        """
+Test different encryption levels and standards"""
         encryption_tests = [
             {
                 'standard': EncryptionStandard.AES_128,
@@ -298,7 +306,8 @@ class TestCopyrightProtectionEngine:
     
     @pytest.mark.asyncio
     async def test_audit_logging_and_tracking(self, protection_engine, sample_protected_content):
-        """Test audit logging and content tracking"""
+        """
+Test audit logging and content tracking"""
         audit_options = {
             'content_id': 'audit_logging_test',
             'audit_logging': True,
@@ -323,7 +332,8 @@ class TestCopyrightProtectionEngine:
     
     @pytest.mark.asyncio
     async def test_copyright_enforcement(self, protection_engine, sample_protected_content):
-        """Test copyright enforcement mechanisms"""
+        """
+Test copyright enforcement mechanisms"""
         copyright_options = {
             'content_id': 'copyright_enforcement_test',
             'copyright_enforcement': True,
@@ -347,7 +357,8 @@ class TestCopyrightProtectionEngine:
     
     @pytest.mark.asyncio
     async def test_protection_seo_optimization(self, protection_engine, sample_protected_content):
-        """Test protection-aware SEO optimization"""
+        """
+Test protection-aware SEO optimization"""
         target_keywords = ['protected content', 'secure media', 'copyright protected', 'enterprise security']
         
         result = await protection_engine.optimize_for_seo(
@@ -364,7 +375,8 @@ class TestCopyrightProtectionEngine:
     
     @pytest.mark.asyncio
     async def test_content_protection_validation(self, protection_engine, sample_protected_content):
-        """Test content protection validation and verification"""
+        """
+Test content protection validation and verification"""
         result = await protection_engine.protect_content(sample_protected_content['video_content'])
         
         assert result['content_protected'] is True
@@ -376,25 +388,28 @@ class TestCopyrightProtectionEngine:
         assert 'security_signature' in result
 
 class TestWatermarkingEngine:
-    """Comprehensive tests for WatermarkingEngine"""
+    """
+Comprehensive tests for WatermarkingEngine"""
     
     @pytest.fixture
     async def watermarking_engine(self):
-        """Create and initialize watermarking engine"""
+        """
+Create and initialize watermarking engine"""
         engine = WatermarkingEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def watermarking_options(self):
-        """Provide watermarking options"""
+        """
+Provide watermarking options"""
         return {
             'content_id': 'watermark_test_123',
             'watermark_type': WatermarkType.INVISIBLE,
             'watermark_strength': 'high',
             'watermark_data': {
                 'creator': 'Fahed Mlaiel',
-                'copyright': '© 2025 Fahed Mlaiel',
+                'copyright': '(c) 2025 Fahed Mlaiel',
                 'organization': 'IA-Influencer-Agent',
                 'creation_date': '2025-01-31',
                 'unique_id': str(uuid.uuid4())
@@ -406,7 +421,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_watermarking_engine_initialization(self, watermarking_engine):
-        """Test watermarking engine initialization"""
+        """
+Test watermarking engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(watermarking_engine)
@@ -455,7 +471,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_visible_watermarking(self, watermarking_engine, sample_protected_content):
-        """Test visible watermarking capabilities"""
+        """
+Test visible watermarking capabilities"""
         visible_watermark_tests = [
             {
                 'position': 'bottom_right',
@@ -482,7 +499,7 @@ class TestWatermarkingEngine:
                 'content_id': f'visible_watermark_{i}',
                 'watermark_type': WatermarkType.VISIBLE,
                 'watermark_config': watermark_config,
-                'custom_text': 'Fahed Mlaiel © 2025',
+                'custom_text': 'Fahed Mlaiel (c) 2025',
                 'logo_overlay': True,
                 'brand_consistency': True
             }
@@ -499,7 +516,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_robust_watermarking(self, watermarking_engine, sample_protected_content):
-        """Test robust watermarking against attacks"""
+        """
+Test robust watermarking against attacks"""
         robust_options = {
             'content_id': 'robust_watermark_test',
             'watermark_type': WatermarkType.ROBUST,
@@ -529,7 +547,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_fragile_watermarking(self, watermarking_engine, sample_protected_content):
-        """Test fragile watermarking for tamper detection"""
+        """
+Test fragile watermarking for tamper detection"""
         fragile_options = {
             'content_id': 'fragile_watermark_test',
             'watermark_type': WatermarkType.FRAGILE,
@@ -553,7 +572,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_watermark_extraction_and_verification(self, watermarking_engine, sample_protected_content):
-        """Test watermark extraction and verification"""
+        """
+Test watermark extraction and verification"""
         # First, embed a watermark
         embed_options = {
             'content_id': 'watermark_extraction_test',
@@ -588,7 +608,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_batch_watermarking(self, watermarking_engine, sample_protected_content):
-        """Test batch watermarking capabilities"""
+        """
+Test batch watermarking capabilities"""
         batch_content = [
             sample_protected_content['image_content'],
             sample_protected_content['audio_content'],
@@ -624,7 +645,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_watermarking_seo_optimization(self, watermarking_engine, sample_protected_content):
-        """Test watermarking SEO optimization"""
+        """
+Test watermarking SEO optimization"""
         target_keywords = ['watermarked content', 'protected media', 'authenticated content', 'copyright watermark']
         
         result = await watermarking_engine.optimize_for_seo(
@@ -640,7 +662,8 @@ class TestWatermarkingEngine:
     
     @pytest.mark.asyncio
     async def test_watermarking_protection(self, watermarking_engine, sample_protected_content):
-        """Test watermarking content protection"""
+        """
+Test watermarking content protection"""
         result = await watermarking_engine.protect_content(sample_protected_content['video_content'])
         
         assert result['watermarked'] is True
@@ -651,18 +674,21 @@ class TestWatermarkingEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestDRMEngine:
-    """Comprehensive tests for DRMEngine"""
+    """
+Comprehensive tests for DRMEngine"""
     
     @pytest.fixture
     async def drm_engine(self):
-        """Create and initialize DRM engine"""
+        """
+Create and initialize DRM engine"""
         engine = DRMEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def drm_options(self):
-        """Provide DRM options"""
+        """
+Provide DRM options"""
         return {
             'content_id': 'drm_test_123',
             'drm_type': DRMType.WIDEVINE,
@@ -683,7 +709,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_drm_engine_initialization(self, drm_engine):
-        """Test DRM engine initialization"""
+        """
+Test DRM engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(drm_engine)
@@ -728,7 +755,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_playready_drm_protection(self, drm_engine, sample_protected_content):
-        """Test PlayReady DRM protection"""
+        """
+Test PlayReady DRM protection"""
         playready_options = {
             'content_id': 'playready_drm_test',
             'drm_type': DRMType.PLAYREADY,
@@ -755,7 +783,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_fairplay_drm_protection(self, drm_engine, sample_protected_content):
-        """Test FairPlay DRM protection"""
+        """
+Test FairPlay DRM protection"""
         fairplay_options = {
             'content_id': 'fairplay_drm_test',
             'drm_type': DRMType.FAIRPLAY,
@@ -782,7 +811,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_license_management(self, drm_engine, sample_protected_content):
-        """Test DRM license management"""
+        """
+Test DRM license management"""
         license_options = {
             'content_id': 'license_management_test',
             'drm_type': DRMType.WIDEVINE,
@@ -808,7 +838,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_usage_rights_enforcement(self, drm_engine, sample_protected_content):
-        """Test usage rights enforcement"""
+        """
+Test usage rights enforcement"""
         rights_tests = [
             {
                 'scenario': 'streaming_only',
@@ -887,7 +918,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_anti_piracy_measures(self, drm_engine, sample_protected_content):
-        """Test anti-piracy and content protection measures"""
+        """
+Test anti-piracy and content protection measures"""
         anti_piracy_options = {
             'content_id': 'anti_piracy_test',
             'drm_type': DRMType.WIDEVINE,
@@ -914,7 +946,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_drm_seo_optimization(self, drm_engine, sample_protected_content):
-        """Test DRM SEO optimization"""
+        """
+Test DRM SEO optimization"""
         target_keywords = ['DRM protected', 'secure streaming', 'licensed content', 'protected media']
         
         result = await drm_engine.optimize_for_seo(
@@ -930,7 +963,8 @@ class TestDRMEngine:
     
     @pytest.mark.asyncio
     async def test_drm_protection_validation(self, drm_engine, sample_protected_content):
-        """Test DRM protection validation"""
+        """
+Test DRM protection validation"""
         result = await drm_engine.protect_content(sample_protected_content['video_content'])
         
         assert result['drm_protected'] is True
@@ -941,11 +975,13 @@ class TestDRMEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestProtectionEngineIntegration:
-    """Integration tests for protection engines"""
+    """
+Integration tests for protection engines"""
     
     @pytest.mark.asyncio
     async def test_comprehensive_protection_pipeline(self, sample_content):
-        """Test comprehensive content protection pipeline"""
+        """
+Test comprehensive content protection pipeline"""
         # Initialize all protection engines
         protection_engine = ContentProtectionEngine()
         watermarking_engine = WatermarkingEngine()
@@ -983,7 +1019,7 @@ class TestProtectionEngineIntegration:
             'robustness_level': 'maximum',
             'watermark_data': {
                 'creator': 'Fahed Mlaiel',
-                'copyright': '© 2025 Fahed Mlaiel'
+                'copyright': '(c) 2025 Fahed Mlaiel'
             }
         }
         

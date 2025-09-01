@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Scalable market intelligence systems
 - AI Prompt Engineer & Content Protection: Intelligent market analysis and competitive insights
 """
+
 import asyncio
 import json
 import logging
@@ -70,7 +71,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class MarketSegmentType(Enum):
-    """Advanced market segmentation categories"""
+    """
+Advanced market segmentation categories"""
+
     MICRO_INFLUENCER = "micro_influencer"      # 1K-100K followers
     MACRO_INFLUENCER = "macro_influencer"      # 100K-1M followers
     MEGA_INFLUENCER = "mega_influencer"        # 1M+ followers
@@ -80,6 +83,7 @@ class MarketSegmentType(Enum):
 
 class CompetitorTier(Enum):
     """Competitor tier classifications"""
+
     DIRECT = "direct"              # Same niche, similar size
     ASPIRATIONAL = "aspirational" # Same niche, larger
     EMERGING = "emerging"          # Same niche, smaller but growing
@@ -88,6 +92,7 @@ class CompetitorTier(Enum):
 
 class AnalysisDepth(Enum):
     """Market analysis depth levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"

@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive style transfer capabilities using deep learning
 for image, text, and multimedia content transformation and adaptation.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -20,7 +21,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class StyleType(Enum):
-    """Types of style transfer"""
+    """
+Types of style transfer"""
+
     IMAGE_ARTISTIC = "image_artistic"
     IMAGE_PHOTOGRAPHIC = "image_photographic"
     TEXT_WRITING = "text_writing"
@@ -30,6 +33,7 @@ class StyleType(Enum):
 
 class TransferMode(Enum):
     """Style transfer modes"""
+
     FAST = "fast"
     BALANCED = "balanced"
     HIGH_QUALITY = "high_quality"
@@ -37,6 +41,7 @@ class TransferMode(Enum):
 
 class ArtisticStyle(Enum):
     """Predefined artistic styles"""
+
     IMPRESSIONIST = "impressionist"
     CUBIST = "cubist"
     ABSTRACT = "abstract"
@@ -62,7 +67,8 @@ class StyleTransferConfig:
 
 @dataclass
 class StyleTransferResult:
-    """Result of style transfer operation"""
+    """
+Result of style transfer operation"""
     operation_id: str
     original_content: Any
     stylized_content: Any
@@ -73,7 +79,8 @@ class StyleTransferResult:
     timestamp: datetime
 
 class StyleTransferEngine:
-    """Main style transfer engine"""
+    """
+Main style transfer engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -237,7 +244,8 @@ class StyleTransferEngine:
             return content
     
     def _preprocess_image(self, image: Any, config: StyleTransferConfig) -> Any:
-        """Preprocess image for style transfer"""
+        """
+Preprocess image for style transfer"""
         # Simulate image preprocessing
         self.logger.debug("Preprocessing image for style transfer")
         
@@ -463,7 +471,8 @@ class StyleTransferEngine:
         return max(0.0, base_score - preservation_penalty)
     
     def _assess_style_fidelity(self, stylized: Any, config: StyleTransferConfig) -> float:
-        """Assess how well the target style is applied"""
+        """
+Assess how well the target style is applied"""
         # Simulate style fidelity assessment
         base_score = 0.75
         
@@ -481,7 +490,8 @@ class StyleTransferEngine:
         return min(1.0, base_score + intensity_bonus + mode_bonus)
     
     def _assess_visual_quality(self, stylized: Any, config: StyleTransferConfig) -> float:
-        """Assess visual quality of stylized content"""
+        """
+Assess visual quality of stylized content"""
         # Simulate visual quality assessment
         base_score = 0.7
         
@@ -499,7 +509,8 @@ class StyleTransferEngine:
         return min(1.0, base_score * mode_multiplier + edge_bonus)
     
     def _assess_temporal_consistency(self, content: Any, config: StyleTransferConfig) -> float:
-        """Assess temporal consistency for video content"""
+        """
+Assess temporal consistency for video content"""
         if config.style_type != StyleType.VIDEO_CINEMATIC:
             return 1.0  # Not applicable
         
@@ -517,13 +528,15 @@ class StyleTransferEngine:
         return min(1.0, base_score + mode_bonus)
     
     def _assess_perceptual_similarity(self, original: Any, stylized: Any) -> float:
-        """Assess perceptual similarity between original and stylized content"""
+        """
+Assess perceptual similarity between original and stylized content"""
         # Simulate perceptual similarity assessment
         return random.uniform(0.6, 0.9)
     
     def batch_style_transfer(self, contents: List[Any], configs: List[StyleTransferConfig],
                            reference_styles: Optional[List[Any]] = None) -> List[StyleTransferResult]:
-        """Perform batch style transfer on multiple contents"""
+        """
+Perform batch style transfer on multiple contents"""
         results = []
         
         if reference_styles is None:

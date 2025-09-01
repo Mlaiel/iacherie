@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class WhatsAppMessageType(str, Enum):
-    """WhatsApp message types"""
+    """
+WhatsApp message types"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -52,6 +55,7 @@ class WhatsAppMessageType(str, Enum):
 
 class WhatsAppInteractionType(str, Enum):
     """WhatsApp interaction types"""
+
     MESSAGE = "message"
     REPLY = "reply"
     REACTION = "reaction"
@@ -62,6 +66,7 @@ class WhatsAppInteractionType(str, Enum):
 
 class WhatsAppContactType(str, Enum):
     """WhatsApp contact types"""
+
     INDIVIDUAL = "individual"
     BUSINESS = "business"
     GROUP = "group"
@@ -86,7 +91,8 @@ class WhatsAppMedia(BaseModel):
 
 
 class WhatsAppContact(BaseModel):
-    """WhatsApp contact data model"""
+    """
+WhatsApp contact data model"""
     phone_number: str
     contact_name: Optional[str] = None
     profile_name: Optional[str] = None
@@ -106,7 +112,8 @@ class WhatsAppContact(BaseModel):
 
 
 class WhatsAppMessage(BaseModel):
-    """WhatsApp message data model"""
+    """
+WhatsApp message data model"""
     message_id: str
     from_contact: WhatsAppContact
     to_contact: Optional[WhatsAppContact] = None
@@ -150,7 +157,8 @@ class WhatsAppGroup(BaseModel):
 
 
 class WhatsAppStatus(BaseModel):
-    """WhatsApp status data model"""
+    """
+WhatsApp status data model"""
     status_id: str
     contact: WhatsAppContact
     content: Optional[str] = None
@@ -165,7 +173,8 @@ class WhatsAppStatus(BaseModel):
 
 
 class WhatsAppConversation(BaseModel):
-    """WhatsApp conversation data model"""
+    """
+WhatsApp conversation data model"""
     conversation_id: str
     participant: WhatsAppContact
     last_message: Optional[WhatsAppMessage] = None
@@ -196,7 +205,8 @@ class WhatsAppSearchResults(BaseModel):
 
 
 class WhatsAppAnalytics(BaseModel):
-    """WhatsApp analytics data model"""
+    """
+WhatsApp analytics data model"""
     phone_number: str
     analysis_period: Tuple[datetime, datetime]
     total_messages_sent: int
@@ -653,22 +663,26 @@ class WhatsAppCrawler(BaseCrawler):
         return []
 
     async def _search_messages(self, query: str, message_type: Optional[WhatsAppMessageType], limit: int) -> List[WhatsAppMessage]:
-        """Search for WhatsApp messages"""
+        """
+Search for WhatsApp messages"""
         # WhatsApp Business API doesn't provide message search, would need webhook data
         return []
 
     async def _search_groups(self, query: str, limit: int) -> List[WhatsAppGroup]:
-        """Search for WhatsApp groups"""
+        """
+Search for WhatsApp groups"""
         # Implementation would depend on group API availability
         return []
 
     async def _search_statuses(self, query: str, limit: int) -> List[WhatsAppStatus]:
-        """Search for WhatsApp status updates"""
+        """
+Search for WhatsApp status updates"""
         # Implementation would depend on status API availability
         return []
 
     async def _get_recent_messages(self) -> List[WhatsAppMessage]:
-        """Get recent messages from webhook or API"""
+        """
+Get recent messages from webhook or API"""
         # This would typically be populated by webhook data
         return []
 
@@ -678,7 +692,8 @@ class WhatsAppCrawler(BaseCrawler):
         message_type: WhatsAppMessageType,
         content: Dict[str, Any]
     ) -> bool:
-        """Send a WhatsApp message"""
+        """
+Send a WhatsApp message"""
         try:
             payload = {
                 "messaging_product": "whatsapp",
@@ -862,17 +877,20 @@ class WhatsAppCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[WhatsAppMessage]:
-        """Get received messages in specific time period"""
+        """
+Get received messages in specific time period"""
         # Implementation would require message storage/webhook data
         return []
 
     async def _calculate_similarity(self, message: WhatsAppMessage) -> float:
-        """Calculate similarity score against protected content"""
+        """
+Calculate similarity score against protected content"""
         # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, message: WhatsAppMessage) -> str:
-        """Check protection status of message"""
+        """
+Check protection status of message"""
         if message.message_id in self.protected_content:
             return "protected"
         return "unprotected"

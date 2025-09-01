@@ -24,6 +24,7 @@ Team Specialists:
 - DevOps: Content Scalability & Performance
 - IA Prompt Engineer: Content-Aware Conversational Experience
 """
+
 import asyncio
 import logging
 import hashlib
@@ -71,7 +72,9 @@ logger = get_logger(__name__)
 
 
 class ContentType(Enum):
-    """Content type classifications"""
+    """
+Content type classifications"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -121,6 +124,7 @@ class ContentFormat(Enum):
 
 class ContentState(Enum):
     """Content processing state"""
+
     UPLOADING = "uploading"
     UPLOADED = "uploaded"
     ANALYZING = "analyzing"
@@ -135,6 +139,7 @@ class ContentState(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -189,7 +194,8 @@ class MediaSessionState(BaseModel):
 
 
 class ContentAnalysisResult(BaseModel):
-    """Content analysis result"""
+    """
+Content analysis result"""
     content_id: str
     analysis_type: str
     results: Dict[str, Any]
@@ -206,7 +212,8 @@ class ContentAnalysisResult(BaseModel):
 
 @dataclass
 class ContentManagerConfig:
-    """Content manager configuration"""
+    """
+Content manager configuration"""
     max_file_size_mb: int = 500
     allowed_content_types: List[str] = field(default_factory=lambda: [
         "audio", "video", "image", "text", "document"
@@ -240,7 +247,8 @@ class ContentProtectionSessionHandler:
         content_info: SessionContentInfo,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> bool:
-        """Protect content with fingerprinting and registration"""
+        """
+Protect content with fingerprinting and registration"""
         
         try:
             content_info.processing_state = ContentState.PROTECTING
@@ -444,7 +452,8 @@ class MediaSessionStateManager:
         self.media_sessions: Dict[str, MediaSessionState] = {}
     
     async def initialize_media_session(self, session_id: str) -> MediaSessionState:
-        """Initialize media session state"""
+        """
+Initialize media session state"""
         
         try:
             media_state = MediaSessionState(session_id=session_id)
@@ -694,7 +703,8 @@ class MediaSessionStateManager:
         await self._cache_media_state(media_state)
     
     async def _cache_media_state(self, media_state: MediaSessionState):
-        """Cache media session state"""
+        """
+Cache media session state"""
         
         try:
             cache_key = f"media_session:{media_state.session_id}"
@@ -757,7 +767,8 @@ class SessionContentAnalyzer:
         self,
         content_info: SessionContentInfo
     ) -> ContentAnalysisResult:
-        """Analyze content and extract metadata"""
+        """
+Analyze content and extract metadata"""
         
         start_time = datetime.utcnow()
         
@@ -1018,7 +1029,8 @@ class SessionContentAnalyzer:
             return 0.0
     
     def _detect_language(self, text: str) -> str:
-        """Detect text language (simplified implementation)"""
+        """
+Detect text language (simplified implementation)"""
         
         # This is a very simplified language detection
         # In production, you'd use libraries like langdetect or spacy
@@ -1079,7 +1091,8 @@ class SessionContentManager:
         self.session_content: Dict[str, List[str]] = {}  # session_id -> [content_ids]
     
     def _initialize_storage(self):
-        """Initialize storage backend"""
+        """
+Initialize storage backend"""
         
         try:
             if self.config.storage_backend == "s3":

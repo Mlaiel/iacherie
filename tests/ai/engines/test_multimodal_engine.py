@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Multimodal Engine Testing Module
+"""
+Multimodal Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all multimodal processing engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -68,18 +71,21 @@ from .test_helpers import (
 )
 
 class TestMultimodalFusionEngine:
-    """Comprehensive tests for MultimodalFusionEngine"""
+    """
+Comprehensive tests for MultimodalFusionEngine"""
     
     @pytest.fixture
     async def multimodal_engine(self):
-        """Create and initialize multimodal processing engine"""
+        """
+Create and initialize multimodal processing engine"""
         engine = MultimodalFusionEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_multimodal_data(self):
-        """Provide sample multimodal data for testing"""
+        """
+Provide sample multimodal data for testing"""
         return {
             'text': "This is a professional demonstration of AI-powered multimodal content processing capabilities.",
             'image': "sample_image_data_base64_encoded_placeholder",
@@ -112,7 +118,8 @@ class TestMultimodalFusionEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, multimodal_engine):
-        """Test multimodal engine initialization"""
+        """
+Test multimodal engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(multimodal_engine)
@@ -196,7 +203,8 @@ class TestMultimodalFusionEngine:
     
     @pytest.mark.asyncio
     async def test_cross_modal_alignment(self, multimodal_engine, sample_multimodal_data):
-        """Test cross-modal content alignment capabilities"""
+        """
+Test cross-modal content alignment capabilities"""
         # Test different alignment strategies
         alignment_tests = [
             {
@@ -363,7 +371,8 @@ class TestMultimodalFusionEngine:
     
     @pytest.mark.asyncio
     async def test_multimodal_protection(self, multimodal_engine, sample_multimodal_data):
-        """Test multimodal content protection features"""
+        """
+Test multimodal content protection features"""
         input_data = {
             'text': sample_multimodal_data['text'],
             'image': sample_multimodal_data['image'],
@@ -381,18 +390,21 @@ class TestMultimodalFusionEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestCrossModalEngine:
-    """Comprehensive tests for CrossModalEngine"""
+    """
+Comprehensive tests for CrossModalEngine"""
     
     @pytest.fixture
     async def cross_modal_engine(self):
-        """Create and initialize cross-modal engine"""
+        """
+Create and initialize cross-modal engine"""
         engine = CrossModalEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def cross_modal_options(self):
-        """Provide cross-modal processing options"""
+        """
+Provide cross-modal processing options"""
         return {
             'content_id': 'cross_modal_test_123',
             'source_modality': ModalityType.TEXT,
@@ -405,7 +417,8 @@ class TestCrossModalEngine:
     
     @pytest.mark.asyncio
     async def test_cross_modal_engine_initialization(self, cross_modal_engine):
-        """Test cross-modal engine initialization"""
+        """
+Test cross-modal engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(cross_modal_engine)
@@ -501,7 +514,8 @@ class TestCrossModalEngine:
     
     @pytest.mark.asyncio
     async def test_audio_to_text_translation(self, cross_modal_engine):
-        """Test audio-to-text cross-modal translation"""
+        """
+Test audio-to-text cross-modal translation"""
         audio_samples = [
             {
                 'audio_data': 'speech_presentation_audio_placeholder',
@@ -547,7 +561,8 @@ class TestCrossModalEngine:
     
     @pytest.mark.asyncio
     async def test_video_to_text_translation(self, cross_modal_engine):
-        """Test video-to-text cross-modal translation"""
+        """
+Test video-to-text cross-modal translation"""
         options = {
             'content_id': 'video_to_text_test',
             'source_modality': ModalityType.VIDEO,
@@ -645,14 +660,16 @@ class TestUnifiedContentEngine:
     
     @pytest.fixture
     async def unified_content_engine(self):
-        """Create and initialize unified content engine"""
+        """
+Create and initialize unified content engine"""
         engine = UnifiedContentEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def unified_content_options(self):
-        """Provide unified content processing options"""
+        """
+Provide unified content processing options"""
         return {
             'content_id': 'unified_test_123',
             'unified_format': 'comprehensive',
@@ -665,7 +682,8 @@ class TestUnifiedContentEngine:
     
     @pytest.mark.asyncio
     async def test_unified_content_engine_initialization(self, unified_content_engine):
-        """Test unified content engine initialization"""
+        """
+Test unified content engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(unified_content_engine)
@@ -716,7 +734,8 @@ class TestUnifiedContentEngine:
     
     @pytest.mark.asyncio
     async def test_content_format_unification(self, unified_content_engine):
-        """Test content format unification across modalities"""
+        """
+Test content format unification across modalities"""
         format_tests = [
             {
                 'format_type': 'presentation',
@@ -799,7 +818,8 @@ class TestUnifiedContentEngine:
     
     @pytest.mark.asyncio
     async def test_unified_metadata_management(self, unified_content_engine):
-        """Test unified metadata management across modalities"""
+        """
+Test unified metadata management across modalities"""
         options = {
             'content_id': 'unified_metadata_test',
             'unified_metadata': True,
@@ -817,7 +837,7 @@ class TestUnifiedContentEngine:
                 'keywords': ['AI', 'multimodal', 'content', 'professional'],
                 'target_audience': 'business_professionals',
                 'language': 'en-US',
-                'copyright': '© 2025 Fahed Mlaiel'
+                'copyright': '(c) 2025 Fahed Mlaiel'
             },
             'content_components': {
                 'text': 'Professional content description',
@@ -842,7 +862,8 @@ class TestUnifiedContentEngine:
     
     @pytest.mark.asyncio
     async def test_unified_content_seo_optimization(self, unified_content_engine):
-        """Test unified content SEO optimization"""
+        """
+Test unified content SEO optimization"""
         target_keywords = ['unified content', 'multimodal AI', 'integrated media', 'professional content']
         
         content_input = {
@@ -863,7 +884,8 @@ class TestUnifiedContentEngine:
     
     @pytest.mark.asyncio
     async def test_unified_content_protection(self, unified_content_engine):
-        """Test unified content protection"""
+        """
+Test unified content protection"""
         content_input = {
             'text': 'Protected multimodal content',
             'image': 'protected_image_data',
@@ -882,11 +904,13 @@ class TestUnifiedContentEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestMultimodalEngineIntegration:
-    """Integration tests for multimodal engines"""
+    """
+Integration tests for multimodal engines"""
     
     @pytest.mark.asyncio
     async def test_complete_multimodal_workflow(self, sample_content):
-        """Test complete multimodal content creation workflow"""
+        """
+Test complete multimodal content creation workflow"""
         # Initialize all multimodal engines
         multimodal_engine = MultimodalFusionEngine()
         cross_modal_engine = CrossMediaEngine()
@@ -959,7 +983,8 @@ class TestMultimodalEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_multimodal_accessibility_compliance(self):
-        """Test multimodal accessibility compliance"""
+        """
+Test multimodal accessibility compliance"""
         multimodal_engine = MultimodalFusionEngine()
         await multimodal_engine.initialize()
         
@@ -992,7 +1017,8 @@ class TestMultimodalEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_multimodal_performance_optimization(self):
-        """Test multimodal performance optimization"""
+        """
+Test multimodal performance optimization"""
         unified_content_engine = UnifiedContentEngine()
         await unified_content_engine.initialize()
         

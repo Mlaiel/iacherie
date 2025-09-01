@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class SyncStatus(Enum):
-    """Real-time synchronization status"""
+    """
+Real-time synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress" 
     SYNCHRONIZED = "synchronized"
@@ -57,6 +60,7 @@ class SyncStatus(Enum):
 
 class ContentType(Enum):
     """Content types for synchronization"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -69,6 +73,7 @@ class ContentType(Enum):
 
 class ConflictResolutionStrategy(Enum):
     """Conflict resolution strategies"""
+
     MERGE_INTELLIGENT = "merge_intelligent"
     LATEST_WINS = "latest_wins"
     MANUAL_RESOLVE = "manual_resolve"
@@ -79,6 +84,7 @@ class ConflictResolutionStrategy(Enum):
 
 class ReplicationMode(Enum):
     """Content replication modes"""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled" 
     ON_DEMAND = "on_demand"
@@ -104,7 +110,8 @@ class SyncOperation:
 
 
 class ContentSyncLog(Base):
-    """Database model for content synchronization logs"""
+    """
+Database model for content synchronization logs"""
     __tablename__ = "content_sync_logs"
     __table_args__ = (
         Index('idx_sync_content_id', 'content_id'),
@@ -174,7 +181,8 @@ class RealtimeSyncManager:
         self.version_trees = {}
         
     async def initialize_sync_infrastructure(self) -> bool:
-        """Initialize synchronization infrastructure"""
+        """
+Initialize synchronization infrastructure"""
         try:
             # Setup Redis pub/sub channels
             await self._setup_sync_channels()

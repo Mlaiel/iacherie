@@ -12,6 +12,7 @@ without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import uuid
@@ -46,6 +47,7 @@ logger = get_logger(__name__)
 
 class CollaborationType(Enum):
     """Types of mobile collaborations."""
+
     REMIX = "remix"
     CO_CREATION = "co_creation"
     DUET = "duet"
@@ -58,6 +60,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration project status."""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -68,6 +71,7 @@ class CollaborationStatus(Enum):
 
 class MobileWorkspaceFeature(Enum):
     """Mobile workspace features."""
+
     REAL_TIME_EDITING = "real_time_editing"
     VOICE_CHAT = "voice_chat"
     VIDEO_CALL = "video_call"
@@ -96,7 +100,8 @@ class MobileCollaborator:
 
 @dataclass
 class CollaborationMatch:
-    """AI-powered collaboration match."""
+    """
+AI-powered collaboration match."""
     match_id: str
     target_user_id: str
     requester_user_id: str
@@ -112,7 +117,8 @@ class CollaborationMatch:
 
 @dataclass
 class MobileCollaborationProject:
-    """Mobile collaboration project."""
+    """
+Mobile collaboration project."""
     project_id: str
     title: str
     description: str
@@ -153,7 +159,8 @@ class MobileCollaborationService:
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize collaboration and AI engines."""
+        """
+Initialize collaboration and AI engines."""
         try:
             self.collaboration_matcher = CollaborationMatcher()
             self.content_processor = ContentProcessor()
@@ -779,7 +786,8 @@ class MobileCollaborationService:
         user_id: str,
         projects: List[MobileCollaborationProject]
     ) -> List[Dict[str, Any]]:
-        """Get collaboration recommendations for user."""
+        """
+Get collaboration recommendations for user."""
         recommendations = []
         
         if len(projects) < 3:

@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -27,7 +28,9 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class PinType(Enum):
-    """Pinterest pin types"""
+    """
+Pinterest pin types"""
+
     STANDARD = "standard"
     VIDEO = "video"
     STORY = "story"
@@ -38,6 +41,7 @@ class PinType(Enum):
 
 class BoardCategory(Enum):
     """Pinterest board categories"""
+
     ART = "art"
     FASHION = "fashion"
     FOOD = "food"
@@ -259,7 +263,8 @@ class PinterestEngine(BaseCrawlerEngine):
         return pin_type in pin_types
         
     def _determine_pin_type(self, pin: Dict[str, Any]) -> PinType:
-        """Determine pin type from pin data"""
+        """
+Determine pin type from pin data"""
         
         media = pin.get('media', {})
         
@@ -279,7 +284,8 @@ class PinterestEngine(BaseCrawlerEngine):
         raw_pin: Dict[str, Any],
         board_info: Dict[str, Any]
     ) -> Optional[PinterestPin]:
-        """Process and analyze pin with advanced metrics"""
+        """
+Process and analyze pin with advanced metrics"""
         
         try:
             pin_id = raw_pin.get('id')
@@ -394,7 +400,8 @@ class PinterestEngine(BaseCrawlerEngine):
         return None
         
     def _extract_video_url(self, media: Dict[str, Any]) -> Optional[str]:
-        """Extract video URL if available"""
+        """
+Extract video URL if available"""
         
         if media.get('media_type') == 'video':
             video_list = media.get('video_list', {})
@@ -406,7 +413,8 @@ class PinterestEngine(BaseCrawlerEngine):
         return None
         
     def _calculate_engagement_rate(self, pin_metrics: Dict[str, Any]) -> float:
-        """Calculate engagement rate for the pin"""
+        """
+Calculate engagement rate for the pin"""
         
         saves = pin_metrics.get('save', 0)
         comments = pin_metrics.get('comment', 0)
@@ -423,7 +431,8 @@ class PinterestEngine(BaseCrawlerEngine):
         pin: Dict[str, Any],
         pin_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate viral potential based on growth patterns"""
+        """
+Calculate viral potential based on growth patterns"""
         
         # Factors: saves rate, repin rate, impression growth
         saves = pin_metrics.get('save', 0)
@@ -473,7 +482,8 @@ class PinterestEngine(BaseCrawlerEngine):
         return min(monetization_score, 1.0)
         
     def _determine_board_category(self, board_info: Dict[str, Any]) -> BoardCategory:
-        """Determine board category from board information"""
+        """
+Determine board category from board information"""
         
         board_name = board_info.get('name', '').lower()
         board_description = board_info.get('description', '').lower()
@@ -538,7 +548,8 @@ class PinterestEngine(BaseCrawlerEngine):
         category: Optional[BoardCategory] = None,
         limit: int = 100
     ) -> List[PinterestPin]:
-        """Crawl trending pins across Pinterest"""
+        """
+Crawl trending pins across Pinterest"""
         
         self.logger.info(f"Crawling trending pins, category: {category}, limit: {limit}")
         
@@ -678,7 +689,8 @@ class PinterestEngine(BaseCrawlerEngine):
         board_id: str,
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Monitor board performance metrics"""
+        """
+Monitor board performance metrics"""
         
         self.logger.info(f"Monitoring board performance: {board_id}")
         
@@ -739,7 +751,8 @@ class PinterestEngine(BaseCrawlerEngine):
         return min(growth_rate, 1.0)
         
     def _analyze_content_performance(self, pins_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze content performance distribution"""
+        """
+Analyze content performance distribution"""
         
         if not pins_metrics:
             return {}
@@ -760,7 +773,8 @@ class PinterestEngine(BaseCrawlerEngine):
         }
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
+        """
+Get authenticated headers for API requests"""
         
         return {
             'User-Agent': 'Pinterest/1.0',
@@ -785,7 +799,8 @@ class PinterestEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
+        """
+Apply rate limiting to prevent API abuse"""
         
         # Pinterest has generous rate limits
         await asyncio.sleep(60 / self.rate_limit_per_minute)

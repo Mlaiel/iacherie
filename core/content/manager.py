@@ -6,8 +6,9 @@ in the IA Influencer Agent platform. It coordinates content processing, protecti
 and monetization workflows according to the business logic specification.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ from .monitor import ContentMonitor
 
 
 class ContentStatus(Enum):
-    """Content processing status enumeration"""
+    """
+Content processing status enumeration"""
+
     UPLOADED = "uploaded"
     VALIDATING = "validating" 
     ANALYZING = "analyzing"
@@ -545,7 +548,8 @@ class ContentManager:
         status: str,
         current_step: str
     ) -> None:
-        """Update workflow status and tracking"""
+        """
+Update workflow status and tracking"""
         if workflow_id in self.active_workflows:
             workflow = self.active_workflows[workflow_id]
             workflow["status"] = status

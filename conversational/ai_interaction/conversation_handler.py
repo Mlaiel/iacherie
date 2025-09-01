@@ -5,8 +5,9 @@ Advanced conversation flow management for AI interactions.
 Handles complex conversation states, context management, and flow control.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationState(Enum):
-    """Conversation state types"""
+    """
+Conversation state types"""
+
     IDLE = "idle"
     ACTIVE = "active"
     WAITING_INPUT = "waiting_input"
@@ -37,6 +40,7 @@ class ConversationState(Enum):
 
 class ConversationMode(Enum):
     """Conversation interaction modes"""
+
     FREE_FORM = "free_form"
     GUIDED = "guided"
     STRUCTURED = "structured"
@@ -47,6 +51,7 @@ class ConversationMode(Enum):
 
 class MessageType(Enum):
     """Types of conversation messages"""
+
     USER_MESSAGE = "user_message"
     AI_RESPONSE = "ai_response"
     SYSTEM_MESSAGE = "system_message"
@@ -82,7 +87,8 @@ class ConversationFlow:
 
 @dataclass
 class ConversationSession:
-    """Complete conversation session data"""
+    """
+Complete conversation session data"""
     session_id: str
     user_id: str
     creator_type: str
@@ -115,7 +121,8 @@ class ConversationHandler:
         self._message_handlers = {}
         
     async def initialize(self) -> None:
-        """Initialize the conversation handler"""
+        """
+Initialize the conversation handler"""
         try:
             await self.context_tracker.initialize()
             await self.session_manager.initialize()
@@ -559,7 +566,8 @@ class ConversationHandler:
         user_message: ConversationMessage,
         processing_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI response for conversation"""
+        """
+Generate AI response for conversation"""
         try:
             # Prepare response context
             response_context = {
@@ -736,7 +744,8 @@ class ConversationHandler:
         }
     
     def _get_flow_progress(self, session: ConversationSession) -> Dict[str, Any]:
-        """Get conversation flow progress"""
+        """
+Get conversation flow progress"""
         if not session.current_flow:
             return {"has_flow": False}
         

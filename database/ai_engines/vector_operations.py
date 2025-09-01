@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Generator
 import json
 import logging
@@ -43,7 +44,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class VectorStorageBackend(str, Enum):
-    """Vector storage backend enumeration."""
+    """
+Vector storage backend enumeration."""
+
     FAISS = "faiss"
     PINECONE = "pinecone"
     ELASTICSEARCH = "elasticsearch"
@@ -53,6 +56,7 @@ class VectorStorageBackend(str, Enum):
 
 class IndexType(str, Enum):
     """Vector index type enumeration."""
+
     FLAT = "flat"
     HNSW = "hnsw"
     IVF = "ivf"
@@ -61,6 +65,7 @@ class IndexType(str, Enum):
 
 class DistanceMetric(str, Enum):
     """Distance metric enumeration."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -82,7 +87,8 @@ class VectorEmbedding:
 
 @dataclass
 class SimilarityResult:
-    """Similarity search result structure."""
+    """
+Similarity search result structure."""
     content_id: str
     similarity_score: float
     distance: float
@@ -92,7 +98,8 @@ class SimilarityResult:
 
 @dataclass
 class SearchQuery:
-    """Vector search query structure."""
+    """
+Vector search query structure."""
     query_vector: np.ndarray
     top_k: int = 10
     distance_metric: DistanceMetric = DistanceMetric.COSINE
@@ -100,7 +107,8 @@ class SearchQuery:
     threshold: Optional[float] = None
 
 class VectorIndexConfig(BaseModel):
-    """Vector index configuration."""
+    """
+Vector index configuration."""
     index_name: str = Field(..., min_length=1)
     dimension: int = Field(..., ge=1, le=4096)
     index_type: IndexType = IndexType.HNSW
@@ -119,7 +127,8 @@ class VectorDatabaseManager:
     """
     
     def __init__(self):
-        """Initialize the vector database manager."""
+        """
+Initialize the vector database manager."""
         self.vector_stores = {}
         self.indexes = {}
         self.embedding_cache = {}
@@ -685,7 +694,8 @@ class VectorDatabaseManager:
         return filtered_results
     
     def _generate_query_hash(self, query: SearchQuery) -> str:
-        """Generate hash for query caching."""
+        """
+Generate hash for query caching."""
         query_data = {
             "vector_hash": hashlib.sha256(query.query_vector.tobytes()).hexdigest()[:16],
             "top_k": query.top_k,
@@ -703,7 +713,8 @@ class VectorDatabaseManager:
         return 0.75  # 75% hit rate
     
     def _estimate_memory_usage(self, index_name: str) -> float:
-        """Estimate memory usage for an index."""
+        """
+Estimate memory usage for an index."""
         if index_name in self.indexes:
             vector_count = self.indexes[index_name]["vector_count"]
             dimension = self.indexes[index_name]["config"].dimension
@@ -762,7 +773,8 @@ class EmbeddingStorage:
     """
     
     def __init__(self):
-        """Initialize the embedding storage."""
+        """
+Initialize the embedding storage."""
         self.embeddings_store = {}
         self.content_to_embedding = {}
         self.embedding_models = {}
@@ -832,7 +844,8 @@ class EmbeddingStorage:
         return None
     
     def _generate_fingerprint_hash(self, embedding: VectorEmbedding) -> str:
-        """Generate fingerprint hash for embedding."""
+        """
+Generate fingerprint hash for embedding."""
         # Combine vector data and metadata
         vector_bytes = embedding.vector.tobytes()
         metadata_bytes = json.dumps(embedding.metadata, sort_keys=True).encode()
@@ -849,7 +862,8 @@ class SimilaritySearchEngine:
     """
     
     def __init__(self, vector_manager: VectorDatabaseManager):
-        """Initialize the similarity search engine."""
+        """
+Initialize the similarity search engine."""
         self.vector_manager = vector_manager
         self.search_history = []
         self.performance_cache = {}
@@ -999,7 +1013,8 @@ class VectorIndexManager:
     """
     
     def __init__(self):
-        """Initialize the vector index manager."""
+        """
+Initialize the vector index manager."""
         self.index_metrics = {}
         self.optimization_history = {}
         
@@ -1101,7 +1116,8 @@ class SemanticSearchOptimizer:
     """
     
     def __init__(self):
-        """Initialize the semantic search optimizer."""
+        """
+Initialize the semantic search optimizer."""
         self.query_patterns = {}
         self.performance_stats = {}
         self.optimization_rules = []

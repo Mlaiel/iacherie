@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RightType(Enum):
-    """Types of intellectual property rights"""
+    """
+Types of intellectual property rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -51,6 +54,7 @@ class RightType(Enum):
 
 class LicenseType(Enum):
     """Content licensing types"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -67,6 +71,7 @@ class LicenseType(Enum):
 
 class RightsStatus(Enum):
     """Rights status classifications"""
+
     OWNED = "owned"
     LICENSED_IN = "licensed_in"
     LICENSED_OUT = "licensed_out"
@@ -80,6 +85,7 @@ class RightsStatus(Enum):
 
 class ComplianceStatus(Enum):
     """Legal compliance status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
@@ -90,6 +96,7 @@ class ComplianceStatus(Enum):
 
 class GeographicScope(Enum):
     """Geographic scope of rights"""
+
     WORLDWIDE = "worldwide"
     EUROPE = "europe"
     NORTH_AMERICA = "north_america"
@@ -342,7 +349,8 @@ class RightsAnalysisResult:
     analysis_confidence: float
 
 class RightsManager:
-    """Advanced rights management system"""
+    """
+Advanced rights management system"""
     
     def __init__(self):
         self.clearance_agencies = {}
@@ -350,7 +358,8 @@ class RightsManager:
         self.compliance_rules = self._initialize_compliance_rules()
     
     def _initialize_compliance_rules(self) -> Dict[str, Any]:
-        """Initialize compliance rules for different jurisdictions"""
+        """
+Initialize compliance rules for different jurisdictions"""
         return {
             "EU": {
                 "copyright_duration": 70,  # years after death
@@ -648,11 +657,13 @@ class RightsManager:
         pass
     
     async def _detect_copyright_issues(self, metadata, existing_rights) -> List[str]:
-        """Detect potential copyright issues"""
+        """
+Detect potential copyright issues"""
         pass
     
     async def _analyze_licensing_requirements(self, uses, territories, copyright_analysis) -> List[str]:
-        """Analyze licensing requirements"""
+        """
+Analyze licensing requirements"""
         pass
 
 # Export classes and functions

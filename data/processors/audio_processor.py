@@ -15,6 +15,7 @@ Features:
 - Audio quality assessment and improvement
 - Batch processing for large audio collections
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -58,7 +59,8 @@ class AudioMetadata:
 
 @dataclass
 class AudioFeatures:
-    """Audio feature extraction results"""
+    """
+Audio feature extraction results"""
     mfcc: np.ndarray
     spectral_centroid: np.ndarray
     spectral_rolloff: np.ndarray
@@ -71,7 +73,8 @@ class AudioFeatures:
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data"""
+    """
+Audio fingerprint data"""
     chromaprint_hash: Optional[str] = None
     spectral_hash: Optional[str] = None
     mfcc_hash: Optional[str] = None
@@ -79,7 +82,8 @@ class AudioFingerprint:
     combined_hash: Optional[str] = None
 
 class AudioProcessor:
-    """Professional audio processing engine"""
+    """
+Professional audio processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -109,7 +113,8 @@ class AudioProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize audio processing engines"""
+        """
+Initialize audio processing engines"""
         try:
             # Initialize Essentia algorithms if available
             if ESSENTIA_AVAILABLE:

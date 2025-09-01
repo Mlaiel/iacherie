@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class CompetitorTier(Enum):
-    """Competitor tier classification"""
+    """
+Competitor tier classification"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     ASPIRATIONAL = "aspirational"
@@ -54,6 +57,7 @@ class CompetitorTier(Enum):
 
 class MarketSegment(Enum):
     """Market segment categories"""
+
     MUSIC_CREATION = "music_creation"
     VIDEO_CONTENT = "video_content"
     PHOTOGRAPHY = "photography"
@@ -66,6 +70,7 @@ class MarketSegment(Enum):
 
 class AnalysisScope(Enum):
     """Analysis scope levels"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     LOCAL = "local"
@@ -99,7 +104,8 @@ class CompetitorProfile:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification"""
+    """
+Market opportunity identification"""
     opportunity_id: str
     title: str
     description: str
@@ -119,7 +125,8 @@ class MarketOpportunity:
 
 @dataclass
 class CompetitivePositioning:
-    """Competitive positioning analysis"""
+    """
+Competitive positioning analysis"""
     user_position: Dict[str, float]
     competitor_positions: Dict[str, Dict[str, float]]
     market_gaps: List[Dict[str, Any]]
@@ -192,7 +199,8 @@ class CompetitionIntelligenceAnalytics:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.http_session:
             await self.http_session.close()
     

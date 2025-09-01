@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class MastodonVisibility(str, Enum):
-    """Mastodon post visibility levels"""
+    """
+Mastodon post visibility levels"""
+
     PUBLIC = "public"
     UNLISTED = "unlisted"
     PRIVATE = "private"
@@ -46,6 +49,7 @@ class MastodonVisibility(str, Enum):
 
 class MastodonContentType(str, Enum):
     """Mastodon content types"""
+
     STATUS = "status"
     BOOST = "boost"
     REPLY = "reply"
@@ -56,6 +60,7 @@ class MastodonContentType(str, Enum):
 
 class MastodonNotificationType(str, Enum):
     """Mastodon notification types"""
+
     MENTION = "mention"
     STATUS = "status"
     REBLOG = "reblog"
@@ -88,7 +93,8 @@ class MastodonAttachment(BaseModel):
 
 
 class MastodonEmoji(BaseModel):
-    """Mastodon custom emoji data model"""
+    """
+Mastodon custom emoji data model"""
     shortcode: str
     url: str
     static_url: str
@@ -97,7 +103,8 @@ class MastodonEmoji(BaseModel):
 
 
 class MastodonMention(BaseModel):
-    """Mastodon mention data model"""
+    """
+Mastodon mention data model"""
     mention_id: str
     username: str
     url: str
@@ -105,14 +112,16 @@ class MastodonMention(BaseModel):
 
 
 class MastodonTag(BaseModel):
-    """Mastodon hashtag data model"""
+    """
+Mastodon hashtag data model"""
     name: str
     url: str
     history: List[Dict[str, Any]] = Field(default_factory=list)
 
 
 class MastodonPoll(BaseModel):
-    """Mastodon poll data model"""
+    """
+Mastodon poll data model"""
     poll_id: str
     expires_at: Optional[datetime] = None
     expired: bool = False
@@ -126,7 +135,8 @@ class MastodonPoll(BaseModel):
 
 
 class MastodonCard(BaseModel):
-    """Mastodon preview card data model"""
+    """
+Mastodon preview card data model"""
     url: str
     title: str
     description: str
@@ -144,14 +154,16 @@ class MastodonCard(BaseModel):
 
 
 class MastodonApplication(BaseModel):
-    """Mastodon application data model"""
+    """
+Mastodon application data model"""
     name: str
     website: Optional[str] = None
     vapid_key: Optional[str] = None
 
 
 class MastodonAccount(BaseModel):
-    """Mastodon account data model"""
+    """
+Mastodon account data model"""
     account_id: str
     username: str
     acct: str  # username@domain for remote accounts
@@ -245,7 +257,8 @@ class MastodonInstance(BaseModel):
 
 
 class MastodonSearchResults(BaseModel):
-    """Mastodon search results data model"""
+    """
+Mastodon search results data model"""
     query: str
     total_results: int
     accounts: List[MastodonAccount] = Field(default_factory=list)
@@ -260,7 +273,8 @@ class MastodonSearchResults(BaseModel):
 
 
 class MastodonAnalytics(BaseModel):
-    """Mastodon analytics data model"""
+    """
+Mastodon analytics data model"""
     account_id: str
     analysis_period: Tuple[datetime, datetime]
     total_statuses: int
@@ -1298,7 +1312,8 @@ class MastodonCrawler(BaseCrawler):
         return 0.0
 
     async def _check_protection_status(self, status: MastodonStatus) -> str:
-        """Check protection status of status"""
+        """
+Check protection status of status"""
         if status.status_id in self.protected_content:
             return "protected"
         return "unprotected"

@@ -5,8 +5,9 @@ Platform-specific connectors for surveillance monitoring.
 Provides specialized integration with major social media and content platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform type enumeration."""
+    """
+Platform type enumeration."""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MUSIC_PLATFORM = "music_platform"
@@ -32,6 +35,7 @@ class PlatformType(Enum):
 
 class ConnectionStatus(Enum):
     """Connection status enumeration."""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     AUTHENTICATING = "authenticating"
@@ -56,7 +60,8 @@ class SearchResult:
 
 @dataclass
 class PlatformCredentials:
-    """Platform credentials structure."""
+    """
+Platform credentials structure."""
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -65,7 +70,8 @@ class PlatformCredentials:
 
 
 class BasePlatformConnector(ABC):
-    """Base class for platform connectors."""
+    """
+Base class for platform connectors."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -88,7 +94,8 @@ class BasePlatformConnector(ABC):
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with platform."""
+        """
+Authenticate with platform."""
         pass
     
     @abstractmethod
@@ -96,16 +103,19 @@ class BasePlatformConnector(ABC):
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content on platform."""
+        """
+Search for similar content on platform."""
         pass
     
     @abstractmethod
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific content."""
+        """
+Get metadata for specific content."""
         pass
     
     async def _check_rate_limits(self) -> bool:
-        """Check if request is allowed based on rate limits."""
+        """
+Check if request is allowed based on rate limits."""
         if not self.rate_limits:
             return True
         
@@ -142,7 +152,8 @@ class BasePlatformConnector(ABC):
                           headers: Optional[Dict[str, str]] = None,
                           params: Optional[Dict[str, Any]] = None,
                           data: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
-        """Make HTTP request with rate limiting and error handling."""
+        """
+Make HTTP request with rate limiting and error handling."""
         if not await self._check_rate_limits():
             logger.warning(f"Rate limit exceeded for {self.platform_name}")
             self.status = ConnectionStatus.RATE_LIMITED
@@ -448,7 +459,8 @@ class YouTubeConnector(BasePlatformConnector):
         return intersection / union if union > 0 else 0.0
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific YouTube video."""
+        """
+Get metadata for specific YouTube video."""
         try:
             # Extract video ID from URL
             video_id = self._extract_video_id(content_url)
@@ -868,7 +880,8 @@ class TwitterConnector(BasePlatformConnector):
         return [tag.lower() for tag in hashtags]
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity using simple word overlap."""
+        """
+Calculate text similarity using simple word overlap."""
         if not text1 or not text2:
             return 0.0
         
@@ -884,7 +897,8 @@ class TwitterConnector(BasePlatformConnector):
         return intersection / union if union > 0 else 0.0
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific Twitter content."""
+        """
+Get metadata for specific Twitter content."""
         try:
             # Extract tweet ID from URL
             tweet_id = self._extract_tweet_id(content_url)
@@ -965,7 +979,8 @@ class GenericWebConnector(BasePlatformConnector):
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content using web search engines."""
+        """
+Search for similar content using web search engines."""
         try:
             search_results = []
             
@@ -1092,17 +1107,20 @@ def register_platform_connector(platform: str, connector: BasePlatformConnector)
 
 
 def get_platform_connector(platform: str) -> Optional[BasePlatformConnector]:
-    """Get platform connector by name."""
+    """
+Get platform connector by name."""
     return _platform_connectors.get(platform)
 
 
 def get_all_platform_connectors() -> Dict[str, BasePlatformConnector]:
-    """Get all registered platform connectors."""
+    """
+Get all registered platform connectors."""
     return _platform_connectors.copy()
 
 
 async def initialize_platform_connectors(config: Dict[str, Any]) -> bool:
-    """Initialize all platform connectors."""
+    """
+Initialize all platform connectors."""
     try:
         connectors_config = config.get("platform_connectors", {})
         

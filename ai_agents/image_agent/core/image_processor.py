@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingProfile(Enum):
-    """Image processing quality profiles"""
+    """
+Image processing quality profiles"""
+
     FAST = "fast"
     BALANCED = "balanced" 
     QUALITY = "quality"
@@ -60,6 +63,7 @@ class ProcessingProfile(Enum):
 
 class FilterType(Enum):
     """Available image filters"""
+
     BLUR = "blur"
     GAUSSIAN_BLUR = "gaussian_blur"
     MOTION_BLUR = "motion_blur"
@@ -76,6 +80,7 @@ class FilterType(Enum):
 
 class ColorSpace(Enum):
     """Supported color spaces"""
+
     RGB = "rgb"
     RGBA = "rgba" 
     GRAYSCALE = "grayscale"
@@ -104,7 +109,8 @@ class ProcessingParams:
 
 @dataclass
 class ProcessingResult:
-    """Processing operation result"""
+    """
+Processing operation result"""
     success: bool
     processing_time: float
     input_size: Tuple[int, int]
@@ -763,7 +769,8 @@ class ImageProcessor:
             return np.corrcoef(img1.flatten(), img2.flatten())[0, 1]
 
     def _calculate_sharpness(self, image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
+        """
+Calculate image sharpness using Laplacian variance"""
         try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -781,7 +788,8 @@ class ImageProcessor:
         output_path: Union[str, Path], 
         params: ProcessingParams
     ) -> None:
-        """Save processed image with optimized settings"""
+        """
+Save processed image with optimized settings"""
         try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -832,7 +840,8 @@ class ImageProcessor:
         return image.rotate(angle, expand=expand, fillcolor=fillcolor)
 
     async def _flip_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Flip image horizontally or vertically"""
+        """
+Flip image horizontally or vertically"""
         direction = operation_params.get('direction', 'horizontal')
         if direction == 'horizontal':
             return image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
@@ -856,7 +865,8 @@ class ImageProcessor:
         return Image.merge('HSV', (h, s, v)).convert('RGB')
 
     async def _adjust_gamma(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply gamma correction"""
+        """
+Apply gamma correction"""
         gamma = operation_params.get('gamma', 1.0)
         
         # Create gamma correction lookup table
@@ -866,7 +876,8 @@ class ImageProcessor:
         return image.point(table * 3)  # Apply to RGB
 
     async def _adjust_color_balance(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Adjust color balance"""
+        """
+Adjust color balance"""
         shadows = operation_params.get('shadows', (1.0, 1.0, 1.0))
         midtones = operation_params.get('midtones', (1.0, 1.0, 1.0))
         highlights = operation_params.get('highlights', (1.0, 1.0, 1.0))
@@ -888,7 +899,8 @@ class ImageProcessor:
         return Image.merge('RGB', (r, g, b))
 
     async def _sharpen_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply sharpening filter"""
+        """
+Apply sharpening filter"""
         strength = operation_params.get('strength', 1.0)
         radius = operation_params.get('radius', 2.0)
         
@@ -899,16 +911,19 @@ class ImageProcessor:
         ))
 
     async def _blur_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply blur filter"""
+        """
+Apply blur filter"""
         radius = operation_params.get('radius', 2.0)
         return image.filter(ImageFilter.GaussianBlur(radius=radius))
 
     async def _reduce_noise(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Reduce image noise"""
+        """
+Reduce image noise"""
         return await self._advanced_noise_reduction(image, operation_params)
 
     async def _enhance_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """General image enhancement"""
+        """
+General image enhancement"""
         # Apply multiple enhancements based on analysis
         enhanced = image.copy()
         
@@ -927,7 +942,8 @@ class ImageProcessor:
         return enhanced
 
     async def _color_correct(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply color correction"""
+        """
+Apply color correction"""
         # Auto white balance and color correction
         img_array = np.array(image).astype(np.float32)
         
@@ -954,7 +970,8 @@ class ImageProcessor:
         return Image.fromarray(img_array.astype(np.uint8))
 
     async def _histogram_equalization(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply histogram equalization"""
+        """
+Apply histogram equalization"""
         img_array = np.array(image)
         
         if len(img_array.shape) == 3:
@@ -976,13 +993,15 @@ class ImageProcessor:
         return Image.fromarray(result)
 
     async def _local_adjustment(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply local adjustments to specific regions"""
+        """
+Apply local adjustments to specific regions"""
         # Placeholder for advanced local adjustment algorithms
         # This would involve mask creation and selective processing
         return image
 
     async def _apply_artistic_effect(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply artistic effects"""
+        """
+Apply artistic effects"""
         effect_type = operation_params.get('type', 'oil_painting')
         
         if effect_type == 'oil_painting':
@@ -996,8 +1015,9 @@ class ImageProcessor:
         return image
 
     async def _add_watermark(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Add watermark to image"""
-        watermark_text = operation_params.get('text', '© 2025')
+        """
+Add watermark to image"""
+        watermark_text = operation_params.get('text', '(c) 2025')
         position = operation_params.get('position', 'bottom_right')
         opacity = operation_params.get('opacity', 0.5)
         
@@ -1145,7 +1165,8 @@ class ImageAnalyzer:
         }
 
     async def _assess_quality(self, image: Image.Image) -> Dict[str, Any]:
-        """Assess overall image quality"""
+        """
+Assess overall image quality"""
         img_array = np.array(image)
         
         if len(img_array.shape) == 3:
@@ -1194,7 +1215,8 @@ class ImageAnalyzer:
         }
 
     async def _analyze_composition(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image composition"""
+        """
+Analyze image composition"""
         img_array = np.array(image)
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY) if len(img_array.shape) == 3 else img_array
         
@@ -1244,7 +1266,8 @@ class ImageAnalyzer:
         }
 
     async def _analyze_color(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze color characteristics"""
+        """
+Analyze color characteristics"""
         img_array = np.array(image)
         
         if len(img_array.shape) != 3:

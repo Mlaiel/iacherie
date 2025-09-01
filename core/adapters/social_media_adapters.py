@@ -20,6 +20,7 @@ Supported Platforms:
 - Pinterest: Developer API, Creator insights
 - Snapchat: Creative Kit, Snap Pixel
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -39,7 +40,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class SocialMediaPlatform(Enum):
-    """Supported social media platforms."""
+    """
+Supported social media platforms."""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -53,6 +56,7 @@ class SocialMediaPlatform(Enum):
 
 class ContentType(Enum):
     """Content types for social media."""
+
     POST = "post"
     STORY = "story"
     REEL = "reel"
@@ -80,7 +84,8 @@ class SocialMediaContent:
 
 @dataclass
 class SocialMediaMetrics:
-    """Analytics metrics from social media platforms."""
+    """
+Analytics metrics from social media platforms."""
     views: int = 0
     likes: int = 0
     comments: int = 0
@@ -704,7 +709,8 @@ class SocialMediaAdapterFactory:
     
     @classmethod
     def create_adapter(cls, platform: SocialMediaPlatform, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified platform."""
+        """
+Create adapter for specified platform."""
         if platform not in cls._adapters:
             raise AdapterError(f"Unsupported social media platform: {platform}")
         

@@ -8,7 +8,7 @@ Technologies: Python, Prometheus, Grafana, Real-time metrics, ML predictions
 ==============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ Metric Collection → Real-time Analysis → Anomaly Detection →
 Performance Prediction → Optimization Recommendations → 
 Alert Generation → Dashboard Updates → Historical Analytics
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -68,6 +71,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -76,6 +80,7 @@ class AlertSeverity(Enum):
 
 class PerformanceCategory(Enum):
     """Performance categories for monitoring"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -95,7 +100,8 @@ class MetricPoint:
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric definition and data"""
+    """
+Performance metric definition and data"""
     name: str
     metric_type: MetricType
     category: PerformanceCategory
@@ -106,7 +112,8 @@ class PerformanceMetric:
     thresholds: Dict[str, float] = field(default_factory=dict)
     
     def add_point(self, value: float, labels: Dict[str, str] = None, metadata: Dict[str, Any] = None):
-        """Add a data point to the metric"""
+        """
+Add a data point to the metric"""
         point = MetricPoint(
             timestamp=datetime.utcnow(),
             value=value,
@@ -116,24 +123,28 @@ class PerformanceMetric:
         self.data_points.append(point)
     
     def get_recent_values(self, duration_minutes: int = 60) -> List[float]:
-        """Get values from recent time period"""
+        """
+Get values from recent time period"""
         cutoff = datetime.utcnow() - timedelta(minutes=duration_minutes)
         return [p.value for p in self.data_points if p.timestamp >= cutoff]
     
     def get_average(self, duration_minutes: int = 60) -> float:
-        """Get average value over time period"""
+        """
+Get average value over time period"""
         values = self.get_recent_values(duration_minutes)
         return statistics.mean(values) if values else 0.0
     
     def get_percentile(self, percentile: float, duration_minutes: int = 60) -> float:
-        """Get percentile value over time period"""
+        """
+Get percentile value over time period"""
         values = self.get_recent_values(duration_minutes)
         return np.percentile(values, percentile) if values else 0.0
 
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition"""
+    """
+Performance alert definition"""
     id: str
     name: str
     description: str
@@ -218,7 +229,8 @@ class PerformanceMonitor:
         self._start_monitoring()
     
     def _initialize_core_metrics(self):
-        """Initialize core performance metrics"""
+        """
+Initialize core performance metrics"""
         core_metrics = [
             # Latency metrics
             PerformanceMetric(
@@ -719,7 +731,8 @@ class PerformanceMonitor:
             )
     
     def _update_throughput_counter(self, operation_type: str, provider: str):
-        """Update throughput metrics"""
+        """
+Update throughput metrics"""
         throughput_metric = 'storage_operations_per_second'
         if throughput_metric in self.metrics:
             # Simple throughput calculation based on recent operations
@@ -732,7 +745,8 @@ class PerformanceMonitor:
             })
     
     def _identify_top_issues(self, hours: int) -> List[Dict[str, Any]]:
-        """Identify top performance issues"""
+        """
+Identify top performance issues"""
         issues = []
         
         # Check each metric against thresholds
@@ -772,7 +786,8 @@ class PerformanceMonitor:
     
     def _generate_recommendations(self, summary_stats: Dict[str, Any], 
                                 top_issues: List[Dict[str, Any]]) -> List[str]:
-        """Generate performance optimization recommendations"""
+        """
+Generate performance optimization recommendations"""
         recommendations = []
         
         # Analyze latency

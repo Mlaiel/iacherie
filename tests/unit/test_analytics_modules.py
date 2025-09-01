@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Analytics Modules
+"""
+Unit Tests for Analytics Modules
 ===============================
 
 Comprehensive unit tests for all analytics modules including:
@@ -26,6 +28,7 @@ Comprehensive unit tests for all analytics modules including:
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure analytics accuracy and reliability
 """
+
 import pytest
 import sys
 import os
@@ -44,11 +47,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestPerformanceAnalytics:
-    """Unit tests for performance analytics and metrics"""
+    """
+Unit tests for performance analytics and metrics"""
     
     @pytest.fixture
     def mock_performance_analytics(self):
-        """Mock performance analytics system"""
+        """
+Mock performance analytics system"""
         return Mock(
             track_content_performance=Mock(return_value={
                 'content_id': 'ct_123',
@@ -93,7 +98,8 @@ class TestPerformanceAnalytics:
         )
     
     def test_content_performance_tracking(self, mock_performance_analytics):
-        """Test individual content performance tracking"""
+        """
+Test individual content performance tracking"""
         content_id = 'ct_123'
         time_period = '30_days'
         
@@ -106,7 +112,8 @@ class TestPerformanceAnalytics:
         assert result['completion_rate'] == 75.8
         
     def test_platform_metrics_analysis(self, mock_performance_analytics):
-        """Test platform-specific metrics analysis"""
+        """
+Test platform-specific metrics analysis"""
         platform = 'spotify'
         metrics_params = {
             'time_period': '90_days',
@@ -123,7 +130,8 @@ class TestPerformanceAnalytics:
         assert result['revenue_per_stream'] == Decimal('0.003')
         
     def test_trending_score_calculation(self, mock_performance_analytics):
-        """Test trending score calculation for content"""
+        """
+Test trending score calculation for content"""
         calculation_params = {
             'time_window': '24_hours',
             'minimum_engagement': 100,
@@ -138,7 +146,8 @@ class TestPerformanceAnalytics:
         assert result['algorithm_version'] == 'v2.1'
         
     def test_performance_insights_generation(self, mock_performance_analytics):
-        """Test generation of performance insights and recommendations"""
+        """
+Test generation of performance insights and recommendations"""
         insight_params = {
             'creator_id': 'cr_123',
             'analysis_depth': 'comprehensive',
@@ -154,11 +163,13 @@ class TestPerformanceAnalytics:
 
 
 class TestUserBehaviorAnalytics:
-    """Unit tests for user behavior analytics"""
+    """
+Unit tests for user behavior analytics"""
     
     @pytest.fixture
     def mock_behavior_analytics(self):
-        """Mock user behavior analytics system"""
+        """
+Mock user behavior analytics system"""
         return Mock(
             track_user_journey=Mock(return_value={
                 'user_id': 'user_123',
@@ -199,7 +210,8 @@ class TestUserBehaviorAnalytics:
         )
     
     def test_user_journey_tracking(self, mock_behavior_analytics):
-        """Test user journey mapping and analysis"""
+        """
+Test user journey mapping and analysis"""
         user_id = 'user_123'
         tracking_params = {
             'start_date': '2024-01-01',
@@ -216,7 +228,8 @@ class TestUserBehaviorAnalytics:
         assert result['conversion_funnel']['registration_to_upload'] == 85.5
         
     def test_engagement_pattern_analysis(self, mock_behavior_analytics):
-        """Test user engagement pattern analysis"""
+        """
+Test user engagement pattern analysis"""
         analysis_params = {
             'time_period': '90_days',
             'segment_users': True,
@@ -231,7 +244,8 @@ class TestUserBehaviorAnalytics:
         assert result['retention_rates']['day_30'] == 28.7
         
     def test_usage_anomaly_detection(self, mock_behavior_analytics):
-        """Test detection of unusual usage patterns"""
+        """
+Test detection of unusual usage patterns"""
         detection_params = {
             'sensitivity': 'medium',
             'time_window': '24_hours',
@@ -246,7 +260,8 @@ class TestUserBehaviorAnalytics:
         assert result['investigation_required'] == 2
         
     def test_user_lifetime_value_calculation(self, mock_behavior_analytics):
-        """Test user lifetime value calculation and prediction"""
+        """
+Test user lifetime value calculation and prediction"""
         user_id = 'user_123'
         ltv_params = {
             'prediction_model': 'advanced',
@@ -264,11 +279,13 @@ class TestUserBehaviorAnalytics:
 
 
 class TestRevenueAnalytics:
-    """Unit tests for revenue and monetization analytics"""
+    """
+Unit tests for revenue and monetization analytics"""
     
     @pytest.fixture
     def mock_revenue_analytics(self):
-        """Mock revenue analytics system"""
+        """
+Mock revenue analytics system"""
         return Mock(
             calculate_revenue_metrics=Mock(return_value={
                 'total_revenue': Decimal('50000.75'),
@@ -313,7 +330,8 @@ class TestRevenueAnalytics:
         )
     
     def test_revenue_metrics_calculation(self, mock_revenue_analytics):
-        """Test comprehensive revenue metrics calculation"""
+        """
+Test comprehensive revenue metrics calculation"""
         metrics_params = {
             'time_period': '30_days',
             'include_breakdown': True,
@@ -328,7 +346,8 @@ class TestRevenueAnalytics:
         assert result['revenue_by_stream']['streaming'] == Decimal('30000.00')
         
     def test_monetization_performance_analysis(self, mock_revenue_analytics):
-        """Test monetization performance analysis"""
+        """
+Test monetization performance analysis"""
         analysis_params = {
             'include_conversion_metrics': True,
             'include_optimization_score': True,
@@ -343,7 +362,8 @@ class TestRevenueAnalytics:
         assert result['revenue_optimization_score'] == 82.3
         
     def test_revenue_trend_forecasting(self, mock_revenue_analytics):
-        """Test revenue trend forecasting and prediction"""
+        """
+Test revenue trend forecasting and prediction"""
         forecast_params = {
             'prediction_horizon': '12_months',
             'include_seasonality': True,
@@ -358,7 +378,8 @@ class TestRevenueAnalytics:
         assert result['confidence_interval']['lower'] == 0.85
         
     def test_payment_analytics_tracking(self, mock_revenue_analytics):
-        """Test payment transaction analytics"""
+        """
+Test payment transaction analytics"""
         payment_params = {
             'time_period': '30_days',
             'include_method_breakdown': True,
@@ -374,11 +395,13 @@ class TestRevenueAnalytics:
 
 
 class TestContentAnalytics:
-    """Unit tests for content analytics and insights"""
+    """
+Unit tests for content analytics and insights"""
     
     @pytest.fixture
     def mock_content_analytics(self):
-        """Mock content analytics system"""
+        """
+Mock content analytics system"""
         return Mock(
             analyze_content_performance=Mock(return_value={
                 'content_id': 'ct_123',
@@ -425,7 +448,8 @@ class TestContentAnalytics:
         )
     
     def test_content_performance_analysis(self, mock_content_analytics):
-        """Test detailed content performance analysis"""
+        """
+Test detailed content performance analysis"""
         content_id = 'ct_123'
         analysis_params = {
             'include_demographics': True,
@@ -442,7 +466,8 @@ class TestContentAnalytics:
         assert len(result['content_insights']) == 2
         
     def test_content_lifecycle_tracking(self, mock_content_analytics):
-        """Test content lifecycle stage tracking"""
+        """
+Test content lifecycle stage tracking"""
         content_id = 'ct_123'
         
         result = mock_content_analytics.track_content_lifecycle(content_id)
@@ -454,7 +479,8 @@ class TestContentAnalytics:
         assert result['total_lifetime_value'] == Decimal('850.75')
         
     def test_content_variant_comparison(self, mock_content_analytics):
-        """Test A/B testing and content variant comparison"""
+        """
+Test A/B testing and content variant comparison"""
         comparison_params = {
             'variant_a_id': 'ct_123',
             'variant_b_id': 'ct_456',
@@ -470,7 +496,8 @@ class TestContentAnalytics:
         assert 'title_optimization' in result['key_differences']
         
     def test_content_recommendation_generation(self, mock_content_analytics):
-        """Test AI-powered content recommendations"""
+        """
+Test AI-powered content recommendations"""
         creator_id = 'cr_123'
         recommendation_params = {
             'analysis_depth': 'comprehensive',
@@ -488,11 +515,13 @@ class TestContentAnalytics:
 
 
 class TestRealTimeAnalytics:
-    """Unit tests for real-time analytics and monitoring"""
+    """
+Unit tests for real-time analytics and monitoring"""
     
     @pytest.fixture
     def mock_realtime_analytics(self):
-        """Mock real-time analytics system"""
+        """
+Mock real-time analytics system"""
         return Mock(
             get_live_metrics=Mock(return_value={
                 'timestamp': datetime.now().isoformat(),
@@ -533,7 +562,8 @@ class TestRealTimeAnalytics:
         )
     
     def test_live_metrics_retrieval(self, mock_realtime_analytics):
-        """Test real-time metrics dashboard"""
+        """
+Test real-time metrics dashboard"""
         result = mock_realtime_analytics.get_live_metrics()
         
         assert 'timestamp' in result
@@ -543,7 +573,8 @@ class TestRealTimeAnalytics:
         assert result['system_load'] == 65.5
         
     def test_trending_content_monitoring(self, mock_realtime_analytics):
-        """Test real-time trending content monitoring"""
+        """
+Test real-time trending content monitoring"""
         monitoring_params = {
             'update_frequency': '1_minute',
             'min_velocity_threshold': 50.0
@@ -558,7 +589,8 @@ class TestRealTimeAnalytics:
         
     @pytest.mark.asyncio
     async def test_user_activity_stream_tracking(self, mock_realtime_analytics):
-        """Test real-time user activity stream tracking"""
+        """
+Test real-time user activity stream tracking"""
         stream_params = {
             'include_geographic_data': True,
             'include_revenue_tracking': True
@@ -572,7 +604,8 @@ class TestRealTimeAnalytics:
         assert result['geographic_distribution']['US'] == 45.2
         
     def test_real_time_alert_generation(self, mock_realtime_analytics):
-        """Test real-time alert and notification system"""
+        """
+Test real-time alert and notification system"""
         alert_params = {
             'severity_threshold': 'warning',
             'include_performance_alerts': True,
@@ -588,11 +621,13 @@ class TestRealTimeAnalytics:
 
 
 class TestAnalyticsIntegration:
-    """Integration tests for analytics modules working together"""
+    """
+Integration tests for analytics modules working together"""
     
     @pytest.fixture
     def mock_integrated_analytics(self):
-        """Mock integrated analytics system"""
+        """
+Mock integrated analytics system"""
         return Mock(
             generate_comprehensive_dashboard=AsyncMock(return_value={
                 'dashboard_id': 'dash_123',
@@ -636,7 +671,8 @@ class TestAnalyticsIntegration:
     
     @pytest.mark.asyncio
     async def test_comprehensive_dashboard_generation(self, mock_integrated_analytics):
-        """Test generation of comprehensive analytics dashboard"""
+        """
+Test generation of comprehensive analytics dashboard"""
         dashboard_params = {
             'creator_id': 'cr_123',
             'time_period': '30_days',
@@ -653,7 +689,8 @@ class TestAnalyticsIntegration:
         
     @pytest.mark.asyncio
     async def test_cross_platform_analytics(self, mock_integrated_analytics):
-        """Test cross-platform analytics aggregation"""
+        """
+Test cross-platform analytics aggregation"""
         analytics_params = {
             'creator_id': 'cr_123',
             'platforms': ['spotify', 'youtube', 'apple_music', 'soundcloud'],
@@ -669,7 +706,8 @@ class TestAnalyticsIntegration:
         
     @pytest.mark.asyncio
     async def test_predictive_analytics_engine(self, mock_integrated_analytics):
-        """Test predictive analytics and forecasting engine"""
+        """
+Test predictive analytics and forecasting engine"""
         prediction_params = {
             'prediction_horizon': '90_days',
             'include_market_analysis': True,

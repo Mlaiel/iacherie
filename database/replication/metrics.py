@@ -20,6 +20,7 @@ Copyright (c) 2024 IA Influencer Agent Team. All rights reserved.
 Unauthorized copying, modification, distribution, or use of this software
 is strictly prohibited and may be subject to legal action.
 """
+
 import asyncio
 import json
 import logging
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -47,6 +50,7 @@ class MetricType(Enum):
 
 class MetricSeverity(Enum):
     """Severity levels for metric alerts"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -64,7 +68,8 @@ class MetricPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric data points"""
+    """
+Time series of metric data points"""
     name: str
     metric_type: MetricType
     points: List[MetricPoint] = field(default_factory=list)
@@ -85,11 +90,13 @@ class MetricSeries:
             self.points = self.points[-1000:]
     
     def get_latest_value(self) -> Optional[Union[int, float]]:
-        """Get the most recent value"""
+        """
+Get the most recent value"""
         return self.points[-1].value if self.points else None
     
     def get_average(self, duration_minutes: int = 60) -> Optional[float]:
-        """Get average value over specified duration"""
+        """
+Get average value over specified duration"""
         cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
         recent_points = [
             p.value for p in self.points 
@@ -98,7 +105,8 @@ class MetricSeries:
         return statistics.mean(recent_points) if recent_points else None
     
     def get_percentile(self, percentile: float, duration_minutes: int = 60) -> Optional[float]:
-        """Get percentile value over specified duration"""
+        """
+Get percentile value over specified duration"""
         cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
         recent_points = [
             p.value for p in self.points 
@@ -114,7 +122,8 @@ class MetricSeries:
 
 @dataclass
 class MetricAlert:
-    """Metric-based alert configuration"""
+    """
+Metric-based alert configuration"""
     name: str
     metric_name: str
     condition: Callable[[float], bool]
@@ -124,7 +133,8 @@ class MetricAlert:
     last_triggered: Optional[datetime] = None
     
     def should_trigger(self, value: float) -> bool:
-        """Check if alert should be triggered"""
+        """
+Check if alert should be triggered"""
         if not self.condition(value):
             return False
         
@@ -135,7 +145,8 @@ class MetricAlert:
         return datetime.utcnow() > cooldown_expires
     
     def trigger(self):
-        """Mark alert as triggered"""
+        """
+Mark alert as triggered"""
         self.last_triggered = datetime.utcnow()
 
 
@@ -163,7 +174,8 @@ class ReplicationMetricsCollector:
         self._initialize_alerts()
     
     def _initialize_standard_metrics(self):
-        """Initialize standard replication metrics"""
+        """
+Initialize standard replication metrics"""
         standard_metrics = [
             # Replication lag metrics
             ("replication_lag_ms", MetricType.GAUGE, "milliseconds", "Replication lag in milliseconds"),
@@ -284,7 +296,8 @@ class ReplicationMetricsCollector:
         self.export_callbacks.append(callback)
     
     def record_metric(self, name: str, value: Union[int, float], tags: Optional[Dict[str, str]] = None):
-        """Record a metric value"""
+        """
+Record a metric value"""
         if name not in self.metrics:
             logger.warning(f"Unknown metric: {name}")
             return
@@ -302,7 +315,8 @@ class ReplicationMetricsCollector:
                 self._handle_alert(alert, value)
     
     def _handle_alert(self, alert: MetricAlert, value: float):
-        """Handle triggered alert"""
+        """
+Handle triggered alert"""
         message = alert.message.format(value=value)
         logger.log(
             level=getattr(logging, alert.severity.value.upper()),
@@ -518,7 +532,8 @@ class ReplicationMetricsCollector:
         return summary
     
     def get_health_dashboard(self) -> Dict[str, Any]:
-        """Get health dashboard data"""
+        """
+Get health dashboard data"""
         dashboard = {
             'overall_health': 'unknown',
             'replication_status': {},

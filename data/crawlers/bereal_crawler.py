@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class BeRealPost:
-    """BeReal post information"""
+    """
+BeReal post information"""
     post_id: str
     user_id: str
     username: str
@@ -73,7 +75,8 @@ class BeRealPost:
 
 @dataclass
 class BeRealUser:
-    """BeReal user information"""
+    """
+BeReal user information"""
     user_id: str
     username: str
     display_name: str
@@ -104,7 +107,8 @@ class BeRealUser:
 
 @dataclass
 class BeRealMemory:
-    """BeReal memory information"""
+    """
+BeReal memory information"""
     memory_id: str
     user_id: str
     date: datetime
@@ -126,7 +130,8 @@ class BeRealMemory:
 
 @dataclass
 class BeRealComment:
-    """BeReal comment information"""
+    """
+BeReal comment information"""
     comment_id: str
     post_id: str
     user_id: str
@@ -144,7 +149,8 @@ class BeRealComment:
 
 @dataclass
 class BeRealReaction:
-    """BeReal reaction information"""
+    """
+BeReal reaction information"""
     reaction_id: str
     post_id: str
     user_id: str
@@ -630,7 +636,8 @@ class BeRealCrawler(PlatformCrawler):
         return memories
     
     async def _get_mock_comments(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock comment data"""
+        """
+Generate mock comment data"""
         comments = []
         
         for i in range(min(max_results, 30)):
@@ -688,7 +695,8 @@ class BeRealCrawler(PlatformCrawler):
         return content
     
     async def _get_friends_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get friends feed content"""
+        """
+Get friends feed content"""
         content = []
         
         for i in range(min(max_results, 20)):
@@ -704,7 +712,8 @@ class BeRealCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[BeRealPost]:
-        """Parse post data"""
+        """
+Parse post data"""
         try:
             creation_time = datetime.fromisoformat(post_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

@@ -6,6 +6,7 @@ privacy controls, and automated compliance monitoring for the IA Influencer Agen
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConsentStatus(Enum):
-    """GDPR consent status enumeration."""
+    """
+GDPR consent status enumeration."""
+
     GIVEN = "given"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
@@ -29,6 +32,7 @@ class ConsentStatus(Enum):
 
 class DataCategory(Enum):
     """Categories of personal data under GDPR."""
+
     PERSONAL_IDENTIFIERS = "personal_identifiers"
     CONTACT_INFORMATION = "contact_information"
     DEMOGRAPHIC_DATA = "demographic_data"
@@ -43,6 +47,7 @@ class DataCategory(Enum):
 
 class ProcessingPurpose(Enum):
     """Lawful purposes for data processing under GDPR."""
+
     CONTRACT_PERFORMANCE = "contract_performance"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -53,6 +58,7 @@ class ProcessingPurpose(Enum):
 
 class DataSubjectRight(Enum):
     """Data subject rights under GDPR."""
+
     ACCESS = "access"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
@@ -82,7 +88,8 @@ class ConsentRecord:
 
 @dataclass
 class DataSubjectRequest:
-    """Data subject request structure."""
+    """
+Data subject request structure."""
     request_id: str
     user_id: str
     request_type: DataSubjectRight
@@ -589,7 +596,8 @@ class GDPRHandler:
         user_id: str,
         processing_purpose: str
     ) -> List[ConsentRecord]:
-        """Get valid consents for user and purpose."""
+        """
+Get valid consents for user and purpose."""
         valid_consents = []
         
         for consent in self.consent_records.values():
@@ -604,7 +612,8 @@ class GDPRHandler:
         return valid_consents
     
     async def _get_expired_consents(self, user_id: str) -> List[ConsentRecord]:
-        """Get expired consents for user."""
+        """
+Get expired consents for user."""
         expired_consents = []
         
         for consent in self.consent_records.values():
@@ -624,7 +633,8 @@ class GDPRHandler:
         user_id: str,
         processing_purpose: str
     ) -> Optional[str]:
-        """Check for alternative legal basis for processing."""
+        """
+Check for alternative legal basis for processing."""
         # Check legitimate interests
         if processing_purpose in ["fraud_prevention", "security", "analytics"]:
             return "legitimate_interests"
@@ -824,7 +834,8 @@ class GDPRHandler:
         start_date: datetime,
         end_date: datetime
     ) -> List[DataSubjectRequest]:
-        """Filter request records by criteria."""
+        """
+Filter request records by criteria."""
         filtered = []
         
         for request in self.data_subject_requests.values():
@@ -848,7 +859,8 @@ class GDPRHandler:
         consent_record: ConsentRecord,
         result: Dict[str, Any]
     ) -> None:
-        """Log consent-related actions."""
+        """
+Log consent-related actions."""
         logger.info(f"GDPR consent {action}: {consent_record.consent_id} for user {consent_record.user_id}")
     
     async def _log_data_subject_request(

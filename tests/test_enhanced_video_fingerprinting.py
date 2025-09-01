@@ -8,7 +8,7 @@ Responsibility: Comprehensive testing of ultra-robust video fingerprinting with 
 ====================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -47,7 +47,8 @@ from data_management.fingerprinting.enhanced_video_fingerprint import (
 
 @pytest.fixture
 def config():
-    """Configuration pour les tests"""
+    """
+Configuration pour les tests"""
     return VideoFingerprintConfig(
         max_frames=50,
         target_fps=10,
@@ -64,7 +65,8 @@ def config():
 
 @pytest.fixture
 def sample_frame():
-    """Génère une frame de test"""
+    """
+Génère une frame de test"""
     # Create a sample frame with various features
     frame = np.zeros((240, 320, 3), dtype=np.uint8)
     
@@ -81,7 +83,8 @@ def sample_frame():
 
 @pytest.fixture
 def sample_video_frames():
-    """Génère une séquence de frames de test"""
+    """
+Génère une séquence de frames de test"""
     frames = []
     for i in range(10):
         frame = np.zeros((240, 320, 3), dtype=np.uint8)
@@ -102,11 +105,13 @@ def sample_video_frames():
     return frames
 
 class TestUltraRobustPerceptualHashing:
-    """Tests pour le hash perceptuel ultra-robuste"""
+    """
+Tests pour le hash perceptuel ultra-robuste"""
     
     @pytest.mark.asyncio
     async def test_basic_perceptual_hashing(self, config, sample_frame):
-        """Test du hash perceptuel de base"""
+        """
+Test du hash perceptuel de base"""
         processor = PerceptualHashProcessor(config)
         
         hashes = await processor.generate_hashes(sample_frame)
@@ -128,7 +133,8 @@ class TestUltraRobustPerceptualHashing:
     
     @pytest.mark.asyncio
     async def test_multiscale_hashing(self, config, sample_frame):
-        """Test du hash multi-échelle pour la résistance à la compression"""
+        """
+Test du hash multi-échelle pour la résistance à la compression"""
         config.multi_scale_hashing = True
         processor = PerceptualHashProcessor(config)
         
@@ -144,7 +150,8 @@ class TestUltraRobustPerceptualHashing:
     
     @pytest.mark.asyncio
     async def test_wavelet_hashing(self, config, sample_frame):
-        """Test du hash basé sur les ondelettes"""
+        """
+Test du hash basé sur les ondelettes"""
         config.wavelet_hashing = True
         processor = PerceptualHashProcessor(config)
         
@@ -157,7 +164,8 @@ class TestUltraRobustPerceptualHashing:
     
     @pytest.mark.asyncio
     async def test_compression_resistance(self, config, sample_frame):
-        """Test de la résistance à la compression"""
+        """
+Test de la résistance à la compression"""
         processor = PerceptualHashProcessor(config)
         
         # Hash original
@@ -187,7 +195,8 @@ class TestRealTimeYOLODetection:
     
     @pytest.mark.asyncio 
     async def test_basic_object_detection(self, config, sample_frame):
-        """Test de détection d'objets de base"""
+        """
+Test de détection d'objets de base"""
         processor = YOLOFrameProcessor(config)
         
         detections = await processor.detect_objects(sample_frame)
@@ -204,7 +213,8 @@ class TestRealTimeYOLODetection:
     
     @pytest.mark.asyncio
     async def test_face_detection_enabled(self, config):
-        """Test de la détection de visages"""
+        """
+Test de la détection de visages"""
         config.face_detection_enabled = True
         processor = YOLOFrameProcessor(config)
         
@@ -219,7 +229,8 @@ class TestRealTimeYOLODetection:
     
     @pytest.mark.asyncio
     async def test_enhanced_person_detection(self, config, sample_frame):
-        """Test de la détection de personnes améliorée"""
+        """
+Test de la détection de personnes améliorée"""
         config.person_detection_enhanced = True
         processor = YOLOFrameProcessor(config)
         
@@ -232,11 +243,13 @@ class TestRealTimeYOLODetection:
                 assert 'pose_analysis' in detection
 
 class TestTemporalAnalysis:
-    """Tests pour l'analyse temporelle avancée"""
+    """
+Tests pour l'analyse temporelle avancée"""
     
     @pytest.mark.asyncio
     async def test_frame_sequence_analysis(self, config, sample_video_frames):
-        """Test de l'analyse des séquences de frames"""
+        """
+Test de l'analyse des séquences de frames"""
         processor = TemporalAnalysisProcessor(config)
         
         temporal_features = await processor.analyze_temporal_patterns(sample_video_frames)
@@ -251,7 +264,8 @@ class TestTemporalAnalysis:
     
     @pytest.mark.asyncio
     async def test_temporal_consistency(self, config, sample_video_frames):
-        """Test de la cohérence temporelle"""
+        """
+Test de la cohérence temporelle"""
         processor = TemporalAnalysisProcessor(config)
         
         temporal_features = await processor.analyze_temporal_patterns(sample_video_frames)
@@ -264,7 +278,8 @@ class TestTemporalAnalysis:
     
     @pytest.mark.asyncio
     async def test_motion_trajectory_analysis(self, config, sample_video_frames):
-        """Test de l'analyse des trajectoires de mouvement"""
+        """
+Test de l'analyse des trajectoires de mouvement"""
         processor = TemporalAnalysisProcessor(config)
         
         temporal_features = await processor.analyze_temporal_patterns(sample_video_frames)
@@ -279,7 +294,8 @@ class TestTemporalAnalysis:
     
     @pytest.mark.asyncio
     async def test_scene_transition_detection(self, config):
-        """Test de la détection des transitions de scène"""
+        """
+Test de la détection des transitions de scène"""
         processor = TemporalAnalysisProcessor(config)
         
         # Créer des frames avec changement de scène évident
@@ -297,11 +313,13 @@ class TestTemporalAnalysis:
             assert transitions['num_scene_cuts'] >= 1
 
 class TestSpatialAnalysis:
-    """Tests pour l'analyse spatiale avancée"""
+    """
+Tests pour l'analyse spatiale avancée"""
     
     @pytest.mark.asyncio
     async def test_spatial_correlation_analysis(self, config, sample_frame):
-        """Test de l'analyse de corrélation spatiale"""
+        """
+Test de l'analyse de corrélation spatiale"""
         processor = SpatialAnalysisProcessor(config)
         
         spatial_features = await processor.analyze_spatial_features(sample_frame)
@@ -320,7 +338,8 @@ class TestSpatialAnalysis:
     
     @pytest.mark.asyncio
     async def test_local_feature_extraction(self, config, sample_frame):
-        """Test de l'extraction de caractéristiques locales"""
+        """
+Test de l'extraction de caractéristiques locales"""
         processor = SpatialAnalysisProcessor(config)
         
         spatial_features = await processor.analyze_spatial_features(sample_frame)
@@ -339,7 +358,8 @@ class TestSpatialAnalysis:
     
     @pytest.mark.asyncio
     async def test_geometric_feature_extraction(self, config, sample_frame):
-        """Test de l'extraction de caractéristiques géométriques"""
+        """
+Test de l'extraction de caractéristiques géométriques"""
         processor = SpatialAnalysisProcessor(config)
         
         spatial_features = await processor.analyze_spatial_features(sample_frame)
@@ -358,11 +378,13 @@ class TestSpatialAnalysis:
                     assert 'hu_moments' in contour
 
 class TestAttackResistance:
-    """Tests de résistance aux attaques (crops, rotations, watermarking)"""
+    """
+Tests de résistance aux attaques (crops, rotations, watermarking)"""
     
     @pytest.mark.asyncio
     async def test_crop_resistance(self, config, sample_frame):
-        """Test de résistance au crop"""
+        """
+Test de résistance au crop"""
         processor = PerceptualHashProcessor(config)
         config.crop_resistance = True
         
@@ -385,7 +407,8 @@ class TestAttackResistance:
     
     @pytest.mark.asyncio
     async def test_rotation_resistance(self, config, sample_frame):
-        """Test de résistance à la rotation"""
+        """
+Test de résistance à la rotation"""
         processor = PerceptualHashProcessor(config)
         config.rotation_resistance = True
         
@@ -407,7 +430,8 @@ class TestAttackResistance:
     
     @pytest.mark.asyncio
     async def test_scale_resistance(self, config, sample_frame):
-        """Test de résistance au changement d'échelle"""
+        """
+Test de résistance au changement d'échelle"""
         processor = PerceptualHashProcessor(config)
         config.multi_scale_hashing = True
         
@@ -429,11 +453,13 @@ class TestAttackResistance:
         assert len(multiscale_scaled) > 0
 
 class TestPerformanceBenchmarks:
-    """Tests de performance pour le traitement temps réel"""
+    """
+Tests de performance pour le traitement temps réel"""
     
     @pytest.mark.asyncio
     async def test_single_frame_processing_speed(self, config, sample_frame):
-        """Test de vitesse de traitement d'une frame"""
+        """
+Test de vitesse de traitement d'une frame"""
         import time
         
         processor = PerceptualHashProcessor(config)
@@ -476,7 +502,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_complete_video_fingerprinting_pipeline(self, config, sample_video_frames):
-        """Test du pipeline complet de fingerprinting vidéo"""
+        """
+Test du pipeline complet de fingerprinting vidéo"""
         
         # Initialiser tous les processeurs
         perceptual_processor = PerceptualHashProcessor(config)
@@ -519,7 +546,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_video_fingerprint_uniqueness(self, config):
-        """Test de l'unicité des empreintes vidéo"""
+        """
+Test de l'unicité des empreintes vidéo"""
         processor = PerceptualHashProcessor(config)
         
         # Créer deux frames très différentes

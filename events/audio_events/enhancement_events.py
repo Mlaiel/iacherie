@@ -7,6 +7,7 @@ noise reduction, and quality improvement processes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -17,7 +18,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class EnhancementType(Enum):
-    """Types of audio enhancement"""
+    """
+Types of audio enhancement"""
+
     NOISE_REDUCTION = "noise_reduction"
     MASTERING = "mastering"
     RESTORATION = "restoration"
@@ -32,6 +35,7 @@ class EnhancementType(Enum):
 
 class NoiseType(Enum):
     """Types of noise to be reduced"""
+
     BACKGROUND_NOISE = "background_noise"
     HISS = "hiss"
     HUM = "hum"
@@ -46,6 +50,7 @@ class NoiseType(Enum):
 
 class MasteringPreset(Enum):
     """Mastering presets for different purposes"""
+
     STREAMING = "streaming"
     CD_RELEASE = "cd_release"
     VINYL = "vinyl"

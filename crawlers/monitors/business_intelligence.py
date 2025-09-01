@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -39,7 +40,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class BusinessMetricType(Enum):
-    """Types of business metrics."""
+    """
+Types of business metrics."""
+
     REVENUE = "revenue"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
@@ -53,6 +56,7 @@ class BusinessMetricType(Enum):
 
 class KPICategory(Enum):
     """Key Performance Indicator categories."""
+
     FINANCIAL = "financial"
     OPERATIONAL = "operational"
     STRATEGIC = "strategic"
@@ -64,6 +68,7 @@ class KPICategory(Enum):
 
 class TrendDirection(Enum):
     """Trend direction indicators."""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -130,7 +135,8 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         self._initialize_alert_thresholds()
     
     def _initialize_kpi_targets(self) -> None:
-        """Initialize KPI targets and benchmarks."""
+        """
+Initialize KPI targets and benchmarks."""
         self.kpi_targets = {
             "monthly_revenue": 50000.0,
             "user_growth_rate": 0.15,  # 15% monthly growth
@@ -232,7 +238,8 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             await self._process_business_event(event)
     
     async def _process_business_event(self, event: Dict[str, Any]) -> None:
-        """Process individual business event."""
+        """
+Process individual business event."""
         try:
             event_type = event.get("type", "")
             
@@ -463,7 +470,8 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         return correlation
     
     async def _calculate_current_metrics(self) -> Dict[str, Any]:
-        """Calculate current business metrics summary."""
+        """
+Calculate current business metrics summary."""
         metrics_summary = {}
         
         try:
@@ -616,12 +624,14 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         pass
     
     async def _initialize_analytics_models(self) -> None:
-        """Initialize analytics and ML models."""
+        """
+Initialize analytics and ML models."""
         # Implementation would initialize predictive models
         pass
     
     async def _monitor_revenue_metrics(self) -> None:
-        """Monitor revenue-related metrics."""
+        """
+Monitor revenue-related metrics."""
         while True:
             try:
                 # Collect revenue data from various sources

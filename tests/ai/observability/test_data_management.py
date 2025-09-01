@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Data Management Module
+"""
+Ultra-Industrial Test Suite for Data Management Module
 
 This module provides comprehensive testing for observability data management,
 lifecycle management, retention policies, and data governance.
@@ -48,6 +50,7 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -86,11 +89,13 @@ from ai.observability.data_management import (
 
 
 class TestObservabilityDataManager:
-    """Ultra-industrial tests for ObservabilityDataManager class"""
+    """
+Ultra-industrial tests for ObservabilityDataManager class"""
     
     @pytest.fixture
     def data_manager(self):
-        """Create ObservabilityDataManager instance for testing"""
+        """
+Create ObservabilityDataManager instance for testing"""
         config = {
             "storage_backends": ["postgresql", "redis", "mongodb"],
             "default_retention_days": 90,
@@ -355,7 +360,8 @@ class TestDataLifecycleManager:
     
     @pytest.fixture
     def lifecycle_manager(self):
-        """Create DataLifecycleManager instance for testing"""
+        """
+Create DataLifecycleManager instance for testing"""
         config = {
             "lifecycle_policies": [
                 {"data_type": "metrics", "hot_days": 7, "warm_days": 30, "cold_days": 90},
@@ -482,7 +488,8 @@ class TestDataRetentionManager:
     
     @pytest.fixture
     def retention_manager(self):
-        """Create DataRetentionManager instance for testing"""
+        """
+Create DataRetentionManager instance for testing"""
         config = {
             "default_retention_policies": {
                 "metrics": {"days": 90, "policy": "rolling"},
@@ -642,7 +649,8 @@ class TestDataArchiver:
     
     @pytest.fixture
     def data_archiver(self):
-        """Create DataArchiver instance for testing"""
+        """
+Create DataArchiver instance for testing"""
         config = {
             "archive_storage_backends": ["s3", "glacier", "local"],
             "default_archive_after_days": 90,
@@ -843,7 +851,8 @@ class TestTimeSeriesDatabase:
     
     @pytest.fixture
     def timeseries_db(self):
-        """Create TimeSeriesDatabase instance for testing"""
+        """
+Create TimeSeriesDatabase instance for testing"""
         config = {
             "backend": "influxdb",  # or "prometheus", "timescaledb"
             "retention_policies": {
@@ -997,7 +1006,8 @@ class TestDataBackup:
     
     @pytest.fixture
     def data_backup(self):
-        """Create DataBackup instance for testing"""
+        """
+Create DataBackup instance for testing"""
         config = {
             "backup_backends": ["s3", "local", "remote_sync"],
             "backup_schedule": {

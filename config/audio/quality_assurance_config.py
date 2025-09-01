@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Quality metrics for assessment"""
+    """
+Quality metrics for assessment"""
+
     AUDIO_FIDELITY = "audio_fidelity"
     DYNAMIC_RANGE = "dynamic_range"
     FREQUENCY_RESPONSE = "frequency_response"
@@ -44,6 +47,7 @@ class QualityMetric(Enum):
 
 class ValidationLevel(Enum):
     """Validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -53,6 +57,7 @@ class ValidationLevel(Enum):
 
 class TestType(Enum):
     """Types of quality tests"""
+
     AUTOMATED_ANALYSIS = "automated_analysis"
     HUMAN_EVALUATION = "human_evaluation"
     A_B_TESTING = "a_b_testing"
@@ -64,6 +69,7 @@ class TestType(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standards"""
+
     EBU_R128 = "ebu_r128"  # Loudness standard
     ITU_BS1770 = "itu_bs1770"  # Loudness measurement
     AES31 = "aes31"  # Audio file format
@@ -75,6 +81,7 @@ class ComplianceStandard(Enum):
 
 class PerformanceBenchmark(Enum):
     """Performance benchmarks"""
+
     PROCESSING_SPEED = "processing_speed"
     MEMORY_USAGE = "memory_usage"
     CPU_UTILIZATION = "cpu_utilization"

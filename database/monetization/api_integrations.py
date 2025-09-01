@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 import asyncio
 import json
 import logging
@@ -56,7 +57,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class APIResponse:
-    """Standardized API response structure"""
+    """
+Standardized API response structure"""
     success: bool
     data: Dict[str, Any]
     status_code: int
@@ -82,7 +84,8 @@ class PlatformAPIIntegrator:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self):
-        """Initialize platform-specific API configurations"""
+        """
+Initialize platform-specific API configurations"""
         self.platform_configs = {
             Platform.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
@@ -672,7 +675,8 @@ class PlatformAPIIntegrator:
         return result.scalar_one_or_none()
     
     async def _get_platform_client(self, connection: PlatformConnection) -> Any:
-        """Get authenticated API client for platform"""
+        """
+Get authenticated API client for platform"""
         
         # Decrypt access token
         access_token = self.security_manager.decrypt(connection.access_token)
@@ -711,7 +715,8 @@ class PlatformAPIIntegrator:
             return now + timedelta(days=1)  # Default to daily
     
     def _map_analytics_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Map raw API data to standardized analytics format"""
+        """
+Map raw API data to standardized analytics format"""
         
         mapped_data = {
             "metric_type": raw_data.get("metric_type", "unknown"),

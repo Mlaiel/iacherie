@@ -26,6 +26,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import logging
 from datetime import datetime, timezone
 from sqlalchemy import create_engine, MetaData, Table, Column, String, DateTime, Boolean, Integer, Text, Numeric, JSON, ForeignKey, Index
@@ -56,7 +57,8 @@ class AdvancedModelsMigration:
         self.session_maker = sessionmaker(bind=self.engine)
     
     def create_enums(self):
-        """Create custom ENUM types for the new models"""
+        """
+Create custom ENUM types for the new models"""
         logger.info("Creating custom ENUM types...")
         
         with self.engine.connect() as conn:

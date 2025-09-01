@@ -11,6 +11,7 @@ This orchestration system and integration patterns are the exclusive intellectua
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GamificationIndexConfig:
-    """Configuration for gamification index orchestrator"""
+    """
+Configuration for gamification index orchestrator"""
     enable_challenge_generation: bool = True
     enable_reward_optimization: bool = True
     enable_engagement_prediction: bool = True
@@ -70,7 +72,8 @@ class GamificationIndex:
         self._initialize_agents()
     
     def _initialize_agents(self):
-        """Initialize all gamification agents"""
+        """
+Initialize all gamification agents"""
         try:
             # Main gamification agent
             self.agents['main'] = GamificationAgent(

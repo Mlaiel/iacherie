@@ -5,7 +5,7 @@ Provides comprehensive content distribution, analytics, revenue tracking, and in
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
@@ -38,6 +38,7 @@ or distribution is strictly prohibited and will result in legal action.
 YouTube, Instagram, TikTok, Twitter, LinkedIn, Spotify, Facebook, Pinterest, 
 Snapchat, Twitch, Reddit, Discord, Telegram, Medium, Substack
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -140,7 +141,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary"
 
 # Module configuration
@@ -181,23 +182,27 @@ class DistributionModuleError(Exception):
 
 
 class PlatformIntegrationError(DistributionModuleError):
-    """Exception for platform integration issues"""
+    """
+Exception for platform integration issues"""
     pass
 
 
 class ContentProcessingError(DistributionModuleError):
-    """Exception for content processing issues"""
+    """
+Exception for content processing issues"""
     pass
 
 
 class AnalyticsError(DistributionModuleError):
-    """Exception for analytics processing issues"""
+    """
+Exception for analytics processing issues"""
     pass
 
 
 @dataclass
 class ModuleStatus:
-    """Distribution module status information"""
+    """
+Distribution module status information"""
     is_healthy: bool
     active_platforms: List[PlatformType]
     processing_queue_size: int
@@ -399,35 +404,40 @@ async def create_distribution_manager(db_session, redis_client=None) -> Distribu
 
 
 async def create_platform_manager(db_session) -> PlatformDistributionManager:
-    """Create and initialize a platform distribution manager"""
+    """
+Create and initialize a platform distribution manager"""
     manager = PlatformDistributionManager(db_session)
     await manager.__aenter__()
     return manager
 
 
 async def create_analytics_tracker(db_session) -> AdvancedAnalyticsTracker:
-    """Create and initialize an analytics tracker"""
+    """
+Create and initialize an analytics tracker"""
     tracker = AdvancedAnalyticsTracker(db_session)
     await tracker.__aenter__()
     return tracker
 
 
 async def create_revenue_tracker(db_session) -> RevenueTracker:
-    """Create and initialize a revenue tracker"""
+    """
+Create and initialize a revenue tracker"""
     tracker = RevenueTracker(db_session)
     await tracker.__aenter__()
     return tracker
 
 
 async def create_scheduler(db_session) -> ContentDistributionScheduler:
-    """Create and initialize a content scheduler"""
+    """
+Create and initialize a content scheduler"""
     scheduler = ContentDistributionScheduler(db_session)
     await scheduler.__aenter__()
     return scheduler
 
 
 async def create_content_adapter(db_session) -> EnterpriseContentAdapter:
-    """Create and initialize a content adapter"""
+    """
+Create and initialize a content adapter"""
     adapter = EnterpriseContentAdapter(db_session)
     await adapter.__aenter__()
     return adapter
@@ -435,27 +445,32 @@ async def create_content_adapter(db_session) -> EnterpriseContentAdapter:
 
 # Utility functions
 def get_supported_platforms() -> List[PlatformType]:
-    """Get list of all supported platforms"""
+    """
+Get list of all supported platforms"""
     return list(PlatformType)
 
 
 def get_supported_content_formats() -> List[ContentFormat]:
-    """Get list of all supported content formats"""
+    """
+Get list of all supported content formats"""
     return list(ContentFormat)
 
 
 def get_available_strategies() -> List[DistributionStrategy]:
-    """Get list of all available distribution strategies"""
+    """
+Get list of all available distribution strategies"""
     return list(DistributionStrategy)
 
 
 def get_module_version() -> str:
-    """Get module version"""
+    """
+Get module version"""
     return __version__
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Get basic module information"""
+    """
+Get basic module information"""
     return MODULE_CONFIG
 
 # Export all public components
@@ -583,7 +598,8 @@ def get_component_registry() -> Dict[str, Any]:
 
 
 def register_component(name: str, component_class: Any) -> None:
-    """Register a new component in the module"""
+    """
+Register a new component in the module"""
     _component_registry[name] = component_class
     logger.info(f"Registered new component: {name}")
 
@@ -595,7 +611,8 @@ def get_component(name: str) -> Optional[Any]:
 
 # Performance monitoring
 class ModulePerformanceMonitor:
-    """Monitor module performance and health"""
+    """
+Monitor module performance and health"""
     
     def __init__(self):
         self.start_time = datetime.utcnow()
@@ -604,11 +621,13 @@ class ModulePerformanceMonitor:
         self.usage_stats = {}
     
     def record_component_load(self, component_name: str, load_time: float):
-        """Record component loading time"""
+        """
+Record component loading time"""
         self.component_load_times[component_name] = load_time
     
     def record_error(self, component_name: str, error_type: str):
-        """Record component error"""
+        """
+Record component error"""
         if component_name not in self.error_counts:
             self.error_counts[component_name] = {}
         
@@ -618,7 +637,8 @@ class ModulePerformanceMonitor:
         self.error_counts[component_name][error_type] += 1
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get performance statistics"""
+        """
+Get performance statistics"""
         uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {
@@ -661,13 +681,15 @@ performance_monitor = ModulePerformanceMonitor()
 
 
 def get_performance_stats() -> Dict[str, Any]:
-    """Get module performance statistics"""
+    """
+Get module performance statistics"""
     return performance_monitor.get_performance_stats()
 
 
 # Module health check
 async def health_check() -> Dict[str, Any]:
-    """Perform module health check"""
+    """
+Perform module health check"""
     health_status = {
         "status": "healthy",
         "timestamp": datetime.utcnow(),

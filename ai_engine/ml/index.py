@@ -6,7 +6,7 @@ model training, inference, optimization, audio intelligence, content analysis,
 recommendation systems, and advanced ML pipeline management.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -30,6 +30,7 @@ Data Ingestion → ML Model Training → Model Validation → Performance Optimi
 → Model Deployment → Real-time Inference → Continuous Learning → Performance Monitoring
 → Security Auditing → Business Intelligence
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable, AsyncGenerator
 import asyncio
 import numpy as np
@@ -180,6 +181,7 @@ __email__ = "mlaiel@live.de"
 # Machine Learning Enums
 class ModelType(Enum):
     """Types of machine learning models."""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -193,6 +195,7 @@ class ModelType(Enum):
 
 class MLFramework(Enum):
     """Machine learning frameworks."""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     SCIKIT_LEARN = "scikit_learn"
@@ -204,6 +207,7 @@ class MLFramework(Enum):
 
 class DeploymentType(Enum):
     """Model deployment types."""
+
     BATCH = "batch"
     REAL_TIME = "real_time"
     STREAMING = "streaming"
@@ -214,6 +218,7 @@ class DeploymentType(Enum):
 
 class DataType(Enum):
     """Types of data processed."""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -439,7 +444,8 @@ class MLFrameworkManager:
         self.performance_monitor = PerformanceMonitor()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize ML capabilities."""
+        """
+Initialize ML capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -467,7 +473,8 @@ class MLFrameworkManager:
     
     async def train_model_comprehensive(self, 
                                       training_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Train model with comprehensive ML pipeline."""
+        """
+Train model with comprehensive ML pipeline."""
         model_type = ModelType(training_config['model_type'])
         framework = MLFramework(training_config.get('framework', 'tensorflow'))
         
@@ -517,7 +524,8 @@ class MLFrameworkManager:
     async def deploy_model_production(self, 
                                     model: Any, 
                                     deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy model to production with comprehensive monitoring."""
+        """
+Deploy model to production with comprehensive monitoring."""
         deployment_type = DeploymentType(deployment_config['deployment_type'])
         
         # Model deployment
@@ -557,15 +565,18 @@ class MLFrameworkManager:
         }
     
     def get_supported_model_types(self) -> List[str]:
-        """Get list of all supported model types."""
+        """
+Get list of all supported model types."""
         return [mt.value for mt in ModelType]
     
     def get_supported_frameworks(self) -> List[str]:
-        """Get list of all supported ML frameworks."""
+        """
+Get list of all supported ML frameworks."""
         return [fr.value for fr in MLFramework]
     
     def get_ml_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive ML capabilities information."""
+        """
+Get comprehensive ML capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         real_time_capabilities = sum(
             1 for category in self.architecture.values()
@@ -610,7 +621,8 @@ class MLFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'comprehensive_model_lifecycle_management',
             'automated_model_training_optimization',
@@ -638,24 +650,28 @@ ml_framework = MLFrameworkManager()
 
 # ML Utility Functions
 async def create_ml_pipeline(pipeline_config: Dict[str, Any]) -> MLPipeline:
-    """Create comprehensive ML pipeline."""
+    """
+Create comprehensive ML pipeline."""
     pipeline = MLPipeline(pipeline_config)
     await pipeline.initialize()
     return pipeline
 
 async def optimize_model_performance(model: Any, 
                                    optimization_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Optimize model performance with advanced techniques."""
+    """
+Optimize model performance with advanced techniques."""
     optimizer = InferenceOptimizer()
     return await optimizer.optimize(model, optimization_config)
 
 async def validate_model_security(model: Any, security_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate model security and privacy compliance."""
+    """
+Validate model security and privacy compliance."""
     security_auditor = SecurityAuditor()
     return await security_auditor.comprehensive_audit(model, security_config)
 
 def get_optimal_framework(model_type: str, data_type: str, deployment_type: str) -> str:
-    """Get optimal ML framework recommendation."""
+    """
+Get optimal ML framework recommendation."""
     framework_recommendations = {
         ('classification', 'text', 'real_time'): 'hugging_face',
         ('classification', 'image', 'real_time'): 'tensorflow',

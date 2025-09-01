@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...core.cache import CacheManager
 
 
 class Permission(Enum):
-    """System permissions"""
+    """
+System permissions"""
+
     READ = "read"
     WRITE = "write"
     DELETE = "delete"
@@ -43,6 +46,7 @@ class Permission(Enum):
 
 class AccessAction(Enum):
     """Access control actions"""
+
     ALLOW = "allow"
     DENY = "deny"
     CONDITIONAL = "conditional"
@@ -51,6 +55,7 @@ class AccessAction(Enum):
 
 class RoleLevel(Enum):
     """Role hierarchy levels"""
+
     SYSTEM = "system"
     ORGANIZATION = "organization"
     PROJECT = "project"
@@ -74,7 +79,8 @@ class AccessPolicy:
 
 @dataclass
 class Role:
-    """Role definition with permissions"""
+    """
+Role definition with permissions"""
     role_id: str
     name: str
     description: str
@@ -88,7 +94,8 @@ class Role:
 
 @dataclass
 class User:
-    """User with access control information"""
+    """
+User with access control information"""
     user_id: str
     username: str
     email: str
@@ -102,7 +109,8 @@ class User:
 
 @dataclass
 class AccessRequest:
-    """Access request for audit and decision"""
+    """
+Access request for audit and decision"""
     request_id: str
     user_id: str
     resource_id: str
@@ -117,7 +125,8 @@ class AccessRequest:
 
 @dataclass
 class AccessLog:
-    """Access log entry for auditing"""
+    """
+Access log entry for auditing"""
     log_id: str
     user_id: str
     resource_id: str
@@ -206,7 +215,8 @@ class PolicyEngine:
         permission: Permission,
         context: Dict[str, Any]
     ) -> bool:
-        """Evaluate a single rule"""
+        """
+Evaluate a single rule"""
         rule_type = rule.get("type")
         
         if rule_type == "user_attribute":
@@ -311,7 +321,8 @@ class RoleManager:
         level: RoleLevel,
         parent_role_id: Optional[str] = None
     ) -> Role:
-        """Create a new role"""
+        """
+Create a new role"""
         if role_id in self.roles:
             raise AccessError(f"Role {role_id} already exists")
         
@@ -354,7 +365,8 @@ class RoleManager:
         return permissions
     
     def get_user_permissions(self, user_roles: Set[str]) -> Set[Permission]:
-        """Get effective permissions for a user based on their roles"""
+        """
+Get effective permissions for a user based on their roles"""
         all_permissions = set()
         
         for role_id in user_roles:
@@ -364,12 +376,14 @@ class RoleManager:
         return all_permissions
     
     def has_permission(self, user_roles: Set[str], permission: Permission) -> bool:
-        """Check if user has a specific permission"""
+        """
+Check if user has a specific permission"""
         user_permissions = self.get_user_permissions(user_roles)
         return permission in user_permissions or Permission.ADMIN in user_permissions
     
     def get_role_hierarchy(self, role_id: str) -> List[str]:
-        """Get complete role hierarchy for a role"""
+        """
+Get complete role hierarchy for a role"""
         hierarchy = [role_id]
         
         if role_id in self.roles:
@@ -389,7 +403,8 @@ class AccessController(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the access controller"""
+        """
+Initialize the access controller"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -691,7 +706,8 @@ class AccessController(BaseManager):
         return sorted(filtered_logs, key=lambda log: log.timestamp, reverse=True)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get access control metrics"""
+        """
+Get access control metrics"""
         return {
             **self.metrics,
             "total_users": len(self.users),
@@ -725,7 +741,8 @@ class AccessController(BaseManager):
         return applicable
     
     async def _log_access(self, request: AccessRequest, decision: AccessAction) -> None:
-        """Log access decision"""
+        """
+Log access decision"""
         log_entry = AccessLog(
             log_id=f"log_{request.request_id}",
             user_id=request.user_id,

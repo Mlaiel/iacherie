@@ -18,6 +18,7 @@ Tous droits réservés. Usage non autorisé strictement interdit.
 - DevOps Engineer
 - IA Prompt Engineer
 """
+
 import pytest
 import sys
 import os
@@ -104,7 +105,8 @@ class TestDatabaseConfig:
     """Tests pour la configuration de base de données."""
     
     def test_database_config_creation(self):
-        """Test la création d'une configuration de base de données."""
+        """
+Test la création d'une configuration de base de données."""
         config = DatabaseConfig(
             host="localhost",
             port=5432,
@@ -163,7 +165,8 @@ class TestRedisConfig:
     """Tests pour la configuration Redis."""
     
     def test_redis_config_creation(self):
-        """Test la création d'une configuration Redis."""
+        """
+Test la création d'une configuration Redis."""
         config = RedisConfig(
             host="localhost",
             port=6379,
@@ -202,7 +205,8 @@ class TestAIModelConfig:
     """Tests pour la configuration des modèles IA."""
     
     def test_ai_model_config_creation(self):
-        """Test la création d'une configuration de modèle IA."""
+        """
+Test la création d'une configuration de modèle IA."""
         config = AIModelConfig(
             openai_api_key="sk-test-key",
             huggingface_token="hf_test_token",
@@ -239,7 +243,8 @@ class TestSecurityConfig:
     """Tests pour la configuration de sécurité."""
     
     def test_security_config_creation(self):
-        """Test la création d'une configuration de sécurité."""
+        """
+Test la création d'une configuration de sécurité."""
         config = SecurityConfig(
             secret_key="super_secret_key_123",
             jwt_algorithm="HS256",
@@ -275,7 +280,8 @@ class TestAudioConfig:
     """Tests pour la configuration audio."""
     
     def test_audio_config_creation(self):
-        """Test la création d'une configuration audio."""
+        """
+Test la création d'une configuration audio."""
         config = AudioConfig(
             sample_rate=44100,
             channels=2,
@@ -301,7 +307,8 @@ class TestVideoConfig:
     """Tests pour la configuration vidéo."""
     
     def test_video_config_creation(self):
-        """Test la création d'une configuration vidéo."""
+        """
+Test la création d'une configuration vidéo."""
         config = VideoConfig(
             max_resolution="1920x1080",
             max_fps=60,
@@ -325,7 +332,8 @@ class TestImageConfig:
     """Tests pour la configuration d'images."""
     
     def test_image_config_creation(self):
-        """Test la création d'une configuration d'images."""
+        """
+Test la création d'une configuration d'images."""
         config = ImageConfig(
             max_width=4096,
             max_height=4096,
@@ -349,7 +357,8 @@ class TestAPIConfig:
     """Tests pour la configuration API."""
     
     def test_api_config_creation(self):
-        """Test la création d'une configuration API."""
+        """
+Test la création d'une configuration API."""
         config = APIConfig(
             host="0.0.0.0",
             port=8000,
@@ -377,7 +386,8 @@ class TestMonitoringConfig:
     """Tests pour la configuration de monitoring."""
     
     def test_monitoring_config_creation(self):
-        """Test la création d'une configuration de monitoring."""
+        """
+Test la création d'une configuration de monitoring."""
         config = MonitoringConfig(
             enabled=True,
             metrics_endpoint="/metrics",
@@ -403,7 +413,8 @@ class TestLoggingConfig:
     """Tests pour la configuration de logging."""
     
     def test_logging_config_creation(self):
-        """Test la création d'une configuration de logging."""
+        """
+Test la création d'une configuration de logging."""
         config = LoggingConfig(
             level="INFO",
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -427,7 +438,8 @@ class TestCacheConfig:
     """Tests pour la configuration de cache."""
     
     def test_cache_config_creation(self):
-        """Test la création d'une configuration de cache."""
+        """
+Test la création d'une configuration de cache."""
         config = CacheConfig(
             enabled=True,
             backend="redis",
@@ -452,12 +464,14 @@ class TestConfigManager:
     
     @pytest.fixture
     def config_manager(self):
-        """Fixture pour créer un gestionnaire de configuration."""
+        """
+Fixture pour créer un gestionnaire de configuration."""
         return ConfigManager()
     
     @pytest.fixture
     def temp_config_file(self):
-        """Fixture pour créer un fichier de configuration temporaire."""
+        """
+Fixture pour créer un fichier de configuration temporaire."""
         config_data = {
             "environment": "test",
             "database": {
@@ -488,7 +502,8 @@ class TestConfigManager:
         assert config_manager.validators is not None
     
     def test_load_from_file_json(self, config_manager, temp_config_file):
-        """Test le chargement depuis un fichier JSON."""
+        """
+Test le chargement depuis un fichier JSON."""
         config_manager.load_from_file(temp_config_file)
         
         assert config_manager.get("environment") == "test"
@@ -571,7 +586,8 @@ class TestConfigManager:
         assert len(errors) == 0
     
     def test_save_configuration(self, config_manager):
-        """Test la sauvegarde de configuration."""
+        """
+Test la sauvegarde de configuration."""
         config_manager.set("test.key", "test_value")
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
@@ -607,15 +623,18 @@ class TestConfigManager:
 
 
 class TestSettingsValidator:
-    """Tests pour le validateur de paramètres."""
+    """
+Tests pour le validateur de paramètres."""
     
     @pytest.fixture
     def validator(self):
-        """Fixture pour créer un validateur."""
+        """
+Fixture pour créer un validateur."""
         return SettingsValidator()
     
     def test_validate_database_settings(self, validator):
-        """Test la validation des paramètres de base de données."""
+        """
+Test la validation des paramètres de base de données."""
         valid_settings = {
             "host": "localhost",
             "port": 5432,
@@ -670,11 +689,13 @@ class TestEnvironmentManager:
     
     @pytest.fixture
     def env_manager(self):
-        """Fixture pour créer un gestionnaire d'environnement."""
+        """
+Fixture pour créer un gestionnaire d'environnement."""
         return EnvironmentManager()
     
     def test_detect_environment(self, env_manager):
-        """Test la détection d'environnement."""
+        """
+Test la détection d'environnement."""
         with patch.dict(os.environ, {'ENVIRONMENT': 'production'}):
             env = env_manager.detect_environment()
             assert env == Environment.PRODUCTION
@@ -684,7 +705,8 @@ class TestEnvironmentManager:
             assert env == Environment.DEVELOPMENT
     
     def test_load_environment_config(self, env_manager):
-        """Test le chargement de configuration d'environnement."""
+        """
+Test le chargement de configuration d'environnement."""
         config = {
             "development": {"debug": True, "log_level": "DEBUG"},
             "production": {"debug": False, "log_level": "INFO"}
@@ -708,11 +730,13 @@ class TestSecretManager:
     
     @pytest.fixture
     def secret_manager(self):
-        """Fixture pour créer un gestionnaire de secrets."""
+        """
+Fixture pour créer un gestionnaire de secrets."""
         return SecretManager()
     
     def test_encrypt_decrypt_secret(self, secret_manager):
-        """Test le chiffrement et déchiffrement de secrets."""
+        """
+Test le chiffrement et déchiffrement de secrets."""
         secret = "my_secret_password"
         
         encrypted = secret_manager.encrypt(secret)
@@ -743,11 +767,13 @@ class TestConfigWatcher:
     
     @pytest.fixture
     def config_watcher(self):
-        """Fixture pour créer un surveillant de configuration."""
+        """
+Fixture pour créer un surveillant de configuration."""
         return ConfigWatcher()
     
     def test_watch_file_changes(self, config_watcher):
-        """Test la surveillance des changements de fichier."""
+        """
+Test la surveillance des changements de fichier."""
         callback_called = False
         
         def test_callback(file_path):
@@ -776,11 +802,13 @@ class TestConfigMerger:
     
     @pytest.fixture
     def config_merger(self):
-        """Fixture pour créer un fusionneur de configuration."""
+        """
+Fixture pour créer un fusionneur de configuration."""
         return ConfigMerger()
     
     def test_merge_simple_configs(self, config_merger):
-        """Test la fusion de configurations simples."""
+        """
+Test la fusion de configurations simples."""
         config1 = {"a": 1, "b": 2}
         config2 = {"b": 3, "c": 4}
         
@@ -820,7 +848,8 @@ class TestIntegration:
     
     @pytest.fixture
     def full_system(self):
-        """Fixture pour créer un système complet."""
+        """
+Fixture pour créer un système complet."""
         return {
             'manager': ConfigManager(),
             'validator': SettingsValidator(),
@@ -830,7 +859,8 @@ class TestIntegration:
         }
     
     def test_complete_config_workflow(self, full_system):
-        """Test le workflow complet de configuration."""
+        """
+Test le workflow complet de configuration."""
         manager = full_system['manager']
         validator = full_system['validator']
         

@@ -8,7 +8,7 @@ Responsibility: Safe and efficient rollback operations for content protection an
 ================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ ROLLBACK LOGIC PIPELINE:
 Safety Assessment → Backup Verification → Dependency Analysis → 
 Rollback Execution → Data Integrity Check → System Verification → Recovery Completion
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Set, Tuple, Any
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class RollbackTrigger(Enum):
-    """Triggers that can initiate rollback operations"""
+    """
+Triggers that can initiate rollback operations"""
+
     MANUAL = "manual"
     AUTOMATIC = "automatic"
     HEALTH_CHECK_FAILURE = "health_check_failure"
@@ -61,6 +64,7 @@ class RollbackTrigger(Enum):
 
 class RollbackSafety(Enum):
     """Safety levels for rollback operations"""
+
     SAFE = "safe"
     CAUTION = "caution"
     HIGH_RISK = "high_risk"
@@ -70,6 +74,7 @@ class RollbackSafety(Enum):
 
 class RecoveryMode(Enum):
     """Recovery modes for different scenarios"""
+
     POINT_IN_TIME = "point_in_time"
     PREVIOUS_VERSION = "previous_version"
     KNOWN_GOOD_STATE = "known_good_state"
@@ -97,7 +102,8 @@ class RollbackConfiguration:
 
 @dataclass
 class RollbackContext:
-    """Comprehensive context for rollback operations"""
+    """
+Comprehensive context for rollback operations"""
     rollback_id: str
     trigger: RollbackTrigger
     source_version: str
@@ -703,7 +709,8 @@ class ProductionRollbackManager:
         target_version: str,
         assessment: Dict[str, Any]
     ) -> List[str]:
-        """Generate rollback recommendations"""
+        """
+Generate rollback recommendations"""
         recommendations = []
         
         if not assessment["backup_available"]:
@@ -780,15 +787,18 @@ class ProductionRollbackManager:
         pass
     
     async def _execute_emergency_recovery(self, execution: RollbackExecution):
-        """Execute emergency recovery procedures"""
+        """
+Execute emergency recovery procedures"""
         pass
     
     async def _record_rollback_execution(self, execution: RollbackExecution):
-        """Record rollback execution in database"""
+        """
+Record rollback execution in database"""
         pass
     
     async def _build_status_response(self, execution: RollbackExecution, active: bool) -> Dict[str, Any]:
-        """Build comprehensive status response"""
+        """
+Build comprehensive status response"""
         return {
             "execution_id": execution.execution_id,
             "status": execution.status.value,
@@ -803,7 +813,8 @@ class ProductionRollbackManager:
         pass
     
     async def _create_recovery_backup(self, version: str, recovery_point_id: str) -> str:
-        """Create backup for recovery point"""
+        """
+Create backup for recovery point"""
         return f"recovery_backup_{version}_{recovery_point_id}"
     
     async def _validate_recovery_point(self, recovery_point: RecoveryPoint) -> Dict[str, Any]:
@@ -815,7 +826,8 @@ class ProductionRollbackManager:
         pass
     
     async def _analyze_test_results(self, test_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze rollback test results"""
+        """
+Analyze rollback test results"""
         return {"overall_score": 85.0, "issues_found": 2}
     
     async def _generate_test_recommendations(self, analysis: Dict[str, Any]) -> List[str]:

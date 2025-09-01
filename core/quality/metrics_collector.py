@@ -8,8 +8,9 @@ Quality metrics collection → Real-time analysis → Performance tracking →
 Quality insights → Automated reporting → Continuous improvement
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import csv
 import io
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of quality metrics"""
+    """
+Types of quality metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -39,6 +42,7 @@ class MetricType(Enum):
 
 class MetricCategory(Enum):
     """Categories of quality metrics"""
+
     CONTENT_QUALITY = "content_quality"
     PERFORMANCE = "performance"
     USER_ENGAGEMENT = "user_engagement"
@@ -59,7 +63,8 @@ class MetricValue:
 
 @dataclass
 class MetricDefinition:
-    """Definition of a quality metric"""
+    """
+Definition of a quality metric"""
     name: str
     metric_type: MetricType
     category: MetricCategory
@@ -82,7 +87,8 @@ class MetricDefinition:
 
 @dataclass
 class MetricSummary:
-    """Statistical summary of metric values"""
+    """
+Statistical summary of metric values"""
     count: int
     min_value: float
     max_value: float
@@ -106,7 +112,8 @@ class MetricSummary:
 
 
 class MetricStorage:
-    """Thread-safe metric storage with retention policies"""
+    """
+Thread-safe metric storage with retention policies"""
     
     def __init__(self, max_size: int = 10000, retention_hours: int = 24):
         self.max_size = max_size
@@ -115,7 +122,8 @@ class MetricStorage:
         self.lock = threading.RLock()
         
     def store_metric(self, metric_name: str, value: MetricValue):
-        """Store a metric value with automatic cleanup"""
+        """
+Store a metric value with automatic cleanup"""
         with self.lock:
             # Add new value
             self.data[metric_name].append(value)
@@ -128,7 +136,8 @@ class MetricStorage:
     
     def get_metrics(self, metric_name: str, 
                    since: Optional[datetime] = None) -> List[MetricValue]:
-        """Retrieve metric values with optional time filtering"""
+        """
+Retrieve metric values with optional time filtering"""
         with self.lock:
             values = list(self.data[metric_name])
             
@@ -138,18 +147,21 @@ class MetricStorage:
             return values
     
     def get_all_metric_names(self) -> List[str]:
-        """Get all stored metric names"""
+        """
+Get all stored metric names"""
         with self.lock:
             return list(self.data.keys())
     
     def clear_metric(self, metric_name: str):
-        """Clear all data for a specific metric"""
+        """
+Clear all data for a specific metric"""
         with self.lock:
             if metric_name in self.data:
                 self.data[metric_name].clear()
     
     def get_storage_stats(self) -> Dict[str, Any]:
-        """Get storage statistics"""
+        """
+Get storage statistics"""
         with self.lock:
             stats = {
                 'total_metrics': len(self.data),
@@ -172,7 +184,8 @@ class MetricStorage:
             return stats
     
     def _estimate_memory_usage(self) -> float:
-        """Estimate memory usage in MB"""
+        """
+Estimate memory usage in MB"""
         # Rough estimation based on average object size
         total_objects = sum(len(values) for values in self.data.values())
         avg_object_size = 200  # bytes per MetricValue (estimated)
@@ -180,7 +193,8 @@ class MetricStorage:
 
 
 class QualityMetricsCollector:
-    """Enterprise quality metrics collection and analysis system"""
+    """
+Enterprise quality metrics collection and analysis system"""
     
     def __init__(self, storage_config: Optional[Dict[str, Any]] = None):
         self.storage = MetricStorage(
@@ -194,7 +208,8 @@ class QualityMetricsCollector:
         self._initialize_standard_metrics()
     
     def _initialize_standard_metrics(self):
-        """Initialize standard quality metrics"""
+        """
+Initialize standard quality metrics"""
         standard_metrics = [
             # Content Quality Metrics
             MetricDefinition(
@@ -384,7 +399,8 @@ class QualityMetricsCollector:
     
     def get_metrics_by_category(self, category: MetricCategory,
                                since: Optional[datetime] = None) -> Dict[str, MetricSummary]:
-        """Get all metrics summaries for a specific category"""
+        """
+Get all metrics summaries for a specific category"""
         category_metrics = {
             name: definition for name, definition in self.definitions.items()
             if definition.category == category
@@ -399,7 +415,8 @@ class QualityMetricsCollector:
         return summaries
     
     def get_dashboard_data(self, time_range_hours: int = 1) -> Dict[str, Any]:
-        """Get comprehensive dashboard data"""
+        """
+Get comprehensive dashboard data"""
         since = datetime.now(timezone.utc) - timedelta(hours=time_range_hours)
         
         dashboard_data = {
@@ -579,7 +596,8 @@ class QualityMetricsCollector:
         )
     
     def batch_collect_metrics(self, metrics: List[Dict[str, Any]]):
-        """Collect multiple metrics in batch"""
+        """
+Collect multiple metrics in batch"""
         for metric_data in metrics:
             self.collect_metric(
                 metric_data['name'],
@@ -589,7 +607,8 @@ class QualityMetricsCollector:
             )
     
     def clear_all_metrics(self):
-        """Clear all stored metric data"""
+        """
+Clear all stored metric data"""
         for metric_name in self.definitions:
             self.storage.clear_metric(metric_name)
         logger.info("All metric data cleared")
@@ -647,6 +666,7 @@ class QualityMetricsCollector:
         return health_status
     
     def shutdown(self):
-        """Gracefully shutdown the metrics collector"""
+        """
+Gracefully shutdown the metrics collector"""
         self.executor.shutdown(wait=True)
         logger.info("Quality metrics collector shutdown complete")

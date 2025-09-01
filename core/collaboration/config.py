@@ -30,6 +30,7 @@ Features:
 - File Storage Configuration
 - Backup & Recovery Settings
 """
+
 import os
 import json
 import logging
@@ -44,7 +45,9 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class Environment(Enum):
-    """Environment enumeration"""
+    """
+Environment enumeration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -52,6 +55,7 @@ class Environment(Enum):
 
 class DatabaseType(Enum):
     """Database type enumeration"""
+
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
@@ -128,7 +132,8 @@ class AIModelConfig:
     
 @dataclass
 class ExternalServiceConfig:
-    """External service configuration"""
+    """
+External service configuration"""
     service_name: str
     api_key: str
     endpoint: str
@@ -141,7 +146,8 @@ class ExternalServiceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
+    """
+Security configuration"""
     encryption_key: str
     jwt_secret: str
     jwt_expiry_hours: int = 24
@@ -198,7 +204,8 @@ class FeatureFlags:
     enable_premium_features: bool = True
 
 class CollaborationConfig:
-    """Main collaboration system configuration"""
+    """
+Main collaboration system configuration"""
     
     def __init__(self, environment: Environment = Environment.DEVELOPMENT):
         self.environment = environment
@@ -206,7 +213,8 @@ class CollaborationConfig:
         self._setup_logging()
         
     def _load_config(self) -> None:
-        """Load configuration from various sources"""
+        """
+Load configuration from various sources"""
         # Load from environment variables
         self._load_from_env()
         
@@ -220,7 +228,8 @@ class CollaborationConfig:
         self._validate_config()
         
     def _load_from_env(self) -> None:
-        """Load configuration from environment variables"""
+        """
+Load configuration from environment variables"""
         # Database configuration
         self.database = DatabaseConfig(
             type=DatabaseType(os.getenv('DATABASE_TYPE', 'postgresql')),
@@ -391,35 +400,41 @@ class CollaborationConfig:
         )
         
     def _merge_config(self, config_dict: Dict[str, Any]) -> None:
-        """Merge configuration from dictionary"""
+        """
+Merge configuration from dictionary"""
         # Implementation would merge config values
         pass
         
     def _merge_secrets(self, secrets_dict: Dict[str, Any]) -> None:
-        """Merge secrets from dictionary"""
+        """
+Merge secrets from dictionary"""
         # Implementation would merge secret values
         pass
         
     def get_model_config(self, model_name: str) -> Optional[AIModelConfig]:
-        """Get configuration for specific AI model"""
+        """
+Get configuration for specific AI model"""
         for model in self.ai_models:
             if model.model_name == model_name:
                 return model
         return None
         
     def get_service_config(self, service_name: str) -> Optional[ExternalServiceConfig]:
-        """Get configuration for specific external service"""
+        """
+Get configuration for specific external service"""
         for service in self.external_services:
             if service.service_name == service_name:
                 return service
         return None
         
     def is_feature_enabled(self, feature_name: str) -> bool:
-        """Check if feature flag is enabled"""
+        """
+Check if feature flag is enabled"""
         return getattr(self.features, feature_name, False)
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary (excluding secrets)"""
+        """
+Convert configuration to dictionary (excluding secrets)"""
         return {
             'environment': self.environment.value,
             'database': {
@@ -455,7 +470,8 @@ config = CollaborationConfig(
 
 # Configuration factory
 def get_config(environment: Optional[str] = None) -> CollaborationConfig:
-    """Get configuration instance"""
+    """
+Get configuration instance"""
     if environment:
         return CollaborationConfig(Environment(environment))
     return config

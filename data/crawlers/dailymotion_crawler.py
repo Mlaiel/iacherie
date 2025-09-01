@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class DailymotionVideo:
-    """Dailymotion video information"""
+    """
+Dailymotion video information"""
     video_id: str
     title: str
     description: Optional[str]
@@ -105,7 +107,8 @@ class DailymotionVideo:
 
 @dataclass
 class DailymotionUser:
-    """Dailymotion user information"""
+    """
+Dailymotion user information"""
     user_id: str
     username: str
     screenname: str
@@ -163,7 +166,8 @@ class DailymotionUser:
 
 @dataclass
 class DailymotionChannel:
-    """Dailymotion channel information"""
+    """
+Dailymotion channel information"""
     channel_id: str
     name: str
     description: Optional[str]

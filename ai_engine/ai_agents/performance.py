@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import time
 import psutil
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""
+    """
+Types of performance metrics."""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -60,7 +63,8 @@ class AgentMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert configuration."""
+    """
+Performance alert configuration."""
     metric_type: MetricType
     threshold: float
     comparison: str  # "greater", "less", "equal"
@@ -76,7 +80,8 @@ class PerformanceTracker:
                  agent_id: str,
                  history_size: int = 1000,
                  sampling_interval: float = 1.0):
-        """Initialize performance tracker."""
+        """
+Initialize performance tracker."""
         self.agent_id = agent_id
         self.history_size = history_size
         self.sampling_interval = sampling_interval
@@ -298,7 +303,8 @@ class PerformanceTracker:
         self.alert_callbacks.append(callback)
     
     def _check_alerts(self):
-        """Check performance alerts."""
+        """
+Check performance alerts."""
         try:
             for alert in self.alerts:
                 if not alert.enabled:
@@ -346,7 +352,8 @@ class PerformanceTracker:
             return None
     
     def _trigger_alert(self, alert: PerformanceAlert, current_value: float):
-        """Trigger performance alert."""
+        """
+Trigger performance alert."""
         try:
             alert_data = {
                 'agent_id': self.agent_id,
@@ -373,15 +380,18 @@ class PerformanceTracker:
         return self.current_metrics
     
     def get_metrics_history(self, limit: int = 100) -> List[AgentMetrics]:
-        """Get metrics history."""
+        """
+Get metrics history."""
         return list(self.metrics_history)[-limit:]
     
     def get_aggregated_metrics(self) -> Dict[str, Any]:
-        """Get aggregated metrics."""
+        """
+Get aggregated metrics."""
         return self.aggregated_metrics
     
     def export_metrics(self) -> Dict[str, Any]:
-        """Export all metrics for analysis."""
+        """
+Export all metrics for analysis."""
         return {
             'agent_id': self.agent_id,
             'current_metrics': {
@@ -405,10 +415,12 @@ class PerformanceTracker:
 
 
 class OptimizationEngine:
-    """AI agent optimization engine."""
+    """
+AI agent optimization engine."""
     
     def __init__(self, performance_tracker: PerformanceTracker):
-        """Initialize optimization engine."""
+        """
+Initialize optimization engine."""
         self.performance_tracker = performance_tracker
         self.optimization_history: List[Dict] = []
         self.optimization_strategies: Dict[str, Callable] = {}
@@ -428,7 +440,8 @@ class OptimizationEngine:
         }
     
     def analyze_performance(self) -> Dict[str, Any]:
-        """Analyze current performance and suggest optimizations."""
+        """
+Analyze current performance and suggest optimizations."""
         try:
             current_metrics = self.performance_tracker.get_current_metrics()
             aggregated_metrics = self.performance_tracker.get_aggregated_metrics()
@@ -661,7 +674,8 @@ class OptimizationEngine:
         return self.optimization_history
     
     def register_strategy(self, name: str, strategy_func: Callable):
-        """Register custom optimization strategy."""
+        """
+Register custom optimization strategy."""
         self.optimization_strategies[name] = strategy_func
         logger.info(f"Registered optimization strategy: {name}")
 

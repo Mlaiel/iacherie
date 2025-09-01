@@ -4,7 +4,7 @@
 Advanced revenue impact analysis and loss prevention for content piracy.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - ROI optimization for protection measures
 - Legal damages estimation
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -44,7 +45,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams affected by piracy."""
+    """
+Types of revenue streams affected by piracy."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     DOWNLOAD_SALES = "download_sales"
     PHYSICAL_SALES = "physical_sales"
@@ -58,6 +61,7 @@ class RevenueStreamType(Enum):
 
 class LossCalculationMethod(Enum):
     """Methods for calculating revenue loss."""
+
     DIRECT_SUBSTITUTION = "direct_substitution"
     MARKET_SHARE_ANALYSIS = "market_share_analysis"
     STATISTICAL_MODELING = "statistical_modeling"
@@ -66,6 +70,7 @@ class LossCalculationMethod(Enum):
 
 class MarketRegion(Enum):
     """Geographic market regions."""
+
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -87,7 +92,8 @@ class RevenueMetrics:
 
 @dataclass
 class PiracyImpactAssessment:
-    """Assessment of piracy impact on revenue."""
+    """
+Assessment of piracy impact on revenue."""
     content_id: str
     assessment_period: Tuple[datetime, datetime]
     total_estimated_loss: Decimal
@@ -101,7 +107,8 @@ class PiracyImpactAssessment:
 
 @dataclass
 class MarketAnalysis:
-    """Market analysis for content performance."""
+    """
+Market analysis for content performance."""
     content_id: str
     analysis_date: datetime
     market_size_usd: Decimal
@@ -114,7 +121,8 @@ class MarketAnalysis:
 
 @dataclass
 class ROIAnalysis:
-    """Return on investment analysis for protection measures."""
+    """
+Return on investment analysis for protection measures."""
     protection_investment: Decimal
     estimated_loss_prevention: Decimal
     roi_percentage: float
@@ -124,7 +132,8 @@ class ROIAnalysis:
     risk_adjusted_return: float
 
 class MarketDataProvider:
-    """Provides market data and industry benchmarks."""
+    """
+Provides market data and industry benchmarks."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -136,7 +145,8 @@ class MarketDataProvider:
         }
         
     async def get_market_benchmarks(self, content_type: str, region: MarketRegion) -> Dict[str, Any]:
-        """Get market benchmarks for content type and region."""
+        """
+Get market benchmarks for content type and region."""
         try:
             # Placeholder for actual market data API calls
             benchmarks = {
@@ -186,7 +196,8 @@ class MarketDataProvider:
         return rates.get(platform, {})
     
     async def get_conversion_rates(self, content_type: str) -> Dict[str, float]:
-        """Get typical conversion rates for content type."""
+        """
+Get typical conversion rates for content type."""
         rates = {
             'music': {
                 'stream_to_download': 0.008,
@@ -208,7 +219,8 @@ class MarketDataProvider:
         return rates.get(content_type, {})
 
 class RevenueCalculator:
-    """Calculates revenue metrics and loss estimates."""
+    """
+Calculates revenue metrics and loss estimates."""
     
     def __init__(self, market_data_provider: MarketDataProvider):
         self.market_data = market_data_provider
@@ -216,7 +228,8 @@ class RevenueCalculator:
     async def calculate_baseline_revenue(self, 
                                        content_metrics: Dict[str, Any],
                                        time_period: Tuple[datetime, datetime]) -> RevenueMetrics:
-        """Calculate baseline revenue metrics for content."""
+        """
+Calculate baseline revenue metrics for content."""
         try:
             # Extract metrics
             streams = content_metrics.get('total_streams', 0)
@@ -658,7 +671,8 @@ class RevenueImpactTracker:
     async def _calculate_regional_losses(self,
                                        total_loss: Decimal,
                                        piracy_metrics: Dict[str, Any]) -> Dict[MarketRegion, Decimal]:
-        """Calculate losses by geographic region."""
+        """
+Calculate losses by geographic region."""
         # Distribution based on piracy geographical data
         regional_distribution = piracy_metrics.get('regional_distribution', {
             'north_america': 0.35,
@@ -681,7 +695,8 @@ class RevenueImpactTracker:
     async def _calculate_conversion_loss(self,
                                        piracy_metrics: Dict[str, Any],
                                        baseline_revenue: RevenueMetrics) -> Decimal:
-        """Calculate loss from reduced conversion rates."""
+        """
+Calculate loss from reduced conversion rates."""
         piracy_exposure = piracy_metrics.get('total_piracy_views', 0)
         conversion_reduction = 0.3  # 30% reduction in conversion due to free availability
         
@@ -693,7 +708,8 @@ class RevenueImpactTracker:
     async def _calculate_brand_damage_impact(self,
                                            piracy_metrics: Dict[str, Any],
                                            baseline_revenue: RevenueMetrics) -> Decimal:
-        """Calculate brand damage impact on future revenue."""
+        """
+Calculate brand damage impact on future revenue."""
         piracy_instances = piracy_metrics.get('total_violations', 0)
         
         # Brand damage factor based on piracy volume
@@ -710,7 +726,8 @@ class RevenueImpactTracker:
     async def _estimate_legal_costs(self,
                                   piracy_metrics: Dict[str, Any],
                                   estimated_loss: Decimal) -> Decimal:
-        """Estimate legal costs for enforcement."""
+        """
+Estimate legal costs for enforcement."""
         violation_count = piracy_metrics.get('total_violations', 0)
         
         # Cost per violation for legal action
@@ -728,7 +745,8 @@ class RevenueImpactTracker:
     def _calculate_confidence_interval(self,
                                      estimates: List[Decimal],
                                      confidence_level: float) -> Tuple[float, float]:
-        """Calculate confidence interval for loss estimates."""
+        """
+Calculate confidence interval for loss estimates."""
         if not estimates:
             return (0.0, 0.0)
         
@@ -745,7 +763,8 @@ class RevenueImpactTracker:
     async def _analyze_consumer_behavior(self,
                                        content_type: str,
                                        regions: List[MarketRegion]) -> Dict[str, Any]:
-        """Analyze consumer behavior trends."""
+        """
+Analyze consumer behavior trends."""
         return {
             'preferred_platforms': ['spotify', 'youtube', 'apple_music'],
             'consumption_patterns': 'streaming_dominant',
@@ -756,7 +775,8 @@ class RevenueImpactTracker:
     async def _analyze_optimal_pricing(self,
                                      content_type: str,
                                      regions: List[MarketRegion]) -> Dict[str, Decimal]:
-        """Analyze optimal pricing strategy."""
+        """
+Analyze optimal pricing strategy."""
         return {
             'streaming_subscription': Decimal('9.99'),
             'single_download': Decimal('1.29'),
@@ -765,7 +785,8 @@ class RevenueImpactTracker:
         }
     
     async def _calculate_demand_elasticity(self, content_type: str) -> float:
-        """Calculate price elasticity of demand."""
+        """
+Calculate price elasticity of demand."""
         # Typical elasticity values by content type
         elasticity_values = {
             'music': -1.2,  # Elastic
@@ -776,7 +797,8 @@ class RevenueImpactTracker:
         return elasticity_values.get(content_type, -1.0)
     
     async def _analyze_seasonality(self, content_type: str) -> Dict[str, float]:
-        """Analyze seasonal factors affecting revenue."""
+        """
+Analyze seasonal factors affecting revenue."""
         return {
             'q1': 0.9,   # Post-holiday dip
             'q2': 1.0,   # Baseline
@@ -785,7 +807,8 @@ class RevenueImpactTracker:
         }
     
     def get_tracking_statistics(self) -> Dict[str, Any]:
-        """Get revenue tracking statistics."""
+        """
+Get revenue tracking statistics."""
         avg_roi = statistics.mean(self.tracking_stats['roi_improvements']) if self.tracking_stats['roi_improvements'] else 0.0
         
         return {

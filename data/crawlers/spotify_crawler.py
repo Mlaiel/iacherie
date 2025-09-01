@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import base64
 from datetime import datetime, timedelta
@@ -87,7 +88,8 @@ class SpotifyCrawler(PlatformCrawler):
         asyncio.create_task(self._initialize_api_client())
     
     async def _initialize_api_client(self):
-        """Initialize Spotify Web API client"""
+        """
+Initialize Spotify Web API client"""
         try:
             # Set up client credentials flow
             client_credentials_manager = SpotifyClientCredentials(
@@ -750,7 +752,8 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _send_new_release_notification(self, album: Dict[str, Any], 
                                            callback_url: str, monitoring_id: str):
-        """Send notification for new release"""
+        """
+Send notification for new release"""
         try:
             notification_data = {
                 'monitoring_id': monitoring_id,

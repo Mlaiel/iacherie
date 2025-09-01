@@ -4,6 +4,7 @@ Real-time compliance monitoring and alerting system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -29,7 +30,9 @@ logger = get_logger(__name__)
 
 
 class ComplianceStatus(str, Enum):
-    """Compliance status levels"""
+    """
+Compliance status levels"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     NON_COMPLIANT = "non_compliant"
@@ -39,6 +42,7 @@ class ComplianceStatus(str, Enum):
 
 class MonitoringScope(str, Enum):
     """Monitoring scope levels"""
+
     SYSTEM = "system"
     ORGANIZATION = "organization"
     USER = "user"
@@ -47,6 +51,7 @@ class MonitoringScope(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -74,7 +79,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceMetricSnapshot:
-    """Point-in-time compliance metric snapshot"""
+    """
+Point-in-time compliance metric snapshot"""
     metric_id: str
     metric_name: str
     value: float
@@ -89,7 +95,8 @@ class ComplianceMetricSnapshot:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert details"""
+    """
+Compliance alert details"""
     alert_id: str
     rule_id: str
     metric_id: str
@@ -104,7 +111,8 @@ class ComplianceAlert:
 
 
 class ComplianceMonitor:
-    """Real-time compliance monitoring and alerting system"""
+    """
+Real-time compliance monitoring and alerting system"""
     
     def __init__(self):
         self.logger = logger

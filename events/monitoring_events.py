@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import logging
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringEventType(Enum):
-    """Types of monitoring events"""
+    """
+Types of monitoring events"""
+
     SYSTEM_HEALTH = "system_health"
     PERFORMANCE_METRIC = "performance_metric"
     ANOMALY_DETECTED = "anomaly_detected"
@@ -45,6 +48,7 @@ class MonitoringEventType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
@@ -54,6 +58,7 @@ class AlertSeverity(Enum):
 
 class ServiceStatus(Enum):
     """Service status states"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -74,7 +79,8 @@ class MonitoringEvent:
     tags: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
@@ -88,7 +94,8 @@ class MonitoringEvent:
 
 
 class MonitoringMetrics:
-    """Prometheus metrics for monitoring"""
+    """
+Prometheus metrics for monitoring"""
     
     def __init__(self):
         # Counters
@@ -108,7 +115,8 @@ class MonitoringMetrics:
 
 
 class SystemMonitor:
-    """Advanced system monitoring and health checking"""
+    """
+Advanced system monitoring and health checking"""
     
     def __init__(self):
         self.metrics = MonitoringMetrics()
@@ -123,7 +131,8 @@ class SystemMonitor:
         }
     
     async def check_system_health(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
+        """
+Perform comprehensive system health check"""
         try:
             start_time = time.time()
             
@@ -205,7 +214,8 @@ class SystemMonitor:
         return round(health_score, 2)
     
     def _determine_status(self, health_score: float, alerts: List[Dict]) -> ServiceStatus:
-        """Determine service status based on health score and alerts"""
+        """
+Determine service status based on health score and alerts"""
         critical_alerts = [a for a in alerts if a['severity'] == AlertSeverity.CRITICAL]
         high_alerts = [a for a in alerts if a['severity'] == AlertSeverity.HIGH]
         
@@ -220,7 +230,8 @@ class SystemMonitor:
 
 
 class AnomalyDetector:
-    """ML-powered anomaly detection for monitoring"""
+    """
+ML-powered anomaly detection for monitoring"""
     
     def __init__(self):
         self.baseline_metrics = defaultdict(list)
@@ -228,7 +239,8 @@ class AnomalyDetector:
         self.min_baseline_samples = 50
     
     async def detect_anomalies(self, metrics: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Detect anomalies in system metrics"""
+        """
+Detect anomalies in system metrics"""
         anomalies = []
         
         for metric_name, value in metrics.items():
@@ -248,7 +260,8 @@ class AnomalyDetector:
         return anomalies
     
     def _check_anomaly(self, metric_name: str, value: float) -> Optional[Dict[str, Any]]:
-        """Check if a value is anomalous"""
+        """
+Check if a value is anomalous"""
         baseline = self.baseline_metrics[metric_name]
         
         if len(baseline) < self.min_baseline_samples:
@@ -280,7 +293,8 @@ class AnomalyDetector:
 
 
 class AlertManager:
-    """Advanced alert management and notification system"""
+    """
+Advanced alert management and notification system"""
     
     def __init__(self):
         self.active_alerts = {}
@@ -289,7 +303,8 @@ class AlertManager:
         self.alert_rules = []
     
     async def process_alert(self, alert: Dict[str, Any]) -> None:
-        """Process and route alerts"""
+        """
+Process and route alerts"""
         try:
             alert_id = f"{alert['type']}_{alert.get('source', 'unknown')}"
             
@@ -344,7 +359,8 @@ class AlertManager:
         return False
     
     async def _send_notifications(self, event: MonitoringEvent) -> None:
-        """Send alert notifications through configured channels"""
+        """
+Send alert notifications through configured channels"""
         # Implementation would send to Slack, email, SMS, etc.
         logger.info(f"Notification sent: {event.message}")
 
@@ -358,7 +374,8 @@ class PerformanceProfiler:
     
     async def profile_operation(self, operation_name: str, duration: float, 
                               metadata: Dict[str, Any] = None) -> None:
-        """Profile an operation's performance"""
+        """
+Profile an operation's performance"""
         profile_data = {
             'operation': operation_name,
             'duration': duration,
@@ -376,7 +393,8 @@ class PerformanceProfiler:
         await self._check_performance_degradation(operation_name, duration)
     
     async def _check_performance_degradation(self, operation: str, current_duration: float) -> None:
-        """Check if operation performance has degraded"""
+        """
+Check if operation performance has degraded"""
         if len(self.performance_data[operation]) < 10:
             return
         
@@ -405,7 +423,8 @@ class PerformanceProfiler:
                 logger.warning(alert['message'])
     
     async def get_performance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
+        """
+Generate comprehensive performance report"""
         report = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'operations': {}
@@ -431,7 +450,8 @@ class PerformanceProfiler:
 
 
 class MonitoringEventHandler:
-    """Main monitoring event handler orchestrating all monitoring components"""
+    """
+Main monitoring event handler orchestrating all monitoring components"""
     
     def __init__(self):
         self.system_monitor = SystemMonitor()
@@ -442,7 +462,8 @@ class MonitoringEventHandler:
         self.monitoring_active = False
     
     async def start_monitoring(self, check_interval: int = 30) -> None:
-        """Start continuous monitoring"""
+        """
+Start continuous monitoring"""
         self.monitoring_active = True
         
         try:
@@ -565,12 +586,14 @@ async def start_monitoring_system(check_interval: int = 30) -> None:
 
 
 async def stop_monitoring_system() -> None:
-    """Stop the global monitoring system"""
+    """
+Stop the global monitoring system"""
     await global_monitoring_handler.stop_monitoring()
 
 
 async def get_monitoring_status() -> Dict[str, Any]:
-    """Get current monitoring system status"""
+    """
+Get current monitoring system status"""
     return await global_monitoring_handler.get_monitoring_dashboard()
 
 

@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ from ...ai.analysis.performance_ai import PerformanceAnalysisAI
 
 
 class PerformanceLevel(Enum):
-    """Performance level classification"""
+    """
+Performance level classification"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     WARNING = "warning"
@@ -59,7 +62,8 @@ class PerformanceSnapshot:
     performance_level: PerformanceLevel
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
+        """
+Convert to dictionary for JSON serialization"""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['performance_level'] = self.performance_level.value
@@ -68,7 +72,8 @@ class PerformanceSnapshot:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition"""
+    """
+Performance alert definition"""
     alert_id: str
     severity: str
     metric: str
@@ -79,7 +84,8 @@ class PerformanceAlert:
     suggested_actions: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
@@ -280,7 +286,8 @@ class DatabasePerformanceMonitor:
             return PerformanceLevel.EXCELLENT
     
     async def _process_snapshot(self, snapshot: PerformanceSnapshot) -> None:
-        """Process performance snapshot and generate alerts"""
+        """
+Process performance snapshot and generate alerts"""
         # Store snapshot
         self.performance_history.append(snapshot)
         
@@ -480,7 +487,8 @@ class DatabasePerformanceMonitor:
         self.alert_callbacks.append(callback)
     
     async def get_recent_alerts(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent performance alerts"""
+        """
+Get recent performance alerts"""
         try:
             alerts_data = await self.cache.lrange("performance:alerts", 0, limit - 1)
             return [json.loads(alert) for alert in alerts_data]

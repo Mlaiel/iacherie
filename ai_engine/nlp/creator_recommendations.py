@@ -4,11 +4,12 @@ Intelligent recommendation system for content optimization, creator matching,
 audience targeting, and personalized content strategies for multi-format creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of recommendations available."""
+    """
+Types of recommendations available."""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     CREATOR_MATCHING = "creator_matching"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -41,6 +44,7 @@ class RecommendationType(Enum):
 
 class RecommendationPriority(Enum):
     """Priority levels for recommendations."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -69,7 +73,8 @@ class CreatorProfile:
 
 @dataclass
 class RecommendationItem:
-    """Individual recommendation item."""
+    """
+Individual recommendation item."""
     recommendation_id: str
     type: RecommendationType
     priority: RecommendationPriority
@@ -88,7 +93,8 @@ class RecommendationItem:
 
 @dataclass
 class RecommendationBundle:
-    """Bundle of related recommendations."""
+    """
+Bundle of related recommendations."""
     bundle_id: str
     creator_id: str
     theme: str
@@ -110,7 +116,8 @@ class CreatorRecommendationEngine:
     """
     
     def __init__(self):
-        """Initialize the recommendation engine."""
+        """
+Initialize the recommendation engine."""
         self.scaler = StandardScaler()
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.recommendation_history: Dict[str, List[RecommendationItem]] = defaultdict(list)
@@ -951,7 +958,8 @@ class RecommendationTracker:
     """Track recommendation implementation and success."""
     
     def __init__(self):
-        """Initialize recommendation tracker."""
+        """
+Initialize recommendation tracker."""
         self.implementation_history: Dict[str, Dict[str, Any]] = {}
         self.success_metrics: Dict[str, List[float]] = defaultdict(list)
     
@@ -961,7 +969,8 @@ class RecommendationTracker:
         status: str, 
         metrics: Optional[Dict[str, float]] = None
     ):
-        """Track implementation status of a recommendation."""
+        """
+Track implementation status of a recommendation."""
         try:
             self.implementation_history[recommendation_id] = {
                 'status': status,

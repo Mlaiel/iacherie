@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Optional, Dict, Any, List
 import logging
 from datetime import datetime
@@ -46,7 +47,8 @@ class IntentRecognitionError(Exception):
         self._log_error()
     
     def _log_error(self) -> None:
-        """Log error with appropriate level based on severity"""
+        """
+Log error with appropriate level based on severity"""
         logger = logging.getLogger(__name__)
         
         error_details = {
@@ -75,7 +77,8 @@ class IntentRecognitionError(Exception):
         }
     
     def __str__(self) -> str:
-        """Human-readable error message"""
+        """
+Human-readable error message"""
         base_message = f"[{self.error_code}] {self.message}"
         
         if self.context:
@@ -582,5 +585,6 @@ class MonetizationIntentError(IntentRecognitionError):
 
 
 class CollaborationIntentError(IntentRecognitionError):
-    """Collaboration intent processing error"""
+    """
+Collaboration intent processing error"""
     pass

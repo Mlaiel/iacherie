@@ -4,6 +4,7 @@ Advanced session management with Redis backend and JWT integration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import json
 import time
@@ -116,7 +117,8 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return False
     
     def _requires_session(self, path: str) -> bool:
-        """Check if path requires an active session"""
+        """
+Check if path requires an active session"""
         
         for required_path in self.require_session_paths:
             if path.startswith(required_path):
@@ -124,7 +126,8 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return False
     
     def _get_session_id(self, request: Request) -> Optional[str]:
-        """Extract session ID from request"""
+        """
+Extract session ID from request"""
         
         # Try header first
         session_id = request.headers.get(self.session_header_name)
@@ -379,12 +382,14 @@ async def create_session(request: Request, user_data: Dict[str, Any]):
 
 
 async def get_session_data(request: Request) -> Dict[str, Any]:
-    """Helper to get session data"""
+    """
+Helper to get session data"""
     return getattr(request.state, 'session_data', {})
 
 
 async def invalidate_session(request: Request, session_backend: object):
-    """Helper to invalidate current session"""
+    """
+Helper to invalidate current session"""
     session_id = getattr(request.state, 'session_id', None)
     if session_id and session_backend:
         cache_key = f"session:{session_id}"

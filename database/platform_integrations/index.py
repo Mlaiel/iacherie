@@ -22,6 +22,7 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 import logging
 from datetime import datetime, timedelta
@@ -82,17 +83,21 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformIntegrationError(Exception):
-    """Exception personnalisée pour les erreurs d'intégration."""
+    """
+Exception personnalisée pour les erreurs d'intégration."""
     pass
 
 
 class ValidationError(Exception):
-    """Exception pour les erreurs de validation."""
+    """
+Exception pour les erreurs de validation."""
     pass
 
 
 class IntegrationOperationResult(Enum):
-    """Résultats des opérations d'intégration."""
+    """
+Résultats des opérations d'intégration."""
+
     SUCCESS = "success"
     PARTIAL_SUCCESS = "partial_success"
     FAILURE = "failure"

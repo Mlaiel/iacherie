@@ -46,13 +46,14 @@ Lead Temporal Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 This temporal intelligence system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic Flow:
 Temporal Data Collection → Pattern Recognition → Seasonal Analysis → 
 Timing Optimization → Performance Prediction → Global Scheduling → 
 Revenue Timing → Audience Behavior → Trend Forecasting → Strategic Planning
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -80,7 +81,9 @@ from ...ai.recommendation.timing_optimizer import TimingOptimizer
 
 
 class TimeGranularity(Enum):
-    """Time analysis granularity levels"""
+    """
+Time analysis granularity levels"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -92,6 +95,7 @@ class TimeGranularity(Enum):
 
 class SeasonalPattern(Enum):
     """Seasonal pattern types"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -104,6 +108,7 @@ class SeasonalPattern(Enum):
 
 class TimeZoneContext(Enum):
     """Time zone context for optimization"""
+
     LOCAL = "local"
     AUDIENCE_PRIMARY = "audience_primary"
     GLOBAL_OPTIMAL = "global_optimal"
@@ -113,6 +118,7 @@ class TimeZoneContext(Enum):
 
 class TemporalTrend(Enum):
     """Types of temporal trends"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     CYCLICAL = "cyclical"
@@ -137,7 +143,8 @@ class TimeSlot:
 
 @dataclass
 class SeasonalInsight:
-    """Seasonal pattern analysis insight"""
+    """
+Seasonal pattern analysis insight"""
     pattern_type: SeasonalPattern
     pattern_name: str
     impact_score: float
@@ -150,7 +157,8 @@ class SeasonalInsight:
 
 @dataclass
 class TemporalProfile:
-    """Comprehensive temporal behavior profile"""
+    """
+Comprehensive temporal behavior profile"""
     user_id: str
     timezone: str
     activity_patterns: Dict[str, Any]
@@ -166,7 +174,8 @@ class TemporalProfile:
 
 @dataclass
 class TimingRecommendation:
-    """Specific timing recommendation for content or activity"""
+    """
+Specific timing recommendation for content or activity"""
     recommendation_id: str
     user_id: str
     content_type: str
@@ -1060,7 +1069,8 @@ class TemporalContextAnalyzer:
         return (size_confidence * 0.6 + distribution_confidence * 0.4)
 
     def _identify_hour_patterns(self, hourly_stats: pd.DataFrame) -> Dict[str, Any]:
-        """Identify specific hour-based patterns"""
+        """
+Identify specific hour-based patterns"""
         engagement_by_hour = hourly_stats[('engagement_rate', 'mean')]
         
         patterns = {
@@ -1075,7 +1085,8 @@ class TemporalContextAnalyzer:
         return patterns
 
     async def _calculate_temporal_optimization_score(self, profile: TemporalProfile) -> float:
-        """Calculate comprehensive temporal optimization score"""
+        """
+Calculate comprehensive temporal optimization score"""
         try:
             optimization_factors = {
                 'timing_precision': self._assess_timing_precision(profile),
@@ -1113,7 +1124,8 @@ class TemporalContextAnalyzer:
         return (avg_confidence * 0.7 + precision_score * 0.3)
 
     def _assess_seasonal_alignment(self, profile: TemporalProfile) -> float:
-        """Assess alignment with seasonal patterns"""
+        """
+Assess alignment with seasonal patterns"""
         if not profile.seasonal_preferences:
             return 0.3
         
@@ -1124,7 +1136,8 @@ class TemporalContextAnalyzer:
         return (avg_confidence * 0.8 + coverage_score * 0.2)
 
     async def _generate_temporal_insights_recommendations(self, profile: TemporalProfile) -> List[Dict[str, Any]]:
-        """Generate actionable temporal insights recommendations"""
+        """
+Generate actionable temporal insights recommendations"""
         try:
             recommendations = []
             

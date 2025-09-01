@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Type, Any, Union
@@ -31,7 +32,9 @@ from ..core.base_models import BaseAIModel, ModelConfig, ModelType, ModelProvide
 
 
 class ModelCategory(Enum):
-    """Model category classifications"""
+    """
+Model category classifications"""
+
     CONTENT_PROCESSING = "content_processing"
     CONTENT_PROTECTION = "content_protection"
     BUSINESS_INTELLIGENCE = "business_intelligence"
@@ -68,7 +71,8 @@ class ModelOrchestrator:
         self._register_core_models()
     
     def _register_core_models(self):
-        """Register all core models"""
+        """
+Register all core models"""
         
         # Audio Models
         self.register_model(
@@ -305,7 +309,8 @@ class ModelOrchestrator:
             )
     
     def _update_model_stats(self, model_id: str, success: bool, processing_time: float):
-        """Update model statistics"""
+        """
+Update model statistics"""
         stats = self.model_stats[model_id]
         
         stats["total_requests"] += 1
@@ -397,11 +402,13 @@ class ModelOrchestrator:
         return self.model_stats
     
     def get_registered_models(self) -> Dict[str, ModelRegistry]:
-        """Get all registered models"""
+        """
+Get all registered models"""
         return self.registered_models
     
     def get_models_by_category(self, category: ModelCategory) -> Dict[str, ModelRegistry]:
-        """Get models by category"""
+        """
+Get models by category"""
         return {
             model_id: registry
             for model_id, registry in self.registered_models.items()
@@ -409,7 +416,8 @@ class ModelOrchestrator:
         }
     
     def get_models_by_capability(self, capability: str) -> Dict[str, ModelRegistry]:
-        """Get models by capability"""
+        """
+Get models by capability"""
         return {
             model_id: registry
             for model_id, registry in self.registered_models.items()
@@ -417,7 +425,8 @@ class ModelOrchestrator:
         }
     
     async def shutdown_model(self, model_id: str):
-        """Shutdown specific model"""
+        """
+Shutdown specific model"""
         if model_id in self.active_models:
             model = self.active_models[model_id]
             if hasattr(model, 'shutdown'):
@@ -446,7 +455,8 @@ class ModelLoadBalancer:
         self.current_index: Dict[str, int] = {}
     
     def add_instance(self, model_id: str, instance: BaseAIModel):
-        """Add model instance to load balancer"""
+        """
+Add model instance to load balancer"""
         if model_id not in self.model_instances:
             self.model_instances[model_id] = []
             self.current_index[model_id] = 0
@@ -454,7 +464,8 @@ class ModelLoadBalancer:
         self.model_instances[model_id].append(instance)
     
     def get_instance(self, model_id: str) -> Optional[BaseAIModel]:
-        """Get next available instance using round-robin"""
+        """
+Get next available instance using round-robin"""
         if model_id not in self.model_instances or not self.model_instances[model_id]:
             return None
         
@@ -469,7 +480,8 @@ class ModelLoadBalancer:
         return instance
     
     def remove_instance(self, model_id: str, instance: BaseAIModel):
-        """Remove instance from load balancer"""
+        """
+Remove instance from load balancer"""
         if model_id in self.model_instances:
             try:
                 self.model_instances[model_id].remove(instance)
@@ -483,11 +495,13 @@ class ModelLoadBalancer:
 
 
 class ModelFactory:
-    """Factory for creating model instances"""
+    """
+Factory for creating model instances"""
     
     @staticmethod
     def create_model(model_type: ModelType, config: ModelConfig) -> BaseAIModel:
-        """Create model instance based on type"""
+        """
+Create model instance based on type"""
         
         model_map = {
             ModelType.AUDIO_MODEL: AudioFeatureExtractor,

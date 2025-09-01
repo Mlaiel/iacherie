@@ -6,6 +6,7 @@ Prometheus, Grafana, and ELK stack integration for production monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import json
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric types"""
+    """
+Metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -49,6 +52,7 @@ class MetricType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -67,7 +71,8 @@ class MetricConfig:
 
 @dataclass
 class Alert:
-    """Alert definition"""
+    """
+Alert definition"""
     alert_id: str
     name: str
     level: AlertLevel
@@ -81,7 +86,8 @@ class Alert:
 
 
 class PrometheusMetricsCollector:
-    """Prometheus metrics collector"""
+    """
+Prometheus metrics collector"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -247,7 +253,8 @@ class SystemMetricsCollector:
         self._collector_thread = None
         
     def start_collection(self):
-        """Start system metrics collection"""
+        """
+Start system metrics collection"""
         if self._collector_thread and self._collector_thread.is_alive():
             return
             
@@ -390,11 +397,13 @@ class AlertManager:
         self.logger = logging.getLogger(__name__)
         
     def register_alert_handler(self, handler: Callable):
-        """Register an alert handler"""
+        """
+Register an alert handler"""
         self.alert_handlers.append(handler)
         
     async def create_alert(self, alert: Alert):
-        """Create a new alert"""
+        """
+Create a new alert"""
         try:
             self.active_alerts[alert.alert_id] = alert
             
@@ -432,7 +441,8 @@ class AlertManager:
 
 
 class MonitoringSystem:
-    """Comprehensive monitoring system"""
+    """
+Comprehensive monitoring system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -447,7 +457,8 @@ class MonitoringSystem:
         self.alerts.register_alert_handler(self._elk_alert_handler)
         
     async def start(self):
-        """Start monitoring system"""
+        """
+Start monitoring system"""
         try:
             # Start Prometheus metrics server
             if HAS_PROMETHEUS and self.config.get('prometheus', {}).get('enabled', True):
@@ -577,24 +588,28 @@ async def initialize_monitoring(config: Dict[str, Any] = None) -> MonitoringSyst
 
 
 def get_monitoring_system() -> Optional[MonitoringSystem]:
-    """Get global monitoring system instance"""
+    """
+Get global monitoring system instance"""
     return monitoring_system
 
 
 # Convenience functions
 async def record_request_metric(method: str, endpoint: str, status_code: int, duration: float):
-    """Record HTTP request metric"""
+    """
+Record HTTP request metric"""
     if monitoring_system:
         await monitoring_system.record_request(method, endpoint, status_code, duration)
 
 
 async def record_ai_metric(model_name: str, inference_type: str, duration: float):
-    """Record AI inference metric"""
+    """
+Record AI inference metric"""
     if monitoring_system:
         await monitoring_system.record_ai_inference(model_name, inference_type, duration)
 
 
 async def ship_log(log_data: Dict[str, Any], index: str = None):
-    """Ship log to ELK stack"""
+    """
+Ship log to ELK stack"""
     if monitoring_system:
         await monitoring_system.elk.ship_log(log_data, index)

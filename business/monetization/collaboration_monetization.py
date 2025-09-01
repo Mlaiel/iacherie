@@ -6,7 +6,7 @@ automated payments, and AI-powered collaboration matching for creators.
 Handles multi-creator projects with complex revenue attribution.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Collaboration Matching → Project Setup → Revenue Attribution → Automated Distribution
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creative collaborations"""
+    """
+Types of creative collaborations"""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation"
     CONTENT_WRITING = "content_writing"
@@ -51,6 +54,7 @@ class CollaborationType(Enum):
 
 class ContributionType(Enum):
     """Types of contributions to collaborative projects"""
+
     CREATIVE_DIRECTION = "creative_direction"
     CONTENT_CREATION = "content_creation"
     TECHNICAL_PRODUCTION = "technical_production"
@@ -65,6 +69,7 @@ class ContributionType(Enum):
 
 class RevenueSplitModel(Enum):
     """Revenue splitting models for collaborations"""
+
     EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     INVESTMENT_BASED = "investment_based"
@@ -76,6 +81,7 @@ class RevenueSplitModel(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration projects"""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
@@ -102,7 +108,8 @@ class CollaboratorContribution:
 
 @dataclass
 class CollaborationContract:
-    """Collaboration agreement and terms"""
+    """
+Collaboration agreement and terms"""
     contract_id: str
     project_id: str
     collaborators: List[CollaboratorContribution]
@@ -244,7 +251,8 @@ class RevenueAttributionEngine:
         return base_weights.get(contribution_type, Decimal('0.15'))
     
     def _calculate_time_investment_factor(self, hours: Optional[int]) -> Decimal:
-        """Calculate time investment multiplier"""
+        """
+Calculate time investment multiplier"""
         if not hours:
             return Decimal('1.0')
         
@@ -263,7 +271,8 @@ class RevenueAttributionEngine:
         investment: Optional[Decimal], 
         total_budget: float
     ) -> Decimal:
-        """Calculate financial investment multiplier"""
+        """
+Calculate financial investment multiplier"""
         if not investment or total_budget == 0:
             return Decimal('1.0')
         
@@ -279,7 +288,8 @@ class RevenueAttributionEngine:
             return Decimal('2.0')
     
     def _calculate_performance_factor(self, metrics: Dict[str, float]) -> Decimal:
-        """Calculate performance-based multiplier"""
+        """
+Calculate performance-based multiplier"""
         if not metrics:
             return Decimal('1.0')
         
@@ -302,7 +312,8 @@ class RevenueAttributionEngine:
         completed_milestones: List[str], 
         total_milestones: List[str]
     ) -> Decimal:
-        """Calculate milestone completion multiplier"""
+        """
+Calculate milestone completion multiplier"""
         if not total_milestones:
             return Decimal('1.0')
         
@@ -319,7 +330,8 @@ class RevenueAttributionEngine:
 
 
 class RevenueSplitter:
-    """Advanced revenue splitting calculation engine"""
+    """
+Advanced revenue splitting calculation engine"""
     
     def __init__(self, attribution_engine: RevenueAttributionEngine):
         self.attribution_engine = attribution_engine
@@ -406,7 +418,8 @@ class RevenueSplitter:
         revenue: CollaborationRevenue,
         project_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate splits based on contribution weights"""
+        """
+Calculate splits based on contribution weights"""
         try:
             # Calculate contribution weights
             contribution_weights = await self.attribution_engine.calculate_contribution_weights(
@@ -994,7 +1007,8 @@ class CollaborationMonetization:
     # Private helper methods
     
     async def _store_collaboration_contract(self, contract: CollaborationContract):
-        """Store collaboration contract in database"""
+        """
+Store collaboration contract in database"""
         try:
             # This would store in the database
             pass

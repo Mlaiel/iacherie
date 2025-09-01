@@ -4,13 +4,14 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Complete deployment and setup system for production AI module deployment.
 
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This deployment system contains proprietary deployment algorithms.
 Unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import sys
@@ -37,7 +38,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -45,6 +48,7 @@ class DeploymentEnvironment(Enum):
 
 class DeploymentStage(Enum):
     """Deployment pipeline stages"""
+
     PREPARATION = "preparation"
     VALIDATION = "validation"
     TESTING = "testing"
@@ -75,7 +79,8 @@ class AIModuleDeployment:
     """
     
     def __init__(self, config: DeploymentConfig):
-        """Initialize deployment system"""
+        """
+Initialize deployment system"""
         self.config = config
         self.deployment_id = f"deploy_{int(time.time())}"
         self.source_directory = Path(__file__).parent
@@ -153,7 +158,7 @@ class AIModuleDeployment:
                 'deployment_log': self.deployment_log,
                 'timestamp': time.time(),
                 'author': 'Fahed Mlaiel (mlaiel@live.de)',
-                'copyright': '© 2025 Fahed Mlaiel. All Rights Reserved.'
+                'copyright': '(c) 2025 Fahed Mlaiel. All Rights Reserved.'
             }
             
             # Print deployment summary
@@ -593,7 +598,8 @@ class AIModuleDeployment:
             }
     
     async def _install_requirements(self):
-        """Install Python requirements"""
+        """
+Install Python requirements"""
         try:
             subprocess.run([
                 sys.executable, '-m', 'pip', 'install', '-r', self.config.requirements_file
@@ -613,7 +619,8 @@ class AIModuleDeployment:
                 file_path.chmod(0o755)
     
     def _print_deployment_summary(self, result: Dict[str, Any]):
-        """Print deployment summary"""
+        """
+Print deployment summary"""
         print("\n" + "=" * 80)
         print("📊 DEPLOYMENT SUMMARY")
         print("=" * 80)
@@ -635,7 +642,7 @@ class AIModuleDeployment:
                 print(f"  - {stage.replace('_', ' ').title()}")
         
         print(f"\n⚖️ Copyright Notice:")
-        print(f"  {result.get('copyright', '© 2025 Fahed Mlaiel. All Rights Reserved.')}")
+        print(f"  {result.get('copyright', '(c) 2025 Fahed Mlaiel. All Rights Reserved.')}")
         print("  Contact: mlaiel@live.de for support")
         print("=" * 80)
     
@@ -652,7 +659,8 @@ async def main():
     parser = argparse.ArgumentParser(
         description='Ultra-Industrial AI Module Deployment System',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""Examples:
+        epilog="""
+Examples:
   python deploy.py --env development --target /opt/ai-module
   python deploy.py --env production --target /opt/ai-module --config config.prod.yaml
   python deploy.py --env staging --target /opt/ai-module --no-tests --no-backup

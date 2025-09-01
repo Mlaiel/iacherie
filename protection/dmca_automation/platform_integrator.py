@@ -7,8 +7,9 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
-Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
+Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import uuid
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform categories"""
+    """
+Platform categories"""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_HOSTING = "video_hosting"
     AUDIO_STREAMING = "audio_streaming"
@@ -42,6 +45,7 @@ class PlatformType(Enum):
 
 class SubmissionMethod(Enum):
     """Submission methods"""
+
     WEB_FORM = "web_form"
     API_ENDPOINT = "api_endpoint"
     EMAIL = "email"
@@ -51,6 +55,7 @@ class SubmissionMethod(Enum):
 
 class PlatformStatus(Enum):
     """Platform cooperation status"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     MODERATE = "moderate"
@@ -80,7 +85,8 @@ class PlatformConfig:
 
 @dataclass
 class SubmissionRequest:
-    """Platform submission request"""
+    """
+Platform submission request"""
     request_id: str
     notice_id: str
     platform_id: str
@@ -93,7 +99,8 @@ class SubmissionRequest:
 
 @dataclass
 class SubmissionResult:
-    """Platform submission result"""
+    """
+Platform submission result"""
     success: bool
     submission_id: str
     platform_response: Optional[Dict[str, Any]]
@@ -117,7 +124,8 @@ class PlatformIntegrator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize platform integrator"""
+        """
+Initialize platform integrator"""
         self.config = config or {}
         self.db = get_database()
         self.web_automation = WebAutomationManager(config)
@@ -697,13 +705,15 @@ class PlatformIntegrator:
                                          notice: TakedownNotice,
                                          platform_config: PlatformConfig,
                                          method: SubmissionMethod) -> str:
-        """Format notice content for specific platform and method"""
+        """
+Format notice content for specific platform and method"""
         base_content = notice.notice_content
         
         # Apply platform-specific formatting
         if platform_config.platform_id == 'youtube.com':
             # YouTube prefers structured format
-            formatted_content = f"""COPYRIGHT INFRINGEMENT NOTICE
+            formatted_content = f"""
+COPYRIGHT INFRINGEMENT NOTICE
 
 Copyright Owner: {notice.copyright_owner}
 Contact Email: {notice.copyright_owner_contact.get('email', '')}
@@ -726,7 +736,8 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
             
         elif platform_config.platform_id == 'tiktok.com':
             # TikTok prefers concise format
-            formatted_content = f"""DMCA Takedown Notice
+            formatted_content = f"""
+DMCA Takedown Notice
 
 I am {notice.copyright_owner}, the copyright owner of original content being infringed.
 
@@ -747,7 +758,8 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
     async def _execute_platform_submission(self, 
                                          request: SubmissionRequest,
                                          platform_config: PlatformConfig) -> SubmissionResult:
-        """Execute the actual platform submission"""
+        """
+Execute the actual platform submission"""
         try:
             if request.submission_method == SubmissionMethod.WEB_FORM:
                 return await self._submit_via_web_form(request, platform_config)

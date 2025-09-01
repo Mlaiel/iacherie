@@ -6,6 +6,7 @@ matching, audience targeting, and content optimization recommendations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -19,7 +20,9 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
+    """
+Types of recommendations"""
+
     COLLABORATION = "collaboration"
     CONTENT_OPTIMIZATION = "content_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -30,6 +33,7 @@ class RecommendationType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations"""
+
     MUSICAL_COLLAB = "musical_collaboration"
     VIDEO_COLLAB = "video_collaboration"
     PODCAST_GUEST = "podcast_guest"
@@ -69,7 +73,8 @@ class RecommendationResult:
     alternative_options: Optional[List['RecommendationResult']] = None
     
     def __post_init__(self):
-        """Ensure score and confidence are in valid ranges"""
+        """
+Ensure score and confidence are in valid ranges"""
         self.score = max(0.0, min(1.0, self.score))
         self.confidence = max(0.0, min(1.0, self.confidence))
 

@@ -4,9 +4,10 @@
 Advanced encoding optimization and codec management for creator content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class EncodingProfile(Enum):
-    """Encoding profiles for different use cases."""
+    """
+Encoding profiles for different use cases."""
+
     WEB_OPTIMIZED = "web_optimized"
     MOBILE_OPTIMIZED = "mobile_optimized"
     STREAMING_OPTIMIZED = "streaming_optimized"
@@ -32,6 +35,7 @@ class EncodingProfile(Enum):
 
 class CodecType(Enum):
     """Codec types."""
+
     VIDEO_H264 = "h264"
     VIDEO_H265 = "h265"
     VIDEO_VP9 = "vp9"
@@ -76,7 +80,8 @@ class EncodingSettings:
 
 @dataclass
 class EncodingResult:
-    """Encoding operation result."""
+    """
+Encoding operation result."""
     success: bool
     input_file: str
     output_file: str
@@ -771,7 +776,8 @@ class EncodingManager:
 
 
 class CodecOptimizer:
-    """Codec-specific optimization utilities."""
+    """
+Codec-specific optimization utilities."""
     
     def __init__(self, encoding_manager: Optional[EncodingManager] = None):
         self.encoding_manager = encoding_manager or EncodingManager()
@@ -782,7 +788,8 @@ class CodecOptimizer:
         use_case: str,
         hardware_acceleration: bool = True
     ) -> CodecType:
-        """Get optimal codec for specific requirements."""
+        """
+Get optimal codec for specific requirements."""
         codec_recommendations = {
             "video": {
                 "streaming": CodecType.VIDEO_H264,

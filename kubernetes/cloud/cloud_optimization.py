@@ -14,6 +14,7 @@ This module provides enterprise-grade cloud cost optimization and performance
 management for the IA Influencer Agent platform, enabling automatic cost
 reduction and resource optimization across multi-cloud environments.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Cloud optimization strategies"""
+    """
+Cloud optimization strategies"""
+
     COST_FOCUSED = "cost_focused"
     PERFORMANCE_FOCUSED = "performance_focused"
     BALANCED = "balanced"
@@ -51,7 +54,8 @@ class CostMetrics:
 
 @dataclass
 class ResourceUtilization:
-    """Resource utilization metrics"""
+    """
+Resource utilization metrics"""
     cpu_utilization: float
     memory_utilization: float
     storage_utilization: float
@@ -68,7 +72,8 @@ class CloudCostOptimizer:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize cloud cost optimizer"""
+        """
+Initialize cloud cost optimizer"""
         self.config = config
         self.aws_client = None
         self.azure_client = None
@@ -77,7 +82,8 @@ class CloudCostOptimizer:
         self.creator_patterns = self._load_creator_usage_patterns()
         
     async def initialize_clients(self):
-        """Initialize cloud provider clients"""
+        """
+Initialize cloud provider clients"""
         try:
             # AWS Cost Explorer and CloudWatch
             if self.config.get('aws', {}).get('enabled'):
@@ -157,7 +163,8 @@ class CloudCostOptimizer:
         }
     
     def _load_creator_usage_patterns(self) -> Dict[str, Any]:
-        """Load creator platform usage patterns"""
+        """
+Load creator platform usage patterns"""
         return {
             'content_upload_patterns': {
                 'peak_hours': ['18:00-23:00', '12:00-14:00'],
@@ -181,7 +188,8 @@ class CloudCostOptimizer:
         }
     
     async def analyze_current_costs(self, timeframe_days: int = 30) -> CostMetrics:
-        """Analyze current cloud costs across all providers"""
+        """
+Analyze current cloud costs across all providers"""
         try:
             total_cost = Decimal('0')
             cost_breakdown = {}
@@ -399,7 +407,8 @@ class CloudCostOptimizer:
         return base_growth * seasonal_factor
     
     def _calculate_potential_savings(self, opportunities: List[str]) -> Decimal:
-        """Calculate potential savings from optimization opportunities"""
+        """
+Calculate potential savings from optimization opportunities"""
         # Estimate savings based on opportunity types
         savings_estimates = {
             'Reserved Instances': 0.4,  # 40% savings
@@ -422,7 +431,8 @@ class CloudCostOptimizer:
         return total_potential
     
     def _assess_optimization_risks(self, opportunities: List[str]) -> str:
-        """Assess risks associated with optimization opportunities"""
+        """
+Assess risks associated with optimization opportunities"""
         risk_factors = []
         
         if any('Spot' in opp for opp in opportunities):
@@ -458,7 +468,8 @@ class CloudCostOptimizer:
         return np.mean(factors)
     
     async def get_resource_utilization(self) -> ResourceUtilization:
-        """Get current resource utilization across all cloud providers"""
+        """
+Get current resource utilization across all cloud providers"""
         try:
             cpu_util = await self._get_cpu_utilization()
             memory_util = await self._get_memory_utilization()
@@ -515,17 +526,20 @@ class CloudCostOptimizer:
         return 0.65  # Placeholder
     
     async def _get_storage_utilization(self) -> float:
-        """Get storage utilization"""
+        """
+Get storage utilization"""
         # Implementation for storage utilization
         return 0.72  # Placeholder
     
     async def _get_network_utilization(self) -> float:
-        """Get network utilization"""
+        """
+Get network utilization"""
         # Implementation for network utilization
         return 0.45  # Placeholder
     
     async def _identify_idle_resources(self) -> List[str]:
-        """Identify idle or underutilized resources"""
+        """
+Identify idle or underutilized resources"""
         idle_resources = []
         
         # Check for idle EC2 instances
@@ -560,7 +574,8 @@ class CloudCostOptimizer:
         strategy: OptimizationStrategy,
         auto_apply: bool = False
     ) -> Dict[str, Any]:
-        """Implement selected optimization strategy"""
+        """
+Implement selected optimization strategy"""
         try:
             optimization_plan = await self._create_optimization_plan(strategy)
             

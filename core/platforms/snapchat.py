@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class SnapchatPlatform(PlatformBase):
-    """Snapchat platform integration"""
+    """
+Snapchat platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Snapchat platform"""
+        """
+Initialize Snapchat platform"""
         super().__init__(config)
         self.api_base = "https://adsapi.snapchat.com/v1"
         self.marketing_api_base = "https://marketingapi.snapchat.com/v1"
@@ -40,7 +43,8 @@ class SnapchatPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Snapchat OAuth2"""
+        """
+Authenticate with Snapchat OAuth2"""
         try:
             access_token = self.config.credentials.get('access_token')
             

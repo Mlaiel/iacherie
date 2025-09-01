@@ -5,12 +5,13 @@ automated takedown notice processing, counter-notifications, and safe harbor pro
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ from ..models.dmca_models import DMCANotice, DMCAStatus, CounterNotification
 
 
 class DMCANoticeType(Enum):
-    """Types of DMCA notices"""
+    """
+Types of DMCA notices"""
+
     TAKEDOWN = "takedown"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -41,6 +44,7 @@ class DMCANoticeType(Enum):
 
 class DMCACompliance(Enum):
     """DMCA compliance levels"""
+
     FULL_COMPLIANCE = "full_compliance"
     PARTIAL_COMPLIANCE = "partial_compliance"
     NON_COMPLIANCE = "non_compliance"
@@ -49,6 +53,7 @@ class DMCACompliance(Enum):
 
 class TakedownAction(Enum):
     """Actions for takedown notices"""
+
     REMOVE_CONTENT = "remove_content"
     DISABLE_ACCESS = "disable_access"
     FORWARD_TO_USER = "forward_to_user"
@@ -76,7 +81,8 @@ class DMCARequest:
 
 @dataclass
 class DMCAResponse:
-    """DMCA response structure"""
+    """
+DMCA response structure"""
     request_id: str
     notice_id: str
     status: DMCACompliance

@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ from ...models.gdpr_models import ComplianceAuditLog, AuditEvent, SecurityEvent
 logger = get_logger(__name__)
 
 class AuditEventType(Enum):
-    """Types of GDPR audit events"""
+    """
+Types of GDPR audit events"""
+
     CONSENT_COLLECTED = "consent_collected"
     CONSENT_WITHDRAWN = "consent_withdrawn"
     CONSENT_RENEWED = "consent_renewed"
@@ -57,6 +60,7 @@ class AuditEventType(Enum):
 
 class AuditSeverity(Enum):
     """Severity levels for audit events"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,6 +68,7 @@ class AuditSeverity(Enum):
 
 class ComplianceCategory(Enum):
     """GDPR compliance categories"""
+
     LAWFULNESS = "lawfulness"
     FAIRNESS = "fairness"
     TRANSPARENCY = "transparency"
@@ -191,7 +196,8 @@ class ComplianceAuditLogger:
         severity: AuditSeverity = None,
         compliance_categories: List[str] = None
     ) -> str:
-        """Log a GDPR compliance event"""
+        """
+Log a GDPR compliance event"""
         try:
             event_id = str(uuid.uuid4())
             

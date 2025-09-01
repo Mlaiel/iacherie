@@ -26,6 +26,7 @@ PROHIBITED ACTIONS:
 
 Any violation will result in immediate legal action under International Copyright Law.
 """
+
 import os
 import re
 import hmac
@@ -64,7 +65,8 @@ class SecurityUtils:
     """
     
     def __init__(self):
-        """Initialize security utilities."""
+        """
+Initialize security utilities."""
         self.backend = default_backend()
         self._encryption_cache: Dict[str, Any] = {}
         self._rate_limit_cache: Dict[str, List[float]] = {}
@@ -227,7 +229,8 @@ class SecurityUtils:
         return iv + encryptor.tag + ciphertext
     
     def _decrypt_aes_gcm(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using AES-256-GCM."""
+        """
+Decrypt data using AES-256-GCM."""
         # Extract components
         iv = encrypted_data[:12]
         tag = encrypted_data[12:28]
@@ -244,21 +247,24 @@ class SecurityUtils:
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_fernet(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt data using Fernet."""
+        """
+Encrypt data using Fernet."""
         # Derive Fernet key
         fernet_key = base64.urlsafe_b64encode(key[:32])
         cipher = Fernet(fernet_key)
         return cipher.encrypt(data)
     
     def _decrypt_fernet(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using Fernet."""
+        """
+Decrypt data using Fernet."""
         # Derive Fernet key
         fernet_key = base64.urlsafe_b64encode(key[:32])
         cipher = Fernet(fernet_key)
         return cipher.decrypt(encrypted_data)
     
     def _encrypt_chacha20(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt data using ChaCha20-Poly1305."""
+        """
+Encrypt data using ChaCha20-Poly1305."""
         # Generate random nonce
         nonce = os.urandom(12)
         
@@ -275,7 +281,8 @@ class SecurityUtils:
         return nonce + encryptor.tag + ciphertext
     
     def _decrypt_chacha20(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using ChaCha20-Poly1305."""
+        """
+Decrypt data using ChaCha20-Poly1305."""
         # Extract components
         nonce = encrypted_data[:12]
         tag = encrypted_data[12:28]
@@ -676,7 +683,8 @@ class ValidationUtils:
     """
     
     def __init__(self):
-        """Initialize validation utilities."""
+        """
+Initialize validation utilities."""
         # Common validation patterns
         self.patterns = {
             'secret_path': re.compile(r'^[a-zA-Z0-9/_-]+$'),
@@ -883,7 +891,8 @@ class NotificationUtils:
     """
     
     def __init__(self):
-        """Initialize notification utilities."""
+        """
+Initialize notification utilities."""
         self.session = requests.Session()
         self.session.timeout = 10
     
@@ -996,12 +1005,14 @@ class KubernetesUtils:
     """
     
     def __init__(self):
-        """Initialize Kubernetes utilities."""
+        """
+Initialize Kubernetes utilities."""
         self.api_client = None
         self._initialize_client()
     
     def _initialize_client(self) -> None:
-        """Initialize Kubernetes API client."""
+        """
+Initialize Kubernetes API client."""
         try:
             from kubernetes import client, config
             
@@ -1146,7 +1157,8 @@ class InfluencerPlatformUtils:
     """
     
     def __init__(self):
-        """Initialize platform utilities."""
+        """
+Initialize platform utilities."""
         self.security = SecurityUtils()
         self.validation = ValidationUtils()
         
@@ -2193,7 +2205,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_anthropic_api_key(self, api_key: str) -> bool:
-        """Test Anthropic API key validity."""
+        """
+Test Anthropic API key validity."""
         try:
             headers = {
                 'x-api-key': api_key,
@@ -2220,7 +2233,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_huggingface_token(self, api_token: str) -> bool:
-        """Test Hugging Face API token validity."""
+        """
+Test Hugging Face API token validity."""
         try:
             headers = {
                 'Authorization': f'Bearer {api_token}'
@@ -2239,7 +2253,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_google_ai_key(self, api_key: str) -> bool:
-        """Test Google AI API key validity."""
+        """
+Test Google AI API key validity."""
         try:
             # Test with models list endpoint
             response = requests.get(
@@ -2257,7 +2272,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         config: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Perform PCI-DSS compliance checks."""
+        """
+Perform PCI-DSS compliance checks."""
         checks = {
             'encrypted_storage': True,  # Assuming credentials are encrypted in vault
             'access_control': True,     # Assuming proper access controls
@@ -2287,7 +2303,8 @@ class InfluencerPlatformUtils:
     
     # AI provider testing methods
     def _test_openai_api_key(self, api_key: str) -> bool:
-        """Test OpenAI API key validity."""
+        """
+Test OpenAI API key validity."""
         try:
             headers = {
                 'Authorization': f'Bearer {api_key}',
@@ -2427,7 +2444,8 @@ class ContentProtectionUtils:
     """
     
     def __init__(self):
-        """Initialize content protection utilities."""
+        """
+Initialize content protection utilities."""
         self.security = SecurityUtils()
         
         # Content protection algorithms
@@ -2630,7 +2648,8 @@ class ContentProtectionUtils:
         return base64.b64encode(audio_hash[:16]).decode()
     
     def _generate_video_fingerprint(self, video_data: bytes) -> str:
-        """Generate video fingerprint using OpenCV-like algorithm."""
+        """
+Generate video fingerprint using OpenCV-like algorithm."""
         # Simplified video fingerprinting
         # In a real implementation, this would extract key frames and use computer vision
         video_hash = hashlib.sha256(video_data).digest()
@@ -2638,7 +2657,8 @@ class ContentProtectionUtils:
         return base64.b64encode(video_hash[:16]).decode()
     
     def _generate_image_fingerprint(self, image_data: bytes) -> str:
-        """Generate image fingerprint using CLIP-like algorithm."""
+        """
+Generate image fingerprint using CLIP-like algorithm."""
         # Simplified image fingerprinting
         # In a real implementation, this would use image feature extraction
         image_hash = hashlib.sha256(image_data).digest()
@@ -2646,7 +2666,8 @@ class ContentProtectionUtils:
         return base64.b64encode(image_hash[:16]).decode()
     
     def _generate_text_fingerprint(self, text_data: bytes) -> str:
-        """Generate text fingerprint using BERT-like algorithm."""
+        """
+Generate text fingerprint using BERT-like algorithm."""
         # Simplified text fingerprinting
         # In a real implementation, this would use NLP embeddings
         text_hash = hashlib.sha256(text_data).digest()
@@ -2659,7 +2680,8 @@ class ContentProtectionUtils:
         fingerprint2: str,
         algorithm: str
     ) -> float:
-        """Calculate similarity between two fingerprints."""
+        """
+Calculate similarity between two fingerprints."""
         try:
             if fingerprint1 == fingerprint2:
                 return 1.0

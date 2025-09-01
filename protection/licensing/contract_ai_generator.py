@@ -11,7 +11,7 @@ Ultra-advanced AI-powered contract generation system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + NLP Engineer + Contract Lawyer + Blockchain Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
@@ -21,6 +21,7 @@ applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -41,7 +42,9 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 class ContractType(Enum):
-    """Types of contracts supported"""
+    """
+Types of contracts supported"""
+
     MUSIC_LICENSING = "music_licensing"
     SYNC_RIGHTS = "sync_rights"
     PUBLISHING_AGREEMENT = "publishing_agreement"
@@ -55,6 +58,7 @@ class ContractType(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -62,6 +66,7 @@ class RiskLevel(Enum):
 
 class LegalJurisdiction(Enum):
     """Supported legal jurisdictions"""
+
     US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GENERAL = "eu_general"
@@ -90,7 +95,8 @@ class ContractParameters:
 
 @dataclass
 class LegalClause:
-    """Individual legal clause structure"""
+    """
+Individual legal clause structure"""
     clause_id: str
     clause_type: str
     title: str
@@ -103,7 +109,8 @@ class LegalClause:
 
 @dataclass
 class RiskAssessment:
-    """Contract risk assessment"""
+    """
+Contract risk assessment"""
     assessment_id: str
     overall_risk: RiskLevel
     risk_factors: List[Dict[str, Any]]
@@ -121,7 +128,8 @@ class AIContractGenerator:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize AI contract generator with configuration."""
+        """
+Initialize AI contract generator with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -457,7 +465,8 @@ class AIContractGenerator:
         return selected_clauses
 
     def _get_standard_clauses(self, contract_type: ContractType) -> List[LegalClause]:
-        """Get standard clauses for contract type."""
+        """
+Get standard clauses for contract type."""
         clause_templates = {
             ContractType.MUSIC_LICENSING: [
                 {
@@ -498,17 +507,20 @@ class AIContractGenerator:
         ]
 
     def _get_jurisdiction_clauses(self, jurisdiction: LegalJurisdiction) -> List[LegalClause]:
-        """Get jurisdiction-specific clauses."""
+        """
+Get jurisdiction-specific clauses."""
         # Implementation for jurisdiction-specific clauses
         return []
 
     def _get_protective_clauses(self, risk_assessment: RiskAssessment) -> List[LegalClause]:
-        """Get protective clauses based on risk assessment."""
+        """
+Get protective clauses based on risk assessment."""
         # Implementation for risk-based protective clauses
         return []
 
     def _get_financial_clauses(self, financial_terms: Dict[str, Any]) -> List[LegalClause]:
-        """Get financial terms clauses."""
+        """
+Get financial terms clauses."""
         # Implementation for financial clauses
         return []
 
@@ -517,7 +529,8 @@ class AIContractGenerator:
         parameters: ContractParameters,
         clauses: List[LegalClause]
     ) -> Dict[str, Any]:
-        """Generate the overall structure of the contract."""
+        """
+Generate the overall structure of the contract."""
         structure = {
             'title': f"{parameters.contract_type.value.replace('_', ' ').title()} Agreement",
             'preamble': await self._generate_preamble(parameters),
@@ -566,7 +579,8 @@ class AIContractGenerator:
         structure: Dict[str, Any],
         custom_clauses: Optional[List[str]] = None
     ) -> str:
-        """Generate the full contract content using AI."""
+        """
+Generate the full contract content using AI."""
         contract_parts = []
         
         # Add title and preamble
@@ -765,7 +779,8 @@ class AIContractGenerator:
         return list(set(issues))  # Remove duplicates
 
     def _suggest_mitigation_strategies(self, risk_factors: List[Dict[str, Any]]) -> List[str]:
-        """Suggest mitigation strategies for identified risks."""
+        """
+Suggest mitigation strategies for identified risks."""
         strategies = []
         
         for risk_factor in risk_factors:
@@ -805,7 +820,8 @@ class AIContractGenerator:
         return compliance_status
 
     def _update_generation_metrics(self, generation_time: float, success: bool):
-        """Update performance metrics."""
+        """
+Update performance metrics."""
         self.generation_metrics['total_contracts'] += 1
         
         if success:
@@ -819,7 +835,8 @@ class AIContractGenerator:
             self.generation_metrics['avg_generation_time'] = new_avg
 
     def get_generation_metrics(self) -> Dict[str, Any]:
-        """Get contract generation performance metrics."""
+        """
+Get contract generation performance metrics."""
         total = self.generation_metrics['total_contracts']
         successful = self.generation_metrics['successful_generations']
         
@@ -832,7 +849,8 @@ class AIContractGenerator:
         }
 
     async def validate_contract_syntax(self, contract_content: str) -> Dict[str, Any]:
-        """Validate contract syntax and structure."""
+        """
+Validate contract syntax and structure."""
         validation_result = {
             'valid': True,
             'errors': [],

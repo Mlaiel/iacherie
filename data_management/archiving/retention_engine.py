@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -30,7 +31,9 @@ from ..exceptions import RetentionPolicyViolationError
 
 
 class RetentionAction(Enum):
-    """Retention action enumeration"""
+    """
+Retention action enumeration"""
+
     KEEP = "keep"
     ARCHIVE = "archive"
     COMPRESS = "compress"
@@ -104,7 +107,8 @@ class RetentionSchedule:
 
 
 class RetentionScheduler:
-    """Automated retention action scheduler"""
+    """
+Automated retention action scheduler"""
     
     def __init__(self, retention_engine):
         self.retention_engine = retention_engine
@@ -426,7 +430,8 @@ class RetentionEngine:
         tags: Set[str] = None,
         metadata: Dict[str, Any] = None
     ) -> Optional[RetentionPolicy]:
-        """Find the most applicable retention policy"""
+        """
+Find the most applicable retention policy"""
         
         matching_policies = []
         tags = tags or set()
@@ -491,7 +496,8 @@ class RetentionEngine:
         archive_entry: ArchiveEntry,
         policy: Optional[RetentionPolicy] = None
     ):
-        """Register content with retention engine"""
+        """
+Register content with retention engine"""
         
         if not policy:
             # Find applicable policy
@@ -578,7 +584,8 @@ class RetentionEngine:
         return schedule
     
     async def can_delete_content(self, content_id: str) -> bool:
-        """Check if content can be deleted according to retention policy"""
+        """
+Check if content can be deleted according to retention policy"""
         
         schedule = self.content_schedules.get(content_id)
         if not schedule:
@@ -607,7 +614,8 @@ class RetentionEngine:
         return True
     
     async def get_due_actions(self, current_time: datetime) -> List[Dict[str, Any]]:
-        """Get retention actions that are due for execution"""
+        """
+Get retention actions that are due for execution"""
         
         due_actions = []
         
@@ -726,7 +734,8 @@ class RetentionEngine:
             conn.commit()
     
     async def _update_content_schedule(self, content_id: str, completed_action: RetentionAction):
-        """Update content schedule after action completion"""
+        """
+Update content schedule after action completion"""
         
         schedule = self.content_schedules.get(content_id)
         if not schedule:
@@ -771,7 +780,8 @@ class RetentionEngine:
             conn.commit()
     
     async def find_expired_content(self) -> List[str]:
-        """Find content that has expired according to retention policies"""
+        """
+Find content that has expired according to retention policies"""
         
         expired_content = []
         current_time = datetime.utcnow()
@@ -786,7 +796,8 @@ class RetentionEngine:
         return expired_content
     
     async def unregister_content(self, content_id: str):
-        """Unregister content from retention management"""
+        """
+Unregister content from retention management"""
         
         if content_id in self.content_schedules:
             del self.content_schedules[content_id]
@@ -877,5 +888,6 @@ class RetentionEngine:
         await self.scheduler.start()
     
     async def stop_scheduler(self):
-        """Stop the retention scheduler"""
+        """
+Stop the retention scheduler"""
         await self.scheduler.stop()

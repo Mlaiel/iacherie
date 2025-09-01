@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,9 @@ Base = declarative_base()
 
 
 class Platform(Enum):
-    """Supported monetization platforms"""
+    """
+Supported monetization platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -52,6 +55,7 @@ class Platform(Enum):
 
 class RevenueType(Enum):
     """Revenue stream types"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     TIPS = "tips"
@@ -68,6 +72,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -80,6 +85,7 @@ class PaymentStatus(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -94,6 +100,7 @@ class Currency(Enum):
 
 class DistributionStatus(Enum):
     """Revenue distribution status"""
+
     CALCULATED = "calculated"
     APPROVED = "approved"
     DISTRIBUTED = "distributed"
@@ -236,7 +243,8 @@ class RevenueTracking(Base):
 
 
 class PaymentTransaction(Base):
-    """Payment transactions table"""
+    """
+Payment transactions table"""
     __tablename__ = 'payment_transactions'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -274,7 +282,8 @@ class PaymentTransaction(Base):
 
 
 class RevenueDistribution(Base):
-    """Revenue distribution tracking"""
+    """
+Revenue distribution tracking"""
     __tablename__ = 'revenue_distributions'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -308,7 +317,8 @@ class RevenueDistribution(Base):
 
 
 class PlatformIntegration(Base):
-    """Platform integration status"""
+    """
+Platform integration status"""
     __tablename__ = 'platform_integrations'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -340,7 +350,8 @@ class PlatformIntegration(Base):
 
 @dataclass
 class MonetizationConfig:
-    """Professional monetization configuration"""
+    """
+Professional monetization configuration"""
     
     # Database and API credentials
     credentials: MonetizationCredentials = field(default_factory=MonetizationCredentials)
@@ -373,7 +384,8 @@ class MonetizationConfig:
     dashboard_alerts: bool = True
     
     def __post_init__(self):
-        """Initialize platform-specific configurations"""
+        """
+Initialize platform-specific configurations"""
         if not self.revenue_tracking.platform_configs:
             self.revenue_tracking.platform_configs = {
                 Platform.YOUTUBE: {
@@ -405,7 +417,8 @@ class MonetizationManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize monetization database connections"""
+        """
+Initialize monetization database connections"""
         try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
@@ -688,7 +701,8 @@ def create_monetization_config() -> MonetizationConfig:
 
 
 def create_monetization_manager(config: Optional[MonetizationConfig] = None) -> MonetizationManager:
-    """Create monetization manager with configuration"""
+    """
+Create monetization manager with configuration"""
     if config is None:
         config = create_monetization_config()
     return MonetizationManager(config)

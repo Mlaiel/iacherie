@@ -4,6 +4,7 @@ Complete security audit implementation for infrastructure and application securi
 Author: AI Assistant
 Purpose: Complete security audit capabilities for infrastructure
 """
+
 import json
 import datetime
 import hashlib
@@ -22,7 +23,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 
 class SecuritySeverity(Enum):
-    """Security finding severity levels"""
+    """
+Security finding severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -32,6 +35,7 @@ class SecuritySeverity(Enum):
 
 class AuditCategory(Enum):
     """Security audit categories"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_PROTECTION = "data_protection"
@@ -62,7 +66,8 @@ class SecurityFinding:
 
 @dataclass
 class AuditReport:
-    """Complete security audit report"""
+    """
+Complete security audit report"""
     audit_id: str
     audit_type: str
     start_time: datetime.datetime
@@ -76,7 +81,8 @@ class AuditReport:
 
 
 class SecurityAuditor:
-    """Comprehensive security auditor"""
+    """
+Comprehensive security auditor"""
     
     def __init__(self):
         self.findings = []
@@ -95,7 +101,8 @@ class SecurityAuditor:
         self.findings.append(finding)
     
     def audit_authentication_security(self) -> List[SecurityFinding]:
-        """Audit authentication mechanisms"""
+        """
+Audit authentication mechanisms"""
         findings = []
         
         # Check for strong password policies
@@ -652,7 +659,8 @@ KEY RECOMMENDATIONS:
 
 
 def run_security_audit_cli():
-    """Command-line interface for running security audit"""
+    """
+Command-line interface for running security audit"""
     auditor = SecurityAuditor()
     
     print("Starting comprehensive security audit...")

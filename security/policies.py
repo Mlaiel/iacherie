@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class PolicyType(Enum):
-    """Types of security policies"""
+    """
+Types of security policies"""
+
     ACCESS_CONTROL = "access_control"
     DATA_PROTECTION = "data_protection"
     INCIDENT_RESPONSE = "incident_response"
@@ -33,6 +36,7 @@ class PolicyType(Enum):
 
 class PolicyStatus(Enum):
     """Policy implementation status"""
+
     DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -88,7 +92,8 @@ class IncidentResponseProcedures:
         self._initialize_procedures()
     
     def _initialize_procedures(self):
-        """Initialize standard incident response procedures"""
+        """
+Initialize standard incident response procedures"""
         
         # Define response playbooks for different incident types
         self.response_playbooks = {
@@ -411,7 +416,8 @@ class SecurityPolicyManager:
         self._initialize_standard_policies()
     
     def _initialize_standard_policies(self):
-        """Initialize standard security policies"""
+        """
+Initialize standard security policies"""
         
         # Access Control Policy
         access_policy = SecurityPolicy(
@@ -552,15 +558,18 @@ class SecurityPolicyManager:
         return self.policies.get(policy_id)
     
     async def get_all_policies(self) -> List[SecurityPolicy]:
-        """Get all security policies"""
+        """
+Get all security policies"""
         return list(self.policies.values())
     
     async def get_policies_by_type(self, policy_type: PolicyType) -> List[SecurityPolicy]:
-        """Get policies by type"""
+        """
+Get policies by type"""
         return [p for p in self.policies.values() if p.policy_type == policy_type]
     
     async def add_policy(self, policy: SecurityPolicy) -> str:
-        """Add new security policy"""
+        """
+Add new security policy"""
         
         self.policies[policy.policy_id] = policy
         
@@ -631,7 +640,8 @@ class SecurityPolicyManager:
         return due_policies
     
     async def generate_policy_compliance_report(self) -> Dict[str, Any]:
-        """Generate policy compliance report"""
+        """
+Generate policy compliance report"""
         
         total_policies = len(self.policies)
         implemented_policies = len([p for p in self.policies.values() if p.status == PolicyStatus.IMPLEMENTED])
@@ -700,7 +710,8 @@ class SecurityPolicyManager:
         template_type: str,
         incident_data: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate incident communication"""
+        """
+Generate incident communication"""
         
         return await self.incident_procedures.generate_incident_communication(
             template_type=template_type,
@@ -714,13 +725,15 @@ security_policy_manager = SecurityPolicyManager()
 
 # Helper functions for easy integration
 async def get_security_policies() -> List[Dict[str, Any]]:
-    """Get all security policies"""
+    """
+Get all security policies"""
     policies = await security_policy_manager.get_all_policies()
     return [p.to_dict() for p in policies]
 
 
 async def get_policy_compliance_report() -> Dict[str, Any]:
-    """Get policy compliance report"""
+    """
+Get policy compliance report"""
     return await security_policy_manager.generate_policy_compliance_report()
 
 

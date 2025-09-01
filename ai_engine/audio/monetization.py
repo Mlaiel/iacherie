@@ -12,6 +12,7 @@ Email: mlaiel@live.de
 This module provides comprehensive monetization capabilities including
 revenue tracking, payment processing, and automated revenue optimization.
 """
+
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from .distribution import DistributionResult
 logger = logging.getLogger(__name__)
 
 class RevenueModel(Enum):
-    """Revenue generation models"""
+    """
+Revenue generation models"""
+
     PAY_PER_STREAM = "pay_per_stream"
     PAY_PER_DOWNLOAD = "pay_per_download"
     SUBSCRIPTION_SHARE = "subscription_share"
@@ -42,6 +45,7 @@ class RevenueModel(Enum):
 
 class RevenueStream(Enum):
     """Types of revenue streams"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     PHYSICAL_SALES = "physical_sales"
@@ -57,6 +61,7 @@ class RevenueStream(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -67,6 +72,7 @@ class PaymentStatus(Enum):
 
 class PaymentMethod(Enum):
     """Payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -128,7 +134,8 @@ class MonetizationStrategy:
 
 @dataclass
 class PaymentRecord:
-    """Payment transaction record"""
+    """
+Payment transaction record"""
     payment_id: str
     user_id: str
     fingerprint_id: str
@@ -223,7 +230,8 @@ class MonetizationEngine:
         }
     
     def _setup_stripe_processor(self) -> Dict[str, Any]:
-        """Setup Stripe payment processor"""
+        """
+Setup Stripe payment processor"""
         return {
             'api_key': self.config.get('stripe_api_key'),
             'webhook_secret': self.config.get('stripe_webhook_secret'),
@@ -231,7 +239,8 @@ class MonetizationEngine:
         }
     
     def _setup_crypto_processor(self) -> Dict[str, Any]:
-        """Setup cryptocurrency payment processor"""
+        """
+Setup cryptocurrency payment processor"""
         return {
             'supported_currencies': ['BTC', 'ETH', 'USDC', 'MATIC'],
             'wallet_addresses': self.config.get('crypto_wallets', {}),
@@ -239,7 +248,8 @@ class MonetizationEngine:
         }
     
     def _setup_wise_processor(self) -> Dict[str, Any]:
-        """Setup Wise payment processor"""
+        """
+Setup Wise payment processor"""
         return {
             'api_key': self.config.get('wise_api_key'),
             'profile_id': self.config.get('wise_profile_id'),
@@ -394,7 +404,8 @@ class MonetizationEngine:
         platform: str,
         strategy: MonetizationStrategy
     ) -> RevenueSource:
-        """Create revenue source for platform"""
+        """
+Create revenue source for platform"""
         source_id = str(uuid.uuid4())
         
         # Get platform-specific settings
@@ -436,7 +447,8 @@ class MonetizationEngine:
         self,
         strategy: MonetizationStrategy
     ) -> List[RevenueSource]:
-        """Create default revenue sources"""
+        """
+Create default revenue sources"""
         sources = []
         
         # Major streaming platforms
@@ -460,7 +472,8 @@ class MonetizationEngine:
         revenue_sources: List[RevenueSource],
         strategy: MonetizationStrategy
     ) -> Decimal:
-        """Calculate estimated monthly revenue"""
+        """
+Calculate estimated monthly revenue"""
         total_estimated = Decimal('0.00')
         
         # Base estimation factors
@@ -504,7 +517,8 @@ class MonetizationEngine:
         return total_estimated
     
     def _get_platform_multiplier(self, platform: str) -> Decimal:
-        """Get platform reach multiplier"""
+        """
+Get platform reach multiplier"""
         multipliers = {
             'spotify': Decimal('1.5'),
             'apple_music': Decimal('1.2'),
@@ -518,13 +532,15 @@ class MonetizationEngine:
         return multipliers.get(platform.lower(), Decimal('1.0'))
     
     def _get_genre_multiplier(self, fingerprint: AudioFingerprint) -> Decimal:
-        """Get genre-based revenue multiplier"""
+        """
+Get genre-based revenue multiplier"""
         # This would analyze the fingerprint to determine genre
         # For now, return base multiplier
         return Decimal('1.0')
     
     def _get_quality_multiplier(self, fingerprint: AudioFingerprint) -> Decimal:
-        """Get quality-based revenue multiplier"""
+        """
+Get quality-based revenue multiplier"""
         # This would analyze audio quality metrics
         # Higher quality = higher monetization potential
         return Decimal('1.0')
@@ -535,7 +551,8 @@ class MonetizationEngine:
         revenue_sources: List[RevenueSource],
         strategy: MonetizationStrategy
     ) -> List[str]:
-        """Generate revenue optimization recommendations"""
+        """
+Generate revenue optimization recommendations"""
         recommendations = []
         
         # Platform diversification
@@ -679,7 +696,8 @@ class MonetizationEngine:
         return amount * rate
     
     async def _process_paypal_payment(self, payment_record: PaymentRecord) -> Dict[str, Any]:
-        """Process PayPal payment"""
+        """
+Process PayPal payment"""
         # Mock PayPal processing
         return {
             'success': True,
@@ -723,7 +741,8 @@ class MonetizationEngine:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[PaymentRecord]:
-        """Get payment history for user"""
+        """
+Get payment history for user"""
         payments = self.payment_records.get(user_id, [])
         
         if start_date or end_date:
@@ -745,7 +764,8 @@ class MonetizationEngine:
         period_start: datetime,
         period_end: datetime
     ) -> RevenueMetrics:
-        """Generate comprehensive revenue report"""
+        """
+Generate comprehensive revenue report"""
         # Get user payments for period
         payments = self.get_user_payments(user_id, period_start, period_end)
         
@@ -777,7 +797,8 @@ class MonetizationEngine:
         fingerprint_id: str,
         performance_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Optimize pricing based on performance data"""
+        """
+Optimize pricing based on performance data"""
         # AI-based pricing optimization
         # This would use ML models to optimize pricing
         

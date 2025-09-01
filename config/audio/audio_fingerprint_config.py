@@ -17,7 +17,9 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -28,6 +30,7 @@ logger = logging.getLogger(__name__)
 
 class FingerprintAlgorithm(Enum):
     """Audio fingerprinting algorithms"""
+
     CHROMAPRINT = "chromaprint"              # AcoustID Chromaprint
     ECHOPRINT = "echoprint"                  # The Echo Nest fingerprinting
     SPECTRAL_HASH = "spectral_hash"          # Spectral peaks hashing
@@ -40,6 +43,7 @@ class FingerprintAlgorithm(Enum):
 
 class MatchingStrategy(Enum):
     """Fingerprint matching strategies"""
+
     EXACT = "exact"                          # Exact hash matching
     HAMMING_DISTANCE = "hamming_distance"    # Hamming distance similarity
     COSINE_SIMILARITY = "cosine_similarity"  # Vector cosine similarity
@@ -52,6 +56,7 @@ class MatchingStrategy(Enum):
 
 class FingerprintQuality(Enum):
     """Fingerprint quality levels"""
+
     BASIC = "basic"                          # Fast, low-precision
     STANDARD = "standard"                    # Balanced speed/precision
     HIGH = "high"                           # High precision
@@ -61,6 +66,7 @@ class FingerprintQuality(Enum):
 
 class DatabaseBackend(Enum):
     """Fingerprint database backends"""
+
     POSTGRESQL = "postgresql"               # PostgreSQL with extensions
     ELASTICSEARCH = "elasticsearch"         # Elasticsearch
     FAISS = "faiss"                        # Facebook AI Similarity Search
@@ -97,7 +103,8 @@ class MatchingThresholds:
 
 @dataclass
 class PerformanceConfig:
-    """Fingerprinting performance configuration"""
+    """
+Fingerprinting performance configuration"""
     max_processing_time_seconds: float = 30.0
     max_memory_usage_mb: int = 1024
     parallel_processing: bool = True
@@ -109,7 +116,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Fingerprinting security configuration"""
+    """
+Fingerprinting security configuration"""
     encrypt_fingerprints: bool = True
     hash_salt: Optional[str] = None
     access_control_enabled: bool = True
@@ -127,7 +135,8 @@ class AudioFingerprintConfig:
     """
     
     def __init__(self):
-        """Initialize audio fingerprint configuration"""
+        """
+Initialize audio fingerprint configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core configuration

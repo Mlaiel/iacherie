@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 import hashlib
 import ipaddress
@@ -40,7 +41,9 @@ from ...monitoring.notifications import SecurityNotificationManager
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat severity levels"""
+    """
+Security threat severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -51,6 +54,7 @@ class SecurityThreatLevel(Enum):
 
 class AccessType(Enum):
     """Database access types"""
+
     SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
@@ -78,7 +82,8 @@ class SecurityEvent:
     risk_score: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = {
             'event_id': self.event_id,
             'timestamp': self.timestamp.isoformat(),
@@ -99,7 +104,8 @@ class SecurityEvent:
 
 @dataclass
 class AccessPattern:
-    """User access pattern analysis"""
+    """
+User access pattern analysis"""
     username: str
     ip_addresses: Set[str]
     access_times: List[datetime]
@@ -110,7 +116,8 @@ class AccessPattern:
     is_suspicious: bool = False
     
     def calculate_risk_score(self) -> float:
-        """Calculate risk score based on patterns"""
+        """
+Calculate risk score based on patterns"""
         risk_factors = 0.0
         
         # Multiple IPs
@@ -137,7 +144,8 @@ class AccessPattern:
 
 @dataclass
 class ThreatDetectionResult:
-    """Threat detection analysis result"""
+    """
+Threat detection analysis result"""
     threat_detected: bool
     threat_type: str
     confidence: float
@@ -148,7 +156,8 @@ class ThreatDetectionResult:
 
 
 class DatabaseSecurityMonitor:
-    """Advanced database security monitoring system"""
+    """
+Advanced database security monitoring system"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -174,7 +183,8 @@ class DatabaseSecurityMonitor:
         self._monitoring_task = None
         
     def _load_geoip_database(self):
-        """Load GeoIP database for location tracking"""
+        """
+Load GeoIP database for location tracking"""
         try:
             # Use MaxMind GeoLite2 database
             self.geoip_db = geoip2.database.Reader('data/GeoLite2-City.mmdb')
@@ -359,7 +369,8 @@ class DatabaseSecurityMonitor:
             return AccessType.SYSTEM
             
     def _calculate_threat_level(self, event_data) -> SecurityThreatLevel:
-        """Calculate threat level for event"""
+        """
+Calculate threat level for event"""
         # Failed authentication
         if event_data.message and 'authentication failed' in event_data.message.lower():
             return SecurityThreatLevel.HIGH
@@ -383,7 +394,8 @@ class DatabaseSecurityMonitor:
         return SecurityThreatLevel.INFO
         
     def _get_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get geolocation for IP address"""
+        """
+Get geolocation for IP address"""
         if not self.geoip_db or ip_address == "unknown":
             return None
             
@@ -438,7 +450,8 @@ class DatabaseSecurityMonitor:
         return min(risk_score, 1.0)
         
     async def _is_suspicious_query(self, query: str) -> bool:
-        """Check if query contains suspicious patterns"""
+        """
+Check if query contains suspicious patterns"""
         if not query:
             return False
             
@@ -462,7 +475,8 @@ class DatabaseSecurityMonitor:
         return False
         
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""
+        """
+Check if IP address is suspicious"""
         if ip_address == "unknown":
             return True
             
@@ -598,7 +612,8 @@ class DatabaseSecurityMonitor:
         return tables
         
     async def _analyze_access_patterns(self):
-        """Analyze access patterns for anomalies"""
+        """
+Analyze access patterns for anomalies"""
         try:
             for username, pattern in self.access_patterns.items():
                 if pattern.is_suspicious:
@@ -831,29 +846,34 @@ class AccessPatternAnalyzer:
         self.logger = logging.getLogger(__name__)
         
     async def analyze_user_behavior(self, username: str) -> Dict[str, Any]:
-        """Analyze user behavior patterns"""
+        """
+Analyze user behavior patterns"""
         # Implementation for detailed user behavior analysis
         pass
         
     async def detect_anomalies(self, patterns: List[AccessPattern]) -> List[Dict]:
-        """Detect anomalies in access patterns"""
+        """
+Detect anomalies in access patterns"""
         # Implementation for anomaly detection
         pass
 
 
 class ThreatDetector:
-    """AI-powered threat detection engine"""
+    """
+AI-powered threat detection engine"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def analyze_events(self, events: List[Dict]) -> ThreatDetectionResult:
-        """Analyze security events for threats"""
+        """
+Analyze security events for threats"""
         # Implementation for AI threat detection
         pass
         
     async def correlate_events(self, events: List[Dict]) -> List[Dict]:
-        """Correlate related security events"""
+        """
+Correlate related security events"""
         # Implementation for event correlation
         pass

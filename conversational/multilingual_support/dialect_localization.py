@@ -4,12 +4,15 @@ Enhanced regional customization for comprehensive multilingual support
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
 
 class LocalizationFeature(Enum):
-    """Enhanced localization features for regional variants"""
+    """
+Enhanced localization features for regional variants"""
+
     CURRENCY_FORMAT = "currency_format"
     DATE_FORMAT = "date_format"
     TIME_FORMAT = "time_format"
@@ -931,7 +934,8 @@ class EnhancedDialectProcessor:
         self.localizations = DIALECT_LOCALIZATIONS
     
     def format_currency(self, amount: float, dialect_code: str) -> str:
-        """Format currency according to dialect preferences"""
+        """
+Format currency according to dialect preferences"""
         localization = self.localizations.get(dialect_code)
         if not localization:
             return f"${amount:.2f}"  # Default fallback

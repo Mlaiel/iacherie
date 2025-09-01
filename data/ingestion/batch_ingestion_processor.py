@@ -6,13 +6,14 @@ Provides scalable, fault-tolerant batch processing with progress tracking,
 resume capabilities, and comprehensive monitoring for IA Influencer Agent platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ from ...core.config import get_settings
 
 
 class BatchStatus(Enum):
-    """Batch processing status"""
+    """
+Batch processing status"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -56,6 +59,7 @@ class BatchStatus(Enum):
 
 class BatchPriority(Enum):
     """Batch processing priority levels"""
+
     LOW = 1
     NORMAL = 5
     HIGH = 8
@@ -63,7 +67,9 @@ class BatchPriority(Enum):
 
 
 class ProcessingMode(Enum):
-    """Batch processing execution modes"""
+    """
+Batch processing execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     DISTRIBUTED = "distributed"
@@ -111,7 +117,8 @@ class BatchConfiguration:
 
 @dataclass
 class BatchProgress:
-    """Batch processing progress tracking"""
+    """
+Batch processing progress tracking"""
     batch_id: str
     total_items: int
     processed_items: int = 0
@@ -130,7 +137,8 @@ class BatchProgress:
 
 @dataclass
 class BatchResult:
-    """Comprehensive batch processing result"""
+    """
+Comprehensive batch processing result"""
     batch_id: str
     status: BatchStatus
     progress: BatchProgress

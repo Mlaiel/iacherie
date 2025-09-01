@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class MediaFileUpload(BaseSchema):
-    """Professional media file upload schema."""
+    """
+Professional media file upload schema."""
     
     content_id: UUID = Field(description="Associated content ID")
     file_type: str = Field(description="Media file type (audio, video, image, document)")

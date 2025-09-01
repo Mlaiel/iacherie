@@ -11,7 +11,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -26,6 +26,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -75,7 +76,9 @@ logger = get_structured_logger(__name__)
 security = HTTPBearer()
 
 class CollaborationSystemStatus(Enum):
-    """System status enumeration"""
+    """
+System status enumeration"""
+
     ACTIVE = "active"
     MAINTENANCE = "maintenance" 
     DEGRADED = "degraded"
@@ -93,7 +96,8 @@ class SystemHealthMetrics(BaseModel):
     last_health_check: datetime
 
 class CollaborationIndexConfig(BaseModel):
-    """Configuration for the collaboration index system"""
+    """
+Configuration for the collaboration index system"""
     enable_debug_mode: bool = False
     max_concurrent_requests: int = 1000
     request_timeout_seconds: int = 30
@@ -127,7 +131,8 @@ class CollaborationIndex:
     """
     
     def __init__(self, config: Optional[CollaborationIndexConfig] = None):
-        """Initialize collaboration index with comprehensive configuration"""
+        """
+Initialize collaboration index with comprehensive configuration"""
         self.config = config or CollaborationIndexConfig()
         self.state = CollaborationIndexState()
         
@@ -531,7 +536,8 @@ class CollaborationIndex:
             return 0
     
     async def _get_processed_partnerships_count(self) -> int:
-        """Get count of processed partnerships"""
+        """
+Get count of processed partnerships"""
         try:
             if self._partnership_engine:
                 return await self._partnership_engine.get_processed_count()
@@ -540,7 +546,8 @@ class CollaborationIndex:
             return 0
     
     async def _get_total_revenue_processed(self) -> float:
-        """Get total revenue processed"""
+        """
+Get total revenue processed"""
         try:
             if self._revenue_engine:
                 return await self._revenue_engine.get_total_processed()
@@ -549,7 +556,8 @@ class CollaborationIndex:
             return 0.0
     
     async def _calculate_error_rate(self) -> float:
-        """Calculate system error rate"""
+        """
+Calculate system error rate"""
         try:
             # Implement error rate calculation logic
             return self.state.performance_metrics.get("error_rate", 0.0)
@@ -594,7 +602,8 @@ async def get_collaboration_index() -> CollaborationIndex:
 async def get_authenticated_creator(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> str:
-    """Dependency to get authenticated creator ID"""
+    """
+Dependency to get authenticated creator ID"""
     try:
         creator_id = await verify_creator_token(credentials.credentials)
         return creator_id
@@ -629,7 +638,7 @@ __all__ = [
 ]
 
 """Professional Collaboration Index System
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This index module provides centralized coordination for all collaboration
 business logic operations with enterprise-grade reliability, monitoring,

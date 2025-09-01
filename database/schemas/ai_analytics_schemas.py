@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class AnalyticsTypeEnum(str, Enum):
-    """Types of analytics"""
+    """
+Types of analytics"""
+
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_INSIGHTS = "audience_insights"
     ENGAGEMENT_ANALYSIS = "engagement_analysis"
@@ -35,6 +38,7 @@ class AnalyticsTypeEnum(str, Enum):
 
 class ModelTypeEnum(str, Enum):
     """Types of ML models"""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -51,6 +55,7 @@ class ModelTypeEnum(str, Enum):
 
 class ModelStatusEnum(str, Enum):
     """ML model status"""
+
     TRAINING = "training"
     VALIDATION = "validation"
     TESTING = "testing"
@@ -63,6 +68,7 @@ class ModelStatusEnum(str, Enum):
 
 class DataQualityEnum(str, Enum):
     """Data quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -72,6 +78,7 @@ class DataQualityEnum(str, Enum):
 
 class InsightTypeEnum(str, Enum):
     """Types of AI insights"""
+
     OPTIMIZATION_SUGGESTION = "optimization_suggestion"
     TREND_PREDICTION = "trend_prediction"
     ANOMALY_ALERT = "anomaly_alert"

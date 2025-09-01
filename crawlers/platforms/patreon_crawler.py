@@ -22,6 +22,7 @@ Features:
 - Comprehensive creator analytics and patron behavior analysis
 - Multi-tier content access monitoring and protection
 """
+
 import asyncio
 import aiohttp
 import json
@@ -56,7 +57,9 @@ settings = get_settings()
 
 
 class PatreonTierType(str, Enum):
-    """Enhanced Patreon subscription tier types"""
+    """
+Enhanced Patreon subscription tier types"""
+
     FREE = "free"
     TIER_1 = "tier_1"
     TIER_2 = "tier_2"
@@ -74,6 +77,7 @@ class PatreonTierType(str, Enum):
 
 class PatreonPostType(str, Enum):
     """Enhanced Patreon post types"""
+
     TEXT_ONLY = "text_only"
     IMAGE = "image"
     VIDEO = "video"
@@ -90,6 +94,7 @@ class PatreonPostType(str, Enum):
 
 class PatreonContentStatus(str, Enum):
     """Patreon content status types"""
+
     PUBLISHED = "published"
     DRAFT = "draft"
     SCHEDULED = "scheduled"
@@ -139,6 +144,7 @@ class PatreonCreator:
 
 class PatreonVisibility(str, Enum):
     """Patreon post visibility levels"""
+
     PUBLIC = "public"
     PATRONS_ONLY = "patrons_only"
     TIER_RESTRICTED = "tier_restricted"
@@ -255,7 +261,8 @@ class PatreonGoal(BaseModel):
 
 
 class PatreonPledge(BaseModel):
-    """Patreon pledge data model"""
+    """
+Patreon pledge data model"""
     pledge_id: str
     amount_cents: int
     created_at: datetime
@@ -271,7 +278,8 @@ class PatreonPledge(BaseModel):
 
 
 class PatreonSearchResults(BaseModel):
-    """Patreon search results data model"""
+    """
+Patreon search results data model"""
     query: str
     total_results: int
     creators: List[PatreonCreator] = Field(default_factory=list)
@@ -284,7 +292,8 @@ class PatreonSearchResults(BaseModel):
 
 
 class PatreonAnalytics(BaseModel):
-    """Patreon analytics data model"""
+    """
+Patreon analytics data model"""
     creator_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
@@ -795,7 +804,8 @@ class PatreonCrawler(BaseCrawler):
         return []
 
     async def _get_creator_recent_posts(self, username: str) -> List[PatreonPost]:
-        """Get recent posts from creator"""
+        """
+Get recent posts from creator"""
         try:
             # First get campaign ID from username
             campaign_id = await self._get_campaign_id_from_username(username)
@@ -937,12 +947,14 @@ class PatreonCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[PatreonPost]:
-        """Get creator's posts in specific time period"""
+        """
+Get creator's posts in specific time period"""
         # Implementation would require pagination through posts with date filtering
         return []
 
     async def _extract_post_features(self, post: PatreonPost) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""
+        """
+Extract features for similarity comparison"""
         features = {
             "title": (post.title or "").lower(),
             "content": (post.content or "").lower(),
@@ -1001,7 +1013,8 @@ class PatreonCrawler(BaseCrawler):
         return 0.0
 
     async def _check_protection_status(self, post: PatreonPost) -> str:
-        """Check protection status of post"""
+        """
+Check protection status of post"""
         if post.post_id in self.protected_content:
             return "protected"
         return "unprotected"

@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for analysis"""
+    """
+Content types for analysis"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -51,6 +54,7 @@ class ContentType(Enum):
 
 class AnalysisType(Enum):
     """Types of content analysis"""
+
     CLASSIFICATION = "classification"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     OBJECT_DETECTION = "object_detection"
@@ -67,6 +71,7 @@ class AnalysisType(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -76,6 +81,7 @@ class ProcessingPriority(Enum):
 
 class QualityMetric(Enum):
     """Content quality metrics"""
+
     RESOLUTION = "resolution"
     CLARITY = "clarity"
     AUDIO_QUALITY = "audio_quality"

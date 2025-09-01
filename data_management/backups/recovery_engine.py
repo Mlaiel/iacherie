@@ -8,10 +8,11 @@ Responsibility: Récupération intelligente et restauration sauvegardes
 ==================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import os
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecoveryStrategy(Enum):
-    """Stratégies de récupération"""
+    """
+Stratégies de récupération"""
+
     FULL_RESTORE = "full_restore"           # Restauration complète
     SELECTIVE_RESTORE = "selective_restore" # Restauration sélective
     INCREMENTAL_RESTORE = "incremental_restore" # Restauration incrémentale
@@ -44,6 +47,7 @@ class RecoveryStrategy(Enum):
 
 class RecoveryPriority(Enum):
     """Priorités de récupération"""
+
     CRITICAL = "critical"     # Critique (immédiat)
     HIGH = "high"            # Haute priorité
     NORMAL = "normal"        # Priorité normale
@@ -53,6 +57,7 @@ class RecoveryPriority(Enum):
 
 class RecoveryStatus(Enum):
     """États de récupération"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -81,7 +86,8 @@ class RecoveryPlan:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "recovery_id": self.recovery_id,
             "strategy": self.strategy.value,
@@ -119,28 +125,32 @@ class RecoveryProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Pourcentage de progression"""
+        """
+Pourcentage de progression"""
         if self.files_total == 0:
             return 0.0
         return (self.files_processed / self.files_total) * 100
     
     @property
     def bytes_percentage(self) -> float:
-        """Pourcentage de bytes traités"""
+        """
+Pourcentage de bytes traités"""
         if self.bytes_total == 0:
             return 0.0
         return (self.bytes_processed / self.bytes_total) * 100
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Durée d'exécution"""
+        """
+Durée d'exécution"""
         if not self.started_at:
             return None
         end_time = self.completed_at or datetime.now()
         return end_time - self.started_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "recovery_id": self.recovery_id,
             "status": self.status.value,
@@ -175,7 +185,8 @@ class RecoveryConfig:
     bandwidth_limit: Optional[int] = None  # bytes/sec
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "parallel_workers": self.parallel_workers,
             "chunk_size": self.chunk_size,
@@ -569,7 +580,8 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une restauration sélective"""
+        """
+Exécute une restauration sélective"""
         # Même logique que restauration complète mais avec fichiers filtrés
         await self._execute_full_restore(plan, files_to_recover, progress)
     
@@ -579,7 +591,8 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une restauration incrémentale"""
+        """
+Exécute une restauration incrémentale"""
         # Tri par timestamp pour restauration chronologique
         files_sorted = sorted(
             files_to_recover,
@@ -883,7 +896,8 @@ class RecoveryEngine:
             await asyncio.sleep(delay)
     
     def _update_recovery_stats(self, progress: RecoveryProgress, success: bool):
-        """Met à jour les statistiques de récupération"""
+        """
+Met à jour les statistiques de récupération"""
         self.recovery_stats["total_recoveries"] += 1
         
         if success:

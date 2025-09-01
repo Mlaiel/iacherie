@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -36,6 +36,7 @@ API Request → Authentication → Input Validation → Pricing Calculation →
 ML Optimization → Market Analysis → Result Caching → Response Generation
 ==========================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -69,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 
 class PricingRequest(BaseModel):
-    """Request model for pricing calculations"""
+    """
+Request model for pricing calculations"""
     content_id: str = Field(..., description="Content identifier")
     content_type: ContentType = Field(..., description="Type of content")
     platform: str = Field(..., description="Target platform")
@@ -105,7 +107,8 @@ class PricingResponse(BaseModel):
 
 
 class TierRecommendationRequest(BaseModel):
-    """Request model for tier recommendations"""
+    """
+Request model for tier recommendations"""
     usage_pattern: Dict[str, Any] = Field(..., description="Historical usage data")
     content_types: List[ContentType] = Field(..., description="Content types produced")
     target_revenue: Optional[Decimal] = Field(None, description="Revenue goal")
@@ -123,7 +126,8 @@ class TierRecommendationResponse(BaseModel):
 
 
 class BulkPricingRequest(BaseModel):
-    """Request model for bulk pricing calculations"""
+    """
+Request model for bulk pricing calculations"""
     pricing_requests: List[PricingRequest] = Field(..., max_items=100)
     priority: str = Field(default="normal", description="Processing priority")
     callback_url: Optional[str] = Field(None, description="Callback URL for results")
@@ -537,7 +541,8 @@ class PricingService:
         pass
     
     async def _validate_pricing_request(self, request: PricingRequest):
-        """Validate pricing request parameters"""
+        """
+Validate pricing request parameters"""
         
         # Validate content exists and is accessible
         if not await self.content_validator.validate_content_exists(request.content_id):
@@ -656,7 +661,8 @@ class PricingService:
         recommended_tier: TierConfiguration,
         target_revenue: Optional[Decimal]
     ) -> Dict[str, Any]:
-        """Calculate ROI projection for tier upgrade"""
+        """
+Calculate ROI projection for tier upgrade"""
         
         if recommended_tier.tier_name == current_tier.tier_name:
             return {'message': 'No tier change recommended'}
@@ -686,7 +692,8 @@ class PricingService:
         current_tier: TierConfiguration,
         recommended_tier: TierConfiguration
     ) -> List[str]:
-        """Generate list of upgrade benefits"""
+        """
+Generate list of upgrade benefits"""
         
         benefits = []
         
@@ -757,7 +764,8 @@ class PricingService:
         action: str,
         data: Dict[str, Any]
     ):
-        """Log pricing audit trail"""
+        """
+Log pricing audit trail"""
         
         try:
             async with self.db_manager.get_session() as session:

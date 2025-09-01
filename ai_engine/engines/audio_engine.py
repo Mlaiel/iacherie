@@ -14,6 +14,7 @@ Violators will face legal action under international copyright law.
 
 Business Logic: Audio Upload → AI Analysis → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import numpy as np
 import logging
@@ -69,7 +70,9 @@ logger = logging.getLogger(__name__)
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -80,6 +83,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(Enum):
     """Audio quality levels"""
+
     LOW = "low"           # <128kbps or <22kHz
     MEDIUM = "medium"     # 128-320kbps, 44.1kHz
     HIGH = "high"         # >320kbps, ≥44.1kHz
@@ -138,7 +142,8 @@ class AudioEngine:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize audio engine with comprehensive configuration"""
+        """
+Initialize audio engine with comprehensive configuration"""
         self.config = config or {}
         
         # Check available libraries
@@ -514,7 +519,8 @@ class AudioEngine:
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure"""
+    """
+Comprehensive audio metadata structure"""
     duration: float
     sample_rate: int
     bit_rate: int
@@ -682,7 +688,8 @@ class AudioProcessingEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive content protection"""
+        """
+Apply comprehensive content protection"""
         # Generate robust audio fingerprint
         fingerprint = await self._generate_robust_fingerprint(content)
         
@@ -703,7 +710,8 @@ class AudioProcessingEngine(BaseContentEngine):
         }
     
     async def _load_enhancement_models(self):
-        """Load AI models for audio enhancement"""
+        """
+Load AI models for audio enhancement"""
         self.logger.info("Loading audio enhancement models...")
         # Simulate model loading
         await asyncio.sleep(0.1)
@@ -780,7 +788,8 @@ class AudioProcessingEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _extract_seo_features(self, content: Any) -> Dict[str, Any]:
-        """Extract features for SEO optimization"""
+        """
+Extract features for SEO optimization"""
         return {
             'genre': 'Electronic',
             'mood': 'Energetic',
@@ -791,7 +800,8 @@ class AudioProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_seo_title(self, features: Dict, keywords: List[str]) -> str:
-        """Generate SEO-optimized title"""
+        """
+Generate SEO-optimized title"""
         genre = features.get('genre', 'Music')
         mood = features.get('mood', 'Dynamic')
         keyword = keywords[0] if keywords else 'Track'
@@ -814,7 +824,8 @@ class AudioProcessingEngine(BaseContentEngine):
         return list(set(base_tags + keywords[:5]))
     
     async def _generate_audio_schema(self, features: Dict) -> Dict[str, Any]:
-        """Generate schema.org markup for audio"""
+        """
+Generate schema.org markup for audio"""
         return {
             "@context": "https://schema.org",
             "@type": "AudioObject",
@@ -995,7 +1006,8 @@ class MusicGenerationEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Protect original music composition"""
+        """
+Protect original music composition"""
         # Generate musical fingerprint
         fingerprint = await self._generate_musical_fingerprint(content)
         
@@ -1012,7 +1024,8 @@ class MusicGenerationEngine(BaseContentEngine):
         }
     
     async def _load_composition_models(self):
-        """Load AI composition models"""
+        """
+Load AI composition models"""
         self.logger.info("Loading composition models...")
         await asyncio.sleep(0.2)
         
@@ -1062,7 +1075,8 @@ class MusicGenerationEngine(BaseContentEngine):
         }
     
     async def _generate_musical_structure(self, requirements: Dict) -> Dict[str, Any]:
-        """Generate musical structure and form"""
+        """
+Generate musical structure and form"""
         duration = requirements['duration']
         
         # Standard song structure based on duration
@@ -1144,7 +1158,7 @@ class MusicGenerationEngine(BaseContentEngine):
             'key': requirements['key'],
             'duration': requirements['duration'],
             'instruments': requirements['instruments'],
-            'copyright': '© 2025 Fahed Mlaiel',
+            'copyright': '(c) 2025 Fahed Mlaiel',
             'isrc': f"DE-AI-25-{int(time.time())}",
             'created_at': datetime.now().isoformat()
         }
@@ -1163,7 +1177,8 @@ class MusicGenerationEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _analyze_musical_features(self, content: Any) -> Dict[str, Any]:
-        """Analyze musical features for SEO"""
+        """
+Analyze musical features for SEO"""
         return {
             'genre': 'Electronic',
             'moods': ['Energetic', 'Uplifting', 'Modern'],
@@ -1174,7 +1189,8 @@ class MusicGenerationEngine(BaseContentEngine):
         }
     
     async def _generate_music_title(self, features: Dict, keywords: List[str]) -> str:
-        """Generate music title optimized for search"""
+        """
+Generate music title optimized for search"""
         genre = features.get('genre', 'Music')
         mood = features.get('moods', ['Dynamic'])[0]
         keyword = keywords[0] if keywords else 'Track'
@@ -1198,7 +1214,8 @@ class MusicGenerationEngine(BaseContentEngine):
         return list(set(base_tags + keywords[:5]))
     
     async def _generate_social_clips(self, content: Any) -> List[Dict[str, Any]]:
-        """Generate social media optimized clips"""
+        """
+Generate social media optimized clips"""
         return [
             {'duration': 15, 'type': 'hook', 'platform': 'tiktok'},
             {'duration': 30, 'type': 'highlight', 'platform': 'instagram'},
@@ -1206,7 +1223,8 @@ class MusicGenerationEngine(BaseContentEngine):
         ]
     
     async def _generate_musical_fingerprint(self, content: Any) -> str:
-        """Generate musical fingerprint for protection"""
+        """
+Generate musical fingerprint for protection"""
         content_str = str(content)
         timestamp = str(time.time())
         combined = f"{content_str}_{timestamp}_music"
@@ -1242,14 +1260,16 @@ class MusicGenerationEngine(BaseContentEngine):
         return durations
     
     async def _plan_key_changes(self, structure: List[str], requirements: Dict) -> List[Dict[str, Any]]:
-        """Plan key changes throughout the composition"""
+        """
+Plan key changes throughout the composition"""
         return [
             {'section': 'Bridge', 'key': 'relative_minor'},
             {'section': 'Solo', 'key': 'dominant_key'}
         ]
     
     async def _plan_dynamics(self, structure: List[str], requirements: Dict) -> Dict[str, str]:
-        """Plan dynamic progression"""
+        """
+Plan dynamic progression"""
         return {
             'Intro': 'pp',
             'Verse': 'mp',
@@ -1383,7 +1403,8 @@ class VoiceEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Protect voice content"""
+        """
+Protect voice content"""
         fingerprint = await self._generate_voice_fingerprint(content)
         
         return {
@@ -1395,7 +1416,8 @@ class VoiceEngine(BaseContentEngine):
         }
     
     async def _load_voice_models(self):
-        """Load voice processing models"""
+        """
+Load voice processing models"""
         self.logger.info("Loading voice models...")
         await asyncio.sleep(0.2)
         
@@ -1465,12 +1487,14 @@ class VoiceEngine(BaseContentEngine):
         }
     
     async def _evaluate_voice_quality(self, audio: Any) -> float:
-        """Evaluate voice quality score"""
+        """
+Evaluate voice quality score"""
         # Simulate quality evaluation
         return 0.91
     
     async def _analyze_voice_features(self, content: Any) -> Dict[str, Any]:
-        """Analyze voice features for SEO"""
+        """
+Analyze voice features for SEO"""
         return {
             'language_detected': 'en',
             'speaker_gender': 'neutral',
@@ -1480,7 +1504,8 @@ class VoiceEngine(BaseContentEngine):
         }
     
     async def _generate_transcript(self, content: Any) -> str:
-        """Generate transcript for accessibility"""
+        """
+Generate transcript for accessibility"""
         return "Professional voice content with enhanced clarity and natural delivery. Perfect for content creators and influencers."
     
     async def _generate_voice_summary(self, features: Dict, keywords: List[str]) -> str:
@@ -1499,7 +1524,8 @@ class VoiceEngine(BaseContentEngine):
         return list(set(base_tags + keywords[:5]))
     
     async def _generate_voice_fingerprint(self, content: Any) -> str:
-        """Generate voice fingerprint"""
+        """
+Generate voice fingerprint"""
         content_str = str(content)
         timestamp = str(time.time())
         combined = f"{content_str}_{timestamp}_voice"

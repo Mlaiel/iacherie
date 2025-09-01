@@ -7,6 +7,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, reprod
 or distribution without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from backend.deployment.infrastructure.cloud_provider import CloudProviderManage
 
 
 class EnvironmentType(Enum):
-    """Environment types supported by the platform"""
+    """
+Environment types supported by the platform"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -37,6 +40,7 @@ class EnvironmentType(Enum):
 
 class EnvironmentStatus(Enum):
     """Environment status indicators"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROVISIONING = "provisioning"
@@ -48,6 +52,7 @@ class EnvironmentStatus(Enum):
 
 class ResourceTier(Enum):
     """Resource allocation tiers"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -146,7 +151,8 @@ class EnvironmentManager:
         }
     
     async def initialize(self) -> None:
-        """Initialize environment manager"""
+        """
+Initialize environment manager"""
         try:
             self.logger.info("Initializing environment manager")
             
@@ -370,7 +376,8 @@ class EnvironmentManager:
         return sorted(environments, key=lambda x: x.created_at, reverse=True)
     
     async def clone_environment(self, source_environment_id: str, target_config: EnvironmentConfig) -> EnvironmentInstance:
-        """Clone an existing environment with new configuration"""
+        """
+Clone an existing environment with new configuration"""
         try:
             if source_environment_id not in self.environments:
                 raise ValidationError(f"Source environment {source_environment_id} not found")
@@ -514,37 +521,44 @@ class EnvironmentManager:
         pass
     
     async def _setup_environment_monitoring(self, environment: EnvironmentInstance) -> None:
-        """Setup monitoring for environment"""
+        """
+Setup monitoring for environment"""
         # Implementation for monitoring setup
         pass
     
     async def _configure_environment_security(self, environment: EnvironmentInstance) -> None:
-        """Configure security for environment"""
+        """
+Configure security for environment"""
         # Implementation for security configuration
         pass
     
     async def _setup_environment_backup(self, environment: EnvironmentInstance) -> None:
-        """Setup backup for environment"""
+        """
+Setup backup for environment"""
         # Implementation for backup setup
         pass
     
     async def _validate_environment_readiness(self, environment: EnvironmentInstance) -> None:
-        """Validate environment is ready for use"""
+        """
+Validate environment is ready for use"""
         # Implementation for environment readiness validation
         pass
     
     async def _load_environment_templates(self) -> None:
-        """Load environment templates from configuration"""
+        """
+Load environment templates from configuration"""
         # Implementation for loading environment templates
         pass
     
     async def _discover_existing_environments(self) -> None:
-        """Discover existing environments in cloud provider"""
+        """
+Discover existing environments in cloud provider"""
         # Implementation for discovering existing environments
         pass
     
     def _get_instance_type_for_tier(self, tier: ResourceTier) -> str:
-        """Get appropriate instance type for resource tier"""
+        """
+Get appropriate instance type for resource tier"""
         tier_mapping = {
             ResourceTier.MINIMAL: 't3.micro',
             ResourceTier.STANDARD: 't3.small',
@@ -555,7 +569,8 @@ class EnvironmentManager:
         return tier_mapping.get(tier, 't3.small')
     
     def _calculate_environment_uptime(self, environment: EnvironmentInstance) -> float:
-        """Calculate environment uptime in hours"""
+        """
+Calculate environment uptime in hours"""
         if environment.status != EnvironmentStatus.ACTIVE:
             return 0.0
         
@@ -563,57 +578,70 @@ class EnvironmentManager:
         return uptime_delta.total_seconds() / 3600
     
     async def _get_resource_utilization(self, environment: EnvironmentInstance) -> Dict[str, float]:
-        """Get resource utilization metrics"""
+        """
+Get resource utilization metrics"""
         # Implementation for resource utilization metrics
         return {'cpu': 0.0, 'memory': 0.0, 'storage': 0.0}
     
     async def _get_performance_metrics(self, environment: EnvironmentInstance) -> Dict[str, Any]:
-        """Get performance metrics"""
+        """
+Get performance metrics"""
         # Implementation for performance metrics
         return {}
     
     async def _get_security_metrics(self, environment: EnvironmentInstance) -> Dict[str, Any]:
-        """Get security metrics"""
+        """
+Get security metrics"""
         # Implementation for security metrics
         return {}
     
     # Additional helper methods for environment management
     async def _validate_environment_updates(self, environment: EnvironmentInstance, updates: Dict[str, Any]) -> None:
-        """Validate environment update operations"""
+        """
+Validate environment update operations"""
         pass
     
     async def _apply_environment_updates(self, environment: EnvironmentInstance, updates: Dict[str, Any]) -> None:
-        """Apply updates to environment configuration"""
+        """
+Apply updates to environment configuration"""
         pass
     
     async def _merge_environment_configs(self, source_config: EnvironmentConfig, target_config: EnvironmentConfig) -> EnvironmentConfig:
-        """Merge source and target environment configurations"""
+        """
+Merge source and target environment configurations"""
         pass
     
     async def _copy_environment_services(self, source_env: EnvironmentInstance, target_env: EnvironmentInstance) -> None:
-        """Copy services from source to target environment"""
+        """
+Copy services from source to target environment"""
         pass
     
     async def _validate_promotion_path(self, source_env: EnvironmentInstance, target_env: EnvironmentInstance) -> None:
-        """Validate environment promotion path"""
+        """
+Validate environment promotion path"""
         pass
     
     async def _promote_environment_services(self, source_env: EnvironmentInstance, target_env: EnvironmentInstance) -> None:
-        """Promote services from source to target environment"""
+        """
+Promote services from source to target environment"""
         pass
     
     async def _stop_environment_services(self, environment: EnvironmentInstance) -> None:
-        """Stop all services in environment"""
+        """
+Stop all services in environment"""
         pass
     
     async def _remove_environment_monitoring(self, environment: EnvironmentInstance) -> None:
-        """Remove monitoring configuration for environment"""
+        """
+Remove monitoring configuration for environment"""
         pass
     
     async def _remove_environment_backup(self, environment: EnvironmentInstance) -> None:
-        """Remove backup configuration for environment"""
+        """
+Remove backup configuration for environment"""
         pass
     
     async def _deprovision_cloud_resources(self, environment: EnvironmentInstance) -> None:
-        """Deprovision cloud resources for environment"""
+        """
+Deprovision cloud resources for environment"""
         pass

@@ -15,7 +15,7 @@ for optimal performance across diverse query patterns.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -41,7 +42,9 @@ from ..monitoring.performance_tracker import PerformanceTracker
 logger = logging.getLogger(__name__)
 
 class QueryType(Enum):
-    """Types of queries supported by composite indexes"""
+    """
+Types of queries supported by composite indexes"""
+
     EXACT_MATCH = "exact_match"
     FUZZY_SEARCH = "fuzzy_search"
     SEMANTIC_SEARCH = "semantic_search"
@@ -52,6 +55,7 @@ class QueryType(Enum):
 
 class IndexPriority(Enum):
     """Priority levels for index selection"""
+
     PRIMARY = "primary"
     SECONDARY = "secondary"
     FALLBACK = "fallback"
@@ -76,7 +80,8 @@ class CompositeIndexManager:
     """
     
     def __init__(self):
-        """Initialize composite index manager"""
+        """
+Initialize composite index manager"""
         self.content_manager = ContentIndexManager()
         self.vector_manager = VectorIndexManager()
         self.faiss_manager = FAISSIndexManager()
@@ -378,7 +383,8 @@ class CompositeIndexManager:
         return adapted_query
     
     async def _execute_manager_query(self, manager, query_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute query on specific index manager"""
+        """
+Execute query on specific index manager"""
         try:
             if hasattr(manager, 'search'):
                 # For managers with search method (Elasticsearch)
@@ -508,7 +514,8 @@ class CompositeIndexManager:
     
     async def _update_query_statistics(self, query_type: QueryType, query_time: float,
                                      manager_results: Dict[str, Any]):
-        """Update query performance statistics"""
+        """
+Update query performance statistics"""
         try:
             stats_key = query_type.value
             
@@ -573,7 +580,8 @@ class CompositeIndexManager:
         pass
     
     async def optimize_composite_indexes(self) -> Dict[str, Any]:
-        """Optimize all composite indexes"""
+        """
+Optimize all composite indexes"""
         try:
             start_time = datetime.now()
             optimization_results = {}

@@ -6,7 +6,7 @@ with major creator platforms (Spotify, YouTube, Instagram, TikTok, etc.)
 for comprehensive revenue tracking and optimization.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Platform Revenue Management
 ====================================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -54,6 +57,7 @@ class PlatformType(Enum):
 
 class IntegrationStatus(Enum):
     """Platform integration status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -79,7 +83,8 @@ class PlatformConfig:
 
 @dataclass
 class RevenueSync:
-    """Revenue synchronization record"""
+    """
+Revenue synchronization record"""
     sync_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     platform: str = ""
@@ -137,7 +142,8 @@ class PlatformRevenueManager:
         self._sync_history = {}
         
     async def initialize(self):
-        """Initialize platform revenue manager"""
+        """
+Initialize platform revenue manager"""
         try:
             # Initialize all platform integrations
             for platform_name, integration in self.platforms.items():
@@ -522,7 +528,8 @@ class PlatformRevenueManager:
         }
 
     async def _normalize_youtube_data(self, raw_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize YouTube revenue data"""
+        """
+Normalize YouTube revenue data"""
         gross_revenue = Decimal(str(raw_data.get('estimated_revenue', 0)))
         youtube_share = Decimal('0.45')  # YouTube takes 45% for most content
         
@@ -544,7 +551,8 @@ class PlatformRevenueManager:
         }
 
     async def _validate_revenue_record(self, record: Dict[str, Any]) -> bool:
-        """Validate normalized revenue record"""
+        """
+Validate normalized revenue record"""
         required_fields = ['platform', 'external_id', 'gross_amount', 'net_amount', 'transaction_date']
         
         # Check required fields
@@ -570,7 +578,8 @@ class PlatformRevenueManager:
                              creator_id: str,
                              platform: Optional[str] = None,
                              limit: int = 50) -> List[Dict[str, Any]]:
-        """Get synchronization history for a creator"""
+        """
+Get synchronization history for a creator"""
         try:
             conditions = ["creator_id = %s"]
             params = [creator_id]

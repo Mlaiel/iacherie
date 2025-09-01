@@ -8,7 +8,7 @@ Responsibility: Real-time ranking systems and competitive analytics
 ==================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ LEADERBOARD REPOSITORY ARCHITECTURE:
 Score Aggregation → Ranking Calculation → Real-time Updates → 
 Performance Analytics → Competition Management → Social Features
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -33,7 +34,9 @@ import statistics
 from ...data_management.repositories.base_repository import BaseRepository, OperationType
 
 class LeaderboardType(Enum):
-    """Leaderboard competition types"""
+    """
+Leaderboard competition types"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     CATEGORY = "category"
@@ -43,6 +46,7 @@ class LeaderboardType(Enum):
 
 class TimeFrame(Enum):
     """Leaderboard time frames"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -52,6 +56,7 @@ class TimeFrame(Enum):
 
 class ScoreMetric(Enum):
     """Score calculation metrics"""
+
     EXPERIENCE_POINTS = "experience_points"
     ACHIEVEMENTS_COUNT = "achievements_count"
     CHALLENGES_COMPLETED = "challenges_completed"
@@ -63,6 +68,7 @@ class ScoreMetric(Enum):
 
 class RankingStatus(Enum):
     """Ranking status"""
+
     ACTIVE = "active"
     CLIMBING = "climbing"
     FALLING = "falling"
@@ -91,7 +97,8 @@ class LeaderboardEntry:
 
 @dataclass
 class Leaderboard:
-    """Leaderboard configuration"""
+    """
+Leaderboard configuration"""
     leaderboard_id: str
     name: str
     description: str
@@ -111,7 +118,8 @@ class Leaderboard:
     metadata: Dict[str, Any]
 
 class LeaderboardRepository(BaseRepository[Leaderboard]):
-    """Enterprise leaderboard management repository"""
+    """
+Enterprise leaderboard management repository"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
@@ -522,7 +530,8 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         score_breakdown: Dict[str, float],
         metric_weights: Dict[ScoreMetric, float]
     ) -> float:
-        """Calculate weighted composite score"""
+        """
+Calculate weighted composite score"""
         total_score = 0.0
         
         for metric, weight in metric_weights.items():
@@ -532,7 +541,8 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         return total_score
     
     def _recalculate_leaderboard_rankings(self, leaderboard_id: str):
-        """Recalculate all rankings for leaderboard"""
+        """
+Recalculate all rankings for leaderboard"""
         try:
             # Get all entries sorted by score
             entries = self._query_leaderboard_entries(
@@ -612,12 +622,14 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         leaderboard_id: str,
         user_id: str
     ) -> Optional[LeaderboardEntry]:
-        """Get user's leaderboard entry"""
+        """
+Get user's leaderboard entry"""
         # Implementation would query user entry
         return None
     
     def _save_leaderboard_entry(self, entry: LeaderboardEntry) -> LeaderboardEntry:
-        """Save leaderboard entry"""
+        """
+Save leaderboard entry"""
         # Implementation would save to database
         return entry
     
@@ -637,12 +649,14 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         rankings: List[LeaderboardEntry],
         user_id: str
     ) -> List[LeaderboardEntry]:
-        """Add user context to rankings"""
+        """
+Add user context to rankings"""
         # Implementation would add context
         return rankings
     
     def get_participant_count(self, leaderboard_id: str) -> int:
-        """Get total participant count"""
+        """
+Get total participant count"""
         # Implementation would count participants
         return 0
     
@@ -652,7 +666,8 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         user_id: str,
         radius: int
     ) -> List[LeaderboardEntry]:
-        """Get nearby leaderboard entries"""
+        """
+Get nearby leaderboard entries"""
         # Implementation would get nearby entries
         return []
     
@@ -662,12 +677,14 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         user_id: str,
         days: int
     ) -> List[Dict[str, Any]]:
-        """Get user rank history"""
+        """
+Get user rank history"""
         # Implementation would get rank history
         return []
     
     def _get_tier_info(self, tier: str, percentile: float) -> Dict[str, Any]:
-        """Get tier information"""
+        """
+Get tier information"""
         return {"tier": tier, "percentile": percentile}
     
     def _calculate_next_milestone(
@@ -679,7 +696,8 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         return {}
     
     def _calculate_achievement_potential(self, entry: LeaderboardEntry) -> Dict[str, Any]:
-        """Calculate achievement potential"""
+        """
+Calculate achievement potential"""
         return {}
     
     def _calculate_leaderboard_analytics(
@@ -687,43 +705,51 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         leaderboard_id: str,
         days: int
     ) -> Dict[str, Any]:
-        """Calculate comprehensive analytics"""
+        """
+Calculate comprehensive analytics"""
         return {}
     
     def _archive_leaderboard_entries(self, leaderboard_id: str, timestamp: datetime):
-        """Archive current leaderboard entries"""
+        """
+Archive current leaderboard entries"""
         # Implementation would archive entries
         pass
     
     def _clear_leaderboard_entries(self, leaderboard_id: str):
-        """Clear current leaderboard entries"""
+        """
+Clear current leaderboard entries"""
         # Implementation would clear entries
         pass
     
     # BaseRepository abstract method implementations
     def create(self, entity: Leaderboard, **kwargs) -> Leaderboard:
-        """Create leaderboard entity"""
+        """
+Create leaderboard entity"""
         self._validate_entity(entity)
         # Implementation would save to database
         return entity
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[Leaderboard]:
-        """Get leaderboard by ID"""
+        """
+Get leaderboard by ID"""
         # Implementation would query database
         return None
     
     def update(self, entity: Leaderboard, **kwargs) -> Leaderboard:
-        """Update leaderboard entity"""
+        """
+Update leaderboard entity"""
         self._validate_entity(entity)
         # Implementation would update database
         return entity
     
     def delete(self, entity_id: str, **kwargs) -> bool:
-        """Delete leaderboard"""
+        """
+Delete leaderboard"""
         # Implementation would delete from database
         return True
     
     def list_all(self, limit: int = 100, offset: int = 0, **filters) -> List[Leaderboard]:
-        """List all leaderboards with filtering"""
+        """
+List all leaderboards with filtering"""
         # Implementation would query with filters
         return []

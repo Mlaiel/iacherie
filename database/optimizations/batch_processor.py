@@ -6,6 +6,7 @@ chunking, parallel processing, and comprehensive error handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ T = TypeVar('T')
 
 
 class BatchStrategy(Enum):
-    """Batch processing strategies"""
+    """
+Batch processing strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     ADAPTIVE = "adaptive"
@@ -39,6 +42,7 @@ class BatchStrategy(Enum):
 
 class BatchStatus(Enum):
     """Batch processing status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -49,6 +53,7 @@ class BatchStatus(Enum):
 
 class ErrorHandling(Enum):
     """Error handling strategies"""
+
     FAIL_FAST = "fail_fast"
     CONTINUE_ON_ERROR = "continue_on_error"
     RETRY_FAILED = "retry_failed"
@@ -89,7 +94,8 @@ class BatchConfig:
 
 @dataclass
 class BatchMetrics:
-    """Batch processing metrics"""
+    """
+Batch processing metrics"""
     batch_id: str
     total_items: int = 0
     processed_items: int = 0
@@ -115,21 +121,24 @@ class BatchMetrics:
     
     @property
     def progress_percentage(self) -> float:
-        """Calculate progress percentage"""
+        """
+Calculate progress percentage"""
         if self.total_items == 0:
             return 0.0
         return (self.processed_items / self.total_items) * 100
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate"""
+        """
+Calculate success rate"""
         if self.processed_items == 0:
             return 0.0
         return (self.successful_items / self.processed_items) * 100
     
     @property
     def estimated_completion_time(self) -> Optional[datetime]:
-        """Estimate completion time based on current progress"""
+        """
+Estimate completion time based on current progress"""
         if self.processed_items == 0 or self.throughput_items_per_sec == 0:
             return None
         
@@ -140,7 +149,8 @@ class BatchMetrics:
 
 @dataclass
 class BatchResult:
-    """Batch processing result"""
+    """
+Batch processing result"""
     batch_id: str
     status: BatchStatus
     metrics: BatchMetrics
@@ -150,18 +160,21 @@ class BatchResult:
     
     @property
     def is_successful(self) -> bool:
-        """Check if batch was successful"""
+        """
+Check if batch was successful"""
         return self.status == BatchStatus.COMPLETED and self.metrics.failed_items == 0
     
     @property
     def has_partial_success(self) -> bool:
-        """Check if batch had partial success"""
+        """
+Check if batch had partial success"""
         return (self.status == BatchStatus.PARTIALLY_COMPLETED or 
                 (self.status == BatchStatus.COMPLETED and self.metrics.failed_items > 0))
 
 
 class BatchChunkCalculator:
-    """Adaptive batch chunk size calculator"""
+    """
+Adaptive batch chunk size calculator"""
     
     def __init__(self, config: BatchConfig):
         self.config = config
@@ -169,7 +182,8 @@ class BatchChunkCalculator:
         self._current_chunk_size = config.batch_size
     
     def calculate_optimal_chunk_size(self, total_items: int, available_memory_mb: float) -> int:
-        """Calculate optimal chunk size based on data and system state"""
+        """
+Calculate optimal chunk size based on data and system state"""
         if not self.config.chunk_size_adaptive:
             return self.config.batch_size
         
@@ -193,7 +207,8 @@ class BatchChunkCalculator:
         return optimal_size
     
     def _calculate_memory_based_size(self, available_memory_mb: float) -> int:
-        """Calculate chunk size based on available memory"""
+        """
+Calculate chunk size based on available memory"""
         # Conservative estimate: use 50% of available memory
         usable_memory_mb = available_memory_mb * 0.5
         
@@ -203,7 +218,8 @@ class BatchChunkCalculator:
         return max(self.config.min_chunk_size, estimated_items)
     
     def _calculate_performance_based_size(self) -> int:
-        """Calculate chunk size based on performance history"""
+        """
+Calculate chunk size based on performance history"""
         if len(self._performance_history) < 3:
             return self.config.batch_size
         
@@ -219,7 +235,8 @@ class BatchChunkCalculator:
         return best_chunk_size
     
     def _calculate_data_based_size(self, total_items: int) -> int:
-        """Calculate chunk size based on total data volume"""
+        """
+Calculate chunk size based on total data volume"""
         if total_items < 1000:
             return min(total_items, self.config.batch_size)
         elif total_items < 10000:
@@ -229,7 +246,8 @@ class BatchChunkCalculator:
             return min(total_items // 100, self.config.max_chunk_size)
     
     def record_performance(self, chunk_size: int, processing_time: float, items_processed: int) -> None:
-        """Record performance metrics for adaptive sizing"""
+        """
+Record performance metrics for adaptive sizing"""
         if processing_time > 0:
             throughput = items_processed / processing_time
             
@@ -247,7 +265,8 @@ class BatchChunkCalculator:
 
 
 class BatchProcessor(Generic[T]):
-    """High-performance batch processor for database operations"""
+    """
+High-performance batch processor for database operations"""
     
     def __init__(self, config: BatchConfig):
         self.config = config
@@ -271,7 +290,8 @@ class BatchProcessor(Generic[T]):
         batch_id: Optional[str] = None,
         progress_callback: Optional[Callable[[BatchMetrics], Awaitable[None]]] = None
     ) -> BatchResult:
-        """Process a batch of items with the specified processor function"""
+        """
+Process a batch of items with the specified processor function"""
         
         batch_id = batch_id or f"batch_{int(time.time() * 1000)}"
         
@@ -598,7 +618,8 @@ class BatchProcessor(Generic[T]):
             return base_delay
     
     def _create_chunks(self, items: List[T], chunk_size: int) -> List[List[T]]:
-        """Split items into chunks of specified size"""
+        """
+Split items into chunks of specified size"""
         chunks = []
         for i in range(0, len(items), chunk_size):
             chunks.append(items[i:i + chunk_size])
@@ -611,7 +632,8 @@ class BatchProcessor(Generic[T]):
         chunk_results: Dict[str, List[Any]],
         processing_time: float
     ) -> None:
-        """Update batch metrics with chunk results"""
+        """
+Update batch metrics with chunk results"""
         
         successful_count = len(chunk_results['successful'])
         failed_count = len(chunk_results['failed'])
@@ -641,7 +663,8 @@ class BatchProcessor(Generic[T]):
         metrics.peak_memory_mb = max(metrics.peak_memory_mb, current_memory)
     
     def _get_available_memory_mb(self) -> float:
-        """Get available system memory in MB"""
+        """
+Get available system memory in MB"""
         try:
             import psutil
             memory = psutil.virtual_memory()
@@ -650,7 +673,8 @@ class BatchProcessor(Generic[T]):
             return 1024.0  # Default fallback
     
     def _get_memory_usage_mb(self) -> float:
-        """Get current memory usage in MB"""
+        """
+Get current memory usage in MB"""
         try:
             import psutil
             process = psutil.Process()
@@ -659,7 +683,8 @@ class BatchProcessor(Generic[T]):
             return 0.0
     
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""
+        """
+Get current CPU usage percentage"""
         try:
             import psutil
             return psutil.cpu_percent(interval=0.1)
@@ -667,7 +692,8 @@ class BatchProcessor(Generic[T]):
             return 0.0
     
     async def _send_batch_metrics(self, metrics: BatchMetrics, status: BatchStatus) -> None:
-        """Send batch metrics to monitoring system"""
+        """
+Send batch metrics to monitoring system"""
         try:
             self.metrics_collector.counter(
                 "batch_processing_total",
@@ -706,11 +732,13 @@ class BatchProcessor(Generic[T]):
         return self._active_batches.get(batch_id)
     
     def add_progress_callback(self, callback: Callable[[BatchMetrics], Awaitable[None]]) -> None:
-        """Add a progress callback function"""
+        """
+Add a progress callback function"""
         self._progress_callbacks.append(callback)
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if self._thread_pool:
             self._thread_pool.shutdown(wait=True)
             self._thread_pool = None
@@ -718,7 +746,8 @@ class BatchProcessor(Generic[T]):
 
 # Specialized batch processors for common database operations
 class DatabaseBatchProcessor:
-    """Specialized batch processor for database operations"""
+    """
+Specialized batch processor for database operations"""
     
     def __init__(self, engine: AsyncEngine, config: BatchConfig):
         self.engine = engine
@@ -731,7 +760,8 @@ class DatabaseBatchProcessor:
         records: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Perform bulk insert operation"""
+        """
+Perform bulk insert operation"""
         
         async def insert_processor(chunk: List[Dict[str, Any]]) -> List[Any]:
             async with self.engine.begin() as conn:

@@ -4,7 +4,7 @@
 Advanced AI-powered analysis of detected piracy violations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - Deep learning violation classification
@@ -13,6 +13,7 @@ This module provides:
 - Risk assessment and prioritization
 - Legal compliance analysis
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class AnalysisLevel(Enum):
-    """Analysis depth levels."""
+    """
+Analysis depth levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     DEEP = "deep"
@@ -31,6 +34,7 @@ class AnalysisLevel(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -38,6 +42,7 @@ class RiskLevel(Enum):
 
 class EvidenceType(Enum):
     """Types of evidence collected."""
+
     FINGERPRINT_MATCH = "fingerprint_match"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_SIMILARITY = "audio_similarity"
@@ -333,24 +338,28 @@ class ViolationAnalyzer:
         return min(1.0, fingerprint_data.get('audio_match_score', 0.5) + np.random.normal(0, 0.1))
     
     async def _analyze_visual_similarity(self, fingerprint_data: Dict[str, Any]) -> float:
-        """Analyze visual similarity using computer vision."""
+        """
+Analyze visual similarity using computer vision."""
         # Simulate advanced visual analysis
         # In production, this would use SIFT, SURF, perceptual hashing, etc.
         return min(1.0, fingerprint_data.get('visual_match_score', 0.5) + np.random.normal(0, 0.1))
     
     async def _analyze_metadata_similarity(self, violation_data: Dict[str, Any]) -> float:
-        """Analyze metadata similarity."""
+        """
+Analyze metadata similarity."""
         # Simulate metadata analysis
         # In production, this would compare titles, descriptions, tags, etc.
         return np.random.uniform(0.3, 0.9)
     
     async def _analyze_structural_similarity(self, fingerprint_data: Dict[str, Any]) -> float:
-        """Analyze structural similarity (deep analysis)."""
+        """
+Analyze structural similarity (deep analysis)."""
         # Simulate structural analysis
         return np.random.uniform(0.4, 0.8)
     
     async def _analyze_temporal_similarity(self, violation_data: Dict[str, Any]) -> float:
-        """Analyze temporal patterns (forensic analysis)."""
+        """
+Analyze temporal patterns (forensic analysis)."""
         # Simulate temporal analysis
         return np.random.uniform(0.2, 0.7)
     
@@ -428,7 +437,8 @@ class ViolationAnalyzer:
         }
     
     async def _detect_watermarks(self, violation_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Detect digital watermarks in content."""
+        """
+Detect digital watermarks in content."""
         # Simulate watermark detection
         if np.random.random() > 0.7:  # 30% chance of watermark detection
             return {
@@ -440,7 +450,8 @@ class ViolationAnalyzer:
         return None
     
     async def _perform_temporal_analysis(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform temporal pattern analysis."""
+        """
+Perform temporal pattern analysis."""
         # Simulate temporal analysis
         return {
             'upload_delay_hours': 2.5,
@@ -531,7 +542,8 @@ class ViolationAnalyzer:
         }
     
     def _get_platform_reach_factor(self, platform: str) -> float:
-        """Get platform reach factor for risk assessment."""
+        """
+Get platform reach factor for risk assessment."""
         platform_factors = {
             'youtube': 1.0,
             'instagram': 0.9,
@@ -570,7 +582,8 @@ class ViolationAnalyzer:
         return legal_analysis
     
     def _determine_jurisdiction(self, platform: str) -> str:
-        """Determine legal jurisdiction based on platform."""
+        """
+Determine legal jurisdiction based on platform."""
         platform_jurisdictions = {
             'youtube': 'US',
             'instagram': 'US',
@@ -582,7 +595,8 @@ class ViolationAnalyzer:
         return platform_jurisdictions.get(platform, 'US')
     
     def _get_applicable_laws(self, jurisdiction: str) -> List[str]:
-        """Get applicable laws for jurisdiction."""
+        """
+Get applicable laws for jurisdiction."""
         laws_by_jurisdiction = {
             'US': ['DMCA', 'Copyright Act'],
             'EU': ['DSM Directive', 'GDPR'],
@@ -592,7 +606,8 @@ class ViolationAnalyzer:
     
     def _is_dmca_eligible(self, violation_data: Dict[str, Any], 
                          evidence_items: List[Dict[str, Any]]) -> bool:
-        """Check if violation is eligible for DMCA takedown."""
+        """
+Check if violation is eligible for DMCA takedown."""
         # Check confidence threshold
         confidence = violation_data.get('confidence_score', 0.0)
         if confidence < 0.8:
@@ -606,7 +621,8 @@ class ViolationAnalyzer:
         return has_strong_evidence
     
     def _assess_evidence_sufficiency(self, evidence_items: List[Dict[str, Any]]) -> str:
-        """Assess if evidence is sufficient for legal action."""
+        """
+Assess if evidence is sufficient for legal action."""
         high_confidence_items = sum(
             1 for item in evidence_items if item.get('confidence', 0.0) > 0.8
         )
@@ -619,7 +635,8 @@ class ViolationAnalyzer:
             return 'insufficient'
     
     def _get_compliance_requirements(self, jurisdiction: str) -> List[str]:
-        """Get compliance requirements for jurisdiction."""
+        """
+Get compliance requirements for jurisdiction."""
         return ['proper_attribution', 'evidence_preservation', 'notification_procedures']
     
     async def _generate_recommendations(self, risk_assessment: Dict[str, Any],
@@ -676,7 +693,8 @@ class ViolationAnalyzer:
         return recommendations
     
     def _update_analysis_stats(self, result: AnalysisResult) -> None:
-        """Update analysis statistics."""
+        """
+Update analysis statistics."""
         self.analysis_stats['total_analyses'] += 1
         
         if result.confidence_score >= 0.85:
@@ -689,11 +707,13 @@ class ViolationAnalyzer:
         self.analysis_stats['average_processing_time_ms'] = new_avg
     
     async def get_analysis_stats(self) -> Dict[str, Any]:
-        """Get analysis performance statistics."""
+        """
+Get analysis performance statistics."""
         return self.analysis_stats.copy()
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the analyzer."""
+        """
+Gracefully shutdown the analyzer."""
         logger.info("Shutting down Violation Analyzer...")
         self.analysis_cache.clear()
         logger.info("Violation Analyzer shutdown complete")

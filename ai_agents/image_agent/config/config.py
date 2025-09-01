@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from pathlib import Path
@@ -20,7 +21,9 @@ from enum import Enum
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
+    """
+Environment types for configuration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -29,6 +32,7 @@ class EnvironmentType(Enum):
 
 class ModelTier(Enum):
     """Model performance tiers"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -128,7 +132,8 @@ class ImageAgentConfig:
         self._load_configuration()
     
     def _load_configuration(self):
-        """Load configuration based on environment"""
+        """
+Load configuration based on environment"""
         # Base configuration
         self._config = self._get_base_config()
         
@@ -143,7 +148,8 @@ class ImageAgentConfig:
         self._load_from_file()
     
     def _get_base_config(self) -> Dict[str, Any]:
-        """Get base configuration settings"""
+        """
+Get base configuration settings"""
         return {
             "processing": ProcessingConfig(),
             "security": SecurityConfig(),
@@ -278,7 +284,8 @@ class ImageAgentConfig:
         config_section[keys[-1]] = value
     
     def _merge_config(self, new_config: Dict[str, Any]):
-        """Recursively merge new configuration"""
+        """
+Recursively merge new configuration"""
         def merge_dict(base: dict, update: dict):
             for key, value in update.items():
                 if key in base and isinstance(base[key], dict) and isinstance(value, dict):
@@ -289,7 +296,8 @@ class ImageAgentConfig:
         merge_dict(self._config, new_config)
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value with dot notation support"""
+        """
+Get configuration value with dot notation support"""
         keys = key.split('.')
         value = self._config
         
@@ -301,11 +309,13 @@ class ImageAgentConfig:
             return default
     
     def set(self, key: str, value: Any):
-        """Set configuration value with dot notation support"""
+        """
+Set configuration value with dot notation support"""
         self._set_nested_config(key, value)
     
     def get_processing_config(self) -> ProcessingConfig:
-        """Get processing configuration"""
+        """
+Get processing configuration"""
         return self._config.get("processing", ProcessingConfig())
     
     def get_security_config(self) -> SecurityConfig:
@@ -333,7 +343,8 @@ class ImageAgentConfig:
         return self._config.copy()
     
     def save_to_file(self, filename: str):
-        """Save current configuration to file"""
+        """
+Save current configuration to file"""
         try:
             with open(filename, 'w') as f:
                 json.dump(self._config, f, indent=2, default=str)

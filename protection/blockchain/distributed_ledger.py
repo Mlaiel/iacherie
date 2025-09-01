@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncIterator, AsyncGenerator
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class DLTNetwork(Enum):
-    """Distributed Ledger Technology networks"""
+    """
+Distributed Ledger Technology networks"""
+
     IPFS = "ipfs"
     ARWEAVE = "arweave"
     HYPERLEDGER_FABRIC = "hyperledger_fabric"
@@ -57,6 +60,7 @@ class DLTNetwork(Enum):
 
 class StorageClass(Enum):
     """Storage classification for content"""
+
     PERMANENT = "permanent"  # Arweave, Filecoin
     DISTRIBUTED = "distributed"  # IPFS, Swarm
     ENTERPRISE = "enterprise"  # Hyperledger Fabric
@@ -110,7 +114,8 @@ class StorageResult:
 
 
 class IPFSClient:
-    """Professional IPFS client for distributed storage"""
+    """
+Professional IPFS client for distributed storage"""
     
     def __init__(self, gateway_url: str = "http://localhost:5001", timeout: int = 300):
         self.gateway_url = gateway_url
@@ -544,7 +549,8 @@ class DistributedLedgerManager:
         }
     
     async def initialize(self) -> bool:
-        """Initialize all DLT clients"""
+        """
+Initialize all DLT clients"""
         try:
             success_count = 0
             

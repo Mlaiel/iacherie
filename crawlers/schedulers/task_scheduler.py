@@ -27,6 +27,7 @@ Continuous learning → Performance pattern recognition → Adaptive optimizatio
 Predictive scheduling → Business impact analysis → Revenue optimization → 
 User experience enhancement → Competitive advantage → Market leadership
 """
+
 import asyncio
 import logging
 import time
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class AdaptationStrategy(Enum):
-    """Adaptation strategy types."""
+    """
+Adaptation strategy types."""
+
     PERFORMANCE_BASED = "performance_based"
     PATTERN_RECOGNITION = "pattern_recognition"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
@@ -67,6 +70,7 @@ class AdaptationStrategy(Enum):
 
 class LearningMode(Enum):
     """Learning operation modes."""
+
     EXPLORATION = "exploration"  # Try new strategies
     EXPLOITATION = "exploitation"  # Use best known strategies
     BALANCED = "balanced"  # Mix of both
@@ -76,6 +80,7 @@ class LearningMode(Enum):
 
 class OptimizationObjective(Enum):
     """Optimization objectives."""
+
     MINIMIZE_LATENCY = "minimize_latency"
     MAXIMIZE_THROUGHPUT = "maximize_throughput"
     OPTIMIZE_RESOURCES = "optimize_resources"
@@ -103,7 +108,8 @@ class PerformancePattern:
 
 @dataclass
 class AdaptationDecision:
-    """Adaptation decision record."""
+    """
+Adaptation decision record."""
     decision_id: str
     strategy: AdaptationStrategy
     objective: OptimizationObjective
@@ -119,7 +125,8 @@ class AdaptationDecision:
 
 @dataclass
 class LearningState:
-    """Current learning state."""
+    """
+Current learning state."""
     exploration_rate: float = 0.3
     exploitation_rate: float = 0.7
     learning_rate: float = 0.01
@@ -133,7 +140,8 @@ class LearningState:
 
 @dataclass
 class ReinforcementState:
-    """Reinforcement learning state."""
+    """
+Reinforcement learning state."""
     state_vector: List[float]
     action_space: List[str]
     reward_history: deque
@@ -171,7 +179,8 @@ class AdaptiveScheduler:
         adaptation_interval: int = 300,  # seconds
         learning_history_size: int = 10000
     ):
-        """Initialize adaptive scheduler."""
+        """
+Initialize adaptive scheduler."""
         self.adaptation_strategy = adaptation_strategy
         self.learning_mode = learning_mode
         self.enable_reinforcement_learning = enable_reinforcement_learning
@@ -320,7 +329,8 @@ class AdaptiveScheduler:
         return model
     
     def _create_reinforcement_agent(self) -> Dict[str, Any]:
-        """Create reinforcement learning agent."""
+        """
+Create reinforcement learning agent."""
         return {
             'q_table': defaultdict(lambda: defaultdict(float)),
             'state_action_counts': defaultdict(lambda: defaultdict(int)),
@@ -331,7 +341,8 @@ class AdaptiveScheduler:
         }
     
     async def start_learning(self) -> None:
-        """Start adaptive learning processes."""
+        """
+Start adaptive learning processes."""
         if self.is_learning:
             return
         
@@ -496,6 +507,7 @@ class AdaptiveScheduler:
     
     async def _prepare_training_data(self, data: List[Dict[str, Any]]) -> Tuple[List[List[float]], List[float]]:
         """Prepare training data from performance history."""
+
         X = []
         y = []
         
@@ -513,7 +525,8 @@ class AdaptiveScheduler:
         return X, y
     
     async def _extract_features(self, data: Dict[str, Any]) -> Optional[List[float]]:
-        """Extract feature vector from performance data."""
+        """
+Extract feature vector from performance data."""
         try:
             features = []
             
@@ -629,7 +642,8 @@ class AdaptiveScheduler:
         return features
     
     def _prepare_deep_learning_targets(self, data: List[Dict[str, Any]]) -> List[float]:
-        """Prepare targets for deep learning model."""
+        """
+Prepare targets for deep learning model."""
         targets = []
         
         for item in data:
@@ -641,7 +655,8 @@ class AdaptiveScheduler:
         return targets
     
     async def _should_adapt(self) -> bool:
-        """Determine if adaptation is needed."""
+        """
+Determine if adaptation is needed."""
         try:
             # Check if enough time has passed since last adaptation
             if self.learning_state.last_adaptation:
@@ -694,7 +709,8 @@ class AdaptiveScheduler:
         return np.mean(scores) if scores else 0.5
     
     async def _get_baseline_performance(self) -> float:
-        """Get baseline performance for comparison."""
+        """
+Get baseline performance for comparison."""
         window_size = min(200, len(self.performance_history))
         if window_size < 10:
             return 0.7  # Default baseline
@@ -710,11 +726,13 @@ class AdaptiveScheduler:
         return np.mean(scores) if scores else 0.7
     
     async def _has_new_patterns(self) -> bool:
-        """Check if new performance patterns have been discovered."""
+        """
+Check if new performance patterns have been discovered."""
         return len(self.pattern_history) > len(self.discovered_patterns) * 10
     
     async def _generate_adaptation_decision(self) -> Optional[AdaptationDecision]:
-        """Generate adaptation decision based on current state."""
+        """
+Generate adaptation decision based on current state."""
         try:
             # Analyze current situation
             current_state = await self._analyze_current_state()
@@ -765,7 +783,8 @@ class AdaptiveScheduler:
         return state
     
     async def _calculate_performance_trend(self) -> str:
-        """Calculate performance trend direction."""
+        """
+Calculate performance trend direction."""
         if len(self.performance_history) < 20:
             return "stable"
         
@@ -800,7 +819,8 @@ class AdaptiveScheduler:
         }
     
     async def _analyze_error_patterns(self) -> Dict[str, Any]:
-        """Analyze error patterns in recent performance."""
+        """
+Analyze error patterns in recent performance."""
         if not self.performance_history:
             return {}
         
@@ -821,14 +841,16 @@ class AdaptiveScheduler:
         }
     
     def _get_user_satisfaction(self) -> float:
-        """Get current user satisfaction score."""
+        """
+Get current user satisfaction score."""
         if not self.business_metrics:
             return 0.8
         
         return self.business_metrics.get('user_satisfaction', 0.8)
     
     async def _generate_adaptation_options(self, current_state: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate adaptation options based on current state."""
+        """
+Generate adaptation options based on current state."""
         options = []
         
         # Performance-based adaptations
@@ -884,7 +906,8 @@ class AdaptiveScheduler:
         return options
     
     async def _select_best_adaptation(self, options: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
-        """Select best adaptation option."""
+        """
+Select best adaptation option."""
         if not options:
             return None
         
@@ -923,7 +946,8 @@ class AdaptiveScheduler:
         return best_option
     
     def _aligns_with_strategy(self, option: Dict[str, Any]) -> bool:
-        """Check if option aligns with current adaptation strategy."""
+        """
+Check if option aligns with current adaptation strategy."""
         if self.adaptation_strategy == AdaptationStrategy.PERFORMANCE_BASED:
             return option['objective'] in [
                 OptimizationObjective.MINIMIZE_LATENCY,
@@ -938,7 +962,8 @@ class AdaptiveScheduler:
             return True  # Hybrid strategy accepts all
     
     async def _implement_adaptation(self, decision: AdaptationDecision) -> None:
-        """Implement adaptation decision."""
+        """
+Implement adaptation decision."""
         try:
             implementation = decision.decision_data.get('implementation', {})
             action = implementation.get('action')
@@ -1057,7 +1082,8 @@ class AdaptiveScheduler:
         return min(1.0, max(-1.0, total_reward))
     
     def _update_q_values(self, state: List[float], action: str, reward: float, next_state: List[float]) -> None:
-        """Update Q-values using Q-learning algorithm."""
+        """
+Update Q-values using Q-learning algorithm."""
         # Convert state to hashable representation
         state_key = tuple(round(x, 2) for x in state)
         next_state_key = tuple(round(x, 2) for x in next_state)
@@ -1080,7 +1106,8 @@ class AdaptiveScheduler:
         self.reinforcement_state.q_values[(state_key, action)] = new_q
     
     async def _extract_rl_state(self, performance_data: Dict[str, Any]) -> List[float]:
-        """Extract state vector for reinforcement learning."""
+        """
+Extract state vector for reinforcement learning."""
         state = []
         
         # Performance metrics
@@ -1103,7 +1130,8 @@ class AdaptiveScheduler:
         return state
     
     async def _detect_performance_patterns(self) -> None:
-        """Detect patterns in performance data."""
+        """
+Detect patterns in performance data."""
         if not self.enable_pattern_recognition or len(self.performance_history) < 50:
             return
         
@@ -1227,7 +1255,8 @@ class AdaptiveScheduler:
                 self.business_metrics[key] = alpha * value + (1 - alpha) * current_value
     
     async def _save_models(self) -> None:
-        """Save ML models to storage."""
+        """
+Save ML models to storage."""
         try:
             storage_path = self.config['model_storage_path']
             
@@ -1364,11 +1393,13 @@ class AdaptiveScheduler:
         }
     
     def add_callback(self, event_type: str, callback: Callable) -> None:
-        """Add event callback."""
+        """
+Add event callback."""
         self.event_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, *args) -> None:
-        """Call registered callbacks for an event."""
+        """
+Call registered callbacks for an event."""
         for callback in self.event_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):

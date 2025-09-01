@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -21,7 +21,8 @@ Distribution multi-plateformes → Remix IA professionnel → Monétisation avan
 
 MISSION: Logique métier remix et génération de contenu IA pour créateurs multi-format
 ARCHITECTURE: Business logic enterprise-grade pour remix IA industriel
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."
@@ -161,7 +162,8 @@ class BusinessRemixOrchestrator:
     """
     
     def __init__(self):
-        """Initialize business remix orchestrator."""
+        """
+Initialize business remix orchestrator."""
         self.workflows = {}
         self.active_journeys = {}
         self.monetization_strategies = {}

@@ -7,6 +7,7 @@ monetization with automated calculations and payments.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Royalty distribution status"""
+    """
+Royalty distribution status"""
+
     PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -30,6 +33,7 @@ class DistributionStatus(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalties"""
+
     CONTENT_SALES = "content_sales"
     STREAMING = "streaming"
     LICENSING = "licensing"
@@ -48,7 +52,8 @@ class RoyaltyStakeholder:
 
 @dataclass
 class RoyaltyData:
-    """Royalty distribution data"""
+    """
+Royalty distribution data"""
     distribution_id: str
     content_id: str
     total_revenue: Decimal
@@ -71,7 +76,8 @@ class RoyaltyDistributorEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize royalty distributor engine"""
+        """
+Initialize royalty distributor engine"""
         try:
             await self._setup_database_tables()
             await self._load_distribution_rules()
@@ -136,7 +142,8 @@ class RoyaltyDistributorEngine:
             """)
 
     async def _load_distribution_rules(self) -> None:
-        """Load royalty distribution rules"""
+        """
+Load royalty distribution rules"""
         try:
             # Distribution fee rates by type
             fee_rates = {

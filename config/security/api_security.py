@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
@@ -27,7 +28,9 @@ from enum import Enum
 
 
 class SecurityHeaderType(Enum):
-    """Types of security headers."""
+    """
+Types of security headers."""
+
     CONTENT_SECURITY_POLICY = "content_security_policy"
     STRICT_TRANSPORT_SECURITY = "strict_transport_security"
     X_CONTENT_TYPE_OPTIONS = "x_content_type_options"
@@ -42,6 +45,7 @@ class SecurityHeaderType(Enum):
 
 class InputValidationType(Enum):
     """Types of input validation."""
+
     SCHEMA_VALIDATION = "schema_validation"
     TYPE_VALIDATION = "type_validation"
     RANGE_VALIDATION = "range_validation"
@@ -54,6 +58,7 @@ class InputValidationType(Enum):
 
 class ApiEndpointSecurity(Enum):
     """API endpoint security levels."""
+
     PUBLIC = "public"
     AUTHENTICATED = "authenticated"
     AUTHORIZED = "authorized"
@@ -565,7 +570,8 @@ def get_api_security_config() -> ApiSecurityConfig:
 
 
 def get_endpoint_security_level(endpoint: str) -> ApiEndpointSecurity:
-    """Get security level for a specific endpoint."""
+    """
+Get security level for a specific endpoint."""
     config = get_api_security_config()
     
     # Check exact match first

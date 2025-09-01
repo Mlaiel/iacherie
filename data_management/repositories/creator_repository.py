@@ -8,7 +8,7 @@ Responsibility: Advanced creator profile management with AI insights and collabo
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ CREATOR REPOSITORY ARCHITECTURE:
 Profile Creation → Skill Analysis → Portfolio Tracking → Collaboration Matching → 
 Performance Analytics → Revenue Management → AI Recommendations
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import hashlib
@@ -32,7 +33,9 @@ from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 from ..models.creator_model import CreatorModel, CreatorType, CreatorStatus
 
 class CreatorTier(Enum):
-    """Creator tier levels for features and monetization"""
+    """
+Creator tier levels for features and monetization"""
+
     STARTER = "starter"
     CREATOR = "creator"
     PRO = "pro"
@@ -40,6 +43,7 @@ class CreatorTier(Enum):
 
 class SkillLevel(Enum):
     """Skill proficiency levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -61,7 +65,8 @@ class CreatorSkills:
 
 @dataclass
 class CreatorAnalytics:
-    """Creator performance analytics"""
+    """
+Creator performance analytics"""
     total_content: int
     total_views: int
     total_likes: int
@@ -76,7 +81,8 @@ class CreatorAnalytics:
 
 @dataclass
 class CollaborationPreferences:
-    """Creator collaboration preferences"""
+    """
+Creator collaboration preferences"""
     open_to_collaborations: bool
     preferred_genres: List[str]
     preferred_formats: List[str]
@@ -88,7 +94,8 @@ class CollaborationPreferences:
 
 @dataclass
 class CreatorPortfolio:
-    """Creator portfolio information"""
+    """
+Creator portfolio information"""
     featured_content_ids: List[str]
     achievements: List[str]
     certifications: List[str]
@@ -614,7 +621,8 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def get_by_tier(self, tier: CreatorTier, limit: int = 100, 
                    offset: int = 0) -> List[CreatorModel]:
-        """Get creators by tier"""
+        """
+Get creators by tier"""
         filters = {'tier': tier.value}
         return self.list(filters=filters, limit=limit, offset=offset)
     
@@ -622,7 +630,8 @@ class CreatorRepository(BaseRepository[CreatorModel]):
                                collaboration_type: str = None,
                                genre: str = None, 
                                limit: int = 20) -> List[CreatorModel]:
-        """Find creators suitable for collaboration"""
+        """
+Find creators suitable for collaboration"""
         try:
             if not self.collaboration_service:
                 return []
@@ -900,17 +909,20 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
         pass
     
     async def _calculate_creator_analytics_async(self, creator_id: str) -> CreatorAnalytics:
-        """Calculate creator analytics asynchronously"""
+        """
+Calculate creator analytics asynchronously"""
         # Async version of analytics calculation
         pass
     
     async def _generate_creator_recommendations_async(self, creator: CreatorModel) -> List[str]:
-        """Generate creator recommendations asynchronously"""
+        """
+Generate creator recommendations asynchronously"""
         # Async version of recommendation generation
         pass
     
     def _generate_creator_id(self, username: str) -> str:
-        """Generate unique creator ID"""
+        """
+Generate unique creator ID"""
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
         username_hash = hashlib.md5(username.encode()).hexdigest()[:8]
         return f"creator_{timestamp}_{username_hash}"

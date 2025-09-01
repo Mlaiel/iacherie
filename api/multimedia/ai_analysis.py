@@ -15,6 +15,7 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -52,7 +53,8 @@ settings = get_settings()
 
 @dataclass
 class AnalysisResult:
-    """Base analysis result structure"""
+    """
+Base analysis result structure"""
     content_type: str
     confidence: float
     processing_time: float
@@ -62,7 +64,8 @@ class AnalysisResult:
 
 @dataclass 
 class SceneAnalysis(AnalysisResult):
-    """Scene detection analysis results"""
+    """
+Scene detection analysis results"""
     scenes: List[Dict[str, Any]] = field(default_factory=list)
     scene_changes: List[float] = field(default_factory=list)
     dominant_colors: List[str] = field(default_factory=list)
@@ -81,7 +84,8 @@ class ObjectAnalysis(AnalysisResult):
 
 @dataclass
 class SentimentAnalysis(AnalysisResult):
-    """Sentiment and emotion analysis results"""
+    """
+Sentiment and emotion analysis results"""
     overall_sentiment: str
     sentiment_score: float
     emotions: Dict[str, float] = field(default_factory=dict)
@@ -92,7 +96,8 @@ class SentimentAnalysis(AnalysisResult):
 
 @dataclass
 class AudioAnalysis(AnalysisResult):
-    """Audio content analysis results"""
+    """
+Audio content analysis results"""
     genre_predictions: Dict[str, float] = field(default_factory=dict)
     tempo: float = 0.0
     key_signature: str = "unknown"
@@ -112,16 +117,19 @@ class BaseAnalyzer(ABC):
         
     @abstractmethod
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> AnalysisResult:
-        """Analyze content and return results"""
+        """
+Analyze content and return results"""
         pass
     
     @abstractmethod
     def load_models(self) -> None:
-        """Load required AI models"""
+        """
+Load required AI models"""
         pass
     
     async def _ensure_models_loaded(self) -> None:
-        """Ensure models are loaded before analysis"""
+        """
+Ensure models are loaded before analysis"""
         if not self._models_loaded:
             await asyncio.get_event_loop().run_in_executor(
                 self.executor, self.load_models
@@ -130,7 +138,8 @@ class BaseAnalyzer(ABC):
 
 
 class ContentAnalyzer(BaseAnalyzer):
-    """Main content analyzer orchestrating different analysis types"""
+    """
+Main content analyzer orchestrating different analysis types"""
     
     def __init__(self):
         super().__init__()
@@ -145,7 +154,8 @@ class ContentAnalyzer(BaseAnalyzer):
         content_format: ContentFormat,
         options: Dict[str, Any] = None
     ) -> Dict[str, AnalysisResult]:
-        """Comprehensive analysis for all content types"""
+        """
+Comprehensive analysis for all content types"""
         options = options or {}
         results = {}
         
@@ -198,7 +208,8 @@ class ContentAnalyzer(BaseAnalyzer):
                 return audio_file.read()
     
     async def _transcribe_audio(self, audio_content: bytes) -> str:
-        """Transcribe audio content to text"""
+        """
+Transcribe audio content to text"""
         # Implementation for speech-to-text
         import speech_recognition as sr
         import tempfile
@@ -220,7 +231,8 @@ class ContentAnalyzer(BaseAnalyzer):
         return await self.analyze_comprehensive(content, ContentFormat.detect(content), options)
     
     def load_models(self) -> None:
-        """Load all required models"""
+        """
+Load all required models"""
         self.scene_detector.load_models()
         self.object_detector.load_models()
         self.sentiment_analyzer.load_models()
@@ -228,7 +240,8 @@ class ContentAnalyzer(BaseAnalyzer):
 
 
 class SceneDetector(BaseAnalyzer):
-    """Advanced scene detection and video analysis"""
+    """
+Advanced scene detection and video analysis"""
     
     def __init__(self):
         super().__init__()
@@ -236,7 +249,8 @@ class SceneDetector(BaseAnalyzer):
         self.face_cascade = None
         
     def load_models(self) -> None:
-        """Load scene detection models"""
+        """
+Load scene detection models"""
         try:
             # Load OpenCV cascade for face detection
             self.face_cascade = cv2.CascadeClassifier(
@@ -302,7 +316,8 @@ class SceneDetector(BaseAnalyzer):
             return await self._analyze_video_file(temp_file.name, options)
     
     async def _analyze_video_file(self, video_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video file for scenes and content"""
+        """
+Analyze video file for scenes and content"""
         results = {
             "scenes": [],
             "scene_changes": [],
@@ -437,7 +452,8 @@ class SceneDetector(BaseAnalyzer):
         return float(np.mean(motion_values)) if motion_values else 0.0
     
     async def _analyze_lighting(self, frames: List[np.ndarray]) -> str:
-        """Analyze lighting conditions in frames"""
+        """
+Analyze lighting conditions in frames"""
         brightness_values = []
         
         for frame in frames[::max(1, len(frames)//20)]:  # Sample frames
@@ -471,7 +487,8 @@ class ObjectDetector(BaseAnalyzer):
         self.face_recognition_model = None
         
     def load_models(self) -> None:
-        """Load object detection models"""
+        """
+Load object detection models"""
         try:
             # Load YOLO for object detection
             import torch
@@ -717,7 +734,8 @@ class SentimentAnalyzer(BaseAnalyzer):
         self.nlp = None
         
     def load_models(self) -> None:
-        """Load sentiment analysis models"""
+        """
+Load sentiment analysis models"""
         try:
             # Load transformers pipelines
             self.text_classifier = pipeline("sentiment-analysis", 
@@ -954,7 +972,8 @@ class AudioContentAnalyzer(BaseAnalyzer):
         self.speech_recognizer = None
         
     def load_models(self) -> None:
-        """Load audio analysis models"""
+        """
+Load audio analysis models"""
         try:
             # Load audio classification models
             self.genre_classifier = pipeline("audio-classification", 
@@ -1031,7 +1050,8 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return audio_data, sample_rate
     
     async def _extract_tempo(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Extract tempo (BPM) from audio"""
+        """
+Extract tempo (BPM) from audio"""
         try:
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
             return float(tempo)

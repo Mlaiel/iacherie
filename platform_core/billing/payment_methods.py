@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 GESTION DES MÉTHODES DE PAIEMENT
@@ -15,6 +15,7 @@ Système de gestion sécurisée des moyens de paiement clients
 - Validation en temps réel et scoring de risque
 - Backup automatique et retry intelligent
 """
+
 import asyncio
 import json
 import logging
@@ -33,7 +34,9 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class PaymentMethodType(Enum):
-    """Types de méthodes de paiement"""
+    """
+Types de méthodes de paiement"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -44,6 +47,7 @@ class PaymentMethodType(Enum):
 
 class CardBrand(Enum):
     """Marques de cartes"""
+
     VISA = "visa"
     MASTERCARD = "mastercard"
     AMEX = "amex"
@@ -54,6 +58,7 @@ class CardBrand(Enum):
 
 class PaymentMethodStatus(Enum):
     """États des méthodes de paiement"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     EXPIRED = "expired"
@@ -117,14 +122,16 @@ class PaymentMethod:
         
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès"""
+        """
+Calcule le taux de succès"""
         total = self.successful_payments + self.failed_payments
         if total == 0:
             return 1.0
         return self.successful_payments / total
 
 class PaymentMethodManager:
-    """Gestionnaire des méthodes de paiement"""
+    """
+Gestionnaire des méthodes de paiement"""
     
     def __init__(self, 
                  encryption_key: Optional[bytes] = None,
@@ -145,7 +152,8 @@ class PaymentMethodManager:
                                method_type: PaymentMethodType,
                                provider_token: str,
                                **kwargs) -> PaymentMethod:
-        """Ajoute une nouvelle méthode de paiement"""
+        """
+Ajoute une nouvelle méthode de paiement"""
         
         payment_method = PaymentMethod(
             customer_id=customer_id,
@@ -189,7 +197,8 @@ class PaymentMethodManager:
         return None
         
     async def get_customer_payment_methods(self, customer_id: str) -> List[PaymentMethod]:
-        """Récupère toutes les méthodes de paiement d'un client"""
+        """
+Récupère toutes les méthodes de paiement d'un client"""
         methods = []
         
         # Chercher dans le cache
@@ -210,7 +219,8 @@ class PaymentMethodManager:
         return methods
         
     async def set_default_payment_method(self, customer_id: str, payment_method_id: str) -> bool:
-        """Définit la méthode de paiement par défaut"""
+        """
+Définit la méthode de paiement par défaut"""
         # Récupérer toutes les méthodes du client
         customer_methods = await self.get_customer_payment_methods(customer_id)
         
@@ -313,7 +323,8 @@ class PaymentMethodManager:
             await self._save_payment_method(method)
             
     def _generate_fingerprint(self, method: PaymentMethod) -> str:
-        """Génère une empreinte unique pour la méthode de paiement"""
+        """
+Génère une empreinte unique pour la méthode de paiement"""
         # Combiner des éléments non sensibles pour créer une empreinte
         fingerprint_data = f"{method.customer_id}:{method.method_type.value}:{method.last_four}:{method.brand.value if method.brand else 'none'}"
         return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
@@ -323,11 +334,13 @@ class PaymentMethodManager:
         return base64.b64encode(self.cipher_suite.encrypt(data.encode())).decode()
         
     def _decrypt_sensitive_data(self, encrypted_data: str) -> str:
-        """Déchiffre les données sensibles"""
+        """
+Déchiffre les données sensibles"""
         return self.cipher_suite.decrypt(base64.b64decode(encrypted_data.encode())).decode()
         
     def _calculate_risk_score(self, method: PaymentMethod) -> float:
-        """Calcule le score de risque d'une méthode de paiement"""
+        """
+Calcule le score de risque d'une méthode de paiement"""
         score = 0.0
         
         # Facteurs de risque
@@ -347,7 +360,8 @@ class PaymentMethodManager:
         return min(1.0, max(0.0, score))
         
     async def _save_payment_method(self, method: PaymentMethod):
-        """Sauvegarde une méthode de paiement en base"""
+        """
+Sauvegarde une méthode de paiement en base"""
         try:
             logger.info(f"Saving payment method {method.payment_method_id} for customer {method.customer_id}")
             
@@ -445,13 +459,15 @@ class PaymentMethodManager:
         return None
         
     async def _load_customer_payment_methods(self, customer_id: str) -> List[PaymentMethod]:
-        """Charge toutes les méthodes de paiement d'un client"""
+        """
+Charge toutes les méthodes de paiement d'un client"""
         # Implémentation de chargement
         return []
 
 @dataclass
 class RefundRequest:
-    """Demande de remboursement"""
+    """
+Demande de remboursement"""
     refund_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     payment_id: str = ""
     customer_id: str = ""
@@ -593,7 +609,8 @@ class RefundManager:
         return True
         
     async def _process_refund(self, request: RefundRequest) -> bool:
-        """Traite un remboursement approuvé"""
+        """
+Traite un remboursement approuvé"""
         try:
             # Utiliser le processeur de paiement pour effectuer le remboursement
             response = await self.payment_processor.refund_payment(

@@ -5,9 +5,10 @@ Main validation engine and registry system for coordinating all validators
 in the IA Influencer Agent Platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union, Callable
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationMode(Enum):
-    """Validation execution modes."""
+    """
+Validation execution modes."""
+
     SYNC = "sync"
     ASYNC = "async"
     PARALLEL = "parallel"
@@ -32,6 +35,7 @@ class ValidationMode(Enum):
 
 class ValidationPriority(Enum):
     """Validation priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -97,7 +101,8 @@ class ValidatorInfo:
 
 @dataclass
 class ValidationRequest:
-    """Validation request structure."""
+    """
+Validation request structure."""
     request_id: str
     validator_name: str
     data: Any
@@ -109,7 +114,8 @@ class ValidationRequest:
 
 @dataclass
 class ValidationResponse:
-    """Validation response structure."""
+    """
+Validation response structure."""
     request_id: str
     validator_name: str
     result: Any
@@ -128,7 +134,8 @@ class ValidatorRegistry:
     """
     
     def __init__(self):
-        """Initialize validator registry."""
+        """
+Initialize validator registry."""
         self._validators: Dict[str, ValidatorInfo] = {}
         self._instances: Dict[str, Any] = {}
         self._locks: Dict[str, asyncio.Lock] = {}
@@ -287,7 +294,8 @@ class ValidatorRegistry:
         ]
     
     def enable_validator(self, name: str) -> None:
-        """Enable a validator."""
+        """
+Enable a validator."""
         if name in self._validators:
             self._validators[name].enabled = True
             logger.info(f"Enabled validator: {name}")
@@ -641,7 +649,8 @@ class ValidationManager:
         return self._stats.copy()
     
     def clear_cache(self) -> None:
-        """Clear validation cache."""
+        """
+Clear validation cache."""
         self._results_cache.clear()
         logger.info("Validation cache cleared")
     
@@ -866,7 +875,8 @@ class ValidationEngine:
         self.registry.register_validator(name, validator_class, **kwargs)
     
     def get_available_validators(self) -> List[str]:
-        """Get list of available validators."""
+        """
+Get list of available validators."""
         return self.registry.get_available_validators()
     
     def update_config(self, config: Dict[str, Any]) -> None:
@@ -887,7 +897,8 @@ class ValidationEngine:
         return self.manager.get_statistics()
     
     def clear_cache(self) -> None:
-        """Clear validation cache."""
+        """
+Clear validation cache."""
         self.manager.clear_cache()
     
     async def health_check(self) -> Dict[str, Any]:

@@ -4,8 +4,9 @@ Professional spectral analysis engine providing comprehensive frequency domain
 analysis, spectral feature extraction, and advanced signal processing capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -19,7 +20,9 @@ from scipy.fft import fft, fftfreq
 
 
 class WindowType(Enum):
-    """Audio window types for spectral analysis"""
+    """
+Audio window types for spectral analysis"""
+
     HANN = "hann"
     HAMMING = "hamming"
     BLACKMAN = "blackman"
@@ -29,6 +32,7 @@ class WindowType(Enum):
 
 class SpectralFeatureType(Enum):
     """Types of spectral features to extract"""
+
     CENTROID = "spectral_centroid"
     ROLLOFF = "spectral_rolloff"
     BANDWIDTH = "spectral_bandwidth"
@@ -216,7 +220,8 @@ class SpectralAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute_fft)
     
     async def _extract_spectral_features(self, audio_data: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract comprehensive spectral features"""
+        """
+Extract comprehensive spectral features"""
         def extract_features():
             features = {}
             
@@ -257,7 +262,8 @@ class SpectralAnalyzer:
                           frequency_bins: np.ndarray,
                           min_height_ratio: float = 0.1,
                           max_peaks: int = 20) -> List[Tuple[float, float]]:
-        """Detect spectral peaks"""
+        """
+Detect spectral peaks"""
         def detect_peaks():
             # Find peaks
             threshold = np.max(magnitude_spectrum) * min_height_ratio
@@ -284,7 +290,8 @@ class SpectralAnalyzer:
     async def _compute_energy_distribution(self, 
                                          power_spectrum: np.ndarray, 
                                          frequency_bins: np.ndarray) -> Dict[str, float]:
-        """Compute energy distribution across frequency bands"""
+        """
+Compute energy distribution across frequency bands"""
         def compute_energy():
             total_energy = np.sum(power_spectrum)
             energy_distribution = {}
@@ -302,7 +309,8 @@ class SpectralAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute_energy)
     
     async def _analyze_harmonics(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze harmonic content"""
+        """
+Analyze harmonic content"""
         def analyze():
             harmonic_analysis = {}
             

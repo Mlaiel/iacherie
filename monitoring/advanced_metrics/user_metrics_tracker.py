@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class UserActivityType(Enum):
-    """Types of user activities for tracking"""
+    """
+Types of user activities for tracking"""
+
     LOGIN = "login"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_VIEW = "content_view"
@@ -40,6 +43,7 @@ class UserActivityType(Enum):
 
 class RetentionPeriod(Enum):
     """Retention analysis periods"""
+
     DAY_1 = "1_day"
     DAY_7 = "7_days"
     DAY_30 = "30_days"
@@ -62,7 +66,8 @@ class UserActivity:
 
 @dataclass
 class MAUMetrics:
-    """Monthly Active Users metrics"""
+    """
+Monthly Active Users metrics"""
     total_mau: int
     new_users_this_month: int
     returning_users: int
@@ -75,7 +80,8 @@ class MAUMetrics:
 
 @dataclass
 class DAUMetrics:
-    """Daily Active Users metrics"""
+    """
+Daily Active Users metrics"""
     total_dau: int
     new_users_today: int
     returning_users_today: int
@@ -89,7 +95,8 @@ class DAUMetrics:
 
 @dataclass
 class RetentionMetrics:
-    """User retention analysis metrics"""
+    """
+User retention analysis metrics"""
     retention_rates: Dict[RetentionPeriod, float]
     cohort_analysis: Dict[str, Dict[str, float]]
     churn_rate: float
@@ -101,7 +108,8 @@ class RetentionMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """Comprehensive user engagement metrics"""
+    """
+Comprehensive user engagement metrics"""
     avg_session_duration: float
     avg_daily_sessions_per_user: float
     content_engagement_rate: float
@@ -433,15 +441,18 @@ class UserMetricsTracker:
         return int(2500 + 500 * np.random.random())
     
     async def _get_mau_for_period(self, start_time: datetime, end_time: datetime) -> int:
-        """Get MAU count for a specific period"""
+        """
+Get MAU count for a specific period"""
         return int(14500 + 1000 * np.random.random())
     
     async def _get_dau_for_period(self, start_time: datetime, end_time: datetime) -> int:
-        """Get DAU count for a specific period"""
+        """
+Get DAU count for a specific period"""
         return int(3500 + 500 * np.random.random())
     
     async def _calculate_dau_by_platform(self, start_time: datetime, end_time: datetime) -> Dict[str, int]:
-        """Calculate DAU broken down by platform"""
+        """
+Calculate DAU broken down by platform"""
         return {
             "spotify": 1200,
             "youtube": 1800,
@@ -466,7 +477,8 @@ class UserMetricsTracker:
         return int(850 + 150 * np.random.random())
     
     async def _calculate_retention_rate(self, analysis_date: datetime, period: RetentionPeriod) -> float:
-        """Calculate retention rate for a specific period"""
+        """
+Calculate retention rate for a specific period"""
         # Simulated retention rates based on industry standards
         retention_rates = {
             RetentionPeriod.DAY_1: 0.85,
@@ -479,7 +491,8 @@ class UserMetricsTracker:
         return retention_rates.get(period, 0.0) + (np.random.random() - 0.5) * 0.1
     
     async def _calculate_cohort_analysis(self, analysis_date: datetime) -> Dict[str, Dict[str, float]]:
-        """Calculate cohort retention analysis"""
+        """
+Calculate cohort retention analysis"""
         return {
             "2024-01": {"day_1": 0.85, "day_7": 0.70, "day_30": 0.48},
             "2024-02": {"day_1": 0.87, "day_7": 0.72, "day_30": 0.51},
@@ -491,7 +504,8 @@ class UserMetricsTracker:
         return 0.032 + (np.random.random() - 0.5) * 0.01  # ~3.2% churn rate
     
     async def _calculate_lifecycle_distribution(self, analysis_date: datetime) -> Dict[str, int]:
-        """Calculate user lifecycle stage distribution"""
+        """
+Calculate user lifecycle stage distribution"""
         return {
             "new": 2500,
             "active": 8500,
@@ -522,19 +536,23 @@ class UserMetricsTracker:
         return 1250.5 + (np.random.random() - 0.5) * 200  # ~20 minutes average
     
     async def _calculate_avg_daily_sessions_per_user(self, start_time: datetime, end_time: datetime) -> float:
-        """Calculate average daily sessions per user"""
+        """
+Calculate average daily sessions per user"""
         return 2.8 + (np.random.random() - 0.5) * 0.5  # ~2.8 sessions per day
     
     async def _calculate_content_engagement_rate(self, start_time: datetime, end_time: datetime) -> float:
-        """Calculate content engagement rate"""
+        """
+Calculate content engagement rate"""
         return 0.425 + (np.random.random() - 0.5) * 0.1  # ~42.5% engagement rate
     
     async def _calculate_collaboration_participation_rate(self, start_time: datetime, end_time: datetime) -> float:
-        """Calculate collaboration participation rate"""
+        """
+Calculate collaboration participation rate"""
         return 0.185 + (np.random.random() - 0.5) * 0.05  # ~18.5% collaboration rate
     
     async def _calculate_platform_distribution(self, start_time: datetime, end_time: datetime) -> Dict[str, float]:
-        """Calculate user distribution across platforms"""
+        """
+Calculate user distribution across platforms"""
         return {
             "spotify": 0.28,
             "youtube": 0.32,
@@ -557,22 +575,26 @@ class UserMetricsTracker:
         return 7.8 + (np.random.random() - 0.5) * 1.0  # Score out of 10
     
     async def _store_activity(self, activity: UserActivity) -> None:
-        """Store user activity in database"""
+        """
+Store user activity in database"""
         # In production, this would store in database
         pass
     
     async def _update_activity_cache(self, activity: UserActivity) -> None:
-        """Update real-time activity cache"""
+        """
+Update real-time activity cache"""
         if activity.user_id not in self.activity_cache:
             self.activity_cache[activity.user_id] = []
         self.activity_cache[activity.user_id].append(activity)
     
     async def _initialize_data_connections(self) -> None:
-        """Initialize database and cache connections"""
+        """
+Initialize database and cache connections"""
         # In production, this would initialize actual connections
         pass
     
     async def _setup_activity_tracking(self) -> None:
-        """Setup real-time activity tracking"""
+        """
+Setup real-time activity tracking"""
         # In production, this would setup event listeners
         pass

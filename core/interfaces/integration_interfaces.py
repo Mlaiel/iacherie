@@ -4,8 +4,9 @@ Defines interfaces for third-party integrations, API clients,
 webhooks, data synchronization and migration operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple, Callable
 from datetime import datetime
@@ -14,7 +15,9 @@ import asyncio
 
 
 class IntegrationType(Enum):
-    """Types of third-party integrations."""
+    """
+Types of third-party integrations."""
+
     STREAMING_PLATFORM = "streaming_platform"
     SOCIAL_MEDIA = "social_media"
     PAYMENT_PROCESSOR = "payment_processor"
@@ -28,6 +31,7 @@ class IntegrationType(Enum):
 
 class SyncStrategy(Enum):
     """Data synchronization strategies."""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     INCREMENTAL = "incremental"
@@ -38,6 +42,7 @@ class SyncStrategy(Enum):
 
 class APIMethod(Enum):
     """HTTP API methods."""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -49,6 +54,7 @@ class APIMethod(Enum):
 
 class WebhookEvent(Enum):
     """Webhook event types."""
+
     USER_CREATED = "user_created"
     CONTENT_UPLOADED = "content_uploaded"
     PAYMENT_PROCESSED = "payment_processed"
@@ -61,6 +67,7 @@ class WebhookEvent(Enum):
 
 class SyncStatus(Enum):
     """Data synchronization status."""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -98,7 +105,8 @@ class ThirdPartyIntegrationInterface(ABC):
         integration_id: str,
         auth_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure authentication for integration."""
+        """
+Configure authentication for integration."""
         pass
     
     @abstractmethod
@@ -106,7 +114,8 @@ class ThirdPartyIntegrationInterface(ABC):
         self,
         integration_id: str
     ) -> Dict[str, Any]:
-        """Test connection to third-party service."""
+        """
+Test connection to third-party service."""
         pass
     
     @abstractmethod
@@ -115,7 +124,8 @@ class ThirdPartyIntegrationInterface(ABC):
         integration_id: str,
         updated_config: Dict[str, Any]
     ) -> bool:
-        """Update integration configuration."""
+        """
+Update integration configuration."""
         pass
     
     @abstractmethod
@@ -124,7 +134,8 @@ class ThirdPartyIntegrationInterface(ABC):
         integration_id: str,
         disable_reason: str
     ) -> bool:
-        """Temporarily disable integration."""
+        """
+Temporarily disable integration."""
         pass
     
     @abstractmethod
@@ -133,12 +144,14 @@ class ThirdPartyIntegrationInterface(ABC):
         integration_id: str,
         cleanup_data: bool = False
     ) -> bool:
-        """Permanently remove integration."""
+        """
+Permanently remove integration."""
         pass
 
 
 class APIClientInterface(ABC):
-    """Interface for API client operations."""
+    """
+Interface for API client operations."""
     
     @abstractmethod
     async def make_api_request(
@@ -172,7 +185,8 @@ class APIClientInterface(ABC):
         api_name: str,
         rate_limit_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle API rate limiting and backoff strategies."""
+        """
+Handle API rate limiting and backoff strategies."""
         pass
     
     @abstractmethod
@@ -181,7 +195,8 @@ class APIClientInterface(ABC):
         request_id: str,
         retry_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Retry failed API request with exponential backoff."""
+        """
+Retry failed API request with exponential backoff."""
         pass
     
     @abstractmethod
@@ -190,7 +205,8 @@ class APIClientInterface(ABC):
         response_data: Dict[str, Any],
         expected_schema: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Validate API response against expected schema."""
+        """
+Validate API response against expected schema."""
         pass
     
     @abstractmethod
@@ -200,7 +216,8 @@ class APIClientInterface(ABC):
         response_data: Dict[str, Any],
         cache_duration: int
     ) -> bool:
-        """Cache API response for performance optimization."""
+        """
+Cache API response for performance optimization."""
         pass
     
     @abstractmethod
@@ -209,12 +226,14 @@ class APIClientInterface(ABC):
         api_name: str,
         performance_metrics: Dict[str, float]
     ) -> bool:
-        """Monitor and log API performance metrics."""
+        """
+Monitor and log API performance metrics."""
         pass
 
 
 class WebhookInterface(ABC):
-    """Interface for webhook management."""
+    """
+Interface for webhook management."""
     
     @abstractmethod
     async def register_webhook_endpoint(
@@ -243,7 +262,8 @@ class WebhookInterface(ABC):
         event_type: WebhookEvent,
         event_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Send webhook notification for event."""
+        """
+Send webhook notification for event."""
         pass
     
     @abstractmethod
@@ -253,7 +273,8 @@ class WebhookInterface(ABC):
         signature: str,
         secret_key: str
     ) -> bool:
-        """Verify webhook payload signature for security."""
+        """
+Verify webhook payload signature for security."""
         pass
     
     @abstractmethod
@@ -262,7 +283,8 @@ class WebhookInterface(ABC):
         webhook_id: str,
         failure_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle webhook delivery failures and retries."""
+        """
+Handle webhook delivery failures and retries."""
         pass
     
     @abstractmethod
@@ -271,7 +293,8 @@ class WebhookInterface(ABC):
         webhook_id: str,
         updated_config: Dict[str, Any]
     ) -> bool:
-        """Update webhook configuration and event subscriptions."""
+        """
+Update webhook configuration and event subscriptions."""
         pass
     
     @abstractmethod
@@ -280,12 +303,14 @@ class WebhookInterface(ABC):
         webhook_id: str,
         deactivation_reason: str
     ) -> bool:
-        """Deactivate webhook endpoint."""
+        """
+Deactivate webhook endpoint."""
         pass
 
 
 class DataSyncInterface(ABC):
-    """Interface for data synchronization operations."""
+    """
+Interface for data synchronization operations."""
     
     @abstractmethod
     async def initiate_data_sync(
@@ -312,7 +337,8 @@ class DataSyncInterface(ABC):
         self,
         sync_job_id: str
     ) -> Dict[str, Any]:
-        """Monitor data synchronization progress."""
+        """
+Monitor data synchronization progress."""
         pass
     
     @abstractmethod
@@ -321,7 +347,8 @@ class DataSyncInterface(ABC):
         sync_job_id: str,
         conflict_resolution: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve data conflicts during synchronization."""
+        """
+Resolve data conflicts during synchronization."""
         pass
     
     @abstractmethod
@@ -330,7 +357,8 @@ class DataSyncInterface(ABC):
         sync_job_id: str,
         validation_rules: List[Dict[str, Any]]
     ) -> Dict[str, bool]:
-        """Validate data integrity after synchronization."""
+        """
+Validate data integrity after synchronization."""
         pass
     
     @abstractmethod
@@ -339,7 +367,8 @@ class DataSyncInterface(ABC):
         sync_schedule: Dict[str, Any],
         sync_targets: List[str]
     ) -> str:
-        """Schedule recurring data synchronization."""
+        """
+Schedule recurring data synchronization."""
         pass
     
     @abstractmethod
@@ -348,12 +377,14 @@ class DataSyncInterface(ABC):
         sync_job_id: str,
         rollback_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Rollback data synchronization operation."""
+        """
+Rollback data synchronization operation."""
         pass
 
 
 class MigrationInterface(ABC):
-    """Interface for data migration operations."""
+    """
+Interface for data migration operations."""
     
     @abstractmethod
     async def plan_data_migration(
@@ -380,7 +411,8 @@ class MigrationInterface(ABC):
         step_id: str,
         execution_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute specific migration step."""
+        """
+Execute specific migration step."""
         pass
     
     @abstractmethod
@@ -389,7 +421,8 @@ class MigrationInterface(ABC):
         migration_plan_id: str,
         validation_criteria: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate migration results against criteria."""
+        """
+Validate migration results against criteria."""
         pass
     
     @abstractmethod
@@ -398,7 +431,8 @@ class MigrationInterface(ABC):
         migration_plan_id: str,
         error_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle and resolve migration errors."""
+        """
+Handle and resolve migration errors."""
         pass
     
     @abstractmethod
@@ -407,7 +441,8 @@ class MigrationInterface(ABC):
         migration_plan_id: str,
         finalization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Finalize migration and cleanup temporary resources."""
+        """
+Finalize migration and cleanup temporary resources."""
         pass
     
     @abstractmethod
@@ -416,5 +451,6 @@ class MigrationInterface(ABC):
         migration_plan_id: str,
         backup_config: Dict[str, Any]
     ) -> str:
-        """Create backup before migration execution."""
+        """
+Create backup before migration execution."""
         pass

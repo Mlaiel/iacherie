@@ -22,6 +22,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue sources for content creators"""
+    """
+Revenue sources for content creators"""
+
     SPOTIFY_STREAMS = "spotify_streams"
     YOUTUBE_MONETIZATION = "youtube_monetization"
     TIKTOK_CREATOR_FUND = "tiktok_creator_fund"
@@ -55,6 +58,7 @@ class RevenueSource(Enum):
 
 class RevenueCurrency(Enum):
     """Supported revenue currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -65,6 +69,7 @@ class RevenueCurrency(Enum):
 
 class RevenueStatus(Enum):
     """Revenue transaction statuses"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     PAID = "paid"
@@ -93,7 +98,8 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueAnalytics:
-    """Comprehensive revenue analytics"""
+    """
+Comprehensive revenue analytics"""
     creator_id: str
     time_period: str
     total_gross_revenue: Decimal
@@ -110,7 +116,8 @@ class RevenueAnalytics:
 
 @dataclass
 class RevenueProtectionMetrics:
-    """Revenue protection effectiveness metrics"""
+    """
+Revenue protection effectiveness metrics"""
     protection_id: str
     creator_id: str
     content_id: str
@@ -125,7 +132,8 @@ class RevenueProtectionMetrics:
 
 @dataclass
 class CollaborationRevenue:
-    """Collaboration revenue sharing data"""
+    """
+Collaboration revenue sharing data"""
     collaboration_id: str
     primary_creator_id: str
     collaborator_ids: List[str]
@@ -816,7 +824,8 @@ class RealtimeRevenueMonitor:
             return amount  # Return original if conversion fails
     
     async def get_creator_revenue_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get revenue summary for a creator"""
+        """
+Get revenue summary for a creator"""
         
         revenue_data = self._realtime_revenue.get(creator_id, {})
         analytics = self._revenue_analytics.get(creator_id)

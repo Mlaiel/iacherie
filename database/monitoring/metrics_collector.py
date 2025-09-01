@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ from ...utils.time_series import TimeSeriesStorage
 
 
 class MetricType(Enum):
-    """Database metric types"""
+    """
+Database metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -45,6 +48,7 @@ class MetricType(Enum):
 
 class MetricCategory(Enum):
     """Metric categories for organization"""
+
     PERFORMANCE = "performance"
     CONNECTIONS = "connections"
     QUERIES = "queries"
@@ -71,7 +75,8 @@ class MetricDefinition:
     aggregations: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['category'] = self.category.value
         data['metric_type'] = self.metric_type.value
@@ -80,7 +85,8 @@ class MetricDefinition:
 
 @dataclass
 class MetricValue:
-    """Single metric value with timestamp"""
+    """
+Single metric value with timestamp"""
     name: str
     value: Union[float, int]
     timestamp: datetime
@@ -88,7 +94,8 @@ class MetricValue:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
@@ -96,7 +103,8 @@ class MetricValue:
 
 @dataclass
 class MetricSummary:
-    """Metric summary statistics"""
+    """
+Metric summary statistics"""
     name: str
     period_start: datetime
     period_end: datetime
@@ -109,7 +117,8 @@ class MetricSummary:
     percentiles: Dict[str, float] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['period_start'] = self.period_start.isoformat()
         data['period_end'] = self.period_end.isoformat()
@@ -629,7 +638,8 @@ class MetricsCollector:
         return sorted_values[lower_index] * (1 - weight) + sorted_values[upper_index] * weight
     
     async def get_all_metrics(self, category: MetricCategory = None) -> Dict[str, Any]:
-        """Get all current metric values"""
+        """
+Get all current metric values"""
         try:
             metrics = {}
             
@@ -657,7 +667,8 @@ class MetricsCollector:
         }
     
     async def get_alerts(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent metric alerts"""
+        """
+Get recent metric alerts"""
         try:
             alerts_data = await self.cache.lrange("metrics:alerts", 0, limit - 1)
             return [json.loads(alert) for alert in alerts_data]

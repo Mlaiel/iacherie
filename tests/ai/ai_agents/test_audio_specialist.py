@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for AudioSpecialistAgent
+"""
+Comprehensive Tests for AudioSpecialistAgent
 
 Industrial-grade testing for audio processing, voice synthesis, music generation,
 audio enhancement, and podcast production capabilities.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -46,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class TestableAudioSpecialistAgent(AudioSpecialistAgent):
-    """Extended audio specialist agent for testing"""
+    """
+Extended audio specialist agent for testing"""
     
     async def generate_synthetic_audio(self, duration: float, format: str = "wav") -> bytes:
         """Generate synthetic audio for testing"""
@@ -77,7 +81,8 @@ class TestAudioSpecialistAgent:
     
     @pytest.fixture
     def audio_config(self) -> AgentConfiguration:
-        """Audio specialist agent configuration"""
+        """
+Audio specialist agent configuration"""
         return AgentConfiguration(
             agent_id="audio_specialist_test",
             agent_name="Test Audio Specialist Agent",
@@ -117,7 +122,8 @@ class TestAudioSpecialistAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, audio_config):
-        """Test audio specialist agent initialization"""
+        """
+Test audio specialist agent initialization"""
         agent = TestableAudioSpecialistAgent(audio_config)
         
         # Before initialization

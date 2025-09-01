@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class TenantType(Enum):
-    """Content creator tenant types"""
+    """
+Content creator tenant types"""
+
     INDIVIDUAL_ARTIST = "individual_artist"
     MUSIC_LABEL = "music_label"
     CONTENT_AGENCY = "content_agency"
@@ -390,12 +393,14 @@ class TenantConnectionManager:
         pass
     
     async def _initialize_mongodb_tenant(self, tenant_config: TenantConfig):
-        """Initialize MongoDB collections with tenant prefix."""
+        """
+Initialize MongoDB collections with tenant prefix."""
         # Implementation for MongoDB tenant initialization
         pass
     
     async def _setup_redis_namespace(self, tenant_config: TenantConfig):
-        """Setup Redis key namespace for tenant."""
+        """
+Setup Redis key namespace for tenant."""
         # Implementation for Redis namespace setup
         pass
     
@@ -405,7 +410,8 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         database_type: str
     ) -> str:
-        """Inject tenant context into database queries."""
+        """
+Inject tenant context into database queries."""
         if database_type == "postgresql":
             # Prepend schema name to table references
             return f"SET search_path TO {tenant_config.schema_name}; {query}"
@@ -455,12 +461,14 @@ class TenantConnectionManager:
         pass
     
     async def _setup_tenant_monitoring(self, tenant_id: str):
-        """Setup monitoring for tenant connections."""
+        """
+Setup monitoring for tenant connections."""
         # Implementation for tenant monitoring setup
         pass
     
     async def _get_tenant_resource_usage(self, tenant_id: str) -> Dict[str, Any]:
-        """Get detailed resource usage for tenant."""
+        """
+Get detailed resource usage for tenant."""
         return {
             "cpu_usage": 0.0,
             "memory_usage": 0.0,
@@ -477,7 +485,8 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         overrides: Dict[str, Any]
     ):
-        """Apply configuration overrides to tenant config."""
+        """
+Apply configuration overrides to tenant config."""
         for key, value in overrides.items():
             if hasattr(tenant_config, key):
                 setattr(tenant_config, key, value)
@@ -489,7 +498,8 @@ class TenantConnectionManager:
         collaborators: List[str],
         permissions: Dict[str, List[str]]
     ) -> Dict[str, Any]:
-        """Setup shared namespace for collaboration."""
+        """
+Setup shared namespace for collaboration."""
         return {
             "collaboration_id": collaboration_id,
             "namespace": f"collab_{collaboration_id}",
@@ -521,7 +531,8 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> AsyncIOMotorClient:
-        """Get MongoDB connection with tenant database."""
+        """
+Get MongoDB connection with tenant database."""
         # Implementation for MongoDB connection
         pass
     
@@ -530,7 +541,8 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> Redis:
-        """Get Redis connection with tenant namespace."""
+        """
+Get Redis connection with tenant namespace."""
         # Implementation for Redis connection
         pass
     
@@ -539,6 +551,7 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> Any:
-        """Get Elasticsearch connection with tenant index."""
+        """
+Get Elasticsearch connection with tenant index."""
         # Implementation for Elasticsearch connection
         pass

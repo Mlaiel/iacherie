@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class PatreonPlatform(PlatformBase):
-    """Patreon platform integration"""
+    """
+Patreon platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Patreon platform"""
+        """
+Initialize Patreon platform"""
         super().__init__(config)
         self.api_base = "https://www.patreon.com/api/oauth2/v2"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -39,7 +42,8 @@ class PatreonPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Patreon OAuth2"""
+        """
+Authenticate with Patreon OAuth2"""
         try:
             access_token = self.config.credentials.get('access_token')
             

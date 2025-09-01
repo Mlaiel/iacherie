@@ -20,6 +20,7 @@ Features:
 - Product image fingerprinting
 - Category and trend analysis
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -49,7 +50,8 @@ settings = get_settings()
 
 @dataclass
 class EcommerceProduct:
-    """E-commerce product data structure."""
+    """
+E-commerce product data structure."""
     product_id: str
     platform: str
     title: str
@@ -74,7 +76,8 @@ class EcommerceProduct:
 
 @dataclass
 class EcommerceSeller:
-    """E-commerce seller data structure."""
+    """
+E-commerce seller data structure."""
     seller_id: str
     platform: str
     name: str
@@ -101,7 +104,8 @@ class EcommerceCrawler:
     """
     
     def __init__(self):
-        """Initialize e-commerce crawler."""
+        """
+Initialize e-commerce crawler."""
         self.rate_limiter = EcommerceRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -177,7 +181,8 @@ class EcommerceCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -637,7 +642,8 @@ class EcommerceCrawler:
         return None
     
     def _extract_amazon_product_id(self, url: str) -> str:
-        """Extract Amazon product ID from URL."""
+        """
+Extract Amazon product ID from URL."""
         match = re.search(r'/dp/([A-Z0-9]{10})', url)
         return match.group(1) if match else ""
     
@@ -659,7 +665,8 @@ class EcommerceCrawler:
         return None
     
     def _parse_price(self, price_str: str) -> float:
-        """Parse price string to float."""
+        """
+Parse price string to float."""
         if not price_str:
             return 0.0
         
@@ -668,7 +675,8 @@ class EcommerceCrawler:
         return float(price_match.group()) if price_match else 0.0
     
     def _generate_derivative_search_queries(self, product: EcommerceProduct) -> List[str]:
-        """Generate search queries to find derivative products."""
+        """
+Generate search queries to find derivative products."""
         queries = []
         
         # Use product title words
@@ -688,7 +696,8 @@ class EcommerceCrawler:
         return queries[:5]  # Limit to 5 queries
     
     def _extract_key_terms(self, text: str) -> List[str]:
-        """Extract key terms from product title."""
+        """
+Extract key terms from product title."""
         # Simple keyword extraction
         words = text.lower().split()
         stop_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
@@ -700,7 +709,8 @@ class EcommerceCrawler:
         product1: EcommerceProduct,
         product2: EcommerceProduct
     ) -> float:
-        """Calculate similarity between two products."""
+        """
+Calculate similarity between two products."""
         from difflib import SequenceMatcher
         
         # Title similarity
@@ -723,7 +733,8 @@ class EcommerceCrawler:
         return (title_similarity * 0.7) + (brand_similarity * 0.3)
     
     def _deduplicate_products(self, products: List[EcommerceProduct]) -> List[EcommerceProduct]:
-        """Remove duplicate products from list."""
+        """
+Remove duplicate products from list."""
         seen_fingerprints = set()
         unique_products = []
         
@@ -735,18 +746,21 @@ class EcommerceCrawler:
         return unique_products
     
     async def _monitor_amazon_product(self, url: str) -> Optional[EcommerceProduct]:
-        """Monitor specific Amazon product."""
+        """
+Monitor specific Amazon product."""
         # Implementation would fetch product page and extract details
         # For now, return None as placeholder
         return None
     
     async def _monitor_ebay_product(self, url: str) -> Optional[EcommerceProduct]:
-        """Monitor specific eBay product."""
+        """
+Monitor specific eBay product."""
         # Implementation would fetch product page and extract details
         return None
     
     async def _monitor_etsy_product(self, url: str) -> Optional[EcommerceProduct]:
-        """Monitor specific Etsy product."""
+        """
+Monitor specific Etsy product."""
         # Implementation would fetch product page and extract details
         return None
 

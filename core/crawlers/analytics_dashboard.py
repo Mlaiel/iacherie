@@ -4,6 +4,7 @@ AI-Powered Analytics and Real-Time Dashboard System
 This module provides comprehensive analytics dashboard with real-time visualizations,
 advanced metrics, AI-powered insights, and interactive reporting capabilities.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChartType(str, Enum):
-    """Types of charts"""
+    """
+Types of charts"""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -55,6 +58,7 @@ class ChartType(str, Enum):
 
 class MetricCategory(str, Enum):
     """Metric categories"""
+
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     CONTENT = "content"
@@ -69,6 +73,7 @@ class MetricCategory(str, Enum):
 
 class DashboardTheme(str, Enum):
     """Dashboard themes"""
+
     LIGHT = "light"
     DARK = "dark"
     CORPORATE = "corporate"
@@ -78,6 +83,7 @@ class DashboardTheme(str, Enum):
 
 class VisualizationType(str, Enum):
     """Visualization types"""
+
     REAL_TIME = "real_time"
     HISTORICAL = "historical"
     COMPARATIVE = "comparative"
@@ -1005,7 +1011,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_bar_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create bar chart"""
+        """
+Create bar chart"""
         fig = go.Figure()
         
         x_col = config.get('x_column', df.columns[0])
@@ -1026,7 +1033,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_pie_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create pie chart"""
+        """
+Create pie chart"""
         fig = go.Figure()
         
         labels_col = config.get('labels_column', df.columns[0])
@@ -1046,7 +1054,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_scatter_plot(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create scatter plot"""
+        """
+Create scatter plot"""
         fig = go.Figure()
         
         x_col = config.get('x_column', df.columns[0])
@@ -1071,7 +1080,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_heatmap(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create heatmap"""
+        """
+Create heatmap"""
         fig = go.Figure()
         
         # Create correlation matrix if not specified
@@ -1104,7 +1114,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_histogram(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create histogram"""
+        """
+Create histogram"""
         fig = go.Figure()
         
         column = config.get('column', df.columns[0])
@@ -1124,7 +1135,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_box_plot(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create box plot"""
+        """
+Create box plot"""
         fig = go.Figure()
         
         y_col = config.get('y_column', df.columns[0])
@@ -1153,7 +1165,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_gauge_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create gauge chart"""
+        """
+Create gauge chart"""
         fig = go.Figure()
         
         value = config.get('value', df.iloc[0, 0] if not df.empty else 0)
@@ -1198,7 +1211,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Data processing and utility methods
     
     def _parse_time_range(self, time_range: str) -> Dict[str, Any]:
-        """Parse time range string into filter conditions"""
+        """
+Parse time range string into filter conditions"""
         now = datetime.utcnow()
         
         if time_range == "1h":
@@ -1384,12 +1398,14 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         }
 
     async def _create_default_metrics(self):
-        """Create default analytics metrics"""
+        """
+Create default analytics metrics"""
         for metric_id, metric in self.metric_definitions.items():
             self.analytics_metrics[metric_id] = metric
 
     async def _create_default_layouts(self):
-        """Create default dashboard layouts"""
+        """
+Create default dashboard layouts"""
         # Main dashboard layout
         main_widgets = [
             {
@@ -1572,7 +1588,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return datetime.utcnow() >= report.next_generation
 
     async def _generate_report(self, report: AnalyticsReport):
-        """Generate analytics report"""
+        """
+Generate analytics report"""
         try:
             # Get data for report
             data = await self.get_analytics_data(

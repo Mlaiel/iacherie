@@ -5,13 +5,16 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module configures all external platform APIs including Spotify, YouTube, Instagram,
 TikTok, Twitter/X, and other social media platforms for content distribution and analytics.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class PlatformType(Enum):
-    """Platform type enumeration"""
+    """
+Platform type enumeration"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -20,6 +23,7 @@ class PlatformType(Enum):
 
 class AuthenticationType(Enum):
     """API authentication types"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -343,6 +347,7 @@ def get_platform_config(platform: str) -> Optional[PlatformAPIConfig]:
     return PLATFORM_CONFIGS.get(platform.lower())
 
 def get_platforms_by_type(platform_type: PlatformType) -> List[PlatformAPIConfig]:
-    """Get all platforms of specific type"""
+    """
+Get all platforms of specific type"""
     return [config for config in PLATFORM_CONFIGS.values() 
             if config.platform_type == platform_type]

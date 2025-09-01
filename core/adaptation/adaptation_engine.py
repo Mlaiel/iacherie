@@ -20,6 +20,7 @@ Copyright: All rights reserved. Unauthorized use strictly prohibited.
 
 Business Logic: Creator Upload → IA Processing → Rights Protection → SEO Pro → Collaboration Matching → Multi-Platform Distribution
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -56,7 +57,9 @@ from .exceptions import AdaptationError, WorkflowError, ProcessingTimeoutError
 
 
 class AdaptationWorkflow(str, Enum):
-    """Ultra-advanced predefined adaptation workflows for all creator types"""
+    """
+Ultra-advanced predefined adaptation workflows for all creator types"""
+
     COMPLETE_ADAPTATION = "complete_adaptation"
     PLATFORM_SPECIFIC = "platform_specific"
     QUALITY_ENHANCEMENT = "quality_enhancement"
@@ -76,6 +79,7 @@ class AdaptationWorkflow(str, Enum):
 
 class CreatorType(str, Enum):
     """Supported creator types with specialized processing"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -89,6 +93,7 @@ class CreatorType(str, Enum):
 
 class ContentFormat(str, Enum):
     """Comprehensive content format support"""
+
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -108,6 +113,7 @@ class ContentFormat(str, Enum):
 
 class ProcessingPriority(str, Enum):
     """Advanced processing priority levels with resource allocation"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -118,6 +124,7 @@ class ProcessingPriority(str, Enum):
 
 class PlatformTarget(str, Enum):
     """Comprehensive platform targeting support"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -153,7 +160,8 @@ class AdaptationPipeline:
 
 @dataclass
 class AdaptationTask:
-    """Individual adaptation task with comprehensive tracking"""
+    """
+Individual adaptation task with comprehensive tracking"""
     task_id: str
     task_type: str
     creator_type: CreatorType
@@ -174,7 +182,8 @@ class AdaptationTask:
 
 @dataclass
 class ContentMetrics:
-    """Comprehensive content quality and performance metrics"""
+    """
+Comprehensive content quality and performance metrics"""
     format_compliance: float
     quality_score: float
     platform_readiness: Dict[str, float]
@@ -189,7 +198,8 @@ class ContentMetrics:
 
 @dataclass 
 class AdaptationEngineRequest:
-    """Enterprise-grade adaptation engine request with comprehensive configuration"""
+    """
+Enterprise-grade adaptation engine request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_type: CreatorType
@@ -594,7 +604,8 @@ class AdaptationEngine:
         request: AdaptationEngineRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute the adaptation pipeline stages"""
+        """
+Execute the adaptation pipeline stages"""
         results = {}
         
         # Update status
@@ -809,7 +820,8 @@ class AdaptationEngine:
         }
     
     def _initialize_pipelines(self) -> Dict[AdaptationWorkflow, AdaptationPipeline]:
-        """Initialize adaptation pipelines"""
+        """
+Initialize adaptation pipelines"""
         pipelines = {}
         
         for workflow, definition in self.workflows.items():
@@ -843,7 +855,8 @@ class AdaptationEngine:
         self,
         workflow: AdaptationWorkflow
     ) -> Dict[str, Any]:
-        """Load workflow definition"""
+        """
+Load workflow definition"""
         return self.workflows.get(workflow, {})
     
     async def _create_execution_pipeline(
@@ -851,7 +864,8 @@ class AdaptationEngine:
         workflow_definition: Dict[str, Any],
         request: AdaptationEngineRequest
     ) -> AdaptationPipeline:
-        """Create execution pipeline from workflow definition"""
+        """
+Create execution pipeline from workflow definition"""
         return self.pipelines.get(request.workflow, AdaptationPipeline(
             workflow=request.workflow,
             stages=['content_analysis', 'final_validation'],

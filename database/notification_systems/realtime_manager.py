@@ -5,7 +5,7 @@ Support multi-rooms, broadcast ciblé, présence utilisateur et messaging temps 
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, Real-time Systems Expert
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 AVERTISSEMENT LÉGAL:
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Set, Callable, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionType(Enum):
-    """Types de connexion temps réel"""
+    """
+Types de connexion temps réel"""
+
     WEBSOCKET = "websocket"
     SOCKET_IO = "socketio"
     SSE = "sse"
@@ -42,6 +45,7 @@ class ConnectionType(Enum):
 
 class MessageType(Enum):
     """Types de messages temps réel"""
+
     CHAT = "chat"
     NOTIFICATION = "notification"
     COLLABORATION_UPDATE = "collaboration_update"
@@ -56,6 +60,7 @@ class MessageType(Enum):
 
 class MessagePriority(Enum):
     """Priorités des messages"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -64,6 +69,7 @@ class MessagePriority(Enum):
 
 class UserStatus(Enum):
     """Statuts de présence utilisateur"""
+
     ONLINE = "online"
     AWAY = "away"
     BUSY = "busy"
@@ -140,7 +146,8 @@ class WebSocketManager:
         self.room_connections: Dict[str, Set[str]] = defaultdict(set)
         
     async def connect(self, websocket: WebSocket, user_id: str, session_id: str) -> str:
-        """Connecter un WebSocket"""
+        """
+Connecter un WebSocket"""
         try:
             await websocket.accept()
             
@@ -213,7 +220,8 @@ class WebSocketManager:
         return sent_count
     
     async def send_to_room(self, room_id: str, message: Dict[str, Any], exclude_user: Optional[str] = None) -> int:
-        """Envoyer un message à toutes les connexions d'une room"""
+        """
+Envoyer un message à toutes les connexions d'une room"""
         sent_count = 0
         connection_ids = list(self.room_connections[room_id])
         
@@ -226,14 +234,16 @@ class WebSocketManager:
         return sent_count
     
     async def join_room(self, connection_id: str, room_id: str):
-        """Joindre une room"""
+        """
+Joindre une room"""
         connection = self.connections.get(connection_id)
         if connection:
             connection.rooms.add(room_id)
             self.room_connections[room_id].add(connection_id)
     
     async def leave_room(self, connection_id: str, room_id: str):
-        """Quitter une room"""
+        """
+Quitter une room"""
         connection = self.connections.get(connection_id)
         if connection:
             connection.rooms.discard(room_id)
@@ -241,7 +251,8 @@ class WebSocketManager:
 
 
 class SocketIOManager:
-    """Gestionnaire Socket.IO"""
+    """
+Gestionnaire Socket.IO"""
     
     def __init__(self, cors_allowed_origins: List[str] = None):
         self.sio = socketio.AsyncServer(
@@ -396,7 +407,8 @@ class PresenceManager:
                             status_message: Optional[str] = None,
                             location: Optional[str] = None,
                             device_info: Optional[Dict[str, Any]] = None):
-        """Mettre à jour la présence d'un utilisateur"""
+        """
+Mettre à jour la présence d'un utilisateur"""
         try:
             presence = UserPresence(
                 user_id=user_id,
@@ -501,7 +513,8 @@ class MessageBroker:
         self.pubsub = None
         
     async def start(self):
-        """Démarrer le courtier"""
+        """
+Démarrer le courtier"""
         try:
             self.pubsub = self.redis.pubsub()
             await self.pubsub.subscribe("realtime:messages")
@@ -635,7 +648,8 @@ class RealtimeCommunicationManager:
         return connection_id
     
     async def disconnect_websocket(self, connection_id: str):
-        """Déconnecter un WebSocket"""
+        """
+Déconnecter un WebSocket"""
         connection = self.websocket_manager.connections.get(connection_id)
         if connection:
             await self.websocket_manager.disconnect(connection_id)
@@ -645,7 +659,8 @@ class RealtimeCommunicationManager:
                 await self.presence_manager.update_presence(connection.user_id, UserStatus.OFFLINE)
     
     async def send_message(self, message: RealtimeMessage) -> bool:
-        """Envoyer un message temps réel"""
+        """
+Envoyer un message temps réel"""
         try:
             # Sauvegarder le message en base si nécessaire
             if message.delivery_receipt or message.read_receipt:
@@ -831,7 +846,8 @@ class RealtimeCommunicationManager:
             )
     
     async def _save_room(self, room: Room) -> str:
-        """Sauvegarder une room en base"""
+        """
+Sauvegarder une room en base"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO communication_rooms (
@@ -851,7 +867,8 @@ class RealtimeCommunicationManager:
             return result
     
     async def _update_room(self, room: Room):
-        """Mettre à jour une room en base"""
+        """
+Mettre à jour une room en base"""
         async with self.db_pool.acquire() as conn:
             query = """
                 UPDATE communication_rooms SET
@@ -868,7 +885,8 @@ class RealtimeCommunicationManager:
             )
     
     async def _get_room(self, room_id: str) -> Optional[Room]:
-        """Récupérer une room"""
+        """
+Récupérer une room"""
         # Vérifier le cache local d'abord
         if room_id in self.rooms:
             return self.rooms[room_id]
@@ -902,16 +920,19 @@ class RealtimeCommunicationManager:
         return await self.presence_manager.get_presence(user_id)
     
     async def get_online_users(self) -> List[str]:
-        """Récupérer les utilisateurs en ligne"""
+        """
+Récupérer les utilisateurs en ligne"""
         return await self.presence_manager.get_online_users()
     
     async def get_room_members(self, room_id: str) -> List[str]:
-        """Récupérer les membres d'une room"""
+        """
+Récupérer les membres d'une room"""
         room = await self._get_room(room_id)
         return list(room.members) if room else []
     
     async def cleanup_expired_data(self):
-        """Nettoyer les données expirées"""
+        """
+Nettoyer les données expirées"""
         try:
             # Nettoyer les présences expirées
             await self.presence_manager.cleanup_expired_presence()

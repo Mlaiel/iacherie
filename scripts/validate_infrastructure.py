@@ -12,6 +12,7 @@ Addresses the full requirement: "INFRASTRUCTURE - Docker Compose, Monitoring, Da
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import sys
 import subprocess
 import time
@@ -31,7 +32,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class InfrastructureValidator:
-    """Comprehensive infrastructure validation for Ainflue Platform"""
+    """
+Comprehensive infrastructure validation for Ainflue Platform"""
     
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
@@ -247,7 +249,8 @@ For support: mlaiel@live.de
         return guide
     
     def run_comprehensive_validation(self) -> Dict:
-        """Run all infrastructure validations"""
+        """
+Run all infrastructure validations"""
         logger.info("🏗️ Starting Comprehensive Infrastructure Validation")
         logger.info("="*80)
         
@@ -413,20 +416,22 @@ Fix the reported issues and re-run this validation.
 
 """
         
-        report += f"""SUPPORT:
+        report += f"""
+SUPPORT:
 ========
 For technical support and deployment assistance:
 📧 Email: mlaiel@live.de
 📖 Documentation: See generated reports and startup guide
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
         
         return report
 
 
 def main():
-    """Main execution function"""
+    """
+Main execution function"""
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
     

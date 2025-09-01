@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import hashlib
 import json
@@ -71,7 +72,9 @@ DetectorFactory.seed = 0
 logger = logging.getLogger(__name__)
 
 class TextProcessingType(Enum):
-    """Text processing operation types"""
+    """
+Text processing operation types"""
+
     ANALYSIS = "analysis"
     GENERATION = "generation"
     TRANSLATION = "translation"
@@ -83,6 +86,7 @@ class TextProcessingType(Enum):
 
 class TextQuality(Enum):
     """Text quality assessment levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -492,7 +496,8 @@ class TextAgent(BaseAgent):
             return 'en', 0.5  # Default to English with low confidence
     
     async def _calculate_text_statistics(self, text: str) -> Dict[str, int]:
-        """Calculate basic text statistics"""
+        """
+Calculate basic text statistics"""
         words = text.split()
         sentences = re.split(r'[.!?]+', text)
         paragraphs = text.split('\n\n')
@@ -505,7 +510,8 @@ class TextAgent(BaseAgent):
         }
     
     async def _generate_fingerprint(self, text: str) -> str:
-        """Generate unique fingerprint for text content"""
+        """
+Generate unique fingerprint for text content"""
         # Normalize text for consistent fingerprinting
         normalized_text = re.sub(r'\s+', ' ', text.lower().strip())
         
@@ -657,7 +663,8 @@ class TextAgent(BaseAgent):
             return 50.0  # Default average readability
     
     async def _estimate_grammar_quality(self, text: str) -> float:
-        """Estimate grammar quality (simplified implementation)"""
+        """
+Estimate grammar quality (simplified implementation)"""
         # Simplified grammar quality estimation
         # In production, use tools like LanguageTool or Grammarly API
         
@@ -678,7 +685,8 @@ class TextAgent(BaseAgent):
         return quality_indicators / max(total_checks * 2, 1)
     
     async def _store_analysis_results(self, result: TextAnalysisResult, text: str):
-        """Store analysis results in database"""
+        """
+Store analysis results in database"""
         try:
             async with get_db_session() as session:
                 # Create text content record
@@ -781,7 +789,8 @@ class TextAgentManager:
         texts: List[str],
         processing_type: TextProcessingType = TextProcessingType.ANALYSIS
     ) -> List[TextAnalysisResult]:
-        """Process multiple texts concurrently"""
+        """
+Process multiple texts concurrently"""
         tasks = []
         
         for text in texts:

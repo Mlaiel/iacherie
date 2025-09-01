@@ -6,6 +6,7 @@ bottleneck detection, and performance trend analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import time
 import statistics
@@ -27,7 +28,9 @@ logger = get_logger(__name__)
 
 
 class PerformanceLevel(Enum):
-    """Performance level indicators"""
+    """
+Performance level indicators"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -37,6 +40,7 @@ class PerformanceLevel(Enum):
 
 class BottleneckType(Enum):
     """Types of performance bottlenecks"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK_IO = "disk_io"
@@ -74,7 +78,8 @@ class QueryMetrics:
     _execution_times: deque = field(default_factory=lambda: deque(maxlen=1000))
     
     def add_execution(self, execution_time: float, rows_examined: int = 0, rows_returned: int = 0, error: bool = False) -> None:
-        """Add execution metrics"""
+        """
+Add execution metrics"""
         self.execution_count += 1
         self.total_time += execution_time
         self.min_time = min(self.min_time, execution_time)
@@ -96,14 +101,16 @@ class QueryMetrics:
     
     @property
     def efficiency_ratio(self) -> float:
-        """Calculate query efficiency (rows returned / rows examined)"""
+        """
+Calculate query efficiency (rows returned / rows examined)"""
         if self.rows_examined == 0:
             return 1.0
         return self.rows_returned / self.rows_examined
     
     @property
     def performance_score(self) -> float:
-        """Calculate overall performance score (0-100)"""
+        """
+Calculate overall performance score (0-100)"""
         score = 100.0
         
         # Penalize slow queries
@@ -133,7 +140,8 @@ class QueryMetrics:
     
     @property
     def performance_level(self) -> PerformanceLevel:
-        """Get performance level based on score"""
+        """
+Get performance level based on score"""
         score = self.performance_score
         if score >= 90:
             return PerformanceLevel.EXCELLENT
@@ -149,7 +157,8 @@ class QueryMetrics:
 
 @dataclass
 class SystemMetrics:
-    """System-level performance metrics"""
+    """
+System-level performance metrics"""
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_io_read: float = 0.0
@@ -164,7 +173,8 @@ class SystemMetrics:
     
     @property
     def connection_utilization(self) -> float:
-        """Calculate connection pool utilization"""
+        """
+Calculate connection pool utilization"""
         if self.total_connections == 0:
             return 0.0
         return self.active_connections / self.total_connections
@@ -172,7 +182,8 @@ class SystemMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert/anomaly"""
+    """
+Performance alert/anomaly"""
     alert_type: str
     severity: str
     message: str
@@ -185,7 +196,8 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance analysis report"""
+    """
+Comprehensive performance analysis report"""
     start_time: datetime
     end_time: datetime
     total_queries: int
@@ -214,7 +226,8 @@ class PerformanceReport:
     
     @property
     def overall_health_score(self) -> float:
-        """Calculate overall database health score"""
+        """
+Calculate overall database health score"""
         score = 100.0
         
         # Error rate impact
@@ -254,7 +267,8 @@ class PerformanceReport:
 
 
 class PerformanceAnalyzer:
-    """Advanced database performance analyzer"""
+    """
+Advanced database performance analyzer"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -283,7 +297,8 @@ class PerformanceAnalyzer:
         self._baseline_metrics: Dict[str, float] = {}
     
     async def start_monitoring(self, engine: AsyncEngine) -> None:
-        """Start continuous performance monitoring"""
+        """
+Start continuous performance monitoring"""
         try:
             logger.info("Starting performance monitoring")
             
@@ -339,7 +354,8 @@ class PerformanceAnalyzer:
         rows_returned: int = 0,
         error: bool = False
     ) -> None:
-        """Track query execution metrics"""
+        """
+Track query execution metrics"""
         try:
             # Generate query ID (normalized)
             query_id = self._generate_query_id(query)
@@ -390,7 +406,8 @@ class PerformanceAnalyzer:
         return hashlib.md5(normalized.encode()).hexdigest()
     
     def _normalize_query(self, query: str) -> str:
-        """Normalize query for pattern matching"""
+        """
+Normalize query for pattern matching"""
         import re
         
         # Convert to lowercase and remove extra whitespace
@@ -666,7 +683,8 @@ class PerformanceAnalyzer:
         queries: List[QueryMetrics],
         system_metrics: List[SystemMetrics]
     ) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""
+        """
+Identify performance bottlenecks"""
         bottlenecks = []
         
         # Query-based bottlenecks
@@ -855,13 +873,15 @@ def get_performance_analyzer(config: Optional[Dict[str, Any]] = None) -> Perform
 
 
 async def start_performance_monitoring(engine: AsyncEngine, config: Optional[Dict[str, Any]] = None) -> None:
-    """Start global performance monitoring"""
+    """
+Start global performance monitoring"""
     analyzer = get_performance_analyzer(config)
     await analyzer.start_monitoring(engine)
 
 
 async def stop_performance_monitoring() -> None:
-    """Stop global performance monitoring"""
+    """
+Stop global performance monitoring"""
     global _performance_analyzer
     
     if _performance_analyzer:

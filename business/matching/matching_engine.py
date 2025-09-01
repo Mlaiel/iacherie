@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set

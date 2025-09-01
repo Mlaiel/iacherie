@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Performance Analyzer module.
+"""
+Test suite for Performance Analyzer module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -26,9 +29,11 @@ import json
 
 
 class TestPerformanceAnalyzer(unittest.TestCase):
-    """Test suite for PerformanceAnalyzer class"""
+    """
+Test suite for PerformanceAnalyzer class"""
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.analyzer = None  # Will be mocked
         self.sample_metrics = {
             "content_id": "content_123",
@@ -80,7 +85,8 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertEqual(calculated_engagement, expected_engagement)
 
     def test_performance_comparison(self):
-        """Test performance comparison between periods"""
+        """
+Test performance comparison between periods"""
         current_metrics = {
             "views": 15000,
             "likes": 800,
@@ -142,7 +148,8 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertAlmostEqual(slope, 92.86, places=2)
 
     def test_performance_benchmarking(self):
-        """Test performance benchmarking against industry standards"""
+        """
+Test performance benchmarking against industry standards"""
         content_metrics = {
             "engagement_rate": 0.08,
             "view_duration": 0.75,  # 75% completion rate
@@ -197,7 +204,8 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertNotIn(1100, anomalies)
 
     def test_roi_performance_correlation(self):
-        """Test correlation between performance metrics and ROI"""
+        """
+Test correlation between performance metrics and ROI"""
         performance_data = [
             {"engagement_rate": 0.05, "roi": 150},
             {"engagement_rate": 0.08, "roi": 200},

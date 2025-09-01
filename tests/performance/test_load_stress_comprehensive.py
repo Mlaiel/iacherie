@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Performance, Load and Stress Tests
+"""
+Comprehensive Performance, Load and Stress Tests
 Tests system performance under various load conditions and stress scenarios.
 
 Author: AI Assistant
 Purpose: Complete performance testing for load and stress scenarios
 """
+
 import pytest
 import sys
 import os
@@ -37,7 +40,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 # Mock system components for performance testing
 class MockSystemComponent:
-    """Mock system component for testing"""
+    """
+Mock system component for testing"""
     
     def __init__(self, name: str, base_latency: float = 0.01):
         self.name = name
@@ -48,7 +52,8 @@ class MockSystemComponent:
         self.current_concurrent = 0
     
     async def process_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate processing a request"""
+        """
+Simulate processing a request"""
         self.current_concurrent += 1
         self.max_concurrent = max(self.max_concurrent, self.current_concurrent)
         self.call_count += 1
@@ -96,7 +101,8 @@ class MockLoadBalancer:
         self.current_index = 0
     
     async def route_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Route request to next available component (round-robin)"""
+        """
+Route request to next available component (round-robin)"""
         component = self.components[self.current_index]
         self.current_index = (self.current_index + 1) % len(self.components)
         
@@ -104,7 +110,8 @@ class MockLoadBalancer:
 
 
 class PerformanceTestHarness:
-    """Test harness for performance testing"""
+    """
+Test harness for performance testing"""
     
     def __init__(self):
         self.results = []
@@ -115,7 +122,8 @@ class PerformanceTestHarness:
                            request_generator,
                            concurrent_users: int,
                            duration_seconds: int) -> Dict[str, Any]:
-        """Run a load test with specified parameters"""
+        """
+Run a load test with specified parameters"""
         start_time = time.time()
         end_time = start_time + duration_seconds
         
@@ -125,7 +133,8 @@ class PerformanceTestHarness:
         total_requests = 0
         
         async def user_session():
-            """Simulate a user session"""
+            """
+Simulate a user session"""
             session_requests = 0
             session_errors = 0
             
@@ -185,7 +194,8 @@ class TestBasicPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_single_component_latency(self):
-        """Test single component response latency"""
+        """
+Test single component response latency"""
         component = MockSystemComponent("test_api", base_latency=0.01)
         
         # Test single request
@@ -352,7 +362,8 @@ class TestStressTesting:
     
     @pytest.fixture
     def stress_components(self):
-        """Create multiple components for stress testing"""
+        """
+Create multiple components for stress testing"""
         return [
             MockSystemComponent("stress_api_1", base_latency=0.01),
             MockSystemComponent("stress_api_2", base_latency=0.015),
@@ -416,7 +427,8 @@ class TestStressTesting:
         """Test system under sustained high stress"""
         
         async def stress_user():
-            """Simulate aggressive user behavior"""
+            """
+Simulate aggressive user behavior"""
             requests_made = 0
             errors = 0
             
@@ -524,7 +536,8 @@ class TestScalabilityTesting:
     @pytest.mark.slow
     @pytest.mark.asyncio
     async def test_horizontal_scaling(self):
-        """Test performance improvement with horizontal scaling"""
+        """
+Test performance improvement with horizontal scaling"""
         
         # Test with single component
         single_component = MockSystemComponent("single_scale_test", base_latency=0.02)
@@ -601,7 +614,8 @@ class TestFailureScenarios:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_component_failure_recovery(self):
-        """Test system recovery from component failures"""
+        """
+Test system recovery from component failures"""
         
         class FailingComponent(MockSystemComponent):
             def __init__(self, name: str, failure_rate: float = 0.1):
@@ -713,7 +727,8 @@ class TestPerformanceRegression:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_performance_baseline(self):
-        """Establish performance baseline metrics"""
+        """
+Establish performance baseline metrics"""
         component = MockSystemComponent("baseline_test", base_latency=0.01)
         
         # Standard test load

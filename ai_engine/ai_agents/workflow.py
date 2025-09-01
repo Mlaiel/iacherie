@@ -11,6 +11,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -36,6 +39,7 @@ class WorkflowStatus(Enum):
 
 class StepStatus(Enum):
     """Individual step status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -46,6 +50,7 @@ class StepStatus(Enum):
 
 class StepType(Enum):
     """Types of workflow steps"""
+
     TASK = "task"                    # Execute a task on an agent
     CONDITION = "condition"          # Conditional logic
     PARALLEL = "parallel"            # Execute multiple steps in parallel
@@ -92,18 +97,21 @@ class WorkflowStep:
     
     @property
     def is_completed(self) -> bool:
-        """Check if step is completed"""
+        """
+Check if step is completed"""
         return self.status in [StepStatus.COMPLETED, StepStatus.SKIPPED]
     
     @property
     def is_failed(self) -> bool:
-        """Check if step failed"""
+        """
+Check if step failed"""
         return self.status == StepStatus.FAILED
 
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition and configuration"""
+    """
+Workflow definition and configuration"""
     workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -125,7 +133,8 @@ class WorkflowDefinition:
         return None
     
     def get_entry_steps(self) -> List[WorkflowStep]:
-        """Get steps with no dependencies (entry points)"""
+        """
+Get steps with no dependencies (entry points)"""
         dependency_ids = set()
         for step in self.steps:
             dependency_ids.update(step.dependencies)
@@ -133,13 +142,15 @@ class WorkflowDefinition:
         return [step for step in self.steps if step.step_id not in dependency_ids]
     
     def get_dependent_steps(self, step_id: str) -> List[WorkflowStep]:
-        """Get steps that depend on the given step"""
+        """
+Get steps that depend on the given step"""
         return [step for step in self.steps if step_id in step.dependencies]
 
 
 @dataclass
 class WorkflowExecution:
-    """Runtime workflow execution instance"""
+    """
+Runtime workflow execution instance"""
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     workflow_id: str = ""
     workflow_definition: Optional[WorkflowDefinition] = None
@@ -173,7 +184,8 @@ class WorkflowExecution:
     
     @property
     def progress_percentage(self) -> float:
-        """Calculate progress percentage"""
+        """
+Calculate progress percentage"""
         if not self.workflow_definition:
             return 0.0
         
@@ -185,7 +197,8 @@ class WorkflowExecution:
     
     @property
     def is_completed(self) -> bool:
-        """Check if workflow is completed"""
+        """
+Check if workflow is completed"""
         return self.status in [WorkflowStatus.COMPLETED, WorkflowStatus.FAILED, WorkflowStatus.CANCELLED]
 
 
@@ -535,7 +548,8 @@ class WorkflowEngine:
         return ready_steps
     
     async def _is_workflow_complete(self, execution: WorkflowExecution) -> bool:
-        """Check if workflow execution is complete"""
+        """
+Check if workflow execution is complete"""
         workflow_def = execution.workflow_definition
         
         # All steps completed or failed
@@ -545,7 +559,8 @@ class WorkflowEngine:
         return processed_steps >= total_steps and not execution.active_steps
     
     def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of workflow execution"""
+        """
+Get status of workflow execution"""
         execution = self.active_executions.get(execution_id)
         if not execution:
             # Check history

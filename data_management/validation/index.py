@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 INDEX PRINCIPAL DU MODULE DE VALIDATION
@@ -15,6 +15,7 @@ Point d'entrée centralisé pour toutes les fonctionnalités de validation
 - Utilité pour tests et intégrations
 - Documentation des composants disponibles
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 from pathlib import Path
@@ -148,11 +149,13 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class ValidationModuleInfo:
-    """Informations sur le module de validation"""
+    """
+Informations sur le module de validation"""
     
     @staticmethod
     def get_module_info() -> Dict[str, Any]:
-        """Retourne les informations du module"""
+        """
+Retourne les informations du module"""
         return {
             "name": "Data Management Validation Module",
             "version": "1.0.0",

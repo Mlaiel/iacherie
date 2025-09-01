@@ -15,6 +15,7 @@ This optimized version:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete unit test coverage and quality validation
 """
+
 import subprocess
 import sys
 import os
@@ -25,7 +26,8 @@ import importlib.util
 
 
 class OptimizedTestRunner:
-    """Optimized test runner for all platform modules with dependency handling."""
+    """
+Optimized test runner for all platform modules with dependency handling."""
     runner = OptimizedTestRunner()
     
     try:

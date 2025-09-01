@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import cv2
@@ -660,11 +661,13 @@ class OpticalCharacterReader(BaseAgent):
                 for result in results]
 
     def get_supported_languages(self) -> List[str]:
-        """Get list of supported OCR languages"""
+        """
+Get list of supported OCR languages"""
         return self.supported_languages.copy()
 
     def set_confidence_threshold(self, threshold: int) -> None:
-        """Set OCR confidence threshold"""
+        """
+Set OCR confidence threshold"""
         if 0 <= threshold <= 100:
             self.confidence_threshold = threshold
             logger.info(f"OCR confidence threshold set to {threshold}")

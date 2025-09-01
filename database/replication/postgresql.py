@@ -13,6 +13,7 @@ Handles:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import psycopg2
@@ -28,7 +29,9 @@ import os
 
 
 class PostgreSQLReplicationMode(Enum):
-    """PostgreSQL replication modes"""
+    """
+PostgreSQL replication modes"""
+
     STREAMING = "streaming"
     LOGICAL = "logical"
     SYNCHRONOUS = "synchronous"
@@ -37,6 +40,7 @@ class PostgreSQLReplicationMode(Enum):
 
 class ReplicationSlotStatus(Enum):
     """Replication slot status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     TEMPORARY = "temporary"
@@ -82,7 +86,8 @@ class PostgreSQLReplicationHandler:
     """
     
     def __init__(self, config: Dict[str, Any], global_config: Any):
-        """Initialize PostgreSQL replication handler"""
+        """
+Initialize PostgreSQL replication handler"""
         self.config = config
         self.global_config = global_config
         self.logger = logging.getLogger(f"{__name__}.PostgreSQLReplicationHandler")

@@ -15,7 +15,7 @@ Comprehensive performance metrics, trend analysis, and predictive insights.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import statistics
@@ -40,7 +41,9 @@ from ..monitoring.performance_tracker import PerformanceTracker
 logger = logging.getLogger(__name__)
 
 class StatisticType(Enum):
-    """Types of statistics collected"""
+    """
+Types of statistics collected"""
+
     INDEX_USAGE = "index_usage"
     QUERY_PERFORMANCE = "query_performance"
     STORAGE_METRICS = "storage_metrics"
@@ -52,6 +55,7 @@ class StatisticType(Enum):
 
 class AggregationPeriod(Enum):
     """Time periods for aggregation"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -61,6 +65,7 @@ class AggregationPeriod(Enum):
 
 class TrendDirection(Enum):
     """Trend direction indicators"""
+
     IMPROVING = "improving"
     DEGRADING = "degrading"
     STABLE = "stable"
@@ -79,7 +84,8 @@ class StatisticEntry:
 
 @dataclass
 class AggregatedStatistic:
-    """Aggregated statistic data"""
+    """
+Aggregated statistic data"""
     period: AggregationPeriod
     start_time: datetime
     end_time: datetime
@@ -95,7 +101,8 @@ class AggregatedStatistic:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
+    """
+Trend analysis result"""
     metric_name: str
     period: AggregationPeriod
     direction: TrendDirection
@@ -123,7 +130,8 @@ class StatisticsManager:
     """
     
     def __init__(self):
-        """Initialize statistics manager"""
+        """
+Initialize statistics manager"""
         self.db_manager = DatabaseManager()
         self.performance_tracker = PerformanceTracker()
         
@@ -848,12 +856,14 @@ class StatisticsManager:
         pass
     
     async def _load_baselines(self):
-        """Load performance baselines"""
+        """
+Load performance baselines"""
         # Implementation would load baseline values
         pass
     
     async def _get_database_index_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get index statistics from database"""
+        """
+Get index statistics from database"""
         # Implementation would query database for index stats
         return {
             'content_idx': {'scans': 1000, 'seeks': 5000, 'size_bytes': 1024000},
@@ -861,7 +871,8 @@ class StatisticsManager:
         }
     
     async def _get_query_performance_metrics(self) -> Dict[str, float]:
-        """Get query performance metrics"""
+        """
+Get query performance metrics"""
         return {
             'avg_query_time': 0.5,
             'queries_per_second': 150.0,
@@ -869,7 +880,8 @@ class StatisticsManager:
         }
     
     async def _get_storage_metrics(self) -> Dict[str, float]:
-        """Get storage metrics"""
+        """
+Get storage metrics"""
         return {
             'total_size': 10737418240,  # 10GB
             'index_size': 1073741824,   # 1GB
@@ -877,14 +889,16 @@ class StatisticsManager:
         }
     
     async def _get_cache_metrics(self) -> Dict[str, float]:
-        """Get cache metrics"""
+        """
+Get cache metrics"""
         return {
             'hit_rate': 85.0,
             'memory_usage': 536870912  # 512MB
         }
     
     async def _get_error_metrics(self) -> Dict[str, int]:
-        """Get error metrics"""
+        """
+Get error metrics"""
         return {
             'connection_errors': 2,
             'query_errors': 1,
@@ -892,28 +906,33 @@ class StatisticsManager:
         }
     
     async def _execute_custom_metric(self, config: Dict[str, Any]) -> float:
-        """Execute custom metric collection"""
+        """
+Execute custom metric collection"""
         # Implementation would execute custom metric logic
         return 42.0
     
     async def _save_pending_statistics(self):
-        """Save pending statistics to persistent storage"""
+        """
+Save pending statistics to persistent storage"""
         # Implementation would save to database/file
         pass
     
     async def _get_recent_aggregated_data(self, period: AggregationPeriod, count: int) -> Dict[str, Dict[str, AggregatedStatistic]]:
-        """Get recent aggregated data"""
+        """
+Get recent aggregated data"""
         # Implementation would retrieve recent aggregated data
         return {}
     
     async def _get_aggregated_data_for_period(self, period: AggregationPeriod, 
                                             start_time: datetime, end_time: datetime) -> Dict[str, Dict[str, AggregatedStatistic]]:
-        """Get aggregated data for time period"""
+        """
+Get aggregated data for time period"""
         # Implementation would retrieve data for period
         return {}
     
     async def _generate_forecast(self, x_values: np.ndarray, y_values: np.ndarray, horizon: int) -> List[float]:
-        """Generate forecast values"""
+        """
+Generate forecast values"""
         try:
             # Simple linear extrapolation
             coefficients = np.polyfit(x_values, y_values, 1)
@@ -930,7 +949,8 @@ class StatisticsManager:
             return []
     
     async def _detect_metric_anomalies(self, timestamps: List[datetime], values: List[float]) -> List[datetime]:
-        """Detect anomalies in metric values"""
+        """
+Detect anomalies in metric values"""
         try:
             if len(values) < 3:
                 return []
@@ -948,17 +968,20 @@ class StatisticsManager:
             return []
     
     async def _is_anomalous_value(self, metric_key: str, value: float, period: AggregationPeriod) -> bool:
-        """Check if value is anomalous"""
+        """
+Check if value is anomalous"""
         # Implementation would check against baselines and historical data
         return False
     
     async def _handle_anomaly(self, metric_key: str, agg_stat: AggregatedStatistic, timestamp: datetime):
-        """Handle detected anomaly"""
+        """
+Handle detected anomaly"""
         # Implementation would trigger alerts or notifications
         pass
     
     async def _generate_recommendations(self, report: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on statistics"""
+        """
+Generate recommendations based on statistics"""
         recommendations = []
         
         try:

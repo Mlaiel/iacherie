@@ -10,6 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -18,7 +19,9 @@ from decimal import Decimal
 
 
 class MLFramework(Enum):
-    """Machine Learning frameworks enumeration."""
+    """
+Machine Learning frameworks enumeration."""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     SCIKIT_LEARN = "scikit_learn"
@@ -31,6 +34,7 @@ class MLFramework(Enum):
 
 class ModelType(Enum):
     """AI model types enumeration."""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -45,6 +49,7 @@ class ModelType(Enum):
 
 class DeploymentTarget(Enum):
     """Model deployment targets."""
+
     CPU = "cpu"
     GPU = "gpu"
     TPU = "tpu"
@@ -83,7 +88,8 @@ class ModelEndpointConfig:
 
 @dataclass
 class InferenceConfig:
-    """ML inference configuration."""
+    """
+ML inference configuration."""
     batch_inference: bool
     streaming_inference: bool
     real_time_inference: bool
@@ -100,7 +106,8 @@ class InferenceConfig:
 
 @dataclass
 class MLPipelineConfig:
-    """ML pipeline configuration."""
+    """
+ML pipeline configuration."""
     pipeline_name: str
     stages: List[str]
     input_sources: List[str]
@@ -117,10 +124,12 @@ class MLPipelineConfig:
 
 
 class MLAPIsConfig:
-    """Professional Machine Learning APIs configuration."""
+    """
+Professional Machine Learning APIs configuration."""
     
     def __init__(self):
-        """Initialize ML APIs configuration."""
+        """
+Initialize ML APIs configuration."""
         self.model_endpoints = self._get_model_endpoints()
         self.inference_configs = self._get_inference_configs()
         self.pipeline_configs = self._get_pipeline_configs()
@@ -129,7 +138,8 @@ class MLAPIsConfig:
         self.monitoring_configs = self._get_monitoring_configs()
     
     def _get_model_endpoints(self) -> Dict[str, ModelEndpointConfig]:
-        """Get ML model endpoints configuration."""
+        """
+Get ML model endpoints configuration."""
         return {
             'audio_fingerprint_v1': ModelEndpointConfig(
                 model_name="audio_fingerprint",
@@ -350,7 +360,8 @@ class MLAPIsConfig:
         }
     
     def _get_pipeline_configs(self) -> Dict[str, MLPipelineConfig]:
-        """Get ML pipeline configurations."""
+        """
+Get ML pipeline configurations."""
         return {
             'content_protection_pipeline': MLPipelineConfig(
                 pipeline_name="content_protection",
@@ -454,7 +465,8 @@ class MLAPIsConfig:
         }
     
     def _get_training_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get model training configurations."""
+        """
+Get model training configurations."""
         return {
             'distributed_training': {
                 'strategy': 'mirrored',
@@ -491,7 +503,8 @@ class MLAPIsConfig:
         }
     
     def _get_monitoring_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get ML monitoring configurations."""
+        """
+Get ML monitoring configurations."""
         return {
             'model_monitoring': {
                 'metrics': [
@@ -543,15 +556,18 @@ class MLAPIsConfig:
         }
     
     def get_model_endpoint(self, model_name: str) -> Optional[ModelEndpointConfig]:
-        """Get model endpoint configuration."""
+        """
+Get model endpoint configuration."""
         return self.model_endpoints.get(model_name)
     
     def get_inference_config(self, config_type: str) -> Optional[InferenceConfig]:
-        """Get inference configuration."""
+        """
+Get inference configuration."""
         return self.inference_configs.get(config_type)
     
     def get_pipeline_config(self, pipeline_name: str) -> Optional[MLPipelineConfig]:
-        """Get ML pipeline configuration."""
+        """
+Get ML pipeline configuration."""
         return self.pipeline_configs.get(pipeline_name)
 
 
@@ -560,15 +576,18 @@ ml_apis_config = MLAPIsConfig()
 
 
 def get_ml_model_endpoint(model_name: str) -> Optional[ModelEndpointConfig]:
-    """Get ML model endpoint configuration."""
+    """
+Get ML model endpoint configuration."""
     return ml_apis_config.get_model_endpoint(model_name)
 
 
 def get_ml_inference_config(config_type: str = 'production') -> Optional[InferenceConfig]:
-    """Get ML inference configuration."""
+    """
+Get ML inference configuration."""
     return ml_apis_config.get_inference_config(config_type)
 
 
 def get_ml_pipeline_config(pipeline_name: str) -> Optional[MLPipelineConfig]:
-    """Get ML pipeline configuration."""
+    """
+Get ML pipeline configuration."""
     return ml_apis_config.get_pipeline_config(pipeline_name)

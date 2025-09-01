@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from pathlib import Path
@@ -37,7 +38,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class SeparationRequest:
-    """Request object for separation operations."""
+    """
+Request object for separation operations."""
     audio_path: Optional[Path] = None
     audio_data: Optional[np.ndarray] = None
     sample_rate: Optional[int] = None
@@ -65,7 +67,8 @@ class SeparationResponse:
 
 
 class SeparationService:
-    """Main service for audio separation orchestration."""
+    """
+Main service for audio separation orchestration."""
     
     def __init__(self, config: Optional[SeparationConfig] = None,
                  processing_config: Optional[ProcessingConfig] = None):
@@ -322,7 +325,8 @@ class BatchProcessor:
                           output_directory: Optional[Path] = None,
                           quality: SeparationQuality = SeparationQuality.HIGH,
                           output_format: OutputFormat = OutputFormat.WAV) -> Dict[str, SeparationResponse]:
-        """Process multiple files in batch."""
+        """
+Process multiple files in batch."""
         separation_types = separation_types or ["vocal"]
         results = {}
         
@@ -406,7 +410,8 @@ class RealtimeProcessor:
     async def start_streaming(self, separation_types: List[str],
                             sample_rate: int = 44100,
                             callback: Optional[Callable] = None) -> None:
-        """Start real-time streaming separation."""
+        """
+Start real-time streaming separation."""
         if self.is_streaming:
             raise ServiceError("Streaming already active")
         
@@ -479,12 +484,14 @@ class RealtimeProcessor:
         self.callbacks[name] = callback
     
     def remove_callback(self, name: str) -> None:
-        """Remove callback."""
+        """
+Remove callback."""
         if name in self.callbacks:
             del self.callbacks[name]
     
     def get_streaming_status(self) -> Dict[str, Any]:
-        """Get real-time streaming status."""
+        """
+Get real-time streaming status."""
         return {
             "is_streaming": self.is_streaming,
             "buffer_size": self.buffer_size,
@@ -511,7 +518,8 @@ def create_separation_service(config: Optional[Dict[str, Any]] = None) -> Separa
 
 def create_batch_processor(separation_service: Optional[SeparationService] = None,
                           max_concurrent: int = 4) -> BatchProcessor:
-    """Factory function to create batch processor."""
+    """
+Factory function to create batch processor."""
     if separation_service is None:
         separation_service = create_separation_service()
     
@@ -521,7 +529,8 @@ def create_batch_processor(separation_service: Optional[SeparationService] = Non
 def create_realtime_processor(separation_service: Optional[SeparationService] = None,
                             buffer_size: int = 4096,
                             overlap: float = 0.25) -> RealtimeProcessor:
-    """Factory function to create real-time processor."""
+    """
+Factory function to create real-time processor."""
     if separation_service is None:
         separation_service = create_separation_service()
     
@@ -530,13 +539,15 @@ def create_realtime_processor(separation_service: Optional[SeparationService] = 
 
 # Service registry for dependency injection
 class ServiceRegistry:
-    """Registry for managing separation service instances."""
+    """
+Registry for managing separation service instances."""
     
     _instances = {}
     
     @classmethod
     def register(cls, name: str, service: Any) -> None:
-        """Register a service instance."""
+        """
+Register a service instance."""
         cls._instances[name] = service
         logger.debug(f"Registered service: {name}")
     
@@ -563,7 +574,8 @@ class ServiceRegistry:
     
     @classmethod
     def clear(cls) -> None:
-        """Clear all registered services."""
+        """
+Clear all registered services."""
         cls._instances.clear()
         logger.debug("Cleared all registered services")
 

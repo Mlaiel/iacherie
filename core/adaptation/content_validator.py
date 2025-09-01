@@ -28,6 +28,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -70,7 +71,9 @@ from .exceptions import ValidationError, ContentValidationError, ComplianceError
 
 
 class ValidationLevel(str, Enum):
-    """Advanced content validation levels with AI sophistication"""
+    """
+Advanced content validation levels with AI sophistication"""
+
     BASIC = "basic"                    # Essential validation only
     STANDARD = "standard"              # Standard compliance checks
     STRICT = "strict"                  # Comprehensive validation
@@ -83,6 +86,7 @@ class ValidationLevel(str, Enum):
 
 class ContentType(str, Enum):
     """Comprehensive content types for validation across all creator categories"""
+
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -107,6 +111,7 @@ class ContentType(str, Enum):
 
 class ValidationResult(str, Enum):
     """Advanced validation result status with severity levels"""
+
     PASSED = "passed"                  # Validation successful
     WARNING = "warning"                # Minor issues detected
     FAILED = "failed"                  # Validation failed
@@ -118,6 +123,7 @@ class ValidationResult(str, Enum):
 
 class ComplianceStandard(str, Enum):
     """Comprehensive compliance standards for all jurisdictions"""
+
     DMCA = "dmca"                      # Digital Millennium Copyright Act
     GDPR = "gdpr"                      # General Data Protection Regulation
     COPPA = "coppa"                    # Children's Online Privacy Protection Act
@@ -194,7 +200,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationIssue:
-    """Comprehensive content validation issue with detailed analysis"""
+    """
+Comprehensive content validation issue with detailed analysis"""
     issue_id: str
     rule_id: str
     severity: str
@@ -229,7 +236,8 @@ class SecurityScanResult:
 
 @dataclass
 class AuthenticityAnalysis:
-    """Comprehensive content authenticity analysis"""
+    """
+Comprehensive content authenticity analysis"""
     authenticity_score: float
     ai_generated_probability: float
     deepfake_probability: float
@@ -244,7 +252,8 @@ class AuthenticityAnalysis:
 
 @dataclass
 class ContentValidationRequest:
-    """Enterprise-grade content validation request with comprehensive configuration"""
+    """
+Enterprise-grade content validation request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -294,7 +303,8 @@ class ValidationSummary:
 
 @dataclass
 class ContentValidationResult:
-    """Comprehensive content validation result with detailed analysis and recommendations"""
+    """
+Comprehensive content validation result with detailed analysis and recommendations"""
     validation_id: str
     creator_id: str
     creator_type: str
@@ -394,7 +404,8 @@ class QualityMetrics:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report"""
+    """
+Comprehensive validation report"""
     validation_id: str
     content_id: str
     content_type: ContentType
@@ -855,7 +866,8 @@ class ContentValidator:
         return rules
     
     def _initialize_quality_models(self) -> Dict[str, Any]:
-        """Initialize quality assessment models"""
+        """
+Initialize quality assessment models"""
         return {
             'image_quality': {
                 'factors': ['resolution', 'compression', 'noise_level', 'sharpness'],
@@ -872,7 +884,8 @@ class ContentValidator:
         }
     
     def _initialize_compliance_checkers(self) -> Dict[str, Any]:
-        """Initialize compliance checking systems"""
+        """
+Initialize compliance checking systems"""
         return {
             'content_policy': {
                 'inappropriate_content': ['violence', 'adult', 'hate_speech'],
@@ -887,7 +900,8 @@ class ContentValidator:
         }
     
     def _load_nlp_model(self):
-        """Load NLP model for text analysis"""
+        """
+Load NLP model for text analysis"""
         try:
             return spacy.load('en_core_web_sm')
         except OSError:
@@ -922,7 +936,8 @@ class ContentValidator:
             return ContentType.DOCUMENT
     
     async def _load_content_data(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Load content data for analysis"""
+        """
+Load content data for analysis"""
         content_data = {
             'file_path': content_path,
             'file_size': 0,

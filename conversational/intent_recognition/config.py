@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ from ...core.config import BaseConfig
 
 @dataclass
 class ModelConfiguration:
-    """Model-specific configuration parameters"""
+    """
+Model-specific configuration parameters"""
     
     # Transformer model settings
     transformer_model_name: str = "distilbert-base-uncased"
@@ -85,7 +87,8 @@ class PerformanceSettings:
 
 @dataclass
 class ConfidenceSettings:
-    """Confidence scoring and uncertainty quantification settings"""
+    """
+Confidence scoring and uncertainty quantification settings"""
     
     # Temperature scaling
     temperature_scaling: float = 1.0
@@ -349,7 +352,8 @@ class IntentRecognitionConfig(BaseConfig):
         self._apply_environment_settings()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables"""
+        """
+Load configuration from environment variables"""
         
         # Model configuration
         if os.getenv("INTENT_TRANSFORMER_MODEL"):
@@ -539,7 +543,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration as dictionary"""
+        """
+Get performance configuration as dictionary"""
         return {
             'processor_threads': self.performance.processor_threads,
             'max_queue_size': self.performance.max_queue_size,
@@ -550,7 +555,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration as dictionary"""
+        """
+Get security configuration as dictionary"""
         return {
             'max_text_length': self.security.max_text_length,
             'min_text_length': self.security.min_text_length,
@@ -561,7 +567,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert entire configuration to dictionary"""
+        """
+Convert entire configuration to dictionary"""
         return {
             'environment': self.environment,
             'model': self.get_model_config(),
@@ -576,7 +583,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def save_to_file(self, file_path: str) -> None:
-        """Save current configuration to file"""
+        """
+Save current configuration to file"""
         try:
             config_dict = self.to_dict()
             
@@ -608,7 +616,8 @@ class IntentRecognitionConfig(BaseConfig):
         return cls(environment=environment)
     
     def __str__(self) -> str:
-        """String representation of configuration"""
+        """
+String representation of configuration"""
         return f"IntentRecognitionConfig(environment={self.environment}, model={self.model.transformer_model_name})"
     
     def __repr__(self) -> str:

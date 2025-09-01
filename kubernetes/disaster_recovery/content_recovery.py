@@ -12,6 +12,7 @@ This module provides specialized recovery capabilities for content protection pl
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ from backend.security.encryption import EncryptionManager
 
 
 class ContentType(Enum):
-    """Content types for recovery"""
+    """
+Content types for recovery"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -50,6 +53,7 @@ class ContentType(Enum):
 
 class RecoveryMode(Enum):
     """Content recovery modes"""
+
     FULL_RESTORATION = "full_restoration"
     PARTIAL_RECOVERY = "partial_recovery"
     METADATA_ONLY = "metadata_only"
@@ -60,6 +64,7 @@ class RecoveryMode(Enum):
 
 class ContentIntegrityLevel(Enum):
     """Content integrity verification levels"""
+
     BASIC = "basic"              # Hash verification only
     STANDARD = "standard"        # Hash + metadata validation
     ADVANCED = "advanced"        # Full content analysis
@@ -85,7 +90,8 @@ class ContentRecoveryRequest:
 
 @dataclass
 class ContentRecoveryResult:
-    """Content recovery operation result"""
+    """
+Content recovery operation result"""
     request_id: str
     recovery_id: str
     start_time: datetime
@@ -183,7 +189,8 @@ class ContentRecoverySystem:
         }
 
     async def initialize(self):
-        """Initialize the content recovery system"""
+        """
+Initialize the content recovery system"""
         try:
             # Initialize content processing engines
             await self.vector_matcher.initialize()
@@ -759,7 +766,8 @@ class ContentRecoverySystem:
             return {'success': False, 'error': str(e)}
 
     async def get_recovery_status(self, request_id: str) -> Dict[str, Any]:
-        """Get status of content recovery request"""
+        """
+Get status of content recovery request"""
         try:
             # Find active recovery
             for recovery_id, recovery_result in self.active_recoveries.items():
@@ -806,7 +814,8 @@ class ContentRecoverySystem:
             return {'error': str(e)}
 
     async def get_recovery_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive content recovery metrics"""
+        """
+Get comprehensive content recovery metrics"""
         try:
             return {
                 'recovery_metrics': self.recovery_metrics.copy(),
@@ -825,7 +834,8 @@ class ContentRecoverySystem:
             return {'error': str(e)}
 
     def _generate_recovery_id(self) -> str:
-        """Generate unique recovery identifier"""
+        """
+Generate unique recovery identifier"""
         return f"recovery_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
 
     def _update_recovery_metrics(self, recovery_result: ContentRecoveryResult, success: bool):
@@ -873,7 +883,9 @@ from backend.content_protection.integrity_validator import ContentIntegrityValid
 
 
 class ContentType(Enum):
-    """Types of content for recovery"""
+    """
+Types of content for recovery"""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -886,6 +898,7 @@ class ContentType(Enum):
 
 class RecoveryMethod(Enum):
     """Content recovery methods"""
+
     BACKUP_RESTORE = "backup_restore"
     REGENERATE_FINGERPRINT = "regenerate_fingerprint"
     CROSS_REFERENCE = "cross_reference"
@@ -895,6 +908,7 @@ class RecoveryMethod(Enum):
 
 class ContentState(Enum):
     """Content recovery states"""
+
     INTACT = "intact"
     CORRUPTED = "corrupted"
     MISSING = "missing"
@@ -921,7 +935,8 @@ class ContentItem:
 
 @dataclass
 class RecoveryOperation:
-    """Content recovery operation"""
+    """
+Content recovery operation"""
     operation_id: str
     timestamp: datetime
     content_items: List[str]  # Content IDs
@@ -1000,7 +1015,8 @@ class ContentRecoverySystem:
         }
 
     async def initialize(self):
-        """Initialize content recovery system"""
+        """
+Initialize content recovery system"""
         try:
             # Load content inventory from database
             await self._load_content_inventory()
@@ -1770,7 +1786,8 @@ class ContentRecoverySystem:
             return False
 
     async def get_recovery_status(self) -> Dict[str, Any]:
-        """Get comprehensive recovery system status"""
+        """
+Get comprehensive recovery system status"""
         try:
             # Count content by state
             content_by_state = defaultdict(int)

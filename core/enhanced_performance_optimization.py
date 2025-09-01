@@ -3,6 +3,7 @@
 This module provides enhanced performance optimization features without 
 external dependencies to satisfy the checklist requirements.
 """
+
 import time
 import threading
 import logging
@@ -15,7 +16,9 @@ import os
 
 
 class OptimizationLevel(Enum):
-    """Performance optimization levels"""
+    """
+Performance optimization levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"  
     EXPERT = "expert"
@@ -24,6 +27,7 @@ class OptimizationLevel(Enum):
 
 class PerformanceStatus(Enum):
     """Performance status levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -45,7 +49,8 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation structure"""
+    """
+Optimization recommendation structure"""
     priority: str = "medium"
     category: str = "general"
     title: str = ""
@@ -520,7 +525,8 @@ class EnhancedPerformanceProfiler:
         return variance
     
     def _calculate_resource_efficiency(self) -> Dict[str, Any]:
-        """Calculate resource efficiency metrics"""
+        """
+Calculate resource efficiency metrics"""
         if not self.metrics_history:
             return {}
         

@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class IngressProtocol(Enum):
-    """Supported ingress protocols"""
+    """
+Supported ingress protocols"""
+
     HTTP = "http"
     HTTPS = "https" 
     GRPC = "grpc"
@@ -48,6 +51,7 @@ class IngressProtocol(Enum):
 
 class LoadBalancingMethod(Enum):
     """Load balancing algorithms"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_conn"
     IP_HASH = "ip_hash"
@@ -85,7 +89,8 @@ class IngressRule:
 
 @dataclass
 class SSLCertificate:
-    """SSL certificate configuration"""
+    """
+SSL certificate configuration"""
     name: str
     cert_file: str
     key_file: str
@@ -447,7 +452,8 @@ class IngressManager:
             await self._update_haproxy_config()
     
     async def _apply_kubernetes_ingress(self, rule: IngressRule) -> None:
-        """Apply Kubernetes ingress configuration"""
+        """
+Apply Kubernetes ingress configuration"""
         try:
             ingress_name = f"ingress-{rule.service_name}"
             namespace = "default"
@@ -524,7 +530,8 @@ class IngressManager:
             await self._create_kubernetes_ssl_secret(certificate)
     
     async def _setup_load_balancers(self) -> None:
-        """Setup load balancer configurations"""
+        """
+Setup load balancer configurations"""
         # Initialize NGINX if available
         try:
             self.nginx_config = nginx.NginxConfig()
@@ -544,11 +551,13 @@ class IngressManager:
         asyncio.create_task(self._health_check_loop())
     
     async def _start_metrics_collection(self) -> None:
-        """Start metrics collection"""
+        """
+Start metrics collection"""
         asyncio.create_task(self._metrics_collection_loop())
     
     async def _health_check_loop(self) -> None:
-        """Periodic health check loop"""
+        """
+Periodic health check loop"""
         while True:
             try:
                 for service_name in self.services:

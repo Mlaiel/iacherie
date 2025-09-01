@@ -11,6 +11,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
+
 import asyncio
 import logging
 import tempfile
@@ -43,7 +44,8 @@ settings = get_settings()
 
 @dataclass
 class ConversionSettings:
-    """Configuration for format conversion"""
+    """
+Configuration for format conversion"""
     target_format: str
     quality: QualityLevel = QualityLevel.HIGH
     compression_type: CompressionType = CompressionType.LOSSY
@@ -73,7 +75,8 @@ class ConversionSettings:
 
 @dataclass
 class ConversionResult:
-    """Result of format conversion"""
+    """
+Result of format conversion"""
     success: bool
     original_path: Path
     converted_path: Optional[Path] = None
@@ -97,16 +100,19 @@ class BaseConverter(ABC):
         
     @abstractmethod
     async def convert(self, input_path: Path, settings: ConversionSettings) -> ConversionResult:
-        """Convert content to target format"""
+        """
+Convert content to target format"""
         pass
     
     @abstractmethod
     def supports_conversion(self, source_format: str, target_format: str) -> bool:
-        """Check if conversion is supported"""
+        """
+Check if conversion is supported"""
         pass
     
     def _generate_output_path(self, input_path: Path, target_format: str) -> Path:
-        """Generate output file path"""
+        """
+Generate output file path"""
         base_name = input_path.stem
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_name = f"{base_name}_converted_{timestamp}.{target_format}"
@@ -119,7 +125,8 @@ class BaseConverter(ABC):
         return converted_size / original_size
     
     async def cleanup_temp_files(self, keep_files: Optional[List[Path]] = None):
-        """Clean up temporary files"""
+        """
+Clean up temporary files"""
         keep_files = keep_files or []
         try:
             for file_path in self.temp_dir.glob("*_converted_*"):
@@ -131,6 +138,7 @@ class BaseConverter(ABC):
 
 class AudioConverter(BaseConverter):
     """Professional audio format converter"""
+
     
     SUPPORTED_CONVERSIONS = {
         # Source -> Target formats
@@ -143,13 +151,15 @@ class AudioConverter(BaseConverter):
     }
     
     def supports_conversion(self, source_format: str, target_format: str) -> bool:
-        """Check if conversion is supported"""
+        """
+Check if conversion is supported"""
         source_format = source_format.lower()
         target_format = target_format.lower()
         return target_format in self.SUPPORTED_CONVERSIONS.get(source_format, [])
     
     async def convert(self, input_path: Path, settings: ConversionSettings) -> ConversionResult:
-        """Convert audio to target format"""
+        """
+Convert audio to target format"""
         start_time = datetime.now()
         
         source_format = input_path.suffix.lower().lstrip('.')
@@ -226,7 +236,8 @@ class AudioConverter(BaseConverter):
     
     async def _convert_to_mp3(self, input_path: Path, output_path: Path, 
                             settings: ConversionSettings):
-        """Convert to MP3 format"""
+        """
+Convert to MP3 format"""
         # Determine bitrate based on quality
         quality_bitrates = {
             QualityLevel.LOW: 128,
@@ -261,7 +272,8 @@ class AudioConverter(BaseConverter):
     
     async def _convert_to_aac(self, input_path: Path, output_path: Path, 
                             settings: ConversionSettings):
-        """Convert to AAC format"""
+        """
+Convert to AAC format"""
         quality_bitrates = {
             QualityLevel.LOW: 128,
             QualityLevel.MEDIUM: 192,
@@ -294,7 +306,8 @@ class AudioConverter(BaseConverter):
     
     async def _convert_to_ogg(self, input_path: Path, output_path: Path, 
                             settings: ConversionSettings):
-        """Convert to OGG Vorbis format"""
+        """
+Convert to OGG Vorbis format"""
         quality_levels = {
             QualityLevel.LOW: 3,
             QualityLevel.MEDIUM: 5,
@@ -326,7 +339,8 @@ class AudioConverter(BaseConverter):
     
     async def _convert_with_ffmpeg(self, input_path: Path, output_path: Path, 
                                  settings: ConversionSettings):
-        """Generic conversion using ffmpeg"""
+        """
+Generic conversion using ffmpeg"""
         input_stream = ffmpeg.input(str(input_path))
         
         kwargs = {}
@@ -348,7 +362,8 @@ class AudioConverter(BaseConverter):
     
     async def _assess_audio_quality(self, original_path: Path, converted_path: Path, 
                                   settings: ConversionSettings) -> Dict[str, Any]:
-        """Assess quality of converted audio"""
+        """
+Assess quality of converted audio"""
         metrics = {}
         
         try:
@@ -405,6 +420,7 @@ class AudioConverter(BaseConverter):
 
 class VideoConverter(BaseConverter):
     """Professional video format converter"""
+
     
     SUPPORTED_CONVERSIONS = {
         'mp4': ['avi', 'mkv', 'mov', 'webm', 'flv'],
@@ -416,13 +432,15 @@ class VideoConverter(BaseConverter):
     }
     
     def supports_conversion(self, source_format: str, target_format: str) -> bool:
-        """Check if conversion is supported"""
+        """
+Check if conversion is supported"""
         source_format = source_format.lower()
         target_format = target_format.lower()
         return target_format in self.SUPPORTED_CONVERSIONS.get(source_format, [])
     
     async def convert(self, input_path: Path, settings: ConversionSettings) -> ConversionResult:
-        """Convert video to target format"""
+        """
+Convert video to target format"""
         start_time = datetime.now()
         
         source_format = input_path.suffix.lower().lstrip('.')
@@ -534,7 +552,8 @@ class VideoConverter(BaseConverter):
     
     async def _convert_with_ffmpeg(self, input_path: Path, output_path: Path, 
                                  params: Dict[str, Any]):
-        """Perform video conversion using ffmpeg"""
+        """
+Perform video conversion using ffmpeg"""
         input_stream = ffmpeg.input(str(input_path))
         output_stream = ffmpeg.output(input_stream, str(output_path), **params)
         
@@ -545,7 +564,8 @@ class VideoConverter(BaseConverter):
     
     async def _assess_video_quality(self, original_path: Path, converted_path: Path, 
                                   settings: ConversionSettings) -> Dict[str, Any]:
-        """Assess quality of converted video"""
+        """
+Assess quality of converted video"""
         metrics = {}
         
         try:
@@ -607,6 +627,7 @@ class VideoConverter(BaseConverter):
 
 class ImageConverter(BaseConverter):
     """Professional image format converter"""
+
     
     SUPPORTED_CONVERSIONS = {
         'jpg': ['png', 'webp', 'tiff', 'bmp'],
@@ -621,13 +642,15 @@ class ImageConverter(BaseConverter):
     }
     
     def supports_conversion(self, source_format: str, target_format: str) -> bool:
-        """Check if conversion is supported"""
+        """
+Check if conversion is supported"""
         source_format = source_format.lower()
         target_format = target_format.lower()
         return target_format in self.SUPPORTED_CONVERSIONS.get(source_format, [])
     
     async def convert(self, input_path: Path, settings: ConversionSettings) -> ConversionResult:
-        """Convert image to target format"""
+        """
+Convert image to target format"""
         start_time = datetime.now()
         
         source_format = input_path.suffix.lower().lstrip('.')
@@ -712,7 +735,8 @@ class ImageConverter(BaseConverter):
         return processed
     
     async def _resize_image(self, image: Image.Image, settings: ConversionSettings) -> Image.Image:
-        """Resize image based on settings"""
+        """
+Resize image based on settings"""
         current_width, current_height = image.size
         
         # Calculate new dimensions
@@ -741,7 +765,8 @@ class ImageConverter(BaseConverter):
         return image
     
     async def _optimize_for_web(self, image: Image.Image, settings: ConversionSettings) -> Image.Image:
-        """Optimize image for web delivery"""
+        """
+Optimize image for web delivery"""
         # Apply progressive JPEG if target is JPEG
         if settings.target_format.lower() in ['jpg', 'jpeg']:
             # Moderate compression for web
@@ -761,7 +786,8 @@ class ImageConverter(BaseConverter):
         return image
     
     async def _save_image(self, image: Image.Image, output_path: Path, settings: ConversionSettings):
-        """Save image with format-specific options"""
+        """
+Save image with format-specific options"""
         save_kwargs = {}
         
         format_upper = settings.target_format.upper()
@@ -806,7 +832,8 @@ class ImageConverter(BaseConverter):
         image.save(str(output_path), **save_kwargs)
     
     def _get_quality_value(self, quality_level: QualityLevel) -> int:
-        """Get numeric quality value for image formats"""
+        """
+Get numeric quality value for image formats"""
         quality_map = {
             QualityLevel.LOW: 60,
             QualityLevel.MEDIUM: 75,
@@ -818,7 +845,8 @@ class ImageConverter(BaseConverter):
     
     async def _assess_image_quality(self, original_path: Path, converted_path: Path, 
                                   settings: ConversionSettings) -> Dict[str, Any]:
-        """Assess quality of converted image"""
+        """
+Assess quality of converted image"""
         metrics = {}
         
         try:
@@ -885,7 +913,8 @@ class FormatConverter:
     
     async def convert(self, input_path: Path, target_format: str, 
                      settings: Optional[ConversionSettings] = None) -> ConversionResult:
-        """Convert multimedia content to target format"""
+        """
+Convert multimedia content to target format"""
         
         # Detect source content type
         source_format = input_path.suffix.lower().lstrip('.')
@@ -934,7 +963,8 @@ class FormatConverter:
         return None
     
     def get_supported_conversions(self) -> Dict[str, List[str]]:
-        """Get all supported format conversions"""
+        """
+Get all supported format conversions"""
         conversions = {}
         
         for converter in self.converters.values():
@@ -944,7 +974,8 @@ class FormatConverter:
         return conversions
     
     def supports_conversion(self, source_format: str, target_format: str) -> bool:
-        """Check if conversion is supported"""
+        """
+Check if conversion is supported"""
         content_type = self._detect_content_type(source_format)
         if content_type is None:
             return False
@@ -957,7 +988,8 @@ class FormatConverter:
     
     async def batch_convert(self, input_paths: List[Path], target_format: str,
                           settings: Optional[ConversionSettings] = None) -> List[ConversionResult]:
-        """Convert multiple files to target format"""
+        """
+Convert multiple files to target format"""
         
         tasks = []
         for input_path in input_paths:
@@ -985,12 +1017,14 @@ class FormatConverter:
         return processed_results
     
     async def cleanup_all_temp_files(self):
-        """Clean up temporary files from all converters"""
+        """
+Clean up temporary files from all converters"""
         for converter in self.converters.values():
             await converter.cleanup_temp_files()
     
     def get_conversion_statistics(self, results: List[ConversionResult]) -> Dict[str, Any]:
-        """Calculate statistics from conversion results"""
+        """
+Calculate statistics from conversion results"""
         stats = {
             'total_conversions': len(results),
             'successful_conversions': sum(1 for r in results if r.success),

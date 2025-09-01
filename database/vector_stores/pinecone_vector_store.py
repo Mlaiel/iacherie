@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -36,7 +37,8 @@ settings = get_settings()
 
 @dataclass
 class PineconeSearchResult:
-    """Pinecone search result with metadata"""
+    """
+Pinecone search result with metadata"""
     content_id: str
     fingerprint_id: int
     similarity_score: float
@@ -47,7 +49,8 @@ class PineconeSearchResult:
 
 @dataclass
 class PineconeIndexStats:
-    """Pinecone index statistics"""
+    """
+Pinecone index statistics"""
     total_vectors: int
     dimension: int
     index_fullness: float

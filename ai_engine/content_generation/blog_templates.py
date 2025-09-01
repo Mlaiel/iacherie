@@ -4,11 +4,12 @@ Comprehensive template system for creating high-quality blog content
 with optimized structures for different types of blog posts.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -30,7 +31,8 @@ class BlogTemplates:
     """
     
     def __init__(self):
-        """Initialize blog templates"""
+        """
+Initialize blog templates"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # How-to/Tutorial Templates
@@ -613,7 +615,8 @@ class BlogTemplates:
         return content
     
     def _fill_lists(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill list-based content sections"""
+        """
+Fill list-based content sections"""
         # Fill tips list
         if '{tips_list}' in content:
             tips = content_data.get('tips', [])
@@ -750,7 +753,8 @@ class BlogTemplates:
         }
     
     def _create_basic_blog_post(self, content_data: Dict[str, Any]) -> str:
-        """Create basic blog post when template fails"""
+        """
+Create basic blog post when template fails"""
         title = content_data.get('title', 'Blog Post')
         content = content_data.get('content', content_data.get('main_content', 'Great content here!'))
         
@@ -767,7 +771,8 @@ Thanks for reading! Share your thoughts in the comments below.
 *What did you think of this post? Let me know in the comments!*"""
     
     def get_available_templates(self, category: str) -> List[str]:
-        """Get available templates for category"""
+        """
+Get available templates for category"""
         try:
             category_templates = getattr(self, f"{category}_templates", {})
             return list(category_templates.keys())
@@ -782,7 +787,8 @@ Thanks for reading! Share your thoughts in the comments below.
         ]
     
     def optimize_for_readability(self, content: str) -> str:
-        """Optimize blog content for readability"""
+        """
+Optimize blog content for readability"""
         lines = content.split('\n')
         optimized_lines = []
         
@@ -806,7 +812,8 @@ Thanks for reading! Share your thoughts in the comments below.
         return '\n'.join(optimized_lines)
     
     def add_internal_linking_suggestions(self, content: str, related_topics: List[str]) -> str:
-        """Add internal linking suggestions"""
+        """
+Add internal linking suggestions"""
         if not related_topics:
             return content
         
@@ -852,7 +859,8 @@ class ArticleTemplate:
 
 
 class ArticleTemplate:
-    """Article template for structured blog content"""
+    """
+Article template for structured blog content"""
     
     def __init__(self, **kwargs):
         self.title = kwargs.get('title', '')
@@ -863,7 +871,8 @@ class ArticleTemplate:
         self.tags = kwargs.get('tags', [])
     
     def render(self, data: Dict[str, Any]) -> str:
-        """Render the article template with data"""
+        """
+Render the article template with data"""
         title = data.get('title', self.title)
         content = data.get('content', 'Article content goes here.')
         return f"# {title}\n\n{content}"

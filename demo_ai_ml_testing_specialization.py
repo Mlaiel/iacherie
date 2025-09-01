@@ -39,10 +39,12 @@ from ai_engine.testing.ab_testing_integration import (
 
 
 class AIMLTestingDemo:
-    """Comprehensive demo of AI/ML testing specialization"""
+    """
+Comprehensive demo of AI/ML testing specialization"""
     
     def __init__(self):
-        """Initialize the demo with all testing components"""
+        """
+Initialize the demo with all testing components"""
         print("🤖 Initializing AI/ML Testing Specialization Demo")
         print("=" * 60)
         
@@ -345,7 +347,8 @@ class AIMLTestingDemo:
             return (np.sum(X, axis=1) > 0.1).astype(int)
         
         def model_b(X):
-            """Liberal model"""
+            """
+Liberal model"""
             return (np.sum(X, axis=1) > -0.1).astype(int)
         
         # Experiment configuration

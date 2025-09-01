@@ -6,13 +6,14 @@ Provides comprehensive insights, performance metrics, and violation alerts
 for content protection and surveillance systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerMetrics:
-    """Performance metrics for crawler operations."""
+    """
+Performance metrics for crawler operations."""
     
     crawler_type: CrawlerType
     total_jobs: int
@@ -54,7 +56,8 @@ class CrawlerMetrics:
 
 @dataclass
 class ViolationTrend:
-    """Trend analysis for violation detection."""
+    """
+Trend analysis for violation detection."""
     
     platform: str
     date: datetime
@@ -66,7 +69,8 @@ class ViolationTrend:
 
 @dataclass
 class SystemHealth:
-    """Overall system health indicators."""
+    """
+Overall system health indicators."""
     
     overall_status: str  # healthy, warning, critical
     cpu_usage: float
@@ -86,10 +90,12 @@ class SystemHealth:
     error_rates: Dict[str, float]
 
 class RealTimeMonitor:
-    """Real-time monitoring system for crawler operations."""
+    """
+Real-time monitoring system for crawler operations."""
     
     def __init__(self, orchestrator: CrawlerOrchestrator):
-        """Initialize real-time monitor."""
+        """
+Initialize real-time monitor."""
         self.orchestrator = orchestrator
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager()
@@ -113,7 +119,8 @@ class RealTimeMonitor:
         self.monitoring_interval = 30  # seconds
     
     async def start_monitoring(self):
-        """Start real-time monitoring."""
+        """
+Start real-time monitoring."""
         self.is_monitoring = True
         logger.info("Real-time monitor started")
         

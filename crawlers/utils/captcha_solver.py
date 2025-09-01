@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import base64
 import asyncio
 import logging
@@ -42,7 +43,9 @@ from urllib.parse import urljoin
 logger = logging.getLogger(__name__)
 
 class CaptchaType(Enum):
-    """CAPTCHA type classification."""
+    """
+CAPTCHA type classification."""
+
     TEXT_BASED = "text_based"
     IMAGE_RECOGNITION = "image_recognition"
     RECAPTCHA_V2 = "recaptcha_v2"
@@ -73,7 +76,8 @@ class CaptchaChallenge:
             self.challenge_id = self._generate_challenge_id()
     
     def _generate_challenge_id(self) -> str:
-        """Generate unique challenge ID."""
+        """
+Generate unique challenge ID."""
         data = f"{self.captcha_type.value}_{self.site_key}_{time.time()}"
         return hashlib.md5(data.encode()).hexdigest()
 
@@ -104,7 +108,8 @@ class CaptchaDetector:
     """
     
     def __init__(self):
-        """Initialize CAPTCHA detector."""
+        """
+Initialize CAPTCHA detector."""
         self.captcha_patterns = {
             'recaptcha_v2': [
                 r'g-recaptcha',
@@ -139,7 +144,8 @@ class CaptchaDetector:
         }
     
     async def detect_captcha(self, html_content: str, page_url: str) -> List[CaptchaChallenge]:
-        """Detect CAPTCHAs in HTML content."""
+        """
+Detect CAPTCHAs in HTML content."""
         detected_captchas = []
         
         try:
@@ -252,7 +258,8 @@ class BaseCaptchaSolver:
     """Base class for CAPTCHA solvers."""
     
     def __init__(self, name: str):
-        """Initialize solver."""
+        """
+Initialize solver."""
         self.name = name
         self.success_rate = 0.0
         self.average_solve_time = 0.0
@@ -260,7 +267,8 @@ class BaseCaptchaSolver:
         self.successful_attempts = 0
     
     async def solve(self, challenge: CaptchaChallenge) -> CaptchaSolution:
-        """Solve CAPTCHA challenge - base implementation."""
+        """
+Solve CAPTCHA challenge - base implementation."""
         try:
             import time
             start_time = time.time()
@@ -367,7 +375,8 @@ class ImageCaptchaSolver(BaseCaptchaSolver):
     """
     
     def __init__(self):
-        """Initialize image CAPTCHA solver."""
+        """
+Initialize image CAPTCHA solver."""
         super().__init__("ImageCaptchaSolver")
         self.supported_types = {
             CaptchaType.TEXT_BASED,
@@ -380,7 +389,8 @@ class ImageCaptchaSolver(BaseCaptchaSolver):
         return captcha_type in self.supported_types
     
     async def solve(self, challenge: CaptchaChallenge) -> CaptchaSolution:
-        """Solve image-based CAPTCHA."""
+        """
+Solve image-based CAPTCHA."""
         start_time = time.time()
         
         try:
@@ -509,7 +519,8 @@ class ExternalCaptchaSolver(BaseCaptchaSolver):
     """
     
     def __init__(self, service_name: str, api_key: str):
-        """Initialize external solver."""
+        """
+Initialize external solver."""
         super().__init__(f"External_{service_name}")
         self.service_name = service_name
         self.api_key = api_key
@@ -543,12 +554,14 @@ class ExternalCaptchaSolver(BaseCaptchaSolver):
         return configs.get(service_name.lower(), {})
     
     def can_solve(self, captcha_type: CaptchaType) -> bool:
-        """Check if service supports this CAPTCHA type."""
+        """
+Check if service supports this CAPTCHA type."""
         supported_types = self.service_config.get('supported_types', set())
         return captcha_type in supported_types
     
     async def solve(self, challenge: CaptchaChallenge) -> CaptchaSolution:
-        """Solve CAPTCHA using external service."""
+        """
+Solve CAPTCHA using external service."""
         start_time = time.time()
         
         try:
@@ -664,14 +677,16 @@ class CaptchaSolver:
     """
     
     def __init__(self):
-        """Initialize CAPTCHA solver."""
+        """
+Initialize CAPTCHA solver."""
         self.solvers: List[BaseCaptchaSolver] = []
         self.detector = CaptchaDetector()
         self.solve_attempts = {}
         self.max_attempts_per_challenge = 3
     
     def add_solver(self, solver: BaseCaptchaSolver) -> None:
-        """Add CAPTCHA solver backend."""
+        """
+Add CAPTCHA solver backend."""
         self.solvers.append(solver)
         logger.info(f"Added CAPTCHA solver: {solver.name}")
     
@@ -753,7 +768,8 @@ class CaptchaSolver:
         return capable_solvers[0]
     
     def get_solver_statistics(self) -> Dict:
-        """Get statistics for all solvers."""
+        """
+Get statistics for all solvers."""
         stats = {}
         
         for solver in self.solvers:
@@ -767,7 +783,8 @@ class CaptchaSolver:
         return stats
     
     def clear_attempt_history(self) -> None:
-        """Clear solve attempt history."""
+        """
+Clear solve attempt history."""
         self.solve_attempts.clear()
         logger.info("Cleared CAPTCHA solve attempt history")
 
@@ -777,17 +794,20 @@ def create_image_captcha_solver() -> ImageCaptchaSolver:
     return ImageCaptchaSolver()
 
 def create_2captcha_solver(api_key: str) -> ExternalCaptchaSolver:
-    """Create 2captcha external solver."""
+    """
+Create 2captcha external solver."""
     return ExternalCaptchaSolver('2captcha', api_key)
 
 def create_anticaptcha_solver(api_key: str) -> ExternalCaptchaSolver:
-    """Create AntiCaptcha external solver."""
+    """
+Create AntiCaptcha external solver."""
     return ExternalCaptchaSolver('anticaptcha', api_key)
 
 def setup_default_captcha_solver(
     external_api_keys: Optional[Dict[str, str]] = None
 ) -> CaptchaSolver:
-    """Setup CAPTCHA solver with default configuration."""
+    """
+Setup CAPTCHA solver with default configuration."""
     solver = CaptchaSolver()
     
     # Add image solver

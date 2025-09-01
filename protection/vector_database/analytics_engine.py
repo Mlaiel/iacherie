@@ -5,7 +5,7 @@ Advanced analytics and insights for vector database performance and content patt
 Provides detailed metrics, trend analysis, and optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -16,6 +16,7 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
+    """
+Types of metrics tracked"""
+
     PERFORMANCE = "performance"
     USAGE = "usage"
     QUALITY = "quality"
@@ -60,6 +63,7 @@ class MetricType(Enum):
 
 class AnalyticsLevel(Enum):
     """Analytics detail levels"""
+
     BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
@@ -79,7 +83,8 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Complete analytics report"""
+    """
+Complete analytics report"""
     report_id: str
     generated_at: float
     period_start: float
@@ -93,7 +98,8 @@ class AnalyticsReport:
 
 @dataclass
 class ContentPattern:
-    """Detected content pattern"""
+    """
+Detected content pattern"""
     pattern_id: str
     pattern_type: str
     confidence: float
@@ -104,7 +110,8 @@ class ContentPattern:
 
 
 class MetricsCollector:
-    """Collect and aggregate performance metrics"""
+    """
+Collect and aggregate performance metrics"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -182,13 +189,15 @@ class MetricsCollector:
         await self.record_metric('cache_hit_rate', 1.0 if cache_hit else 0.0, 'ratio')
     
     async def record_index_stats(self, total_vectors: int, index_size_mb: float, dimension: int):
-        """Record index statistics"""
+        """
+Record index statistics"""
         await self.record_metric('vectors_total', total_vectors, 'count')
         await self.record_metric('index_size_mb', index_size_mb, 'MB')
         await self.record_metric('vector_dimension', dimension, 'count')
     
     async def record_similarity_distribution(self, similarity_scores: List[float]):
-        """Record similarity score distribution"""
+        """
+Record similarity score distribution"""
         if not similarity_scores:
             return
         
@@ -200,7 +209,8 @@ class MetricsCollector:
         await self.record_metric('similarity_max', float(np.max(scores_array)), 'score')
     
     async def get_metric_summary(self, metric_name: str, hours: int = 24) -> Dict[str, Any]:
-        """Get aggregated metric summary for time period"""
+        """
+Get aggregated metric summary for time period"""
         try:
             end_time = time.time()
             start_time = end_time - (hours * 3600)
@@ -743,7 +753,8 @@ class AnalyticsEngine:
         return None
     
     def export_report(self, report_id: str, format: str = 'json') -> Optional[str]:
-        """Export report in specified format"""
+        """
+Export report in specified format"""
         try:
             if report_id not in self.reports:
                 return None

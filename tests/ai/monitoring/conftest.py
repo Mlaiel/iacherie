@@ -3,8 +3,9 @@
 Provides shared test configuration, fixtures, and utilities for comprehensive monitoring tests.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import pytest
 import pytest_asyncio
@@ -33,14 +34,16 @@ def event_loop():
 
 @pytest.fixture
 async def temp_dir():
-    """Create a temporary directory for test files."""
+    """
+Create a temporary directory for test files."""
     temp_path = Path(tempfile.mkdtemp())
     yield temp_path
     shutil.rmtree(temp_path, ignore_errors=True)
 
 @pytest.fixture
 def sample_metrics_data():
-    """Generate sample metrics data for testing."""
+    """
+Generate sample metrics data for testing."""
     return {
         "ai_performance": {
             "model_inference_time": 0.25,
@@ -134,7 +137,8 @@ def mock_redis_client():
 
 @pytest.fixture
 def mock_database_session():
-    """Create a mock database session for testing."""
+    """
+Create a mock database session for testing."""
     mock_session = AsyncMock()
     mock_session.execute.return_value = MagicMock()
     mock_session.commit.return_value = None
@@ -144,7 +148,8 @@ def mock_database_session():
 
 @pytest.fixture
 def mock_metrics_collector():
-    """Create a mock metrics collector for testing."""
+    """
+Create a mock metrics collector for testing."""
     from ai.core.metrics import MetricsCollector
     
     collector = AsyncMock(spec=MetricsCollector)
@@ -155,7 +160,8 @@ def mock_metrics_collector():
 
 @pytest.fixture
 def performance_test_config():
-    """Configuration for performance testing."""
+    """
+Configuration for performance testing."""
     return {
         "max_response_time": 1.0,  # seconds
         "max_memory_usage": 100,   # MB
@@ -207,7 +213,8 @@ async def monitoring_system_setup():
 
 @pytest.fixture
 def test_time_range():
-    """Generate a test time range for time-based tests."""
+    """
+Generate a test time range for time-based tests."""
     end_time = datetime.utcnow()
     start_time = end_time - timedelta(hours=24)
     
@@ -267,22 +274,26 @@ class PerformanceValidator:
     
     @staticmethod
     def validate_response_time(response_time: float, max_time: float = 1.0) -> bool:
-        """Validate response time is within acceptable limits."""
+        """
+Validate response time is within acceptable limits."""
         return response_time <= max_time
     
     @staticmethod
     def validate_memory_usage(memory_mb: float, max_memory: float = 100.0) -> bool:
-        """Validate memory usage is within acceptable limits."""
+        """
+Validate memory usage is within acceptable limits."""
         return memory_mb <= max_memory
     
     @staticmethod
     def validate_throughput(requests_per_second: float, min_throughput: float = 100.0) -> bool:
-        """Validate throughput meets minimum requirements."""
+        """
+Validate throughput meets minimum requirements."""
         return requests_per_second >= min_throughput
 
 # Test data generators
 class TestDataGenerator:
-    """Generate realistic test data for various scenarios."""
+    """
+Generate realistic test data for various scenarios."""
     
     @staticmethod
     def generate_time_series_data(
@@ -292,7 +303,8 @@ class TestDataGenerator:
         base_value: float = 100.0,
         variance: float = 10.0
     ) -> List[Dict[str, Any]]:
-        """Generate time series data for testing."""
+        """
+Generate time series data for testing."""
         import random
         
         data = []

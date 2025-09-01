@@ -5,8 +5,9 @@ Core recommendation engine and configuration for the Ainflue AI platform.
 Provides the main recommendation system with configuration management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationMode(Enum):
-    """Recommendation generation modes."""
+    """
+Recommendation generation modes."""
+
     FAST = "fast"
     BALANCED = "balanced" 
     COMPREHENSIVE = "comprehensive"
@@ -68,7 +71,8 @@ class RecommendationConfig:
     enable_ab_testing: bool = False
     
     def validate(self) -> bool:
-        """Validate configuration settings."""
+        """
+Validate configuration settings."""
         if not 0.0 <= self.min_confidence_threshold <= 1.0:
             raise ValidationError("Confidence threshold must be between 0.0 and 1.0")
         
@@ -109,7 +113,8 @@ class RecommendationResponse:
     total_candidates: int = 0
     
     def get_top_recommendations(self, n: int) -> List[Dict[str, Any]]:
-        """Get top N recommendations."""
+        """
+Get top N recommendations."""
         return self.recommendations[:n]
 
 
@@ -295,7 +300,8 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Get collaborative filtering recommendations."""
+        """
+Get collaborative filtering recommendations."""
         # Mock implementation
         return [
             {
@@ -313,7 +319,8 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Get content-based recommendations."""
+        """
+Get content-based recommendations."""
         # Mock implementation
         return [
             {
@@ -331,7 +338,8 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Get hybrid recommendations."""
+        """
+Get hybrid recommendations."""
         # Mock implementation
         return [
             {
@@ -350,7 +358,8 @@ class RecommendationEngine:
         recommendations: List[Dict[str, Any]],
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Filter and rank recommendations based on request and config."""
+        """
+Filter and rank recommendations based on request and config."""
         
         # Filter by confidence threshold
         filtered = [
@@ -377,7 +386,8 @@ class RecommendationEngine:
         response: Optional[RecommendationResponse],
         success: bool
     ) -> None:
-        """Update analytics metrics."""
+        """
+Update analytics metrics."""
         self.analytics['total_requests'] += 1
         
         if success:
@@ -398,13 +408,15 @@ class RecommendationEngine:
                 )
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get analytics data."""
+        """
+Get analytics data."""
         analytics = self.analytics.copy()
         analytics['unique_users'] = len(analytics['unique_users'])
         return analytics
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the recommendation engine."""
+        """
+Perform health check on the recommendation engine."""
         health_status = {
             'status': 'healthy',
             'initialized': self.is_initialized,
@@ -424,21 +436,24 @@ class RecommendationEngine:
 
 
 class MockModel:
-    """Mock model for testing purposes."""
+    """
+Mock model for testing purposes."""
     
     def __init__(self, name: str):
         self.name = name
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the mock model."""
+        """
+Initialize the mock model."""
         # Simulate initialization time
         await asyncio.sleep(0.01)
         self.is_initialized = True
         return True
     
     async def health_check(self) -> bool:
-        """Check model health."""
+        """
+Check model health."""
         return self.is_initialized
 
 

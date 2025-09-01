@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive test suite for Gamification Agent Module.
+"""
+Comprehensive test suite for Gamification Agent Module.
 
 Tests all gamification components including challenge generation, reward optimization,
 engagement prediction, social competition, badge generation, and progression analysis.
@@ -20,6 +22,7 @@ engagement prediction, social competition, badge generation, and progression ana
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
@@ -29,9 +32,11 @@ import json
 
 
 class TestGamificationAgentModule(unittest.TestCase):
-    """Comprehensive test suite for Gamification Agent Module"""
+    """
+Comprehensive test suite for Gamification Agent Module"""
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.sample_user_data = {
             "user_id": "test_user_123",
             "level": 5,
@@ -85,7 +90,8 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertEqual(optimized_reward, 205)
 
     def test_engagement_prediction_scoring(self):
-        """Test engagement prediction scoring system"""
+        """
+Test engagement prediction scoring system"""
         user_metrics = {
             "content_frequency": 80,      # 80%
             "quality_consistency": 85,    # 85%
@@ -425,7 +431,8 @@ class TestGamificationAgentModule(unittest.TestCase):
 class TestGamificationPerformance(unittest.TestCase):
     """Performance tests for gamification system"""
     def test_large_user_base_simulation(self):
-        """Test system performance with large user base"""
+        """
+Test system performance with large user base"""
         num_users = 10000
         challenges_per_user = 3
         

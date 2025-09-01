@@ -6,7 +6,7 @@ Provides comprehensive transformation, optimization, and format conversion capab
 with AI-powered enhancement and intelligent content adaptation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
@@ -23,6 +23,7 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
+
 import asyncio
 import logging
 import tempfile
@@ -67,7 +68,9 @@ from ...core.config import get_settings
 
 
 class TransformationType(Enum):
-    """Content transformation types"""
+    """
+Content transformation types"""
+
     FORMAT_CONVERSION = "format_conversion"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     COMPRESSION_OPTIMIZATION = "compression_optimization"
@@ -80,6 +83,7 @@ class TransformationType(Enum):
 
 class TransformationQuality(Enum):
     """Transformation quality levels"""
+
     DRAFT = "draft"        # Fast processing, basic quality
     STANDARD = "standard"  # Balanced quality and speed
     HIGH = "high"         # High quality processing
@@ -89,6 +93,7 @@ class TransformationQuality(Enum):
 
 class TransformationPriority(Enum):
     """Transformation processing priority"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -97,6 +102,7 @@ class TransformationPriority(Enum):
 
 class OptimizationTarget(Enum):
     """Content optimization targets"""
+
     WEB = "web"              # Web optimization
     MOBILE = "mobile"        # Mobile optimization
     SOCIAL_MEDIA = "social"  # Social media platforms
@@ -142,7 +148,8 @@ class TransformationOptions:
 
 @dataclass
 class TransformationResult:
-    """Transformation processing result"""
+    """
+Transformation processing result"""
     success: bool
     transformation_id: str
     original_content: Dict[str, Any]
@@ -185,7 +192,8 @@ class ContentTransformer:
     """
     
     def __init__(self):
-        """Initialize content transformer"""
+        """
+Initialize content transformer"""
         self.logger = logging.getLogger(__name__)
         self.settings = get_settings()
         
@@ -215,7 +223,8 @@ class ContentTransformer:
         }
     
     def _initialize_ai_models(self):
-        """Initialize AI models for transformation"""
+        """
+Initialize AI models for transformation"""
         try:
             # Load models based on availability and configuration
             if self.settings.enable_ai_enhancement:
@@ -459,7 +468,8 @@ class ContentTransformer:
                              content_data: Union[bytes, BinaryIO],
                              content_type: str,
                              filename: str) -> Dict[str, Any]:
-        """Analyze content for transformation optimization"""
+        """
+Analyze content for transformation optimization"""
         try:
             analysis = {
                 'content_type': content_type,
@@ -705,7 +715,8 @@ class ContentTransformer:
                                          content_type: str,
                                          step: Dict[str, Any],
                                          options: TransformationOptions) -> Union[bytes, BinaryIO]:
-        """Execute single transformation step"""
+        """
+Execute single transformation step"""
         try:
             step_function = step['function']
             step_params = step.get('params', {})
@@ -862,7 +873,8 @@ class ContentTransformer:
             return 0.5  # Default quality score
     
     def _estimate_compression_potential(self, image: Image.Image) -> float:
-        """Estimate compression potential for image"""
+        """
+Estimate compression potential for image"""
         try:
             # Analyze color diversity and complexity
             colors = image.getcolors(maxcolors=256*256*256)
@@ -882,7 +894,8 @@ class ContentTransformer:
             return 0.5
     
     def _determine_output_content_type(self, input_type: str, options: TransformationOptions) -> str:
-        """Determine output content type based on transformation"""
+        """
+Determine output content type based on transformation"""
         if options.output_format:
             # Map format to MIME type
             format_mapping = {
@@ -903,7 +916,8 @@ class ContentTransformer:
         return input_type
     
     def _calculate_size_reduction(self, original_size: int, new_size: int) -> float:
-        """Calculate size reduction percentage"""
+        """
+Calculate size reduction percentage"""
         if original_size == 0:
             return 0.0
         
@@ -915,7 +929,8 @@ class ContentTransformer:
                                            transformed_content: bytes,
                                            content_type: str,
                                            options: TransformationOptions) -> Dict[str, Any]:
-        """Assess transformation quality"""
+        """
+Assess transformation quality"""
         try:
             metrics = {
                 'size_reduction': self._calculate_size_reduction(
@@ -1036,7 +1051,8 @@ class ContentTransformer:
             return 0.5
     
     def _calculate_speed_score(self, processing_time: float) -> float:
-        """Calculate processing speed score"""
+        """
+Calculate processing speed score"""
         try:
             # Normalize based on reasonable processing time (10 seconds)
             target_time = 10.0
@@ -1049,7 +1065,8 @@ class ContentTransformer:
     def _generate_enhancement_suggestions(self, 
                                         result: TransformationResult, 
                                         options: TransformationOptions) -> List[str]:
-        """Generate enhancement suggestions"""
+        """
+Generate enhancement suggestions"""
         suggestions = []
         
         try:
@@ -1128,47 +1145,56 @@ async def _sharpen_image(content: bytes, content_type: str, params: Dict[str, An
     return content
 
 async def _correct_image_colors(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Correct image colors using AI or traditional methods"""
+    """
+Correct image colors using AI or traditional methods"""
     # Implementation would use color correction algorithms
     return content
 
 async def _reduce_audio_noise(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Reduce audio noise using signal processing"""
+    """
+Reduce audio noise using signal processing"""
     # Implementation would use audio processing libraries
     return content
 
 async def _normalize_audio(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Normalize audio levels"""
+    """
+Normalize audio levels"""
     # Implementation would use audio normalization algorithms
     return content
 
 async def _enhance_audio_eq(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Enhance audio using EQ"""
+    """
+Enhance audio using EQ"""
     # Implementation would use audio EQ processing
     return content
 
 async def _intelligent_compression(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Apply intelligent compression based on content analysis"""
+    """
+Apply intelligent compression based on content analysis"""
     # Implementation would use AI-powered compression
     return content
 
 async def _optimize_for_platform(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Optimize content for specific platforms"""
+    """
+Optimize content for specific platforms"""
     # Implementation would apply platform-specific optimizations
     return content
 
 async def _optimize_metadata(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Optimize metadata for SEO"""
+    """
+Optimize metadata for SEO"""
     # Implementation would enhance metadata
     return content
 
 async def _optimize_filename(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Optimize filename for SEO"""
+    """
+Optimize filename for SEO"""
     # Implementation would suggest better filenames
     return content
 
 async def _generate_alt_text(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Generate alt text for accessibility"""
+    """
+Generate alt text for accessibility"""
     # Implementation would use AI to generate descriptions
     return content
 

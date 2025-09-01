@@ -5,7 +5,7 @@ Advanced blockchain integration for immutable rights verification, smart contrac
 and decentralized digital rights management with NFT and cryptocurrency support.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import hashlib
@@ -42,7 +43,9 @@ from cryptography.hazmat.backends import default_backend
 logger = logging.getLogger(__name__)
 
 class BlockchainNetwork(str, Enum):
-    """Supported blockchain networks."""
+    """
+Supported blockchain networks."""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
@@ -54,6 +57,7 @@ class BlockchainNetwork(str, Enum):
 
 class TransactionType(str, Enum):
     """Types of blockchain transactions."""
+
     RIGHTS_REGISTRATION = "rights_registration"
     LICENSE_ISSUANCE = "license_issuance"
     OWNERSHIP_TRANSFER = "ownership_transfer"
@@ -65,6 +69,7 @@ class TransactionType(str, Enum):
 
 class ContractType(str, Enum):
     """Types of smart contracts."""
+
     ERC721 = "erc721"  # NFT standard
     ERC1155 = "erc1155"  # Multi-token standard
     ERC20 = "erc20"  # Fungible token standard
@@ -74,6 +79,7 @@ class ContractType(str, Enum):
 
 class TransactionStatus(str, Enum):
     """Blockchain transaction status."""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -102,7 +108,8 @@ class BlockchainTransaction:
 
 @dataclass
 class SmartContract:
-    """Smart contract definition."""
+    """
+Smart contract definition."""
     contract_id: str
     contract_type: ContractType
     network: BlockchainNetwork
@@ -150,7 +157,8 @@ class BlockchainIntegration:
     """Advanced blockchain integration for DRM system."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize blockchain integration."""
+        """
+Initialize blockchain integration."""
         self.config = config
         self.transactions: List[BlockchainTransaction] = []
         self.smart_contracts: Dict[str, SmartContract] = {}
@@ -891,7 +899,8 @@ class BlockchainIntegration:
         contract: SmartContract,
         constructor_params: Dict[str, Any]
     ) -> None:
-        """Simulate smart contract deployment."""
+        """
+Simulate smart contract deployment."""
         try:
             # Generate simulated contract address
             contract.contract_address = "0x" + secrets.token_hex(20)

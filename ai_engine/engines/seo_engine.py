@@ -13,6 +13,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import re
@@ -57,7 +58,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SEOMetadata:
-    """SEO metadata for content"""
+    """
+SEO metadata for content"""
     title: str
     description: str
     keywords: List[str]
@@ -95,7 +97,8 @@ class SEOEngine:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize SEO engine with configuration"""
+        """
+Initialize SEO engine with configuration"""
         self.config = config or {}
         
         # Initialize NLP tools
@@ -424,7 +427,8 @@ class SEOEngine:
         themes: List[str],
         content_type: str
     ) -> List[str]:
-        """Generate content tags for categorization"""
+        """
+Generate content tags for categorization"""
         
         tags = set()
         
@@ -456,7 +460,8 @@ class SEOEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate structured data markup"""
+        """
+Generate structured data markup"""
         
         base_structured_data = {
             "@context": "https://schema.org",
@@ -533,7 +538,8 @@ class SEOEngine:
         return social_tags
     
     def _get_og_type(self, content_type: str) -> str:
-        """Get Open Graph type for content"""
+        """
+Get Open Graph type for content"""
         
         og_types = {
             'audio': 'music.song',
@@ -545,7 +551,8 @@ class SEOEngine:
         return og_types.get(content_type, 'article')
     
     async def _generate_meta_title(self, title: str) -> str:
-        """Generate meta title tag"""
+        """
+Generate meta title tag"""
         # Meta title should be slightly different from H1 title
         return f"{title} | IA-Influencer-Agent"
     
@@ -609,7 +616,8 @@ class SEOEngine:
         title: str,
         config: Dict[str, Any]
     ) -> str:
-        """Optimize title for specific platform"""
+        """
+Optimize title for specific platform"""
         
         max_length = config.get('title_max_length', 100)
         
@@ -722,7 +730,8 @@ class SEOEngine:
         return platform_tags[:max_tags]
     
     async def _get_optimal_posting_time(self, platform: str, content_type: str) -> str:
-        """Get optimal posting time for platform"""
+        """
+Get optimal posting time for platform"""
         
         # General optimal posting times based on research
         optimal_times = {
@@ -751,7 +760,8 @@ class SEOEngine:
         return optimal_times.get(platform, {}).get('weekdays', '19:00-21:00')
     
     async def _get_optimal_content_format(self, platform: str, content_type: str) -> str:
-        """Get optimal content format for platform"""
+        """
+Get optimal content format for platform"""
         
         format_recommendations = {
             'youtube': {
@@ -777,7 +787,8 @@ class SEOEngine:
         return format_recommendations.get(platform, {}).get(content_type, 'Standard format')
     
     async def _generate_engagement_tips(self, platform: str, content_type: str) -> List[str]:
-        """Generate platform-specific engagement tips"""
+        """
+Generate platform-specific engagement tips"""
         
         general_tips = [
             "Post consistently at optimal times",

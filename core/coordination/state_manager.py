@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 State Definition → Transition Rules → State Changes → Validation → Persistence → Notification
 """
+
 import asyncio
 import uuid
 import threading
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class StateType(Enum):
-    """Types of states managed by the system"""
+    """
+Types of states managed by the system"""
+
     WORKFLOW_STATE = "workflow_state"
     PROCESS_STATE = "process_state"
     TASK_STATE = "task_state"
@@ -44,6 +47,7 @@ class StateType(Enum):
 
 class TransitionType(Enum):
     """Types of state transitions"""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     CONDITIONAL = "conditional"
@@ -54,6 +58,7 @@ class TransitionType(Enum):
 
 class TransitionRule(Enum):
     """State transition validation rules"""
+
     STRICT = "strict"
     LENIENT = "lenient"
     CONDITIONAL = "conditional"
@@ -62,6 +67,7 @@ class TransitionRule(Enum):
 
 class StateStatus(Enum):
     """State status indicators"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     TRANSITIONING = "transitioning"
@@ -85,7 +91,8 @@ class StateTransition:
 
 @dataclass
 class StateDefinition:
-    """Complete state definition"""
+    """
+Complete state definition"""
     state_id: str
     name: str
     state_type: StateType
@@ -99,7 +106,8 @@ class StateDefinition:
 
 @dataclass
 class StateInstance:
-    """Active state instance"""
+    """
+Active state instance"""
     instance_id: str
     state_id: str
     entity_id: str
@@ -115,7 +123,8 @@ class StateInstance:
 
 @dataclass
 class TransitionRequest:
-    """State transition request"""
+    """
+State transition request"""
     request_id: str
     instance_id: str
     target_state: str
@@ -126,7 +135,8 @@ class TransitionRequest:
 
 
 class StateManager:
-    """Enterprise state management and transition control system"""
+    """
+Enterprise state management and transition control system"""
     
     def __init__(self, persistence_enabled: bool = True):
         self.persistence_enabled = persistence_enabled
@@ -638,7 +648,8 @@ class StateManager:
         return True
     
     async def _lock_instance(self, instance_id: str, locker: str, timeout_seconds: int = 300):
-        """Lock state instance for transition"""
+        """
+Lock state instance for transition"""
         instance = self.state_instances[instance_id]
         instance.locked_by = locker
         instance.lock_expires_at = datetime.now(timezone.utc) + timedelta(seconds=timeout_seconds)
@@ -822,7 +833,8 @@ class StateManager:
         return entity_instances
     
     def get_state_metrics(self) -> Dict[str, Any]:
-        """Get state management metrics"""
+        """
+Get state management metrics"""
         total_instances = len(self.state_instances)
         active_instances = len([i for i in self.state_instances.values() if i.status == StateStatus.ACTIVE])
         locked_instances = len([i for i in self.state_instances.values() if self._is_instance_locked(i)])
@@ -863,15 +875,18 @@ class StateManager:
         self.event_handlers[event_type].append(handler)
     
     def register_state_listener(self, state_id: str, listener: Callable):
-        """Register listener for specific state"""
+        """
+Register listener for specific state"""
         self.state_listeners[state_id].append(listener)
     
     def register_entity_listener(self, entity_id: str, listener: Callable):
-        """Register listener for specific entity"""
+        """
+Register listener for specific entity"""
         self.entity_listeners[entity_id].append(listener)
     
     async def cleanup_expired_instances(self) -> int:
-        """Cleanup expired and inactive state instances"""
+        """
+Cleanup expired and inactive state instances"""
         try:
             cleanup_count = 0
             current_time = datetime.now(timezone.utc)

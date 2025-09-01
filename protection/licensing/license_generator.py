@@ -10,8 +10,9 @@ Professional license generation system with multi-jurisdiction support:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Business Analyst
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -26,7 +27,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Supported license types"""
+    """
+Supported license types"""
+
     COMMERCIAL = "commercial"
     CREATIVE_COMMONS = "creative_commons"
     SYNC_LICENSING = "sync_licensing"
@@ -40,6 +43,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status types"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PENDING_APPROVAL = "pending_approval"
@@ -61,7 +65,8 @@ class LicenseTerms:
 
 @dataclass
 class LicenseMetadata:
-    """License metadata and tracking information"""
+    """
+License metadata and tracking information"""
     license_id: str
     content_id: str
     licensor_id: str
@@ -83,7 +88,8 @@ class LicenseGenerator:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize license generator with configuration."""
+        """
+Initialize license generator with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -355,7 +361,8 @@ class LicenseGenerator:
         terms: LicenseTerms,
         jurisdiction_rules: Dict[str, Any]
     ) -> str:
-        """Generate specific clause text based on parameters."""
+        """
+Generate specific clause text based on parameters."""
         clause_templates = {
             'grant_of_rights': (
                 f"The Licensor hereby grants to the Licensee a "
@@ -470,7 +477,8 @@ class LicenseGenerator:
         return base_requirements
     
     def _calculate_expiration_date(self, custom_terms: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate license expiration date from terms."""
+        """
+Calculate license expiration date from terms."""
         duration = custom_terms.get('duration')
         if not duration:
             return None
@@ -502,7 +510,8 @@ class LicenseGenerator:
         return hashlib.sha256(doc_string.encode()).hexdigest()
     
     def get_available_templates(self) -> List[Dict[str, Any]]:
-        """Get list of available license templates."""
+        """
+Get list of available license templates."""
         return [
             {
                 'name': template_name,
@@ -514,11 +523,13 @@ class LicenseGenerator:
         ]
     
     def get_supported_jurisdictions(self) -> List[str]:
-        """Get list of supported legal jurisdictions."""
+        """
+Get list of supported legal jurisdictions."""
         return list(self.jurisdiction_rules.keys())
     
     def get_generator_metrics(self) -> Dict[str, Any]:
-        """Get license generator performance metrics."""
+        """
+Get license generator performance metrics."""
         return {
             **self.metrics,
             'available_templates': len(self.template_cache),

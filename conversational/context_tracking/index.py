@@ -33,8 +33,9 @@ Lead Module Orchestration Engineer : Fahed Mlaiel <mlaiel@live.de>
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING :
 This orchestration system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type
@@ -66,7 +67,9 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class ModuleType(Enum):
-    """Context tracking module types"""
+    """
+Context tracking module types"""
+
     AI_FINGERPRINTING = "ai_fingerprinting"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
     CONTENT_ANALYSIS = "content_analysis"
@@ -106,14 +109,16 @@ class ContextTrackingIndex:
     """
     
     def __init__(self):
-        """Initialize the context tracking index"""
+        """
+Initialize the context tracking index"""
         self.modules: Dict[str, ModuleInfo] = {}
         self.instances: Dict[str, Any] = {}
         self.metrics = {}
         self._initialize_modules()
     
     def _initialize_modules(self):
-        """Initialize all available modules"""
+        """
+Initialize all available modules"""
         
         # Define module registry
         module_registry = {
@@ -266,13 +271,15 @@ class ContextTrackingIndex:
         return self.modules.copy()
     
     def get_module_capabilities(self, module_id: str) -> List[str]:
-        """Get module capabilities"""
+        """
+Get module capabilities"""
         if module_id not in self.modules:
             return []
         return self.modules[module_id].capabilities
     
     def get_health_status(self) -> Dict[str, str]:
-        """Get health status of all modules"""
+        """
+Get health status of all modules"""
         return {
             module_id: info.health_status 
             for module_id, info in self.modules.items()
@@ -283,7 +290,8 @@ context_tracking_index = ContextTrackingIndex()
 
 # Convenience functions for module access
 async def get_ai_fingerprinting_engine(**kwargs):
-    """Get AI Fingerprinting Engine instance"""
+    """
+Get AI Fingerprinting Engine instance"""
     return await context_tracking_index.get_module("ai_fingerprinting", **kwargs)
 
 async def get_behavioral_context_engine(**kwargs):
@@ -315,7 +323,8 @@ def list_available_modules():
     return context_tracking_index.list_modules()
 
 def get_module_health():
-    """Get health status of all modules"""
+    """
+Get health status of all modules"""
     return context_tracking_index.get_health_status()
 
 # Export all convenience functions

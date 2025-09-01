@@ -6,6 +6,7 @@ This script showcases the enterprise-grade functionality for managing multi-form
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 import asyncio
 from datetime import datetime
 from uuid import uuid4
@@ -74,7 +75,8 @@ class ClientModuleDemo:
     """
     
     def __init__(self):
-        """Initialize demo with mock services."""
+        """
+Initialize demo with mock services."""
         print("🚀 Initializing IA Influencer Agent - Client Module Demo")
         print("=" * 60)
         

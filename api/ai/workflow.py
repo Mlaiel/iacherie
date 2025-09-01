@@ -9,8 +9,9 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 from typing import Dict, Any, List, Optional
@@ -247,7 +248,7 @@ class AIIntegrationWorkflow:
         report += f"""⚠️ LEGAL NOTICE
 This AI system is proprietary to Fahed Mlaiel (mlaiel@live.de)
 Unauthorized use, copying, or distribution is strictly prohibited
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 🏆 DEVELOPED BY: Fahed Mlaiel & Expert Team
 📧 Contact: mlaiel@live.de
@@ -257,7 +258,8 @@ Unauthorized use, copying, or distribution is strictly prohibited
         return report
 
 async def demo_complete_workflow():
-    """Demonstrate complete AI workflow."""
+    """
+Demonstrate complete AI workflow."""
     print("🚀 Initializing IA Influencer Agent AI Workflow...")
     
     workflow = AIIntegrationWorkflow()

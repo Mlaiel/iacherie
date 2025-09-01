@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class RuleType(Enum):
-    """Automation rule types"""
+    """
+Automation rule types"""
+
     CONTENT_TRIGGER = "content_trigger"
     PERFORMANCE_TRIGGER = "performance_trigger"
     TIME_BASED = "time_based"
@@ -60,6 +63,7 @@ class RuleType(Enum):
 
 class ConditionOperator(Enum):
     """Condition evaluation operators"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -80,6 +84,7 @@ class ConditionOperator(Enum):
 
 class ActionType(Enum):
     """Automation action types"""
+
     TRIGGER_WORKFLOW = "trigger_workflow"
     SEND_NOTIFICATION = "send_notification"
     UPDATE_METADATA = "update_metadata"
@@ -95,6 +100,7 @@ class ActionType(Enum):
 
 class RuleStatus(Enum):
     """Rule execution status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PAUSED = "paused"
@@ -308,7 +314,8 @@ class AutomationRulesEngine:
         self.max_concurrent_executions = 20
     
     def _initialize_evaluators(self) -> Dict[ConditionOperator, Callable]:
-        """Initialize condition evaluation functions"""
+        """
+Initialize condition evaluation functions"""
         return {
             ConditionOperator.EQUALS: lambda a, b: a == b,
             ConditionOperator.NOT_EQUALS: lambda a, b: a != b,
@@ -329,7 +336,8 @@ class AutomationRulesEngine:
         }
     
     def _initialize_action_executors(self) -> Dict[ActionType, Callable]:
-        """Initialize action execution functions"""
+        """
+Initialize action execution functions"""
         return {
             ActionType.TRIGGER_WORKFLOW: self._execute_trigger_workflow,
             ActionType.SEND_NOTIFICATION: self._execute_send_notification,
@@ -658,7 +666,8 @@ class AutomationRulesEngine:
         return value
     
     def _check_execution_limits(self, rule: AutomationRule) -> bool:
-        """Check if rule hasn't exceeded execution limits"""
+        """
+Check if rule hasn't exceeded execution limits"""
         if not rule.execution_limit:
             return True
         
@@ -710,58 +719,69 @@ class AutomationRulesEngine:
         return {'success': True, 'workflow_id': parameters.get('workflow_id')}
     
     async def _execute_send_notification(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute notification action"""
+        """
+Execute notification action"""
         # Implementation would send notification
         return {'success': True, 'notification_sent': True}
     
     async def _execute_update_metadata(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute metadata update action"""
+        """
+Execute metadata update action"""
         # Implementation would update metadata
         return {'success': True, 'metadata_updated': True}
     
     async def _execute_publish_content(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute content publishing action"""
+        """
+Execute content publishing action"""
         # Implementation would publish content
         return {'success': True, 'content_published': True}
     
     async def _execute_schedule_task(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute task scheduling action"""
+        """
+Execute task scheduling action"""
         # Implementation would schedule task
         return {'success': True, 'task_scheduled': True}
     
     async def _execute_generate_report(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute report generation action"""
+        """
+Execute report generation action"""
         # Implementation would generate report
         return {'success': True, 'report_generated': True}
     
     async def _execute_backup_data(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute data backup action"""
+        """
+Execute data backup action"""
         # Implementation would backup data
         return {'success': True, 'backup_created': True}
     
     async def _execute_sync_platforms(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute platform synchronization action"""
+        """
+Execute platform synchronization action"""
         # Implementation would sync platforms
         return {'success': True, 'platforms_synced': True}
     
     async def _execute_apply_protection(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute content protection action"""
+        """
+Execute content protection action"""
         # Implementation would apply protection
         return {'success': True, 'protection_applied': True}
     
     async def _execute_escalate_issue(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute issue escalation action"""
+        """
+Execute issue escalation action"""
         # Implementation would escalate issue
         return {'success': True, 'issue_escalated': True}
     
     async def _execute_custom_script(self, parameters: Dict, event_data: Dict, rule: AutomationRule) -> Dict:
-        """Execute custom script action"""
+        """
+Execute custom script action"""
         # Implementation would execute custom script
         return {'success': True, 'script_executed': True}
 
 
 class MLRuleOptimizer:
-    """Machine learning optimizer for automation rules"""
+    """
+Machine learning optimizer for automation rules"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -771,7 +791,8 @@ class MLRuleOptimizer:
         rule: AutomationRule,
         event_data: Dict[str, Any]
     ) -> float:
-        """Predict likelihood of rule execution success using ML"""
+        """
+Predict likelihood of rule execution success using ML"""
         # Simplified ML prediction - in reality would use trained models
         # Based on historical success rate and context similarity
         
@@ -799,7 +820,8 @@ class MLRuleOptimizer:
         rule: AutomationRule,
         execution: RuleExecution
     ):
-        """Update ML model with execution results"""
+        """
+Update ML model with execution results"""
         # Update learning data
         learning_data = rule.learning_data or {}
         
@@ -836,7 +858,8 @@ class MLRuleOptimizer:
         rule: AutomationRule,
         event_data: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between current context and historical successful contexts"""
+        """
+Calculate similarity between current context and historical successful contexts"""
         # Simplified context similarity calculation
         # In reality would use more sophisticated ML techniques
         

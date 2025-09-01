@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -36,6 +36,7 @@ Creator Registration → Content Upload → Pricing Analysis → Dynamic Optimiz
 Revenue Tracking → Performance Analytics → Tier Management
 ================================================================
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Decimal, Boolean, JSON, Text, ForeignKey, Index
 from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
@@ -50,7 +51,8 @@ Base = declarative_base()
 
 
 class PricingStrategy(Base):
-    """Pricing strategies configuration table"""
+    """
+Pricing strategies configuration table"""
     __tablename__ = 'pricing_strategies'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -299,7 +301,8 @@ class PricingAuditLog(Base):
 
 
 class MarketIntelligence(Base):
-    """Market intelligence data for pricing decisions"""
+    """
+Market intelligence data for pricing decisions"""
     __tablename__ = 'market_intelligence'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -333,7 +336,8 @@ class MarketIntelligence(Base):
 
 
 class PricingExperiment(Base):
-    """A/B testing for pricing strategies"""
+    """
+A/B testing for pricing strategies"""
     __tablename__ = 'pricing_experiments'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -368,7 +372,8 @@ class PricingExperiment(Base):
 
 
 class DynamicPricingRule(Base):
-    """Dynamic pricing rules and triggers"""
+    """
+Dynamic pricing rules and triggers"""
     __tablename__ = 'dynamic_pricing_rules'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

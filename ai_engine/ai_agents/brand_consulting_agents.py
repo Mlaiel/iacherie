@@ -3,11 +3,12 @@
 Specialized agents for brand development, positioning, and consulting services.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in brand consulting, personal brand development,
 brand positioning, and brand strategy optimization for content creators.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -21,7 +22,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class BrandAnalysis:
-    """Brand analysis results"""
+    """
+Brand analysis results"""
     brand_strength: float
     brand_consistency: float
     brand_positioning: str
@@ -34,7 +36,8 @@ class BrandAnalysis:
 
 @dataclass
 class BrandStrategy:
-    """Brand strategy structure"""
+    """
+Brand strategy structure"""
     brand_vision: str
     brand_mission: str
     brand_values: List[str]
@@ -347,7 +350,8 @@ class BrandConsultantAgent(BaseAIAgent):
             return 0.5
 
     def _calculate_brand_strength(self, creator_profile: Dict[str, Any]) -> float:
-        """Calculate overall brand strength"""
+        """
+Calculate overall brand strength"""
         strength_factors = []
         
         # Audience size factor
@@ -377,7 +381,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return sum(strength_factors)
 
     def _determine_brand_positioning(self, creator_profile: Dict[str, Any]) -> str:
-        """Determine current brand positioning"""
+        """
+Determine current brand positioning"""
         niche = creator_profile.get('niche', 'general')
         content_style = creator_profile.get('content_style', 'mixed')
         audience_size = creator_profile.get('total_followers', 0)
@@ -571,7 +576,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _develop_brand_vision(self, creator_profile: Dict[str, Any], 
                             brand_goals: Dict[str, Any]) -> str:
-        """Develop brand vision statement"""
+        """
+Develop brand vision statement"""
         niche = creator_profile.get('niche', 'content creation')
         impact_goal = brand_goals.get('impact_goal', 'inspire and educate')
         audience_scope = brand_goals.get('audience_scope', 'community')
@@ -686,7 +692,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _define_content_pillars(self, niche: str, brand_personality: Dict[str, float],
                               brand_goals: Dict[str, Any]) -> List[str]:
-        """Define content pillars for brand"""
+        """
+Define content pillars for brand"""
         pillars = []
         
         # Niche-based pillars
@@ -722,7 +729,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _create_visual_identity_guidelines(self, creator_profile: Dict[str, Any],
                                          brand_personality: Dict[str, float]) -> Dict[str, Any]:
-        """Create visual identity guidelines"""
+        """
+Create visual identity guidelines"""
         return {
             "color_scheme": self._recommend_color_scheme(brand_personality),
             "typography_style": self._recommend_typography(brand_personality),
@@ -820,7 +828,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return color_schemes.get(top_trait, color_schemes['professional'])
 
     def _recommend_typography(self, brand_personality: Dict[str, float]) -> Dict[str, str]:
-        """Recommend typography based on brand personality"""
+        """
+Recommend typography based on brand personality"""
         top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
         
         typography_styles = {
@@ -835,7 +844,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return typography_styles.get(top_trait, typography_styles['professional'])
 
     def _recommend_imagery_style(self, brand_personality: Dict[str, float]) -> List[str]:
-        """Recommend imagery style based on brand personality"""
+        """
+Recommend imagery style based on brand personality"""
         top_traits = sorted(brand_personality.items(), key=lambda x: x[1], reverse=True)[:2]
         
         style_recommendations = []

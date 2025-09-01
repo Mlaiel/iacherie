@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -26,7 +27,8 @@ from ...database.repositories.fingerprint_repository import FingerprintRepositor
 
 @dataclass
 class ContentBackupRecord:
-    """Content backup record metadata."""
+    """
+Content backup record metadata."""
     content_id: str
     content_type: str
     fingerprint_data: Dict[str, Any]

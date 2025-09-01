@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Docker deployment manager for orchestrating the complete
 IA-Influencer platform with all microservices and infrastructure.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 import asyncio
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DockerDeploymentManager:
-    """Enterprise Docker Deployment Manager for IA-Influencer Platform"""
+    """
+Enterprise Docker Deployment Manager for IA-Influencer Platform"""
     
     # Deployment Configuration
     environment: str = "production"
@@ -485,7 +487,8 @@ echo "✅ Backup completed: $BACKUP_DIR"
         return scripts
     
     def save_deployment_configuration(self, output_dir: str) -> List[str]:
-        """Save complete deployment configuration"""
+        """
+Save complete deployment configuration"""
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
@@ -619,7 +622,8 @@ SMTP_USERNAME=your_email@ia-influencer.com
 SMTP_PASSWORD=your_email_password_here
 """
     def _generate_deployment_readme(self) -> str:
-        """Generate deployment README"""
+        """
+Generate deployment README"""
         return f"""# 🚀 IA-Influencer Platform - Docker Deployment Guide
 
 ## Expert Team Specialties
@@ -774,10 +778,11 @@ For technical support, contact: mlaiel@live.de
 This software is proprietary to Fahed Mlaiel. All rights reserved.
 Unauthorized use, copying, or distribution is strictly prohibited.
 
-© 2024 Fahed Mlaiel. All rights reserved.
+(c) 2024 Fahed Mlaiel. All rights reserved.
 """
     async def deploy_platform(self, output_dir: str) -> bool:
-        """Deploy the entire IA-Influencer platform"""
+        """
+Deploy the entire IA-Influencer platform"""
         try:
             logger.info("🚀 Starting IA-Influencer platform deployment...")
             

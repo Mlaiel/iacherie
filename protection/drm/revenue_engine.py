@@ -5,7 +5,7 @@ Comprehensive revenue tracking, calculation, and distribution system for DRM
 with advanced analytics, multi-currency support, and real-time processing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class RevenueType(str, Enum):
-    """Types of revenue streams."""
+    """
+Types of revenue streams."""
+
     LICENSE_FEE = "license_fee"
     ROYALTY = "royalty"
     STREAMING = "streaming"
@@ -54,6 +57,7 @@ class RevenueType(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment processing status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -64,6 +68,7 @@ class PaymentStatus(str, Enum):
 
 class CurrencyCode(str, Enum):
     """Supported currencies."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -77,6 +82,7 @@ class CurrencyCode(str, Enum):
 
 class RevenueShareModel(str, Enum):
     """Revenue sharing models."""
+
     FLAT_SPLIT = "flat_split"
     TIERED_SPLIT = "tiered_split"
     PERFORMANCE_BASED = "performance_based"
@@ -102,12 +108,14 @@ class RevenueTransaction:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Calculate net amount after fees and taxes."""
+        """
+Calculate net amount after fees and taxes."""
         self.net_amount = self.gross_amount - self.platform_fee - self.taxes
 
 @dataclass
 class RevenueShare:
-    """Revenue sharing configuration."""
+    """
+Revenue sharing configuration."""
     share_id: str
     content_id: str
     stakeholder_id: int
@@ -135,7 +143,8 @@ class RevenueForecast:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics summary."""
+    """
+Revenue analytics summary."""
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -165,7 +174,8 @@ class RevenueEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Revenue Engine."""
+        """
+Initialize the Revenue Engine."""
         self.config = config
         self._initialized = False
         
@@ -345,7 +355,8 @@ class RevenueEngine:
         return amount * (fee_rate / 100)
 
     async def _calculate_taxes(self, amount: Decimal, currency: CurrencyCode, user_id: int) -> Decimal:
-        """Calculate applicable taxes."""
+        """
+Calculate applicable taxes."""
         # Placeholder for tax calculation
         # In production, this would integrate with tax services
         
@@ -362,7 +373,8 @@ class RevenueEngine:
         return amount * (tax_rate / 100)
 
     async def _process_revenue_sharing(self, transaction: RevenueTransaction) -> None:
-        """Process revenue sharing for stakeholders."""
+        """
+Process revenue sharing for stakeholders."""
         content_shares = self.revenue_shares.get(transaction.content_id, [])
         
         if not content_shares:
@@ -384,7 +396,8 @@ class RevenueEngine:
                 await self._record_share_transaction(share, share_amount, transaction)
 
     def _is_share_active(self, share: RevenueShare) -> bool:
-        """Check if revenue share is currently active."""
+        """
+Check if revenue share is currently active."""
         current_time = datetime.utcnow()
         
         if current_time < share.effective_date:
@@ -401,7 +414,8 @@ class RevenueEngine:
         total_amount: Decimal,
         transaction: RevenueTransaction
     ) -> Decimal:
-        """Calculate share amount based on model and conditions."""
+        """
+Calculate share amount based on model and conditions."""
         if share.share_model == RevenueShareModel.FLAT_SPLIT:
             amount = total_amount * (share.share_percentage / 100)
         
@@ -435,7 +449,8 @@ class RevenueEngine:
         total_amount: Decimal,
         transaction: RevenueTransaction
     ) -> Decimal:
-        """Calculate tiered revenue share."""
+        """
+Calculate tiered revenue share."""
         # Get total revenue for content to determine tier
         content_revenue = await self.get_content_revenue_total(transaction.content_id)
         
@@ -460,7 +475,8 @@ class RevenueEngine:
         total_amount: Decimal,
         transaction: RevenueTransaction
     ) -> Decimal:
-        """Calculate performance-based revenue share."""
+        """
+Calculate performance-based revenue share."""
         # Get performance metrics
         performance_score = await self._get_performance_score(transaction.content_id)
         
@@ -476,7 +492,8 @@ class RevenueEngine:
         total_amount: Decimal,
         transaction: RevenueTransaction
     ) -> Decimal:
-        """Calculate waterfall distribution share."""
+        """
+Calculate waterfall distribution share."""
         # Placeholder for waterfall logic
         # In production, this would implement complex waterfall distribution
         return total_amount * (share.share_percentage / 100)
@@ -487,7 +504,8 @@ class RevenueEngine:
         total_amount: Decimal,
         transaction: RevenueTransaction
     ) -> Decimal:
-        """Calculate hybrid model share."""
+        """
+Calculate hybrid model share."""
         # Combine multiple models
         flat_share = total_amount * (share.share_percentage / 100)
         performance_adjustment = await self._get_performance_score(transaction.content_id)
@@ -495,7 +513,8 @@ class RevenueEngine:
         return flat_share * Decimal(str(performance_adjustment))
 
     async def _get_performance_score(self, content_id: str) -> float:
-        """Get performance score for content."""
+        """
+Get performance score for content."""
         # Placeholder for performance calculation
         # In production, this would analyze engagement, views, etc.
         return 1.0
@@ -506,7 +525,8 @@ class RevenueEngine:
         amount: Decimal,
         original_transaction: RevenueTransaction
     ) -> None:
-        """Record revenue share transaction."""
+        """
+Record revenue share transaction."""
         share_transaction_id = f"share_{uuid.uuid4().hex[:12]}"
         
         share_transaction = RevenueTransaction(
@@ -727,7 +747,8 @@ class RevenueEngine:
         return float((second_revenue - first_revenue) / first_revenue * 100)
 
     async def _identify_top_performers(self, transactions: List[RevenueTransaction]) -> List[Dict[str, Any]]:
-        """Identify top performing content and users."""
+        """
+Identify top performing content and users."""
         content_revenue = defaultdict(Decimal)
         user_revenue = defaultdict(Decimal)
         
@@ -856,7 +877,8 @@ class RevenueEngine:
         transactions: List[RevenueTransaction],
         forecast_days: int
     ) -> Dict[RevenueType, Decimal]:
-        """Forecast revenue breakdown by type."""
+        """
+Forecast revenue breakdown by type."""
         # Calculate historical distribution
         type_totals = defaultdict(Decimal)
         total_revenue = Decimal('0')
@@ -885,7 +907,8 @@ class RevenueEngine:
         content_id: str,
         transactions: List[RevenueTransaction]
     ) -> Dict[str, Any]:
-        """Identify factors influencing revenue forecast."""
+        """
+Identify factors influencing revenue forecast."""
         factors = {
             "historical_performance": "stable" if len(transactions) > 50 else "limited_data",
             "revenue_trend": await self._get_revenue_trend(transactions),
@@ -931,7 +954,8 @@ class RevenueEngine:
         return sum(t.net_amount / t.exchange_rate for t in content_transactions)
 
     async def process_payments(self) -> Dict[str, Any]:
-        """Process pending payments."""
+        """
+Process pending payments."""
         processed_count = 0
         failed_count = 0
         total_amount = Decimal('0')
@@ -989,7 +1013,8 @@ class RevenueEngine:
         return random.random() > 0.05
 
     async def get_revenue_dashboard_data(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """Get comprehensive dashboard data."""
+        """
+Get comprehensive dashboard data."""
         # Time periods for comparison
         now = datetime.utcnow()
         today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)

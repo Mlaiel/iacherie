@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -13,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""Simple validation test for Advanced Metrics Module
+"""
+Simple validation test for Advanced Metrics Module
 =================================================
 
 Basic validation without external dependencies to ensure module structure and concepts are correct.
@@ -21,6 +23,7 @@ Basic validation without external dependencies to ensure module structure and co
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import sys
 import asyncio
@@ -28,7 +31,8 @@ from datetime import datetime, timedelta
 import unittest
 
 def test_module_structure():
-    """Test that all required module files exist"""
+    """
+Test that all required module files exist"""
     print("🔍 Testing Advanced Metrics Module Structure...")
     
     base_path = "monitoring/advanced_metrics"
@@ -356,7 +360,7 @@ def run_all_tests():
     else:
         print("❌ VALIDATION FAILED - Major issues require attention")
     
-    print("\n© 2025 Fahed Mlaiel - All Rights Reserved")
+    print("\n(c) 2025 Fahed Mlaiel - All Rights Reserved")
     print("Contact: mlaiel@live.de")
     
     return success_rate >= 90

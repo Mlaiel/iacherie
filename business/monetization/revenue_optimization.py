@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class RevenueOptimizationStatus(Enum):
-    """Statuts du module Revenue Optimization"""
+    """
+Statuts du module Revenue Optimization"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -38,27 +41,32 @@ class RevenueOptimizationConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class IRevenueOptimizationService(ABC):
-    """Interface du service Revenue Optimization"""
+    """
+Interface du service Revenue Optimization"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class RevenueOptimizationManager:
-    """Gestionnaire principal Revenue Optimization"""
+    """
+Gestionnaire principal Revenue Optimization"""
     
     def __init__(self, config: RevenueOptimizationConfig):
         self.config = config
@@ -133,7 +141,8 @@ class RevenueOptimizationService(IRevenueOptimizationService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique pour l'optimisation des revenus"""
+        """
+Exécution de la logique métier spécifique pour l'optimisation des revenus"""
         try:
             # Initialize result structure
             result = {
@@ -373,7 +382,8 @@ async def create_revenueoptimization_service(config: Optional[RevenueOptimizatio
     return service
 
 def get_revenueoptimization_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Revenue Optimization",
         "version": "1.0.0",
@@ -391,7 +401,8 @@ class RevenueOptimizationAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Revenue Optimization",

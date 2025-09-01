@@ -5,13 +5,14 @@ Enterprise-grade NLP core engine for the Ainflue AI platform.
 Provides advanced text analysis, sentiment detection, and content understanding.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is proprietary and confidential. Unauthorized use, modification, 
 distribution, or copying is strictly prohibited without explicit written 
 permission from the author Fahed Mlaiel (mlaiel@live.de).
 """
+
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class NLPTaskType(Enum):
-    """Types of NLP tasks supported by the engine."""
+    """
+Types of NLP tasks supported by the engine."""
+
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     TEXT_CLASSIFICATION = "text_classification"
     ENTITY_EXTRACTION = "entity_extraction"
@@ -65,7 +68,8 @@ class NLPResult:
 
 
 class BaseNLPProcessor(ABC):
-    """Base class for all NLP processors."""
+    """
+Base class for all NLP processors."""
     
     def __init__(self, name: str):
         self.name = name
@@ -73,12 +77,14 @@ class BaseNLPProcessor(ABC):
         
     @abstractmethod
     async def process(self, task: NLPTask) -> NLPResult:
-        """Process an NLP task and return results."""
+        """
+Process an NLP task and return results."""
         pass
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize the processor."""
+        """
+Initialize the processor."""
         pass
 
 
@@ -190,7 +196,8 @@ class AdvancedNLPEngine:
         return results
     
     def _update_stats(self, result: NLPResult) -> None:
-        """Update engine statistics."""
+        """
+Update engine statistics."""
         self.stats['tasks_processed'] += 1
         self.stats['total_processing_time'] += result.processing_time
         
@@ -199,27 +206,32 @@ class AdvancedNLPEngine:
         self.stats['success_rate'] = success_count / self.stats['tasks_processed']
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get engine statistics."""
+        """
+Get engine statistics."""
         return self.stats.copy()
     
     def supports_task_type(self, task_type: NLPTaskType) -> bool:
-        """Check if a task type is supported."""
+        """
+Check if a task type is supported."""
         return task_type in self.processors
 
 
 class MinimalNLPProcessor(BaseNLPProcessor):
-    """Minimal NLP processor implementation for testing."""
+    """
+Minimal NLP processor implementation for testing."""
     
     def __init__(self, name: str):
         super().__init__(name)
         
     async def initialize(self) -> bool:
-        """Initialize the minimal processor."""
+        """
+Initialize the minimal processor."""
         self.is_initialized = True
         return True
     
     async def process(self, task: NLPTask) -> NLPResult:
-        """Process a task with minimal implementation."""
+        """
+Process a task with minimal implementation."""
         import time
         start_time = time.time()
         
@@ -242,7 +254,8 @@ class MinimalNLPProcessor(BaseNLPProcessor):
         )
     
     def _generate_minimal_result(self, task: NLPTask) -> Any:
-        """Generate minimal result based on task type."""
+        """
+Generate minimal result based on task type."""
         text = task.input_text
         
         if task.task_type == NLPTaskType.SENTIMENT_ANALYSIS:

@@ -12,6 +12,7 @@ Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import math
@@ -37,7 +38,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class SeparationResult:
-    """Result container for audio separation operations."""
+    """
+Result container for audio separation operations."""
     source_stems: Dict[str, np.ndarray]
     quality_scores: Dict[str, float]
     processing_time: float
@@ -47,7 +49,8 @@ class SeparationResult:
 
 
 class BaseSeparator(ABC):
-    """Abstract base class for all audio separation models."""
+    """
+Abstract base class for all audio separation models."""
     
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         self.model_path = model_path
@@ -71,11 +74,13 @@ class BaseSeparator(ABC):
     
     @abstractmethod
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
-        """Separate audio into stems."""
+        """
+Separate audio into stems."""
         pass
     
     def validate_audio(self, audio: np.ndarray) -> None:
-        """Validate input audio format."""
+        """
+Validate input audio format."""
         if not isinstance(audio, np.ndarray):
             raise AudioProcessingError("Audio must be numpy array")
         
@@ -187,7 +192,8 @@ class VocalSeparator(BaseSeparator):
         return scores
     
     def _calculate_sdr(self, reference: np.ndarray, separated: np.ndarray) -> float:
-        """Calculate Signal-to-Distortion Ratio."""
+        """
+Calculate Signal-to-Distortion Ratio."""
         if len(reference.shape) == 2:
             reference = reference.mean(axis=0)
         if len(separated.shape) == 2:
@@ -210,7 +216,8 @@ class VocalSeparator(BaseSeparator):
 
 
 class InstrumentSeparator(BaseSeparator):
-    """Professional instrument separation for music production."""
+    """
+Professional instrument separation for music production."""
     
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
@@ -330,7 +337,8 @@ class InstrumentSeparator(BaseSeparator):
     
     def _evaluate_separation_quality(self, stems: Dict[str, np.ndarray], 
                                    original: np.ndarray) -> Dict[str, float]:
-        """Evaluate separation quality using multiple metrics."""
+        """
+Evaluate separation quality using multiple metrics."""
         scores = {}
         
         for instrument, stem in stems.items():
@@ -348,7 +356,8 @@ class InstrumentSeparator(BaseSeparator):
         return scores
     
     def _calculate_spectral_similarity(self, reference: np.ndarray, separated: np.ndarray) -> float:
-        """Calculate spectral similarity between reference and separated audio."""
+        """
+Calculate spectral similarity between reference and separated audio."""
         # Compute spectrograms
         ref_spec = np.abs(librosa.stft(reference))
         sep_spec = np.abs(librosa.stft(separated))
@@ -374,7 +383,8 @@ class InstrumentSeparator(BaseSeparator):
 
 
 class DrumSeparator(BaseSeparator):
-    """Specialized drum separation with rhythm analysis."""
+    """
+Specialized drum separation with rhythm analysis."""
     
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
@@ -506,7 +516,8 @@ class DrumSeparator(BaseSeparator):
         return enhanced_audio
     
     def _analyze_rhythm(self, audio: np.ndarray) -> Tuple[float, np.ndarray]:
-        """Analyze rhythm and tempo."""
+        """
+Analyze rhythm and tempo."""
         # Extract tempo and beats
         tempo, beats = librosa.beat.beat_track(
             y=audio,
@@ -518,7 +529,8 @@ class DrumSeparator(BaseSeparator):
     
     def _evaluate_drum_quality(self, stems: Dict[str, np.ndarray], 
                               original: np.ndarray, tempo: float) -> Dict[str, float]:
-        """Evaluate drum separation quality with rhythm awareness."""
+        """
+Evaluate drum separation quality with rhythm awareness."""
         scores = {}
         
         for component, stem in stems.items():
@@ -538,7 +550,8 @@ class DrumSeparator(BaseSeparator):
         return scores
     
     def _calculate_rhythm_consistency(self, audio: np.ndarray, expected_tempo: float) -> float:
-        """Calculate rhythm consistency score."""
+        """
+Calculate rhythm consistency score."""
         try:
             detected_tempo, _ = librosa.beat.beat_track(y=audio, sr=self.sample_rate)
             
@@ -551,7 +564,8 @@ class DrumSeparator(BaseSeparator):
             return 0.5  # Default score if analysis fails
     
     def _calculate_percussive_clarity(self, audio: np.ndarray) -> float:
-        """Calculate percussive clarity score."""
+        """
+Calculate percussive clarity score."""
         try:
             # Separate harmonic and percussive components
             _, percussive = librosa.effects.hpss(audio)
@@ -570,7 +584,8 @@ class DrumSeparator(BaseSeparator):
 
 
 class BassSeparator(BaseSeparator):
-    """Advanced bass separation with frequency analysis."""
+    """
+Advanced bass separation with frequency analysis."""
     
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
@@ -693,7 +708,8 @@ class BassSeparator(BaseSeparator):
         return audio
     
     def _create_bass_mask(self, n_bins: int) -> np.ndarray:
-        """Create frequency mask for bass range."""
+        """
+Create frequency mask for bass range."""
         freqs = librosa.fft_frequencies(sr=self.sample_rate, n_fft=self.n_fft)
         bass_mask = np.zeros(n_bins)
         
@@ -714,7 +730,8 @@ class BassSeparator(BaseSeparator):
         return bass_mask
     
     def _extract_sub_bass(self, bass_audio: np.ndarray) -> np.ndarray:
-        """Extract sub-bass frequencies (20-60 Hz)."""
+        """
+Extract sub-bass frequencies (20-60 Hz)."""
         # Apply low-pass filter for sub-bass
         sub_bass = librosa.effects.preemphasis(bass_audio, coef=-0.97)
         
@@ -729,7 +746,8 @@ class BassSeparator(BaseSeparator):
         return librosa.istft(stft, hop_length=self.hop_length)
     
     def _extract_mid_bass(self, bass_audio: np.ndarray) -> np.ndarray:
-        """Extract mid-bass frequencies (60-250 Hz)."""
+        """
+Extract mid-bass frequencies (60-250 Hz)."""
         stft = librosa.stft(bass_audio, n_fft=self.n_fft, hop_length=self.hop_length)
         freqs = librosa.fft_frequencies(sr=self.sample_rate, n_fft=self.n_fft)
         
@@ -741,7 +759,8 @@ class BassSeparator(BaseSeparator):
     
     def _evaluate_bass_quality(self, stems: Dict[str, np.ndarray], 
                               original: np.ndarray) -> Dict[str, float]:
-        """Evaluate bass separation quality."""
+        """
+Evaluate bass separation quality."""
         scores = {}
         
         for component, stem in stems.items():
@@ -761,7 +780,8 @@ class BassSeparator(BaseSeparator):
         return scores
     
     def _calculate_frequency_fidelity(self, audio: np.ndarray, component: str) -> float:
-        """Calculate frequency domain fidelity."""
+        """
+Calculate frequency domain fidelity."""
         try:
             # Compute power spectral density
             freqs, psd = librosa.core.spectrum._spectrogram(
@@ -812,7 +832,8 @@ class BassSeparator(BaseSeparator):
 # Neural Network Architectures
 
 class DrumSeparationNet(nn.Module):
-    """Neural network for drum separation."""
+    """
+Neural network for drum separation."""
     
     def __init__(self, input_channels: int, output_channels: int, hidden_size: int = 256):
         super().__init__()
@@ -847,7 +868,8 @@ class DrumSeparationNet(nn.Module):
 
 
 class BassSeparationNet(nn.Module):
-    """Neural network for bass separation."""
+    """
+Neural network for bass separation."""
     
     def __init__(self, input_size: int, hidden_size: int, num_layers: int):
         super().__init__()
@@ -877,7 +899,8 @@ class BassSeparationNet(nn.Module):
 
 # Factory function for creating separators
 def create_separator(separator_type: str, **kwargs) -> BaseSeparator:
-    """Factory function to create separation models."""
+    """
+Factory function to create separation models."""
     separators = {
         "vocal": VocalSeparator,
         "instrument": InstrumentSeparator,

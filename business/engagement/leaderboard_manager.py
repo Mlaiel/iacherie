@@ -9,7 +9,7 @@ Module: backend/business/engagement/leaderboard_manager.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Leaderboard Ranking → Distribution → Monetization → Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class LeaderboardType(str, Enum):
-    """Types of leaderboards."""
+    """
+Types of leaderboards."""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     CATEGORY = "category"
@@ -56,6 +59,7 @@ class LeaderboardType(str, Enum):
 
 class LeaderboardMetric(str, Enum):
     """Metrics used for leaderboard rankings."""
+
     EXPERIENCE_POINTS = "experience_points"
     CONTENT_COUNT = "content_count"
     COLLABORATION_COUNT = "collaboration_count"
@@ -75,6 +79,7 @@ class LeaderboardMetric(str, Enum):
 
 class LeaderboardScope(str, Enum):
     """Scope/duration of leaderboards."""
+
     ALL_TIME = "all_time"
     YEARLY = "yearly"
     MONTHLY = "monthly"
@@ -85,6 +90,7 @@ class LeaderboardScope(str, Enum):
 
 class LeaderboardStatus(str, Enum):
     """Status of leaderboards."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -148,7 +154,8 @@ class LeaderboardEntry:
 
 @dataclass
 class LeaderboardDefinition:
-    """Defines a leaderboard configuration."""
+    """
+Defines a leaderboard configuration."""
     leaderboard_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
@@ -269,7 +276,8 @@ class LeaderboardManager:
     """
     
     def __init__(self):
-        """Initialize the leaderboard manager."""
+        """
+Initialize the leaderboard manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._leaderboards: Dict[str, LeaderboardDefinition] = {}
         self._leaderboard_data: Dict[str, List[LeaderboardEntry]] = {}
@@ -743,7 +751,8 @@ class LeaderboardManager:
         leaderboard_id: str,
         user_id: str
     ) -> Optional[LeaderboardEntry]:
-        """Get a user's position in a specific leaderboard."""
+        """
+Get a user's position in a specific leaderboard."""
         entries = self._leaderboard_data.get(leaderboard_id, [])
         
         for entry in entries:
@@ -753,7 +762,8 @@ class LeaderboardManager:
         return None
     
     async def get_user_leaderboard_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get summary of user's performance across all leaderboards."""
+        """
+Get summary of user's performance across all leaderboards."""
         try:
             summary = {
                 "user_id": user_id,
@@ -1042,13 +1052,15 @@ async def update_user_metric_score(
     value: Union[int, float, Decimal],
     user_profile: Optional[Dict[str, Any]] = None
 ) -> List[str]:
-    """Update user metric score (convenience function)."""
+    """
+Update user metric score (convenience function)."""
     manager = await get_leaderboard_manager()
     return await manager.update_user_score(user_id, metric, value, user_profile)
 
 
 async def get_global_leaderboard(limit: int = 50, user_context: Optional[str] = None) -> Dict[str, Any]:
-    """Get the main global leaderboard (convenience function)."""
+    """
+Get the main global leaderboard (convenience function)."""
     manager = await get_leaderboard_manager()
     
     # Find the global experience points leaderboard
@@ -1062,6 +1074,7 @@ async def get_global_leaderboard(limit: int = 50, user_context: Optional[str] = 
 
 
 async def get_user_rankings(user_id: str) -> Dict[str, Any]:
-    """Get user's rankings across all leaderboards (convenience function)."""
+    """
+Get user's rankings across all leaderboards (convenience function)."""
     manager = await get_leaderboard_manager()
     return await manager.get_user_leaderboard_summary(user_id)

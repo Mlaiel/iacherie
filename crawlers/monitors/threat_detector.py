@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -42,7 +43,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
-    """Threat severity levels."""
+    """
+Threat severity levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -50,7 +53,9 @@ class ThreatLevel(Enum):
     EMERGENCY = 5
 
 class ThreatType(Enum):
-    """Types of security threats."""
+    """
+Types of security threats."""
+
     CONTENT_THEFT = "content_theft"
     UNAUTHORIZED_ACCESS = "unauthorized_access"
     DDoS_ATTACK = "ddos_attack"
@@ -64,6 +69,7 @@ class ThreatType(Enum):
 
 class ThreatSource(Enum):
     """Sources of threat detection."""
+
     NETWORK_TRAFFIC = "network_traffic"
     API_LOGS = "api_logs"
     USER_BEHAVIOR = "user_behavior"
@@ -87,7 +93,8 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatEvent:
-    """Threat event data structure."""
+    """
+Threat event data structure."""
     event_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     threat_type: ThreatType = ThreatType.SUSPICIOUS_BEHAVIOR
@@ -125,7 +132,8 @@ class ThreatDetector(MonitorEngine):
         self._initialize_ml_models()
     
     def _initialize_threat_patterns(self) -> None:
-        """Initialize known threat patterns and signatures."""
+        """
+Initialize known threat patterns and signatures."""
         self.threat_patterns = {
             ThreatType.INJECTION_ATTACK: [
                 r"(?i)(union|select|insert|update|delete|drop|create|alter)\s+",
@@ -159,7 +167,8 @@ class ThreatDetector(MonitorEngine):
         pass
     
     async def initialize(self) -> bool:
-        """Initialize threat detection engine."""
+        """
+Initialize threat detection engine."""
         try:
             logger.info("Initializing threat detection engine...")
             
@@ -237,7 +246,8 @@ class ThreatDetector(MonitorEngine):
             await self._analyze_event(event)
     
     async def _analyze_event(self, event: Dict[str, Any]) -> None:
-        """Analyze individual event for threat indicators."""
+        """
+Analyze individual event for threat indicators."""
         try:
             # Extract event details
             source_ip = event.get("source_ip")
@@ -324,7 +334,8 @@ class ThreatDetector(MonitorEngine):
         return False
     
     async def _check_ip_reputation(self, ip: str) -> bool:
-        """Check IP reputation against threat intelligence."""
+        """
+Check IP reputation against threat intelligence."""
         try:
             # Validate IP format
             ipaddress.ip_address(ip)
@@ -579,12 +590,14 @@ class ThreatDetector(MonitorEngine):
         pass
     
     async def _initialize_behavior_baselines(self) -> None:
-        """Initialize behavioral baselines for anomaly detection."""
+        """
+Initialize behavioral baselines for anomaly detection."""
         # Implementation would analyze historical data to establish baselines
         pass
     
     async def _monitor_network_traffic(self) -> None:
-        """Monitor network traffic for threats."""
+        """
+Monitor network traffic for threats."""
         while True:
             try:
                 # Implementation would monitor network traffic

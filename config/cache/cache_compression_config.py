@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -29,7 +30,9 @@ from pydantic import BaseModel, validator
 
 
 class CompressionAlgorithm(str, Enum):
-    """Supported compression algorithms"""
+    """
+Supported compression algorithms"""
+
     GZIP = "gzip"
     ZLIB = "zlib"
     BZIP2 = "bzip2"
@@ -42,6 +45,7 @@ class CompressionAlgorithm(str, Enum):
 
 class CompressionLevel(int, Enum):
     """Compression levels (1-9, where 9 is highest compression)"""
+
     FASTEST = 1
     FAST = 3
     DEFAULT = 6
@@ -49,7 +53,9 @@ class CompressionLevel(int, Enum):
 
 
 class ContentType(str, Enum):
-    """Content types for compression optimization"""
+    """
+Content types for compression optimization"""
+
     JSON = "json"
     XML = "xml"
     TEXT = "text"
@@ -87,7 +93,8 @@ class CompressionProfile:
     
     def should_compress(self, data_size: int, content_type: ContentType = None, 
                        key: str = None) -> bool:
-        """Check if data should be compressed with this profile"""
+        """
+Check if data should be compressed with this profile"""
         if not self.enabled:
             return False
         
@@ -109,7 +116,8 @@ class CompressionProfile:
 
 @dataclass
 class CompressionMetrics:
-    """Compression performance metrics"""
+    """
+Compression performance metrics"""
     total_compressions: int = 0
     total_decompressions: int = 0
     bytes_before_compression: int = 0
@@ -121,33 +129,38 @@ class CompressionMetrics:
     
     @property
     def compression_ratio(self) -> float:
-        """Average compression ratio"""
+        """
+Average compression ratio"""
         if self.bytes_before_compression == 0:
             return 0.0
         return self.bytes_after_compression / self.bytes_before_compression
     
     @property
     def space_saved_bytes(self) -> int:
-        """Total bytes saved through compression"""
+        """
+Total bytes saved through compression"""
         return self.bytes_before_compression - self.bytes_after_compression
     
     @property
     def space_saved_percentage(self) -> float:
-        """Percentage of space saved"""
+        """
+Percentage of space saved"""
         if self.bytes_before_compression == 0:
             return 0.0
         return (1.0 - self.compression_ratio) * 100.0
     
     @property
     def avg_compression_time(self) -> float:
-        """Average compression time per operation"""
+        """
+Average compression time per operation"""
         if self.total_compressions == 0:
             return 0.0
         return self.total_compression_time / self.total_compressions
     
     @property
     def avg_decompression_time(self) -> float:
-        """Average decompression time per operation"""
+        """
+Average decompression time per operation"""
         if self.total_decompressions == 0:
             return 0.0
         return self.total_decompression_time / self.total_decompressions
@@ -247,7 +260,8 @@ class CacheCompressionConfig(BaseModel):
     
     def get_profile_for_data(self, data_size: int, content_type: ContentType = None, 
                            key: str = None, tenant_id: str = None) -> Optional[CompressionProfile]:
-        """Get best compression profile for given data"""
+        """
+Get best compression profile for given data"""
         if not self.enabled:
             return None
         
@@ -338,7 +352,8 @@ class CacheCompressionConfig(BaseModel):
         return self.fallback_content_type
     
     def should_use_async_compression(self, data_size: int, algorithm: CompressionAlgorithm) -> bool:
-        """Determine if async compression should be used"""
+        """
+Determine if async compression should be used"""
         if not self.async_compression:
             return False
         
@@ -349,7 +364,8 @@ class CacheCompressionConfig(BaseModel):
         return data_size >= large_data_threshold or algorithm in slow_algorithms
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary"""
+        """
+Get configuration summary"""
         return {
             "enabled": self.enabled,
             "default_algorithm": self.default_algorithm,
@@ -524,7 +540,8 @@ class CompressionEngine:
             )
     
     def _compress_sync(self, data: bytes, profile: CompressionProfile) -> bytes:
-        """Synchronous compression"""
+        """
+Synchronous compression"""
         algorithm = profile.algorithm
         level = profile.level.value
         
@@ -562,7 +579,8 @@ class CompressionEngine:
             return zlib.compress(data, level=level)
     
     async def _compress_chunked(self, data: bytes, profile: CompressionProfile) -> bytes:
-        """Compress data in parallel chunks"""
+        """
+Compress data in parallel chunks"""
         chunk_size = profile.chunk_size
         chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
         
@@ -592,7 +610,8 @@ class CompressionEngine:
         )
     
     def _decompress_sync(self, compressed_data: bytes, algorithm: CompressionAlgorithm) -> bytes:
-        """Synchronous decompression"""
+        """
+Synchronous decompression"""
         if algorithm == CompressionAlgorithm.GZIP:
             return gzip.decompress(compressed_data)
         elif algorithm == CompressionAlgorithm.ZLIB:
@@ -623,7 +642,8 @@ class CompressionEngine:
             return zlib.decompress(compressed_data)
     
     def _generate_cache_key(self, data: bytes, profile: CompressionProfile) -> str:
-        """Generate cache key for compressed data"""
+        """
+Generate cache key for compressed data"""
         import hashlib
         data_hash = hashlib.md5(data).hexdigest()
         return f"{profile.name}:{profile.algorithm}:{profile.level}:{data_hash}"
@@ -641,7 +661,8 @@ class CompressionEngine:
         self.metrics.total_compression_time += compression_time
     
     def _handle_compression_failure(self):
-        """Handle compression failure for circuit breaker"""
+        """
+Handle compression failure for circuit breaker"""
         self.consecutive_failures += 1
         self.last_failure_time = time.time()
         

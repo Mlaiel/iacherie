@@ -25,6 +25,7 @@ intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
 """
+
 import asyncio
 import logging
 import json
@@ -760,7 +761,8 @@ def get_blockchain_example() -> str:
 
 ```python
 # Deploy revenue sharing contract
-contract_code = """pragma solidity ^0.8.0;
+contract_code = """
+pragma solidity ^0.8.0;
 
 contract RevenueShare {
     mapping(address => uint256) public shares;
@@ -1098,17 +1100,20 @@ def get_module_info() -> Dict[str, Any]:
     return MODULE_INFO
 
 def get_component_info(component_name: str = None) -> Dict[str, Any]:
-    """Get information about specific component or all components"""
+    """
+Get information about specific component or all components"""
     if component_name:
         return COMPONENT_DESCRIPTIONS.get(component_name, {})
     return COMPONENT_DESCRIPTIONS
 
 def get_supported_platforms() -> Dict[str, Any]:
-    """Get detailed information about supported platforms"""
+    """
+Get detailed information about supported platforms"""
     return SUPPORTED_PLATFORMS
 
 def get_supported_payment_gateways() -> Dict[str, Any]:
-    """Get information about supported payment gateways"""
+    """
+Get information about supported payment gateways"""
     return SUPPORTED_PAYMENT_GATEWAYS
 
 # ==================== MODULE EXPORTS ====================
@@ -1354,15 +1359,18 @@ CONFIG_TEMPLATES = {
 }
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive module information"""
+    """
+Get comprehensive module information"""
     return MODULE_INFO
 
 def get_component_info(component_name: str) -> Dict[str, Any]:
-    """Get detailed information about a specific component"""
+    """
+Get detailed information about a specific component"""
     return COMPONENT_DESCRIPTIONS.get(component_name, {})
 
 def get_quick_start_example(example_type: str) -> str:
-    """Get quick start code example"""
+    """
+Get quick start code example"""
     return QUICK_START_EXAMPLES.get(example_type, "Example not found")
 
 def get_all_examples() -> Dict[str, str]:
@@ -1375,7 +1383,8 @@ def get_config_template(template_type: str = "basic_setup") -> Dict[str, Any]:
 
 # Module health check
 async def health_check() -> Dict[str, Any]:
-    """Perform module health check"""
+    """
+Perform module health check"""
     try:
         # Initialize core components for health check
         revenue_agent = RevenueAgent()

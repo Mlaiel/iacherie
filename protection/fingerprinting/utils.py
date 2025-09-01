@@ -5,13 +5,14 @@ Comprehensive utility functions for multi-modal content fingerprinting,
 including file handling, data processing, similarity calculations, and optimization tools.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import os
 import hashlib
 import mimetypes
@@ -48,7 +49,9 @@ from .models import ContentType, ProcessingMetrics, QualityMetrics
 logger = logging.getLogger(__name__)
 
 class FileHandler:
-    """Advanced file handling utilities for content fingerprinting."""
+    """
+Advanced file handling utilities for content fingerprinting."""
+
     
     SUPPORTED_AUDIO_FORMATS = {
         '.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac', '.wma', '.opus'
@@ -68,7 +71,8 @@ class FileHandler:
     
     @staticmethod
     def detect_content_type(file_path: str) -> ContentType:
-        """Detect content type from file extension and MIME type."""
+        """
+Detect content type from file extension and MIME type."""
         ext = Path(file_path).suffix.lower()
         mime_type, _ = mimetypes.guess_type(file_path)
         
@@ -111,7 +115,8 @@ class FileHandler:
     
     @staticmethod
     def calculate_checksum(file_path: str, algorithm: str = 'sha256') -> str:
-        """Calculate file checksum."""
+        """
+Calculate file checksum."""
         hash_func = getattr(hashlib, algorithm)()
         
         with open(file_path, 'rb') as f:
@@ -150,11 +155,13 @@ class FileHandler:
                 os.unlink(temp_path)
 
 class DataProcessor:
-    """Data processing utilities for different content types."""
+    """
+Data processing utilities for different content types."""
     
     @staticmethod
     def normalize_audio(audio_data: np.ndarray, target_sr: int = 22050) -> np.ndarray:
-        """Normalize audio data."""
+        """
+Normalize audio data."""
         # Normalize amplitude
         if audio_data.dtype != np.float32:
             audio_data = audio_data.astype(np.float32)
@@ -171,7 +178,8 @@ class DataProcessor:
     
     @staticmethod
     def resize_image(image: np.ndarray, target_size: Tuple[int, int] = (224, 224)) -> np.ndarray:
-        """Resize image while maintaining aspect ratio."""
+        """
+Resize image while maintaining aspect ratio."""
         h, w = image.shape[:2]
         target_w, target_h = target_size
         
@@ -192,7 +200,8 @@ class DataProcessor:
     
     @staticmethod
     def extract_video_frames(video_path: str, max_frames: int = 100) -> List[np.ndarray]:
-        """Extract representative frames from video."""
+        """
+Extract representative frames from video."""
         cap = cv2.VideoCapture(video_path)
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         
@@ -214,7 +223,8 @@ class DataProcessor:
     
     @staticmethod
     def clean_text(text: str) -> str:
-        """Clean and normalize text data."""
+        """
+Clean and normalize text data."""
         import re
         import unicodedata
         
@@ -232,7 +242,8 @@ class DataProcessor:
     
     @staticmethod
     def split_text_chunks(text: str, chunk_size: int = 512, overlap: int = 50) -> List[str]:
-        """Split text into overlapping chunks for processing."""
+        """
+Split text into overlapping chunks for processing."""
         words = text.split()
         chunks = []
         
@@ -244,18 +255,21 @@ class DataProcessor:
         return chunks
 
 class SimilarityCalculator:
-    """Advanced similarity calculation utilities."""
+    """
+Advanced similarity calculation utilities."""
     
     @staticmethod
     def cosine_similarity_np(vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between two vectors."""
+        """
+Calculate cosine similarity between two vectors."""
         vec1_norm = vec1 / (np.linalg.norm(vec1) + 1e-8)
         vec2_norm = vec2 / (np.linalg.norm(vec2) + 1e-8)
         return np.dot(vec1_norm, vec2_norm)
     
     @staticmethod
     def euclidean_similarity(vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized euclidean similarity."""
+        """
+Calculate normalized euclidean similarity."""
         distance = np.linalg.norm(vec1 - vec2)
         # Normalize to [0, 1] range
         max_distance = np.linalg.norm(vec1) + np.linalg.norm(vec2)
@@ -263,7 +277,8 @@ class SimilarityCalculator:
     
     @staticmethod
     def hamming_similarity(hash1: str, hash2: str) -> float:
-        """Calculate Hamming similarity for hash strings."""
+        """
+Calculate Hamming similarity for hash strings."""
         if len(hash1) != len(hash2):
             return 0.0
         
@@ -272,14 +287,16 @@ class SimilarityCalculator:
     
     @staticmethod
     def jaccard_similarity(set1: set, set2: set) -> float:
-        """Calculate Jaccard similarity between two sets."""
+        """
+Calculate Jaccard similarity between two sets."""
         intersection = len(set1.intersection(set2))
         union = len(set1.union(set2))
         return intersection / union if union > 0 else 0.0
     
     @staticmethod
     def weighted_similarity(similarities: Dict[str, float], weights: Dict[str, float]) -> float:
-        """Calculate weighted average of multiple similarities."""
+        """
+Calculate weighted average of multiple similarities."""
         if not similarities or not weights:
             return 0.0
         
@@ -294,11 +311,13 @@ class SimilarityCalculator:
         return weighted_sum / total_weight if total_weight > 0 else 0.0
 
 class PerformanceOptimizer:
-    """Performance optimization utilities."""
+    """
+Performance optimization utilities."""
     
     @staticmethod
     def time_function(func: Callable) -> Callable:
-        """Decorator to measure function execution time."""
+        """
+Decorator to measure function execution time."""
         @wraps(func)
         def wrapper(*args, **kwargs):
             start_time = time.time()
@@ -317,7 +336,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def optimize_numpy_operations():
-        """Optimize NumPy operations for performance."""
+        """
+Optimize NumPy operations for performance."""
         # Enable Intel MKL optimizations if available
         try:
             import mkl
@@ -330,7 +350,8 @@ class PerformanceOptimizer:
         os.environ['NUMEXPR_NUM_THREADS'] = str(os.cpu_count())
 
 class VectorDatabase:
-    """FAISS-based vector database for efficient similarity search."""
+    """
+FAISS-based vector database for efficient similarity search."""
     
     def __init__(self, dimension: int, index_type: str = 'IndexFlatIP'):
         self.dimension = dimension
@@ -340,7 +361,8 @@ class VectorDatabase:
         self.metadata = {}  # Store metadata for each vector
     
     def _create_index(self) -> faiss.Index:
-        """Create FAISS index based on type."""
+        """
+Create FAISS index based on type."""
         if self.index_type == 'IndexFlatIP':
             return faiss.IndexFlatIP(self.dimension)
         elif self.index_type == 'IndexFlatL2':
@@ -415,7 +437,8 @@ class VectorDatabase:
             }, f)
     
     def load(self, filepath: str):
-        """Load index from disk."""
+        """
+Load index from disk."""
         self.index = faiss.read_index(filepath)
         
         # Load metadata
@@ -428,7 +451,9 @@ class VectorDatabase:
             self.index_type = data['index_type']
 
 class ConfigManager:
-    """Configuration management for fingerprinting system."""
+    """
+Configuration management for fingerprinting system."""
+
     
     DEFAULT_CONFIG = {
         'audio': {
@@ -478,18 +503,21 @@ class ConfigManager:
             self.load_config(config_path)
     
     def load_config(self, config_path: str):
-        """Load configuration from file."""
+        """
+Load configuration from file."""
         with open(config_path, 'r') as f:
             user_config = json.load(f)
             self._merge_config(self.config, user_config)
     
     def save_config(self, config_path: str):
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         with open(config_path, 'w') as f:
             json.dump(self.config, f, indent=2)
     
     def _merge_config(self, base_config: Dict, user_config: Dict):
-        """Recursively merge user config into base config."""
+        """
+Recursively merge user config into base config."""
         for key, value in user_config.items():
             if key in base_config and isinstance(base_config[key], dict) and isinstance(value, dict):
                 self._merge_config(base_config[key], value)
@@ -497,7 +525,8 @@ class ConfigManager:
                 base_config[key] = value
     
     def get(self, key_path: str, default: Any = None) -> Any:
-        """Get configuration value using dot notation."""
+        """
+Get configuration value using dot notation."""
         keys = key_path.split('.')
         value = self.config
         
@@ -510,7 +539,8 @@ class ConfigManager:
         return value
 
 class CacheManager:
-    """Intelligent caching system for fingerprinting operations."""
+    """
+Intelligent caching system for fingerprinting operations."""
     
     def __init__(self, max_size: int = 1000, ttl_seconds: int = 3600):
         self.max_size = max_size
@@ -520,7 +550,8 @@ class CacheManager:
         self.creation_times = {}
     
     def get(self, key: str) -> Optional[Any]:
-        """Get value from cache."""
+        """
+Get value from cache."""
         if key not in self.cache:
             return None
         
@@ -534,7 +565,8 @@ class CacheManager:
         return self.cache[key]
     
     def set(self, key: str, value: Any):
-        """Set value in cache."""
+        """
+Set value in cache."""
         # Remove oldest if at capacity
         if len(self.cache) >= self.max_size:
             self._evict_lru()
@@ -545,13 +577,15 @@ class CacheManager:
         self.creation_times[key] = current_time
     
     def _remove(self, key: str):
-        """Remove key from cache."""
+        """
+Remove key from cache."""
         self.cache.pop(key, None)
         self.access_times.pop(key, None)
         self.creation_times.pop(key, None)
     
     def _evict_lru(self):
-        """Evict least recently used item."""
+        """
+Evict least recently used item."""
         if not self.access_times:
             return
         
@@ -559,7 +593,8 @@ class CacheManager:
         self._remove(lru_key)
     
     def clear(self):
-        """Clear all cache."""
+        """
+Clear all cache."""
         self.cache.clear()
         self.access_times.clear()
         self.creation_times.clear()
@@ -567,7 +602,8 @@ class CacheManager:
 # Utility decorators and functions
 
 def retry_on_failure(max_retries: int = 3, delay: float = 1.0, exponential_backoff: bool = True):
-    """Decorator to retry function on failure."""
+    """
+Decorator to retry function on failure."""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -606,7 +642,8 @@ def get_optimal_batch_size(content_type: ContentType, available_memory_gb: float
     return int(base_size * memory_factor)
 
 def setup_gpu_environment():
-    """Setup optimal GPU environment for fingerprinting."""
+    """
+Setup optimal GPU environment for fingerprinting."""
     if torch.cuda.is_available():
         # Set memory fraction
         torch.cuda.set_per_process_memory_fraction(0.8)

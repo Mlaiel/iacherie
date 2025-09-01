@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import logging
 import json
 import yaml
@@ -46,7 +47,8 @@ from .object_storage import S3ObjectStorageProvider, S3ContentStorageProvider
 logger = logging.getLogger(__name__)
 
 class StorageProviderType(Enum):
-    """Supported storage provider types."""
+    """
+Supported storage provider types."""
     # Database providers
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
@@ -208,7 +210,8 @@ class StorageConfigurationManager:
     """
     
     def __init__(self):
-        """Initialize configuration manager."""
+        """
+Initialize configuration manager."""
         self.configurations: Dict[str, StorageProviderConfig] = {}
         self.environment_prefix = "STORAGE_"
         
@@ -321,7 +324,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_filesystem_config(self, config_data: Dict[str, Any]) -> FilesystemConfig:
-        """Parse filesystem configuration."""
+        """
+Parse filesystem configuration."""
         base_path = self._get_env_override(
             'FILESYSTEM_BASE_PATH',
             config_data.get('base_path', './data/storage')
@@ -339,7 +343,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_cache_config(self, config_data: Dict[str, Any]) -> CacheConfig:
-        """Parse cache configuration."""
+        """
+Parse cache configuration."""
         redis_url = self._get_env_override(
             'REDIS_URL',
             config_data.get('redis_url')
@@ -358,7 +363,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_object_storage_config(self, config_data: Dict[str, Any]) -> ObjectStorageConfig:
-        """Parse object storage configuration."""
+        """
+Parse object storage configuration."""
         return ObjectStorageConfig(
             bucket_name=self._get_env_override(
                 'S3_BUCKET_NAME',
@@ -400,7 +406,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_vector_config(self, config_data: Dict[str, Any]) -> VectorConfig:
-        """Parse vector database configuration."""
+        """
+Parse vector database configuration."""
         return VectorConfig(
             dimension=config_data.get('dimension', 512),
             metric=config_data.get('metric', 'cosine'),
@@ -426,7 +433,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_timeseries_config(self, config_data: Dict[str, Any]) -> TimeSeriesConfig:
-        """Parse time series configuration."""
+        """
+Parse time series configuration."""
         return TimeSeriesConfig(
             influxdb_url=self._get_env_override(
                 'INFLUXDB_URL',
@@ -453,7 +461,8 @@ class StorageConfigurationManager:
         )
     
     def _get_env_override(self, env_key: str, default_value: Any) -> Any:
-        """Get value with environment variable override."""
+        """
+Get value with environment variable override."""
         full_env_key = f"{self.environment_prefix}{env_key}"
         return os.getenv(full_env_key, default_value)
     
@@ -462,21 +471,24 @@ class StorageConfigurationManager:
         return self.configurations.get(provider_id)
     
     def get_providers_by_type(self, backend_type: StorageBackendType) -> List[StorageProviderConfig]:
-        """Get all providers of specific backend type."""
+        """
+Get all providers of specific backend type."""
         return [
             config for config in self.configurations.values()
             if config.backend_type == backend_type and config.enabled
         ]
     
     def get_providers_by_priority(self) -> List[StorageProviderConfig]:
-        """Get all providers sorted by priority."""
+        """
+Get all providers sorted by priority."""
         return sorted(
             [config for config in self.configurations.values() if config.enabled],
             key=lambda x: x.priority
         )
     
     def validate_configuration(self, provider_id: str) -> List[str]:
-        """Validate provider configuration and return list of errors."""
+        """
+Validate provider configuration and return list of errors."""
         errors = []
         
         config = self.configurations.get(provider_id)
@@ -595,7 +607,8 @@ class StorageProviderFactory(StorageFactory):
     """
     
     def __init__(self, config_manager: StorageConfigurationManager):
-        """Initialize storage provider factory."""
+        """
+Initialize storage provider factory."""
         self.config_manager = config_manager
         
         # Provider class mappings
@@ -806,7 +819,8 @@ class StorageProviderFactory(StorageFactory):
                     await self.commit()
                     
             async def add_operation(self, operation_type: str, data: Dict):
-                """Add operation to transaction"""
+                """
+Add operation to transaction"""
                 operation = {
                     "type": operation_type,
                     "data": data,

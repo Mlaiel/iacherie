@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union
@@ -47,7 +48,9 @@ from .realtime_violation_detector import RealTimeViolationDetector
 logger = logging.getLogger(__name__)
 
 class AnalyzerType(Enum):
-    """Available analyzer types."""
+    """
+Available analyzer types."""
+
     CONTENT = "content"
     CLASSIFIER = "classifier"
     COMPETITIVE = "competitive"
@@ -90,7 +93,8 @@ class AnalysisModuleIndex:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the analysis module index."""
+        """
+Initialize the analysis module index."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -424,7 +428,8 @@ class AnalysisModuleIndex:
         }
     
     def _get_system_uptime(self) -> str:
-        """Get system uptime (placeholder)."""
+        """
+Get system uptime (placeholder)."""
         return "Available on request"
     
     async def health_check(self) -> Dict[str, Any]:

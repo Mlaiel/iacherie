@@ -8,7 +8,7 @@ Responsibility: Central repository registry and factory patterns
 =====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ REPOSITORIES INDEX ARCHITECTURE:
 Repository Registration → Factory Pattern → Dependency Injection → 
 Configuration Management → Health Monitoring → Performance Tracking
 """
+
 from typing import Dict, List, Optional, Any, Type, Union
 import logging
 import asyncio
@@ -45,7 +46,9 @@ from . import (
 )
 
 class RepositoryType(Enum):
-    """Repository type enumeration"""
+    """
+Repository type enumeration"""
+
     BASE = "base"
     CONTENT = "content"
     CREATOR = "creator"
@@ -72,7 +75,8 @@ class RepositoryHealth:
 
 @dataclass
 class RepositoryMetrics:
-    """Repository performance metrics"""
+    """
+Repository performance metrics"""
     repository_type: str
     total_operations: int
     successful_operations: int
@@ -83,7 +87,8 @@ class RepositoryMetrics:
     memory_usage: float
 
 class RepositoryFactory:
-    """Advanced repository factory with dependency injection and configuration"""
+    """
+Advanced repository factory with dependency injection and configuration"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -110,7 +115,8 @@ class RepositoryFactory:
         repo_type: Union[str, RepositoryType],
         **kwargs
     ) -> BaseRepository:
-        """Create a repository instance with dependency injection"""
+        """
+Create a repository instance with dependency injection"""
         try:
             # Normalize repository type
             if isinstance(repo_type, RepositoryType):
@@ -199,7 +205,8 @@ class RepositoryFactory:
         return self.repositories.get(repo_type_str)
 
     def get_async_repository(self, repo_type: Union[str, RepositoryType]) -> Optional[AsyncBaseRepository]:
-        """Get cached async repository instance"""
+        """
+Get cached async repository instance"""
         repo_type_str = repo_type.value if isinstance(repo_type, RepositoryType) else repo_type.lower()
         return self.async_repositories.get(repo_type_str)
 
@@ -208,7 +215,8 @@ class RepositoryFactory:
         repository_types: List[Union[str, RepositoryType]],
         shared_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, BaseRepository]:
-        """Create a complete suite of repositories with shared configuration"""
+        """
+Create a complete suite of repositories with shared configuration"""
         try:
             repositories = {}
             
@@ -363,7 +371,8 @@ class RepositoryFactory:
         }
 
     def _setup_async_repository_monitoring(self, repo_type: str, repository: AsyncBaseRepository):
-        """Set up monitoring for async repository"""
+        """
+Set up monitoring for async repository"""
         # This would set up monitoring dashboards and alerts
         self.health_monitors[repo_type] = {
             'repository': repository,
@@ -372,7 +381,8 @@ class RepositoryFactory:
         }
 
     async def _check_repository_health(self, repo_type: str, repository: BaseRepository) -> RepositoryHealth:
-        """Check health of a specific repository"""
+        """
+Check health of a specific repository"""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -410,7 +420,8 @@ class RepositoryFactory:
             )
 
     async def _check_async_repository_health(self, repo_type: str, repository: AsyncBaseRepository) -> RepositoryHealth:
-        """Check health of a specific async repository"""
+        """
+Check health of a specific async repository"""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -448,7 +459,8 @@ class RepositoryFactory:
             )
 
     def _collect_repository_metrics(self, repo_type: str, repository: BaseRepository) -> RepositoryMetrics:
-        """Collect metrics from a specific repository"""
+        """
+Collect metrics from a specific repository"""
         # This would collect actual metrics from the repository
         return RepositoryMetrics(
             repository_type=repo_type,
@@ -462,7 +474,8 @@ class RepositoryFactory:
         )
 
     def _collect_async_repository_metrics(self, repo_type: str, repository: AsyncBaseRepository) -> RepositoryMetrics:
-        """Collect metrics from a specific async repository"""
+        """
+Collect metrics from a specific async repository"""
         # This would collect actual metrics from the async repository
         return RepositoryMetrics(
             repository_type=repo_type,
@@ -480,7 +493,8 @@ class RepositoryFactory:
         repository: BaseRepository,
         optimization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply performance optimizations to repository"""
+        """
+Apply performance optimizations to repository"""
         # This would apply actual optimizations
         return {
             'cache_optimization': True,
@@ -495,26 +509,30 @@ repository_factory = RepositoryFactory()
 
 # Convenience functions
 def get_repository(repo_type: Union[str, RepositoryType], **kwargs) -> BaseRepository:
-    """Get or create a repository instance"""
+    """
+Get or create a repository instance"""
     existing = repository_factory.get_repository(repo_type)
     if existing:
         return existing
     return repository_factory.create_repository(repo_type, **kwargs)
 
 def get_async_repository(repo_type: Union[str, RepositoryType], **kwargs) -> AsyncBaseRepository:
-    """Get or create an async repository instance"""
+    """
+Get or create an async repository instance"""
     existing = repository_factory.get_async_repository(repo_type)
     if existing:
         return existing
     return repository_factory.create_async_repository(repo_type, **kwargs)
 
 def create_full_repository_suite(**shared_config) -> Dict[str, BaseRepository]:
-    """Create a complete suite of all available repositories"""
+    """
+Create a complete suite of all available repositories"""
     all_repo_types = [repo_type for repo_type in RepositoryType]
     return repository_factory.create_repository_suite(all_repo_types, shared_config)
 
 def create_full_async_repository_suite(**shared_config) -> Dict[str, AsyncBaseRepository]:
-    """Create a complete suite of all available async repositories"""
+    """
+Create a complete suite of all available async repositories"""
     all_repo_types = [repo_type for repo_type in RepositoryType]
     return repository_factory.create_async_repository_suite(all_repo_types, shared_config)
 

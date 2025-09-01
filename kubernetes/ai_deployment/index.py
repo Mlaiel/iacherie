@@ -6,8 +6,9 @@ including model serving, training pipelines, edge computing, federated learning,
 MLOps, creative AI, conversational AI, and computer vision AI deployment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIDeploymentType(Enum):
-    """AI deployment types available in the system"""
+    """
+AI deployment types available in the system"""
+
     MODEL_SERVING = "model_serving"
     TRAINING_PIPELINE = "training_pipeline"
     EDGE_COMPUTING = "edge_computing"
@@ -43,6 +46,7 @@ class AIDeploymentType(Enum):
 
 class AIDeploymentStatus(Enum):
     """AI deployment status states"""
+
     INITIALIZING = "initializing"
     DEPLOYING = "deploying"
     DEPLOYED = "deployed"
@@ -512,15 +516,18 @@ async def deploy_ai_infrastructure():
 
 
 async def get_ai_status():
-    """Get global AI deployment status"""
+    """
+Get global AI deployment status"""
     return await ai_deployment_manager.get_deployment_status()
 
 
 async def get_ai_metrics():
-    """Get comprehensive AI metrics"""
+    """
+Get comprehensive AI metrics"""
     return await ai_deployment_manager.get_deployment_metrics()
 
 
 async def cleanup_ai_infrastructure():
-    """Clean up all AI infrastructure"""
+    """
+Clean up all AI infrastructure"""
     return await ai_deployment_manager.cleanup_all_deployments()

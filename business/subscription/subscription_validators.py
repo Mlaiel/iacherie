@@ -4,10 +4,11 @@ Comprehensive validation system for subscription operations, business rules,
 and data integrity checks across the subscription management system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from typing import Optional, Dict, Any, List, Tuple
@@ -46,7 +47,8 @@ class SubscriptionValidators:
     """
     
     def __init__(self):
-        """Initialize subscription validators."""
+        """
+Initialize subscription validators."""
         self.logger = get_logger(__name__)
         
         # Validation configuration
@@ -717,7 +719,8 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate Stripe payment method data."""
+        """
+Validate Stripe payment method data."""
         if "type" not in payment_data:
             result["errors"].append("Payment method type is required")
         
@@ -739,7 +742,8 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate Wise payment method data."""
+        """
+Validate Wise payment method data."""
         # Wise-specific validation logic
         pass
     
@@ -748,7 +752,8 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate billing details."""
+        """
+Validate billing details."""
         billing_details = payment_data.get("billing_details", {})
         
         # Name validation

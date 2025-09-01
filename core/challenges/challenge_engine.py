@@ -8,7 +8,7 @@ Responsibility: Core challenge creation, lifecycle, and management engine
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ CHALLENGE ENGINE ARCHITECTURE:
 Challenge Factory → Lifecycle Manager → Progress Tracker → 
 Validation Engine → Reward Calculator → Analytics Collector
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -31,7 +32,9 @@ import uuid
 from abc import ABC, abstractmethod
 
 class ChallengeType(Enum):
-    """Types of challenges available in the platform"""
+    """
+Types of challenges available in the platform"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -44,6 +47,7 @@ class ChallengeType(Enum):
 
 class ChallengeCategory(Enum):
     """Challenge categories based on content type and activity"""
+
     CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     ENGAGEMENT = "engagement"
@@ -57,6 +61,7 @@ class ChallengeCategory(Enum):
 
 class ChallengeStatus(Enum):
     """Challenge lifecycle status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
@@ -68,6 +73,7 @@ class ChallengeStatus(Enum):
 
 class ChallengeDifficulty(IntEnum):
     """Challenge difficulty levels (1-10)"""
+
     BEGINNER = 1
     EASY = 2
     NOVICE = 3
@@ -80,7 +86,9 @@ class ChallengeDifficulty(IntEnum):
     LEGENDARY = 10
 
 class ChallengeVisibility(Enum):
-    """Challenge visibility levels"""
+    """
+Challenge visibility levels"""
+
     PUBLIC = "public"
     PRIVATE = "private"
     INVITE_ONLY = "invite_only"
@@ -185,7 +193,8 @@ class ChallengeEngine:
                  reward_service=None,
                  validation_service=None,
                  gamification_service=None):
-        """Initialize challenge engine with dependencies"""
+        """
+Initialize challenge engine with dependencies"""
         self.challenge_repository = challenge_repository
         self.user_service = user_service
         self.analytics_service = analytics_service
@@ -723,7 +732,8 @@ class ChallengeEngine:
     async def _check_milestone_achievements(self, 
                                           config: ChallengeConfiguration,
                                           participation: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for milestone achievements"""
+        """
+Check for milestone achievements"""
         current_percentage = participation.get("completion_percentage", 0.0)
         achieved_milestones = participation.get("milestones_achieved", [])
         
@@ -871,7 +881,8 @@ class ChallengeEngine:
     async def _enrich_challenges_for_user(self, 
                                         challenges: List[Dict[str, Any]],
                                         user_id: str) -> List[Dict[str, Any]]:
-        """Enrich challenges with user-specific data"""
+        """
+Enrich challenges with user-specific data"""
         enriched = []
         
         for challenge in challenges:

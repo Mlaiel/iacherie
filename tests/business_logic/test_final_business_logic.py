@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,10 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Final Business Logic Core Test
+"""
+Final Business Logic Core Test
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import sys
 import os
@@ -33,7 +36,9 @@ from simple_agents import (
 
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -43,6 +48,7 @@ class CreatorType(Enum):
 
 class WorkflowStage(Enum):
     """Business workflow stages"""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     CONTENT_ANALYSIS = "content_analysis"
@@ -70,7 +76,8 @@ class WorkflowConfig:
 
 @dataclass
 class ContentUpload:
-    """Content upload data"""
+    """
+Content upload data"""
     content_id: str
     creator_id: str
     creator_type: CreatorType
@@ -82,7 +89,8 @@ class ContentUpload:
 
 
 class BusinessWorkflowOrchestrator:
-    """Complete business workflow orchestrator"""
+    """
+Complete business workflow orchestrator"""
     
     def __init__(self):
         self.protection_agent = None
@@ -96,7 +104,8 @@ class BusinessWorkflowOrchestrator:
         self.active_workflows = {}
     
     async def initialize(self):
-        """Initialize the orchestrator"""
+        """
+Initialize the orchestrator"""
         # Initialize all agents
         self.protection_agent = ProtectionAgent()
         await self.protection_agent.initialize()

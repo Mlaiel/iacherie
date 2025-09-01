@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import json
 import logging
@@ -37,7 +38,8 @@ settings = get_settings()
 
 
 class MessagingInfrastructureConfig(BaseModel):
-    """Configuration for complete messaging infrastructure"""
+    """
+Configuration for complete messaging infrastructure"""
     deployment_name: str = Field(default="ia-influencer-messaging", description="Deployment name")
     deploy_kafka: bool = Field(default=True, description="Deploy Kafka cluster")
     deploy_rabbitmq: bool = Field(default=True, description="Deploy RabbitMQ cluster")
@@ -79,7 +81,8 @@ class MessagingDeploymentOrchestrator:
         self.monitoring_tasks: List[asyncio.Task] = []
 
     def _get_default_config(self) -> MessagingInfrastructureConfig:
-        """Get default infrastructure configuration"""
+        """
+Get default infrastructure configuration"""
         return MessagingInfrastructureConfig(
             deployment_name="ia-influencer-messaging",
             deploy_kafka=True,
@@ -834,32 +837,37 @@ async def create_kafka_manager(config: Optional[KafkaClusterConfig] = None) -> K
 
 
 async def create_rabbitmq_manager(config: Optional[RabbitMQClusterConfig] = None) -> RabbitMQManager:
-    """Create and deploy RabbitMQ manager"""
+    """
+Create and deploy RabbitMQ manager"""
     manager = RabbitMQManager(config)
     await manager.deploy_cluster()
     return manager
 
 
 async def create_celery_manager(config: Optional[CeleryClusterConfig] = None) -> CeleryManager:
-    """Create and deploy Celery manager"""
+    """
+Create and deploy Celery manager"""
     manager = CeleryManager(config)
     await manager.deploy_cluster()
     return manager
 
 
 async def create_message_router() -> MessageRouter:
-    """Create and initialize message router"""
+    """
+Create and initialize message router"""
     router = MessageRouter()
     return router
 
 
 async def create_messaging_orchestrator(config: Optional[MessagingInfrastructureConfig] = None) -> MessagingDeploymentOrchestrator:
-    """Create messaging deployment orchestrator"""
+    """
+Create messaging deployment orchestrator"""
     return MessagingDeploymentOrchestrator(config)
 
 
 async def deploy_messaging_infrastructure(config: Optional[MessagingInfrastructureConfig] = None) -> MessagingDeploymentOrchestrator:
-    """Deploy complete messaging infrastructure"""
+    """
+Deploy complete messaging infrastructure"""
     orchestrator = MessagingDeploymentOrchestrator(config)
     await orchestrator.deploy_infrastructure()
     return orchestrator
@@ -911,7 +919,8 @@ class MessagingDeploymentOrchestrator:
                                            kafka_config: Optional[KafkaClusterConfig] = None,
                                            rabbitmq_config: Optional[RabbitMQClusterConfig] = None,
                                            celery_config: Optional[CeleryClusterConfig] = None) -> Dict[str, Union[str, bool]]:
-        """Deploy complete messaging infrastructure"""
+        """
+Deploy complete messaging infrastructure"""
         try:
             logger.info("Starting complete messaging infrastructure deployment")
             
@@ -1078,22 +1087,26 @@ def create_kafka_manager(config: Optional[KafkaClusterConfig] = None) -> KafkaMa
 
 
 def create_rabbitmq_manager(config: Optional[RabbitMQClusterConfig] = None) -> RabbitMQManager:
-    """Create RabbitMQ manager instance"""
+    """
+Create RabbitMQ manager instance"""
     return RabbitMQManager(config)
 
 
 def create_celery_manager(config: Optional[CeleryClusterConfig] = None) -> CeleryManager:
-    """Create Celery manager instance"""
+    """
+Create Celery manager instance"""
     return CeleryManager(config)
 
 
 def create_message_router() -> MessageRouter:
-    """Create message router instance"""
+    """
+Create message router instance"""
     return MessageRouter()
 
 
 def create_messaging_orchestrator() -> MessagingDeploymentOrchestrator:
-    """Create messaging deployment orchestrator"""
+    """
+Create messaging deployment orchestrator"""
     return MessagingDeploymentOrchestrator()
 
 

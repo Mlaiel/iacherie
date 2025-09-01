@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import cv2
 import numpy as np
 import torch
@@ -31,7 +32,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class VideoQuality(Enum):
-    """Video quality levels for content analysis"""
+    """
+Video quality levels for content analysis"""
+
     LOW_QUALITY = "low_quality"
     STANDARD_DEFINITION = "standard_definition"
     HIGH_DEFINITION = "high_definition"
@@ -42,6 +45,7 @@ class VideoQuality(Enum):
 
 class VideoContentType(Enum):
     """Video content type classification"""
+
     VLOG = "vlog"
     TUTORIAL = "tutorial"
     ENTERTAINMENT = "entertainment"
@@ -56,6 +60,7 @@ class VideoContentType(Enum):
 
 class SceneType(Enum):
     """Scene type classification"""
+
     INDOOR = "indoor"
     OUTDOOR = "outdoor"
     STUDIO = "studio"
@@ -99,7 +104,8 @@ class VideoFeatures:
 
 @dataclass
 class VideoProtectionResult:
-    """Video content protection analysis results"""
+    """
+Video content protection analysis results"""
     is_original: bool
     confidence_score: float
     copyright_matches: List[Dict]
@@ -114,7 +120,8 @@ class VideoProtectionResult:
 
 
 class VideoFeatureExtractor(BaseAIModel):
-    """Advanced video feature extraction using computer vision and ML"""
+    """
+Advanced video feature extraction using computer vision and ML"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -125,7 +132,8 @@ class VideoFeatureExtractor(BaseAIModel):
         self._init_models()
         
     def _init_models(self):
-        """Initialize video processing models"""
+        """
+Initialize video processing models"""
         # Object detection model (YOLO, R-CNN, etc.)
         self.object_detector = self._load_object_detector()
         
@@ -142,27 +150,32 @@ class VideoFeatureExtractor(BaseAIModel):
         self.text_detector = self._load_text_detector()
         
     def _load_object_detector(self):
-        """Load object detection model"""
+        """
+Load object detection model"""
         # In production, load YOLO or other object detection model
         return None
         
     def _load_scene_classifier(self):
-        """Load scene classification model"""
+        """
+Load scene classification model"""
         # In production, load scene classification model
         return None
         
     def _load_action_recognizer(self):
-        """Load action recognition model"""
+        """
+Load action recognition model"""
         # In production, load action recognition model
         return None
         
     def _load_quality_assessor(self):
-        """Load video quality assessment model"""
+        """
+Load video quality assessment model"""
         # In production, load quality assessment model
         return None
         
     def _load_text_detector(self):
-        """Load text detection model"""
+        """
+Load text detection model"""
         # In production, load OCR model (Tesseract, EAST, etc.)
         return None
     
@@ -348,7 +361,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _detect_objects(self, frame: np.ndarray, timestamp: float) -> List[Dict]:
-        """Detect objects in frame"""
+        """
+Detect objects in frame"""
         # Simplified object detection
         # In production, use YOLO, R-CNN, or other advanced models
         
@@ -470,7 +484,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _analyze_colors(self, frame: np.ndarray) -> Dict:
-        """Analyze color characteristics of frame"""
+        """
+Analyze color characteristics of frame"""
         # Convert to different color spaces
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
@@ -501,7 +516,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _get_dominant_colors(self, frame: np.ndarray, k: int = 3) -> List[List[int]]:
-        """Get dominant colors using K-means clustering"""
+        """
+Get dominant colors using K-means clustering"""
         # Reshape frame for clustering
         data = frame.reshape((-1, 3))
         data = np.float32(data)
@@ -515,7 +531,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return centers.tolist()
     
     def _classify_scene_type(self, brightness: float, dominant_colors: List, complexity: float) -> str:
-        """Classify scene type based on visual features"""
+        """
+Classify scene type based on visual features"""
         if brightness < 50:
             return "dark_scene"
         elif brightness > 200:
@@ -543,7 +560,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return float(indoor_prob)
     
     def _assess_lighting_quality(self, brightness: float, frame: np.ndarray) -> str:
-        """Assess lighting quality of frame"""
+        """
+Assess lighting quality of frame"""
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         brightness_std = np.std(gray)
         
@@ -614,7 +632,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return float(np.clip(temp, 2000, 10000))
     
     def _calculate_vibrance(self, hsv: np.ndarray) -> float:
-        """Calculate color vibrance score"""
+        """
+Calculate color vibrance score"""
         saturation = hsv[:, :, 1]
         value = hsv[:, :, 2]
         
@@ -623,7 +642,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return float(vibrance / 255.0)
     
     def _compile_motion_analysis(self, motion_vectors: List[Dict]) -> Dict:
-        """Compile motion analysis from all frames"""
+        """
+Compile motion analysis from all frames"""
         if not motion_vectors:
             return {
                 'average_motion': 0.0,
@@ -665,7 +685,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _compile_color_analysis(self, color_histograms: List[Dict]) -> Dict:
-        """Compile color analysis from all frames"""
+        """
+Compile color analysis from all frames"""
         if not color_histograms:
             return {}
         
@@ -683,7 +704,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _compile_lighting_analysis(self, brightness_values: List[float]) -> Dict:
-        """Compile lighting analysis from all frames"""
+        """
+Compile lighting analysis from all frames"""
         if not brightness_values:
             return {}
         
@@ -717,7 +739,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _assess_color_grading(self, temperatures: List[float], vibrance: List[float]) -> str:
-        """Assess color grading quality"""
+        """
+Assess color grading quality"""
         temp_consistency = 1.0 - (np.std(temperatures) / np.mean(temperatures))
         vibrance_avg = np.mean(vibrance)
         
@@ -742,7 +765,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return float((brightness_score + consistency_score) / 2)
     
     def _assess_video_quality(self, width: int, height: int, fps: float, brightness_values: List[float]) -> VideoQuality:
-        """Assess overall video quality"""
+        """
+Assess overall video quality"""
         # Resolution-based assessment
         total_pixels = width * height
         
@@ -768,7 +792,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return base_quality
     
     def _classify_content_type(self, scene_analysis: List[Dict], object_detections: List[Dict], duration: float) -> VideoContentType:
-        """Classify video content type"""
+        """
+Classify video content type"""
         # Simplified content classification
         # In production, use sophisticated ML models
         
@@ -795,7 +820,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return VideoContentType.ENTERTAINMENT  # Default
     
     def _calculate_composition_score(self, face_detections: List[Dict], object_detections: List[Dict], motion_analysis: Dict) -> float:
-        """Calculate composition quality score"""
+        """
+Calculate composition quality score"""
         score = 0.5  # Base score
         
         # Rule of thirds analysis (simplified)
@@ -834,7 +860,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return min(1.0, score)
     
     def _assess_technical_quality(self, width: int, height: int, fps: float, motion_analysis: Dict, lighting_analysis: Dict) -> Dict:
-        """Assess technical quality metrics"""
+        """
+Assess technical quality metrics"""
         # Resolution score
         total_pixels = width * height
         resolution_score = min(1.0, total_pixels / (1920 * 1080))  # Normalize to 1080p
@@ -865,7 +892,8 @@ class VideoFeatureExtractor(BaseAIModel):
         }
     
     def _generate_content_fingerprint(self, thumbnail_frames: List[np.ndarray], object_detections: List[Dict]) -> str:
-        """Generate content fingerprint for copyright detection"""
+        """
+Generate content fingerprint for copyright detection"""
         # Create a unique fingerprint based on visual content
         fingerprint_data = []
         
@@ -884,7 +912,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return hashlib.md5(fingerprint_str.encode()).hexdigest()
     
     def _detect_key_moments(self, scene_analysis: List[Dict], motion_analysis: Dict, face_detections: List[Dict]) -> List[Tuple[float, str]]:
-        """Detect key moments in video"""
+        """
+Detect key moments in video"""
         key_moments = []
         
         # Motion-based key moments
@@ -915,7 +944,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return key_moments[:20]  # Return top 20 key moments
     
     def _detect_emotions(self, face_detections: List[Dict], scene_analysis: List[Dict]) -> Dict[str, float]:
-        """Detect overall emotions in video"""
+        """
+Detect overall emotions in video"""
         emotion_counts = {}
         
         # Aggregate emotions from face detections
@@ -934,7 +964,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return emotion_probs
     
     def _detect_brands(self, object_detections: List[Dict], text_detections: List[Dict]) -> List[Dict]:
-        """Detect brand appearances in video"""
+        """
+Detect brand appearances in video"""
         # Simplified brand detection
         # In production, use specialized brand recognition models
         
@@ -959,7 +990,8 @@ class VideoFeatureExtractor(BaseAIModel):
         return brands
     
     def _generate_similarity_hash(self, content_fingerprint: str, color_analysis: Dict) -> str:
-        """Generate hash for similarity comparison"""
+        """
+Generate hash for similarity comparison"""
         # Combine content fingerprint with color characteristics
         similarity_data = {
             'fingerprint': content_fingerprint,
@@ -972,7 +1004,8 @@ class VideoFeatureExtractor(BaseAIModel):
 
 
 class VideoCopyrightDetector(BaseAIModel):
-    """Advanced video copyright detection and protection"""
+    """
+Advanced video copyright detection and protection"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -981,12 +1014,14 @@ class VideoCopyrightDetector(BaseAIModel):
         self.manipulation_detector = self._init_manipulation_detector()
         
     def _init_deepfake_detector(self):
-        """Initialize deepfake detection model"""
+        """
+Initialize deepfake detection model"""
         # In production, load deepfake detection model
         return None
         
     def _init_manipulation_detector(self):
-        """Initialize video manipulation detection model"""
+        """
+Initialize video manipulation detection model"""
         # In production, load manipulation detection model
         return None
     
@@ -1078,7 +1113,8 @@ class VideoCopyrightDetector(BaseAIModel):
         return matches
     
     def _detect_watermarks(self, video_features: VideoFeatures) -> bool:
-        """Detect digital watermarks in video"""
+        """
+Detect digital watermarks in video"""
         # Check thumbnail frames for watermark patterns
         for thumb in video_features.thumbnail_frames:
             # Convert to frequency domain for watermark detection
@@ -1100,7 +1136,8 @@ class VideoCopyrightDetector(BaseAIModel):
         return False
     
     def _detect_deepfakes(self, video_features: VideoFeatures) -> bool:
-        """Detect deepfake content in video"""
+        """
+Detect deepfake content in video"""
         # Simplified deepfake detection
         # In production, use specialized deepfake detection models
         
@@ -1142,7 +1179,8 @@ class VideoCopyrightDetector(BaseAIModel):
         return total_checks > 0 and (deepfake_indicators / total_checks) > 0.5
     
     def _detect_manipulations(self, video_features: VideoFeatures) -> bool:
-        """Detect video manipulations"""
+        """
+Detect video manipulations"""
         manipulation_score = 0
         total_checks = 0
         
@@ -1191,7 +1229,8 @@ class VideoCopyrightDetector(BaseAIModel):
         return total_checks > 0 and (manipulation_score / total_checks) > 0.5
     
     def _check_similarity_matches(self, similarity_hash: str) -> List[Dict]:
-        """Check for similar content using hash comparison"""
+        """
+Check for similar content using hash comparison"""
         # In production, use proper similarity search with LSH
         matches = []
         
@@ -1201,13 +1240,14 @@ class VideoCopyrightDetector(BaseAIModel):
         return matches
     
     def _analyze_copyright_markers(self, video_features: VideoFeatures) -> List[Dict]:
-        """Analyze embedded copyright markers"""
+        """
+Analyze embedded copyright markers"""
         markers = []
         
         # Check for copyright text in detected text
         for text in video_features.text_detection:
             text_content = text.get('text', '').lower()
-            copyright_keywords = ['copyright', '©', '(c)', 'all rights reserved', 'proprietary']
+            copyright_keywords = ['copyright', '(c)', '(c)', 'all rights reserved', 'proprietary']
             
             for keyword in copyright_keywords:
                 if keyword in text_content:
@@ -1230,7 +1270,8 @@ class VideoCopyrightDetector(BaseAIModel):
         return markers
     
     def _calculate_authenticity_score(self, deepfake_detected: bool, manipulation_detected: bool, watermark_detected: bool) -> float:
-        """Calculate content authenticity score"""
+        """
+Calculate content authenticity score"""
         base_score = 1.0
         
         if deepfake_detected:
@@ -1246,7 +1287,8 @@ class VideoCopyrightDetector(BaseAIModel):
     
     def _calculate_originality_confidence(self, fingerprint_matches: List[Dict], watermark_detected: bool, 
                                         similarity_matches: List[Dict], authenticity_score: float) -> float:
-        """Calculate confidence score for content originality"""
+        """
+Calculate confidence score for content originality"""
         base_confidence = authenticity_score
         
         # Reduce confidence based on matches
@@ -1265,7 +1307,8 @@ class VideoCopyrightDetector(BaseAIModel):
     def _generate_protection_recommendations(self, is_original: bool, confidence_score: float, 
                                            authenticity_score: float, deepfake_detected: bool, 
                                            manipulation_detected: bool) -> List[str]:
-        """Generate protection recommendations"""
+        """
+Generate protection recommendations"""
         recommendations = []
         
         if deepfake_detected:

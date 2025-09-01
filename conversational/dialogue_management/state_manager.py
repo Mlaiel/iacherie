@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -31,7 +32,9 @@ from backend.services.notification.real_time_service import RealTimeNotification
 logger = logging.getLogger(__name__)
 
 class StateType(Enum):
-    """Types of conversation states"""
+    """
+Types of conversation states"""
+
     CONVERSATIONAL = "conversational"  # Basic dialogue states
     BUSINESS_WORKFLOW = "business_workflow"  # Business process states
     COLLABORATION = "collaboration"  # Collaboration states
@@ -43,6 +46,7 @@ class StateType(Enum):
 
 class StateCategory(Enum):
     """Categories for state organization"""
+
     ENTRY = "entry"
     ACTIVE = "active"
     TRANSITION = "transition"
@@ -52,6 +56,7 @@ class StateCategory(Enum):
 
 class StatePersistence(Enum):
     """State persistence levels"""
+
     TEMPORARY = "temporary"  # Session only
     SHORT_TERM = "short_term"  # Hours
     MEDIUM_TERM = "medium_term"  # Days
@@ -121,7 +126,8 @@ class StateTransition:
 
 @dataclass
 class ConversationState:
-    """Current state of a conversation"""
+    """
+Current state of a conversation"""
     conversation_id: str
     current_state: str
     state_history: List[str] = field(default_factory=list)
@@ -147,7 +153,8 @@ class ConversationState:
 
 @dataclass
 class StateSnapshot:
-    """Snapshot of conversation state for rollback"""
+    """
+Snapshot of conversation state for rollback"""
     snapshot_id: str
     conversation_id: str
     state_data: Dict[str, Any]
@@ -156,7 +163,8 @@ class StateSnapshot:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class StateMachine:
-    """State machine for individual conversation workflow"""
+    """
+State machine for individual conversation workflow"""
     
     def __init__(self, conversation_id: str, initial_state: str):
         self.conversation_id = conversation_id
@@ -990,7 +998,8 @@ class StateManager:
         return on_entry_callback
 
     def _create_exit_callback(self, state_def: StateDefinition):
-        """Create callback for state exit"""
+        """
+Create callback for state exit"""
         
         async def on_exit_callback(event_data):
             conversation_id = event_data.model.conversation_id
@@ -999,7 +1008,8 @@ class StateManager:
         return on_exit_callback
 
     def _create_transition_conditions(self, transition_def: StateTransition):
-        """Create condition functions for transition"""
+        """
+Create condition functions for transition"""
         
         async def check_conditions(event_data):
             conversation_id = event_data.model.conversation_id
@@ -1023,7 +1033,8 @@ class StateManager:
         return [execute_pre_actions] if transition_def.pre_actions else []
 
     def _create_post_actions(self, transition_def: StateTransition):
-        """Create post-action functions for transition"""
+        """
+Create post-action functions for transition"""
         
         async def execute_post_actions(event_data):
             conversation_id = event_data.model.conversation_id
@@ -1033,7 +1044,8 @@ class StateManager:
         return [execute_post_actions] if transition_def.post_actions else []
 
     async def _execute_state_entry_actions(self, conversation_id: str, state_id: str):
-        """Execute actions when entering state"""
+        """
+Execute actions when entering state"""
         
         state_def = self.state_definitions.get(state_id)
         if not state_def:
@@ -1043,7 +1055,8 @@ class StateManager:
             await self._execute_state_action(conversation_id, action, state_id)
 
     async def _execute_state_exit_actions(self, conversation_id: str, state_id: str):
-        """Execute actions when exiting state"""
+        """
+Execute actions when exiting state"""
         
         state_def = self.state_definitions.get(state_id)
         if not state_def:
@@ -1053,7 +1066,8 @@ class StateManager:
             await self._execute_state_action(conversation_id, action, state_id)
 
     async def _execute_state_action(self, conversation_id: str, action: str, state_id: str):
-        """Execute individual state action"""
+        """
+Execute individual state action"""
         
         try:
             if action == "log_error":

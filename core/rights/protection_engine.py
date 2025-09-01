@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Protection Engine Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ settings = get_settings()
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels."""
+    """
+Content protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -51,6 +54,7 @@ class ProtectionLevel(str, Enum):
 
 class ProtectionMethod(str, Enum):
     """Available protection methods."""
+
     DIGITAL_WATERMARKING = "digital_watermarking"
     STEGANOGRAPHY = "steganography"
     FINGERPRINTING = "fingerprinting"
@@ -63,6 +67,7 @@ class ProtectionMethod(str, Enum):
 
 class ThreatLevel(str, Enum):
     """Threat assessment levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -87,7 +92,8 @@ class ProtectionConfiguration:
 
 
 class ProtectionRequest(BaseModel):
-    """Protection activation request model."""
+    """
+Protection activation request model."""
     content_id: str = Field(..., description="Content identifier")
     protection_level: ProtectionLevel = Field(default=ProtectionLevel.STANDARD)
     methods: List[ProtectionMethod] = Field(default_factory=list)
@@ -116,7 +122,8 @@ class ThreatAssessment(BaseModel):
 
 
 class ProtectionReport(BaseModel):
-    """Protection status report model."""
+    """
+Protection status report model."""
     protection_id: str
     content_id: str
     protection_status: str
@@ -141,7 +148,8 @@ class ContentProtectionEngine:
         fingerprint_engine: DigitalFingerprintEngine,
         copyright_detector: CopyrightDetectionService
     ):
-        """Initialize content protection engine."""
+        """
+Initialize content protection engine."""
         self.db = db_session
         self.fingerprint_engine = fingerprint_engine
         self.copyright_detector = copyright_detector
@@ -210,7 +218,7 @@ class ContentProtectionEngine:
                 enabled_methods=protection_request.methods,
                 watermark_settings={
                     "visible": protection_request.watermark_visible,
-                    "text": protection_request.watermark_text or f"© Protected Content - {datetime.utcnow().year}",
+                    "text": protection_request.watermark_text or f"(c) Protected Content - {datetime.utcnow().year}",
                     "opacity": 0.3,
                     "position": "bottom_right"
                 },
@@ -570,7 +578,8 @@ class ContentProtectionEngine:
     async def _apply_protection_method(
         self, method: ProtectionMethod, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Apply specific protection method to content."""
+        """
+Apply specific protection method to content."""
         service = self.protection_methods.get(method)
         if not service:
             return {"error": f"Protection method {method} not available"}
@@ -631,13 +640,15 @@ class ContentProtectionEngine:
     # Placeholder implementations for supporting services
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """Get content record from database."""
+        """
+Get content record from database."""
         pass
     
     async def _start_protection_monitoring(
         self, protection_id: str, config: ProtectionConfiguration
     ) -> str:
-        """Start protection monitoring task."""
+        """
+Start protection monitoring task."""
         return f"monitor_task_{protection_id}"
     
     async def _create_blockchain_proof(
@@ -661,12 +672,14 @@ class ContentProtectionEngine:
 # Supporting service classes (simplified implementations)
 
 class DigitalWatermarkingService:
-    """Digital watermarking service for content protection."""
+    """
+Digital watermarking service for content protection."""
     
     async def apply_watermark(
         self, content: Any, settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply digital watermark to content."""
+        """
+Apply digital watermark to content."""
         return {
             "watermark_applied": True,
             "watermark_type": "visible" if settings.get("visible") else "invisible",
@@ -681,7 +694,8 @@ class SteganographyService:
     async def embed_steganographic_data(
         self, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Embed steganographic protection data."""
+        """
+Embed steganographic protection data."""
         return {
             "steganography_applied": True,
             "data_embedded": f"protection_id:{config.protection_id}",
@@ -695,7 +709,8 @@ class AccessControlService:
     async def setup_access_control(
         self, content: Any, restrictions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup access control for content."""
+        """
+Setup access control for content."""
         return {
             "access_control_enabled": True,
             "password_protected": restrictions.get("password_protected", False),
@@ -710,7 +725,8 @@ class BlockchainTimestampingService:
     async def create_timestamp(
         self, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Create blockchain timestamp for content."""
+        """
+Create blockchain timestamp for content."""
         return {
             "blockchain_timestamp": True,
             "network": "ethereum",
@@ -725,7 +741,8 @@ class RealTimeMonitoringService:
     async def setup_monitoring(
         self, content_id: str, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Setup real-time monitoring for content."""
+        """
+Setup real-time monitoring for content."""
         return {
             "monitoring_enabled": True,
             "content_id": content_id,
@@ -740,7 +757,8 @@ class GeofencingService:
     async def setup_geofencing(
         self, content: Any, restrictions: List[str]
     ) -> Dict[str, Any]:
-        """Setup geographic access restrictions."""
+        """
+Setup geographic access restrictions."""
         return {
             "geofencing_enabled": True,
             "restricted_regions": restrictions,
@@ -752,21 +770,26 @@ class ThreatDetectionEngine:
     """Advanced threat detection engine."""
     
     async def scan_unauthorized_access(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for unauthorized access attempts."""
+        """
+Scan for unauthorized access attempts."""
         return []
     
     async def scan_copyright_violations(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for copyright violations."""
+        """
+Scan for copyright violations."""
         return []
     
     async def scan_unauthorized_distribution(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for unauthorized distribution."""
+        """
+Scan for unauthorized distribution."""
         return []
     
     async def scan_tampering_attempts(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for content tampering attempts."""
+        """
+Scan for content tampering attempts."""
         return []
     
     async def scan_suspicious_activity(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for suspicious user activity."""
+        """
+Scan for suspicious user activity."""
         return []

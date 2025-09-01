@@ -14,6 +14,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
       Microservices Architect + Audio Processing Expert + DevOps Engineer + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import json
@@ -39,7 +40,9 @@ from .vector_cache import VectorCache, FAISSCache, ContentType as VectorContentT
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Enhanced content types for IA Influencer Agent platform"""
+    """
+Enhanced content types for IA Influencer Agent platform"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -56,6 +59,7 @@ class ContentType(Enum):
 
 class ProcessingStatus(Enum):
     """Enhanced processing status tracking"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -71,6 +75,7 @@ class ProcessingStatus(Enum):
 
 class ContentPriority(Enum):
     """Content priority levels for processing and caching"""
+
     URGENT = 5      # Live content, revenue-critical
     HIGH = 4        # Premium creator content  
     NORMAL = 3      # Standard content
@@ -78,7 +83,9 @@ class ContentPriority(Enum):
     BACKGROUND = 1  # Archive content
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     NONE = "none"
     BASIC = "basic"         # Simple fingerprinting
     ADVANCED = "advanced"   # Multi-vector fingerprinting
@@ -87,6 +94,7 @@ class ProtectionLevel(Enum):
 
 class MonetizationStatus(Enum):
     """Content monetization status"""
+
     NOT_MONETIZED = "not_monetized"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
@@ -184,7 +192,8 @@ class ContentMetadata:
     content_similarity_hash: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary with proper serialization"""
+        """
+Convert to dictionary with proper serialization"""
         data = {}
         for key, value in asdict(self).items():
             if isinstance(value, Enum):
@@ -199,7 +208,8 @@ class ContentMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentMetadata':
-        """Create from dictionary with proper deserialization"""
+        """
+Create from dictionary with proper deserialization"""
         # Convert enum fields
         if 'content_type' in data:
             data['content_type'] = ContentType(data['content_type'])
@@ -242,23 +252,27 @@ class ContentMetadata:
         return cls(**data)
     
     def update_analytics(self, metric: str, value: Union[int, float] = 1):
-        """Update analytics metrics"""
+        """
+Update analytics metrics"""
         if hasattr(self, metric):
             current_value = getattr(self, metric)
             if isinstance(current_value, (int, float)):
                 setattr(self, metric, current_value + value)
     
     def add_platform_view(self, platform: str, count: int = 1):
-        """Add platform-specific view"""
+        """
+Add platform-specific view"""
         self.platform_views[platform] = self.platform_views.get(platform, 0) + count
         self.view_count += count
     
     def add_geographic_view(self, country: str, count: int = 1):
-        """Add geographic view"""
+        """
+Add geographic view"""
         self.geographic_views[country] = self.geographic_views.get(country, 0) + count
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate"""
+        """
+Calculate engagement rate"""
         if self.view_count == 0:
             return 0.0
         
@@ -266,7 +280,8 @@ class ContentMetadata:
         return (total_engagement / self.view_count) * 100
     
     def calculate_completion_rate(self) -> float:
-        """Calculate content completion rate"""
+        """
+Calculate content completion rate"""
         if not self.duration or self.view_count == 0:
             return 0.0
         
@@ -275,7 +290,8 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Enhanced content processing result"""
+    """
+Enhanced content processing result"""
     content_id: str
     processing_type: str
     result_data: Dict[str, Any]
@@ -296,21 +312,24 @@ class ProcessingResult:
             self.created_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['created_at'] = self.created_at.isoformat()
         return data
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ProcessingResult':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         if 'created_at' in data:
             data['created_at'] = datetime.fromisoformat(data['created_at'])
         return cls(**data)
 
 @dataclass
 class ContentAnalytics:
-    """Comprehensive content analytics"""
+    """
+Comprehensive content analytics"""
     content_id: str
     creator_id: str
     
@@ -338,7 +357,8 @@ class ContentAnalytics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def add_view(self, timestamp: datetime = None):
-        """Add a view with timestamp tracking"""
+        """
+Add a view with timestamp tracking"""
         if not timestamp:
             timestamp = datetime.utcnow()
         
@@ -350,7 +370,8 @@ class ContentAnalytics:
         self.last_updated = datetime.utcnow()
     
     def add_revenue(self, amount: float, timestamp: datetime = None):
-        """Add revenue with monthly tracking"""
+        """
+Add revenue with monthly tracking"""
         if not timestamp:
             timestamp = datetime.utcnow()
         
@@ -359,7 +380,8 @@ class ContentAnalytics:
         self.last_updated = datetime.utcnow()
     
     def get_trend_data(self, days: int = 30) -> Dict[str, Any]:
-        """Get trend data for specified days"""
+        """
+Get trend data for specified days"""
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         recent_views = {}
@@ -560,7 +582,8 @@ class EnterpriseContentCache:
     
     def _generate_enhanced_content_id(self, creator_id: str, filename: str, 
                                     file_content: bytes, metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Generate enhanced content ID with business logic"""
+        """
+Generate enhanced content ID with business logic"""
         
         # Create compound hash for uniqueness
         content_hash = hashlib.sha256(file_content).hexdigest()[:16]
@@ -1123,7 +1146,8 @@ class EnterpriseContentCache:
         }
     
     async def close(self):
-        """Close cache connections"""
+        """
+Close cache connections"""
         await self.redis_cache.close()
         self.memory_cache.close()
         if self.vector_cache:

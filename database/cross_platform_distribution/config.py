@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
@@ -22,7 +23,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Environment(str, Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -64,7 +67,8 @@ class PlatformApiConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics configuration"""
+    """
+Analytics configuration"""
     collection_interval: int = 3600  # seconds
     batch_size: int = 1000
     retention_days: int = 365
@@ -94,7 +98,8 @@ class DistributionConfig:
         self._load_config()
     
     def _load_config(self):
-        """Load configuration from environment variables"""
+        """
+Load configuration from environment variables"""
         
         # Database configuration
         self.database = DatabaseConfig(
@@ -218,15 +223,18 @@ class DistributionConfig:
         return self.platform_credentials.get(platform.lower())
     
     def is_platform_configured(self, platform: str) -> bool:
-        """Check if platform is properly configured"""
+        """
+Check if platform is properly configured"""
         return platform.lower() in self.platform_credentials
     
     def get_configured_platforms(self) -> list:
-        """Get list of configured platforms"""
+        """
+Get list of configured platforms"""
         return list(self.platform_credentials.keys())
     
     def validate_config(self) -> Dict[str, Any]:
-        """Validate configuration and return status"""
+        """
+Validate configuration and return status"""
         
         validation_result = {
             "valid": True,
@@ -323,21 +331,25 @@ def get_config() -> DistributionConfig:
     return config
 
 def load_config(environment: Environment = Environment.DEVELOPMENT) -> DistributionConfig:
-    """Load configuration for specific environment"""
+    """
+Load configuration for specific environment"""
     global config
     config = DistributionConfig(environment)
     return config
 
 def get_database_url() -> str:
-    """Get database connection URL"""
+    """
+Get database connection URL"""
     return config.get_database_url()
 
 def get_redis_url() -> str:
-    """Get Redis connection URL"""
+    """
+Get Redis connection URL"""
     return config.get_redis_url()
 
 def is_platform_configured(platform: str) -> bool:
-    """Check if platform is configured"""
+    """
+Check if platform is configured"""
     return config.is_platform_configured(platform)
 
 # Export all configuration classes and functions

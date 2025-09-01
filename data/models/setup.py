@@ -5,7 +5,7 @@ Professional setup script for the data models module.
 Handles dependencies, installation, and package configuration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from setuptools import setup, find_packages
 import os
 import sys

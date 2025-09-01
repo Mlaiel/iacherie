@@ -18,6 +18,7 @@ Tous droits réservés. Usage non autorisé strictement interdit.
 - DevOps Engineer
 - IA Prompt Engineer
 """
+
 import pytest
 import sys
 import os
@@ -50,10 +51,12 @@ from .test_helpers import CacheStats
 
 
 class TestCacheEntry:
-    """Tests pour les entrées de cache."""
+    """
+Tests pour les entrées de cache."""
     
     def test_cache_entry_creation(self):
-        """Test la création d'une entrée de cache."""
+        """
+Test la création d'une entrée de cache."""
         data = {"key": "value", "number": 42}
         now = datetime.now()
         entry = CacheEntry(
@@ -112,7 +115,8 @@ class TestCacheStats:
     """Tests pour les statistiques de cache."""
     
     def test_cache_stats_initialization(self):
-        """Test l'initialisation des statistiques."""
+        """
+Test l'initialisation des statistiques."""
         stats = CacheStats()
         
         assert stats.hits == 0
@@ -122,7 +126,8 @@ class TestCacheStats:
         assert stats.hit_ratio == 0.0
     
     def test_cache_stats_calculation(self):
-        """Test le calcul des statistiques."""
+        """
+Test le calcul des statistiques."""
         stats = CacheStats()
         
         # Enregistrer des hits et misses
@@ -136,15 +141,18 @@ class TestCacheStats:
 
 
 class TestAdvancedCache:
-    """Tests pour le cache avancé."""
+    """
+Tests pour le cache avancé."""
     
     @pytest.fixture
     def cache(self):
-        """Fixture pour créer un cache."""
+        """
+Fixture pour créer un cache."""
         return AdvancedCache(max_size=100, default_ttl=3600)
     
     def test_cache_initialization(self, cache):
-        """Test l'initialisation du cache."""
+        """
+Test l'initialisation du cache."""
         assert cache.max_size == 100
         assert cache.default_ttl == 3600
         assert cache.strategy == CacheStrategy.LRU
@@ -152,7 +160,8 @@ class TestAdvancedCache:
         assert isinstance(cache.stats, CacheStats)
     
     def test_cache_set_get(self, cache):
-        """Test l'insertion et la récupération."""
+        """
+Test l'insertion et la récupération."""
         # Insertion
         cache.set("key1", "value1")
         
@@ -270,11 +279,13 @@ class TestResourceMonitor:
     
     @pytest.fixture
     def monitor(self):
-        """Fixture pour créer un moniteur de ressources."""
+        """
+Fixture pour créer un moniteur de ressources."""
         return ResourceMonitor()
     
     def test_monitor_initialization(self, monitor):
-        """Test l'initialisation du moniteur."""
+        """
+Test l'initialisation du moniteur."""
         assert monitor.sampling_interval == 1.0
         assert monitor.history_size == 1000
         assert len(monitor.metrics_history) == 0
@@ -282,7 +293,8 @@ class TestResourceMonitor:
     
     @pytest.mark.asyncio
     async def test_collect_system_metrics(self, monitor):
-        """Test la collecte des métriques système."""
+        """
+Test la collecte des métriques système."""
         with patch('psutil.cpu_percent', return_value=45.2):
             with patch('psutil.virtual_memory') as mock_memory:
                 mock_memory.return_value.percent = 60.8
@@ -298,7 +310,8 @@ class TestResourceMonitor:
     
     @pytest.mark.asyncio
     async def test_continuous_monitoring(self, monitor):
-        """Test le monitoring continu."""
+        """
+Test le monitoring continu."""
         # Mock des métriques
         mock_metrics = ResourceMetrics(
             cpu_usage=50.0,
@@ -325,7 +338,8 @@ class TestResourceMonitor:
             assert len(monitor.metrics_history) > 0
     
     def test_resource_alerts(self, monitor):
-        """Test les alertes de ressources."""
+        """
+Test les alertes de ressources."""
         # Configurer des seuils
         thresholds = {
             ResourceType.CPU: 80.0,
@@ -353,7 +367,8 @@ class TestResourceMonitor:
         assert len(alerts) == 2  # CPU et mémoire
     
     def test_metrics_history_management(self, monitor):
-        """Test la gestion de l'historique des métriques."""
+        """
+Test la gestion de l'historique des métriques."""
         # Ajouter plus de métriques que la limite
         for i in range(monitor.history_size + 100):
             metrics = ResourceMetrics(
@@ -368,15 +383,18 @@ class TestResourceMonitor:
 
 
 class TestProcessingOptimizer:
-    """Tests pour l'optimiseur de traitement."""
+    """
+Tests pour l'optimiseur de traitement."""
     
     @pytest.fixture
     def optimizer(self):
-        """Fixture pour créer un optimiseur de traitement."""
+        """
+Fixture pour créer un optimiseur de traitement."""
         return ProcessingOptimizer()
     
     def test_optimizer_initialization(self, optimizer):
-        """Test l'initialisation de l'optimiseur."""
+        """
+Test l'initialisation de l'optimiseur."""
         assert optimizer.level == OptimizationLevel.BALANCED
         assert optimizer.parallel_workers == os.cpu_count()
         assert optimizer.batch_size == 32
@@ -384,7 +402,8 @@ class TestProcessingOptimizer:
     
     @pytest.mark.asyncio
     async def test_optimize_processing_pipeline(self, optimizer):
-        """Test l'optimisation d'un pipeline de traitement."""
+        """
+Test l'optimisation d'un pipeline de traitement."""
         # Pipeline de test
         def process_item(item):
             return item * 2
@@ -402,7 +421,8 @@ class TestProcessingOptimizer:
     
     @pytest.mark.asyncio
     async def test_parallel_processing_optimization(self, optimizer):
-        """Test l'optimisation du traitement parallèle."""
+        """
+Test l'optimisation du traitement parallèle."""
         def cpu_intensive_task(n):
             # Simulation d'une tâche CPU intensive
             return sum(i * i for i in range(n))
@@ -426,7 +446,8 @@ class TestProcessingOptimizer:
             assert parallel_time < sequential_time
     
     def test_batch_size_optimization(self, optimizer):
-        """Test l'optimisation de la taille des lots."""
+        """
+Test l'optimisation de la taille des lots."""
         # Données de test
         data_sizes = [100, 1000, 10000, 100000]
         
@@ -439,7 +460,8 @@ class TestProcessingOptimizer:
             assert optimal_batch_size <= 1000
     
     def test_optimization_level_adjustment(self, optimizer):
-        """Test l'ajustement du niveau d'optimisation."""
+        """
+Test l'ajustement du niveau d'optimisation."""
         # Test niveau AGGRESSIVE
         optimizer.set_optimization_level(OptimizationLevel.AGGRESSIVE)
         assert optimizer.level == OptimizationLevel.AGGRESSIVE
@@ -452,15 +474,18 @@ class TestProcessingOptimizer:
 
 
 class TestMemoryOptimizer:
-    """Tests pour l'optimiseur de mémoire."""
+    """
+Tests pour l'optimiseur de mémoire."""
     
     @pytest.fixture
     def memory_optimizer(self):
-        """Fixture pour créer un optimiseur de mémoire."""
+        """
+Fixture pour créer un optimiseur de mémoire."""
         return MemoryOptimizer()
     
     def test_memory_usage_monitoring(self, memory_optimizer):
-        """Test le monitoring de l'utilisation mémoire."""
+        """
+Test le monitoring de l'utilisation mémoire."""
         with patch('psutil.virtual_memory') as mock_memory:
             mock_memory.return_value.percent = 75.5
             
@@ -468,7 +493,8 @@ class TestMemoryOptimizer:
             assert usage == 75.5
     
     def test_memory_cleanup(self, memory_optimizer):
-        """Test le nettoyage de la mémoire."""
+        """
+Test le nettoyage de la mémoire."""
         # Créer des objets temporaires
         temp_objects = []
         for i in range(1000):
@@ -486,7 +512,8 @@ class TestMemoryOptimizer:
         # Note: Le test peut être instable selon l'environnement
     
     def test_memory_pool_management(self, memory_optimizer):
-        """Test la gestion des pools de mémoire."""
+        """
+Test la gestion des pools de mémoire."""
         # Allouer un pool
         pool_size = 1024 * 1024  # 1MB
         pool_id = memory_optimizer.create_memory_pool(pool_size)
@@ -503,7 +530,8 @@ class TestMemoryOptimizer:
         assert pool_id not in memory_optimizer.memory_pools
     
     def test_memory_leak_detection(self, memory_optimizer):
-        """Test la détection de fuites mémoire."""
+        """
+Test la détection de fuites mémoire."""
         # Simuler une fuite
         leaked_objects = []
         for i in range(100):
@@ -522,11 +550,13 @@ class TestCPUOptimizer:
     
     @pytest.fixture
     def cpu_optimizer(self):
-        """Fixture pour créer un optimiseur CPU."""
+        """
+Fixture pour créer un optimiseur CPU."""
         return CPUOptimizer()
     
     def test_cpu_profiling(self, cpu_optimizer):
-        """Test le profilage CPU."""
+        """
+Test le profilage CPU."""
         def cpu_intensive_function():
             return sum(i * i for i in range(10000))
         
@@ -556,7 +586,8 @@ class TestCPUOptimizer:
         assert results == [task * 2 for task in tasks]
     
     def test_cpu_affinity_optimization(self, cpu_optimizer):
-        """Test l'optimisation de l'affinité CPU."""
+        """
+Test l'optimisation de l'affinité CPU."""
         if hasattr(os, 'sched_getaffinity'):
             # Obtenir l'affinité actuelle
             current_affinity = cpu_optimizer.get_cpu_affinity()
@@ -572,12 +603,14 @@ class TestIOOptimizer:
     
     @pytest.fixture
     def io_optimizer(self):
-        """Fixture pour créer un optimiseur I/O."""
+        """
+Fixture pour créer un optimiseur I/O."""
         return IOOptimizer()
     
     @pytest.mark.asyncio
     async def test_async_io_optimization(self, io_optimizer):
-        """Test l'optimisation I/O asynchrone."""
+        """
+Test l'optimisation I/O asynchrone."""
         # Simulation de lectures de fichiers
         async def mock_read_file(filename):
             await asyncio.sleep(0.01)  # Simulation I/O
@@ -610,7 +643,8 @@ class TestIOOptimizer:
             assert 4096 <= optimal_buffer <= 65536
     
     def test_io_queue_optimization(self, io_optimizer):
-        """Test l'optimisation des files d'attente I/O."""
+        """
+Test l'optimisation des files d'attente I/O."""
         # Créer des requêtes I/O de test
         io_requests = [
             {"type": "read", "priority": 1, "size": 1024},
@@ -634,11 +668,13 @@ class TestDatabaseOptimizer:
     
     @pytest.fixture
     def db_optimizer(self):
-        """Fixture pour créer un optimiseur de base de données."""
+        """
+Fixture pour créer un optimiseur de base de données."""
         return DatabaseOptimizer()
     
     def test_query_optimization_analysis(self, db_optimizer):
-        """Test l'analyse d'optimisation des requêtes."""
+        """
+Test l'analyse d'optimisation des requêtes."""
         # Requête de test
         query = """
         SELECT u.name, p.title, COUNT(c.id) as comment_count
@@ -676,7 +712,8 @@ class TestDatabaseOptimizer:
         assert optimal_pool_size <= concurrent_users * 2  # Pas plus que 2x les utilisateurs
     
     def test_index_recommendation(self, db_optimizer):
-        """Test les recommandations d'index."""
+        """
+Test les recommandations d'index."""
         # Requêtes fréquentes de test
         frequent_queries = [
             "SELECT * FROM users WHERE email = ?",
@@ -698,12 +735,14 @@ class TestAsyncTaskOptimizer:
     
     @pytest.fixture
     def task_optimizer(self):
-        """Fixture pour créer un optimiseur de tâches asynchrones."""
+        """
+Fixture pour créer un optimiseur de tâches asynchrones."""
         return AsyncTaskOptimizer()
     
     @pytest.mark.asyncio
     async def test_task_scheduling_optimization(self, task_optimizer):
-        """Test l'optimisation de la planification des tâches."""
+        """
+Test l'optimisation de la planification des tâches."""
         # Créer des tâches de test
         async def quick_task(n):
             await asyncio.sleep(0.01)
@@ -780,11 +819,13 @@ class TestPerformanceProfiler:
     
     @pytest.fixture
     def profiler(self):
-        """Fixture pour créer un profileur."""
+        """
+Fixture pour créer un profileur."""
         return PerformanceProfiler()
     
     def test_function_profiling(self, profiler):
-        """Test le profilage de fonction."""
+        """
+Test le profilage de fonction."""
         def test_function():
             # Simulation de travail
             total = 0
@@ -866,11 +907,13 @@ class TestBenchmarkManager:
     
     @pytest.fixture
     def benchmark_manager(self):
-        """Fixture pour créer un gestionnaire de benchmarks."""
+        """
+Fixture pour créer un gestionnaire de benchmarks."""
         return BenchmarkManager()
     
     def test_benchmark_registration(self, benchmark_manager):
-        """Test l'enregistrement de benchmarks."""
+        """
+Test l'enregistrement de benchmarks."""
         def test_benchmark():
             return sum(i for i in range(1000))
         
@@ -925,11 +968,13 @@ class TestSmartPreloader:
     
     @pytest.fixture
     def preloader(self):
-        """Fixture pour créer un préchargeur."""
+        """
+Fixture pour créer un préchargeur."""
         return SmartPreloader()
     
     def test_access_pattern_learning(self, preloader):
-        """Test l'apprentissage des modèles d'accès."""
+        """
+Test l'apprentissage des modèles d'accès."""
         # Simuler des accès séquentiels
         access_sequence = ["file1", "file2", "file3", "file1", "file2", "file3"]
         
@@ -988,11 +1033,13 @@ class TestCompressionManager:
     
     @pytest.fixture
     def compression_manager(self):
-        """Fixture pour créer un gestionnaire de compression."""
+        """
+Fixture pour créer un gestionnaire de compression."""
         return CompressionManager()
     
     def test_data_compression(self, compression_manager):
-        """Test la compression de données."""
+        """
+Test la compression de données."""
         # Données de test
         test_data = "This is a test string that should compress well " * 100
         
@@ -1040,12 +1087,14 @@ class TestBatchProcessor:
     
     @pytest.fixture
     def batch_processor(self):
-        """Fixture pour créer un processeur par lots."""
+        """
+Fixture pour créer un processeur par lots."""
         return BatchProcessor()
     
     @pytest.mark.asyncio
     async def test_batch_processing_optimization(self, batch_processor):
-        """Test l'optimisation du traitement par lots."""
+        """
+Test l'optimisation du traitement par lots."""
         # Données de test
         data = list(range(1000))
         
@@ -1064,7 +1113,8 @@ class TestBatchProcessor:
         assert batch_time < 1.0  # Temps raisonnable
     
     def test_optimal_batch_size_calculation(self, batch_processor):
-        """Test le calcul de la taille optimale des lots."""
+        """
+Test le calcul de la taille optimale des lots."""
         # Test différents scénarios
         scenarios = [
             (100, 0.001),    # Petits données, traitement rapide
@@ -1084,7 +1134,8 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_memory_aware_batching(self, batch_processor):
-        """Test le traitement par lots avec conscience de la mémoire."""
+        """
+Test le traitement par lots avec conscience de la mémoire."""
         # Simuler des données volumineuses
         large_items = [[i] * 1000 for i in range(100)]  # 100 listes de 1000 éléments
         
@@ -1106,15 +1157,18 @@ class TestBatchProcessor:
 
 
 class TestPerformanceOptimizer:
-    """Tests pour l'optimiseur de performance principal."""
+    """
+Tests pour l'optimiseur de performance principal."""
     
     @pytest.fixture
     def performance_optimizer(self):
-        """Fixture pour créer l'optimiseur principal."""
+        """
+Fixture pour créer l'optimiseur principal."""
         return PerformanceOptimizer()
     
     def test_optimizer_initialization(self, performance_optimizer):
-        """Test l'initialisation de l'optimiseur principal."""
+        """
+Test l'initialisation de l'optimiseur principal."""
         assert performance_optimizer.cache is not None
         assert performance_optimizer.resource_monitor is not None
         assert performance_optimizer.processing_optimizer is not None
@@ -1125,7 +1179,8 @@ class TestPerformanceOptimizer:
     
     @pytest.mark.asyncio
     async def test_comprehensive_optimization(self, performance_optimizer):
-        """Test l'optimisation complète du système."""
+        """
+Test l'optimisation complète du système."""
         # Simuler une charge de travail
         def sample_workload():
             # CPU intensive
@@ -1178,11 +1233,13 @@ class TestPerformanceOptimizer:
 
 
 class TestIntegration:
-    """Tests d'intégration pour le système d'optimisation complet."""
+    """
+Tests d'intégration pour le système d'optimisation complet."""
     
     @pytest.fixture
     def optimization_system(self):
-        """Fixture pour créer un système d'optimisation complet."""
+        """
+Fixture pour créer un système d'optimisation complet."""
         return {
             'optimizer': PerformanceOptimizer(),
             'cache': AdvancedCache(max_size=1000),
@@ -1193,7 +1250,8 @@ class TestIntegration:
     
     @pytest.mark.asyncio
     async def test_end_to_end_optimization(self, optimization_system):
-        """Test d'optimisation bout en bout."""
+        """
+Test d'optimisation bout en bout."""
         optimizer = optimization_system['optimizer']
         cache = optimization_system['cache']
         monitor = optimization_system['monitor']

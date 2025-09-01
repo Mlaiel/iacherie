@@ -30,6 +30,7 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
+
 import asyncio
 import logging
 import json
@@ -62,7 +63,9 @@ logger = get_logger(__name__)
 
 
 class RetryStrategy(Enum):
-    """Retry strategy types."""
+    """
+Retry strategy types."""
+
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     FIXED_DELAY = "fixed_delay"
@@ -71,6 +74,7 @@ class RetryStrategy(Enum):
 
 class CircuitBreakerState(Enum):
     """Circuit breaker states."""
+
     CLOSED = "closed"      # Normal operation
     OPEN = "open"          # Failing, rejecting requests
     HALF_OPEN = "half_open"  # Testing if service recovered
@@ -101,7 +105,8 @@ class RetryConfig:
 
 @dataclass
 class RetryAttempt:
-    """Information about a retry attempt."""
+    """
+Information about a retry attempt."""
     
     attempt_number: int
     timestamp: datetime
@@ -118,7 +123,8 @@ class RetryAttempt:
 
 @dataclass
 class RetryResult:
-    """Result of retry operation."""
+    """
+Result of retry operation."""
     
     success: bool
     result: Any = None
@@ -133,7 +139,8 @@ class RetryResult:
 
 
 class CircuitBreaker:
-    """Circuit breaker pattern implementation for resilient operations."""
+    """
+Circuit breaker pattern implementation for resilient operations."""
     
     def __init__(
         self,
@@ -154,28 +161,33 @@ class CircuitBreaker:
     
     @property
     def state(self) -> CircuitBreakerState:
-        """Get current circuit breaker state."""
+        """
+Get current circuit breaker state."""
         return self._state
     
     @property
     def failure_count(self) -> int:
-        """Get current failure count."""
+        """
+Get current failure count."""
         return self._failure_count
     
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self._check_state()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if exc_type is None:
             await self._on_success()
         elif issubclass(exc_type, self.expected_exception):
             await self._on_failure()
     
     async def _check_state(self):
-        """Check and update circuit breaker state."""
+        """
+Check and update circuit breaker state."""
         async with self._lock:
             now = time.time()
             
@@ -228,7 +240,8 @@ class BackoffCalculator:
         jitter: bool = True,
         jitter_max: float = 0.1
     ) -> float:
-        """Calculate exponential backoff delay."""
+        """
+Calculate exponential backoff delay."""
         delay = base_delay * (multiplier ** (attempt - 1))
         delay = min(delay, max_delay)
         
@@ -247,7 +260,8 @@ class BackoffCalculator:
         jitter: bool = True,
         jitter_max: float = 0.1
     ) -> float:
-        """Calculate linear backoff delay."""
+        """
+Calculate linear backoff delay."""
         delay = base_delay + (increment * (attempt - 1))
         delay = min(delay, max_delay)
         
@@ -264,7 +278,8 @@ class BackoffCalculator:
         jitter: bool = True,
         jitter_max: float = 0.1
     ) -> float:
-        """Calculate fixed delay."""
+        """
+Calculate fixed delay."""
         delay = base_delay
         
         if jitter:
@@ -275,13 +290,15 @@ class BackoffCalculator:
 
 
 class RetryPolicyManager:
-    """Manage retry policies for different operation types."""
+    """
+Manage retry policies for different operation types."""
     
     def __init__(self):
         self.policies = self._load_default_policies()
     
     def _load_default_policies(self) -> Dict[str, RetryConfig]:
-        """Load default retry policies."""
+        """
+Load default retry policies."""
         return {
             'api_request': RetryConfig(
                 max_attempts=3,
@@ -335,16 +352,19 @@ class RetryPolicyManager:
         }
     
     def get_policy(self, operation_type: str) -> RetryConfig:
-        """Get retry policy for operation type."""
+        """
+Get retry policy for operation type."""
         return self.policies.get(operation_type, self.policies['api_request'])
     
     def register_policy(self, operation_type: str, config: RetryConfig):
-        """Register custom retry policy."""
+        """
+Register custom retry policy."""
         self.policies[operation_type] = config
 
 
 class AdaptiveRetryManager:
-    """Adaptive retry manager that learns from failures."""
+    """
+Adaptive retry manager that learns from failures."""
     
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
@@ -683,7 +703,8 @@ class RetryExecutor:
             return config.base_delay
     
     def _should_stop_retry(self, exception: Exception, config: RetryConfig) -> bool:
-        """Determine if retrying should stop based on exception."""
+        """
+Determine if retrying should stop based on exception."""
         # Check stop conditions
         for stop_exception in config.stop_on_exceptions:
             if isinstance(exception, stop_exception):
@@ -704,7 +725,8 @@ class RetryExecutor:
         return False  # Continue retrying
     
     def _get_circuit_breaker(self, name: str) -> CircuitBreaker:
-        """Get or create circuit breaker."""
+        """
+Get or create circuit breaker."""
         if name not in self.circuit_breakers:
             self.circuit_breakers[name] = CircuitBreaker(
                 name=name,
@@ -715,7 +737,8 @@ class RetryExecutor:
 
 
 class RetryHandler:
-    """Main retry handler orchestrating all retry operations."""
+    """
+Main retry handler orchestrating all retry operations."""
     
     def __init__(
         self,
@@ -795,11 +818,13 @@ class RetryHandler:
         return decorator
     
     def register_policy(self, operation_type: str, config: RetryConfig):
-        """Register custom retry policy."""
+        """
+Register custom retry policy."""
         self.policy_manager.register_policy(operation_type, config)
     
     async def get_retry_statistics(self) -> Dict[str, Any]:
-        """Get retry statistics for monitoring."""
+        """
+Get retry statistics for monitoring."""
         try:
             stats = {}
             
@@ -858,7 +883,8 @@ async def create_retry_handler(
     redis_client: Optional[aioredis.Redis] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ) -> RetryHandler:
-    """Create and return a RetryHandler instance."""
+    """
+Create and return a RetryHandler instance."""
     if redis_client is None:
         redis_client = await get_redis_client()
     

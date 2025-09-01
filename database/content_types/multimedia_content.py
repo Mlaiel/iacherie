@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -34,7 +35,9 @@ from .text_content import TextContentManager, TextMetadata, TextFingerprint
 logger = logging.getLogger(__name__)
 
 class MultimediaFormat(Enum):
-    """Supported multimedia container formats"""
+    """
+Supported multimedia container formats"""
+
     ZIP = {"ext": ".zip", "compression": True, "structured": True, "metadata": False}
     TAR = {"ext": ".tar", "compression": False, "structured": True, "metadata": False}
     TAR_GZ = {"ext": ".tar.gz", "compression": True, "structured": True, "metadata": False}
@@ -44,6 +47,7 @@ class MultimediaFormat(Enum):
 
 class MultimediaContentType(Enum):
     """Multimedia content classification types"""
+
     PRESENTATION = "presentation"  # Slides with text, images, videos
     INTERACTIVE_MEDIA = "interactive_media"  # Games, apps with multimedia
     DOCUMENTARY_PACKAGE = "documentary_package"  # Video + transcripts + images
@@ -61,6 +65,7 @@ class MultimediaContentType(Enum):
 
 class SynchronizationType(Enum):
     """Types of synchronization between multimedia components"""
+
     TEMPORAL = "temporal"  # Time-based synchronization
     SPATIAL = "spatial"  # Layout-based synchronization
     SEMANTIC = "semantic"  # Content-based relationships
@@ -152,7 +157,8 @@ class MultimediaMetadata:
 
 @dataclass
 class MultimediaFingerprint:
-    """Multimedia fingerprint for content identification and protection"""
+    """
+Multimedia fingerprint for content identification and protection"""
     content_id: str
     package_hash: str
     component_hashes: Dict[str, str]  # Component ID -> hash

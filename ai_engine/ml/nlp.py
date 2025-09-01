@@ -19,6 +19,7 @@ Features:
 - Real-time analysis capabilities
 - Extensible architecture
 """
+
 import logging
 import numpy as np
 import torch
@@ -54,6 +55,7 @@ except ImportError:
 
 class NLPTaskType(Enum):
     """NLP task types"""
+
     TEXT_GENERATION = "text_generation"
     LANGUAGE_DETECTION = "language_detection"
     TEXT_SUMMARIZATION = "text_summarization"
@@ -65,6 +67,7 @@ class NLPTaskType(Enum):
 
 class Language(Enum):
     """Supported languages"""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -82,6 +85,7 @@ class Language(Enum):
 
 class SentimentPolarity(Enum):
     """Sentiment polarity levels"""
+
     VERY_NEGATIVE = "very_negative"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -102,7 +106,8 @@ class NLPResult:
 
 @dataclass
 class LanguageDetectionResult:
-    """Language detection result"""
+    """
+Language detection result"""
     detected_language: Language
     confidence: float
     all_predictions: List[Tuple[Language, float]] = None
@@ -110,7 +115,8 @@ class LanguageDetectionResult:
 
 @dataclass
 class SummaryResult:
-    """Text summarization result"""
+    """
+Text summarization result"""
     original_text: str
     summary: str
     compression_ratio: float
@@ -119,7 +125,8 @@ class SummaryResult:
 
 @dataclass
 class KeywordResult:
-    """Keyword extraction result"""
+    """
+Keyword extraction result"""
     keywords: List[str]
     scores: List[float]
     phrases: List[str] = None
@@ -128,7 +135,8 @@ class KeywordResult:
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result"""
+    """
+Sentiment analysis result"""
     polarity: SentimentPolarity
     confidence: float
     compound_score: float
@@ -138,7 +146,8 @@ class SentimentResult:
 
 
 class BaseNLPProcessor(ABC):
-    """Base class for NLP processors"""
+    """
+Base class for NLP processors"""
     
     def __init__(self, processor_name: str = "base_nlp"):
         self.processor_name = processor_name
@@ -153,20 +162,23 @@ class BaseNLPProcessor(ABC):
         pass
         
     def preprocess_text(self, text: str) -> str:
-        """Basic text preprocessing"""
+        """
+Basic text preprocessing"""
         # Remove extra whitespace
         text = re.sub(r'\s+', ' ', text.strip())
         return text
     
     def tokenize_simple(self, text: str) -> List[str]:
-        """Simple tokenization fallback"""
+        """
+Simple tokenization fallback"""
         # Basic word tokenization
         words = re.findall(r'\b\w+\b', text.lower())
         return words
 
 
 class TextGenerator(BaseNLPProcessor):
-    """Advanced text generation using language models"""
+    """
+Advanced text generation using language models"""
     
     def __init__(self, model_name: str = "gpt2"):
         super().__init__(f"generator_{model_name}")
@@ -214,7 +226,8 @@ class TextGenerator(BaseNLPProcessor):
     
     def generate_text(self, prompt: str, max_length: Optional[int] = None, 
                      temperature: Optional[float] = None) -> NLPResult:
-        """Generate text continuation from prompt"""
+        """
+Generate text continuation from prompt"""
         import time
         start_time = time.time()
         
@@ -274,7 +287,8 @@ class TextGenerator(BaseNLPProcessor):
         return generated_text
     
     def _generate_simple(self, prompt: str, max_length: int) -> str:
-        """Simple text generation fallback"""
+        """
+Simple text generation fallback"""
         # Basic template-based generation
         common_continuations = [
             "and this opens up new possibilities for innovation.",
@@ -295,7 +309,8 @@ class TextGenerator(BaseNLPProcessor):
 
 
 class LanguageDetector(BaseNLPProcessor):
-    """Language detection for text content"""
+    """
+Language detection for text content"""
     
     def __init__(self, model_name: str = "language_detector_v1"):
         super().__init__(f"lang_det_{model_name}")
@@ -315,7 +330,8 @@ class LanguageDetector(BaseNLPProcessor):
         }
     
     def load_model(self) -> bool:
-        """Load language detection model"""
+        """
+Load language detection model"""
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Could load a dedicated language detection model
@@ -445,7 +461,8 @@ class TextSummarizer(BaseNLPProcessor):
         return summary[0]['summary_text']
     
     def _summarize_extractive(self, text: str, ratio: float) -> str:
-        """Simple extractive summarization"""
+        """
+Simple extractive summarization"""
         sentences = self._split_sentences(text)
         
         if len(sentences) <= 2:
@@ -474,14 +491,16 @@ class TextSummarizer(BaseNLPProcessor):
         return ' '.join(selected_sentences)
     
     def _split_sentences(self, text: str) -> List[str]:
-        """Split text into sentences"""
+        """
+Split text into sentences"""
         # Simple sentence splitting
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         return sentences
     
     def _calculate_word_frequencies(self, text: str) -> Dict[str, float]:
-        """Calculate word frequencies"""
+        """
+Calculate word frequencies"""
         words = self.tokenize_simple(text)
         word_count = Counter(words)
         max_freq = max(word_count.values()) if word_count else 1
@@ -491,7 +510,8 @@ class TextSummarizer(BaseNLPProcessor):
         return word_freq
     
     def _extract_key_sentences(self, text: str, num_sentences: int) -> List[str]:
-        """Extract key sentences from text"""
+        """
+Extract key sentences from text"""
         sentences = self._split_sentences(text)
         word_freq = self._calculate_word_frequencies(text)
         
@@ -509,7 +529,8 @@ class TextSummarizer(BaseNLPProcessor):
 
 
 class KeywordExtractor(BaseNLPProcessor):
-    """Keyword and key phrase extraction from text"""
+    """
+Keyword and key phrase extraction from text"""
     
     def __init__(self, model_name: str = "keyword_extractor_v1"):
         super().__init__(f"keyword_{model_name}")
@@ -526,7 +547,8 @@ class KeywordExtractor(BaseNLPProcessor):
         }
     
     def load_model(self) -> bool:
-        """Load keyword extraction model"""
+        """
+Load keyword extraction model"""
         try:
             self.is_loaded = True
             logger.info(f"Keyword extractor {self.processor_name} loaded successfully")

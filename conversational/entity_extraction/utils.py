@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import json
@@ -32,11 +33,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 class TextProcessor:
-    """Advanced text processing utilities for entity extraction"""
+    """
+Advanced text processing utilities for entity extraction"""
     
     @staticmethod
     def normalize_text(text: str) -> str:
-        """Normalize text for consistent processing"""
+        """
+Normalize text for consistent processing"""
         if not text:
             return ""
         
@@ -68,7 +71,8 @@ class TextProcessor:
     
     @staticmethod
     def clean_entity_text(text: str) -> str:
-        """Clean extracted entity text"""
+        """
+Clean extracted entity text"""
         if not text:
             return ""
         
@@ -93,7 +97,8 @@ class TextProcessor:
     
     @staticmethod
     def detect_language(text: str) -> str:
-        """Detect text language (simplified)"""
+        """
+Detect text language (simplified)"""
         # Simple language detection based on character patterns
         if re.search(r'[àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]', text.lower()):
             return 'fr'  # French
@@ -106,7 +111,8 @@ class TextProcessor:
 
 
 class SimilarityCalculator:
-    """Advanced similarity calculation utilities"""
+    """
+Advanced similarity calculation utilities"""
     
     def __init__(self):
         self.tfidf_vectorizer = TfidfVectorizer(
@@ -117,7 +123,8 @@ class SimilarityCalculator:
         self.is_fitted = False
     
     def calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate semantic similarity between two texts"""
+        """
+Calculate semantic similarity between two texts"""
         if not text1 or not text2:
             return 0.0
         
@@ -131,7 +138,8 @@ class SimilarityCalculator:
         return (fuzzy_score + token_score) / 2.0
     
     def calculate_semantic_similarity(self, texts: List[str]) -> np.ndarray:
-        """Calculate semantic similarity matrix for multiple texts"""
+        """
+Calculate semantic similarity matrix for multiple texts"""
         if len(texts) < 2:
             return np.array([[1.0]])
         
@@ -167,18 +175,21 @@ class SimilarityCalculator:
 
 
 class PerformanceTimer:
-    """Performance timing utilities for optimization"""
+    """
+Performance timing utilities for optimization"""
     
     def __init__(self):
         self.start_times = {}
         self.durations = {}
     
     def start(self, operation: str):
-        """Start timing an operation"""
+        """
+Start timing an operation"""
         self.start_times[operation] = time.time()
     
     def stop(self, operation: str) -> float:
-        """Stop timing and return duration"""
+        """
+Stop timing and return duration"""
         if operation in self.start_times:
             duration = time.time() - self.start_times[operation]
             self.durations[operation] = duration
@@ -187,7 +198,8 @@ class PerformanceTimer:
         return 0.0
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get performance statistics"""
+        """
+Get performance statistics"""
         return {
             'completed_operations': len(self.durations),
             'active_operations': len(self.start_times),
@@ -198,11 +210,13 @@ class PerformanceTimer:
 
 
 class DataValidator:
-    """Data validation utilities for entity extraction"""
+    """
+Data validation utilities for entity extraction"""
     
     @staticmethod
     def validate_entity_data(entity_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate entity data structure"""
+        """
+Validate entity data structure"""
         errors = []
         
         # Required fields
@@ -245,7 +259,8 @@ class DataValidator:
     
     @staticmethod
     def sanitize_input(text: str, max_length: int = 10000) -> str:
-        """Sanitize input text for security"""
+        """
+Sanitize input text for security"""
         if not text:
             return ""
         
@@ -272,7 +287,8 @@ class CacheManager:
         self.ttl = ttl
     
     def get_cache_key(self, data: Any) -> str:
-        """Generate cache key from data"""
+        """
+Generate cache key from data"""
         if isinstance(data, str):
             return hashlib.md5(data.encode('utf-8')).hexdigest()
         elif isinstance(data, dict):
@@ -281,7 +297,8 @@ class CacheManager:
             return hashlib.md5(str(data).encode('utf-8')).hexdigest()
     
     def get(self, key: str) -> Optional[Any]:
-        """Get item from cache if not expired"""
+        """
+Get item from cache if not expired"""
         if key in self.cache:
             # Check if expired
             if time.time() - self.timestamps[key] > self.ttl:
@@ -291,7 +308,8 @@ class CacheManager:
         return None
     
     def set(self, key: str, value: Any):
-        """Set item in cache"""
+        """
+Set item in cache"""
         # Remove oldest items if cache is full
         if len(self.cache) >= self.max_size:
             self._evict_oldest()
@@ -300,13 +318,15 @@ class CacheManager:
         self.timestamps[key] = time.time()
     
     def remove(self, key: str):
-        """Remove item from cache"""
+        """
+Remove item from cache"""
         if key in self.cache:
             del self.cache[key]
             del self.timestamps[key]
     
     def _evict_oldest(self):
-        """Evict oldest cache entries"""
+        """
+Evict oldest cache entries"""
         # Remove 10% of oldest entries
         num_to_remove = max(1, self.max_size // 10)
         oldest_keys = sorted(self.timestamps.keys(), key=lambda k: self.timestamps[k])[:num_to_remove]
@@ -315,12 +335,14 @@ class CacheManager:
             self.remove(key)
     
     def clear(self):
-        """Clear all cache"""
+        """
+Clear all cache"""
         self.cache.clear()
         self.timestamps.clear()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         now = time.time()
         expired_count = sum(1 for ts in self.timestamps.values() if now - ts > self.ttl)
         
@@ -334,7 +356,8 @@ class CacheManager:
 
 
 def timing_decorator(func):
-    """Decorator to measure function execution time"""
+    """
+Decorator to measure function execution time"""
     @functools.wraps(func)
     async def async_wrapper(*args, **kwargs):
         start_time = time.time()
@@ -395,14 +418,16 @@ def retry_decorator(max_retries: int = 3, delay: float = 1.0):
 
 
 class EntityDeduplicator:
-    """Advanced entity deduplication utilities"""
+    """
+Advanced entity deduplication utilities"""
     
     def __init__(self, similarity_threshold: float = 0.85):
         self.similarity_threshold = similarity_threshold
         self.similarity_calculator = SimilarityCalculator()
     
     def deduplicate_entities(self, entities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate entities based on text similarity"""
+        """
+Remove duplicate entities based on text similarity"""
         if len(entities) <= 1:
             return entities
         
@@ -449,14 +474,16 @@ entity_deduplicator = EntityDeduplicator()
 
 # Utility functions
 def create_entity_fingerprint(entity_data: Dict[str, Any]) -> str:
-    """Create unique fingerprint for entity"""
+    """
+Create unique fingerprint for entity"""
     key_fields = ['text', 'entity_type', 'start_pos', 'end_pos']
     fingerprint_data = {k: v for k, v in entity_data.items() if k in key_fields}
     return hashlib.sha256(json.dumps(fingerprint_data, sort_keys=True).encode()).hexdigest()
 
 
 def merge_entity_metadata(base_entity: Dict[str, Any], additional_metadata: Dict[str, Any]) -> Dict[str, Any]:
-    """Merge additional metadata into base entity"""
+    """
+Merge additional metadata into base entity"""
     merged = base_entity.copy()
     
     if 'metadata' not in merged:
@@ -474,7 +501,8 @@ def merge_entity_metadata(base_entity: Dict[str, Any], additional_metadata: Dict
 
 
 def format_extraction_results(results: Dict[str, Any]) -> Dict[str, Any]:
-    """Format extraction results for API response"""
+    """
+Format extraction results for API response"""
     return {
         'entities': results.get('entities', []),
         'total_count': len(results.get('entities', [])),

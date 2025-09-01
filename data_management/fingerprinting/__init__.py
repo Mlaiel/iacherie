@@ -8,7 +8,7 @@ Responsibility: Advanced multi-format content fingerprinting and protection syst
 ====================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -167,6 +167,7 @@ logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
     """Types d'empreintes supportées"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -175,6 +176,7 @@ class FingerprintType(Enum):
 
 class SimilarityThreshold(Enum):
     """Seuils de similarité pour la détection"""
+
     EXACT = 0.95      # Correspondance exacte
     HIGH = 0.85       # Haute similarité
     MEDIUM = 0.70     # Similarité moyenne
@@ -182,7 +184,9 @@ class SimilarityThreshold(Enum):
     POTENTIAL = 0.40  # Correspondance potentielle
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection du contenu"""
+    """
+Niveaux de protection du contenu"""
+
     MAXIMUM = "maximum"     # Protection maximale
     HIGH = "high"          # Protection élevée
     STANDARD = "standard"   # Protection standard
@@ -517,17 +521,20 @@ class FingerprintingEngine:
         return np.random.rand(512).astype(np.float32)
 
     async def _video_to_vector(self, video_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte vidéo en vecteur"""
+        """
+Convertit une empreinte vidéo en vecteur"""
         # Implémentation de conversion vidéo vers vecteur
         return np.random.rand(1024).astype(np.float32)
 
     async def _image_to_vector(self, image_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte image en vecteur"""
+        """
+Convertit une empreinte image en vecteur"""
         # Implémentation de conversion image vers vecteur
         return np.random.rand(768).astype(np.float32)
 
     async def _text_to_vector(self, text_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte texte en vecteur"""
+        """
+Convertit une empreinte texte en vecteur"""
         # Implémentation de conversion texte vers vecteur
         return np.random.rand(256).astype(np.float32)
 
@@ -536,16 +543,19 @@ class FingerprintingEngine:
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Calcule une similarité détaillée entre deux empreintes"""
+        """
+Calcule une similarité détaillée entre deux empreintes"""
         # Implémentation du calcul de similarité avancé
         return 0.85  # Simulation
 
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""
+        """
+Retourne les métriques de performance"""
         return self.metrics.copy()
 
     def get_status(self) -> Dict[str, Any]:
-        """Retourne le statut du système"""
+        """
+Retourne le statut du système"""
         return {
             "version": __version__,
             "engines_active": {

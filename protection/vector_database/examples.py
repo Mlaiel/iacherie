@@ -5,7 +5,7 @@ Professional examples demonstrating the ultra-advanced vector database system
 for content protection and similarity search in production environments.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -16,6 +16,7 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Any

@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import threading
 import time
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
+    """
+Supported database types"""
+
     POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
@@ -45,6 +48,7 @@ class DatabaseType(Enum):
 
 class ConnectionPoolStrategy(Enum):
     """Connection pool strategies"""
+
     LAZY_LOADING = "lazy_loading"          # Create connections on-demand
     EAGER_LOADING = "eager_loading"        # Pre-create all connections
     MIXED = "mixed"                        # Combination of both
@@ -52,6 +56,7 @@ class ConnectionPoolStrategy(Enum):
 
 class HealthCheckLevel(Enum):
     """Health check detail levels"""
+
     BASIC = "basic"                        # Simple ping checks
     DETAILED = "detailed"                  # Full health statistics
     COMPREHENSIVE = "comprehensive"        # Complete diagnostic information
@@ -73,7 +78,8 @@ class ConnectionPoolConfig:
 
 @dataclass
 class DatabaseConnectionInfo:
-    """Database connection information and statistics"""
+    """
+Database connection information and statistics"""
     database_type: DatabaseType
     connection_id: str
     created_at: float
@@ -463,7 +469,8 @@ class DatabaseConnectionPool:
                 # Don't wait for completion to avoid blocking
 
     def _check_connection_health(self, connection_id: str, connection: Any, conn_info: DatabaseConnectionInfo) -> None:
-        """Check health of individual connection"""
+        """
+Check health of individual connection"""
         try:
             is_healthy = self._is_connection_healthy(connection, conn_info.database_type)
             

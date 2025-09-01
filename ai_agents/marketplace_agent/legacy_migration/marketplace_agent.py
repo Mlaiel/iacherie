@@ -4,8 +4,9 @@ Enterprise-grade marketplace agent providing comprehensive content marketplace
 management, creator collaboration orchestration, and AI-powered monetization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -26,7 +27,9 @@ from .distribution_manager import DistributionManager
 
 
 class MarketplaceStatus(Enum):
-    """Marketplace operational status enumeration."""
+    """
+Marketplace operational status enumeration."""
+
     ACTIVE = "active"
     MAINTENANCE = "maintenance"
     SUSPENDED = "suspended"
@@ -35,6 +38,7 @@ class MarketplaceStatus(Enum):
 
 class ContentType(Enum):
     """Supported content types for marketplace."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -46,6 +50,7 @@ class ContentType(Enum):
 
 class PriceModel(Enum):
     """Available pricing models for marketplace listings."""
+
     FIXED = "fixed"
     AUCTION = "auction"
     SUBSCRIPTION = "subscription"
@@ -606,7 +611,8 @@ class MarketplaceAgent(BaseAgent):
             return 0.0
 
     async def _calculate_avg_response_time(self) -> float:
-        """Calculate average API response time."""
+        """
+Calculate average API response time."""
         try:
             return await self.marketplace_analytics.get_average_response_time()
         except Exception:
@@ -616,7 +622,8 @@ class MarketplaceAgent(BaseAgent):
         self,
         collaboration: CollaborationRequest
     ) -> None:
-        """Send collaboration notification to target creator."""
+        """
+Send collaboration notification to target creator."""
         try:
             # Implementation would integrate with notification service
             self.logger.info(f"Collaboration notification sent for: {collaboration.id}")

@@ -11,6 +11,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrafficType(Enum):
-    """Traffic type classification"""
+    """
+Traffic type classification"""
+
     UPLOAD = "upload"
     DOWNLOAD = "download"
     API_REQUESTS = "api_requests"
@@ -55,7 +58,8 @@ class BandwidthLimit:
 
 @dataclass
 class TrafficSample:
-    """Traffic measurement sample"""
+    """
+Traffic measurement sample"""
     timestamp: datetime
     bytes_in: int
     bytes_out: int
@@ -68,7 +72,8 @@ class TrafficSample:
 
 @dataclass
 class ServiceTrafficStats:
-    """Traffic statistics for a service"""
+    """
+Traffic statistics for a service"""
     service_name: str
     current_bandwidth_in_mbps: float = 0.0
     current_bandwidth_out_mbps: float = 0.0

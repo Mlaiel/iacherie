@@ -4,6 +4,7 @@ Automated revenue calculation for different platforms.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueData:
-    """Revenue data structure"""
+    """
+Revenue data structure"""
     platform: str
     content_id: str
     views: int

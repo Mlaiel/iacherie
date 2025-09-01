@@ -15,6 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Content upload → Format detection → Technical validation → 
 Business rule validation → Quality scoring → Enhancement recommendations
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -48,7 +49,9 @@ import spacy
 
 
 class ValidationLevel(Enum):
-    """Validation intensity levels"""
+    """
+Validation intensity levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -57,6 +60,7 @@ class ValidationLevel(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -374,7 +378,8 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate audio content technical and quality specifications."""
+        """
+Validate audio content technical and quality specifications."""
         if not HAS_MEDIA_LIBS:
             result.warnings.append("Media processing libraries not available - limited audio validation")
             return
@@ -799,7 +804,8 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate text content quality, readability, and compliance."""
+        """
+Validate text content quality, readability, and compliance."""
         try:
             # Extract text content
             if isinstance(content_data, str):
@@ -1096,7 +1102,8 @@ class ContentValidator:
         return None
     
     def _calculate_validation_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score from all checks."""
+        """
+Calculate overall validation score from all checks."""
         scores = []
         
         # Technical checks score
@@ -1822,7 +1829,8 @@ class TextQualityValidator:
         return seo_metrics
     
     def _calculate_text_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall text quality score based on multiple factors."""
+        """
+Calculate overall text quality score based on multiple factors."""
         score_components = []
         
         # Readability score (0-1)

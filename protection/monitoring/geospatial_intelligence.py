@@ -12,7 +12,7 @@ Industrial Features:
 - Cultural and linguistic threat adaptation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -44,7 +45,9 @@ from folium.plugins import HeatMap, MarkerCluster
 logger = logging.getLogger(__name__)
 
 class JurisdictionType(str, Enum):
-    """Legal jurisdiction classifications."""
+    """
+Legal jurisdiction classifications."""
+
     STRONG_COPYRIGHT = "strong_copyright"      # US, UK, Germany, etc.
     MODERATE_COPYRIGHT = "moderate_copyright"  # Many EU countries
     WEAK_COPYRIGHT = "weak_copyright"          # Some developing nations
@@ -54,6 +57,7 @@ class JurisdictionType(str, Enum):
 
 class GeopoliticalRisk(str, Enum):
     """Geopolitical risk levels."""
+
     MINIMAL = "minimal"       # Strong rule of law, good enforcement
     LOW = "low"              # Generally reliable but some gaps
     MODERATE = "moderate"     # Mixed enforcement, political considerations
@@ -63,6 +67,7 @@ class GeopoliticalRisk(str, Enum):
 
 class TerritorialPattern(str, Enum):
     """Territorial activity patterns."""
+
     DOMESTIC_ONLY = "domestic_only"
     REGIONAL_SPREAD = "regional_spread"
     INTERNATIONAL_NETWORK = "international_network"
@@ -89,7 +94,8 @@ class GeospatialThreat:
 
 @dataclass
 class JurisdictionProfile:
-    """Legal jurisdiction profile."""
+    """
+Legal jurisdiction profile."""
     country_code: str
     country_name: str
     jurisdiction_type: JurisdictionType
@@ -106,7 +112,8 @@ class JurisdictionProfile:
 
 @dataclass
 class GeospatialCluster:
-    """Cluster of geospatial activity."""
+    """
+Cluster of geospatial activity."""
     cluster_id: str
     center_coordinates: Tuple[float, float]
     radius_km: float
@@ -118,10 +125,12 @@ class GeospatialCluster:
     growth_rate: float
 
 class GeospatialIntelligenceEngine:
-    """Ultra-advanced geospatial intelligence and surveillance system."""
+    """
+Ultra-advanced geospatial intelligence and surveillance system."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the geospatial intelligence engine."""
+        """
+Initialize the geospatial intelligence engine."""
         self.config = config
         self.redis_client = None
         self.db_session = None
@@ -809,12 +818,14 @@ class GeospatialIntelligenceEngine:
         return len(strong_jurisdictions) > 0 and len(weak_jurisdictions) > len(strong_jurisdictions)
 
     def _indicates_safe_harbor_seeking(self, threats: List[GeospatialThreat]) -> bool:
-        """Check if pattern indicates safe harbor seeking."""
+        """
+Check if pattern indicates safe harbor seeking."""
         safe_harbor_count = sum(1 for t in threats if t.jurisdiction_type == JurisdictionType.SAFE_HARBOR)
         return safe_harbor_count > len(threats) * 0.5
 
     def _indicates_nomadic_operation(self, threats: List[GeospatialThreat]) -> bool:
-        """Check if pattern indicates nomadic operation."""
+        """
+Check if pattern indicates nomadic operation."""
         # Look for frequent country changes over time
         threats_sorted = sorted(threats, key=lambda x: x.detection_time)
         country_changes = 0
@@ -827,7 +838,8 @@ class GeospatialIntelligenceEngine:
         return country_changes > len(threats) * 0.3
 
     def _calculate_territorial_coordination(self, threats: List[GeospatialThreat]) -> float:
-        """Calculate coordination score for territorial cluster."""
+        """
+Calculate coordination score for territorial cluster."""
         try:
             if len(threats) < 2:
                 return 0.0

@@ -5,7 +5,7 @@ Système professionnel de gestion des paramètres et constantes
 Auteur: Fahed Mlaiel - Lead Developer & AI Architect
 Email: mlaiel@live.de
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: Tous droits réservés © 2025 Fahed Mlaiel
+Copyright: Tous droits réservés (c) 2025 Fahed Mlaiel
 
 AVERTISSEMENT LÉGAL STRICT:
 Ce code, concept et propriété intellectuelle appartiennent exclusivement à Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute tentative de vol, copie, redistribution ou utilisation sans autorisation �
 explicite de Fahed Mlaiel (mlaiel@live.de) entraînera des actions légales immédiates 
 selon le droit allemand et international de la propriété intellectuelle.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from enum import Enum
@@ -21,7 +22,8 @@ from pydantic import BaseSettings, Field
 
 
 class RightsTrackingConfig(BaseSettings):
-    """Configuration principale du système de suivi des droits"""
+    """
+Configuration principale du système de suivi des droits"""
     
     # === Configuration Base de Données ===
     DATABASE_URL: str = Field(
@@ -93,6 +95,7 @@ class RightsTrackingConfig(BaseSettings):
 # Énumérations pour les types de données
 class LicenseType(str, Enum):
     """Types de licences disponibles"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC = "sync"
@@ -105,6 +108,7 @@ class LicenseType(str, Enum):
 
 class ContentType(str, Enum):
     """Types de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -117,6 +121,7 @@ class ContentType(str, Enum):
 
 class ViolationType(str, Enum):
     """Types de violations détectées"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -129,6 +134,7 @@ class ViolationType(str, Enum):
 
 class Platform(str, Enum):
     """Plateformes de surveillance supportées"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -145,6 +151,7 @@ class Platform(str, Enum):
 
 class ActionType(str, Enum):
     """Types d'actions d'enforcement"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
@@ -156,6 +163,7 @@ class ActionType(str, Enum):
 
 class Currency(str, Enum):
     """Devises supportées"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -173,6 +181,7 @@ class Currency(str, Enum):
 
 class TerritoryCode(str, Enum):
     """Codes de territoires ISO 3166-1"""
+
     WORLDWIDE = "WW"
     US = "US"
     CA = "CA"
@@ -251,7 +260,8 @@ class PlatformConfig:
 
 @dataclass
 class AIModelConfig:
-    """Configuration pour les modèles d'IA"""
+    """
+Configuration pour les modèles d'IA"""
     model_name: str
     model_path: str
     input_formats: List[str]
@@ -263,7 +273,8 @@ class AIModelConfig:
 
 @dataclass
 class NotificationConfig:
-    """Configuration des notifications"""
+    """
+Configuration des notifications"""
     channel_type: str  # email, webhook, sms, slack
     endpoint: str
     enabled: bool
@@ -355,19 +366,19 @@ AI_MODEL_CONFIGS: Dict[str, AIModelConfig] = {
 # Templates de clauses légales par juridiction
 LEGAL_CLAUSE_TEMPLATES: Dict[str, Dict[str, str]] = {
     "US": {
-        "copyright_notice": "© {year} {owner}. All rights reserved.",
+        "copyright_notice": "(c) {year} {owner}. All rights reserved.",
         "fair_use_disclaimer": "This work is protected by copyright. Fair use provisions under 17 USC § 107 may apply.",
         "dmca_notice": "Protected under the Digital Millennium Copyright Act (DMCA).",
         "termination_clause": "This license may be terminated immediately upon breach of any term."
     },
     "EU": {
-        "copyright_notice": "© {year} {owner}. Tous droits réservés.",
+        "copyright_notice": "(c) {year} {owner}. Tous droits réservés.",
         "gdpr_compliance": "Processing compliant with GDPR Art. 6(1)(f) - legitimate interests.",
         "database_rights": "Protected by EU Database Directive 96/9/EC.",
         "termination_clause": "Cette licence peut être résiliée immédiatement en cas de violation."
     },
     "GB": {
-        "copyright_notice": "© {year} {owner}. All rights reserved.",
+        "copyright_notice": "(c) {year} {owner}. All rights reserved.",
         "uk_copyright_act": "Protected under the Copyright, Designs and Patents Act 1988.",
         "moral_rights": "The author asserts their moral rights under s.77-89 CDPA 1988.",
         "termination_clause": "This licence may be terminated immediately upon breach."
@@ -507,17 +518,20 @@ def get_config() -> RightsTrackingConfig:
 
 
 def get_platform_config(platform: Platform) -> Optional[PlatformConfig]:
-    """Retourne la configuration pour une plateforme spécifique"""
+    """
+Retourne la configuration pour une plateforme spécifique"""
     return PLATFORM_CONFIGS.get(platform)
 
 
 def get_ai_model_config(model_name: str) -> Optional[AIModelConfig]:
-    """Retourne la configuration pour un modèle d'IA spécifique"""
+    """
+Retourne la configuration pour un modèle d'IA spécifique"""
     return AI_MODEL_CONFIGS.get(model_name)
 
 
 def get_legal_clauses(jurisdiction: str) -> Dict[str, str]:
-    """Retourne les clauses légales pour une juridiction"""
+    """
+Retourne les clauses légales pour une juridiction"""
     return LEGAL_CLAUSE_TEMPLATES.get(jurisdiction, LEGAL_CLAUSE_TEMPLATES["US"])
 
 
@@ -528,7 +542,8 @@ def get_default_royalty_rate(license_type: LicenseType, usage_type: str) -> floa
 
 
 def validate_territory_code(territory: str) -> bool:
-    """Valide un code de territoire"""
+    """
+Valide un code de territoire"""
     try:
         TerritoryCode(territory)
         return True
@@ -537,7 +552,8 @@ def validate_territory_code(territory: str) -> bool:
 
 
 def get_currency_symbol(currency: Currency) -> str:
-    """Retourne le symbole d'une devise"""
+    """
+Retourne le symbole d'une devise"""
     symbols = {
         Currency.USD: "$",
         Currency.EUR: "€",

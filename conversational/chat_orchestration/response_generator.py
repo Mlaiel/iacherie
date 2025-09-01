@@ -6,6 +6,7 @@ content protection guidance for different creator types.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -19,7 +20,9 @@ from backend.business.monetization import MonetizationEngine
 
 
 class ResponseType(Enum):
-    """Types of AI responses"""
+    """
+Types of AI responses"""
+
     INFORMATIONAL = "informational"
     ACTIONABLE = "actionable"
     ANALYTICAL = "analytical"
@@ -32,6 +35,7 @@ class ResponseType(Enum):
 
 class ResponseTone(Enum):
     """Response tone variations"""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     ENCOURAGING = "encouraging"
@@ -303,7 +307,8 @@ class ResponseGenerator:
             has_attachments = len(processed_message.attachments) > 0
             
             if has_attachments:
-                content = f"""I've analyzed your content upload. Here's what I found:
+                content = f"""
+I've analyzed your content upload. Here's what I found:
 
 **Content Overview:**
 - Content type: {creator_type} focused material

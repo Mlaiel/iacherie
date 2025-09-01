@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional container storage management with persistent volumes,
 storage classes, and advanced data lifecycle management.
 """
+
 import os
 import asyncio
 import logging
@@ -34,7 +35,9 @@ from google.cloud import storage as gcs
 logger = logging.getLogger(__name__)
 
 class StorageType(Enum):
-    """Storage types"""
+    """
+Storage types"""
+
     BLOCK = "block"
     FILE = "file"
     OBJECT = "object"
@@ -42,6 +45,7 @@ class StorageType(Enum):
 
 class AccessMode(Enum):
     """Persistent volume access modes"""
+
     READ_WRITE_ONCE = "ReadWriteOnce"
     READ_ONLY_MANY = "ReadOnlyMany"
     READ_WRITE_MANY = "ReadWriteMany"
@@ -49,17 +53,20 @@ class AccessMode(Enum):
 
 class ReclaimPolicy(Enum):
     """Persistent volume reclaim policies"""
+
     RETAIN = "Retain"
     DELETE = "Delete"
     RECYCLE = "Recycle"
 
 class VolumeBindingMode(Enum):
     """Volume binding modes"""
+
     IMMEDIATE = "Immediate"
     WAIT_FOR_FIRST_CONSUMER = "WaitForFirstConsumer"
 
 class StorageProvisioner(Enum):
     """Storage provisioners"""
+
     AWS_EBS = "ebs.csi.aws.com"
     AZURE_DISK = "disk.csi.azure.com"
     AZURE_FILE = "file.csi.azure.com"
@@ -83,7 +90,8 @@ class StorageClass:
 
 @dataclass
 class PersistentVolume:
-    """Persistent volume configuration"""
+    """
+Persistent volume configuration"""
     name: str
     capacity: str
     access_modes: List[AccessMode]
@@ -97,7 +105,8 @@ class PersistentVolume:
 
 @dataclass
 class PersistentVolumeClaim:
-    """Persistent volume claim configuration"""
+    """
+Persistent volume claim configuration"""
     name: str
     namespace: str
     access_modes: List[AccessMode]
@@ -110,7 +119,8 @@ class PersistentVolumeClaim:
 
 @dataclass
 class VolumeMount:
-    """Volume mount configuration"""
+    """
+Volume mount configuration"""
     name: str
     mount_path: str
     sub_path: Optional[str] = None
@@ -118,7 +128,8 @@ class VolumeMount:
 
 @dataclass
 class VolumeSnapshot:
-    """Volume snapshot configuration"""
+    """
+Volume snapshot configuration"""
     name: str
     namespace: str
     volume_snapshot_class: str
@@ -128,7 +139,8 @@ class VolumeSnapshot:
 
 @dataclass
 class BackupConfig:
-    """Backup configuration"""
+    """
+Backup configuration"""
     name: str
     source_pvc: str
     namespace: str

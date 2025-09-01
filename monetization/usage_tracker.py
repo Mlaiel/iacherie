@@ -7,6 +7,7 @@ analytics, and comprehensive reporting capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import asyncio
 import time
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class UsageType(Enum):
-    """Types of content usage"""
+    """
+Types of content usage"""
+
     STREAM = "stream"
     DOWNLOAD = "download"
     SYNC = "sync"
@@ -34,6 +37,7 @@ class UsageType(Enum):
 
 class UsageStatus(Enum):
     """Status of usage records"""
+
     RECORDED = "recorded"
     VERIFIED = "verified"
     DISPUTED = "disputed"
@@ -60,7 +64,8 @@ class UsageRecord:
 
 @dataclass
 class UsageStatistics:
-    """Usage statistics for a license"""
+    """
+Usage statistics for a license"""
     license_id: int
     period_start: datetime
     period_end: datetime
@@ -90,7 +95,8 @@ class UsageTracker:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize usage tracker"""
+        """
+Initialize usage tracker"""
         self.config = config or {}
         
         # Usage storage

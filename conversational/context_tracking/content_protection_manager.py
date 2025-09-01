@@ -49,8 +49,9 @@ Lead Content Security Engineer : Fahed Mlaiel <mlaiel@live.de>
 This content protection system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import json
@@ -116,7 +117,9 @@ from backend.models.content_protection import (
 logger = logging.getLogger(__name__)
 
 class ViolationSeverity(Enum):
-    """Niveaux de sévérité des violations."""
+    """
+Niveaux de sévérité des violations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -124,6 +127,7 @@ class ViolationSeverity(Enum):
 
 class ProtectionStatus(Enum):
     """États de protection du contenu."""
+
     MONITORING = "monitoring"
     VIOLATION_DETECTED = "violation_detected"
     EVIDENCE_COLLECTED = "evidence_collected"
@@ -133,6 +137,7 @@ class ProtectionStatus(Enum):
 
 class PlatformType(Enum):
     """Plateformes surveillées."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -159,7 +164,8 @@ class ContentProtectionManager:
     """
     
     def __init__(self):
-        """Initialisation du gestionnaire de protection."""
+        """
+Initialisation du gestionnaire de protection."""
         self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
@@ -207,7 +213,8 @@ class ContentProtectionManager:
         self._initialize_ai_models()
     
     async def initialize(self):
-        """Initialisation asynchrone des connexions et services."""
+        """
+Initialisation asynchrone des connexions et services."""
         try:
             # Database connections
             self.redis_client = await get_redis_client()
@@ -359,7 +366,8 @@ class ContentProtectionManager:
         return frequencies.get(protection_level, 1800)
     
     async def _schedule_content_monitoring(self, protection_record: Dict[str, Any]):
-        """Planifie la surveillance automatique du contenu."""
+        """
+Planifie la surveillance automatique du contenu."""
         try:
             # Create Celery task for monitoring
             monitoring_task = {
@@ -839,7 +847,8 @@ class ContentProtectionManager:
             return ViolationSeverity.LOW
     
     async def _trigger_immediate_action(self, violation_record: Dict[str, Any]):
-        """Déclenche une action immédiate pour violations critiques."""
+        """
+Déclenche une action immédiate pour violations critiques."""
         try:
             # Send DMCA takedown notice
             await self._send_dmca_takedown(violation_record)
@@ -908,10 +917,12 @@ class ContentProtectionManager:
         return notice
     
     def _load_dmca_template(self, template_type: str) -> str:
-        """Charge un template DMCA."""
+        """
+Charge un template DMCA."""
         # Placeholder - would load from file or database
         templates = {
-            'takedown': """DMCA Takedown Notice
+            'takedown': """
+DMCA Takedown Notice
 
 To Whom It May Concern:
 
@@ -1176,7 +1187,8 @@ IA-Influencer-Agent Legal Team
         return []
     
     async def _record_blockchain_ownership(self, protection_id: str, fingerprint_id: str, user_id: int):
-        """Enregistre la propriété sur blockchain."""
+        """
+Enregistre la propriété sur blockchain."""
         if self.web3 and self.evidence_contract:
             try:
                 # This would create a blockchain transaction

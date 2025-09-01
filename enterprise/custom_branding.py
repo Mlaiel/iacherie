@@ -13,6 +13,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class AssetOptimizationLevel(Enum):
-    """Asset optimization level"""
+    """
+Asset optimization level"""
+
     BASIC = "basic"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -50,6 +53,7 @@ class AssetOptimizationLevel(Enum):
 
 class ResponsiveBreakpoint(Enum):
     """Responsive design breakpoints"""
+
     MOBILE = "mobile"  # < 768px
     TABLET = "tablet"  # 768px - 1024px
     DESKTOP = "desktop"  # 1024px - 1440px
@@ -58,6 +62,7 @@ class ResponsiveBreakpoint(Enum):
 
 class BrandElementType(Enum):
     """Brand element types"""
+
     LOGO = "logo"
     ICON = "icon"
     WATERMARK = "watermark"
@@ -82,7 +87,8 @@ class ColorAnalysis:
 
 @dataclass
 class LogoVariant:
-    """Logo variant configuration"""
+    """
+Logo variant configuration"""
     variant_id: str
     name: str
     use_case: str
@@ -98,7 +104,8 @@ class LogoVariant:
 
 @dataclass
 class ResponsiveAsset:
-    """Responsive asset configuration"""
+    """
+Responsive asset configuration"""
     asset_id: str
     base_asset: str
     breakpoints: Dict[ResponsiveBreakpoint, Dict[str, Any]]
@@ -110,7 +117,8 @@ class ResponsiveAsset:
 
 @dataclass
 class BrandGuidelines:
-    """Brand guidelines configuration"""
+    """
+Brand guidelines configuration"""
     brand_name: str
     primary_colors: List[str]
     secondary_colors: List[str]
@@ -125,7 +133,8 @@ class BrandGuidelines:
 
 
 class ColorIntelligence:
-    """AI-powered color analysis and optimization"""
+    """
+AI-powered color analysis and optimization"""
     
     def __init__(self):
         self._color_emotions = {
@@ -143,7 +152,8 @@ class ColorIntelligence:
         }
     
     async def analyze_brand_colors(self, colors: List[str]) -> ColorAnalysis:
-        """Analyze brand colors for harmony, accessibility, and emotional impact"""
+        """
+Analyze brand colors for harmony, accessibility, and emotional impact"""
         try:
             # Extract dominant colors
             dominant_colors = self._extract_dominant_colors(colors)
@@ -181,7 +191,8 @@ class ColorIntelligence:
         return colors[:5]  # Return top 5 dominant colors
     
     def _analyze_color_harmony(self, colors: List[str]) -> str:
-        """Analyze color harmony type"""
+        """
+Analyze color harmony type"""
         if len(colors) < 2:
             return "monochromatic"
         
@@ -265,7 +276,8 @@ class ColorIntelligence:
             return 1.0
     
     def _classify_mood(self, colors: List[str]) -> str:
-        """Classify emotional mood of color palette"""
+        """
+Classify emotional mood of color palette"""
         mood_scores = {}
         
         for color_hex in colors:
@@ -313,7 +325,8 @@ class ColorIntelligence:
         return closest_color
     
     def _analyze_temperature(self, colors: List[str]) -> str:
-        """Analyze color temperature"""
+        """
+Analyze color temperature"""
         warm_count = 0
         cool_count = 0
         
@@ -401,7 +414,8 @@ class LogoProcessor:
         brand_colors: List[str],
         use_cases: List[str]
     ) -> List[LogoVariant]:
-        """Process logo into multiple variants for different use cases"""
+        """
+Process logo into multiple variants for different use cases"""
         try:
             variants = []
             
@@ -575,7 +589,8 @@ class LogoProcessor:
             return 0.5  # Default medium quality
     
     def _check_logo_accessibility(self, img: Image.Image, brand_colors: List[str]) -> bool:
-        """Check logo accessibility compliance"""
+        """
+Check logo accessibility compliance"""
         try:
             # Basic accessibility checks
             # In real implementation, this would include:
@@ -588,7 +603,8 @@ class LogoProcessor:
 
 
 class ThemeCustomizer:
-    """Advanced theme customization and CSS generation"""
+    """
+Advanced theme customization and CSS generation"""
     
     def __init__(self):
         self._css_template = jinja2.Environment(
@@ -603,7 +619,8 @@ class ThemeCustomizer:
         typography: Dict[str, Any],
         customizations: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate custom theme CSS and JavaScript"""
+        """
+Generate custom theme CSS and JavaScript"""
         try:
             # Analyze colors
             color_intelligence = ColorIntelligence()
@@ -853,7 +870,8 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 """
 class BrandAssetManager:
-    """Comprehensive brand asset management system"""
+    """
+Comprehensive brand asset management system"""
     
     def __init__(self):
         self._asset_storage: Dict[str, Any] = {}
@@ -865,7 +883,8 @@ class BrandAssetManager:
         asset_data: bytes,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Store brand asset with metadata"""
+        """
+Store brand asset with metadata"""
         try:
             # Store asset data
             self._asset_storage[asset_id] = asset_data
@@ -936,7 +955,8 @@ class BrandingEngine:
         logo_data: bytes,
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create comprehensive brand package with all assets and themes"""
+        """
+Create comprehensive brand package with all assets and themes"""
         try:
             # Analyze brand colors
             color_analysis = await self.color_intelligence.analyze_brand_colors(primary_colors)

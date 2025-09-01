@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -17,7 +18,9 @@ import logging
 
 
 class MetricType(Enum):
-    """Types of metrics collected."""
+    """
+Types of metrics collected."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -27,6 +30,7 @@ class MetricType(Enum):
 
 class MetricLevel(Enum):
     """Metric importance levels."""
+
     DEBUG = "debug"
     INFO = "info" 
     WARNING = "warning"
@@ -48,7 +52,8 @@ class Metric:
 
 @dataclass
 class TimerContext:
-    """Context manager for timing operations."""
+    """
+Context manager for timing operations."""
     name: str
     start_time: float = field(default_factory=time.time)
     end_time: Optional[float] = None
@@ -72,7 +77,8 @@ class TimerContext:
 
 
 class WorkflowMetrics:
-    """Comprehensive metrics collection for workflow operations."""
+    """
+Comprehensive metrics collection for workflow operations."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -118,11 +124,13 @@ class WorkflowMetrics:
             ))
     
     def decrement(self, metric_name: str, value: int = 1, tags: Dict[str, str] = None):
-        """Decrement a counter metric."""
+        """
+Decrement a counter metric."""
         self.increment(metric_name, -value, tags)
     
     def set_gauge(self, metric_name: str, value: Union[int, float], tags: Dict[str, str] = None):
-        """Set a gauge metric value."""
+        """
+Set a gauge metric value."""
         with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.gauges[key] = value
@@ -135,7 +143,8 @@ class WorkflowMetrics:
             ))
     
     def record_histogram(self, metric_name: str, value: Union[int, float], tags: Dict[str, str] = None):
-        """Record a value in a histogram."""
+        """
+Record a value in a histogram."""
         with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.histograms[key].append(value)
@@ -152,7 +161,8 @@ class WorkflowMetrics:
             ))
     
     def record_timer(self, metric_name: str, duration: float, tags: Dict[str, str] = None):
-        """Record a timer metric."""
+        """
+Record a timer metric."""
         with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.timers[key].append(duration)
@@ -169,7 +179,8 @@ class WorkflowMetrics:
             ))
     
     def timer(self, metric_name: str, tags: Dict[str, str] = None) -> TimerContext:
-        """Create a timer context manager."""
+        """
+Create a timer context manager."""
         return TimerContext(
             name=metric_name,
             tags=tags or {},
@@ -177,7 +188,8 @@ class WorkflowMetrics:
         )
     
     def record_workflow_execution(self, workflow_id: str, success: bool, duration: float, **kwargs):
-        """Record workflow execution metrics."""
+        """
+Record workflow execution metrics."""
         tags = {
             "workflow_id": workflow_id,
             "success": str(success).lower()
@@ -431,14 +443,16 @@ class WorkflowMetrics:
                 ]
     
     async def start_background_tasks(self):
-        """Start background metric aggregation and cleanup tasks."""
+        """
+Start background metric aggregation and cleanup tasks."""
         if self.enable_aggregation:
             asyncio.create_task(self._aggregation_task())
         
         asyncio.create_task(self._cleanup_task())
     
     async def _aggregation_task(self):
-        """Background task for metric aggregation."""
+        """
+Background task for metric aggregation."""
         while True:
             try:
                 await asyncio.sleep(self.aggregation_window.total_seconds())
@@ -476,7 +490,8 @@ class WorkflowMetrics:
             self.last_aggregation = now
     
     def _calculate_aggregates(self, metrics: List[Metric]) -> Dict[str, Any]:
-        """Calculate aggregate statistics for metrics."""
+        """
+Calculate aggregate statistics for metrics."""
         if not metrics:
             return {}
         
@@ -502,7 +517,8 @@ class WorkflowMetrics:
             )
     
     def _build_metric_key(self, metric_name: str, tags: Dict[str, str] = None) -> str:
-        """Build unique key for metric with tags."""
+        """
+Build unique key for metric with tags."""
         if not tags:
             return metric_name
         
@@ -530,7 +546,8 @@ class WorkflowMetrics:
             return sorted_values[lower] * (1 - weight) + sorted_values[upper] * weight
     
     def _histogram_summary(self, values: List[float]) -> Dict[str, Any]:
-        """Generate summary for histogram values."""
+        """
+Generate summary for histogram values."""
         if not values:
             return {}
         

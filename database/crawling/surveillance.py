@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,7 +35,9 @@ from ..core.exceptions import (
 
 
 class SurveillanceType(Enum):
-    """Types of content surveillance."""
+    """
+Types of content surveillance."""
+
     COPYRIGHT_MONITORING = "copyright_monitoring"
     BRAND_PROTECTION = "brand_protection"
     CONTENT_DISCOVERY = "content_discovery"
@@ -47,6 +50,7 @@ class SurveillanceType(Enum):
 
 class MatchConfidence(Enum):
     """Content match confidence levels."""
+
     EXACT = "exact"           # 95-100% similarity
     HIGH = "high"             # 85-94% similarity
     MEDIUM = "medium"         # 70-84% similarity
@@ -56,6 +60,7 @@ class MatchConfidence(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     CRITICAL = "critical"     # Immediate action required
     HIGH = "high"             # Action within 1 hour
     MEDIUM = "medium"         # Action within 24 hours
@@ -65,6 +70,7 @@ class AlertSeverity(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring session status."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -86,7 +92,8 @@ class ContentSurveillanceManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize content surveillance manager."""
+        """
+Initialize content surveillance manager."""
         super().__init__(db_session)
         self.active_monitors = {}
         self.alert_dispatchers = {}
@@ -543,7 +550,8 @@ class ContentSurveillanceManager(DatabaseManager):
             return MatchConfidence.SUSPECTED
     
     async def _extract_content_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from discovered content for analysis."""
+        """
+Extract features from discovered content for analysis."""
         features = {
             "content_type": content.get("type", "unknown"),
             "duration": content.get("duration", 0),
@@ -658,7 +666,8 @@ class ContentSurveillanceManager(DatabaseManager):
         pass
     
     async def _initialize_surveillance_system(self) -> None:
-        """Initialize surveillance system components."""
+        """
+Initialize surveillance system components."""
         self.active_monitors = {}
         self.alert_dispatchers = {
             "email": [],
@@ -678,7 +687,8 @@ class ContentSurveillanceManager(DatabaseManager):
         pass
     
     async def _activate_surveillance_target(self, target_id: str) -> None:
-        """Activate surveillance target in monitoring system."""
+        """
+Activate surveillance target in monitoring system."""
         self.active_monitors[target_id] = {
             "status": "active",
             "last_check": datetime.utcnow(),
@@ -701,7 +711,8 @@ class ContentSurveillanceManager(DatabaseManager):
         target_ids: List[str],
         config: Dict[str, Any]
     ) -> None:
-        """Start real-time monitoring processes."""
+        """
+Start real-time monitoring processes."""
         # Implementation would start real-time monitoring workers
         pass
     
@@ -711,12 +722,14 @@ class ContentSurveillanceManager(DatabaseManager):
         entry_type: str,
         entry_value: str
     ) -> None:
-        """Activate watchlist entry in monitoring system."""
+        """
+Activate watchlist entry in monitoring system."""
         # Implementation would add entry to active watchlist
         pass
     
     async def _calculate_match_statistics(self, matches: List) -> Dict[str, Any]:
-        """Calculate statistics from content matches."""
+        """
+Calculate statistics from content matches."""
         if not matches:
             return {
                 "total_matches": 0,

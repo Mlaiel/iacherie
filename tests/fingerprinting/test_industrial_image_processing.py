@@ -40,7 +40,8 @@ class TestIndustrialImageProcessor:
     
     @pytest.fixture
     def sample_image_path(self):
-        """Create a sample test image"""
+        """
+Create a sample test image"""
         # Create a simple test image
         with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
             # Create a simple RGB image
@@ -62,7 +63,8 @@ class TestIndustrialImageProcessor:
     
     @pytest.fixture
     def industrial_config(self):
-        """Create test configuration"""
+        """
+Create test configuration"""
         return IndustrialImageConfig(
             enable_phash=True,
             enable_dhash=True,
@@ -154,7 +156,8 @@ class TestIndustrialImageProcessor:
         assert processor.config.enable_orb is True
 
 def test_module_imports():
-    """Test that modules can be imported correctly"""
+    """
+Test that modules can be imported correctly"""
     if MODULES_AVAILABLE:
         assert IndustrialImageProcessor is not None
         assert IndustrialImageConfig is not None

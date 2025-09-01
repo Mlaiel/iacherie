@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Business Metrics Tests - Industrial Grade
+"""
+Advanced Business Metrics Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for business intelligence and KPI tracking system.
 Tests revenue tracking, user engagement analytics, and platform growth metrics with real scenarios.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -68,11 +71,13 @@ from .fixtures import (
 
 
 class TestBusinessMetricsCollectorCore:
-    """Core functionality tests for business metrics collection."""
+    """
+Core functionality tests for business metrics collection."""
     
     @pytest.fixture
     async def metrics_collector(self):
-        """Create and initialize business metrics collector."""
+        """
+Create and initialize business metrics collector."""
         collector = BusinessMetricsCollector(
             config={
                 "revenue_tracking": True,
@@ -404,7 +409,8 @@ class TestBusinessMetricsAnalysis:
     
     @pytest.fixture
     async def analytics_system(self):
-        """Create analytics-focused metrics system."""
+        """
+Create analytics-focused metrics system."""
         system = BusinessMetricsCollector(
             config={
                 "analytics_enabled": True,
@@ -730,7 +736,8 @@ class TestBusinessMetricsReporting:
     
     @pytest.fixture
     async def reporting_system(self):
-        """Create reporting-focused metrics system."""
+        """
+Create reporting-focused metrics system."""
         system = BusinessMetricsCollector(
             config={
                 "reporting_enabled": True,
@@ -940,7 +947,8 @@ class TestBusinessMetricsPerformance:
     
     @pytest.fixture
     async def performance_system(self):
-        """Create high-performance metrics system."""
+        """
+Create high-performance metrics system."""
         system = BusinessMetricsCollector(
             config={
                 "high_performance_mode": True,
@@ -1111,7 +1119,8 @@ class TestBusinessMetricsCollector:
     
     @pytest.fixture
     async def metrics_collector(self):
-        """Create Business Metrics Collector instance."""
+        """
+Create Business Metrics Collector instance."""
         collector = BusinessMetricsCollector()
         await collector.initialize()
         yield collector
@@ -1119,11 +1128,13 @@ class TestBusinessMetricsCollector:
     
     @pytest.fixture
     def business_test_data(self):
-        """Generate comprehensive business test data."""
+        """
+Generate comprehensive business test data."""
         return TestDataGenerator.generate_business_metrics_data(days=30)
     
     async def test_collector_initialization(self, metrics_collector):
-        """Test proper initialization of business metrics collector."""
+        """
+Test proper initialization of business metrics collector."""
         assert metrics_collector is not None
         assert metrics_collector.is_initialized
         assert metrics_collector.revenue_tracker is not None
@@ -1132,7 +1143,8 @@ class TestBusinessMetricsCollector:
         assert metrics_collector.engagement_tracker is not None
     
     async def test_revenue_tracking(self, metrics_collector):
-        """Test comprehensive revenue tracking and calculation."""
+        """
+Test comprehensive revenue tracking and calculation."""
         # Test various revenue sources
         revenue_data = [
             {

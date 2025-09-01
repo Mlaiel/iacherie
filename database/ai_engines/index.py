@@ -13,6 +13,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import sys
 import asyncio
 import logging
@@ -40,7 +41,7 @@ __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "Copyright © 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 
 try:
     # Import core AI Engines components
@@ -79,7 +80,8 @@ class AIEnginesIndex:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize AI Engines Index."""
+        """
+Initialize AI Engines Index."""
         self.config = config or self._load_default_config()
         self.components: Dict[str, Any] = {}
         self.initialized = False
@@ -245,11 +247,13 @@ class AIEnginesIndex:
         return self.components.get(component_name)
     
     def list_components(self) -> List[str]:
-        """List all available AI engine components."""
+        """
+List all available AI engine components."""
         return list(self.components.keys())
     
     async def shutdown(self) -> Dict[str, Any]:
-        """Gracefully shutdown all AI engine components."""
+        """
+Gracefully shutdown all AI engine components."""
         try:
             logger.info("Shutting down AI Engines components...")
             
@@ -310,7 +314,8 @@ def get_ai_engines_index(config: Optional[Dict[str, Any]] = None) -> AIEnginesIn
     return _ai_engines_index
 
 async def main():
-    """Main entry point for AI Engines module."""
+    """
+Main entry point for AI Engines module."""
     try:
         print(f"AI Engines Database Module v{__version__}")
         print(f"Author: {__author__} <{__email__}>")

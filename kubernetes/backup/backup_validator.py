@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -23,7 +24,9 @@ from ...core.exceptions import ValidationError
 
 
 class ValidationLevel(Enum):
-    """Validation level enumeration."""
+    """
+Validation level enumeration."""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -32,6 +35,7 @@ class ValidationLevel(Enum):
 
 class ValidationStatus(Enum):
     """Validation status enumeration."""
+
     VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
@@ -60,7 +64,8 @@ class ValidationResult:
 
 @dataclass
 class ValidationCheck:
-    """Individual validation check definition."""
+    """
+Individual validation check definition."""
     check_id: str
     name: str
     description: str
@@ -547,7 +552,8 @@ class BackupValidator:
         check: ValidationCheck,
         result: ValidationResult
     ) -> Dict[str, Any]:
-        """Perform individual validation check."""
+        """
+Perform individual validation check."""
         check_start = time.time()
         
         self.logger.debug(f"Performing check: {check.check_id} for backup: {backup_id}")

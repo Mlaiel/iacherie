@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + Data Scientist + DBA +
             Analytics Engineer + Business Intelligence Specialist + DevOps Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -54,7 +55,9 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class AnalyticsMetric(str, Enum):
-    """Analytics metric enumeration"""
+    """
+Analytics metric enumeration"""
+
     TOTAL_COMMISSION = "total_commission"
     AVERAGE_COMMISSION = "average_commission"
     MEDIAN_COMMISSION = "median_commission"
@@ -73,6 +76,7 @@ class AnalyticsMetric(str, Enum):
 
 class AggregationPeriod(str, Enum):
     """Aggregation period enumeration"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -82,6 +86,7 @@ class AggregationPeriod(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction enumeration"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -100,7 +105,8 @@ class MetricCalculation:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight"""
+    """
+Analytics insight"""
     insight_id: str
     title: str
     description: str
@@ -119,7 +125,8 @@ class CommissionAnalyticsEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission Analytics Engine"""
+        """
+Initialize Commission Analytics Engine"""
         self.config = config or {}
         
         # Database and cache connections
@@ -162,7 +169,8 @@ class CommissionAnalyticsEngine:
         }
     
     def _initialize_predictive_models(self) -> None:
-        """Initialize predictive models"""
+        """
+Initialize predictive models"""
         self._predictive_models = {
             "commission_forecast": LinearRegression(),
             "churn_prediction": RandomForestRegressor(n_estimators=100, random_state=42),
@@ -728,7 +736,8 @@ class CommissionAnalyticsEngine:
         start_date: datetime, 
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get historical metric data"""
+        """
+Get historical metric data"""
         # Mock historical data for ML training
         days = (end_date - start_date).days
         historical_data = []
@@ -781,7 +790,8 @@ class CommissionAnalyticsEngine:
         return np.array(future_X)
     
     def _select_prediction_model(self, metric: AnalyticsMetric) -> str:
-        """Select appropriate prediction model"""
+        """
+Select appropriate prediction model"""
         if metric in [AnalyticsMetric.TOTAL_COMMISSION, AnalyticsMetric.COMMISSION_COUNT]:
             return "commission_forecast"
         elif metric == AnalyticsMetric.CHURN_RATE:
@@ -812,7 +822,8 @@ class CommissionAnalyticsEngine:
         return confidence_intervals
     
     def _calculate_model_accuracy(self, model, X: np.ndarray, y: np.ndarray) -> float:
-        """Calculate model accuracy"""
+        """
+Calculate model accuracy"""
         predictions = model.predict(X)
         mae = mean_absolute_error(y, predictions)
         mean_actual = np.mean(y)
@@ -824,7 +835,8 @@ class CommissionAnalyticsEngine:
         return float(accuracy)
     
     def _determine_prediction_trend(self, predictions: np.ndarray) -> TrendDirection:
-        """Determine trend direction from predictions"""
+        """
+Determine trend direction from predictions"""
         if len(predictions) < 2:
             return TrendDirection.STABLE
         
@@ -844,7 +856,8 @@ class CommissionAnalyticsEngine:
     
     # Cache methods
     async def _get_cached_metric(self, cache_key: str) -> Optional[MetricCalculation]:
-        """Get cached metric"""
+        """
+Get cached metric"""
         try:
             if not self._redis_client:
                 return None
@@ -893,7 +906,7 @@ class CommissionAnalyticsEngine:
             logger.warning(f"Cache storage failed: {e}")
 
 """Professional Commission Analytics Engine
-© 2025 Fahed Mlaiel - Advanced Analytics Solution
+(c) 2025 Fahed Mlaiel - Advanced Analytics Solution
 
 This module provides comprehensive commission analytics capabilities including
 business intelligence, predictive modeling, and advanced data analysis.

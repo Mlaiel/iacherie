@@ -8,7 +8,7 @@ multiple platforms and revenue streams.
 Business Logic: Protected Content → Optimized Distribution → Revenue Tracking → Automated Monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Revenue Engineer + 
 FinTech Specialist + Payment Systems Expert + Analytics Engineer + Database Administrator + 
@@ -27,6 +27,7 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Permanent injunction against unauthorized use
 - Full recovery of legal costs and fees
 """
+
 import asyncio
 import json
 import uuid
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueStreamType(str, Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     PLATFORM_ROYALTIES = "platform_royalties"
     DIRECT_MONETIZATION = "direct_monetization"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
@@ -68,6 +71,7 @@ class RevenueStreamType(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -78,6 +82,7 @@ class PaymentMethod(str, Enum):
 
 class RevenueStatus(str, Enum):
     """Revenue tracking status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     CONFIRMED = "confirmed"
@@ -88,6 +93,7 @@ class RevenueStatus(str, Enum):
 
 class TaxRegion(str, Enum):
     """Tax regions for compliance"""
+
     EU = "eu"
     US = "us"
     UK = "uk"
@@ -313,7 +319,8 @@ class MonetizationIntegrationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the monetization integration manager"""
+        """
+Initialize the monetization integration manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
@@ -748,22 +755,26 @@ class MonetizationIntegrationManager:
         pass
     
     async def _init_paypal_processor(self):
-        """Initialize PayPal payment processor"""
+        """
+Initialize PayPal payment processor"""
         # Placeholder for PayPal initialization
         pass
     
     async def _init_wise_processor(self):
-        """Initialize Wise payment processor"""
+        """
+Initialize Wise payment processor"""
         # Placeholder for Wise initialization
         pass
     
     async def _init_bank_processor(self):
-        """Initialize bank transfer processor"""
+        """
+Initialize bank transfer processor"""
         # Placeholder for bank transfer initialization
         pass
     
     async def _initialize_revenue_tracking(self, integration: MonetizationIntegration):
-        """Initialize revenue tracking for integration"""
+        """
+Initialize revenue tracking for integration"""
         try:
             tracking_config = {
                 'integration_id': str(integration.integration_id),
@@ -825,7 +836,8 @@ class MonetizationIntegrationManager:
         }
     
     async def _get_integration_by_id(self, integration_id: str) -> Optional[MonetizationIntegration]:
-        """Get integration by ID"""
+        """
+Get integration by ID"""
         try:
             result = await self.db_session.execute(
                 f"SELECT * FROM monetization_integrations WHERE integration_id = '{integration_id}'"

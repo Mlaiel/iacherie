@@ -16,6 +16,7 @@ Enterprise deployment orchestrator for multi-environment deployments.
 Provides automated, secure, and monitored deployment workflows.
 =============================================
 """
+
 import os
 import sys
 import asyncio
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy enumeration"""
+    """
+Deployment strategy enumeration"""
+
     ROLLING = "rolling"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -58,6 +61,7 @@ class DeploymentStrategy(Enum):
 
 class DeploymentPhase(Enum):
     """Deployment phase enumeration"""
+
     PREPARATION = "preparation"
     PRE_DEPLOYMENT = "pre_deployment"
     DEPLOYMENT = "deployment"
@@ -69,6 +73,7 @@ class DeploymentPhase(Enum):
 
 class DeploymentStatus(Enum):
     """Deployment status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESS = "success"
@@ -135,7 +140,8 @@ class DeploymentOrchestrator:
         self.active_deployments: Dict[str, DeploymentResult] = {}
         
     async def deploy(self, config: DeploymentConfig) -> DeploymentResult:
-        """Execute deployment with specified configuration"""
+        """
+Execute deployment with specified configuration"""
         try:
             deployment_id = self._generate_deployment_id()
             
@@ -783,12 +789,14 @@ class DeploymentOrchestrator:
         return self.active_deployments.get(deployment_id)
     
     def list_active_deployments(self) -> List[DeploymentResult]:
-        """List active deployments"""
+        """
+List active deployments"""
         return list(self.active_deployments.values())
 
 
 async def main():
-    """Main deployment function"""
+    """
+Main deployment function"""
     parser = argparse.ArgumentParser(description='IA Influencer Agent Deployment Orchestrator')
     parser.add_argument(
         'environment',

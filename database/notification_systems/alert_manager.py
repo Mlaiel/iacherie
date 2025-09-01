@@ -5,7 +5,7 @@ Gestion des escalades, seuils, règles métier et notifications multi-canaux.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, ML Engineer, Security Expert
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 AVERTISSEMENT LÉGAL:
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité des alertes"""
+    """
+Niveaux de sévérité des alertes"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -41,6 +44,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Statuts des alertes"""
+
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -50,6 +54,7 @@ class AlertStatus(Enum):
 
 class AlertType(Enum):
     """Types d'alertes"""
+
     SYSTEM_ERROR = "system_error"
     SECURITY_BREACH = "security_breach"
     CONTENT_VIOLATION = "content_violation"
@@ -66,6 +71,7 @@ class AlertType(Enum):
 
 class EscalationAction(Enum):
     """Actions d'escalade"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -532,7 +538,8 @@ class AlertEngine:
         return None
     
     async def _escalation_processor(self):
-        """Processeur d'escalades"""
+        """
+Processeur d'escalades"""
         while True:
             try:
                 now = datetime.utcnow()
@@ -821,7 +828,8 @@ class AlertEngine:
             return result
     
     async def _save_alert(self, alert: Alert):
-        """Sauvegarder une alerte"""
+        """
+Sauvegarder une alerte"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO alerts (
@@ -847,7 +855,8 @@ class AlertEngine:
             )
     
     async def _update_alert(self, alert: Alert):
-        """Mettre à jour une alerte"""
+        """
+Mettre à jour une alerte"""
         async with self.db_pool.acquire() as conn:
             query = """
                 UPDATE alerts SET
@@ -869,7 +878,8 @@ class AlertEngine:
             )
     
     async def _save_notification(self, notification: AlertNotification):
-        """Sauvegarder une notification"""
+        """
+Sauvegarder une notification"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO alert_notifications (
@@ -891,7 +901,8 @@ class AlertEngine:
             )
     
     async def get_active_alerts(self, filters: Optional[Dict[str, Any]] = None) -> List[Alert]:
-        """Récupérer les alertes actives avec filtres"""
+        """
+Récupérer les alertes actives avec filtres"""
         alerts = list(self.active_alerts.values())
         
         if not filters:
@@ -905,7 +916,8 @@ class AlertEngine:
         return filtered_alerts
     
     def _match_alert_filters(self, alert: Alert, filters: Dict[str, Any]) -> bool:
-        """Vérifier si une alerte correspond aux filtres"""
+        """
+Vérifier si une alerte correspond aux filtres"""
         if "severity" in filters and alert.severity not in filters["severity"]:
             return False
         

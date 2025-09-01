@@ -372,7 +372,8 @@ scrape_configs:
         }
     
     def write_yaml(self, obj: Any, file_path: str):
-        """Write object to YAML file"""
+        """
+Write object to YAML file"""
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w') as f:
             yaml.dump(obj, f, default_flow_style=False, sort_keys=False)

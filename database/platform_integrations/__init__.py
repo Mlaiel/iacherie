@@ -24,6 +24,7 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
+
 from typing import List, Dict, Any, Optional, Union
 import logging
 

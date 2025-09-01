@@ -8,6 +8,7 @@ Performance monitoring and metrics collection utility for the IA Influencer Agen
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import time
 import logging
 import threading
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data structure"""
+    """
+Performance metric data structure"""
     name: str
     value: float
     timestamp: float
@@ -46,16 +48,19 @@ class PerformanceMonitor:
         self.enabled = True
     
     def enable(self):
-        """Enable performance monitoring"""
+        """
+Enable performance monitoring"""
         self.enabled = True
     
     def disable(self):
-        """Disable performance monitoring"""
+        """
+Disable performance monitoring"""
         self.enabled = False
     
     @contextmanager
     def timer(self, operation_name: str, tags: Optional[Dict[str, str]] = None):
-        """Context manager for timing operations"""
+        """
+Context manager for timing operations"""
         if not self.enabled:
             yield
             return
@@ -88,7 +93,8 @@ class PerformanceMonitor:
             self.metrics[name].append(metric)
     
     def start_timer(self, operation_name: str) -> str:
-        """Start a named timer"""
+        """
+Start a named timer"""
         if not self.enabled:
             return operation_name
         
@@ -157,7 +163,8 @@ class PerformanceMonitor:
                 return {name: list(metrics) for name, metrics in self.metrics.items()}
     
     def get_stats(self, metric_name: str) -> Dict[str, float]:
-        """Get statistics for a specific metric"""
+        """
+Get statistics for a specific metric"""
         with self.lock:
             metrics = list(self.metrics.get(metric_name, []))
         
@@ -187,7 +194,8 @@ class PerformanceMonitor:
         return stats
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get performance summary for all metrics"""
+        """
+Get performance summary for all metrics"""
         summary = {
             'monitor_name': self.name,
             'enabled': self.enabled,
@@ -203,7 +211,8 @@ class PerformanceMonitor:
         return summary
     
     def clear_metrics(self, metric_name: Optional[str] = None):
-        """Clear collected metrics"""
+        """
+Clear collected metrics"""
         with self.lock:
             if metric_name:
                 self.metrics.pop(metric_name, None)
@@ -211,7 +220,8 @@ class PerformanceMonitor:
                 self.metrics.clear()
     
     def reset(self):
-        """Reset all performance data"""
+        """
+Reset all performance data"""
         with self.lock:
             self.metrics.clear()
             self.active_timers.clear()
@@ -225,7 +235,8 @@ def timer(operation_name: str, tags: Optional[Dict[str, str]] = None):
     return default_monitor.timer(operation_name, tags)
 
 def timing_decorator(operation_name: Optional[str] = None, tags: Optional[Dict[str, str]] = None):
-    """Global timing decorator"""
+    """
+Global timing decorator"""
     return default_monitor.timing_decorator(operation_name, tags)
 
 def record_metric(name: str, value: float, tags: Optional[Dict[str, str]] = None, unit: str = "ms"):
@@ -233,5 +244,6 @@ def record_metric(name: str, value: float, tags: Optional[Dict[str, str]] = None
     default_monitor.record_metric(name, value, tags, unit)
 
 def get_performance_summary() -> Dict[str, Any]:
-    """Get global performance summary"""
+    """
+Get global performance summary"""
     return default_monitor.get_summary()

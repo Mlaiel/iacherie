@@ -3,6 +3,7 @@ Advanced industrial-grade Bandcamp crawler for independent music content protect
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
+
 import asyncio
 import json
 import re
@@ -27,7 +28,8 @@ settings = get_settings()
 
 
 class BandcampTrack(BaseModel):
-    """Bandcamp Track data model"""
+    """
+Bandcamp Track data model"""
     track_id: str
     title: str
     artist_name: str
@@ -72,7 +74,8 @@ class BandcampArtist(BaseModel):
 
 
 class BandcampAlbum(BaseModel):
-    """Bandcamp Album data model"""
+    """
+Bandcamp Album data model"""
     album_id: str
     title: str
     artist_name: str
@@ -1018,7 +1021,8 @@ class BandcampCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _calculate_fan_engagement(self, artist: BandcampArtist) -> str:
-        """Calculate artist fan engagement level"""
+        """
+Calculate artist fan engagement level"""
         engagement_score = 0
         
         if artist.follower_count > 1000:
@@ -1052,7 +1056,8 @@ class BandcampCrawler(BaseCrawler):
         return []
     
     async def _analyze_release_frequency(self, discography: List[Dict]) -> str:
-        """Analyze artist's release frequency"""
+        """
+Analyze artist's release frequency"""
         if len(discography) < 2:
             return "insufficient_data"
         
@@ -1094,7 +1099,8 @@ class BandcampCrawler(BaseCrawler):
         return []  # Placeholder
     
     async def _analyze_genre_trends(self, items: List[Dict]) -> Dict[str, int]:
-        """Analyze genre trends from trending items"""
+        """
+Analyze genre trends from trending items"""
         genre_counts = {}
         
         for item in items:
@@ -1104,7 +1110,8 @@ class BandcampCrawler(BaseCrawler):
         return dict(sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_pricing_trends(self, items: List[Dict]) -> Dict[str, Any]:
-        """Analyze pricing trends from items"""
+        """
+Analyze pricing trends from items"""
         # Would require detailed price data
         return {"avg_price": 0.0, "free_percentage": 0.0}
     
@@ -1119,7 +1126,8 @@ class BandcampCrawler(BaseCrawler):
         return dict(sorted(location_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _identify_emerging_indie_artists(self, items: List[Dict]) -> List[str]:
-        """Identify emerging independent artists"""
+        """
+Identify emerging independent artists"""
         emerging_artists = []
         
         for item in items:
@@ -1130,7 +1138,8 @@ class BandcampCrawler(BaseCrawler):
         return emerging_artists[:10]
     
     async def _analyze_label_diversity(self, items: List[Dict]) -> Dict[str, Any]:
-        """Analyze label diversity in trending items"""
+        """
+Analyze label diversity in trending items"""
         return {
             "independent_percentage": 85.0,  # Bandcamp is primarily independent
             "label_count": len(set(item.get('label', 'Independent') for item in items))

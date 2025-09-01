@@ -5,8 +5,9 @@ Advanced revenue calculation and prediction for multi-platform content monetizat
 Handles real-time revenue tracking, projections, and optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from ..analytics.content_analytics import ContentAnalytics
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""
+    """
+Supported monetization platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -43,6 +46,7 @@ class PlatformType(Enum):
 
 class RevenueType(Enum):
     """Types of revenue streams"""
+
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATIONS = "donations"
@@ -56,6 +60,7 @@ class RevenueType(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -84,7 +89,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection data"""
+    """
+Revenue projection data"""
     content_id: str
     projected_revenue_7d: Decimal
     projected_revenue_30d: Decimal
@@ -98,7 +104,8 @@ class RevenueProjection:
 
 @dataclass
 class RevenueReport:
-    """Comprehensive revenue report"""
+    """
+Comprehensive revenue report"""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -532,7 +539,8 @@ class RevenueCalculator:
     
     async def _calculate_platform_revenue(self, platform: PlatformType,
                                         performance: Any, platform_data: Dict) -> Decimal:
-        """Calculate revenue based on platform type"""
+        """
+Calculate revenue based on platform type"""
         params = self.platform_parameters.get(platform, {})
         
         if platform in [PlatformType.YOUTUBE, PlatformType.INSTAGRAM, PlatformType.TIKTOK]:
@@ -573,14 +581,16 @@ class RevenueCalculator:
         return max(total_revenue, self.minimum_revenue_threshold)
     
     async def _calculate_cpm(self, revenue: Decimal, views: int) -> Decimal:
-        """Calculate CPM (Cost Per Mille)"""
+        """
+Calculate CPM (Cost Per Mille)"""
         if views == 0:
             return Decimal('0')
         
         return (revenue / views) * 1000
     
     def _determine_revenue_type(self, platform: PlatformType) -> RevenueType:
-        """Determine primary revenue type for platform"""
+        """
+Determine primary revenue type for platform"""
         platform_revenue_types = {
             PlatformType.YOUTUBE: RevenueType.AD_REVENUE,
             PlatformType.INSTAGRAM: RevenueType.AD_REVENUE,
@@ -594,7 +604,8 @@ class RevenueCalculator:
         return platform_revenue_types.get(platform, RevenueType.AD_REVENUE)
     
     async def _store_revenue_metrics(self, metrics: RevenueMetrics):
-        """Store revenue metrics in database"""
+        """
+Store revenue metrics in database"""
         try:
             revenue_record = RevenueModel(
                 id=str(uuid.uuid4()),
@@ -640,7 +651,8 @@ class RevenueCalculator:
         return historical_data
     
     async def _analyze_revenue_trends(self, historical_data: List[Dict]) -> Dict[str, float]:
-        """Analyze revenue trends from historical data"""
+        """
+Analyze revenue trends from historical data"""
         if not historical_data:
             return {'growth_rate': 0.0, 'seasonality': 1.0}
         
@@ -671,7 +683,8 @@ class RevenueCalculator:
     async def _calculate_revenue_projections(self, content_id: str,
                                            historical_data: List[Dict],
                                            trends: Dict) -> Dict[str, Decimal]:
-        """Calculate revenue projections"""
+        """
+Calculate revenue projections"""
         if not historical_data:
             return {
                 '7_days': Decimal('0'),
@@ -711,7 +724,8 @@ class RevenueCalculator:
     async def _generate_revenue_recommendations(self, content_id: str,
                                               historical_data: List[Dict],
                                               trends: Dict) -> List[str]:
-        """Generate revenue optimization recommendations"""
+        """
+Generate revenue optimization recommendations"""
         recommendations = []
         
         # Analyze trends for recommendations
@@ -766,7 +780,8 @@ class RevenueCalculator:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
@@ -802,13 +817,15 @@ class RevenueCalculator:
     
     async def _get_user_revenue_data(self, user_id: str, start_date: datetime,
                                    end_date: datetime) -> List[Dict]:
-        """Get all revenue data for user in period"""
+        """
+Get all revenue data for user in period"""
         # Placeholder implementation
         return []
     
     async def _calculate_total_revenue(self, revenue_data: List[Dict],
                                      currency: Currency) -> Decimal:
-        """Calculate total revenue in specified currency"""
+        """
+Calculate total revenue in specified currency"""
         # Implementation for revenue calculation and currency conversion
         return Decimal('0')
     

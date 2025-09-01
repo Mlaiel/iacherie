@@ -4,6 +4,7 @@ Structured logging with multiple outputs, correlation IDs, and performance track
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import json
 import sys
@@ -17,10 +18,12 @@ from ..config import settings
 
 
 class JSONFormatter(logging.Formatter):
-    """JSON log formatter for structured logging"""
+    """
+JSON log formatter for structured logging"""
     
     def format(self, record: logging.LogRecord) -> str:
-        """Format log record as JSON"""
+        """
+Format log record as JSON"""
         log_entry = {
             "timestamp": datetime.utcnow().isoformat() + "Z",
             "level": record.levelname,
@@ -57,7 +60,8 @@ class CorrelationFilter(logging.Filter):
         self.correlation_id = None
     
     def filter(self, record: logging.LogRecord) -> bool:
-        """Add correlation ID to record"""
+        """
+Add correlation ID to record"""
         record.correlation_id = self.correlation_id or "no-correlation"
         return True
     
@@ -67,7 +71,8 @@ class CorrelationFilter(logging.Filter):
 
 
 class PerformanceLogger:
-    """Performance tracking and logging"""
+    """
+Performance tracking and logging"""
     
     def __init__(self, logger_name: str = "performance"):
         self.logger = logging.getLogger(logger_name)
@@ -224,7 +229,8 @@ class LoggerManager:
         self._setup_loggers()
     
     def _setup_loggers(self):
-        """Setup all loggers with appropriate handlers and formatters"""
+        """
+Setup all loggers with appropriate handlers and formatters"""
         # Root logger configuration
         root_logger = logging.getLogger()
         root_logger.setLevel(getattr(logging, settings.monitoring.log_level.upper()))
@@ -275,18 +281,21 @@ class LoggerManager:
         return logger
     
     def set_correlation_id(self, correlation_id: str):
-        """Set correlation ID for current context"""
+        """
+Set correlation ID for current context"""
         self.correlation_filter.set_correlation_id(correlation_id)
     
     def generate_correlation_id(self) -> str:
-        """Generate new correlation ID"""
+        """
+Generate new correlation ID"""
         correlation_id = str(uuid.uuid4())
         self.set_correlation_id(correlation_id)
         return correlation_id
     
     @contextmanager
     def correlation_context(self, correlation_id: Optional[str] = None):
-        """Context manager for correlation ID"""
+        """
+Context manager for correlation ID"""
         if correlation_id is None:
             correlation_id = self.generate_correlation_id()
         
@@ -299,7 +308,8 @@ class LoggerManager:
             self.correlation_filter.correlation_id = old_correlation_id
     
     def log_startup(self):
-        """Log application startup"""
+        """
+Log application startup"""
         logger = self.get_logger("ainflue.startup")
         logger.info("Ainflue platform starting up", extra={
             "version": "1.0.0",

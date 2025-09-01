@@ -7,6 +7,7 @@ Orchestrates authentication, data synchronization, and cross-platform operations
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformStatus:
-    """Platform connection and health status"""
+    """
+Platform connection and health status"""
     platform: str
     is_connected: bool
     is_authenticated: bool
@@ -41,7 +43,8 @@ class PlatformStatus:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Aggregated analytics across all platforms"""
+    """
+Aggregated analytics across all platforms"""
     date_range: Dict[str, str]
     total_content: int = 0
     total_views: int = 0
@@ -53,7 +56,8 @@ class CrossPlatformAnalytics:
 
 
 class PlatformCoordinator:
-    """Central coordinator for all platform integrations"""
+    """
+Central coordinator for all platform integrations"""
     
     def __init__(
         self,
@@ -80,7 +84,8 @@ class PlatformCoordinator:
         self.platform_status: Dict[str, PlatformStatus] = {}
         
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         await self.oauth_manager.__aenter__()
         await self.rate_limiter.__aenter__()
         await self.youtube_api.__aenter__()
@@ -93,7 +98,8 @@ class PlatformCoordinator:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         await self.oauth_manager.__aexit__(exc_type, exc_val, exc_tb)
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         await self.youtube_api.__aexit__(exc_type, exc_val, exc_tb)
@@ -112,7 +118,8 @@ class PlatformCoordinator:
         redirect_uri: str,
         scopes: Optional[List[str]] = None
     ):
-        """Configure OAuth settings for a platform"""
+        """
+Configure OAuth settings for a platform"""
         self.oauth_manager.configure_platform(
             platform, client_id, client_secret, redirect_uri, scopes
         )
@@ -264,7 +271,8 @@ class PlatformCoordinator:
         platforms: Optional[List[str]] = None,
         platform_specific_data: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """Sync content across multiple platforms"""
+        """
+Sync content across multiple platforms"""
         
         platforms = platforms or ["youtube", "instagram", "tiktok", "twitter"]
         platform_specific_data = platform_specific_data or {}

@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,9 @@ import random
 logger = logging.getLogger(__name__)
 
 class AdType(Enum):
-    """Advertisement types"""
+    """
+Advertisement types"""
+
     DISPLAY = "display"
     VIDEO = "video"
     AUDIO = "audio"
@@ -28,6 +31,7 @@ class AdType(Enum):
 
 class AdPlacement(Enum):
     """Advertisement placement types"""
+
     PRE_ROLL = "pre_roll"
     MID_ROLL = "mid_roll"
     POST_ROLL = "post_roll"
@@ -39,6 +43,7 @@ class AdPlacement(Enum):
 
 class AdNetwork(Enum):
     """Advertisement networks"""
+
     GOOGLE_ADS = "google_ads"
     FACEBOOK_ADS = "facebook_ads"
     AMAZON_ADS = "amazon_ads"
@@ -58,7 +63,8 @@ class AdvertisingJob:
 
 @dataclass 
 class AdvertisingResult:
-    """Result of advertising operations"""
+    """
+Result of advertising operations"""
     job_id: str
     success: bool
     ad_id: Optional[str] = None
@@ -69,7 +75,8 @@ class AdvertisingResult:
 
 @dataclass
 class Advertisement:
-    """Advertisement data model"""
+    """
+Advertisement data model"""
     ad_id: str
     content_id: str
     ad_type: AdType
@@ -107,7 +114,8 @@ class AdvertisingEngine:
         self.revenue_stats = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the advertising engine"""
+        """
+Initialize the advertising engine"""
         try:
             logger.info("Initializing Advertising Engine...")
             
@@ -399,7 +407,8 @@ class AdvertisingEngine:
             del self.active_jobs[job_id]
     
     async def _analyze_content_for_ads(self, content_id: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content for optimal ad placement"""
+        """
+Analyze content for optimal ad placement"""
         # Simulate content analysis
         content_type = metadata.get("type", "video")
         duration = metadata.get("duration", 300)  # seconds

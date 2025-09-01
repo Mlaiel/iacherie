@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule configuration"""
+    """
+Rate limiting rule configuration"""
     identifier: str  # user_id, ip_address, api_key, etc.
     limit: int      # requests per window
     window: int     # time window in seconds
@@ -39,7 +41,8 @@ class RateLimitRule:
 
 @dataclass
 class RateLimitStatus:
-    """Current rate limit status"""
+    """
+Current rate limit status"""
     allowed: bool
     remaining: int
     reset_time: datetime
@@ -66,7 +69,8 @@ class RateLimiter:
         default_limit: int = 1000,
         window: int = 60
     ):
-        """Initialize rate limiter"""
+        """
+Initialize rate limiter"""
         self.redis_url = redis_url
         self.strategy = strategy
         self.default_limit = default_limit
@@ -253,7 +257,8 @@ class RateLimiter:
             return await self._sliding_window_check(identifier, rule)
     
     async def _token_bucket_check(self, identifier: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Token bucket rate limiting algorithm"""
+        """
+Token bucket rate limiting algorithm"""
         try:
             current_time = time.time()
             bucket_key = f"rate_limit:token_bucket:{identifier}"

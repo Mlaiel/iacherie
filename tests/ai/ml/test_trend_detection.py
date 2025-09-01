@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Trend Detection Tests - Enterprise Grade Test Suite
+"""
+Trend Detection Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for trend detection, market analysis, virality prediction,
 and competitive intelligence systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -50,10 +53,12 @@ from ai.ml.trend_detection import (
 
 
 class TestTrendDetector:
-    """Tests for basic trend detection functionality"""
+    """
+Tests for basic trend detection functionality"""
     
     def test_init_trend_detector(self):
-        """Test trend detector initialization"""
+        """
+Test trend detector initialization"""
         detector = TrendDetector(
             time_window="7d",
             min_trend_strength=0.3,
@@ -160,7 +165,8 @@ class TestTrendDetector:
         assert no_trend_strength < 0.3  # Weak or no trend
 
     def test_multi_timeframe_trend_analysis(self, sample_trend_data):
-        """Test trend analysis across multiple timeframes"""
+        """
+Test trend analysis across multiple timeframes"""
         detector = TrendDetector()
         
         timeframes = ["1h", "4h", "1d", "1w", "1m"]
@@ -187,7 +193,8 @@ class TestMarketTrendAnalyzer:
     """Tests for market trend analysis functionality"""
     
     def test_init_market_analyzer(self):
-        """Test market trend analyzer initialization"""
+        """
+Test market trend analyzer initialization"""
         analyzer = MarketTrendAnalyzer(
             market_sectors=["technology", "healthcare", "finance", "entertainment"],
             data_sources=["social_media", "news", "search_trends", "financial_data"],
@@ -304,7 +311,8 @@ class TestContentTrendPredictor:
     """Tests for content trend prediction"""
     
     def test_init_content_predictor(self):
-        """Test content trend predictor initialization"""
+        """
+Test content trend predictor initialization"""
         predictor = ContentTrendPredictor(
             content_categories=["music", "technology", "lifestyle", "education"],
             prediction_horizon="30d",
@@ -439,7 +447,8 @@ class TestViralityPredictor:
     """Tests for virality prediction functionality"""
     
     def test_init_virality_predictor(self):
-        """Test virality predictor initialization"""
+        """
+Test virality predictor initialization"""
         predictor = ViralityPredictor(
             viral_threshold=10000,  # Minimum views for viral content
             prediction_window="24h",
@@ -468,7 +477,8 @@ class TestViralityPredictor:
         assert non_viral_score < 0.3  # Low viral probability
 
     def test_early_viral_detection(self):
-        """Test early viral detection within first few hours"""
+        """
+Test early viral detection within first few hours"""
         predictor = ViralityPredictor(enable_real_time_prediction=True)
         
         # Mock early engagement data (first 2 hours)
@@ -568,7 +578,8 @@ class TestTrendForecastingEngine:
     """Tests for trend forecasting functionality"""
     
     def test_init_forecasting_engine(self):
-        """Test trend forecasting engine initialization"""
+        """
+Test trend forecasting engine initialization"""
         engine = TrendForecastingEngine(
             forecasting_models=["ARIMA", "LSTM", "Prophet"],
             forecast_horizons=["1d", "1w", "1m", "3m"],
@@ -710,7 +721,8 @@ class TestCompetitiveIntelligenceEngine:
     """Tests for competitive intelligence functionality"""
     
     def test_init_competitive_intelligence(self):
-        """Test competitive intelligence engine initialization"""
+        """
+Test competitive intelligence engine initialization"""
         engine = CompetitiveIntelligenceEngine(
             target_company="TechCorp",
             competitors=["CompetitorA", "CompetitorB", "CompetitorC"],
@@ -840,7 +852,8 @@ class TestTrendMetrics:
     """Tests for trend analysis metrics and evaluation"""
     
     def test_init_trend_metrics(self):
-        """Test trend metrics initialization"""
+        """
+Test trend metrics initialization"""
         metrics = TrendMetrics()
         
         assert hasattr(metrics, 'prediction_accuracy')
@@ -849,7 +862,8 @@ class TestTrendMetrics:
         assert hasattr(metrics, 'timing_accuracy')
 
     def test_trend_detection_accuracy(self):
-        """Test trend detection accuracy calculation"""
+        """
+Test trend detection accuracy calculation"""
         metrics = TrendMetrics()
         
         # Mock trend predictions vs actual trends
@@ -943,7 +957,8 @@ class TestTrendDetectionIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_trend_analysis_pipeline(self, sample_trend_data, temp_dir):
-        """Test complete trend analysis pipeline"""
+        """
+Test complete trend analysis pipeline"""
         # Initialize components
         detector = TrendDetector(detection_algorithms=["momentum", "breakout"])
         predictor = ContentTrendPredictor(content_categories=["technology"])

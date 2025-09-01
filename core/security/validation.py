@@ -19,6 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 import re
 import mimetypes
 import magic
@@ -54,7 +55,9 @@ from backend.core.logging import SecurityLogger
 
 
 class ValidationResult(Enum):
-    """Validation result status with threat levels"""
+    """
+Validation result status with threat levels"""
+
     VALID = "valid"
     INVALID = "invalid"
     SUSPICIOUS = "suspicious"
@@ -65,6 +68,7 @@ class ValidationResult(Enum):
 
 class ThreatCategory(Enum):
     """Threat categories for classification"""
+
     MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
@@ -80,6 +84,7 @@ class ThreatCategory(Enum):
 
 class ContentCategory(Enum):
     """Content categories for validation"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -118,7 +123,8 @@ class MalwareSignature:
 
 
 class InputValidator:
-    """Advanced input validation and sanitization"""
+    """
+Advanced input validation and sanitization"""
     
     def __init__(self):
         self.logger = SecurityLogger("InputValidator")
@@ -705,7 +711,8 @@ class ContentValidator:
         return ext_mapping.get(file_extension.lower())
     
     def _get_category_from_mime(self, mime_type: str) -> Optional[ContentCategory]:
-        """Get content category from MIME type"""
+        """
+Get content category from MIME type"""
         if mime_type.startswith('image/'):
             return ContentCategory.IMAGE
         elif mime_type.startswith('audio/'):
@@ -722,7 +729,8 @@ class ContentValidator:
             return None
     
     def _is_mime_type_allowed(self, mime_type: str, category: Optional[ContentCategory]) -> bool:
-        """Check if MIME type is allowed for the category"""
+        """
+Check if MIME type is allowed for the category"""
         if not category:
             return False
         
@@ -730,7 +738,8 @@ class ContentValidator:
         return mime_type in allowed_types
     
     def _contains_executable_code(self, file_data: bytes) -> bool:
-        """Check if file contains executable code"""
+        """
+Check if file contains executable code"""
         # Check for PE header (Windows executables)
         if file_data.startswith(b'MZ'):
             return True
@@ -756,7 +765,8 @@ class ContentValidator:
         return False
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data"""
+        """
+Calculate Shannon entropy of data"""
         if not data:
             return 0.0
         
@@ -778,7 +788,8 @@ class ContentValidator:
 
 
 class MalwareScanner:
-    """Malware detection and scanning"""
+    """
+Malware detection and scanning"""
     
     def __init__(self):
         self.logger = SecurityLogger("MalwareScanner")

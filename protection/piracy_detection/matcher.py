@@ -4,7 +4,7 @@
 Advanced AI-powered content matching and similarity detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - Multi-modal content fingerprint matching
@@ -13,6 +13,7 @@ This module provides:
 - Batch processing optimization
 - Advanced matching algorithms
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class MatchingAlgorithm(Enum):
-    """Content matching algorithms."""
+    """
+Content matching algorithms."""
+
     COSINE_SIMILARITY = "cosine"
     EUCLIDEAN_DISTANCE = "euclidean" 
     HAMMING_DISTANCE = "hamming"
@@ -34,6 +37,7 @@ class MatchingAlgorithm(Enum):
 
 class ContentType(Enum):
     """Content types for matching."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -530,7 +534,8 @@ class ContentMatcher:
             return 0.0
     
     def _euclidean_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate similarity based on Euclidean distance."""
+        """
+Calculate similarity based on Euclidean distance."""
         try:
             distance = np.linalg.norm(vector1 - vector2)
             max_distance = np.sqrt(len(vector1))  # Maximum possible distance
@@ -539,7 +544,8 @@ class ContentMatcher:
             return 0.0
     
     def _hamming_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate Hamming similarity."""
+        """
+Calculate Hamming similarity."""
         try:
             # Convert to binary for Hamming distance
             binary1 = (vector1 > np.mean(vector1)).astype(int)
@@ -550,7 +556,8 @@ class ContentMatcher:
             return 0.0
     
     def _jaccard_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate Jaccard similarity."""
+        """
+Calculate Jaccard similarity."""
         try:
             # Convert to sets for Jaccard
             set1 = set(np.where(vector1 > np.mean(vector1))[0])
@@ -562,12 +569,14 @@ class ContentMatcher:
             return 0.0
     
     def _perceptual_hash_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate perceptual hash similarity."""
+        """
+Calculate perceptual hash similarity."""
         # Simplified perceptual hash similarity
         return self._cosine_similarity(vector1, vector2)
     
     def _deep_learning_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate deep learning-based similarity."""
+        """
+Calculate deep learning-based similarity."""
         # Simulate deep learning similarity
         # In production, this would use trained neural networks
         base_similarity = self._cosine_similarity(vector1, vector2)
@@ -575,7 +584,8 @@ class ContentMatcher:
         return min(1.0, base_similarity * 1.1)
     
     def _calculate_confidence(self, similarity_score: float, algorithm: MatchingAlgorithm) -> float:
-        """Calculate confidence score for a match."""
+        """
+Calculate confidence score for a match."""
         # Algorithm-specific confidence adjustments
         algorithm_confidence_factors = {
             MatchingAlgorithm.DEEP_LEARNING: 1.0,
@@ -590,7 +600,8 @@ class ContentMatcher:
         return min(1.0, similarity_score * factor)
     
     def _get_feature_breakdown(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Dict[str, float]:
-        """Get detailed feature-by-feature similarity breakdown."""
+        """
+Get detailed feature-by-feature similarity breakdown."""
         # Simplified feature breakdown
         return {
             'vector_similarity': self._cosine_similarity(
@@ -657,7 +668,8 @@ class ContentMatcher:
         return combined_matches
     
     def _is_cache_valid(self, cached_data: Dict[str, Any]) -> bool:
-        """Check if cached data is still valid."""
+        """
+Check if cached data is still valid."""
         cache_time = cached_data.get('timestamp')
         ttl_hours = cached_data.get('ttl_hours', 1)
         
@@ -668,7 +680,8 @@ class ContentMatcher:
         return False
     
     def _update_cache_stats(self, cache_hit: bool) -> None:
-        """Update cache statistics."""
+        """
+Update cache statistics."""
         total_requests = self.matching_stats.get('total_requests', 0) + 1
         cache_hits = self.matching_stats.get('cache_hits', 0)
         
@@ -680,7 +693,8 @@ class ContentMatcher:
         self.matching_stats['cache_hit_rate'] = cache_hits / total_requests if total_requests > 0 else 0.0
     
     def _update_matching_stats(self, matches: List[MatchResult], processing_time: float) -> None:
-        """Update matching performance statistics."""
+        """
+Update matching performance statistics."""
         self.matching_stats['total_matches_performed'] += 1
         
         if matches:
@@ -703,7 +717,8 @@ class ContentMatcher:
                 self.matching_stats['performance_metrics']['processing_times'][-1000:]
     
     async def get_matching_stats(self) -> Dict[str, Any]:
-        """Get matching performance statistics."""
+        """
+Get matching performance statistics."""
         stats = self.matching_stats.copy()
         
         # Calculate additional metrics
@@ -718,7 +733,8 @@ class ContentMatcher:
         return stats
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the matcher."""
+        """
+Gracefully shutdown the matcher."""
         logger.info("Shutting down Content Matcher...")
         
         # Clear cache

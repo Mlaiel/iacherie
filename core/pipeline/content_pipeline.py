@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Upload → Format Detection → Quality Analysis → AI Enhancement → Optimization → Validation
 """
+
 import asyncio
 import logging
 import time
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentPipelineStage(Enum):
-    """Content processing pipeline stages"""
+    """
+Content processing pipeline stages"""
+
     UPLOAD_VALIDATION = "upload_validation"
     FORMAT_DETECTION = "format_detection"
     CONTENT_ANALYSIS = "content_analysis"
@@ -42,6 +45,7 @@ class ContentPipelineStage(Enum):
 
 class ContentType(Enum):
     """Supported content types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -52,6 +56,7 @@ class ContentType(Enum):
 
 class ProcessingQuality(Enum):
     """Processing quality levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -78,7 +83,8 @@ class ContentMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Content processing result"""
+    """
+Content processing result"""
     success: bool = False
     content_id: str = ""
     original_path: Optional[str] = None
@@ -125,7 +131,8 @@ class OptimizationGate:
 
 
 class ContentProcessor:
-    """Individual content processor"""
+    """
+Individual content processor"""
     
     def __init__(self, processor_type: str, config: Dict[str, Any]):
         self.processor_type = processor_type
@@ -277,7 +284,8 @@ class ContentProcessingPipeline:
         }
     
     def _initialize_quality_gates(self):
-        """Initialize quality gates"""
+        """
+Initialize quality gates"""
         self.quality_gates = [
             QualityGate(
                 name="file_size_check",
@@ -711,28 +719,33 @@ class ContentProcessingPipeline:
         return 0.85  # Would implement actual quality analysis
     
     async def _validate_ai_enhancement(self, file_path: str, parameters: Dict[str, Any]) -> float:
-        """Validate AI enhancement quality"""
+        """
+Validate AI enhancement quality"""
         # Simulate AI enhancement validation
         return 0.90  # Would implement actual AI quality assessment
     
     async def _validate_virus_scan(self, file_path: str, parameters: Dict[str, Any]) -> bool:
-        """Validate virus scan"""
+        """
+Validate virus scan"""
         # Simulate virus scan
         return True  # Would implement actual virus scanning
     
     async def _validate_copyright(self, file_path: str, parameters: Dict[str, Any]) -> bool:
-        """Validate copyright"""
+        """
+Validate copyright"""
         # Simulate copyright check
         return True  # Would implement actual copyright verification
     
     async def _validate_content_policy(self, file_path: str, parameters: Dict[str, Any]) -> bool:
-        """Validate content policy"""
+        """
+Validate content policy"""
         # Simulate content policy check
         return True  # Would implement actual policy validation
     
     # Optimization Methods
     async def _optimize_compression(self, file_path: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize compression"""
+        """
+Optimize compression"""
         target_reduction = parameters.get("target_size_reduction", 0.3)
         
         return {
@@ -770,11 +783,13 @@ class ContentProcessingPipeline:
         return self.active_processes.get(content_id) or self.completed_processes.get(content_id)
     
     def get_active_processes(self) -> Dict[str, ProcessingResult]:
-        """Get all active processes"""
+        """
+Get all active processes"""
         return self.active_processes.copy()
     
     def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing metrics"""
+        """
+Get processing metrics"""
         completed_processes = list(self.completed_processes.values())
         
         return {

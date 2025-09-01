@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...core.cache import CacheManager
 
 
 class PolicyType(Enum):
-    """Types of data governance policies"""
+    """
+Types of data governance policies"""
+
     COMPLIANCE = "compliance"
     QUALITY = "quality"
     RETENTION = "retention"
@@ -41,6 +44,7 @@ class PolicyType(Enum):
 
 class PolicySeverity(Enum):
     """Policy violation severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -49,6 +53,7 @@ class PolicySeverity(Enum):
 
 class PolicyAction(Enum):
     """Actions to take when policy is violated"""
+
     ALERT = "alert"
     QUARANTINE = "quarantine"
     DELETE = "delete"
@@ -74,7 +79,8 @@ class PolicyRule:
 
 @dataclass
 class PolicyViolation:
-    """Policy violation record"""
+    """
+Policy violation record"""
     violation_id: str
     policy_id: str
     rule_id: str
@@ -123,7 +129,8 @@ class DataPolicy:
         self.avg_execution_time = 0.0
     
     def add_rule(self, rule: PolicyRule) -> None:
-        """Add a new rule to the policy"""
+        """
+Add a new rule to the policy"""
         if any(r.rule_id == rule.rule_id for r in self.rules):
             raise PolicyError(f"Rule {rule.rule_id} already exists in policy {self.policy_id}")
         
@@ -141,7 +148,8 @@ class DataPolicy:
         return False
     
     def update_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
-        """Update an existing rule"""
+        """
+Update an existing rule"""
         for rule in self.rules:
             if rule.rule_id == rule_id:
                 for key, value in updates.items():
@@ -152,7 +160,8 @@ class DataPolicy:
         return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert policy to dictionary"""
+        """
+Convert policy to dictionary"""
         return {
             "policy_id": self.policy_id,
             "name": self.name,
@@ -288,7 +297,8 @@ class PolicyEngine(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the policy engine"""
+        """
+Initialize the policy engine"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         

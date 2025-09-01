@@ -7,6 +7,7 @@ multi-currency support, and compliance with international tax regulations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class InvoiceStatus(Enum):
-    """Invoice status types"""
+    """
+Invoice status types"""
+
     DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
@@ -34,6 +37,7 @@ class InvoiceStatus(Enum):
 
 class InvoiceType(Enum):
     """Invoice types"""
+
     STANDARD = "standard"
     RECURRING = "recurring"
     COMMISSION = "commission"
@@ -54,7 +58,8 @@ class InvoiceLineItem:
 
 @dataclass
 class InvoiceData:
-    """Invoice data structure"""
+    """
+Invoice data structure"""
     invoice_id: str
     customer_id: str
     invoice_number: str
@@ -81,7 +86,8 @@ class InvoiceGeneratorEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize invoice generator engine"""
+        """
+Initialize invoice generator engine"""
         try:
             await self._setup_database_tables()
             await self._load_tax_configurations()
@@ -133,7 +139,8 @@ class InvoiceGeneratorEngine:
             """)
 
     async def _load_tax_configurations(self) -> None:
-        """Load tax configurations from database"""
+        """
+Load tax configurations from database"""
         try:
             # Cache tax rates by country/region
             tax_rates = {

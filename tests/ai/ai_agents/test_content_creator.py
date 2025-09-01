@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Content Creator Agent
+"""
+Comprehensive Tests for Content Creator Agent
 
 Industrial-grade testing for the advanced content creation agent covering multi-format
 content generation, style transfer, brand consistency, and platform optimization.
@@ -38,6 +40,7 @@ Project Team Specialties:
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
 """
+
 import pytest
 import sys
 import os
@@ -132,12 +135,14 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         self.mock_outputs = {}
         
     async def _custom_initialize(self) -> None:
-        """Test implementation of custom initialization"""
+        """
+Test implementation of custom initialization"""
         await asyncio.sleep(0.1)
         self.status = AgentStatus.READY
         
     async def _create_text_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Mock text content creation"""
+        """
+Mock text content creation"""
         content = f"Generated text content for: {request.style_preferences.get('topic', 'general')}"
         return {
             "content": content,
@@ -181,7 +186,8 @@ class TestContentCreatorAgent:
     
     @pytest.fixture
     def creator_config(self) -> AgentConfiguration:
-        """Content creator agent configuration"""
+        """
+Content creator agent configuration"""
         return AgentConfiguration(
             agent_id="content_creator_001",
             agent_name="Advanced Content Creator",
@@ -215,7 +221,8 @@ class TestContentCreatorAgent:
     
     @pytest.fixture
     def text_creation_request(self) -> ContentCreationRequest:
-        """Text content creation request"""
+        """
+Text content creation request"""
         return ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
@@ -932,7 +939,8 @@ class TestContentCreatorAgent:
     
     @pytest.fixture
     def content_agent_config(self) -> AgentConfiguration:
-        """Content creator agent configuration"""
+        """
+Content creator agent configuration"""
         return AgentConfiguration(
             agent_id="content_creator_test",
             agent_name="Test Content Creator",
@@ -968,7 +976,8 @@ class TestContentCreatorAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, content_agent_config):
-        """Test content creator agent initialization"""
+        """
+Test content creator agent initialization"""
         agent = ContentCreatorAgent(content_agent_config)
         
         # Before initialization

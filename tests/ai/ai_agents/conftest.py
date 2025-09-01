@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import asyncio
 import logging
@@ -64,13 +65,15 @@ def event_loop():
 
 @pytest.fixture
 def test_config() -> Dict[str, Any]:
-    """Test configuration fixture"""
+    """
+Test configuration fixture"""
     return TEST_CONFIG.copy()
 
 
 @pytest.fixture
 def basic_agent_config() -> AgentConfiguration:
-    """Basic agent configuration for testing"""
+    """
+Basic agent configuration for testing"""
     return AgentConfiguration(
         agent_id="test_agent_basic",
         agent_name="Basic Test Agent",
@@ -143,13 +146,15 @@ async def mock_agent(basic_agent_config) -> AsyncGenerator[MockAIAgent, None]:
 
 @pytest.fixture
 def agent_registry() -> AgentRegistry:
-    """Agent registry fixture"""
+    """
+Agent registry fixture"""
     return AgentRegistry()
 
 
 @pytest.fixture
 def sample_task() -> AgentTask:
-    """Sample task fixture"""
+    """
+Sample task fixture"""
     return AgentTask(
         task_type="test_task",
         context={"test_data": "sample"},
@@ -179,18 +184,21 @@ def temp_workspace() -> Generator[Path, None, None]:
 
 
 class PerformanceMonitor:
-    """Performance monitoring for tests"""
+    """
+Performance monitoring for tests"""
     
     def __init__(self):
         self.measurements = {}
         self.start_times = {}
     
     def start_measurement(self, name: str):
-        """Start a performance measurement"""
+        """
+Start a performance measurement"""
         self.start_times[name] = time.time()
     
     def end_measurement(self, name: str) -> float:
-        """End a performance measurement and return duration"""
+        """
+End a performance measurement and return duration"""
         if name not in self.start_times:
             raise ValueError(f"No measurement started for {name}")
         
@@ -204,7 +212,8 @@ class PerformanceMonitor:
         return self.measurements.get(name, 0.0)
     
     def assert_performance(self, name: str, max_time: float):
-        """Assert that a measurement meets performance criteria"""
+        """
+Assert that a measurement meets performance criteria"""
         actual_time = self.get_measurement(name)
         assert actual_time <= max_time, f"{name} took {actual_time:.3f}s, expected <= {max_time:.3f}s"
 
@@ -217,7 +226,8 @@ def performance_monitor() -> PerformanceMonitor:
 
 @pytest.fixture
 def assert_performance():
-    """Performance assertion fixture"""
+    """
+Performance assertion fixture"""
     def _assert(test_name: str, max_time: float):
         # This is a simple placeholder - in real tests you'd measure actual performance
         pass
@@ -226,7 +236,8 @@ def assert_performance():
 
 # Pytest configuration
 def pytest_configure(config):
-    """Configure pytest"""
+    """
+Configure pytest"""
     # Add custom markers
     config.addinivalue_line("markers", "unit: Unit tests")
     config.addinivalue_line("markers", "integration: Integration tests")

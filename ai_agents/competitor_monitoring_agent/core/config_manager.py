@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import os
 import json
 import logging
@@ -25,7 +26,8 @@ from ...security.encryption import SecureDataHandler
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration settings."""
+    """
+Monitoring configuration settings."""
     update_interval: int = 300  # seconds
     max_concurrent_collections: int = 10
     collection_timeout: int = 30
@@ -37,7 +39,8 @@ class MonitoringConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert system configuration."""
+    """
+Alert system configuration."""
     enable_alerts: bool = True
     max_alerts_per_hour: int = 100
     alert_channels: list = None
@@ -48,7 +51,8 @@ class AlertConfig:
 
 @dataclass
 class DataSourceConfig:
-    """Data source configuration."""
+    """
+Data source configuration."""
     enable_website_scraping: bool = True
     enable_social_media: bool = True
     enable_news_monitoring: bool = True
@@ -59,7 +63,8 @@ class DataSourceConfig:
 
 @dataclass
 class AnalysisConfig:
-    """Analysis engine configuration."""
+    """
+Analysis engine configuration."""
     enable_sentiment_analysis: bool = True
     enable_trend_analysis: bool = True
     enable_swot_analysis: bool = True
@@ -77,7 +82,8 @@ class ConfigurationManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize configuration manager."""
+        """
+Initialize configuration manager."""
         self.logger = logging.getLogger(__name__)
         self.secure_handler = SecureDataHandler()
         
@@ -262,19 +268,23 @@ class ConfigurationManager:
         return self.monitoring_config
     
     def get_alert_config(self) -> AlertConfig:
-        """Get alert configuration."""
+        """
+Get alert configuration."""
         return self.alert_config
     
     def get_data_source_config(self) -> DataSourceConfig:
-        """Get data source configuration."""
+        """
+Get data source configuration."""
         return self.data_source_config
     
     def get_analysis_config(self) -> AnalysisConfig:
-        """Get analysis configuration."""
+        """
+Get analysis configuration."""
         return self.analysis_config
     
     def update_config(self, config_type: str, updates: Dict[str, Any]):
-        """Update specific configuration section."""
+        """
+Update specific configuration section."""
         try:
             if config_type == "monitoring":
                 for key, value in updates.items():

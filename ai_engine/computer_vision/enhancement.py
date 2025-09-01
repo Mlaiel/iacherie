@@ -49,6 +49,7 @@ logger = logging.getLogger(__name__)
 
 class EnhancementType(Enum):
     """Types of enhancement operations"""
+
     NOISE_REDUCTION = "noise_reduction"
     SHARPENING = "sharpening"
     COLOR_CORRECTION = "color_correction"
@@ -62,6 +63,7 @@ class EnhancementType(Enum):
 
 class QualityLevel(Enum):
     """Quality enhancement levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -108,7 +110,8 @@ class QualityMetrics:
     before_after_comparison: Dict[str, float] = field(default_factory=dict)
 
 class BaseEnhancer(ABC):
-    """Abstract base class for all enhancement engines"""
+    """
+Abstract base class for all enhancement engines"""
     
     def __init__(self, device: str = "auto"):
         self.device = self._setup_device(device)
@@ -133,14 +136,17 @@ class BaseEnhancer(ABC):
     
     @abstractmethod
     def enhance(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Perform enhancement on image"""
+        """
+Perform enhancement on image"""
         pass
 
 class NoiseReducer(BaseEnhancer):
-    """Advanced noise reduction using multiple algorithms"""
+    """
+Advanced noise reduction using multiple algorithms"""
     
     def _init_enhancer(self):
-        """Initialize noise reduction models"""
+        """
+Initialize noise reduction models"""
         self.bilateral_config = {
             'd': 9,
             'sigmaColor': 75,
@@ -160,7 +166,8 @@ class NoiseReducer(BaseEnhancer):
         }
     
     def enhance(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Apply advanced noise reduction"""
+        """
+Apply advanced noise reduction"""
         start_time = time.time()
         
         try:
@@ -262,10 +269,12 @@ class NoiseReducer(BaseEnhancer):
         )
 
 class ColorCorrector(BaseEnhancer):
-    """Professional color correction and grading engine"""
+    """
+Professional color correction and grading engine"""
     
     def _init_enhancer(self):
-        """Initialize color correction components"""
+        """
+Initialize color correction components"""
         self.color_spaces = ['RGB', 'HSV', 'LAB', 'XYZ']
         self.reference_white_points = {
             'D65': [95.047, 100.000, 108.883],
@@ -277,7 +286,8 @@ class ColorCorrector(BaseEnhancer):
         self.luts = self._generate_professional_luts()
     
     def _generate_professional_luts(self) -> Dict[str, np.ndarray]:
-        """Generate professional color grading LUTs"""
+        """
+Generate professional color grading LUTs"""
         luts = {}
         
         # Cinematic LUT
@@ -306,7 +316,8 @@ class ColorCorrector(BaseEnhancer):
         return luts
     
     def enhance(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Apply professional color correction"""
+        """
+Apply professional color correction"""
         start_time = time.time()
         
         try:
@@ -378,7 +389,8 @@ class ColorCorrector(BaseEnhancer):
         return corrected.astype(np.uint8)
     
     def _apply_gamma_correction(self, image: np.ndarray, gamma: float) -> np.ndarray:
-        """Apply gamma correction"""
+        """
+Apply gamma correction"""
         # Build lookup table
         inv_gamma = 1.0 / gamma
         table = np.array([((i / 255.0) ** inv_gamma) * 255 for i in np.arange(0, 256)]).astype("uint8")
@@ -416,14 +428,16 @@ class ColorCorrector(BaseEnhancer):
         return cv2.cvtColor(lab, cv2.COLOR_LAB2RGB)
     
     def _adjust_saturation(self, image: np.ndarray, multiplier: float) -> np.ndarray:
-        """Adjust color saturation in HSV space"""
+        """
+Adjust color saturation in HSV space"""
         hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV).astype(np.float32)
         hsv[:, :, 1] = hsv[:, :, 1] * multiplier
         hsv[:, :, 1] = np.clip(hsv[:, :, 1], 0, 255)
         return cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2RGB)
     
     def _apply_lut(self, image: np.ndarray, lut: np.ndarray) -> np.ndarray:
-        """Apply Look-Up Table for color grading"""
+        """
+Apply Look-Up Table for color grading"""
         # Normalize image to 0-1 range
         img_normalized = image.astype(np.float32) / 255.0
         
@@ -444,7 +458,8 @@ class ColorCorrector(BaseEnhancer):
         return (result * 255).astype(np.uint8)
     
     def _calculate_color_metrics(self, original: np.ndarray, processed: np.ndarray, processing_time: float) -> QualityMetrics:
-        """Calculate color correction quality metrics"""
+        """
+Calculate color correction quality metrics"""
         # Color histogram comparison
         orig_hist = cv2.calcHist([original], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
         proc_hist = cv2.calcHist([processed], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
@@ -474,10 +489,12 @@ class ColorCorrector(BaseEnhancer):
         )
 
 class ResolutionUpscaler(BaseEnhancer):
-    """AI-powered resolution upscaling engine"""
+    """
+AI-powered resolution upscaling engine"""
     
     def _init_enhancer(self):
-        """Initialize upscaling models"""
+        """
+Initialize upscaling models"""
         self.upscale_methods = {
             'bicubic': cv2.INTER_CUBIC,
             'lanczos': cv2.INTER_LANCZOS4,
@@ -490,7 +507,8 @@ class ResolutionUpscaler(BaseEnhancer):
         self.ai_models_available = False
     
     def enhance(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Perform resolution upscaling"""
+        """
+Perform resolution upscaling"""
         start_time = time.time()
         
         try:
@@ -558,10 +576,12 @@ class ResolutionUpscaler(BaseEnhancer):
         return upscaled
     
     def _ai_upscale(self, image: np.ndarray, scale_factor: float, method: str) -> np.ndarray:
-        """AI-based super-resolution using advanced deep learning models"""
+        """
+AI-based super-resolution using advanced deep learning models"""
         
         class SuperResolutionModel(nn.Module):
-            """Enhanced Deep Super-Resolution (EDSR) model implementation"""
+            """
+Enhanced Deep Super-Resolution (EDSR) model implementation"""
             
             def __init__(self, scale_factor=2, num_channels=3, num_features=256, num_blocks=32):
                 super().__init__()
@@ -585,7 +605,8 @@ class ResolutionUpscaler(BaseEnhancer):
                 self.conv_output = nn.Conv2d(num_features, num_channels, 3, padding=1)
                 
             def _make_residual_block(self, num_features):
-                """Create residual block with enhanced feature learning"""
+                """
+Create residual block with enhanced feature learning"""
                 return nn.Sequential(
                     nn.Conv2d(num_features, num_features, 3, padding=1),
                     nn.ReLU(inplace=True),
@@ -593,7 +614,8 @@ class ResolutionUpscaler(BaseEnhancer):
                 )
                 
             def _make_upsampling_layer(self, num_features, scale_factor):
-                """Create upsampling layer using sub-pixel convolution"""
+                """
+Create upsampling layer using sub-pixel convolution"""
                 layers = []
                 for _ in range(int(np.log2(scale_factor))):
                     layers.append(nn.Conv2d(num_features, num_features * 4, 3, padding=1))
@@ -602,7 +624,8 @@ class ResolutionUpscaler(BaseEnhancer):
                 return nn.Sequential(*layers)
                 
             def forward(self, x):
-                """Forward pass through super-resolution model"""
+                """
+Forward pass through super-resolution model"""
                 # Initial feature extraction
                 features = self.conv_input(x)
                 residual = features
@@ -724,7 +747,8 @@ class ResolutionUpscaler(BaseEnhancer):
         )
 
 class ImageEnhancer:
-    """Comprehensive image enhancement orchestrator"""
+    """
+Comprehensive image enhancement orchestrator"""
     
     def __init__(self):
         self.noise_reducer = NoiseReducer()
@@ -733,7 +757,8 @@ class ImageEnhancer:
         self.enhancement_pipeline = []
     
     def enhance_image(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, Dict[str, QualityMetrics]]:
-        """Apply comprehensive image enhancement"""
+        """
+Apply comprehensive image enhancement"""
         enhanced = image.copy()
         metrics_collection = {}
         
@@ -755,7 +780,8 @@ class ImageEnhancer:
         return enhanced, metrics_collection
     
     def _basic_enhancement(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Basic enhancement for quick processing"""
+        """
+Basic enhancement for quick processing"""
         # Simple brightness and contrast adjustment
         enhanced = cv2.convertScaleAbs(
             image, 
@@ -775,7 +801,8 @@ class ImageEnhancer:
         )
     
     def _standard_enhancement(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Standard enhancement with noise reduction and color correction"""
+        """
+Standard enhancement with noise reduction and color correction"""
         # Apply noise reduction
         enhanced, noise_metrics = self.noise_reducer.enhance(image, settings)
         
@@ -789,7 +816,8 @@ class ImageEnhancer:
         return enhanced, combined_metrics
     
     def _professional_enhancement(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Professional enhancement with full pipeline"""
+        """
+Professional enhancement with full pipeline"""
         # Stage 1: Noise reduction
         enhanced, noise_metrics = self.noise_reducer.enhance(image, settings)
         
@@ -807,7 +835,8 @@ class ImageEnhancer:
         return enhanced, combined_metrics
     
     def _studio_enhancement(self, image: np.ndarray, settings: EnhancementSettings) -> Tuple[np.ndarray, QualityMetrics]:
-        """Studio-grade enhancement with all advanced features"""
+        """
+Studio-grade enhancement with all advanced features"""
         # Stage 1: Advanced noise reduction
         enhanced, noise_metrics = self.noise_reducer.enhance(image, settings)
         
@@ -833,7 +862,8 @@ class ImageEnhancer:
         return enhanced, combined_metrics
     
     def _apply_professional_sharpening(self, image: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Apply professional unsharp masking"""
+        """
+Apply professional unsharp masking"""
         gaussian = cv2.GaussianBlur(image, (0, 0), 1.0)
         sharpened = cv2.addWeighted(
             image, 
@@ -845,7 +875,8 @@ class ImageEnhancer:
         return sharpened
     
     def _apply_advanced_sharpening(self, image: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Apply advanced multi-scale sharpening"""
+        """
+Apply advanced multi-scale sharpening"""
         # Multi-scale unsharp masking
         enhanced = image.copy().astype(np.float32)
         
@@ -857,7 +888,8 @@ class ImageEnhancer:
         return np.clip(enhanced, 0, 255).astype(np.uint8)
     
     def _apply_hdr_processing(self, image: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Apply HDR-like processing"""
+        """
+Apply HDR-like processing"""
         # Tone mapping for HDR effect
         img_float = image.astype(np.float32) / 255.0
         
@@ -869,7 +901,8 @@ class ImageEnhancer:
         return cv2.cvtColor(lab, cv2.COLOR_LAB2RGB)
     
     def _apply_final_polish(self, image: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Apply final polish and refinements"""
+        """
+Apply final polish and refinements"""
         # Subtle detail enhancement
         enhanced = image.copy()
         
@@ -880,7 +913,8 @@ class ImageEnhancer:
         return enhanced
     
     def _combine_metrics(self, metrics_list: List[QualityMetrics]) -> QualityMetrics:
-        """Combine multiple quality metrics"""
+        """
+Combine multiple quality metrics"""
         if not metrics_list:
             return QualityMetrics(
                 overall_quality=0.0, sharpness_score=0.0, noise_level=1.0,
@@ -915,14 +949,16 @@ class ImageEnhancer:
         )
 
 class VideoEnhancer:
-    """Advanced video enhancement engine"""
+    """
+Advanced video enhancement engine"""
     
     def __init__(self):
         self.image_enhancer = ImageEnhancer()
         self.temporal_processors = []
     
     def enhance_video(self, video_path: str, output_path: str, settings: EnhancementSettings) -> Dict[str, Any]:
-        """Enhanced video processing with temporal consistency"""
+        """
+Enhanced video processing with temporal consistency"""
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -1034,14 +1070,16 @@ class VideoEnhancer:
         return frame
 
 class QualityProcessor:
-    """Quality assessment and optimization processor"""
+    """
+Quality assessment and optimization processor"""
     
     def __init__(self):
         self.quality_metrics = {}
         self.benchmark_images = []
     
     def assess_quality(self, image: np.ndarray, reference: Optional[np.ndarray] = None) -> QualityMetrics:
-        """Comprehensive quality assessment"""
+        """
+Comprehensive quality assessment"""
         metrics = {}
         
         # Sharpness assessment
@@ -1083,7 +1121,8 @@ class QualityProcessor:
         )
     
     def _assess_sharpness(self, image: np.ndarray) -> float:
-        """Assess image sharpness using Laplacian variance"""
+        """
+Assess image sharpness using Laplacian variance"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
         
@@ -1092,7 +1131,8 @@ class QualityProcessor:
         return normalized_sharpness
     
     def _assess_noise(self, image: np.ndarray) -> float:
-        """Assess noise level using wavelet decomposition"""
+        """
+Assess noise level using wavelet decomposition"""
         try:
             from skimage.restoration import estimate_sigma
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -1111,7 +1151,8 @@ class QualityProcessor:
             return max(0.0, 1.0 - (noise_level / 30.0))
     
     def _assess_contrast(self, image: np.ndarray) -> float:
-        """Assess contrast using RMS contrast"""
+        """
+Assess contrast using RMS contrast"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         mean_intensity = np.mean(gray)
         rms_contrast = np.sqrt(np.mean((gray - mean_intensity) ** 2))
@@ -1121,7 +1162,8 @@ class QualityProcessor:
         return normalized_contrast
     
     def _assess_color_quality(self, image: np.ndarray) -> float:
-        """Assess color quality using saturation and color distribution"""
+        """
+Assess color quality using saturation and color distribution"""
         hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         
         # Saturation statistics
@@ -1141,7 +1183,8 @@ class QualityProcessor:
         return min(1.0, color_quality)
     
     def _assess_dynamic_range(self, image: np.ndarray) -> float:
-        """Assess dynamic range of the image"""
+        """
+Assess dynamic range of the image"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Calculate histogram
@@ -1158,7 +1201,8 @@ class QualityProcessor:
         return min(1.0, dynamic_range)
     
     def _assess_aesthetic_appeal(self, image: np.ndarray) -> float:
-        """Assess aesthetic appeal using multiple visual features"""
+        """
+Assess aesthetic appeal using multiple visual features"""
         # Rule of thirds composition
         thirds_score = self._assess_rule_of_thirds(image)
         
@@ -1176,7 +1220,8 @@ class QualityProcessor:
         return min(1.0, aesthetic_score)
     
     def _assess_rule_of_thirds(self, image: np.ndarray) -> float:
-        """Assess composition using rule of thirds"""
+        """
+Assess composition using rule of thirds"""
         h, w = image.shape[:2]
         
         # Define thirds lines
@@ -1204,7 +1249,8 @@ class QualityProcessor:
         return interest_score / regions
     
     def _assess_color_harmony(self, image: np.ndarray) -> float:
-        """Assess color harmony using color theory"""
+        """
+Assess color harmony using color theory"""
         # Convert to HSV for hue analysis
         hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         hue = hsv[:, :, 0]
@@ -1228,7 +1274,8 @@ class QualityProcessor:
         return min(1.0, harmony_score)
     
     def _assess_visual_balance(self, image: np.ndarray) -> float:
-        """Assess visual balance and weight distribution"""
+        """
+Assess visual balance and weight distribution"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         h, w = gray.shape
         
@@ -1253,7 +1300,8 @@ class QualityProcessor:
         return max(0.0, balance_score)
     
     def _assess_similarity(self, image: np.ndarray, reference: np.ndarray) -> float:
-        """Assess similarity between processed and reference images"""
+        """
+Assess similarity between processed and reference images"""
         try:
             from skimage.metrics import structural_similarity as ssim
             
@@ -1274,7 +1322,8 @@ class QualityProcessor:
             return max(0.0, correlation)
     
     def _calculate_overall_quality(self, metrics: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual metrics"""
+        """
+Calculate overall quality score from individual metrics"""
         # Weighted combination of quality factors
         weights = {
             'sharpness': 0.25,

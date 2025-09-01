@@ -18,6 +18,7 @@ Development Team Specialties:
 - DevOps & Infrastructure Engineer
 - AI Prompt Engineering Expert
 """
+
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Callable
 from dataclasses import dataclass, field
@@ -34,7 +35,9 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported social media platform types"""
+    """
+Supported social media platform types"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -48,6 +51,7 @@ class PlatformType(Enum):
 
 class ContentType(Enum):
     """Content types for different platforms"""
+
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
@@ -59,6 +63,7 @@ class ContentType(Enum):
 
 class PostStatus(Enum):
     """Post publication status"""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
@@ -81,7 +86,8 @@ class PlatformConfig:
     
 @dataclass
 class ContentPost:
-    """Unified content post structure"""
+    """
+Unified content post structure"""
     id: str
     platform: PlatformType
     content_type: ContentType
@@ -98,7 +104,8 @@ class ContentPost:
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 class PlatformAdapter(ABC):
-    """Abstract base class for platform-specific adapters"""
+    """
+Abstract base class for platform-specific adapters"""
     
     def __init__(self, config: PlatformConfig):
         self.config = config
@@ -108,26 +115,31 @@ class PlatformAdapter(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
+        """
+Authenticate with the platform"""
         pass
         
     @abstractmethod
     async def publish_content(self, post: ContentPost) -> Dict[str, Any]:
-        """Publish content to the platform"""
+        """
+Publish content to the platform"""
         pass
         
     @abstractmethod
     async def get_analytics(self, post_id: str, metrics: List[str]) -> Dict[str, Any]:
-        """Get post analytics"""
+        """
+Get post analytics"""
         pass
         
     @abstractmethod
     async def delete_content(self, post_id: str) -> bool:
-        """Delete content from platform"""
+        """
+Delete content from platform"""
         pass
 
 class RateLimiter:
-    """Rate limiting for API calls"""
+    """
+Rate limiting for API calls"""
     
     def __init__(self, limits: Dict[str, int]):
         self.limits = limits  # {'requests_per_minute': 60, 'requests_per_hour': 1000}
@@ -168,14 +180,16 @@ class RateLimiter:
         history.append(now)
 
 class CredentialManager:
-    """Secure credential management with encryption"""
+    """
+Secure credential management with encryption"""
     
     def __init__(self, encryption_key: Optional[bytes] = None):
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher = Fernet(self.encryption_key)
         
     def encrypt_credentials(self, config: PlatformConfig) -> PlatformConfig:
-        """Encrypt sensitive credentials"""
+        """
+Encrypt sensitive credentials"""
         if not config.encrypted:
             config.api_key = self.cipher.encrypt(config.api_key.encode()).decode()
             config.api_secret = self.cipher.encrypt(config.api_secret.encode()).decode()
@@ -186,7 +200,8 @@ class CredentialManager:
         return config
         
     def decrypt_credentials(self, config: PlatformConfig) -> PlatformConfig:
-        """Decrypt sensitive credentials"""
+        """
+Decrypt sensitive credentials"""
         if config.encrypted:
             config.api_key = self.cipher.decrypt(config.api_key.encode()).decode()
             config.api_secret = self.cipher.decrypt(config.api_secret.encode()).decode()
@@ -211,7 +226,8 @@ class PlatformManager:
         self.cross_platform_rules: List[Dict[str, Any]] = []
         
     async def register_platform(self, config: PlatformConfig, adapter_class: type):
-        """Register a new platform with its adapter"""
+        """
+Register a new platform with its adapter"""
         try:
             # Encrypt credentials
             encrypted_config = self.credential_manager.encrypt_credentials(config)
@@ -347,7 +363,8 @@ class PlatformManager:
         return formatted
     
     async def _apply_cross_platform_rule(self, post: ContentPost, rule: Dict[str, Any]) -> ContentPost:
-        """Apply cross-platform content rules"""
+        """
+Apply cross-platform content rules"""
         if rule.get('type') == 'hashtag_mapping':
             platform_hashtags = rule.get('hashtag_map', {}).get(post.platform.value, {})
             for original, replacement in platform_hashtags.items():
@@ -363,7 +380,8 @@ class PlatformManager:
         return post
     
     def _apply_content_filter(self, text: str, filter_rule: Dict[str, Any]) -> str:
-        """Apply content filtering rules"""
+        """
+Apply content filtering rules"""
         if 'remove_words' in filter_rule:
             for word in filter_rule['remove_words']:
                 text = text.replace(word, '')
@@ -375,7 +393,8 @@ class PlatformManager:
         return text.strip()
     
     async def get_unified_analytics(self, post_id: str, platforms: Optional[List[PlatformType]] = None) -> Dict[str, Any]:
-        """Get unified analytics across platforms"""
+        """
+Get unified analytics across platforms"""
         if platforms is None:
             platforms = list(self.adapters.keys())
         

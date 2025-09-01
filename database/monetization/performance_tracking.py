@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class MetricType(Enum):
-    """Content performance metric types"""
+    """
+Content performance metric types"""
+
     VIEWS = "views"
     STREAMS = "streams"
     DOWNLOADS = "downloads"
@@ -61,6 +64,7 @@ class MetricType(Enum):
 
 class PerformanceStatus(Enum):
     """Performance tracking status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -68,6 +72,7 @@ class PerformanceStatus(Enum):
 
 class ContentType(Enum):
     """Content type classification"""
+
     MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
@@ -134,7 +139,8 @@ class PerformanceRecord(Base):
     )
 
 class PerformanceAggregation(Base):
-    """Aggregated performance metrics for efficient querying"""
+    """
+Aggregated performance metrics for efficient querying"""
     __tablename__ = 'performance_aggregations'
     
     # Primary identification
@@ -202,7 +208,8 @@ class PerformanceAggregation(Base):
     )
 
 class PerformanceBenchmark(Base):
-    """Industry and category performance benchmarks"""
+    """
+Industry and category performance benchmarks"""
     __tablename__ = 'performance_benchmarks'
     
     # Primary identification
@@ -270,7 +277,8 @@ class PerformanceBenchmark(Base):
     )
 
 class ContentPerformanceAlert(Base):
-    """Performance alerts and notifications"""
+    """
+Performance alerts and notifications"""
     __tablename__ = 'content_performance_alerts'
     
     # Primary identification
@@ -314,7 +322,8 @@ class ContentPerformanceAlert(Base):
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight data structure"""
+    """
+Performance insight data structure"""
     insight_type: str
     title: str
     description: str
@@ -325,7 +334,8 @@ class PerformanceInsight:
     priority: str  # low, medium, high
     
 class PerformanceOptimizationSuggestion(Base):
-    """AI-generated performance optimization suggestions"""
+    """
+AI-generated performance optimization suggestions"""
     __tablename__ = 'performance_optimization_suggestions'
     
     # Primary identification

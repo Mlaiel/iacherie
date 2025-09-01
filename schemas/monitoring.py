@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class MonitoringConfiguration(UUIDSchema, TimestampSchema):
-    """Content monitoring configuration schema."""
+    """
+Content monitoring configuration schema."""
     
     creator_id: UUID
     monitoring_name: str = Field(description="Monitoring configuration name")

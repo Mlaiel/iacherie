@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -35,7 +36,9 @@ from ..blockchain.smart_contracts import SmartContractManager
 
 
 class LicenseType(Enum):
-    """License types for different content usage scenarios"""
+    """
+License types for different content usage scenarios"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNCHRONIZATION = "synchronization"
@@ -50,6 +53,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License agreement status tracking"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -74,7 +78,8 @@ class LicenseConfiguration:
 
 
 class LicenseRequest(BaseModel):
-    """License request structure"""
+    """
+License request structure"""
     content_id: str = Field(..., description="Content identifier")
     licensee_id: str = Field(..., description="Licensee user ID")
     license_type: LicenseType = Field(..., description="Type of license requested")
@@ -449,12 +454,14 @@ class AutomatedLicensingEngine:
         pass
     
     async def _verify_ownership_rights(self, content_id: str) -> Dict[str, Any]:
-        """Verify content ownership rights"""
+        """
+Verify content ownership rights"""
         # Implementation for ownership verification
         pass
     
     async def _analyze_market_pricing(self, license_type: LicenseType, territory: List[str]) -> Dict[str, Any]:
-        """Analyze market pricing data"""
+        """
+Analyze market pricing data"""
         # Implementation for market analysis
         pass
     
@@ -464,12 +471,14 @@ class AutomatedLicensingEngine:
         base_price: Decimal, 
         revenue_percentage: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate projected revenue streams"""
+        """
+Calculate projected revenue streams"""
         # Implementation for revenue projection
         pass
     
     def _generate_usage_limits(self, license_type: LicenseType, intended_use: str) -> Dict[str, int]:
-        """Generate appropriate usage limits"""
+        """
+Generate appropriate usage limits"""
         base_limits = {
             "daily_streams": 10000,
             "monthly_downloads": 1000,

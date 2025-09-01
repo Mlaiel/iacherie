@@ -17,12 +17,13 @@ Features:
 - Configuration inheritance
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import os
 import json
 import yaml
@@ -39,7 +40,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class ConfigurationEnvironment(str, Enum):
-    """Configuration environment types."""
+    """
+Configuration environment types."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -47,6 +50,7 @@ class ConfigurationEnvironment(str, Enum):
 
 class ConfigurationFormat(str, Enum):
     """Configuration file formats."""
+
     JSON = "json"
     YAML = "yaml"
     TOML = "toml"
@@ -77,7 +81,8 @@ class PlatformConfiguration:
 
 @dataclass
 class CrawlerConfiguration:
-    """Complete crawler configuration."""
+    """
+Complete crawler configuration."""
     # General settings
     environment: ConfigurationEnvironment = ConfigurationEnvironment.DEVELOPMENT
     max_workers: int = 50
@@ -294,7 +299,8 @@ class ConfigurationManager:
         return config
     
     def _parse_platform_config(self, platform_data: Dict[str, Any]) -> PlatformConfiguration:
-        """Parse platform-specific configuration."""
+        """
+Parse platform-specific configuration."""
         platform_config = PlatformConfiguration()
         
         # Basic settings
@@ -362,7 +368,8 @@ class ConfigurationManager:
         return platform_config
     
     def _decrypt_if_encrypted(self, value: Optional[str]) -> Optional[str]:
-        """Decrypt value if it's encrypted."""
+        """
+Decrypt value if it's encrypted."""
         if not value or not value.startswith('ENCRYPTED:'):
             return value
         
@@ -409,7 +416,8 @@ class ConfigurationManager:
         setattr(obj, parts[-1], value)
     
     def _validate_configuration(self):
-        """Validate configuration for common issues."""
+        """
+Validate configuration for common issues."""
         validation_errors = []
         
         # Validate general settings
@@ -509,7 +517,8 @@ class ConfigurationManager:
         }
     
     def encrypt_sensitive_value(self, value: str) -> str:
-        """Encrypt sensitive configuration value."""
+        """
+Encrypt sensitive configuration value."""
         if not value:
             return value
         

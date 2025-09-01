@@ -28,6 +28,7 @@ import os
 class SEOStrategy(str, Enum):
     """
 SEO optimization strategies."""
+
     
     AGGRESSIVE_GROWTH = "aggressive_growth"
     STEADY_ORGANIC = "steady_organic"
@@ -39,6 +40,7 @@ SEO optimization strategies."""
 
 class ContentCategory(str, Enum):
     """Content categories for SEO optimization."""
+
     
     MUSIC = "music"
     VIDEO = "video"
@@ -53,6 +55,7 @@ class ContentCategory(str, Enum):
 
 class PlatformOptimization(str, Enum):
     """Platforms for SEO optimization."""
+
     
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -68,6 +71,7 @@ class PlatformOptimization(str, Enum):
 
 class MarketingCampaignType(str, Enum):
     """Marketing campaign types."""
+
     
     AWARENESS_CAMPAIGN = "awareness_campaign"
     ENGAGEMENT_CAMPAIGN = "engagement_campaign"

@@ -6,9 +6,10 @@ Provides advanced deep learning insights, quality assessment, optimization
 recommendations, and comprehensive content intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import json
@@ -47,7 +48,9 @@ ACTIVE_ANALYSIS_JOBS = Gauge('active_content_analysis_jobs', 'Active content ana
 
 
 class ContentType(Enum):
-    """Comprehensive content types supported"""
+    """
+Comprehensive content types supported"""
+
     AUDIO_TRACK = "audio_track"
     MUSIC_ALBUM = "music_album"
     PODCAST_EPISODE = "podcast_episode"
@@ -68,6 +71,7 @@ class ContentType(Enum):
 
 class AnalysisDepth(Enum):
     """Analysis depth and sophistication levels"""
+
     QUICK_SCAN = "quick_scan"
     STANDARD_ANALYSIS = "standard_analysis"
     DEEP_ANALYSIS = "deep_analysis"
@@ -77,6 +81,7 @@ class AnalysisDepth(Enum):
 
 class QualityDimension(Enum):
     """Quality assessment dimensions"""
+
     TECHNICAL_QUALITY = "technical_quality"
     CONTENT_RELEVANCE = "content_relevance"
     ENGAGEMENT_POTENTIAL = "engagement_potential"
@@ -132,7 +137,8 @@ class TechnicalAnalysis:
 
 @dataclass
 class ContentInsights:
-    """Deep content insights and intelligence"""
+    """
+Deep content insights and intelligence"""
     sentiment_analysis: Dict[str, Any]
     topic_modeling: Dict[str, Any]
     emotion_detection: Dict[str, Any]
@@ -149,7 +155,8 @@ class ContentInsights:
 
 @dataclass
 class OptimizationRecommendation:
-    """Detailed optimization recommendations"""
+    """
+Detailed optimization recommendations"""
     recommendation_id: str
     category: str
     priority: str  # critical, high, medium, low
@@ -168,7 +175,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive content analysis result"""
+    """
+Comprehensive content analysis result"""
     analysis_id: str
     content_id: str
     analysis_depth: AnalysisDepth
@@ -192,7 +200,8 @@ class AnalysisResult:
 
 @dataclass
 class BatchAnalysisResult:
-    """Enterprise batch content analysis results"""
+    """
+Enterprise batch content analysis results"""
     batch_id: str
     total_items: int
     processed_items: int
@@ -280,7 +289,8 @@ class ContentAnalyzer:
         }
         
     async def initialize(self) -> None:
-        """Initialize the content analyzer with all dependencies"""
+        """
+Initialize the content analyzer with all dependencies"""
         try:
             # Initialize Redis connection
             self.redis_client = redis.from_url(
@@ -439,7 +449,8 @@ class ContentAnalyzer:
         self._quality_thresholds = {}
         
     async def initialize(self) -> None:
-        """Initialize the content analyzer"""
+        """
+Initialize the content analyzer"""
         try:
             await self.ai_models.load_analysis_models()
             await self.content_processor.initialize()

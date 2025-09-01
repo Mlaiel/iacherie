@@ -6,6 +6,7 @@ des transactions financières pour la plateforme IA Influencer Agent.
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer & Financial Systems Architect
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -29,7 +30,9 @@ Base = declarative_base()
 
 
 class TransactionStatus(Enum):
-    """Status des transactions de revenus"""
+    """
+Status des transactions de revenus"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSED = "processed"
@@ -40,6 +43,7 @@ class TransactionStatus(Enum):
 
 class TransactionType(Enum):
     """Types de transactions financières"""
+
     PLATFORM_REVENUE = "platform_revenue"
     COMMISSION = "commission"
     ROYALTY = "royalty"
@@ -53,6 +57,7 @@ class TransactionType(Enum):
 
 class RevenueSource(Enum):
     """Sources de revenus par plateforme"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -125,7 +130,8 @@ class RevenueRecord(BaseModel, TimestampMixin):
         self._calculate_commission_and_payout()
 
     def _generate_transaction_id(self) -> str:
-        """Génère un ID unique pour la transaction"""
+        """
+Génère un ID unique pour la transaction"""
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
         return f"REV_{timestamp}_{unique_id}"

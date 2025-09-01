@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 import hashlib
 import os
@@ -39,7 +40,9 @@ from ...security.encryption import BackupEncryption
 
 
 class BackupType(Enum):
-    """Types of database backups"""
+    """
+Types of database backups"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -50,6 +53,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -62,6 +66,7 @@ class BackupStatus(Enum):
 
 class ReplicationStatus(Enum):
     """Database replication status"""
+
     HEALTHY = "healthy"
     LAGGING = "lagging"
     BROKEN = "broken"
@@ -71,6 +76,7 @@ class ReplicationStatus(Enum):
 
 class RecoveryTestStatus(Enum):
     """Recovery test status"""
+
     PASSED = "passed"
     FAILED = "failed"
     PARTIAL = "partial"
@@ -117,7 +123,8 @@ class BackupJob:
 
 @dataclass
 class BackupExecution:
-    """Backup execution record"""
+    """
+Backup execution record"""
     execution_id: str
     job_id: str
     backup_type: BackupType
@@ -155,7 +162,8 @@ class BackupExecution:
 
 @dataclass
 class ReplicationMonitor:
-    """Replication monitoring data"""
+    """
+Replication monitoring data"""
     replica_id: str
     replica_name: str
     master_host: str
@@ -170,7 +178,8 @@ class ReplicationMonitor:
     alerts: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'replica_id': self.replica_id,
             'replica_name': self.replica_name,
@@ -189,7 +198,8 @@ class ReplicationMonitor:
 
 @dataclass
 class RecoveryTest:
-    """Recovery test execution"""
+    """
+Recovery test execution"""
     test_id: str
     backup_id: str
     test_type: str
@@ -203,7 +213,8 @@ class RecoveryTest:
     issues_found: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'test_id': self.test_id,
             'backup_id': self.backup_id,
@@ -220,7 +231,8 @@ class RecoveryTest:
 
 
 class BackupMonitor:
-    """Enterprise backup monitoring and management system"""
+    """
+Enterprise backup monitoring and management system"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -245,7 +257,8 @@ class BackupMonitor:
         asyncio.create_task(self._load_backup_jobs())
         
     async def _load_backup_jobs(self):
-        """Load backup job configurations"""
+        """
+Load backup job configurations"""
         try:
             # Default backup jobs for the IA Influencer platform
             default_jobs = [
@@ -1184,29 +1197,34 @@ class ReplicationHealthChecker:
         self.logger = logging.getLogger(__name__)
         
     async def check_replication_lag(self, replica_info: Dict[str, Any]) -> float:
-        """Check replication lag in seconds"""
+        """
+Check replication lag in seconds"""
         # Implementation for detailed replication lag analysis
         pass
         
     async def validate_replication_integrity(self, master_host: str, replica_host: str) -> bool:
-        """Validate replication data integrity"""
+        """
+Validate replication data integrity"""
         # Implementation for replication integrity validation
         pass
 
 
 class DataIntegrityValidator:
-    """Data integrity validation for backups and replicas"""
+    """
+Data integrity validation for backups and replicas"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def validate_backup_integrity(self, backup_path: str) -> Dict[str, Any]:
-        """Validate backup file integrity"""
+        """
+Validate backup file integrity"""
         # Implementation for backup integrity validation
         pass
         
     async def validate_data_consistency(self, source_db: str, target_db: str) -> Dict[str, Any]:
-        """Validate data consistency between databases"""
+        """
+Validate data consistency between databases"""
         # Implementation for data consistency validation
         pass

@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple
@@ -21,7 +22,9 @@ from .config import ReplicationConfig
 
 
 class FailoverState(Enum):
-    """Failover process states"""
+    """
+Failover process states"""
+
     MONITORING = "monitoring"
     DETECTING = "detecting"
     VALIDATING = "validating"
@@ -36,6 +39,7 @@ class FailoverState(Enum):
 
 class FailoverTrigger(Enum):
     """Failover trigger types"""
+
     HEALTH_CHECK_FAILURE = "health_check_failure"
     NETWORK_PARTITION = "network_partition"
     HIGH_LATENCY = "high_latency"
@@ -48,6 +52,7 @@ class FailoverTrigger(Enum):
 
 class FailoverPriority(Enum):
     """Failover priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -74,7 +79,8 @@ class FailoverCandidate:
 
 @dataclass
 class FailoverEvent:
-    """Failover event record"""
+    """
+Failover event record"""
     id: str
     trigger: FailoverTrigger
     priority: FailoverPriority
@@ -1136,7 +1142,8 @@ class FailoverManager:
         self.notification_callbacks.append(callback)
     
     async def shutdown(self) -> None:
-        """Shutdown failover manager"""
+        """
+Shutdown failover manager"""
         try:
             self.logger.info("Shutting down failover manager...")
             

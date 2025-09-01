@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests for Data Governance Classification System
+"""
+Tests for Data Governance Classification System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -40,15 +43,18 @@ from data_management.governance.classification import (
 
 
 class TestPatternClassifier:
-    """Test cases for PatternClassifier"""
+    """
+Test cases for PatternClassifier"""
     
     @pytest.fixture
     def classifier(self):
-        """Create a PatternClassifier instance for testing"""
+        """
+Create a PatternClassifier instance for testing"""
         return PatternClassifier()
     
     def test_get_supported_types(self, classifier):
-        """Test that classifier returns supported content types"""
+        """
+Test that classifier returns supported content types"""
         supported_types = classifier.get_supported_types()
         
         assert isinstance(supported_types, list)

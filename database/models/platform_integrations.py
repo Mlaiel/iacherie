@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Platform type enumeration"""
+    """
+Platform type enumeration"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -55,6 +58,7 @@ class PlatformType(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -93,6 +97,7 @@ class Platform(Enum):
 
 class IntegrationStatus(Enum):
     """Integration status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -106,6 +111,7 @@ class IntegrationStatus(Enum):
 
 class AuthType(Enum):
     """Authentication type enumeration"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -118,6 +124,7 @@ class AuthType(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status"""
+
     SYNCED = "synced"
     PENDING = "pending"
     FAILED = "failed"
@@ -129,6 +136,7 @@ class SyncStatus(Enum):
 
 class PermissionLevel(Enum):
     """Permission levels for platform access"""
+
     READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     FULL_ACCESS = "full_access"
@@ -412,7 +420,8 @@ class PlatformIntegration(Base):
         return datetime.now(timezone.utc) >= self.token_expires_at
     
     def needs_token_refresh(self) -> bool:
-        """Check if token needs refresh based on threshold"""
+        """
+Check if token needs refresh based on threshold"""
         if not self.token_expires_at or not self.auto_token_refresh:
             return False
         
@@ -422,7 +431,8 @@ class PlatformIntegration(Base):
         return datetime.now(timezone.utc) >= threshold_time
     
     def is_healthy(self) -> bool:
-        """Check overall health status of integration"""
+        """
+Check overall health status of integration"""
         return (
             self.integration_status == IntegrationStatus.ACTIVE and
             self.health_status == "healthy" and
@@ -455,7 +465,8 @@ class PlatformIntegration(Base):
         return max(priority, 1)  # Minimum priority of 1
     
     def should_retry_sync(self) -> bool:
-        """Determine if sync should be retried"""
+        """
+Determine if sync should be retried"""
         return (
             self.sync_status in [SyncStatus.FAILED, SyncStatus.PARTIAL] and
             self.sync_retry_count < self.max_retry_attempts and
@@ -464,7 +475,8 @@ class PlatformIntegration(Base):
     
     @classmethod
     def create_integration(cls, platform_data: Dict[str, Any], user_id: str) -> 'PlatformIntegration':
-        """Create PlatformIntegration from platform connection data"""
+        """
+Create PlatformIntegration from platform connection data"""
         return cls(
             user_id=user_id,
             platform=Platform(platform_data.get('platform', 'other')),

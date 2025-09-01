@@ -8,7 +8,7 @@ Responsibility: Advanced vector indexing, similarity search with FAISS and Elast
 ==================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -27,6 +27,7 @@ VECTOR SIMILARITY TECHNOLOGIES:
 ├── 🚀 Distributed Search (Multi-node)
 └── 🛡️ Real-time Monitoring (Instant Detection)
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -131,7 +132,8 @@ class SimilarityMetric(ABC):
     
     @abstractmethod
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Compute similarity between two vectors"""
+        """
+Compute similarity between two vectors"""
         logger.warning(f"compute method not implemented in {self.__class__.__name__}")
         # Return default similarity (0.5 = neutral similarity)
         return 0.5
@@ -148,7 +150,8 @@ class CosineSimilarity(SimilarityMetric):
     """Métrique de similarité cosinus"""
     
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité cosinus entre deux vecteurs"""
+        """
+Calcule la similarité cosinus entre deux vecteurs"""
         if SCIPY_AVAILABLE:
             return 1.0 - cosine(vector1, vector2)
         else:
@@ -163,7 +166,8 @@ class CosineSimilarity(SimilarityMetric):
             return dot_product / (norm1 * norm2)
     
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la similarité cosinus par lots"""
+        """
+Calcule la similarité cosinus par lots"""
         if SKLEARN_AVAILABLE:
             return cosine_similarity(vectors1, vectors2)
         else:
@@ -178,10 +182,12 @@ class CosineSimilarity(SimilarityMetric):
             return np.array(results)
 
 class EuclideanSimilarity(SimilarityMetric):
-    """Métrique de distance euclidienne (convertie en similarité)"""
+    """
+Métrique de distance euclidienne (convertie en similarité)"""
     
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité basée sur la distance euclidienne"""
+        """
+Calcule la similarité basée sur la distance euclidienne"""
         if SCIPY_AVAILABLE:
             distance = euclidean(vector1, vector2)
         else:
@@ -191,7 +197,8 @@ class EuclideanSimilarity(SimilarityMetric):
         return 1.0 / (1.0 + distance)
     
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la distance euclidienne par lots"""
+        """
+Calcule la distance euclidienne par lots"""
         if SKLEARN_AVAILABLE:
             distances = euclidean_distances(vectors1, vectors2)
             # Conversion en similarité
@@ -207,10 +214,12 @@ class EuclideanSimilarity(SimilarityMetric):
             return np.array(results)
 
 class ManhattanSimilarity(SimilarityMetric):
-    """Métrique de distance de Manhattan (convertie en similarité)"""
+    """
+Métrique de distance de Manhattan (convertie en similarité)"""
     
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité basée sur la distance de Manhattan"""
+        """
+Calcule la similarité basée sur la distance de Manhattan"""
         if SCIPY_AVAILABLE:
             distance = cityblock(vector1, vector2)
         else:
@@ -220,7 +229,8 @@ class ManhattanSimilarity(SimilarityMetric):
         return 1.0 / (1.0 + distance)
     
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la distance de Manhattan par lots"""
+        """
+Calcule la distance de Manhattan par lots"""
         results = []
         for v1 in vectors1:
             row = []
@@ -232,7 +242,8 @@ class ManhattanSimilarity(SimilarityMetric):
 
 @dataclass
 class SearchResult:
-    """Résultat d'une recherche de similarité"""
+    """
+Résultat d'une recherche de similarité"""
     fingerprint_id: str
     content_id: str
     similarity_score: float
@@ -242,7 +253,8 @@ class SearchResult:
 
 @dataclass
 class IndexStats:
-    """Statistiques d'un index vectoriel"""
+    """
+Statistiques d'un index vectoriel"""
     total_vectors: int
     dimension: int
     index_size_mb: float
@@ -251,7 +263,8 @@ class IndexStats:
     performance_metrics: Dict[str, float] = field(default_factory=dict)
 
 class FAISSIndexManager:
-    """Gestionnaire d'index FAISS pour la recherche vectorielle rapide"""
+    """
+Gestionnaire d'index FAISS pour la recherche vectorielle rapide"""
     
     def __init__(self, config: VectorSimilarityConfig):
         self.config = config
@@ -702,14 +715,16 @@ class SimilarityCalculator:
     
     def batch_similarity(self, vectors1: np.ndarray, vectors2: np.ndarray,
                         metric: str = None) -> np.ndarray:
-        """Calcule la similarité par lots"""
+        """
+Calcule la similarité par lots"""
         metric_obj = self.metrics.get(metric, self.default_metric)
         return metric_obj.batch_compute(vectors1, vectors2)
     
     def find_similar_vectors(self, query_vector: np.ndarray, 
                            candidate_vectors: np.ndarray,
                            threshold: float = None) -> List[Tuple[int, float]]:
-        """Trouve les vecteurs similaires dans un ensemble de candidats"""
+        """
+Trouve les vecteurs similaires dans un ensemble de candidats"""
         threshold = threshold or self.config.similarity_threshold
         
         similarities = []
@@ -723,7 +738,8 @@ class SimilarityCalculator:
         return similarities[:self.config.max_results]
 
 class MatchingEngine:
-    """Moteur de matching avancé combinant FAISS et Elasticsearch"""
+    """
+Moteur de matching avancé combinant FAISS et Elasticsearch"""
     
     def __init__(self, config: VectorSimilarityConfig):
         self.config = config
@@ -921,7 +937,8 @@ class MatchingEngine:
         self.cache[key] = results
     
     def _deduplicate_results(self, results: List[SearchResult]) -> List[SearchResult]:
-        """Supprime les doublons des résultats"""
+        """
+Supprime les doublons des résultats"""
         seen_fingerprints = set()
         unique_results = []
         
@@ -933,7 +950,8 @@ class MatchingEngine:
         return unique_results
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""
+        """
+Retourne les métriques de performance"""
         cache_hit_rate = (
             self.metrics["cache_hits"] / 
             max(self.metrics["cache_hits"] + self.metrics["cache_misses"], 1)
@@ -978,21 +996,24 @@ class VectorSimilarityEngine:
     
     async def find_similar(self, query_fingerprint: Dict[str, Any],
                           content_type: str = None) -> List[SearchResult]:
-        """Trouve les fingerprints similaires de manière asynchrone"""
+        """
+Trouve les fingerprints similaires de manière asynchrone"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None, self.matching_engine.find_matches, query_fingerprint, content_type
         )
     
     def save_indexes(self) -> bool:
-        """Sauvegarde tous les index sur disque"""
+        """
+Sauvegarde tous les index sur disque"""
         success = True
         for content_type in self.matching_engine.faiss_manager.indexes:
             success = success and self.matching_engine.faiss_manager.save_index(content_type)
         return success
     
     def load_indexes(self, content_types: List[str], dimensions: Dict[str, int]) -> bool:
-        """Charge les index depuis le disque"""
+        """
+Charge les index depuis le disque"""
         success = True
         for content_type in content_types:
             dimension = dimensions.get(content_type, 512)  # Dimension par défaut
@@ -1000,7 +1021,8 @@ class VectorSimilarityEngine:
         return success
     
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Retourne des métriques complètes du système"""
+        """
+Retourne des métriques complètes du système"""
         matching_metrics = self.matching_engine.get_metrics()
         
         # Statistiques des index

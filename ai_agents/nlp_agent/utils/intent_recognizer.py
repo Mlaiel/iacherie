@@ -7,6 +7,7 @@ goals, and purposes in text content with high accuracy.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -31,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 class IntentCategory(Enum):
     """Main intent categories"""
+
     INFORMATIONAL = "informational"
     TRANSACTIONAL = "transactional"
     NAVIGATIONAL = "navigational"
@@ -42,6 +44,7 @@ class IntentCategory(Enum):
 
 class IntentType(Enum):
     """Specific intent types"""
+
     QUESTION = "question"
     REQUEST = "request"
     COMPLAINT = "complaint"
@@ -69,7 +72,8 @@ class IntentScore:
 
 @dataclass
 class IntentResult:
-    """Complete intent recognition result"""
+    """
+Complete intent recognition result"""
     text: str
     primary_intent: str
     primary_category: str
@@ -92,7 +96,8 @@ class IntentRecognizer:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Intent Recognizer"""
+        """
+Initialize Intent Recognizer"""
         self.config = config or default_config
         self.models = {}
         self.pipelines = {}
@@ -102,7 +107,8 @@ class IntentRecognizer:
         self._initialize_models()
     
     def _load_intent_patterns(self) -> Dict[str, Dict[str, List[str]]]:
-        """Load patterns for intent recognition"""
+        """
+Load patterns for intent recognition"""
         return {
             "question": {
                 "patterns": [
@@ -611,7 +617,8 @@ class IntentRecognizer:
         text1: str,
         text2: str
     ) -> Dict[str, Any]:
-        """Compare intents between two texts"""
+        """
+Compare intents between two texts"""
         results = await self.recognize_intent([text1, text2])
         result1, result2 = results
         
@@ -638,11 +645,13 @@ class IntentRecognizer:
         return list(self.intent_patterns.keys())
     
     def get_intent_patterns(self, intent: str) -> Dict[str, Any]:
-        """Get patterns for a specific intent"""
+        """
+Get patterns for a specific intent"""
         return self.intent_patterns.get(intent, {})
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
+        """
+Perform health check"""
         status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),
@@ -700,7 +709,8 @@ def calculate_intent_similarity(result1: IntentResult, result2: IntentResult) ->
     return (intent_sim + confidence_sim + context_sim) / 3.0
 
 def extract_intent_features(result: IntentResult) -> Dict[str, Any]:
-    """Extract key features from intent result"""
+    """
+Extract key features from intent result"""
     return {
         "primary_intent": result.primary_intent,
         "primary_category": result.primary_category,

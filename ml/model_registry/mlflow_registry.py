@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 REGISTRE DE MODÈLES MLFLOW
@@ -15,6 +15,7 @@ Gestion complète du cycle de vie des modèles ML
 - Model promotion et deployment
 - Rollback et A/B testing support
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ModelStage(Enum):
-    """Stades du cycle de vie d'un modèle"""
+    """
+Stades du cycle de vie d'un modèle"""
+
     NONE = "None"
     STAGING = "Staging"
     PRODUCTION = "Production"
@@ -50,6 +53,7 @@ class ModelStage(Enum):
 
 class RegistryStatus(Enum):
     """Statut des opérations registry"""
+
     SUCCESS = "success"
     FAILED = "failed"
     PENDING = "pending"
@@ -72,7 +76,8 @@ class ModelMetadata:
 
 @dataclass
 class ModelRegistryConfig:
-    """Configuration du model registry"""
+    """
+Configuration du model registry"""
     tracking_uri: str = "sqlite:///mlflow.db"
     artifact_root: str = "./mlruns"
     experiment_name: str = "Default"
@@ -108,7 +113,8 @@ class MLflowModelRegistry:
         self.deployment_cache: Dict[str, DeploymentInfo] = {}
     
     def _initialize_mlflow(self):
-        """Initialise la connexion MLflow"""
+        """
+Initialise la connexion MLflow"""
         try:
             # Configuration MLflow
             mlflow.set_tracking_uri(self.config.tracking_uri)

@@ -22,6 +22,7 @@ Team Specialties:
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
 """
+
 import asyncio
 import logging
 import time
@@ -62,7 +63,9 @@ from ...utils.cache_utils import CacheManager
 logger = logging.getLogger(__name__)
 
 class MatchingCriteria(Enum):
-    """Criteria for creator matching"""
+    """
+Criteria for creator matching"""
+
     CONTENT_SIMILARITY = "content_similarity"
     STYLE_COMPATIBILITY = "style_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -87,7 +90,8 @@ class CreatorVector:
 
 @dataclass
 class MatchScore:
-    """Comprehensive match scoring result"""
+    """
+Comprehensive match scoring result"""
     creator_a_id: str
     creator_b_id: str
     overall_score: float
@@ -420,7 +424,8 @@ class CreatorMatcher:
         return vector
     
     async def _compute_creator_vector(self, creator_id: str) -> Optional[CreatorVector]:
-        """Compute multi-dimensional creator vector"""
+        """
+Compute multi-dimensional creator vector"""
         
         try:
             async with get_async_session() as session:
@@ -489,7 +494,8 @@ class StyleAnalyzer:
         self.feature_extractors = {}
     
     async def initialize(self):
-        """Initialize style analysis models"""
+        """
+Initialize style analysis models"""
         try:
             # Initialize different style analysis models
             self.style_models = {
@@ -559,7 +565,8 @@ class AudienceAnalyzer:
         self.demographic_processor = None
     
     async def initialize(self):
-        """Initialize audience analysis components"""
+        """
+Initialize audience analysis components"""
         try:
             # Load audience analysis models
             self.audience_models = {
@@ -645,7 +652,8 @@ class CompatibilityScorer:
         }
     
     async def initialize(self):
-        """Initialize all scoring components"""
+        """
+Initialize all scoring components"""
         try:
             await self.style_analyzer.initialize()
             await self.audience_analyzer.initialize()

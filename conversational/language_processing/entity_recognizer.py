@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
@@ -56,7 +57,9 @@ logger = get_logger(__name__)
 
 
 class EntityType(Enum):
-    """Types of named entities"""
+    """
+Types of named entities"""
+
     PERSON = "person"
     ORGANIZATION = "organization"
     LOCATION = "location"
@@ -93,6 +96,7 @@ class EntityType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for entity recognition"""
+
     VERY_HIGH = "very_high"  # >0.9
     HIGH = "high"           # 0.7-0.9
     MEDIUM = "medium"       # 0.5-0.7
@@ -102,6 +106,7 @@ class ConfidenceLevel(Enum):
 
 class RelationType(Enum):
     """Types of relationships between entities"""
+
     WORKS_FOR = "works_for"
     LOCATED_IN = "located_in"
     FOUNDED_BY = "founded_by"
@@ -168,7 +173,8 @@ class EntityExtractionResult:
 
 
 class EntityRecognizer:
-    """Advanced named entity recognition system"""
+    """
+Advanced named entity recognition system"""
     
     def __init__(self):
         self.nlp = None
@@ -177,7 +183,8 @@ class EntityRecognizer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize NER models"""
+        """
+Initialize NER models"""
         try:
             # Initialize spaCy NER
             self.nlp = spacy.load("en_core_web_lg")
@@ -365,7 +372,8 @@ class EntityRecognizer:
         return mapping.get(label, EntityType.MISC)
         
     def _get_entity_context(self, doc, entity) -> str:
-        """Get context around an entity"""
+        """
+Get context around an entity"""
         try:
             # Get sentence containing the entity
             for sent in doc.sents:
@@ -442,7 +450,8 @@ class EntityRecognizer:
         return mapping.get(label, EntityType.MISC)
         
     async def _extract_custom_entities(self, text: str) -> List[NamedEntity]:
-        """Extract custom entity types using regex patterns"""
+        """
+Extract custom entity types using regex patterns"""
         try:
             entities = []
             
@@ -730,7 +739,8 @@ class EntityAnalyzer:
         text: str,
         entity: str
     ) -> Dict[str, float]:
-        """Analyze sentiment towards a specific entity"""
+        """
+Analyze sentiment towards a specific entity"""
         try:
             # This would integrate with sentiment analysis
             # Enhanced professional entity analysis with AI verification

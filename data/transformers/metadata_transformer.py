@@ -5,9 +5,10 @@ Advanced metadata extraction, transformation, and standardization capabilities
 for creators' content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import os
@@ -41,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 class MetadataFormat(Enum):
     """Supported metadata formats."""
+
     JSON = "json"
     XML = "xml"
     YAML = "yaml"
@@ -51,6 +53,7 @@ class MetadataFormat(Enum):
 
 class MetadataStandard(Enum):
     """Metadata standards."""
+
     DUBLIN_CORE = "dublin_core"
     EXIF = "exif"
     ID3 = "id3"
@@ -92,7 +95,8 @@ class MetadataSchema:
 
 @dataclass
 class MetadataSettings:
-    """Metadata processing settings."""
+    """
+Metadata processing settings."""
     format: MetadataFormat = MetadataFormat.JSON
     standard: MetadataStandard = MetadataStandard.DUBLIN_CORE
     include_technical: bool = True
@@ -621,7 +625,8 @@ class MetadataTransformer:
                 element.text = str(value)
     
     async def _normalize_dates(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize date formats in metadata."""
+        """
+Normalize date formats in metadata."""
         try:
             date_fields = ['date', 'creation_date', 'modification_date', 'creation_time', 'modification_time']
             
@@ -690,7 +695,8 @@ class MetadataTransformer:
         return mime_type or 'application/octet-stream'
     
     def _parse_metadata_settings(self, request) -> MetadataSettings:
-        """Parse transformation request into metadata settings."""
+        """
+Parse transformation request into metadata settings."""
         settings = MetadataSettings()
         
         if hasattr(request, 'target_format') and request.target_format:
@@ -722,7 +728,8 @@ class MetadataTransformer:
         settings: MetadataSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
+        """
+Generate output file path."""
         if requested_output:
             return Path(requested_output)
         
@@ -751,12 +758,14 @@ class MetadataExtractor:
         self.transformer = transformer or MetadataTransformer()
     
     async def extract(self, file_path: str) -> Dict[str, Any]:
-        """Extract metadata from file."""
+        """
+Extract metadata from file."""
         return await self.transformer.extract_metadata(file_path)
 
 
 class MetadataStandardizer:
-    """Simplified metadata standardizer interface."""
+    """
+Simplified metadata standardizer interface."""
     
     def __init__(self, transformer: Optional[MetadataTransformer] = None):
         self.transformer = transformer or MetadataTransformer()

@@ -1,7 +1,7 @@
 """Revenue Management System - Central Integration Hub
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Revenue Optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -67,7 +68,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueSystemConfiguration:
-    """Revenue system configuration"""
+    """
+Revenue system configuration"""
     enable_real_time_tracking: bool = True
     enable_ai_optimization: bool = True
     enable_cross_platform_sync: bool = True
@@ -120,7 +122,8 @@ class RevenueManagementSystem:
         self.performance_stats = {}
         
     async def initialize(self) -> None:
-        """Initialize the complete revenue management system"""
+        """
+Initialize the complete revenue management system"""
         try:
             logger.info(f"Initializing Revenue Management System {self.system_id}")
             
@@ -658,5 +661,6 @@ async def create_revenue_management_system(config: Optional[Dict[str, Any]] = No
 
 
 def create_revenue_system_config(**kwargs) -> RevenueSystemConfiguration:
-    """Create revenue system configuration"""
+    """
+Create revenue system configuration"""
     return RevenueSystemConfiguration(**kwargs)

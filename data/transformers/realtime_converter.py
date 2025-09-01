@@ -5,9 +5,10 @@ Advanced real-time content conversion and streaming transformation system
 for live creator workflows and instant content processing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, AsyncIterator
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(Enum):
-    """Real-time stream types."""
+    """
+Real-time stream types."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -35,6 +38,7 @@ class StreamType(Enum):
 
 class ConversionMode(Enum):
     """Real-time conversion modes."""
+
     LIVE_STREAM = "live_stream"
     BUFFERED = "buffered"
     CHUNK_BASED = "chunk_based"
@@ -44,6 +48,7 @@ class ConversionMode(Enum):
 
 class QualityPreset(Enum):
     """Quality presets for real-time conversion."""
+
     ULTRA_LOW_LATENCY = "ultra_low_latency"  # <50ms
     LOW_LATENCY = "low_latency"              # <200ms
     BALANCED = "balanced"                     # <500ms
@@ -115,7 +120,8 @@ class StreamMetrics:
     has_errors: bool = False
     
     def update_latency(self, latency_ms: float):
-        """Update latency metrics."""
+        """
+Update latency metrics."""
         self.average_latency_ms = (
             (self.average_latency_ms * self.chunks_processed + latency_ms) /
             (self.chunks_processed + 1)
@@ -126,7 +132,8 @@ class StreamMetrics:
 
 @dataclass
 class StreamChunk:
-    """Individual chunk of streaming data."""
+    """
+Individual chunk of streaming data."""
     id: str
     stream_id: str
     timestamp: float
@@ -695,7 +702,8 @@ class RealtimeConverter:
         pass
     
     async def _read_from_source(self, source: str) -> AsyncIterator[bytes]:
-        """Read data from source asynchronously."""
+        """
+Read data from source asynchronously."""
         # This would implement actual source reading
         # For simulation, yield dummy data
         for i in range(100):
@@ -715,7 +723,8 @@ class RealtimeConverter:
         chunk.timestamp = time.time()
     
     async def _apply_quality_settings(self, stream_id: str, quality_config: Dict[str, Any]):
-        """Apply quality settings to stream."""
+        """
+Apply quality settings to stream."""
         if stream_id in self.active_streams:
             config = self.active_streams[stream_id]["config"]
             
@@ -732,7 +741,8 @@ class EffectsPipeline:
         self.enabled = True
     
     async def apply_effects(self, chunk: StreamChunk) -> StreamChunk:
-        """Apply effects to chunk."""
+        """
+Apply effects to chunk."""
         if not self.enabled:
             return chunk
         
@@ -809,7 +819,8 @@ class StreamingWebSocketHandler:
         self.active_connections: Dict[str, websockets.WebSocketServerProtocol] = {}
     
     async def handle_connection(self, websocket, path):
-        """Handle WebSocket connection."""
+        """
+Handle WebSocket connection."""
         try:
             connection_id = f"ws_{int(time.time() * 1000)}"
             self.active_connections[connection_id] = websocket
@@ -861,7 +872,8 @@ class StreamingWebSocketHandler:
             pass
     
     async def _websocket_output_handler(self, connection_id: str):
-        """Handle output to WebSocket connection."""
+        """
+Handle output to WebSocket connection."""
         def send_to_websocket(chunk: StreamChunk):
             websocket = self.active_connections.get(connection_id)
             if websocket:

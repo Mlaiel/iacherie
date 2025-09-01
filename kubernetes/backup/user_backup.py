@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -25,7 +26,8 @@ from ...ai_agents.repositories.agent_repository import AgentRepository
 
 @dataclass
 class UserBackupRecord:
-    """User backup record metadata."""
+    """
+User backup record metadata."""
     user_id: str
     backup_timestamp: datetime
     included_data: List[str]

@@ -6,6 +6,7 @@ analysis, trend detection, and business intelligence capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -48,6 +51,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Types of metrics to analyze"""
+
     CREATION_RATE = "creation_rate"
     MATCH_RATE = "match_rate"
     QUALITY_DISTRIBUTION = "quality_distribution"
@@ -105,7 +109,8 @@ class AnalyticsQuery:
 
 @dataclass
 class TrendAnalysis:
-    """Results of trend analysis"""
+    """
+Results of trend analysis"""
     metric_name: str
     timeframe: AnalyticsTimeframe
     trend_direction: str  # "increasing", "decreasing", "stable"
@@ -144,7 +149,8 @@ class AnalyticsReport:
 
 
 class StatisticalAnalyzer:
-    """Statistical analysis component for fingerprint data"""
+    """
+Statistical analysis component for fingerprint data"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.StatisticalAnalyzer")
@@ -1036,7 +1042,8 @@ class FingerprintAnalyticsEngine:
         return conditions
     
     def _generate_time_intervals(self, query: AnalyticsQuery) -> List[Tuple[datetime, datetime]]:
-        """Generate time intervals for time series analysis"""
+        """
+Generate time intervals for time series analysis"""
         intervals = []
         
         if not query.start_date or not query.end_date:
@@ -1067,7 +1074,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get creation rate time series data"""
+        """
+Get creation rate time series data"""
         series_data = []
         
         for start_time, end_time in intervals:
@@ -1096,7 +1104,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get match rate time series data"""
+        """
+Get match rate time series data"""
         series_data = []
         
         for start_time, end_time in intervals:
@@ -1125,7 +1134,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get average quality time series data"""
+        """
+Get average quality time series data"""
         series_data = []
         
         for start_time, end_time in intervals:
@@ -1154,7 +1164,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get storage usage time series data"""
+        """
+Get storage usage time series data"""
         series_data = []
         
         for start_time, end_time in intervals:
@@ -1183,7 +1194,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get user activity time series data"""
+        """
+Get user activity time series data"""
         series_data = []
         
         for start_time, end_time in intervals:
@@ -1211,7 +1223,8 @@ class FingerprintAnalyticsEngine:
         session: AsyncSession,
         conditions: List
     ) -> Dict[str, int]:
-        """Get confidence score distribution in buckets"""
+        """
+Get confidence score distribution in buckets"""
         # Define confidence buckets
         buckets = {
             '0.0-0.2': 0,
@@ -1245,7 +1258,8 @@ class FingerprintAnalyticsEngine:
         return buckets
     
     def _bucket_user_activity(self, user_activity: Dict[str, int]) -> Dict[str, int]:
-        """Bucket user activity into ranges"""
+        """
+Bucket user activity into ranges"""
         buckets = {
             '1-5': 0,
             '6-20': 0,
@@ -1269,7 +1283,8 @@ class FingerprintAnalyticsEngine:
         return buckets
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on analytics engine"""
+        """
+Perform health check on analytics engine"""
         try:
             health = {
                 "status": "healthy",

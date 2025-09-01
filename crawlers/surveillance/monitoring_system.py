@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -23,6 +23,7 @@ protection logic according to the unified requirements specification. Supports a
 types: musicians, video creators, photographers, bloggers, comedians, educational content, 
 lifestyle influencers, business content, technology creators across all major platforms.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringScope(Enum):
-    """Monitoring scope definitions for different creator types."""
+    """
+Monitoring scope definitions for different creator types."""
+
     GLOBAL = "global"           # All platforms, all content types
     PLATFORM_SPECIFIC = "platform_specific"  # Specific platforms only
     CONTENT_TYPE = "content_type"  # Specific content types (audio, video, etc.)
@@ -53,6 +56,7 @@ class MonitoringScope(Enum):
 
 class MonitoringStrategy(Enum):
     """Monitoring execution strategies."""
+
     CONTINUOUS = "continuous"   # 24/7 real-time monitoring
     SCHEDULED = "scheduled"     # Periodic checks
     EVENT_DRIVEN = "event_driven"  # Triggered by events
@@ -62,6 +66,7 @@ class MonitoringStrategy(Enum):
 
 class ContentCategory(Enum):
     """Content categories for specialized monitoring."""
+
     MUSIC = "music"             # Musicians, audio content
     VIDEO = "video"             # Video creators, filmmakers
     PHOTOGRAPHY = "photography"  # Photographers, visual artists
@@ -76,6 +81,7 @@ class ContentCategory(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels for violation detection."""
+
     INFO = "info"               # Informational alerts
     LOW = "low"                 # Low priority issues
     MEDIUM = "medium"           # Medium priority violations
@@ -86,6 +92,7 @@ class AlertSeverity(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring task execution status."""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -113,7 +120,8 @@ class CreatorProfile:
 
 @dataclass
 class MonitoringTarget:
-    """Enhanced monitoring target with business intelligence."""
+    """
+Enhanced monitoring target with business intelligence."""
     target_id: str
     creator_profile: CreatorProfile
     monitoring_scope: MonitoringScope
@@ -133,7 +141,8 @@ class MonitoringTarget:
 
 @dataclass
 class ViolationAlert:
-    """Comprehensive violation alert with business context."""
+    """
+Comprehensive violation alert with business context."""
     alert_id: str
     target_id: str
     creator_id: str
@@ -787,7 +796,8 @@ class ContentMonitoringSystem:
             return 'text'
     
     def _generate_search_terms(self, profile: CreatorProfile) -> List[str]:
-        """Generate search terms for platform scanning."""
+        """
+Generate search terms for platform scanning."""
         terms = [profile.creator_id]
         
         # Add creator type specific terms
@@ -805,7 +815,8 @@ class ContentMonitoringSystem:
         return terms
     
     def _get_violation_thresholds(self, creator_type: ContentCategory) -> Dict[str, float]:
-        """Get violation thresholds based on creator type."""
+        """
+Get violation thresholds based on creator type."""
         base_threshold = 0.8
         
         # Adjust thresholds based on content type
@@ -838,7 +849,8 @@ class ContentMonitoringSystem:
         profile: CreatorProfile, 
         custom_config: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Get alert settings for creator."""
+        """
+Get alert settings for creator."""
         settings = {
             'email_enabled': True,
             'sms_enabled': False,
@@ -864,7 +876,8 @@ class ContentMonitoringSystem:
         creator_type: ContentCategory, 
         custom_config: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Get business rules based on creator type."""
+        """
+Get business rules based on creator type."""
         rules = {
             'auto_takedown_enabled': False,
             'collaboration_detection': True,
@@ -899,7 +912,8 @@ class ContentMonitoringSystem:
         profile: CreatorProfile, 
         custom_config: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate priority score for monitoring target."""
+        """
+Calculate priority score for monitoring target."""
         base_score = 1.0
         
         # Adjust based on creator type
@@ -926,7 +940,8 @@ class ContentMonitoringSystem:
         return min(score, 5.0)  # Cap at 5.0
     
     def _calculate_next_check(self, strategy: MonitoringStrategy) -> datetime:
-        """Calculate next check time based on strategy."""
+        """
+Calculate next check time based on strategy."""
         now = datetime.now()
         
         if strategy == MonitoringStrategy.CONTINUOUS:
@@ -943,7 +958,8 @@ class ContentMonitoringSystem:
             return now + timedelta(hours=1)
     
     def _get_sleep_time(self, strategy: MonitoringStrategy) -> int:
-        """Get sleep time between monitoring cycles."""
+        """
+Get sleep time between monitoring cycles."""
         if strategy == MonitoringStrategy.CONTINUOUS:
             return 30  # 30 seconds
         elif strategy == MonitoringStrategy.SCHEDULED:
@@ -963,7 +979,8 @@ class ContentMonitoringSystem:
         creator_type: ContentCategory,
         custom_config: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Get platform-specific configuration."""
+        """
+Get platform-specific configuration."""
         config = {
             'rate_limit': 60,  # requests per minute
             'max_results': 100,
@@ -1012,7 +1029,8 @@ class ContentMonitoringSystem:
         creator_type: ContentCategory, 
         platform: str
     ) -> AlertSeverity:
-        """Determine alert severity based on similarity and context."""
+        """
+Determine alert severity based on similarity and context."""
         if similarity >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity >= 0.90:
@@ -1030,7 +1048,8 @@ class ContentMonitoringSystem:
         profile: CreatorProfile,
         content_item: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate business impact of violation."""
+        """
+Calculate business impact of violation."""
         impact = {
             'revenue_impact': 0.0,
             'brand_impact': 'medium',
@@ -1065,7 +1084,8 @@ class ContentMonitoringSystem:
         profile: CreatorProfile,
         target: MonitoringTarget
     ) -> List[str]:
-        """Generate recommended actions for violation."""
+        """
+Generate recommended actions for violation."""
         actions = []
         
         # Universal actions
@@ -1142,7 +1162,8 @@ class ContentMonitoringSystem:
         return implications
     
     async def _start_background_tasks(self) -> None:
-        """Start background monitoring tasks."""
+        """
+Start background monitoring tasks."""
         if self._background_tasks_started:
             return
         
@@ -1232,7 +1253,8 @@ class ContentMonitoringSystem:
             self.metrics.prevented_losses += alert.business_impact['revenue_impact']
     
     async def _update_metrics_periodically(self) -> None:
-        """Update system metrics periodically."""
+        """
+Update system metrics periodically."""
         while True:
             try:
                 await asyncio.sleep(60)  # Update every minute
@@ -1324,27 +1346,33 @@ class ContentMonitoringSystem:
         self.violation_callbacks.append(callback)
     
     def add_collaboration_callback(self, callback: Callable) -> None:
-        """Add collaboration opportunity callback."""
+        """
+Add collaboration opportunity callback."""
         self.collaboration_callbacks.append(callback)
     
     def add_monetization_callback(self, callback: Callable) -> None:
-        """Add monetization opportunity callback."""
+        """
+Add monetization opportunity callback."""
         self.monetization_callbacks.append(callback)
     
     def add_business_intelligence_callback(self, callback: Callable) -> None:
-        """Add business intelligence callback."""
+        """
+Add business intelligence callback."""
         self.business_intelligence_callbacks.append(callback)
     
     def get_monitoring_metrics(self) -> MonitoringMetrics:
-        """Get current monitoring metrics."""
+        """
+Get current monitoring metrics."""
         return self.metrics
     
     def get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get creator profile by ID."""
+        """
+Get creator profile by ID."""
         return self.creator_profiles.get(creator_id)
     
     def get_monitoring_target(self, target_id: str) -> Optional[MonitoringTarget]:
-        """Get monitoring target by ID."""
+        """
+Get monitoring target by ID."""
         return self.monitoring_targets.get(target_id)
     
     async def get_violation_alerts(
@@ -1353,13 +1381,15 @@ class ContentMonitoringSystem:
         severity: Optional[AlertSeverity] = None,
         limit: int = 100
     ) -> List[ViolationAlert]:
-        """Get violation alerts with optional filtering."""
+        """
+Get violation alerts with optional filtering."""
         # Implementation would query storage backend
         # This is a placeholder
         return []
     
     async def shutdown(self) -> None:
-        """Shutdown the monitoring system gracefully."""
+        """
+Shutdown the monitoring system gracefully."""
         self._logger.info("Shutting down Content Monitoring System...")
         
         # Stop all monitoring tasks

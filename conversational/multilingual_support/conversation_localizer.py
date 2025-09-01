@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class MessageType(Enum):
-    """Types of messages in conversations"""
+    """
+Types of messages in conversations"""
+
     USER_MESSAGE = "user_message"
     SYSTEM_RESPONSE = "system_response"
     NOTIFICATION = "notification"
@@ -53,6 +56,7 @@ class MessageType(Enum):
 
 class LocalizationLevel(Enum):
     """Levels of localization to apply"""
+
     BASIC = "basic"          # Translation only
     STANDARD = "standard"    # Translation + basic cultural adaptation
     ADVANCED = "advanced"    # Full cultural adaptation + regional customization
@@ -98,7 +102,8 @@ class LocalizedMessage:
 
 @dataclass
 class TemplateData:
-    """Template data for localized responses"""
+    """
+Template data for localized responses"""
     template_id: str
     template_category: str
     original_template: str
@@ -111,7 +116,8 @@ class TemplateData:
 
 
 class MessageLocalizer:
-    """Advanced message localization with context awareness"""
+    """
+Advanced message localization with context awareness"""
     
     def __init__(
         self,
@@ -378,7 +384,8 @@ class MessageLocalizer:
         return min(confidence, 1.0)
     
     def _clean_message_text(self, text: str) -> str:
-        """Clean and normalize message text"""
+        """
+Clean and normalize message text"""
         # Remove extra whitespace
         text = ' '.join(text.split())
         
@@ -519,7 +526,8 @@ class ResponseLocalizer:
         conversation_context: ConversationContext,
         variables: Optional[Dict[str, Any]] = None
     ) -> LocalizedMessage:
-        """Localize system response with variable substitution"""
+        """
+Localize system response with variable substitution"""
         try:
             # Substitute variables if provided
             if variables:
@@ -658,7 +666,8 @@ class TemplateLocalizer:
         variables: Optional[Dict[str, Any]] = None,
         cultural_context: Optional[CulturalContext] = None
     ) -> str:
-        """Localize template with variables and cultural adaptation"""
+        """
+Localize template with variables and cultural adaptation"""
         try:
             # Get localized template
             localized_template = await self._get_localized_template(
@@ -793,7 +802,8 @@ class LocalizedResponseGenerator:
         conversation_context: ConversationContext,
         variables: Optional[Dict[str, Any]] = None
     ) -> LocalizedMessage:
-        """Generate complete localized response"""
+        """
+Generate complete localized response"""
         try:
             # Use template if provided
             if response_template_id:
@@ -874,7 +884,8 @@ class ConversationLocalizer:
         target_language: SupportedLanguage,
         **kwargs
     ) -> ConversationContext:
-        """Create comprehensive conversation context"""
+        """
+Create comprehensive conversation context"""
         try:
             # Get user language context
             user_context = await self.language_manager.get_user_language_context(user_id)

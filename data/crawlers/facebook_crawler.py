@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import re
 from datetime import datetime, timedelta
@@ -91,7 +92,8 @@ class FacebookCrawler(PlatformCrawler):
         asyncio.create_task(self._initialize_api_client())
     
     async def _initialize_api_client(self):
-        """Initialize Facebook Graph API client"""
+        """
+Initialize Facebook Graph API client"""
         try:
             self.graph_api = facebook.GraphAPI(
                 access_token=self.access_token,
@@ -561,7 +563,8 @@ class FacebookCrawler(PlatformCrawler):
         return unique_results
     
     async def _deduplicate_pages(self, pages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate pages from results"""
+        """
+Remove duplicate pages from results"""
         seen_ids = set()
         unique_pages = []
         
@@ -575,7 +578,8 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _send_monitoring_notification(self, post: Dict[str, Any], 
                                           callback_url: str, monitoring_id: str):
-        """Send monitoring notification for new post"""
+        """
+Send monitoring notification for new post"""
         try:
             notification_data = {
                 'monitoring_id': monitoring_id,

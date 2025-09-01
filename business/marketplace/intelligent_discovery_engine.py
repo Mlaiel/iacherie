@@ -20,7 +20,7 @@ Expert Team Specialties:
 - DevOps Engineer - Infrastructure and deployment
 - IA Prompt Engineer - Advanced AI prompt optimization
 
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -38,6 +38,7 @@ Creator Profile Analysis → AI Categorization → Skill Assessment → Portfoli
 Market Positioning → Smart Matching → Opportunity Discovery → Collaboration Suggestions → 
 Performance Tracking → Revenue Optimization → Ecosystem Growth
 """
+
 import asyncio
 import logging
 import json
@@ -84,7 +85,9 @@ settings = get_settings()
 
 
 class DiscoveryCategory(Enum):
-    """Creator discovery categories"""
+    """
+Creator discovery categories"""
+
     RISING_STARS = "rising_stars"
     ESTABLISHED_TALENT = "established_talent"
     NICHE_SPECIALISTS = "niche_specialists"
@@ -99,6 +102,7 @@ class DiscoveryCategory(Enum):
 
 class MarketplaceSegment(Enum):
     """Marketplace segments for categorization"""
+
     MUSIC_PRODUCTION = "music_production"
     CONTENT_CREATION = "content_creation"
     VISUAL_ARTS = "visual_arts"
@@ -113,6 +117,7 @@ class MarketplaceSegment(Enum):
 
 class OpportunityType(Enum):
     """Types of opportunities available"""
+
     COLLABORATION = "collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     SPONSORED_CONTENT = "sponsored_content"
@@ -170,7 +175,8 @@ class DiscoveryResult:
 
 @dataclass
 class MarketplaceOpportunity:
-    """Business opportunity in the marketplace"""
+    """
+Business opportunity in the marketplace"""
     opportunity_id: str
     opportunity_type: OpportunityType
     title: str
@@ -233,7 +239,8 @@ class IntelligentDiscoveryEngine:
         }
 
     async def initialize_discovery_models(self):
-        """Initialize AI models for intelligent discovery"""
+        """
+Initialize AI models for intelligent discovery"""
         
         try:
             logger.info("Initializing discovery AI models")
@@ -546,7 +553,8 @@ class IntelligentDiscoveryEngine:
         return []
 
     async def _prepare_creator_features(self, creator_data: List[Dict[str, Any]]) -> np.ndarray:
-        """Prepare feature vectors for creator clustering"""
+        """
+Prepare feature vectors for creator clustering"""
         
         features = []
         for creator in creator_data:
@@ -573,7 +581,8 @@ class IntelligentDiscoveryEngine:
         return self.scaler.fit_transform(features)
 
     async def _build_creator_network(self, creator_data: List[Dict[str, Any]], cluster_labels: np.ndarray):
-        """Build creator collaboration network graph"""
+        """
+Build creator collaboration network graph"""
         
         # Add nodes
         for i, creator in enumerate(creator_data):
@@ -594,12 +603,14 @@ class IntelligentDiscoveryEngine:
                     self.creator_network.add_edge(creator_id, collaborator_id, weight=1.0)
 
     async def _initialize_trend_predictor(self, creator_data: List[Dict[str, Any]]):
-        """Initialize trend prediction model"""
+        """
+Initialize trend prediction model"""
         # Implementation for trend prediction model
         pass
 
     def _parse_search_criteria(self, criteria: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse and validate search criteria"""
+        """
+Parse and validate search criteria"""
         
         parsed = {
             'creator_types': criteria.get('creator_types', []),
@@ -617,7 +628,8 @@ class IntelligentDiscoveryEngine:
         return parsed
 
     async def _get_candidate_creators(self, criteria: Dict[str, Any]) -> List[CreatorProfile]:
-        """Get candidate creator pool based on basic criteria"""
+        """
+Get candidate creator pool based on basic criteria"""
         # Implementation to query database with basic filters
         return []
 
@@ -625,7 +637,8 @@ class IntelligentDiscoveryEngine:
                                          candidates: List[CreatorProfile],
                                          criteria: Dict[str, Any],
                                          categories: List[DiscoveryCategory]) -> List[CreatorProfile]:
-        """Apply AI-powered intelligent filtering"""
+        """
+Apply AI-powered intelligent filtering"""
         
         filtered_candidates = []
         
@@ -650,7 +663,8 @@ class IntelligentDiscoveryEngine:
     async def _generate_discovery_result(self, 
                                        creator: CreatorProfile,
                                        criteria: Dict[str, Any]) -> DiscoveryResult:
-        """Generate detailed discovery result for a creator"""
+        """
+Generate detailed discovery result for a creator"""
         
         # Calculate comprehensive scores
         relevance_score = await self._calculate_relevance_score(creator, criteria)
@@ -691,7 +705,8 @@ class IntelligentDiscoveryEngine:
         )
 
     async def _calculate_relevance_score(self, creator: CreatorProfile, criteria: Dict[str, Any]) -> float:
-        """Calculate relevance score between creator and search criteria"""
+        """
+Calculate relevance score between creator and search criteria"""
         
         score_components = []
         
@@ -737,7 +752,8 @@ class IntelligentDiscoveryEngine:
             return 0.5  # Neutral score if no criteria
 
     async def _assess_creator_quality(self, creator: CreatorProfile) -> float:
-        """Assess overall creator quality using AI analysis"""
+        """
+Assess overall creator quality using AI analysis"""
         
         quality_factors = []
         
@@ -768,7 +784,8 @@ class IntelligentDiscoveryEngine:
         return sum(quality_factors) / len(quality_factors) if quality_factors else 0.5
 
     def _assess_social_presence_quality(self, social_presence: Dict[str, Any]) -> float:
-        """Assess social media presence quality"""
+        """
+Assess social media presence quality"""
         
         if not social_presence:
             return 0.3  # Low score for no social presence
@@ -798,7 +815,8 @@ class IntelligentDiscoveryEngine:
         return min(1.0, quality_score / platforms)
 
     async def _calculate_location_proximity(self, location1: str, location2: str) -> float:
-        """Calculate location proximity score"""
+        """
+Calculate location proximity score"""
         
         try:
             coords1 = await self._geocode_location(location1)

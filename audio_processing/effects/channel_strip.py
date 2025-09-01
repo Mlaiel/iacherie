@@ -4,8 +4,9 @@ Industrial-grade channel strip with comprehensive processing capabilities
 including EQ, dynamics, inserts, sends, and professional routing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -16,7 +17,9 @@ from abc import ABC, abstractmethod
 
 
 class ChannelStripType(Enum):
-    """Channel strip types"""
+    """
+Channel strip types"""
+
     MICROPHONE = "microphone"
     LINE = "line"
     INSTRUMENT = "instrument"
@@ -29,6 +32,7 @@ class ChannelStripType(Enum):
 
 class InsertPosition(Enum):
     """Insert effect positions"""
+
     PRE_EQ = "pre_eq"
     POST_EQ = "post_eq"
     PRE_FADER = "pre_fader"
@@ -59,7 +63,8 @@ class ChannelEQ:
 
 @dataclass
 class ChannelDynamics:
-    """Channel dynamics processing"""
+    """
+Channel dynamics processing"""
     compressor_enabled: bool = False
     compressor_threshold: float = -12.0  # dB
     compressor_ratio: float = 3.0
@@ -77,7 +82,8 @@ class ChannelDynamics:
 
 @dataclass
 class SendConfiguration:
-    """Auxiliary send configuration"""
+    """
+Auxiliary send configuration"""
     send_id: str
     pre_fader: bool = False         # Pre/post fader
     level: float = 0.0              # Send level in dB
@@ -86,7 +92,8 @@ class SendConfiguration:
 
 
 class ChannelStrip:
-    """Professional channel strip with full processing chain"""
+    """
+Professional channel strip with full processing chain"""
     
     def __init__(self, 
                  channel_id: str,
@@ -155,7 +162,8 @@ class ChannelStrip:
         self.gate_envelope = 0.0
     
     def _update_hpf(self):
-        """Update high-pass filter coefficients"""
+        """
+Update high-pass filter coefficients"""
         if self.hpf_enabled and self.hpf_frequency > 0:
             nyquist = self.sample_rate / 2
             normalized_freq = self.hpf_frequency / nyquist
@@ -167,13 +175,15 @@ class ChannelStrip:
             self.hpf_b, self.hpf_a = np.array([1.0]), np.array([1.0])
     
     def _update_eq_filters(self):
-        """Update EQ filter coefficients"""
+        """
+Update EQ filter coefficients"""
         # This is a simplified implementation
         # In production, you'd implement proper parametric EQ filters
         pass
     
     def process(self, input_audio: np.ndarray) -> np.ndarray:
-        """Process audio through complete channel strip"""
+        """
+Process audio through complete channel strip"""
         try:
             if input_audio.size == 0:
                 return input_audio
@@ -242,7 +252,8 @@ class ChannelStrip:
         return processed
     
     def _process_eq(self, audio: np.ndarray) -> np.ndarray:
-        """Process through 4-band parametric EQ"""
+        """
+Process through 4-band parametric EQ"""
         # Simplified EQ implementation
         processed = audio.copy()
         
@@ -259,7 +270,8 @@ class ChannelStrip:
         return processed
     
     def _apply_shelf_filter(self, audio: np.ndarray, frequency: float, gain_db: float, shelf_type: str) -> np.ndarray:
-        """Apply shelving filter"""
+        """
+Apply shelving filter"""
         nyquist = self.sample_rate / 2
         normalized_freq = frequency / nyquist
         
@@ -276,7 +288,8 @@ class ChannelStrip:
         return scipy.signal.lfilter(b * gain_linear, a, audio)
     
     def _process_dynamics(self, audio: np.ndarray) -> np.ndarray:
-        """Process dynamics (compressor and gate)"""
+        """
+Process dynamics (compressor and gate)"""
         processed = audio.copy()
         
         # Simplified dynamics processing
@@ -294,7 +307,8 @@ class ChannelStrip:
         return processed
     
     def _process_inserts(self, audio: np.ndarray) -> np.ndarray:
-        """Process through insert effects"""
+        """
+Process through insert effects"""
         processed = audio.copy()
         
         # Process through each insert effect
@@ -305,7 +319,8 @@ class ChannelStrip:
         return processed
     
     def _apply_fader_and_pan(self, audio: np.ndarray) -> np.ndarray:
-        """Apply fader level and pan"""
+        """
+Apply fader level and pan"""
         processed = audio.copy()
         
         # Apply mute
@@ -335,7 +350,8 @@ class ChannelStrip:
         return processed
     
     def _calculate_pan_gains(self, pan: float) -> Tuple[float, float]:
-        """Calculate left/right gains for pan position"""
+        """
+Calculate left/right gains for pan position"""
         # Constant power panning
         pan_radians = (pan + 1.0) * np.pi / 4.0  # Map -1..1 to 0..π/2
         left_gain = np.cos(pan_radians)
@@ -344,12 +360,14 @@ class ChannelStrip:
         return left_gain, right_gain
     
     def _update_metering(self, input_audio: np.ndarray, output_audio: np.ndarray):
-        """Update channel meters"""
+        """
+Update channel meters"""
         self.input_level = 20 * np.log10(np.max(np.abs(input_audio)) + 1e-10)
         self.output_level = 20 * np.log10(np.max(np.abs(output_audio)) + 1e-10)
     
     def add_send(self, send_id: str, pre_fader: bool = False, level: float = -6.0):
-        """Add auxiliary send"""
+        """
+Add auxiliary send"""
         self.sends[send_id] = SendConfiguration(
             send_id=send_id,
             pre_fader=pre_fader,
@@ -363,7 +381,8 @@ class ChannelStrip:
             self.sends[send_id].level = level
     
     def get_send_audio(self, send_id: str, audio: np.ndarray) -> Optional[np.ndarray]:
-        """Get audio for specific send"""
+        """
+Get audio for specific send"""
         if send_id not in self.sends:
             return None
         
@@ -379,7 +398,8 @@ class ChannelStrip:
         return send_audio
     
     def add_insert(self, insert_name: str, processor: Any, position: InsertPosition = InsertPosition.POST_EQ):
-        """Add insert effect processor"""
+        """
+Add insert effect processor"""
         self.inserts[insert_name] = processor
         self.insert_position = position
         self.logger.info(f"Added insert '{insert_name}' to channel {self.channel_id}")

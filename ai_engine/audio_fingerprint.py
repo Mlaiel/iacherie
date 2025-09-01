@@ -7,6 +7,7 @@ Supports multiple audio formats and real-time fingerprint generation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import numpy as np
 import hashlib
 import io
@@ -61,7 +62,8 @@ class AudioFingerprintEngine:
                  chunk_duration: float = 10.0,
                  overlap: float = 0.5,
                  precision_threshold: float = 0.95):
-        """Initialize audio fingerprint engine."""
+        """
+Initialize audio fingerprint engine."""
         self.sample_rate = sample_rate
         self.chunk_duration = chunk_duration
         self.overlap = overlap
@@ -299,7 +301,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _detect_key(self, y: np.ndarray, sr: int) -> str:
-        """Detect musical key."""
+        """
+Detect musical key."""
         try:
             # Simplified key detection using chroma features
             chroma = librosa.feature.chroma_stft(y=y, sr=sr)
@@ -321,7 +324,8 @@ class AudioFingerprintEngine:
                                chromaprint_data: bytes,
                                spectral_features: Dict,
                                mfcc_features: np.ndarray) -> str:
-        """Generate combined hash from all features."""
+        """
+Generate combined hash from all features."""
         try:
             # Combine all features into a single byte string
             combined_data = chromaprint_data
@@ -390,7 +394,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _spectral_similarity(self, features1: Dict, features2: Dict) -> float:
-        """Calculate spectral features similarity."""
+        """
+Calculate spectral features similarity."""
         try:
             if not features1 or not features2:
                 return 0.0
@@ -412,7 +417,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _mfcc_similarity(self, mfcc1: np.ndarray, mfcc2: np.ndarray) -> float:
-        """Calculate MFCC similarity using cosine similarity."""
+        """
+Calculate MFCC similarity using cosine similarity."""
         try:
             if mfcc1.size == 0 or mfcc2.size == 0:
                 return 0.0
@@ -436,7 +442,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _get_matched_features(self, fp1: AudioFingerprint, fp2: Dict) -> List[str]:
-        """Get list of matched features."""
+        """
+Get list of matched features."""
         matched = []
         
         # Check tempo similarity

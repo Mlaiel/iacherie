@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade regulatory compliance framework implementation.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Set
@@ -24,7 +25,9 @@ import json
 import hashlib
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""
+    """
+Compliance frameworks"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     SOC2 = "soc2"  # Service Organization Control 2
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -38,6 +41,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -46,6 +50,7 @@ class ComplianceStatus(Enum):
 
 class AuditType(Enum):
     """Audit types"""
+
     INTERNAL = "internal"
     EXTERNAL = "external"
     REGULATORY = "regulatory"
@@ -54,6 +59,7 @@ class AuditType(Enum):
 
 class DataClassification(Enum):
     """Data classification levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -62,6 +68,7 @@ class DataClassification(Enum):
 
 class RiskLevel(Enum):
     """Risk levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -153,7 +160,8 @@ class ComplianceReport:
 
 @dataclass
 class ComplianceConfiguration:
-    """Complete compliance configuration"""
+    """
+Complete compliance configuration"""
     enabled_frameworks: List[ComplianceFramework]
     requirements: Dict[str, ComplianceRequirement]
     implementations: Dict[str, ControlImplementation]
@@ -182,7 +190,8 @@ class ComplianceConfigManager:
     """
     
     def __init__(self):
-        """Initialize compliance configuration manager"""
+        """
+Initialize compliance configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Compliance configuration
@@ -614,27 +623,32 @@ class ComplianceConfigManager:
         return True  # Default to compliant for unknown frameworks
     
     async def _check_gdpr_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check GDPR specific compliance"""
+        """
+Check GDPR specific compliance"""
         # Implementation would check GDPR specific controls
         return True
     
     async def _check_soc2_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check SOC2 specific compliance"""
+        """
+Check SOC2 specific compliance"""
         # Implementation would check SOC2 specific controls
         return True
     
     async def _check_iso27001_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check ISO 27001 specific compliance"""
+        """
+Check ISO 27001 specific compliance"""
         # Implementation would check ISO 27001 specific controls
         return True
     
     async def _check_pci_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check PCI DSS specific compliance"""
+        """
+Check PCI DSS specific compliance"""
         # Implementation would check PCI DSS specific controls
         return True
     
     async def _update_compliance_status(self) -> None:
-        """Update overall compliance status"""
+        """
+Update overall compliance status"""
         for framework in self.compliance_config.enabled_frameworks:
             framework_requirements = [
                 req_id for req_id, req in self.compliance_config.requirements.items()
@@ -707,7 +721,8 @@ class ComplianceConfigManager:
         pass
     
     async def _load_risk_assessments(self) -> None:
-        """Load and process risk assessments"""
+        """
+Load and process risk assessments"""
         for risk_assessment in self.compliance_config.risk_assessments:
             self.risk_register[risk_assessment.risk_id] = risk_assessment
         

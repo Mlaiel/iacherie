@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Publishing pipeline status"""
+    """
+Publishing pipeline status"""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
@@ -55,6 +58,7 @@ class PipelineStatus(Enum):
 
 class ContentStatus(Enum):
     """Individual content item status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     OPTIMIZED = "optimized"
@@ -68,6 +72,7 @@ class ContentStatus(Enum):
 
 class PlatformType(Enum):
     """Supported publishing platforms"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -87,6 +92,7 @@ class PlatformType(Enum):
 
 class OptimizationType(Enum):
     """Content optimization types"""
+
     FORMAT_CONVERSION = "format_conversion"
     COMPRESSION = "compression"
     RESOLUTION_SCALING = "resolution_scaling"
@@ -101,6 +107,7 @@ class OptimizationType(Enum):
 
 class SchedulingStrategy(Enum):
     """Content scheduling strategies"""
+
     IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     CUSTOM_TIME = "custom_time"
@@ -123,7 +130,8 @@ class PlatformConfig:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization configuration"""
+    """
+Content optimization configuration"""
     optimization_type: OptimizationType
     parameters: Dict[str, Any]
     priority: int = 1
@@ -639,7 +647,8 @@ class PublishingPipelineManager:
         }
     
     async def _validate_content_quality(self, job: PublishingJob):
-        """Validate content meets quality standards"""
+        """
+Validate content meets quality standards"""
         # Quality validation implementation
         pass
     
@@ -647,7 +656,8 @@ class PublishingPipelineManager:
         self,
         job: PublishingJob
     ) -> Dict[str, Dict[str, Any]]:
-        """Optimize content for each target platform"""
+        """
+Optimize content for each target platform"""
         optimization_results = {}
         
         for platform_config in job.target_platforms:
@@ -758,7 +768,8 @@ class PublishingPipelineManager:
         pass
     
     async def get_publishing_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get detailed status of publishing job"""
+        """
+Get detailed status of publishing job"""
         job = self.db_session.query(PublishingJob).filter(
             PublishingJob.id == job_id
         ).first()
@@ -797,7 +808,8 @@ class PublishingPipelineManager:
 
 
 class AISchedulingOptimizer:
-    """AI-powered content scheduling optimization"""
+    """
+AI-powered content scheduling optimization"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -808,7 +820,8 @@ class AISchedulingOptimizer:
         content_metadata: Dict[str, Any],
         user_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimal publishing schedule using AI"""
+        """
+Generate optimal publishing schedule using AI"""
         # Simplified scheduling logic - would use ML models in production
         
         strategy = pipeline.scheduling_strategy
@@ -856,7 +869,8 @@ class AISchedulingOptimizer:
 
 
 class QualityValidator:
-    """Content quality validation engine"""
+    """
+Content quality validation engine"""
     
     def __init__(self):
         self.quality_checks = {
@@ -872,7 +886,8 @@ class QualityValidator:
         content_type: str,
         quality_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate content quality against rules"""
+        """
+Validate content quality against rules"""
         validator = self.quality_checks.get(content_type)
         
         if not validator:
@@ -881,17 +896,21 @@ class QualityValidator:
         return await validator(content_path, quality_rules)
     
     async def _validate_video_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate video content quality"""
+        """
+Validate video content quality"""
         return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_audio_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate audio content quality"""
+        """
+Validate audio content quality"""
         return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_image_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate image content quality"""
+        """
+Validate image content quality"""
         return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_text_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate text content quality"""
+        """
+Validate text content quality"""
         return {'valid': True, 'score': 0.95, 'issues': []}

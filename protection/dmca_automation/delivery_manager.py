@@ -7,8 +7,9 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
-Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
+Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import uuid
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeliveryMethod(Enum):
-    """Supported delivery methods"""
+    """
+Supported delivery methods"""
+
     EMAIL = "email"
     WEB_FORM = "web_form"
     API_ENDPOINT = "api_endpoint"
@@ -40,6 +43,7 @@ class DeliveryMethod(Enum):
 
 class DeliveryStatus(Enum):
     """Delivery status options"""
+
     PENDING = "pending"
     QUEUED = "queued"
     SENDING = "sending"
@@ -52,6 +56,7 @@ class DeliveryStatus(Enum):
 
 class DeliveryPriority(Enum):
     """Delivery priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -61,7 +66,8 @@ class DeliveryPriority(Enum):
 
 @dataclass
 class DeliveryChannel:
-    """Delivery channel configuration"""
+    """
+Delivery channel configuration"""
     channel_id: str
     method: DeliveryMethod
     endpoint: str
@@ -76,7 +82,8 @@ class DeliveryChannel:
 
 @dataclass
 class DeliveryRequest:
-    """Delivery request structure"""
+    """
+Delivery request structure"""
     request_id: str
     notice_id: str
     recipient: str
@@ -92,7 +99,8 @@ class DeliveryRequest:
 
 @dataclass
 class DeliveryResult:
-    """Delivery attempt result"""
+    """
+Delivery attempt result"""
     success: bool
     delivery_id: str
     timestamp: datetime
@@ -118,7 +126,8 @@ class DeliveryManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize delivery manager"""
+        """
+Initialize delivery manager"""
         self.config = config or {}
         self.db = get_database()
         self.logger = logger
@@ -540,7 +549,8 @@ class DeliveryManager:
         )
     
     async def _get_notice_content(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve notice content from database"""
+        """
+Retrieve notice content from database"""
         try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
@@ -593,7 +603,8 @@ class DeliveryManager:
     async def _format_notice_for_delivery(self, 
                                         notice: TakedownNotice,
                                         method: DeliveryMethod) -> str:
-        """Format notice content for specific delivery method"""
+        """
+Format notice content for specific delivery method"""
         if method == DeliveryMethod.EMAIL:
             return self._format_email_notice(notice)
         elif method == DeliveryMethod.WEB_FORM:
@@ -602,8 +613,10 @@ class DeliveryManager:
             return notice.notice_content
     
     def _format_email_notice(self, notice: TakedownNotice) -> str:
-        """Format notice for email delivery"""
-        return f"""Subject: DMCA Takedown Notice - Copyright Infringement
+        """
+Format notice for email delivery"""
+        return f"""
+Subject: DMCA Takedown Notice - Copyright Infringement
 
 {notice.notice_content}
 
@@ -613,13 +626,15 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         """.strip()
     
     def _format_web_form_notice(self, notice: TakedownNotice) -> str:
-        """Format notice for web form submission"""
+        """
+Format notice for web form submission"""
         return notice.notice_content  # Web forms typically use the raw content
     
     async def _generate_delivery_headers(self, 
                                        method: DeliveryMethod,
                                        recipient_info: Dict[str, Any]) -> Dict[str, str]:
-        """Generate appropriate headers for delivery method"""
+        """
+Generate appropriate headers for delivery method"""
         headers = {}
         
         if method == DeliveryMethod.EMAIL:
@@ -639,7 +654,8 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         return headers
     
     async def _execute_delivery(self, request: DeliveryRequest) -> DeliveryResult:
-        """Execute the actual delivery"""
+        """
+Execute the actual delivery"""
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -727,7 +743,8 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         return True
     
     def _get_concurrency_limit(self, method: DeliveryMethod) -> int:
-        """Get concurrency limit for delivery method"""
+        """
+Get concurrency limit for delivery method"""
         limits = {
             DeliveryMethod.EMAIL: 5,
             DeliveryMethod.WEB_FORM: 2,
@@ -739,7 +756,8 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
     async def _store_delivery_record(self, 
                                    request: DeliveryRequest,
                                    result: DeliveryResult) -> None:
-        """Store delivery record in database"""
+        """
+Store delivery record in database"""
         try:
             query = """
                 INSERT INTO dmca_delivery_records (

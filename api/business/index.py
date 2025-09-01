@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, Type, Any, List, Optional
 from datetime import datetime
@@ -75,7 +76,8 @@ class BusinessServiceRegistry:
         self._is_initialized = False
     
     async def initialize_services(self) -> None:
-        """Initialize all services in dependency order."""
+        """
+Initialize all services in dependency order."""
         try:
             logger.info("Starting business services initialization...")
             
@@ -189,11 +191,13 @@ class BusinessServiceRegistry:
             return self._service_monitor.get_all_service_metrics()
     
     def list_services(self) -> List[str]:
-        """List all available services."""
+        """
+List all available services."""
         return list(self._service_types.keys())
     
     def get_service_dependencies(self, service_name: str) -> List[str]:
-        """Get dependencies for a specific service."""
+        """
+Get dependencies for a specific service."""
         return self._service_dependencies.get(service_name, [])
     
     @asynccontextmanager
@@ -316,7 +320,8 @@ class BusinessServiceRegistry:
         return dependencies
     
     async def _start_health_monitoring(self) -> None:
-        """Start health monitoring for all services."""
+        """
+Start health monitoring for all services."""
         try:
             await self._health_checker.start_monitoring()
             logger.info("Health monitoring started for all services")
@@ -452,47 +457,58 @@ def get_user_service() -> UserService:
     return service_registry.get_service('user')
 
 def get_content_service() -> ContentService:
-    """Get ContentService instance."""
+    """
+Get ContentService instance."""
     return service_registry.get_service('content')
 
 def get_ai_processing_service() -> AIProcessingService:
-    """Get AIProcessingService instance."""
+    """
+Get AIProcessingService instance."""
     return service_registry.get_service('ai_processing')
 
 def get_protection_service() -> ProtectionService:
-    """Get ProtectionService instance."""
+    """
+Get ProtectionService instance."""
     return service_registry.get_service('protection')
 
 def get_collaboration_service() -> CollaborationService:
-    """Get CollaborationService instance."""
+    """
+Get CollaborationService instance."""
     return service_registry.get_service('collaboration')
 
 def get_matching_service() -> MatchingService:
-    """Get MatchingService instance."""
+    """
+Get MatchingService instance."""
     return service_registry.get_service('matching')
 
 def get_notification_service() -> NotificationService:
-    """Get NotificationService instance."""
+    """
+Get NotificationService instance."""
     return service_registry.get_service('notification')
 
 def get_monetization_service() -> MonetizationService:
-    """Get MonetizationService instance."""
+    """
+Get MonetizationService instance."""
     return service_registry.get_service('monetization')
 
 def get_analytics_service() -> AnalyticsService:
-    """Get AnalyticsService instance."""
+    """
+Get AnalyticsService instance."""
     return service_registry.get_service('analytics')
 
 def get_seo_service() -> SEOService:
-    """Get SEOService instance."""
+    """
+Get SEOService instance."""
     return service_registry.get_service('seo')
 
 def get_distribution_service() -> DistributionService:
-    """Get DistributionService instance."""
+    """
+Get DistributionService instance."""
     return service_registry.get_service('distribution')
 
 def get_service_orchestrator() -> BusinessServiceOrchestrator:
-    """Get BusinessServiceOrchestrator instance."""
+    """
+Get BusinessServiceOrchestrator instance."""
     return service_orchestrator
 
 # Core business services
@@ -541,48 +557,57 @@ def initialize_business_services(core_services):
 
 
 def get_business_orchestrator(core_services):
-    """Get business orchestrator with all services initialized"""
+    """
+Get business orchestrator with all services initialized"""
     services = initialize_business_services(core_services)
     return services['orchestrator']
 
 
 def get_user_service(core_services):
-    """Get standalone user service"""
+    """
+Get standalone user service"""
     return UserService(core_services)
 
 
 def get_content_service(core_services):
-    """Get standalone content service"""
+    """
+Get standalone content service"""
     return ContentService(core_services)
 
 
 def get_ai_processing_service(core_services):
-    """Get standalone AI processing service"""
+    """
+Get standalone AI processing service"""
     return AIProcessingService(core_services)
 
 
 def get_protection_service(core_services):
-    """Get standalone protection service"""
+    """
+Get standalone protection service"""
     return ProtectionService(core_services)
 
 
 def get_collaboration_service(core_services):
-    """Get standalone collaboration service"""
+    """
+Get standalone collaboration service"""
     return CollaborationService(core_services)
 
 
 def get_matching_service(core_services):
-    """Get standalone matching service"""
+    """
+Get standalone matching service"""
     return MatchingService(core_services)
 
 
 def get_monetization_service(core_services):
-    """Get standalone monetization service"""
+    """
+Get standalone monetization service"""
     return MonetizationService(core_services)
 
 
 def get_notification_service(core_services):
-    """Get standalone notification service"""
+    """
+Get standalone notification service"""
     return NotificationService(core_services)
 
 

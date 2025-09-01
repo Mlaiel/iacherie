@@ -14,6 +14,7 @@ This module provides comprehensive cloud migration capabilities for the IA
 Influencer Agent platform, including assessment, planning, execution, and
 validation of cloud migrations across different providers and architectures.
 """
+
 import logging
 import asyncio
 import json
@@ -32,7 +33,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class MigrationType(Enum):
-    """Migration types supported"""
+    """
+Migration types supported"""
+
     LIFT_AND_SHIFT = "lift_and_shift"
     REPLATFORM = "replatform"
     REFACTOR = "refactor"
@@ -43,6 +46,7 @@ class MigrationType(Enum):
 
 class MigrationPhase(Enum):
     """Migration execution phases"""
+
     ASSESSMENT = "assessment"
     PLANNING = "planning"
     PREPARATION = "preparation"
@@ -54,6 +58,7 @@ class MigrationPhase(Enum):
 
 class SourceEnvironment(Enum):
     """Source environment types"""
+
     ON_PREMISES = "on_premises"
     AWS = "aws"
     AZURE = "azure"
@@ -63,6 +68,7 @@ class SourceEnvironment(Enum):
 
 class TargetEnvironment(Enum):
     """Target environment types"""
+
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -91,7 +97,8 @@ class MigrationAssessment:
 
 @dataclass
 class MigrationPlan:
-    """Migration execution plan"""
+    """
+Migration execution plan"""
     plan_id: str
     assessment_id: str
     migration_type: MigrationType
@@ -108,7 +115,8 @@ class MigrationPlan:
 
 @dataclass
 class MigrationJob:
-    """Migration job execution state"""
+    """
+Migration job execution state"""
     job_id: str
     plan_id: str
     current_phase: MigrationPhase
@@ -122,10 +130,12 @@ class MigrationJob:
     metrics: Dict[str, Any] = field(default_factory=dict)
 
 class CloudMigrationService:
-    """Enterprise cloud migration and modernization service"""
+    """
+Enterprise cloud migration and modernization service"""
     
     def __init__(self):
-        """Initialize cloud migration service"""
+        """
+Initialize cloud migration service"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Cloud clients
@@ -161,7 +171,8 @@ class CloudMigrationService:
             return False
 
     def _check_ansible_availability(self) -> bool:
-        """Check if Ansible is available"""
+        """
+Check if Ansible is available"""
         try:
             import ansible
             return True
@@ -169,7 +180,8 @@ class CloudMigrationService:
             return False
 
     def _check_docker_availability(self) -> bool:
-        """Check if Docker is available"""
+        """
+Check if Docker is available"""
         try:
             self.docker_client.ping()
             return True
@@ -177,7 +189,8 @@ class CloudMigrationService:
             return False
 
     def _check_kubernetes_availability(self) -> bool:
-        """Check if Kubernetes is available"""
+        """
+Check if Kubernetes is available"""
         try:
             import kubernetes
             return True
@@ -187,7 +200,8 @@ class CloudMigrationService:
     async def assess_migration_readiness(self, 
                                        source_config: Dict[str, Any],
                                        target_config: Dict[str, Any]) -> MigrationAssessment:
-        """Perform comprehensive migration readiness assessment"""
+        """
+Perform comprehensive migration readiness assessment"""
         try:
             assessment_id = f"assessment_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -389,7 +403,8 @@ class CloudMigrationService:
         return common_apps[:3]  # Simulate finding first 3 apps
 
     async def _detect_windows_applications(self, instance: Dict[str, Any]) -> List[str]:
-        """Detect applications running on Windows instance"""
+        """
+Detect applications running on Windows instance"""
         common_apps = [
             'iis', 'sqlserver', '.net_framework', 
             'sharepoint', 'exchange'
@@ -398,7 +413,8 @@ class CloudMigrationService:
         return common_apps[:2]  # Simulate finding first 2 apps
 
     def _assess_app_complexity(self, app_analysis: Dict[str, Any]) -> str:
-        """Assess application migration complexity"""
+        """
+Assess application migration complexity"""
         complexity_score = 0
         
         # Factor in number of applications
@@ -421,7 +437,8 @@ class CloudMigrationService:
             return 'high'
 
     def _recommend_migration_strategy(self, app_analysis: Dict[str, Any]) -> str:
-        """Recommend migration strategy based on analysis"""
+        """
+Recommend migration strategy based on analysis"""
         if app_analysis['migration_complexity'] == 'low':
             return 'containerize'
         elif app_analysis['migration_complexity'] == 'medium':
@@ -432,7 +449,8 @@ class CloudMigrationService:
     async def create_migration_plan(self, assessment_id: str, 
                                   migration_type: MigrationType,
                                   target_env: TargetEnvironment) -> MigrationPlan:
-        """Create detailed migration execution plan"""
+        """
+Create detailed migration execution plan"""
         try:
             if assessment_id not in self.assessments:
                 raise ValueError(f"Assessment not found: {assessment_id}")
@@ -566,7 +584,8 @@ class CloudMigrationService:
         return phases
 
     async def execute_migration(self, plan_id: str) -> str:
-        """Execute migration according to plan"""
+        """
+Execute migration according to plan"""
         try:
             if plan_id not in self.plans:
                 raise ValueError(f"Migration plan not found: {plan_id}")
@@ -705,7 +724,8 @@ class CloudMigrationService:
         )
 
     async def get_migration_metrics(self) -> Dict[str, Any]:
-        """Get migration service metrics"""
+        """
+Get migration service metrics"""
         total_assessments = len(self.assessments)
         total_plans = len(self.plans)
         active_migrations = len(self.active_migrations)

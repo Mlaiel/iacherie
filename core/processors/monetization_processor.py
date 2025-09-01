@@ -23,6 +23,7 @@ Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationType(str, Enum):
-    """Types of monetization"""
+    """
+Types of monetization"""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     LICENSING = "licensing"
@@ -79,6 +82,7 @@ class MonetizationType(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Payment methods"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     BANK_TRANSFER = "bank_transfer"
@@ -88,6 +92,7 @@ class PaymentMethod(str, Enum):
 
 class RevenueSource(str, Enum):
     """Revenue sources"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -100,6 +105,7 @@ class RevenueSource(str, Enum):
 
 class MonetizationStatus(str, Enum):
     """Monetization status"""
+
     PENDING = "pending"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -110,6 +116,7 @@ class MonetizationStatus(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -221,7 +228,8 @@ class RevenueAnalytics:
 
 @dataclass
 class MonetizationResult:
-    """Result of monetization operation"""
+    """
+Result of monetization operation"""
     success: bool
     operation_type: str
     revenue_streams_created: List[RevenueStream]
@@ -234,7 +242,8 @@ class MonetizationResult:
 
 
 class YouTubeRevenueTracker:
-    """YouTube revenue tracking engine"""
+    """
+YouTube revenue tracking engine"""
     
     def __init__(self, api_key: str, config: MonetizationConfig):
         self.api_key = api_key
@@ -322,7 +331,8 @@ class YouTubeRevenueTracker:
 
 
 class InstagramRevenueTracker:
-    """Instagram revenue tracking engine"""
+    """
+Instagram revenue tracking engine"""
     
     def __init__(self, api_key: str, config: MonetizationConfig):
         self.api_key = api_key
@@ -399,7 +409,8 @@ class InstagramRevenueTracker:
 
 
 class SpotifyRevenueTracker:
-    """Spotify revenue tracking engine"""
+    """
+Spotify revenue tracking engine"""
     
     def __init__(self, api_key: str, config: MonetizationConfig):
         self.api_key = api_key
@@ -478,7 +489,8 @@ class SpotifyRevenueTracker:
 
 
 class PaymentProcessor:
-    """Payment processing engine"""
+    """
+Payment processing engine"""
     
     def __init__(self, config: MonetizationConfig):
         self.config = config
@@ -1207,7 +1219,8 @@ class MonetizationProcessor:
             return False
     
     async def _test_database_connection(self) -> bool:
-        """Test database connection"""
+        """
+Test database connection"""
         try:
             # Would test actual database connection
             return True

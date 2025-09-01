@@ -22,6 +22,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -46,7 +47,9 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class PartitionStrategy(Enum):
-    """Partition strategy types"""
+    """
+Partition strategy types"""
+
     HASH = "hash"
     RANGE = "range"
     LIST = "list"
@@ -58,6 +61,7 @@ class PartitionStrategy(Enum):
 
 class PartitionType(Enum):
     """Partition type definitions"""
+
     HORIZONTAL = "horizontal"
     VERTICAL = "vertical"
     FUNCTIONAL = "functional"
@@ -65,6 +69,7 @@ class PartitionType(Enum):
 
 class PartitionStatus(Enum):
     """Partition status states"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     CREATING = "creating"
@@ -76,6 +81,7 @@ class PartitionStatus(Enum):
 
 class ShardingMethod(Enum):
     """Sharding methodology"""
+
     CONSISTENT_HASH = "consistent_hash"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
@@ -84,6 +90,7 @@ class ShardingMethod(Enum):
 
 class CompressionType(Enum):
     """Data compression types"""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -92,6 +99,7 @@ class CompressionType(Enum):
 
 class ArchivalPolicy(Enum):
     """Data archival policies"""
+
     TIME_BASED = "time_based"
     SIZE_BASED = "size_based"
     ACCESS_BASED = "access_based"
@@ -100,6 +108,7 @@ class ArchivalPolicy(Enum):
 
 class MaintenanceWindow(Enum):
     """Maintenance window schedules"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -127,7 +136,8 @@ class PartitionConfig:
 
 @dataclass
 class PartitionMetadata:
-    """Partition metadata tracking"""
+    """
+Partition metadata tracking"""
     partition_id: str
     table_name: str
     partition_name: str
@@ -1180,5 +1190,6 @@ class PartitionManager:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.shutdown()

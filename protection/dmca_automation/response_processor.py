@@ -7,8 +7,9 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
-Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
+Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import uuid
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of platform responses"""
+    """
+Types of platform responses"""
+
     ACKNOWLEDGMENT = "acknowledgment"
     COMPLIANCE = "compliance"
     PARTIAL_COMPLIANCE = "partial_compliance"
@@ -42,6 +45,7 @@ class ResponseType(Enum):
 
 class ResponseStatus(Enum):
     """Response processing status"""
+
     PENDING = "pending"
     PROCESSED = "processed"
     REQUIRES_ACTION = "requires_action"
@@ -52,6 +56,7 @@ class ResponseStatus(Enum):
 
 class SentimentType(Enum):
     """Response sentiment classification"""
+
     COOPERATIVE = "cooperative"
     NEUTRAL = "neutral"
     DEFENSIVE = "defensive"
@@ -74,7 +79,8 @@ class ResponseClassification:
 
 @dataclass
 class ActionRecommendation:
-    """Recommended action based on response"""
+    """
+Recommended action based on response"""
     action_type: str
     priority: int
     description: str
@@ -98,7 +104,8 @@ class ResponseProcessor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize response processor"""
+        """
+Initialize response processor"""
         self.config = config or {}
         self.db = get_database()
         self.nlp_processor = NLPProcessor(config)
@@ -504,7 +511,8 @@ class ResponseProcessor:
         )
     
     async def _analyze_response_sentiment(self, content: str) -> SentimentType:
-        """Analyze sentiment of response"""
+        """
+Analyze sentiment of response"""
         content_lower = content.lower()
         
         # Check for specific sentiment indicators
@@ -530,7 +538,8 @@ class ResponseProcessor:
     async def _analyze_legal_implications(self, 
                                         content: str,
                                         classification: ResponseClassification) -> Dict[str, Any]:
-        """Analyze legal implications of response"""
+        """
+Analyze legal implications of response"""
         content_lower = content.lower()
         implications = {}
         
@@ -574,7 +583,8 @@ class ResponseProcessor:
                                              classification: ResponseClassification,
                                              legal_analysis: Dict[str, Any],
                                              notice_id: str) -> List[ActionRecommendation]:
-        """Generate action recommendations based on analysis"""
+        """
+Generate action recommendations based on analysis"""
         recommendations = []
         
         if classification.response_type == ResponseType.ACKNOWLEDGMENT:
@@ -658,7 +668,8 @@ class ResponseProcessor:
     async def _calculate_compliance_metrics(self, 
                                           classification: ResponseClassification,
                                           response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate compliance-related metrics"""
+        """
+Calculate compliance-related metrics"""
         # Determine compliance status
         if classification.response_type == ResponseType.COMPLIANCE:
             compliance_status = 'compliant'
@@ -687,7 +698,8 @@ class ResponseProcessor:
         }
     
     def _calculate_response_cooperation_score(self, classification: ResponseClassification) -> float:
-        """Calculate cooperation score based on response characteristics"""
+        """
+Calculate cooperation score based on response characteristics"""
         base_score = 0.5
         
         # Adjust based on response type
@@ -715,7 +727,8 @@ class ResponseProcessor:
         return max(0.0, min(1.0, base_score))
     
     def _assess_legal_risk_level(self, classification: ResponseClassification) -> str:
-        """Assess legal risk level based on response"""
+        """
+Assess legal risk level based on response"""
         if classification.response_type == ResponseType.COUNTER_NOTICE:
             return 'high'
         elif classification.response_type == ResponseType.REJECTION and classification.sentiment == SentimentType.HOSTILE:

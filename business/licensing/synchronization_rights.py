@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -29,7 +30,9 @@ from ..ai.sync_intelligence import SyncIntelligenceEngine
 
 
 class SyncMediaType(Enum):
-    """Types of synchronization media"""
+    """
+Types of synchronization media"""
+
     FILM = "film"
     TELEVISION = "television"
     COMMERCIAL = "commercial"
@@ -46,6 +49,7 @@ class SyncMediaType(Enum):
 
 class SyncUsageType(Enum):
     """Types of synchronization usage"""
+
     BACKGROUND_MUSIC = "background_music"
     FEATURED_PERFORMANCE = "featured_performance"
     THEME_SONG = "theme_song"
@@ -60,6 +64,7 @@ class SyncUsageType(Enum):
 
 class LicenseDuration(Enum):
     """License duration types"""
+
     PERPETUAL = "perpetual"
     TERM_LIMITED = "term_limited"
     FESTIVAL_ONLY = "festival_only"
@@ -86,7 +91,8 @@ class SyncOpportunity:
 
 
 class SyncLicenseRequest(BaseModel):
-    """Sync license request structure"""
+    """
+Sync license request structure"""
     content_id: str = Field(..., description="Content for sync licensing")
     project_id: str = Field(..., description="Media project ID")
     media_type: SyncMediaType = Field(..., description="Type of media project")
@@ -568,7 +574,8 @@ class SynchronizationRightsService:
     
     # Helper methods for internal operations
     async def _validate_sync_license_request(self, request: SyncLicenseRequest) -> Dict[str, Any]:
-        """Validate sync license request"""
+        """
+Validate sync license request"""
         # Implementation for request validation
         pass
     
@@ -577,7 +584,8 @@ class SynchronizationRightsService:
         content_id: str, 
         request: SyncLicenseRequest
     ) -> Dict[str, Any]:
-        """Analyze content suitability for sync placement"""
+        """
+Analyze content suitability for sync placement"""
         # Implementation for content analysis
         pass
     
@@ -586,6 +594,7 @@ class SynchronizationRightsService:
         request: SyncLicenseRequest, 
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate intelligent sync pricing analysis"""
+        """
+Generate intelligent sync pricing analysis"""
         # Implementation for pricing analysis
         pass

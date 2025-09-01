@@ -26,6 +26,7 @@ Architecture Components:
 - Monitoring and alerting setup
 - Security hardening and compliance
 """
+
 import os
 import sys
 import json
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScriptType(Enum):
-    """Types of provisioning scripts"""
+    """
+Types of provisioning scripts"""
+
     BOOTSTRAP = "bootstrap"
     DEPLOYMENT = "deployment"
     CONFIGURATION = "configuration"
@@ -62,6 +65,7 @@ class ScriptType(Enum):
 
 class ExecutionMode(Enum):
     """Script execution modes"""
+
     LOCAL = "local"
     REMOTE = "remote"
     CONTAINER = "container"
@@ -85,7 +89,8 @@ class ScriptConfig:
     error_file: Optional[str] = None
     
     def __post_init__(self):
-        """Add default environment variables"""
+        """
+Add default environment variables"""
         self.environment_variables.update({
             'ENVIRONMENT': self.environment,
             'SCRIPT_NAME': self.name,
@@ -97,7 +102,8 @@ class ScriptConfig:
 
 @dataclass
 class ScriptResult:
-    """Result of script execution"""
+    """
+Result of script execution"""
     script_name: str
     success: bool
     exit_code: int
@@ -111,7 +117,8 @@ class ScriptResult:
 
 
 class BaseProvisioningScript(ABC):
-    """Abstract base class for provisioning scripts"""
+    """
+Abstract base class for provisioning scripts"""
     
     def __init__(self, config: ScriptConfig):
         self.config = config
@@ -125,11 +132,13 @@ class BaseProvisioningScript(ABC):
     
     @abstractmethod
     def generate_script_content(self) -> str:
-        """Generate the script content"""
+        """
+Generate the script content"""
         pass
     
     def validate_prerequisites(self) -> bool:
-        """Validate script prerequisites"""
+        """
+Validate script prerequisites"""
         for prereq in self.config.prerequisites:
             if not self._check_prerequisite(prereq):
                 self.logger.error(f"Prerequisite not met: {prereq}")
@@ -267,7 +276,8 @@ class BootstrapScript(BaseProvisioningScript):
     """Bootstrap script for initial environment setup"""
     
     def generate_script_content(self) -> str:
-        """Generate bootstrap script content"""
+        """
+Generate bootstrap script content"""
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -736,7 +746,8 @@ class DeploymentScript(BaseProvisioningScript):
         self.deployment_config = deployment_config
     
     def generate_script_content(self) -> str:
-        """Generate deployment script content"""
+        """
+Generate deployment script content"""
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -1055,7 +1066,8 @@ class ValidationScript(BaseProvisioningScript):
     """Validation script for infrastructure and deployment verification"""
     
     def generate_script_content(self) -> str:
-        """Generate validation script content"""
+        """
+Generate validation script content"""
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -1370,14 +1382,16 @@ main "$@"
 
 
 class RollbackScript(BaseProvisioningScript):
-    """Rollback script for infrastructure and deployment recovery"""
+    """
+Rollback script for infrastructure and deployment recovery"""
     
     def __init__(self, config: ScriptConfig, rollback_config: Dict[str, Any]):
         super().__init__(config)
         self.rollback_config = rollback_config
     
     def generate_script_content(self) -> str:
-        """Generate rollback script content"""
+        """
+Generate rollback script content"""
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -1480,7 +1494,8 @@ main "$@"
 
 
 class ScriptManager:
-    """Manager for provisioning scripts"""
+    """
+Manager for provisioning scripts"""
     
     def __init__(self):
         self.scripts: Dict[str, BaseProvisioningScript] = {}
@@ -1488,7 +1503,8 @@ class ScriptManager:
         self.execution_queue: List[str] = []
         
     def register_script(self, name: str, script: BaseProvisioningScript):
-        """Register a provisioning script"""
+        """
+Register a provisioning script"""
         self.scripts[name] = script
         self.logger.info(f"Registered script: {name}")
     
@@ -1561,14 +1577,16 @@ class ScriptManager:
         return self.scripts[name].execution_history
     
     def get_all_scripts(self) -> List[str]:
-        """Get list of all registered scripts"""
+        """
+Get list of all registered scripts"""
         return list(self.scripts.keys())
 
 
 # Factory function for creating scripts
 def create_script(script_type: ScriptType, config: ScriptConfig, 
                  **kwargs) -> BaseProvisioningScript:
-    """Factory function to create appropriate script"""
+    """
+Factory function to create appropriate script"""
     if script_type == ScriptType.BOOTSTRAP:
         return BootstrapScript(config)
     elif script_type == ScriptType.DEPLOYMENT:

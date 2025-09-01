@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DistributionSystemStatus:
-    """Overall distribution system status"""
+    """
+Overall distribution system status"""
     is_healthy: bool = True
     active_jobs: int = 0
     active_campaigns: int = 0
@@ -486,7 +488,8 @@ class DistributionManager(BaseAgent):
         }
 
     async def _handle_high_load(self) -> None:
-        """Handle high system load situations"""
+        """
+Handle high system load situations"""
         logger.info("Handling high system load")
         # Implementation would scale up resources, optimize queues, etc.
 
@@ -510,7 +513,8 @@ class DistributionManager(BaseAgent):
         }
 
     async def _get_recent_performance_metrics(self) -> Dict[str, Any]:
-        """Get recent performance metrics"""
+        """
+Get recent performance metrics"""
         return {
             'last_hour_jobs': 0,
             'last_hour_success_rate': 0.0,
@@ -518,7 +522,8 @@ class DistributionManager(BaseAgent):
         }
 
     async def _optimize_cache_usage(self) -> None:
-        """Optimize cache usage and cleanup"""
+        """
+Optimize cache usage and cleanup"""
         try:
             logger.info("Starting cache optimization...")
             

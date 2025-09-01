@@ -24,8 +24,9 @@ PROHIBITED and will result in immediate legal action under German and Internatio
 
 Contact: mlaiel@live.de for licensing inquiries ONLY.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import sys
 from typing import Dict, List, Optional, Union, Any
@@ -109,7 +110,9 @@ from .real_time_logging_config import (
 
 
 class LoggingSystemTier(Enum):
-    """Enterprise logging system deployment tiers."""
+    """
+Enterprise logging system deployment tiers."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -119,6 +122,7 @@ class LoggingSystemTier(Enum):
 
 class LoggingModuleType(Enum):
     """Available specialized logging modules."""
+
     CONTENT_PROTECTION = "content_protection"
     MONETIZATION = "monetization"
     COLLABORATION = "collaboration"
@@ -164,14 +168,16 @@ class EnterpriseLoggingSystem:
     """
     
     def __init__(self, config: SystemLoggingConfig):
-        """Initialize enterprise logging system."""
+        """
+Initialize enterprise logging system."""
         self.config = config
         self.loggers: Dict[LoggingModuleType, Any] = {}
         self.system_logger = self._setup_system_logger()
         self._initialize_modules()
     
     def _setup_system_logger(self) -> structlog.BoundLogger:
-        """Setup master system logger."""
+        """
+Setup master system logger."""
         structlog.configure(
             processors=[
                 structlog.stdlib.filter_by_level,
@@ -221,7 +227,8 @@ class EnterpriseLoggingSystem:
             self._initialize_module(module_type)
     
     def _initialize_module(self, module_type: LoggingModuleType):
-        """Initialize specific logging module."""
+        """
+Initialize specific logging module."""
         try:
             if module_type == LoggingModuleType.CONTENT_PROTECTION:
                 config = self._get_content_protection_config()
@@ -289,7 +296,8 @@ class EnterpriseLoggingSystem:
             return ContentProtectionLoggingConfig.create_development_config()
     
     def _get_monetization_config(self) -> MonetizationLoggingConfig:
-        """Get monetization logging configuration based on system tier."""
+        """
+Get monetization logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return MonetizationLoggingConfig.create_enterprise_config()
         elif self.config.tier == LoggingSystemTier.PRODUCTION:
@@ -298,7 +306,8 @@ class EnterpriseLoggingSystem:
             return MonetizationLoggingConfig.create_development_config()
     
     def _get_collaboration_config(self) -> CollaborationLoggingConfig:
-        """Get collaboration logging configuration based on system tier."""
+        """
+Get collaboration logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return CollaborationLoggingConfig.create_enterprise_config()
         elif self.config.tier == LoggingSystemTier.PRODUCTION:
@@ -307,7 +316,8 @@ class EnterpriseLoggingSystem:
             return CollaborationLoggingConfig.create_development_config()
     
     def _get_ai_processing_config(self) -> AIProcessingLoggingConfig:
-        """Get AI processing logging configuration based on system tier."""
+        """
+Get AI processing logging configuration based on system tier."""
         if self.config.tier == LoggingSystemTier.PRODUCTION:
             return AIProcessingLoggingConfig.create_production_config()
         elif self.config.tier in [LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
@@ -316,7 +326,8 @@ class EnterpriseLoggingSystem:
             return AIProcessingLoggingConfig.create_development_config()
     
     def _get_platform_integration_config(self) -> PlatformIntegrationLoggingConfig:
-        """Get platform integration logging configuration based on system tier."""
+        """
+Get platform integration logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return PlatformIntegrationLoggingConfig.create_enterprise_config()
         elif self.config.tier == LoggingSystemTier.PRODUCTION:
@@ -325,7 +336,8 @@ class EnterpriseLoggingSystem:
             return PlatformIntegrationLoggingConfig.create_development_config()
     
     def _get_creator_analytics_config(self) -> CreatorAnalyticsLoggingConfig:
-        """Get creator analytics logging configuration based on system tier."""
+        """
+Get creator analytics logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return CreatorAnalyticsLoggingConfig.create_enterprise_config()
         elif self.config.tier == LoggingSystemTier.PRODUCTION:
@@ -334,7 +346,8 @@ class EnterpriseLoggingSystem:
             return CreatorAnalyticsLoggingConfig.create_development_config()
     
     def _get_rights_management_config(self) -> RightsManagementLoggingConfig:
-        """Get rights management logging configuration based on system tier."""
+        """
+Get rights management logging configuration based on system tier."""
         if self.config.tier == LoggingSystemTier.HIGH_SECURITY:
             return RightsManagementLoggingConfig.create_legal_compliant_config()
         elif self.config.tier == LoggingSystemTier.ENTERPRISE:
@@ -345,14 +358,16 @@ class EnterpriseLoggingSystem:
             return RightsManagementLoggingConfig.create_development_config()
     
     def _get_multi_format_config(self) -> MultiFormatLoggingConfig:
-        """Get multi-format logging configuration based on system tier."""
+        """
+Get multi-format logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.PRODUCTION, LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return MultiFormatLoggingConfig.create_high_performance_config()
         else:
             return MultiFormatLoggingConfig.create_development_config()
     
     def _get_compliance_config(self) -> ComplianceLoggingConfig:
-        """Get compliance logging configuration based on system tier."""
+        """
+Get compliance logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return ComplianceLoggingConfig.create_full_compliance_config()
         elif self.config.tier == LoggingSystemTier.PRODUCTION:
@@ -361,58 +376,71 @@ class EnterpriseLoggingSystem:
             return ComplianceLoggingConfig.create_development_config()
     
     def _get_real_time_config(self) -> RealTimeLoggingConfig:
-        """Get real-time logging configuration based on system tier."""
+        """
+Get real-time logging configuration based on system tier."""
         if self.config.tier in [LoggingSystemTier.PRODUCTION, LoggingSystemTier.ENTERPRISE, LoggingSystemTier.HIGH_SECURITY]:
             return RealTimeLoggingConfig.create_high_performance_config()
         else:
             return RealTimeLoggingConfig.create_development_config()
     
     def get_logger(self, module_type: LoggingModuleType) -> Optional[Any]:
-        """Get specific logger instance."""
+        """
+Get specific logger instance."""
         return self.loggers.get(module_type)
     
     def get_content_protection_logger(self) -> Optional[ContentProtectionLogger]:
-        """Get content protection logger."""
+        """
+Get content protection logger."""
         return self.get_logger(LoggingModuleType.CONTENT_PROTECTION)
     
     def get_monetization_logger(self) -> Optional[MonetizationLogger]:
-        """Get monetization logger."""
+        """
+Get monetization logger."""
         return self.get_logger(LoggingModuleType.MONETIZATION)
     
     def get_collaboration_logger(self) -> Optional[CollaborationLogger]:
-        """Get collaboration logger."""
+        """
+Get collaboration logger."""
         return self.get_logger(LoggingModuleType.COLLABORATION)
     
     def get_ai_processing_logger(self) -> Optional[AIProcessingLogger]:
-        """Get AI processing logger."""
+        """
+Get AI processing logger."""
         return self.get_logger(LoggingModuleType.AI_PROCESSING)
     
     def get_platform_integration_logger(self) -> Optional[PlatformIntegrationLogger]:
-        """Get platform integration logger."""
+        """
+Get platform integration logger."""
         return self.get_logger(LoggingModuleType.PLATFORM_INTEGRATION)
     
     def get_creator_analytics_logger(self) -> Optional[CreatorAnalyticsLogger]:
-        """Get creator analytics logger."""
+        """
+Get creator analytics logger."""
         return self.get_logger(LoggingModuleType.CREATOR_ANALYTICS)
     
     def get_rights_management_logger(self) -> Optional[RightsManagementLogger]:
-        """Get rights management logger."""
+        """
+Get rights management logger."""
         return self.get_logger(LoggingModuleType.RIGHTS_MANAGEMENT)
     
     def get_multi_format_logger(self) -> Optional[MultiFormatLogger]:
-        """Get multi-format logger."""
+        """
+Get multi-format logger."""
         return self.get_logger(LoggingModuleType.MULTI_FORMAT)
     
     def get_compliance_logger(self) -> Optional[ComplianceLogger]:
-        """Get compliance logger."""
+        """
+Get compliance logger."""
         return self.get_logger(LoggingModuleType.COMPLIANCE)
     
     def get_real_time_logger(self) -> Optional[RealTimeLogger]:
-        """Get real-time logger."""
+        """
+Get real-time logger."""
         return self.get_logger(LoggingModuleType.REAL_TIME)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
+        """
+Get comprehensive system status."""
         return {
             "system_tier": self.config.tier.value,
             "enabled_modules": [m.value for m in self.config.enabled_modules],
@@ -584,12 +612,14 @@ def initialize_global_logging_system(tier: LoggingSystemTier = LoggingSystemTier
 
 
 def get_global_logging_system() -> Optional[EnterpriseLoggingSystem]:
-    """Get global logging system instance."""
+    """
+Get global logging system instance."""
     return _global_logging_system
 
 
 def shutdown_global_logging_system():
-    """Shutdown global logging system instance."""
+    """
+Shutdown global logging system instance."""
     global _global_logging_system
     if _global_logging_system:
         _global_logging_system.shutdown()

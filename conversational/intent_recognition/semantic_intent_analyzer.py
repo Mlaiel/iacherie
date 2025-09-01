@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class SemanticDimension(Enum):
-    """Semantic analysis dimensions"""
+    """
+Semantic analysis dimensions"""
+
     EMOTIONAL_TONE = "emotional_tone"
     TECHNICAL_COMPLEXITY = "technical_complexity"
     URGENCY_LEVEL = "urgency_level"
@@ -43,6 +46,7 @@ class SemanticDimension(Enum):
 
 class IntentCluster(Enum):
     """High-level intent clusters"""
+
     CONTENT_CREATION = "content_creation"
     BUSINESS_OPERATIONS = "business_operations"
     TECHNICAL_SUPPORT = "technical_support"
@@ -85,7 +89,8 @@ class SemanticFeatures:
 
 @dataclass
 class SemanticIntentResult:
-    """Result of semantic intent analysis"""
+    """
+Result of semantic intent analysis"""
     
     # Primary intent cluster
     intent_cluster: IntentCluster
@@ -135,7 +140,8 @@ class SemanticIntentAnalyzer:
         self._load_domain_knowledge()
     
     def _initialize_models(self):
-        """Initialize semantic analysis models"""
+        """
+Initialize semantic analysis models"""
         try:
             # Load sentence transformer for embeddings
             model_name = self.config.model.transformer_model_name
@@ -371,7 +377,8 @@ class SemanticIntentAnalyzer:
         return identified_terms
     
     def _calculate_emotional_valence(self, text: str) -> float:
-        """Calculate emotional valence (-1 to 1)"""
+        """
+Calculate emotional valence (-1 to 1)"""
         try:
             sentiment_results = self.sentiment_analyzer(text)
             
@@ -473,7 +480,8 @@ class SemanticIntentAnalyzer:
         return min(1.0, complexity)
     
     def _get_dependency_depth(self, token) -> int:
-        """Calculate dependency tree depth for a token"""
+        """
+Calculate dependency tree depth for a token"""
         depth = 0
         current = token
         
@@ -486,7 +494,8 @@ class SemanticIntentAnalyzer:
         return depth
     
     def _calculate_formality_level(self, text: str) -> float:
-        """Calculate formality level (0 to 1)"""
+        """
+Calculate formality level (0 to 1)"""
         
         formal_indicators = [
             "please", "thank you", "would", "could", "may", "might",
@@ -623,7 +632,8 @@ class SemanticIntentAnalyzer:
         return best_cluster, min(1.0, confidence)
     
     def _calculate_similarity_scores(self, embedding: np.ndarray) -> Dict[str, float]:
-        """Calculate similarity scores with various intent categories"""
+        """
+Calculate similarity scores with various intent categories"""
         
         similarity_scores = {}
         
@@ -637,7 +647,8 @@ class SemanticIntentAnalyzer:
         return similarity_scores
     
     def _extract_intent_nuances(self, text: str, features: SemanticFeatures) -> List[str]:
-        """Extract nuanced aspects of the intent"""
+        """
+Extract nuanced aspects of the intent"""
         
         nuances = []
         
@@ -858,11 +869,13 @@ class SemanticIntentAnalyzer:
         return min(1.0, max(0.0, confidence))
     
     def get_intent_embedding(self, text: str) -> np.ndarray:
-        """Get embedding vector for given text"""
+        """
+Get embedding vector for given text"""
         return self.sentence_transformer.encode(text)
     
     def compare_intents(self, text1: str, text2: str) -> float:
-        """Compare semantic similarity between two texts"""
+        """
+Compare semantic similarity between two texts"""
         embedding1 = self.get_intent_embedding(text1)
         embedding2 = self.get_intent_embedding(text2)
         

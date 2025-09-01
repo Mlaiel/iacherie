@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -54,7 +55,9 @@ from ...security.encryption import encrypt_sensitive_data, decrypt_sensitive_dat
 logger = get_structured_logger(__name__)
 
 class FraudRiskLevel(str, Enum):
-    """Fraud risk level enumeration"""
+    """
+Fraud risk level enumeration"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -64,6 +67,7 @@ class FraudRiskLevel(str, Enum):
 
 class FraudCategory(str, Enum):
     """Fraud category enumeration"""
+
     IDENTITY_FRAUD = "identity_fraud"
     PAYMENT_FRAUD = "payment_fraud"
     TRANSACTION_FRAUD = "transaction_fraud"
@@ -77,6 +81,7 @@ class FraudCategory(str, Enum):
 
 class DetectionMethod(str, Enum):
     """Detection method enumeration"""
+
     RULE_BASED = "rule_based"
     MACHINE_LEARNING = "machine_learning"
     STATISTICAL_ANALYSIS = "statistical_analysis"
@@ -88,6 +93,7 @@ class DetectionMethod(str, Enum):
 
 class ActionType(str, Enum):
     """Fraud action type enumeration"""
+
     ALLOW = "allow"
     FLAG = "flag"
     REVIEW = "review"
@@ -109,7 +115,8 @@ class FraudRule:
     active: bool = True
 
 class FraudAnalysisRequest(BaseModel):
-    """Fraud analysis request model"""
+    """
+Fraud analysis request model"""
     
     analysis_id: str = Field(default_factory=lambda: f"fraud_{uuid.uuid4().hex}")
     creator_id: str = Field(..., min_length=1)
@@ -204,7 +211,8 @@ class FraudDetectorEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Fraud Detector Engine"""
+        """
+Initialize Fraud Detector Engine"""
         self.config = config or {}
         
         # Detection components
@@ -481,7 +489,8 @@ class FraudDetectorEngine:
         return FraudRiskLevel.VERY_LOW
     
     def _determine_recommended_action(self, result: FraudAnalysisResult) -> ActionType:
-        """Determine recommended action based on analysis"""
+        """
+Determine recommended action based on analysis"""
         if result.risk_level == FraudRiskLevel.CRITICAL:
             return ActionType.BLOCK
         elif result.risk_level == FraudRiskLevel.VERY_HIGH:
@@ -494,7 +503,8 @@ class FraudDetectorEngine:
             return ActionType.ALLOW
     
     def _calculate_confidence_score(self, result: FraudAnalysisResult) -> Decimal:
-        """Calculate confidence score for the analysis"""
+        """
+Calculate confidence score for the analysis"""
         base_confidence = Decimal("0.7")
         
         # Increase confidence with more detection methods
@@ -828,11 +838,13 @@ class FraudRuleEngine:
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize rule engine"""
+        """
+Initialize rule engine"""
         pass
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze using fraud rules"""
+        """
+Analyze using fraud rules"""
         # Mock rule-based analysis
         return {
             "score": 30,
@@ -849,7 +861,8 @@ class FraudRuleEngine:
         pass
 
 class MLFraudDetector:
-    """Machine learning fraud detection component"""
+    """
+Machine learning fraud detection component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -857,7 +870,8 @@ class MLFraudDetector:
         self._scaler: Optional[StandardScaler] = None
     
     async def initialize(self) -> None:
-        """Initialize ML detector"""
+        """
+Initialize ML detector"""
         try:
             # Initialize ML models
             self._model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -913,17 +927,20 @@ class MLFraudDetector:
         pass
 
 class BehavioralAnalyzer:
-    """Behavioral pattern analysis component"""
+    """
+Behavioral pattern analysis component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize behavioral analyzer"""
+        """
+Initialize behavioral analyzer"""
         pass
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze behavioral patterns"""
+        """
+Analyze behavioral patterns"""
         # Mock behavioral analysis
         return {
             "score": 35,
@@ -941,17 +958,20 @@ class BehavioralAnalyzer:
         pass
 
 class NetworkAnalyzer:
-    """Network pattern analysis component"""
+    """
+Network pattern analysis component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize network analyzer"""
+        """
+Initialize network analyzer"""
         pass
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze network patterns"""
+        """
+Analyze network patterns"""
         # Mock network analysis
         return {
             "score": 20,
@@ -965,14 +985,16 @@ class NetworkAnalyzer:
         pass
 
 class AnomalyDetector:
-    """Anomaly detection component"""
+    """
+Anomaly detection component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self._isolation_forest: Optional[IsolationForest] = None
     
     async def initialize(self) -> None:
-        """Initialize anomaly detector"""
+        """
+Initialize anomaly detector"""
         try:
             self._isolation_forest = IsolationForest(contamination=0.1, random_state=42)
             
@@ -1033,8 +1055,9 @@ class AnomalyDetector:
         """Shutdown anomaly detector"""
         pass
 
-"""Professional Fraud Detector Engine
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+"""
+Professional Fraud Detector Engine
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides comprehensive fraud detection capabilities using multiple
 advanced techniques including machine learning, behavioral analysis, and rule-based detection.

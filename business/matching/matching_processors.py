@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -89,7 +90,9 @@ from .matching_models import (
 
 
 class ProcessingStage(str, Enum):
-    """Data processing stages"""
+    """
+Data processing stages"""
+
     RAW_INGESTION = "raw_ingestion"
     VALIDATION = "validation"
     NORMALIZATION = "normalization"
@@ -101,6 +104,7 @@ class ProcessingStage(str, Enum):
 
 class DataQuality(str, Enum):
     """Data quality levels"""
+
     EXCELLENT = "excellent"      # 95-100% complete and accurate
     GOOD = "good"               # 85-94% complete and accurate
     FAIR = "fair"               # 70-84% complete and accurate
@@ -709,7 +713,8 @@ class ProfileProcessor(BaseDataProcessor):
         enriched_data: Dict[str, Any],
         quality_metrics: Dict[str, Any]
     ) -> CreatorProfile:
-        """Create final CreatorProfile object"""
+        """
+Create final CreatorProfile object"""
         try:
             features = enriched_data.get("computed_features", {})
             
@@ -975,13 +980,15 @@ class ProfileQualityAssessor:
         return 0.85
     
     async def assess_authenticity(self, profile_data: Dict[str, Any]) -> float:
-        """Assess profile authenticity"""
+        """
+Assess profile authenticity"""
         # Implementation
         return 0.92
 
 
 class ProfileEnrichmentEngine:
-    """Profile data enrichment"""
+    """
+Profile data enrichment"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

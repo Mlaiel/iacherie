@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -47,7 +48,9 @@ import websockets
 logger = logging.getLogger(__name__)
 
 class NetworkType(Enum):
-    """Supported blockchain network types."""
+    """
+Supported blockchain network types."""
+
     ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
@@ -59,6 +62,7 @@ class NetworkType(Enum):
 
 class ConnectionStatus(Enum):
     """Connection status states."""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
@@ -84,7 +88,8 @@ class NetworkConfig:
 
 @dataclass
 class ConnectionMetrics:
-    """Connection performance and health metrics."""
+    """
+Connection performance and health metrics."""
     network_type: NetworkType
     status: ConnectionStatus
     last_block_number: int
@@ -324,7 +329,8 @@ class BlockchainConnector:
             asyncio.create_task(self._monitor_connections())
     
     async def _monitor_connections(self) -> None:
-        """Monitor connection health and update metrics."""
+        """
+Monitor connection health and update metrics."""
         while self._is_monitoring:
             try:
                 # Test all connections
@@ -364,14 +370,16 @@ class BlockchainConnector:
         return self.metrics
     
     async def shutdown(self) -> None:
-        """Shutdown the connector and clean up resources."""
+        """
+Shutdown the connector and clean up resources."""
         self._is_monitoring = False
         self.web3_instances.clear()
         self.metrics.status = ConnectionStatus.DISCONNECTED
 
 
 class EthereumConnector(BlockchainConnector):
-    """Ethereum mainnet and testnet connector with ETH-specific optimizations."""
+    """
+Ethereum mainnet and testnet connector with ETH-specific optimizations."""
     
     def __init__(self, mainnet: bool = True):
         """
@@ -563,7 +571,8 @@ class MultiChainConnector:
     """
     
     def __init__(self):
-        """Initialize multi-chain connector."""
+        """
+Initialize multi-chain connector."""
         self.connectors: Dict[NetworkType, BlockchainConnector] = {}
         self.default_networks = [
             NetworkType.ETHEREUM_MAINNET,
@@ -634,7 +643,8 @@ class MultiChainConnector:
         return self.connectors.get(network)
     
     def get_all_connectors(self) -> Dict[NetworkType, BlockchainConnector]:
-        """Get all active connectors."""
+        """
+Get all active connectors."""
         return self.connectors.copy()
     
     async def get_best_network_for_operation(

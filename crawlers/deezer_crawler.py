@@ -3,6 +3,7 @@ Advanced industrial-grade Deezer crawler for music content protection and analyt
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
+
 import asyncio
 import json
 import re
@@ -26,7 +27,8 @@ settings = get_settings()
 
 
 class DeezerTrack(BaseModel):
-    """Deezer Track data model"""
+    """
+Deezer Track data model"""
     track_id: str
     title: str
     artist_name: str
@@ -51,7 +53,8 @@ class DeezerTrack(BaseModel):
 
 
 class DeezerArtist(BaseModel):
-    """Deezer Artist data model"""
+    """
+Deezer Artist data model"""
     artist_id: str
     name: str
     link: str
@@ -739,7 +742,8 @@ class DeezerCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _categorize_artist_popularity(self, fan_count: int) -> str:
-        """Categorize artist popularity level"""
+        """
+Categorize artist popularity level"""
         if fan_count > 1000000:
             return "superstar"
         elif fan_count > 100000:
@@ -780,7 +784,8 @@ class DeezerCrawler(BaseCrawler):
         return dict(sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_duration_trends(self, tracks: List[Dict]) -> Dict[str, Any]:
-        """Analyze duration trends from track list"""
+        """
+Analyze duration trends from track list"""
         durations = [track.get('duration', 0) for track in tracks if track.get('duration')]
         
         if not durations:
@@ -800,12 +805,14 @@ class DeezerCrawler(BaseCrawler):
         }
     
     async def _get_popular_genres(self, tracks: List[Dict]) -> List[str]:
-        """Get most popular genres from track list"""
+        """
+Get most popular genres from track list"""
         genre_analysis = await self._analyze_genre_trends(tracks)
         return list(genre_analysis.keys())[:5]
     
     async def _identify_emerging_artists(self, artists: List[Dict]) -> List[Dict]:
-        """Identify emerging artists based on metrics"""
+        """
+Identify emerging artists based on metrics"""
         emerging = []
         
         for artist in artists:
@@ -824,7 +831,8 @@ class DeezerCrawler(BaseCrawler):
         return emerging[:5]
     
     async def _analyze_track_performance(self, track: DeezerTrack) -> Dict[str, Any]:
-        """Analyze individual track performance metrics"""
+        """
+Analyze individual track performance metrics"""
         return {
             'track_id': track.track_id,
             'title': track.title,
@@ -838,7 +846,8 @@ class DeezerCrawler(BaseCrawler):
         }
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize track duration"""
+        """
+Categorize track duration"""
         if duration < 120:
             return "very_short"
         elif duration < 180:

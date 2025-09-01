@@ -5,6 +5,7 @@ Core engine for skill matching operations with intelligent skill and competency 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SkillMatchingJob:
-    """Skill Matching operation job"""
+    """
+Skill Matching operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class SkillMatchingJob:
 
 @dataclass
 class SkillMatchingResult:
-    """Skill Matching operation result"""
+    """
+Skill Matching operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class SkillMatchingResult:
     completed_at: datetime = None
 
 class SkillMatchingEngine:
-    """Core skill matching processing engine"""
+    """
+Core skill matching processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

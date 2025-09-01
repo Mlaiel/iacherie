@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for AIModelsConfig module ensuring 100% reliability,
 security, and performance for multi-format content creators.
 """
+
 import pytest
 import sys
 import os
@@ -66,7 +67,8 @@ class TestAIModelsConfig:
     """Tests complets pour la configuration des modèles IA."""
     
     def setup_method(self):
-        """Setup test environment and fixtures"""
+        """
+Setup test environment and fixtures"""
         self.config = AIModelsConfig()
     
     @pytest_marks["unit"]
@@ -471,7 +473,8 @@ class TestModelProvider:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         # Use the enum directly for provider creation
         self.provider_type = ModelProvider.OPENAI
     
@@ -489,11 +492,13 @@ class TestModelProvider:
         assert self.provider_type.value in supported_providers
 
 class TestModelCosts:
-    """Tests pour le calcul des coûts des modèles."""
+    """
+Tests pour le calcul des coûts des modèles."""
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.config = AIModelsConfig()
     
     @pytest_marks["unit"]
@@ -544,7 +549,8 @@ class TestStressAndLoad:
         config = AIModelsConfig()
         
         def access_config():
-            """Fonction d'accès à la configuration."""
+            """
+Fonction d'accès à la configuration."""
             try:
                 # Access available configuration methods
                 models = config.models

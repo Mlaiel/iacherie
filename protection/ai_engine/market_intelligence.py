@@ -11,7 +11,7 @@ State-of-the-art market intelligence and competitive analysis engine providing:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + Backend Senior + Market Intelligence + Competitive Analysis + Strategic Planning + Data Science Expert
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 This proprietary market intelligence system contains advanced algorithms, competitive analysis techniques,
@@ -26,6 +26,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -882,7 +883,8 @@ class MarketIntelligenceEngine:
         )
     
     async def _cache_market_analysis(self, creator_id: str, market_segment: str, analysis: MarketAnalysis):
-        """Cache market analysis results"""
+        """
+Cache market analysis results"""
         try:
             if self.redis_client:
                 cache_key = f"market_analysis:{creator_id}:{market_segment}"
@@ -898,30 +900,36 @@ class MarketIntelligenceEngine:
         return {'competitor_count': 15, 'market_concentration': 'moderate', 'entry_barriers': 'medium'}
     
     async def _identify_market_opportunities(self, creator_id: str, market_segment: str, market_data: Dict[str, Any], trends: List[Dict[str, Any]]):
-        """Identify market opportunities"""
+        """
+Identify market opportunities"""
         return [
             {'opportunity': 'AI content tools', 'potential': 'high', 'timeline': '6-12 months'},
             {'opportunity': 'Cross-platform strategy', 'potential': 'medium', 'timeline': '3-6 months'}
         ]
     
     async def _analyze_market_threats(self, creator_id: str, market_segment: str, competitive_landscape: Dict[str, Any]):
-        """Analyze market threats"""
+        """
+Analyze market threats"""
         return {'threat_level': 'moderate', 'key_threats': ['platform_changes', 'increased_competition']}
     
     async def _analyze_target_audience(self, creator_id: str, market_segment: str, market_data: Dict[str, Any]):
-        """Analyze target audience insights"""
+        """
+Analyze target audience insights"""
         return {'primary_demographic': '18-34', 'engagement_preferences': ['video', 'interactive'], 'growth_segments': ['Gen Z']}
     
     async def _generate_market_forecasts(self, market_segment: str, market_data: Dict[str, Any], trends: List[Dict[str, Any]]):
-        """Generate market forecasts"""
+        """
+Generate market forecasts"""
         return {'6_month_outlook': 'positive', '12_month_outlook': 'strong_growth', 'key_drivers': ['technology', 'audience_expansion']}
     
     async def _get_creator_data(self, creator_id: str):
-        """Get creator data"""
+        """
+Get creator data"""
         return {'id': creator_id, 'type': 'content_creator'}
     
     async def _analyze_creator_content_patterns(self, creator_id: str):
-        """Analyze creator content patterns"""
+        """
+Analyze creator content patterns"""
         return {'primary_content_type': 'video', 'posting_frequency': 3.5}
 
 # Export classes

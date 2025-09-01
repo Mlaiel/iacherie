@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import cv2
@@ -46,7 +47,9 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 
 class DetectionType(Enum):
-    """Types of content detection"""
+    """
+Types of content detection"""
+
     EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     DERIVATIVE_WORK = "derivative_work"
@@ -58,6 +61,7 @@ class DetectionType(Enum):
 
 class ContentType(Enum):
     """Types of content that can be detected"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -86,7 +90,8 @@ class DetectionResult:
 
 @dataclass
 class ContentFingerprint:
-    """Comprehensive content fingerprint"""
+    """
+Comprehensive content fingerprint"""
     content_id: str
     content_type: ContentType
     audio_fingerprint: Optional[Dict[str, Any]] = None
@@ -153,7 +158,8 @@ class ContentDetector:
         asyncio.create_task(self._initialize_ai_models())
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for content detection"""
+        """
+Initialize AI models for content detection"""
         try:
             # Initialize CLIP model for cross-modal similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -674,7 +680,8 @@ class ContentDetector:
     
     async def _calculate_confidence_score(self, similarity_scores: Dict[str, float],
                                         fingerprint_matches: List[Dict[str, Any]]) -> float:
-        """Calculate confidence score for detection"""
+        """
+Calculate confidence score for detection"""
         try:
             # Base confidence on number of matching modalities
             modality_count = len([s for s in similarity_scores.values() if s > 0.5])

@@ -4,12 +4,13 @@ Architecture: Webhook Processing and External Integrations
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Système de gestion de webhooks pour intégrations externes avec retry,
     signature et transformation pour la plateforme IA-Influencer-Agent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class WebhookEvent(Enum):
-    """Types d'événements webhook"""
+    """
+Types d'événements webhook"""
+
     DELIVERY_SUCCESS = "delivery.success"
     DELIVERY_FAILED = "delivery.failed"
     DELIVERY_RETRY = "delivery.retry"
@@ -40,6 +43,7 @@ class WebhookEvent(Enum):
 
 class WebhookStatus(Enum):
     """Statut des webhooks"""
+
     ACTIVE = "active"
     DISABLED = "disabled"
     FAILED = "failed"
@@ -187,7 +191,8 @@ class WebhookTransformer:
     
     @staticmethod
     def transform_event(event: Event, template: Optional[str] = None) -> Dict[str, Any]:
-        """Transforme un événement en payload webhook"""
+        """
+Transforme un événement en payload webhook"""
         if template:
             return WebhookTransformer._apply_template(event, template)
         else:
@@ -195,7 +200,8 @@ class WebhookTransformer:
     
     @staticmethod
     def _default_transform(event: Event) -> Dict[str, Any]:
-        """Transformation par défaut"""
+        """
+Transformation par défaut"""
         return {
             "webhook_version": "1.0",
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -252,7 +258,8 @@ class WebhookSigner:
     
     @staticmethod
     def generate_signature(payload: bytes, secret: str) -> str:
-        """Génère une signature HMAC-SHA256"""
+        """
+Génère une signature HMAC-SHA256"""
         signature = hmac.new(
             secret.encode('utf-8'),
             payload,
@@ -268,7 +275,8 @@ class WebhookSigner:
 
 
 class WebhookProcessor:
-    """Processeur de livraison de webhooks"""
+    """
+Processeur de livraison de webhooks"""
     
     def __init__(self, max_concurrent: int = 10):
         self.max_concurrent = max_concurrent
@@ -276,13 +284,15 @@ class WebhookProcessor:
         self._session: Optional[aiohttp.ClientSession] = None
     
     async def start(self):
-        """Démarre le processeur"""
+        """
+Démarre le processeur"""
         if self._session is None:
             timeout = aiohttp.ClientTimeout(total=60)
             self._session = aiohttp.ClientSession(timeout=timeout)
     
     async def stop(self):
-        """Arrête le processeur"""
+        """
+Arrête le processeur"""
         if self._session:
             await self._session.close()
             self._session = None
@@ -292,7 +302,8 @@ class WebhookProcessor:
         endpoint: WebhookEndpoint, 
         delivery: WebhookDelivery
     ) -> bool:
-        """Livre un webhook"""
+        """
+Livre un webhook"""
         async with self._semaphore:
             return await self._attempt_delivery(endpoint, delivery)
     
@@ -301,7 +312,8 @@ class WebhookProcessor:
         endpoint: WebhookEndpoint, 
         delivery: WebhookDelivery
     ) -> bool:
-        """Tente la livraison d'un webhook"""
+        """
+Tente la livraison d'un webhook"""
         if not self._session:
             await self.start()
         
@@ -464,7 +476,8 @@ class WebhookManager:
         status: Optional[WebhookStatus] = None,
         event_type: Optional[str] = None
     ) -> List[WebhookEndpoint]:
-        """Récupère les endpoints selon critères"""
+        """
+Récupère les endpoints selon critères"""
         endpoints = list(self._endpoints.values())
         
         if status:
@@ -625,7 +638,8 @@ class WebhookManager:
         status: Optional[str] = None,
         limit: int = 100
     ) -> List[WebhookDelivery]:
-        """Récupère les livraisons selon critères"""
+        """
+Récupère les livraisons selon critères"""
         deliveries = list(self._deliveries.values())
         
         if endpoint_id:
@@ -640,7 +654,8 @@ class WebhookManager:
         return deliveries[:limit]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""
+        """
+Retourne les statistiques"""
         return {
             "stats": self._stats.copy(),
             "queue_size": self._delivery_queue.qsize(),

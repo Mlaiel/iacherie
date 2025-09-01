@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Generation Configuration Tests
+"""
+Generation Configuration Tests
 
 Comprehensive tests for the GenerationConfig class that manages
 AI model configurations and generation parameters.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -64,7 +67,8 @@ class TestGenerationConfig:
     
     @pytest.fixture
     def basic_config(self):
-        """Create a basic generation configuration"""
+        """
+Create a basic generation configuration"""
         return GenerationConfig(
             model_name="gpt-4",
             temperature=0.7,
@@ -135,7 +139,8 @@ class TestGenerationConfig:
         assert len(validation_result.warnings) == 0
     
     def test_config_validation_temperature_errors(self):
-        """Test temperature validation errors"""
+        """
+Test temperature validation errors"""
         # Test temperature too low
         with pytest.raises(ValueError, match="Temperature must be between 0.0 and 2.0"):
             GenerationConfig(
@@ -264,7 +269,8 @@ class TestGenerationConfig:
         assert cloned_config.temperature == 0.8
     
     def test_config_merging(self, basic_config):
-        """Test configuration merging"""
+        """
+Test configuration merging"""
         override_config = GenerationConfig(
             model_name="claude-3",
             temperature=0.9,
@@ -319,7 +325,8 @@ class TestGenerationConfig:
         assert 0.7 <= balanced_config.top_p <= 0.9
     
     def test_environment_integration(self):
-        """Test environment variable integration"""
+        """
+Test environment variable integration"""
         with patch.dict(os.environ, {
             'AI_MODEL_NAME': 'test-model',
             'AI_TEMPERATURE': '0.5',
@@ -334,7 +341,8 @@ class TestGenerationConfig:
             assert config.use_cache is True
     
     def test_config_validation_warnings(self):
-        """Test configuration validation warnings"""
+        """
+Test configuration validation warnings"""
         # High temperature warning
         high_temp_config = GenerationConfig(
             model_name="gpt-4",
@@ -378,10 +386,12 @@ class TestGenerationConfig:
 
 
 class TestModelProvider:
-    """Test suite for ModelProvider enum"""
+    """
+Test suite for ModelProvider enum"""
     
     def test_provider_values(self):
-        """Test model provider enum values"""
+        """
+Test model provider enum values"""
         assert ModelProvider.OPENAI.value == "openai"
         assert ModelProvider.ANTHROPIC.value == "anthropic"
         assert ModelProvider.GOOGLE.value == "google"
@@ -402,11 +412,13 @@ class TestConfigValidator:
     
     @pytest.fixture
     def validator(self):
-        """Create a config validator instance"""
+        """
+Create a config validator instance"""
         return ConfigValidator()
     
     def test_validate_temperature(self, validator):
-        """Test temperature validation"""
+        """
+Test temperature validation"""
         # Valid temperatures
         assert validator.validate_temperature(0.0) is True
         assert validator.validate_temperature(0.7) is True
@@ -418,7 +430,8 @@ class TestConfigValidator:
         assert validator.validate_temperature(None) is False
     
     def test_validate_token_limits(self, validator):
-        """Test token limit validation"""
+        """
+Test token limit validation"""
         # Valid token counts
         assert validator.validate_max_tokens(100, "gpt-4") is True
         assert validator.validate_max_tokens(8000, "gpt-4") is True
@@ -459,11 +472,13 @@ class TestConfigLoader:
     
     @pytest.fixture
     def loader(self):
-        """Create a config loader instance"""
+        """
+Create a config loader instance"""
         return ConfigLoader()
     
     def test_load_from_file(self, loader, tmp_path):
-        """Test loading configuration from file"""
+        """
+Test loading configuration from file"""
         config_data = {
             "model_name": "gpt-4",
             "temperature": 0.8,
@@ -531,11 +546,13 @@ class TestConfigManager:
     
     @pytest.fixture
     def manager(self):
-        """Create a config manager instance"""
+        """
+Create a config manager instance"""
         return ConfigManager()
     
     def test_config_registration(self, manager):
-        """Test configuration registration"""
+        """
+Test configuration registration"""
         config = GenerationConfig(
             model_name="test-model",
             temperature=0.7,
@@ -621,7 +638,8 @@ class TestEnvironmentConfig:
     """Test suite for EnvironmentConfig class"""
     
     def test_development_environment(self):
-        """Test development environment configuration"""
+        """
+Test development environment configuration"""
         dev_config = EnvironmentConfig.development()
         
         assert dev_config.debug_mode is True
@@ -654,7 +672,8 @@ class TestPerformanceConfig:
     """Test suite for PerformanceConfig class"""
     
     def test_performance_config_creation(self):
-        """Test performance configuration creation"""
+        """
+Test performance configuration creation"""
         perf_config = PerformanceConfig(
             max_concurrent_requests=10,
             request_timeout=30.0,
@@ -672,7 +691,8 @@ class TestPerformanceConfig:
         assert perf_config.enable_streaming is True
     
     def test_performance_optimization(self):
-        """Test performance optimization recommendations"""
+        """
+Test performance optimization recommendations"""
         perf_config = PerformanceConfig()
         
         recommendations = perf_config.get_optimization_recommendations()

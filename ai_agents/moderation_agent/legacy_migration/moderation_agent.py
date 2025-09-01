@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,9 @@ from ...utils.content_analyzer import ContentAnalyzer
 logger = logging.getLogger(__name__)
 
 class ModerationAction(Enum):
-    """Content moderation actions"""
+    """
+Content moderation actions"""
+
     APPROVE = "approve"
     FLAG = "flag"
     BLOCK = "block"
@@ -70,6 +73,7 @@ class ModerationAction(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
     VIOLENCE = "violence"
@@ -86,6 +90,7 @@ class ViolationType(Enum):
 
 class SeverityLevel(Enum):
     """Violation severity levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -93,7 +98,9 @@ class SeverityLevel(Enum):
     EXTREME = 5
 
 class ContentType(Enum):
-    """Types of content to moderate"""
+    """
+Types of content to moderate"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -116,7 +123,8 @@ class ModerationResult:
 
 @dataclass
 class ViolationDetection:
-    """Detection of a specific violation"""
+    """
+Detection of a specific violation"""
     violation_type: ViolationType
     confidence: float
     severity: SeverityLevel
@@ -644,7 +652,8 @@ class ModerationAgent(BaseAgent):
             return ModerationAction.APPROVE, SeverityLevel.LOW
     
     def _calculate_severity_from_score(self, confidence_score: float) -> SeverityLevel:
-        """Calculate severity level from confidence score"""
+        """
+Calculate severity level from confidence score"""
         if confidence_score >= 0.95:
             return SeverityLevel.EXTREME
         elif confidence_score >= 0.85:
@@ -657,7 +666,8 @@ class ModerationAgent(BaseAgent):
             return SeverityLevel.LOW
     
     def _load_moderation_rules(self) -> Dict[str, Any]:
-        """Load moderation rules configuration"""
+        """
+Load moderation rules configuration"""
         return {
             'auto_approve_threshold': 0.1,
             'auto_flag_threshold': 0.6,
@@ -675,7 +685,8 @@ class ModerationAgent(BaseAgent):
         }
     
     def _load_confidence_thresholds(self) -> Dict[str, float]:
-        """Load confidence thresholds for different violation types"""
+        """
+Load confidence thresholds for different violation types"""
         return {
             'toxicity_toxicity': 0.7,
             'toxicity_severe_toxicity': 0.6,
@@ -690,7 +701,8 @@ class ModerationAgent(BaseAgent):
         }
     
     async def _detect_spam_text(self, text: str) -> Dict[str, Any]:
-        """Detect spam content in text"""
+        """
+Detect spam content in text"""
         try:
             # Spam detection features
             spam_indicators = {
@@ -1163,7 +1175,8 @@ class ModerationAgent(BaseAgent):
         return mapping.get(category, ViolationType.HARASSMENT)
     
     def _calculate_overall_confidence(self, violations: List[ViolationDetection]) -> float:
-        """Calculate overall confidence score from violations"""
+        """
+Calculate overall confidence score from violations"""
         if not violations:
             return 0.0
         
@@ -1179,7 +1192,8 @@ class ModerationAgent(BaseAgent):
         return weighted_confidence / total_weight if total_weight > 0 else 0.0
     
     def _generate_moderation_explanation(self, violations: List[ViolationDetection]) -> str:
-        """Generate human-readable explanation for moderation decision"""
+        """
+Generate human-readable explanation for moderation decision"""
         if not violations:
             return "Content approved - no violations detected"
         
@@ -1210,7 +1224,8 @@ class ModerationAgent(BaseAgent):
         return False
     
     def _count_repeated_patterns(self, text: str) -> float:
-        """Count repeated character patterns in text"""
+        """
+Count repeated character patterns in text"""
         if not text:
             return 0.0
         
@@ -1233,13 +1248,15 @@ class ModerationAgent(BaseAgent):
         return repeated_count / len(text) if text else 0.0
     
     def _extract_urls(self, text: str) -> List[str]:
-        """Extract URLs from text"""
+        """
+Extract URLs from text"""
         import re
         url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         return re.findall(url_pattern, text)
     
     def _count_promotional_keywords(self, text: str) -> float:
-        """Count promotional keywords in text"""
+        """
+Count promotional keywords in text"""
         promotional_keywords = [
             'buy', 'sale', 'discount', 'offer', 'deal', 'free', 'win', 'prize',
             'click here', 'limited time', 'act now', 'exclusive', 'bonus'
@@ -1251,7 +1268,8 @@ class ModerationAgent(BaseAgent):
         return count / len(promotional_keywords)
     
     def _violation_to_dict(self, violation: ViolationDetection) -> Dict[str, Any]:
-        """Convert ViolationDetection to dictionary"""
+        """
+Convert ViolationDetection to dictionary"""
         return {
             'violation_type': violation.violation_type.value,
             'confidence': violation.confidence,
@@ -1262,7 +1280,8 @@ class ModerationAgent(BaseAgent):
         }
     
     def _get_model_versions(self) -> Dict[str, str]:
-        """Get versions of loaded models"""
+        """
+Get versions of loaded models"""
         return {
             'detoxify': 'multilingual-v1',
             'whisper': 'base',
@@ -1271,7 +1290,8 @@ class ModerationAgent(BaseAgent):
         }
     
     async def _log_moderation_decision(self, result: ModerationResult, user_id: str):
-        """Log moderation decision for audit purposes"""
+        """
+Log moderation decision for audit purposes"""
         try:
             log_entry = {
                 'timestamp': result.timestamp.isoformat(),
@@ -1338,13 +1358,15 @@ class ModerationAgent(BaseAgent):
             self.auto_moderation_stats['human_review_required'] += 1
 
 class ModerationAgentManager:
-    """Manager for moderation agent instances"""
+    """
+Manager for moderation agent instances"""
     
     def __init__(self):
         self.agents: Dict[str, ModerationAgent] = {}
     
     async def create_agent(self, agent_id: str, config: Dict[str, Any] = None) -> ModerationAgent:
-        """Create new moderation agent"""
+        """
+Create new moderation agent"""
         agent = ModerationAgent(agent_id, config)
         await agent.initialize()
         self.agents[agent_id] = agent

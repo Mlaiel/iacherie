@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
@@ -25,7 +26,9 @@ from backend.core.cache.strategies import CacheManager
 
 
 class CompatibilityDimension(Enum):
-    """Compatibility analysis dimensions"""
+    """
+Compatibility analysis dimensions"""
+
     CONTENT_STYLE = "content_style"
     AUDIENCE_DEMOGRAPHICS = "audience_demographics"
     BRAND_ALIGNMENT = "brand_alignment"
@@ -52,7 +55,8 @@ class CompatibilityScore:
 
 @dataclass
 class CreatorCompatibilityProfile:
-    """Extended creator profile for compatibility analysis"""
+    """
+Extended creator profile for compatibility analysis"""
     user_id: int
     content_style_vector: np.ndarray
     audience_profile: Dict[str, Any]
@@ -637,7 +641,8 @@ class CompatibilityAnalyzer:
         interests_a: List[str],
         interests_b: List[str]
     ) -> float:
-        """Calculate interest overlap using Jaccard similarity"""
+        """
+Calculate interest overlap using Jaccard similarity"""
         try:
             set_a = set(interests_a)
             set_b = set(interests_b)
@@ -654,7 +659,8 @@ class CompatibilityAnalyzer:
         self,
         dimension_scores: Dict[CompatibilityDimension, float]
     ) -> float:
-        """Calculate confidence level based on score consistency"""
+        """
+Calculate confidence level based on score consistency"""
         try:
             scores = list(dimension_scores.values())
             if not scores:
@@ -677,7 +683,8 @@ class CompatibilityAnalyzer:
         creator_b: CreatorCompatibilityProfile,
         dimension_scores: Dict[CompatibilityDimension, float]
     ) -> List[str]:
-        """Identify key compatibility factors"""
+        """
+Identify key compatibility factors"""
         factors = []
         
         for dimension, score in dimension_scores.items():

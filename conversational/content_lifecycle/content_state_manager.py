@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class StateTransitionType(Enum):
-    """State transition types"""
+    """
+State transition types"""
+
     MANUAL = "manual"
     AUTOMATED = "automated"
     SCHEDULED = "scheduled"
@@ -43,6 +46,7 @@ class StateTransitionType(Enum):
 
 class StateValidationLevel(Enum):
     """State validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -66,7 +70,8 @@ class StateTransition:
 
 @dataclass
 class ContentState:
-    """Content state representation"""
+    """
+Content state representation"""
     content_id: str
     current_state: ContentLifecycleState
     previous_state: Optional[ContentLifecycleState]
@@ -81,7 +86,8 @@ class ContentState:
 
 
 class ContentStateManager:
-    """Advanced content state management system"""
+    """
+Advanced content state management system"""
     
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
@@ -91,7 +97,8 @@ class ContentStateManager:
         self.state_cache_ttl = 3600  # 1 hour
         
     def _initialize_state_transitions(self) -> Dict[str, StateTransition]:
-        """Initialize valid state transitions"""
+        """
+Initialize valid state transitions"""
         transitions = {}
         
         # Creation workflow transitions
@@ -460,7 +467,8 @@ class ContentStateManager:
         transition: StateTransition,
         trigger_data: Dict[str, Any]
     ) -> None:
-        """Validate transition conditions and requirements"""
+        """
+Validate transition conditions and requirements"""
         # Check transition conditions
         conditions_result = await self._check_transition_conditions(content_id, transition)
         if not conditions_result["valid"]:
@@ -625,7 +633,8 @@ class ContentStateManager:
         new_state: ContentLifecycleState,
         event: LifecycleEvent
     ) -> None:
-        """Update content state in database"""
+        """
+Update content state in database"""
         # Placeholder implementation
         pass
     
@@ -634,7 +643,8 @@ class ContentStateManager:
         session: AsyncSession, 
         event: LifecycleEvent
     ) -> None:
-        """Store lifecycle event in database"""
+        """
+Store lifecycle event in database"""
         # Placeholder implementation
         pass
     
@@ -643,7 +653,8 @@ class ContentStateManager:
         session: AsyncSession, 
         content_id: str
     ) -> List[LifecycleEvent]:
-        """Fetch state history from database"""
+        """
+Fetch state history from database"""
         # Placeholder implementation
         return []
     
@@ -656,31 +667,38 @@ class ContentStateManager:
         user_id: Optional[str],
         duration: Optional[timedelta]
     ) -> None:
-        """Update content lock status in database"""
+        """
+Update content lock status in database"""
         # Placeholder implementation
         pass
     
     # Action implementation methods (placeholders)
     async def _send_notification(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Send notification action"""
+        """
+Send notification action"""
         pass
     
     async def _log_event(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Log event action"""
+        """
+Log event action"""
         pass
     
     async def _schedule_publishing(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Schedule publishing action"""
+        """
+Schedule publishing action"""
         pass
     
     async def _publish_content(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Publish content action"""
+        """
+Publish content action"""
         pass
     
     async def _start_monitoring(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Start monitoring action"""
+        """
+Start monitoring action"""
         pass
     
     async def _activate_protection(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Activate protection action"""
+        """
+Activate protection action"""
         pass

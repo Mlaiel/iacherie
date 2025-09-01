@@ -28,6 +28,7 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
+
 import hashlib
 import hmac
 import secrets
@@ -58,7 +59,9 @@ settings = get_settings()
 
 
 class ContentType(Enum):
-    """Content types for protection"""
+    """
+Content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -70,6 +73,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -79,6 +83,7 @@ class ProtectionLevel(Enum):
 
 class FingerprintType(Enum):
     """Fingerprint types"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     CRYPTOGRAPHIC_HASH = "cryptographic_hash"
     AI_EMBEDDING = "ai_embedding"
@@ -89,6 +94,7 @@ class FingerprintType(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -198,7 +204,8 @@ class ContentProtectionManager:
         self._setup_protection_algorithms()
     
     def _setup_protection_algorithms(self):
-        """Initialize protection algorithms and systems"""
+        """
+Initialize protection algorithms and systems"""
         self.hash_algorithms = {
             'sha256': hashlib.sha256,
             'sha512': hashlib.sha512,
@@ -208,7 +215,8 @@ class ContentProtectionManager:
         self.protection_keys = self._generate_protection_keys()
     
     def _generate_protection_keys(self) -> Dict[str, bytes]:
-        """Generate cryptographic keys for content protection"""
+        """
+Generate cryptographic keys for content protection"""
         keys = {}
         for key_type in ['fingerprint', 'watermark', 'signature']:
             keys[key_type] = secrets.token_bytes(32)
@@ -221,7 +229,8 @@ class ContentProtectionManager:
         creator_id: str,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint"""
+        """
+Generate comprehensive content fingerprint"""
         try:
             # Convert content to bytes
             if isinstance(content_data, str):
@@ -756,13 +765,15 @@ async def detect_threats(
     source_url: Optional[str] = None,
     platform: Optional[str] = None
 ) -> List[SecurityThreat]:
-    """Detect threats for protected content"""
+    """
+Detect threats for protected content"""
     return await protection_manager.detect_content_threats(
         content_fingerprint, source_url, platform
     )
 
 async def get_content_status(content_id: str) -> Dict[str, Any]:
-    """Get protection status for content"""
+    """
+Get protection status for content"""
     return await protection_manager.get_protection_status(content_id)
 
 async def generate_fingerprint(
@@ -771,7 +782,8 @@ async def generate_fingerprint(
     creator_id: str,
     protection_level: ProtectionLevel = ProtectionLevel.STANDARD
 ) -> ContentFingerprint:
-    """Generate content fingerprint"""
+    """
+Generate content fingerprint"""
     return await protection_manager.generate_content_fingerprint(
         content_data, content_type, creator_id, protection_level
     )

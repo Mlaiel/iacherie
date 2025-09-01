@@ -7,6 +7,7 @@ provides unified interfaces, and handles complex billing workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from .dispute_manager import DisputeManagerEngine
 logger = logging.getLogger(__name__)
 
 class BillingWorkflowType(Enum):
-    """Types of billing workflows"""
+    """
+Types of billing workflows"""
+
     ONE_TIME_PAYMENT = "one_time_payment"
     SUBSCRIPTION_BILLING = "subscription_billing"
     COMMISSION_PAYOUT = "commission_payout"
@@ -43,6 +46,7 @@ class BillingWorkflowType(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -62,7 +66,8 @@ class BillingWorkflow:
 
 @dataclass
 class BillingMetrics:
-    """Comprehensive billing metrics"""
+    """
+Comprehensive billing metrics"""
     total_revenue: Decimal
     processed_payments: int
     active_subscriptions: int
@@ -93,7 +98,8 @@ class BillingAggregatorEngine:
         self.dispute_manager = DisputeManagerEngine(redis_client, db_pool)
         
     async def initialize(self) -> None:
-        """Initialize billing aggregator and all components"""
+        """
+Initialize billing aggregator and all components"""
         try:
             await self._setup_database_tables()
             
@@ -161,7 +167,8 @@ class BillingAggregatorEngine:
             """)
 
     async def _setup_workflow_templates(self) -> None:
-        """Setup workflow templates for common billing operations"""
+        """
+Setup workflow templates for common billing operations"""
         try:
             workflow_templates = {
                 BillingWorkflowType.ONE_TIME_PAYMENT: [
@@ -514,7 +521,8 @@ class BillingAggregatorEngine:
     async def _execute_invoice_generator_step(self, step_name: str,
                                             parameters: Dict[str, Any],
                                             context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute invoice generator step"""
+        """
+Execute invoice generator step"""
         if step_name == 'generate_invoice':
             # Use context data from previous steps
             invoice_data = {
@@ -538,7 +546,8 @@ class BillingAggregatorEngine:
     async def _execute_subscription_billing_step(self, step_name: str,
                                                 parameters: Dict[str, Any],
                                                 context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute subscription billing step"""
+        """
+Execute subscription billing step"""
         if step_name == 'validate_subscription':
             subscription = await self.subscription_billing.get_subscription_details(
                 parameters['subscription_id']
@@ -601,7 +610,8 @@ class BillingAggregatorEngine:
     async def _execute_royalty_distributor_step(self, step_name: str,
                                               parameters: Dict[str, Any],
                                               context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute royalty distributor step"""
+        """
+Execute royalty distributor step"""
         if step_name == 'calculate_distribution':
             from .royalty_distributor import RoyaltyType
             
@@ -641,7 +651,8 @@ class BillingAggregatorEngine:
     async def _execute_billing_analytics_step(self, step_name: str,
                                             parameters: Dict[str, Any],
                                             context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute billing analytics step"""
+        """
+Execute billing analytics step"""
         if step_name == 'update_analytics':
             # Trigger analytics update
             await self._trigger_analytics_update(parameters, context)
@@ -656,7 +667,8 @@ class BillingAggregatorEngine:
 
     async def _trigger_analytics_update(self, parameters: Dict[str, Any], 
                                       context: Dict[str, Any]) -> None:
-        """Trigger analytics update"""
+        """
+Trigger analytics update"""
         try:
             # Create analytics event
             event_id = f"analytics_update_{int(datetime.now().timestamp())}"

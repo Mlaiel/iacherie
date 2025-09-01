@@ -5,7 +5,7 @@ Central orchestration system for all DRM components including access control,
 licensing, encryption, usage tracking, revenue management, and blockchain integration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -46,7 +47,9 @@ from .blockchain_integration import BlockchainIntegration
 logger = logging.getLogger(__name__)
 
 class DRMSystemStatus(str, Enum):
-    """DRM system operational status."""
+    """
+DRM system operational status."""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     DEGRADED = "degraded"
@@ -56,6 +59,7 @@ class DRMSystemStatus(str, Enum):
 
 class ContentType(str, Enum):
     """Supported content types."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -100,7 +104,8 @@ class ContentProtectionRequest:
 
 @dataclass
 class DRMSystemResponse:
-    """DRM system operation response."""
+    """
+DRM system operation response."""
     request_id: str
     success: bool
     result: Dict[str, Any] = field(default_factory=dict)
@@ -110,10 +115,12 @@ class DRMSystemResponse:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class DRMSystemManager:
-    """Central DRM system manager for enterprise content protection."""
+    """
+Central DRM system manager for enterprise content protection."""
     
     def __init__(self, config: DRMSystemConfig):
-        """Initialize DRM system manager."""
+        """
+Initialize DRM system manager."""
         self.config = config
         self.status = DRMSystemStatus.INITIALIZING
         self.start_time = datetime.now(timezone.utc)
@@ -145,7 +152,8 @@ class DRMSystemManager:
         self.active_requests: Dict[str, ContentProtectionRequest] = {}
         
     async def initialize(self) -> bool:
-        """Initialize all DRM system components."""
+        """
+Initialize all DRM system components."""
         try:
             logger.info("Initializing DRM system components...")
             
@@ -754,7 +762,8 @@ class DRMSystemManager:
         return count
     
     async def _system_health_monitor(self) -> None:
-        """Monitor system health continuously."""
+        """
+Monitor system health continuously."""
         while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes

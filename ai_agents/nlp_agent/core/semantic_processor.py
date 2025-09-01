@@ -7,6 +7,7 @@ meaning extraction, and contextual analysis using state-of-the-art NLP models.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -51,7 +52,8 @@ class SemanticEntity:
 
 @dataclass
 class SemanticRelation:
-    """Semantic relationship between entities"""
+    """
+Semantic relationship between entities"""
     subject: str
     predicate: str
     object: str
@@ -60,7 +62,8 @@ class SemanticRelation:
 
 @dataclass
 class ConceptualTheme:
-    """High-level conceptual theme"""
+    """
+High-level conceptual theme"""
     theme: str
     relevance_score: float
     supporting_evidence: List[str] = field(default_factory=list)
@@ -68,7 +71,8 @@ class ConceptualTheme:
 
 @dataclass
 class SemanticResult:
-    """Complete semantic processing result"""
+    """
+Complete semantic processing result"""
     text: str
     main_concepts: List[str] = field(default_factory=list)
     semantic_entities: List[SemanticEntity] = field(default_factory=list)
@@ -92,7 +96,8 @@ class SemanticProcessor:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Semantic Processor"""
+        """
+Initialize Semantic Processor"""
         self.config = config or default_config
         self.models = {}
         self.embeddings_model = None
@@ -102,7 +107,8 @@ class SemanticProcessor:
         self._initialize_models()
     
     def _load_semantic_patterns(self) -> Dict[str, List[str]]:
-        """Load patterns for semantic analysis"""
+        """
+Load patterns for semantic analysis"""
         return {
             "causal": [
                 r"\bbecause\b", r"\bsince\b", r"\bas\b", r"\bdue to\b",
@@ -397,7 +403,8 @@ class SemanticProcessor:
         return None
     
     async def _extract_concepts_rule_based(self, text: str) -> List[str]:
-        """Extract concepts using rule-based approach"""
+        """
+Extract concepts using rule-based approach"""
         concepts = []
         
         # Check against concept ontology
@@ -702,7 +709,8 @@ class SemanticProcessor:
         return min(density, 1.0)  # Cap at 1.0
     
     async def _analyze_coherence(self, text: str) -> float:
-        """Analyze text coherence using embeddings similarity"""
+        """
+Analyze text coherence using embeddings similarity"""
         if hasattr(self, 'fallback_mode') or not self.embeddings_model:
             # Fallback coherence analysis
             return await self._analyze_coherence_fallback(text)
@@ -755,7 +763,8 @@ class SemanticProcessor:
         text1: str,
         text2: str
     ) -> float:
-        """Compare semantic similarity between two texts"""
+        """
+Compare semantic similarity between two texts"""
         if hasattr(self, 'fallback_mode') or not self.embeddings_model:
             # Fallback: simple word overlap
             words1 = set(text1.lower().split())
@@ -836,7 +845,8 @@ def calculate_semantic_overlap(result1: SemanticResult, result2: SemanticResult)
     return (concept_overlap + theme_overlap) / 2
 
 def extract_semantic_keywords(result: SemanticResult) -> List[str]:
-    """Extract semantic keywords from processing result"""
+    """
+Extract semantic keywords from processing result"""
     keywords = []
     
     # Add main concepts

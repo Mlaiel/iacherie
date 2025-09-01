@@ -14,6 +14,7 @@ PROHIBITED and will be prosecuted to the full extent of the law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Callable, Tuple
@@ -29,7 +30,8 @@ import time
 import traceback
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
+    """
+Get current UTC datetime in a timezone-aware manner"""
     return datetime.now(timezone.utc)
 
 # Import all content protection subsystems
@@ -52,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class SystemStatus(Enum):
-    """System operational status"""
+    """
+System operational status"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     DEGRADED = "degraded"
@@ -63,6 +67,7 @@ class SystemStatus(Enum):
 
 class OperationType(Enum):
     """Protection operation types"""
+
     PROTECT = "protect"
     MONITOR = "monitor" 
     DETECT = "detect"
@@ -90,7 +95,8 @@ class SystemMetrics:
 
 @dataclass
 class OperationResult:
-    """Result of any protection system operation"""
+    """
+Result of any protection system operation"""
     operation_id: str
     operation_type: OperationType
     success: bool
@@ -102,7 +108,8 @@ class OperationResult:
 
 
 def async_performance_monitor(operation_type: OperationType):
-    """Decorator for monitoring async operation performance"""
+    """
+Decorator for monitoring async operation performance"""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(*args, **kwargs):

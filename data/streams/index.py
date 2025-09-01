@@ -9,7 +9,7 @@ including real-time content processing, AI-powered protection monitoring,
 revenue tracking, and cross-platform data synchronization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use, copying, modification, or distribution of this code
@@ -18,6 +18,7 @@ Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Any, Type
 import logging
 
@@ -127,7 +128,7 @@ from .connector import (
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary"
 
 # Team specialties
@@ -187,7 +188,8 @@ class StreamsRegistry:
         self._initialized = False
         
     async def initialize(self) -> None:
-        """Initialize the streams registry"""
+        """
+Initialize the streams registry"""
         if self._initialized:
             return
             
@@ -247,19 +249,23 @@ class StreamsRegistry:
         return self._managers.get(name)
         
     def get_processor(self, name: str) -> Optional[RealTimeProcessor]:
-        """Get registered processor by name"""
+        """
+Get registered processor by name"""
         return self._processors.get(name)
         
     def get_streamer(self, name: str) -> Optional[Any]:
-        """Get registered streamer by name"""
+        """
+Get registered streamer by name"""
         return self._streamers.get(name)
         
     def get_monitor(self, name: str) -> Optional[StreamMonitor]:
-        """Get registered monitor by name"""
+        """
+Get registered monitor by name"""
         return self._monitors.get(name)
         
     def list_components(self) -> Dict[str, List[str]]:
-        """List all registered components"""
+        """
+List all registered components"""
         return {
             "managers": list(self._managers.keys()),
             "processors": list(self._processors.keys()),

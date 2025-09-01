@@ -7,6 +7,7 @@ All templates are embedded directly in this module to respect the 3-level depth 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Multi-format Content Protection Platform
 """
+
 import os
 import json
 import asyncio
@@ -26,7 +27,9 @@ from app.core.ai.content_generator import ContentGenerator
 
 
 class TemplateType(str, Enum):
-    """Notification template types."""
+    """
+Notification template types."""
+
     EMAIL_HTML = "email_html"
     EMAIL_TEXT = "email_text"
     SMS = "sms"
@@ -523,6 +526,7 @@ WEBHOOK_TEMPLATES = {
 
 class PersonalizationLevel(str, Enum):
     """AI personalization levels."""
+
     NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"
@@ -532,6 +536,7 @@ class PersonalizationLevel(str, Enum):
 
 class ContentTone(str, Enum):
     """Content tone options."""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CASUAL = "casual"
@@ -555,7 +560,8 @@ class TemplateVariable:
 
 @dataclass
 class PersonalizationContext:
-    """Context for AI-powered personalization."""
+    """
+Context for AI-powered personalization."""
     user_id: str
     creator_type: str  # musician, blogger, photographer, influencer, comedian
     user_preferences: Dict[str, Any] = field(default_factory=dict)
@@ -601,7 +607,8 @@ class ABTestVariant:
 
 @dataclass
 class NotificationTemplate:
-    """Enterprise notification template with AI-powered features."""
+    """
+Enterprise notification template with AI-powered features."""
     id: str
     name: str
     type: TemplateType
@@ -938,7 +945,8 @@ class NotificationTemplateEngine:
         tags: Optional[List[str]] = None,
         active_only: bool = True
     ) -> List[NotificationTemplate]:
-        """Get templates filtered by criteria."""
+        """
+Get templates filtered by criteria."""
         filtered_templates = []
         
         for template in self.templates.values():
@@ -963,7 +971,8 @@ class NotificationTemplateEngine:
 
     # Private methods
     async def _validate_template(self, template: NotificationTemplate) -> None:
-        """Validate template structure and content."""
+        """
+Validate template structure and content."""
         if not template.name:
             raise ValueError("Template name is required")
         
@@ -1141,7 +1150,8 @@ class NotificationTemplateEngine:
         return score
 
     def _increment_version(self, current_version: str) -> str:
-        """Increment template version."""
+        """
+Increment template version."""
         try:
             parts = current_version.split(".")
             patch = int(parts[2]) + 1
@@ -1177,7 +1187,8 @@ class NotificationTemplateEngine:
         return dt.strftime(format_string)
 
     def _format_duration(self, seconds: int) -> str:
-        """Format duration in human-readable format."""
+        """
+Format duration in human-readable format."""
         if seconds < 60:
             return f"{seconds}s"
         elif seconds < 3600:
@@ -1353,13 +1364,15 @@ def _return_test_id(test_id):
     return test_id
 
 class ABTestManager:
-    """A/B Testing manager for notifications"""
+    """
+A/B Testing manager for notifications"""
     
     def __init__(self):
         self.ab_test_results = {}
 
     async def get_ab_test_results(self, test_id: str) -> Dict[str, Any]:
-        """Get A/B test results with statistical analysis."""
+        """
+Get A/B test results with statistical analysis."""
         if test_id not in self.ab_test_results:
             raise ValueError(f"A/B test not found: {test_id}")
         
@@ -1647,7 +1660,8 @@ class ABTestManager:
         context: Dict[str, Any],
         personalization_context: Optional[PersonalizationContext]
     ) -> Dict[str, Any]:
-        """Prepare rendering context with all variables and functions."""
+        """
+Prepare rendering context with all variables and functions."""
         render_context = context.copy()
         
         # Add personalization data
@@ -1690,7 +1704,8 @@ class ABTestManager:
         return dt.strftime(format_string)
 
     def _format_duration(self, seconds: int) -> str:
-        """Format duration in human-readable format."""
+        """
+Format duration in human-readable format."""
         if seconds < 60:
             return f"{seconds} seconds"
         elif seconds < 3600:

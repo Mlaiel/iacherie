@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AppleMusicTrack:
-    """Apple Music track information"""
+    """
+Apple Music track information"""
     id: str
     name: str
     artist_name: str
@@ -36,7 +37,8 @@ class AppleMusicTrack:
     
 @dataclass
 class AppleMusicPlaylist:
-    """Apple Music playlist information"""
+    """
+Apple Music playlist information"""
     id: str
     name: str
     description: str
@@ -48,7 +50,8 @@ class AppleMusicPlaylist:
 
 @dataclass
 class AppleMusicAnalytics:
-    """Apple Music analytics data"""
+    """
+Apple Music analytics data"""
     track_id: str
     plays: int
     completion_rate: float
@@ -141,7 +144,8 @@ class AppleMusicMusicKitAgent:
     async def _make_api_request(self, endpoint: str, method: str = 'GET', 
                                data: Optional[Dict] = None, 
                                user_token: Optional[str] = None) -> Optional[Dict]:
-        """Make authenticated API request to Apple Music"""
+        """
+Make authenticated API request to Apple Music"""
         await self._ensure_valid_token()
         
         headers = {
@@ -221,7 +225,8 @@ class AppleMusicMusicKitAgent:
     # Track Management
     async def search_tracks(self, query: str, limit: int = 25, 
                           country: str = 'us') -> List[AppleMusicTrack]:
-        """Search for tracks in Apple Music catalog"""
+        """
+Search for tracks in Apple Music catalog"""
         endpoint = f"catalog/{country}/search?term={query}&types=songs&limit={limit}"
         search_data = await self._make_api_request(endpoint)
         

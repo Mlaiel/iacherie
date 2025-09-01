@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -35,7 +36,9 @@ from paypal_checkout_serversdk.core import PayPalHttpClient, SandboxEnvironment,
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Revenue sources"""
+    """
+Revenue sources"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -54,6 +57,7 @@ class RevenueSource(Enum):
 
 class PaymentProvider(Enum):
     """Payment providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -63,6 +67,7 @@ class PaymentProvider(Enum):
 
 class RevenueType(Enum):
     """Types of revenue"""
+
     AD_REVENUE = "ad_revenue"
     STREAMING_ROYALTIES = "streaming_royalties"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -76,6 +81,7 @@ class RevenueType(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequency options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
@@ -85,6 +91,7 @@ class PayoutFrequency(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -117,7 +124,8 @@ class RevenueEntry:
 
 @dataclass
 class PayoutRequest:
-    """Payout request"""
+    """
+Payout request"""
     payout_id: str
     user_id: str
     amount: Decimal
@@ -149,7 +157,8 @@ class RevenueAnalytics:
 
 @dataclass
 class RevenueInfrastructureSpec:
-    """Revenue tracking infrastructure specification"""
+    """
+Revenue tracking infrastructure specification"""
     api_credentials: Dict[str, Dict[str, str]] = field(default_factory=dict)
     payment_providers: List[PaymentProvider] = field(default_factory=lambda: [
         PaymentProvider.STRIPE, PaymentProvider.PAYPAL
@@ -168,7 +177,8 @@ class RevenueInfrastructureSpec:
     max_concurrent_api_calls: int = 100
 
 class YouTubeRevenueTracker:
-    """YouTube revenue tracking integration"""
+    """
+YouTube revenue tracking integration"""
     
     def __init__(self, api_credentials: Dict[str, str]):
         self.api_key = api_credentials.get("api_key")
@@ -403,7 +413,8 @@ class RevenueAnalyticsEngine:
                                        period_start: datetime, 
                                        period_end: datetime,
                                        revenue_entries: List[RevenueEntry]) -> RevenueAnalytics:
-        """Generate comprehensive revenue analytics"""
+        """
+Generate comprehensive revenue analytics"""
         try:
             # Calculate total revenue
             total_revenue = sum(entry.amount for entry in revenue_entries)
@@ -600,7 +611,8 @@ class RevenueTrackingInfrastructureManager:
         self._initialize_payment_processors()
         
     async def initialize_revenue_infrastructure(self) -> Dict[str, Any]:
-        """Initialize complete revenue tracking infrastructure"""
+        """
+Initialize complete revenue tracking infrastructure"""
         try:
             logger.info("Initializing revenue tracking infrastructure...")
             

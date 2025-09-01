@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
+    """
+Types of recommendations"""
+
     CONTENT_BASED = "content_based"
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     HYBRID = "hybrid"
@@ -59,6 +62,7 @@ class RecommendationType(Enum):
 
 class RecommendationDomain(Enum):
     """Recommendation domains"""
+
     CONTENT_CREATION = "content_creation"
     INFLUENCER_DISCOVERY = "influencer_discovery"
     AUDIENCE_ENGAGEMENT = "audience_engagement"
@@ -73,6 +77,7 @@ class RecommendationDomain(Enum):
 
 class ModelComplexity(Enum):
     """Model complexity levels"""
+
     SIMPLE = "simple"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -82,6 +87,7 @@ class ModelComplexity(Enum):
 
 class RecommendationAccuracy(Enum):
     """Recommendation accuracy targets"""
+
     GOOD = "good"
     HIGH = "high"
     VERY_HIGH = "very_high"

@@ -4,10 +4,11 @@ Central index for all audio synthesis capabilities of the IA-Influencer-Agent pl
 This module provides unified access to all synthesis components and orchestration services.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
@@ -85,7 +86,9 @@ logger = logging.getLogger(__name__)
 
 
 class SynthesisCapability(Enum):
-    """Available synthesis capabilities."""
+    """
+Available synthesis capabilities."""
+
     NEURAL_VOCODER = "neural_vocoder"
     MUSIC_GENERATION = "music_generation"
     SPEECH_SYNTHESIS = "speech_synthesis"
@@ -100,6 +103,7 @@ class SynthesisCapability(Enum):
 
 class AudioFormat(Enum):
     """Supported audio formats."""
+
     WAV = "wav"
     FLAC = "flac"
     MP3 = "mp3"
@@ -144,7 +148,8 @@ class AudioSynthesisHub:
     """
     
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize the Audio Synthesis Hub."""
+        """
+Initialize the Audio Synthesis Hub."""
         self.config_path = config_path or Path("config/synthesis.yaml")
         
         # Initialize core managers
@@ -359,7 +364,8 @@ class AudioSynthesisHub:
         )
         
     async def _handle_music_generation(self, request: SynthesisRequest) -> SynthesisResponse:
-        """Handle music generation requests."""
+        """
+Handle music generation requests."""
         music_config = request.parameters
         
         generated_music = self.composition_engine.generate_composition(music_config)
@@ -379,7 +385,8 @@ class AudioSynthesisHub:
         )
         
     async def _handle_speech_synthesis(self, request: SynthesisRequest) -> SynthesisResponse:
-        """Handle speech synthesis requests."""
+        """
+Handle speech synthesis requests."""
         text = request.input_data
         voice_id = request.parameters.get('voice_id', 'default')
         emotion = request.parameters.get('emotion', 'neutral')
@@ -407,7 +414,8 @@ class AudioSynthesisHub:
         )
         
     async def _handle_realtime_processing(self, request: SynthesisRequest) -> SynthesisResponse:
-        """Handle realtime processing requests."""
+        """
+Handle realtime processing requests."""
         audio_data = request.input_data
         processing_config = request.parameters
         
@@ -429,7 +437,8 @@ class AudioSynthesisHub:
         )
         
     async def _handle_spatial_audio(self, request: SynthesisRequest) -> SynthesisResponse:
-        """Handle spatial audio processing requests."""
+        """
+Handle spatial audio processing requests."""
         audio_data = request.input_data
         position = request.parameters.get('position', (0, 0, 0))
         room_size = request.parameters.get('room_size', 'medium')
@@ -455,7 +464,8 @@ class AudioSynthesisHub:
         )
         
     async def _handle_voice_cloning(self, request: SynthesisRequest) -> SynthesisResponse:
-        """Handle voice cloning requests."""
+        """
+Handle voice cloning requests."""
         target_voice = request.parameters.get('target_voice')
         text = request.input_data
         
@@ -543,7 +553,8 @@ class AudioSynthesisHub:
         )
         
     def _calculate_audio_quality(self, audio: torch.Tensor) -> float:
-        """Calculate general audio quality score."""
+        """
+Calculate general audio quality score."""
         if audio is None or audio.numel() == 0:
             return 0.0
             
@@ -569,7 +580,8 @@ class AudioSynthesisHub:
         return max(0.0, min(1.0, quality))
         
     def _calculate_music_quality(self, music: torch.Tensor, config: Dict[str, Any]) -> float:
-        """Calculate music-specific quality score."""
+        """
+Calculate music-specific quality score."""
         basic_quality = self._calculate_audio_quality(music)
         
         # Additional music-specific metrics could be added here
@@ -577,7 +589,8 @@ class AudioSynthesisHub:
         return basic_quality
         
     def _calculate_speech_quality(self, speech: torch.Tensor) -> float:
-        """Calculate speech-specific quality score."""
+        """
+Calculate speech-specific quality score."""
         basic_quality = self._calculate_audio_quality(speech)
         
         # Additional speech-specific metrics could be added here
@@ -585,7 +598,8 @@ class AudioSynthesisHub:
         return basic_quality
         
     def _calculate_spatial_quality(self, spatial_audio: torch.Tensor) -> float:
-        """Calculate spatial audio quality score."""
+        """
+Calculate spatial audio quality score."""
         basic_quality = self._calculate_audio_quality(spatial_audio)
         
         # Check channel separation if stereo/multichannel
@@ -600,11 +614,13 @@ class AudioSynthesisHub:
         return basic_quality
         
     def get_capabilities(self) -> List[str]:
-        """Get list of available synthesis capabilities."""
+        """
+Get list of available synthesis capabilities."""
         return [cap.value for cap, available in self.capabilities.items() if available]
         
     def get_hub_statistics(self) -> Dict[str, Any]:
-        """Get hub performance statistics."""
+        """
+Get hub performance statistics."""
         avg_processing_time = (self.total_processing_time / self.request_count 
                              if self.request_count > 0 else 0)
         
@@ -617,7 +633,8 @@ class AudioSynthesisHub:
         }
         
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check."""
+        """
+Perform comprehensive health check."""
         health_status = {
             'status': 'healthy',
             'components': {},
@@ -646,7 +663,8 @@ class AudioSynthesisHub:
         return health_status
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown the hub and all components."""
+        """
+Gracefully shutdown the hub and all components."""
         logger.info("Shutting down Audio Synthesis Hub...")
         
         try:
@@ -717,13 +735,15 @@ async def synthesize_audio(capability: SynthesisCapability,
 
 
 def list_capabilities() -> List[str]:
-    """Get list of available synthesis capabilities."""
+    """
+Get list of available synthesis capabilities."""
     hub = get_synthesis_hub()
     return hub.get_capabilities()
 
 
 def get_hub_health() -> Dict[str, Any]:
-    """Get hub health status."""
+    """
+Get hub health status."""
     hub = get_synthesis_hub()
     return hub.health_check()
 
@@ -759,4 +779,4 @@ __all__ = [
 # Module initialization
 logger.info("Audio Synthesis Index module loaded successfully")
 logger.info(f"Available capabilities: {[cap.value for cap in SynthesisCapability]}")
-logger.info("© 2025 Fahed Mlaiel - Professional Audio Synthesis Engine")
+logger.info("(c) 2025 Fahed Mlaiel - Professional Audio Synthesis Engine")

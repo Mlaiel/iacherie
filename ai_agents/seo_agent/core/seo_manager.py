@@ -20,6 +20,7 @@ Any attempt to steal, copy, reverse-engineer, or commercialize this code without
 will result in immediate legal action under German and international intellectual property law.
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 import time
@@ -61,7 +62,9 @@ from ...ml.prediction_models import SEOROIPredictionModel
 logger = logging.getLogger(__name__)
 
 class CampaignStatus(Enum):
-    """Advanced SEO campaign status management"""
+    """
+Advanced SEO campaign status management"""
+
     DRAFT = "draft"
     PLANNING = "planning"
     PENDING_APPROVAL = "pending_approval"
@@ -77,6 +80,7 @@ class CampaignStatus(Enum):
 
 class CampaignType(Enum):
     """Enterprise-level SEO campaign types"""
+
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     CONTENT_AUDIT = "content_audit"
     TECHNICAL_SEO = "technical_seo"
@@ -98,6 +102,7 @@ class CampaignType(Enum):
 
 class CampaignPriority(IntEnum):
     """Campaign priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -105,7 +110,9 @@ class CampaignPriority(IntEnum):
     MAINTENANCE = 5
 
 class AutomationLevel(Enum):
-    """Campaign automation levels"""
+    """
+Campaign automation levels"""
+
     MANUAL = "manual"
     SEMI_AUTOMATED = "semi_automated"
     FULLY_AUTOMATED = "fully_automated"
@@ -141,7 +148,8 @@ class SEOPerformanceMetrics:
 
 @dataclass
 class SEOCampaign:
-    """Enterprise SEO campaign with advanced tracking and automation"""
+    """
+Enterprise SEO campaign with advanced tracking and automation"""
     campaign_id: str
     name: str
     description: str
@@ -531,7 +539,8 @@ class SEOAgentManager:
         self.auto_reporting_enabled = True
         
     async def initialize(self):
-        """Initialize SEO Agent Manager"""
+        """
+Initialize SEO Agent Manager"""
         try:
             # Initialize core SEO agent
             await self.seo_agent.initialize()

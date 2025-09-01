@@ -19,6 +19,7 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 
 class BrowserType(Enum):
-    """Supported browser types"""
+    """
+Supported browser types"""
+
     CHROME = "chrome"
     FIREFOX = "firefox"
     EDGE = "edge"
@@ -57,6 +60,7 @@ class BrowserType(Enum):
 
 class BrowserMode(Enum):
     """Browser execution modes"""
+
     HEADLESS = "headless"
     VISIBLE = "visible"
     STEALTH = "stealth"
@@ -65,6 +69,7 @@ class BrowserMode(Enum):
 
 class SessionStatus(Enum):
     """Browser session status"""
+
     IDLE = "idle"
     ACTIVE = "active"
     BUSY = "busy"
@@ -98,7 +103,8 @@ class BrowserConfiguration:
 
 @dataclass
 class BrowserCapabilities:
-    """Browser capabilities and features"""
+    """
+Browser capabilities and features"""
     supports_javascript: bool = True
     supports_cookies: bool = True
     supports_css: bool = True
@@ -113,7 +119,8 @@ class BrowserCapabilities:
 
 @dataclass
 class BrowserSession:
-    """Browser session information"""
+    """
+Browser session information"""
     session_id: str
     driver: webdriver.Remote
     config: BrowserConfiguration
@@ -130,11 +137,13 @@ class BrowserSession:
 
 
 class ChromeDriver:
-    """Chrome WebDriver implementation with advanced configurations"""
+    """
+Chrome WebDriver implementation with advanced configurations"""
     
     @staticmethod
     def create_options(config: BrowserConfiguration) -> ChromeOptions:
-        """Create Chrome options based on configuration"""
+        """
+Create Chrome options based on configuration"""
         options = ChromeOptions()
         
         # Basic configurations
@@ -215,11 +224,13 @@ class ChromeDriver:
 
 
 class FirefoxDriver:
-    """Firefox WebDriver implementation with advanced configurations"""
+    """
+Firefox WebDriver implementation with advanced configurations"""
     
     @staticmethod
     def create_options(config: BrowserConfiguration) -> FirefoxOptions:
-        """Create Firefox options based on configuration"""
+        """
+Create Firefox options based on configuration"""
         options = FirefoxOptions()
         
         # Basic configurations
@@ -310,7 +321,8 @@ class BrowserManager:
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize browser manager"""
+        """
+Initialize browser manager"""
         try:
             self.logger.info("Initializing browser manager...")
             
@@ -376,7 +388,8 @@ class BrowserManager:
         return None
     
     async def close_session(self, session_id: str) -> bool:
-        """Close browser session"""
+        """
+Close browser session"""
         session = self.sessions.get(session_id)
         if not session:
             return False
@@ -550,7 +563,8 @@ class BrowserManager:
         return driver
     
     async def _create_firefox_driver(self, config: BrowserConfiguration) -> webdriver.Firefox:
-        """Create Firefox WebDriver"""
+        """
+Create Firefox WebDriver"""
         options = FirefoxDriver.create_options(config)
         service = FirefoxDriver.create_service()
         
@@ -564,7 +578,8 @@ class BrowserManager:
         return driver
     
     async def _create_edge_driver(self, config: BrowserConfiguration) -> webdriver.Edge:
-        """Create Edge WebDriver"""
+        """
+Create Edge WebDriver"""
         options = EdgeOptions()
         
         if config.mode in [BrowserMode.HEADLESS, BrowserMode.STEALTH]:
@@ -620,7 +635,8 @@ class BrowserManager:
             await self.close_session(session_id)
     
     async def _monitoring_loop(self):
-        """Monitoring loop for session health and cleanup"""
+        """
+Monitoring loop for session health and cleanup"""
         while True:
             try:
                 await self._cleanup_idle_sessions()
@@ -646,7 +662,8 @@ def create_stealth_config(
     browser_type: BrowserType = BrowserType.CHROME,
     user_agent: Optional[str] = None
 ) -> BrowserConfiguration:
-    """Create stealth browser configuration"""
+    """
+Create stealth browser configuration"""
     return BrowserConfiguration(
         browser_type=browser_type,
         mode=BrowserMode.STEALTH,
@@ -660,7 +677,8 @@ def create_stealth_config(
 def create_performance_config(
     browser_type: BrowserType = BrowserType.CHROME
 ) -> BrowserConfiguration:
-    """Create performance-optimized browser configuration"""
+    """
+Create performance-optimized browser configuration"""
     return BrowserConfiguration(
         browser_type=browser_type,
         mode=BrowserMode.PERFORMANCE,

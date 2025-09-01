@@ -5,8 +5,9 @@ waveshaping, harmonic generation, and professional gain staging.
 Includes vintage amp modeling and modern high-gain processing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Optional, Dict, Any, Tuple, Callable
@@ -18,7 +19,9 @@ import threading
 
 
 class DistortionType(Enum):
-    """Distortion algorithm types"""
+    """
+Distortion algorithm types"""
+
     OVERDRIVE = "overdrive"
     HARD_CLIP = "hard_clip"
     SOFT_CLIP = "soft_clip"
@@ -32,6 +35,7 @@ class DistortionType(Enum):
 
 class FilterType(Enum):
     """Pre/Post filter types"""
+
     NONE = "none"
     LOW_PASS = "low_pass"
     HIGH_PASS = "high_pass"
@@ -68,26 +72,31 @@ class DistortionParams:
 
 
 class WaveShapers:
-    """Collection of waveshaping functions"""
+    """
+Collection of waveshaping functions"""
     
     @staticmethod
     def hard_clip(x: np.ndarray, threshold: float = 1.0) -> np.ndarray:
-        """Hard clipping waveshaper"""
+        """
+Hard clipping waveshaper"""
         return np.clip(x, -threshold, threshold)
     
     @staticmethod
     def soft_clip(x: np.ndarray, threshold: float = 1.0) -> np.ndarray:
-        """Soft clipping using tanh"""
+        """
+Soft clipping using tanh"""
         return np.tanh(x / threshold) * threshold
     
     @staticmethod
     def overdrive(x: np.ndarray, gain: float = 2.0) -> np.ndarray:
-        """Overdrive waveshaper"""
+        """
+Overdrive waveshaper"""
         return x / (1.0 + abs(x * gain))
     
     @staticmethod
     def tube_saturation(x: np.ndarray, warmth: float = 0.5, compression: float = 0.3) -> np.ndarray:
-        """Tube saturation modeling"""
+        """
+Tube saturation modeling"""
         # Apply compression
         compressed = x / (1.0 + abs(x) * compression)
         
@@ -99,7 +108,8 @@ class WaveShapers:
     
     @staticmethod
     def fuzz(x: np.ndarray, intensity: float = 2.0) -> np.ndarray:
-        """Fuzz distortion"""
+        """
+Fuzz distortion"""
         # Extreme clipping with some filtering
         clipped = np.clip(x * intensity, -0.7, 0.7)
         
@@ -108,7 +118,8 @@ class WaveShapers:
     
     @staticmethod
     def asymmetric(x: np.ndarray, bias: float = 0.0) -> np.ndarray:
-        """Asymmetric distortion"""
+        """
+Asymmetric distortion"""
         positive = x + bias
         negative = x - bias
         
@@ -121,24 +132,28 @@ class WaveShapers:
     
     @staticmethod
     def waveshaper_cubic(x: np.ndarray, amount: float = 0.5) -> np.ndarray:
-        """Cubic waveshaper"""
+        """
+Cubic waveshaper"""
         return x - (amount / 3.0) * (x ** 3)
     
     @staticmethod
     def exponential(x: np.ndarray, factor: float = 2.0) -> np.ndarray:
-        """Exponential waveshaper"""
+        """
+Exponential waveshaper"""
         return np.sign(x) * (1 - np.exp(-abs(x) * factor))
 
 
 class HarmonicGenerator:
-    """Harmonic content generator"""
+    """
+Harmonic content generator"""
     
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
         self.history = np.zeros(4)  # For derivative calculation
         
     def generate_harmonics(self, signal: np.ndarray, amount: float) -> np.ndarray:
-        """Generate harmonic content"""
+        """
+Generate harmonic content"""
         if amount <= 0:
             return signal
         
@@ -155,14 +170,16 @@ class HarmonicGenerator:
         return signal + amount * harmonics * 0.1
     
     def enhance_presence(self, signal: np.ndarray) -> np.ndarray:
-        """Enhance presence and clarity"""
+        """
+Enhance presence and clarity"""
         # Simple high-frequency emphasis
         enhanced = signal + 0.1 * np.diff(signal, prepend=signal[0])
         return enhanced
 
 
 class FilterBank:
-    """Multi-mode filter bank"""
+    """
+Multi-mode filter bank"""
     
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
@@ -170,7 +187,8 @@ class FilterBank:
         
     def process(self, signal: np.ndarray, filter_type: FilterType, 
                frequency: float, q: float = 0.707) -> np.ndarray:
-        """Process signal with specified filter"""
+        """
+Process signal with specified filter"""
         if filter_type == FilterType.NONE:
             return signal
         
@@ -216,7 +234,8 @@ class BitCrusher:
         
     def process(self, signal: np.ndarray, bit_depth: int, 
                rate_factor: float) -> np.ndarray:
-        """Apply bit crushing and sample rate reduction"""
+        """
+Apply bit crushing and sample rate reduction"""
         # Bit depth reduction
         if bit_depth < 16:
             levels = 2 ** bit_depth
@@ -244,7 +263,8 @@ class BitCrusher:
 
 
 class DistortionProcessor:
-    """Professional distortion processor with multiple algorithms"""
+    """
+Professional distortion processor with multiple algorithms"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -261,7 +281,8 @@ class DistortionProcessor:
         self.processed_samples = 0
         
     def _init_components(self):
-        """Initialize processing components"""
+        """
+Initialize processing components"""
         try:
             self.wave_shapers = WaveShapers()
             self.harmonic_generator = HarmonicGenerator(self.sample_rate)
@@ -517,7 +538,8 @@ class DistortionProcessor:
         return presets.get(name, presets['mild_overdrive'])
     
     def apply_preset(self, name: str):
-        """Apply a preset to the processor"""
+        """
+Apply a preset to the processor"""
         preset = self.create_preset(name)
         
         # Update parameters from preset
@@ -561,7 +583,8 @@ class DistortionProcessor:
         }
     
     def analyze_signal_characteristics(self, signal: np.ndarray) -> Dict[str, float]:
-        """Analyze input signal characteristics for automatic parameter suggestion"""
+        """
+Analyze input signal characteristics for automatic parameter suggestion"""
         # Peak analysis
         peak_level = np.max(np.abs(signal))
         rms_level = np.sqrt(np.mean(signal ** 2))
@@ -587,7 +610,8 @@ class DistortionProcessor:
         }
     
     def suggest_parameters(self, signal_analysis: Dict[str, float]) -> Dict[str, Any]:
-        """Suggest optimal parameters based on signal analysis"""
+        """
+Suggest optimal parameters based on signal analysis"""
         suggestions = {}
         
         # Adjust drive based on input level
@@ -621,7 +645,8 @@ class DistortionProcessor:
         return suggestions
     
     def auto_adjust(self, signal: np.ndarray):
-        """Automatically adjust parameters based on input signal"""
+        """
+Automatically adjust parameters based on input signal"""
         analysis = self.analyze_signal_characteristics(signal)
         suggestions = self.suggest_parameters(analysis)
         
@@ -698,7 +723,8 @@ class DistortionProcessor:
         self.tone_zi = scipy.signal.lfilter_zi(self.tone_b, self.tone_a)
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply distortion processing"""
+        """
+Apply distortion processing"""
         try:
             # Apply input gain
             boosted_audio = audio_data * self.drive
@@ -752,15 +778,18 @@ class DistortionProcessor:
             return self._overdrive(audio_data)
     
     def _overdrive(self, audio_data: np.ndarray) -> np.ndarray:
-        """Smooth overdrive distortion"""
+        """
+Smooth overdrive distortion"""
         return np.tanh(audio_data)
     
     def _hard_clip(self, audio_data: np.ndarray) -> np.ndarray:
-        """Hard clipping distortion"""
+        """
+Hard clipping distortion"""
         return np.clip(audio_data, -1.0, 1.0)
     
     def _soft_clip(self, audio_data: np.ndarray) -> np.ndarray:
-        """Soft clipping distortion"""
+        """
+Soft clipping distortion"""
         # Cubic soft clipping
         abs_x = np.abs(audio_data)
         sign_x = np.sign(audio_data)
@@ -775,7 +804,8 @@ class DistortionProcessor:
         return np.where(abs_x > 1.0, sign_x, clipped)
     
     def _tube_distortion(self, audio_data: np.ndarray) -> np.ndarray:
-        """Tube-style distortion with bias and warmth"""
+        """
+Tube-style distortion with bias and warmth"""
         # Add tube bias
         biased_audio = audio_data + self.tube_bias
         
@@ -796,7 +826,8 @@ class DistortionProcessor:
         return result * 0.8  # Reduce level slightly
     
     def _fuzz_distortion(self, audio_data: np.ndarray) -> np.ndarray:
-        """Fuzz-style distortion with square-wave-like characteristics"""
+        """
+Fuzz-style distortion with square-wave-like characteristics"""
         # Heavy saturation followed by smoothing
         heavily_distorted = np.tanh(audio_data * 10)
         
@@ -806,7 +837,8 @@ class DistortionProcessor:
         return heavily_distorted * 0.7 + square_component
     
     def _waveshaper(self, audio_data: np.ndarray) -> np.ndarray:
-        """Custom waveshaping distortion"""
+        """
+Custom waveshaping distortion"""
         # Polynomial waveshaping
         x = audio_data
         shaped = x + 0.3 * x**3 - 0.1 * x**5
@@ -819,7 +851,8 @@ class DistortionProcessor:
         return shaped
     
     def _apply_tone_control(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply tone control (simple high/low frequency balance)"""
+        """
+Apply tone control (simple high/low frequency balance)"""
         if self.tone == 0.5:
             return audio_data  # No tone adjustment
         
@@ -843,7 +876,8 @@ class DistortionProcessor:
     
     def set_parameters(self, drive: float = None, level: float = None,
                       tone: float = None, distortion_type: DistortionType = None):
-        """Set distortion parameters"""
+        """
+Set distortion parameters"""
         if drive is not None:
             self.drive = max(0.1, min(20.0, drive))
         if level is not None:

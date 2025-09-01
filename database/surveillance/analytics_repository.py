@@ -5,8 +5,9 @@ Advanced analytics system for surveillance monitoring data.
 Provides comprehensive metrics, trends analysis, and reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Tuple
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""
+    """
+Metric type enumeration."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -30,6 +33,7 @@ class MetricType(Enum):
 
 class AggregationType(Enum):
     """Aggregation type enumeration."""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -51,7 +55,8 @@ class Metric:
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query structure."""
+    """
+Analytics query structure."""
     metric_names: List[str]
     start_time: datetime
     end_time: datetime
@@ -63,7 +68,8 @@ class AnalyticsQuery:
 
 @dataclass
 class TrendData:
-    """Trend analysis data structure."""
+    """
+Trend analysis data structure."""
     metric_name: str
     time_series: List[Tuple[datetime, float]]
     trend_direction: str  # "increasing", "decreasing", "stable"
@@ -221,18 +227,21 @@ class SurveillanceAnalytics:
                        name: str, 
                        value: float,
                        labels: Optional[Dict[str, str]] = None) -> None:
-        """Set a gauge metric value."""
+        """
+Set a gauge metric value."""
         await self.record_metric(name, value, labels)
     
     async def record_histogram(self, 
                              name: str, 
                              value: float,
                              labels: Optional[Dict[str, str]] = None) -> None:
-        """Record a histogram metric value."""
+        """
+Record a histogram metric value."""
         await self.record_metric(name, value, labels)
     
     async def query_metrics(self, query: AnalyticsQuery) -> List[Dict[str, Any]]:
-        """Query metrics from storage."""
+        """
+Query metrics from storage."""
         try:
             return await self.storage_backend.query_metrics(query)
         except Exception as e:
@@ -875,7 +884,8 @@ class TrendAnalyzer:
         self.analysis_models: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize trend analyzer."""
+        """
+Initialize trend analyzer."""
         try:
             # Initialize analysis models
             await self._initialize_analysis_models()
@@ -1025,7 +1035,8 @@ class ReportGenerator:
         self.report_templates: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize report generator."""
+        """
+Initialize report generator."""
         try:
             # Load report templates
             await self._load_report_templates()

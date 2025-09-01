@@ -6,6 +6,7 @@ automatic rebalancing, and cross-shard query optimization.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import json
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class ShardingStrategy(Enum):
-    """Database sharding strategies"""
+    """
+Database sharding strategies"""
+
     HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
@@ -37,6 +40,7 @@ class ShardingStrategy(Enum):
 
 class ShardStatus(Enum):
     """Shard status states"""
+
     ACTIVE = "active"
     MIGRATING = "migrating"
     READONLY = "readonly"
@@ -47,6 +51,7 @@ class ShardStatus(Enum):
 
 class QueryType(Enum):
     """Query operation types"""
+
     SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
@@ -85,11 +90,13 @@ class ShardMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
     
     def utilization_score(self) -> float:
-        """Calculate shard utilization score (0-1)"""
+        """
+Calculate shard utilization score (0-1)"""
         return max(self.cpu_usage, self.memory_usage, self.disk_usage)
     
     def health_score(self) -> float:
-        """Calculate shard health score (0-100)"""
+        """
+Calculate shard health score (0-100)"""
         score = 100.0
         
         # Penalize high utilization
@@ -107,7 +114,8 @@ class ShardMetrics:
 
 @dataclass
 class ShardingRule:
-    """Sharding rule definition"""
+    """
+Sharding rule definition"""
     table_name: str
     shard_key: str
     strategy: ShardingStrategy
@@ -117,7 +125,8 @@ class ShardingRule:
 
 
 class ConsistentHashRing:
-    """Consistent hash ring for sharding"""
+    """
+Consistent hash ring for sharding"""
     
     def __init__(self, shards: List[str], virtual_nodes: int = 100):
         self.shards = set(shards)
@@ -127,7 +136,8 @@ class ConsistentHashRing:
         self._build_ring()
     
     def _build_ring(self):
-        """Build the hash ring"""
+        """
+Build the hash ring"""
         self.ring.clear()
         self.shard_positions.clear()
         
@@ -218,12 +228,14 @@ class ShardRouter:
         self.consistent_rings: Dict[str, ConsistentHashRing] = {}
     
     def setup_consistent_ring(self, table_name: str, shards: List[str]):
-        """Setup consistent hash ring for table"""
+        """
+Setup consistent hash ring for table"""
         self.consistent_rings[table_name] = ConsistentHashRing(shards)
     
     def route_query(self, table_name: str, query_data: Dict[str, Any], 
                    query_type: QueryType) -> List[str]:
-        """Route query to appropriate shards"""
+        """
+Route query to appropriate shards"""
         rule = self.sharding_rules.get(table_name)
         if not rule:
             raise ValueError(f"No sharding rule found for table {table_name}")
@@ -307,7 +319,8 @@ class CrossShardQueryExecutor:
     
     async def execute_cross_shard_query(self, query: str, target_shards: List[str],
                                       aggregation_func: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Execute query across multiple shards"""
+        """
+Execute query across multiple shards"""
         try:
             # Execute query on all target shards concurrently
             tasks = []
@@ -358,7 +371,8 @@ class CrossShardQueryExecutor:
     
     def _apply_aggregation(self, results: List[Dict[str, Any]], 
                           aggregation_func: str) -> List[Dict[str, Any]]:
-        """Apply aggregation function to combined results"""
+        """
+Apply aggregation function to combined results"""
         if not results:
             return []
         
@@ -390,7 +404,8 @@ class ShardRebalancer:
         self.rebalancing_tasks: Dict[str, asyncio.Task] = {}
     
     async def check_rebalancing_needed(self) -> Dict[str, Any]:
-        """Check if rebalancing is needed"""
+        """
+Check if rebalancing is needed"""
         try:
             rebalancing_plan = {
                 'needed': False,
@@ -487,7 +502,8 @@ class DatabaseShardCoordinator:
         self.query_stats: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
     
     async def initialize(self) -> bool:
-        """Initialize shard coordinator"""
+        """
+Initialize shard coordinator"""
         try:
             logger.info("Initializing database shard coordinator")
             

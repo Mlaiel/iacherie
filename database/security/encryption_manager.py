@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import os
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
+    """
+Supported encryption algorithms"""
+
     AES_256_GCM = "AES-256-GCM"
     AES_256_CBC = "AES-256-CBC"
     CHACHA20_POLY1305 = "ChaCha20-Poly1305"
@@ -58,6 +61,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyType(Enum):
     """Encryption key types"""
+
     MASTER = "master"
     DATABASE = "database"
     COLUMN = "column"
@@ -68,6 +72,7 @@ class KeyType(Enum):
 
 class EncryptionMode(Enum):
     """Encryption operation modes"""
+
     ENCRYPT = auto()
     DECRYPT = auto()
     ROTATE = auto()
@@ -76,7 +81,8 @@ class EncryptionMode(Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata"""
+    """
+Encryption key metadata"""
     key_id: str
     key_type: KeyType
     algorithm: EncryptionAlgorithm
@@ -102,7 +108,8 @@ class EncryptionContext:
 
 
 class EncryptionMetrics:
-    """Encryption performance and security metrics"""
+    """
+Encryption performance and security metrics"""
     
     def __init__(self):
         self.operations_count: int = 0
@@ -113,7 +120,8 @@ class EncryptionMetrics:
         self.security_events: List[Dict[str, Any]] = []
         
     def record_operation(self, operation_time: float, data_size: int, success: bool):
-        """Record encryption operation metrics"""
+        """
+Record encryption operation metrics"""
         self.operations_count += 1
         self.total_data_size += data_size
         
@@ -137,7 +145,8 @@ class DatabaseEncryptionManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize encryption manager"""
+        """
+Initialize encryption manager"""
         self.config = config or {}
         self.keys: Dict[str, EncryptionKey] = {}
         self.key_store: Dict[str, bytes] = {}
@@ -625,11 +634,13 @@ class DatabaseEncryptionManager:
         return self.keys.get(key_id)
     
     def list_active_keys(self) -> List[EncryptionKey]:
-        """List all active encryption keys"""
+        """
+List all active encryption keys"""
         return [key for key in self.keys.values() if key.is_active]
     
     def get_encryption_metrics(self) -> Dict[str, Any]:
-        """Get encryption performance metrics"""
+        """
+Get encryption performance metrics"""
         return {
             "operations_count": self.metrics.operations_count,
             "total_data_size": self.metrics.total_data_size,

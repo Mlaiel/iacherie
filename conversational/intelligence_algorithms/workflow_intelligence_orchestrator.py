@@ -29,6 +29,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowType(Enum):
-    """Types of content creator workflows"""
+    """
+Types of content creator workflows"""
+
     CONTENT_CREATION = "content_creation"
     CONTENT_PROTECTION = "content_protection"
     MONETIZATION = "monetization"
@@ -79,6 +82,7 @@ class WorkflowType(Enum):
 
 class ProcessStage(Enum):
     """Workflow process stages"""
+
     PLANNING = "planning"
     INITIATION = "initiation"
     EXECUTION = "execution"
@@ -91,6 +95,7 @@ class ProcessStage(Enum):
 
 class EfficiencyScore(Enum):
     """Workflow efficiency score levels"""
+
     LOW = "low"
     MODERATE = "moderate"
     GOOD = "good"
@@ -117,7 +122,8 @@ class WorkflowMetrics:
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step definition"""
+    """
+Individual workflow step definition"""
     step_id: str
     step_name: str
     step_type: str
@@ -132,7 +138,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowTemplate:
-    """Workflow template for specific creator types"""
+    """
+Workflow template for specific creator types"""
     template_id: str
     workflow_type: WorkflowType
     creator_type: str

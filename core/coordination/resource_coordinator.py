@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Resource Discovery → Allocation → Monitoring → Optimization → Cleanup → Reporting
 """
+
 import asyncio
 import uuid
 import psutil
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class ResourceType(Enum):
-    """Types of resources managed by the system"""
+    """
+Types of resources managed by the system"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -46,6 +49,7 @@ class ResourceType(Enum):
 
 class AllocationStrategy(Enum):
     """Resource allocation strategies"""
+
     FIRST_FIT = "first_fit"
     BEST_FIT = "best_fit"
     WORST_FIT = "worst_fit"
@@ -58,6 +62,7 @@ class AllocationStrategy(Enum):
 
 class ResourceStatus(Enum):
     """Resource status states"""
+
     AVAILABLE = "available"
     ALLOCATED = "allocated"
     RESERVED = "reserved"
@@ -69,6 +74,7 @@ class ResourceStatus(Enum):
 
 class AllocationPriority(Enum):
     """Resource allocation priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -78,7 +84,8 @@ class AllocationPriority(Enum):
 
 @dataclass
 class ResourceCapacity:
-    """Resource capacity definition"""
+    """
+Resource capacity definition"""
     total: float
     available: float
     allocated: float
@@ -87,7 +94,8 @@ class ResourceCapacity:
     
     @property
     def utilization_percentage(self) -> float:
-        """Calculate resource utilization percentage"""
+        """
+Calculate resource utilization percentage"""
         if self.total == 0:
             return 0.0
         return (self.allocated / self.total) * 100
@@ -95,7 +103,8 @@ class ResourceCapacity:
 
 @dataclass
 class ResourceRequirement:
-    """Resource requirement specification"""
+    """
+Resource requirement specification"""
     resource_type: ResourceType
     amount: float
     priority: AllocationPriority
@@ -106,7 +115,8 @@ class ResourceRequirement:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record"""
+    """
+Resource allocation record"""
     allocation_id: str
     resource_id: str
     consumer_id: str
@@ -120,7 +130,8 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceInstance:
-    """Individual resource instance"""
+    """
+Individual resource instance"""
     resource_id: str
     resource_type: ResourceType
     name: str
@@ -463,7 +474,8 @@ class ResourceCoordinator:
         resource: ResourceInstance, 
         constraints: Dict[str, Any]
     ) -> bool:
-        """Check if resource meets allocation constraints"""
+        """
+Check if resource meets allocation constraints"""
         try:
             for constraint_key, constraint_value in constraints.items():
                 if constraint_key == "location":
@@ -498,7 +510,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Best-fit allocation strategy"""
+        """
+Best-fit allocation strategy"""
         if not candidates:
             return None
         
@@ -515,7 +528,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Worst-fit allocation strategy"""
+        """
+Worst-fit allocation strategy"""
         if not candidates:
             return None
         
@@ -532,7 +546,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Round-robin allocation strategy"""
+        """
+Round-robin allocation strategy"""
         if not candidates:
             return None
         
@@ -544,7 +559,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Priority-based allocation strategy"""
+        """
+Priority-based allocation strategy"""
         if not candidates:
             return None
         
@@ -559,7 +575,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Load-balanced allocation strategy"""
+        """
+Load-balanced allocation strategy"""
         if not candidates:
             return None
         
@@ -574,7 +591,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Fair-share allocation strategy"""
+        """
+Fair-share allocation strategy"""
         if not candidates:
             return None
         
@@ -586,7 +604,8 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Predictive allocation strategy"""
+        """
+Predictive allocation strategy"""
         if not candidates:
             return None
         
@@ -595,7 +614,8 @@ class ResourceCoordinator:
         return await self._allocate_best_fit(candidates, requirement)
     
     async def deallocate_resource(self, allocation_id: str) -> bool:
-        """Deallocate a previously allocated resource"""
+        """
+Deallocate a previously allocated resource"""
         try:
             if allocation_id not in self.allocations:
                 logger.warning(f"Allocation not found: {allocation_id}")
@@ -904,7 +924,8 @@ class ResourceCoordinator:
         self.event_handlers[event_type].append(handler)
     
     def set_default_strategy(self, strategy: AllocationStrategy):
-        """Set default allocation strategy"""
+        """
+Set default allocation strategy"""
         self.default_strategy = strategy
         logger.info(f"Default allocation strategy set to: {strategy.value}")
     

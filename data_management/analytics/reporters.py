@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -34,7 +35,9 @@ from ...core.database import get_database_session
 
 
 class ReportType(Enum):
-    """Report types for different audiences."""
+    """
+Report types for different audiences."""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     BUSINESS_INTELLIGENCE = "business_intelligence"
     TECHNICAL_PERFORMANCE = "technical_performance"
@@ -45,6 +48,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats."""
+
     HTML = "html"
     PDF = "pdf"
     JSON = "json"
@@ -65,7 +69,8 @@ class ReportSection:
 
 @dataclass
 class GeneratedReport:
-    """Complete generated report."""
+    """
+Complete generated report."""
     report_id: str
     report_type: ReportType
     title: str
@@ -390,7 +395,8 @@ class BusinessReporter:
         }
         
     async def _create_revenue_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create revenue analysis section."""
+        """
+Create revenue analysis section."""
         
         # Extract revenue metrics
         revenue_metrics = []
@@ -454,7 +460,8 @@ class BusinessReporter:
         }
         
     def _create_revenue_breakdown_chart(self, revenue_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create revenue source breakdown chart."""
+        """
+Create revenue source breakdown chart."""
         
         # Sample revenue breakdown
         sources = ['Content Licensing', 'Subscriptions', 'Commissions', 'Premium Features']
@@ -478,7 +485,8 @@ class BusinessReporter:
         }
         
     async def _create_recommendations_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create strategic recommendations section."""
+        """
+Create strategic recommendations section."""
         
         content = """
         ## Strategic Recommendations
@@ -639,7 +647,8 @@ class BusinessReporter:
         }
         
     async def _create_content_performance_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create content performance analysis section."""
+        """
+Create content performance analysis section."""
         
         content = """
         ## Content Performance Analysis
@@ -723,7 +732,8 @@ class BusinessReporter:
         }
         
     async def _create_protection_effectiveness_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create protection effectiveness analysis section."""
+        """
+Create protection effectiveness analysis section."""
         
         content = """
         ## Content Protection Effectiveness
@@ -775,7 +785,8 @@ class BusinessReporter:
         }
         
     def _create_threat_analysis_chart(self) -> Dict[str, Any]:
-        """Create threat analysis chart."""
+        """
+Create threat analysis chart."""
         
         platforms = ['YouTube', 'Instagram', 'TikTok', 'Facebook', 'Twitter']
         violations = [145, 89, 67, 123, 45]
@@ -801,7 +812,8 @@ class BusinessReporter:
         }
         
     async def _create_market_analysis_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create market analysis section."""
+        """
+Create market analysis section."""
         
         content = """
         ## Market Analysis & Competitive Intelligence
@@ -860,7 +872,8 @@ class BusinessReporter:
         }
         
     def _create_opportunity_analysis_chart(self) -> Dict[str, Any]:
-        """Create opportunity analysis chart."""
+        """
+Create opportunity analysis chart."""
         
         opportunities = ['Mobile First', 'AI Enhancement', 'Global Expansion', 'Enterprise', 'Partnerships']
         impact = [8, 9, 7, 6, 8]
@@ -985,7 +998,8 @@ class BusinessReporter:
             f.write(html_content)
             
     async def _export_pdf_report(self, report: GeneratedReport, file_path: Path) -> None:
-        """Export report as PDF (placeholder - would use reportlab)."""
+        """
+Export report as PDF (placeholder - would use reportlab)."""
         
         # This would typically use libraries like reportlab or weasyprint
         # For now, create a simple text version
@@ -1052,7 +1066,8 @@ class ExecutiveDashboard:
         self.logger = logging.getLogger(__name__)
         
     async def generate_dashboard_data(self) -> Dict[str, Any]:
-        """Generate real-time dashboard data."""
+        """
+Generate real-time dashboard data."""
         
         try:
             dashboard_data = {

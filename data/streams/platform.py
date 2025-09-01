@@ -5,8 +5,9 @@ Multi-platform streaming connector for real-time data synchronization
 across social media, music, and content platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -31,7 +32,9 @@ settings = get_settings()
 
 
 class PlatformType(str, Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -44,6 +47,7 @@ class PlatformType(str, Enum):
 
 class SyncMode(str, Enum):
     """Data synchronization modes"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
@@ -52,6 +56,7 @@ class SyncMode(str, Enum):
 
 class DataType(str, Enum):
     """Platform data types"""
+
     ANALYTICS = "analytics"
     CONTENT = "content"
     ENGAGEMENT = "engagement"
@@ -77,7 +82,8 @@ class PlatformCredentials:
 
 @dataclass
 class SyncConfig:
-    """Platform synchronization configuration"""
+    """
+Platform synchronization configuration"""
     platform: PlatformType
     data_types: List[DataType]
     sync_mode: SyncMode
@@ -88,7 +94,8 @@ class SyncConfig:
 
 
 class PlatformData(BaseModel):
-    """Normalized platform data structure"""
+    """
+Normalized platform data structure"""
     platform: PlatformType = Field(description="Source platform")
     data_type: DataType = Field(description="Type of data")
     user_id: str = Field(description="Platform user identifier")
@@ -109,36 +116,43 @@ class PlatformConnector(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize platform connection"""
+        """
+Initialize platform connection"""
         pass
         
     @abstractmethod
     async def fetch_analytics(self, user_id: str, **kwargs) -> List[PlatformData]:
-        """Fetch analytics data"""
+        """
+Fetch analytics data"""
         pass
         
     @abstractmethod
     async def fetch_content(self, user_id: str, **kwargs) -> List[PlatformData]:
-        """Fetch content data"""
+        """
+Fetch content data"""
         pass
         
     @abstractmethod
     async def fetch_engagement(self, user_id: str, **kwargs) -> List[PlatformData]:
-        """Fetch engagement data"""
+        """
+Fetch engagement data"""
         pass
         
     @abstractmethod
     async def validate_credentials(self) -> bool:
-        """Validate platform credentials"""
+        """
+Validate platform credentials"""
         pass
         
     async def refresh_tokens(self) -> bool:
-        """Refresh authentication tokens"""
+        """
+Refresh authentication tokens"""
         return True
 
 
 class SpotifyConnector(PlatformConnector):
-    """Spotify platform connector"""
+    """
+Spotify platform connector"""
     
     async def initialize(self) -> bool:
         try:
@@ -418,7 +432,8 @@ class PlatformStreamer:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize platform streamer"""
+        """
+Initialize platform streamer"""
         try:
             logger.info("PlatformStreamer initialized successfully")
         except Exception as e:
@@ -593,7 +608,8 @@ class PlatformStreamer:
         self.data_callbacks.append(callback)
         
     async def get_sync_status(self) -> Dict[str, Any]:
-        """Get synchronization status for all configurations"""
+        """
+Get synchronization status for all configurations"""
         status = {}
         
         for sync_id, config in self.sync_configs.items():
@@ -616,7 +632,8 @@ class PlatformStreamer:
         return await self.connectors[platform].validate_credentials()
         
     async def _start_sync_task(self, sync_id: str, user_id: str) -> None:
-        """Start background sync task"""
+        """
+Start background sync task"""
         if sync_id in self.sync_tasks:
             self.sync_tasks[sync_id].cancel()
             
@@ -632,7 +649,8 @@ class PlatformStreamer:
         self.sync_tasks[sync_id] = task
         
     async def _real_time_sync(self, sync_id: str, user_id: str) -> None:
-        """Real-time synchronization task"""
+        """
+Real-time synchronization task"""
         config = self.sync_configs[sync_id]
         
         while config.enabled and not self._shutdown_event.is_set():

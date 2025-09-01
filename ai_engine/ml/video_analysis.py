@@ -17,6 +17,7 @@ Features:
 - Temporal pattern recognition
 - High-performance parallel processing
 """
+
 import logging
 import numpy as np
 import torch
@@ -44,6 +45,7 @@ except ImportError:
 
 class VideoTaskType(Enum):
     """Video analysis task types"""
+
     CLASSIFICATION = "classification"
     ACTION_RECOGNITION = "action_recognition"
     SCENE_DETECTION = "scene_detection"
@@ -53,6 +55,7 @@ class VideoTaskType(Enum):
 
 class ActionType(Enum):
     """Recognized action types"""
+
     WALKING = "walking"
     RUNNING = "running"
     SITTING = "sitting"
@@ -66,6 +69,7 @@ class ActionType(Enum):
 
 class SceneType(Enum):
     """Scene types in videos"""
+
     INDOOR = "indoor"
     OUTDOOR = "outdoor"
     NATURE = "nature"
@@ -87,7 +91,8 @@ class VideoFrame:
 
 @dataclass
 class VideoAnalysisResult:
-    """Result from video analysis"""
+    """
+Result from video analysis"""
     task_type: VideoTaskType
     predictions: List[Dict[str, Any]]
     confidence: float
@@ -96,7 +101,8 @@ class VideoAnalysisResult:
     metadata: Dict[str, Any] = None
     
     def get_best_prediction(self) -> Dict[str, Any]:
-        """Get the prediction with highest confidence"""
+        """
+Get the prediction with highest confidence"""
         if not self.predictions:
             return {}
         return max(self.predictions, key=lambda x: x.get('confidence', 0))
@@ -104,7 +110,8 @@ class VideoAnalysisResult:
 
 @dataclass
 class ActionDetection:
-    """Action detection result"""
+    """
+Action detection result"""
     action_type: ActionType
     confidence: float
     start_frame: int
@@ -116,7 +123,8 @@ class ActionDetection:
 
 @dataclass
 class SceneSegment:
-    """Scene segment in video"""
+    """
+Scene segment in video"""
     scene_type: SceneType
     start_frame: int
     end_frame: int
@@ -127,7 +135,8 @@ class SceneSegment:
 
 
 class BaseVideoAnalyzer(ABC):
-    """Base class for video analyzers"""
+    """
+Base class for video analyzers"""
     
     def __init__(self, analyzer_name: str = "base_video"):
         self.analyzer_name = analyzer_name
@@ -142,11 +151,13 @@ class BaseVideoAnalyzer(ABC):
         
     @abstractmethod
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Analyze video file"""
+        """
+Analyze video file"""
         pass
         
     def extract_frames(self, video_path: str, max_frames: int = 100) -> List[VideoFrame]:
-        """Extract frames from video file"""
+        """
+Extract frames from video file"""
         frames = []
         
         try:
@@ -211,7 +222,8 @@ class BaseVideoAnalyzer(ABC):
 
 
 class VideoAnalyzer(BaseVideoAnalyzer):
-    """General video content analyzer"""
+    """
+General video content analyzer"""
     
     def __init__(self, model_name: str = "video_analyzer_v1"):
         super().__init__(f"analyzer_{model_name}")
@@ -272,7 +284,8 @@ class VideoAnalyzer(BaseVideoAnalyzer):
         return SimpleVideoModel(len(self.content_categories))
     
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Analyze video content"""
+        """
+Analyze video content"""
         start_time = time.time()
         
         try:
@@ -475,7 +488,8 @@ class ActionRecognizer(BaseVideoAnalyzer):
         return Action3DCNN(len(self.action_types))
     
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Recognize actions in video"""
+        """
+Recognize actions in video"""
         start_time = time.time()
         
         try:
@@ -642,7 +656,8 @@ class SceneDetector(BaseVideoAnalyzer):
         return SceneModel(len(self.scene_types))
     
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Detect scene changes and classify scenes"""
+        """
+Detect scene changes and classify scenes"""
         start_time = time.time()
         
         try:

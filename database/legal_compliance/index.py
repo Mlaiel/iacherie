@@ -12,6 +12,7 @@ Business Logic Flow:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 import asyncio
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentProcessingRequest:
-    """Comprehensive content processing request for the IA Influencer ecosystem."""
+    """
+Comprehensive content processing request for the IA Influencer ecosystem."""
     request_id: str
     user_id: str
     creator_type: CreatorType
@@ -67,7 +69,8 @@ class ContentProcessingRequest:
 
 @dataclass
 class ContentProcessingResult:
-    """Comprehensive processing result with all compliance information."""
+    """
+Comprehensive processing result with all compliance information."""
     request_id: str
     content_id: str
     processing_status: str
@@ -95,7 +98,8 @@ class LegalComplianceOrchestrator:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Legal Compliance Orchestrator."""
+        """
+Initialize the Legal Compliance Orchestrator."""
         self.config = config
         
         # Initialize all compliance managers
@@ -691,7 +695,8 @@ class LegalComplianceOrchestrator:
         return priority_recommendations[:8]  # Top 8 priority recommendations
     
     def _compile_next_actions(self, creator_id: str) -> List[str]:
-        """Compile next actions for the creator."""
+        """
+Compile next actions for the creator."""
         return [
             "Review compliance recommendations",
             "Upload new content for protection",
@@ -734,6 +739,7 @@ logger = logging.getLogger(__name__)
 
 class ComplianceStatus(Enum):
     """Legal compliance status enumeration."""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -1123,7 +1129,8 @@ async def process_dmca_request(
     platform_data: Dict[str, Any],
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for DMCA request processing."""
+    """
+Convenience function for DMCA request processing."""
     index = get_compliance_index(config)
     return await index.process_dmca_request(
         complainant_info, infringing_content, platform_data

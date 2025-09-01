@@ -5,13 +5,14 @@ Factory pattern implementation for creating and managing parser instances.
 Provides centralized access to all parser types with configuration management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Type
 from enum import Enum
@@ -59,7 +60,8 @@ from .fingerprint_parsers import (
 
 
 class ParserType(Enum):
-    """Enumeration of available parser types"""
+    """
+Enumeration of available parser types"""
     
     # Platform parsers
     PLATFORM_YOUTUBE = "platform_youtube"
@@ -129,6 +131,7 @@ class ParserType(Enum):
 
 class ParserCategory(Enum):
     """Categories of parsers for organization"""
+
     
     PLATFORM = "platform"
     MEDIA = "media"
@@ -150,7 +153,8 @@ class ParserFactory:
         self._category_mapping = self._build_category_mapping()
     
     def _build_parser_registry(self) -> Dict[ParserType, Type]:
-        """Build registry of parser types to classes"""
+        """
+Build registry of parser types to classes"""
         return {
             # Platform parsers
             ParserType.PLATFORM_YOUTUBE: YouTubeParser,
@@ -219,7 +223,8 @@ class ParserFactory:
         }
     
     def _build_category_mapping(self) -> Dict[ParserCategory, List[ParserType]]:
-        """Build mapping of categories to parser types"""
+        """
+Build mapping of categories to parser types"""
         return {
             ParserCategory.PLATFORM: [
                 ParserType.PLATFORM_YOUTUBE, ParserType.PLATFORM_INSTAGRAM,
@@ -266,7 +271,8 @@ class ParserFactory:
         }
     
     def create_parser(self, parser_type: Union[ParserType, str], use_cache: bool = True) -> Any:
-        """Create a parser instance"""
+        """
+Create a parser instance"""
         try:
             # Convert string to ParserType if necessary
             if isinstance(parser_type, str):
@@ -350,7 +356,8 @@ class ParserFactory:
         return list(self._parser_registry.keys())
     
     def get_parser_types_by_category(self, category: Union[ParserCategory, str]) -> List[ParserType]:
-        """Get parser types for a specific category"""
+        """
+Get parser types for a specific category"""
         if isinstance(category, str):
             try:
                 category = ParserCategory(category)
@@ -360,11 +367,13 @@ class ParserFactory:
         return self._category_mapping.get(category, [])
     
     def get_categories(self) -> List[ParserCategory]:
-        """Get list of available parser categories"""
+        """
+Get list of available parser categories"""
         return list(self._category_mapping.keys())
     
     def is_parser_type_supported(self, parser_type: Union[ParserType, str]) -> bool:
-        """Check if a parser type is supported"""
+        """
+Check if a parser type is supported"""
         if isinstance(parser_type, str):
             try:
                 parser_type = ParserType(parser_type)
@@ -374,11 +383,13 @@ class ParserFactory:
         return parser_type in self._parser_registry
     
     def clear_cache(self):
-        """Clear the parser cache"""
+        """
+Clear the parser cache"""
         self._parser_cache.clear()
     
     def get_cache_info(self) -> Dict[str, Any]:
-        """Get information about cached parsers"""
+        """
+Get information about cached parsers"""
         return {
             'cached_parsers': len(self._parser_cache),
             'cached_types': [parser_type.value for parser_type in self._parser_cache.keys()],
@@ -386,7 +397,8 @@ class ParserFactory:
         }
     
     def auto_detect_parser_type(self, content_info: Dict[str, Any]) -> Optional[ParserType]:
-        """Auto-detect parser type based on content information"""
+        """
+Auto-detect parser type based on content information"""
         try:
             # Check for URL patterns (platform detection)
             if 'url' in content_info:
@@ -469,7 +481,8 @@ class ParserFactory:
             return None
     
     def create_parser_pipeline(self, parser_types: List[Union[ParserType, str]], use_cache: bool = True) -> List[Any]:
-        """Create a pipeline of parsers"""
+        """
+Create a pipeline of parsers"""
         try:
             pipeline = []
             

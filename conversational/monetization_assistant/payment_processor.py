@@ -18,6 +18,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set, Callable
@@ -71,7 +72,8 @@ settings = get_settings()
 
 
 class PaymentProvider(Enum):
-    """Comprehensive list of supported payment providers."""
+    """
+Comprehensive list of supported payment providers."""
     # Traditional payment gateways
     STRIPE = "stripe"
     PAYPAL = "paypal"
@@ -253,6 +255,7 @@ class CurrencyType(Enum):
 
 class PaymentMethod(Enum):
     """Payment method categories."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -267,6 +270,7 @@ class PaymentMethod(Enum):
 
 class FraudRiskLevel(Enum):
     """Fraud risk assessment levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -425,7 +429,8 @@ class PaymentTransaction:
 
 @dataclass
 class RevenueDistribution:
-    """Automated revenue distribution configuration."""
+    """
+Automated revenue distribution configuration."""
     distribution_id: str
     source_transaction_id: str
     total_amount: Decimal
@@ -494,7 +499,8 @@ class PaymentProcessor:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the payment processor with enterprise capabilities."""
+        """
+Initialize the payment processor with enterprise capabilities."""
         self.config = config or get_monetization_config()
         
         # Core services
@@ -552,7 +558,8 @@ class PaymentProcessor:
         self._is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the payment processor with all integrations."""
+        """
+Initialize the payment processor with all integrations."""
         try:
             logger.info("Initializing payment processor...")
             
@@ -611,14 +618,16 @@ class PaymentProcessorEngine:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the payment processor."""
+        """
+Initialize the payment processor."""
         self.config = config or MonetizationConfig()
         self._gateway_manager = PaymentGatewayManager()
         self._encryption_service = EncryptionService()
         self._payment_accounts = {}
         
     async def initialize(self) -> None:
-        """Initialize the payment processor."""
+        """
+Initialize the payment processor."""
         try:
             await self._gateway_manager.initialize()
             await self._load_payment_configurations()
@@ -1010,24 +1019,28 @@ class PaymentProcessorEngine:
     async def _validate_account_details(
         self, provider: PaymentProvider, details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate payment account details."""
+        """
+Validate payment account details."""
         # Implementation for account validation
         pass
     
     async def _verify_account_with_provider(
         self, provider: PaymentProvider, details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify account with payment provider."""
+        """
+Verify account with payment provider."""
         # Implementation for provider verification
         pass
     
     async def _get_fee_structure(self, provider: PaymentProvider) -> Dict[str, float]:
-        """Get fee structure for provider."""
+        """
+Get fee structure for provider."""
         # Implementation for fee structure retrieval
         pass
     
     def _generate_account_id(self) -> str:
-        """Generate unique account ID."""
+        """
+Generate unique account ID."""
         return f"PAY_{datetime.now().strftime('%Y%m%d')}_{hash(datetime.now().isoformat())}"
     
     def _generate_transaction_id(self) -> str:

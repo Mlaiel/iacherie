@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Critical APIs Load Testing
+"""
+Critical APIs Load Testing
 ========================
 
 Enhanced load testing specifically targeting critical business APIs for the Ainflue platform.
@@ -20,6 +22,7 @@ Tests authentication, content upload, fingerprinting, analytics, protection, and
 
 Author: Performance Optimization Team
 """
+
 import asyncio
 import time
 import json
@@ -43,7 +46,8 @@ from tests.performance.test_load_stress import PerformanceMetrics
 
 @dataclass
 class CriticalAPIEndpoint:
-    """Critical API endpoint configuration"""
+    """
+Critical API endpoint configuration"""
     name: str
     path: str
     method: str = "POST"
@@ -64,7 +68,8 @@ class CriticalAPILoadTester:
         self.session: Optional[aiohttp.ClientSession] = None
         
     def _define_critical_endpoints(self) -> List[CriticalAPIEndpoint]:
-        """Define critical business API endpoints"""
+        """
+Define critical business API endpoints"""
         return [
             # Authentication & User Management
             CriticalAPIEndpoint(
@@ -212,7 +217,8 @@ class TestCriticalAPIsLoad:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_critical_apis_individual_load(self):
-        """Test each critical API individually under load"""
+        """
+Test each critical API individually under load"""
         tester = CriticalAPILoadTester()
         results = {}
         

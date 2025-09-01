@@ -41,6 +41,7 @@ Enterprise Features:
 - Predictive analytics coordination and forecasting hub
 - Comprehensive analytics API gateway and service registry
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -72,7 +73,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsEngineType(Enum):
-    """Professional analytics engine types for comprehensive business intelligence."""
+    """
+Professional analytics engine types for comprehensive business intelligence."""
+
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -91,6 +94,7 @@ class AnalyticsEngineType(Enum):
 
 class ReportType(Enum):
     """Enterprise report types for different stakeholder needs."""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     TECHNICAL_DEEP_DIVE = "technical_deep_dive"
     BUSINESS_INTELLIGENCE = "business_intelligence"
@@ -159,7 +163,8 @@ class EnterpriseAnalyticsOrchestrator:
         self.strategic_recommendation_engine = None
         
     async def initialize_analytics_orchestrator(self):
-        """Initialize the complete analytics orchestration system."""
+        """
+Initialize the complete analytics orchestration system."""
         try:
             self.logger.info("Initializing enterprise analytics orchestrator")
             
@@ -570,7 +575,8 @@ class ConversationalAnalyticsManager:
         self._initialized = False
     
     async def initialize_all_modules(self):
-        """Initialize all analytics modules."""
+        """
+Initialize all analytics modules."""
         try:
             self.logger.info("Initializing Conversational Analytics Manager")
             
@@ -792,14 +798,16 @@ class ConversationalAnalyticsManager:
 
 # Convenience functions for easy access
 async def create_analytics_manager(db_session: AsyncSession, config: Dict[str, Any]) -> ConversationalAnalyticsManager:
-    """Create and initialize analytics manager."""
+    """
+Create and initialize analytics manager."""
     manager = ConversationalAnalyticsManager(db_session, config)
     await manager.initialize_all_modules()
     return manager
 
 
 def get_available_modules() -> List[str]:
-    """Get list of available analytics modules."""
+    """
+Get list of available analytics modules."""
     return [
         'performance_analytics',
         'engagement_analytics',

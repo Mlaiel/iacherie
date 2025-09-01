@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SchedulingStrategy(str, Enum):
-    """Scheduling optimization strategies"""
+    """
+Scheduling optimization strategies"""
+
     MAXIMUM_REACH = "maximum_reach"
     MAXIMUM_ENGAGEMENT = "maximum_engagement"
     BALANCED_DISTRIBUTION = "balanced_distribution"
@@ -40,6 +43,7 @@ class SchedulingStrategy(str, Enum):
 
 class TimeSlotPriority(str, Enum):
     """Time slot priority levels"""
+
     PEAK = "peak"
     HIGH = "high"
     MEDIUM = "medium"
@@ -48,6 +52,7 @@ class TimeSlotPriority(str, Enum):
 
 class AudienceSegment(str, Enum):
     """Audience segments for timing optimization"""
+
     GLOBAL = "global"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -97,7 +102,8 @@ class SchedulingResult:
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
 
 class ScheduleTemplate(Base):
-    """Database model for reusable schedule templates"""
+    """
+Database model for reusable schedule templates"""
     __tablename__ = "schedule_templates"
     
     id = Column(Integer, primary_key=True, index=True)
@@ -330,7 +336,8 @@ class SchedulingEngine:
         audience_analysis: Dict[str, Any],
         request: SchedulingRequest
     ) -> List[TimeSlot]:
-        """Generate time slots for a specific day"""
+        """
+Generate time slots for a specific day"""
         
         slots = []
         is_weekend = date.weekday() >= 5
@@ -450,7 +457,8 @@ class SchedulingEngine:
         slot_time: datetime, 
         platform_config: Dict[str, Any]
     ) -> float:
-        """Get score based on platform optimal times"""
+        """
+Get score based on platform optimal times"""
         
         hour = slot_time.hour
         weekday = slot_time.weekday()
@@ -564,7 +572,8 @@ class SchedulingEngine:
         time_slots: List[TimeSlot],
         strategy: SchedulingStrategy
     ) -> datetime:
-        """Select optimal time based on strategy"""
+        """
+Select optimal time based on strategy"""
         
         if not time_slots:
             return datetime.utcnow() + timedelta(hours=1)
@@ -589,7 +598,8 @@ class SchedulingEngine:
         time_slots: List[TimeSlot],
         optimal_time: datetime
     ) -> List[datetime]:
-        """Generate alternative time options"""
+        """
+Generate alternative time options"""
         
         # Filter out the selected optimal time and get top alternatives
         alternatives = [
@@ -612,7 +622,8 @@ class SchedulingEngine:
         scheduled_time: datetime,
         request: SchedulingRequest
     ) -> Dict[str, float]:
-        """Predict performance metrics for scheduled time"""
+        """
+Predict performance metrics for scheduled time"""
         
         # Base performance metrics by platform
         base_metrics = {
@@ -674,7 +685,8 @@ class SchedulingEngine:
         request: SchedulingRequest,
         result: SchedulingResult
     ) -> List[str]:
-        """Generate scheduling recommendations"""
+        """
+Generate scheduling recommendations"""
         
         recommendations = []
         

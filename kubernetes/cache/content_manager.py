@@ -32,6 +32,7 @@ Key Features:
 - Revenue analytics cache for immediate monetization insights
 - Collaborative content discovery cache for partnership opportunities
 """
+
 import asyncio
 import hashlib
 import json
@@ -58,7 +59,9 @@ import psutil
 
 
 class ContentType(Enum):
-    """Supported content types for IA Influencer Agent platform"""
+    """
+Supported content types for IA Influencer Agent platform"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -74,6 +77,7 @@ class ContentType(Enum):
 
 class CreatorType(Enum):
     """Types of content creators supported"""
+
     MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
@@ -86,6 +90,7 @@ class CreatorType(Enum):
 
 class PlatformTarget(Enum):
     """Target platforms for content optimization"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -100,6 +105,7 @@ class PlatformTarget(Enum):
 
 class CacheStrategy(Enum):
     """Cache storage and retrieval strategies optimized for content types"""
+
     LRU = "lru"
     LFU = "lfu"
     FIFO = "fifo"
@@ -612,7 +618,8 @@ class ContentCacheManager:
         return self._memory_cache.get(content_id)
 
     async def _retrieve_from_redis(self, content_id: str) -> Optional[ContentCacheEntry]:
-        """Retrieve cache entry from Redis"""
+        """
+Retrieve cache entry from Redis"""
         try:
             serialized_data = await self.redis_client.get(f"content:{content_id}")
             if serialized_data:
@@ -632,7 +639,8 @@ class ContentCacheManager:
         return datetime.now() > expiry_time
 
     async def _enforce_memory_limits(self) -> None:
-        """Enforce memory cache size limits with intelligent eviction"""
+        """
+Enforce memory cache size limits with intelligent eviction"""
         max_memory_mb = self.config.max_memory_cache_size_mb
         current_size_mb = self._cache_stats["total_size"] / (1024 * 1024)
         
@@ -676,7 +684,8 @@ class ContentCacheManager:
         content_ids: List[str],
         priority_weights: Dict[str, float]
     ) -> List[Tuple[str, float]]:
-        """Prioritize content for cache warm-up using AI scoring"""
+        """
+Prioritize content for cache warm-up using AI scoring"""
         prioritized = []
         
         for content_id in content_ids:
@@ -690,14 +699,16 @@ class ContentCacheManager:
         return prioritized
 
     async def _simulate_content_warmup(self, content_id: str) -> bool:
-        """Simulate content warm-up process"""
+        """
+Simulate content warm-up process"""
         # This would typically load content from persistent storage
         # For simulation, we'll just return True
         await asyncio.sleep(0.01)  # Simulate some processing time
         return True
 
     async def _calculate_average_compression_ratio(self) -> float:
-        """Calculate average compression ratio across all cached content"""
+        """
+Calculate average compression ratio across all cached content"""
         if not self._memory_cache:
             return 1.0
         
@@ -705,7 +716,8 @@ class ContentCacheManager:
         return total_ratio / len(self._memory_cache)
 
     async def _calculate_cache_efficiency_score(self) -> float:
-        """Calculate overall cache efficiency score"""
+        """
+Calculate overall cache efficiency score"""
         hit_rate = (
             self._cache_stats["hits"] / 
             (self._cache_stats["hits"] + self._cache_stats["misses"])

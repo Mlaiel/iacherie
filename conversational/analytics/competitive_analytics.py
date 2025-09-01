@@ -10,6 +10,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ import hashlib
 
 
 class CompetitorCategory(Enum):
-    """Categories of competitors to analyze."""
+    """
+Categories of competitors to analyze."""
+
     DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     MARKET_LEADER = "market_leader"
@@ -39,6 +42,7 @@ class CompetitorCategory(Enum):
 
 class AnalysisScope(Enum):
     """Scope of competitive analysis."""
+
     CONTENT_STRATEGY = "content_strategy"
     ENGAGEMENT_METRICS = "engagement_metrics"
     MONETIZATION_APPROACH = "monetization_approach"
@@ -71,7 +75,8 @@ class CompetitorProfile:
 
 @dataclass
 class MarketPosition:
-    """Market position analysis result."""
+    """
+Market position analysis result."""
     our_position: int
     total_competitors: int
     market_share_estimate: float
@@ -83,7 +88,8 @@ class MarketPosition:
 
 @dataclass
 class CompetitiveInsight:
-    """Individual competitive insight."""
+    """
+Individual competitive insight."""
     insight_id: str
     insight_type: str
     title: str
@@ -150,7 +156,8 @@ class CompetitiveAnalytics:
         }
     
     async def initialize_competitive_monitoring(self):
-        """Initialize competitive monitoring system."""
+        """
+Initialize competitive monitoring system."""
         try:
             self.logger.info("Initializing competitive analytics monitoring")
             

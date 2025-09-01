@@ -6,6 +6,7 @@ Validates the following requirements:
 - Documentation: 100% APIs documentées
 - Monitoring: 50+ métriques métier
 """
+
 import json
 import os
 import subprocess
@@ -18,7 +19,8 @@ from dataclasses import dataclass
 
 @dataclass
 class QualityResult:
-    """Result of a quality check"""
+    """
+Result of a quality check"""
     requirement: str
     passed: bool
     score: float
@@ -27,7 +29,8 @@ class QualityResult:
 
 
 class QualityRequirementsValidator:
-    """Validates quality requirements for production readiness"""
+    """
+Validates quality requirements for production readiness"""
     
     def __init__(self, repo_path: str = "."):
         self.repo_path = Path(repo_path)

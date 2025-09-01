@@ -24,6 +24,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Microservices Infrastructure
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import time
@@ -63,7 +64,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of microservices"""
+    """
+Types of microservices"""
+
     API_GATEWAY = "api_gateway"
     CONTENT_PROTECTION = "content_protection"
     AI_FINGERPRINTING = "ai_fingerprinting"
@@ -84,6 +87,7 @@ class ServiceType(Enum):
 
 class CommunicationProtocol(Enum):
     """Communication protocols between services"""
+
     HTTP_REST = "http_rest"
     GRPC = "grpc"
     GRAPHQL = "graphql"
@@ -94,6 +98,7 @@ class CommunicationProtocol(Enum):
 
 class ServiceDiscoveryType(Enum):
     """Service discovery mechanisms"""
+
     CONSUL = "consul"
     ETCD = "etcd"
     KUBERNETES_DNS = "kubernetes_dns"
@@ -103,6 +108,7 @@ class ServiceDiscoveryType(Enum):
 
 class LoadBalancingStrategy(Enum):
     """Load balancing strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -113,6 +119,7 @@ class LoadBalancingStrategy(Enum):
 
 class CircuitBreakerState(Enum):
     """Circuit breaker states"""
+
     CLOSED = "closed"
     OPEN = "open"
     HALF_OPEN = "half_open"
@@ -120,6 +127,7 @@ class CircuitBreakerState(Enum):
 
 class ServiceMeshType(Enum):
     """Service mesh implementations"""
+
     ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
@@ -155,7 +163,8 @@ class ServiceEndpoint:
 
 @dataclass
 class ServiceDependency:
-    """Service dependency configuration"""
+    """
+Service dependency configuration"""
     service_name: str
     service_type: ServiceType
     protocol: CommunicationProtocol
@@ -243,7 +252,8 @@ class ServiceConfiguration:
 
 @dataclass
 class ServiceMeshConfiguration:
-    """Service mesh configuration"""
+    """
+Service mesh configuration"""
     mesh_type: ServiceMeshType = ServiceMeshType.ISTIO
     mtls_enabled: bool = True
     traffic_management_enabled: bool = True
@@ -274,7 +284,8 @@ class ServiceMeshConfiguration:
 
 @dataclass
 class APIGatewayConfiguration:
-    """API Gateway configuration"""
+    """
+API Gateway configuration"""
     gateway_name: str = "ia-influencer-gateway"
     port: int = 80
     ssl_port: int = 443
@@ -316,7 +327,8 @@ class MicroservicesDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Microservices Deployment Manager"""
+        """
+Initialize the Microservices Deployment Manager"""
         self.config_path = config_path or os.getenv('MICROSERVICES_CONFIG_PATH', '/etc/microservices/config.yaml')
         self.services: Dict[str, ServiceConfiguration] = {}
         self.service_mesh_config: ServiceMeshConfiguration = ServiceMeshConfiguration()
@@ -659,7 +671,8 @@ class MicroservicesDeploymentManager:
             self._create_namespace(namespace)
     
     def _deploy_istio_service_mesh(self):
-        """Deploy Istio service mesh"""
+        """
+Deploy Istio service mesh"""
         # Install Istio control plane
         istio_namespace = "istio-system"
         self._create_namespace(istio_namespace)
@@ -1331,7 +1344,8 @@ class MicroservicesDeploymentManager:
             return obj
     
     def _create_namespace(self, namespace: str):
-        """Create Kubernetes namespace if it doesn't exist"""
+        """
+Create Kubernetes namespace if it doesn't exist"""
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:

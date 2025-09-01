@@ -11,6 +11,7 @@ Centralized configuration management for database connections:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import os
@@ -27,7 +28,9 @@ import base64
 
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -36,6 +39,7 @@ class Environment(Enum):
 
 class ConfigurationSource(Enum):
     """Configuration sources"""
+
     FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -95,7 +99,8 @@ class RedisConfig:
 
 @dataclass
 class MongoConfig:
-    """MongoDB configuration"""
+    """
+MongoDB configuration"""
     host: str
     port: int = 27017
     database: str
@@ -150,7 +155,8 @@ class ElasticsearchConfig:
 
 @dataclass
 class VectorStoreConfig:
-    """Vector store configuration"""
+    """
+Vector store configuration"""
     provider: str  # faiss, pinecone, weaviate, etc.
     
     # FAISS specific
@@ -400,17 +406,20 @@ class DatabaseConfigurationManager:
         pass
     
     async def _load_from_database(self) -> None:
-        """Load configuration from database (placeholder)"""
+        """
+Load configuration from database (placeholder)"""
         # This would load configuration from a configuration database
         pass
     
     async def _load_from_vault(self) -> None:
-        """Load configuration from secure vault (placeholder)"""
+        """
+Load configuration from secure vault (placeholder)"""
         # This would load sensitive configuration from a secure vault
         pass
     
     def _deep_merge(self, target: Dict[str, Any], source: Dict[str, Any]) -> None:
-        """Deep merge two dictionaries"""
+        """
+Deep merge two dictionaries"""
         for key, value in source.items():
             if key in target and isinstance(target[key], dict) and isinstance(value, dict):
                 self._deep_merge(target[key], value)
@@ -418,7 +427,8 @@ class DatabaseConfigurationManager:
                 target[key] = value
     
     async def _validate_configurations(self) -> None:
-        """Validate all configurations"""
+        """
+Validate all configurations"""
         
         # Validate global configuration
         for db_type, config in self.global_config.items():
@@ -471,14 +481,16 @@ class DatabaseConfigurationManager:
         return True
     
     async def _setup_monitoring(self) -> None:
-        """Setup configuration monitoring"""
+        """
+Setup configuration monitoring"""
         # This would setup file watchers for configuration changes
         pass
     
     def get_database_config(self, 
                            db_type: str, 
                            tenant_id: Optional[str] = None) -> Optional[Union[DatabaseConfig, RedisConfig, MongoConfig]]:
-        """Get database configuration"""
+        """
+Get database configuration"""
         
         # Check tenant-specific configuration first
         if tenant_id and tenant_id in self.tenant_configs:
@@ -521,11 +533,13 @@ class DatabaseConfigurationManager:
         return self.tenant_configs.get(tenant_id)
     
     def list_tenants(self) -> List[str]:
-        """List all configured tenants"""
+        """
+List all configured tenants"""
         return list(self.tenant_configs.keys())
     
     async def add_tenant(self, tenant_config: TenantConfig) -> bool:
-        """Add new tenant configuration"""
+        """
+Add new tenant configuration"""
         
         try:
             # Validate configuration
@@ -639,7 +653,8 @@ class DatabaseConfigurationManager:
         self.config_change_callbacks.append(callback)
     
     def encrypt_sensitive_data(self, data: str) -> Optional[str]:
-        """Encrypt sensitive configuration data"""
+        """
+Encrypt sensitive configuration data"""
         if not self.cipher_suite:
             return data
         

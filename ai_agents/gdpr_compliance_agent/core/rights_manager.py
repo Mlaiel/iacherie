@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -35,7 +36,9 @@ from ...models.gdpr_models import DataSubjectRight, DataExportRecord, RightsRequ
 logger = get_logger(__name__)
 
 class DataSubjectRightType(Enum):
-    """GDPR Data Subject Rights"""
+    """
+GDPR Data Subject Rights"""
+
     RIGHT_OF_ACCESS = "access"
     RIGHT_OF_RECTIFICATION = "rectification"
     RIGHT_OF_ERASURE = "erasure"
@@ -47,6 +50,7 @@ class DataSubjectRightType(Enum):
 
 class RequestStatus(Enum):
     """Status of rights requests"""
+
     RECEIVED = "received"
     UNDER_REVIEW = "under_review"
     IN_PROGRESS = "in_progress"
@@ -56,6 +60,7 @@ class RequestStatus(Enum):
 
 class RequestPriority(Enum):
     """Priority levels for rights requests"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"

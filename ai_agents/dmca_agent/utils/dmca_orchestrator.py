@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
@@ -28,7 +29,9 @@ from .copyright_verification import CopyrightVerification, CopyrightClaim, Owner
 from .legal_document_generator import LegalDocumentGenerator, DocumentRequest, DocumentType, DocumentLanguage, DocumentFormat, UrgencyLevel
 
 class DMCAPriority(Enum):
-    """DMCA case priority levels"""
+    """
+DMCA case priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
@@ -36,6 +39,7 @@ class DMCAPriority(Enum):
 
 class DMCAStatus(Enum):
     """DMCA takedown status"""
+
     PENDING = "pending"
     VERIFICATION_IN_PROGRESS = "verification_in_progress"
     VERIFICATION_FAILED = "verification_failed"
@@ -59,6 +63,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
@@ -90,7 +95,9 @@ from ...models.dmca import DMCACaseRecord, TakedownStatus
 logger = logging.getLogger(__name__)
 
 class DMCAPriority(Enum):
-    """DMCA case priority levels"""
+    """
+DMCA case priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
@@ -98,6 +105,7 @@ class DMCAPriority(Enum):
 
 class DMCAStatus(Enum):
     """DMCA takedown status"""
+
     PENDING = "pending"
     VERIFICATION_IN_PROGRESS = "verification_in_progress"
     VERIFICATION_FAILED = "verification_failed"
@@ -113,6 +121,7 @@ class DMCAStatus(Enum):
 
 class CaseType(Enum):
     """DMCA case types"""
+
     MUSICAL_WORK = "musical_work"
     SOUND_RECORDING = "sound_recording"
     VIDEO_CONTENT = "video_content"
@@ -147,7 +156,8 @@ class DMCACase:
 
 @dataclass
 class DMCAProcessResult:
-    """Complete DMCA process result"""
+    """
+Complete DMCA process result"""
     case_id: str
     success: bool
     final_status: DMCAStatus
@@ -494,7 +504,8 @@ class DMCAOrchestrator(BaseAgent):
         return mapping.get(priority, UrgencyLevel.STANDARD)
     
     async def _prepare_document_data(self, dmca_case: DMCACase) -> Dict[str, Any]:
-        """Prepare data for document generation"""
+        """
+Prepare data for document generation"""
         return {
             "case_id": dmca_case.case_id,
             "copyright_owner_name": dmca_case.copyright_owner,
@@ -563,7 +574,8 @@ class DMCAOrchestrator(BaseAgent):
         return base_cost + doc_cost + takedown_cost + time_cost
     
     async def _update_processing_statistics(self, dmca_case: DMCACase, result: DMCAProcessResult) -> None:
-        """Update processing statistics"""
+        """
+Update processing statistics"""
         self.processing_stats["total_cases"] += 1
         
         if result.success:
@@ -1210,7 +1222,8 @@ class DMCAOrchestrator(BaseAgent):
         return None
     
     def _generate_cases_summary(self) -> Dict:
-        """Generate summary statistics for all cases"""
+        """
+Generate summary statistics for all cases"""
         if not self.active_cases:
             return {"total": 0, "by_status": {}, "by_platform": {}}
         

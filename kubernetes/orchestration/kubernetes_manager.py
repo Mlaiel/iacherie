@@ -11,6 +11,7 @@ Features:
 - Rolling deployments with zero downtime
 - Health monitoring and self-healing
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,9 +32,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize Kubernetes metrics collector with monitoring capabilities"""
+        """
+Initialize Kubernetes metrics collector with monitoring capabilities"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.k8s_metrics = ['pod_metrics', 'node_metrics', 'service_metrics', 'ingress_metrics']
         self.collection_apis = ['metrics-server', 'prometheus', 'heapster']
@@ -46,6 +49,7 @@ class MetricsCollector:
 
 class DeploymentStrategy(Enum):
     """Kubernetes deployment strategies."""
+
     ROLLING_UPDATE = "RollingUpdate"
     RECREATE = "Recreate"
     BLUE_GREEN = "BlueGreen"
@@ -54,6 +58,7 @@ class DeploymentStrategy(Enum):
 
 class ResourceType(Enum):
     """Kubernetes resource types."""
+
     DEPLOYMENT = "Deployment"
     SERVICE = "Service"
     CONFIGMAP = "ConfigMap"
@@ -77,7 +82,8 @@ class KubernetesResource:
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration."""
+    """
+Deployment configuration."""
     name: str
     namespace: str
     image: str
@@ -715,7 +721,8 @@ class KubernetesManager(BaseDeploymentManager):
         return False
 
     async def _wait_for_rollout_complete(self, deployment_name: str, namespace: str, timeout: int = 600) -> bool:
-        """Wait for rollout to complete."""
+        """
+Wait for rollout to complete."""
         start_time = datetime.now()
         while (datetime.now() - start_time).total_seconds() < timeout:
             try:

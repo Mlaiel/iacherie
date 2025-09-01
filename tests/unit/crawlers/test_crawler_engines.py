@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for crawler engines and platform integrations.
+"""
+Unit tests for crawler engines and platform integrations.
 
 Comprehensive tests for Spotify, YouTube, Instagram, and other
 platform crawlers with focus on rate limiting, data extraction,
@@ -21,6 +23,7 @@ and error handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -54,7 +57,8 @@ class TestSpotifyCrawler:
     
     @pytest.fixture
     def spotify_crawler(self):
-        """Create Spotify crawler instance."""
+        """
+Create Spotify crawler instance."""
         config = {
             'client_id': 'test_spotify_client_id',
             'client_secret': 'test_spotify_client_secret',
@@ -66,7 +70,8 @@ class TestSpotifyCrawler:
     
     @pytest.fixture
     def mock_spotify_api_response(self):
-        """Mock Spotify API response data."""
+        """
+Mock Spotify API response data."""
         return {
             'tracks': {
                 'items': [
@@ -89,7 +94,8 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_search_tracks(self, spotify_crawler, mock_spotify_api_response):
-        """Test searching for tracks on Spotify."""
+        """
+Test searching for tracks on Spotify."""
         with patch.object(spotify_crawler, '_make_api_request') as mock_request:
             mock_request.return_value = mock_spotify_api_response
             
@@ -103,7 +109,8 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_get_track_details(self, spotify_crawler):
-        """Test getting detailed track information."""
+        """
+Test getting detailed track information."""
         track_id = 'track123'
         mock_track_data = {
             'id': track_id,
@@ -130,7 +137,8 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_get_artist_albums(self, spotify_crawler):
-        """Test getting albums for an artist."""
+        """
+Test getting albums for an artist."""
         artist_id = 'artist123'
         mock_albums_response = {
             'items': [
@@ -160,7 +168,8 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_rate_limiting(self, spotify_crawler):
-        """Test rate limiting functionality."""
+        """
+Test rate limiting functionality."""
         with patch.object(spotify_crawler.rate_limiter, 'acquire') as mock_acquire:
             mock_acquire.return_value = AsyncMock()
             
@@ -176,7 +185,8 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_error_handling(self, spotify_crawler):
-        """Test error handling for API failures."""
+        """
+Test error handling for API failures."""
         with patch.object(spotify_crawler, '_make_api_request') as mock_request:
             mock_request.side_effect = aiohttp.ClientError("API Error")
             
@@ -200,11 +210,13 @@ class TestSpotifyCrawler:
 
 
 class TestYouTubeCrawler:
-    """Test suite for YouTube crawler functionality."""
+    """
+Test suite for YouTube crawler functionality."""
     
     @pytest.fixture
     def youtube_crawler(self):
-        """Create YouTube crawler instance."""
+        """
+Create YouTube crawler instance."""
         config = {
             'api_key': 'test_youtube_api_key',
             'rate_limit': 10000,  # requests per day
@@ -215,7 +227,8 @@ class TestYouTubeCrawler:
     
     @pytest.fixture
     def mock_youtube_api_response(self):
-        """Mock YouTube API response data."""
+        """
+Mock YouTube API response data."""
         return {
             'items': [
                 {
@@ -240,7 +253,8 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_search_videos(self, youtube_crawler, mock_youtube_api_response):
-        """Test searching for videos on YouTube."""
+        """
+Test searching for videos on YouTube."""
         with patch.object(youtube_crawler, '_make_api_request') as mock_request:
             mock_request.return_value = mock_youtube_api_response
             
@@ -254,7 +268,8 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_get_video_details(self, youtube_crawler):
-        """Test getting detailed video information."""
+        """
+Test getting detailed video information."""
         video_id = 'video123'
         mock_video_data = {
             'items': [
@@ -290,7 +305,8 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_get_channel_videos(self, youtube_crawler):
-        """Test getting videos from a specific channel."""
+        """
+Test getting videos from a specific channel."""
         channel_id = 'channel123'
         
         with patch.object(youtube_crawler, 'search_videos') as mock_search:
@@ -306,7 +322,8 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_scraping_fallback(self, youtube_crawler):
-        """Test scraping fallback when API is unavailable."""
+        """
+Test scraping fallback when API is unavailable."""
         with patch.object(youtube_crawler, '_make_api_request') as mock_api:
             mock_api.side_effect = Exception("API quota exceeded")
             
@@ -341,11 +358,13 @@ class TestYouTubeCrawler:
 
 
 class TestInstagramCrawler:
-    """Test suite for Instagram crawler functionality."""
+    """
+Test suite for Instagram crawler functionality."""
     
     @pytest.fixture
     def instagram_crawler(self):
-        """Create Instagram crawler instance."""
+        """
+Create Instagram crawler instance."""
         config = {
             'access_token': 'test_instagram_token',
             'rate_limit': 200,  # requests per hour
@@ -356,7 +375,8 @@ class TestInstagramCrawler:
     
     @pytest.mark.asyncio
     async def test_get_hashtag_posts(self, instagram_crawler):
-        """Test getting posts for a hashtag."""
+        """
+Test getting posts for a hashtag."""
         hashtag = 'testhashtag'
         mock_posts = [
             {
@@ -386,7 +406,8 @@ class TestInstagramCrawler:
     
     @pytest.mark.asyncio
     async def test_get_user_posts(self, instagram_crawler):
-        """Test getting posts from a specific user."""
+        """
+Test getting posts from a specific user."""
         username = 'testuser'
         
         with patch.object(instagram_crawler, '_selenium_get_user_posts') as mock_selenium:
@@ -402,7 +423,8 @@ class TestInstagramCrawler:
     
     @pytest.mark.asyncio
     async def test_selenium_scraping(self, instagram_crawler):
-        """Test Selenium-based scraping functionality."""
+        """
+Test Selenium-based scraping functionality."""
         with patch('selenium.webdriver.Chrome') as mock_driver:
             mock_driver_instance = Mock()
             mock_driver.return_value = mock_driver_instance
@@ -426,7 +448,8 @@ class TestInstagramCrawler:
     
     @pytest.mark.asyncio
     async def test_rate_limiting_compliance(self, instagram_crawler):
-        """Test Instagram rate limiting compliance."""
+        """
+Test Instagram rate limiting compliance."""
         with patch.object(instagram_crawler.rate_limiter, 'wait_if_needed') as mock_wait:
             mock_wait.return_value = AsyncMock()
             
@@ -442,11 +465,13 @@ class TestInstagramCrawler:
 
 
 class TestBaseCrawler:
-    """Test suite for base crawler functionality."""
+    """
+Test suite for base crawler functionality."""
     
     @pytest.fixture
     def base_crawler(self):
-        """Create base crawler instance."""
+        """
+Create base crawler instance."""
         config = {
             'max_retries': 3,
             'retry_delay': 1.0,
@@ -457,7 +482,8 @@ class TestBaseCrawler:
     
     @pytest.mark.asyncio
     async def test_retry_mechanism(self, base_crawler):
-        """Test retry mechanism for failed requests."""
+        """
+Test retry mechanism for failed requests."""
         with patch.object(base_crawler, '_make_request') as mock_request:
             # First two calls fail, third succeeds
             mock_request.side_effect = [
@@ -492,7 +518,8 @@ class TestBaseCrawler:
         assert all(agent in user_agents for agent in selected_agents)
     
     def test_url_validation(self, base_crawler):
-        """Test URL validation functionality."""
+        """
+Test URL validation functionality."""
         valid_urls = [
             'https://www.example.com',
             'http://test.com/path',
@@ -514,7 +541,8 @@ class TestBaseCrawler:
     
     @pytest.mark.asyncio
     async def test_response_caching(self, base_crawler):
-        """Test response caching functionality."""
+        """
+Test response caching functionality."""
         url = 'https://api.example.com/data'
         
         with patch.object(base_crawler, '_make_request') as mock_request:
@@ -536,16 +564,19 @@ class TestBaseCrawler:
 
 
 class TestRateLimiter:
-    """Test suite for rate limiting functionality."""
+    """
+Test suite for rate limiting functionality."""
     
     @pytest.fixture
     def rate_limiter(self):
-        """Create rate limiter instance."""
+        """
+Create rate limiter instance."""
         return RateLimiter(max_requests=10, time_window=60)
     
     @pytest.mark.asyncio
     async def test_rate_limit_enforcement(self, rate_limiter):
-        """Test rate limit enforcement."""
+        """
+Test rate limit enforcement."""
         # Make requests up to the limit
         for _ in range(10):
             can_proceed = await rate_limiter.acquire()
@@ -557,7 +588,8 @@ class TestRateLimiter:
     
     @pytest.mark.asyncio
     async def test_time_window_reset(self, rate_limiter):
-        """Test rate limit reset after time window."""
+        """
+Test rate limit reset after time window."""
         # Fill up the rate limit
         for _ in range(10):
             await rate_limiter.acquire()
@@ -571,7 +603,8 @@ class TestRateLimiter:
             assert can_proceed is True
     
     def test_burst_allowance(self, rate_limiter):
-        """Test burst request allowance."""
+        """
+Test burst request allowance."""
         # Configure burst allowance
         rate_limiter.burst_limit = 15
         
@@ -586,11 +619,13 @@ class TestRateLimiter:
 
 
 class TestProxyManager:
-    """Test suite for proxy management functionality."""
+    """
+Test suite for proxy management functionality."""
     
     @pytest.fixture
     def proxy_manager(self):
-        """Create proxy manager instance."""
+        """
+Create proxy manager instance."""
         proxies = [
             {'host': 'proxy1.com', 'port': 8080, 'protocol': 'http'},
             {'host': 'proxy2.com', 'port': 8080, 'protocol': 'https'},
@@ -599,7 +634,8 @@ class TestProxyManager:
         return ProxyManager(proxies)
     
     def test_proxy_rotation(self, proxy_manager):
-        """Test proxy rotation functionality."""
+        """
+Test proxy rotation functionality."""
         proxies_used = []
         
         for _ in range(6):  # More than number of proxies
@@ -611,7 +647,8 @@ class TestProxyManager:
     
     @pytest.mark.asyncio
     async def test_proxy_health_check(self, proxy_manager):
-        """Test proxy health checking."""
+        """
+Test proxy health checking."""
         with patch.object(proxy_manager, '_test_proxy_connection') as mock_test:
             mock_test.side_effect = [True, False, True]  # proxy1 ok, proxy2 failed, proxy3 ok
             
@@ -622,7 +659,8 @@ class TestProxyManager:
             assert healthy_proxies[1]['host'] == 'proxy3.com'
     
     def test_proxy_failure_handling(self, proxy_manager):
-        """Test handling of proxy failures."""
+        """
+Test handling of proxy failures."""
         # Mark a proxy as failed
         proxy_manager.mark_proxy_failed('proxy2.com')
         
@@ -641,23 +679,27 @@ class TestProxyManager:
 
 # Integration tests
 class TestCrawlerIntegration:
-    """Integration tests for crawler system."""
+    """
+Integration tests for crawler system."""
     
     @pytest.mark.asyncio
     async def test_multi_platform_content_discovery(self):
-        """Test content discovery across multiple platforms."""
+        """
+Test content discovery across multiple platforms."""
         # This would test coordinated crawling across platforms
         pass
     
     @pytest.mark.asyncio
     async def test_content_deduplication(self):
-        """Test deduplication of content found across platforms."""
+        """
+Test deduplication of content found across platforms."""
         # Test identifying same content on different platforms
         pass
     
     @pytest.mark.asyncio
     async def test_crawler_performance_under_load(self):
-        """Test crawler performance under high load."""
+        """
+Test crawler performance under high load."""
         # Performance testing for concurrent crawling
         pass
 

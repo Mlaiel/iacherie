@@ -19,6 +19,7 @@ Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import time
@@ -56,7 +57,9 @@ import undetected_chromedriver as uc
 
 
 class PlatformType(Enum):
-    """Supported social media platforms"""
+    """
+Supported social media platforms"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -72,6 +75,7 @@ class PlatformType(Enum):
 
 class CrawlerType(Enum):
     """Types of crawlers"""
+
     API_CRAWLER = "api_crawler"
     WEB_SCRAPER = "web_scraper"
     SELENIUM_CRAWLER = "selenium_crawler"
@@ -82,6 +86,7 @@ class CrawlerType(Enum):
 
 class CrawlStatus(Enum):
     """Crawl task status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -123,7 +128,8 @@ class CrawlTask:
 
 @dataclass
 class CrawlResult:
-    """Result from crawling operation"""
+    """
+Result from crawling operation"""
     task_id: str
     platform: PlatformType
     content_url: str
@@ -205,7 +211,8 @@ class ContentCrawlerOrchestrator:
         self.k8s_autoscaling = client.AutoscalingV1Api()
     
     def _init_platform_crawlers(self):
-        """Initialize platform-specific crawlers"""
+        """
+Initialize platform-specific crawlers"""
         platforms = [
             PlatformType.YOUTUBE,
             PlatformType.TIKTOK,
@@ -733,7 +740,8 @@ class ContentCrawlerOrchestrator:
     async def _validate_and_process_results(self, 
                                           results: List[CrawlResult], 
                                           task: CrawlTask) -> List[CrawlResult]:
-        """Validate and process crawl results"""
+        """
+Validate and process crawl results"""
         validated_results = []
         
         for result in results:
@@ -775,7 +783,8 @@ class ContentCrawlerOrchestrator:
             return False
     
     def _requires_fingerprinting(self, result: CrawlResult) -> bool:
-        """Determine if content requires fingerprinting"""
+        """
+Determine if content requires fingerprinting"""
         # All audio and video content requires fingerprinting
         if result.content_type in ['audio', 'video']:
             return True
@@ -889,7 +898,8 @@ class ContentCrawlerOrchestrator:
                 await self._trigger_dmca_enforcement(result)
     
     async def _trigger_dmca_enforcement(self, result: CrawlResult):
-        """Trigger DMCA enforcement for potential violation"""
+        """
+Trigger DMCA enforcement for potential violation"""
         try:
             # Add to DMCA processing queue
             dmca_task = {
@@ -918,7 +928,8 @@ class ContentCrawlerOrchestrator:
         pass
     
     async def _wait_for_task_completion(self, task_id: str, timeout: int) -> List[CrawlResult]:
-        """Wait for task completion and return results"""
+        """
+Wait for task completion and return results"""
         start_time = time.time()
         
         while time.time() - start_time < timeout:
@@ -937,9 +948,11 @@ class ContentCrawlerOrchestrator:
         return []
     
     def _start_background_workers(self):
-        """Start background worker threads"""
+        """
+Start background worker threads"""
         def queue_processor():
-            """Process crawl queue"""
+            """
+Process crawl queue"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
@@ -1031,7 +1044,8 @@ class PlatformCrawlerManager:
         return endpoints.get(self.platform, {})
     
     def _get_scraping_configs(self) -> Dict[str, Any]:
-        """Get platform-specific scraping configurations"""
+        """
+Get platform-specific scraping configurations"""
         configs = {
             PlatformType.TIKTOK: {
                 'base_url': 'https://www.tiktok.com',
@@ -1066,7 +1080,8 @@ class PlatformCrawlerManager:
         return options
     
     async def crawl_via_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Crawl using official platform APIs"""
+        """
+Crawl using official platform APIs"""
         results = []
         
         try:
@@ -2441,16 +2456,19 @@ class PlatformCrawlerManager:
         return []
     
     async def _crawl_instagram_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
-        """Instagram Selenium crawling implementation"""
+        """
+Instagram Selenium crawling implementation"""
         return []
     
     async def _crawl_generic_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
-        """Generic Selenium crawling implementation"""
+        """
+Generic Selenium crawling implementation"""
         return []
     
     # Helper methods for API implementations
     async def _get_youtube_video_details(self, video_id: str, api_key: str, session) -> Dict[str, Any]:
-        """Get detailed YouTube video information"""
+        """
+Get detailed YouTube video information"""
         try:
             details_url = "https://www.googleapis.com/youtube/v3/videos"
             params = {

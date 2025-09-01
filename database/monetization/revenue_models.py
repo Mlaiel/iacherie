@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -43,7 +44,8 @@ Base = declarative_base()
 
 
 class RevenueType(Enum):
-    """Comprehensive revenue stream types for content creators"""
+    """
+Comprehensive revenue stream types for content creators"""
     # Streaming revenue
     MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
@@ -178,6 +180,7 @@ class PlatformType(Enum):
 
 class Currency(Enum):
     """Supported currencies for international revenue tracking"""
+
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     GBP = "GBP"  # British Pound
@@ -227,6 +230,7 @@ class Currency(Enum):
 
 class RevenueStatus(Enum):
     """Revenue record status lifecycle"""
+
     PENDING = "pending"
     ESTIMATED = "estimated"
     CONFIRMED = "confirmed"
@@ -241,6 +245,7 @@ class RevenueStatus(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING_APPROVAL = "pending_approval"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -255,6 +260,7 @@ class PaymentStatus(Enum):
 
 class TaxStatus(Enum):
     """Tax processing and compliance status"""
+
     NOT_APPLICABLE = "not_applicable"
     PENDING_CALCULATION = "pending_calculation"
     CALCULATED = "calculated"
@@ -423,14 +429,16 @@ class RevenueRecord(Base):
     
     @property
     def profit_margin(self) -> float:
-        """Calculate profit margin percentage"""
+        """
+Calculate profit margin percentage"""
         if self.gross_amount == 0:
             return 0.0
         return float((self.net_amount / self.gross_amount) * 100)
     
     @property
     def effective_tax_rate(self) -> float:
-        """Calculate effective tax rate"""
+        """
+Calculate effective tax rate"""
         if self.gross_amount == 0:
             return 0.0
         return float((self.gross_tax_amount / self.gross_amount) * 100)

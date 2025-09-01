@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 LOAD BALANCER INTELLIGENT
@@ -15,6 +15,7 @@ Répartition de charge avancée avec détection de pannes
 - Circuit breaker pattern intégré
 - Métriques temps réel et auto-scaling
 """
+
 import asyncio
 import logging
 import time
@@ -32,7 +33,9 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 class LoadBalancingAlgorithm(Enum):
-    """Algorithmes de load balancing"""
+    """
+Algorithmes de load balancing"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -43,6 +46,7 @@ class LoadBalancingAlgorithm(Enum):
 
 class ServerStatus(Enum):
     """États des serveurs"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -82,7 +86,8 @@ class ServerMetrics:
 
 @dataclass
 class Server:
-    """Définition d'un serveur backend"""
+    """
+Définition d'un serveur backend"""
     server_id: str
     host: str
     port: int
@@ -121,7 +126,8 @@ class Server:
         return (connection_factor + response_time_factor + error_factor) / 3
 
 class HealthChecker:
-    """Vérificateur de santé des serveurs"""
+    """
+Vérificateur de santé des serveurs"""
     
     def __init__(self, session: Optional[aiohttp.ClientSession] = None):
         self.session = session
@@ -129,7 +135,8 @@ class HealthChecker:
         self._health_tasks: Dict[str, asyncio.Task] = {}
         
     async def start(self):
-        """Démarre le health checker"""
+        """
+Démarre le health checker"""
         if self._own_session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=10)
@@ -175,7 +182,8 @@ class HealthChecker:
             del self._health_tasks[server_id]
             
     async def _health_check_loop(self, server: Server):
-        """Boucle de health check pour un serveur"""
+        """
+Boucle de health check pour un serveur"""
         while True:
             try:
                 await asyncio.sleep(server.health_check_interval)
@@ -270,7 +278,8 @@ class LoadBalancer:
         self.start_time = datetime.utcnow()
         
     async def start(self):
-        """Démarre le load balancer"""
+        """
+Démarre le load balancer"""
         await self.health_checker.start()
         logger.info(f"LoadBalancer démarré avec algorithme {self.algorithm.value}")
         
@@ -345,7 +354,8 @@ class LoadBalancer:
         return server
         
     def _weighted_round_robin(self, servers: List[Server]) -> Server:
-        """Algorithme Round Robin pondéré"""
+        """
+Algorithme Round Robin pondéré"""
         if not servers:
             return None
             
@@ -364,15 +374,18 @@ class LoadBalancer:
         return server
         
     def _least_connections(self, servers: List[Server]) -> Server:
-        """Algorithme Least Connections"""
+        """
+Algorithme Least Connections"""
         return min(servers, key=lambda s: s.metrics.active_connections)
         
     def _least_response_time(self, servers: List[Server]) -> Server:
-        """Algorithme basé sur le temps de réponse"""
+        """
+Algorithme basé sur le temps de réponse"""
         return min(servers, key=lambda s: s.metrics.average_response_time)
         
     def _ip_hash(self, servers: List[Server], client_ip: Optional[str]) -> Server:
-        """Algorithme basé sur le hash de l'IP client"""
+        """
+Algorithme basé sur le hash de l'IP client"""
         if not client_ip:
             return self._round_robin(servers)
             
@@ -381,16 +394,19 @@ class LoadBalancer:
         return servers[hash_value % len(servers)]
         
     def _random(self, servers: List[Server]) -> Server:
-        """Sélection aléatoire"""
+        """
+Sélection aléatoire"""
         return random.choice(servers)
         
     def _weighted_random(self, servers: List[Server]) -> Server:
-        """Sélection aléatoire pondérée"""
+        """
+Sélection aléatoire pondérée"""
         weights = [max(0.1, server.weight * (1 - server.load_score)) for server in servers]
         return random.choices(servers, weights=weights)[0]
         
     async def record_request(self, server: Server, response_time: float, success: bool):
-        """Enregistre les métriques d'une requête"""
+        """
+Enregistre les métriques d'une requête"""
         server.metrics.total_requests += 1
         server.metrics.last_request_time = datetime.utcnow()
         
@@ -406,17 +422,20 @@ class LoadBalancer:
             self.total_errors += 1
             
     async def acquire_connection(self, server: Server):
-        """Acquiert une connexion vers un serveur"""
+        """
+Acquiert une connexion vers un serveur"""
         server.metrics.active_connections += 1
         self._connections_count[server.server_id] += 1
         
     async def release_connection(self, server: Server):
-        """Libère une connexion vers un serveur"""
+        """
+Libère une connexion vers un serveur"""
         server.metrics.active_connections = max(0, server.metrics.active_connections - 1)
         self._connections_count[server.server_id] = max(0, self._connections_count[server.server_id] - 1)
         
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du load balancer"""
+        """
+Retourne les statistiques du load balancer"""
         uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {

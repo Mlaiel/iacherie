@@ -15,12 +15,13 @@ Features:
 - Performance analytics and response optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -41,7 +42,9 @@ from backend.utils.translation_service import TranslationService
 
 
 class ResponseType(Enum):
-    """Comprehensive response type enumeration"""
+    """
+Comprehensive response type enumeration"""
+
     INFORMATIONAL = "informational"
     ACTIONABLE = "actionable"
     ANALYTICAL = "analytical"
@@ -58,6 +61,7 @@ class ResponseType(Enum):
 
 class ResponseTone(Enum):
     """Advanced response tone variations"""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     ENCOURAGING = "encouraging"
@@ -72,6 +76,7 @@ class ResponseTone(Enum):
 
 class ResponsePriority(Enum):
     """Response priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -81,6 +86,7 @@ class ResponsePriority(Enum):
 
 class CreatorSpecialization(Enum):
     """Creator specialization categories"""
+
     AUDIO_PRODUCTION = "audio_production"
     VISUAL_CONTENT = "visual_content"
     WRITTEN_CONTENT = "written_content"
@@ -106,7 +112,8 @@ class MonetizationRecommendation:
 
 @dataclass
 class CollaborationSuggestion:
-    """Collaboration opportunity suggestion"""
+    """
+Collaboration opportunity suggestion"""
     collaboration_type: str
     description: str
     potential_partners: List[str]
@@ -118,7 +125,8 @@ class CollaborationSuggestion:
 
 @dataclass
 class ProtectionRecommendation:
-    """Content protection recommendation"""
+    """
+Content protection recommendation"""
     protection_type: str
     urgency_level: str
     description: str
@@ -130,7 +138,8 @@ class ProtectionRecommendation:
 
 @dataclass
 class ResponseComponents:
-    """Comprehensive response components structure"""
+    """
+Comprehensive response components structure"""
     main_content: str
     action_items: List[str] = field(default_factory=list)
     suggestions: List[str] = field(default_factory=list)
@@ -146,7 +155,8 @@ class ResponseComponents:
 
 @dataclass
 class ResponseMetadata:
-    """Response generation metadata"""
+    """
+Response generation metadata"""
     response_id: str
     generation_time_ms: float
     model_version: str
@@ -161,7 +171,8 @@ class ResponseMetadata:
 
 @dataclass
 class GeneratedResponse:
-    """Complete generated response with all components"""
+    """
+Complete generated response with all components"""
     response_id: str
     content: str
     response_type: ResponseType
@@ -576,7 +587,8 @@ class EnterpriseResponseGenerator:
         creator_profile: Any,
         context_analysis: Dict[str, Any]
     ) -> ResponseComponents:
-        """Generate comprehensive response components"""
+        """
+Generate comprehensive response components"""
         
         components = ResponseComponents(main_content=main_content)
         
@@ -857,12 +869,14 @@ class EnterpriseResponseGenerator:
         return {}
     
     async def _get_industry_insights(self, creator_profile: Any) -> Dict[str, Any]:
-        """Get industry insights and trends"""
+        """
+Get industry insights and trends"""
         # Implementation would fetch industry data
         return {}
     
     def _get_prompt_template(self, creator_type: str, response_type: ResponseType, tone: ResponseTone) -> str:
-        """Get appropriate prompt template"""
+        """
+Get appropriate prompt template"""
         return self.creator_prompts.get(creator_type, {}).get(response_type.value, "")
     
     async def _build_contextualized_prompt(
@@ -876,7 +890,8 @@ class EnterpriseResponseGenerator:
         return template
     
     def _get_temperature_for_type(self, response_type: ResponseType) -> float:
-        """Get appropriate temperature setting for response type"""
+        """
+Get appropriate temperature setting for response type"""
         temperature_mapping = {
             ResponseType.CREATIVE: 0.9,
             ResponseType.ANALYTICAL: 0.3,
@@ -892,12 +907,14 @@ class EnterpriseResponseGenerator:
         response_type: ResponseType,
         creator_profile: Any
     ) -> str:
-        """Post-process generated content"""
+        """
+Post-process generated content"""
         # Apply formatting, validation, and cleanup
         return self.text_formatter.format_response(content, response_type.value)
     
     def _load_creator_prompt_templates(self) -> Dict[str, Dict[str, str]]:
-        """Load creator-specific prompt templates"""
+        """
+Load creator-specific prompt templates"""
         # Implementation would load from configuration files
         return {
             "musician": {
@@ -923,7 +940,8 @@ class EnterpriseResponseGenerator:
         creator_profile: Any,
         context_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate follow-up conversation prompts"""
+        """
+Generate follow-up conversation prompts"""
         return [
             "Would you like more specific advice on this topic?",
             "Do you have questions about implementing these recommendations?",
@@ -949,17 +967,20 @@ class EnterpriseResponseGenerator:
         context: Dict[str, Any],
         response_type: ResponseType
     ) -> float:
-        """Calculate confidence score for the generated response"""
+        """
+Calculate confidence score for the generated response"""
         # Implementation would analyze various factors
         return 0.9
     
     async def _count_tokens(self, content: str) -> int:
-        """Count tokens in the generated content"""
+        """
+Count tokens in the generated content"""
         # Implementation would use tokenizer
         return len(content.split())
     
     def _extract_personalization_factors(self, creator_profile: Any) -> List[str]:
-        """Extract personalization factors from creator profile"""
+        """
+Extract personalization factors from creator profile"""
         return [
             creator_profile.creator_type.value,
             *creator_profile.specializations,
@@ -967,12 +988,14 @@ class EnterpriseResponseGenerator:
         ]
     
     async def _assess_content_safety(self, content: str) -> float:
-        """Assess content safety score"""
+        """
+Assess content safety score"""
         # Implementation would check for safety issues
         return 1.0
     
     async def _track_generation_analytics(self, response: GeneratedResponse, session: Any) -> None:
-        """Track response generation analytics"""
+        """
+Track response generation analytics"""
         # Implementation would track comprehensive analytics
         pass
     
@@ -982,7 +1005,8 @@ class EnterpriseResponseGenerator:
         confidence_score: float,
         creator_profile: Any
     ) -> None:
-        """Update internal quality metrics"""
+        """
+Update internal quality metrics"""
         self.quality_metrics["total_responses"] += 1
         
         # Update averages

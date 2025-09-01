@@ -62,6 +62,7 @@ For licensing inquiries or authorized usage: mlaiel@live.de
 Legal compliance verification required before any usage, modification, or integration.
 All code usage is monitored and tracked for compliance enforcement.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -85,7 +86,9 @@ from .content_creator_flows import CreatorProfile, Platform, ContentFormat
 logger = logging.getLogger(__name__)
 
 class IntegrationStatus(Enum):
-    """Platform integration status"""
+    """
+Platform integration status"""
+
     NOT_CONNECTED = "not_connected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -97,6 +100,7 @@ class IntegrationStatus(Enum):
 
 class IntegrationType(Enum):
     """Types of platform integration"""
+
     READ_ONLY = "read_only"
     ANALYTICS_ONLY = "analytics_only"
     CONTENT_MANAGEMENT = "content_management"
@@ -107,6 +111,7 @@ class IntegrationType(Enum):
 
 class PlatformFeature(Enum):
     """Platform features for integration"""
+
     CONTENT_UPLOAD = "content_upload"
     ANALYTICS_ACCESS = "analytics_access"
     AUDIENCE_INSIGHTS = "audience_insights"
@@ -120,6 +125,7 @@ class PlatformFeature(Enum):
 
 class OptimizationGoal(Enum):
     """Platform optimization goals"""
+
     INCREASE_REACH = "increase_reach"
     IMPROVE_ENGAGEMENT = "improve_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
@@ -200,7 +206,8 @@ class PlatformDialogueHandler:
         self.platform_flows = self._initialize_platform_flows()
         
     def _initialize_platform_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform integration conversation flows"""
+        """
+Initialize platform integration conversation flows"""
         return {
             "platform_assessment_flow": {
                 "name": "Platform Presence Assessment",

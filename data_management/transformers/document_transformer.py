@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel
 - Sécurité Expert: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import time
@@ -74,7 +75,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class DocumentFormat(Enum):
-    """Formats de document supportés"""
+    """
+Formats de document supportés"""
+
     PDF = "pdf"
     DOCX = "docx"
     TXT = "txt"
@@ -88,6 +91,7 @@ class DocumentFormat(Enum):
 
 class DocumentType(Enum):
     """Types de documents pour optimisation"""
+
     BLOG_POST = "blog_post"
     ARTICLE = "article"
     SCRIPT = "script"
@@ -100,6 +104,7 @@ class DocumentType(Enum):
 
 class ContentQuality(Enum):
     """Niveaux de qualité de contenu"""
+
     PROFESSIONAL = "professional"
     STANDARD = "standard"
     CASUAL = "casual"
@@ -121,7 +126,8 @@ class TextAnalysis:
 
 @dataclass
 class DocumentProcessingResult:
-    """Résultat du traitement de document"""
+    """
+Résultat du traitement de document"""
     success: bool
     input_file: str
     output_file: Optional[str]
@@ -134,7 +140,8 @@ class DocumentProcessingResult:
     errors: List[str]
 
 class DocumentAnalyzer:
-    """Analyseur de document intelligent pour créateurs de contenu"""
+    """
+Analyseur de document intelligent pour créateurs de contenu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -508,7 +515,8 @@ class DocumentAnalyzer:
         )
     
     def _clean_text(self, text: str) -> str:
-        """Nettoie le texte pour l'analyse"""
+        """
+Nettoie le texte pour l'analyse"""
         
         # Suppression des caractères de contrôle
         text = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', text)
@@ -522,7 +530,8 @@ class DocumentAnalyzer:
         return text.strip()
     
     def _detect_language(self, text: str) -> str:
-        """Détecte la langue du texte"""
+        """
+Détecte la langue du texte"""
         
         try:
             from textblob import TextBlob
@@ -573,7 +582,8 @@ class DocumentAnalyzer:
             return 0.5  # Score neutre par défaut
     
     def _analyze_sentiment(self, text: str) -> float:
-        """Analyse le sentiment du texte"""
+        """
+Analyse le sentiment du texte"""
         
         try:
             if self.sentiment_analyzer:
@@ -598,7 +608,8 @@ class DocumentAnalyzer:
             return 0.0  # Sentiment neutre par défaut
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extrait les mots-clés importants"""
+        """
+Extrait les mots-clés importants"""
         
         keywords = []
         
@@ -632,7 +643,8 @@ class DocumentAnalyzer:
         return keywords[:10]
     
     def _extract_topics(self, text: str) -> List[str]:
-        """Extrait les sujets principaux"""
+        """
+Extrait les sujets principaux"""
         
         topics = []
         
@@ -668,7 +680,8 @@ class DocumentAnalyzer:
         return topics[:10]
     
     def _classify_document_type(self, text: str, analysis: TextAnalysis) -> str:
-        """Classifie automatiquement le type de document"""
+        """
+Classifie automatiquement le type de document"""
         
         text_lower = text.lower()
         word_count = analysis.word_count
@@ -705,7 +718,8 @@ class DocumentAnalyzer:
             return DocumentType.ARTICLE.value
     
     def _analyze_seo_potential(self, text: str, analysis: TextAnalysis) -> Dict[str, Any]:
-        """Analyse le potentiel SEO du contenu"""
+        """
+Analyse le potentiel SEO du contenu"""
         
         seo_score = 0.0
         recommendations = []
@@ -769,7 +783,8 @@ class DocumentAnalyzer:
         return title_count >= 2
     
     def _detect_links(self, text: str) -> bool:
-        """Détecte la présence de liens"""
+        """
+Détecte la présence de liens"""
         
         url_pattern = r'https?://[^\s]+'
         markdown_link_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
@@ -777,7 +792,8 @@ class DocumentAnalyzer:
         return bool(re.search(url_pattern, text) or re.search(markdown_link_pattern, text))
     
     def _has_meta_info(self, text: str) -> bool:
-        """Détecte la présence d'informations méta"""
+        """
+Détecte la présence d'informations méta"""
         
         meta_patterns = [
             r'title:\s*.+',
@@ -797,7 +813,8 @@ class DocumentAnalyzer:
         analysis: TextAnalysis,
         seo_analysis: Dict[str, Any]
     ) -> float:
-        """Calcule un score de qualité global du contenu"""
+        """
+Calcule un score de qualité global du contenu"""
         
         # Facteurs de qualité
         length_score = min(1.0, analysis.word_count / 1000)  # Optimal autour de 1000 mots
@@ -816,7 +833,8 @@ class DocumentAnalyzer:
         return round(quality_score, 3)
     
     def _get_extraction_method(self, file_path: str) -> str:
-        """Détermine la méthode d'extraction utilisée"""
+        """
+Détermine la méthode d'extraction utilisée"""
         
         file_ext = Path(file_path).suffix.lower()
         
@@ -834,7 +852,8 @@ class DocumentAnalyzer:
         return method_mapping.get(file_ext, 'text_reader')
     
     def _detect_embedded_media(self, file_path: str, media_type: str) -> bool:
-        """Détecte la présence de médias embarqués"""
+        """
+Détecte la présence de médias embarqués"""
         
         file_ext = Path(file_path).suffix.lower()
         
@@ -865,7 +884,8 @@ class DocumentAnalyzer:
         return False
     
     def _detect_tables(self, text: str) -> bool:
-        """Détecte la présence de tableaux dans le texte"""
+        """
+Détecte la présence de tableaux dans le texte"""
         
         # Recherche de patterns de tableaux
         table_patterns = [
@@ -881,7 +901,8 @@ class DocumentAnalyzer:
         return False
 
 class ContentOptimizer:
-    """Optimisateur de contenu pour créateurs"""
+    """
+Optimisateur de contenu pour créateurs"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -919,7 +940,8 @@ class ContentOptimizer:
         return optimized_text
     
     def improve_readability(self, text: str) -> str:
-        """Améliore la lisibilité du texte"""
+        """
+Améliore la lisibilité du texte"""
         
         # Simplification des phrases longues
         sentences = sent_tokenize(text)
@@ -939,7 +961,8 @@ class ContentOptimizer:
         return ' '.join(improved_sentences)
     
     def add_structure(self, text: str) -> str:
-        """Ajoute une structure au texte"""
+        """
+Ajoute une structure au texte"""
         
         paragraphs = text.split('\n\n')
         if len(paragraphs) < 2:
@@ -1003,7 +1026,8 @@ class DocumentTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de document selon configuration"""
+        """
+Transformation de document selon configuration"""
         
         start_time = time.time()
         operations = []
@@ -1117,7 +1141,8 @@ class DocumentTransformer:
             return text
     
     def _convert_to_markdown(self, text: str) -> str:
-        """Convertit vers Markdown"""
+        """
+Convertit vers Markdown"""
         
         # Détection et conversion des titres
         lines = text.split('\n')
@@ -1171,7 +1196,8 @@ class DocumentTransformer:
         return html_content
     
     def _convert_to_text(self, text: str) -> str:
-        """Nettoie pour format texte pur"""
+        """
+Nettoie pour format texte pur"""
         
         # Suppression des formatages spéciaux
         cleaned = re.sub(r'<[^>]+>', '', text)  # HTML tags
@@ -1182,7 +1208,8 @@ class DocumentTransformer:
         return cleaned
     
     def _summarize_document(self, text: str, params: Dict[str, Any]) -> str:
-        """Crée un résumé automatique du document"""
+        """
+Crée un résumé automatique du document"""
         
         max_length = params.get('max_length', 500)
         summary_type = params.get('type', 'extractive')
@@ -1264,7 +1291,8 @@ class DocumentTransformer:
         output_path: str,
         config: 'TransformationConfig'
     ) -> None:
-        """Sauvegarde le document traité"""
+        """
+Sauvegarde le document traité"""
         
         # Création du répertoire si nécessaire
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
@@ -1284,7 +1312,8 @@ class DocumentTransformer:
                 file.write(text)
     
     def _save_as_docx(self, text: str, output_path: str) -> None:
-        """Sauvegarde en format DOCX"""
+        """
+Sauvegarde en format DOCX"""
         
         try:
             doc = DocxDocument()
@@ -1396,7 +1425,8 @@ class DocumentTransformer:
         )
 
 class AsyncDocumentTransformer:
-    """Version asynchrone du transformateur de document"""
+    """
+Version asynchrone du transformateur de document"""
     
     def __init__(self):
         self.sync_transformer = DocumentTransformer()
@@ -1408,7 +1438,8 @@ class AsyncDocumentTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de document asynchrone"""
+        """
+Transformation de document asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -1424,7 +1455,8 @@ class AsyncDocumentTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 4
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
+        """
+Transformation en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

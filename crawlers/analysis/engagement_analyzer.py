@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -40,7 +41,9 @@ from sklearn.model_selection import train_test_split
 logger = logging.getLogger(__name__)
 
 class EngagementType(Enum):
-    """Types of engagement interactions."""
+    """
+Types of engagement interactions."""
+
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -54,6 +57,7 @@ class EngagementType(Enum):
 
 class EngagementQuality(Enum):
     """Quality levels of engagement."""
+
     EXCELLENT = "excellent"     # High-value meaningful interactions
     GOOD = "good"              # Positive meaningful interactions
     AVERAGE = "average"        # Standard interactions
@@ -62,6 +66,7 @@ class EngagementQuality(Enum):
 
 class AudienceSegment(Enum):
     """Audience segmentation categories."""
+
     CORE_FANS = "core_fans"           # Most engaged loyal followers
     CASUAL_FOLLOWERS = "casual_followers"  # Regular but less engaged
     NEW_AUDIENCE = "new_audience"     # Recently discovered content
@@ -101,7 +106,8 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Audience behavior and demographic insights."""
+    """
+Audience behavior and demographic insights."""
     total_audience_size: int
     active_audience_percentage: float
     
@@ -126,7 +132,8 @@ class AudienceInsights:
 
 @dataclass
 class EngagementPrediction:
-    """Engagement prediction and forecasting."""
+    """
+Engagement prediction and forecasting."""
     predicted_engagement_rate: float
     predicted_interactions: int
     confidence_score: float
@@ -148,7 +155,8 @@ class EngagementPrediction:
 
 @dataclass
 class EngagementAnalysisResult:
-    """Complete engagement analysis result."""
+    """
+Complete engagement analysis result."""
     content_id: str
     analysis_timestamp: datetime
     
@@ -709,7 +717,8 @@ class EngagementAnalyzer:
         return spam_indicators
     
     def _analyze_comment_sentiment(self, comments: List[str]) -> float:
-        """Analyze sentiment of comments."""
+        """
+Analyze sentiment of comments."""
         if not comments:
             return 0.0
         
@@ -732,7 +741,8 @@ class EngagementAnalyzer:
         return np.mean(sentiment_scores) if sentiment_scores else 0.0
     
     def _calculate_response_rate(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate creator response rate to comments."""
+        """
+Calculate creator response rate to comments."""
         total_comments = engagement_data.get('comments', 0)
         creator_responses = engagement_data.get('creator_responses', 0)
         
@@ -742,7 +752,8 @@ class EngagementAnalyzer:
         return creator_responses / total_comments
     
     def _calculate_conversation_depth(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate average conversation thread depth."""
+        """
+Calculate average conversation thread depth."""
         comment_threads = engagement_data.get('comment_threads', [])
         
         if not comment_threads:
@@ -752,7 +763,8 @@ class EngagementAnalyzer:
         return np.mean(thread_depths)
     
     def _calculate_engagement_velocity(self, content_id: str, engagement_data: Dict[str, Any]) -> float:
-        """Calculate engagement growth velocity."""
+        """
+Calculate engagement growth velocity."""
         # Simple implementation - in production would track over time
         total_interactions = engagement_data.get('total_interactions', 0)
         time_since_post = engagement_data.get('hours_since_post', 1)
@@ -760,7 +772,8 @@ class EngagementAnalyzer:
         return total_interactions / max(1, time_since_post)
     
     def _find_peak_engagement_time(self, engagement_data: Dict[str, Any]) -> Optional[datetime]:
-        """Find peak engagement time."""
+        """
+Find peak engagement time."""
         engagement_by_hour = engagement_data.get('engagement_by_hour', {})
         
         if not engagement_by_hour:
@@ -773,7 +786,8 @@ class EngagementAnalyzer:
         return datetime.combine(today, datetime.min.time()).replace(hour=int(peak_hour))
     
     def _calculate_engagement_duration(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate how long engagement activity lasts."""
+        """
+Calculate how long engagement activity lasts."""
         engagement_timestamps = engagement_data.get('engagement_timestamps', [])
         
         if len(engagement_timestamps) < 2:
@@ -786,7 +800,8 @@ class EngagementAnalyzer:
         return duration
     
     def _calculate_new_vs_returning_ratio(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate ratio of new vs returning users."""
+        """
+Calculate ratio of new vs returning users."""
         new_users = engagement_data.get('new_users', 0)
         returning_users = engagement_data.get('returning_users', 0)
         
@@ -801,7 +816,8 @@ class EngagementAnalyzer:
         audience_data: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> Dict[AudienceSegment, float]:
-        """Segment audience based on engagement patterns."""
+        """
+Segment audience based on engagement patterns."""
         # Simplified segmentation - in production would use ML clustering
         total_audience = audience_data.get('total_followers', 1000)
         
@@ -822,7 +838,8 @@ class EngagementAnalyzer:
         segments: Dict[AudienceSegment, float],
         engagement_data: Dict[str, Any]
     ) -> Dict[AudienceSegment, float]:
-        """Calculate engagement rates by audience segment."""
+        """
+Calculate engagement rates by audience segment."""
         # Estimated engagement rates by segment
         engagement_rates = {
             AudienceSegment.CORE_FANS: 0.12,      # High engagement
@@ -836,7 +853,8 @@ class EngagementAnalyzer:
         return engagement_rates
     
     def _analyze_optimal_posting_times(self, audience_data: Dict[str, Any]) -> List[datetime]:
-        """Analyze optimal posting times for audience."""
+        """
+Analyze optimal posting times for audience."""
         # Default optimal times based on general social media patterns
         today = datetime.now().date()
         optimal_times = [
@@ -848,7 +866,8 @@ class EngagementAnalyzer:
         return optimal_times
     
     def _analyze_content_preferences(self, audience_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audience content preferences."""
+        """
+Analyze audience content preferences."""
         # Simulated content preferences
         preferences = {
             'video': 0.4,
@@ -860,7 +879,8 @@ class EngagementAnalyzer:
         return preferences
     
     def _analyze_interaction_patterns(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience interaction patterns."""
+        """
+Analyze audience interaction patterns."""
         patterns = {
             'quick_engagers': 0.3,  # Engage within first hour
             'delayed_engagers': 0.4,  # Engage within 24 hours
@@ -878,7 +898,8 @@ class EngagementAnalyzer:
         audience_insights: AudienceInsights,
         platform: str
     ) -> np.ndarray:
-        """Extract features for ML prediction."""
+        """
+Extract features for ML prediction."""
         features = [
             current_metrics.engagement_rate,
             audience_insights.active_audience_percentage,
@@ -898,7 +919,8 @@ class EngagementAnalyzer:
         prediction: EngagementPrediction,
         content_data: Dict[str, Any]
     ) -> float:
-        """Calculate viral potential score."""
+        """
+Calculate viral potential score."""
         factors = []
         
         # High engagement rate factor
@@ -940,7 +962,8 @@ class EngagementAnalyzer:
         return np.mean(factors)
     
     def _compare_performance_to_average(self, content_id: str, metrics: EngagementMetrics) -> float:
-        """Compare performance to user's historical average."""
+        """
+Compare performance to user's historical average."""
         # Get historical performance (simplified)
         if content_id in self.engagement_history:
             historical_rates = [m.engagement_rate for m in self.engagement_history[content_id]]
@@ -957,7 +980,8 @@ class EngagementAnalyzer:
         platform: str,
         content_type: str
     ) -> Dict[str, float]:
-        """Benchmark against industry standards."""
+        """
+Benchmark against industry standards."""
         benchmarks = {}
         
         # Platform benchmarks
@@ -987,7 +1011,8 @@ class EngagementAnalyzer:
         insights: AudienceInsights,
         prediction: EngagementPrediction
     ) -> List[str]:
-        """Generate engagement optimization recommendations."""
+        """
+Generate engagement optimization recommendations."""
         recommendations = []
         
         # Comment engagement
@@ -1167,7 +1192,8 @@ class EngagementAnalyzer:
         metrics: EngagementMetrics,
         data_quality: float
     ) -> float:
-        """Calculate analysis confidence score."""
+        """
+Calculate analysis confidence score."""
         confidence_factors = []
         
         # Data quality factor
@@ -1192,7 +1218,8 @@ class EngagementAnalyzer:
         return np.mean(confidence_factors)
     
     def _update_engagement_history(self, content_id: str, metrics: EngagementMetrics) -> None:
-        """Update engagement history for analysis."""
+        """
+Update engagement history for analysis."""
         self.engagement_history[content_id].append(metrics)
         
         # Keep only recent history (last 50 entries)
@@ -1200,7 +1227,8 @@ class EngagementAnalyzer:
             self.engagement_history[content_id] = self.engagement_history[content_id][-50:]
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get engagement analysis analytics and performance metrics."""
+        """
+Get engagement analysis analytics and performance metrics."""
         avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {

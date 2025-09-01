@@ -27,6 +27,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -91,7 +92,9 @@ from ...data.metrics_repository import MetricsRepository
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Comprehensive performance measurement categories"""
+    """
+Comprehensive performance measurement categories"""
+
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     LATENCY = "latency"
@@ -107,6 +110,7 @@ class PerformanceMetric(Enum):
 
 class OptimizationTechnique(Enum):
     """Advanced performance optimization techniques"""
+
     INTELLIGENT_CACHING = "intelligent_caching"
     ADAPTIVE_COMPRESSION = "adaptive_compression"
     PARALLEL_PROCESSING = "parallel_processing"
@@ -125,6 +129,7 @@ class OptimizationTechnique(Enum):
 
 class PerformanceThreshold(Enum):
     """Performance threshold levels"""
+
     CRITICAL = "critical"
     WARNING = "warning"
     OPTIMAL = "optimal"
@@ -178,7 +183,8 @@ class PerformanceProfile:
     compression_effectiveness: float = 0.0
     
     def calculate_performance_score(self) -> float:
-        """Calculate overall performance score (0-100)"""
+        """
+Calculate overall performance score (0-100)"""
         score_components = {
             'response_time': min(100, max(0, 100 - (self.avg_response_time * 10))),
             'throughput': min(100, self.throughput_rps),
@@ -206,7 +212,8 @@ class PerformanceProfile:
 
 @dataclass
 class OptimizationResult:
-    """Comprehensive performance optimization outcome tracking"""
+    """
+Comprehensive performance optimization outcome tracking"""
     optimization_id: str = field(default_factory=lambda: f"opt_{int(time.time())}")
     technique: OptimizationTechnique = None
     before_metrics: Optional[PerformanceProfile] = None
@@ -299,7 +306,8 @@ class PerformanceConfig:
     anomaly_detection_sensitivity: float = 0.05
 
 class SystemMetrics:
-    """Real-time system metrics collector"""
+    """
+Real-time system metrics collector"""
     
     def __init__(self):
         self.process = psutil.Process()
@@ -308,7 +316,8 @@ class SystemMetrics:
         self._cache_ttl = 5  # 5 seconds cache
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive current system metrics"""
+        """
+Get comprehensive current system metrics"""
         current_time = time.time()
         
         # Use cached metrics if still valid
@@ -395,7 +404,8 @@ class BottleneckAnalyzer:
         self._model_trained = False
     
     def analyze_bottlenecks(self, metrics: PerformanceProfile) -> List[Dict[str, Any]]:
-        """Identify system bottlenecks using advanced analytics"""
+        """
+Identify system bottlenecks using advanced analytics"""
         bottlenecks = []
         
         # CPU bottleneck analysis
@@ -824,7 +834,8 @@ class PerformanceOptimizer(BaseAgent):
             return OptimizationTechnique.INTELLIGENT_CACHING
 
     async def _apply_optimization(self, technique: OptimizationTechnique, bottlenecks: List[Dict[str, Any]]) -> bool:
-        """Apply specific optimization technique"""
+        """
+Apply specific optimization technique"""
         try:
             if technique == OptimizationTechnique.INTELLIGENT_CACHING:
                 return await self._optimize_caching()
@@ -950,47 +961,56 @@ class PerformanceOptimizer(BaseAgent):
         pass
 
     async def _defragment_memory(self):
-        """Defragment memory to reduce fragmentation"""
+        """
+Defragment memory to reduce fragmentation"""
         # Implementation for memory defragmentation
         pass
 
     async def _analyze_slow_queries(self):
-        """Analyze and identify slow database queries"""
+        """
+Analyze and identify slow database queries"""
         # Implementation for slow query analysis
         return []
 
     async def _optimize_connection_pool(self):
-        """Optimize database connection pool settings"""
+        """
+Optimize database connection pool settings"""
         # Implementation for connection pool optimization
         pass
 
     async def _update_query_plans(self):
-        """Update database query execution plans"""
+        """
+Update database query execution plans"""
         # Implementation for query plan optimization
         pass
 
     async def _enable_batch_processing(self):
-        """Enable intelligent batch processing"""
+        """
+Enable intelligent batch processing"""
         # Implementation for batch processing
         pass
 
     async def _tune_event_loops(self):
-        """Tune async event loops for optimal performance"""
+        """
+Tune async event loops for optimal performance"""
         # Implementation for event loop tuning
         pass
 
     async def _implement_request_batching(self):
-        """Implement intelligent request batching"""
+        """
+Implement intelligent request batching"""
         # Implementation for request batching
         pass
 
     async def _optimize_io_operations(self):
-        """Optimize I/O operations for better performance"""
+        """
+Optimize I/O operations for better performance"""
         # Implementation for I/O optimization
         pass
 
     def _calculate_improvement(self, before: PerformanceProfile, after: PerformanceProfile) -> float:
-        """Calculate performance improvement percentage"""
+        """
+Calculate performance improvement percentage"""
         before_score = before.calculate_performance_score()
         after_score = after.calculate_performance_score()
         
@@ -1001,7 +1021,8 @@ class PerformanceOptimizer(BaseAgent):
         return round(improvement, 2)
 
     def _generate_recommendations(self, bottlenecks: List[Dict[str, Any]], current_metrics: PerformanceProfile) -> List[str]:
-        """Generate performance improvement recommendations"""
+        """
+Generate performance improvement recommendations"""
         recommendations = []
         
         # General recommendations based on performance score
@@ -1031,7 +1052,8 @@ class PerformanceOptimizer(BaseAgent):
             profile.network_io_in = metrics['network_bytes_recv']
 
     async def get_performance_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive performance dashboard data"""
+        """
+Get comprehensive performance dashboard data"""
         return {
             "current_metrics": {
                 "performance_score": self.current_profile.calculate_performance_score(),
@@ -1061,7 +1083,8 @@ class PerformanceOptimizer(BaseAgent):
         return await self.optimize_performance_automatic()
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get optimizer status"""
+        """
+Get optimizer status"""
         return {
             "status": "active" if self._monitoring_active else "inactive",
             "performance_score": self.current_profile.calculate_performance_score(),
@@ -1308,7 +1331,8 @@ class PerformanceOptimizer(BaseAgent):
     async def _select_optimization_strategies(self, 
                                            bottlenecks: List[Dict[str, Any]], 
                                            target_metrics: Dict[str, float] = None) -> List[str]:
-        """Select optimal optimization strategies based on bottlenecks and targets"""
+        """
+Select optimal optimization strategies based on bottlenecks and targets"""
         strategy_scores = defaultdict(float)
         
         # Score strategies based on bottlenecks
@@ -1523,7 +1547,8 @@ class SpeedEnhancer:
         }
         
     async def enhance_speed(self, content_type: str = 'all') -> Dict[str, Any]:
-        """Execute comprehensive speed enhancement"""
+        """
+Execute comprehensive speed enhancement"""
         try:
             start_time = time.time()
             baseline_speed = await self._measure_current_speed()

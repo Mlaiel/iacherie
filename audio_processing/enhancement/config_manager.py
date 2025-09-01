@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
+
 import json
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field, asdict
@@ -26,7 +27,9 @@ from .quality_analyzer import QualityLevel
 
 
 class PresetCategory(Enum):
-    """Enhancement preset categories"""
+    """
+Enhancement preset categories"""
+
     MUSIC_PRODUCTION = "music_production"
     PODCAST_BROADCAST = "podcast_broadcast" 
     VOICE_RECORDING = "voice_recording"
@@ -63,7 +66,8 @@ class EnhancementPreset:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EnhancementPreset':
-        """Create preset from dictionary"""
+        """
+Create preset from dictionary"""
         # Handle parameters
         params_data = data.get('parameters', {})
         parameters = EnhancementParameters(**params_data)
@@ -90,7 +94,8 @@ class EnhancementPreset:
 
 @dataclass
 class AdaptiveConfig:
-    """Adaptive enhancement configuration"""
+    """
+Adaptive enhancement configuration"""
     enable_content_detection: bool = True
     enable_quality_monitoring: bool = True
     enable_performance_adaptation: bool = True
@@ -123,7 +128,8 @@ class EnhancementConfigManager:
     """
     
     def __init__(self, config_dir: Optional[Union[str, Path]] = None):
-        """Initialize configuration manager"""
+        """
+Initialize configuration manager"""
         self.logger = logging.getLogger(__name__)
         
         # Configuration directory
@@ -154,7 +160,8 @@ class EnhancementConfigManager:
             self.presets[preset.name] = preset
     
     def _create_default_presets(self) -> List[EnhancementPreset]:
-        """Create default enhancement presets"""
+        """
+Create default enhancement presets"""
         presets = []
         
         # Music Production Preset
@@ -326,7 +333,8 @@ class EnhancementConfigManager:
         return self.presets.get(name)
     
     def list_presets(self, category: Optional[PresetCategory] = None) -> List[str]:
-        """List available presets, optionally filtered by category"""
+        """
+List available presets, optionally filtered by category"""
         if category is None:
             return list(self.presets.keys())
         
@@ -334,7 +342,8 @@ class EnhancementConfigManager:
                 if preset.category == category]
     
     def add_preset(self, preset: EnhancementPreset, overwrite: bool = False):
-        """Add new preset"""
+        """
+Add new preset"""
         if preset.name in self.presets and not overwrite:
             raise ValueError(f"Preset '{preset.name}' already exists. Use overwrite=True to replace.")
         
@@ -627,7 +636,8 @@ class EnhancementConfigManager:
         }
     
     def export_preset(self, name: str, file_path: Union[str, Path]):
-        """Export single preset to file"""
+        """
+Export single preset to file"""
         if name not in self.presets:
             raise ValueError(f"Preset '{name}' not found")
         

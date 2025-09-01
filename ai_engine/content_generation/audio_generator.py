@@ -4,11 +4,12 @@ Professional audio content generator for influencers and content creators
 supporting music generation, voice synthesis, and audio enhancement.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -23,7 +24,9 @@ from .base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class AudioFormat:
-    """Audio format enumeration"""
+    """
+Audio format enumeration"""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -33,6 +36,7 @@ class AudioFormat:
 
 class AudioQuality:
     """Audio quality enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -56,7 +60,8 @@ class VoiceConfig:
 
 
 class AudioGenerationOptions:
-    """Configuration options for audio generation"""
+    """
+Configuration options for audio generation"""
     
     def __init__(self, **kwargs):
         self.duration = kwargs.get('duration', 30)  # Duration in seconds
@@ -89,7 +94,8 @@ class AudioContentGenerator(BaseContentGenerator):
     """
     
     def _setup_models(self) -> None:
-        """Setup AI models and dependencies"""
+        """
+Setup AI models and dependencies"""
         try:
             # Initialize audio generation models
             self._initialize_music_generation()
@@ -147,7 +153,8 @@ class AudioContentGenerator(BaseContentGenerator):
         self.current_music_model = 'musicgen-medium'
         
     def _initialize_voice_synthesis(self) -> None:
-        """Initialize voice synthesis models"""
+        """
+Initialize voice synthesis models"""
         # In a real implementation, this would load models like:
         # - Bark for voice generation
         # - Tortoise TTS for voice synthesis
@@ -161,7 +168,8 @@ class AudioContentGenerator(BaseContentGenerator):
         self.current_voice_model = 'bark'
     
     def _initialize_audio_effects(self) -> None:
-        """Initialize audio effects and processing"""
+        """
+Initialize audio effects and processing"""
         self.available_effects = {
             'reverb': {'params': ['room_size', 'damping', 'wet_dry']},
             'delay': {'params': ['delay_time', 'feedback', 'wet_dry']},
@@ -173,7 +181,8 @@ class AudioContentGenerator(BaseContentGenerator):
         }
     
     def _setup_resources(self) -> None:
-        """Setup computational resources"""
+        """
+Setup computational resources"""
         # Audio generation requires significant computational resources
         self.max_concurrent_requests = self.config.get('max_concurrent_requests', 2)
         self.request_timeout = self.config.get('request_timeout', 300)
@@ -186,7 +195,8 @@ class AudioContentGenerator(BaseContentGenerator):
         self.use_gpu = self.config.get('use_gpu', True)
     
     def _setup_validation_rules(self) -> None:
-        """Setup audio validation rules"""
+        """
+Setup audio validation rules"""
         self.validation_rules = {
             'min_duration': 1.0,  # Minimum 1 second
             'max_duration': 300.0,  # Maximum 5 minutes
@@ -334,7 +344,8 @@ class AudioContentGenerator(BaseContentGenerator):
         prompt: str,
         options: AudioGenerationOptions
     ) -> str:
-        """Determine the type of audio to generate"""
+        """
+Determine the type of audio to generate"""
         prompt_lower = prompt.lower()
         
         # Check for explicit type in prompt
@@ -371,7 +382,8 @@ class AudioContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: AudioGenerationOptions
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Generate music content"""
+        """
+Generate music content"""
         start_time = datetime.now()
         
         # Build music prompt
@@ -402,7 +414,8 @@ class AudioContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: AudioGenerationOptions
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Generate voice content"""
+        """
+Generate voice content"""
         start_time = datetime.now()
         
         # Extract text to speak
@@ -430,7 +443,8 @@ class AudioContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: AudioGenerationOptions
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Generate sound effect"""
+        """
+Generate sound effect"""
         start_time = datetime.now()
         
         # Generate sound effect based on prompt
@@ -452,7 +466,8 @@ class AudioContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: AudioGenerationOptions
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Generate ambient audio"""
+        """
+Generate ambient audio"""
         start_time = datetime.now()
         
         # Generate ambient soundscape
@@ -475,12 +490,14 @@ class AudioContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: AudioGenerationOptions
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Generate general audio content"""
+        """
+Generate general audio content"""
         # Default to music generation for general audio
         return await self._generate_music(prompt, context, options)
     
     def _build_music_prompt(self, prompt: str, options: AudioGenerationOptions) -> str:
-        """Build enhanced prompt for music generation"""
+        """
+Build enhanced prompt for music generation"""
         elements = [
             f"Genre: {options.genre}",
             f"Mood: {options.mood}",
@@ -524,7 +541,8 @@ class AudioContentGenerator(BaseContentGenerator):
             return 'general'
     
     def _classify_ambience(self, prompt: str) -> str:
-        """Classify the type of ambience"""
+        """
+Classify the type of ambience"""
         prompt_lower = prompt.lower()
         
         if any(word in prompt_lower for word in ['forest', 'nature', 'birds']):
@@ -543,7 +561,8 @@ class AudioContentGenerator(BaseContentGenerator):
         prompt: str,
         options: AudioGenerationOptions
     ) -> np.ndarray:
-        """Mock music generation (replace with actual AI model)"""
+        """
+Mock music generation (replace with actual AI model)"""
         # Generate synthetic music-like audio
         duration = options.duration
         sample_rate = options.sample_rate
@@ -584,7 +603,8 @@ class AudioContentGenerator(BaseContentGenerator):
         text: str,
         options: AudioGenerationOptions
     ) -> np.ndarray:
-        """Mock voice generation (replace with actual TTS model)"""
+        """
+Mock voice generation (replace with actual TTS model)"""
         # Estimate duration based on text length
         words_per_minute = 150  # Average speaking rate
         word_count = len(text.split())
@@ -622,7 +642,8 @@ class AudioContentGenerator(BaseContentGenerator):
         prompt: str,
         options: AudioGenerationOptions
     ) -> np.ndarray:
-        """Mock sound effect generation"""
+        """
+Mock sound effect generation"""
         duration = min(options.duration, 5.0)  # Sound effects are usually short
         sample_rate = options.sample_rate
         
@@ -656,7 +677,8 @@ class AudioContentGenerator(BaseContentGenerator):
         prompt: str,
         options: AudioGenerationOptions
     ) -> np.ndarray:
-        """Mock ambient audio generation"""
+        """
+Mock ambient audio generation"""
         duration = options.duration
         sample_rate = options.sample_rate
         
@@ -695,7 +717,8 @@ class AudioContentGenerator(BaseContentGenerator):
         options: AudioGenerationOptions,
         audio_type: str
     ) -> np.ndarray:
-        """Apply post-processing effects to audio"""
+        """
+Apply post-processing effects to audio"""
         processed = audio.copy()
         
         # Apply requested effects
@@ -719,7 +742,8 @@ class AudioContentGenerator(BaseContentGenerator):
         effect_name: str,
         options: AudioGenerationOptions
     ) -> np.ndarray:
-        """Apply specific audio effect"""
+        """
+Apply specific audio effect"""
         if effect_name == 'reverb':
             return self._apply_reverb(audio, room_size=0.5, damping=0.3, wet_dry=0.2)
         elif effect_name == 'delay':
@@ -730,7 +754,8 @@ class AudioContentGenerator(BaseContentGenerator):
             return audio
     
     def _apply_reverb(self, audio: np.ndarray, room_size: float, damping: float, wet_dry: float) -> np.ndarray:
-        """Apply simple reverb effect"""
+        """
+Apply simple reverb effect"""
         # Simple reverb simulation using multiple delays
         delay_times = [0.01, 0.02, 0.035, 0.05]  # Multiple delay taps
         reverb_signal = np.zeros_like(audio)
@@ -744,7 +769,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return audio + reverb_signal * wet_dry
     
     def _apply_delay(self, audio: np.ndarray, delay_time: float, feedback: float, wet_dry: float) -> np.ndarray:
-        """Apply delay effect"""
+        """
+Apply delay effect"""
         delay_samples = int(delay_time * 44100)
         if delay_samples >= len(audio):
             return audio
@@ -753,12 +779,14 @@ class AudioContentGenerator(BaseContentGenerator):
         return audio + delayed * wet_dry
     
     def _apply_eq(self, audio: np.ndarray, low: float, mid: float, high: float) -> np.ndarray:
-        """Apply simple EQ (simplified implementation)"""
+        """
+Apply simple EQ (simplified implementation)"""
         # This is a very simplified EQ - in practice, use proper filters
         return audio * ((low + mid + high) / 3)
     
     async def _apply_enhancement(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply audio enhancement for high quality"""
+        """
+Apply audio enhancement for high quality"""
         # Noise reduction (simple)
         if len(audio) > 1000:
             # Remove very quiet sections that might be noise
@@ -768,14 +796,16 @@ class AudioContentGenerator(BaseContentGenerator):
         return audio
     
     def _normalize_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Normalize audio to prevent clipping"""
+        """
+Normalize audio to prevent clipping"""
         max_val = np.max(np.abs(audio))
         if max_val > 0:
             return audio / max_val * 0.95  # Leave some headroom
         return audio
     
     def _apply_limiter(self, audio: np.ndarray) -> np.ndarray:
-        """Apply soft limiting to prevent harsh clipping"""
+        """
+Apply soft limiting to prevent harsh clipping"""
         threshold = 0.95
         ratio = 10.0
         
@@ -794,7 +824,8 @@ class AudioContentGenerator(BaseContentGenerator):
         options: AudioGenerationOptions,
         user_id: str
     ) -> str:
-        """Save audio to file and return path"""
+        """
+Save audio to file and return path"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"audio_{user_id}_{timestamp}.{options.format}"
         filepath = os.path.join(self.temp_dir, filename)
@@ -829,7 +860,8 @@ class AudioContentGenerator(BaseContentGenerator):
         }
     
     async def _validate_audio_quality(self, audio: np.ndarray, sample_rate: int) -> bool:
-        """Validate audio quality"""
+        """
+Validate audio quality"""
         # Check for silence
         if np.max(np.abs(audio)) < 0.001:
             return False
@@ -848,11 +880,13 @@ class AudioContentGenerator(BaseContentGenerator):
         return True
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""
+        """
+Check if generator supports the specified content type"""
         return content_type == 'audio'
     
     async def add_custom_voice(self, voice_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Add a custom voice to the voice library"""
+        """
+Add a custom voice to the voice library"""
         voice_id = voice_data.get('voice_id', f"custom_{int(datetime.now().timestamp())}")
         
         # Mock implementation - in real system, would train/register voice
@@ -877,7 +911,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return self.voice_library
     
     async def clone_voice(self, source_audio: str, voice_name: str) -> Dict[str, Any]:
-        """Clone a voice from source audio"""
+        """
+Clone a voice from source audio"""
         # Mock implementation
         voice_id = f"cloned_{int(datetime.now().timestamp())}"
         
@@ -896,7 +931,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return False
     
     def list_available_voices(self, language: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List all available voices in the library, optionally filtered by language"""
+        """
+List all available voices in the library, optionally filtered by language"""
         voices = [
             {
                 'voice_id': voice_id,
@@ -911,7 +947,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return voices
     
     async def _synthesize_speech(self, text: str, voice_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Internal method to synthesize speech"""
+        """
+Internal method to synthesize speech"""
         # Mock implementation - in real system would use TTS engine
         duration = len(text) * 0.1  # Rough estimate
         sample_rate = voice_config.get('sample_rate', 44100)
@@ -955,7 +992,8 @@ class AudioContentGenerator(BaseContentGenerator):
             return audio
     
     async def _enhance_audio(self, audio: np.ndarray, enhancement_options: Dict[str, Any]) -> np.ndarray:
-        """Internal method to enhance audio quality"""
+        """
+Internal method to enhance audio quality"""
         enhanced_audio = audio.copy()
         
         # Mock enhancement operations
@@ -970,7 +1008,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return enhanced_audio
     
     async def _stream_synthesis(self, text: str, voice_config: Dict[str, Any]) -> AsyncGenerator[np.ndarray, None]:
-        """Internal method for streaming speech synthesis"""
+        """
+Internal method for streaming speech synthesis"""
         # Mock streaming - yield chunks of audio
         words = text.split()
         for i, word in enumerate(words):
@@ -985,7 +1024,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return processed_text
     
     async def _mix_with_background(self, speech_audio: np.ndarray, background_audio: np.ndarray, mix_ratio: float = 0.3) -> np.ndarray:
-        """Internal method to mix speech with background music"""
+        """
+Internal method to mix speech with background music"""
         # Ensure both arrays have the same length
         min_length = min(len(speech_audio), len(background_audio))
         speech_trimmed = speech_audio[:min_length]
@@ -1002,7 +1042,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return mixed_audio
     
     async def _apply_audio_effects(self, audio: np.ndarray, effects: List[Dict[str, Any]]) -> np.ndarray:
-        """Internal method to apply audio effects"""
+        """
+Internal method to apply audio effects"""
         processed_audio = audio.copy()
         
         for effect in effects:
@@ -1027,7 +1068,8 @@ class AudioContentGenerator(BaseContentGenerator):
         return processed_audio
     
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""
+        """
+Release model-specific resources"""
         # Clean up temporary files
         if os.path.exists(self.temp_dir):
             import shutil

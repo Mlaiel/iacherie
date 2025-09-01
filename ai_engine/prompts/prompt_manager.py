@@ -6,6 +6,7 @@ Handles prompt creation, optimization, versioning, and performance tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import hashlib
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class PromptCategory(Enum):
-    """Categories of prompts"""
+    """
+Categories of prompts"""
+
     CONTENT_CREATION = "content_creation"
     CREATIVE_WRITING = "creative_writing"
     BUSINESS_COMMUNICATION = "business_communication"
@@ -36,6 +39,7 @@ class PromptCategory(Enum):
 
 class PromptType(Enum):
     """Types of prompts"""
+
     INSTRUCTION = "instruction"
     QUESTION = "question"
     COMPLETION = "completion"
@@ -50,6 +54,7 @@ class PromptType(Enum):
 
 class PromptStatus(Enum):
     """Status of prompts"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     TESTING = "testing"
@@ -75,7 +80,8 @@ class PromptVariable:
 
 @dataclass
 class PromptTemplate:
-    """Template definition for prompts"""
+    """
+Template definition for prompts"""
     template_id: str
     name: str
     description: str
@@ -137,7 +143,8 @@ class PromptManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize prompt manager"""
+        """
+Initialize prompt manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -174,7 +181,8 @@ class PromptManager:
         }
     
     async def initialize(self) -> bool:
-        """Initialize the prompt manager"""
+        """
+Initialize the prompt manager"""
         try:
             self.logger.info("Initializing Prompt Manager...")
             
@@ -620,13 +628,15 @@ class PromptManager:
         template: PromptTemplate,
         context: Optional[Dict[str, Any]]
     ) -> str:
-        """Apply performance optimizations to generated prompt"""
+        """
+Apply performance optimizations to generated prompt"""
         # Placeholder for prompt optimization
         # Could include A/B test results, performance data, etc.
         return prompt
     
     async def _execute_with_model(self, prompt: str, model_name: str) -> str:
-        """Execute prompt with AI model (placeholder)"""
+        """
+Execute prompt with AI model (placeholder)"""
         # This would integrate with actual AI service
         await asyncio.sleep(0.1)  # Simulate API call
         return f"Mock response for prompt of length {len(prompt)}"
@@ -653,7 +663,8 @@ class PromptManager:
         return min(base_score, 1.0)
     
     async def _store_execution(self, execution: PromptExecution):
-        """Store execution record"""
+        """
+Store execution record"""
         self.execution_history.append(execution)
         
         # Maintain history size limit
@@ -674,7 +685,8 @@ class PromptManager:
             self.metrics['success_rate'] = len(successful) / len(self.execution_history)
     
     async def _update_template_metrics(self, template_id: str, execution: PromptExecution):
-        """Update template-specific metrics"""
+        """
+Update template-specific metrics"""
         template = self.templates[template_id]
         template.usage_count += 1
         
@@ -684,7 +696,8 @@ class PromptManager:
         template.success_rate = len(successful) / len(template_executions) if template_executions else 0
     
     async def _get_template_performance(self, template_id: str) -> List[PromptExecution]:
-        """Get performance data for a template"""
+        """
+Get performance data for a template"""
         return [e for e in self.execution_history if e.template_id == template_id]
     
     async def _optimize_for_performance(
@@ -692,7 +705,8 @@ class PromptManager:
         template: PromptTemplate,
         performance_data: List[PromptExecution]
     ) -> Dict[str, Any]:
-        """Optimize template for performance"""
+        """
+Optimize template for performance"""
         # Placeholder optimization logic
         avg_time = sum(e.execution_time_ms for e in performance_data) / len(performance_data)
         
@@ -787,12 +801,14 @@ class PromptManager:
         return {'analysis': 'Variable usage analysis would go here'}
     
     async def _analyze_performance_trends(self, executions: List[PromptExecution]) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         # Placeholder analysis
         return {'trends': 'Performance trend analysis would go here'}
     
     def _get_quality_grade(self, avg_quality: float) -> str:
-        """Get quality grade based on average quality score"""
+        """
+Get quality grade based on average quality score"""
         if avg_quality >= 0.9:
             return "A"
         elif avg_quality >= 0.8:
@@ -831,22 +847,26 @@ class PromptManager:
         pass
     
     async def _save_template(self, template: PromptTemplate):
-        """Save template to storage"""
+        """
+Save template to storage"""
         # Placeholder for saving to persistent storage
         pass
     
     async def _setup_monitoring(self):
-        """Setup performance monitoring"""
+        """
+Setup performance monitoring"""
         # Placeholder for monitoring setup
         pass
     
     async def _start_optimization_tasks(self):
-        """Start background optimization tasks"""
+        """
+Start background optimization tasks"""
         # Placeholder for background task setup
         pass
     
     async def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary"""
+        """
+Get performance summary"""
         return {
             'total_executions': len(self.execution_history),
             'recent_performance': 'Good',

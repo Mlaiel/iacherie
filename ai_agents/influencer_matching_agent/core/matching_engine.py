@@ -6,6 +6,7 @@ creator analysis and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -17,7 +18,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class MatchingCriteria(Enum):
-    """Criteria for influencer matching"""
+    """
+Criteria for influencer matching"""
+
     AUDIENCE_DEMOGRAPHICS = "audience_demographics"
     CONTENT_STYLE = "content_style"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -27,6 +30,7 @@ class MatchingCriteria(Enum):
 
 class CollaborationType(Enum):
     """Types of collaboration"""
+
     SPONSORED_POST = "sponsored_post"
     PRODUCT_REVIEW = "product_review"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -199,7 +203,8 @@ class MatchingEngine:
         return compatible_creators
 
     async def _calculate_matching_scores(self, creators: List[Dict[str, Any]], brand_requirements: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate compatibility scores for creators"""
+        """
+Calculate compatibility scores for creators"""
         matching_scores = {}
         
         for creator in creators:
@@ -228,7 +233,8 @@ class MatchingEngine:
         return matching_scores
 
     async def _generate_recommendations(self, creators: List[Dict[str, Any]]) -> List[str]:
-        """Generate recommendations based on matching results"""
+        """
+Generate recommendations based on matching results"""
         recommendations = []
         
         if len(creators) == 0:

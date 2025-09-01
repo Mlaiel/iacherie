@@ -5,7 +5,7 @@ and identity validation for creators across all platforms and content types.
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class VerificationLevel(Enum):
-    """Verification levels"""
+    """
+Verification levels"""
+
     UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
@@ -39,6 +42,7 @@ class VerificationLevel(Enum):
 
 class VerificationStatus(Enum):
     """Verification status"""
+
     PENDING = "pending"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
@@ -60,14 +64,16 @@ class VerificationRequest:
 
 
 class IdentityValidator:
-    """Identity validation and document verification"""
+    """
+Identity validation and document verification"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def validate_identity_document(self, document_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate identity document"""
+        """
+Validate identity document"""
         document_type = document_data.get('type', '')
         document_content = document_data.get('content', '')
         
@@ -121,7 +127,8 @@ class IdentityValidator:
 
 
 class CredibilityScorer:
-    """Credibility scoring system"""
+    """
+Credibility scoring system"""
     
     def __init__(self, profile_manager: CreatorProfileManager, cache_manager: CacheManager):
         self.profile_manager = profile_manager
@@ -129,7 +136,8 @@ class CredibilityScorer:
         self.logger = get_logger(self.__class__.__name__)
     
     async def calculate_credibility_score(self, creator_id: str) -> Dict[str, Any]:
-        """Calculate comprehensive credibility score"""
+        """
+Calculate comprehensive credibility score"""
         # Get creator profile
         profile = await self.profile_manager.get_creator_profile(creator_id)
         if not profile:
@@ -186,22 +194,26 @@ class CredibilityScorer:
         return verification_scores.get(VerificationLevel.IDENTITY_VERIFIED, 60.0)
     
     async def _calculate_engagement_score(self, creator_id: str) -> float:
-        """Calculate engagement component score"""
+        """
+Calculate engagement component score"""
         # Mock engagement score
         return 85.5
     
     async def _calculate_consistency_score(self, creator_id: str) -> float:
-        """Calculate consistency component score"""
+        """
+Calculate consistency component score"""
         # Mock consistency score
         return 78.2
     
     async def _calculate_trust_score(self, creator_id: str) -> float:
-        """Calculate trust component score"""
+        """
+Calculate trust component score"""
         # Mock trust score
         return 91.8
     
     def _determine_credibility_tier(self, score: float) -> str:
-        """Determine credibility tier based on score"""
+        """
+Determine credibility tier based on score"""
         if score >= 90:
             return "platinum"
         elif score >= 80:
@@ -223,7 +235,8 @@ class VerificationProcessor:
         self.logger = get_logger(self.__class__.__name__)
     
     async def process_verification_request(self, verification_request: VerificationRequest) -> Dict[str, Any]:
-        """Process verification request"""
+        """
+Process verification request"""
         try:
             # Update status to in review
             verification_request.status = VerificationStatus.IN_REVIEW
@@ -265,7 +278,8 @@ class VerificationProcessor:
         }
     
     async def _process_professional_verification(self, request: VerificationRequest) -> Dict[str, Any]:
-        """Process professional verification"""
+        """
+Process professional verification"""
         # Mock professional verification processing
         return {
             'status': VerificationStatus.APPROVED,
@@ -275,7 +289,8 @@ class VerificationProcessor:
         }
     
     async def _process_basic_verification(self, request: VerificationRequest) -> Dict[str, Any]:
-        """Process basic verification"""
+        """
+Process basic verification"""
         # Mock basic verification processing
         return {
             'status': VerificationStatus.APPROVED,
@@ -356,7 +371,8 @@ class VerificationSystem:
         ]
     
     async def _get_verification_history(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get verification history"""
+        """
+Get verification history"""
         # Mock verification history
         return [
             {
@@ -377,7 +393,8 @@ class VerificationSystem:
         ]
     
     async def _get_verification_badges(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get verification badges earned"""
+        """
+Get verification badges earned"""
         return [
             {
                 'badge_type': 'verified_identity',
@@ -394,7 +411,8 @@ class VerificationSystem:
         ]
     
     async def _get_available_verification_upgrades(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get available verification upgrades"""
+        """
+Get available verification upgrades"""
         return [
             {
                 'verification_level': 'professional_verified',
@@ -409,7 +427,8 @@ class VerificationSystem:
         ]
     
     async def submit_verification_request(self, creator_id: str, verification_data: Dict[str, Any]) -> VerificationRequest:
-        """Submit new verification request"""
+        """
+Submit new verification request"""
         try:
             request_id = f"req_{creator_id}_{datetime.utcnow().timestamp()}"
             

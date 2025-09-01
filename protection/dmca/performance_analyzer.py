@@ -4,7 +4,7 @@
 Enterprise-grade performance monitoring and analytics system for DMCA operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -30,6 +30,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     SUCCESS_RATE = "success_rate"
     RESPONSE_TIME = "response_time"
     RESOLUTION_TIME = "resolution_time"
@@ -67,6 +70,7 @@ class MetricType(Enum):
 
 class TimeFrame(Enum):
     """Time frames for analytics"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -77,6 +81,7 @@ class TimeFrame(Enum):
 
 class PerformanceIndicator(Enum):
     """Key performance indicators"""
+
     EXCELLENT = "excellent"    # >95%
     GOOD = "good"             # 85-95%
     AVERAGE = "average"       # 70-85%
@@ -99,7 +104,8 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     generated_at: datetime
     time_frame: TimeFrame
@@ -116,7 +122,8 @@ class AnalyticsReport:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance data"""
+    """
+Platform-specific performance data"""
     platform: PlatformType
     total_cases: int
     success_rate: float
@@ -130,7 +137,8 @@ class PlatformPerformance:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
+    """
+Trend analysis results"""
     metric_type: MetricType
     trend_direction: str
     trend_strength: float
@@ -141,7 +149,8 @@ class TrendAnalysis:
 
 
 class DMCAPerformanceAnalyzer:
-    """Enterprise performance analyzer for DMCA operations"""
+    """
+Enterprise performance analyzer for DMCA operations"""
     
     def __init__(self):
         self.metrics_history: List[PerformanceMetric] = []
@@ -150,7 +159,8 @@ class DMCAPerformanceAnalyzer:
         self.targets: Dict[MetricType, float] = self._initialize_targets()
     
     def _initialize_benchmarks(self) -> Dict[MetricType, float]:
-        """Initialize industry benchmarks"""
+        """
+Initialize industry benchmarks"""
         return {
             MetricType.SUCCESS_RATE: 85.0,
             MetricType.RESPONSE_TIME: 24.0,  # hours
@@ -165,7 +175,8 @@ class DMCAPerformanceAnalyzer:
         }
     
     def _initialize_targets(self) -> Dict[MetricType, float]:
-        """Initialize performance targets"""
+        """
+Initialize performance targets"""
         return {
             MetricType.SUCCESS_RATE: 95.0,
             MetricType.RESPONSE_TIME: 12.0,  # hours
@@ -186,7 +197,8 @@ class DMCAPerformanceAnalyzer:
         end_date: datetime,
         case_data: List[Dict[str, Any]]
     ) -> AnalyticsReport:
-        """Generate comprehensive performance analytics report"""
+        """
+Generate comprehensive performance analytics report"""
         report_id = f"ANALYTICS_{int(datetime.utcnow().timestamp())}"
         
         logger.info(f"Generating analytics report {report_id} for {time_frame.value}")
@@ -538,7 +550,8 @@ class DMCAPerformanceAnalyzer:
         report.trends = trends
     
     async def _analyze_platform_performance(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Analyze platform-specific performance"""
+        """
+Analyze platform-specific performance"""
         platform_data = defaultdict(list)
         
         for case in case_data:
@@ -567,7 +580,8 @@ class DMCAPerformanceAnalyzer:
         ]
     
     async def _calculate_platform_metrics(self, platform: str, cases: List[Dict[str, Any]]) -> PlatformPerformance:
-        """Calculate metrics for specific platform"""
+        """
+Calculate metrics for specific platform"""
         total_cases = len(cases)
         
         # Success rate
@@ -618,7 +632,8 @@ class DMCAPerformanceAnalyzer:
         )
     
     async def _generate_forecasts(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Generate performance forecasts"""
+        """
+Generate performance forecasts"""
         # Simplified forecasting logic
         forecasts = {}
         
@@ -629,7 +644,8 @@ class DMCAPerformanceAnalyzer:
         report.forecasts = forecasts
     
     def _calculate_metric_trend(self, metric_type: MetricType, time_series_data: Dict) -> Dict[str, Any]:
-        """Calculate trend for specific metric"""
+        """
+Calculate trend for specific metric"""
         # Simplified trend calculation
         return {
             "direction": "stable",
@@ -735,7 +751,8 @@ class DMCAPerformanceAnalyzer:
         return indicators
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time performance metrics"""
+        """
+Get real-time performance metrics"""
         if not self.metrics_history:
             return {}
         

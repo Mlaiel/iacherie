@@ -5,9 +5,10 @@ Advanced validation chain system for orchestrating multiple validators
 in sequence or parallel for comprehensive content and data validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Type
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChainExecutionMode(Enum):
-    """Chain execution modes."""
+    """
+Chain execution modes."""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -31,6 +34,7 @@ class ChainExecutionMode(Enum):
 
 class ChainStepType(Enum):
     """Types of validation chain steps."""
+
     VALIDATOR = "validator"
     TRANSFORMER = "transformer"
     FILTER = "filter"
@@ -41,6 +45,7 @@ class ChainStepType(Enum):
 
 class ChainStatus(Enum):
     """Chain execution status."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -81,7 +86,8 @@ class ValidationStep:
 
 @dataclass
 class ValidationPipeline:
-    """Validation pipeline configuration."""
+    """
+Validation pipeline configuration."""
     pipeline_id: str
     name: str
     description: str
@@ -360,7 +366,8 @@ class ValidationChain:
         result: ChainResult,
         context: Optional[Dict[str, Any]]
     ) -> None:
-        """Execute pipeline steps sequentially."""
+        """
+Execute pipeline steps sequentially."""
         current_data = data
         
         try:
@@ -716,7 +723,8 @@ class ValidationChain:
         executed_steps: set,
         result: ChainResult
     ) -> bool:
-        """Check if step dependencies are satisfied."""
+        """
+Check if step dependencies are satisfied."""
         if not step.dependencies:
             return True
         
@@ -736,7 +744,8 @@ class ValidationChain:
         return True
     
     async def _get_pipeline(self, pipeline_id: str) -> ValidationPipeline:
-        """Get pipeline by ID."""
+        """
+Get pipeline by ID."""
         if pipeline_id in self.pipeline_cache:
             return self.pipeline_cache[pipeline_id]
         
@@ -978,15 +987,18 @@ class ChainValidator:
         steps: List[Dict[str, Any]],
         **kwargs
     ) -> str:
-        """Create new validation pipeline."""
+        """
+Create new validation pipeline."""
         return await self.chain.create_pipeline(name, steps, **kwargs)
     
     def get_builtin_pipelines(self) -> List[str]:
-        """Get list of built-in pipelines."""
+        """
+Get list of built-in pipelines."""
         return list(self.chain.builtin_pipelines.keys())
     
     async def get_pipeline_info(self, pipeline_id: str) -> Optional[Dict[str, Any]]:
-        """Get pipeline information."""
+        """
+Get pipeline information."""
         try:
             pipeline = await self.chain._get_pipeline(pipeline_id)
             return {

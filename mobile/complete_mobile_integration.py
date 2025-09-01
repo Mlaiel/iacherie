@@ -4,6 +4,7 @@ Unified service for iOS, Android, PWA, and React Native integration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ COPYRIGHT WARNING: Proprietary code - unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class MobilePlatform(Enum):
-    """Supported mobile platforms."""
+    """
+Supported mobile platforms."""
+
     IOS = "ios"
     ANDROID = "android"
     PWA = "pwa"
@@ -27,6 +30,7 @@ class MobilePlatform(Enum):
 
 class AppFeature(Enum):
     """Mobile app features."""
+
     CAMERA_INTEGRATION = "camera_integration"
     AUDIO_RECORDING = "audio_recording"
     BIOMETRIC_AUTH = "biometric_auth"
@@ -55,7 +59,8 @@ class MobileAppConfig:
 
 
 class CompleteMobileAppsService:
-    """Complete mobile apps integration and management service."""
+    """
+Complete mobile apps integration and management service."""
     
     def __init__(self):
         self.platform_configs = self._initialize_platform_configs()
@@ -63,7 +68,8 @@ class CompleteMobileAppsService:
         self.app_store_configs = self._initialize_app_store_configs()
     
     def _initialize_platform_configs(self) -> Dict[MobilePlatform, MobileAppConfig]:
-        """Initialize configuration for all mobile platforms."""
+        """
+Initialize configuration for all mobile platforms."""
         
         return {
             MobilePlatform.IOS: MobileAppConfig(

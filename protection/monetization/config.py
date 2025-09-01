@@ -9,6 +9,7 @@ Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution,
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
 """
+
 import os
 import json
 import logging
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration."""
+    """
+Environment types for configuration."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -34,6 +37,7 @@ class EnvironmentType(Enum):
 
 class SecurityLevel(Enum):
     """Security levels for different configurations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -188,7 +192,8 @@ class CacheConfig:
 
 @dataclass
 class BusinessRulesConfig:
-    """Business rules and limits configuration."""
+    """
+Business rules and limits configuration."""
     min_payout_amount: Decimal = Decimal("10.00")
     max_payout_amount: Decimal = Decimal("50000.00")
     commission_rate_default: float = 0.05  # 5%
@@ -308,7 +313,8 @@ class MonetizationConfig:
     
     @classmethod
     def from_file(cls, file_path: Union[str, Path]) -> 'MonetizationConfig':
-        """Load configuration from a file (JSON, YAML, or INI)."""
+        """
+Load configuration from a file (JSON, YAML, or INI)."""
         file_path = Path(file_path)
         
         if not file_path.exists():
@@ -377,7 +383,8 @@ class MonetizationConfig:
         return asdict(self)
     
     def to_json(self) -> str:
-        """Convert configuration to JSON string."""
+        """
+Convert configuration to JSON string."""
         data = self.to_dict()
         # Convert enums to strings for JSON serialization
         if 'environment' in data:
@@ -385,7 +392,8 @@ class MonetizationConfig:
         return json.dumps(data, indent=2, default=str)
     
     def save_to_file(self, file_path: Union[str, Path], format_type: str = 'json') -> None:
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         file_path = Path(file_path)
         data = self.to_dict()
         
@@ -449,7 +457,8 @@ class MonetizationConfig:
 
 
 class ConfigurationManager:
-    """Manager for configuration loading and management."""
+    """
+Manager for configuration loading and management."""
     
     def __init__(self):
         self._config: Optional[MonetizationConfig] = None
@@ -458,7 +467,8 @@ class ConfigurationManager:
     def load_config(self, 
                    config_file: Optional[Union[str, Path]] = None,
                    from_env: bool = True) -> MonetizationConfig:
-        """Load configuration from various sources."""
+        """
+Load configuration from various sources."""
         
         if config_file:
             # Load from file
@@ -487,14 +497,16 @@ class ConfigurationManager:
         return self._config
     
     def reload_config(self) -> MonetizationConfig:
-        """Reload configuration from source."""
+        """
+Reload configuration from source."""
         if self._config_file_path:
             return self.load_config(self._config_file_path, from_env=False)
         else:
             return self.load_config(from_env=True)
     
     def update_config(self, updates: Dict[str, Any]) -> None:
-        """Update configuration with new values."""
+        """
+Update configuration with new values."""
         if self._config is None:
             self._config = MonetizationConfig()
         
@@ -504,7 +516,8 @@ class ConfigurationManager:
                 setattr(self._config, key, value)
     
     def save_current_config(self, file_path: Union[str, Path], format_type: str = 'json') -> None:
-        """Save current configuration to file."""
+        """
+Save current configuration to file."""
         if self._config is None:
             raise ValueError("No configuration loaded")
         
@@ -524,13 +537,15 @@ def get_config_manager() -> ConfigurationManager:
 
 
 def get_config() -> MonetizationConfig:
-    """Get the current configuration."""
+    """
+Get the current configuration."""
     return get_config_manager().get_config()
 
 
 def load_config(config_file: Optional[Union[str, Path]] = None, 
                from_env: bool = True) -> MonetizationConfig:
-    """Load configuration."""
+    """
+Load configuration."""
     return get_config_manager().load_config(config_file, from_env)
 
 

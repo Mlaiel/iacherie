@@ -19,6 +19,7 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
+
 import os
 import json
 import yaml
@@ -34,7 +35,9 @@ from cryptography.fernet import Fernet
 
 
 class Environment(Enum):
-    """Environment types"""
+    """
+Environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -43,6 +46,7 @@ class Environment(Enum):
 
 class ConfigSource(Enum):
     """Configuration sources"""
+
     FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -63,7 +67,8 @@ class ProxyConfig:
 
 @dataclass
 class BrowserConfig:
-    """Browser configuration"""
+    """
+Browser configuration"""
     default_browser: str = "chrome"
     headless: bool = True
     window_size: tuple = (1920, 1080)
@@ -102,7 +107,8 @@ class ConnectionConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
+    """
+Security configuration"""
     enable_encryption: bool = True
     encryption_key: Optional[str] = None
     enable_ssl_verification: bool = True
@@ -114,7 +120,8 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration"""
+    """
+Monitoring configuration"""
     enable_metrics: bool = True
     metrics_interval: int = 60
     enable_health_checks: bool = True
@@ -247,27 +254,32 @@ class ConfigurationManager:
         return config.proxy
     
     def get_browser_config(self) -> BrowserConfig:
-        """Get browser configuration"""
+        """
+Get browser configuration"""
         config = self.load_configuration()
         return config.browser
     
     def get_api_config(self) -> APIConfig:
-        """Get API configuration"""
+        """
+Get API configuration"""
         config = self.load_configuration()
         return config.api
     
     def get_connection_config(self) -> ConnectionConfig:
-        """Get connection configuration"""
+        """
+Get connection configuration"""
         config = self.load_configuration()
         return config.connection
     
     def get_security_config(self) -> SecurityConfig:
-        """Get security configuration"""
+        """
+Get security configuration"""
         config = self.load_configuration()
         return config.security
     
     def get_monitoring_config(self) -> MonitoringConfig:
-        """Get monitoring configuration"""
+        """
+Get monitoring configuration"""
         config = self.load_configuration()
         return config.monitoring
     
@@ -276,7 +288,8 @@ class ConfigurationManager:
         section: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update specific configuration section"""
+        """
+Update specific configuration section"""
         try:
             config = self.load_configuration()
             
@@ -356,7 +369,8 @@ class ConfigurationManager:
         }
     
     def _detect_environment(self) -> Environment:
-        """Detect current environment"""
+        """
+Detect current environment"""
         env = os.getenv('DRIVERS_ENV', 'development').lower()
         
         env_mapping = {
@@ -373,7 +387,8 @@ class ConfigurationManager:
         return env_mapping.get(env, Environment.DEVELOPMENT)
     
     def _load_from_files(self):
-        """Load configuration from files"""
+        """
+Load configuration from files"""
         # Try environment-specific file first
         env_file = self.config_dir / f"drivers_{self.environment.value}.yaml"
         if env_file.exists():
@@ -423,7 +438,8 @@ class ConfigurationManager:
             self.config_sources[ConfigSource.ENVIRONMENT] = env_config
     
     def _load_from_defaults(self):
-        """Load default configuration"""
+        """
+Load default configuration"""
         default_config = {
             'environment': self.environment.value,
             'proxy': {
@@ -482,7 +498,8 @@ class ConfigurationManager:
         self.config_sources[ConfigSource.DEFAULT] = default_config
     
     def _merge_configurations(self) -> DriversConfiguration:
-        """Merge configurations from all sources"""
+        """
+Merge configurations from all sources"""
         # Start with defaults
         merged = self.config_sources.get(ConfigSource.DEFAULT, {}).copy()
         
@@ -498,7 +515,8 @@ class ConfigurationManager:
         return self._dict_to_config(merged)
     
     def _deep_merge(self, base: Dict, override: Dict) -> Dict:
-        """Deep merge two dictionaries"""
+        """
+Deep merge two dictionaries"""
         result = base.copy()
         
         for key, value in override.items():
@@ -510,7 +528,8 @@ class ConfigurationManager:
         return result
     
     def _dict_to_config(self, config_dict: Dict) -> DriversConfiguration:
-        """Convert dictionary to DriversConfiguration object"""
+        """
+Convert dictionary to DriversConfiguration object"""
         return DriversConfiguration(
             environment=Environment(config_dict.get('environment', 'development')),
             proxy=ProxyConfig(**config_dict.get('proxy', {})),
@@ -523,7 +542,8 @@ class ConfigurationManager:
         )
     
     def _config_to_dict(self, config: DriversConfiguration) -> Dict:
-        """Convert DriversConfiguration object to dictionary"""
+        """
+Convert DriversConfiguration object to dictionary"""
         return {
             'environment': config.environment.value,
             'proxy': {
@@ -589,7 +609,8 @@ class ConfigurationManager:
         }
     
     def _validate_configuration(self, config: DriversConfiguration) -> DriversConfiguration:
-        """Validate configuration"""
+        """
+Validate configuration"""
         # Basic validation
         if config.browser.max_sessions <= 0:
             raise ValueError("Browser max_sessions must be greater than 0")
@@ -608,7 +629,8 @@ class ConfigurationManager:
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def _load_or_generate_encryption_key(self) -> bytes:
-        """Load or generate encryption key"""
+        """
+Load or generate encryption key"""
         key_file = self.config_dir / ".encryption_key"
         
         if key_file.exists():
@@ -659,7 +681,8 @@ class ConfigurationManager:
         return config_dict
     
     def _decrypt_sensitive_data(self, config_dict: Dict) -> Dict:
-        """Decrypt sensitive configuration data"""
+        """
+Decrypt sensitive configuration data"""
         if not self.cipher_suite:
             return config_dict
         
@@ -722,5 +745,6 @@ def get_config_manager(
 
 
 def load_drivers_config() -> DriversConfiguration:
-    """Load drivers configuration using singleton manager"""
+    """
+Load drivers configuration using singleton manager"""
     return get_config_manager().load_configuration()

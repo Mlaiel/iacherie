@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -50,7 +51,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Available service types"""
+    """
+Available service types"""
+
     CORE_AGENT = "core_agent"
     ANALYTICS = "analytics"
     PLAYLIST_MANAGEMENT = "playlist_management"
@@ -62,6 +65,7 @@ class ServiceType(Enum):
 
 class DeploymentMode(Enum):
     """Deployment modes for services"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -80,7 +84,8 @@ class ServiceConfiguration:
     performance_settings: Dict[str, Any] = field(default_factory=dict)
 
 class SpotifyAgentFactory:
-    """Factory for creating and managing Spotify agent services"""
+    """
+Factory for creating and managing Spotify agent services"""
     
     def __init__(self, base_config: Optional[Dict[str, Any]] = None):
         self.base_config = base_config or {}
@@ -360,28 +365,32 @@ async def create_spotify_agent(config: Optional[Dict[str, Any]] = None) -> Spoti
     return await spotify_factory.create_service(service_config)
 
 async def create_analytics_service(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Quick function to create analytics services"""
+    """
+Quick function to create analytics services"""
     service_config = ServiceConfiguration(service_type=ServiceType.ANALYTICS)
     if config:
         service_config.custom_config = config
     return await spotify_factory.create_service(service_config)
 
 async def create_marketing_service(config: Optional[Dict[str, Any]] = None) -> MarketingIntelligenceEngine:
-    """Quick function to create marketing intelligence service"""
+    """
+Quick function to create marketing intelligence service"""
     service_config = ServiceConfiguration(service_type=ServiceType.MARKETING_INTELLIGENCE)
     if config:
         service_config.custom_config = config
     return await spotify_factory.create_service(service_config)
 
 async def create_protection_service(config: Optional[Dict[str, Any]] = None) -> ContentProtectionSystem:
-    """Quick function to create content protection service"""
+    """
+Quick function to create content protection service"""
     service_config = ServiceConfiguration(service_type=ServiceType.CONTENT_PROTECTION)
     if config:
         service_config.custom_config = config
     return await spotify_factory.create_service(service_config)
 
 async def create_collaboration_service(config: Optional[Dict[str, Any]] = None) -> CollaborationEngine:
-    """Quick function to create collaboration service"""
+    """
+Quick function to create collaboration service"""
     service_config = ServiceConfiguration(service_type=ServiceType.COLLABORATION)
     if config:
         service_config.custom_config = config
@@ -421,17 +430,20 @@ class SpotifyIntegrationHub:
     """Main integration hub for Spotify services"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Spotify integration hub"""
+        """
+Initialize Spotify integration hub"""
         self.config = config or {}
         self.agent_manager = SpotifyAgentManager(config)
         
     async def get_agent_for_tenant(self, tenant_id: str) -> SpotifyAgent:
-        """Get Spotify agent instance for specific tenant"""
+        """
+Get Spotify agent instance for specific tenant"""
         return await self.agent_manager.get_agent(tenant_id)
     
     async def authenticate_user(self, user_id: str, tenant_id: str, 
                               auth_code: Optional[str] = None) -> Dict[str, Any]:
-        """Authenticate user with Spotify"""
+        """
+Authenticate user with Spotify"""
         agent = await self.get_agent_for_tenant(tenant_id)
         return await agent.authenticate_user(user_id, auth_code)
     
@@ -477,20 +489,23 @@ class SpotifyIntegrationHub:
     async def get_personalized_recommendations(self, user_id: str, tenant_id: str,
                                              seed_data: Dict[str, Any],
                                              limit: int = 50) -> List[Dict[str, Any]]:
-        """Get personalized track recommendations"""
+        """
+Get personalized track recommendations"""
         agent = await self.get_agent_for_tenant(tenant_id)
         return await agent.get_track_recommendations(seed_data, limit)
     
     async def analyze_release_strategy(self, track_data: Dict[str, Any],
                                      artist_id: str, tenant_id: str) -> Dict[str, Any]:
-        """Analyze optimal release strategy and timing"""
+        """
+Analyze optimal release strategy and timing"""
         agent = await self.get_agent_for_tenant(tenant_id)
         return await agent.analyze_release_timing(track_data, artist_id)
     
     async def _generate_unified_recommendations(self, analytics: Dict[str, Any],
                                               audience_insights: Dict[str, Any],
                                               profile_analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate unified recommendations from all analysis data"""
+        """
+Generate unified recommendations from all analysis data"""
         unified_recommendations = []
         
         # Combine recommendations from different sources

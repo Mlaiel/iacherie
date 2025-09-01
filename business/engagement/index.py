@@ -10,7 +10,7 @@ Module: backend/business/engagement/index.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -27,6 +27,7 @@ Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching + Gamification → Multi-platform Distribution → Revenue Optimization → Analytics
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -75,7 +76,8 @@ class EngagementIndex:
     """
     
     def __init__(self):
-        """Initialize the engagement index."""
+        """
+Initialize the engagement index."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._orchestrator = None
         self._initialized = False
@@ -474,13 +476,15 @@ async def process_creator_action(
     data: Dict[str, Any],
     user_profile: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Process any creator action (high-level convenience function)."""
+    """
+Process any creator action (high-level convenience function)."""
     index = await get_engagement_index()
     return await index.process_creator_action(user_id, action, data, user_profile)
 
 
 async def get_creator_engagement_dashboard(user_id: str) -> Dict[str, Any]:
-    """Get creator engagement dashboard (high-level convenience function)."""
+    """
+Get creator engagement dashboard (high-level convenience function)."""
     index = await get_engagement_index()
     return await index.get_creator_dashboard(user_id)
 
@@ -492,7 +496,8 @@ async def handle_content_upload_complete(
     quality_score: float,
     engagement_metrics: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Handle complete content upload process (convenience function)."""
+    """
+Handle complete content upload process (convenience function)."""
     index = await get_engagement_index()
     return await index.handle_content_upload(
         user_id=user_id,
@@ -510,7 +515,8 @@ async def handle_collaboration_complete(
     output_quality: float,
     partners: List[str]
 ) -> Dict[str, Any]:
-    """Handle complete collaboration process (convenience function)."""
+    """
+Handle complete collaboration process (convenience function)."""
     index = await get_engagement_index()
     return await index.handle_collaboration_completion(
         user_id=user_id,
@@ -521,7 +527,8 @@ async def handle_collaboration_complete(
 
 
 async def quick_user_summary(user_id: str) -> Dict[str, Any]:
-    """Get quick user engagement summary (convenience function)."""
+    """
+Get quick user engagement summary (convenience function)."""
     index = await get_engagement_index()
     return await index.get_user_engagement_summary(user_id)
 

@@ -5,6 +5,7 @@ with multi-format analysis, preference detection, and optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ from ...security.data_validator import DataValidator
 logger = logging.getLogger(__name__)
 
 class ProfileCompleteness(Enum):
-    """Profile completeness levels"""
+    """
+Profile completeness levels"""
+
     BASIC = "basic"          # 0-30%
     INTERMEDIATE = "intermediate"  # 31-60%
     ADVANCED = "advanced"    # 61-85%
@@ -49,6 +52,7 @@ class ProfileCompleteness(Enum):
 
 class ContentGenre(Enum):
     """Supported content genres"""
+
     MUSIC_ELECTRONIC = "music_electronic"
     MUSIC_ACOUSTIC = "music_acoustic"
     MUSIC_HIP_HOP = "music_hip_hop"
@@ -430,7 +434,8 @@ class ProfileBuilder:
             profile.brand_guidelines.update(initial_data['brand'])
     
     async def _apply_creator_defaults(self, profile: ProfileData) -> None:
-        """Apply creator type-specific defaults and configurations."""
+        """
+Apply creator type-specific defaults and configurations."""
         creator_configs = {
             'musician': {
                 'content_formats': ['audio', 'video', 'image'],
@@ -459,7 +464,8 @@ class ProfileBuilder:
                 setattr(profile, key, default_value)
     
     async def _analyze_initial_profile(self, profile: ProfileData) -> None:
-        """Perform initial AI analysis of profile data."""
+        """
+Perform initial AI analysis of profile data."""
         if profile.bio:
             # Extract interests and themes from bio
             interests = await self.interest_extractor.extract_interests(profile.bio)
@@ -472,7 +478,8 @@ class ProfileBuilder:
     
     async def _analyze_content_samples(self, profile: ProfileData, 
                                      content_samples: List[Dict[str, Any]]) -> None:
-        """Analyze provided content samples for profile enrichment."""
+        """
+Analyze provided content samples for profile enrichment."""
         for sample in content_samples:
             content_type = sample.get('type', 'unknown')
             
@@ -545,7 +552,8 @@ class ProfileBuilder:
             profile.personality_traits.update(personality_analysis)
     
     async def _generate_optimization_suggestions(self, profile: ProfileData) -> None:
-        """Generate AI-powered profile optimization suggestions."""
+        """
+Generate AI-powered profile optimization suggestions."""
         suggestions = []
         
         # Content optimization
@@ -614,7 +622,8 @@ class ProfileBuilder:
             profile.completeness_level = ProfileCompleteness.COMPLETE
     
     async def _analyze_personality_from_text(self, text: str) -> Dict[str, float]:
-        """Analyze personality traits from text using NLP."""
+        """
+Analyze personality traits from text using NLP."""
         try:
             # Simple keyword-based personality analysis
             personality_keywords = {
@@ -673,17 +682,20 @@ class ProfileBuilder:
         return 0.8 if profile.brand_guidelines else 0.3
     
     async def _analyze_tone_consistency(self, profile: ProfileData) -> float:
-        """Analyze tone consistency across content."""
+        """
+Analyze tone consistency across content."""
         # Placeholder implementation
         return 0.7 if profile.content_themes else 0.4
     
     async def _analyze_messaging_consistency(self, profile: ProfileData) -> float:
-        """Analyze messaging consistency across platforms.""" 
+        """
+Analyze messaging consistency across platforms.""" 
         # Placeholder implementation
         return 0.6 if profile.bio and len(profile.social_media_handles) > 0 else 0.2
     
     async def _generate_ai_suggestions(self, profile: ProfileData) -> List[Dict[str, Any]]:
-        """Generate AI-powered personalized suggestions."""
+        """
+Generate AI-powered personalized suggestions."""
         ai_suggestions = []
         
         # Content strategy suggestions based on creator type
@@ -710,11 +722,13 @@ class ProfileBuilder:
         return ai_suggestions
     
     async def _analyze_audio_sample(self, sample: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audio sample for genre and characteristics."""
+        """
+Analyze audio sample for genre and characteristics."""
         # Placeholder implementation - would use actual audio analysis
         return {'genre': 'pop', 'tempo': 'medium', 'energy': 'high'}
     
     async def _analyze_image_sample(self, sample: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image sample for content and style."""
+        """
+Analyze image sample for content and style."""
         # Placeholder implementation - would use actual image analysis
         return {'themes': ['portrait', 'professional'], 'style': 'modern'}

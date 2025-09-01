@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ExecutionStatus(Enum):
-    """Task execution status enumeration."""
+    """
+Task execution status enumeration."""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -38,6 +41,7 @@ class ExecutionStatus(Enum):
 
 class ExecutionMode(Enum):
     """Execution mode options."""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     PARALLEL = "parallel"
@@ -46,6 +50,7 @@ class ExecutionMode(Enum):
 
 class ExecutorType(Enum):
     """Executor type classification."""
+
     LOCAL_PROCESS = "local_process"
     THREAD_POOL = "thread_pool"
     ASYNC_COROUTINE = "async_coroutine"
@@ -69,7 +74,8 @@ class ExecutionContext:
 
 @dataclass
 class ExecutionResult:
-    """Task execution result with metrics and output."""
+    """
+Task execution result with metrics and output."""
     execution_id: str
     task_id: str
     status: ExecutionStatus
@@ -85,7 +91,8 @@ class ExecutionResult:
 
 @dataclass
 class ExecutorNode:
-    """Execution node configuration and status."""
+    """
+Execution node configuration and status."""
     node_id: str
     name: str
     executor_type: ExecutorType
@@ -120,7 +127,8 @@ class ExecutionTask:
 
 @dataclass
 class BatchExecution:
-    """Batch execution tracking."""
+    """
+Batch execution tracking."""
     batch_id: str
     name: str
     tasks: List[ExecutionTask]
@@ -545,7 +553,8 @@ class ExecutionEngine:
         await self._execute_batch_parallel(batch)
     
     async def _select_optimal_executor(self, task: ExecutionTask) -> Optional[ExecutorNode]:
-        """Select optimal executor node for task."""
+        """
+Select optimal executor node for task."""
         if not self.executor_nodes:
             return None
         
@@ -601,7 +610,8 @@ class ExecutionEngine:
         return best_executor or executors[0]
     
     async def _check_executor_capacity(self, node: ExecutorNode, task: ExecutionTask) -> bool:
-        """Check if executor has sufficient capacity."""
+        """
+Check if executor has sufficient capacity."""
         for resource, required in task.resource_requirements.items():
             if resource in node.capacity:
                 available = node.capacity[resource] - node.current_load.get(resource, 0.0)
@@ -610,7 +620,8 @@ class ExecutionEngine:
         return True
     
     async def _validate_task(self, task: ExecutionTask) -> bool:
-        """Validate task definition."""
+        """
+Validate task definition."""
         try:
             if not task.task_id or not task.handler:
                 return False
@@ -627,15 +638,18 @@ class ExecutionEngine:
             return False
     
     async def get_execution_result(self, execution_id: str) -> Optional[ExecutionResult]:
-        """Get execution result by ID."""
+        """
+Get execution result by ID."""
         return self.execution_results.get(execution_id)
     
     async def get_batch_status(self, batch_id: str) -> Optional[BatchExecution]:
-        """Get batch execution status."""
+        """
+Get batch execution status."""
         return self.batch_executions.get(batch_id)
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel running execution."""
+        """
+Cancel running execution."""
         try:
             if execution_id in self.active_executions:
                 context = self.active_executions[execution_id]
@@ -684,7 +698,8 @@ class ExecutionEngine:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown execution engine gracefully."""
+        """
+Shutdown execution engine gracefully."""
         # Cancel all active executions
         for execution_id in list(self.active_executions.keys()):
             await self.cancel_execution(execution_id)

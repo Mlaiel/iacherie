@@ -8,7 +8,7 @@ Technologies: Python, Legal Automation, GDPR Compliance, Data Protection, Audit 
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Données utilisateur → Analyse conformité → Application réglementations → 
 Audit trails → Protection données → Rapports compliance → Notifications légales
 """
+
 from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegulation(Enum):
-    """Réglementations de conformité"""
+    """
+Réglementations de conformité"""
+
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     LGPD = "lgpd"  # Lei Geral de Proteção de Dados (Brazil)
@@ -52,6 +55,7 @@ class ComplianceRegulation(Enum):
 
 class DataCategory(Enum):
     """Catégories de données"""
+
     PERSONAL_IDENTIFIABLE = "personal_identifiable"
     SENSITIVE_PERSONAL = "sensitive_personal"
     FINANCIAL = "financial"
@@ -67,6 +71,7 @@ class DataCategory(Enum):
 
 class ConsentType(Enum):
     """Types de consentement"""
+
     EXPLICIT = "explicit"  # Consentement explicite
     IMPLIED = "implied"    # Consentement implicite
     OPT_IN = "opt_in"     # Opt-in actif
@@ -77,6 +82,7 @@ class ConsentType(Enum):
 
 class AuditEventType(Enum):
     """Types d'événements d'audit"""
+
     DATA_ACCESS = "data_access"
     DATA_PROCESSING = "data_processing"
     DATA_TRANSFER = "data_transfer"
@@ -91,6 +97,7 @@ class AuditEventType(Enum):
 
 class ComplianceStatus(Enum):
     """Statuts de conformité"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -150,7 +157,8 @@ class ComplianceConfig:
 
 @dataclass
 class ConsentRecord:
-    """Enregistrement de consentement"""
+    """
+Enregistrement de consentement"""
     id: str
     user_id: str
     consent_type: ConsentType
@@ -950,7 +958,8 @@ class ComplianceManager(ABC):
         await self._audit_queue.put(audit_event)
     
     async def _schedule_data_processing_review(self, user_id: str) -> None:
-        """Schedule review of data processing after consent withdrawal"""
+        """
+Schedule review of data processing after consent withdrawal"""
         # This would schedule a background task to review all data processing
         # for the user and stop/delete data as required
         pass
@@ -962,7 +971,8 @@ class ComplianceManager(ABC):
         processing_records: List[DataProcessingRecord],
         audit_events: List[AuditEvent]
     ) -> float:
-        """Calculate compliance score for regulation"""
+        """
+Calculate compliance score for regulation"""
         score = 100.0
         
         # Consent compliance
@@ -1036,7 +1046,8 @@ class ComplianceManager(ABC):
     
     @asynccontextmanager
     async def get_compliance_session(self, user_id: str):
-        """Context manager for compliance operations"""
+        """
+Context manager for compliance operations"""
         session_id = str(uuid.uuid4())
         try:
             logger.info(f"⚖️ Compliance session started: {session_id} for user {user_id}")

@@ -6,11 +6,12 @@ Handles real-time data synchronization, revenue tracking, analytics aggregation,
 and automated platform interactions for content creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ from .revenue_calculator import Currency
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""
+    """
+Supported monetization platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -48,6 +51,7 @@ class PlatformType(Enum):
 
 class APIStatus(Enum):
     """API connection status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -58,6 +62,7 @@ class APIStatus(Enum):
 
 class DataType(Enum):
     """Types of data to sync"""
+
     REVENUE = "revenue"
     ANALYTICS = "analytics"
     AUDIENCE = "audience"
@@ -82,7 +87,8 @@ class PlatformCredentials:
 
 @dataclass
 class APIResponse:
-    """Standardized API response"""
+    """
+Standardized API response"""
     platform: PlatformType
     data_type: DataType
     data: Dict[str, Any]
@@ -95,7 +101,8 @@ class APIResponse:
 
 @dataclass
 class RevenueData:
-    """Platform revenue data"""
+    """
+Platform revenue data"""
     platform: PlatformType
     user_id: str
     content_id: str
@@ -112,7 +119,8 @@ class RevenueData:
 
 @dataclass
 class AnalyticsData:
-    """Platform analytics data"""
+    """
+Platform analytics data"""
     platform: PlatformType
     user_id: str
     content_id: str
@@ -199,14 +207,16 @@ class PlatformAPIs:
         self.http_session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.http_session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.request_timeout)
         )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.http_session:
             await self.http_session.close()
     
@@ -591,7 +601,8 @@ class PlatformAPIs:
     
     async def _sync_tiktok_revenue(self, credentials: PlatformCredentials,
                                  days_back: int) -> List[RevenueData]:
-        """Sync TikTok revenue data"""
+        """
+Sync TikTok revenue data"""
         revenue_data = []
         
         # TikTok Creator Fund API
@@ -601,7 +612,8 @@ class PlatformAPIs:
     
     async def _sync_spotify_revenue(self, credentials: PlatformCredentials,
                                   days_back: int) -> List[RevenueData]:
-        """Sync Spotify revenue data"""
+        """
+Sync Spotify revenue data"""
         revenue_data = []
         
         # Spotify for Artists API
@@ -610,7 +622,8 @@ class PlatformAPIs:
         return revenue_data
     
     async def _check_rate_limit(self, platform: PlatformType) -> bool:
-        """Check if platform rate limit allows request"""
+        """
+Check if platform rate limit allows request"""
         cache_key = f"rate_limit:{platform.value}"
         current_count = await self.redis.get(cache_key) or 0
         
@@ -660,7 +673,8 @@ class PlatformAPIs:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
@@ -690,7 +704,8 @@ class PlatformAPIs:
         return bool(credentials.access_token and credentials.client_id)
     
     async def _test_api_connection(self, credentials: PlatformCredentials) -> APIResponse:
-        """Test API connection with credentials"""
+        """
+Test API connection with credentials"""
         # Implementation would test API connection
         return APIResponse(
             platform=credentials.platform,
@@ -704,7 +719,8 @@ class PlatformAPIs:
         )
     
     async def _refresh_token(self, credentials: PlatformCredentials) -> Optional[PlatformCredentials]:
-        """Refresh access token"""
+        """
+Refresh access token"""
         # Implementation would refresh token using refresh_token
         return credentials
     

@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Implémentation des modèles IA de génération musicale ultra-avancés
 TECHNOLOGIES: WaveNet, MuseNet, AIVA, Magenta, Jukebox, Neural Processing
 LOGIQUE MÉTIER: Audio input → AI analysis → Model selection → Generation → Quality control
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -156,7 +157,8 @@ if TORCH_AVAILABLE:
 else:
     # Mock WaveNetModel when torch is not available
     class WaveNetModel:
-        """Mock WaveNet model for when PyTorch is not available"""
+        """
+Mock WaveNet model for when PyTorch is not available"""
         
         def __init__(self, *args, **kwargs):
             logger.warning("WaveNetModel created in mock mode (PyTorch not available)")
@@ -167,6 +169,7 @@ else:
 
 class MusicGenerationModel(Enum):
     """Enumeration of available music generation models"""
+
     WAVENET = "wavenet"
     MUSENET = "musenet"
     AIVA = "aiva"
@@ -175,6 +178,7 @@ class MusicGenerationModel(Enum):
 
 class GenerationQuality(Enum):
     """Quality levels for music generation"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
@@ -198,7 +202,8 @@ class GenerationRequest:
 
 @dataclass
 class GenerationResult:
-    """Data class for music generation results"""
+    """
+Data class for music generation results"""
     output_audio_path: str
     model_used: MusicGenerationModel
     quality_score: float
@@ -208,7 +213,8 @@ class GenerationResult:
     error_message: Optional[str] = None
 
 class BaseGenerationModel:
-    """Base class for all music generation models"""
+    """
+Base class for all music generation models"""
     
     def __init__(self, model_name: str, model_type: MusicGenerationModel):
         self.model_name = model_name

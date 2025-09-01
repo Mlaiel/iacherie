@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class ReportType(Enum):
-    """Financial report types"""
+    """
+Financial report types"""
+
     INCOME_STATEMENT = "income_statement"
     BALANCE_SHEET = "balance_sheet"
     CASH_FLOW = "cash_flow"
@@ -56,6 +59,7 @@ class ReportType(Enum):
 
 class ReportingPeriod(Enum):
     """Reporting period types"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -65,6 +69,7 @@ class ReportingPeriod(Enum):
 
 class ReportStatus(Enum):
     """Report generation status"""
+
     PENDING = "pending"
     GENERATING = "generating"
     COMPLETED = "completed"
@@ -73,6 +78,7 @@ class ReportStatus(Enum):
 
 class ComplianceStandard(Enum):
     """Financial compliance standards"""
+
     GAAP = "gaap"
     IFRS = "ifrs"
     SOX = "sox"
@@ -152,7 +158,8 @@ class FinancialReport(Base):
     )
 
 class RevenueLineItem(Base):
-    """Detailed revenue line items for financial reports"""
+    """
+Detailed revenue line items for financial reports"""
     __tablename__ = 'revenue_line_items'
     
     # Primary identification
@@ -433,7 +440,8 @@ class ReportTemplate(Base):
 
 @dataclass
 class FinancialInsight:
-    """Financial insight data structure"""
+    """
+Financial insight data structure"""
     insight_type: str
     category: str
     title: str
@@ -446,7 +454,8 @@ class FinancialInsight:
     supporting_data: Dict[str, Any]
 
 class ReportSchedule(Base):
-    """Automated report generation schedules"""
+    """
+Automated report generation schedules"""
     __tablename__ = 'report_schedules'
     
     # Primary identification

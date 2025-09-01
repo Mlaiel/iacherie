@@ -12,6 +12,7 @@ Features:
 - Multi-platform monitoring (YouTube, TikTok, Instagram, etc.)
 - Smart alert filtering and notification management
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Set
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     LOW = "low"
     MEDIUM = "medium" 
     HIGH = "high"
@@ -44,6 +47,7 @@ class AlertSeverity(str, Enum):
 
 class AlertStatus(str, Enum):
     """Alert processing status."""
+
     PENDING = "pending"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -53,6 +57,7 @@ class AlertStatus(str, Enum):
 
 class PlatformType(str, Enum):
     """Supported monitoring platforms."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -91,7 +96,8 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for protection monitoring."""
+    """
+Configuration for protection monitoring."""
     scan_interval_minutes: int = 30
     similarity_threshold: float = 0.85
     platforms_enabled: Set[PlatformType] = None
@@ -110,7 +116,8 @@ class MonitoringConfig:
 
 
 class BasePlatformMonitor:
-    """Abstract base class for platform-specific monitors."""
+    """
+Abstract base class for platform-specific monitors."""
     
     def __init__(self, platform: PlatformType, config: MonitoringConfig):
         self.platform = platform
@@ -126,7 +133,8 @@ class BasePlatformMonitor:
         )
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         if self.session:
             await self.session.close()
     
@@ -267,7 +275,8 @@ class BasePlatformMonitor:
         return screenshot_url
     
     async def _capture_with_playwright(self, url: str) -> Optional[str]:
-        """Capture screenshot using Playwright"""
+        """
+Capture screenshot using Playwright"""
         try:
             from playwright.async_api import async_playwright
             
@@ -457,7 +466,8 @@ class TikTokMonitor(BasePlatformMonitor):
         super().__init__(PlatformType.TIKTOK, config)
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search TikTok for potentially infringing content."""
+        """
+Search TikTok for potentially infringing content."""
         try:
             if not self.session:
                 await self.initialize()
@@ -520,7 +530,8 @@ class GenericWebMonitor(BasePlatformMonitor):
         super().__init__(PlatformType.GENERIC_WEB, config)
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search web using search engines for content."""
+        """
+Search web using search engines for content."""
         try:
             if not self.session:
                 await self.initialize()
@@ -567,7 +578,8 @@ class ProtectionMonitoringService:
         self.active_alerts: Dict[str, ViolationAlert] = {}
     
     def _initialize_monitors(self) -> None:
-        """Initialize platform-specific monitors."""
+        """
+Initialize platform-specific monitors."""
         try:
             # Get API keys from configuration
             config_manager = self._get_config_manager()
@@ -686,7 +698,8 @@ class ProtectionMonitoringService:
         fingerprints: List[ContentFingerprint],
         session: AsyncSession
     ) -> None:
-        """Process a batch of fingerprints for violation detection."""
+        """
+Process a batch of fingerprints for violation detection."""
         tasks = []
         
         for fingerprint in fingerprints:
@@ -701,7 +714,8 @@ class ProtectionMonitoringService:
         fingerprint: ContentFingerprint,
         session: AsyncSession
     ) -> None:
-        """Check a single fingerprint for violations across platforms."""
+        """
+Check a single fingerprint for violations across platforms."""
         try:
             # Generate search queries based on fingerprint metadata
             search_queries = self._generate_search_queries(fingerprint)
@@ -807,7 +821,8 @@ class ProtectionMonitoringService:
         similarity_score: float,
         session: AsyncSession
     ) -> None:
-        """Create a new violation alert."""
+        """
+Create a new violation alert."""
         try:
             alert_id = hashlib.md5(
                 f"{fingerprint.id}:{search_result['url']}".encode()
@@ -913,9 +928,11 @@ class ProtectionMonitoringService:
         }
     
     def _get_config_manager(self):
-        """Get configuration manager for API keys and settings"""
+        """
+Get configuration manager for API keys and settings"""
         class ConfigManager:
-            """Configuration manager for API keys and platform settings"""
+            """
+Configuration manager for API keys and platform settings"""
             
             def __init__(self):
                 self.config_data = {
@@ -947,7 +964,8 @@ class ProtectionMonitoringService:
                 }
             
             def get_api_key(self, platform: str, key_name: str) -> Optional[str]:
-                """Get API key for specific platform and key name"""
+                """
+Get API key for specific platform and key name"""
                 try:
                     platform_config = self.config_data.get(platform, {})
                     api_key = platform_config.get(key_name)
@@ -999,7 +1017,8 @@ class ProtectionMonitoringService:
                 return self.config_data.get(platform, {})
             
             def is_platform_configured(self, platform: str) -> bool:
-                """Check if platform has required configuration"""
+                """
+Check if platform has required configuration"""
                 platform_config = self.config_data.get(platform, {})
                 
                 # Define required keys for each platform

@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Type, Union
@@ -40,7 +41,9 @@ from ...core.config import Settings
 
 
 class MonitoringComponentType(Enum):
-    """Types of monitoring components"""
+    """
+Types of monitoring components"""
+
     PERFORMANCE = "performance"
     QUERY = "query"
     CONNECTION = "connection"
@@ -83,7 +86,8 @@ class ComponentRegistry:
 
 
 class MonitoringOrchestrator:
-    """Central orchestrator for all monitoring components"""
+    """
+Central orchestrator for all monitoring components"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -102,7 +106,8 @@ class MonitoringOrchestrator:
         self._initialize_component_registry()
         
     def _initialize_component_registry(self):
-        """Initialize the component registry with all monitoring components"""
+        """
+Initialize the component registry with all monitoring components"""
         try:
             # Register all monitoring components with their dependencies
             components = [
@@ -432,7 +437,8 @@ class MonitoringOrchestrator:
         return self.active_components.get(comp_type)
         
     async def restart_component(self, comp_type: MonitoringComponentType):
-        """Restart specific monitoring component"""
+        """
+Restart specific monitoring component"""
         try:
             if comp_type in self.active_components:
                 await self._stop_component(comp_type)
@@ -474,7 +480,8 @@ class MonitoringComponentFactory:
     
     @staticmethod
     def create_component(component_type: MonitoringComponentType, settings: Settings) -> Any:
-        """Create monitoring component instance"""
+        """
+Create monitoring component instance"""
         component_map = {
             MonitoringComponentType.PERFORMANCE: DatabasePerformanceMonitor,
             MonitoringComponentType.QUERY: QueryAnalyzer,
@@ -513,54 +520,62 @@ async def create_monitoring_index(settings: Settings) -> MonitoringOrchestrator:
 
 
 async def get_monitoring_orchestrator() -> Optional[MonitoringOrchestrator]:
-    """Get global monitoring orchestrator"""
+    """
+Get global monitoring orchestrator"""
     return _orchestrator
 
 
 async def start_all_monitoring(settings: Settings, components: Optional[List[MonitoringComponentType]] = None):
-    """Start all monitoring components"""
+    """
+Start all monitoring components"""
     orchestrator = await create_monitoring_index(settings)
     await orchestrator.start_monitoring(components)
     return orchestrator
 
 
 async def stop_all_monitoring():
-    """Stop all monitoring components"""
+    """
+Stop all monitoring components"""
     if _orchestrator:
         await _orchestrator.stop_monitoring()
 
 
 # Convenience functions for component access
 async def get_performance_monitor() -> Optional[DatabasePerformanceMonitor]:
-    """Get performance monitoring component"""
+    """
+Get performance monitoring component"""
     if _orchestrator:
         return await _orchestrator.get_component(MonitoringComponentType.PERFORMANCE)
     return None
 
 
 async def get_query_analyzer() -> Optional[QueryAnalyzer]:
-    """Get query analysis component"""
+    """
+Get query analysis component"""
     if _orchestrator:
         return await _orchestrator.get_component(MonitoringComponentType.QUERY)
     return None
 
 
 async def get_security_monitor() -> Optional[DatabaseSecurityMonitor]:
-    """Get security monitoring component"""
+    """
+Get security monitoring component"""
     if _orchestrator:
         return await _orchestrator.get_component(MonitoringComponentType.SECURITY)
     return None
 
 
 async def get_ai_insights() -> Optional[DatabaseAIInsights]:
-    """Get AI insights component"""
+    """
+Get AI insights component"""
     if _orchestrator:
         return await _orchestrator.get_component(MonitoringComponentType.AI_INSIGHTS)
     return None
 
 
 async def get_backup_monitor() -> Optional[BackupMonitor]:
-    """Get backup monitoring component"""
+    """
+Get backup monitoring component"""
     if _orchestrator:
         return await _orchestrator.get_component(MonitoringComponentType.BACKUP)
     return None

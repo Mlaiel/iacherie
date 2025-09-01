@@ -12,7 +12,7 @@ Technical Specifications:
 - Executive summary and detailed analytics
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -49,7 +50,9 @@ from .performance_optimizer import PerformanceOptimizer
 logger = logging.getLogger(__name__)
 
 class ReportFormat(str, Enum):
-    """Report output formats."""
+    """
+Report output formats."""
+
     PDF = "pdf"
     EXCEL = "excel"
     JSON = "json"
@@ -58,6 +61,7 @@ class ReportFormat(str, Enum):
 
 class ReportType(str, Enum):
     """Types of reports."""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYTICS = "detailed_analytics"
     PERFORMANCE_REPORT = "performance_report"
@@ -68,6 +72,7 @@ class ReportType(str, Enum):
 
 class ReportFrequency(str, Enum):
     """Report generation frequency."""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -76,6 +81,7 @@ class ReportFrequency(str, Enum):
 
 class ChartStyle(str, Enum):
     """Chart styling options."""
+
     PROFESSIONAL = "professional"
     MODERN = "modern"
     MINIMAL = "minimal"
@@ -93,7 +99,8 @@ class ReportSection:
     order: int = 0
 
 class ReportTemplate(BaseModel):
-    """Report template configuration."""
+    """
+Report template configuration."""
     template_id: str
     name: str
     description: str = ""
@@ -153,7 +160,8 @@ class ReportGenerator:
         analytics: MonitoringAnalytics,
         performance_optimizer: PerformanceOptimizer
     ):
-        """Initialize report generator."""
+        """
+Initialize report generator."""
         self.config = config
         self.analytics = analytics
         self.performance_optimizer = performance_optimizer
@@ -423,7 +431,8 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather analytics data for a section."""
+        """
+Gather analytics data for a section."""
         # Determine time range for analytics
         duration = time_range[1] - time_range[0]
         if duration <= timedelta(hours=1):
@@ -462,7 +471,8 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather performance data for a section."""
+        """
+Gather performance data for a section."""
         # Get current performance metrics
         current_metrics = await self.performance_optimizer.monitor_system_performance()
         
@@ -495,7 +505,8 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather violations data for a section."""
+        """
+Gather violations data for a section."""
         # Mock violations data (would integrate with actual violation tracking)
         return {
             'title': section.title,
@@ -524,7 +535,8 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather platform-specific data for a section."""
+        """
+Gather platform-specific data for a section."""
         platforms = ['youtube', 'spotify', 'instagram', 'tiktok']
         
         platform_data = {}
@@ -556,7 +568,8 @@ class ReportGenerator:
         report_data: Dict[str, Any],
         format_type: ReportFormat
     ) -> Tuple[Path, int]:
-        """Generate report in specific format."""
+        """
+Generate report in specific format."""
         if format_type == ReportFormat.PDF:
             return await self._generate_pdf_report(report_id, template, report_data)
         elif format_type == ReportFormat.EXCEL:
@@ -644,7 +657,7 @@ class ReportGenerator:
                 transform=ax.transAxes)
         
         # Copyright notice
-        ax.text(0.5, 0.1, "© 2025 Fahed Mlaiel - IA Influencer Agent Platform",
+        ax.text(0.5, 0.1, "(c) 2025 Fahed Mlaiel - IA Influencer Agent Platform",
                 horizontalalignment='center',
                 fontsize=10, style='italic',
                 transform=ax.transAxes)
@@ -757,7 +770,8 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> Tuple[Path, int]:
-        """Generate Excel report with multiple sheets."""
+        """
+Generate Excel report with multiple sheets."""
         file_path = self.output_directory / f"{report_id}.xlsx"
         
         with pd.ExcelWriter(str(file_path), engine='openpyxl') as writer:
@@ -937,7 +951,8 @@ class ReportGenerator:
             return now
 
     async def _start_report_scheduler(self) -> None:
-        """Start the automated report scheduler."""
+        """
+Start the automated report scheduler."""
         self._scheduler_running = True
         self._scheduler_task = asyncio.create_task(self._scheduler_loop())
         logger.info("Report scheduler started")

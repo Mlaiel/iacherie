@@ -5,8 +5,9 @@ Manages multiple vector indexes for different content types and embedding dimens
 Provides unified interface for index lifecycle management and optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class IndexStatus(Enum):
-    """Status of vector index"""
+    """
+Status of vector index"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     TRAINING = "training"
@@ -53,7 +56,8 @@ class IndexConfiguration:
 
 @dataclass
 class IndexInfo:
-    """Information about a managed index"""
+    """
+Information about a managed index"""
     config: IndexConfiguration
     status: IndexStatus
     vector_count: int
@@ -64,7 +68,8 @@ class IndexInfo:
 
 
 class VectorIndexManager:
-    """Manages multiple vector indexes for different content types"""
+    """
+Manages multiple vector indexes for different content types"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -440,7 +445,8 @@ class VectorIndexManager:
             return padded
     
     async def train_indexes(self, training_data: Optional[Dict[str, List[np.ndarray]]] = None) -> Dict[str, bool]:
-        """Train indexes that require training"""
+        """
+Train indexes that require training"""
         results = {}
         
         for index_name, vector_store in self.indexes.items():
@@ -585,7 +591,8 @@ class VectorIndexManager:
         return embedding_type.value.replace('_', '_')
     
     async def get_index_info(self, index_name: Optional[str] = None) -> Union[IndexInfo, Dict[str, IndexInfo]]:
-        """Get information about indexes"""
+        """
+Get information about indexes"""
         try:
             if index_name:
                 # Get info for specific index
@@ -703,7 +710,8 @@ class VectorIndexManager:
         }
     
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if self.auto_save_task:
             self.auto_save_task.cancel()
         

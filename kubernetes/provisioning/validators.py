@@ -26,6 +26,7 @@ Architecture Components:
 - Load testing and capacity validation
 - Disaster recovery testing
 """
+
 import asyncio
 import json
 import logging
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation severity levels"""
+    """
+Validation severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -61,6 +64,7 @@ class ValidationLevel(Enum):
 
 class ValidationStatus(Enum):
     """Validation status"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -70,6 +74,7 @@ class ValidationStatus(Enum):
 
 class ValidationCategory(Enum):
     """Validation categories"""
+
     INFRASTRUCTURE = "infrastructure"
     NETWORKING = "networking"
     SECURITY = "security"
@@ -113,7 +118,8 @@ class ValidationSuite:
     results: List[ValidationResult] = field(default_factory=list)
     
     def add_result(self, result: ValidationResult):
-        """Add validation result and update counters"""
+        """
+Add validation result and update counters"""
         self.results.append(result)
         self.total_checks += 1
         
@@ -129,13 +135,15 @@ class ValidationSuite:
             self.error_checks += 1
     
     def get_success_rate(self) -> float:
-        """Calculate success rate"""
+        """
+Calculate success rate"""
         if self.total_checks == 0:
             return 0.0
         return (self.passed_checks / self.total_checks) * 100
     
     def has_critical_failures(self) -> bool:
-        """Check if there are critical failures"""
+        """
+Check if there are critical failures"""
         return any(
             r.status == ValidationStatus.FAILED and r.level == ValidationLevel.CRITICAL 
             for r in self.results
@@ -143,7 +151,8 @@ class ValidationSuite:
 
 
 class BaseValidator(ABC):
-    """Abstract base class for validators"""
+    """
+Abstract base class for validators"""
     
     def __init__(self, name: str, category: ValidationCategory, level: ValidationLevel):
         self.name = name
@@ -158,7 +167,8 @@ class BaseValidator(ABC):
     
     def create_result(self, status: ValidationStatus, message: str, 
                      details: Dict[str, Any] = None, remediation: str = None) -> ValidationResult:
-        """Create validation result"""
+        """
+Create validation result"""
         return ValidationResult(
             name=self.name,
             category=self.category,
@@ -171,7 +181,8 @@ class BaseValidator(ABC):
 
 
 class AWSInfrastructureValidator(BaseValidator):
-    """Validator for AWS infrastructure components"""
+    """
+Validator for AWS infrastructure components"""
     
     def __init__(self):
         super().__init__("AWS Infrastructure", ValidationCategory.INFRASTRUCTURE, ValidationLevel.CRITICAL)
@@ -959,7 +970,8 @@ class ValidationEngine:
         self._initialize_default_validators()
     
     def _initialize_default_validators(self):
-        """Initialize default set of validators"""
+        """
+Initialize default set of validators"""
         self.validators = [
             AWSInfrastructureValidator(),
             KubernetesValidator(),
@@ -971,7 +983,8 @@ class ValidationEngine:
         ]
     
     def add_validator(self, validator: BaseValidator):
-        """Add a custom validator"""
+        """
+Add a custom validator"""
         self.validators.append(validator)
         self.logger.info(f"Added validator: {validator.name}")
     
@@ -1204,7 +1217,8 @@ class ValidationEngine:
 
 # Utility functions
 async def run_infrastructure_validation(environment: str, config: Dict[str, Any]) -> ValidationSuite:
-    """Run complete infrastructure validation"""
+    """
+Run complete infrastructure validation"""
     engine = ValidationEngine()
     
     context = {
@@ -1216,7 +1230,8 @@ async def run_infrastructure_validation(environment: str, config: Dict[str, Any]
 
 
 def create_validation_context(environment: str, **kwargs) -> Dict[str, Any]:
-    """Create validation context from environment and additional parameters"""
+    """
+Create validation context from environment and additional parameters"""
     context = {
         'environment': environment,
         'region': kwargs.get('region', 'us-east-1'),

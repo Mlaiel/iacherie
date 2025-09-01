@@ -1,8 +1,9 @@
 """Performance Models - IA Influencer Agent Platform Enterprise
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 
 Advanced performance models for system monitoring and optimization.
 """
+
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 from enum import Enum
@@ -10,7 +11,9 @@ from dataclasses import dataclass
 from decimal import Decimal
 
 class PerformanceMetricType(str, Enum):
-    """Performance metric types."""
+    """
+Performance metric types."""
+
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -32,7 +35,8 @@ class PerformanceMetric:
 # Additional models for the performance system
 @dataclass
 class MetricType:
-    """Metric type definition."""
+    """
+Metric type definition."""
     type_id: str
     name: str
     unit: str
@@ -40,7 +44,8 @@ class MetricType:
     
 @dataclass
 class PerformanceTrend:
-    """Performance trend analysis."""
+    """
+Performance trend analysis."""
     trend_id: str
     metric_type: str
     direction: str  # "up", "down", "stable"
@@ -69,7 +74,8 @@ class BenchmarkComparison:
     
 @dataclass
 class PerformanceReport:
-    """Performance report structure."""
+    """
+Performance report structure."""
     report_id: str
     report_type: str
     generated_at: datetime
@@ -80,7 +86,8 @@ class PerformanceReport:
     
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation."""
+    """
+Performance optimization recommendation."""
     recommendation_id: str
     category: str
     title: str

@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -41,7 +42,9 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Trend category types."""
+    """
+Trend category types."""
+
     VIRAL_CONTENT = "viral_content"
     HASHTAG_TREND = "hashtag_trend"
     TOPIC_TREND = "topic_trend"
@@ -57,6 +60,7 @@ class TrendCategory(Enum):
 
 class TrendVelocity(Enum):
     """Trend velocity levels."""
+
     EXPLOSIVE = "explosive"      # Sudden spike
     RAPID = "rapid"             # Fast growth
     STEADY = "steady"           # Consistent growth
@@ -66,6 +70,7 @@ class TrendVelocity(Enum):
 
 class TrendScope(Enum):
     """Trend geographical scope."""
+
     GLOBAL = "global"
     CONTINENTAL = "continental"
     NATIONAL = "national"
@@ -100,7 +105,8 @@ class TrendMetrics:
 
 @dataclass
 class TrendItem:
-    """Individual trending item."""
+    """
+Individual trending item."""
     trend_id: str
     keyword: str
     category: TrendCategory
@@ -256,7 +262,8 @@ class TrendAnalyzer:
         }
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for trend analysis."""
+        """
+Initialize machine learning models for trend analysis."""
         try:
             # TF-IDF vectorizer for text analysis
             self.tfidf_vectorizer = TfidfVectorizer(
@@ -612,12 +619,14 @@ class TrendAnalyzer:
         return [tag.lower() for tag in hashtags]
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text."""
+        """
+Extract mentions from text."""
         mentions = re.findall(r'@(\w+)', text)
         return [mention.lower() for mention in mentions]
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
-        """Extract keywords from text."""
+        """
+Extract keywords from text."""
         # Remove stop words and extract meaningful keywords
         stop_words = {
             'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
@@ -641,7 +650,8 @@ class TrendAnalyzer:
         keywords: List[str],
         timestamp: datetime
     ) -> None:
-        """Update mention tracking for trend detection."""
+        """
+Update mention tracking for trend detection."""
         # Update hashtag mentions
         for hashtag in hashtags:
             self.hashtag_mentions[hashtag].append(timestamp)
@@ -668,7 +678,8 @@ class TrendAnalyzer:
                 del self.keyword_mentions[keyword]
     
     def _calculate_velocity(self, timestamps: List[datetime]) -> TrendVelocity:
-        """Calculate trend velocity based on timestamps."""
+        """
+Calculate trend velocity based on timestamps."""
         if len(timestamps) < 2:
             return TrendVelocity.STABLE
         
@@ -697,7 +708,8 @@ class TrendAnalyzer:
             return TrendVelocity.STABLE
     
     def _categorize_keyword(self, keyword: str, context: str) -> TrendCategory:
-        """Categorize keyword into trend category."""
+        """
+Categorize keyword into trend category."""
         keyword_lower = keyword.lower()
         context_lower = context.lower()
         
@@ -721,7 +733,8 @@ class TrendAnalyzer:
             return TrendCategory.TOPIC_TREND
     
     def _deduplicate_trends(self, trends: List[TrendItem]) -> List[TrendItem]:
-        """Remove duplicate trends based on similarity."""
+        """
+Remove duplicate trends based on similarity."""
         if not trends:
             return []
         
@@ -750,7 +763,8 @@ class TrendAnalyzer:
         return deduplicated
     
     def _calculate_trend_participation(self, trends: List[TrendItem], hashtags: List[str]) -> float:
-        """Calculate how much the content participates in current trends."""
+        """
+Calculate how much the content participates in current trends."""
         if not trends:
             return 0.0
         
@@ -770,7 +784,8 @@ class TrendAnalyzer:
         return np.mean(participation_scores) if participation_scores else 0.0
     
     def _calculate_trend_originality(self, keywords: List[str], hashtags: List[str]) -> float:
-        """Calculate content originality vs trend following."""
+        """
+Calculate content originality vs trend following."""
         if not keywords and not hashtags:
             return 0.5
         
@@ -791,7 +806,8 @@ class TrendAnalyzer:
         return (uniqueness_ratio + originality_factor) / 2
     
     def _calculate_trend_timing(self, trends: List[TrendItem]) -> float:
-        """Calculate timing score based on trend lifecycle stage."""
+        """
+Calculate timing score based on trend lifecycle stage."""
         if not trends:
             return 0.5
         
@@ -823,7 +839,8 @@ class TrendAnalyzer:
         trends: List[TrendItem],
         metadata: Dict[str, Any]
     ) -> float:
-        """Calculate viral potential score."""
+        """
+Calculate viral potential score."""
         factors = []
         
         # Trend participation factor
@@ -864,7 +881,8 @@ class TrendAnalyzer:
         trends: List[TrendItem],
         max_recommendations: int = 10
     ) -> List[str]:
-        """Recommend hashtags based on content and trends."""
+        """
+Recommend hashtags based on content and trends."""
         recommendations = []
         
         # Add trending hashtags
@@ -919,7 +937,8 @@ class TrendAnalyzer:
         return next_peak
     
     def _generate_trend_recommendations(self, trends: List[TrendItem]) -> List[str]:
-        """Generate trend-based content recommendations."""
+        """
+Generate trend-based content recommendations."""
         recommendations = []
         
         if not trends:
@@ -966,7 +985,8 @@ class TrendAnalyzer:
         scope: Optional[TrendScope] = None,
         limit: int = 20
     ) -> List[TrendItem]:
-        """Get current trending topics with optional filtering."""
+        """
+Get current trending topics with optional filtering."""
         try:
             # For now, return simulated trending topics
             # In real implementation, this would query the trend database

@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -30,7 +31,9 @@ from ..integrations.platform_apis import PlatformAPIManager
 
 
 class ViolationType(Enum):
-    """Types of copyright violations"""
+    """
+Types of copyright violations"""
+
     UNAUTHORIZED_UPLOAD = "unauthorized_upload"
     COMMERCIAL_MISUSE = "commercial_misuse"
     TERRITORY_VIOLATION = "territory_violation"
@@ -43,6 +46,7 @@ class ViolationType(Enum):
 
 class EnforcementSeverity(Enum):
     """Enforcement action severity levels"""
+
     LOW = "low"           # Warning notice
     MEDIUM = "medium"     # Takedown request
     HIGH = "high"         # Legal notice
@@ -51,6 +55,7 @@ class EnforcementSeverity(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for enforcement"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -74,7 +79,8 @@ class EnforcementStrategy:
 
 
 class CopyrightViolationReport(BaseModel):
-    """Copyright violation report structure"""
+    """
+Copyright violation report structure"""
     content_id: str
     violation_url: str
     platform: PlatformType
@@ -522,11 +528,13 @@ class CopyrightEnforcementService:
         pass
     
     async def _check_violation_url_status(self, url: str) -> Dict[str, Any]:
-        """Check current status of violation URL"""
+        """
+Check current status of violation URL"""
         # Implementation for URL status checking
         pass
     
     async def _generate_dmca_notice(self, violation: CopyrightViolation) -> Dict[str, Any]:
-        """Generate properly formatted DMCA takedown notice"""
+        """
+Generate properly formatted DMCA takedown notice"""
         # Implementation for DMCA notice generation
         pass

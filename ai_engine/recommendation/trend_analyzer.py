@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,7 +43,9 @@ from ..core.base_models import ModelStatus
 
 
 class TrendScope(Enum):
-    """Scope of trend analysis"""
+    """
+Scope of trend analysis"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     LOCAL = "local"
@@ -54,6 +57,7 @@ class TrendScope(Enum):
 
 class TrendPredictionModel(Enum):
     """Trend prediction model types"""
+
     TIME_SERIES = "time_series"
     MACHINE_LEARNING = "machine_learning"
     DEEP_LEARNING = "deep_learning"
@@ -65,6 +69,7 @@ class TrendPredictionModel(Enum):
 
 class TrendIndicator(Enum):
     """Key trend indicators"""
+
     SEARCH_VOLUME = "search_volume"
     SOCIAL_MENTIONS = "social_mentions"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -104,7 +109,8 @@ class TrendMetrics:
 
 @dataclass
 class TrendPrediction:
-    """Trend prediction structure"""
+    """
+Trend prediction structure"""
     prediction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     trend_id: str = ""
     prediction_type: str = "growth"
@@ -136,7 +142,8 @@ class TrendAnalyzer:
     """
     
     def __init__(self):
-        """Initialize trend analyzer"""
+        """
+Initialize trend analyzer"""
         self.logger = logging.getLogger(__name__)
         self.status = ModelStatus.INITIALIZING
         
@@ -651,7 +658,8 @@ class TrendAnalyzer:
         """Rank trends by relevance and potential"""
         
         def calculate_trend_score(trend: TrendInsight) -> float:
-            """Calculate composite trend score"""
+            """
+Calculate composite trend score"""
             weights = {
                 "growth_rate": 0.25,
                 "momentum_score": 0.25,
@@ -744,7 +752,8 @@ class TrendAnalyzer:
         return []
     
     async def _extract_trend_features(self, trend_history: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Extract features from trend history"""
+        """
+Extract features from trend history"""
         # Implementation for feature extraction
         return {
             "historical_growth": 0.7,
@@ -800,7 +809,8 @@ class TrendAnalyzer:
         return (0.6, 0.9)  # Placeholder
     
     async def _identify_trend_risks(self, trend_features: Dict[str, float]) -> List[str]:
-        """Identify risk factors for trend"""
+        """
+Identify risk factors for trend"""
         risks = []
         
         if trend_features.get("volatility", 0) > 0.7:
@@ -880,7 +890,8 @@ class TrendAnalyzer:
         return [RevenueStream.SPONSORSHIPS, RevenueStream.ADVERTISING, RevenueStream.MERCHANDISE]
     
     async def _identify_creator_opportunities(self, trend_data: Dict[str, Any]) -> List[str]:
-        """Identify creator opportunities for trend"""
+        """
+Identify creator opportunities for trend"""
         # Implementation for creator opportunity identification
         return [
             "Early adopter advantage",
@@ -966,7 +977,8 @@ class TrendPredictor:
         trend_data: Dict[str, Any], 
         horizon: timedelta
     ) -> Dict[str, Any]:
-        """Predict complete trend lifecycle"""
+        """
+Predict complete trend lifecycle"""
         
         if self.prediction_model == TrendPredictionModel.TIME_SERIES:
             return await self._time_series_prediction(trend_data, horizon)
@@ -978,7 +990,8 @@ class TrendPredictor:
             return await self._ensemble_prediction(trend_data, horizon)
     
     async def _time_series_prediction(self, trend_data: Dict[str, Any], horizon: timedelta) -> Dict[str, Any]:
-        """Time series based prediction"""
+        """
+Time series based prediction"""
         # Implementation for time series prediction
         return {"prediction_type": "time_series", "accuracy": 0.8}
     
@@ -1013,14 +1026,16 @@ class TrendDetector:
     """Advanced trend detection system for identifying emerging patterns."""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize trend detector with configuration."""
+        """
+Initialize trend detector with configuration."""
         self.config = config or {}
         self.detection_sensitivity = self.config.get('sensitivity', 0.7)
         self.trend_threshold = self.config.get('trend_threshold', 0.6)
         self.temporal_window = self.config.get('temporal_window', 24)  # hours
         
     async def detect_emerging_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect emerging trends from data patterns."""
+        """
+Detect emerging trends from data patterns."""
         try:
             trends = []
             
@@ -1065,7 +1080,8 @@ class TrendDetector:
         ]
         
     async def _detect_engagement_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect trends in engagement patterns."""
+        """
+Detect trends in engagement patterns."""
         return [
             {
                 'trend_type': 'engagement',
@@ -1077,7 +1093,8 @@ class TrendDetector:
         ]
         
     async def _detect_platform_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect platform-specific trends."""
+        """
+Detect platform-specific trends."""
         return [
             {
                 'trend_type': 'platform',
@@ -1089,7 +1106,8 @@ class TrendDetector:
         ]
         
     async def _filter_and_rank_trends(self, trends: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Filter and rank detected trends by confidence and relevance."""
+        """
+Filter and rank detected trends by confidence and relevance."""
         # Filter by confidence threshold
         filtered = [t for t in trends if t.get('confidence', 0) >= self.trend_threshold]
         
@@ -1100,17 +1118,20 @@ class TrendDetector:
 
 
 class ViralPredictor:
-    """Advanced viral content prediction system."""
+    """
+Advanced viral content prediction system."""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize viral predictor with configuration."""
+        """
+Initialize viral predictor with configuration."""
         self.config = config or {}
         self.viral_threshold = self.config.get('viral_threshold', 0.8)
         self.prediction_window = self.config.get('prediction_window', 72)  # hours
         self.features_count = self.config.get('features_count', 50)
         
     async def predict_viral_potential(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict viral potential of content."""
+        """
+Predict viral potential of content."""
         try:
             # Extract viral features
             features = await self._extract_viral_features(content_data)
@@ -1160,7 +1181,8 @@ class ViralPredictor:
         }
         
     async def _calculate_viral_score(self, features: Dict[str, float]) -> float:
-        """Calculate overall viral score from features."""
+        """
+Calculate overall viral score from features."""
         # Weight important viral factors
         weights = {
             'emotional_impact': 0.15,
@@ -1188,7 +1210,8 @@ class ViralPredictor:
         return weighted_score / total_weight if total_weight > 0 else 0.0
         
     async def _predict_viral_timeline(self, content_data: Dict[str, Any], viral_score: float) -> Dict[str, Any]:
-        """Predict viral spread timeline."""
+        """
+Predict viral spread timeline."""
         if viral_score < self.viral_threshold:
             return {'viral_likely': False, 'timeline': []}
             
@@ -1216,7 +1239,8 @@ class ViralPredictor:
         }
         
     async def _generate_viral_insights(self, features: Dict[str, float], viral_score: float) -> List[str]:
-        """Generate insights about viral potential."""
+        """
+Generate insights about viral potential."""
         insights = []
         
         if viral_score >= 0.8:

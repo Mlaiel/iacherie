@@ -8,7 +8,7 @@ Responsibility: Gestion complète des réseaux sociaux avec automatisation intel
 ==========================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER SOCIAL MEDIA:
 Content Planning → Multi-Platform Publishing → Audience Engagement → Performance Analytics → 
 Community Management → Trend Analysis → Influencer Collaboration → Brand Monitoring
 """
+
 import json
 import logging
 import asyncio
@@ -39,7 +40,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 @dataclass
 class SocialMediaPost:
-    """Modèle de post pour réseaux sociaux"""
+    """
+Modèle de post pour réseaux sociaux"""
     platform: str
     content: str
     media_urls: List[str]
@@ -52,7 +54,8 @@ class SocialMediaPost:
 
 @dataclass
 class EngagementMetrics:
-    """Métriques d'engagement"""
+    """
+Métriques d'engagement"""
     likes: int
     comments: int
     shares: int
@@ -65,7 +68,8 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Insights d'audience"""
+    """
+Insights d'audience"""
     total_followers: int
     demographics: Dict[str, Any]
     interests: List[str]
@@ -75,7 +79,8 @@ class AudienceInsights:
 
 
 class SocialMediaProcessor(BaseProcessor):
-    """Processeur gestion réseaux sociaux - Production Enterprise"""
+    """
+Processeur gestion réseaux sociaux - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -196,7 +201,8 @@ class SocialMediaProcessor(BaseProcessor):
         self.trend_analysis = {}
         
     def _init_database(self):
-        """Initialise la base de données SQLite"""
+        """
+Initialise la base de données SQLite"""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -499,7 +505,8 @@ class SocialMediaProcessor(BaseProcessor):
         return professional_count > casual_count
     
     def _validate_post_content(self, content_data: Dict, media_urls: List[str], platform: str, platform_config: Dict) -> Dict[str, Any]:
-        """Valide le contenu du post"""
+        """
+Valide le contenu du post"""
         validation = {
             'valid': True,
             'errors': [],
@@ -696,7 +703,8 @@ class SocialMediaProcessor(BaseProcessor):
         return 'general'
     
     def _start_content_scheduler(self):
-        """Démarre le planificateur de contenu"""
+        """
+Démarre le planificateur de contenu"""
         def scheduler_worker():
             self.scheduler_active = True
             
@@ -761,7 +769,8 @@ class SocialMediaProcessor(BaseProcessor):
         return random.random() > 0.1  # 90% success rate
     
     def _update_post_status(self, post_id: str, status: str, timestamp: datetime):
-        """Met à jour le statut du post dans la base de données"""
+        """
+Met à jour le statut du post dans la base de données"""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -800,7 +809,8 @@ class SocialMediaProcessor(BaseProcessor):
         return result
     
     def _bulk_schedule(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Programme plusieurs posts en lot"""
+        """
+Programme plusieurs posts en lot"""
         posts_data = input_data.get('posts', [])
         
         result = {
@@ -924,7 +934,8 @@ class SocialMediaProcessor(BaseProcessor):
         return analytics
     
     def _generate_analytics_summary(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère un résumé des analyses"""
+        """
+Génère un résumé des analyses"""
         summary = {
             'total_platforms': len(analytics_data),
             'total_posts': 0,
@@ -1090,7 +1101,8 @@ class SocialMediaProcessor(BaseProcessor):
 
 
 class AsyncSocialMediaProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur social media"""
+    """
+Version asynchrone du processeur social media"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -1098,7 +1110,8 @@ class AsyncSocialMediaProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=6)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone des réseaux sociaux"""
+        """
+Traitement asynchrone des réseaux sociaux"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1107,5 +1120,6 @@ class AsyncSocialMediaProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)

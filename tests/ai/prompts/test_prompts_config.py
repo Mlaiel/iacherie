@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Prompts Configuration Tests
+"""
+Advanced Prompts Configuration Tests
 Ultra-professional test suite for Prompts Configuration system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -43,17 +46,20 @@ from ai.prompts.prompts_config import (
 
 
 class TestPromptsConfig:
-    """Ultra-comprehensive test suite for Prompts Configuration"""
+    """
+Ultra-comprehensive test suite for Prompts Configuration"""
     
     @pytest.fixture
     def fresh_config(self):
-        """Create a fresh PromptsConfig instance for each test"""
+        """
+Create a fresh PromptsConfig instance for each test"""
         config = PromptsConfig()
         return config
     
     @pytest.fixture
     def custom_config(self):
-        """Create a custom configuration for testing"""
+        """
+Create a custom configuration for testing"""
         return PromptsConfig(
             default_quality_level=PromptQualityLevel.ENTERPRISE,
             min_quality_score=90.0,
@@ -95,7 +101,8 @@ class TestPromptsConfig:
     # ===== INITIALIZATION TESTS =====
     
     def test_config_initialization_default(self, fresh_config):
-        """Test default configuration initialization"""
+        """
+Test default configuration initialization"""
         assert fresh_config.default_quality_level == PromptQualityLevel.ADVANCED
         assert fresh_config.min_quality_score == 85.0
         assert fresh_config.max_prompt_length == 2000
@@ -137,7 +144,8 @@ class TestPromptsConfig:
         assert Platform.TIKTOK in fresh_config.supported_platforms
     
     def test_config_post_init_formats(self, fresh_config):
-        """Test post-init default format configuration"""
+        """
+Test post-init default format configuration"""
         expected_formats = [
             ContentFormat.AUDIO, ContentFormat.VIDEO, 
             ContentFormat.IMAGE, ContentFormat.TEXT, ContentFormat.MIXED
@@ -149,7 +157,8 @@ class TestPromptsConfig:
         assert ContentFormat.MIXED in fresh_config.supported_formats
     
     def test_custom_config_initialization(self, custom_config):
-        """Test custom configuration initialization"""
+        """
+Test custom configuration initialization"""
         assert custom_config.default_quality_level == PromptQualityLevel.ENTERPRISE
         assert custom_config.min_quality_score == 90.0
         assert custom_config.max_prompt_length == 2500
@@ -497,7 +506,8 @@ class TestPromptsConfig:
         assert video_config.max_prompt_length == 2500
     
     def test_social_media_config(self):
-        """Test configuration optimized for social media platforms"""
+        """
+Test configuration optimized for social media platforms"""
         social_config = PromptsConfig(
             supported_platforms=[
                 Platform.INSTAGRAM, Platform.TIKTOK, Platform.FACEBOOK,
@@ -524,7 +534,8 @@ class TestPromptsConfig:
     # ===== SERIALIZATION TESTS =====
     
     def test_config_to_dict(self, custom_config):
-        """Test configuration serialization to dictionary"""
+        """
+Test configuration serialization to dictionary"""
         # Note: Since dataclass doesn't have built-in to_dict, we'll test the attributes
         config_dict = {
             "default_quality_level": custom_config.default_quality_level.value,
@@ -589,7 +600,8 @@ class TestPromptsConfig:
         assert PROMPTS_CONFIG.enable_content_filtering is True
     
     def test_global_config_validation(self):
-        """Test global configuration validation"""
+        """
+Test global configuration validation"""
         validation_result = validate_config()
         assert isinstance(validation_result, dict)
         assert "valid" in validation_result
@@ -625,7 +637,8 @@ class TestPromptsConfig:
             assert len(config.supported_platforms) == 10
     
     def test_validation_performance(self):
-        """Test configuration validation performance"""
+        """
+Test configuration validation performance"""
         test_configs = []
         
         # Create various config scenarios

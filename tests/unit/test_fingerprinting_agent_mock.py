@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Mock-based Unit Tests for Fingerprinting Agent
+"""
+Mock-based Unit Tests for Fingerprinting Agent
 ==============================================
 
 Mock-based tests for the AI-powered fingerprinting agent module that work
@@ -21,6 +23,7 @@ without external dependencies like numpy, librosa, etc.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete test coverage without external dependencies
 """
+
 import pytest
 import sys
 import os
@@ -37,14 +40,16 @@ numpy_mock.mean = Mock(return_value=3.0)
 numpy_mock.std = Mock(return_value=1.5)
 
 class MockFingerprintingAgent:
-    """Mock fingerprinting agent for testing"""
+    """
+Mock fingerprinting agent for testing"""
     
     def __init__(self):
         self.fingerprint_cache = {}
         self.similarity_threshold = 0.8
         
     async def generate_audio_fingerprint(self, audio_data: bytes) -> str:
-        """Generate mock audio fingerprint"""
+        """
+Generate mock audio fingerprint"""
         # Create deterministic fingerprint based on data hash
         hasher = hashlib.md5()
         hasher.update(audio_data)
@@ -64,7 +69,8 @@ class MockFingerprintingAgent:
         return 0.7 if fp1[:8] == fp2[:8] else 0.3
     
     async def search_similar_content(self, fingerprint: str, threshold: float = 0.8) -> List[Dict]:
-        """Search for similar content"""
+        """
+Search for similar content"""
         results = []
         for cached_fp, metadata in self.fingerprint_cache.items():
             similarity = await self.calculate_similarity(fingerprint, cached_fp)
@@ -79,14 +85,16 @@ class MockFingerprintingAgent:
 
 @pytest.mark.asyncio
 class TestFingerprintingAgentMock:
-    """Test cases for fingerprinting agent with mocks"""
+    """
+Test cases for fingerprinting agent with mocks"""
     
     @pytest.fixture
     def agent(self):
         return MockFingerprintingAgent()
     
     async def test_audio_fingerprint_generation(self, agent):
-        """Test audio fingerprint generation"""
+        """
+Test audio fingerprint generation"""
         audio_data = b"mock_audio_data_for_testing"
         fingerprint = await agent.generate_audio_fingerprint(audio_data)
         
@@ -163,7 +171,8 @@ class TestFingerprintingEdgeCases:
     """Test edge cases and error handling"""
     
     def test_empty_data_handling(self):
-        """Test handling of empty data"""
+        """
+Test handling of empty data"""
         agent = MockFingerprintingAgent()
         
         # Test with empty bytes - should handle gracefully
@@ -200,7 +209,8 @@ class TestFingerprintingPerformance:
     """Performance-related tests for fingerprinting"""
     
     async def test_fingerprint_generation_speed(self):
-        """Test fingerprint generation performance"""
+        """
+Test fingerprint generation performance"""
         agent = MockFingerprintingAgent()
         
         start_time = datetime.now()

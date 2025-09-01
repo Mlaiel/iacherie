@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional
@@ -67,7 +68,8 @@ class CommunicationService:
         self.running = False
     
     async def initialize(self):
-        """Initialize all communication components"""
+        """
+Initialize all communication components"""
         try:
             logger.info("Initializing communication service...")
             
@@ -317,33 +319,38 @@ async def get_communication_service(redis_client: redis.Redis, db_session: Sessi
 
 # Service factory functions
 async def create_websocket_manager(redis_client: redis.Redis, db_session: Session) -> WebSocketManager:
-    """Create and initialize WebSocket manager"""
+    """
+Create and initialize WebSocket manager"""
     manager = WebSocketManager(redis_client, db_session)
     await manager.initialize()
     return manager
 
 
 async def create_message_broker(redis_client: redis.Redis, db_session: Session) -> MessageBroker:
-    """Create and initialize message broker"""
+    """
+Create and initialize message broker"""
     async with get_message_broker(redis_client, db_session) as broker:
         return broker
 
 
 async def create_notification_engine(redis_client: redis.Redis, db_session: Session) -> NotificationEngine:
-    """Create and initialize notification engine"""
+    """
+Create and initialize notification engine"""
     engine = NotificationEngine(redis_client, db_session)
     await engine.initialize()
     return engine
 
 
 async def create_live_collaboration(redis_client: redis.Redis, db_session: Session) -> LiveCollaboration:
-    """Create and initialize live collaboration"""
+    """
+Create and initialize live collaboration"""
     async with get_live_collaboration(redis_client, db_session) as collaboration:
         return collaboration
 
 
 async def create_streaming_coordinator(redis_client: redis.Redis, db_session: Session) -> StreamingCoordinator:
-    """Create and initialize streaming coordinator"""
+    """
+Create and initialize streaming coordinator"""
     async with get_streaming_coordinator(redis_client, db_session) as coordinator:
         return coordinator
 
@@ -356,7 +363,8 @@ async def send_notification_to_creators(
     variables: Dict[str, Any],
     creator_type_filter: Optional[str] = None
 ) -> list:
-    """Send notification to multiple creators"""
+    """
+Send notification to multiple creators"""
     if creator_type_filter:
         from .notification_engine import ContentCreatorType
         filter_enum = ContentCreatorType(creator_type_filter)
@@ -378,7 +386,8 @@ async def create_collaboration_room_for_creators(
     collaboration_type: str,
     creator_types: list
 ) -> str:
-    """Create collaboration room for specific creator types"""
+    """
+Create collaboration room for specific creator types"""
     from .live_collaboration import CollaborationType
     
     collab_type = CollaborationType(collaboration_type)
@@ -493,7 +502,8 @@ async def create_cross_platform_bridge(
     db_session: Session,
     redis_client: redis.Redis
 ) -> CrossPlatformBridge:
-    """Create and initialize cross-platform bridge"""
+    """
+Create and initialize cross-platform bridge"""
     return await get_cross_platform_bridge(db_session, redis_client)
 
 
@@ -501,7 +511,8 @@ async def create_communication_analytics_engine(
     db_session: Session,
     redis_client: redis.Redis
 ) -> CommunicationAnalyticsEngine:
-    """Create and initialize communication analytics engine"""
+    """
+Create and initialize communication analytics engine"""
     return await get_communication_analytics_engine(db_session, redis_client)
 
 
@@ -513,7 +524,8 @@ async def sync_content_across_platforms(
     content_data: Dict[str, Any],
     service: CommunicationService
 ) -> Dict[str, Any]:
-    """Sync content across multiple platforms"""
+    """
+Sync content across multiple platforms"""
     try:
         if not service.realtime_sync or not service.cross_platform_bridge:
             return {'success': False, 'error': 'Services not initialized'}

@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, func,
@@ -44,7 +45,9 @@ Base = declarative_base()
 
 
 class CalculationMethod(Enum):
-    """Royalty calculation methods"""
+    """
+Royalty calculation methods"""
+
     SIMPLE_PERCENTAGE = "simple_percentage"
     TIERED_PERCENTAGE = "tiered_percentage"
     FLAT_FEE = "flat_fee"
@@ -58,6 +61,7 @@ class CalculationMethod(Enum):
 
 class TierCriteria(Enum):
     """Criteria for tiered calculations"""
+
     REVENUE_AMOUNT = "revenue_amount"
     USAGE_COUNT = "usage_count"
     TIME_PERIOD = "time_period"
@@ -70,6 +74,7 @@ class TierCriteria(Enum):
 
 class DeductionType(Enum):
     """Types of deductions from royalty calculations"""
+
     PLATFORM_FEE = "platform_fee"
     SERVICE_FEE = "service_fee"
     PROCESSING_FEE = "processing_fee"
@@ -87,6 +92,7 @@ class DeductionType(Enum):
 
 class CalculationStatus(Enum):
     """Status of royalty calculations"""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     COMPLETED = "completed"
@@ -325,7 +331,8 @@ class RoyaltyCalculation(Base):
     
     @property
     def deduction_percentage(self) -> float:
-        """Calculate total deductions as percentage of gross royalty"""
+        """
+Calculate total deductions as percentage of gross royalty"""
         if self.gross_royalty_amount == 0:
             return 0.0
         return float((self.total_deductions / self.gross_royalty_amount) * 100)

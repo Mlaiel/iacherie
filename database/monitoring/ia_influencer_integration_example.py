@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 import json
 from datetime import datetime

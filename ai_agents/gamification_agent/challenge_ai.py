@@ -11,6 +11,7 @@ This challenge generation AI and algorithms are the exclusive intellectual prope
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -24,7 +25,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ChallengeType(Enum):
-    """Types of challenges available"""
+    """
+Types of challenges available"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -36,6 +39,7 @@ class ChallengeType(Enum):
 
 class ChallengeDifficulty(Enum):
     """Challenge difficulty levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -44,6 +48,7 @@ class ChallengeDifficulty(Enum):
 
 class ChallengeStatus(Enum):
     """Challenge status tracking"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -65,7 +70,8 @@ class ChallengeConfig:
 
 @dataclass
 class ChallengeTemplate:
-    """Template for challenge creation"""
+    """
+Template for challenge creation"""
     template_id: str
     title: str
     description: str
@@ -82,7 +88,8 @@ class ChallengeTemplate:
 
 @dataclass
 class PersonalizedChallenge:
-    """Personalized challenge instance"""
+    """
+Personalized challenge instance"""
     challenge_id: str
     user_id: str
     template_id: str
@@ -595,7 +602,8 @@ class ChallengeGenerator:
         return analysis
     
     async def _select_suitable_templates(self, user_analysis: Dict[str, Any]) -> List[ChallengeTemplate]:
-        """Select suitable challenge templates based on user analysis"""
+        """
+Select suitable challenge templates based on user analysis"""
         suitable_templates = []
         experience_level = user_analysis['experience_level']
         preferred_categories = user_analysis['preferred_categories']
@@ -651,7 +659,8 @@ class ChallengeGenerator:
         template: ChallengeTemplate,
         user_analysis: Dict[str, Any]
     ) -> PersonalizedChallenge:
-        """Create a personalized challenge from template"""
+        """
+Create a personalized challenge from template"""
         
         # Calculate personalized target value
         base_target = template.target_value
@@ -744,7 +753,8 @@ class ChallengeGenerator:
         user_analysis: Dict[str, Any],
         template: ChallengeTemplate
     ) -> List[str]:
-        """Generate AI-powered optimization suggestions"""
+        """
+Generate AI-powered optimization suggestions"""
         suggestions = []
         
         # Difficulty optimization
@@ -858,7 +868,8 @@ class ChallengeGenerator:
         return final_reward
     
     def _update_completion_stats(self, user_id: str, challenge: PersonalizedChallenge):
-        """Update completion statistics for optimization"""
+        """
+Update completion statistics for optimization"""
         if user_id not in self.completion_stats:
             self.completion_stats[user_id] = {}
         
@@ -890,7 +901,8 @@ class ChallengeGenerator:
         )
     
     def _is_challenge_completed(self, challenge_id: str) -> bool:
-        """Check if a challenge was completed"""
+        """
+Check if a challenge was completed"""
         for user_challenges in self.active_challenges.values():
             for challenge in user_challenges:
                 if challenge.challenge_id == challenge_id:
@@ -898,7 +910,8 @@ class ChallengeGenerator:
         return False
     
     async def get_user_challenges(self, user_id: str) -> Dict[str, Any]:
-        """Get all challenges for a user"""
+        """
+Get all challenges for a user"""
         try:
             user_challenges = self.active_challenges.get(user_id, [])
             

@@ -5,6 +5,7 @@ and content platforms including YouTube, SoundCloud, Instagram, TikTok, etc.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import aiohttp
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
@@ -32,6 +35,7 @@ class PlatformType(Enum):
 
 class APIMethod(Enum):
     """API method types"""
+
     REST = "rest"
     GRAPHQL = "graphql"
     WEBSOCKET = "websocket"
@@ -57,7 +61,8 @@ class PlatformConfig:
 
 @dataclass
 class APICredentials:
-    """API credentials for a platform"""
+    """
+API credentials for a platform"""
     platform_id: str
     api_key: Optional[str] = None
     client_id: Optional[str] = None
@@ -69,7 +74,8 @@ class APICredentials:
 
 @dataclass
 class PlatformResponse:
-    """Standardized platform response"""
+    """
+Standardized platform response"""
     platform_id: str
     success: bool
     data: Dict[str, Any]
@@ -104,7 +110,8 @@ class PlatformIntegrationManager:
         self._initialize_platforms()
     
     def _initialize_platforms(self):
-        """Initialize built-in platform configurations"""
+        """
+Initialize built-in platform configurations"""
         
         # YouTube configuration
         self.platforms["youtube"] = PlatformConfig(
@@ -556,18 +563,21 @@ class PlatformIntegrationManager:
         return list(self.platforms.keys())
     
     def get_platform_info(self, platform_id: str) -> Optional[Dict[str, Any]]:
-        """Get platform configuration info"""
+        """
+Get platform configuration info"""
         platform_config = self.platforms.get(platform_id)
         if platform_config:
             return asdict(platform_config)
         return None
     
     def get_rate_limit_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get current rate limit status for a platform"""
+        """
+Get current rate limit status for a platform"""
         return self.rate_limits.get(platform_id, {})
     
     async def test_platform_connection(self, platform_id: str) -> bool:
-        """Test connection to a platform"""
+        """
+Test connection to a platform"""
         try:
             # Make a simple test request based on platform
             if platform_id == "youtube":

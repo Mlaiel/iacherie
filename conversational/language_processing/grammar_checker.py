@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -51,7 +52,9 @@ logger = get_logger(__name__)
 
 
 class ErrorType(Enum):
-    """Types of writing errors"""
+    """
+Types of writing errors"""
+
     SPELLING = "spelling"
     GRAMMAR = "grammar"
     PUNCTUATION = "punctuation"
@@ -64,6 +67,7 @@ class ErrorType(Enum):
 
 class ErrorSeverity(Enum):
     """Error severity levels"""
+
     CRITICAL = "critical"
     MAJOR = "major"
     MINOR = "minor"
@@ -85,7 +89,8 @@ class WritingError:
 
 @dataclass
 class WritingAnalysis:
-    """Complete writing analysis result"""
+    """
+Complete writing analysis result"""
     original_text: str
     corrected_text: str
     errors: List[WritingError]
@@ -102,7 +107,8 @@ class WritingAnalysis:
 
 
 class GrammarChecker:
-    """Advanced grammar and style checker"""
+    """
+Advanced grammar and style checker"""
     
     def __init__(self):
         self.language_tool = None
@@ -111,7 +117,8 @@ class GrammarChecker:
         self._initialize_tools()
         
     def _initialize_tools(self):
-        """Initialize grammar checking tools"""
+        """
+Initialize grammar checking tools"""
         try:
             # Initialize LanguageTool
             self.language_tool = language_tool_python.LanguageTool('en-US')
@@ -254,7 +261,8 @@ class GrammarChecker:
             return ErrorType.GRAMMAR
             
     def _determine_severity(self, rule_id: str) -> ErrorSeverity:
-        """Determine error severity"""
+        """
+Determine error severity"""
         if not rule_id:
             return ErrorSeverity.MINOR
             
@@ -271,7 +279,8 @@ class GrammarChecker:
             return ErrorSeverity.MINOR
             
     async def _check_spelling_errors(self, text: str) -> List[WritingError]:
-        """Check for spelling errors"""
+        """
+Check for spelling errors"""
         try:
             words = word_tokenize(text)
             errors = []

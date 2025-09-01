@@ -6,6 +6,7 @@ for the IA Influencer Agent blockchain ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass
 from enum import Enum
@@ -21,7 +22,9 @@ from eth_typing import Address, HexStr
 logger = logging.getLogger(__name__)
 
 class ContractType(Enum):
-    """Smart contract types supported by the platform."""
+    """
+Smart contract types supported by the platform."""
+
     COPYRIGHT_REGISTRY = "copyright_registry"
     NFT_CREATOR = "nft_creator"
     ROYALTY_DISTRIBUTOR = "royalty_distributor"
@@ -31,6 +34,7 @@ class ContractType(Enum):
 
 class ChainNetwork(Enum):
     """Supported blockchain networks."""
+
     ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
@@ -78,7 +82,8 @@ class SmartContractManager:
         self._initialize_networks()
         
     def _initialize_networks(self) -> None:
-        """Initialize Web3 instances for all supported networks."""
+        """
+Initialize Web3 instances for all supported networks."""
         network_configs = {
             ChainNetwork.ETHEREUM_MAINNET: {
                 "rpc_url": self.config.get("ethereum_mainnet_rpc"),
@@ -444,7 +449,8 @@ class SmartContractManager:
         return self.contracts.get(contract_key)
 
     def list_contracts(self) -> Dict[str, ContractMetadata]:
-        """List all managed contracts."""
+        """
+List all managed contracts."""
         return self.contracts.copy()
 
     def verify_contract_on_explorer(

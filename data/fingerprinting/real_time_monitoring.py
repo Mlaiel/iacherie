@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringMode(Enum):
-    """Real-time monitoring modes"""
+    """
+Real-time monitoring modes"""
+
     PASSIVE = "passive"  # Monitor only
     ACTIVE = "active"    # Monitor and respond
     AGGRESSIVE = "aggressive"  # Proactive monitoring with prediction
@@ -63,6 +66,7 @@ class MonitoringMode(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -71,6 +75,7 @@ class AlertLevel(Enum):
 
 class MetricType(Enum):
     """Types of monitoring metrics"""
+
     FINGERPRINT_CREATED = "fingerprint_created"
     SIMILARITY_MATCH = "similarity_match"
     VIOLATION_DETECTED = "violation_detected"
@@ -135,7 +140,8 @@ class StreamingWindow:
     timestamps: deque = field(default_factory=deque)
     
     def add_value(self, value: float, timestamp: Optional[datetime] = None):
-        """Add value to streaming window"""
+        """
+Add value to streaming window"""
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -154,7 +160,8 @@ class StreamingWindow:
             self.values.popleft()
     
     def get_statistics(self) -> Dict[str, float]:
-        """Get window statistics"""
+        """
+Get window statistics"""
         if not self.values:
             return {}
         
@@ -172,7 +179,8 @@ class StreamingWindow:
 
 
 class RealTimeMonitor:
-    """Advanced real-time monitoring system"""
+    """
+Advanced real-time monitoring system"""
     
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
@@ -224,7 +232,8 @@ class RealTimeMonitor:
             self.streaming_windows[name] = window
     
     def _setup_alert_thresholds(self):
-        """Setup alert thresholds for different metrics"""
+        """
+Setup alert thresholds for different metrics"""
         self.alert_thresholds = {
             MetricType.SIMILARITY_MATCH: {
                 'warning': 0.8,
@@ -249,7 +258,8 @@ class RealTimeMonitor:
         }
     
     async def start(self):
-        """Start real-time monitoring system"""
+        """
+Start real-time monitoring system"""
         if self.running:
             logger.warning("Real-time monitor already running")
             return
@@ -929,7 +939,8 @@ class RealTimeMonitor:
         level: Optional[AlertLevel] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get recent alerts"""
+        """
+Get recent alerts"""
         alerts = list(self.alerts_buffer)
         
         if level:
@@ -963,7 +974,8 @@ _realtime_monitor: Optional[RealTimeMonitor] = None
 
 
 def get_realtime_monitor(config: Optional[FingerprintingSystemConfig] = None) -> RealTimeMonitor:
-    """Get or create real-time monitor instance"""
+    """
+Get or create real-time monitor instance"""
     global _realtime_monitor
     
     if _realtime_monitor is None:
@@ -976,7 +988,8 @@ def get_realtime_monitor(config: Optional[FingerprintingSystemConfig] = None) ->
 
 
 def reset_realtime_monitor():
-    """Reset real-time monitor (for testing)"""
+    """
+Reset real-time monitor (for testing)"""
     global _realtime_monitor
     if _realtime_monitor:
         asyncio.create_task(_realtime_monitor.stop())
@@ -985,7 +998,8 @@ def reset_realtime_monitor():
 
 # Convenience functions
 async def record_fingerprint_metric(fingerprint_id: str, metric_type: MetricType, value: float, **kwargs):
-    """Record fingerprint-related metric"""
+    """
+Record fingerprint-related metric"""
     monitor = get_realtime_monitor()
     
     metric = RealTimeMetric(
@@ -1002,7 +1016,8 @@ async def record_fingerprint_metric(fingerprint_id: str, metric_type: MetricType
 
 
 async def record_performance_metric(operation: str, duration: float, **kwargs):
-    """Record performance metric"""
+    """
+Record performance metric"""
     monitor = get_realtime_monitor()
     
     metric = RealTimeMetric(

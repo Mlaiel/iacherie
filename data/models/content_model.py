@@ -5,8 +5,9 @@ Professional content data model for multi-format content management.
 Supports audio, video, image, and text content with comprehensive metadata.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from datetime import datetime
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
@@ -22,7 +23,9 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -32,6 +35,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content status enumeration"""
+
     DRAFT = "draft"
     PROCESSING = "processing"
     ACTIVE = "active"
@@ -42,6 +46,7 @@ class ContentStatus(Enum):
 
 class ContentVisibility(Enum):
     """Content visibility settings"""
+
     PUBLIC = "public"
     PRIVATE = "private"
     UNLISTED = "unlisted"
@@ -248,44 +253,52 @@ class ContentModel(Base):
     
     @property
     def is_audio(self) -> bool:
-        """Check if content is audio type"""
+        """
+Check if content is audio type"""
         return self.content_type == ContentType.AUDIO.value
     
     @property
     def is_video(self) -> bool:
-        """Check if content is video type"""
+        """
+Check if content is video type"""
         return self.content_type == ContentType.VIDEO.value
     
     @property
     def is_image(self) -> bool:
-        """Check if content is image type"""
+        """
+Check if content is image type"""
         return self.content_type == ContentType.IMAGE.value
     
     @property
     def is_text(self) -> bool:
-        """Check if content is text type"""
+        """
+Check if content is text type"""
         return self.content_type == ContentType.TEXT.value
     
     @property
     def is_published(self) -> bool:
-        """Check if content is published"""
+        """
+Check if content is published"""
         return self.status == ContentStatus.ACTIVE.value and self.published_at is not None
     
     @property
     def is_protected(self) -> bool:
-        """Check if content has protection enabled"""
+        """
+Check if content has protection enabled"""
         return self.protection_enabled and not self.is_deleted
     
     @property
     def is_monetizable(self) -> bool:
-        """Check if content can be monetized"""
+        """
+Check if content can be monetized"""
         return (self.monetization_enabled and 
                 self.status == ContentStatus.ACTIVE.value and 
                 not self.is_deleted)
     
     @property
     def file_extension(self) -> str:
-        """Get file extension from filename"""
+        """
+Get file extension from filename"""
         if self.original_filename and '.' in self.original_filename:
             return self.original_filename.split('.')[-1].lower()
         return ""
@@ -299,7 +312,8 @@ class ContentModel(Base):
     
     @property
     def size_formatted(self) -> str:
-        """Get human-readable file size"""
+        """
+Get human-readable file size"""
         if not self.file_size:
             return "Unknown"
         
@@ -362,12 +376,14 @@ class ContentModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_quality_score(self, score: float):
-        """Set content quality score"""
+        """
+Set content quality score"""
         self.quality_score = max(0.0, min(100.0, score))
         self.updated_at = datetime.utcnow()
     
     def mark_as_protected(self, fingerprint_hash: str = None):
-        """Mark content as protected"""
+        """
+Mark content as protected"""
         self.protection_enabled = True
         self.is_protected = True
         if fingerprint_hash:
@@ -375,14 +391,16 @@ class ContentModel(Base):
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete content"""
+        """
+Soft delete content"""
         self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.status = ContentStatus.DELETED.value
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted content"""
+        """
+Restore soft-deleted content"""
         self.is_deleted = False
         self.deleted_at = None
         self.status = ContentStatus.ACTIVE.value

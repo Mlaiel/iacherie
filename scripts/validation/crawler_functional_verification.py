@@ -8,6 +8,7 @@ Tests actual functionality, initialization, and core capabilities of priority cr
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import sys
 import os
 import ast
@@ -21,14 +22,16 @@ import json
 
 @dataclass
 class FunctionalTest:
-    """Result of a functional test."""
+    """
+Result of a functional test."""
     test_name: str
     status: str  # 'pass', 'fail', 'skip'
     message: str
     details: Optional[Dict[str, Any]] = None
 
 class CrawlerFunctionalVerifier:
-    """Enhanced functional verification for crawler implementations."""
+    """
+Enhanced functional verification for crawler implementations."""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)

@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Simplified model training without MLflow, wandb, optuna dependencies.
 """
+
 import logging
 import time
 import json
@@ -17,7 +18,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class TrainingStatus(Enum):
-    """Training status enumeration"""
+    """
+Training status enumeration"""
+
     NOT_STARTED = "not_started"
     INITIALIZING = "initializing"
     TRAINING = "training"
@@ -28,6 +31,7 @@ class TrainingStatus(Enum):
 
 class OptimizationAlgorithm(Enum):
     """Optimization algorithms"""
+
     SGD = "sgd"
     ADAM = "adam"
     ADAMW = "adamw"
@@ -74,7 +78,8 @@ class TrainingResult:
     artifacts: List[str] = field(default_factory=list)
 
 class SimpleModelTrainer:
-    """Simplified model trainer without heavy dependencies"""
+    """
+Simplified model trainer without heavy dependencies"""
     
     def __init__(self, config: TrainingConfig):
         self.config = config
@@ -220,7 +225,8 @@ class SimpleModelTrainer:
             return current_value < self.best_metric_value - self.config.early_stopping_threshold
     
     def _save_checkpoint(self, model: Any, epoch: int, checkpoint_type: str):
-        """Save model checkpoint"""
+        """
+Save model checkpoint"""
         try:
             checkpoint_dir = Path(self.config.output_dir) / f"checkpoint-{checkpoint_type}-{epoch}"
             checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -283,7 +289,8 @@ class SimpleModelTrainer:
         }
     
     def get_training_progress(self) -> Dict[str, Any]:
-        """Get current training progress"""
+        """
+Get current training progress"""
         return {
             'status': self.status.value,
             'current_epoch': self.current_epoch,

@@ -377,7 +377,8 @@ class PerformanceMetricsAgent(BaseAIAgent):
         metrics: List[KPIMetric],
         request: PerformanceMetricsRequest
     ) -> Dict[str, Any]:
-        """Generate performance forecasts."""
+        """
+Generate performance forecasts."""
         return {
             'next_24h_forecast': {
                 'expected_revenue': 5950.0,
@@ -401,7 +402,8 @@ class PerformanceMetricsAgent(BaseAIAgent):
         alerts: List[PerformanceAlert],
         trends: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate metrics summary."""
+        """
+Generate metrics summary."""
         return {
             'health_score': 8.7,
             'total_metrics': len(metrics),
@@ -421,7 +423,8 @@ class PerformanceMetricsAgent(BaseAIAgent):
         }
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time performance dashboard data."""
+        """
+Get real-time performance dashboard data."""
         return {
             'timestamp': datetime.now().isoformat(),
             'system_status': 'healthy',

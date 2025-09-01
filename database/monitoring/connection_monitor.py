@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ from ...utils.alerting import AlertManager
 
 
 class ConnectionState(Enum):
-    """Database connection states"""
+    """
+Database connection states"""
+
     ACTIVE = "active"
     IDLE = "idle"
     IDLE_IN_TRANSACTION = "idle_in_transaction"
@@ -48,6 +51,7 @@ class ConnectionState(Enum):
 
 class PoolHealth(Enum):
     """Connection pool health status"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -74,7 +78,8 @@ class ConnectionInfo:
     duration_ms: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['backend_start'] = self.backend_start.isoformat()
         data['query_start'] = self.query_start.isoformat() if self.query_start else None
@@ -85,7 +90,8 @@ class ConnectionInfo:
 
 @dataclass
 class PoolMetrics:
-    """Connection pool metrics"""
+    """
+Connection pool metrics"""
     pool_name: str
     total_connections: int
     active_connections: int
@@ -106,7 +112,8 @@ class PoolMetrics:
     timestamp: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['health_status'] = self.health_status.value
         data['timestamp'] = self.timestamp.isoformat()
@@ -115,7 +122,8 @@ class PoolMetrics:
 
 @dataclass
 class ConnectionLeak:
-    """Connection leak detection"""
+    """
+Connection leak detection"""
     connection_id: str
     duration_hours: float
     last_query: Optional[str]
@@ -125,7 +133,8 @@ class ConnectionLeak:
     detected_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['detected_at'] = self.detected_at.isoformat()
         return data
@@ -398,21 +407,24 @@ class ConnectionMonitor:
         return len(recent_requests) / 60.0
     
     def _calculate_average_checkout_time(self) -> float:
-        """Calculate average connection checkout time"""
+        """
+Calculate average connection checkout time"""
         if not self.checkout_times:
             return 0.0
         
         return sum(self.checkout_times) / len(self.checkout_times)
     
     def _calculate_max_checkout_time(self) -> float:
-        """Calculate maximum connection checkout time"""
+        """
+Calculate maximum connection checkout time"""
         if not self.checkout_times:
             return 0.0
         
         return max(self.checkout_times)
     
     def _determine_pool_health(self, utilization_percent: float, active_connections: int) -> PoolHealth:
-        """Determine connection pool health status"""
+        """
+Determine connection pool health status"""
         if utilization_percent >= self.critical_utilization_threshold * 100:
             return PoolHealth.EMERGENCY
         elif utilization_percent >= self.high_utilization_threshold * 100:
@@ -423,7 +435,8 @@ class ConnectionMonitor:
             return PoolHealth.HEALTHY
     
     async def _process_pool_metrics(self, metrics: PoolMetrics) -> None:
-        """Process pool metrics and generate alerts"""
+        """
+Process pool metrics and generate alerts"""
         try:
             # Cache metrics
             await self.cache.set(
@@ -664,11 +677,13 @@ class ConnectionMonitor:
         self.alert_callbacks.append(callback)
     
     def track_connection_request(self) -> None:
-        """Track a connection request"""
+        """
+Track a connection request"""
         self.connection_requests.append(time.time())
     
     def track_checkout_time(self, checkout_time_ms: float) -> None:
-        """Track connection checkout time"""
+        """
+Track connection checkout time"""
         self.checkout_times.append(checkout_time_ms)
     
     async def kill_connection(self, connection_id: str, reason: str = "Manual termination") -> bool:

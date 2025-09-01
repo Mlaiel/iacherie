@@ -8,7 +8,7 @@ Responsibility: Advanced backup and recovery for content protection and monetiza
 ============================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ BACKUP STRATEGY:
 Pre-Migration Backup → Incremental Snapshots → Recovery Point Management → 
 Point-in-Time Recovery → Disaster Recovery → Automated Verification
 """
+
 import asyncio
 import logging
 import os
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backup operations"""
+    """
+Types of backup operations"""
+
     FULL_BACKUP = "full_backup"                  # Complete database backup
     INCREMENTAL_BACKUP = "incremental_backup"   # Changes since last backup
     DIFFERENTIAL_BACKUP = "differential_backup" # Changes since last full backup
@@ -61,6 +64,7 @@ class BackupType(Enum):
 
 class BackupStrategy(Enum):
     """Backup strategies for different scenarios"""
+
     CONSERVATIVE = "conservative"    # Maximum safety, multiple backups
     BALANCED = "balanced"           # Balance safety and performance
     PERFORMANCE = "performance"     # Minimize backup overhead
@@ -70,6 +74,7 @@ class BackupStrategy(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms for backups"""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -820,7 +825,8 @@ class EnterpriseBackupManager:
         backup_result: Dict[str, Any],
         description: str
     ) -> Dict[str, Any]:
-        """Create recovery point for backup"""
+        """
+Create recovery point for backup"""
         # Implementation would create recovery point record
         return {"recovery_point_id": f"rp_{backup_id}"}
     
@@ -906,7 +912,8 @@ class EnterpriseBackupManager:
         return []
     
     async def _remove_backup(self, backup_id: str) -> Dict[str, Any]:
-        """Remove backup and associated files"""
+        """
+Remove backup and associated files"""
         # Implementation would remove backup files
         return {"success": True, "space_freed": 0}
     

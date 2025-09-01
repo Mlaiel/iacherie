@@ -4,7 +4,7 @@ Advanced video quality analysis for content creators, filmmakers, and video infl
 Implements professional video metrics and industry-standard quality assessment.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class VideoResolution(Enum):
-    """Standard video resolutions"""
+    """
+Standard video resolutions"""
+
     SD_480P = "480p"
     HD_720P = "720p"
     FULL_HD_1080P = "1080p"
@@ -43,6 +46,7 @@ class VideoResolution(Enum):
 
 class FrameRate(Enum):
     """Standard frame rates"""
+
     CINEMA_24 = 24
     PAL_25 = 25
     NTSC_30 = 30
@@ -52,7 +56,9 @@ class FrameRate(Enum):
 
 
 class Bitrate(Enum):
-    """Bitrate quality levels"""
+    """
+Bitrate quality levels"""
+
     LOW = "low"          # < 1 Mbps
     MEDIUM = "medium"    # 1-5 Mbps
     HIGH = "high"        # 5-15 Mbps
@@ -62,6 +68,7 @@ class Bitrate(Enum):
 
 class CompressionArtifacts(Enum):
     """Compression artifact levels"""
+
     NONE = "none"
     MINIMAL = "minimal"
     MODERATE = "moderate"
@@ -164,7 +171,8 @@ class VideoQualityAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize video quality analyzer"""
+        """
+Initialize video quality analyzer"""
         super().__init__(config or ModelConfig(
             name="video_quality_analyzer",
             model_type=ModelType.VIDEO_MODEL,
@@ -343,11 +351,13 @@ class VideoQualityAnalyzer(BaseAIModel):
         return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from video processing services."""
+        """
+Disconnect from video processing services."""
         return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video quality assessment."""
+        """
+Process video quality assessment."""
         return await self.analyze_video_quality(data.get('video_data', b''), 
                                                data.get('profile', VideoQualityProfile()))
     
@@ -357,7 +367,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         video_path: Path,
         profile: VideoQualityProfile
     ):
-        """Extract basic video properties"""
+        """
+Extract basic video properties"""
         try:
             # Get video properties
             profile.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -489,7 +500,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ):
-        """Analyze technical quality aspects"""
+        """
+Analyze technical quality aspects"""
         try:
             # Compression artifacts detection
             artifacts_score = self._detect_compression_artifacts(cap, profile)
@@ -554,7 +566,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ):
-        """Analyze motion characteristics and camera stability"""
+        """
+Analyze motion characteristics and camera stability"""
         try:
             # Sample frames for motion analysis
             sample_count = min(10, profile.total_frames - 1)
@@ -759,7 +772,8 @@ class VideoQualityAnalyzer(BaseAIModel):
             return 1.0
     
     def _generate_video_recommendations(self, profile: VideoQualityProfile):
-        """Generate video-specific recommendations"""
+        """
+Generate video-specific recommendations"""
         recommendations = []
         
         # Resolution recommendations

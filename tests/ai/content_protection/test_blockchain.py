@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests Ultra-Industriels Avancés pour le Module Blockchain Verification
+"""
+Tests Ultra-Industriels Avancés pour le Module Blockchain Verification
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -30,6 +32,7 @@ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -60,7 +63,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BlockchainTestTransaction:
-    """Blockchain transaction for testing"""
+    """
+Blockchain transaction for testing"""
     tx_hash: str
     block_number: int
     gas_used: int
@@ -73,7 +77,8 @@ class BlockchainTestTransaction:
 
 @dataclass
 class SmartContractTestConfig:
-    """Smart contract configuration for testing"""
+    """
+Smart contract configuration for testing"""
     contract_name: str
     contract_address: str
     abi: List[Dict[str, Any]]
@@ -95,7 +100,8 @@ class TestUltraIndustrialBlockchainVerification:
     - Conformité avec standards juridiques internationaux
     """
     async def _create_proof_dict(self, blockchain_verifier, content_id, owner_id, content_hash, statement, metadata):
-        """Helper method to create proof and return as dict for test compatibility"""
+        """
+Helper method to create proof and return as dict for test compatibility"""
         proof_obj = await blockchain_verifier.create_proof_of_ownership(
             content_id, owner_id, content_hash, statement, metadata
         )
@@ -110,7 +116,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.fixture
     def enterprise_blockchain_config(self):
-        """Configuration ultra-avancée pour la blockchain"""
+        """
+Configuration ultra-avancée pour la blockchain"""
         return {
             'networks': {
                 'ethereum_mainnet': {
@@ -198,13 +205,15 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.fixture
     def enterprise_blockchain_verifier(self, enterprise_blockchain_config):
-        """Create enterprise-grade blockchain verifier"""
+        """
+Create enterprise-grade blockchain verifier"""
         verifier = BlockchainVerifier(enterprise_blockchain_config)
         return verifier
 
     @pytest.fixture
     def professional_content_ownership_data(self):
-        """Generate professional content ownership data"""
+        """
+Generate professional content ownership data"""
         content_hash = hashlib.sha256("professional_content_fahed_mlaiel".encode()).hexdigest()
         
         return {
@@ -223,7 +232,7 @@ class TestUltraIndustrialBlockchainVerification:
                 'quality': 'professional'
             },
             'ownership_statement': 'I, Fahed Mlaiel, am the original creator and exclusive owner of this content',
-            'copyright_notice': '© 2025 Fahed Mlaiel. All Rights Reserved.',
+            'copyright_notice': '(c) 2025 Fahed Mlaiel. All Rights Reserved.',
             'legal_jurisdiction': 'International',
             'registration_intent': 'full_commercial_protection'
         }
@@ -308,7 +317,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_ultra_advanced_ownership_registration_blockchain(self, enterprise_blockchain_verifier, professional_content_ownership_data):
-        """Test ultra-advanced blockchain ownership registration"""
+        """
+Test ultra-advanced blockchain ownership registration"""
         logger.info("Testing ultra-advanced blockchain ownership registration")
         
         # Mock blockchain interactions for realistic testing
@@ -708,7 +718,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_proof_of_ownership_creation(self, enterprise_blockchain_verifier, professional_content_ownership_data):
-        """Test creation and storage of proof of ownership"""
+        """
+Test creation and storage of proof of ownership"""
         
         # Create proof of ownership using test data (corrected to use dict directly)
         sample_proof = professional_content_ownership_data  # Use the dict directly
@@ -773,7 +784,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_ownership_verification(self, blockchain_verifier, sample_proof_of_ownership):
-        """Test blockchain-based ownership verification"""
+        """
+Test blockchain-based ownership verification"""
         
         with patch.object(blockchain_verifier, '_verify_on_blockchain') as mock_verify:
             mock_verify.return_value = {
@@ -818,7 +830,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_content_integrity_verification(self, blockchain_verifier, sample_proof_of_ownership):
-        """Test content integrity verification using blockchain records"""
+        """
+Test content integrity verification using blockchain records"""
         
         # Register original content
         original_registration = await blockchain_verifier.create_proof_of_ownership(
@@ -857,7 +870,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_smart_contract_deployment_and_interaction(self, blockchain_verifier, mock_blockchain_networks, sample_proof_of_ownership):
-        """Test smart contract deployment and interaction"""
+        """
+Test smart contract deployment and interaction"""
         
         # Define smart contract for content protection
         contract_source_code = """
@@ -925,7 +939,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_blockchain_record_management(self, blockchain_verifier, sample_proof_of_ownership):
-        """Test comprehensive blockchain record management"""
+        """
+Test comprehensive blockchain record management"""
         
         # Create initial blockchain record
         blockchain_record = BlockchainRecord(
@@ -983,7 +998,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_cross_chain_verification(self, blockchain_verifier, sample_proof_of_ownership, mock_blockchain_networks):
-        """Test cross-chain verification and consensus"""
+        """
+Test cross-chain verification and consensus"""
         
         with patch.object(blockchain_verifier, '_verify_across_networks') as mock_cross_verify:
             # Mock verification results from multiple networks
@@ -1039,7 +1055,8 @@ class TestUltraIndustrialBlockchainVerification:
 
     @pytest.mark.asyncio
     async def test_timestamping_and_chronological_verification(self, blockchain_verifier, sample_proof_of_ownership):
-        """Test blockchain timestamping and chronological verification"""
+        """
+Test blockchain timestamping and chronological verification"""
         
         # Create series of timestamped records
         timestamps = [
@@ -1213,7 +1230,8 @@ class TestUltraIndustrialBlockchainVerification:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_blockchain_performance_scalability(self, blockchain_verifier):
-        """Test blockchain operations performance and scalability"""
+        """
+Test blockchain operations performance and scalability"""
         
         import time
         
@@ -1295,7 +1313,8 @@ class TestUltraIndustrialBlockchainVerification:
 class TestBlockchainIntegration:
     """Integration tests for blockchain verification system"""
     async def _create_proof_dict(self, blockchain_verifier, content_id, owner_id, content_hash, statement, metadata):
-        """Helper method to create proof and return as dict for test compatibility"""
+        """
+Helper method to create proof and return as dict for test compatibility"""
         proof_obj = await blockchain_verifier.create_proof_of_ownership(
             content_id, owner_id, content_hash, statement, metadata
         )
@@ -1310,7 +1329,8 @@ class TestBlockchainIntegration:
 
     @pytest.mark.asyncio
     async def test_end_to_end_blockchain_workflow(self, test_config, sample_content_metadata):
-        """Test complete blockchain verification workflow"""
+        """
+Test complete blockchain verification workflow"""
         
         blockchain_verifier = BlockchainVerifier(test_config.get('blockchain', {}))
         

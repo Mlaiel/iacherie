@@ -1,7 +1,7 @@
 """Content Revenue Optimizer - Platform-specific content monetization optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content"""
+    """
+Types of content"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -67,6 +70,7 @@ class ContentType(Enum):
 
 class PlatformType(Enum):
     """Supported platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -81,6 +85,7 @@ class PlatformType(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization strategies"""
+
     AD_REVENUE = "ad_revenue"
     SPONSORSHIP = "sponsorship"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -95,6 +100,7 @@ class MonetizationStrategy(Enum):
 
 class OptimizationGoal(Enum):
     """Optimization objectives"""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REACH = "maximize_reach"
@@ -125,21 +131,24 @@ class ContentMetrics:
     
     @property
     def roi(self) -> float:
-        """Calculate return on investment"""
+        """
+Calculate return on investment"""
         if self.cost_to_produce > 0:
             return float((self.revenue_generated - self.cost_to_produce) / self.cost_to_produce)
         return 0.0
     
     @property
     def revenue_per_view(self) -> Decimal:
-        """Calculate revenue per view"""
+        """
+Calculate revenue per view"""
         if self.views > 0:
             return self.revenue_generated / Decimal(str(self.views))
         return Decimal('0')
     
     @property
     def engagement_score(self) -> float:
-        """Calculate composite engagement score"""
+        """
+Calculate composite engagement score"""
         if self.views == 0:
             return 0.0
         
@@ -161,7 +170,8 @@ class ContentMetrics:
 
 @dataclass
 class ContentOptimizationRecommendation:
-    """Content optimization recommendation"""
+    """
+Content optimization recommendation"""
     recommendation_id: str
     platform: PlatformType
     content_type: ContentType
@@ -180,7 +190,8 @@ class ContentOptimizationRecommendation:
 
 @dataclass
 class PlatformStrategy:
-    """Platform-specific optimization strategy"""
+    """
+Platform-specific optimization strategy"""
     platform: PlatformType
     optimal_content_types: List[ContentType]
     best_posting_times: List[str]
@@ -193,7 +204,8 @@ class PlatformStrategy:
 
 @dataclass
 class CrossPlatformSynergy:
-    """Cross-platform content synergy analysis"""
+    """
+Cross-platform content synergy analysis"""
     synergy_id: str
     primary_platform: PlatformType
     secondary_platforms: List[PlatformType]
@@ -205,7 +217,8 @@ class CrossPlatformSynergy:
 
 
 class ContentRevenueOptimizer:
-    """Advanced platform-specific content monetization optimization engine"""
+    """
+Advanced platform-specific content monetization optimization engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -219,7 +232,8 @@ class ContentRevenueOptimizer:
         self.confidence_threshold = self.config.get('confidence_threshold', 0.7)
         
     async def initialize(self) -> None:
-        """Initialize content revenue optimizer"""
+        """
+Initialize content revenue optimizer"""
         try:
             # Initialize platform strategies
             await self._initialize_platform_strategies()
@@ -416,7 +430,8 @@ class ContentRevenueOptimizer:
         self.ml_models['label_encoder'] = LabelEncoder()
     
     async def _setup_optimization_algorithms(self) -> None:
-        """Setup optimization algorithms"""
+        """
+Setup optimization algorithms"""
         self.optimization_algorithms = {
             'genetic_algorithm': self._genetic_optimization,
             'gradient_descent': self._gradient_descent_optimization,
@@ -429,7 +444,8 @@ class ContentRevenueOptimizer:
         content_metrics: List[ContentMetrics],
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """Analyze content performance across platforms"""
+        """
+Analyze content performance across platforms"""
         try:
             if not content_metrics:
                 return {'error': 'No content metrics provided'}
@@ -514,7 +530,8 @@ class ContentRevenueOptimizer:
         content_metrics: List[ContentMetrics], 
         top_n: int = 10
     ) -> List[Dict[str, Any]]:
-        """Identify top performing content"""
+        """
+Identify top performing content"""
         # Sort by composite score (revenue + engagement)
         def performance_score(content: ContentMetrics) -> float:
             revenue_score = float(content.revenue_generated) / 100  # Normalize
@@ -545,7 +562,8 @@ class ContentRevenueOptimizer:
         content_metrics: List[ContentMetrics], 
         bottom_n: int = 10
     ) -> List[Dict[str, Any]]:
-        """Identify underperforming content for optimization"""
+        """
+Identify underperforming content for optimization"""
         # Calculate median performance benchmarks
         revenues = [float(c.revenue_generated) for c in content_metrics]
         engagements = [c.engagement_score for c in content_metrics]
@@ -582,7 +600,8 @@ class ContentRevenueOptimizer:
         return underperformers[:bottom_n]
     
     async def _analyze_revenue_patterns(self, content_metrics: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze revenue patterns and trends"""
+        """
+Analyze revenue patterns and trends"""
         if not content_metrics:
             return {}
         
@@ -663,7 +682,8 @@ class ContentRevenueOptimizer:
         }
     
     async def _identify_optimization_opportunities(self, content_metrics: List[ContentMetrics]) -> List[Dict[str, Any]]:
-        """Identify specific optimization opportunities"""
+        """
+Identify specific optimization opportunities"""
         opportunities = []
         
         # Low engagement, high reach opportunity
@@ -710,7 +730,8 @@ class ContentRevenueOptimizer:
         target_platform: Optional[PlatformType] = None,
         optimization_goal: OptimizationGoal = OptimizationGoal.MAXIMIZE_REVENUE
     ) -> List[ContentOptimizationRecommendation]:
-        """Generate AI-powered optimization recommendations"""
+        """
+Generate AI-powered optimization recommendations"""
         try:
             recommendations = []
             
@@ -854,7 +875,8 @@ class ContentRevenueOptimizer:
         return recommendations
     
     async def _analyze_current_platform_performance(self, content: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze current platform performance metrics"""
+        """
+Analyze current platform performance metrics"""
         if not content:
             return {}
         

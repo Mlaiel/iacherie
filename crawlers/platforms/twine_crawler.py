@@ -3,9 +3,10 @@
 Advanced Twine crawler with comprehensive music distribution analysis, artist tracking,
 and digital music platform monitoring capabilities for the IA Influencer Agent platform.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized reproduction or distribution of this code is strictly prohibited.
 """
+
 import asyncio
 import logging
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwineTrack:
-    """Comprehensive Twine track data structure."""
+    """
+Comprehensive Twine track data structure."""
     track_id: str
     title: str
     artist_name: str
@@ -55,7 +57,8 @@ class TwineTrack:
 
 @dataclass
 class TwineArtist:
-    """Twine artist profile data structure."""
+    """
+Twine artist profile data structure."""
     artist_id: str
     name: str
     stage_name: Optional[str]
@@ -82,7 +85,8 @@ class TwineArtist:
 
 @dataclass
 class TwineAlbum:
-    """Twine album data structure."""
+    """
+Twine album data structure."""
     album_id: str
     title: str
     artist_id: str
@@ -105,7 +109,8 @@ class TwineAlbum:
 
 @dataclass
 class TwineSearchResult:
-    """Twine search result data structure."""
+    """
+Twine search result data structure."""
     query: str
     total_results: int
     tracks: List[TwineTrack]
@@ -119,7 +124,8 @@ class TwineSearchResult:
 
 @dataclass
 class TwineAnalytics:
-    """Twine analytics and insights data."""
+    """
+Twine analytics and insights data."""
     period_start: datetime
     period_end: datetime
     total_distributions: int
@@ -185,11 +191,13 @@ class TwineCrawler:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.cleanup()
         
     async def initialize(self):
-        """Initialize crawler with authentication and configuration."""
+        """
+Initialize crawler with authentication and configuration."""
         connector = aiohttp.TCPConnector(limit=50, limit_per_host=10)
         timeout = aiohttp.ClientTimeout(total=30, connect=10)
         
@@ -218,7 +226,8 @@ class TwineCrawler:
             await self.session.close()
             
     async def _make_request(self, endpoint: str, params: Dict = None) -> Dict:
-        """Make authenticated API request with rate limiting."""
+        """
+Make authenticated API request with rate limiting."""
         await self.rate_limiter.acquire()
         
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
@@ -294,7 +303,8 @@ class TwineCrawler:
         )
         
     async def get_track_details(self, track_id: str) -> Optional[TwineTrack]:
-        """Get detailed information about a specific track."""
+        """
+Get detailed information about a specific track."""
         try:
             data = await self._make_request(f'tracks/{track_id}')
             return await self._parse_track_data(data)
@@ -463,7 +473,8 @@ class TwineCrawler:
         artist_id: str, 
         period_days: int = 30
     ) -> Dict:
-        """Get royalty and revenue analytics for an artist."""
+        """
+Get royalty and revenue analytics for an artist."""
         try:
             params = {
                 'period': f'{period_days}d',
@@ -613,7 +624,8 @@ class TwineCrawler:
         return [genre for genre, count in trending[:10]]
         
     async def _find_similar_content(self, content_id: str) -> List[TwineTrack]:
-        """Find content similar to protected content."""
+        """
+Find content similar to protected content."""
         return []
         
     async def _calculate_violation_score(
@@ -621,11 +633,13 @@ class TwineCrawler:
         original_content_id: str, 
         track: TwineTrack
     ) -> float:
-        """Calculate violation score between original content and track."""
+        """
+Calculate violation score between original content and track."""
         return 0.0
         
     async def _check_isrc_conflicts(self, isrc: str) -> List[Dict]:
-        """Check for ISRC conflicts in the database."""
+        """
+Check for ISRC conflicts in the database."""
         try:
             # This would check against a database of known ISRCs
             conflicts = []

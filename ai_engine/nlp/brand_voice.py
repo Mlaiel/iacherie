@@ -4,11 +4,12 @@ Advanced AI-powered brand voice analysis and consistency monitoring for
 content creators, influencers, and brand partnerships across all content formats.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -30,7 +31,9 @@ import spacy
 logger = logging.getLogger(__name__)
 
 class VoiceDimension(Enum):
-    """Brand voice dimensions"""
+    """
+Brand voice dimensions"""
+
     FORMALITY = "formality"  # Formal vs Casual
     ENTHUSIASM = "enthusiasm"  # Excited vs Calm
     EXPERTISE = "expertise"  # Expert vs Approachable
@@ -42,6 +45,7 @@ class VoiceDimension(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     SOCIAL_POST = "social_post"
     BLOG_ARTICLE = "blog_article"
     VIDEO_SCRIPT = "video_script"
@@ -73,7 +77,8 @@ class VoiceProfile:
 
 @dataclass
 class VoiceAnalysisResult:
-    """Voice analysis result"""
+    """
+Voice analysis result"""
     content_id: str
     brand_id: str
     consistency_score: float
@@ -90,7 +95,8 @@ class VoiceAnalysisResult:
 
 @dataclass
 class BrandVoiceEvolution:
-    """Brand voice evolution tracking"""
+    """
+Brand voice evolution tracking"""
     brand_id: str
     time_period: timedelta
     voice_drift: Dict[VoiceDimension, float] = field(default_factory=dict)
@@ -125,7 +131,8 @@ class BrandVoiceAnalyzer:
         self.voice_models = {}
         
     async def initialize(self):
-        """Initialize NLP models and analyzers"""
+        """
+Initialize NLP models and analyzers"""
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_sm")
@@ -166,7 +173,8 @@ class BrandVoiceAnalyzer:
         }
     
     async def create_voice_profile(self, voice_profile: VoiceProfile) -> bool:
-        """Create or update a brand voice profile"""
+        """
+Create or update a brand voice profile"""
         try:
             # Validate voice profile
             if not self._validate_voice_profile(voice_profile):
@@ -303,7 +311,8 @@ class BrandVoiceAnalyzer:
         return dimension_scores
     
     async def _analyze_formality(self, content: str) -> float:
-        """Analyze formality level (-1 = very casual, 1 = very formal)"""
+        """
+Analyze formality level (-1 = very casual, 1 = very formal)"""
         try:
             doc = self.nlp(content)
             

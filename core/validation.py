@@ -10,12 +10,13 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
 MISSION: Validation complète du système core pour déploiement production
 """
+
 import os
 import sys
 import importlib
@@ -371,7 +372,7 @@ class CoreSystemValidator:
         
         report_lines.extend([
             "=" * 80,
-            "© 2025 Fahed Mlaiel - IA-Influencer-Agent Core System",
+            "(c) 2025 Fahed Mlaiel - IA-Influencer-Agent Core System",
             "=" * 80
         ])
         

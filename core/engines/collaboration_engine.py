@@ -15,6 +15,7 @@ redistribution without explicit written permission from Fahed Mlaiel is
 strictly prohibited and will result in legal action.
 ================================================================================
 """
+
 import logging
 import asyncio
 import json
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(str, Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
@@ -55,6 +58,7 @@ class CreatorType(str, Enum):
 
 class CollaborationType(str, Enum):
     """Types of collaboration"""
+
     FEATURE = "feature"  # Featured in content
     REMIX = "remix"  # Remix/adaptation
     DUET = "duet"  # Joint creation
@@ -67,6 +71,7 @@ class CollaborationType(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Collaboration request status"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -77,6 +82,7 @@ class CollaborationStatus(str, Enum):
 
 class Genre(str, Enum):
     """Content genres"""
+
     POP = "pop"
     ROCK = "rock"
     HIP_HOP = "hip_hop"
@@ -112,7 +118,8 @@ class CreatorMetrics:
 
 @dataclass
 class CollaborationMatch:
-    """AI-generated collaboration match"""
+    """
+AI-generated collaboration match"""
     creator_id: str
     target_creator_id: str
     compatibility_score: float
@@ -127,7 +134,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal details"""
+    """
+Collaboration proposal details"""
     proposal_id: str
     initiator_id: str
     target_id: str
@@ -422,7 +430,8 @@ class CollaborationEngine:
         creator2_id: str,
         collaboration_types: List[CollaborationType] = None
     ) -> float:
-        """Analyze collaboration history compatibility"""
+        """
+Analyze collaboration history compatibility"""
         try:
             # Get historical collaboration data
             creator1_history = await self._get_collaboration_history(creator1_id)
@@ -892,22 +901,26 @@ class CollaborationEngine:
         max_followers: int,
         target_regions: List[str]
     ) -> List[Dict[str, Any]]:
-        """Get potential collaboration candidates"""
+        """
+Get potential collaboration candidates"""
         # Implementation depends on your database layer
         return []
 
     async def _get_creator_audience_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator audience demographics"""
+        """
+Get creator audience demographics"""
         # Implementation depends on your analytics system
         return {}
 
     async def _get_collaboration_history(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get creator's collaboration history"""
+        """
+Get creator's collaboration history"""
         # Implementation depends on your database layer
         return []
 
     async def _get_creator_followers(self, creator_id: str) -> int:
-        """Get creator's total follower count"""
+        """
+Get creator's total follower count"""
         # Implementation depends on your database layer
         return 0
 
@@ -917,17 +930,20 @@ class CollaborationEngine:
         creator2_id: str,
         collaboration_types: List[CollaborationType]
     ) -> float:
-        """Estimate potential revenue from collaboration"""
+        """
+Estimate potential revenue from collaboration"""
         # Implementation for revenue estimation
         return 0.0
 
     async def _calculate_optimal_timing(self, creator1_id: str, creator2_id: str) -> datetime:
-        """Calculate optimal timing for collaboration"""
+        """
+Calculate optimal timing for collaboration"""
         # Implementation for timing optimization
         return datetime.now() + timedelta(weeks=2)
 
     async def _get_cached_matches(self, cache_key: str) -> List[CollaborationMatch]:
-        """Get cached collaboration matches"""
+        """
+Get cached collaboration matches"""
         try:
             cached_data = await self.redis_manager.get(cache_key)
             if cached_data:
@@ -938,7 +954,8 @@ class CollaborationEngine:
             return None
 
     async def _cache_matches(self, cache_key: str, matches: List[CollaborationMatch]):
-        """Cache collaboration matches"""
+        """
+Cache collaboration matches"""
         try:
             data = [asdict(match) for match in matches]
             # Convert datetime objects to strings
@@ -955,17 +972,20 @@ class CollaborationEngine:
         pass
 
     async def _send_collaboration_notification(self, proposal: CollaborationProposal):
-        """Send notification about new collaboration proposal"""
+        """
+Send notification about new collaboration proposal"""
         # Implementation depends on your notification system
         pass
 
     async def _get_collaboration_proposal(self, proposal_id: str) -> Dict[str, Any]:
-        """Get collaboration proposal from database"""
+        """
+Get collaboration proposal from database"""
         # Implementation depends on your database layer
         return {}
 
     async def _accept_collaboration(self, proposal: Dict[str, Any]) -> Dict[str, Any]:
-        """Accept collaboration proposal"""
+        """
+Accept collaboration proposal"""
         # Implementation for accepting collaboration
         return {"status": "accepted"}
 
@@ -989,7 +1009,8 @@ class CollaborationEngine:
         pass
 
     async def _complete_collaboration(self, collaboration_id: str):
-        """Mark collaboration as completed"""
+        """
+Mark collaboration as completed"""
         # Implementation depends on your database layer
         pass
 
@@ -999,6 +1020,7 @@ class CollaborationEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Get creator's collaboration history"""
+        """
+Get creator's collaboration history"""
         # Implementation depends on your database layer
         return []

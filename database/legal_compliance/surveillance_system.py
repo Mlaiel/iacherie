@@ -9,6 +9,7 @@ Infringement Detection → Automated Response → Legal Enforcement
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillancePlatform(Enum):
-    """Platforms monitored for content infringement."""
+    """
+Platforms monitored for content infringement."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -41,6 +44,7 @@ class SurveillancePlatform(Enum):
 
 class InfringementType(Enum):
     """Types of content infringement."""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     UNAUTHORIZED_REMIX = "unauthorized_remix"
@@ -54,6 +58,7 @@ class InfringementType(Enum):
 
 class ConfidenceLevel(Enum):
     """AI confidence levels for infringement detection."""
+
     VERY_HIGH = "very_high"  # 95%+
     HIGH = "high"           # 85-94%
     MEDIUM = "medium"       # 70-84%
@@ -63,6 +68,7 @@ class ConfidenceLevel(Enum):
 
 class InfringementStatus(Enum):
     """Status of infringement cases."""
+
     DETECTED = "detected"
     VALIDATED = "validated"
     DMCA_SENT = "dmca_sent"
@@ -75,6 +81,7 @@ class InfringementStatus(Enum):
 
 class EnforcementAction(Enum):
     """Available enforcement actions."""
+
     SEND_DMCA = "send_dmca"
     PLATFORM_REPORT = "platform_report"
     MONETIZE_CLAIM = "monetize_claim"
@@ -103,7 +110,8 @@ class SurveillanceTarget:
 
 @dataclass
 class InfringementDetection:
-    """Detected infringement case."""
+    """
+Detected infringement case."""
     detection_id: str
     target_id: str
     original_content_id: str
@@ -124,7 +132,8 @@ class InfringementDetection:
 
 @dataclass
 class SurveillanceReport:
-    """Surveillance activity report."""
+    """
+Surveillance activity report."""
     report_id: str
     creator_id: str
     period_start: datetime
@@ -148,7 +157,8 @@ class ContentSurveillanceManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Content Surveillance Manager."""
+        """
+Initialize the Content Surveillance Manager."""
         self.config = config
         self.db_config = config.get("database", {})
         self.surveillance_config = config.get("surveillance", {})
@@ -282,63 +292,75 @@ class ContentSurveillanceManager:
         return hashlib.md5(audio_data[:1024]).hexdigest()
     
     async def _generate_spectral_hash(self, audio_data: bytes) -> str:
-        """Generate spectral hash for audio."""
+        """
+Generate spectral hash for audio."""
         # Placeholder implementation - would use FFT analysis
         return hashlib.sha1(audio_data[::100]).hexdigest()
     
     async def _generate_mel_spectrogram_hash(self, audio_data: bytes) -> str:
-        """Generate mel-spectrogram based hash."""
+        """
+Generate mel-spectrogram based hash."""
         # Placeholder implementation - would use actual mel-spectrogram analysis
         return hashlib.sha256(audio_data[::50]).hexdigest()
     
     async def _generate_perceptual_hash(self, image_data: bytes) -> str:
-        """Generate perceptual hash for images."""
+        """
+Generate perceptual hash for images."""
         # Placeholder implementation - would use actual pHash algorithm
         return hashlib.md5(image_data[:2048]).hexdigest()
     
     async def _generate_feature_hash(self, image_data: bytes) -> str:
-        """Generate feature-based hash for images."""
+        """
+Generate feature-based hash for images."""
         # Placeholder implementation - would use SIFT/SURF features
         return hashlib.sha1(image_data[::200]).hexdigest()
     
     async def _generate_dl_hash(self, image_data: bytes) -> str:
-        """Generate deep learning based hash."""
+        """
+Generate deep learning based hash."""
         # Placeholder implementation - would use CNN features
         return hashlib.sha256(image_data[::150]).hexdigest()
     
     async def _generate_frame_hash(self, video_data: bytes) -> str:
-        """Generate frame-based hash for videos."""
+        """
+Generate frame-based hash for videos."""
         # Placeholder implementation - would analyze key frames
         return hashlib.md5(video_data[:4096]).hexdigest()
     
     async def _generate_motion_hash(self, video_data: bytes) -> str:
-        """Generate motion-based hash for videos."""
+        """
+Generate motion-based hash for videos."""
         # Placeholder implementation - would analyze motion vectors
         return hashlib.sha1(video_data[::500]).hexdigest()
     
     async def _generate_av_hash(self, video_data: bytes) -> str:
-        """Generate combined audio-video hash."""
+        """
+Generate combined audio-video hash."""
         # Placeholder implementation - would combine audio and video features
         return hashlib.sha256(video_data[::300]).hexdigest()
     
     async def _generate_semantic_hash(self, text_data: bytes) -> str:
-        """Generate semantic hash for text."""
+        """
+Generate semantic hash for text."""
         # Placeholder implementation - would use NLP embeddings
         text = text_data.decode('utf-8', errors='ignore')
         return hashlib.md5(text.lower().encode()).hexdigest()
     
     async def _generate_style_hash(self, text_data: bytes) -> str:
-        """Generate writing style hash."""
+        """
+Generate writing style hash."""
         # Placeholder implementation - would analyze writing patterns
         return hashlib.sha1(text_data[::10]).hexdigest()
     
     async def _generate_structural_hash(self, text_data: bytes) -> str:
-        """Generate structural hash for text."""
+        """
+Generate structural hash for text."""
         # Placeholder implementation - would analyze document structure
         return hashlib.sha256(text_data[::20]).hexdigest()
     
     def _get_default_platforms_for_content_type(self, content_type: str) -> List[SurveillancePlatform]:
-        """Get default platforms to monitor based on content type."""
+        """
+Get default platforms to monitor based on content type."""
         platform_mapping = {
             "audio": [
                 SurveillancePlatform.YOUTUBE, SurveillancePlatform.SPOTIFY,
@@ -548,7 +570,8 @@ class ContentSurveillanceManager:
         algorithm_scores: Dict[str, float],
         content_type: str
     ) -> float:
-        """Calculate overall detection confidence."""
+        """
+Calculate overall detection confidence."""
         if not algorithm_scores:
             return 0.0
         
@@ -605,7 +628,8 @@ class ContentSurveillanceManager:
             return ConfidenceLevel.VERY_LOW
     
     async def _process_infringement_detection(self, detection: InfringementDetection) -> None:
-        """Process and store infringement detection."""
+        """
+Process and store infringement detection."""
         try:
             # Store detection
             self.infringement_detections[detection.detection_id] = detection
@@ -654,7 +678,8 @@ class ContentSurveillanceManager:
         detection: InfringementDetection,
         action: EnforcementAction
     ) -> bool:
-        """Execute a specific enforcement action."""
+        """
+Execute a specific enforcement action."""
         try:
             if action == EnforcementAction.SEND_DMCA:
                 return await self._send_dmca_takedown(detection)

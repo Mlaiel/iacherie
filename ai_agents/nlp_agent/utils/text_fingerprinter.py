@@ -7,6 +7,7 @@ and similarity analysis with high precision and robust matching capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -62,6 +63,7 @@ logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
     """Types of text fingerprints"""
+
     HASH = "hash"  # Simple hash-based
     SHINGLE = "shingle"  # N-gram shingles
     SEMANTIC = "semantic"  # Semantic embeddings
@@ -71,6 +73,7 @@ class FingerprintType(Enum):
 
 class SimilarityMethod(Enum):
     """Similarity calculation methods"""
+
     COSINE = "cosine"
     JACCARD = "jaccard"
     HAMMING = "hamming"
@@ -92,7 +95,8 @@ class TextFingerprint:
 
 @dataclass
 class SimilarityResult:
-    """Result of similarity comparison between texts"""
+    """
+Result of similarity comparison between texts"""
     text1_id: str
     text2_id: str
     overall_similarity: float
@@ -109,7 +113,8 @@ class SimilarityResult:
 
 @dataclass
 class FingerprintingResult:
-    """Complete fingerprinting analysis result"""
+    """
+Complete fingerprinting analysis result"""
     fingerprints: List[TextFingerprint] = field(default_factory=list)
     similarity_matrix: Optional[np.ndarray] = None
     duplicate_pairs: List[Tuple[str, str, float]] = field(default_factory=list)
@@ -126,7 +131,8 @@ class TextFingerprinter:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Text Fingerprinter"""
+        """
+Initialize Text Fingerprinter"""
         self.config = config or default_config
         self.fingerprint_cache = {}
         self.similarity_cache = {}
@@ -137,7 +143,8 @@ class TextFingerprinter:
         self._initialize_components()
     
     def _load_stop_words(self) -> set:
-        """Load stop words for text processing"""
+        """
+Load stop words for text processing"""
         stop_words = set()
         
         try:
@@ -158,7 +165,8 @@ class TextFingerprinter:
         return stop_words
     
     def _initialize_components(self):
-        """Initialize fingerprinting components"""
+        """
+Initialize fingerprinting components"""
         try:
             # Initialize scikit-learn vectorizers
             if SKLEARN_AVAILABLE:
@@ -206,7 +214,8 @@ class TextFingerprinter:
         return -1  # Use CPU
     
     def _generate_text_id(self, text: str, custom_id: Optional[str] = None) -> str:
-        """Generate unique ID for text"""
+        """
+Generate unique ID for text"""
         if custom_id:
             return custom_id
         
@@ -310,7 +319,8 @@ class TextFingerprinter:
         return combined_hash
     
     async def _create_shingle_fingerprint(self, text: str, k: int = 5) -> List[str]:
-        """Create shingle-based fingerprint using k-grams"""
+        """
+Create shingle-based fingerprint using k-grams"""
         # Normalize text
         normalized = re.sub(r'[^a-zA-Z0-9\s]', '', text.lower())
         words = normalized.split()
@@ -345,7 +355,8 @@ class TextFingerprinter:
         return list(set(shingles))  # Remove duplicates
     
     async def _create_semantic_fingerprint(self, text: str) -> Optional[np.ndarray]:
-        """Create semantic fingerprint using embeddings"""
+        """
+Create semantic fingerprint using embeddings"""
         try:
             if TRANSFORMERS_AVAILABLE and "embeddings" in self.pipelines:
                 # Generate embeddings
@@ -627,7 +638,8 @@ class TextFingerprinter:
         return 0.0
     
     def _calculate_shingle_similarity(self, shingles1: List[str], shingles2: List[str]) -> float:
-        """Calculate Jaccard similarity between shingle sets"""
+        """
+Calculate Jaccard similarity between shingle sets"""
         set1 = set(shingles1)
         set2 = set(shingles2)
         
@@ -642,7 +654,8 @@ class TextFingerprinter:
         vector2: np.ndarray,
         similarity_method: SimilarityMethod
     ) -> float:
-        """Calculate semantic similarity between vectors"""
+        """
+Calculate semantic similarity between vectors"""
         try:
             if similarity_method == SimilarityMethod.COSINE:
                 # Cosine similarity
@@ -695,7 +708,8 @@ class TextFingerprinter:
         text_ids: Optional[List[str]] = None,
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> List[TextFingerprint]:
-        """Create fingerprints for multiple texts"""
+        """
+Create fingerprints for multiple texts"""
         if text_ids and len(text_ids) != len(texts):
             raise ValueError("Number of text_ids must match number of texts")
         
@@ -878,7 +892,8 @@ def calculate_jaccard_similarity(set1: Set, set2: Set) -> float:
     return intersection / union if union > 0 else 0.0
 
 def normalize_text_for_comparison(text: str) -> str:
-    """Normalize text for comparison purposes"""
+    """
+Normalize text for comparison purposes"""
     # Convert to lowercase
     normalized = text.lower()
     
@@ -891,7 +906,8 @@ def normalize_text_for_comparison(text: str) -> str:
     return normalized.strip()
 
 def estimate_similarity_threshold(similarity_scores: List[float]) -> float:
-    """Estimate appropriate similarity threshold based on score distribution"""
+    """
+Estimate appropriate similarity threshold based on score distribution"""
     if not similarity_scores:
         return 0.8
     

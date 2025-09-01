@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 import sys
 import json
@@ -57,7 +58,8 @@ class ConfigurationIndex:
     """
     
     def __init__(self):
-        """Initialize configuration index."""
+        """
+Initialize configuration index."""
         self.version = "2.0.0"
         self.initialized_at = datetime.now()
         self.author = "Fahed Mlaiel <mlaiel@live.de>"
@@ -612,19 +614,23 @@ def get_system_status() -> Dict[str, Any]:
     return configuration_index.get_system_overview()
 
 def validate_configurations() -> Dict[str, Any]:
-    """Validate all configurations."""
+    """
+Validate all configurations."""
     return configuration_index.validate_all_configurations()
 
 def get_health_status() -> Dict[str, Any]:
-    """Get configuration health status."""
+    """
+Get configuration health status."""
     return configuration_index.get_configuration_health()
 
 def generate_report() -> Dict[str, Any]:
-    """Generate comprehensive configuration report."""
+    """
+Generate comprehensive configuration report."""
     return configuration_index.generate_comprehensive_report()
 
 def export_report(filepath: Optional[str] = None) -> str:
-    """Export configuration report to file."""
+    """
+Export configuration report to file."""
     return configuration_index.export_configuration_report(filepath)
 
 # Module initialization

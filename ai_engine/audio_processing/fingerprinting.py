@@ -4,8 +4,9 @@ Professional audio fingerprinting and content matching system for the IA Influen
 Implements state-of-the-art audio identification algorithms for copyright protection and content discovery.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Audio fingerprint algorithm types"""
+    """
+Audio fingerprint algorithm types"""
+
     CHROMAPRINT = "chromaprint"
     LANDMARK = "landmark"
     SPECTRAL_HASH = "spectral_hash"
@@ -50,7 +53,8 @@ class AudioFingerprint:
     confidence: float = 1.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert fingerprint to dictionary for storage"""
+        """
+Convert fingerprint to dictionary for storage"""
         return {
             'fingerprint_data': self._serialize_fingerprint_data(),
             'fingerprint_type': self.fingerprint_type.value,
@@ -63,7 +67,8 @@ class AudioFingerprint:
         }
     
     def _serialize_fingerprint_data(self) -> str:
-        """Serialize fingerprint data for storage"""
+        """
+Serialize fingerprint data for storage"""
         if isinstance(self.fingerprint_data, np.ndarray):
             return pickle.dumps(self.fingerprint_data).hex()
         elif isinstance(self.fingerprint_data, bytes):
@@ -73,7 +78,8 @@ class AudioFingerprint:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'AudioFingerprint':
-        """Create fingerprint from dictionary"""
+        """
+Create fingerprint from dictionary"""
         fingerprint_type = FingerprintType(data['fingerprint_type'])
         
         # Deserialize fingerprint data
@@ -97,7 +103,8 @@ class AudioFingerprint:
 
 @dataclass
 class MatchResult:
-    """Audio content matching result"""
+    """
+Audio content matching result"""
     matched_audio_id: str
     similarity_score: float
     confidence: float
@@ -240,7 +247,8 @@ class SpectralLandmarkExtractor:
         return landmarks
     
     def landmarks_to_hashes(self, landmarks: List[Tuple[int, int, int]]) -> Set[int]:
-        """Convert landmarks to hash set for fast matching"""
+        """
+Convert landmarks to hash set for fast matching"""
         hashes = set()
         
         for anchor_time, anchor_freq, target_time in landmarks:
@@ -385,7 +393,8 @@ class AudioFingerprinter:
     async def _generate_spectral_hash_fingerprint(self, 
                                                 audio_data: np.ndarray, 
                                                 sample_rate: int) -> np.ndarray:
-        """Generate spectral hash fingerprint"""
+        """
+Generate spectral hash fingerprint"""
         try:
             # Compute mel spectrogram
             mel_spec = librosa.feature.melspectrogram(
@@ -770,7 +779,8 @@ class ContentMatcher:
     def _calculate_hash_similarity(self, 
                                  query_hash: np.ndarray, 
                                  candidate_hash: np.ndarray) -> float:
-        """Calculate similarity for binary hash fingerprints"""
+        """
+Calculate similarity for binary hash fingerprints"""
         if len(query_hash) == 0 or len(candidate_hash) == 0:
             return 0.0
         
@@ -786,7 +796,8 @@ class ContentMatcher:
     def _calculate_chromaprint_similarity(self, 
                                         query_bytes: bytes, 
                                         candidate_bytes: bytes) -> float:
-        """Calculate similarity for Chromaprint fingerprints"""
+        """
+Calculate similarity for Chromaprint fingerprints"""
         if not query_bytes or not candidate_bytes:
             return 0.0
         
@@ -800,7 +811,8 @@ class ContentMatcher:
     def _calculate_combined_similarity(self, 
                                      query_combined: Dict[str, Any], 
                                      candidate_combined: Dict[str, Any]) -> float:
-        """Calculate similarity for combined fingerprints"""
+        """
+Calculate similarity for combined fingerprints"""
         if not query_combined or not candidate_combined:
             return 0.0
         

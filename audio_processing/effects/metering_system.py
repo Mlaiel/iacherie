@@ -13,7 +13,7 @@ Features:
 - Export capabilities for analysis reports
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 =============================================================================
 CONFIDENTIAL - IA INFLUENCER AGENT PLATFORM
@@ -29,6 +29,7 @@ Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited under international copyright law.
 =============================================================================
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -39,7 +40,9 @@ import scipy.signal
 
 
 class MeterType(Enum):
-    """Professional meter types"""
+    """
+Professional meter types"""
+
     PEAK = "peak"
     RMS = "rms"
     VU = "vu"
@@ -53,6 +56,7 @@ class MeterType(Enum):
 
 class MeterStandard(Enum):
     """Broadcast metering standards"""
+
     EBU_R128 = "ebu_r128"
     ATSC_A85 = "atsc_a85"
     ITU_BS1770 = "itu_bs1770"
@@ -62,6 +66,7 @@ class MeterStandard(Enum):
 
 class BallasticsType(Enum):
     """Meter ballistics characteristics"""
+
     DIGITAL_PEAK = "digital_peak"
     DIGITAL_TRUE_PEAK = "digital_true_peak"
     ANALOG_VU = "analog_vu"
@@ -83,7 +88,8 @@ class MeterReading:
 
 @dataclass
 class MeterConfiguration:
-    """Meter configuration parameters"""
+    """
+Meter configuration parameters"""
     meter_type: MeterType
     ballistics: BallasticsType
     integration_time: float  # seconds
@@ -94,7 +100,8 @@ class MeterConfiguration:
 
 
 class PeakMeter:
-    """Professional peak meter with configurable ballistics"""
+    """
+Professional peak meter with configurable ballistics"""
     
     def __init__(self, sample_rate: int, ballistics: BallasticsType = BallasticsType.DIGITAL_PEAK):
         self.sample_rate = sample_rate
@@ -108,7 +115,8 @@ class PeakMeter:
         self._configure_ballistics()
     
     def _configure_ballistics(self) -> None:
-        """Configure meter ballistics based on standard"""
+        """
+Configure meter ballistics based on standard"""
         if self.ballistics == BallasticsType.DIGITAL_PEAK:
             self.attack_time = 0.0  # Instantaneous
             self.decay_time = 1.7  # seconds
@@ -137,7 +145,8 @@ class PeakMeter:
             self.decay_coeff = 0.0
     
     def process(self, audio_data: np.ndarray) -> MeterReading:
-        """Process audio and return peak meter reading"""
+        """
+Process audio and return peak meter reading"""
         current_peak = np.max(np.abs(audio_data))
         
         # Apply ballistics
@@ -184,7 +193,8 @@ class RMSMeter:
         self.buffer_full = False
     
     def process(self, audio_data: np.ndarray) -> MeterReading:
-        """Process audio and return RMS meter reading"""
+        """
+Process audio and return RMS meter reading"""
         for sample in audio_data.flatten():
             self.rms_buffer[self.buffer_index] = sample * sample
             self.buffer_index = (self.buffer_index + 1) % self.buffer_size
@@ -238,7 +248,8 @@ class LUFSMeter:
         self.channel_weights = self._get_channel_weights(channels)
     
     def _design_k_filter(self) -> Tuple[np.ndarray, np.ndarray]:
-        """Design K-weighting filter for LUFS measurement"""
+        """
+Design K-weighting filter for LUFS measurement"""
         # High-frequency shelving filter (1681 Hz, +4 dB)
         f_h = 1681.0
         omega_h = 2 * np.pi * f_h / self.sample_rate
@@ -259,7 +270,8 @@ class LUFSMeter:
         return (np.convolve(b_h, b_l), np.convolve(a_h, a_l))
     
     def _get_channel_weights(self, channels: int) -> List[float]:
-        """Get channel weights for LUFS calculation"""
+        """
+Get channel weights for LUFS calculation"""
         if channels == 1:
             return [1.0]
         elif channels == 2:
@@ -270,7 +282,8 @@ class LUFSMeter:
             return [1.0] * channels  # Default equal weighting
     
     def process(self, audio_data: np.ndarray) -> Dict[str, MeterReading]:
-        """Process audio and return LUFS measurements"""
+        """
+Process audio and return LUFS measurements"""
         readings = {}
         
         # Ensure correct shape
@@ -341,7 +354,8 @@ class SpectrumMeter:
         self.averaged_spectrum = None
     
     def process(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Process audio and return spectrum analysis"""
+        """
+Process audio and return spectrum analysis"""
         if len(audio_data) < self.fft_size:
             # Pad with zeros if needed
             audio_data = np.pad(audio_data, (0, self.fft_size - len(audio_data)))
@@ -376,7 +390,8 @@ class SpectrumMeter:
 
 
 class PhaseMeter:
-    """Professional phase correlation meter"""
+    """
+Professional phase correlation meter"""
     
     def __init__(self, sample_rate: int, integration_time: float = 0.1):
         self.sample_rate = sample_rate
@@ -386,7 +401,8 @@ class PhaseMeter:
         self.max_correlation_history = 100
     
     def process(self, stereo_audio: np.ndarray) -> MeterReading:
-        """Process stereo audio and return phase correlation"""
+        """
+Process stereo audio and return phase correlation"""
         if stereo_audio.shape[0] != 2:
             return MeterReading(0.0, "correlation", datetime.now(), MeterType.PHASE, valid=False)
         
@@ -560,7 +576,8 @@ class MeteringSystem:
             self.measurement_history[meter_id].pop(0)
     
     def get_measurement_statistics(self, meter_id: str, duration_seconds: float = 10.0) -> Dict[str, float]:
-        """Get statistics for a meter over specified duration"""
+        """
+Get statistics for a meter over specified duration"""
         if meter_id not in self.measurement_history:
             return {}
         
@@ -587,7 +604,8 @@ class MeteringSystem:
         }
     
     def check_compliance(self, standard: MeterStandard) -> Dict[str, bool]:
-        """Check compliance with broadcast standards"""
+        """
+Check compliance with broadcast standards"""
         compliance_results = {}
         
         if standard == MeterStandard.EBU_R128:
@@ -605,7 +623,8 @@ class MeteringSystem:
         return compliance_results
     
     def export_measurement_report(self, duration_seconds: float = 60.0) -> Dict[str, Any]:
-        """Export comprehensive measurement report"""
+        """
+Export comprehensive measurement report"""
         report = {
             'timestamp': datetime.now().isoformat(),
             'duration_seconds': duration_seconds,

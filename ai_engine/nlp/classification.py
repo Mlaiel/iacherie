@@ -4,11 +4,12 @@ Intelligent content classification system for categorizing, tagging, and organiz
 influencer content across multiple dimensions and platforms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentCategory:
-    """Content category structure"""
+    """
+Content category structure"""
     name: str
     confidence: float
     subcategories: List[str] = field(default_factory=list)
@@ -42,7 +44,8 @@ class TopicClassification:
 
 @dataclass
 class ContentStyle:
-    """Content style classification"""
+    """
+Content style classification"""
     style_type: str  # educational, entertaining, promotional, personal, etc.
     tone: str  # formal, casual, humorous, serious, etc.
     voice: str  # authoritative, friendly, professional, etc.
@@ -52,7 +55,8 @@ class ContentStyle:
 
 @dataclass
 class AudienceTarget:
-    """Target audience classification"""
+    """
+Target audience classification"""
     primary_audience: str
     secondary_audiences: List[str]
     demographics: Dict[str, Any]
@@ -62,7 +66,8 @@ class AudienceTarget:
 
 @dataclass
 class ContentIntent:
-    """Content intent classification"""
+    """
+Content intent classification"""
     primary_intent: str  # inform, entertain, persuade, sell, inspire, etc.
     secondary_intents: List[str]
     intent_strength: Dict[str, float]
@@ -71,7 +76,8 @@ class ContentIntent:
 
 @dataclass
 class PlatformOptimization:
-    """Platform-specific classification"""
+    """
+Platform-specific classification"""
     best_platforms: List[str]
     platform_scores: Dict[str, float]
     adaptation_suggestions: Dict[str, List[str]]
@@ -80,7 +86,8 @@ class PlatformOptimization:
 
 @dataclass
 class ClassificationResult:
-    """Complete content classification result"""
+    """
+Complete content classification result"""
     request_id: str
     original_text: str
     content_category: ContentCategory
@@ -121,7 +128,8 @@ class AdvancedContentClassifier:
         self.keyword_extractors = self._initialize_keyword_extractors()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'enable_topic_modeling': True,
             'enable_style_analysis': True,
@@ -136,7 +144,8 @@ class AdvancedContentClassifier:
         }
     
     def _load_category_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Load content category definitions"""
+        """
+Load content category definitions"""
         return {
             # Lifestyle categories
             'lifestyle': {
@@ -204,7 +213,8 @@ class AdvancedContentClassifier:
         }
     
     def _initialize_topic_models(self) -> Dict[str, Any]:
-        """Initialize topic modeling components"""
+        """
+Initialize topic modeling components"""
         return {
             'lda_model': 'latent_dirichlet_allocation',  # Would use actual LDA
             'bert_topic': 'bert_topic_model',  # Would use BERTopic
@@ -214,7 +224,8 @@ class AdvancedContentClassifier:
         }
     
     def _build_topic_keyword_database(self) -> Dict[str, List[str]]:
-        """Build comprehensive topic keyword database"""
+        """
+Build comprehensive topic keyword database"""
         return {
             # Lifestyle topics
             'fashion': ['outfit', 'style', 'fashion', 'clothes', 'ootd', 'trend', 'designer', 'shopping'],
@@ -251,7 +262,8 @@ class AdvancedContentClassifier:
         }
     
     def _load_style_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load content style patterns"""
+        """
+Load content style patterns"""
         return {
             'educational': {
                 'indicators': ['learn', 'tutorial', 'guide', 'how to', 'step by step', 'tips'],
@@ -292,7 +304,8 @@ class AdvancedContentClassifier:
         }
     
     def _load_audience_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Load audience profile definitions"""
+        """
+Load audience profile definitions"""
         return {
             'gen_z': {
                 'age_range': (18, 26),
@@ -329,7 +342,8 @@ class AdvancedContentClassifier:
         }
     
     def _load_intent_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load content intent patterns"""
+        """
+Load content intent patterns"""
         return {
             'inform': {
                 'indicators': ['learn', 'know', 'information', 'fact', 'research', 'study', 'explain'],
@@ -370,7 +384,8 @@ class AdvancedContentClassifier:
         }
     
     def _load_platform_characteristics(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific characteristics"""
+        """
+Load platform-specific characteristics"""
         return {
             'instagram': {
                 'optimal_content_types': ['lifestyle', 'fashion', 'food', 'travel', 'fitness'],
@@ -420,7 +435,8 @@ class AdvancedContentClassifier:
         }
     
     def _initialize_keyword_extractors(self) -> Dict[str, Any]:
-        """Initialize keyword extraction components"""
+        """
+Initialize keyword extraction components"""
         return {
             'tfidf_extractor': 'tfidf_vectorizer',  # Would use actual TF-IDF
             'keybert_extractor': 'keybert_model',  # Would use KeyBERT
@@ -430,7 +446,8 @@ class AdvancedContentClassifier:
         }
     
     async def classify_content(self, text: str, context: Dict[str, Any] = None) -> ClassificationResult:
-        """Comprehensive content classification"""
+        """
+Comprehensive content classification"""
         start_time = datetime.utcnow()
         request_id = self._generate_request_id(text)
         
@@ -592,7 +609,8 @@ class AdvancedContentClassifier:
         return matched_subcategories[:3]  # Top 3 subcategories
     
     async def _extract_category_keywords(self, text: str, category: str) -> List[str]:
-        """Extract keywords relevant to the category"""
+        """
+Extract keywords relevant to the category"""
         category_info = self.category_definitions.get(category, {})
         category_keywords = category_info.get('keywords', [])
         
@@ -606,7 +624,8 @@ class AdvancedContentClassifier:
         return found_keywords
     
     async def _classify_topics(self, text: str) -> TopicClassification:
-        """Classify content topics using multiple methods"""
+        """
+Classify content topics using multiple methods"""
         
         # Extract topics using keyword matching
         topic_scores = {}
@@ -1089,7 +1108,8 @@ class AdvancedContentClassifier:
         return list(set(cleaned_tags))[:20]  # Return up to 20 unique tags
     
     async def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases from text"""
+        """
+Extract key phrases from text"""
         # Simple key phrase extraction
         words = text.lower().split()
         
@@ -1154,7 +1174,8 @@ class AdvancedContentClassifier:
                                           topic_classification: TopicClassification,
                                           content_style: ContentStyle,
                                           content_intent: ContentIntent) -> float:
-        """Calculate overall classification confidence"""
+        """
+Calculate overall classification confidence"""
         
         confidence_factors = []
         
@@ -1179,7 +1200,8 @@ class AdvancedContentClassifier:
         return sum(confidence_factors) / len(confidence_factors) if confidence_factors else 0.5
     
     def _generate_request_id(self, text: str) -> str:
-        """Generate unique request ID"""
+        """
+Generate unique request ID"""
         import hashlib
         id_string = f"{text[:100]}{datetime.utcnow().isoformat()}"
         return hashlib.md5(id_string.encode()).hexdigest()[:12]
@@ -1202,7 +1224,8 @@ async def quick_classify(text: str) -> Dict[str, Any]:
     }
 
 async def classify_for_platform(text: str, target_platform: str) -> Dict[str, Any]:
-    """Classify content with platform-specific optimization"""
+    """
+Classify content with platform-specific optimization"""
     classifier = AdvancedContentClassifier()
     result = await classifier.classify_content(text)
     

@@ -25,6 +25,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Complete Deployment Orchestration
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import json
@@ -76,7 +77,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentPhase(Enum):
-    """Deployment phases for orchestrated rollout"""
+    """
+Deployment phases for orchestrated rollout"""
+
     INFRASTRUCTURE = "infrastructure"
     CORE_SERVICES = "core_services"
     DATA_LAYER = "data_layer"
@@ -91,6 +94,7 @@ class DeploymentPhase(Enum):
 
 class DeploymentMode(Enum):
     """Deployment execution modes"""
+
     FULL_DEPLOYMENT = "full_deployment"
     INCREMENTAL_UPDATE = "incremental_update"
     ROLLBACK = "rollback"
@@ -128,7 +132,8 @@ class DeploymentOrchestrator:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the deployment orchestrator"""
+        """
+Initialize the deployment orchestrator"""
         self.config_path = config_path or os.getenv('DEPLOYMENT_CONFIG_PATH', '/etc/deployment/config.json')
         self.deployment_managers = {}
         self.deployment_status = {}
@@ -566,7 +571,8 @@ class DeploymentOrchestrator:
 
 
 def main():
-    """Main function for deployment orchestration"""
+    """
+Main function for deployment orchestration"""
     parser = argparse.ArgumentParser(description='IA Influencer Agent Deployment Orchestrator')
     parser.add_argument('--mode', choices=['full', 'incremental', 'rollback', 'status'], 
                        default='status', help='Deployment mode')

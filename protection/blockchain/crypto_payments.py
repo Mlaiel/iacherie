@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class SupportedCryptocurrency(Enum):
-    """Supported cryptocurrencies for payments"""
+    """
+Supported cryptocurrencies for payments"""
+
     ETHEREUM = "ETH"
     BITCOIN = "BTC"
     POLYGON_MATIC = "MATIC"
@@ -62,6 +65,7 @@ class SupportedCryptocurrency(Enum):
 
 class PaymentStatus(Enum):
     """Payment transaction status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -72,6 +76,7 @@ class PaymentStatus(Enum):
 
 class ServiceTier(Enum):
     """Service tiers for content protection"""
+
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -89,7 +94,8 @@ class PaymentRate:
     discount_percentage: Decimal = Decimal('0')
     
     def calculate_crypto_amount(self, usd_amount: Decimal) -> Decimal:
-        """Calculate cryptocurrency amount for USD value"""
+        """
+Calculate cryptocurrency amount for USD value"""
         discounted_amount = usd_amount * (Decimal('1') - self.discount_percentage / Decimal('100'))
         crypto_amount = discounted_amount * self.current_rate
         return crypto_amount.quantize(Decimal('0.000001'), rounding=ROUND_DOWN)
@@ -97,7 +103,8 @@ class PaymentRate:
 
 @dataclass
 class PaymentRequest:
-    """Cryptocurrency payment request"""
+    """
+Cryptocurrency payment request"""
     request_id: str
     user_id: str
     service_type: str
@@ -145,7 +152,8 @@ class PaymentRequest:
 
 
 class PriceOracle:
-    """Cryptocurrency price oracle for real-time rates"""
+    """
+Cryptocurrency price oracle for real-time rates"""
     
     def __init__(self, api_keys: Dict[str, str]):
         self.api_keys = api_keys
@@ -162,7 +170,8 @@ class PriceOracle:
             await self.session.close()
     
     async def get_current_price(self, cryptocurrency: SupportedCryptocurrency) -> Decimal:
-        """Get current USD price for cryptocurrency"""
+        """
+Get current USD price for cryptocurrency"""
         try:
             cache_key = cryptocurrency.value
             
@@ -329,7 +338,8 @@ class PaymentProcessor:
         self._initialize_service_rates()
     
     async def initialize(self) -> bool:
-        """Initialize payment processor"""
+        """
+Initialize payment processor"""
         try:
             # Initialize price oracle
             api_keys = self.config.get('api_keys', {})
@@ -396,7 +406,8 @@ class PaymentProcessor:
         cryptocurrency: SupportedCryptocurrency,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PaymentRequest:
-        """Create a new payment request"""
+        """
+Create a new payment request"""
         try:
             # Get current pricing
             base_rate = self.service_rates.get(service_type)

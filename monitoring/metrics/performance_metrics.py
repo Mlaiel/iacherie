@@ -7,6 +7,7 @@ real-time metrics, APM integration, and comprehensive performance analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -121,7 +122,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceLevel(Enum):
-    """Performance levels for classification"""
+    """
+Performance levels for classification"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -143,7 +146,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition"""
+    """
+Performance alert definition"""
     metric_name: str
     threshold: float
     condition: str  # 'greater_than', 'less_than', 'equals'
@@ -162,7 +166,8 @@ class PerformanceProfiler:
         self.active_profiles = {}
         
     def start_profile(self, operation_name: str) -> str:
-        """Start profiling an operation"""
+        """
+Start profiling an operation"""
         profile_id = f"{operation_name}_{time.time()}"
         self.active_profiles[profile_id] = {
             "name": operation_name,
@@ -255,7 +260,8 @@ class PerformanceMetricsCollector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize performance metrics collector"""
+        """
+Initialize performance metrics collector"""
         self.config = config or {}
         
         # Metrics storage

@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 
@@ -35,7 +36,8 @@ class BlockchainAgentIndex:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Blockchain Agent Index with all services."""
+        """
+Initialize the Blockchain Agent Index with all services."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -308,7 +310,8 @@ class BlockchainAgentIndex:
         return mapping.get(content_type, CopyrightType.VISUAL_ART)
     
     async def _get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status."""
+        """
+Get overall system status."""
         return {
             'blockchain_connections': len(self.blockchain_agent.web3_connections),
             'supported_networks': len(self.blockchain_agent.networks),
@@ -318,7 +321,8 @@ class BlockchainAgentIndex:
         }
     
     def get_service_info(self) -> Dict[str, Any]:
-        """Get information about all available services."""
+        """
+Get information about all available services."""
         return {
             'blockchain_agent': {
                 'description': 'Core blockchain integration and transaction management',
@@ -357,7 +361,8 @@ class BlockchainAgentIndex:
 blockchain_index = None
 
 def get_blockchain_index(config: Optional[Dict] = None) -> BlockchainAgentIndex:
-    """Get or create global blockchain agent index instance."""
+    """
+Get or create global blockchain agent index instance."""
     global blockchain_index
     if blockchain_index is None:
         blockchain_index = BlockchainAgentIndex(config)
@@ -371,7 +376,8 @@ async def create_nft_with_copyright(
     creator_address: str,
     content_type: ContentType = ContentType.IMAGE
 ) -> Dict[str, str]:
-    """Quick function to create NFT with copyright protection."""
+    """
+Quick function to create NFT with copyright protection."""
     index = get_blockchain_index()
     return await index.create_complete_creator_solution(
         creator_address=creator_address,

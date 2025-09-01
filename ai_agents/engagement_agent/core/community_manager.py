@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ from ...integrations.social_platforms import SocialPlatformIntegrator
 logger = logging.getLogger(__name__)
 
 class CommunityRole(Enum):
-    """Community member roles"""
+    """
+Community member roles"""
+
     LEADER = "leader"
     AMBASSADOR = "ambassador"
     ACTIVE_MEMBER = "active_member"
@@ -56,6 +59,7 @@ class CommunityRole(Enum):
 
 class CommunityHealth(Enum):
     """Community health status levels"""
+
     THRIVING = "thriving"
     HEALTHY = "healthy"
     STABLE = "stable"
@@ -64,6 +68,7 @@ class CommunityHealth(Enum):
 
 class EngagementTier(Enum):
     """User engagement tier classification"""
+
     SUPER_ENGAGED = "super_engaged"
     HIGHLY_ENGAGED = "highly_engaged"
     MODERATELY_ENGAGED = "moderately_engaged"
@@ -105,7 +110,8 @@ class CommunityMember:
 
 @dataclass
 class CommunityInsights:
-    """Community analytics and insights"""
+    """
+Community analytics and insights"""
     community_id: str
     platform: str
     analysis_date: datetime
@@ -640,7 +646,8 @@ class CommunityManager:
     async def _classify_member_role(self, 
                                   user_data: Dict[str, Any],
                                   engagement_metrics: Dict[str, Any]) -> CommunityRole:
-        """Classify member role based on engagement and behavior"""
+        """
+Classify member role based on engagement and behavior"""
         try:
             total_interactions = engagement_metrics.get('total_interactions', 0)
             frequency = engagement_metrics.get('frequency', 0.0)

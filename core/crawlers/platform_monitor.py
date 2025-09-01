@@ -6,8 +6,9 @@ de toutes les plateformes digitales pour protection de contenu.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -31,7 +32,9 @@ from ...utils.metrics_collector import MetricsCollector
 
 
 class MonitoringStatus(Enum):
-    """Statuts de surveillance"""
+    """
+Statuts de surveillance"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -41,6 +44,7 @@ class MonitoringStatus(Enum):
 
 class AlertPriority(Enum):
     """Priorités d'alertes"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -65,7 +69,8 @@ class MonitoringTarget:
 
 @dataclass
 class PlatformAlert:
-    """Alerte de plateforme"""
+    """
+Alerte de plateforme"""
     alert_id: str
     target_id: str
     platform: str
@@ -350,7 +355,8 @@ class PlatformMonitoringService:
         target: MonitoringTarget,
         target_data: Dict[str, Any]
     ) -> None:
-        """Configure la surveillance concurrentielle"""
+        """
+Configure la surveillance concurrentielle"""
         competitor_urls = target_data.get('competitor_urls', [])
         shared_keywords = target_data.get('shared_keywords', [])
         
@@ -360,7 +366,8 @@ class PlatformMonitoringService:
             pass
 
     async def start_monitoring(self) -> None:
-        """Démarre le service de surveillance"""
+        """
+Démarre le service de surveillance"""
         try:
             self.monitoring_status = MonitoringStatus.ACTIVE
             self.logger.info("Démarrage du service de surveillance multi-plateformes")
@@ -470,7 +477,8 @@ class PlatformMonitoringService:
         target: MonitoringTarget,
         keywords: List[str]
     ) -> List[Dict[str, Any]]:
-        """Recherche de violations sur une plateforme"""
+        """
+Recherche de violations sur une plateforme"""
         violations = []
         
         try:
@@ -506,7 +514,8 @@ class PlatformMonitoringService:
         target: MonitoringTarget,
         keywords: List[str]
     ) -> List[Dict[str, Any]]:
-        """Recherche de violations sur TikTok"""
+        """
+Recherche de violations sur TikTok"""
         # Implémentation spécialisée TikTok
         return []
 
@@ -515,7 +524,8 @@ class PlatformMonitoringService:
         target: MonitoringTarget,
         keywords: List[str]
     ) -> List[Dict[str, Any]]:
-        """Recherche de violations sur Instagram"""
+        """
+Recherche de violations sur Instagram"""
         # Implémentation spécialisée Instagram
         return []
 
@@ -524,7 +534,8 @@ class PlatformMonitoringService:
         target: MonitoringTarget,
         keywords: List[str]
     ) -> List[Dict[str, Any]]:
-        """Recherche de violations sur Twitter"""
+        """
+Recherche de violations sur Twitter"""
         # Implémentation spécialisée Twitter
         return []
 
@@ -533,7 +544,8 @@ class PlatformMonitoringService:
         target: MonitoringTarget,
         keywords: List[str]
     ) -> List[Dict[str, Any]]:
-        """Recherche de violations sur Facebook"""
+        """
+Recherche de violations sur Facebook"""
         # Implémentation spécialisée Facebook
         return []
 
@@ -543,7 +555,8 @@ class PlatformMonitoringService:
         violation: Dict[str, Any],
         platform: str
     ) -> None:
-        """Traite une violation détectée"""
+        """
+Traite une violation détectée"""
         try:
             # Mise à jour des compteurs
             target.violation_count += 1
@@ -618,7 +631,8 @@ class PlatformMonitoringService:
             return AlertPriority.LOW
 
     async def _send_immediate_notification(self, alert: PlatformAlert) -> None:
-        """Envoie une notification immédiate"""
+        """
+Envoie une notification immédiate"""
         notification_data = {
             'type': 'violation_alert',
             'alert_id': alert.alert_id,
@@ -636,7 +650,8 @@ class PlatformMonitoringService:
         alert: PlatformAlert,
         violation: Dict[str, Any]
     ) -> None:
-        """Déclenche des actions automatiques"""
+        """
+Déclenche des actions automatiques"""
         try:
             if alert.priority == AlertPriority.CRITICAL:
                 # Actions d'urgence
@@ -667,7 +682,8 @@ class PlatformMonitoringService:
         alert: PlatformAlert,
         violation: Dict[str, Any]
     ) -> None:
-        """Exécute des actions rapides"""
+        """
+Exécute des actions rapides"""
         # Collecte d'évidence
         await self._collect_evidence_automatically(alert, violation)
         
@@ -679,12 +695,14 @@ class PlatformMonitoringService:
         alert: PlatformAlert,
         violation: Dict[str, Any]
     ) -> None:
-        """Envoie un DMCA automatique"""
+        """
+Envoie un DMCA automatique"""
         # Intégration avec le copyright guardian
         pass
 
     async def _notify_stakeholders_emergency(self, alert: PlatformAlert) -> None:
-        """Notifie les parties prenantes en urgence"""
+        """
+Notifie les parties prenantes en urgence"""
         # Notifications d'urgence
         pass
 
@@ -693,7 +711,8 @@ class PlatformMonitoringService:
         alert: PlatformAlert,
         violation: Dict[str, Any]
     ) -> None:
-        """Collecte automatiquement les preuves"""
+        """
+Collecte automatiquement les preuves"""
         # Collecte d'évidence
         pass
 
@@ -702,12 +721,14 @@ class PlatformMonitoringService:
         alert: PlatformAlert,
         violation: Dict[str, Any]
     ) -> None:
-        """Prépare une demande de takedown"""
+        """
+Prépare une demande de takedown"""
         # Préparation takedown
         pass
 
     async def _run_seo_monitoring(self) -> None:
-        """Exécute la surveillance SEO"""
+        """
+Exécute la surveillance SEO"""
         while self.monitoring_status == MonitoringStatus.ACTIVE:
             try:
                 # Surveillance SEO
@@ -731,7 +752,8 @@ class PlatformMonitoringService:
         pass
 
     async def _run_piracy_monitoring(self) -> None:
-        """Exécute la surveillance de piratage"""
+        """
+Exécute la surveillance de piratage"""
         while self.monitoring_status == MonitoringStatus.ACTIVE:
             try:
                 # Surveillance piratage
@@ -773,7 +795,8 @@ class PlatformMonitoringService:
         self.real_time_metrics.last_updated = datetime.now()
 
     async def _broadcast_metrics_update(self) -> None:
-        """Diffuse les métriques via WebSocket"""
+        """
+Diffuse les métriques via WebSocket"""
         if self.websocket_clients:
             metrics_data = {
                 'type': 'metrics_update',
@@ -793,7 +816,8 @@ class PlatformMonitoringService:
             self.websocket_clients -= disconnected_clients
 
     async def _run_alert_processing(self) -> None:
-        """Traite les alertes en continu"""
+        """
+Traite les alertes en continu"""
         while self.monitoring_status == MonitoringStatus.ACTIVE:
             try:
                 # Traitement des alertes non résolues
@@ -820,12 +844,14 @@ class PlatformMonitoringService:
                 await self._escalate_alert(alert)
 
     async def _escalate_alert(self, alert: PlatformAlert) -> None:
-        """Escalade une alerte"""
+        """
+Escalade une alerte"""
         # Escalade vers un niveau supérieur
         await self.notification_manager.send_escalation_notice(alert)
 
     async def _run_websocket_server(self) -> None:
-        """Démarre le serveur WebSocket pour temps réel"""
+        """
+Démarre le serveur WebSocket pour temps réel"""
         try:
             async def handle_client(websocket, path):
                 self.websocket_clients.add(websocket)
@@ -888,7 +914,8 @@ class PlatformMonitoringService:
         }
 
     def _get_targets_by_type_stats(self) -> Dict[str, int]:
-        """Statistiques des cibles par type"""
+        """
+Statistiques des cibles par type"""
         stats = {}
         for target in self.monitoring_targets.values():
             target_type = target.target_type
@@ -896,7 +923,8 @@ class PlatformMonitoringService:
         return stats
 
     def _get_top_platforms_stats(self) -> List[Dict[str, Any]]:
-        """Statistiques des principales plateformes"""
+        """
+Statistiques des principales plateformes"""
         platform_counts = {}
         for target in self.monitoring_targets.values():
             for platform in target.platforms:
@@ -908,7 +936,8 @@ class PlatformMonitoringService:
         ][:5]
 
     def _get_alerts_by_priority_stats(self) -> Dict[str, int]:
-        """Statistiques des alertes par priorité"""
+        """
+Statistiques des alertes par priorité"""
         stats = {}
         for alert in self.platform_alerts.values():
             priority = alert.priority.value
@@ -916,7 +945,8 @@ class PlatformMonitoringService:
         return stats
 
     def _get_recent_alerts(self) -> List[Dict[str, Any]]:
-        """Alertes récentes"""
+        """
+Alertes récentes"""
         recent_alerts = sorted(
             self.platform_alerts.values(),
             key=lambda x: x.created_at,
@@ -936,7 +966,8 @@ class PlatformMonitoringService:
         ]
 
     def _calculate_monitoring_success_rate(self) -> float:
-        """Calcule le taux de succès de surveillance"""
+        """
+Calcule le taux de succès de surveillance"""
         total_targets = len(self.monitoring_targets)
         successful_targets = len([
             t for t in self.monitoring_targets.values()

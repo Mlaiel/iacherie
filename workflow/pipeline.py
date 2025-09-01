@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, List, Optional, Callable, Any, Union
 from enum import Enum
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from ..utils.caching import CacheManager
 
 
 class PipelineStatus(Enum):
-    """Enhanced pipeline execution status."""
+    """
+Enhanced pipeline execution status."""
+
     PENDING = "pending"
     QUEUED = "queued"
     RUNNING = "running"
@@ -36,6 +39,7 @@ class PipelineStatus(Enum):
 
 class PipelineStepType(Enum):
     """Types of pipeline steps."""
+
     VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     ANALYSIS = "analysis"
@@ -47,6 +51,7 @@ class PipelineStepType(Enum):
 
 class ExecutionStrategy(Enum):
     """Pipeline execution strategies."""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -86,7 +91,8 @@ class PipelineStep:
         return self._evaluate_conditions(context)
     
     def _evaluate_conditions(self, context: Dict[str, Any]) -> bool:
-        """Evaluate step conditions against context."""
+        """
+Evaluate step conditions against context."""
         if not self.conditions:
             return True
         
@@ -155,7 +161,8 @@ class PipelineStep:
 
 
 class IntelligentContentPipeline:
-    """Intelligent content processing pipeline with adaptive routing."""
+    """
+Intelligent content processing pipeline with adaptive routing."""
     
     def __init__(self, pipeline_id: str = None, config: Dict[str, Any] = None):
         self.pipeline_id = pipeline_id or f"pipeline_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
@@ -205,11 +212,13 @@ class IntelligentContentPipeline:
         return self
     
     def get_context(self, key: str, default: Any = None) -> Any:
-        """Get context data."""
+        """
+Get context data."""
         return self.context.get(key, default)
     
     async def execute(self, content_item: ContentItem = None) -> Dict[str, Any]:
-        """Execute the entire pipeline with intelligent routing."""
+        """
+Execute the entire pipeline with intelligent routing."""
         if content_item:
             self.set_context("content_item", content_item)
         
@@ -426,7 +435,8 @@ class IntelligentContentPipeline:
                 break
     
     def _find_available_steps(self) -> List[str]:
-        """Find steps that can now be executed."""
+        """
+Find steps that can now be executed."""
         available_steps = []
         
         for step_name, step in self.steps.items():
@@ -443,7 +453,8 @@ class IntelligentContentPipeline:
         return available_steps
     
     async def _resolve_stuck_pipeline(self, remaining_steps: Set[str]) -> bool:
-        """Attempt to resolve stuck pipeline by analyzing dependencies."""
+        """
+Attempt to resolve stuck pipeline by analyzing dependencies."""
         self.logger.info(f"Attempting to resolve stuck pipeline with steps: {remaining_steps}")
         
         # Analyze dependencies
@@ -525,7 +536,8 @@ class IntelligentContentPipeline:
         return True
     
     def _build_execution_summary(self) -> Dict[str, Any]:
-        """Build comprehensive execution summary."""
+        """
+Build comprehensive execution summary."""
         duration = (self.end_time - self.start_time).total_seconds() if self.end_time and self.start_time else 0
         
         return {
@@ -585,7 +597,8 @@ class IntelligentContentPipeline:
         return min(total_processing_time / pipeline_duration, self.max_parallel_steps) / self.max_parallel_steps
     
     def pause(self):
-        """Pause pipeline execution."""
+        """
+Pause pipeline execution."""
         self.status = PipelineStatus.PAUSED
         self.logger.info(f"Paused pipeline: {self.pipeline_id}")
     
@@ -627,12 +640,14 @@ class IntelligentContentPipeline:
         return dict(self.execution_graph)
     
     async def finalize_execution(self) -> Dict[str, Any]:
-        """Finalize pipeline execution."""
+        """
+Finalize pipeline execution."""
         self.end_time = datetime.utcnow()
         return self.get_execution_summary()
 
     async def _execute_step(self, step: PipelineStep) -> bool:
-        """Execute a single pipeline step."""
+        """
+Execute a single pipeline step."""
         step.status = PipelineStatus.RUNNING
         step.start_time = datetime.utcnow()
         
@@ -667,7 +682,8 @@ class IntelligentContentPipeline:
         return False
 
     def get_execution_summary(self) -> Dict:
-        """Get summary of pipeline execution."""
+        """
+Get summary of pipeline execution."""
         duration = None
         if self.start_time and self.end_time:
             duration = (self.end_time - self.start_time).total_seconds()

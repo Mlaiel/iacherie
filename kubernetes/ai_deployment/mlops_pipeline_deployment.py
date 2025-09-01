@@ -6,8 +6,9 @@ including continuous training, automated model validation, deployment pipelines,
 monitoring, and governance for AI/ML models in production.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStage(Enum):
-    """MLOps pipeline stages"""
+    """
+MLOps pipeline stages"""
+
     DATA_INGESTION = "data_ingestion"
     DATA_VALIDATION = "data_validation"
     DATA_PREPROCESSING = "data_preprocessing"
@@ -44,6 +47,7 @@ class PipelineStage(Enum):
 
 class TriggerType(Enum):
     """Pipeline trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     DATA_DRIFT = "data_drift"
@@ -56,6 +60,7 @@ class TriggerType(Enum):
 
 class ValidationStrategy(Enum):
     """Model validation strategies"""
+
     CROSS_VALIDATION = "cross_validation"
     HOLDOUT_VALIDATION = "holdout_validation"
     TIME_SERIES_SPLIT = "time_series_split"
@@ -67,6 +72,7 @@ class ValidationStrategy(Enum):
 
 class DeploymentStrategy(Enum):
     """Model deployment strategies"""
+
     BLUE_GREEN = "blue_green"
     ROLLING_UPDATE = "rolling_update"
     CANARY_DEPLOYMENT = "canary_deployment"
@@ -1029,7 +1035,8 @@ class MLOpsPipelineDeployment:
         return stage_deployments
     
     async def _create_stage_config(self, stage: PipelineStage, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Create configuration for individual pipeline stage"""
+        """
+Create configuration for individual pipeline stage"""
         base_config = {
             "pipeline_id": pipeline_id,
             "stage": stage.value,

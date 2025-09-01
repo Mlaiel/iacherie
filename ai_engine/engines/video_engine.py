@@ -4,7 +4,7 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 Advanced AI-powered video processing engine for comedians, influencers, and video creators.
 
 PROPRIETARY CODE - CONFIDENTIAL
-© 2025 IA-Influencer-Agent Team. All Rights Reserved.
+(c) 2025 IA-Influencer-Agent Team. All Rights Reserved.
 
 Team Development:
 - Lead AI Engineer: Dr. Alexandra Chen
@@ -19,6 +19,7 @@ Any violation will be prosecuted to the full extent of the law.
 
 Business Logic: User Upload → AI Analysis → Scene Detection → Quality Assessment → Recommendations
 """
+
 import asyncio
 import numpy as np
 import logging
@@ -36,7 +37,9 @@ from pathlib import Path
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class VideoFormat(Enum):
-    """Supported video formats"""
+    """
+Supported video formats"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -47,6 +50,7 @@ class VideoFormat(Enum):
 
 class VideoQuality(Enum):
     """Video quality presets"""
+
     LOW_360P = "360p"
     MEDIUM_720P = "720p"
     HIGH_1080P = "1080p"
@@ -55,6 +59,7 @@ class VideoQuality(Enum):
 
 class VideoCodec(Enum):
     """Video codecs"""
+
     H264 = "h264"
     H265 = "h265"
     VP9 = "vp9"
@@ -246,7 +251,8 @@ class VideoProcessingEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive video protection"""
+        """
+Apply comprehensive video protection"""
         # Generate video fingerprint
         fingerprint = await self._generate_video_fingerprint(content)
         
@@ -268,7 +274,8 @@ class VideoProcessingEngine(BaseContentEngine):
         }
     
     async def _load_video_models(self):
-        """Load video processing AI models"""
+        """
+Load video processing AI models"""
         self.logger.info("Loading video processing models...")
         await asyncio.sleep(0.3)
         
@@ -460,7 +467,8 @@ class VideoProcessingEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _extract_video_seo_features(self, content: Any) -> Dict[str, Any]:
-        """Extract features for SEO optimization"""
+        """
+Extract features for SEO optimization"""
         return {
             'duration': 300,
             'quality': 'HD',
@@ -474,7 +482,8 @@ class VideoProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_video_title(self, features: Dict, keywords: List[str]) -> str:
-        """Generate SEO-optimized video title"""
+        """
+Generate SEO-optimized video title"""
         category = features.get('category', 'Content')
         mood = features.get('mood', 'Professional')
         keyword = keywords[0] if keywords else 'Video'
@@ -497,7 +506,8 @@ class VideoProcessingEngine(BaseContentEngine):
         return list(set(base_tags + keywords[:7]))
     
     async def _generate_video_timestamps(self, content: Any) -> List[Dict[str, Any]]:
-        """Generate video timestamps for navigation"""
+        """
+Generate video timestamps for navigation"""
         return [
             {'time': '0:00', 'title': 'Introduction'},
             {'time': '1:00', 'title': 'Main Content'},
@@ -506,7 +516,8 @@ class VideoProcessingEngine(BaseContentEngine):
         ]
     
     async def _generate_closed_captions(self, content: Any) -> Dict[str, Any]:
-        """Generate closed captions for accessibility"""
+        """
+Generate closed captions for accessibility"""
         return {
             'available': True,
             'languages': ['en', 'de', 'fr'],
@@ -516,7 +527,8 @@ class VideoProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_social_previews(self, content: Any) -> Dict[str, Any]:
-        """Generate social media previews"""
+        """
+Generate social media previews"""
         return {
             'youtube': {'duration': 60, 'aspect_ratio': '16:9'},
             'instagram': {'duration': 15, 'aspect_ratio': '1:1'},
@@ -525,7 +537,8 @@ class VideoProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_video_schema(self, features: Dict) -> Dict[str, Any]:
-        """Generate schema.org markup for video"""
+        """
+Generate schema.org markup for video"""
         return {
             "@context": "https://schema.org",
             "@type": "VideoObject",
@@ -672,11 +685,13 @@ class VisualEffectsEngine(BaseContentEngine):
         return {}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """VFX content protection"""
+        """
+VFX content protection"""
         return {'protected': True, 'vfx_watermark': True}
     
     async def _load_vfx_models(self):
-        """Load VFX processing models"""
+        """
+Load VFX processing models"""
         self.logger.info("Loading VFX models...")
         await asyncio.sleep(0.3)
         
@@ -844,11 +859,13 @@ class VideoCompressionEngine(BaseContentEngine):
         return {'optimized_delivery': True, 'fast_loading': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Content protection is maintained during compression"""
+        """
+Content protection is maintained during compression"""
         return {'protection_preserved': True}
     
     async def _init_compression_algorithms(self):
-        """Initialize compression algorithms"""
+        """
+Initialize compression algorithms"""
         self.logger.info("Initializing compression algorithms...")
         await asyncio.sleep(0.2)
         

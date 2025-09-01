@@ -26,6 +26,7 @@ and international copyright laws.
 
 Specialization: Vector Database Architecture & High-Performance Similarity Search
 """
+
 import asyncio
 import logging
 import json
@@ -63,7 +64,9 @@ logger = logging.getLogger(__name__)
 
 
 class VectorDBType(Enum):
-    """Supported vector database types."""
+    """
+Supported vector database types."""
+
     FAISS = "faiss"
     CHROMADB = "chromadb"
     PINECONE = "pinecone"
@@ -76,6 +79,7 @@ class VectorDBType(Enum):
 
 class IndexType(Enum):
     """Vector index types."""
+
     FLAT = "flat"
     IVF_FLAT = "ivf_flat"
     IVF_PQ = "ivf_pq"
@@ -87,6 +91,7 @@ class IndexType(Enum):
 
 class DistanceMetric(Enum):
     """Distance metrics for similarity search."""
+
     EUCLIDEAN = "euclidean"
     COSINE = "cosine"
     DOT_PRODUCT = "dot_product"
@@ -137,7 +142,8 @@ class VectorDatabaseDeploymentManager:
     - Cost optimization
     """
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the vector database deployment manager."""
+        """
+Initialize the vector database deployment manager."""
         self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
@@ -1014,7 +1020,8 @@ class VectorDatabaseDeploymentManager:
         metadata: Optional[List[Dict[str, Any]]],
         ids: Optional[List[str]]
     ) -> bool:
-        """Add vectors to Pinecone index."""
+        """
+Add vectors to Pinecone index."""
         # Implementation for Pinecone vector addition
         return True
 
@@ -1026,7 +1033,8 @@ class VectorDatabaseDeploymentManager:
         metadata: Optional[List[Dict[str, Any]]],
         ids: Optional[List[str]]
     ) -> bool:
-        """Add vectors to Weaviate collection."""
+        """
+Add vectors to Weaviate collection."""
         # Implementation for Weaviate vector addition
         return True
 
@@ -1038,7 +1046,8 @@ class VectorDatabaseDeploymentManager:
         metadata: Optional[List[Dict[str, Any]]],
         ids: Optional[List[str]]
     ) -> bool:
-        """Add vectors to Qdrant collection."""
+        """
+Add vectors to Qdrant collection."""
         # Implementation for Qdrant vector addition
         return True
 
@@ -1050,7 +1059,8 @@ class VectorDatabaseDeploymentManager:
         top_k: int,
         filter_dict: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Search vectors in FAISS index."""
+        """
+Search vectors in FAISS index."""
         # Implementation for FAISS vector search
         return []
 
@@ -1062,7 +1072,8 @@ class VectorDatabaseDeploymentManager:
         top_k: int,
         filter_dict: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Search vectors in Pinecone index."""
+        """
+Search vectors in Pinecone index."""
         # Implementation for Pinecone vector search
         return []
 
@@ -1074,7 +1085,8 @@ class VectorDatabaseDeploymentManager:
         top_k: int,
         filter_dict: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Search vectors in Weaviate collection."""
+        """
+Search vectors in Weaviate collection."""
         # Implementation for Weaviate vector search
         return []
 
@@ -1086,12 +1098,14 @@ class VectorDatabaseDeploymentManager:
         top_k: int,
         filter_dict: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Search vectors in Qdrant collection."""
+        """
+Search vectors in Qdrant collection."""
         # Implementation for Qdrant vector search
         return []
 
     def get_deployment_status(self, deployment_id: str) -> Dict[str, Any]:
-        """Get vector database deployment status."""
+        """
+Get vector database deployment status."""
         if deployment_id not in self.active_deployments:
             return {"status": "not_found"}
         
@@ -1102,7 +1116,8 @@ class VectorDatabaseDeploymentManager:
         return list(self.active_deployments.values())
 
     async def scale_deployment(self, deployment_id: str, replicas: int) -> bool:
-        """Scale vector database deployment."""
+        """
+Scale vector database deployment."""
         try:
             if deployment_id not in self.active_deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")

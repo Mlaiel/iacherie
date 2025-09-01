@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -58,7 +59,9 @@ from ...core.enums import ContentType, PlatformType, CreatorType
 
 
 class CreatorTier(str, Enum):
-    """Creator tier classification"""
+    """
+Creator tier classification"""
+
     NANO = "nano"                    # 1K - 10K followers
     MICRO = "micro"                  # 10K - 100K followers  
     MACRO = "macro"                  # 100K - 1M followers
@@ -68,6 +71,7 @@ class CreatorTier(str, Enum):
 
 class MatchingStatus(str, Enum):
     """Collaboration matching status"""
+
     PENDING = "pending"
     MATCHED = "matched"
     ACCEPTED = "accepted"
@@ -79,6 +83,7 @@ class MatchingStatus(str, Enum):
 
 class CollaborationType(str, Enum):
     """Types of creator collaborations"""
+
     DUET = "duet"                           # Musical/Video duets
     REMIX = "remix"                         # Content remixing
     CROSS_PROMOTION = "cross_promotion"     # Audience sharing
@@ -95,6 +100,7 @@ class CollaborationType(str, Enum):
 
 class CompatibilityFactor(str, Enum):
     """Factors affecting creator compatibility"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     BRAND_ALIGNMENT = "brand_alignment"
@@ -111,6 +117,7 @@ class CompatibilityFactor(str, Enum):
 
 class MatchingPriority(str, Enum):
     """Priority levels for matching requests"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -210,7 +217,8 @@ class CreatorProfile(BaseBusinessModel):
 
 @dataclass 
 class MatchingCriteria(BaseBusinessModel):
-    """Advanced matching criteria configuration"""
+    """
+Advanced matching criteria configuration"""
     
     # Basic Filters
     min_followers: Optional[int] = None
@@ -263,7 +271,8 @@ class MatchingCriteria(BaseBusinessModel):
 
 @dataclass
 class CreatorCompatibility(BaseBusinessModel):
-    """Detailed compatibility analysis between two creators"""
+    """
+Detailed compatibility analysis between two creators"""
     
     creator_a_id: str
     creator_b_id: str

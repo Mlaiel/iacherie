@@ -14,6 +14,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import pytest
 import asyncio
 from decimal import Decimal
@@ -51,10 +52,12 @@ from IA_Influencer_Agent.backend.database.payment_processing import (
 
 
 class TestPaymentModels:
-    """Test payment models and enums"""
+    """
+Test payment models and enums"""
     
     def test_payment_status_enum(self):
-        """Test PaymentStatus enum values"""
+        """
+Test PaymentStatus enum values"""
         assert PaymentStatus.PENDING.value == "pending"
         assert PaymentStatus.PROCESSING.value == "processing"
         assert PaymentStatus.COMPLETED.value == "completed"
@@ -89,12 +92,14 @@ class TestEnterprisePaymentProcessingService:
     
     @pytest.fixture
     def payment_service(self):
-        """Create payment service instance for testing"""
+        """
+Create payment service instance for testing"""
         return EnterprisePaymentProcessingService()
     
     @pytest.mark.asyncio
     async def test_process_payment_success(self, payment_service):
-        """Test successful payment processing"""
+        """
+Test successful payment processing"""
         # Mock dependencies
         with patch.object(payment_service, 'gateway_manager') as mock_gateway:
             mock_gateway.process_payment.return_value = {
@@ -119,7 +124,8 @@ class TestEnterprisePaymentProcessingService:
     
     @pytest.mark.asyncio
     async def test_process_payment_fraud_detection(self, payment_service):
-        """Test payment processing with fraud detection"""
+        """
+Test payment processing with fraud detection"""
         with patch.object(payment_service, 'fraud_engine') as mock_fraud:
             mock_fraud.assess_transaction_risk.return_value = FraudAssessmentResult(
                 risk_score=0.9,
@@ -147,7 +153,8 @@ class TestEnterprisePaymentProcessingService:
     
     @pytest.mark.asyncio
     async def test_process_refund(self, payment_service):
-        """Test refund processing"""
+        """
+Test refund processing"""
         with patch.object(payment_service, 'gateway_manager') as mock_gateway:
             mock_gateway.process_refund.return_value = {
                 'status': 'success',
@@ -168,15 +175,18 @@ class TestEnterprisePaymentProcessingService:
 
 
 class TestPaymentGatewayManager:
-    """Test payment gateway management"""
+    """
+Test payment gateway management"""
     
     @pytest.fixture
     def gateway_manager(self):
-        """Create gateway manager instance for testing"""
+        """
+Create gateway manager instance for testing"""
         return PaymentGatewayManager()
     
     def test_gateway_registration(self, gateway_manager):
-        """Test payment gateway registration"""
+        """
+Test payment gateway registration"""
         stripe_gateway = StripeGateway()
         paypal_gateway = PayPalGateway()
         
@@ -188,7 +198,8 @@ class TestPaymentGatewayManager:
     
     @pytest.mark.asyncio
     async def test_gateway_health_check(self, gateway_manager):
-        """Test gateway health monitoring"""
+        """
+Test gateway health monitoring"""
         with patch.object(gateway_manager, 'health_monitor') as mock_monitor:
             mock_monitor.check_gateway_health.return_value = {
                 'status': 'healthy',
@@ -203,7 +214,8 @@ class TestPaymentGatewayManager:
     
     @pytest.mark.asyncio
     async def test_gateway_failover(self, gateway_manager):
-        """Test automatic gateway failover"""
+        """
+Test automatic gateway failover"""
         # Simulate primary gateway failure
         with patch.object(gateway_manager, 'circuit_breaker') as mock_breaker:
             mock_breaker.is_open.return_value = True  # Primary gateway down
@@ -220,16 +232,19 @@ class TestPaymentGatewayManager:
 
 
 class TestFraudDetectionEngine:
-    """Test fraud detection system"""
+    """
+Test fraud detection system"""
     
     @pytest.fixture
     def fraud_engine(self):
-        """Create fraud detection engine for testing"""
+        """
+Create fraud detection engine for testing"""
         return AdvancedFraudDetectionEngine()
     
     @pytest.mark.asyncio
     async def test_fraud_assessment_high_risk(self, fraud_engine):
-        """Test fraud assessment for high-risk transaction"""
+        """
+Test fraud assessment for high-risk transaction"""
         assessment_request = FraudAssessmentRequest(
             user_id='user_123',
             amount=Decimal('50000.00'),  # Very high amount
@@ -253,7 +268,8 @@ class TestFraudDetectionEngine:
     
     @pytest.mark.asyncio
     async def test_fraud_assessment_low_risk(self, fraud_engine):
-        """Test fraud assessment for low-risk transaction"""
+        """
+Test fraud assessment for low-risk transaction"""
         assessment_request = FraudAssessmentRequest(
             user_id='user_123',
             amount=Decimal('25.00'),  # Normal amount
@@ -282,16 +298,19 @@ class TestFraudDetectionEngine:
 
 
 class TestTransactionAnalytics:
-    """Test transaction analytics system"""
+    """
+Test transaction analytics system"""
     
     @pytest.fixture
     def analytics_engine(self):
-        """Create analytics engine for testing"""
+        """
+Create analytics engine for testing"""
         return AdvancedTransactionAnalytics()
     
     @pytest.mark.asyncio
     async def test_real_time_dashboard(self, analytics_engine):
-        """Test real-time dashboard generation"""
+        """
+Test real-time dashboard generation"""
         with patch.object(analytics_engine, '_get_real_time_metrics') as mock_metrics:
             mock_metrics.return_value = {
                 'transactions_per_minute': 150,
@@ -308,7 +327,8 @@ class TestTransactionAnalytics:
     
     @pytest.mark.asyncio
     async def test_revenue_trends_analysis(self, analytics_engine):
-        """Test revenue trends analysis"""
+        """
+Test revenue trends analysis"""
         with patch.object(analytics_engine.revenue_repo, 'get_revenue_trends') as mock_trends:
             mock_trends.return_value = [
                 {
@@ -337,7 +357,8 @@ class TestTransactionAnalytics:
     
     @pytest.mark.asyncio
     async def test_custom_analytics_query(self, analytics_engine):
-        """Test custom analytics query processing"""
+        """
+Test custom analytics query processing"""
         query = AnalyticsQuery(
             metric_type=MetricType.REVENUE,
             timeframe=AnalyticsTimeframe.DAILY,
@@ -368,16 +389,19 @@ class TestTransactionAnalytics:
 
 
 class TestComplianceManager:
-    """Test compliance management system"""
+    """
+Test compliance management system"""
     
     @pytest.fixture
     def compliance_manager(self):
-        """Create compliance manager for testing"""
+        """
+Create compliance manager for testing"""
         return AdvancedComplianceManager()
     
     @pytest.mark.asyncio
     async def test_pci_dss_compliance_check(self, compliance_manager):
-        """Test PCI DSS compliance assessment"""
+        """
+Test PCI DSS compliance assessment"""
         with patch.object(compliance_manager, '_execute_pci_check') as mock_pci:
             mock_pci.return_value = {
                 'status': 'PASSED',
@@ -393,7 +417,8 @@ class TestComplianceManager:
     
     @pytest.mark.asyncio
     async def test_gdpr_compliance_check(self, compliance_manager):
-        """Test GDPR compliance assessment"""
+        """
+Test GDPR compliance assessment"""
         with patch.object(compliance_manager, '_execute_gdpr_check') as mock_gdpr:
             mock_gdpr.return_value = {
                 'status': 'PASSED',
@@ -408,7 +433,8 @@ class TestComplianceManager:
     
     @pytest.mark.asyncio
     async def test_compliance_violation_handling(self, compliance_manager):
-        """Test compliance violation detection and handling"""
+        """
+Test compliance violation detection and handling"""
         # Simulate a compliance violation
         with patch.object(compliance_manager, '_check_data_encryption') as mock_encryption:
             mock_encryption.return_value = {
@@ -426,16 +452,19 @@ class TestComplianceManager:
 
 
 class TestWebhookManager:
-    """Test webhook management system"""
+    """
+Test webhook management system"""
     
     @pytest.fixture
     def webhook_manager(self):
-        """Create webhook manager for testing"""
+        """
+Create webhook manager for testing"""
         return AdvancedWebhookManager()
     
     @pytest.mark.asyncio
     async def test_stripe_webhook_processing(self, webhook_manager):
-        """Test Stripe webhook processing"""
+        """
+Test Stripe webhook processing"""
         # Mock Stripe webhook payload
         headers = {
             'Stripe-Signature': 't=1234567890,v1=test_signature'
@@ -485,11 +514,13 @@ class TestWebhookManager:
 
 
 class TestPerformance:
-    """Performance tests for payment processing"""
+    """
+Performance tests for payment processing"""
     
     @pytest.mark.asyncio
     async def test_concurrent_payment_processing(self):
-        """Test concurrent payment processing performance"""
+        """
+Test concurrent payment processing performance"""
         payment_service = EnterprisePaymentProcessingService()
         
         # Mock gateway processing
@@ -533,7 +564,8 @@ class TestPerformance:
     
     @pytest.mark.asyncio
     async def test_fraud_detection_performance(self):
-        """Test fraud detection performance under load"""
+        """
+Test fraud detection performance under load"""
         fraud_engine = AdvancedFraudDetectionEngine()
         
         # Create multiple fraud assessment requests

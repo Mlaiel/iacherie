@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QueryPerformanceMetric:
-    """Performance metrics for search queries"""
+    """
+Performance metrics for search queries"""
     query_hash: str
     execution_time: float
     result_count: int
@@ -47,7 +49,8 @@ class QueryPerformanceMetric:
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
+    """
+Cache entry with metadata"""
     query_hash: str
     results: List[VectorSearchResult]
     created_at: datetime
@@ -58,7 +61,8 @@ class CacheEntry:
 
 
 class QueryCache:
-    """Intelligent query result caching system"""
+    """
+Intelligent query result caching system"""
     
     def __init__(self, max_size: int = 10000, default_ttl: int = 3600):
         self.max_size = max_size
@@ -158,7 +162,8 @@ class QueryCache:
         return age < entry.ttl_seconds
     
     def _evict_oldest(self) -> None:
-        """Evict oldest cache entry"""
+        """
+Evict oldest cache entry"""
         if self.cache:
             query_hash, entry = self.cache.popitem(last=False)
             self.cache_stats["total_size_bytes"] -= entry.size_bytes
@@ -178,7 +183,8 @@ class QueryCache:
         return base_size
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
         hit_rate = self.cache_stats["hits"] / total_requests if total_requests > 0 else 0.0
         
@@ -201,7 +207,8 @@ class QueryOptimizer:
         self.optimization_rules: Dict[str, Any] = self._initialize_optimization_rules()
     
     def _initialize_optimization_rules(self) -> Dict[str, Any]:
-        """Initialize optimization rules based on content types and patterns"""
+        """
+Initialize optimization rules based on content types and patterns"""
         return {
             "similarity_threshold_adjustment": {
                 "audio": {"min": 0.65, "max": 0.95, "optimal": 0.80},
@@ -241,7 +248,8 @@ class QueryOptimizer:
         return optimized_request
     
     def _optimize_similarity_threshold(self, request: VectorSearchRequest) -> VectorSearchRequest:
-        """Optimize similarity threshold based on content type and history"""
+        """
+Optimize similarity threshold based on content type and history"""
         content_type = request.content_type
         current_threshold = request.similarity_threshold
         
@@ -345,7 +353,8 @@ class QueryOptimizer:
         ]
     
     def _get_recent_performance(self, content_type: str, limit: int = 10) -> List[QueryPerformanceMetric]:
-        """Get recent performance metrics"""
+        """
+Get recent performance metrics"""
         content_metrics = [
             metric for metric in self.performance_history
             if metric.content_type == content_type
@@ -356,14 +365,16 @@ class QueryOptimizer:
 
 
 class ResultEnhancer:
-    """Advanced result enhancement and post-processing"""
+    """
+Advanced result enhancement and post-processing"""
     
     def __init__(self, config: VectorConfig):
         self.config = config
     
     def enhance_results(self, results: List[VectorSearchResult], 
                        request: VectorSearchRequest) -> List[VectorSearchResult]:
-        """Enhance search results with additional processing"""
+        """
+Enhance search results with additional processing"""
         try:
             enhanced_results = []
             
@@ -581,7 +592,8 @@ class SearchOptimizer:
         return self.query_cache.get_statistics()
     
     async def clear_cache(self) -> None:
-        """Clear optimization cache"""
+        """
+Clear optimization cache"""
         self.query_cache.clear()
         logger.info("Search optimization cache cleared")
     

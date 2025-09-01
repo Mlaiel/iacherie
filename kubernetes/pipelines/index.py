@@ -3,7 +3,7 @@
 Enterprise-Grade Pipeline System with Advanced Content Protection & Monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This index file provides the main entry point for the complete IA Influencer Agent pipeline 
 management system, including content protection, revenue recovery, AI processing, and 
@@ -29,6 +29,7 @@ Usage:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import sys
 import os
 import asyncio
@@ -77,7 +78,7 @@ def display_banner():
     🚀 IA Influencer Agent - Pipeline Management System
     
     Author: Fahed Mlaiel <mlaiel@live.de>
-    Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
     
     ⚠️  WARNING: This software is proprietary and confidential.
         Unauthorized use is strictly prohibited and will be prosecuted
@@ -106,7 +107,8 @@ def display_banner():
     print(banner)
 
 def check_dependencies():
-    """Check if required dependencies are available"""
+    """
+Check if required dependencies are available"""
     required_packages = [
         'fastapi', 'uvicorn', 'prometheus_client', 'aiohttp', 
         'pydantic', 'yaml', 'jinja2'
@@ -140,13 +142,14 @@ def show_system_info():
     """)
 
 def main_entry():
-    """Main entry point with enhanced error handling and information"""
+    """
+Main entry point with enhanced error handling and information"""
     
     # Check if running with --version or --info flags
     if '--version' in sys.argv:
         print("IA Influencer Agent Pipeline System v1.0.0")
         print("Author: Fahed Mlaiel <mlaiel@live.de>")
-        print("Copyright: © 2025 Fahed Mlaiel. All rights reserved.")
+        print("Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.")
         return
         
     if '--info' in sys.argv:

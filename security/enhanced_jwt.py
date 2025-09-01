@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class TokenType(Enum):
-    """JWT token types"""
+    """
+JWT token types"""
+
     ACCESS = "access"
     REFRESH = "refresh"
     ID = "id"
@@ -45,6 +48,7 @@ class TokenType(Enum):
 
 class TokenSecurityLevel(Enum):
     """Token security levels"""
+
     STANDARD = "standard"
     HIGH = "high"
     ENTERPRISE = "enterprise"
@@ -67,7 +71,8 @@ class TokenFamily:
 
 @dataclass
 class TokenMetrics:
-    """Token usage metrics"""
+    """
+Token usage metrics"""
     issued_count: int = 0
     refreshed_count: int = 0
     revoked_count: int = 0
@@ -76,7 +81,8 @@ class TokenMetrics:
 
 
 class EnhancedJWTManager:
-    """Enhanced JWT manager with token rotation and security features"""
+    """
+Enhanced JWT manager with token rotation and security features"""
     
     def __init__(
         self,
@@ -109,7 +115,8 @@ class EnhancedJWTManager:
             self.redis_client = await aioredis.from_url(self.redis_url)
             
     def _derive_security_keys(self):
-        """Derive additional security keys from master secret"""
+        """
+Derive additional security keys from master secret"""
         # Create HMAC key for token signing
         self.signing_key = hmac.new(
             self.secret_key.encode(),
@@ -410,7 +417,8 @@ class EnhancedJWTManager:
                 await self.revoke_token_family(family_id)
                 
     async def _store_token_family(self, family: TokenFamily):
-        """Store token family in Redis"""
+        """
+Store token family in Redis"""
         family_key = f"token_family:{family.family_id}"
         family_data = {
             "family_id": family.family_id,
@@ -478,7 +486,8 @@ class EnhancedJWTManager:
         return self.metrics
         
     async def get_user_active_sessions(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get active sessions for a user"""
+        """
+Get active sessions for a user"""
         families = await self._get_user_families(user_id)
         sessions = []
         

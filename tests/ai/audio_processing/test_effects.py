@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -23,8 +24,9 @@ Comprehensive testing for professional audio effects and restoration including:
 - Effects chain validation
 
 Created by Expert Team: Audio Developer + Backend Senior + ML Engineer
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -72,7 +74,8 @@ class TestEffectsProcessor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.effects = EffectsProcessor()
         self.processor = AudioProcessor()
@@ -87,7 +90,8 @@ class TestEffectsProcessor:
         assert effects.sample_rate == 44100  # Default
     
     def test_apply_reverb_hall(self):
-        """Test hall reverb effect"""
+        """
+Test hall reverb effect"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -183,7 +187,8 @@ class TestEffectsProcessor:
         assert compressed_dynamic_range <= original_dynamic_range
     
     def test_apply_eq_low_pass(self):
-        """Test low-pass EQ filter"""
+        """
+Test low-pass EQ filter"""
         audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -359,7 +364,8 @@ class TestEffectsProcessor:
         assert not np.isnan(limited_audio).any()
     
     def test_performance_benchmarking(self):
-        """Test effects processing performance"""
+        """
+Test effects processing performance"""
         audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -392,7 +398,8 @@ class TestAudioRestoration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.restoration = AudioRestoration()
         self.processor = AudioProcessor()
@@ -406,7 +413,8 @@ class TestAudioRestoration:
         assert hasattr(restoration, 'noise_profile')
     
     def test_remove_noise_spectral(self):
-        """Test spectral noise reduction"""
+        """
+Test spectral noise reduction"""
         # Load noisy audio
         noisy_file = self.test_data_dir / "white_noise.wav"
         noisy_audio, sample_rate = self.processor.load_audio(str(noisy_file))
@@ -607,7 +615,8 @@ class TestReverbType:
     """Test ReverbType enumeration"""
     
     def test_reverb_types(self):
-        """Test all reverb types are available"""
+        """
+Test all reverb types are available"""
         assert hasattr(ReverbType, 'HALL')
         assert hasattr(ReverbType, 'ROOM')
         assert hasattr(ReverbType, 'PLATE')
@@ -616,10 +625,12 @@ class TestReverbType:
 
 
 class TestFilterType:
-    """Test FilterType enumeration"""
+    """
+Test FilterType enumeration"""
     
     def test_filter_types(self):
-        """Test all filter types are available"""
+        """
+Test all filter types are available"""
         assert hasattr(FilterType, 'LOW_PASS')
         assert hasattr(FilterType, 'HIGH_PASS')
         assert hasattr(FilterType, 'BAND_PASS')
@@ -634,7 +645,8 @@ class TestEffectsIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     

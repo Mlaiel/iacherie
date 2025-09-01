@@ -7,6 +7,7 @@ Provides unified access to all NLP processing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Any, Optional, Union, Type
 import logging
 from datetime import datetime
@@ -37,14 +38,16 @@ class NLPAgentIndex:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize NLP Agent Index with configuration"""
+        """
+Initialize NLP Agent Index with configuration"""
         self.config = config or default_config
         self.components: Dict[str, Any] = {}
         self.initialized_components: Dict[str, bool] = {}
         self._setup_component_registry()
     
     def _setup_component_registry(self):
-        """Setup registry of available components"""
+        """
+Setup registry of available components"""
         self.component_registry = {
             "orchestrator": {
                 "class": NLPOrchestrator,
@@ -281,14 +284,16 @@ def get_nlp_capabilities() -> Dict[str, List[str]]:
 _global_index: Optional[NLPAgentIndex] = None
 
 def get_global_index(config: Optional[NLPAgentConfig] = None) -> NLPAgentIndex:
-    """Get or create global NLP Agent index instance"""
+    """
+Get or create global NLP Agent index instance"""
     global _global_index
     if _global_index is None:
         _global_index = NLPAgentIndex(config)
     return _global_index
 
 def reset_global_index():
-    """Reset global index (useful for testing)"""
+    """
+Reset global index (useful for testing)"""
     global _global_index
     if _global_index:
         _global_index.shutdown()

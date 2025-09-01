@@ -6,8 +6,9 @@ digital avec techniques d'IA et surveillance multi-plateformes.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -36,7 +37,9 @@ from ...utils.deep_web_scanner import DeepWebScanner
 
 
 class PiracyType(Enum):
-    """Types de piratage détectables"""
+    """
+Types de piratage détectables"""
+
     DIRECT_COPY = "direct_copy"
     MODIFIED_COPY = "modified_copy"
     PARTIAL_EXTRACTION = "partial_extraction"
@@ -50,6 +53,7 @@ class PiracyType(Enum):
 
 class ThreatLevel(Enum):
     """Niveaux de menace"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -80,7 +84,8 @@ class PiracyDetection:
 
 @dataclass
 class PirateSite:
-    """Site de piratage identifié"""
+    """
+Site de piratage identifié"""
     domain: str
     site_type: str  # 'torrent', 'streaming', 'download', 'social'
     risk_score: float
@@ -154,7 +159,8 @@ class PiracyDetectionEngine:
         }
 
     def _initialize_ai_models(self) -> None:
-        """Initialise les modèles IA spécialisés"""
+        """
+Initialise les modèles IA spécialisés"""
         try:
             # Modèle de classification de contenu pirate
             self.piracy_classifier = pipeline(
@@ -457,7 +463,8 @@ class PiracyDetectionEngine:
         return results
 
     def _extract_snippet(self, link_element) -> str:
-        """Extrait le snippet d'un résultat"""
+        """
+Extrait le snippet d'un résultat"""
         # Recherche du texte descriptif près du lien
         parent = link_element.parent
         if parent:
@@ -610,12 +617,14 @@ class PiracyDetectionEngine:
         return title_tag.get_text().strip() if title_tag else ''
 
     def _extract_page_description(self, soup: BeautifulSoup) -> str:
-        """Extrait la description de la page"""
+        """
+Extrait la description de la page"""
         desc_tag = soup.find('meta', attrs={'name': 'description'})
         return desc_tag.get('content', '') if desc_tag else ''
 
     def _extract_download_links(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les liens de téléchargement"""
+        """
+Extrait les liens de téléchargement"""
         download_links = []
         
         # Patterns de liens de téléchargement
@@ -637,7 +646,8 @@ class PiracyDetectionEngine:
         return list(set(download_links))
 
     def _extract_streaming_links(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les liens de streaming"""
+        """
+Extrait les liens de streaming"""
         streaming_links = []
         
         # Recherche d'iframes et de lecteurs vidéo
@@ -649,7 +659,8 @@ class PiracyDetectionEngine:
         return streaming_links
 
     def _extract_view_count(self, soup: BeautifulSoup) -> int:
-        """Extrait le nombre de vues"""
+        """
+Extrait le nombre de vues"""
         # Recherche de patterns de compteurs de vues
         view_patterns = [
             r'(\d+(?:,\d+)*)\s*(?:views?|vues?|visualizações?)',
@@ -665,7 +676,8 @@ class PiracyDetectionEngine:
         return 0
 
     def _extract_download_count(self, soup: BeautifulSoup) -> int:
-        """Extrait le nombre de téléchargements"""
+        """
+Extrait le nombre de téléchargements"""
         download_patterns = [
             r'(\d+(?:,\d+)*)\s*(?:downloads?|téléchargements?)',
             r'(?:downloads?|téléchargements?):\s*(\d+(?:,\d+)*)'
@@ -680,7 +692,8 @@ class PiracyDetectionEngine:
         return 0
 
     def _extract_uploader_info(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extrait les informations sur l'uploader"""
+        """
+Extrait les informations sur l'uploader"""
         uploader_info = {}
         
         # Recherche de patterns d'uploader
@@ -698,7 +711,8 @@ class PiracyDetectionEngine:
         return uploader_info
 
     def _extract_file_info(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extrait les informations sur les fichiers"""
+        """
+Extrait les informations sur les fichiers"""
         file_info = {}
         
         # Recherche de taille de fichier
@@ -727,12 +741,14 @@ class PiracyDetectionEngine:
         return comments
 
     def _extract_social_shares(self, soup: BeautifulSoup) -> Dict[str, int]:
-        """Extrait les partages sociaux"""
+        """
+Extrait les partages sociaux"""
         # Implémentation simplifiée
         return {'total_shares': 0}
 
     def _detect_monetization(self, soup: BeautifulSoup) -> bool:
-        """Détecte la monétisation"""
+        """
+Détecte la monétisation"""
         monetization_indicators = [
             'adsense', 'advertisement', 'sponsor',
             'donate', 'premium', 'vip'
@@ -746,7 +762,8 @@ class PiracyDetectionEngine:
         content_info: Dict[str, Any],
         suspect_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Compare le contenu suspect avec l'original"""
+        """
+Compare le contenu suspect avec l'original"""
         metrics = {}
         
         try:
@@ -796,7 +813,8 @@ class PiracyDetectionEngine:
         content_analysis: Dict[str, Any],
         similarity_metrics: Dict[str, float]
     ) -> PiracyType:
-        """Classifie le type de piratage"""
+        """
+Classifie le type de piratage"""
         # Logique de classification basée sur l'analyse
         if content_analysis.get('download_links'):
             if similarity_metrics.get('text_similarity', 0) > 0.9:
@@ -817,7 +835,8 @@ class PiracyDetectionEngine:
         similarity_metrics: Dict[str, float],
         content_analysis: Dict[str, Any]
     ) -> float:
-        """Calcule le score de confiance de piratage"""
+        """
+Calcule le score de confiance de piratage"""
         confidence = 0.0
         
         # Facteur de similarité
@@ -867,7 +886,8 @@ class PiracyDetectionEngine:
             return ThreatLevel.LOW
 
     def _identify_platform(self, url: str) -> str:
-        """Identifie la plateforme depuis l'URL"""
+        """
+Identifie la plateforme depuis l'URL"""
         domain = self._extract_domain(url)
         
         # Mapping des domaines connus
@@ -887,7 +907,8 @@ class PiracyDetectionEngine:
         return 'Unknown'
 
     def _estimate_revenue_impact(self, content_analysis: Dict[str, Any]) -> float:
-        """Estime l'impact sur les revenus"""
+        """
+Estime l'impact sur les revenus"""
         # Estimation simplifiée basée sur les vues/téléchargements
         view_count = content_analysis.get('view_count', 0)
         download_count = content_analysis.get('download_count', 0)
@@ -898,33 +919,39 @@ class PiracyDetectionEngine:
         return estimated_loss
 
     async def _scan_social_platforms(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
-        """Scan des plateformes sociales"""
+        """
+Scan des plateformes sociales"""
         # Implémentation du scan social (utiliserait les APIs appropriées)
         return []
 
     async def _scan_torrent_networks(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
-        """Scan des réseaux torrent"""
+        """
+Scan des réseaux torrent"""
         # Implémentation du scan torrent
         return []
 
     async def _scan_streaming_sites(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
-        """Scan des sites de streaming"""
+        """
+Scan des sites de streaming"""
         # Implémentation du scan streaming
         return []
 
     async def _scan_deep_web(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
-        """Scan du deep web"""
+        """
+Scan du deep web"""
         return await self.deep_web_scanner.scan_for_content(content_info)
 
     async def _scan_darknet(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
-        """Scan du darknet via Tor"""
+        """
+Scan du darknet via Tor"""
         return await self.tor_manager.scan_darknet_for_piracy(content_info)
 
     def _filter_and_deduplicate_detections(
         self,
         detections: List[PiracyDetection]
     ) -> List[PiracyDetection]:
-        """Filtre et déduplique les détections"""
+        """
+Filtre et déduplique les détections"""
         seen_urls = set()
         filtered = []
         
@@ -944,7 +971,8 @@ class PiracyDetectionEngine:
         return filtered
 
     def _get_random_headers(self) -> Dict[str, str]:
-        """Génère des headers HTTP aléatoires"""
+        """
+Génère des headers HTTP aléatoires"""
         user_agents = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
@@ -1010,17 +1038,20 @@ class PiracyDetectionEngine:
         pass
 
     async def _collect_legal_evidence(self, detection: PiracyDetection) -> None:
-        """Collecte des preuves légales"""
+        """
+Collecte des preuves légales"""
         # Implémentation de collecte de preuves
         pass
 
     async def _notify_stakeholders(self, detection: PiracyDetection) -> None:
-        """Notifie les parties prenantes"""
+        """
+Notifie les parties prenantes"""
         # Implémentation des notifications
         pass
 
     async def _update_pirate_sites_database(self) -> None:
-        """Met à jour la base de sites pirates"""
+        """
+Met à jour la base de sites pirates"""
         # Implémentation de la mise à jour
         pass
 
@@ -1079,7 +1110,8 @@ class PiracyDetectionEngine:
         }
 
     def _get_top_pirate_platforms(self) -> List[Dict[str, Any]]:
-        """Récupère les plateformes pirates les plus actives"""
+        """
+Récupère les plateformes pirates les plus actives"""
         platform_counts = {}
         
         for detection in self.piracy_detections:

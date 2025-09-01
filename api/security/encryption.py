@@ -4,6 +4,7 @@ Military-grade encryption with key management and secure communications
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Cryptography Specialist + Backend Senior
 """
+
 import os
 import secrets
 import hashlib
@@ -40,12 +41,15 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionError(Exception):
-    """Custom encryption exception"""
+    """
+Custom encryption exception"""
     pass
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
+    """
+Supported encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     RSA_4096 = "rsa_4096"
@@ -60,6 +64,7 @@ class EncryptionAlgorithm(Enum):
 
 class HashingAlgorithm(Enum):
     """Supported hashing algorithms"""
+
     SHA256 = "sha256"
     SHA384 = "sha384"
     SHA512 = "sha512"
@@ -73,6 +78,7 @@ class HashingAlgorithm(Enum):
 
 class KeyType(Enum):
     """Key type enumeration"""
+
     SYMMETRIC = "symmetric"
     ASYMMETRIC_PRIVATE = "asymmetric_private"
     ASYMMETRIC_PUBLIC = "asymmetric_public"
@@ -94,11 +100,13 @@ class EncryptionKey:
     is_active: bool = True
     
     def is_expired(self) -> bool:
-        """Check if key has expired"""
+        """
+Check if key has expired"""
         return self.expires_at is not None and datetime.now(timezone.utc) > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert key to dictionary (excluding sensitive material)"""
+        """
+Convert key to dictionary (excluding sensitive material)"""
         return {
             'key_id': self.key_id,
             'key_type': self.key_type.value,
@@ -112,7 +120,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionResult:
-    """Encryption operation result"""
+    """
+Encryption operation result"""
     encrypted_data: bytes
     key_id: str
     algorithm: EncryptionAlgorithm
@@ -123,26 +132,31 @@ class EncryptionResult:
 
 
 class BaseEncryptor(ABC):
-    """Base encryptor interface"""
+    """
+Base encryptor interface"""
     
     @abstractmethod
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
-        """Encrypt data"""
+        """
+Encrypt data"""
         pass
     
     @abstractmethod
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
-        """Decrypt data"""
+        """
+Decrypt data"""
         pass
     
     @abstractmethod
     def generate_key(self, **kwargs) -> EncryptionKey:
-        """Generate encryption key"""
+        """
+Generate encryption key"""
         pass
 
 
 class AESEncryption(BaseEncryptor):
-    """Advanced Encryption Standard (AES) implementation"""
+    """
+Advanced Encryption Standard (AES) implementation"""
     
     def __init__(self, mode: str = "GCM"):
         self.mode = mode.upper()
@@ -272,7 +286,8 @@ class RSAEncryption(BaseEncryptor):
                          else EncryptionAlgorithm.RSA_2048)
     
     def generate_key_pair(self, key_id: str = None, **kwargs) -> Tuple[EncryptionKey, EncryptionKey]:
-        """Generate RSA key pair"""
+        """
+Generate RSA key pair"""
         if not key_id:
             key_id = f"rsa_{secrets.token_hex(8)}"
         
@@ -674,7 +689,8 @@ class HybridEncryption:
         }
     
     def decrypt(self, hybrid_result: Dict[str, Any], private_key: EncryptionKey) -> bytes:
-        """Decrypt data using hybrid decryption"""
+        """
+Decrypt data using hybrid decryption"""
         
         # Decrypt symmetric key
         encrypted_key_result = EncryptionResult(
@@ -740,7 +756,8 @@ class HashingService:
     
     def hash_data(self, data: bytes, algorithm: HashingAlgorithm = HashingAlgorithm.SHA256,
                   salt: bytes = None) -> Tuple[bytes, bytes]:
-        """Hash data with optional salt"""
+        """
+Hash data with optional salt"""
         
         if salt is None:
             salt = os.urandom(32)  # 256-bit salt
@@ -849,7 +866,8 @@ class HashingService:
 
 
 class KeyManagementService:
-    """Comprehensive key management system"""
+    """
+Comprehensive key management system"""
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
@@ -1049,7 +1067,8 @@ class KeyManagementService:
 
 
 class EncryptionManager:
-    """Main encryption manager orchestrating all encryption services"""
+    """
+Main encryption manager orchestrating all encryption services"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -1204,7 +1223,8 @@ class EncryptionManager:
     
     async def generate_key_pair(self, algorithm: EncryptionAlgorithm, 
                                key_id: str = None) -> Tuple[EncryptionKey, EncryptionKey]:
-        """Generate asymmetric key pair"""
+        """
+Generate asymmetric key pair"""
         
         if algorithm in [EncryptionAlgorithm.RSA_4096, EncryptionAlgorithm.RSA_2048]:
             key_size = 4096 if algorithm == EncryptionAlgorithm.RSA_4096 else 2048

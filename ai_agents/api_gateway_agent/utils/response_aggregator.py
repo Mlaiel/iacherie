@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ServiceResponse:
-    """Individual service response data"""
+    """
+Individual service response data"""
     service_name: str
     status_code: int
     headers: Dict[str, str]
@@ -40,7 +42,8 @@ class ServiceResponse:
 
 @dataclass
 class AggregationRule:
-    """Response aggregation configuration"""
+    """
+Response aggregation configuration"""
     pattern: str
     services: List[str]
     aggregation_type: str  # merge, concat, transform
@@ -64,7 +67,8 @@ class ResponseAggregator:
     """
     
     def __init__(self, redis_url: Optional[str] = None):
-        """Initialize response aggregator"""
+        """
+Initialize response aggregator"""
         self.redis_url = redis_url
         self.redis = None
         
@@ -378,7 +382,8 @@ class ResponseAggregator:
         return None
     
     def _match_pattern(self, path: str, pattern: str) -> bool:
-        """Match request path against pattern"""
+        """
+Match request path against pattern"""
         # Simple pattern matching - could be enhanced with regex
         if pattern.endswith("*"):
             return path.startswith(pattern[:-1])

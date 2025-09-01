@@ -26,6 +26,7 @@ system coordination algorithms, and enterprise architecture patterns developed b
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All system integration patterns and orchestration logic are protected intellectual property.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,7 +46,9 @@ from .exporters import create_exporter, ExportFormat
 
 
 class SystemStatus(Enum):
-    """Analytics system status levels."""
+    """
+Analytics system status levels."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     CRITICAL = "critical"
@@ -55,6 +58,7 @@ class SystemStatus(Enum):
 
 class ModuleStatus(Enum):
     """Individual module status levels."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -84,7 +88,8 @@ class AnalyticsConfig:
 
 @dataclass
 class SystemHealth:
-    """System health monitoring data."""
+    """
+System health monitoring data."""
     overall_status: SystemStatus
     module_statuses: Dict[str, ModuleStatus]
     performance_metrics: Dict[str, float]
@@ -464,7 +469,8 @@ class AnalyticsOrchestrator:
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
     
     async def _monitoring_loop(self):
-        """Continuous monitoring loop."""
+        """
+Continuous monitoring loop."""
         while True:
             try:
                 await self._update_system_health()
@@ -524,25 +530,29 @@ class AnalyticsOrchestrator:
         return True
     
     async def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage."""
+        """
+Get current CPU usage percentage."""
         # Placeholder implementation
         import psutil
         return psutil.cpu_percent(interval=1)
     
     async def _get_memory_usage(self) -> float:
-        """Get current memory usage percentage."""
+        """
+Get current memory usage percentage."""
         # Placeholder implementation
         import psutil
         return psutil.virtual_memory().percent
     
     async def _get_disk_usage(self) -> float:
-        """Get current disk usage percentage."""
+        """
+Get current disk usage percentage."""
         # Placeholder implementation
         import psutil
         return psutil.disk_usage('/').percent
     
     async def _generate_performance_recommendations(self) -> List[str]:
-        """Generate performance optimization recommendations."""
+        """
+Generate performance optimization recommendations."""
         recommendations = []
         
         metrics = self.system_health.performance_metrics

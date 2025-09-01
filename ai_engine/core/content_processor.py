@@ -4,10 +4,11 @@ Advanced content processing pipeline for multi-format content creators platform.
 Handles the complete content workflow from upload to distribution.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 from typing import Dict, Any, List, Optional, Union, Callable, TypeVar, Generic, Tuple
@@ -34,7 +35,9 @@ T = TypeVar('T')
 
 
 class ProcessingStage(Enum):
-    """Stages in the content processing pipeline"""
+    """
+Stages in the content processing pipeline"""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
@@ -51,6 +54,7 @@ class ProcessingStage(Enum):
 
 class ProcessingStatus(Enum):
     """Status of content processing"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -61,6 +65,7 @@ class ProcessingStatus(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -83,7 +88,8 @@ class ProcessingContext:
     processing_options: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "user_id": self.user_id,
             "session_id": self.session_id,
@@ -111,7 +117,8 @@ class ProcessingResult:
     confidence_score: float = 1.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "stage": self.stage.value,
             "status": self.status.value,
@@ -152,7 +159,8 @@ class PipelineState:
     distribution_assets: Dict[str, Any] = field(default_factory=dict)
     
     def update_stage(self, stage: ProcessingStage, result: ProcessingResult):
-        """Update pipeline stage with result"""
+        """
+Update pipeline stage with result"""
         self.current_stage = stage
         self.stage_results[stage] = result
         self.updated_at = datetime.utcnow()
@@ -164,7 +172,8 @@ class PipelineState:
             self.status = ProcessingStatus.FAILED
             
     def get_processing_summary(self) -> Dict[str, Any]:
-        """Get comprehensive processing summary"""
+        """
+Get comprehensive processing summary"""
         total_time = 0.0
         stage_times = {}
         
@@ -249,7 +258,8 @@ class BaseProcessor:
 
 
 class ValidationProcessor(BaseProcessor):
-    """Content validation processor"""
+    """
+Content validation processor"""
     
     def __init__(self):
         super().__init__("validation")
@@ -480,7 +490,8 @@ class AIAnalysisProcessor(BaseProcessor):
 
 
 class ProtectionProcessor(BaseProcessor):
-    """Content protection and rights management processor"""
+    """
+Content protection and rights management processor"""
     
     def __init__(self):
         super().__init__("protection")
@@ -581,7 +592,8 @@ class ProtectionProcessor(BaseProcessor):
         return combined_hash
         
     async def _check_content_similarity(self, fingerprint: str, context: ProcessingContext) -> Dict[str, Any]:
-        """Check content similarity against existing content"""
+        """
+Check content similarity against existing content"""
         # In production, this would query a fingerprint database
         return {
             "similarity_score": 0.1,  # Low similarity
@@ -651,7 +663,8 @@ class ContentProcessingPipeline:
         # Additional processors would be initialized here
         
     def register_processor(self, stage: ProcessingStage, processor: BaseProcessor):
-        """Register a custom processor for a stage"""
+        """
+Register a custom processor for a stage"""
         self.processors[stage] = processor
         logger.info(f"Registered processor '{processor.name}' for stage '{stage.value}'")
         
@@ -771,7 +784,8 @@ class ContentProcessingPipeline:
         return None
         
     def cancel_pipeline(self, content_id: str) -> bool:
-        """Cancel active pipeline"""
+        """
+Cancel active pipeline"""
         if content_id in self.active_pipelines:
             state = self.active_pipelines[content_id]
             state.status = ProcessingStatus.CANCELLED

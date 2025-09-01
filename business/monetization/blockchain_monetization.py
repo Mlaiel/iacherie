@@ -6,7 +6,7 @@ DeFi integrations, smart contracts, and decentralized revenue streams.
 Complete Web3 infrastructure for content creators.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Content Tokenization → NFT Minting → Smart Contracts → DeFi Integration → Revenue Distribution
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
@@ -55,6 +58,7 @@ class BlockchainNetwork(Enum):
 
 class CryptoCurrency(Enum):
     """Supported cryptocurrencies"""
+
     ETH = "ethereum"
     MATIC = "polygon"
     BNB = "binance_coin"
@@ -69,6 +73,7 @@ class CryptoCurrency(Enum):
 
 class NFTType(Enum):
     """NFT content types"""
+
     MUSIC_TRACK = "music_track"
     ALBUM = "album"
     ARTWORK = "artwork"
@@ -83,6 +88,7 @@ class NFTType(Enum):
 
 class SmartContractType(Enum):
     """Smart contract types"""
+
     ERC721_NFT = "erc721_nft"
     ERC1155_MULTI = "erc1155_multi"
     REVENUE_SHARING = "revenue_sharing"
@@ -95,6 +101,7 @@ class SmartContractType(Enum):
 
 class TransactionStatus(Enum):
     """Blockchain transaction status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -157,7 +164,8 @@ class NFTAsset:
 
 @dataclass
 class CryptoTransaction:
-    """Cryptocurrency transaction record"""
+    """
+Cryptocurrency transaction record"""
     transaction_id: str
     user_id: str
     transaction_hash: str
@@ -177,7 +185,8 @@ class CryptoTransaction:
 
 @dataclass
 class SmartContract:
-    """Smart contract deployment record"""
+    """
+Smart contract deployment record"""
     contract_id: str
     user_id: str
     contract_address: str
@@ -196,7 +205,8 @@ class SmartContract:
 
 @dataclass
 class RoyaltyDistribution:
-    """Royalty distribution configuration"""
+    """
+Royalty distribution configuration"""
     nft_id: str
     creator_percentage: float
     platform_percentage: float
@@ -757,7 +767,8 @@ class NFTMarketplace:
         self,
         user_nfts: List[NFTAsset]
     ) -> List[str]:
-        """Generate NFT strategy recommendations"""
+        """
+Generate NFT strategy recommendations"""
         recommendations = []
         
         if len(user_nfts) < 5:
@@ -1038,7 +1049,8 @@ class DeFiIntegration:
         ]
     
     async def _assess_defi_risks(self, user_id: str) -> Dict[str, Any]:
-        """Assess DeFi portfolio risks"""
+        """
+Assess DeFi portfolio risks"""
         return {
             'overall_risk': 'medium',
             'impermanent_loss_risk': 'medium',
@@ -1048,7 +1060,8 @@ class DeFiIntegration:
 
 
 class BlockchainMonetization:
-    """Main blockchain monetization orchestrator"""
+    """
+Main blockchain monetization orchestrator"""
     
     def __init__(
         self,

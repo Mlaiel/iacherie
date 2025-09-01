@@ -12,6 +12,7 @@ Exemple complet d'utilisation de la pipeline de monétisation créateur :
 User (musicien/blogueur/photographe/influencer/comédien) → Upload multi-format → 
 AI protection droits → SEO pro → Matching collaboration → Distribution multi-plateformes → Tracking revenus
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List
@@ -35,7 +36,8 @@ class CompleteCreatorWorkflowExample:
     """
     
     def __init__(self):
-        """Initialise tous les composants de la pipeline"""
+        """
+Initialise tous les composants de la pipeline"""
         self.workflow_orchestrator = CreatorWorkflowOrchestrator()
         self.platform_manager = CreatorPlatformManager()
         self.monetization_analyzer = CreatorMonetizationAnalyzer()

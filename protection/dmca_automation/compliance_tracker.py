@@ -14,7 +14,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
-All rights reserved © 2025 Fahed Mlaiel
+All rights reserved (c) 2025 Fahed Mlaiel
 
 ADVANCED COMPLIANCE TRACKING FEATURES:
 - Real-Time Platform Monitoring with AI Detection
@@ -26,6 +26,7 @@ ADVANCED COMPLIANCE TRACKING FEATURES:
 - Performance Analytics & Success Rate Optimization
 - Regulatory Compliance Reporting (GDPR, CCPA, DMCA)
 """
+
 import asyncio
 import logging
 import uuid
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceStatus(Enum):
-    """Comprehensive compliance status levels"""
+    """
+Comprehensive compliance status levels"""
+
     UNKNOWN = "unknown"
     PENDING_REVIEW = "pending_review"
     UNDER_INVESTIGATION = "under_investigation"
@@ -68,6 +71,7 @@ class ComplianceStatus(Enum):
 
 class EscalationLevel(Enum):
     """Escalation levels for non-compliance"""
+
     NONE = "none"
     FIRST_REMINDER = "first_reminder"
     SECOND_REMINDER = "second_reminder"
@@ -80,6 +84,7 @@ class EscalationLevel(Enum):
 
 class MonitoringFrequency(Enum):
     """Monitoring check frequencies"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -90,6 +95,7 @@ class MonitoringFrequency(Enum):
 
 class PlatformType(Enum):
     """Supported platform types for tracking"""
+
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
     INSTAGRAM = "instagram"
@@ -125,7 +131,8 @@ class ComplianceTrackingConfig:
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance tracking metrics"""
+    """
+Compliance tracking metrics"""
     tracking_id: str
     success_rate: float
     response_time_avg: float
@@ -141,7 +148,8 @@ class ComplianceMetrics:
 
 @dataclass
 class TrackingAlert:
-    """Tracking alert notification"""
+    """
+Tracking alert notification"""
     alert_id: str
     tracking_id: str
     alert_type: str
@@ -173,7 +181,8 @@ class ComplianceTracker:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enterprise compliance tracker"""
+        """
+Initialize enterprise compliance tracker"""
         self.config = config or {}
         self.db = get_database()
         self.platform_integrator = PlatformIntegrator(config)
@@ -636,7 +645,8 @@ class ComplianceTracker:
             return 'unknown'
     
     async def _store_tracking_record(self, tracking: ComplianceTracking) -> None:
-        """Store tracking record in database"""
+        """
+Store tracking record in database"""
         try:
             query = """
                 INSERT INTO dmca_compliance_tracking (
@@ -690,7 +700,8 @@ class ComplianceTracker:
         return tracking.status
     
     async def _get_tracking_record(self, tracking_id: str) -> Optional[ComplianceTracking]:
-        """Retrieve tracking record from database"""
+        """
+Retrieve tracking record from database"""
         try:
             query = "SELECT * FROM dmca_compliance_tracking WHERE tracking_id = %s"
             result = await self.db.fetch_one(query, [tracking_id])
@@ -746,7 +757,8 @@ class ComplianceTracker:
             return {'action': 'no_action', 'result': 'escalation_not_needed'}
     
     async def _send_reminder_notice(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Send reminder notice to platform"""
+        """
+Send reminder notice to platform"""
         # Simulate sending reminder
         return {
             'action': 'reminder_sent',
@@ -756,7 +768,8 @@ class ComplianceTracker:
         }
     
     async def _send_final_warning(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Send final warning notice"""
+        """
+Send final warning notice"""
         # Simulate sending final warning
         return {
             'action': 'final_warning_sent',
@@ -767,7 +780,8 @@ class ComplianceTracker:
         }
     
     async def _send_legal_warning(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Send legal warning notice"""
+        """
+Send legal warning notice"""
         # Simulate sending legal warning
         return {
             'action': 'legal_warning_sent',
@@ -778,7 +792,8 @@ class ComplianceTracker:
         }
     
     async def _initiate_legal_action(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Initiate legal action proceedings"""
+        """
+Initiate legal action proceedings"""
         # Simulate legal action initiation
         return {
             'action': 'legal_action_initiated',
@@ -799,7 +814,8 @@ class ComplianceTracker:
         }
     
     async def _query_compliance_data(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query compliance data from database"""
+        """
+Query compliance data from database"""
         try:
             query = """
                 SELECT t.*, n.copyright_owner, n.platform as notice_platform

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,8 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 # Mock engines for testing - would be replaced with actual implementations
 class CreativeVisionGenerator:
     async def initialize(self): 
-        """Initialize creative vision generator"""
+        """
+Initialize creative vision generator"""
         logger.info("CreativeVisionGenerator initialized")
         self.vision_models_loaded = True
         self.creativity_algorithms_ready = True
@@ -52,7 +54,8 @@ class StyleAnalyzer:
 
 class ColorHarmonyEngine:
     async def initialize(self): 
-        """Initialize color harmony engine"""
+        """
+Initialize color harmony engine"""
         logger.info("ColorHarmonyEngine initialized")
         self.color_theory_loaded = True
         self.harmony_algorithms_ready = True
@@ -70,7 +73,8 @@ class ColorHarmonyEngine:
 
 class CompositionAnalyzer:
     async def initialize(self): 
-        """Initialize composition analyzer"""
+        """
+Initialize composition analyzer"""
         logger.info("CompositionAnalyzer initialized")
         self.composition_models_loaded = True
         self.layout_analysis_ready = True
@@ -102,7 +106,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreativeStyle(Enum):
-    """Creative style categories"""
+    """
+Creative style categories"""
+
     MINIMALIST = "minimalist"
     MAXIMALIST = "maximalist"
     VINTAGE = "vintage"
@@ -119,6 +125,7 @@ class CreativeStyle(Enum):
 
 class ColorScheme(Enum):
     """Color scheme types"""
+
     MONOCHROMATIC = "monochromatic"
     ANALOGOUS = "analogous"
     COMPLEMENTARY = "complementary"
@@ -130,6 +137,7 @@ class ColorScheme(Enum):
 
 class CreativeMood(Enum):
     """Creative mood categories"""
+
     ENERGETIC = "energetic"
     CALM = "calm"
     DRAMATIC = "dramatic"
@@ -146,6 +154,7 @@ class CreativeMood(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -173,7 +182,8 @@ class ColorPalette:
 
 @dataclass
 class CreativeVision:
-    """Comprehensive creative vision structure"""
+    """
+Comprehensive creative vision structure"""
     vision_id: str
     project_title: str
     creative_brief: str
@@ -198,7 +208,8 @@ class CreativeVision:
 
 @dataclass
 class CreativeReview:
-    """Creative review and feedback"""
+    """
+Creative review and feedback"""
     review_id: str
     vision_id: str
     reviewer: str
@@ -213,7 +224,8 @@ class CreativeReview:
 
 @dataclass
 class CreativeAsset:
-    """Creative asset structure"""
+    """
+Creative asset structure"""
     asset_id: str
     vision_id: str
     asset_type: str
@@ -688,7 +700,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         requirements: Dict[str, Any], 
         constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate style recommendations based on requirements"""
+        """
+Generate style recommendations based on requirements"""
         
         # Analyze target audience preferences
         audience_style_preferences = await self._analyze_audience_style_preferences(
@@ -718,7 +731,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         }
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle creative direction task"""
+        """
+Check if agent can handle creative direction task"""
         supported_tasks = [
             "develop_creative_vision",
             "analyze_creative_quality", 

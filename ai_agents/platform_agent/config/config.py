@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -29,7 +30,9 @@ from .platform_agent import PlatformType
 
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -50,7 +53,8 @@ class PlatformCredentials:
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
+    """
+Database configuration"""
     url: str = "postgresql://localhost:5432/ia_influencer"
     pool_size: int = 20
     max_overflow: int = 30
@@ -104,7 +108,8 @@ class AIConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""
+    """
+Monitoring and observability configuration"""
     enable_metrics: bool = True
     enable_tracing: bool = True
     enable_logging: bool = True
@@ -202,7 +207,8 @@ class ConfigManager:
         self._load_platform_credentials()
     
     def _update_config_from_dict(self, config_dict: Dict[str, Any]):
-        """Update configuration from dictionary"""
+        """
+Update configuration from dictionary"""
         for key, value in config_dict.items():
             if hasattr(self._config, key):
                 if isinstance(getattr(self._config, key), dict):
@@ -211,7 +217,8 @@ class ConfigManager:
                     setattr(self._config, key, value)
     
     def _load_from_environment(self):
-        """Load configuration from environment variables"""
+        """
+Load configuration from environment variables"""
         # Database
         if db_url := os.getenv("DATABASE_URL"):
             self._config.database.url = db_url
@@ -274,11 +281,13 @@ class ConfigManager:
         return self._config
     
     def get_platform_credentials(self, platform: PlatformType) -> Optional[PlatformCredentials]:
-        """Get credentials for specific platform"""
+        """
+Get credentials for specific platform"""
         return self._config.platform_credentials.get(platform.value)
     
     def save_config(self, path: Optional[str] = None):
-        """Save current configuration to file"""
+        """
+Save current configuration to file"""
         save_path = path or self.config_path
         
         # Create directory if it doesn't exist
@@ -291,7 +300,8 @@ class ConfigManager:
             json.dump(config_dict, f, indent=2, default=str)
     
     def _config_to_dict(self, include_credentials: bool = False) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         config_dict = {
             "environment": self._config.environment.value,
             "debug": self._config.debug,
@@ -476,17 +486,21 @@ config = config_manager.config
 
 # Helper functions for easy access
 def get_config() -> PlatformAgentGlobalConfig:
-    """Get global configuration"""
+    """
+Get global configuration"""
     return config
 
 def get_platform_credentials(platform: PlatformType) -> Optional[PlatformCredentials]:
-    """Get platform credentials"""
+    """
+Get platform credentials"""
     return config_manager.get_platform_credentials(platform)
 
 def is_production() -> bool:
-    """Check if running in production environment"""
+    """
+Check if running in production environment"""
     return config.environment == Environment.PRODUCTION
 
 def is_development() -> bool:
-    """Check if running in development environment"""
+    """
+Check if running in development environment"""
     return config.environment == Environment.DEVELOPMENT

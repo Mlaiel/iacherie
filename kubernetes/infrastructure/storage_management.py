@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -23,7 +24,9 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class StorageType(Enum):
-    """Storage types"""
+    """
+Storage types"""
+
     OBJECT_STORAGE = "object_storage"
     BLOCK_STORAGE = "block_storage"
     FILE_STORAGE = "file_storage"
@@ -31,6 +34,7 @@ class StorageType(Enum):
 
 class StorageClass(Enum):
     """Kubernetes storage classes"""
+
     STANDARD = "standard"
     FAST_SSD = "fast-ssd"
     SLOW_HDD = "slow-hdd"
@@ -38,6 +42,7 @@ class StorageClass(Enum):
 
 class BackupStrategy(Enum):
     """Backup strategies"""
+
     FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     DIFFERENTIAL_BACKUP = "differential_backup"
@@ -45,6 +50,7 @@ class BackupStrategy(Enum):
 
 class DataTier(Enum):
     """Data storage tiers"""
+
     HOT = "hot"
     WARM = "warm"
     COLD = "cold"
@@ -111,7 +117,8 @@ class PersistentVolumeClaimSpec:
     selector: Optional[Dict[str, Any]] = None
 
 class StorageManager:
-    """Main storage management system"""
+    """
+Main storage management system"""
     
     def __init__(self, k8s_client=None, aws_session=None):
         self.k8s_client = k8s_client
@@ -122,7 +129,8 @@ class StorageManager:
         self.ebs_client = aws_session.client('ec2') if aws_session else None
         
     async def create_storage_infrastructure(self, configs: List[StorageConfig]) -> Dict[str, Any]:
-        """Create complete storage infrastructure"""
+        """
+Create complete storage infrastructure"""
         try:
             results = {}
             

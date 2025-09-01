@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -81,7 +82,8 @@ settings = get_settings()
 
 
 class ContentGenerationType(str, Enum):
-    """Advanced content generation types"""
+    """
+Advanced content generation types"""
     # Text content
     BLOG_ARTICLE = "blog_article"
     SOCIAL_MEDIA_POST = "social_media_post"
@@ -124,6 +126,7 @@ class ContentGenerationType(str, Enum):
 
 class CreativeEngine(str, Enum):
     """AI engines for content generation"""
+
     GPT4_TURBO = "gpt-4-turbo"
     GPT4_VISION = "gpt-4-vision-preview"
     CLAUDE_3_OPUS = "claude-3-opus"
@@ -139,6 +142,7 @@ class CreativeEngine(str, Enum):
 
 class ContentTone(str, Enum):
     """Content tone and style options"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     FRIENDLY = "friendly"
@@ -177,7 +181,8 @@ class GenerationRequest:
 
 @dataclass
 class GeneratedContent:
-    """Generated content with metadata"""
+    """
+Generated content with metadata"""
     content: str
     content_type: ContentGenerationType
     metadata: Dict[str, Any]
@@ -194,7 +199,8 @@ class GeneratedContent:
 
 
 class ContentGenerator:
-    """Advanced AI-powered content generator"""
+    """
+Advanced AI-powered content generator"""
     
     def __init__(self):
         self.openai_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
@@ -419,7 +425,8 @@ class ContentGenerator:
         return engine_map.get(request.content_type, CreativeEngine.GPT4_TURBO)
 
     async def _generate_text_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate text-based content"""
+        """
+Generate text-based content"""
         # Build comprehensive prompt
         prompt = self._build_text_prompt(request)
         
@@ -433,7 +440,8 @@ class ContentGenerator:
             return await self._generate_with_custom_model(prompt, request)
 
     async def _generate_creative_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate creative content like lyrics, poems, stories"""
+        """
+Generate creative content like lyrics, poems, stories"""
         # Build creative prompt with structure
         prompt = self._build_creative_prompt(request)
         
@@ -448,7 +456,8 @@ class ContentGenerator:
         return await self._generate_with_creative_engine(prompt, request, engine)
 
     async def _generate_script_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate script content for video/audio"""
+        """
+Generate script content for video/audio"""
         # Build script prompt with formatting
         prompt = self._build_script_prompt(request)
         
@@ -471,12 +480,14 @@ class ContentGenerator:
             return await self._generate_visual_description(prompt, request)
 
     async def _generate_generic_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate generic content for other types"""
+        """
+Generate generic content for other types"""
         prompt = self._build_generic_prompt(request)
         return await self._generate_with_selected_engine(prompt, request, engine)
 
     def _build_text_prompt(self, request: GenerationRequest) -> str:
-        """Build comprehensive prompt for text content"""
+        """
+Build comprehensive prompt for text content"""
         template = self.content_templates.get(request.content_type, {})
         style = self.style_patterns.get(request.tone, {})
         
@@ -566,7 +577,8 @@ class ContentGenerator:
         Make it suitable for social media and marketing use.
         """
     def _build_generic_prompt(self, request: GenerationRequest) -> str:
-        """Build generic prompt for other content types"""
+        """
+Build generic prompt for other content types"""
         return f"""
         Create high-quality {request.content_type.value} content about:
         {request.prompt}
@@ -577,7 +589,8 @@ class ContentGenerator:
         Ensure the content is engaging, original, and professionally written.
         """
     async def _generate_with_openai(self, prompt: str, request: GenerationRequest) -> str:
-        """Generate content using OpenAI GPT models"""
+        """
+Generate content using OpenAI GPT models"""
         try:
             messages = [
                 {"role": "system", "content": self._get_system_prompt(request)},
@@ -722,7 +735,8 @@ class ContentGenerator:
         return token_map.get(request.content_type, 1000)
 
     async def _enhance_content(self, content: str, request: GenerationRequest) -> str:
-        """Enhance generated content with post-processing"""
+        """
+Enhance generated content with post-processing"""
         enhanced = content
         
         # Apply tone-specific enhancements
@@ -744,7 +758,8 @@ class ContentGenerator:
         return enhanced
 
     def _enhance_professional_tone(self, content: str) -> str:
-        """Enhance content for professional tone"""
+        """
+Enhance content for professional tone"""
         # Remove contractions
         contractions = {
             "don't": "do not", "won't": "will not", "can't": "cannot",
@@ -766,13 +781,15 @@ class ContentGenerator:
         return content
 
     def _enhance_educational_content(self, content: str) -> str:
-        """Enhance content for educational purposes"""
+        """
+Enhance content for educational purposes"""
         # Add structural elements for better learning
         # This could include adding bullet points, numbered lists, etc.
         return content
 
     async def _apply_seo_enhancements(self, content: str, request: GenerationRequest) -> str:
-        """Apply SEO enhancements to content"""
+        """
+Apply SEO enhancements to content"""
         seo_req = request.seo_requirements
         
         if not seo_req:
@@ -849,7 +866,8 @@ class ContentGenerator:
         return formatted
 
     def _format_for_instagram(self, content: str) -> str:
-        """Format content for Instagram"""
+        """
+Format content for Instagram"""
         # Add line breaks for readability
         # Add relevant hashtags
         formatted = content + "\n\n"
@@ -866,7 +884,8 @@ class ContentGenerator:
         return content
 
     def _format_for_twitter(self, content: str) -> str:
-        """Format content for Twitter"""
+        """
+Format content for Twitter"""
         # Ensure content fits Twitter character limit
         if len(content) > 280:
             content = content[:277] + "..."
@@ -885,7 +904,8 @@ class ContentGenerator:
         return content  # Already in a readable format
 
     async def _calculate_quality_metrics(self, content: str, request: GenerationRequest) -> Dict[str, float]:
-        """Calculate comprehensive quality metrics"""
+        """
+Calculate comprehensive quality metrics"""
         metrics = {}
         
         try:
@@ -965,7 +985,8 @@ class ContentGenerator:
             return 50.0  # Default moderate readability
 
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word"""
+        """
+Count syllables in a word"""
         word = word.lower().strip(".,!?;:")
         if len(word) <= 3:
             return 1
@@ -1017,7 +1038,8 @@ class ContentGenerator:
         return np.mean(keyword_scores) if keyword_scores else 0.0
 
     def _assess_creativity(self, content: str) -> float:
-        """Assess creativity based on vocabulary diversity"""
+        """
+Assess creativity based on vocabulary diversity"""
         words = re.findall(r'\b\w+\b', content.lower())
         
         if len(words) == 0:
@@ -1030,7 +1052,8 @@ class ContentGenerator:
         return min(1.0, diversity_ratio * 2)
 
     def _predict_engagement(self, content: str, request: GenerationRequest) -> float:
-        """Predict potential engagement score"""
+        """
+Predict potential engagement score"""
         factors = []
         
         # Content length factor
@@ -1066,7 +1089,8 @@ class ContentGenerator:
         return np.mean(factors)
 
     def _create_metadata(self, request: GenerationRequest, quality_metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Create comprehensive metadata for generated content"""
+        """
+Create comprehensive metadata for generated content"""
         return {
             'generation_params': {
                 'content_type': request.content_type.value,
@@ -1090,7 +1114,8 @@ class ContentGenerator:
         }
 
     def _estimate_cost(self, request: GenerationRequest, processing_time: float) -> float:
-        """Estimate generation cost"""
+        """
+Estimate generation cost"""
         # Base cost factors
         base_cost = 0.01  # Base cost per generation
         
@@ -1120,7 +1145,8 @@ class ContentGenerator:
         return round(total_cost, 4)
 
     async def _store_generation_record(self, request: GenerationRequest, result: GeneratedContent):
-        """Store generation record in database"""
+        """
+Store generation record in database"""
         try:
             async with get_async_session() as session:
                 # Store in content generations table (would need to create this table)
@@ -1195,7 +1221,8 @@ class AICreativeEngine:
         return await asyncio.gather(*tasks, return_exceptions=True)
 
     async def get_content_suggestions(self, partial_prompt: str, content_type: ContentGenerationType) -> List[str]:
-        """Get content suggestions based on partial prompt"""
+        """
+Get content suggestions based on partial prompt"""
         suggestions = []
         
         # Use AI to generate prompt completions
@@ -1277,7 +1304,8 @@ class AICreativeEngine:
         }
 
     def _get_model_usage_stats(self) -> Dict[str, int]:
-        """Get model usage statistics"""
+        """
+Get model usage statistics"""
         usage = {}
         for perf in self.model_performance.values():
             engine = perf.get('engine_used', 'unknown')
@@ -1285,7 +1313,8 @@ class AICreativeEngine:
         return usage
 
     def _get_content_type_stats(self) -> Dict[str, int]:
-        """Get content type generation statistics"""
+        """
+Get content type generation statistics"""
         stats = {}
         for perf in self.model_performance.values():
             content_type = perf.get('content_type', 'unknown')

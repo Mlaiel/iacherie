@@ -24,6 +24,7 @@ Team Specializations:
 - DevOps Engineer: CI/CD & infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt optimization
 """
+
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -51,7 +52,9 @@ from ...utils.validation import validate_input
 
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities"""
+    """
+Types of collaboration opportunities"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -71,6 +74,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration opportunities"""
+
     DETECTED = "detected"
     ANALYZED = "analyzed"
     CONTACTED = "contacted"
@@ -82,6 +86,7 @@ class CollaborationStatus(Enum):
 
 class CollaborationPriority(Enum):
     """Priority levels for collaboration opportunities"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -121,7 +126,8 @@ class CollaborationEntity:
 
 @dataclass
 class CollaborationNetwork:
-    """Network analysis of collaboration opportunities"""
+    """
+Network analysis of collaboration opportunities"""
     nodes: List[str]
     edges: List[Tuple[str, str, float]]
     clusters: List[List[str]]
@@ -133,7 +139,8 @@ class CollaborationNetwork:
 
 @dataclass
 class CollaborationAnalysisResult:
-    """Complete collaboration analysis results"""
+    """
+Complete collaboration analysis results"""
     entities: List[CollaborationEntity]
     total_opportunities: int
     high_priority_count: int
@@ -358,7 +365,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_real_time_tracking(self):
-        """Initialize real-time collaboration opportunity tracking"""
+        """
+Initialize real-time collaboration opportunity tracking"""
         self.tracking_components = {
             'social_media_monitors': {
                 'twitter_api': self._initialize_twitter_monitor(),
@@ -384,7 +392,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_twitter_monitor(self):
-        """Initialize Twitter API monitoring for collaboration opportunities"""
+        """
+Initialize Twitter API monitoring for collaboration opportunities"""
         # This would initialize Twitter API v2 streaming
         # For now, return configuration structure
         return {
@@ -397,7 +406,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_instagram_monitor(self):
-        """Initialize Instagram API monitoring"""
+        """
+Initialize Instagram API monitoring"""
         return {
             'api_version': 'basic_display',
             'hashtags': ['#collab', '#collaboration', '#brandpartnership'],
@@ -407,7 +417,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_youtube_monitor(self):
-        """Initialize YouTube API monitoring"""
+        """
+Initialize YouTube API monitoring"""
         return {
             'api_version': 'v3',
             'search_terms': ['collaboration', 'featuring', 'guest appearance'],
@@ -418,7 +429,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_tiktok_monitor(self):
-        """Initialize TikTok API monitoring"""
+        """
+Initialize TikTok API monitoring"""
         return {
             'api_version': 'research',
             'hashtags': ['#collab', '#duet', '#collaboration'],
@@ -428,7 +440,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     async def _load_fallback_models(self):
-        """Load simplified fallback models if advanced models fail"""
+        """
+Load simplified fallback models if advanced models fail"""
         try:
             self.collaboration_classifier = pipeline(
                 "text-classification",
@@ -1239,7 +1252,8 @@ class CollaborationEntityTracker(BaseService):
         entity: CollaborationEntity,
         user_profile: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate overall opportunity score"""
+        """
+Calculate overall opportunity score"""
         score = entity.confidence * 0.4  # Base confidence weight
         
         # Add compatibility score
@@ -1267,7 +1281,8 @@ class CollaborationEntityTracker(BaseService):
         return min(1.0, max(0.0, score))
     
     async def _determine_priority(self, entity: CollaborationEntity) -> CollaborationPriority:
-        """Determine priority level for collaboration entity"""
+        """
+Determine priority level for collaboration entity"""
         score = entity.opportunity_score
         
         # Time-sensitive boost
@@ -1292,7 +1307,8 @@ class CollaborationEntityTracker(BaseService):
             return CollaborationPriority.LOW
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check service health status"""
+        """
+Check service health status"""
         return {
             "status": "healthy" if self.models_loaded else "degraded",
             "models_loaded": self.models_loaded,

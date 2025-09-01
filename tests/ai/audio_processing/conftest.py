@@ -1,6 +1,6 @@
 # conftest.py - Configuration globale des tests
 # Created by: Fahed Mlaiel (mlaiel@live.de)
-# © 2025 Fahed Mlaiel. All rights reserved.
+# (c) 2025 Fahed Mlaiel. All rights reserved.
 
 import os
 import sys

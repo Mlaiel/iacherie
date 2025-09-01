@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -40,7 +41,9 @@ from ..storage.vector_storage import VectorStorage
 
 
 class VectorType(Enum):
-    """Types of vectors supported"""
+    """
+Types of vectors supported"""
+
     CONTENT_EMBEDDING = "content_embedding"
     AUDIO_EMBEDDING = "audio_embedding"
     VIDEO_EMBEDDING = "video_embedding"
@@ -52,6 +55,7 @@ class VectorType(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity metrics available"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -62,6 +66,7 @@ class SimilarityMetric(Enum):
 
 class IndexType(Enum):
     """Vector index types"""
+
     FLAT = "flat"
     IVF = "ivf"
     HNSW = "hnsw"
@@ -84,7 +89,8 @@ class VectorDocument:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity search result"""
+    """
+Similarity search result"""
     document: VectorDocument
     similarity_score: float
     distance: float
@@ -94,7 +100,8 @@ class SimilarityMatch:
 
 @dataclass
 class ClusterResult:
-    """Clustering analysis result"""
+    """
+Clustering analysis result"""
     cluster_id: int
     cluster_center: np.ndarray
     cluster_size: int
@@ -105,7 +112,8 @@ class ClusterResult:
 
 @dataclass
 class VectorAnalysis:
-    """Vector space analysis result"""
+    """
+Vector space analysis result"""
     total_vectors: int
     dimensions: int
     density_metrics: Dict[str, float]
@@ -200,7 +208,8 @@ class VectorOperations:
         self.similarity_engine = SimilarityEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize vector storage"""
+        """
+Initialize vector storage"""
         self.vector_storage = VectorStorage(self.config)
     
     async def add_vector(
@@ -408,7 +417,8 @@ class VectorOperations:
         vector_type: VectorType,
         top_k: int = 10
     ) -> List[List[SimilarityMatch]]:
-        """Perform batch similarity search"""
+        """
+Perform batch similarity search"""
         results = []
         
         for query_embedding in query_embeddings:
@@ -535,7 +545,8 @@ class VectorOperations:
         cluster_center: np.ndarray,
         top_k: int = 3
     ) -> List[VectorDocument]:
-        """Find most representative documents for a cluster"""
+        """
+Find most representative documents for a cluster"""
         if not documents:
             return []
         
@@ -668,7 +679,8 @@ class VectorOperations:
         return outliers
     
     def _analyze_dimensionality(self, embeddings: np.ndarray) -> Dict[str, Any]:
-        """Analyze optimal dimensionality for embeddings"""
+        """
+Analyze optimal dimensionality for embeddings"""
         if len(embeddings) < 2:
             return {}
         
@@ -838,7 +850,8 @@ class VectorOperations:
         return self.vector_documents.get(vector_id)
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get vector operations performance metrics"""
+        """
+Get vector operations performance metrics"""
         metrics = self.performance_metrics.copy()
         
         # Add index information

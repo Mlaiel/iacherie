@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -80,13 +81,15 @@ class TestNoiseReducer(unittest.TestCase):
     """Test suite for NoiseReducer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.reducer = NoiseReducer()
         self.noisy_image = self._create_noisy_test_image()
         self.clean_image = self._create_clean_test_image()
     
     def _create_noisy_test_image(self) -> np.ndarray:
-        """Create a test image with noise"""
+        """
+Create a test image with noise"""
         # Start with a clean image
         image = np.zeros((200, 200, 3), dtype=np.uint8)
         cv2.rectangle(image, (50, 50), (150, 150), (100, 150, 200), -1)
@@ -103,18 +106,21 @@ class TestNoiseReducer(unittest.TestCase):
         return noisy_image
     
     def _create_clean_test_image(self) -> np.ndarray:
-        """Create a clean test image for comparison"""
+        """
+Create a clean test image for comparison"""
         image = np.zeros((200, 200, 3), dtype=np.uint8)
         cv2.rectangle(image, (50, 50), (150, 150), (100, 150, 200), -1)
         cv2.circle(image, (100, 100), 30, (255, 255, 255), -1)
         return image
     
     def test_reducer_initialization(self):
-        """Test NoiseReducer initialization"""
+        """
+Test NoiseReducer initialization"""
         self.assertIsInstance(self.reducer, NoiseReducer)
     
     def test_gaussian_noise_reduction(self):
-        """Test Gaussian noise reduction"""
+        """
+Test Gaussian noise reduction"""
         try:
             denoised = self.reducer.reduce_gaussian_noise(self.noisy_image)
             
@@ -193,14 +199,16 @@ class TestColorCorrector(unittest.TestCase):
     """Test suite for ColorCorrector class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.corrector = ColorCorrector()
         self.test_image = self._create_color_test_image()
         self.dark_image = self._create_dark_image()
         self.oversaturated_image = self._create_oversaturated_image()
     
     def _create_color_test_image(self) -> np.ndarray:
-        """Create a test image with various colors"""
+        """
+Create a test image with various colors"""
         image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Red region
@@ -223,23 +231,27 @@ class TestColorCorrector(unittest.TestCase):
         return image
     
     def _create_dark_image(self) -> np.ndarray:
-        """Create an underexposed test image"""
+        """
+Create an underexposed test image"""
         image = self.test_image.copy().astype(np.float32)
         return (image * 0.3).astype(np.uint8)  # Make it 30% darker
     
     def _create_oversaturated_image(self) -> np.ndarray:
-        """Create an oversaturated test image"""
+        """
+Create an oversaturated test image"""
         image = self.test_image.copy()
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype(np.float32)
         hsv[:, :, 1] = np.clip(hsv[:, :, 1] * 1.5, 0, 255)  # Increase saturation
         return cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2BGR)
     
     def test_corrector_initialization(self):
-        """Test ColorCorrector initialization"""
+        """
+Test ColorCorrector initialization"""
         self.assertIsInstance(self.corrector, ColorCorrector)
     
     def test_brightness_adjustment(self):
-        """Test brightness adjustment"""
+        """
+Test brightness adjustment"""
         try:
             # Brighten dark image
             brightened = self.corrector.adjust_brightness(self.dark_image, factor=1.5)
@@ -346,12 +358,14 @@ class TestResolutionUpscaler(unittest.TestCase):
     """Test suite for ResolutionUpscaler class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.upscaler = ResolutionUpscaler()
         self.low_res_image = self._create_low_resolution_image()
     
     def _create_low_resolution_image(self) -> np.ndarray:
-        """Create a low resolution test image"""
+        """
+Create a low resolution test image"""
         # Create a small image with clear features
         image = np.zeros((50, 50, 3), dtype=np.uint8)
         
@@ -363,11 +377,13 @@ class TestResolutionUpscaler(unittest.TestCase):
         return image
     
     def test_upscaler_initialization(self):
-        """Test ResolutionUpscaler initialization"""
+        """
+Test ResolutionUpscaler initialization"""
         self.assertIsInstance(self.upscaler, ResolutionUpscaler)
     
     def test_bicubic_upscaling(self):
-        """Test bicubic interpolation upscaling"""
+        """
+Test bicubic interpolation upscaling"""
         try:
             upscaled = self.upscaler.bicubic_upscale(self.low_res_image, scale_factor=2.0)
             
@@ -453,13 +469,15 @@ class TestImageEnhancer(unittest.TestCase):
     """Test suite for ImageEnhancer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.enhancer = ImageEnhancer()
         self.test_image = self._create_enhancement_test_image()
         self.settings = self._create_enhancement_settings()
     
     def _create_enhancement_test_image(self) -> np.ndarray:
-        """Create a test image that needs enhancement"""
+        """
+Create a test image that needs enhancement"""
         # Create a low quality image
         image = np.zeros((150, 200, 3), dtype=np.uint8)
         
@@ -477,7 +495,8 @@ class TestImageEnhancer(unittest.TestCase):
         return dark_image
     
     def _create_enhancement_settings(self):
-        """Create enhancement settings for testing"""
+        """
+Create enhancement settings for testing"""
         try:
             return EnhancementSettings(
                 noise_reduction=True,
@@ -499,11 +518,13 @@ class TestImageEnhancer(unittest.TestCase):
             }
     
     def test_enhancer_initialization(self):
-        """Test ImageEnhancer initialization"""
+        """
+Test ImageEnhancer initialization"""
         self.assertIsInstance(self.enhancer, ImageEnhancer)
     
     def test_comprehensive_enhancement(self):
-        """Test comprehensive image enhancement"""
+        """
+Test comprehensive image enhancement"""
         try:
             enhanced = self.enhancer.enhance(self.test_image, settings=self.settings)
             
@@ -604,17 +625,20 @@ class TestVideoEnhancer(unittest.TestCase):
     """Test suite for VideoEnhancer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.enhancer = VideoEnhancer()
         self.test_video_path = self._create_test_video()
     
     def tearDown(self):
-        """Clean up test fixtures"""
+        """
+Clean up test fixtures"""
         if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
+        """
+Create a test video file"""
         temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
@@ -643,11 +667,13 @@ class TestVideoEnhancer(unittest.TestCase):
         return temp_path
     
     def test_enhancer_initialization(self):
-        """Test VideoEnhancer initialization"""
+        """
+Test VideoEnhancer initialization"""
         self.assertIsInstance(self.enhancer, VideoEnhancer)
     
     def test_video_enhancement(self):
-        """Test video enhancement"""
+        """
+Test video enhancement"""
         try:
             # Create output path
             output_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
@@ -728,7 +754,8 @@ class TestEnhancementIntegration(unittest.TestCase):
     """Test suite for enhancement integration and workflows"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.noise_reducer = NoiseReducer()
         self.color_corrector = ColorCorrector()
         self.upscaler = ResolutionUpscaler()
@@ -737,7 +764,8 @@ class TestEnhancementIntegration(unittest.TestCase):
         self.test_image = self._create_comprehensive_test_image()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image with multiple issues"""
+        """
+Create comprehensive test image with multiple issues"""
         # Start with a small, low quality image
         image = np.zeros((100, 150, 3), dtype=np.uint8)
         
@@ -761,7 +789,8 @@ class TestEnhancementIntegration(unittest.TestCase):
         return desaturated
     
     def test_complete_enhancement_pipeline(self):
-        """Test complete enhancement pipeline"""
+        """
+Test complete enhancement pipeline"""
         try:
             # Step 1: Noise reduction
             denoised = self.noise_reducer.reduce_gaussian_noise(self.test_image)
@@ -813,7 +842,8 @@ class TestEnhancementIntegration(unittest.TestCase):
         return np.var(gray)
     
     def test_performance_benchmarking(self):
-        """Test enhancement performance"""
+        """
+Test enhancement performance"""
         try:
             start_time = time.time()
             

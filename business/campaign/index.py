@@ -5,12 +5,13 @@ Central index and configuration module for the campaign management system.
 Provides unified access, initialization, and coordination for all campaign modules.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -43,7 +44,9 @@ from .seo_optimizer import SEOOptimizer
 
 
 class CampaignModuleStatus(str, Enum):
-    """Campaign module status enumeration"""
+    """
+Campaign module status enumeration"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -53,6 +56,7 @@ class CampaignModuleStatus(str, Enum):
 
 class ServicePriority(str, Enum):
     """Service priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -74,7 +78,8 @@ class ModuleInfo:
 
 @dataclass
 class CampaignSystemConfig:
-    """Campaign system configuration"""
+    """
+Campaign system configuration"""
     max_concurrent_campaigns: int = 10000
     max_content_size_mb: int = 500
     cache_ttl_seconds: int = 3600
@@ -624,12 +629,14 @@ class CampaignSystemIndex:
         pass
     
     async def _perform_cleanup_tasks(self) -> None:
-        """Perform cleanup tasks"""
+        """
+Perform cleanup tasks"""
         # Implementation for cleanup tasks
         pass
     
     async def _check_core_services_health(self) -> Dict[str, Any]:
-        """Check health of core services"""
+        """
+Check health of core services"""
         return {
             "overall_score": 95.0,
             "database": {"status": "healthy", "score": 98.0},

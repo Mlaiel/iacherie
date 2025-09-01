@@ -16,6 +16,7 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, List, Set, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,7 +25,9 @@ import os
 
 
 class SurveillanceMode(str, Enum):
-    """Surveillance operational modes."""
+    """
+Surveillance operational modes."""
+
     CONTINUOUS = "continuous"
     SCHEDULED = "scheduled"
     TRIGGER_BASED = "trigger_based"
@@ -34,6 +37,7 @@ class SurveillanceMode(str, Enum):
 
 class MonitoringScope(str, Enum):
     """Scope of content monitoring."""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -43,6 +47,7 @@ class MonitoringScope(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -52,6 +57,7 @@ class AlertSeverity(str, Enum):
 
 class AlertType(str, Enum):
     """Types of surveillance alerts."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
@@ -64,6 +70,7 @@ class AlertType(str, Enum):
 
 class ResponseAction(str, Enum):
     """Automated response actions."""
+
     NOTIFY_ONLY = "notify_only"
     DMCA_TAKEDOWN = "dmca_takedown"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -76,6 +83,7 @@ class ResponseAction(str, Enum):
 
 class EvidenceType(str, Enum):
     """Types of evidence to collect."""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     METADATA = "metadata"
@@ -150,7 +158,8 @@ class ContentTargetConfig:
 
 @dataclass
 class AlertConfig:
-    """Configuration for surveillance alerts."""
+    """
+Configuration for surveillance alerts."""
     # Alert generation
     enable_real_time_alerts: bool = True
     enable_batch_alerts: bool = True
@@ -182,7 +191,8 @@ class AlertConfig:
 
 @dataclass
 class EvidenceCollectionConfig:
-    """Configuration for evidence collection during surveillance."""
+    """
+Configuration for evidence collection during surveillance."""
     # Automatic evidence collection
     enable_automatic_evidence: bool = True
     collect_on_detection: bool = True
@@ -268,7 +278,8 @@ class ResponseAutomationConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration for surveillance system."""
+    """
+Performance configuration for surveillance system."""
     # Processing limits
     max_concurrent_monitors: int = 50
     max_content_checks_per_minute: int = 1000
@@ -295,7 +306,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for surveillance system."""
+    """
+Security configuration for surveillance system."""
     # Access control
     require_authentication: bool = True
     enable_role_based_access: bool = True
@@ -324,7 +336,8 @@ class SecurityConfig:
 
 @dataclass
 class ReportingConfig:
-    """Configuration for surveillance reporting."""
+    """
+Configuration for surveillance reporting."""
     # Report generation
     enable_automated_reports: bool = True
     daily_reports: bool = True
@@ -404,7 +417,8 @@ class AutomatedSurveillanceConfig:
             return AlertSeverity.INFO
     
     def get_actions_for_severity(self, severity: AlertSeverity) -> List[ResponseAction]:
-        """Get automated response actions for alert severity."""
+        """
+Get automated response actions for alert severity."""
         actions_map = {
             AlertSeverity.CRITICAL: self.response_config.critical_actions,
             AlertSeverity.HIGH: self.response_config.high_actions,
@@ -415,7 +429,8 @@ class AutomatedSurveillanceConfig:
         return actions_map.get(severity, [ResponseAction.NOTIFY_ONLY])
     
     def should_collect_evidence(self, alert_type: AlertType, severity: AlertSeverity) -> bool:
-        """Determine if evidence should be collected for alert."""
+        """
+Determine if evidence should be collected for alert."""
         if not self.evidence_config.enable_automatic_evidence:
             return False
         
@@ -434,7 +449,8 @@ class AutomatedSurveillanceConfig:
         return False
     
     def validate_config(self) -> bool:
-        """Validate the automated surveillance configuration."""
+        """
+Validate the automated surveillance configuration."""
         try:
             if not self.target_platforms:
                 raise ValueError("At least one target platform must be specified")
@@ -516,7 +532,8 @@ class AutomatedSurveillanceConfig:
 # Factory functions for different use cases
 
 def create_high_security_surveillance_config() -> AutomatedSurveillanceConfig:
-    """Create high-security surveillance configuration."""
+    """
+Create high-security surveillance configuration."""
     config = AutomatedSurveillanceConfig()
     
     # High security settings
@@ -550,7 +567,8 @@ def create_high_security_surveillance_config() -> AutomatedSurveillanceConfig:
 
 
 def create_real_time_surveillance_config() -> AutomatedSurveillanceConfig:
-    """Create real-time focused surveillance configuration."""
+    """
+Create real-time focused surveillance configuration."""
     config = AutomatedSurveillanceConfig()
     
     # Real-time settings
@@ -579,7 +597,8 @@ def create_real_time_surveillance_config() -> AutomatedSurveillanceConfig:
 
 
 def create_enterprise_surveillance_config() -> AutomatedSurveillanceConfig:
-    """Create enterprise-grade surveillance configuration."""
+    """
+Create enterprise-grade surveillance configuration."""
     config = AutomatedSurveillanceConfig()
     
     # Enterprise features

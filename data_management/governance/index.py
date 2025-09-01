@@ -9,6 +9,7 @@ Email: mlaiel@live.de
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited ⚠️
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -22,7 +23,8 @@ _governance_manager: Optional[DataGovernanceManager] = None
 
 
 def get_governance_manager(config: Optional[Dict[str, Any]] = None) -> DataGovernanceManager:
-    """Get or create global governance manager instance"""
+    """
+Get or create global governance manager instance"""
     global _governance_manager
     
     if _governance_manager is None:
@@ -68,13 +70,15 @@ async def apply_governance_to_content(
 
 
 async def check_content_compliance(content_id: str) -> Dict[str, Any]:
-    """Check current compliance status of content"""
+    """
+Check current compliance status of content"""
     manager = get_governance_manager()
     return await manager.check_compliance(content_id)
 
 
 async def get_governance_metrics() -> Dict[str, Any]:
-    """Get current governance metrics and performance indicators"""
+    """
+Get current governance metrics and performance indicators"""
     manager = get_governance_manager()
     return await manager.get_governance_metrics()
 
@@ -154,14 +158,16 @@ async def export_governance_data(
 
 
 async def cleanup_expired_content() -> Dict[str, int]:
-    """Clean up expired content based on retention policies"""
+    """
+Clean up expired content based on retention policies"""
     manager = get_governance_manager()
     return await manager.cleanup_expired_content()
 
 
 # Content type validation helpers
 def validate_content_type(content_type: str) -> bool:
-    """Validate if content type is supported"""
+    """
+Validate if content type is supported"""
     try:
         ContentType(content_type.lower())
         return True
@@ -170,12 +176,14 @@ def validate_content_type(content_type: str) -> bool:
 
 
 def get_supported_content_types() -> List[str]:
-    """Get list of supported content types"""
+    """
+Get list of supported content types"""
     return [ct.value for ct in ContentType]
 
 
 def get_governance_status_options() -> List[str]:
-    """Get list of possible governance status values"""
+    """
+Get list of possible governance status values"""
     return [gs.value for gs in GovernanceStatus]
 
 

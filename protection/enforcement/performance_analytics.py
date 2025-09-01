@@ -1,6 +1,7 @@
 """Performance Analytics and Reporting System
 Advanced analytics for copyright enforcement performance monitoring
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     COUNT = "count"
     RATE = "rate"
     PERCENTAGE = "percentage"
@@ -31,6 +34,7 @@ class MetricType(Enum):
 
 class TimePeriod(Enum):
     """Time periods for analytics"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -41,6 +45,7 @@ class TimePeriod(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     CSV = "csv"
     PDF = "pdf"
@@ -91,14 +96,16 @@ class MetricValue:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def format_value(self, metric_def: MetricDefinition) -> str:
-        """Format value according to metric definition"""
+        """
+Format value according to metric definition"""
         formatted_value = round(self.value, metric_def.decimal_places)
         return metric_def.format_string.format(value=formatted_value, unit=metric_def.unit)
 
 
 @dataclass
 class PerformanceReport:
-    """Complete performance report"""
+    """
+Complete performance report"""
     id: str
     title: str
     description: str
@@ -125,16 +132,19 @@ class PerformanceReport:
         self.metrics.append(metric)
     
     def add_insight(self, insight: str):
-        """Add insight to report"""
+        """
+Add insight to report"""
         self.insights.append(insight)
     
     def add_recommendation(self, recommendation: str):
-        """Add recommendation to report"""
+        """
+Add recommendation to report"""
         self.recommendations.append(recommendation)
 
 
 class PerformanceAnalytics:
-    """Advanced performance analytics engine"""
+    """
+Advanced performance analytics engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -470,7 +480,8 @@ class PerformanceAnalytics:
         end_time: datetime,
         period: TimePeriod
     ) -> Optional[MetricValue]:
-        """Calculate metric value for specific time period"""
+        """
+Calculate metric value for specific time period"""
         try:
             # Get raw data based on data source
             raw_data = await self._get_raw_data(
@@ -562,7 +573,8 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get legal documents data"""
+        """
+Get legal documents data"""
         # Simulate with sample data
         sample_data = []
         return sample_data
@@ -573,7 +585,8 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get escalations data"""
+        """
+Get escalations data"""
         # Simulate with sample data
         sample_data = []
         return sample_data
@@ -584,7 +597,8 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get evidence packages data"""
+        """
+Get evidence packages data"""
         # Simulate with sample data
         sample_data = []
         return sample_data
@@ -595,13 +609,15 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get content matches data"""
+        """
+Get content matches data"""
         # Simulate with sample data
         sample_data = []
         return sample_data
     
     def _apply_aggregation(self, data: List[Dict[str, Any]], method: str) -> float:
-        """Apply aggregation method to data"""
+        """
+Apply aggregation method to data"""
         try:
             if not data:
                 return 0.0

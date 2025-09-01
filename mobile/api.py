@@ -4,6 +4,7 @@ Mobile-optimized API endpoints with offline support and sync
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Efficient mobile API access for content management and collaboration
 """
+
 import asyncio
 import json
 import logging
@@ -62,7 +63,8 @@ class OfflineRequest:
 
 @dataclass
 class SyncOperation:
-    """Data synchronization operation."""
+    """
+Data synchronization operation."""
     sync_id: str
     user_id: str
     device_id: str
@@ -81,7 +83,8 @@ class SyncOperation:
 
 
 class MobileResponseOptimizer:
-    """Mobile response optimization for bandwidth and performance."""
+    """
+Mobile response optimization for bandwidth and performance."""
     
     def __init__(self):
         self.logger = get_logger("mobile.response_optimizer")
@@ -711,7 +714,8 @@ def optimize_response_for_mobile(
     data: Any,
     request: Request
 ) -> Dict[str, Any]:
-    """Optimize response for mobile client."""
+    """
+Optimize response for mobile client."""
     
     optimizer = MobileResponseOptimizer()
     return optimizer.optimize_response(data, request)
@@ -719,17 +723,20 @@ def optimize_response_for_mobile(
 
 # Dependency injection functions
 def get_mobile_api_router() -> MobileAPIRouter:
-    """Get mobile API router instance."""
+    """
+Get mobile API router instance."""
     return MobileAPIRouter()
 
 
 def get_response_optimizer() -> MobileResponseOptimizer:
-    """Get response optimizer instance."""
+    """
+Get response optimizer instance."""
     return MobileResponseOptimizer()
 
 
 def get_offline_sync_manager() -> OfflineSyncManager:
-    """Get offline sync manager instance."""
+    """
+Get offline sync manager instance."""
     return OfflineSyncManager()
 
 

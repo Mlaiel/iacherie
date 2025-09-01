@@ -7,6 +7,7 @@ and content co-creation effectiveness on the Ainflue platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     BRAND_PARTNERSHIP = "brand_partnership"
     CREATOR_COLLAB = "creator_collaboration"
     CONTENT_LICENSING = "content_licensing" 
@@ -36,6 +39,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status"""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
@@ -62,7 +66,8 @@ class CollaborationEvent:
 
 @dataclass
 class CreatorPerformance:
-    """Creator performance metrics"""
+    """
+Creator performance metrics"""
     creator_id: int
     total_collaborations: int
     successful_collaborations: int
@@ -90,7 +95,8 @@ class CollaborationSuccessTracker:
     """
     
     def __init__(self):
-        """Initialize collaboration success tracker"""
+        """
+Initialize collaboration success tracker"""
         
         # Prometheus metrics
         self.collaborations_total = Counter(
@@ -414,7 +420,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _calculate_top_creators(self, events: List[CollaborationEvent], limit: int = 10) -> List[Dict[str, Any]]:
-        """Calculate top performing creators"""
+        """
+Calculate top performing creators"""
         creator_stats = defaultdict(lambda: {
             "collaborations": 0,
             "successful": 0,

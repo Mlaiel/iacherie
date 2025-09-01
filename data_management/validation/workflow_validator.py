@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 VALIDATION WORKFLOW MULTI-CRÉATEURS
@@ -15,6 +15,7 @@ Validation complète des workflows de création de contenu
 - Orchestration validation bout-en-bout
 - Conformité business et qualité intégrée
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -39,6 +40,7 @@ logger = logging.getLogger(__name__)
 
 class WorkflowStep(Enum):
     """Étapes du workflow de validation"""
+
     CONTENT_INGESTION = "content_ingestion"
     METADATA_EXTRACTION = "metadata_extraction"
     TECHNICAL_VALIDATION = "technical_validation"
@@ -50,6 +52,7 @@ class WorkflowStep(Enum):
 
 class WorkflowStatus(Enum):
     """Status du workflow"""
+
     PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
@@ -59,6 +62,7 @@ class WorkflowStatus(Enum):
 
 class CreatorType(Enum):
     """Types de créateurs supportés"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
@@ -82,7 +86,8 @@ class WorkflowStepResult:
 
 @dataclass
 class WorkflowConfiguration:
-    """Configuration du workflow"""
+    """
+Configuration du workflow"""
     creator_type: CreatorType
     content_type: str  # audio, video, image, text
     target_platforms: List[str]
@@ -95,7 +100,8 @@ class WorkflowConfiguration:
 
 @dataclass
 class WorkflowResult:
-    """Résultat complet du workflow"""
+    """
+Résultat complet du workflow"""
     workflow_id: str
     configuration: WorkflowConfiguration
     overall_status: WorkflowStatus
@@ -118,7 +124,8 @@ class WorkflowResult:
     next_steps: List[str] = field(default_factory=list)
 
 class WorkflowOrchestrator:
-    """Orchestrateur principal des workflows"""
+    """
+Orchestrateur principal des workflows"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.WorkflowOrchestrator")
@@ -213,7 +220,8 @@ class WorkflowOrchestrator:
     
     async def validate_content_workflow(self, file_path: str, 
                                       config: WorkflowConfiguration) -> WorkflowResult:
-        """Lance un workflow de validation complet"""
+        """
+Lance un workflow de validation complet"""
         
         workflow_id = str(uuid.uuid4())
         start_time = datetime.now()
@@ -539,7 +547,8 @@ class WorkflowOrchestrator:
     async def _execute_sequential_steps(self, file_path: str, 
                                       config: WorkflowConfiguration,
                                       workflow_result: WorkflowResult) -> Dict[WorkflowStep, WorkflowStepResult]:
-        """Exécute les étapes d'analyse en séquentiel"""
+        """
+Exécute les étapes d'analyse en séquentiel"""
         
         sequential_steps = [
             WorkflowStep.QUALITY_ASSESSMENT,
@@ -809,7 +818,8 @@ class WorkflowValidator:
         return self.orchestrator._active_workflows.copy()
     
     def get_workflow_status(self, workflow_id: str) -> Optional[WorkflowResult]:
-        """Retourne le status d'un workflow spécifique"""
+        """
+Retourne le status d'un workflow spécifique"""
         return self.orchestrator._active_workflows.get(workflow_id)
 
 # Export des classes principales

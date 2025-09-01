@@ -5,8 +5,9 @@ including harmful content detection, age-appropriate filtering, and brand safety
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from ..ml.content_classifier import ContentClassifier
 
 
 class ContentRiskLevel(Enum):
-    """Content risk severity levels"""
+    """
+Content risk severity levels"""
+
     SAFE = "safe"
     LOW_RISK = "low_risk"
     MODERATE_RISK = "moderate_risk"
@@ -32,6 +35,7 @@ class ContentRiskLevel(Enum):
 
 class ContentCategory(Enum):
     """Content safety categories"""
+
     TOXICITY = "toxicity"
     HARASSMENT = "harassment"
     HATE_SPEECH = "hate_speech"
@@ -48,6 +52,7 @@ class ContentCategory(Enum):
 
 class AgeRating(Enum):
     """Age appropriateness ratings"""
+
     ALL_AGES = "all_ages"
     TEEN = "teen"
     MATURE = "mature"
@@ -57,6 +62,7 @@ class AgeRating(Enum):
 
 class BrandSafetyLevel(Enum):
     """Brand safety compliance levels"""
+
     BRAND_SAFE = "brand_safe"
     LOW_RISK = "low_risk"
     MODERATE_RISK = "moderate_risk"
@@ -81,7 +87,8 @@ class ContentViolation:
 
 @dataclass
 class ContentSafetyResult:
-    """Content safety assessment result"""
+    """
+Content safety assessment result"""
     overall_safety_score: float
     risk_level: ContentRiskLevel
     age_rating: AgeRating
@@ -97,7 +104,8 @@ class ContentSafetyResult:
 
 @dataclass
 class ContentModerationAction:
-    """Content moderation action structure"""
+    """
+Content moderation action structure"""
     action_type: str
     content_segment: str
     replacement_text: Optional[str]
@@ -579,7 +587,8 @@ class ContentComplianceEngine:
         sentiment_analysis: Dict[str, Any],
         content_classification: Dict[str, Any]
     ) -> BrandSafetyLevel:
-        """Assess brand safety compliance level"""
+        """
+Assess brand safety compliance level"""
         # Check for brand-unsafe content
         brand_unsafe_categories = [
             ContentCategory.HATE_SPEECH,
@@ -652,7 +661,8 @@ class ContentComplianceEngine:
             return ContentRiskLevel.HARMFUL
     
     def _generate_safety_recommendations(self, result: ContentSafetyResult) -> List[str]:
-        """Generate safety compliance recommendations"""
+        """
+Generate safety compliance recommendations"""
         recommendations = []
         
         if result.violations:
@@ -714,7 +724,8 @@ class ContentComplianceEngine:
         return total_confidence / len(violations)
     
     def _get_category_actions(self, category: ContentCategory) -> List[str]:
-        """Get recommended actions for violation category"""
+        """
+Get recommended actions for violation category"""
         actions = {
             ContentCategory.TOXICITY: [
                 "Filter toxic content",
@@ -858,5 +869,6 @@ class ContentComplianceEngine:
         return [category.value for category in ContentCategory]
     
     def get_category_thresholds(self, category: ContentCategory) -> Dict[str, float]:
-        """Get safety thresholds for specific category"""
+        """
+Get safety thresholds for specific category"""
         return self.safety_thresholds.get(category, {})

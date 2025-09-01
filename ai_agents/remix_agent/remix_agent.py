@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Agent IA principal pour orchestration intelligente de remixes professio
 TECHNOLOGIES: Multi-Agent Coordination, Decision Making, Workflow Orchestration
 LOGIQUE MÉTIER: Request → Analysis → Decision → Coordination → Execution → Validation → Response
 """
+
 import asyncio
 import logging
 import uuid
@@ -31,7 +32,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class AgentStatus(Enum):
-    """Status of the remix agent"""
+    """
+Status of the remix agent"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -43,6 +46,7 @@ class AgentStatus(Enum):
 
 class RemixPriority(Enum):
     """Priority levels for remix requests"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -51,6 +55,7 @@ class RemixPriority(Enum):
 
 class ProcessingMode(Enum):
     """Processing modes for different use cases"""
+
     STANDARD = "standard"
     CREATIVE = "creative"
     PROFESSIONAL = "professional"
@@ -74,7 +79,8 @@ class RemixAgentConfig:
 
 @dataclass
 class RemixRequest:
-    """Request for remix processing"""
+    """
+Request for remix processing"""
     request_id: str
     user_id: str
     input_audio_path: str
@@ -90,7 +96,8 @@ class RemixRequest:
 
 @dataclass
 class RemixResponse:
-    """Response from remix processing"""
+    """
+Response from remix processing"""
     request_id: str
     agent_id: str
     status: AgentStatus
@@ -629,7 +636,8 @@ class RemixAgent:
             return False
     
     def _estimate_completion_time(self, request: RemixRequest) -> str:
-        """Estimate completion time for a request"""
+        """
+Estimate completion time for a request"""
         try:
             # Simple estimation based on queue and average processing time
             queue_time = self.processing_queue.qsize() * self.metrics.get("average_processing_time", 60)

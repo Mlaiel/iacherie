@@ -2,7 +2,7 @@
 Enterprise-Grade CI/CD Pipeline Orchestration and Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive pipeline management capabilities for the IA Influencer Agent
 platform, including multi-environment deployments, automated testing, security scanning,
@@ -21,6 +21,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import json
@@ -38,7 +39,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 
 class PipelineStep:
-    """Individual pipeline step definition and execution"""
+    """
+Individual pipeline step definition and execution"""
     
     def __init__(self, name: str, command: str, working_dir: Optional[str] = None,
                  environment_vars: Optional[Dict[str, str]] = None,
@@ -125,7 +127,8 @@ class PipelineExecution:
         self.steps.append(step)
         
     async def execute(self) -> bool:
-        """Execute complete pipeline with all steps"""
+        """
+Execute complete pipeline with all steps"""
         self.start_time = datetime.utcnow()
         self.status = PipelineStatus.RUNNING
         self.logger.info(f"Starting pipeline execution: {self.execution_id}")
@@ -264,7 +267,8 @@ class AdvancedPipelineManager:
         
     async def execute_pipeline(self, pipeline_id: str, 
                              context: Optional[Dict[str, Any]] = None) -> str:
-        """Execute pipeline with specified context"""
+        """
+Execute pipeline with specified context"""
         if pipeline_id not in self.registered_pipelines:
             raise ValueError(f"Pipeline not found: {pipeline_id}")
             
@@ -320,7 +324,8 @@ class AdvancedPipelineManager:
             
     async def _build_steps_for_build(self, execution: PipelineExecution, 
                                    context: Dict[str, Any]):
-        """Build steps for application build pipeline"""
+        """
+Build steps for application build pipeline"""
         steps = [
             PipelineStep(
                 name="checkout_code",
@@ -498,11 +503,13 @@ class AdvancedPipelineManager:
         return None
         
     def list_active_pipelines(self) -> List[str]:
-        """List all currently active pipeline executions"""
+        """
+List all currently active pipeline executions"""
         return list(self.active_executions.keys())
         
     def get_execution_details(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about pipeline execution"""
+        """
+Get detailed information about pipeline execution"""
         execution = None
         
         if execution_id in self.active_executions:
@@ -537,7 +544,8 @@ class AdvancedPipelineManager:
         }
         
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Cancel active pipeline execution"""
+        """
+Cancel active pipeline execution"""
         if execution_id not in self.active_executions:
             return False
             

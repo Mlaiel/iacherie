@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...utils.template_engine import TemplateEngine
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -37,6 +40,7 @@ class AlertSeverity(Enum):
 
 class AlertType(Enum):
     """Types of competitor alerts."""
+
     CONTENT_UPDATE = "content_update"
     PRICING_CHANGE = "pricing_change"
     PRODUCT_LAUNCH = "product_launch"
@@ -68,7 +72,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance."""
+    """
+Alert instance."""
     alert_id: str
     rule_id: str
     competitor_id: str
@@ -87,7 +92,8 @@ class Alert:
 
 @dataclass
 class AlertMetrics:
-    """Alert system metrics."""
+    """
+Alert system metrics."""
     total_alerts: int
     alerts_by_severity: Dict[str, int]
     alerts_by_type: Dict[str, int]
@@ -107,7 +113,8 @@ class AlertSystem:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the alert system."""
+        """
+Initialize the alert system."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

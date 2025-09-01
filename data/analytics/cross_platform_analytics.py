@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -60,6 +63,7 @@ class PlatformType(Enum):
 
 class MetricCategory(Enum):
     """Cross-platform metric categories"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
@@ -96,7 +100,8 @@ class PlatformMetrics:
 
 @dataclass
 class CrossPlatformReport:
-    """Comprehensive cross-platform analytics report"""
+    """
+Comprehensive cross-platform analytics report"""
     user_id: str
     content_id: str
     report_period: Dict[str, datetime]
@@ -113,7 +118,8 @@ class CrossPlatformReport:
 
 @dataclass
 class PlatformBenchmark:
-    """Platform benchmarking data"""
+    """
+Platform benchmarking data"""
     platform: PlatformType
     content_type: str
     industry_averages: Dict[str, float]
@@ -177,7 +183,8 @@ class CrossPlatformAnalytics:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.http_session:
             await self.http_session.close()
     

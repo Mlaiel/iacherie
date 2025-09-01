@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Advanced Twitter/X monitoring system for real-time surveillance and content analysis.
 Provides comprehensive monitoring of tweets, users, trends, and engagement patterns.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Tweet:
-    """Twitter/X tweet data."""
+    """
+Twitter/X tweet data."""
     tweet_id: str
     user_id: str
     username: str
@@ -156,7 +158,8 @@ class TwitterMonitor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Twitter monitor."""
+        """
+Initialize Twitter monitor."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -862,7 +865,8 @@ class TwitterMonitor:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
+        """
+Get recent violations."""
         recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
@@ -888,7 +892,8 @@ class TwitterMonitor:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Twitter monitor."""
+        """
+Shutdown the Twitter monitor."""
         try:
             self._logger.info("Shutting down Twitter monitor...")
             

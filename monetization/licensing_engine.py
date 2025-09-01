@@ -4,6 +4,7 @@ Automated content licensing and contract management.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """License types"""
+    """
+License types"""
+
     ROYALTY_FREE = "royalty_free"
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
@@ -29,6 +32,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status"""
+
     DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
@@ -72,7 +76,8 @@ class LicensingAgreement:
 
 
 class LicensingEngine:
-    """Automated licensing and contract management engine"""
+    """
+Automated licensing and contract management engine"""
     
     # Default pricing models
     PRICING_MODELS = {

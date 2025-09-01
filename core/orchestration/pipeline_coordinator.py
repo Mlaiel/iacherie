@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status enumeration."""
+    """
+Pipeline execution status enumeration."""
+
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -37,6 +40,7 @@ class PipelineStatus(Enum):
 
 class PipelineType(Enum):
     """Pipeline type classification."""
+
     CONTENT_PROCESSING = "content_processing"
     AI_ENHANCEMENT = "ai_enhancement"
     PROTECTION_WORKFLOW = "protection_workflow"
@@ -48,6 +52,7 @@ class PipelineType(Enum):
 
 class QualityGateType(Enum):
     """Quality gate validation types."""
+
     CONTENT_VALIDATION = "content_validation"
     SECURITY_SCAN = "security_scan"
     PERFORMANCE_CHECK = "performance_check"
@@ -71,7 +76,8 @@ class QualityGate:
 
 @dataclass
 class PipelineStage:
-    """Individual pipeline stage definition."""
+    """
+Individual pipeline stage definition."""
     stage_id: str
     name: str
     processor: str
@@ -87,7 +93,8 @@ class PipelineStage:
 
 @dataclass
 class PipelineDefinition:
-    """Complete pipeline definition structure."""
+    """
+Complete pipeline definition structure."""
     pipeline_id: str
     name: str
     description: str
@@ -103,7 +110,8 @@ class PipelineDefinition:
 
 @dataclass
 class PipelineExecution:
-    """Pipeline execution tracking information."""
+    """
+Pipeline execution tracking information."""
     pipeline_id: str
     execution_id: str
     status: PipelineStatus = PipelineStatus.IDLE
@@ -126,7 +134,8 @@ class PipelineExecution:
 
 @dataclass
 class ResourcePool:
-    """Resource pool for pipeline execution."""
+    """
+Resource pool for pipeline execution."""
     pool_id: str
     name: str
     resource_type: str
@@ -636,7 +645,8 @@ class PipelineCoordinator:
             return False
     
     async def _build_pipeline_dependencies(self, pipeline_def: PipelineDefinition) -> None:
-        """Build pipeline stage dependency graph."""
+        """
+Build pipeline stage dependency graph."""
         pipeline_id = pipeline_def.pipeline_id
         self.dependency_graph[pipeline_id] = {}
         
@@ -644,7 +654,8 @@ class PipelineCoordinator:
             self.dependency_graph[pipeline_id][stage.stage_id] = set(stage.dependencies)
     
     async def _check_stage_dependencies(self, execution_id: str, stage: PipelineStage) -> bool:
-        """Check if stage dependencies are satisfied."""
+        """
+Check if stage dependencies are satisfied."""
         execution = self.active_executions[execution_id]
         
         # Check all dependencies are completed
@@ -655,7 +666,8 @@ class PipelineCoordinator:
         return True
     
     async def _check_resource_availability(self, pipeline_def: PipelineDefinition) -> bool:
-        """Check if required resources are available."""
+        """
+Check if required resources are available."""
         required_resources = pipeline_def.resource_requirements
         
         for resource_type, required_amount in required_resources.items():
@@ -667,7 +679,8 @@ class PipelineCoordinator:
         return True
     
     async def _allocate_resources(self, execution_id: str, pipeline_def: PipelineDefinition) -> None:
-        """Allocate resources for pipeline execution."""
+        """
+Allocate resources for pipeline execution."""
         required_resources = pipeline_def.resource_requirements
         
         for resource_type, required_amount in required_resources.items():
@@ -677,14 +690,16 @@ class PipelineCoordinator:
                 pool.allocated[execution_id] = required_amount
     
     async def _release_resources(self, execution_id: str) -> None:
-        """Release allocated resources."""
+        """
+Release allocated resources."""
         for pool in self.resource_pools.values():
             if execution_id in pool.allocated:
                 pool.available += pool.allocated[execution_id]
                 del pool.allocated[execution_id]
     
     def _update_performance_stats(self) -> None:
-        """Update coordination performance statistics."""
+        """
+Update coordination performance statistics."""
         if self.coordination_stats['total_pipelines'] > 0:
             # Calculate resource utilization
             total_capacity = sum(pool.capacity for pool in self.resource_pools.values())
@@ -696,7 +711,8 @@ class PipelineCoordinator:
                 )
     
     async def add_resource_pool(self, pool: ResourcePool) -> bool:
-        """Add a new resource pool."""
+        """
+Add a new resource pool."""
         try:
             self.resource_pools[pool.pool_id] = pool
             
@@ -719,7 +735,8 @@ class PipelineCoordinator:
         return self.active_executions.get(execution_id)
     
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Cancel running pipeline execution."""
+        """
+Cancel running pipeline execution."""
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]

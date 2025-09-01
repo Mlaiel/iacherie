@@ -51,6 +51,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -97,7 +98,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations available in the platform."""
+    """
+Types of collaborations available in the platform."""
+
     CONTENT_COLLABORATION = "content_collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     CROSS_PROMOTION = "cross_promotion"
@@ -112,6 +115,7 @@ class CollaborationType(Enum):
 
 class CompatibilityFactor(Enum):
     """Factors considered in compatibility analysis."""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     BRAND_ALIGNMENT = "brand_alignment"
@@ -126,6 +130,7 @@ class CompatibilityFactor(Enum):
 
 class RiskLevel(Enum):
     """Risk levels for collaborations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -155,7 +160,8 @@ class CreatorProfile:
 
 @dataclass
 class CompatibilityScore:
-    """Compatibility score between two creators."""
+    """
+Compatibility score between two creators."""
     creator1_id: str
     creator2_id: str
     overall_score: float
@@ -172,7 +178,8 @@ class CompatibilityScore:
 
 @dataclass
 class CollaborationOpportunity:
-    """Identified collaboration opportunity."""
+    """
+Identified collaboration opportunity."""
     opportunity_id: str
     creators: List[str]
     collaboration_type: CollaborationType
@@ -197,7 +204,8 @@ class CollaborationMatchingEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the collaboration matching engine."""
+        """
+Initialize the collaboration matching engine."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__ + ".matching")
         
@@ -573,7 +581,8 @@ class CollaborationMatchingEngine:
         return overlap_score / total_weight if total_weight > 0 else 0.0
     
     def _calculate_content_style_similarity(self, profile1: CreatorProfile, profile2: CreatorProfile) -> float:
-        """Calculate content style similarity score."""
+        """
+Calculate content style similarity score."""
         style1 = profile1.content_style
         style2 = profile2.content_style
         
@@ -603,7 +612,8 @@ class CollaborationMatchingEngine:
         return np.mean(similarities) if similarities else 0.0
     
     def _calculate_brand_alignment(self, profile1: CreatorProfile, profile2: CreatorProfile) -> float:
-        """Calculate brand alignment score."""
+        """
+Calculate brand alignment score."""
         # Analyze past brand partnerships for alignment
         brands1 = set(bp.get('brand_name', '') for bp in profile1.brand_partnerships)
         brands2 = set(bp.get('brand_name', '') for bp in profile2.brand_partnerships)
@@ -621,7 +631,8 @@ class CollaborationMatchingEngine:
         return (brand_overlap * 0.4 + category_alignment * 0.6)
     
     def _calculate_engagement_pattern_similarity(self, profile1: CreatorProfile, profile2: CreatorProfile) -> float:
-        """Calculate engagement pattern similarity."""
+        """
+Calculate engagement pattern similarity."""
         # Compare engagement rates
         eng1 = profile1.engagement_rate
         eng2 = profile2.engagement_rate
@@ -638,7 +649,8 @@ class CollaborationMatchingEngine:
         return rate_similarity
     
     def _calculate_platform_overlap(self, profile1: CreatorProfile, profile2: CreatorProfile) -> float:
-        """Calculate platform presence overlap."""
+        """
+Calculate platform presence overlap."""
         platforms1 = set(profile1.platforms)
         platforms2 = set(profile2.platforms)
         
@@ -648,7 +660,8 @@ class CollaborationMatchingEngine:
         return overlap / total_unique if total_unique > 0 else 0.0
     
     def _calculate_reputation_compatibility(self, profile1: CreatorProfile, profile2: CreatorProfile) -> float:
-        """Calculate reputation score compatibility."""
+        """
+Calculate reputation score compatibility."""
         rep1 = profile1.reputation_score
         rep2 = profile2.reputation_score
         
@@ -667,7 +680,8 @@ class CollaborationMatchingEngine:
         factor_scores: Dict[str, float],
         requested_types: Optional[List[CollaborationType]] = None
     ) -> List[str]:
-        """Determine recommended collaboration types based on compatibility factors."""
+        """
+Determine recommended collaboration types based on compatibility factors."""
         recommendations = []
         
         # High audience overlap -> Cross-promotion
@@ -694,7 +708,8 @@ class CollaborationMatchingEngine:
         profile2: CreatorProfile,
         compatibility_score: float
     ) -> float:
-        """Calculate potential revenue from collaboration."""
+        """
+Calculate potential revenue from collaboration."""
         # Base revenue calculation
         base_revenue1 = profile1.follower_count * profile1.engagement_rate * 0.01  # €
         base_revenue2 = profile2.follower_count * profile2.engagement_rate * 0.01  # €
@@ -713,7 +728,8 @@ class CollaborationMatchingEngine:
         profile2: CreatorProfile,
         factor_scores: Dict[str, float]
     ) -> RiskLevel:
-        """Assess risk level for the collaboration."""
+        """
+Assess risk level for the collaboration."""
         # Calculate risk factors
         reputation_risk = 1.0 - min(profile1.reputation_score, profile2.reputation_score) / 100
         alignment_risk = 1.0 - factor_scores.get(CompatibilityFactor.BRAND_ALIGNMENT.value, 0)
@@ -732,7 +748,8 @@ class CollaborationMatchingEngine:
             return RiskLevel.CRITICAL
     
     def _calculate_success_probability(self, factor_scores: Dict[str, float], overall_score: float) -> float:
-        """Calculate collaboration success probability."""
+        """
+Calculate collaboration success probability."""
         # Base probability from overall compatibility
         base_probability = overall_score
         
@@ -750,7 +767,8 @@ class CollaborationMatchingEngine:
         profile1: CreatorProfile,
         profile2: CreatorProfile
     ) -> List[str]:
-        """Recommend optimal platforms for collaboration."""
+        """
+Recommend optimal platforms for collaboration."""
         # Find common platforms
         common_platforms = list(set(profile1.platforms) & set(profile2.platforms))
         
@@ -767,7 +785,8 @@ class CollaborationMatchingEngine:
         profile1: CreatorProfile,
         profile2: CreatorProfile
     ) -> Dict[str, Any]:
-        """Calculate optimal timing for collaboration."""
+        """
+Calculate optimal timing for collaboration."""
         # In a real implementation, would analyze:
         # - Creator posting schedules
         # - Audience activity patterns
@@ -788,7 +807,8 @@ class CollaborationMatchingEngine:
         collaboration_type: CollaborationType,
         planned_content: Optional[Dict[str, Any]] = None
     ) -> List[float]:
-        """Extract features for success prediction model."""
+        """
+Extract features for success prediction model."""
         features = [
             profile1.follower_count / 1000000,  # Normalized follower count
             profile2.follower_count / 1000000,
@@ -806,7 +826,8 @@ class CollaborationMatchingEngine:
         return features
     
     def _calculate_basic_success_probability(self, compatibility: CompatibilityScore) -> float:
-        """Calculate basic success probability without ML model."""
+        """
+Calculate basic success probability without ML model."""
         return compatibility.overall_score * 0.8 + 0.1  # 10-90% range
     
     async def _identify_risk_factors(
@@ -815,7 +836,8 @@ class CollaborationMatchingEngine:
         profile2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> List[Dict[str, Any]]:
-        """Identify potential risk factors for the collaboration."""
+        """
+Identify potential risk factors for the collaboration."""
         risk_factors = []
         
         # Reputation risk
@@ -853,7 +875,8 @@ class CollaborationMatchingEngine:
         collaboration_type: CollaborationType,
         success_probability: float
     ) -> List[Dict[str, str]]:
-        """Generate recommendations to improve collaboration success."""
+        """
+Generate recommendations to improve collaboration success."""
         recommendations = []
         
         if success_probability < 0.7:
@@ -885,7 +908,8 @@ class CollaborationMatchingEngine:
         profile2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> Dict[str, float]:
-        """Project expected metrics from collaboration."""
+        """
+Project expected metrics from collaboration."""
         combined_reach = profile1.follower_count + profile2.follower_count
         avg_engagement = (profile1.engagement_rate + profile2.engagement_rate) / 2
         
@@ -901,7 +925,8 @@ class CollaborationMatchingEngine:
         }
     
     async def _analyze_market_trends(self, timeframe_days: int) -> Dict[str, Any]:
-        """Analyze market trends for collaboration opportunities."""
+        """
+Analyze market trends for collaboration opportunities."""
         # In a real implementation, would analyze:
         # - Trending hashtags and topics
         # - Successful collaboration patterns
@@ -921,11 +946,13 @@ class CollaborationMatchingEngine:
         }
     
     def _identify_hot_collaboration_types(self, trend_analysis: Dict[str, Any]) -> List[CollaborationType]:
-        """Identify collaboration types that are trending."""
+        """
+Identify collaboration types that are trending."""
         return trend_analysis.get('hot_collaboration_types', [CollaborationType.CONTENT_COLLABORATION])
     
     async def _find_trending_creators(self, trend_analysis: Dict[str, Any]) -> List[CreatorProfile]:
-        """Find creators who are aligned with current trends."""
+        """
+Find creators who are aligned with current trends."""
         # In a real implementation, would query database for creators
         # matching trending topics and showing growth
         return []  # Placeholder
@@ -935,7 +962,8 @@ class CollaborationMatchingEngine:
         creators: List[CreatorProfile],
         collaboration_type: CollaborationType
     ) -> List[Tuple[CreatorProfile, CreatorProfile]]:
-        """Find compatible creator pairs for a specific collaboration type."""
+        """
+Find compatible creator pairs for a specific collaboration type."""
         pairs = []
         
         for i, creator1 in enumerate(creators):
@@ -953,7 +981,8 @@ class CollaborationMatchingEngine:
         collaboration_type: CollaborationType,
         trend_analysis: Dict[str, Any]
     ) -> CollaborationOpportunity:
-        """Create a collaboration opportunity from a creator pair."""
+        """
+Create a collaboration opportunity from a creator pair."""
         creator1, creator2 = creator_pair
         compatibility = await self._calculate_compatibility(creator1, creator2)
         

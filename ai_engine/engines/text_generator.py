@@ -16,7 +16,7 @@ AI-powered SEO optimization, collaboration matching, and monetization strategies
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -32,6 +32,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import logging
 import json
@@ -54,7 +55,9 @@ from .base_engine import BaseContentEngine, EngineStatus, ProcessingPriority, Co
 
 
 class TextContentStyle(Enum):
-    """Advanced text content style types for creators"""
+    """
+Advanced text content style types for creators"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     CREATIVE = "creative"
@@ -73,6 +76,7 @@ class TextContentStyle(Enum):
 
 class ContentFormat(Enum):
     """Supported content output formats"""
+
     PLAIN_TEXT = "plain_text"
     MARKDOWN = "markdown"
     HTML = "html"
@@ -189,7 +193,8 @@ class AdvancedTextGenerator:
         self.style_classifier = None
         
     def _load_content_templates(self):
-        """Load content generation templates"""
+        """
+Load content generation templates"""
         self.templates = {
             TextContentStyle.SOCIAL_MEDIA: {
                 "structure": "hook + content + cta + hashtags",
@@ -361,7 +366,8 @@ class AdvancedTextGenerator:
         return content
         
     def _generate_social_media_content(self, request: TextGenerationRequest) -> str:
-        """Generate optimized social media content"""
+        """
+Generate optimized social media content"""
         hook = f"🚀 {request.target_audience}, this is for you!"
         content = f"Discover amazing {request.keywords[0] if request.keywords else 'content'} that will transform your experience."
         cta = "👇 Share your thoughts in the comments!"
@@ -432,7 +438,8 @@ class AdvancedTextGenerator:
         return optimized
         
     def _adjust_content_length(self, content: str, target_length: int) -> str:
-        """Adjust content to target length"""
+        """
+Adjust content to target length"""
         words = content.split()
         current_length = len(words)
         
@@ -572,14 +579,16 @@ class AdvancedTextGenerator:
             return 0.4
             
     def _calculate_uniqueness_score(self, content: str) -> float:
-        """Calculate content uniqueness score"""
+        """
+Calculate content uniqueness score"""
         # Simplified uniqueness calculation
         words = set(content.lower().split())
         unique_ratio = len(words) / max(1, len(content.split()))
         return min(1.0, unique_ratio * 1.2)
         
     def _extract_hashtags(self, content: str, request: TextGenerationRequest) -> List[str]:
-        """Extract and suggest relevant hashtags"""
+        """
+Extract and suggest relevant hashtags"""
         existing_hashtags = re.findall(r'#\w+', content)
         
         # Generate hashtags from keywords

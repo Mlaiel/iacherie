@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,9 @@ from ...utils.activity_aggregator import ActivityAggregator
 logger = logging.getLogger(__name__)
 
 class ActivityType(Enum):
-    """Comprehensive activity type classification"""
+    """
+Comprehensive activity type classification"""
+
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
@@ -82,6 +85,7 @@ class ActivityType(Enum):
 
 class ActivitySeverity(IntEnum):
     """Activity severity levels"""
+
     DEBUG = 1
     INFO = 2
     WARNING = 3
@@ -89,7 +93,9 @@ class ActivitySeverity(IntEnum):
     CRITICAL = 5
 
 class ActivitySource(Enum):
-    """Activity source classification"""
+    """
+Activity source classification"""
+
     WEB_APP = "web_app"
     MOBILE_APP = "mobile_app"
     API = "api"
@@ -116,7 +122,8 @@ class ActivityConfiguration:
 
 @dataclass
 class ActivityMetrics:
-    """Comprehensive activity metrics tracking"""
+    """
+Comprehensive activity metrics tracking"""
     total_activities_logged: int = 0
     activities_by_type: Dict[str, int] = field(default_factory=dict)
     activities_by_source: Dict[str, int] = field(default_factory=dict)
@@ -595,7 +602,8 @@ class ActivityLogger:
         return True
 
     async def _encrypt_sensitive_activity_data(self, activity_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive fields in activity record"""
+        """
+Encrypt sensitive fields in activity record"""
         sensitive_fields = ['user_id', 'details', 'client_info']
         encrypted_record = activity_record.copy()
         
@@ -608,7 +616,8 @@ class ActivityLogger:
         return encrypted_record
 
     async def _log_activity_real_time(self, activity_record: Dict[str, Any]) -> None:
-        """Log activity in real-time for critical events"""
+        """
+Log activity in real-time for critical events"""
         try:
             async with get_db_session() as session:
                 activity_log = ActivityLog(
@@ -641,7 +650,8 @@ class ActivityLogger:
             asyncio.create_task(self._process_activity_batch())
 
     async def _start_batch_processor(self) -> None:
-        """Start background batch processing service"""
+        """
+Start background batch processing service"""
         while True:
             try:
                 if self.activity_buffer:
@@ -723,7 +733,8 @@ class ActivityLogger:
         return str(uuid.uuid4())
 
     async def _gather_client_info(self) -> Dict[str, Any]:
-        """Gather client information from request context"""
+        """
+Gather client information from request context"""
         # This would typically extract from web framework context
         return {
             "ip_address": "127.0.0.1",  # Placeholder

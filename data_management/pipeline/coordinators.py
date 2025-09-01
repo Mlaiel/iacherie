@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Advanced coordination systems for orchestrating multi-format content processing
 pipelines across distributed infrastructure with AI-powered optimization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -20,7 +21,9 @@ from ..utils.decorators import monitor_performance, retry_on_failure
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status enumeration."""
+    """
+Pipeline execution status enumeration."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed" 
@@ -264,11 +267,13 @@ class ContentPipelineCoordinator:
         self.event_handlers[event_type].append(handler)
     
     async def get_pipeline_status(self, pipeline_id: str) -> Optional[PipelineContext]:
-        """Get current status of a pipeline."""
+        """
+Get current status of a pipeline."""
         return self.active_pipelines.get(pipeline_id)
     
     async def cancel_pipeline(self, pipeline_id: str) -> bool:
-        """Cancel an active pipeline."""
+        """
+Cancel an active pipeline."""
         if pipeline_id in self.active_pipelines:
             context = self.active_pipelines[pipeline_id]
             context.status = PipelineStatus.CANCELLED
@@ -277,7 +282,8 @@ class ContentPipelineCoordinator:
         return False
     
     async def get_active_pipelines(self) -> List[PipelineContext]:
-        """Get list of all active pipelines."""
+        """
+Get list of all active pipelines."""
         return list(self.active_pipelines.values())
 
 
@@ -358,7 +364,8 @@ class ProcessingOrchestrator:
         content_data: Dict[str, Any],
         requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Orchestrate real-time processing with sub-second latency."""
+        """
+Orchestrate real-time processing with sub-second latency."""
         if not self.stream_engine:
             raise ProcessingError("Stream processing engine not available")
         
@@ -536,7 +543,8 @@ class QualityAssuranceCoordinator:
             return {'score': 50, 'metrics': {}, 'issues': ['Unsupported content type']}
     
     async def _assess_audio_technical_quality(self, content_path: str) -> Dict[str, Any]:
-        """Assess audio technical quality."""
+        """
+Assess audio technical quality."""
         try:
             # Load audio data
             y, sr = librosa.load(content_path)
@@ -757,7 +765,8 @@ class QualityAssuranceCoordinator:
         content_type: str,
         requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess compliance with platform requirements."""
+        """
+Assess compliance with platform requirements."""
         # Platform-specific compliance checks
         target_platforms = requirements.get('target_platforms', [])
         
@@ -781,7 +790,8 @@ class QualityAssuranceCoordinator:
         content_type: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Check compliance for specific platform."""
+        """
+Check compliance for specific platform."""
         # Platform-specific requirements
         platform_requirements = {
             'youtube': {
@@ -818,7 +828,8 @@ class QualityAssuranceCoordinator:
         self,
         assessment_results: Dict[str, Any]
     ) -> List[str]:
-        """Generate quality improvement recommendations."""
+        """
+Generate quality improvement recommendations."""
         recommendations = []
         
         # Based on technical quality issues
@@ -1102,11 +1113,13 @@ class QualityAssuranceCoordinator:
             self.event_handlers[event_type].append(handler)
     
     async def get_pipeline_status(self, pipeline_id: str) -> Optional[PipelineContext]:
-        """Get current status of a pipeline."""
+        """
+Get current status of a pipeline."""
         return self.active_pipelines.get(pipeline_id)
     
     async def cancel_pipeline(self, pipeline_id: str) -> bool:
-        """Cancel an active pipeline."""
+        """
+Cancel an active pipeline."""
         if pipeline_id in self.active_pipelines:
             context = self.active_pipelines[pipeline_id]
             context.status = PipelineStatus.CANCELLED
@@ -1164,7 +1177,8 @@ class ProcessingOrchestrator:
         return results
     
     async def _analyze_workload(self, requests: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze processing workload for optimal resource allocation."""
+        """
+Analyze processing workload for optimal resource allocation."""
         
         analysis = {
             'total_requests': len(requests),
@@ -1191,7 +1205,8 @@ class ProcessingOrchestrator:
         return analysis
     
     def _calculate_complexity_score(self, request: Dict[str, Any]) -> float:
-        """Calculate processing complexity score for a request."""
+        """
+Calculate processing complexity score for a request."""
         base_scores = {
             'audio': 1.0,
             'image': 0.8,
@@ -1218,7 +1233,8 @@ class ProcessingOrchestrator:
         return base_score * size_multiplier * complexity_multiplier
     
     def _recommend_engine_allocation(self, analysis: Dict[str, Any]) -> Dict[str, int]:
-        """Recommend optimal engine allocation based on workload analysis."""
+        """
+Recommend optimal engine allocation based on workload analysis."""
         
         total_complexity = sum(analysis['complexity_scores'])
         available_engines = self.config.max_processing_engines
@@ -1253,7 +1269,8 @@ class QualityAssuranceCoordinator:
         content_data: Dict[str, Any],
         target_platforms: List[str]
     ) -> Dict[str, Any]:
-        """Coordinate comprehensive quality assurance process."""
+        """
+Coordinate comprehensive quality assurance process."""
         
         qa_results = {
             'overall_score': 0.0,
@@ -1286,7 +1303,8 @@ class QualityAssuranceCoordinator:
         return qa_results
     
     def _load_quality_standards(self) -> Dict[str, Any]:
-        """Load quality standards configuration."""
+        """
+Load quality standards configuration."""
         return {
             'audio': {
                 'min_bitrate': 128,
@@ -1314,7 +1332,8 @@ class QualityAssuranceCoordinator:
         }
     
     async def _validate_general_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content against general quality standards."""
+        """
+Validate content against general quality standards."""
         
         content_type = content_data.get('type')
         standards = self.quality_standards.get(content_type, {})
@@ -1334,7 +1353,8 @@ class QualityAssuranceCoordinator:
         content_data: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """Validate content compliance with platform-specific requirements."""
+        """
+Validate content compliance with platform-specific requirements."""
         
         platform_standards = self._get_platform_standards(platform)
         compliance_results = {

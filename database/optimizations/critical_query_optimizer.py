@@ -10,6 +10,7 @@ Enhanced database query optimization focusing on critical business operations:
 
 Author: Database Optimization Team
 """
+
 import asyncio
 import time
 import logging
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class CriticalQueryType(Enum):
-    """Critical business query categories"""
+    """
+Critical business query categories"""
+
     USER_AUTH = "user_authentication"
     CONTENT_UPLOAD = "content_upload"
     FINGERPRINT_PROCESSING = "fingerprint_processing"
@@ -50,7 +53,8 @@ class QueryPerformanceTarget:
 
 @dataclass  
 class QueryOptimizationResult:
-    """Result of query optimization analysis"""
+    """
+Result of query optimization analysis"""
     original_query: str
     optimized_query: str
     optimization_type: str
@@ -71,7 +75,8 @@ class CriticalQueryOptimizer:
         self.cache_strategies = self._define_cache_strategies()
         
     def _define_performance_targets(self) -> Dict[CriticalQueryType, QueryPerformanceTarget]:
-        """Define performance targets for critical query types"""
+        """
+Define performance targets for critical query types"""
         return {
             CriticalQueryType.USER_AUTH: QueryPerformanceTarget(
                 query_type=CriticalQueryType.USER_AUTH,
@@ -311,7 +316,8 @@ class CriticalQueryOptimizer:
     
     def analyze_query_performance(self, query: str, execution_time_ms: float, 
                                 cpu_usage: float, memory_usage_mb: float) -> Dict[str, Any]:
-        """Analyze query performance against targets"""
+        """
+Analyze query performance against targets"""
         query_type = self.classify_query(query)
         
         if not query_type:

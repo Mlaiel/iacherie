@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -36,6 +36,7 @@ Multi-Format Creator Upload → AI Content Analysis → Dynamic Pricing Optimiza
 Protection Integration → SEO Enhancement → Collaboration Matching → Revenue Maximization
 =========================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
@@ -74,7 +75,9 @@ logger = logging.getLogger(__name__)
 
 
 class PricingStrategy(Enum):
-    """Advanced pricing strategies for content creators"""
+    """
+Advanced pricing strategies for content creators"""
+
     DYNAMIC_MARKET_BASED = "dynamic_market_based"
     PREMIUM_TIER_SCALING = "premium_tier_scaling" 
     COLLABORATION_OPTIMIZED = "collaboration_optimized"
@@ -89,6 +92,7 @@ class PricingStrategy(Enum):
 
 class PricingTier(Enum):
     """Multi-tier pricing levels for creators"""
+
     STARTER = "starter"
     PROFESSIONAL = "professional"  
     PREMIUM = "premium"
@@ -98,6 +102,7 @@ class PricingTier(Enum):
 
 class ContentType(Enum):
     """Supported content types for pricing"""
+
     MUSIC_TRACK = "music_track"
     MUSIC_ALBUM = "music_album"
     PODCAST_EPISODE = "podcast_episode"
@@ -114,6 +119,7 @@ class ContentType(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -141,7 +147,8 @@ class PricingMetrics:
     trend_momentum: float
     
     def calculate_final_price(self) -> Decimal:
-        """Calculate final optimized price with all factors"""
+        """
+Calculate final optimized price with all factors"""
         adjustments = (
             self.market_demand_score * 
             self.engagement_multiplier * 
@@ -157,7 +164,8 @@ class PricingMetrics:
 
 @dataclass 
 class CompetitorData:
-    """Competitor pricing intelligence"""
+    """
+Competitor pricing intelligence"""
     competitor_id: str
     content_similarity_score: float
     price_range: Tuple[Decimal, Decimal]
@@ -170,7 +178,8 @@ class CompetitorData:
 
 @dataclass
 class MarketInsights:
-    """Market intelligence for pricing decisions"""
+    """
+Market intelligence for pricing decisions"""
     market_segment: str
     average_price: Decimal
     price_volatility: float
@@ -184,7 +193,8 @@ class MarketInsights:
 
 
 class PricingModel(BaseModel):
-    """Pydantic model for pricing validation"""
+    """
+Pydantic model for pricing validation"""
     content_id: str = Field(..., description="Unique content identifier")
     creator_id: str = Field(..., description="Creator identifier")
     content_type: ContentType = Field(..., description="Type of content")
@@ -283,7 +293,8 @@ class PricingEngine:
         self._redis_client = None
         
     async def initialize(self):
-        """Initialize async components"""
+        """
+Initialize async components"""
         self._redis_client = await aioredis.from_url('redis://localhost')
         logger.info("Pricing engine initialized successfully")
         
@@ -295,7 +306,8 @@ class PricingEngine:
         
     @asynccontextmanager
     async def pricing_session(self, creator_id: str):
-        """Async context manager for pricing sessions with caching"""
+        """
+Async context manager for pricing sessions with caching"""
         session_key = f"pricing_session:{creator_id}:{uuid.uuid4().hex[:8]}"
         
         try:
@@ -437,7 +449,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Premium tier scaling pricing strategy"""
+        """
+Premium tier scaling pricing strategy"""
         
         tier_multiplier = self.tier_multipliers.get(pricing_model.tier_level, Decimal('1.0'))
         
@@ -463,7 +476,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Collaboration-optimized pricing strategy"""
+        """
+Collaboration-optimized pricing strategy"""
         
         # Collaboration potential score
         collab_potential = pricing_model.content_metadata.get('collaboration_score', 0.5)
@@ -493,7 +507,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Platform-specific pricing optimization"""
+        """
+Platform-specific pricing optimization"""
         
         platform_factors = {
             'spotify': 1.0,
@@ -533,7 +548,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Audience engagement-driven pricing strategy"""
+        """
+Audience engagement-driven pricing strategy"""
         
         # Engagement metrics from target audience
         engagement_rate = pricing_model.target_audience.get('engagement_rate', 0.05)
@@ -563,7 +579,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Geographic market localization pricing"""
+        """
+Geographic market localization pricing"""
         
         # Geographic purchasing power adjustments
         geographic_factors = {
@@ -604,7 +621,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Content type specialized pricing strategy"""
+        """
+Content type specialized pricing strategy"""
         
         # Content type value multipliers
         content_multipliers = {
@@ -653,7 +671,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """AI-predicted optimal pricing strategy"""
+        """
+AI-predicted optimal pricing strategy"""
         
         # Prepare features for ML model
         features = self._prepare_ml_features(pricing_model, market_insights)
@@ -681,7 +700,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Competitive intelligence-based pricing"""
+        """
+Competitive intelligence-based pricing"""
         
         competitors = market_insights.competitive_landscape
         
@@ -731,7 +751,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, Any]:
-        """Seasonal trend-adjusted pricing strategy"""
+        """
+Seasonal trend-adjusted pricing strategy"""
         
         current_season = self._get_current_season()
         seasonal_patterns = market_insights.seasonal_patterns
@@ -767,7 +788,8 @@ class PricingEngine:
         
     # Utility Methods
     async def _gather_market_insights(self, pricing_model: PricingModel) -> MarketInsights:
-        """Gather comprehensive market intelligence"""
+        """
+Gather comprehensive market intelligence"""
         
         # Mock implementation - replace with real market data collection
         return MarketInsights(
@@ -829,7 +851,8 @@ class PricingEngine:
         base_metrics: Dict[str, Any],
         market_insights: MarketInsights
     ) -> Decimal:
-        """AI-powered price optimization"""
+        """
+AI-powered price optimization"""
         
         strategy_price = base_metrics.get('strategy_price', pricing_model.base_price)
         
@@ -854,7 +877,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         price: Decimal
     ) -> float:
-        """Predict conversion rate for given price"""
+        """
+Predict conversion rate for given price"""
         
         # Price elasticity model
         base_conversion = 0.05  # 5% base conversion rate
@@ -870,7 +894,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         price: Decimal
     ) -> Decimal:
-        """Calculate estimated ROI"""
+        """
+Calculate estimated ROI"""
         
         conversion_rate = await self._predict_conversion_rate(pricing_model, price)
         audience_size = pricing_model.target_audience.get('size', 1000)
@@ -893,7 +918,8 @@ class PricingEngine:
         market_insights: MarketInsights,
         competitor_data: List[CompetitorData]
     ) -> float:
-        """Calculate confidence score for pricing recommendation"""
+        """
+Calculate confidence score for pricing recommendation"""
         
         # Market data availability
         market_score = 0.8 if market_insights.market_opportunity_score > 0 else 0.3
@@ -912,7 +938,8 @@ class PricingEngine:
         return max(0.1, min(0.95, confidence))
         
     def _get_geographic_adjustment(self, geographic_market: str) -> float:
-        """Get geographic adjustment factor"""
+        """
+Get geographic adjustment factor"""
         
         adjustments = {
             'US': 1.0,
@@ -927,7 +954,8 @@ class PricingEngine:
         return adjustments.get(geographic_market, 1.0)
         
     def _get_currency_strength_factor(self, currency: Currency) -> float:
-        """Get currency strength adjustment factor"""
+        """
+Get currency strength adjustment factor"""
         
         # Simplified currency strength factors
         strength_factors = {
@@ -946,7 +974,8 @@ class PricingEngine:
         platform: str,
         content_type: ContentType
     ) -> float:
-        """Get platform-specific content performance multiplier"""
+        """
+Get platform-specific content performance multiplier"""
         
         # Platform-content performance matrix
         performance_matrix = {
@@ -974,7 +1003,8 @@ class PricingEngine:
         content_type: ContentType,
         content_metadata: Dict[str, Any]
     ) -> float:
-        """Calculate content length/size factor"""
+        """
+Calculate content length/size factor"""
         
         length_factors = {
             ContentType.MUSIC_TRACK: lambda meta: min(meta.get('duration_seconds', 180) / 180, 2.0),
@@ -990,7 +1020,8 @@ class PricingEngine:
         return 1.0
         
     def _get_current_season(self) -> str:
-        """Get current season for seasonal pricing"""
+        """
+Get current season for seasonal pricing"""
         
         month = datetime.utcnow().month
         
@@ -1008,7 +1039,8 @@ class PricingEngine:
         content_type: ContentType,
         season: str
     ) -> float:
-        """Get seasonal relevance for content type"""
+        """
+Get seasonal relevance for content type"""
         
         seasonal_relevance = {
             'spring': {
@@ -1033,7 +1065,8 @@ class PricingEngine:
         return seasonal_relevance.get(season, {}).get(content_type, 1.0)
         
     def _get_event_premium_factor(self) -> float:
-        """Get event-based premium factor"""
+        """
+Get event-based premium factor"""
         
         # Check for major events/holidays
         now = datetime.utcnow()
@@ -1051,7 +1084,8 @@ class PricingEngine:
         pricing_model: PricingModel,
         market_insights: MarketInsights
     ) -> Dict[str, float]:
-        """Prepare features for ML model"""
+        """
+Prepare features for ML model"""
         
         return {
             'base_price': float(pricing_model.base_price),
@@ -1069,7 +1103,8 @@ class PricingEngine:
         }
         
     def _generate_cache_key(self, pricing_model: PricingModel) -> str:
-        """Generate cache key for pricing model"""
+        """
+Generate cache key for pricing model"""
         
         key_components = [
             pricing_model.content_id,
@@ -1140,7 +1175,8 @@ class PricingEngine:
         self,
         pricing_requests: List[PricingModel]
     ) -> Dict[str, PricingMetrics]:
-        """Optimize pricing for multiple items in batch"""
+        """
+Optimize pricing for multiple items in batch"""
         
         results = {}
         

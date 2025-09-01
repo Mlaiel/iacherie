@@ -4,6 +4,7 @@ Enterprise-grade GDPR compliance automation and management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -27,7 +28,9 @@ logger = get_logger(__name__)
 
 
 class GDPRRequestType(str, Enum):
-    """GDPR request types"""
+    """
+GDPR request types"""
+
     ACCESS = "access"
     PORTABILITY = "portability"
     RECTIFICATION = "rectification"
@@ -38,6 +41,7 @@ class GDPRRequestType(str, Enum):
 
 class ConsentPurpose(str, Enum):
     """Data processing consent purposes"""
+
     ESSENTIAL = "essential"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
@@ -49,6 +53,7 @@ class ConsentPurpose(str, Enum):
 
 class ProcessingLawfulBasis(str, Enum):
     """GDPR lawful basis for processing"""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -73,7 +78,8 @@ class PersonalDataInventory:
 
 @dataclass
 class GDPRComplianceReport:
-    """GDPR compliance status report"""
+    """
+GDPR compliance status report"""
     user_id: int
     report_date: datetime
     consent_status: Dict[str, bool]
@@ -85,7 +91,8 @@ class GDPRComplianceReport:
 
 
 class GDPRComplianceManager:
-    """Enterprise GDPR compliance manager with automation"""
+    """
+Enterprise GDPR compliance manager with automation"""
     
     def __init__(self):
         self.logger = logger

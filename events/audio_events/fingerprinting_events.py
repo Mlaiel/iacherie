@@ -7,6 +7,7 @@ and content protection for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -17,7 +18,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class FingerprintingMethod(Enum):
-    """Audio fingerprinting methods"""
+    """
+Audio fingerprinting methods"""
+
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
@@ -29,6 +32,7 @@ class FingerprintingMethod(Enum):
 
 class MatchConfidence(Enum):
     """Confidence levels for audio matches"""
+
     PERFECT = "perfect"  # 95-100%
     HIGH = "high"        # 85-94%
     MEDIUM = "medium"    # 70-84%
@@ -38,6 +42,7 @@ class MatchConfidence(Enum):
 
 class ViolationType(Enum):
     """Types of copyright violations"""
+
     EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     REMIX_UNAUTHORIZED = "remix_unauthorized"

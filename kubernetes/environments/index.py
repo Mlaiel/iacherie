@@ -15,6 +15,7 @@ Central index for deployment environment management.
 Provides unified access to all environment managers and configurations.
 ===================================================
 """
+
 import os
 import logging
 from typing import Dict, Any, List, Optional, Type, Union
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""
+    """
+Environment type enumeration"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -82,7 +85,8 @@ class EnvironmentManagerFactory:
     
     @classmethod
     def create_manager(cls, environment_type: EnvironmentType, config_path: Optional[str] = None):
-        """Create environment manager instance"""
+        """
+Create environment manager instance"""
         if environment_type not in cls._managers:
             raise ValueError(f"Unsupported environment type: {environment_type}")
         
@@ -353,7 +357,8 @@ class EnvironmentCoordinator:
                 ]
     
     def _calculate_initialization_order(self, environments: List[EnvironmentType]) -> List[EnvironmentType]:
-        """Calculate environment initialization order based on dependencies"""
+        """
+Calculate environment initialization order based on dependencies"""
         # Simple topological sort
         visited = set()
         result = []
@@ -377,7 +382,8 @@ class EnvironmentCoordinator:
         return result
     
     def _validate_cross_environment_compatibility(self) -> Dict[str, Any]:
-        """Validate compatibility across environments"""
+        """
+Validate compatibility across environments"""
         compatibility_result = {
             'compatible': True,
             'issues': [],
@@ -392,7 +398,8 @@ class EnvironmentCoordinator:
         return compatibility_result
     
     def _generate_compliance_recommendations(self) -> List[str]:
-        """Generate compliance recommendations"""
+        """
+Generate compliance recommendations"""
         return [
             "Ensure all environments have consistent security policies",
             "Regular compliance audits across all environments",
@@ -409,7 +416,8 @@ class EnvironmentCoordinator:
         }
     
     def _generate_optimization_recommendations(self, resource_usage: Dict) -> List[str]:
-        """Generate resource optimization recommendations"""
+        """
+Generate resource optimization recommendations"""
         return [
             "Consider auto-scaling for production environment",
             "Optimize container resource limits",
@@ -445,7 +453,8 @@ class EnvironmentCoordinator:
 
 # Convenience functions for quick environment access
 def get_environment_manager(environment_type: str, config_path: Optional[str] = None):
-    """Get environment manager by type string"""
+    """
+Get environment manager by type string"""
     try:
         env_type = EnvironmentType(environment_type.lower())
         return EnvironmentManagerFactory.create_manager(env_type, config_path)
@@ -459,28 +468,33 @@ def create_development_environment(config_path: Optional[str] = None):
 
 
 def create_production_environment(config_path: Optional[str] = None):
-    """Create production environment manager"""
+    """
+Create production environment manager"""
     return ProductionEnvironmentManager(config_path)
 
 
 def create_staging_environment(config_path: Optional[str] = None):
-    """Create staging environment manager"""
+    """
+Create staging environment manager"""
     return StagingEnvironmentManager(config_path)
 
 
 def create_kubernetes_environment(config_path: Optional[str] = None):
-    """Create Kubernetes environment manager"""
+    """
+Create Kubernetes environment manager"""
     return KubernetesEnvironmentManager(config_path)
 
 
 def create_compliance_environment(config_path: Optional[str] = None):
-    """Create compliance environment manager"""
+    """
+Create compliance environment manager"""
     return ComplianceEnvironmentManager(config_path)
 
 
 # Environment validation utilities
 def validate_environment_configuration(environment_type: str, config: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate environment configuration"""
+    """
+Validate environment configuration"""
     validation_result = {
         'valid': True,
         'errors': [],

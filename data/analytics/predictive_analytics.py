@@ -5,12 +5,13 @@ Advanced predictive analytics and machine learning for content performance forec
 Provides AI-powered insights, trend predictions, and optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ warnings.filterwarnings('ignore')
 
 
 class PredictionType(Enum):
-    """Types of predictions"""
+    """
+Types of predictions"""
+
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_GROWTH = "audience_growth"
     REVENUE_FORECAST = "revenue_forecast"
@@ -57,6 +60,7 @@ class PredictionType(Enum):
 
 class ModelType(Enum):
     """Machine learning model types"""
+
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     NEURAL_NETWORK = "neural_network"
@@ -67,6 +71,7 @@ class ModelType(Enum):
 
 class PredictionConfidence(Enum):
     """Prediction confidence levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -92,7 +97,8 @@ class PredictionResult:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
+    """
+Trend analysis result"""
     trend_id: str
     metric_name: str
     trend_direction: str  # "increasing", "decreasing", "stable", "volatile"
@@ -119,7 +125,8 @@ class ContentOptimization:
 
 @dataclass
 class AudienceInsight:
-    """Predictive audience insight"""
+    """
+Predictive audience insight"""
     insight_id: str
     insight_type: str
     description: str
@@ -824,7 +831,8 @@ class EnsembleModel:
         self.scaler = scaler
         
     def predict(self, X):
-        """Make ensemble prediction."""
+        """
+Make ensemble prediction."""
         predictions = []
         
         for i, model in enumerate(self.models):
@@ -839,7 +847,8 @@ class EnsembleModel:
         return np.mean(predictions, axis=0)
     
     def predict_proba(self, X):
-        """Make probability predictions for classification."""
+        """
+Make probability predictions for classification."""
         if hasattr(self.models[0], 'predict_proba'):
             predictions = []
             for model in self.models:

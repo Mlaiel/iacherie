@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 import hashlib
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ShardingStrategy(Enum):
-    """Database sharding strategies"""
+    """
+Database sharding strategies"""
+
     HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
@@ -43,6 +46,7 @@ class ShardingStrategy(Enum):
 
 class ShardingKey(Enum):
     """Keys used for sharding decisions"""
+
     USER_ID = "user_id"
     TENANT_ID = "tenant_id"
     CONTENT_ID = "content_id"
@@ -53,6 +57,7 @@ class ShardingKey(Enum):
 
 class DataType(Enum):
     """Data types for different sharding strategies"""
+
     USER_DATA = "user_data"
     CONTENT_DATA = "content_data"
     ANALYTICS_DATA = "analytics_data"
@@ -85,7 +90,8 @@ class ShardConfig:
 
 @dataclass
 class ShardingRule:
-    """Rules for data distribution across shards"""
+    """
+Rules for data distribution across shards"""
     rule_id: str
     data_type: DataType
     sharding_strategy: ShardingStrategy
@@ -97,7 +103,8 @@ class ShardingRule:
 
 @dataclass
 class DatabaseShardingConfig:
-    """Professional database sharding configuration"""
+    """
+Professional database sharding configuration"""
     # Global sharding settings
     sharding_enabled: bool = True
     default_strategy: ShardingStrategy = ShardingStrategy.HASH_BASED
@@ -144,7 +151,8 @@ class ShardingManager:
         self.performance_stats: Dict[str, Dict] = {}
         
     async def initialize(self) -> bool:
-        """Initialize sharding manager and connections"""
+        """
+Initialize sharding manager and connections"""
         try:
             # Initialize connections to all shards
             for shard_id, shard_config in self.config.shards.items():
@@ -257,7 +265,8 @@ class ShardingManager:
             return self._apply_default_sharding(key_value)
             
     def _hash_based_sharding(self, target_shards: List[str], key_value: Any) -> str:
-        """Hash-based sharding across target shards"""
+        """
+Hash-based sharding across target shards"""
         active_targets = [
             shard_id for shard_id in target_shards
             if shard_id in self.config.shards and self.config.shards[shard_id].is_active
@@ -269,7 +278,8 @@ class ShardingManager:
         return active_targets[shard_index]
         
     def _range_based_sharding(self, target_shards: List[str], key_value: Any) -> str:
-        """Range-based sharding"""
+        """
+Range-based sharding"""
         for shard_id in target_shards:
             shard_config = self.config.shards.get(shard_id)
             if (shard_config and shard_config.is_active and
@@ -307,7 +317,8 @@ class ShardingManager:
         data_type: DataType = DataType.USER_DATA,
         key_value: Optional[Any] = None
     ) -> List[Dict[str, Any]]:
-        """Execute query on appropriate shard"""
+        """
+Execute query on appropriate shard"""
         try:
             # Determine target shard
             if sharding_key and key_value is not None:

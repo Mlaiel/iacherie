@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -49,7 +50,9 @@ from ....ml.models import (
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions available"""
+    """
+Types of predictions available"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     REVENUE = "revenue"
@@ -63,6 +66,7 @@ class PredictionType(Enum):
 
 class AnalysisDepth(Enum):
     """Depth of analysis to perform"""
+
     BASIC = "basic"              # Basic metrics and simple predictions
     STANDARD = "standard"        # Standard ML analysis
     ADVANCED = "advanced"        # Deep learning and complex models
@@ -942,12 +946,14 @@ class DistributionIntelligence:
         return pd.DataFrame()
 
     async def _prepare_training_data(self, data: pd.DataFrame) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
-        """Prepare training data for ML models"""
+        """
+Prepare training data for ML models"""
         # Implementation would process data for training
         return np.array([]), {'engagement': np.array([]), 'viral': np.array([])}
 
     async def _train_engagement_model(self, features: np.ndarray, targets: np.ndarray) -> None:
-        """Train engagement prediction model"""
+        """
+Train engagement prediction model"""
         if len(features) > 0 and len(targets) > 0:
             X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size=0.2, random_state=42)
             self.engagement_model.fit(X_train, y_train)

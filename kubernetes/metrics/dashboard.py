@@ -31,6 +31,7 @@ Features:
 - Mobile-responsive design with offline caching
 - Advanced filtering and correlation analysis
 """
+
 import logging
 import asyncio
 import time
@@ -71,7 +72,9 @@ settings = get_settings()
 
 
 class ChartType(Enum):
-    """Enhanced chart types with business intelligence features"""
+    """
+Enhanced chart types with business intelligence features"""
+
     LINE = "line"
     BAR = "bar"
     PIE = "pie"
@@ -99,6 +102,7 @@ class ChartType(Enum):
 
 class TimeRange(Enum):
     """Time range options for dashboard data"""
+
     LAST_5M = "5m"
     LAST_15M = "15m"
     LAST_1H = "1h"
@@ -112,6 +116,7 @@ class TimeRange(Enum):
 
 class RefreshInterval(Enum):
     """Dashboard refresh intervals"""
+
     REALTIME = 1      # 1 second
     FAST = 5          # 5 seconds
     NORMAL = 30       # 30 seconds
@@ -120,7 +125,9 @@ class RefreshInterval(Enum):
 
 
 class AggregationType(Enum):
-    """Data aggregation types"""
+    """
+Data aggregation types"""
+
     NONE = "none"
     SUM = "sum"
     AVG = "avg"
@@ -137,6 +144,7 @@ class AggregationType(Enum):
 
 class DashboardLayout(Enum):
     """Dashboard layout types"""
+
     GRID = "grid"
     VERTICAL = "vertical"
     HORIZONTAL = "horizontal"
@@ -148,6 +156,7 @@ class DashboardLayout(Enum):
 
 class ExportFormat(Enum):
     """Export format options"""
+
     PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"

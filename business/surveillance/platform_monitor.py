@@ -10,7 +10,7 @@ Module: backend/business/surveillance/platform_monitor.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -28,6 +28,7 @@ Platform Registration → Configuration Setup → API Integration → Real-time 
 Content Detection → Pattern Analysis → Threat Assessment → Automated Response →
 Legal Action Coordination → Performance Analytics → Optimization Feedback Loop
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -113,7 +114,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -122,6 +125,7 @@ class AlertLevel(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring status types"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -145,7 +149,8 @@ class MonitoringAlert:
 
 @dataclass
 class MonitoringResult:
-    """Result from platform monitoring operation"""
+    """
+Result from platform monitoring operation"""
     platform: str
     content_id: str
     monitoring_duration: float
@@ -159,7 +164,8 @@ class MonitoringResult:
 
 
 class PlatformMonitor:
-    """Base class for platform-specific monitoring"""
+    """
+Base class for platform-specific monitoring"""
     
     def __init__(self, platform: str, config: Dict[str, Any]):
         self.platform = platform
@@ -173,7 +179,8 @@ class PlatformMonitor:
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> bool:
-        """Start monitoring for specific content"""
+        """
+Start monitoring for specific content"""
         # Default implementation for platforms without monitoring support
         logging.warning(f"Content monitoring not implemented for {self.platform}")
         self.monitoring_status = MonitoringStatus.STOPPED
@@ -189,7 +196,8 @@ class PlatformMonitor:
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> MonitoringResult:
-        """Check for new content matches or infringements"""
+        """
+Check for new content matches or infringements"""
         # Default implementation for platforms without update checking
         logging.warning(f"Update checking not implemented for {self.platform}")
         from datetime import datetime
@@ -500,7 +508,8 @@ class PlatformMonitoringService:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all platform monitors"""
+        """
+Initialize all platform monitors"""
         try:
             # Initialize platform-specific monitors
             monitor_config = {

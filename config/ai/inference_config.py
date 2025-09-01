@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class InferenceBackend(str, Enum):
-    """Supported inference backends."""
+    """
+Supported inference backends."""
+
     
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
@@ -37,6 +40,7 @@ class InferenceBackend(str, Enum):
 
 class BatchingStrategy(str, Enum):
     """Batching strategies for inference optimization."""
+
     
     DYNAMIC = "dynamic"
     STATIC = "static"
@@ -46,6 +50,7 @@ class BatchingStrategy(str, Enum):
 
 class CachingStrategy(str, Enum):
     """Caching strategies for inference results."""
+
     
     MEMORY = "memory"
     REDIS = "redis"

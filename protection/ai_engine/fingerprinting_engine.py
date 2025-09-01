@@ -11,7 +11,7 @@ State-of-the-art content fingerprinting system providing:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + ML Engineer + Audio Engineer + Computer Vision + Security Expert + Signal Processing
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 This proprietary fingerprinting system contains advanced algorithms, signal processing techniques,
@@ -26,6 +26,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -1239,7 +1240,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _hamming_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate Hamming similarity between perceptual hashes"""
+        """
+Calculate Hamming similarity between perceptual hashes"""
         try:
             if len(fp1) != len(fp2):
                 return 0.0
@@ -1255,7 +1257,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _feature_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Calculate similarity between feature-based fingerprints"""
+        """
+Calculate similarity between feature-based fingerprints"""
         try:
             # Extract comparable features
             features1 = []
@@ -1290,7 +1293,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _semantic_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Calculate semantic similarity between text fingerprints"""
+        """
+Calculate semantic similarity between text fingerprints"""
         try:
             # Compare top terms
             if 'top_terms' in fp1 and 'top_terms' in fp2:
@@ -1311,28 +1315,32 @@ class ContentFingerprintEngine:
     # Utility methods
     
     def _calculate_skewness(self, data: np.ndarray) -> np.ndarray:
-        """Calculate skewness of data"""
+        """
+Calculate skewness of data"""
         mean_val = np.mean(data, axis=1, keepdims=True)
         std_val = np.std(data, axis=1, keepdims=True)
         normalized = (data - mean_val) / (std_val + 1e-8)
         return np.mean(normalized**3, axis=1)
     
     def _calculate_kurtosis(self, data: np.ndarray) -> np.ndarray:
-        """Calculate kurtosis of data"""
+        """
+Calculate kurtosis of data"""
         mean_val = np.mean(data, axis=1, keepdims=True)
         std_val = np.std(data, axis=1, keepdims=True)
         normalized = (data - mean_val) / (std_val + 1e-8)
         return np.mean(normalized**4, axis=1) - 3
     
     def _calculate_entropy(self, signal: np.ndarray) -> float:
-        """Calculate entropy of signal"""
+        """
+Calculate entropy of signal"""
         hist, _ = np.histogram(signal, bins=50)
         hist = hist / np.sum(hist)
         hist = hist[hist > 0]  # Remove zeros
         return -np.sum(hist * np.log2(hist))
     
     def _kmeans_descriptors(self, descriptors: np.ndarray, k: int = 64) -> np.ndarray:
-        """Perform k-means clustering on descriptors"""
+        """
+Perform k-means clustering on descriptors"""
         try:
             from sklearn.cluster import KMeans
             

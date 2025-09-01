@@ -10,13 +10,14 @@ Enterprise-grade text fingerprinting with advanced NLP techniques:
 - Language detection
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -75,7 +76,8 @@ class TextMetadata:
     complexity_score: Optional[float]
 
 class BERTEmbeddingExtractor:
-    """BERT-based neural embeddings for semantic text understanding."""
+    """
+BERT-based neural embeddings for semantic text understanding."""
     
     def __init__(self, model_name: str = "bert-base-uncased"):
         self.model_name = model_name
@@ -170,7 +172,8 @@ class BERTEmbeddingExtractor:
         return text.strip()
     
     def _chunk_text(self, text: str, max_length: int = 512) -> List[str]:
-        """Split text into chunks that fit BERT's maximum length."""
+        """
+Split text into chunks that fit BERT's maximum length."""
         # Tokenize to get accurate token count
         tokens = self.tokenizer.tokenize(text)
         
@@ -189,7 +192,8 @@ class BERTEmbeddingExtractor:
         return chunks
     
     def _compute_embedding_hash(self, embeddings: np.ndarray) -> str:
-        """Compute hash from BERT embeddings."""
+        """
+Compute hash from BERT embeddings."""
         # Quantize embeddings to binary
         binary_embeddings = (embeddings > np.median(embeddings)).astype(int)
         
@@ -198,7 +202,8 @@ class BERTEmbeddingExtractor:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
-        """Extract semantic features from embeddings."""
+        """
+Extract semantic features from embeddings."""
         return {
             "embedding_mean": float(np.mean(embeddings)),
             "embedding_std": float(np.std(embeddings)),
@@ -273,7 +278,8 @@ class SentenceTransformerExtractor:
         return hashlib.md5(hash_string.encode()).hexdigest()
 
 class TFIDFAnalyzer:
-    """TF-IDF vectorization and analysis."""
+    """
+TF-IDF vectorization and analysis."""
     
     def __init__(self, max_features: int = 5000, ngram_range: Tuple[int, int] = (1, 3)):
         self.max_features = max_features
@@ -282,7 +288,8 @@ class TFIDFAnalyzer:
         self.stop_words = self._get_stop_words()
         
     def _get_stop_words(self) -> Set[str]:
-        """Get combined stop words from multiple sources."""
+        """
+Get combined stop words from multiple sources."""
         try:
             nltk_stops = set(stopwords.words('english'))
         except LookupError:
@@ -368,7 +375,8 @@ class TFIDFAnalyzer:
         return text.strip()
     
     def _generate_tfidf_fingerprint(self, tfidf_scores: np.ndarray) -> str:
-        """Generate fingerprint from TF-IDF scores."""
+        """
+Generate fingerprint from TF-IDF scores."""
         # Use top N features for fingerprint
         top_indices = np.argsort(tfidf_scores)[-100:][::-1]  # Top 100 features
         top_scores = tfidf_scores[top_indices]
@@ -464,7 +472,8 @@ class NGramAnalyzer:
         return tokens
     
     def _extract_ngrams(self, tokens: List[str], n: int) -> Dict[str, Any]:
-        """Extract N-grams of specified length."""
+        """
+Extract N-grams of specified length."""
         if len(tokens) < n:
             return {"ngrams": [], "frequencies": {}, "total_count": 0}
         
@@ -572,7 +581,8 @@ class SemanticAnalyzer:
         self._initialize_pipelines()
         
     def _initialize_pipelines(self):
-        """Initialize HuggingFace pipelines."""
+        """
+Initialize HuggingFace pipelines."""
         try:
             self.sentiment_pipeline = pipeline("sentiment-analysis")
             self.ner_pipeline = pipeline("ner", aggregation_strategy="simple")
@@ -823,7 +833,8 @@ class SemanticAnalyzer:
         return overlap > 0 and overlap / max(len(words1), len(words2)) > 0.3
     
     def _calculate_topic_coherence(self, topics: List[Dict[str, Any]]) -> float:
-        """Calculate topic coherence score."""
+        """
+Calculate topic coherence score."""
         if not topics:
             return 0.0
         
@@ -933,7 +944,8 @@ class SemanticAnalyzer:
     
     def _generate_semantic_fingerprint(self, sentiment_info: Dict, ner_info: Dict,
                                      topic_info: Dict, readability_info: Dict) -> str:
-        """Generate fingerprint from semantic analysis."""
+        """
+Generate fingerprint from semantic analysis."""
         fingerprint_components = []
         
         # Sentiment fingerprint
@@ -1145,37 +1157,43 @@ class TextFingerprintingService:
             return 0.0
     
     async def _run_bert_extraction(self, text: str) -> Dict[str, Any]:
-        """Run BERT embedding extraction."""
+        """
+Run BERT embedding extraction."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.bert_extractor.extract_embeddings, text
         )
     
     async def _run_sentence_bert_extraction(self, text: str) -> Dict[str, Any]:
-        """Run Sentence-BERT extraction."""
+        """
+Run Sentence-BERT extraction."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.sentence_bert_extractor.extract_embeddings, text
         )
     
     async def _run_tfidf_analysis(self, text: str) -> Dict[str, Any]:
-        """Run TF-IDF analysis."""
+        """
+Run TF-IDF analysis."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.tfidf_analyzer.analyze_tfidf, text
         )
     
     async def _run_ngram_analysis(self, text: str) -> Dict[str, Any]:
-        """Run N-gram analysis."""
+        """
+Run N-gram analysis."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.ngram_analyzer.analyze_ngrams, text
         )
     
     async def _run_semantic_analysis(self, text: str) -> Dict[str, Any]:
-        """Run semantic analysis."""
+        """
+Run semantic analysis."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.semantic_analyzer.analyze_semantics, text
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""
+        """
+Generate combined hash from all fingerprint components."""
         hash_components = []
         
         # Extract key hash components

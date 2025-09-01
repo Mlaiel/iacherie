@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -37,7 +38,9 @@ from .entity_extractor import ExtractedEntity, EntityCategory
 
 
 class CreativeEntityType(Enum):
-    """Types of creative industry entities"""
+    """
+Types of creative industry entities"""
+
     MUSICAL_GENRE = "musical_genre"
     MUSICAL_INSTRUMENT = "musical_instrument"
     ARTISTIC_TECHNIQUE = "artistic_technique"
@@ -57,6 +60,7 @@ class CreativeEntityType(Enum):
 
 class CreativeSpecialty(Enum):
     """Creative specialties for focused detection"""
+
     MUSIC_PRODUCTION = "music_production"
     VISUAL_ARTS = "visual_arts"
     PERFORMING_ARTS = "performing_arts"
@@ -83,7 +87,8 @@ class CreativeEntityData:
 
 @dataclass
 class CreativeDetectionResult:
-    """Result of creative entity detection"""
+    """
+Result of creative entity detection"""
     creative_entities: List[CreativeEntityData]
     genre_classification: Dict[str, float]
     style_analysis: Dict[str, Any]
@@ -281,7 +286,8 @@ class CreativeEntityDetector(BaseService):
         }
     
     async def _load_genre_taxonomies(self):
-        """Load genre classification taxonomies"""
+        """
+Load genre classification taxonomies"""
         self.genre_taxonomies = {
             'music_genre_tree': {
                 'electronic': {
@@ -317,7 +323,8 @@ class CreativeEntityDetector(BaseService):
         }
     
     async def _load_cultural_mappings(self):
-        """Load cultural context mappings"""
+        """
+Load cultural context mappings"""
         self.cultural_mappings = {
             'regional_music_styles': {
                 'latin_america': {
@@ -370,7 +377,8 @@ class CreativeEntityDetector(BaseService):
         }
     
     async def _load_trend_analyzers(self):
-        """Load trend analysis models and data"""
+        """
+Load trend analysis models and data"""
         self.trend_analyzers = {
             'genre_popularity': {
                 'rising_genres': ['hyperpop', 'phonk', 'pluggnb', 'jersey_club', 'afrobeats'],
@@ -516,7 +524,8 @@ class CreativeEntityDetector(BaseService):
         text: str,
         specialty_focus: Optional[CreativeSpecialty]
     ) -> List[CreativeEntityData]:
-        """Detect entities using pattern matching"""
+        """
+Detect entities using pattern matching"""
         entities = []
         text_lower = text.lower()
         
@@ -659,7 +668,8 @@ class CreativeEntityDetector(BaseService):
         vocab_category: str,
         subcategory: str
     ) -> List[CreativeEntityData]:
-        """Match vocabulary items in text"""
+        """
+Match vocabulary items in text"""
         entities = []
         
         for item in items:
@@ -784,7 +794,8 @@ class CreativeEntityDetector(BaseService):
         text: str,
         entities: List[CreativeEntityData]
     ) -> Dict[str, float]:
-        """Classify genres and styles from entities"""
+        """
+Classify genres and styles from entities"""
         genre_scores = {}
         
         # Extract genre entities
@@ -813,7 +824,8 @@ class CreativeEntityDetector(BaseService):
         text: str,
         entities: List[CreativeEntityData]
     ) -> Dict[str, Any]:
-        """Analyze artistic styles and aesthetics"""
+        """
+Analyze artistic styles and aesthetics"""
         style_analysis = {
             'dominant_styles': [],
             'aesthetic_qualities': [],
@@ -849,7 +861,8 @@ class CreativeEntityDetector(BaseService):
         return style_analysis
     
     async def _map_influences(self, entities: List[CreativeEntityData]) -> Dict[str, List[str]]:
-        """Map influences and connections between entities"""
+        """
+Map influences and connections between entities"""
         influence_map = {}
         
         # Group entities by type
@@ -885,7 +898,8 @@ class CreativeEntityDetector(BaseService):
         entities: List[CreativeEntityData],
         text: str
     ) -> Dict[str, float]:
-        """Analyze trend indicators"""
+        """
+Analyze trend indicators"""
         trend_indicators = {
             'innovation_trend': 0.0,
             'mainstream_appeal': 0.0,
@@ -937,7 +951,8 @@ class CreativeEntityDetector(BaseService):
         genre_classification: Dict[str, float],
         style_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive creative summary"""
+        """
+Generate comprehensive creative summary"""
         summary = {
             'total_entities': len(entities),
             'creative_diversity': 0.0,
@@ -1011,7 +1026,8 @@ class CreativeEntityDetector(BaseService):
         return any(cat in vocab_category for cat in relevant_categories)
     
     def _map_vocab_to_creative_type(self, vocab_category: str) -> CreativeEntityType:
-        """Map vocabulary category to creative entity type"""
+        """
+Map vocabulary category to creative entity type"""
         mapping = {
             'musical_genres': CreativeEntityType.MUSICAL_GENRE,
             'artistic_techniques': CreativeEntityType.ARTISTIC_TECHNIQUE,
@@ -1027,7 +1043,8 @@ class CreativeEntityDetector(BaseService):
         return CreativeEntityType.ARTISTIC_CONCEPT
     
     def _map_vocab_to_specialty(self, vocab_category: str) -> CreativeSpecialty:
-        """Map vocabulary category to creative specialty"""
+        """
+Map vocabulary category to creative specialty"""
         if 'music' in vocab_category:
             return CreativeSpecialty.MUSIC_PRODUCTION
         elif 'visual' in vocab_category or 'artistic' in vocab_category:
@@ -1038,7 +1055,8 @@ class CreativeEntityDetector(BaseService):
             return CreativeSpecialty.CONTENT_CREATION
     
     def _map_technique_to_specialty(self, technique_type: str) -> CreativeSpecialty:
-        """Map technique type to specialty"""
+        """
+Map technique type to specialty"""
         mapping = {
             'music_production': CreativeSpecialty.MUSIC_PRODUCTION,
             'visual_arts': CreativeSpecialty.VISUAL_ARTS,
@@ -1047,7 +1065,8 @@ class CreativeEntityDetector(BaseService):
         return mapping.get(technique_type, CreativeSpecialty.CONTENT_CREATION)
     
     def _map_role_to_specialty(self, role_type: str) -> CreativeSpecialty:
-        """Map role type to specialty"""
+        """
+Map role type to specialty"""
         mapping = {
             'music_roles': CreativeSpecialty.MUSIC_PRODUCTION,
             'visual_roles': CreativeSpecialty.VISUAL_ARTS,
@@ -1056,7 +1075,8 @@ class CreativeEntityDetector(BaseService):
         return mapping.get(role_type, CreativeSpecialty.CONTENT_CREATION)
     
     def _map_classification_to_creative_type(self, label: str) -> Optional[CreativeEntityType]:
-        """Map ML classification label to creative entity type"""
+        """
+Map ML classification label to creative entity type"""
         # This would depend on the specific model being used
         label_lower = label.lower()
         
@@ -1070,7 +1090,8 @@ class CreativeEntityDetector(BaseService):
         return None
     
     def _extract_style_entities(self, style_features, text: str) -> List[CreativeEntityData]:
-        """Extract style entities from ML features"""
+        """
+Extract style entities from ML features"""
         entities = []
         
         # This would process the style features to identify style-related entities
@@ -1079,7 +1100,8 @@ class CreativeEntityDetector(BaseService):
         return entities
     
     def _extract_cultural_data(self, cultural_context: str, entity: CreativeEntityData) -> Dict[str, Any]:
-        """Extract cultural context data"""
+        """
+Extract cultural context data"""
         cultural_data = {}
         context_lower = cultural_context.lower()
         
@@ -1100,7 +1122,8 @@ class CreativeEntityDetector(BaseService):
         return cultural_data
     
     def _get_main_genre(self, genre_name: str) -> Optional[str]:
-        """Get main genre from subgenre"""
+        """
+Get main genre from subgenre"""
         for main_genre, subgenres in self.genre_taxonomies.get('music_genre_tree', {}).items():
             for subgenre_category, subgenre_list in subgenres.items():
                 if genre_name in subgenre_list or genre_name == subgenre_category:
@@ -1109,7 +1132,8 @@ class CreativeEntityDetector(BaseService):
         return None
     
     def _get_related_techniques(self, genre: str) -> List[str]:
-        """Get techniques related to a genre"""
+        """
+Get techniques related to a genre"""
         # Simplified mapping of genres to techniques
         genre_techniques = {
             'electronic': ['synthesis', 'sampling', 'sequencing', 'mixing'],
@@ -1125,7 +1149,8 @@ class CreativeEntityDetector(BaseService):
         return []
     
     def _get_genre_cultural_context(self, genre: str) -> Dict[str, Any]:
-        """Get cultural context for a genre"""
+        """
+Get cultural context for a genre"""
         # Search cultural mappings for genre context
         for region, data in self.cultural_mappings.get('regional_music_styles', {}).items():
             if genre in data.get('genres', []):
@@ -1138,7 +1163,8 @@ class CreativeEntityDetector(BaseService):
         return {}
     
     def _calculate_innovation_score(self, entity_text: str) -> float:
-        """Calculate innovation score for entity"""
+        """
+Calculate innovation score for entity"""
         # Check against trending/innovative terms
         innovative_keywords = ['fusion', 'experimental', 'hybrid', 'new', 'emerging', 'cutting-edge']
         traditional_keywords = ['classic', 'traditional', 'standard', 'conventional']
@@ -1170,7 +1196,8 @@ class CreativeEntityDetector(BaseService):
         return max(0.0, min(1.0, innovation_score))
     
     def _calculate_vocabulary_innovation(self, item: str, vocab_category: str) -> float:
-        """Calculate innovation score for vocabulary item"""
+        """
+Calculate innovation score for vocabulary item"""
         base_score = 0.4
         
         # Boost for technology-related terms
@@ -1185,7 +1212,8 @@ class CreativeEntityDetector(BaseService):
         return min(1.0, base_score)
     
     def _deduplicate_entities(self, entities: List[CreativeEntityData]) -> List[CreativeEntityData]:
-        """Remove duplicate entities and merge similar ones"""
+        """
+Remove duplicate entities and merge similar ones"""
         unique_entities = []
         seen_texts = set()
         
@@ -1215,7 +1243,8 @@ class CreativeEntityDetector(BaseService):
         genre_classification: Dict[str, float],
         style_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate overall detection confidence"""
+        """
+Calculate overall detection confidence"""
         factors = []
         
         # Entity detection confidence
@@ -1239,7 +1268,8 @@ class CreativeEntityDetector(BaseService):
         return np.mean(factors) if factors else 0.5
     
     def _update_detection_stats(self, result: CreativeDetectionResult):
-        """Update detection statistics"""
+        """
+Update detection statistics"""
         self.detection_stats['total_detections'] += 1
         self.detection_stats['successful_detections'] += 1
         
@@ -1266,7 +1296,8 @@ class CreativeEntityDetector(BaseService):
         self.detection_stats['avg_processing_time'] = new_avg
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get creative detection statistics"""
+        """
+Get creative detection statistics"""
         return {
             **self.detection_stats,
             'supported_creative_types': [ct.value for ct in CreativeEntityType],
@@ -1277,7 +1308,8 @@ class CreativeEntityDetector(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for creative entity detector"""
+        """
+Health check for creative entity detector"""
         return {
             'status': 'healthy',
             'creative_classifier_available': self.creative_classifier is not None,

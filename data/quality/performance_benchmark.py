@@ -15,8 +15,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple, Callable
 import asyncio
 import logging
@@ -45,7 +46,9 @@ import platform
 logger = logging.getLogger(__name__)
 
 class BenchmarkType(Enum):
-    """Types of quality benchmarks"""
+    """
+Types of quality benchmarks"""
+
     THROUGHPUT = "throughput"                    # Operations per second
     LATENCY = "latency"                         # Response time
     ACCURACY = "accuracy"                       # Quality accuracy
@@ -56,6 +59,7 @@ class BenchmarkType(Enum):
 
 class PerformanceMetric(Enum):
     """Performance metrics to track"""
+
     PROCESSING_TIME = "processing_time"
     MEMORY_USAGE = "memory_usage"
     CPU_USAGE = "cpu_usage"
@@ -79,7 +83,8 @@ class BenchmarkResult:
 
 @dataclass
 class PerformanceProfile:
-    """Performance profiling result"""
+    """
+Performance profiling result"""
     function_name: str
     total_time: float
     calls_count: int
@@ -92,7 +97,8 @@ class PerformanceProfile:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation"""
+    """
+Performance optimization recommendation"""
     category: str
     priority: str
     description: str
@@ -546,7 +552,8 @@ class SystemMonitor:
         self.monitor_thread = None
     
     async def start_monitoring(self, interval: float = 1.0):
-        """Start system monitoring"""
+        """
+Start system monitoring"""
         self.monitoring = True
         self.metrics = []
         
@@ -557,7 +564,8 @@ class SystemMonitor:
         self.monitor_thread.start()
     
     async def stop_monitoring(self) -> Dict[str, Any]:
-        """Stop monitoring and return metrics"""
+        """
+Stop monitoring and return metrics"""
         self.monitoring = False
         
         if self.monitor_thread:
@@ -566,7 +574,8 @@ class SystemMonitor:
         return self._analyze_metrics()
     
     def _monitor_loop(self, interval: float):
-        """Monitoring loop"""
+        """
+Monitoring loop"""
         while self.monitoring:
             try:
                 metric = {
@@ -612,7 +621,8 @@ class MetricsCollector:
         self.metrics = {}
     
     async def start(self):
-        """Start metrics collection"""
+        """
+Start metrics collection"""
         self.start_time = time.perf_counter()
         self.metrics = {
             "start_memory": memory_profiler.memory_usage()[0],
@@ -641,12 +651,14 @@ class PerformanceProfiler:
         self.profiler = None
     
     def start_profiling(self):
-        """Start profiling"""
+        """
+Start profiling"""
         self.profiler = cProfile.Profile()
         self.profiler.enable()
     
     def stop_profiling(self) -> PerformanceProfile:
-        """Stop profiling and return results"""
+        """
+Stop profiling and return results"""
         if self.profiler:
             self.profiler.disable()
             
@@ -660,7 +672,8 @@ class PerformanceProfiler:
             return self._analyze_profile_stats(stats)
     
     def _analyze_profile_stats(self, stats: pstats.Stats) -> PerformanceProfile:
-        """Analyze profiling statistics"""
+        """
+Analyze profiling statistics"""
         
         # This is a simplified analysis - would be more sophisticated in production
         return PerformanceProfile(

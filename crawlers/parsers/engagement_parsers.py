@@ -5,13 +5,14 @@ Specialized parsers for extracting engagement metrics from social media platform
 Handles likes, comments, shares, reactions, and interaction analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import re
@@ -28,7 +29,8 @@ from .parser_config import ParserConfig
 
 
 class BaseEngagementParser(ABC):
-    """Abstract base class for engagement parsers"""
+    """
+Abstract base class for engagement parsers"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -36,33 +38,39 @@ class BaseEngagementParser(ABC):
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_engagement(self, content_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse engagement data for specific content"""
+        """
+Parse engagement data for specific content"""
         pass
     
     @abstractmethod
     def get_platform_name(self) -> str:
-        """Get the platform name for this engagement parser"""
+        """
+Get the platform name for this engagement parser"""
         pass
     
     def _calculate_engagement_rate(self, interactions: int, impressions: int) -> float:
-        """Calculate engagement rate as percentage"""
+        """
+Calculate engagement rate as percentage"""
         if impressions == 0:
             return 0.0
         return (interactions / impressions) * 100
     
     def _classify_engagement_level(self, engagement_rate: float) -> str:
-        """Classify engagement level based on rate"""
+        """
+Classify engagement level based on rate"""
         if engagement_rate >= 10:
             return "excellent"
         elif engagement_rate >= 5:
@@ -101,7 +109,8 @@ class BaseEngagementParser(ABC):
 
 
 class YouTubeEngagementParser(BaseEngagementParser):
-    """Parser for YouTube engagement metrics"""
+    """
+Parser for YouTube engagement metrics"""
     
     def get_platform_name(self) -> str:
         return "youtube"
@@ -254,7 +263,8 @@ class YouTubeEngagementParser(BaseEngagementParser):
 
 
 class InstagramEngagementParser(BaseEngagementParser):
-    """Parser for Instagram engagement metrics"""
+    """
+Parser for Instagram engagement metrics"""
     
     def get_platform_name(self) -> str:
         return "instagram"
@@ -371,7 +381,8 @@ class InstagramEngagementParser(BaseEngagementParser):
 
 
 class FacebookEngagementParser(BaseEngagementParser):
-    """Parser for Facebook engagement metrics"""
+    """
+Parser for Facebook engagement metrics"""
     
     def get_platform_name(self) -> str:
         return "facebook"
@@ -503,7 +514,8 @@ class FacebookEngagementParser(BaseEngagementParser):
 
 
 class TwitterEngagementParser(BaseEngagementParser):
-    """Parser for Twitter engagement metrics"""
+    """
+Parser for Twitter engagement metrics"""
     
     def get_platform_name(self) -> str:
         return "twitter"
@@ -611,7 +623,8 @@ class TwitterEngagementParser(BaseEngagementParser):
 
 
 class TikTokEngagementParser(BaseEngagementParser):
-    """Parser for TikTok engagement metrics"""
+    """
+Parser for TikTok engagement metrics"""
     
     def get_platform_name(self) -> str:
         return "tiktok"
@@ -645,7 +658,8 @@ class TikTokEngagementParser(BaseEngagementParser):
         return {}
     
     async def _parse_tiktok_engagement(self, video_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse TikTok engagement metrics"""
+        """
+Parse TikTok engagement metrics"""
         return {
             'overview': {
                 'views': 0,
@@ -661,7 +675,8 @@ class TikTokEngagementParser(BaseEngagementParser):
 
 
 class LinkedInEngagementParser(BaseEngagementParser):
-    """Parser for LinkedIn engagement metrics"""
+    """
+Parser for LinkedIn engagement metrics"""
     
     def get_platform_name(self) -> str:
         return "linkedin"
@@ -694,7 +709,8 @@ class LinkedInEngagementParser(BaseEngagementParser):
         return {}
     
     async def _parse_linkedin_engagement(self, post_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse LinkedIn engagement metrics"""
+        """
+Parse LinkedIn engagement metrics"""
         return {
             'overview': {
                 'impressions': 0,

@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import hashlib
 import hmac
 import secrets
@@ -44,7 +45,9 @@ settings = get_settings()
 
 
 class SecurityLevel(Enum):
-    """Security level enumeration"""
+    """
+Security level enumeration"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -54,6 +57,7 @@ class SecurityLevel(Enum):
 
 class AccessType(Enum):
     """Database access type enumeration"""
+
     READ = "read"
     WRITE = "write"
     DELETE = "delete"
@@ -63,6 +67,7 @@ class AccessType(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Encryption algorithm enumeration"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     RSA_4096 = "rsa_4096"
@@ -94,7 +99,8 @@ class SecurityPolicy:
 
 @dataclass
 class AccessPermission:
-    """Database access permission"""
+    """
+Database access permission"""
     user_id: str
     resource_type: str  # table, view, function, etc.
     resource_name: str
@@ -108,7 +114,8 @@ class AccessPermission:
 
 @dataclass
 class AuditEvent:
-    """Database audit event"""
+    """
+Database audit event"""
     event_id: str
     user_id: Optional[str]
     session_id: Optional[str]
@@ -128,7 +135,8 @@ class AuditEvent:
 
 
 class DatabaseEncryption:
-    """Database field-level encryption service"""
+    """
+Database field-level encryption service"""
     
     def __init__(self):
         self.encryption_keys: Dict[str, bytes] = {}
@@ -136,7 +144,8 @@ class DatabaseEncryption:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize encryption service"""
+        """
+Initialize encryption service"""
         if self._initialized:
             return
         
@@ -368,14 +377,16 @@ class PasswordSecurity:
     
     @staticmethod
     def hash_password(password: str) -> str:
-        """Hash password using bcrypt"""
+        """
+Hash password using bcrypt"""
         salt = bcrypt.gensalt(rounds=12)
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed.decode('utf-8')
     
     @staticmethod
     def verify_password(password: str, hashed: str) -> bool:
-        """Verify password against hash"""
+        """
+Verify password against hash"""
         try:
             return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
         except Exception:
@@ -383,13 +394,15 @@ class PasswordSecurity:
     
     @staticmethod
     def generate_secure_password(length: int = 16) -> str:
-        """Generate cryptographically secure password"""
+        """
+Generate cryptographically secure password"""
         chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*'
         return ''.join(secrets.choice(chars) for _ in range(length))
     
     @staticmethod
     def validate_password_strength(password: str, policy: SecurityPolicy) -> Tuple[bool, List[str]]:
-        """Validate password against security policy"""
+        """
+Validate password against security policy"""
         issues = []
         
         if len(password) < policy.min_password_length:
@@ -412,6 +425,7 @@ class PasswordSecurity:
 
 class QuerySanitizer:
     """SQL injection prevention and query sanitization"""
+
     
     DANGEROUS_PATTERNS = [
         r'(union\s+select)',
@@ -434,7 +448,8 @@ class QuerySanitizer:
     
     @classmethod
     def is_safe_query(cls, query: str) -> Tuple[bool, List[str]]:
-        """Check if query is safe from SQL injection"""
+        """
+Check if query is safe from SQL injection"""
         issues = []
         query_lower = query.lower()
         
@@ -453,7 +468,8 @@ class QuerySanitizer:
     
     @classmethod
     def escape_string_value(cls, value: str) -> str:
-        """Escape string value for safe SQL usage"""
+        """
+Escape string value for safe SQL usage"""
         # This is basic escaping - always prefer parameterized queries
         return value.replace("'", "''").replace('"', '""')
 
@@ -469,7 +485,8 @@ class DatabaseAuditor:
         self._retention_days = 2555  # 7 years
     
     async def initialize(self):
-        """Initialize audit service"""
+        """
+Initialize audit service"""
         await self.encryption.initialize()
         self._setup_database_event_listeners()
         logger.info("Database auditor initialized")
@@ -487,12 +504,14 @@ class DatabaseAuditor:
                 self._on_after_execute(kw.get('statement'), kw.get('parameters'))
     
     def _on_before_execute(self, statement: str, parameters: Any):
-        """Handle before query execution"""
+        """
+Handle before query execution"""
         # Log query start - could be used for performance monitoring
         pass
     
     def _on_after_execute(self, statement: str, parameters: Any):
-        """Handle after query execution"""
+        """
+Handle after query execution"""
         try:
             # Create audit event
             event = AuditEvent(
@@ -518,12 +537,14 @@ class DatabaseAuditor:
         return None
     
     def _get_current_session_id(self) -> Optional[str]:
-        """Get current session ID from context"""
+        """
+Get current session ID from context"""
         # This should be implemented based on your session management
         return None
     
     def _extract_action_from_statement(self, statement: str) -> str:
-        """Extract action type from SQL statement"""
+        """
+Extract action type from SQL statement"""
         if not statement:
             return 'unknown'
         
@@ -547,7 +568,8 @@ class DatabaseAuditor:
             return 'other'
     
     def _extract_table_from_statement(self, statement: str) -> str:
-        """Extract table name from SQL statement"""
+        """
+Extract table name from SQL statement"""
         if not statement:
             return 'unknown'
         
@@ -569,7 +591,8 @@ class DatabaseAuditor:
         return 'unknown'
     
     def _sanitize_parameters(self, parameters: Any) -> Optional[Dict[str, Any]]:
-        """Sanitize parameters for audit logging"""
+        """
+Sanitize parameters for audit logging"""
         if not parameters:
             return None
         
@@ -594,7 +617,8 @@ class DatabaseAuditor:
                                description: str,
                                severity: SecurityLevel = SecurityLevel.INTERNAL,
                                metadata: Optional[Dict[str, Any]] = None):
-        """Log a security-related event"""
+        """
+Log a security-related event"""
         event = AuditEvent(
             event_id=str(uuid.uuid4()),
             user_id=user_id,
@@ -643,7 +667,8 @@ class DatabaseAuditor:
         return filtered_events[:limit]
     
     async def cleanup_old_audit_events(self):
-        """Clean up old audit events based on retention policy"""
+        """
+Clean up old audit events based on retention policy"""
         cutoff_date = datetime.utcnow() - timedelta(days=self._retention_days)
         
         initial_count = len(self.audit_events)
@@ -666,7 +691,8 @@ class AccessControlManager:
         self.locked_users: Dict[str, datetime] = {}
     
     async def initialize(self):
-        """Initialize access control manager"""
+        """
+Initialize access control manager"""
         # Setup default security policies
         self.security_policies['default'] = SecurityPolicy(
             name='Default Security Policy',
@@ -792,7 +818,8 @@ class AccessControlManager:
         return None
     
     async def record_failed_attempt(self, user_id: str, ip_address: Optional[str] = None):
-        """Record failed authentication attempt"""
+        """
+Record failed authentication attempt"""
         current_time = datetime.utcnow()
         
         if user_id not in self.failed_attempts:
@@ -831,11 +858,13 @@ class AccessControlManager:
         return True
     
     async def get_user_permissions(self, user_id: str) -> List[AccessPermission]:
-        """Get all permissions for a user"""
+        """
+Get all permissions for a user"""
         return self.permissions.get(user_id, [])
     
     async def cleanup_expired_permissions(self):
-        """Clean up expired permissions"""
+        """
+Clean up expired permissions"""
         current_time = datetime.utcnow()
         cleanup_count = 0
         
@@ -866,7 +895,8 @@ class DatabaseSecurity:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize all security components"""
+        """
+Initialize all security components"""
         if self._initialized:
             return
         
@@ -940,7 +970,8 @@ class DatabaseSecurity:
         return self.query_sanitizer.is_safe_query(query)
     
     async def get_security_summary(self) -> Dict[str, Any]:
-        """Get security system summary"""
+        """
+Get security system summary"""
         return {
             'encryption_active': self.encryption._initialized,
             'audit_enabled': self.auditor._audit_enabled,
@@ -955,7 +986,8 @@ class DatabaseSecurity:
 
 
 class SecureSessionWrapper:
-    """Wrapper for database session with security features"""
+    """
+Wrapper for database session with security features"""
     
     def __init__(self, session: AsyncSession, user_id: str, security: DatabaseSecurity):
         self.session = session
@@ -963,7 +995,8 @@ class SecureSessionWrapper:
         self.security = security
     
     async def execute_secure(self, query: str, parameters: Dict[str, Any] = None) -> Any:
-        """Execute query with security validation"""
+        """
+Execute query with security validation"""
         # Validate query security
         is_safe, issues = await self.security.validate_query_security(query)
         
@@ -1004,12 +1037,14 @@ class SecureSessionWrapper:
         return self.security.encryption.encrypt_field(value)
     
     async def decrypt_field(self, encrypted_value: str) -> str:
-        """Decrypt field value"""
+        """
+Decrypt field value"""
         return self.security.encryption.decrypt_field(encrypted_value)
 
 
 class SecurityError(Exception):
-    """Security-related exception"""
+    """
+Security-related exception"""
     pass
 
 
@@ -1018,7 +1053,8 @@ _security_instance: Optional[DatabaseSecurity] = None
 
 
 async def get_database_security() -> DatabaseSecurity:
-    """Get global database security instance"""
+    """
+Get global database security instance"""
     global _security_instance
     
     if _security_instance is None:
@@ -1030,22 +1066,26 @@ async def get_database_security() -> DatabaseSecurity:
 
 # Convenience functions
 async def secure_password_hash(password: str) -> str:
-    """Hash password securely"""
+    """
+Hash password securely"""
     return PasswordSecurity.hash_password(password)
 
 
 async def verify_password(password: str, hashed: str) -> bool:
-    """Verify password against hash"""
+    """
+Verify password against hash"""
     return PasswordSecurity.verify_password(password, hashed)
 
 
 async def encrypt_sensitive_field(value: str) -> str:
-    """Encrypt sensitive field value"""
+    """
+Encrypt sensitive field value"""
     security = await get_database_security()
     return security.encryption.encrypt_field(value)
 
 
 async def decrypt_sensitive_field(encrypted_value: str) -> str:
-    """Decrypt sensitive field value"""
+    """
+Decrypt sensitive field value"""
     security = await get_database_security()
     return security.encryption.decrypt_field(encrypted_value)

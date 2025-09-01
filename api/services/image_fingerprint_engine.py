@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, modification or use is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import numpy as np
 from typing import Dict, List, Tuple, Optional
 import hashlib
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
+    """
+Image fingerprint data structure"""
     perceptual_hash: str
     average_hash: str
     difference_hash: str
@@ -262,7 +264,8 @@ class ImageFingerprintEngine:
             
     def compare_fingerprints(self, fp1: ImageFingerprint, 
                            fp2: ImageFingerprint) -> float:
-        """Compare two image fingerprints and return similarity score (0-1)"""
+        """
+Compare two image fingerprints and return similarity score (0-1)"""
         try:
             scores = []
             
@@ -360,7 +363,8 @@ class ImageFingerprintEngine:
             return 0.0
             
     def batch_extract_fingerprints(self, image_files: List[str]) -> Dict[str, ImageFingerprint]:
-        """Extract fingerprints from multiple image files"""
+        """
+Extract fingerprints from multiple image files"""
         fingerprints = {}
         
         for image_file in image_files:
@@ -392,7 +396,8 @@ class ImageFingerprintEngine:
         
     def detect_modifications(self, original_fp: ImageFingerprint,
                            modified_fp: ImageFingerprint) -> Dict[str, bool]:
-        """Detect types of modifications made to an image"""
+        """
+Detect types of modifications made to an image"""
         try:
             modifications = {
                 'resized': False,

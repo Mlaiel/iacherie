@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import hashlib
@@ -47,7 +48,9 @@ import soundfile as sf
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration."""
+    """
+Content type enumeration."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,6 +62,7 @@ class ContentType(Enum):
 
 class AnalysisStatus(Enum):
     """Analysis status enumeration."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -67,6 +71,7 @@ class AnalysisStatus(Enum):
 
 class ThreatLevel(Enum):
     """Threat level enumeration."""
+
     NONE = 0
     LOW = 1
     MEDIUM = 2
@@ -75,7 +80,8 @@ class ThreatLevel(Enum):
 
 @dataclass
 class ContentFeatures:
-    """Content feature extraction result."""
+    """
+Content feature extraction result."""
     content_id: str
     content_type: ContentType
     text_features: Optional[Dict[str, Any]] = None
@@ -88,7 +94,8 @@ class ContentFeatures:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result."""
+    """
+Comprehensive analysis result."""
     content_id: str
     analysis_id: str
     content_type: ContentType
@@ -755,7 +762,8 @@ class ContentAnalyzer:
         return (positive_count - negative_count) / (positive_count + negative_count)
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score for text."""
+        """
+Calculate readability score for text."""
         # Simplified Flesch Reading Ease score
         sentences = len([s for s in text.split('.') if s.strip()])
         words = len(text.split())
@@ -768,7 +776,8 @@ class ContentAnalyzer:
         return max(0.0, min(100.0, score)) / 100.0  # Normalize to 0-1
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word."""
+        """
+Count syllables in a word."""
         word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
@@ -792,7 +801,8 @@ class ContentAnalyzer:
         self,
         content_batch: List[Tuple[str, Union[str, bytes, Path], ContentType, Optional[Dict[str, Any]]]]
     ) -> List[AnalysisResult]:
-        """Analyze multiple content items in batch."""
+        """
+Analyze multiple content items in batch."""
         tasks = []
         
         for content_id, content_data, content_type, metadata in content_batch:

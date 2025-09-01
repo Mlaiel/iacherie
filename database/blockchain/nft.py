@@ -6,6 +6,7 @@ for the IA Influencer Agent platform content protection ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -24,12 +25,15 @@ import magic
 logger = logging.getLogger(__name__)
 
 class NFTStandard(Enum):
-    """Supported NFT standards."""
+    """
+Supported NFT standards."""
+
     ERC721 = "ERC-721"
     ERC1155 = "ERC-1155"
 
 class NFTContentType(Enum):
     """Types of content that can be minted as NFTs."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -39,6 +43,7 @@ class NFTContentType(Enum):
 
 class NFTMarketplace(Enum):
     """Supported NFT marketplaces."""
+
     OPENSEA = "opensea"
     RARIBLE = "rarible"
     FOUNDATION = "foundation"
@@ -64,7 +69,8 @@ class NFTMetadata:
 
 @dataclass 
 class NFTCreationRequest:
-    """Request structure for NFT creation."""
+    """
+Request structure for NFT creation."""
     content_hash: str
     content_type: NFTContentType
     content_url: str
@@ -80,7 +86,8 @@ class NFTCreationRequest:
 
 @dataclass
 class NFTCreationResult:
-    """Result of NFT creation process."""
+    """
+Result of NFT creation process."""
     token_id: str
     contract_address: str
     transaction_hash: str
@@ -92,7 +99,8 @@ class NFTCreationResult:
     ipfs_hash: Optional[str] = None
 
 class IPFSManager:
-    """Manager for IPFS operations for NFT metadata and content storage."""
+    """
+Manager for IPFS operations for NFT metadata and content storage."""
     
     def __init__(self, ipfs_config: Dict[str, Any]):
         """

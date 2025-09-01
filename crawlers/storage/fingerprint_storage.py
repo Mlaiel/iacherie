@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import logging
 import asyncio
 import json
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerPrintRecord:
-    """Comprehensive fingerprint record."""
+    """
+Comprehensive fingerprint record."""
     id: str
     content_id: str
     user_id: str
@@ -70,7 +72,8 @@ class SimilarityMatch:
 
 @dataclass
 class ViolationDetectionResult:
-    """Violation detection analysis result."""
+    """
+Violation detection analysis result."""
     is_violation: bool
     confidence_score: float
     similarity_matches: List[SimilarityMatch] = field(default_factory=list)
@@ -87,20 +90,23 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
     """
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
-        """Initialize database fingerprint storage provider."""
+        """
+Initialize database fingerprint storage provider."""
         super().__init__(provider_id, config)
         self.similarity_engines = {}
         self.violation_detectors = {}
         
     async def connect(self) -> None:
-        """Connect to database and initialize fingerprint tables."""
+        """
+Connect to database and initialize fingerprint tables."""
         await super().connect()
         await self._create_fingerprint_tables()
         await self._initialize_similarity_engines()
         await self._initialize_violation_detectors()
         
     async def _create_fingerprint_tables(self) -> None:
-        """Create fingerprint-specific database tables."""
+        """
+Create fingerprint-specific database tables."""
         fingerprint_table_sql = """
         CREATE TABLE IF NOT EXISTS content_fingerprints (
             id VARCHAR(36) PRIMARY KEY,
@@ -472,7 +478,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         }
     
     def _generate_fingerprint_hash(self, fingerprint_data: Union[str, List[float]]) -> str:
-        """Generate hash for fingerprint data."""
+        """
+Generate hash for fingerprint data."""
         if isinstance(fingerprint_data, list):
             # For vector data, create hash of normalized values
             normalized = json.dumps(sorted([round(x, 6) for x in fingerprint_data]))
@@ -486,7 +493,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         fingerprint_type: FingerPrintType,
         fingerprint_data: Union[str, List[float]]
     ) -> float:
-        """Calculate quality score for fingerprint."""
+        """
+Calculate quality score for fingerprint."""
         try:
             if fingerprint_type == FingerPrintType.CHROMAPRINT:
                 # For audio fingerprints, longer is generally better
@@ -606,7 +614,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         fingerprint_type: FingerPrintType,
         fingerprint_data: Union[str, List[float]]
     ) -> List[str]:
-        """Generate LSH hash buckets for fast similarity search."""
+        """
+Generate LSH hash buckets for fast similarity search."""
         buckets = []
         
         try:
@@ -755,7 +764,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         return 1.0 if fp1 == fp2 else 0.0
     
     async def _vector_embedding_similarity(self, fp1: List[float], fp2: List[float]) -> float:
-        """Calculate vector embedding similarity (cosine similarity)."""
+        """
+Calculate vector embedding similarity (cosine similarity)."""
         try:
             vec1 = np.array(fp1)
             vec2 = np.array(fp2)
@@ -780,11 +790,13 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         return await self._vector_embedding_similarity(fp1, fp2)
     
     async def _clip_embedding_similarity(self, fp1: List[float], fp2: List[float]) -> float:
-        """Calculate CLIP embedding similarity."""
+        """
+Calculate CLIP embedding similarity."""
         return await self._vector_embedding_similarity(fp1, fp2)
     
     def _subsequence_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate similarity between fingerprints of different lengths."""
+        """
+Calculate similarity between fingerprints of different lengths."""
         if not fp1 or not fp2:
             return 0.0
         
@@ -803,7 +815,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         return best_similarity
     
     async def _get_content_fingerprints(self, content_id: str) -> List[Dict[str, Any]]:
-        """Get all fingerprints for content."""
+        """
+Get all fingerprints for content."""
         try:
             sql = """
             SELECT id, fingerprint_type, fingerprint_data, quality_score
@@ -852,7 +865,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         return fingerprints
     
     async def _analyze_content_urls(self, platform_data: CrawlerData, fingerprints: List[Dict[str, Any]]):
-        """Extract fingerprints from URLs in platform data."""
+        """
+Extract fingerprints from URLs in platform data."""
         try:
             # Extract URLs from various sources
             urls_to_analyze = []
@@ -960,7 +974,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         original_fp: Dict[str, Any],
         detected_fp: Dict[str, Any]
     ) -> ViolationDetectionResult:
-        """Simple threshold-based violation detection."""
+        """
+Simple threshold-based violation detection."""
         # Thresholds by fingerprint type
         thresholds = {
             FingerPrintType.CHROMAPRINT.value: 0.85,
@@ -1063,7 +1078,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         detection_result: ViolationDetectionResult,
         platform_data: CrawlerData
     ) -> ViolationRecord:
-        """Create violation record from detection result."""
+        """
+Create violation record from detection result."""
         return ViolationRecord(
             id=str(uuid.uuid4()),
             original_content_id=original_fp.get('content_id', ''),
@@ -1132,7 +1148,8 @@ class DatabaseFingerPrintStorageProvider(DatabaseStorageProvider, FingerPrintSto
         return filtered
     
     async def _is_duplicate_violation(self, violation: ViolationRecord) -> bool:
-        """Check if violation is duplicate."""
+        """
+Check if violation is duplicate."""
         try:
             sql = """
             SELECT COUNT(*) FROM violation_detections 

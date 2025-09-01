@@ -4,6 +4,7 @@ Advanced AI-powered fraud detection and prevention system manager.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -63,7 +64,8 @@ class FraudDetectionConfig:
     suspicious_activity_threshold: float = 0.7
 
 class FraudDetectionManager(BaseAgent):
-    """Fraud Detection Manager - Enterprise-grade fraud prevention system"""
+    """
+Fraud Detection Manager - Enterprise-grade fraud prevention system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -168,19 +170,23 @@ class FraudDetectionManager(BaseAgent):
         return await self.behavior_analyzer.analyze_behavior(data)
 
     async def _validate_revenue(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate revenue authenticity"""
+        """
+Validate revenue authenticity"""
         return await self.revenue_validator.validate_revenue(data)
 
     async def _detect_deepfake(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect deepfake content"""
+        """
+Detect deepfake content"""
         return await self.deepfake_detector.detect_deepfake(data)
 
     async def _check_threat_intelligence(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check threat intelligence databases"""
+        """
+Check threat intelligence databases"""
         return await self.threat_intelligence.analyze_threat(data)
 
     async def _get_fraud_report(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive fraud report"""
+        """
+Generate comprehensive fraud report"""
         user_id = data.get('user_id')
         time_range = data.get('time_range', 30)  # days
         
@@ -200,7 +206,8 @@ class FraudDetectionManager(BaseAgent):
         }
 
     def _get_recommended_action(self, risk_score: float, indicators: List[str]) -> str:
-        """Get recommended action based on fraud assessment"""
+        """
+Get recommended action based on fraud assessment"""
         if risk_score > 0.9:
             return "immediate_account_suspension"
         elif risk_score > 0.7:

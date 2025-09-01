@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -66,7 +67,9 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class ThreatLevel(str, Enum):
-    """Content protection threat severity levels"""
+    """
+Content protection threat severity levels"""
+
     CRITICAL = "critical"      # Commercial infringement, high revenue impact
     HIGH = "high"             # Large-scale unauthorized distribution
     MEDIUM = "medium"         # Moderate exposure, potential commercial use
@@ -76,6 +79,7 @@ class ThreatLevel(str, Enum):
 
 class InfringementType(str, Enum):
     """Types of content infringement"""
+
     DIRECT_COPY = "direct_copy"
     MODIFIED_COPY = "modified_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -92,6 +96,7 @@ class InfringementType(str, Enum):
 
 class PlatformType(str, Enum):
     """Monitored platform categories"""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_SHARING = "video_sharing"
     MUSIC_STREAMING = "music_streaming"
@@ -108,6 +113,7 @@ class PlatformType(str, Enum):
 
 class ProtectionAction(str, Enum):
     """Automated protection actions"""
+
     MONITOR = "monitor"
     ALERT = "alert"
     DMCA_TAKEDOWN = "dmca_takedown"
@@ -147,7 +153,8 @@ class ThreatDetection:
 
 @dataclass
 class ProtectionCampaign:
-    """Comprehensive protection campaign configuration"""
+    """
+Comprehensive protection campaign configuration"""
     campaign_id: str
     content_id: str
     creator_id: str
@@ -170,7 +177,8 @@ class ProtectionCampaign:
 
 @dataclass
 class EnforcementAction:
-    """Automated enforcement action with tracking"""
+    """
+Automated enforcement action with tracking"""
     action_id: str
     detection_id: str
     action_type: ProtectionAction
@@ -191,7 +199,8 @@ class EnforcementAction:
 
 @dataclass
 class ProtectionRequest:
-    """Enterprise-grade content protection request"""
+    """
+Enterprise-grade content protection request"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -229,14 +238,16 @@ class ProtectionResult:
 
 
 class PlatformMonitor:
-    """Advanced platform monitoring with AI-powered detection"""
+    """
+Advanced platform monitoring with AI-powered detection"""
     
     def __init__(self, platform_type: PlatformType):
         self.platform_type = platform_type
         self.logger = logging.getLogger(__name__)
         
     async def scan_platform(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Scan platform for potential infringement"""
+        """
+Scan platform for potential infringement"""
         results = []
         
         # Platform-specific scanning logic
@@ -250,7 +261,8 @@ class PlatformMonitor:
         return results
     
     async def _scan_social_media(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Scan social media platforms"""
+        """
+Scan social media platforms"""
         # Placeholder for actual social media API integration
         return [{"url": "example.com", "similarity": 0.9}]
     
@@ -520,7 +532,8 @@ class ContentProtectionSystem:
         return []
     
     async def _calculate_protection_metrics(self, campaign: ProtectionCampaign) -> Dict[str, float]:
-        """Calculate protection effectiveness metrics"""
+        """
+Calculate protection effectiveness metrics"""
         return {
             "coverage_score": 0.95,
             "detection_accuracy": 0.98,
@@ -571,7 +584,8 @@ class ContentProtectionSystem:
         scan_result: Dict[str, Any],
         platform: str
     ) -> ThreatDetection:
-        """Create threat detection from scan result"""
+        """
+Create threat detection from scan result"""
         detection_id = f"threat_{campaign.campaign_id}_{uuid.uuid4().hex[:8]}"
         
         return ThreatDetection(
@@ -604,7 +618,8 @@ class ContentProtectionSystem:
         return monitors
     
     def _load_legal_templates(self) -> Dict[str, Any]:
-        """Load legal document templates"""
+        """
+Load legal document templates"""
         return {
             "dmca_takedown": "DMCA takedown notice template",
             "cease_desist": "Cease and desist letter template",

@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -77,7 +78,9 @@ from .matching_models import (
 
 
 class AnalyticsTimeframe(str, Enum):
-    """Time frames for analytics calculations"""
+    """
+Time frames for analytics calculations"""
+
     HOUR = "1h"
     DAY = "1d"
     WEEK = "1w"
@@ -89,6 +92,7 @@ class AnalyticsTimeframe(str, Enum):
 
 class MetricType(str, Enum):
     """Types of metrics tracked in analytics"""
+
     MATCH_ACCURACY = "match_accuracy"
     SUCCESS_RATE = "success_rate"
     ENGAGEMENT_BOOST = "engagement_boost"
@@ -461,7 +465,8 @@ class MatchingAnalytics(BaseAnalyticsEngine):
             return datetime(2024, 1, 1)  # Platform start date
     
     async def get_creator_analytics(self, creator_id: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Get analytics specific to a creator"""
+        """
+Get analytics specific to a creator"""
         try:
             cache_key = f"creator_analytics:{creator_id}:{timeframe.value}"
             cached_data = await self.redis_client.get(cache_key)
@@ -707,7 +712,8 @@ class StatisticalAnalysisEngine:
         self.models = {}
     
     async def initialize(self): 
-        """Initialize statistical analysis engine"""
+        """
+Initialize statistical analysis engine"""
         logger.info("StatisticalAnalysisEngine initialized")
         return True
     
@@ -716,7 +722,8 @@ class StatisticalAnalysisEngine:
         return data.corr().to_dict()
     
     def trend_analysis(self, time_series: List[float]) -> Dict[str, Any]:
-        """Analyze trends in time series data"""
+        """
+Analyze trends in time series data"""
         return {"trend": "increasing", "slope": 0.05, "r_squared": 0.78}
 
 
@@ -728,7 +735,8 @@ class PredictiveAnalyticsEngine:
         self.training_data = {}
     
     async def initialize(self): 
-        """Initialize predictive analytics engine"""
+        """
+Initialize predictive analytics engine"""
         logger.info("PredictiveAnalyticsEngine initialized")
         return True
     
@@ -739,14 +747,16 @@ class PredictiveAnalyticsEngine:
 
 
 class VisualizationEngine:
-    """Visualization generation for analytics"""
+    """
+Visualization generation for analytics"""
     
     def __init__(self):
         self.chart_templates = {}
         self.visualization_cache = {}
     
     async def initialize(self): 
-        """Initialize visualization engine"""
+        """
+Initialize visualization engine"""
         logger.info("VisualizationEngine initialized")
         return True
     

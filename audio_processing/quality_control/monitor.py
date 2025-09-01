@@ -6,7 +6,7 @@ analysis, and automated quality reporting.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -14,6 +14,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring detail levels"""
+    """
+Monitoring detail levels"""
+
     BASIC = "basic"           # Basic metrics only
     STANDARD = "standard"     # Standard monitoring
     DETAILED = "detailed"     # Detailed analysis
@@ -41,6 +44,7 @@ class MonitoringLevel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -49,6 +53,7 @@ class AlertSeverity(Enum):
 
 class AlertType(Enum):
     """Types of quality alerts"""
+
     QUALITY_DEGRADATION = "quality_degradation"
     THRESHOLD_BREACH = "threshold_breach"
     SYSTEM_ERROR = "system_error"
@@ -88,7 +93,8 @@ class MonitoringMetrics:
 
 @dataclass
 class QualityTrend:
-    """Quality trend analysis"""
+    """
+Quality trend analysis"""
     period: str
     trend_direction: str  # "improving", "stable", "degrading"
     trend_strength: float  # 0.0 to 1.0
@@ -231,7 +237,8 @@ class QualityMonitor:
         return self.current_metrics
     
     async def get_quality_trends(self, period: timedelta = None) -> QualityTrend:
-        """Analyze quality trends over specified period"""
+        """
+Analyze quality trends over specified period"""
         if period is None:
             period = self.trend_window
         
@@ -416,12 +423,14 @@ class QualityMonitor:
         return list(self.active_alerts.values())
     
     async def get_alert_history(self, hours: int = 24) -> List[QualityAlert]:
-        """Get alert history for specified period"""
+        """
+Get alert history for specified period"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         return [alert for alert in self.alert_history if alert.timestamp >= cutoff_time]
     
     async def _monitoring_loop(self):
-        """Background monitoring loop"""
+        """
+Background monitoring loop"""
         while self.is_monitoring:
             try:
                 await self._update_metrics()
@@ -486,7 +495,8 @@ class QualityMonitor:
         processing_time: float,
         success: bool
     ):
-        """Check for alert conditions"""
+        """
+Check for alert conditions"""
         
         # Critical quality threshold
         if success and quality_report.overall_score < self.quality_thresholds['critical_min']:
@@ -622,7 +632,8 @@ class QualityMonitor:
             await self.resolve_alert(alert_id)
     
     def configure_thresholds(self, thresholds: Dict[str, float]):
-        """Configure alert thresholds"""
+        """
+Configure alert thresholds"""
         self.quality_thresholds.update(thresholds)
         logger.info(f"Updated quality thresholds: {thresholds}")
     

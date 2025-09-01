@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Diagnostics Module
+"""
+Ultra-Industrial Test Suite for Diagnostics Module
 
 This module provides comprehensive testing for system diagnostics,
 troubleshooting, root cause analysis, and performance profiling.
@@ -48,6 +50,7 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -82,11 +85,13 @@ from ai.observability.diagnostics import (
 
 
 class TestDiagnosticsEngine:
-    """Ultra-industrial tests for DiagnosticsEngine class"""
+    """
+Ultra-industrial tests for DiagnosticsEngine class"""
     
     @pytest.fixture
     def diagnostics_engine(self):
-        """Create DiagnosticsEngine instance for testing"""
+        """
+Create DiagnosticsEngine instance for testing"""
         config = {
             "diagnostic_modules": [
                 "system", "performance", "security", "ai_models", "network", "database"
@@ -302,7 +307,8 @@ class TestSystemDiagnostics:
     
     @pytest.fixture
     def system_diagnostics(self):
-        """Create SystemDiagnostics instance for testing"""
+        """
+Create SystemDiagnostics instance for testing"""
         config = {
             "monitoring_components": [
                 "cpu", "memory", "disk", "network", "processes", "services"
@@ -321,7 +327,8 @@ class TestSystemDiagnostics:
         assert hasattr(system_diagnostics, 'performance_profiler')
     
     def test_cpu_diagnostics(self, system_diagnostics):
-        """Test CPU diagnostic capabilities"""
+        """
+Test CPU diagnostic capabilities"""
         # Collect CPU diagnostics
         cpu_diagnostics = system_diagnostics.diagnose_cpu_performance()
         
@@ -455,7 +462,8 @@ class TestAIModelDiagnostics:
     
     @pytest.fixture
     def ai_model_diagnostics(self):
-        """Create AIModelDiagnostics instance for testing"""
+        """
+Create AIModelDiagnostics instance for testing"""
         config = {
             "supported_frameworks": ["tensorflow", "pytorch", "scikit_learn", "hugging_face"],
             "model_health_checks": [
@@ -518,7 +526,8 @@ class TestAIModelDiagnostics:
         assert hasattr(ai_model_diagnostics, 'explainability_engine')
     
     def test_model_performance_analysis(self, ai_model_diagnostics, model_performance_data):
-        """Test AI model performance analysis"""
+        """
+Test AI model performance analysis"""
         # Analyze content protection model
         cpm_analysis = ai_model_diagnostics.analyze_model_performance(
             model_data=model_performance_data["content_protection_model"]
@@ -688,7 +697,8 @@ class TestPerformanceDiagnostics:
     
     @pytest.fixture
     def performance_diagnostics(self):
-        """Create PerformanceDiagnostics instance for testing"""
+        """
+Create PerformanceDiagnostics instance for testing"""
         config = {
             "profiling_enabled": True,
             "bottleneck_detection_enabled": True,
@@ -738,7 +748,8 @@ class TestPerformanceDiagnostics:
         assert hasattr(performance_diagnostics, 'optimization_engine')
     
     def test_response_time_analysis(self, performance_diagnostics, performance_metrics):
-        """Test response time performance analysis"""
+        """
+Test response time performance analysis"""
         # Analyze response time patterns
         response_analysis = performance_diagnostics.analyze_response_times(
             metrics=performance_metrics["application_metrics"]

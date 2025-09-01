@@ -8,7 +8,7 @@ Technologies: Security Analytics, Threat Detection, Access Control, Encryption
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Security assessment → Threat detection → Access validation → Encryption management →
 Audit logging → Compliance monitoring → Incident response → Security optimization
 """
+
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security level classifications"""
+    """
+Security level classifications"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -50,6 +53,7 @@ class SecurityLevel(Enum):
 
 class ThreatSeverity(Enum):
     """Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -59,6 +63,7 @@ class ThreatSeverity(Enum):
 
 class SecurityEventType(Enum):
     """Security event types"""
+
     AUTHENTICATION_FAILURE = "authentication_failure"
     AUTHORIZATION_VIOLATION = "authorization_violation"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
@@ -71,6 +76,7 @@ class SecurityEventType(Enum):
 
 class AccessPermission(Enum):
     """Access permission levels"""
+
     READ_ONLY = "read_only"
     WRITE_LIMITED = "write_limited"
     WRITE_FULL = "write_full"
@@ -142,7 +148,8 @@ class SecurityToken:
 
 @dataclass
 class SecurityAudit:
-    """Security audit result"""
+    """
+Security audit result"""
     audit_id: str
     audit_type: str
     security_score: float
@@ -153,7 +160,8 @@ class SecurityAudit:
 
 
 class ThreatDetectionEngine:
-    """Advanced threat detection engine"""
+    """
+Advanced threat detection engine"""
     
     def __init__(self, sensitivity: float = 0.8):
         self.sensitivity = sensitivity
@@ -167,7 +175,8 @@ class ThreatDetectionEngine:
         event_data: Dict[str, Any],
         historical_data: List[Dict[str, Any]] = None
     ) -> List[SecurityEvent]:
-        """Detect security threats in event data"""
+        """
+Detect security threats in event data"""
         
         threats = []
         
@@ -191,7 +200,8 @@ class ThreatDetectionEngine:
         return threats
     
     async def _detect_pattern_threats(self, event_data: Dict[str, Any]) -> List[SecurityEvent]:
-        """Detect threats using pattern matching"""
+        """
+Detect threats using pattern matching"""
         
         threats = []
         
@@ -325,7 +335,8 @@ class ThreatDetectionEngine:
         event_data: Dict[str, Any],
         pattern_config: Dict[str, Any]
     ) -> bool:
-        """Check if event matches threat pattern"""
+        """
+Check if event matches threat pattern"""
         
         # Check payload for malicious patterns
         payload = str(event_data.get('payload', ''))
@@ -344,7 +355,8 @@ class ThreatDetectionEngine:
         event_data: Dict[str, Any],
         historical_data: List[Dict[str, Any]]
     ) -> float:
-        """Calculate anomaly score for event"""
+        """
+Calculate anomaly score for event"""
         
         # Simple anomaly detection based on frequency and patterns
         score = 0.0
@@ -370,7 +382,8 @@ class ThreatDetectionEngine:
         return min(score, 1.0)
     
     def _calculate_severity_from_score(self, score: float) -> ThreatSeverity:
-        """Calculate threat severity from anomaly score"""
+        """
+Calculate threat severity from anomaly score"""
         
         if score >= 0.9:
             return ThreatSeverity.CRITICAL
@@ -382,7 +395,8 @@ class ThreatDetectionEngine:
             return ThreatSeverity.LOW
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""
+        """
+Check if IP address is suspicious"""
         
         try:
             ip = ipaddress.ip_address(ip_address)
@@ -399,7 +413,8 @@ class ThreatDetectionEngine:
             return True  # Invalid IP format is suspicious
     
     async def _is_unusual_request_pattern(self, event_data: Dict[str, Any]) -> bool:
-        """Check for unusual request patterns"""
+        """
+Check for unusual request patterns"""
         
         # Check request timing
         timestamp = event_data.get('timestamp', datetime.now())
@@ -421,14 +436,16 @@ class ThreatDetectionEngine:
         event_data: Dict[str, Any],
         rule: Dict[str, Any]
     ) -> bool:
-        """Evaluate custom detection rule"""
+        """
+Evaluate custom detection rule"""
         
         # Placeholder for rule evaluation engine
         # In production, this would implement a rule engine
         return False
     
     async def _check_rapid_attempts(self, event_data: Dict[str, Any]) -> bool:
-        """Check for rapid successive attempts"""
+        """
+Check for rapid successive attempts"""
         
         # Placeholder for rapid attempt detection
         return event_data.get('request_rate', 0) > 100
@@ -438,7 +455,8 @@ class ThreatDetectionEngine:
         event_data: Dict[str, Any],
         historical_data: List[Dict[str, Any]]
     ) -> float:
-        """Check for timing anomalies"""
+        """
+Check for timing anomalies"""
         
         # Simple timing anomaly detection
         current_hour = event_data.get('timestamp', datetime.now()).hour
@@ -465,7 +483,8 @@ class ThreatDetectionEngine:
         event_data: Dict[str, Any],
         historical_data: List[Dict[str, Any]]
     ) -> float:
-        """Check for payload anomalies"""
+        """
+Check for payload anomalies"""
         
         current_payload = str(event_data.get('payload', ''))
         current_size = len(current_payload)
@@ -488,7 +507,8 @@ class ThreatDetectionEngine:
 
 
 class EncryptionManager:
-    """Advanced encryption management system"""
+    """
+Advanced encryption management system"""
     
     def __init__(self, config: SecurityConfiguration):
         self.config = config
@@ -497,7 +517,8 @@ class EncryptionManager:
         self.key_rotation_schedule = None
         
     async def initialize(self):
-        """Initialize encryption manager"""
+        """
+Initialize encryption manager"""
         
         if self.config.encryption_enabled:
             await self._generate_initial_keys()
@@ -518,7 +539,8 @@ class EncryptionManager:
         return base64.b64encode(encrypted).decode()
     
     async def decrypt_data(self, encrypted_data: str) -> str:
-        """Decrypt encrypted data"""
+        """
+Decrypt encrypted data"""
         
         if not self.config.encryption_enabled:
             return encrypted_data
@@ -567,7 +589,8 @@ class EncryptionManager:
             self.backup_keys.append(self._generate_key())
     
     def _generate_key(self) -> Fernet:
-        """Generate encryption key"""
+        """
+Generate encryption key"""
         
         # Use PBKDF2 for key derivation
         password = secrets.token_bytes(32)
@@ -584,7 +607,8 @@ class EncryptionManager:
         return Fernet(key)
     
     async def _schedule_key_rotation(self):
-        """Schedule automatic key rotation"""
+        """
+Schedule automatic key rotation"""
         
         async def rotation_loop():
             while True:
@@ -595,7 +619,8 @@ class EncryptionManager:
 
 
 class QueueSecurityManager:
-    """Enterprise-grade queue security management system"""
+    """
+Enterprise-grade queue security management system"""
     
     def __init__(self, config: SecurityConfiguration = None):
         self.config = config or SecurityConfiguration()
@@ -786,7 +811,8 @@ class QueueSecurityManager:
         return threats
     
     async def encrypt_sensitive_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive fields in data"""
+        """
+Encrypt sensitive fields in data"""
         
         if not self.config.encryption_enabled:
             return data
@@ -802,7 +828,8 @@ class QueueSecurityManager:
         return encrypted_data
     
     async def decrypt_sensitive_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt sensitive fields in data"""
+        """
+Decrypt sensitive fields in data"""
         
         if not self.config.encryption_enabled:
             return data
@@ -892,7 +919,8 @@ class QueueSecurityManager:
     # Private methods
     
     async def _initialize_security_rules(self):
-        """Initialize security rules and patterns"""
+        """
+Initialize security rules and patterns"""
         
         # Initialize detection rules
         self.threat_detector.detection_rules = [
@@ -913,7 +941,8 @@ class QueueSecurityManager:
         ]
     
     async def _start_security_monitoring(self):
-        """Start security monitoring tasks"""
+        """
+Start security monitoring tasks"""
         
         async def monitoring_loop():
             while True:
@@ -952,7 +981,8 @@ class QueueSecurityManager:
         return True
     
     def _get_required_permission(self, operation: str) -> AccessPermission:
-        """Get required permission for operation"""
+        """
+Get required permission for operation"""
         
         permission_map = {
             'read': AccessPermission.READ_ONLY,
@@ -969,7 +999,8 @@ class QueueSecurityManager:
         queue_id: str,
         operation: str
     ) -> bool:
-        """Check queue-specific access permissions"""
+        """
+Check queue-specific access permissions"""
         
         # Check if user has access to specific queue
         user_queue_access = self.user_permissions.get(security_token.user_id, {})
@@ -1048,7 +1079,8 @@ class QueueSecurityManager:
             del self.active_tokens[token_id]
     
     async def _activate_emergency_mode(self):
-        """Activate emergency security mode"""
+        """
+Activate emergency security mode"""
         
         logger.critical("EMERGENCY SECURITY MODE ACTIVATED")
         
@@ -1071,7 +1103,8 @@ class QueueSecurityManager:
         await self._check_security_system_health()
     
     async def _clean_expired_tokens(self):
-        """Clean expired authentication tokens"""
+        """
+Clean expired authentication tokens"""
         
         now = datetime.now()
         expired_tokens = [
@@ -1093,7 +1126,8 @@ class QueueSecurityManager:
         pass
     
     async def _check_security_system_health(self):
-        """Check security system health"""
+        """
+Check security system health"""
         
         # Check encryption manager
         if self.config.encryption_enabled and not self.encryption_manager.active_key:
@@ -1129,7 +1163,8 @@ class QueueSecurityManager:
         return findings
     
     async def _audit_access_control(self) -> List[Dict[str, Any]]:
-        """Audit access control configuration"""
+        """
+Audit access control configuration"""
         
         findings = []
         
@@ -1147,7 +1182,8 @@ class QueueSecurityManager:
         return findings
     
     async def _audit_threat_detection(self) -> List[Dict[str, Any]]:
-        """Audit threat detection capabilities"""
+        """
+Audit threat detection capabilities"""
         
         findings = []
         
@@ -1162,7 +1198,8 @@ class QueueSecurityManager:
         return findings
     
     async def _audit_encryption(self) -> List[Dict[str, Any]]:
-        """Audit encryption implementation"""
+        """
+Audit encryption implementation"""
         
         findings = []
         
@@ -1179,7 +1216,8 @@ class QueueSecurityManager:
         return findings
     
     async def _calculate_security_score(self, findings: List[Dict[str, Any]]) -> float:
-        """Calculate security score based on findings"""
+        """
+Calculate security score based on findings"""
         
         base_score = 1.0
         
@@ -1200,7 +1238,8 @@ class QueueSecurityManager:
         self,
         findings: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate security recommendations"""
+        """
+Generate security recommendations"""
         
         recommendations = []
         
@@ -1236,7 +1275,8 @@ class QueueSecurityManager:
         }
     
     async def _calculate_current_security_score(self) -> float:
-        """Calculate current security score"""
+        """
+Calculate current security score"""
         
         # Quick security assessment
         findings = []
@@ -1259,7 +1299,8 @@ def create_queue_security_manager(
     enable_encryption: bool = True,
     enable_threat_detection: bool = True
 ) -> QueueSecurityManager:
-    """Create queue security manager instance"""
+    """
+Create queue security manager instance"""
     
     config = SecurityConfiguration(
         security_level=security_level,

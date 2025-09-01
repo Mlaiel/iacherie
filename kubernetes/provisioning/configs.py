@@ -26,6 +26,7 @@ Architecture Components:
 - Monitoring and logging configuration
 - Security and compliance settings
 """
+
 import os
 import json
 import yaml
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigFormat(Enum):
-    """Supported configuration formats"""
+    """
+Supported configuration formats"""
+
     YAML = "yaml"
     JSON = "json"
     ENV = "env"
@@ -64,6 +67,7 @@ class ConfigFormat(Enum):
 
 class SecretProvider(Enum):
     """Supported secret management providers"""
+
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
     GCP_SECRET_MANAGER = "gcp_secret_manager"
@@ -74,6 +78,7 @@ class SecretProvider(Enum):
 
 class EnvironmentType(Enum):
     """Environment types for configuration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -96,7 +101,8 @@ class ConfigMetadata:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Add default tags"""
+        """
+Add default tags"""
         self.tags.update({
             'project': 'IA-Influencer-Agent',
             'environment': self.environment.value,
@@ -106,7 +112,8 @@ class ConfigMetadata:
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration settings"""
+    """
+Database configuration settings"""
     host: str
     port: int
     database: str
@@ -142,7 +149,8 @@ class RedisConfig:
     socket_keepalive_options: Dict[str, int] = field(default_factory=dict)
     
     def get_connection_url(self, include_password: bool = True) -> str:
-        """Generate Redis connection URL"""
+        """
+Generate Redis connection URL"""
         protocol = "rediss" if self.ssl else "redis"
         password_part = f":{self.password}@" if include_password and self.password else ""
         return f"{protocol}://{password_part}{self.host}:{self.port}/{self.database}"
@@ -394,7 +402,8 @@ class EnvironmentConfig:
     custom_settings: Dict[str, Any] = field(default_factory=dict)
     
     def validate(self) -> List[str]:
-        """Validate configuration for consistency and completeness"""
+        """
+Validate configuration for consistency and completeness"""
         errors = []
         
         # Validate database configuration
@@ -451,7 +460,8 @@ class EnvironmentConfig:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EnvironmentConfig':
-        """Create configuration from dictionary"""
+        """
+Create configuration from dictionary"""
         return cls(
             metadata=ConfigMetadata(**data['metadata']),
             database=DatabaseConfig(**data['database']),
@@ -515,7 +525,8 @@ class StorageConfig:
 
 @dataclass
 class AIConfig:
-    """AI and ML service configuration"""
+    """
+AI and ML service configuration"""
     fingerprinting_enabled: bool = True
     content_protection_enabled: bool = True
     model_cache_size: int = 1000
@@ -550,7 +561,8 @@ class AIConfig:
 
 @dataclass
 class ApplicationConfig:
-    """Main application configuration"""
+    """
+Main application configuration"""
     name: str = "IA Influencer Platform"
     version: str = "1.0.0"
     host: str = "0.0.0.0"
@@ -588,22 +600,26 @@ class BaseConfigManager(ABC):
     
     @abstractmethod
     def save_config(self, config: ApplicationConfig, config_name: str) -> bool:
-        """Save configuration to source"""
+        """
+Save configuration to source"""
         pass
     
     @abstractmethod
     def validate_config(self, config: ApplicationConfig) -> Dict[str, bool]:
-        """Validate configuration"""
+        """
+Validate configuration"""
         pass
     
     def generate_config_checksum(self, config_data: Dict[str, Any]) -> str:
-        """Generate checksum for configuration data"""
+        """
+Generate checksum for configuration data"""
         config_str = json.dumps(config_data, sort_keys=True)
         return hashlib.sha256(config_str.encode()).hexdigest()
 
 
 class FileConfigManager(BaseConfigManager):
-    """File-based configuration manager"""
+    """
+File-based configuration manager"""
     
     def __init__(self, environment: EnvironmentType, config_dir: str):
         super().__init__(environment)
@@ -611,7 +627,8 @@ class FileConfigManager(BaseConfigManager):
         self.config_dir.mkdir(parents=True, exist_ok=True)
         
     def load_config(self, config_name: str) -> ApplicationConfig:
-        """Load configuration from YAML file"""
+        """
+Load configuration from YAML file"""
         config_file = self.config_dir / f"{config_name}-{self.environment.value}.yaml"
         
         if not config_file.exists():
@@ -691,7 +708,8 @@ class FileConfigManager(BaseConfigManager):
         return validation_results
     
     def _dict_to_config(self, config_data: Dict[str, Any]) -> ApplicationConfig:
-        """Convert dictionary to ApplicationConfig"""
+        """
+Convert dictionary to ApplicationConfig"""
         # Handle nested objects
         if 'database' in config_data:
             config_data['database'] = DatabaseConfig(**config_data['database'])
@@ -721,7 +739,8 @@ class FileConfigManager(BaseConfigManager):
         return ApplicationConfig(**config_data)
     
     def _create_default_config(self) -> ApplicationConfig:
-        """Create default configuration"""
+        """
+Create default configuration"""
         return ApplicationConfig(
             metadata=ConfigMetadata(
                 name="default",
@@ -741,7 +760,8 @@ class FileConfigManager(BaseConfigManager):
 
 
 class SecretManager:
-    """Secure secret management"""
+    """
+Secure secret management"""
     
     def __init__(self, provider: SecretProvider, **kwargs):
         self.provider = provider
@@ -749,7 +769,8 @@ class SecretManager:
         self._initialize_provider(**kwargs)
     
     def _initialize_provider(self, **kwargs):
-        """Initialize secret provider client"""
+        """
+Initialize secret provider client"""
         if self.provider == SecretProvider.AWS_SECRETS_MANAGER:
             self.client = boto3.client('secretsmanager', region_name=kwargs.get('region', 'us-east-1'))
         elif self.provider == SecretProvider.AZURE_KEY_VAULT:
@@ -849,13 +870,15 @@ class SecretManager:
         return base64.urlsafe_b64encode(kdf.derive(password.encode()))
     
     def _encrypt_value(self, value: str) -> str:
-        """Encrypt a value for local storage"""
+        """
+Encrypt a value for local storage"""
         f = Fernet(self.encryption_key)
         encrypted_value = f.encrypt(value.encode())
         return base64.urlsafe_b64encode(encrypted_value).decode()
     
     def _decrypt_value(self, encrypted_value: str) -> str:
-        """Decrypt a value from local storage"""
+        """
+Decrypt a value from local storage"""
         f = Fernet(self.encryption_key)
         decoded_value = base64.urlsafe_b64decode(encrypted_value.encode())
         decrypted_value = f.decrypt(decoded_value)
@@ -863,7 +886,8 @@ class SecretManager:
 
 
 class ConfigTemplateEngine:
-    """Template engine for dynamic configuration generation"""
+    """
+Template engine for dynamic configuration generation"""
     
     def __init__(self):
         self.template_env = jinja2.Environment(
@@ -873,7 +897,8 @@ class ConfigTemplateEngine:
         self.logger = logging.getLogger(__name__)
     
     def render_config_template(self, template_content: str, variables: Dict[str, Any]) -> str:
-        """Render configuration template with variables"""
+        """
+Render configuration template with variables"""
         try:
             template = self.template_env.from_string(template_content)
             return template.render(**variables)
@@ -979,7 +1004,8 @@ data:
 
 
 class EnvironmentConfigManager:
-    """Manager for environment-specific configurations"""
+    """
+Manager for environment-specific configurations"""
     
     def __init__(self, config_dir: str):
         self.config_dir = Path(config_dir)
@@ -993,7 +1019,8 @@ class EnvironmentConfigManager:
             self.config_managers[env_type] = FileConfigManager(env_type, config_dir)
     
     def set_secret_manager(self, secret_manager: SecretManager):
-        """Set the secret manager"""
+        """
+Set the secret manager"""
         self.secret_manager = secret_manager
     
     def load_environment_config(self, environment: EnvironmentType, 
@@ -1047,7 +1074,8 @@ class EnvironmentConfigManager:
     
     def _load_secrets_into_config(self, config: ApplicationConfig, 
                                 environment: EnvironmentType) -> ApplicationConfig:
-        """Load secrets from secret manager into configuration"""
+        """
+Load secrets from secret manager into configuration"""
         env_prefix = environment.value
         
         # Load database password
@@ -1129,7 +1157,8 @@ def generate_jwt_secret() -> str:
 
 
 def create_default_environment_configs(config_dir: str) -> Dict[EnvironmentType, ApplicationConfig]:
-    """Create default configurations for all environments"""
+    """
+Create default configurations for all environments"""
     configs = {}
     
     for env_type in EnvironmentType:

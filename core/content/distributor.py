@@ -5,8 +5,9 @@ The ContentDistributor manages content distribution across multiple platforms
 and channels according to platform-specific requirements and user preferences.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -24,7 +25,9 @@ from ..platforms.soundcloud_api import SoundCloudAPI
 
 
 class DistributionStatus(Enum):
-    """Distribution status enumeration"""
+    """
+Distribution status enumeration"""
+
     PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"

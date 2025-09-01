@@ -6,7 +6,7 @@ data from multiple sources, platforms, and revenue streams into unified
 analytics and reporting for content creators.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Earnings Aggregation
 ==============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationType(Enum):
-    """Aggregation types"""
+    """
+Aggregation types"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -81,7 +84,8 @@ class EarningsAggregator:
         self.metrics = metrics_collector
         
     async def initialize(self):
-        """Initialize earnings aggregator"""
+        """
+Initialize earnings aggregator"""
         try:
             logger.info("Earnings aggregator initialized successfully")
             

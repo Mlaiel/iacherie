@@ -5,6 +5,7 @@ Core engine for version control operations with Git-like version control for cre
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VersionControlJob:
-    """Version Control operation job"""
+    """
+Version Control operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class VersionControlJob:
 
 @dataclass
 class VersionControlResult:
-    """Version Control operation result"""
+    """
+Version Control operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class VersionControlResult:
     completed_at: datetime = None
 
 class VersionControlEngine:
-    """Core version control processing engine"""
+    """
+Core version control processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

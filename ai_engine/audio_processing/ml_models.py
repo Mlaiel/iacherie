@@ -4,8 +4,9 @@ State-of-the-art machine learning models for comprehensive audio analysis.
 Includes pre-trained and custom models for various audio processing tasks.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """Types of ML models available"""
+    """
+Types of ML models available"""
+
     GENRE_CLASSIFIER = "genre_classifier"
     MOOD_DETECTOR = "mood_detector"
     TEMPO_ESTIMATOR = "tempo_estimator"
@@ -50,6 +53,7 @@ class ModelType(Enum):
 
 class ModelArchitecture(Enum):
     """Neural network architectures"""
+
     CNN_1D = "cnn_1d"
     CNN_2D = "cnn_2d"
     LSTM = "lstm"
@@ -80,7 +84,8 @@ class ModelConfig:
 
 @dataclass
 class PredictionResult:
-    """Result from model prediction"""
+    """
+Result from model prediction"""
     model_type: ModelType
     predictions: Dict[str, float]
     confidence: float
@@ -328,7 +333,8 @@ class AudioTransformer(nn.Module):
         )
     
     def _create_positional_encoding(self, max_len: int, d_model: int) -> torch.Tensor:
-        """Create positional encoding for transformer"""
+        """
+Create positional encoding for transformer"""
         pe = torch.zeros(max_len, d_model)
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
         
@@ -416,7 +422,8 @@ class MLModelManager:
         }
     
     def _init_default_configs(self):
-        """Initialize default model configurations"""
+        """
+Initialize default model configurations"""
         self.model_configs = {
             ModelType.GENRE_CLASSIFIER: ModelConfig(
                 model_type=ModelType.GENRE_CLASSIFIER,
@@ -468,7 +475,8 @@ class MLModelManager:
                              audio_data: np.ndarray,
                              sample_rate: int,
                              feature_names: List[str]) -> Dict[str, np.ndarray]:
-        """Extract specified features from audio data"""
+        """
+Extract specified features from audio data"""
         try:
             features = {}
             
@@ -496,7 +504,8 @@ class MLModelManager:
         )
     
     async def _extract_chroma(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract chroma features"""
+        """
+Extract chroma features"""
         return librosa.feature.chroma_stft(
             y=audio_data, 
             sr=sample_rate,
@@ -504,7 +513,8 @@ class MLModelManager:
         )
     
     async def _extract_spectral_contrast(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral contrast features"""
+        """
+Extract spectral contrast features"""
         return librosa.feature.spectral_contrast(
             y=audio_data, 
             sr=sample_rate,
@@ -512,19 +522,22 @@ class MLModelManager:
         )
     
     async def _extract_tonnetz(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract tonnetz (tonal centroid) features"""
+        """
+Extract tonnetz (tonal centroid) features"""
         chroma = librosa.feature.chroma_cqt(y=audio_data, sr=sample_rate)
         return librosa.feature.tonnetz(chroma=chroma)
     
     async def _extract_zcr(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract zero crossing rate"""
+        """
+Extract zero crossing rate"""
         return librosa.feature.zero_crossing_rate(
             audio_data, 
             hop_length=512
         )
     
     async def _extract_spectral_centroid(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral centroid"""
+        """
+Extract spectral centroid"""
         return librosa.feature.spectral_centroid(
             y=audio_data, 
             sr=sample_rate,
@@ -532,7 +545,8 @@ class MLModelManager:
         )
     
     async def _extract_spectral_bandwidth(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral bandwidth"""
+        """
+Extract spectral bandwidth"""
         return librosa.feature.spectral_bandwidth(
             y=audio_data, 
             sr=sample_rate,
@@ -540,7 +554,8 @@ class MLModelManager:
         )
     
     async def _extract_spectral_rolloff(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral rolloff"""
+        """
+Extract spectral rolloff"""
         return librosa.feature.spectral_rolloff(
             y=audio_data, 
             sr=sample_rate,
@@ -548,13 +563,15 @@ class MLModelManager:
         )
     
     async def _extract_tempo(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract tempo information"""
+        """
+Extract tempo information"""
         tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
         onset_env = librosa.onset.onset_strength(y=audio_data, sr=sample_rate)
         return np.array([tempo, len(beats), np.mean(onset_env)])
     
     async def _extract_onset_strength(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract onset strength"""
+        """
+Extract onset strength"""
         return librosa.onset.onset_strength(
             y=audio_data, 
             sr=sample_rate,
@@ -562,7 +579,8 @@ class MLModelManager:
         )
     
     async def _extract_harmonic_percussive(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract harmonic and percussive components"""
+        """
+Extract harmonic and percussive components"""
         y_harmonic, y_percussive = librosa.effects.hpss(audio_data)
         
         # Calculate energy ratios
@@ -579,7 +597,8 @@ class MLModelManager:
         return np.array([harmonic_ratio, percussive_ratio])
     
     async def _extract_mel_spectrogram(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract mel spectrogram"""
+        """
+Extract mel spectrogram"""
         return librosa.feature.melspectrogram(
             y=audio_data, 
             sr=sample_rate,
@@ -588,14 +607,16 @@ class MLModelManager:
         )
     
     async def _extract_rms_energy(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract RMS energy"""
+        """
+Extract RMS energy"""
         return librosa.feature.rms(
             y=audio_data,
             hop_length=512
         )
     
     async def create_model(self, model_config: ModelConfig) -> nn.Module:
-        """Create a neural network model based on configuration"""
+        """
+Create a neural network model based on configuration"""
         try:
             architecture = model_config.architecture
             num_classes = len(model_config.output_classes)
@@ -770,7 +791,8 @@ class MLModelManager:
                                   X_val: np.ndarray,
                                   y_train: np.ndarray,
                                   y_val: np.ndarray) -> Dict[str, Any]:
-        """Train neural network models"""
+        """
+Train neural network models"""
         try:
             # Create model
             model = await self.create_model(config)
@@ -1160,7 +1182,8 @@ class MLModelManager:
         return list(self.model_configs.keys())
     
     def get_model_info(self, model_type: ModelType) -> Dict[str, Any]:
-        """Get information about a specific model"""
+        """
+Get information about a specific model"""
         if model_type not in self.model_configs:
             return {}
         

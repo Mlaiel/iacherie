@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
+    """
+Supported database types"""
+
     POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
@@ -65,6 +68,7 @@ class DatabaseType(Enum):
 
 class IndexType(Enum):
     """Database index types"""
+
     BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
@@ -75,6 +79,7 @@ class IndexType(Enum):
 
 class StorageFormat(Enum):
     """Content storage formats"""
+
     JSON = "json"
     BINARY = "binary"
     COMPRESSED = "compressed"
@@ -96,7 +101,8 @@ class DatabaseConnection:
 
 @dataclass
 class ContentRecord:
-    """Content database record"""
+    """
+Content database record"""
     record_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str = ""
     content_id: str = ""
@@ -147,7 +153,8 @@ class QueryFilter:
 
 @dataclass
 class QueryOptions:
-    """Database query options"""
+    """
+Database query options"""
     filters: List[QueryFilter] = field(default_factory=list)
     sort_by: Optional[str] = None
     sort_order: str = "asc"  # asc, desc
@@ -172,7 +179,8 @@ class DatabaseStats:
 
 
 class ContentDatabaseManager:
-    """Advanced content database management system"""
+    """
+Advanced content database management system"""
     
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
@@ -305,7 +313,8 @@ class ContentDatabaseManager:
             await self._create_elasticsearch_schema()
     
     async def _create_postgresql_schema(self):
-        """Create PostgreSQL schema"""
+        """
+Create PostgreSQL schema"""
         try:
             pool = self.connections[DatabaseType.POSTGRESQL]
             
@@ -513,7 +522,8 @@ class ContentDatabaseManager:
             return str(result['record_id'])
     
     async def _store_fallback_record(self, record: ContentRecord) -> str:
-        """Store record using fallback method (SQLite)"""
+        """
+Store record using fallback method (SQLite)"""
         # This would implement SQLite storage as fallback
         logger.warning("Using fallback storage method")
         return record.record_id
@@ -734,7 +744,8 @@ class ContentDatabaseManager:
         self, 
         options: QueryOptions
     ) -> List[ContentRecord]:
-        """Query content records with filters"""
+        """
+Query content records with filters"""
         try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 return await self._query_postgresql_records(options)
@@ -828,7 +839,8 @@ class ContentDatabaseManager:
         )
     
     async def _query_fallback_records(self, options: QueryOptions) -> List[ContentRecord]:
-        """Query records using fallback method"""
+        """
+Query records using fallback method"""
         # This would implement SQLite or file-based querying
         return []
     
@@ -837,7 +849,8 @@ class ContentDatabaseManager:
         fingerprint_id: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update content record"""
+        """
+Update content record"""
         try:
             updates['updated_at'] = datetime.utcnow()
             
@@ -910,7 +923,8 @@ class ContentDatabaseManager:
         fingerprint_id: str, 
         updates: Dict[str, Any]
     ):
-        """Update records in secondary databases"""
+        """
+Update records in secondary databases"""
         # MongoDB update
         if DatabaseType.MONGODB in self.connections:
             try:
@@ -979,7 +993,8 @@ class ContentDatabaseManager:
         return False
     
     async def _delete_secondary_records(self, fingerprint_id: str):
-        """Delete records from secondary databases"""
+        """
+Delete records from secondary databases"""
         # MongoDB deletion
         if DatabaseType.MONGODB in self.connections:
             try:
@@ -1089,7 +1104,8 @@ class ContentDatabaseManager:
             return results
     
     def _hit_to_content_record(self, hit_source: Dict[str, Any]) -> ContentRecord:
-        """Convert Elasticsearch hit to ContentRecord"""
+        """
+Convert Elasticsearch hit to ContentRecord"""
         # This would implement the conversion logic
         return ContentRecord(
             record_id=hit_source.get('record_id', ''),
@@ -1101,14 +1117,16 @@ class ContentDatabaseManager:
         )
     
     async def _update_access_time(self, fingerprint_id: str):
-        """Update last access time for record"""
+        """
+Update last access time for record"""
         await self.update_content_record(
             fingerprint_id,
             {'last_accessed': datetime.utcnow()}
         )
     
     async def _invalidate_cache(self, fingerprint_id: str):
-        """Invalidate cached record"""
+        """
+Invalidate cached record"""
         if self.redis_client:
             try:
                 cache_key = f"content_record:{fingerprint_id}"
@@ -1159,12 +1177,14 @@ class ContentDatabaseManager:
             }
     
     async def get_statistics(self) -> DatabaseStats:
-        """Get current database statistics"""
+        """
+Get current database statistics"""
         await self._update_statistics()
         return self.stats
     
     async def cleanup_expired_records(self) -> int:
-        """Clean up expired records"""
+        """
+Clean up expired records"""
         try:
             current_time = datetime.utcnow()
             
@@ -1259,7 +1279,8 @@ def get_content_database_manager(config: Optional[FingerprintingSystemConfig] = 
 
 
 def reset_content_database_manager():
-    """Reset content database manager (for testing)"""
+    """
+Reset content database manager (for testing)"""
     global _content_db_manager
     if _content_db_manager:
         asyncio.create_task(_content_db_manager.close())
@@ -1276,7 +1297,8 @@ async def store_fingerprint(
     metadata: Optional[ContentMetadata] = None,
     **kwargs
 ) -> str:
-    """Store fingerprint convenience function"""
+    """
+Store fingerprint convenience function"""
     manager = get_content_database_manager()
     
     record = ContentRecord(
@@ -1302,6 +1324,7 @@ async def store_fingerprint(
 
 
 async def find_fingerprint(fingerprint_id: str) -> Optional[ContentRecord]:
-    """Find fingerprint convenience function"""
+    """
+Find fingerprint convenience function"""
     manager = get_content_database_manager()
     return await manager.get_content_record(fingerprint_id)

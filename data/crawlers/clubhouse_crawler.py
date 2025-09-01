@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class ClubhouseRoom:
-    """Clubhouse room information"""
+    """
+Clubhouse room information"""
     room_id: str
     title: str
     description: str
@@ -71,7 +73,8 @@ class ClubhouseRoom:
 
 @dataclass
 class ClubhouseUser:
-    """Clubhouse user information"""
+    """
+Clubhouse user information"""
     user_id: str
     username: str
     name: str
@@ -102,7 +105,8 @@ class ClubhouseUser:
 
 @dataclass
 class ClubhouseClub:
-    """Clubhouse club information"""
+    """
+Clubhouse club information"""
     club_id: str
     name: str
     description: str
@@ -135,7 +139,8 @@ class ClubhouseClub:
 
 @dataclass
 class ClubhouseEvent:
-    """Clubhouse event information"""
+    """
+Clubhouse event information"""
     event_id: str
     name: str
     description: str
@@ -167,7 +172,8 @@ class ClubhouseEvent:
 
 @dataclass
 class ClubhouseNotification:
-    """Clubhouse notification information"""
+    """
+Clubhouse notification information"""
     notification_id: str
     user_id: str
     type: str  # room_start, user_joined_room, club_activity, etc.
@@ -729,14 +735,16 @@ class ClubhouseCrawler(PlatformCrawler):
         return notifications
     
     async def _get_live_rooms(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get live room data"""
+        """
+Get live room data"""
         rooms = await self._get_mock_rooms(query, max_results)
         # Filter for live rooms
         live_rooms = [room for room in rooms if room.get('is_live', False)]
         return live_rooms[:max_results]
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
+        """
+Get trending content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -753,7 +761,8 @@ class ClubhouseCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_room_data(self, room_data: Dict[str, Any]) -> Optional[ClubhouseRoom]:
-        """Parse room data"""
+        """
+Parse room data"""
         try:
             creation_time = datetime.fromisoformat(room_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

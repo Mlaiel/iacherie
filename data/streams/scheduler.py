@@ -5,8 +5,9 @@ Intelligent scheduling system for stream processing tasks with priority
 management, resource optimization, and automated load balancing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -27,7 +28,9 @@ settings = get_settings()
 
 
 class TaskPriority(int, Enum):
-    """Task priority levels"""
+    """
+Task priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -36,7 +39,9 @@ class TaskPriority(int, Enum):
 
 
 class TaskStatus(str, Enum):
-    """Task execution status"""
+    """
+Task execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -47,6 +52,7 @@ class TaskStatus(str, Enum):
 
 class SchedulingStrategy(str, Enum):
     """Task scheduling strategies"""
+
     FIFO = "fifo"  # First In, First Out
     PRIORITY = "priority"  # Priority-based
     ROUND_ROBIN = "round_robin"  # Round-robin
@@ -78,14 +84,16 @@ class ScheduledTask:
     result: Optional[Any] = None
     
     def __lt__(self, other):
-        """For heap comparison - higher priority first"""
+        """
+For heap comparison - higher priority first"""
         if self.priority != other.priority:
             return self.priority.value > other.priority.value
         return self.scheduled_at < other.scheduled_at
 
 
 class WorkerConfig(BaseModel):
-    """Worker configuration"""
+    """
+Worker configuration"""
     worker_id: str = Field(description="Worker identifier")
     max_concurrent_tasks: int = Field(default=5, description="Maximum concurrent tasks")
     specialized_types: List[str] = Field(default_factory=list, description="Task types this worker handles")
@@ -126,7 +134,8 @@ class StreamScheduler:
         self._queue_lock = asyncio.Lock()
         
     async def initialize(self) -> None:
-        """Initialize stream scheduler"""
+        """
+Initialize stream scheduler"""
         try:
             # Initialize default worker
             await self.add_worker(WorkerConfig(
@@ -386,7 +395,8 @@ class StreamScheduler:
         self.task_callbacks[event_type].append(callback)
         
     async def get_scheduler_stats(self) -> SchedulerStats:
-        """Get scheduler performance statistics"""
+        """
+Get scheduler performance statistics"""
         # Update real-time stats
         self.stats.pending_tasks = len(self.task_queue)
         self.stats.running_tasks = len(self.active_tasks)
@@ -400,7 +410,8 @@ class StreamScheduler:
         return self.stats
         
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop"""
+        """
+Main scheduler loop"""
         while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(0.1)  # Check every 100ms
@@ -452,7 +463,8 @@ class StreamScheduler:
             return None
             
     async def _find_available_worker(self, task: ScheduledTask) -> Optional[str]:
-        """Find available worker for task"""
+        """
+Find available worker for task"""
         for worker_id, worker in self.workers.items():
             if not worker.enabled:
                 continue
@@ -529,7 +541,8 @@ class StreamScheduler:
         worker_id: str,
         result: Any
     ) -> None:
-        """Handle successful task completion"""
+        """
+Handle successful task completion"""
         try:
             # Update task
             task.status = TaskStatus.COMPLETED

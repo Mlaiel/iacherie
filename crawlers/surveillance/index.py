@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -20,6 +20,7 @@ legal action. Contact mlaiel@live.de for licensing.
 This module provides centralized access to all surveillance system components
 for the IA Influencer Agent platform.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -425,12 +426,14 @@ class SurveillanceSystemManager:
         return status
     
     def _setup_component_integration(self) -> None:
-        """Setup integration between components."""
+        """
+Setup integration between components."""
         # Component integration will be configured in _setup_callbacks
         pass
     
     async def _setup_callbacks(self) -> None:
-        """Setup callbacks between components for integration."""
+        """
+Setup callbacks between components for integration."""
         try:
             # Connect monitoring system to other components
             if self.monitoring_system and self.analytics_engine:
@@ -530,7 +533,8 @@ class SurveillanceSystemManager:
         threat_level: Optional[ThreatLevel] = None,
         limit: int = 100
     ) -> List[ThreatEvent]:
-        """Get threat events with filtering."""
+        """
+Get threat events with filtering."""
         if not self.threat_detection:
             return []
         
@@ -548,7 +552,8 @@ class SurveillanceSystemManager:
         creator_id: Optional[str] = None,
         limit: int = 100
     ) -> List[UnifiedAlert]:
-        """Get unified alerts with filtering."""
+        """
+Get unified alerts with filtering."""
         if not self.alert_manager:
             return []
         
@@ -566,7 +571,8 @@ class SurveillanceSystemManager:
         status: Optional[ComplianceStatus] = None,
         limit: int = 100
     ) -> List[ComplianceViolation]:
-        """Get compliance violations with filtering."""
+        """
+Get compliance violations with filtering."""
         if not self.compliance_monitor:
             return []
         
@@ -580,14 +586,16 @@ class SurveillanceSystemManager:
         self,
         insight_type: Optional[InsightType] = None
     ) -> List[BusinessInsight]:
-        """Get business insights with filtering."""
+        """
+Get business insights with filtering."""
         if not self.analytics_engine:
             return []
         
         return self.analytics_engine.get_insights(insight_type=insight_type)
     
     async def shutdown(self) -> None:
-        """Shutdown all surveillance system components."""
+        """
+Shutdown all surveillance system components."""
         self._logger.info("Shutting down Surveillance System Manager...")
         
         try:

@@ -1,7 +1,7 @@
 """Revenue Validator - Advanced data validation and quality assurance system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationSeverity(Enum):
-    """Severity levels for validation issues"""
+    """
+Severity levels for validation issues"""
+
     CRITICAL = "critical"
     ERROR = "error"
     WARNING = "warning"
@@ -58,6 +61,7 @@ class ValidationSeverity(Enum):
 
 class ValidationCategory(Enum):
     """Categories of validation rules"""
+
     DATA_INTEGRITY = "data_integrity"
     BUSINESS_LOGIC = "business_logic"
     STATISTICAL_ANOMALY = "statistical_anomaly"
@@ -69,6 +73,7 @@ class ValidationCategory(Enum):
 
 class DataQualityDimension(Enum):
     """Data quality dimensions"""
+
     COMPLETENESS = "completeness"
     ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
@@ -96,13 +101,15 @@ class ValidationIssue:
     
     @property
     def is_blocking(self) -> bool:
-        """Check if issue is blocking"""
+        """
+Check if issue is blocking"""
         return self.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]
 
 
 @dataclass
 class ValidationRule:
-    """Validation rule definition"""
+    """
+Validation rule definition"""
     rule_id: str
     name: str
     description: str
@@ -117,7 +124,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report"""
+    """
+Comprehensive validation report"""
     report_id: str
     data_source: str
     validation_timestamp: datetime
@@ -131,18 +139,21 @@ class ValidationReport:
     
     @property
     def has_critical_issues(self) -> bool:
-        """Check if report has critical issues"""
+        """
+Check if report has critical issues"""
         return any(issue.severity == ValidationSeverity.CRITICAL for issue in self.issues)
     
     @property
     def has_blocking_issues(self) -> bool:
-        """Check if report has blocking issues"""
+        """
+Check if report has blocking issues"""
         return any(issue.is_blocking for issue in self.issues)
 
 
 # Pydantic models for data structure validation
 class RevenueStreamModel(BaseModel):
-    """Revenue stream data model"""
+    """
+Revenue stream data model"""
     platform: str
     revenue: Decimal
     currency: str = "EUR"
@@ -194,7 +205,8 @@ class EngagementMetricsModel(BaseModel):
 
 
 class RevenueDataModel(BaseModel):
-    """Complete revenue data model"""
+    """
+Complete revenue data model"""
     user_id: str
     reporting_period: str
     total_revenue: Decimal
@@ -214,7 +226,8 @@ class RevenueDataModel(BaseModel):
 
 
 class RevenueValidator:
-    """Advanced revenue data validation and quality assurance system"""
+    """
+Advanced revenue data validation and quality assurance system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -230,7 +243,8 @@ class RevenueValidator:
         self.validation_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue validator"""
+        """
+Initialize revenue validator"""
         try:
             # Setup validation rules
             await self._setup_validation_rules()
@@ -422,7 +436,8 @@ class RevenueValidator:
         self.ml_models['pattern_detector'] = None
     
     async def _load_historical_patterns(self) -> None:
-        """Load historical patterns for validation"""
+        """
+Load historical patterns for validation"""
         # Expected revenue patterns by platform
         self.historical_patterns = {
             'platform_revenue_ranges': {
@@ -1256,7 +1271,8 @@ class RevenueValidator:
         issues: List[ValidationIssue],
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate validation summary statistics"""
+        """
+Generate validation summary statistics"""
         summary = {
             'total_issues': len(issues),
             'issues_by_severity': {},
@@ -1296,7 +1312,8 @@ class RevenueValidator:
         return summary
     
     async def _calculate_completeness(self, data: Dict[str, Any]) -> float:
-        """Calculate data completeness score"""
+        """
+Calculate data completeness score"""
         # Expected fields
         expected_fields = [
             'user_id', 'reporting_period', 'total_revenue',
@@ -1319,7 +1336,8 @@ class RevenueValidator:
         issues: List[ValidationIssue],
         quality_score: float
     ) -> List[str]:
-        """Generate actionable recommendations"""
+        """
+Generate actionable recommendations"""
         recommendations = []
         
         # Priority-based recommendations
@@ -1373,7 +1391,8 @@ class RevenueValidator:
 
 
 async def create_revenue_validator(config: Optional[Dict[str, Any]] = None) -> RevenueValidator:
-    """Factory function to create and initialize revenue validator"""
+    """
+Factory function to create and initialize revenue validator"""
     validator = RevenueValidator(config)
     await validator.initialize()
     return validator

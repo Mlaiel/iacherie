@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -111,7 +112,8 @@ class CollaborationMatchingService:
         }
 
     def _get_cache_key(self, asset_id: int, criteria_hash: str) -> str:
-        """Generate cache key for matching results"""
+        """
+Generate cache key for matching results"""
         return f"collaboration:matches:{asset_id}:{criteria_hash}"
 
     async def _cache_get(self, key: str) -> Optional[List[Dict]]:
@@ -378,7 +380,8 @@ class CollaborationMatchingService:
         creator: Creator, 
         criteria: MatchingCriteria
     ) -> List[Tuple[Creator, float]]:
-        """Find creators with similar content and audience"""
+        """
+Find creators with similar content and audience"""
         # Get creators with similar content types
         similar_creators = db.query(Creator).join(ContentAsset).filter(
             and_(
@@ -408,7 +411,8 @@ class CollaborationMatchingService:
         creator2: Creator, 
         reference_asset: ContentAsset
     ) -> float:
-        """Calculate similarity between two creators"""
+        """
+Calculate similarity between two creators"""
         factors = []
         
         # Content type similarity (already filtered)
@@ -425,7 +429,8 @@ class CollaborationMatchingService:
         return sum(factors) / len(factors)
 
     def _categorize_content(self, asset: ContentAsset) -> str:
-        """Categorize content for brand matching"""
+        """
+Categorize content for brand matching"""
         # Analyze metadata and content type to determine category
         metadata = asset.metadata or {}
         
@@ -473,7 +478,8 @@ class CollaborationMatchingService:
         collaboration_type: str,
         estimated_reach: int
     ) -> float:
-        """Estimate potential revenue from collaboration"""
+        """
+Estimate potential revenue from collaboration"""
         # Revenue estimation based on reach and collaboration type
         revenue_per_thousand = {
             'brand_partnership': 5.0,  # $5 per 1k reach
@@ -492,7 +498,8 @@ class CollaborationMatchingService:
         brand_name: str, 
         content_category: str
     ) -> List[str]:
-        """Get specific compatibility factors for brand partnership"""
+        """
+Get specific compatibility factors for brand partnership"""
         factors = [
             f"Content aligns with {brand_name} brand values",
             f"Target audience matches {brand_name} demographics",
@@ -574,7 +581,8 @@ class CollaborationMatchingService:
         return sum(factors) / len(factors)
 
     def _determine_collaboration_tier(self, analytics: Any, match_score: float) -> CollaborationTier:
-        """Determine collaboration tier based on analytics and match score"""
+        """
+Determine collaboration tier based on analytics and match score"""
         if analytics.views > 100000 and match_score > 0.8:
             return CollaborationTier.PREMIUM
         elif analytics.views > 10000 and match_score > 0.6:
@@ -587,7 +595,8 @@ class CollaborationMatchingService:
         matches: List[CollaborationMatch], 
         criteria: MatchingCriteria
     ) -> List[CollaborationMatch]:
-        """Apply user-specified criteria filters"""
+        """
+Apply user-specified criteria filters"""
         filtered_matches = matches
         
         if criteria.collaboration_types:
@@ -604,7 +613,8 @@ class CollaborationMatchingService:
         return filtered_matches
 
     def _hash_criteria(self, criteria: MatchingCriteria) -> str:
-        """Generate hash for criteria caching"""
+        """
+Generate hash for criteria caching"""
         criteria_str = f"{criteria.content_type}_{criteria.genre}_{criteria.target_audience}_{criteria.min_reach}"
         return str(hash(criteria_str))
 

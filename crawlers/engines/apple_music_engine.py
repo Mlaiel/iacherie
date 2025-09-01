@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -49,7 +50,8 @@ settings = get_settings()
 
 @dataclass
 class AppleMusicTrack:
-    """Apple Music track data structure"""
+    """
+Apple Music track data structure"""
     id: str
     name: str
     artist_name: str
@@ -71,7 +73,8 @@ class AppleMusicTrack:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist data structure"""
+    """
+Apple Music artist data structure"""
     id: str
     name: str
     artwork_url: Optional[str]
@@ -88,7 +91,8 @@ class AppleMusicArtist:
 
 @dataclass
 class AppleMusicPlaylist:
-    """Apple Music playlist data structure"""
+    """
+Apple Music playlist data structure"""
     id: str
     name: str
     description: Optional[str]
@@ -115,7 +119,8 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Apple Music crawler engine"""
+        """
+Initialize Apple Music crawler engine"""
         super().__init__(platform="apple_music", config=config)
         
         # Apple Music API configuration
@@ -429,7 +434,8 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _parse_artist_data(self, artist_data: Dict[str, Any]) -> AppleMusicArtist:
-        """Parse Apple Music artist data"""
+        """
+Parse Apple Music artist data"""
         attributes = artist_data.get('attributes', {})
         
         return AppleMusicArtist(
@@ -448,7 +454,8 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> AppleMusicPlaylist:
-        """Parse Apple Music playlist data"""
+        """
+Parse Apple Music playlist data"""
         attributes = playlist_data.get('attributes', {})
         
         return AppleMusicPlaylist(
@@ -530,7 +537,8 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         return len(intersection) / len(original_words)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
+        """
+Clean up resources"""
         try:
             if self.session:
                 await self.session.close()

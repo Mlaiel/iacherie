@@ -6,6 +6,7 @@ creator authenticity, social media validation, and business verification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID, uuid4
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class VerificationLevel(str, Enum):
-    """Verification levels for creators."""
+    """
+Verification levels for creators."""
+
     UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
@@ -73,7 +76,8 @@ class DocumentSubmissionData(BaseModel):
 
 
 class SocialMediaVerificationData(BaseModel):
-    """Social media account verification data."""
+    """
+Social media account verification data."""
     platform: str  # instagram, youtube, tiktok, twitter, etc.
     username: str
     profile_url: str
@@ -608,7 +612,8 @@ class VerificationManager:
         return hashlib.sha256(data.encode()).hexdigest()
         
     def _estimate_verification_time(self) -> str:
-        """Estimate identity verification completion time."""
+        """
+Estimate identity verification completion time."""
         return "2-5 business days"
         
     def _estimate_social_verification_time(self) -> str:
@@ -666,7 +671,8 @@ class VerificationManager:
             return VerificationLevel.EMAIL_VERIFIED  # Default for registered users
             
     def _format_verification_data(self, verification: Optional[IdentityVerification]) -> Optional[Dict[str, Any]]:
-        """Format verification data for API response."""
+        """
+Format verification data for API response."""
         if not verification:
             return None
             
@@ -700,7 +706,8 @@ class VerificationManager:
         return []
         
     async def _get_verification_next_steps(self, current_level: VerificationLevel) -> List[str]:
-        """Get next steps for improving verification level."""
+        """
+Get next steps for improving verification level."""
         next_steps = {
             VerificationLevel.EMAIL_VERIFIED: [
                 "Complete identity verification",

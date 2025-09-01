@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -52,7 +53,9 @@ from ...security.encryption import encrypt_sensitive_data, decrypt_sensitive_dat
 logger = get_structured_logger(__name__)
 
 class ProcessorStatus(str, Enum):
-    """Processor status enumeration"""
+    """
+Processor status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -61,6 +64,7 @@ class ProcessorStatus(str, Enum):
 
 class TransactionType(str, Enum):
     """Transaction type enumeration"""
+
     COMMISSION_PAYMENT = "commission_payment"
     REFUND = "refund"
     CHARGEBACK = "chargeback"
@@ -70,6 +74,7 @@ class TransactionType(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Payment method enumeration"""
+
     CREDIT_CARD = "credit_card"
     BANK_TRANSFER = "bank_transfer"
     DIGITAL_WALLET = "digital_wallet"
@@ -167,7 +172,8 @@ class CommissionProcessor:
     """
     
     def __init__(self, config: ProcessorConfig):
-        """Initialize commission processor"""
+        """
+Initialize commission processor"""
         self.config = config
         self.status = ProcessorStatus.INACTIVE
         self._client = None
@@ -348,12 +354,14 @@ class StripeProcessor(CommissionProcessor):
     """
     
     async def _setup_client(self) -> None:
-        """Setup Stripe client"""
+        """
+Setup Stripe client"""
         stripe.api_key = self.config.secret_key
         self._client = stripe
     
     async def _validate_credentials(self) -> None:
-        """Validate Stripe credentials"""
+        """
+Validate Stripe credentials"""
         try:
             # Test API connection
             await asyncio.to_thread(stripe.Account.retrieve)
@@ -502,7 +510,8 @@ class PayPalProcessor(CommissionProcessor):
     """
     
     async def _setup_client(self) -> None:
-        """Setup PayPal client"""
+        """
+Setup PayPal client"""
         if self.config.environment == "sandbox":
             environment = SandboxEnvironment(
                 client_id=self.config.api_key,
@@ -730,7 +739,8 @@ class CryptocurrencyProcessor(CommissionProcessor):
     """
     
     async def _setup_client(self) -> None:
-        """Setup crypto client"""
+        """
+Setup crypto client"""
         # Initialize cryptocurrency wallet connections
         # This would typically involve connecting to blockchain nodes or APIs
         self.wallet_config = {
@@ -866,7 +876,8 @@ class ProcessorManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize processor manager"""
+        """
+Initialize processor manager"""
         self.config = config or {}
         self._processors: Dict[PaymentProcessor, CommissionProcessor] = {}
         self._processor_configs: Dict[PaymentProcessor, ProcessorConfig] = {}
@@ -1034,7 +1045,7 @@ class ProcessorManager:
             logger.error(f"Processor shutdown error: {e}")
 
 """Professional Commission Processors
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This module provides comprehensive payment processing capabilities with multi-gateway
 support, intelligent routing, and robust error handling.

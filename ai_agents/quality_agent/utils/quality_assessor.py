@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -57,7 +58,9 @@ from ..quality_agent import QualityScore, QualityLevel, ContentType
 logger = logging.getLogger(__name__)
 
 class AssessmentCategory(Enum):
-    """Quality assessment categories"""
+    """
+Quality assessment categories"""
+
     TECHNICAL = "technical"
     CREATIVE = "creative"
     COMMERCIAL = "commercial"
@@ -80,7 +83,8 @@ class AssessmentCriteria:
 
 @dataclass
 class AssessmentResult:
-    """Individual assessment result"""
+    """
+Individual assessment result"""
     criteria_name: str
     score: float
     max_score: float
@@ -93,7 +97,8 @@ class AssessmentResult:
 
 @dataclass
 class DetailedAssessment:
-    """Comprehensive assessment results"""
+    """
+Comprehensive assessment results"""
     content_id: str
     content_type: ContentType
     overall_score: float
@@ -607,7 +612,8 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_image_composition(self, image: np.ndarray) -> float:
-        """Analyze image composition quality"""
+        """
+Analyze image composition quality"""
         try:
             # Rule of thirds analysis
             height, width = image.shape[:2]
@@ -647,7 +653,8 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_color_harmony(self, image: np.ndarray) -> float:
-        """Analyze color harmony in image"""
+        """
+Analyze color harmony in image"""
         try:
             if len(image.shape) != 3:
                 return 0.5
@@ -684,7 +691,8 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_text_creativity(self, text: str) -> float:
-        """Analyze text creativity and originality"""
+        """
+Analyze text creativity and originality"""
         try:
             # Vocabulary diversity
             words = text.lower().split()
@@ -712,7 +720,8 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_musical_harmony(self, y: np.ndarray, sr: int) -> float:
-        """Analyze musical harmony and chord progressions"""
+        """
+Analyze musical harmony and chord progressions"""
         try:
             # Chromagram analysis
             chromagram = librosa.feature.chroma_stft(y=y, sr=sr)
@@ -730,7 +739,8 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_rhythm_complexity(self, y: np.ndarray, sr: int) -> float:
-        """Analyze rhythmic complexity and patterns"""
+        """
+Analyze rhythmic complexity and patterns"""
         try:
             # Tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
@@ -757,7 +767,8 @@ class QualityAssessor:
         percentage: float, 
         criterion: AssessmentCriteria
     ) -> str:
-        """Determine assessment status based on thresholds"""
+        """
+Determine assessment status based on thresholds"""
         
         if percentage >= criterion.target_threshold * 100:
             return "pass"
@@ -896,7 +907,8 @@ class QualityAssessor:
         return weighted_sum / max(total_weight, 1.0) if total_weight > 0 else 0.0
 
     def _determine_quality_grade(self, overall_score: float) -> str:
-        """Determine quality grade from overall score"""
+        """
+Determine quality grade from overall score"""
         
         if overall_score >= 90:
             return "A+"
@@ -951,7 +963,8 @@ class QualityAssessor:
             return 0.0
 
     def _initialize_nlp_models(self):
-        """Initialize NLP models for text analysis"""
+        """
+Initialize NLP models for text analysis"""
         try:
             # Download required NLTK data
             import nltk
@@ -1105,7 +1118,8 @@ class QualityAssessor:
         category_scores: Dict[str, float],
         overall_score: float
     ) -> Dict[str, Any]:
-        """Compare scores with industry benchmarks"""
+        """
+Compare scores with industry benchmarks"""
         
         content_benchmarks = self.benchmarks.get(content_type.value.lower(), {})
         
@@ -1175,7 +1189,8 @@ class ContentScorer:
         content_path: str,
         content_type: ContentType
     ) -> float:
-        """Generate quick quality score (0-100)"""
+        """
+Generate quick quality score (0-100)"""
         
         try:
             if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
@@ -1213,7 +1228,8 @@ class ContentScorer:
             return 25.0
 
     async def _quick_video_score(self, content_path: str) -> float:
-        """Quick video quality score"""
+        """
+Quick video quality score"""
         try:
             cap = cv2.VideoCapture(content_path)
             
@@ -1234,7 +1250,8 @@ class ContentScorer:
             return 25.0
 
     async def _quick_image_score(self, content_path: str) -> float:
-        """Quick image quality score"""
+        """
+Quick image quality score"""
         try:
             image = cv2.imread(content_path)
             height, width = image.shape[:2]
@@ -1253,7 +1270,8 @@ class ContentScorer:
             return 25.0
 
     async def _quick_text_score(self, content_path: str) -> float:
-        """Quick text quality score"""
+        """
+Quick text quality score"""
         try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()

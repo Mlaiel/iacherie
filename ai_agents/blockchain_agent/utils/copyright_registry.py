@@ -16,6 +16,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,7 +46,9 @@ from .blockchain_agent import BlockchainNetwork
 
 
 class CopyrightType(Enum):
-    """Types of copyrightable content."""
+    """
+Types of copyrightable content."""
+
     MUSICAL_COMPOSITION = "musical_composition"
     SOUND_RECORDING = "sound_recording"
     AUDIOVISUAL_WORK = "audiovisual_work"
@@ -59,6 +62,7 @@ class CopyrightType(Enum):
 
 class RegistrationStatus(Enum):
     """Copyright registration statuses."""
+
     PENDING = "pending"
     REGISTERED = "registered"
     VERIFIED = "verified"
@@ -69,6 +73,7 @@ class RegistrationStatus(Enum):
 
 class LegalJurisdiction(Enum):
     """International legal jurisdictions."""
+
     INTERNATIONAL = "international"
     US = "united_states"
     EU = "european_union"
@@ -105,7 +110,8 @@ class CopyrightClaim:
     
 @dataclass
 class CopyrightEvidence:
-    """Evidence supporting copyright claim."""
+    """
+Evidence supporting copyright claim."""
     evidence_type: str
     description: str
     timestamp: datetime
@@ -116,7 +122,8 @@ class CopyrightEvidence:
 
 @dataclass
 class OwnershipTransfer:
-    """Copyright ownership transfer record."""
+    """
+Copyright ownership transfer record."""
     transfer_id: str
     copyright_id: str
     from_owner: str
@@ -142,7 +149,8 @@ class CopyrightRegistry:
     """
     
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the Copyright Registry system."""
+        """
+Initialize the Copyright Registry system."""
         self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
@@ -642,7 +650,8 @@ class CopyrightRegistry:
         return creation_date + timedelta(days=duration_years * 365)
     
     async def _process_evidence_files(self, claim_id: str, evidence_files: List[str]):
-        """Process and store evidence files for copyright claim."""
+        """
+Process and store evidence files for copyright claim."""
         for file_path in evidence_files:
             try:
                 file_hash = await self._calculate_file_hash(file_path)
@@ -691,7 +700,8 @@ class CopyrightRegistry:
         transfer: OwnershipTransfer,
         new_owner_name: str
     ) -> Dict[str, Any]:
-        """Generate legal document for copyright ownership transfer."""
+        """
+Generate legal document for copyright ownership transfer."""
         return {
             'document_type': 'copyright_transfer',
             'transfer_id': transfer.transfer_id,
@@ -717,14 +727,16 @@ class CopyrightRegistry:
         }
     
     async def _generate_dmca_document(self, dmca_notice: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate formal DMCA takedown notice document."""
+        """
+Generate formal DMCA takedown notice document."""
         return {
             'document_type': 'dmca_takedown_notice',
             'title': 'Digital Millennium Copyright Act Takedown Notice',
             'notice_id': dmca_notice['notice_id'],
             'date': dmca_notice['date'],
             'to_platform': dmca_notice['infringement_details']['platform_contact'],
-            'content': f"""DMCA TAKEDOWN NOTICE
+            'content': f"""
+DMCA TAKEDOWN NOTICE
 
 To: {dmca_notice['infringement_details']['platform_contact']}
 Date: {dmca_notice['date']}
@@ -756,7 +768,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         }
     
     async def _upload_to_ipfs(self, data: Dict[str, Any]) -> str:
-        """Upload document to IPFS and return URI."""
+        """
+Upload document to IPFS and return URI."""
         # This would integrate with actual IPFS service
         content_str = json.dumps(data, sort_keys=True)
         mock_hash = hashlib.sha256(content_str.encode()).hexdigest()[:46]
@@ -767,7 +780,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         return hashlib.sha256(content.encode()).hexdigest()
     
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file content."""
+        """
+Calculate SHA-256 hash of file content."""
         sha256_hash = hashlib.sha256()
         try:
             with open(file_path, "rb") as f:
@@ -832,7 +846,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         }
     
     async def get_copyright_info(self, claim_id: str) -> Dict[str, Any]:
-        """Get comprehensive information about a copyright claim."""
+        """
+Get comprehensive information about a copyright claim."""
         if claim_id not in self.copyright_claims:
             raise ValueError(f"Copyright claim not found: {claim_id}")
         

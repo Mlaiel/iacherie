@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 from .nginx_manager import NginxManager
 from .haproxy_manager import HAProxyManager
 from .envoy_manager import EnvoyManager
@@ -109,9 +110,11 @@ def get_module_info():
     return MODULE_INFO
 
 def get_version():
-    """Get module version"""
+    """
+Get module version"""
     return __version__
 
 def get_available_components():
-    """Get list of available load balancer components"""
+    """
+Get list of available load balancer components"""
     return __all__

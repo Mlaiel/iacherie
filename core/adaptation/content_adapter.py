@@ -19,6 +19,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -53,7 +54,9 @@ from .exceptions import AdaptationError, UnsupportedFormatError, QualityValidati
 
 
 class ContentType(str, Enum):
-    """Comprehensive content types for all creator categories"""
+    """
+Comprehensive content types for all creator categories"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -77,6 +80,7 @@ class ContentType(str, Enum):
 
 class CreatorSpecialty(str, Enum):
     """Creator specializations for targeted optimization"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -97,6 +101,7 @@ class CreatorSpecialty(str, Enum):
 
 class AdaptationQuality(str, Enum):
     """Advanced quality levels with AI optimization"""
+
     ULTRA_HIGH = "ultra_high"        # Lossless, professional grade
     HIGH = "high"                    # Broadcast quality
     MEDIUM = "medium"                # Social media optimized
@@ -110,6 +115,7 @@ class AdaptationQuality(str, Enum):
 
 class PlatformSpecification(str, Enum):
     """Comprehensive platform specifications for optimization"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -151,7 +157,8 @@ class ContentMetadata:
 
 @dataclass
 class AdaptationRequest:
-    """Enterprise-grade content adaptation request with comprehensive configuration"""
+    """
+Enterprise-grade content adaptation request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_specialty: CreatorSpecialty
@@ -196,7 +203,8 @@ class QualityMetrics:
 
 @dataclass
 class AdaptationResult:
-    """Comprehensive result of content adaptation process with analytics"""
+    """
+Comprehensive result of content adaptation process with analytics"""
     adaptation_id: str
     original_content_id: str
     creator_id: str
@@ -451,7 +459,8 @@ class ContentAdapter:
         self,
         request: AdaptationRequest
     ) -> None:
-        """Validate adaptation request parameters"""
+        """
+Validate adaptation request parameters"""
         if not request.content_id:
             raise AdaptationError("Content ID is required")
         
@@ -490,7 +499,8 @@ class ContentAdapter:
         self,
         content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content characteristics for optimization"""
+        """
+Analyze content characteristics for optimization"""
         return {
             'content_type': '',
             'quality_metrics': {},
@@ -504,7 +514,8 @@ class ContentAdapter:
         request: AdaptationRequest,
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimal adaptation strategy"""
+        """
+Generate optimal adaptation strategy"""
         return {
             'pipeline_steps': [],
             'optimization_targets': {},
@@ -518,7 +529,8 @@ class ContentAdapter:
         strategy: Dict[str, Any],
         request: AdaptationRequest
     ) -> Dict[str, Any]:
-        """Execute the adaptation pipeline"""
+        """
+Execute the adaptation pipeline"""
         return {
             'adapted_versions': {},
             'processing_metadata': {},
@@ -531,7 +543,8 @@ class ContentAdapter:
         adapted: Dict[str, Any],
         quality_level: AdaptationQuality
     ) -> Dict[str, float]:
-        """Validate that quality is preserved according to requirements"""
+        """
+Validate that quality is preserved according to requirements"""
         return {
             'overall_quality_score': 0.95,
             'format_fidelity': 0.98,
@@ -546,12 +559,14 @@ class ContentAdapter:
         quality_metrics: Dict[str, float],
         session: AsyncSession
     ) -> None:
-        """Store adaptation results in database"""
+        """
+Store adaptation results in database"""
         # Implementation would store in database
         pass
     
     async def _detect_content_type(self, format_string: str) -> ContentType:
-        """Detect content type from format string"""
+        """
+Detect content type from format string"""
         format_lower = format_string.lower()
         
         for content_type, formats in self.supported_formats.items():

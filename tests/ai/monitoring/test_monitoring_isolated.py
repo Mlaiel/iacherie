@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Isolated Monitoring Tests - Industrial Grade
+"""
+Isolated Monitoring Tests - Industrial Grade
 
 Comprehensive test suite without complex backend dependencies.
 Tests core monitoring functionality with mocked dependencies.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -44,7 +47,8 @@ pytestmark = pytest.mark.asyncio
 
 
 class MockMetric:
-    """Mock metric for testing."""
+    """
+Mock metric for testing."""
     
     def __init__(self, name: str, value: float, timestamp: datetime = None):
         self.name = name
@@ -88,11 +92,13 @@ class MockAIPerformanceMonitor:
         return True
     
     async def get_configuration(self) -> Dict[str, Any]:
-        """Get monitor configuration."""
+        """
+Get monitor configuration."""
         return self.config.copy()
     
     async def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all stored metrics."""
+        """
+Get all stored metrics."""
         return {
             "metrics_count": len(self.metrics),
             "metrics": self.metrics,
@@ -141,20 +147,24 @@ class MockAIPerformanceMonitor:
 class TestMonitoringCore:
     """Core monitoring functionality tests."""
     
-    """Initialize MockAIPerformanceMonitor."""
+    """
+Initialize MockAIPerformanceMonitor."""
     
     @pytest_asyncio.fixture
     async def performance_monitor(self):
-        """Create performance monitor fixture."""
+        """
+Create performance monitor fixture."""
         return MockAIPerformanceMonitor()
     
     @pytest_asyncio.fixture
     async def high_performance_monitor(self):
-        """Create high-performance monitor fixture for load testing.""" 
+        """
+Create high-performance monitor fixture for load testing.""" 
         return MockAIPerformanceMonitor(enable_caching=True)
     
     async def test_performance_monitor_initialization(self, performance_monitor):
-        """Test performance monitor initialization."""
+        """
+Test performance monitor initialization."""
         # Verify monitor initialization
         assert performance_monitor is not None
         assert hasattr(performance_monitor, 'metrics_store')
@@ -170,7 +180,8 @@ class TestMonitoringCore:
         assert isinstance(metrics, dict)
     
     async def test_inference_time_recording(self, performance_monitor):
-        """Test inference time recording."""
+        """
+Test inference time recording."""
         # Test single inference recording
         model_id = "test_model_v1"
         inference_time = 125.5
@@ -396,7 +407,8 @@ class TestMonitoringPerformance:
     
     @pytest_asyncio.fixture
     async def high_performance_monitor(self):
-        """Create high-performance monitor instance."""
+        """
+Create high-performance monitor instance."""
         monitor = MockAIPerformanceMonitor()
         monitor.config.update({
             "high_performance_mode": True,

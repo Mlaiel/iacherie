@@ -2,7 +2,7 @@
 Enterprise-Grade Content Protection & Fingerprinting Pipeline Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive content protection pipeline management for the IA Influencer Agent
 platform, integrating AI fingerprinting, surveillance, and automated protection workflows.
@@ -18,6 +18,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 from .pipeline_manager import PipelineStep, PipelineExecution, AdvancedPipelineManager
 
 class ContentType(Enum):
-    """Content type enumeration for protection pipelines"""
+    """
+Content type enumeration for protection pipelines"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -41,6 +44,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection level definitions"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -48,6 +52,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Content violation type classifications"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     REVENUE_THEFT = "revenue_theft"
@@ -69,7 +74,8 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationDetection:
-    """Content violation detection result"""
+    """
+Content violation detection result"""
     violation_id: str
     content_fingerprint: ContentFingerprint
     detected_url: str

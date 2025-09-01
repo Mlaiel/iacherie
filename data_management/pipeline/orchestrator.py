@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import json
 import logging
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -44,6 +47,7 @@ class PipelineStatus(Enum):
 
 class TaskType(Enum):
     """Data processing task types"""
+
     EXTRACTION = "extraction"
     TRANSFORMATION = "transformation"
     VALIDATION = "validation"
@@ -56,6 +60,7 @@ class TaskType(Enum):
 
 class Priority(Enum):
     """Task priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -64,7 +69,8 @@ class Priority(Enum):
 
 @dataclass
 class PipelineTask:
-    """Data pipeline task definition"""
+    """
+Data pipeline task definition"""
     id: str
     name: str
     task_type: TaskType
@@ -87,7 +93,8 @@ class PipelineTask:
 
 @dataclass
 class PipelineDefinition:
-    """Data pipeline definition"""
+    """
+Data pipeline definition"""
     id: str
     name: str
     description: str
@@ -100,21 +107,25 @@ class PipelineDefinition:
 
 
 class TaskProcessor(ABC):
-    """Abstract base class for task processors"""
+    """
+Abstract base class for task processors"""
     
     @abstractmethod
     async def process(self, input_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process task with input data and configuration"""
+        """
+Process task with input data and configuration"""
         pass
     
     @abstractmethod
     def validate_config(self, config: Dict[str, Any]) -> bool:
-        """Validate task configuration"""
+        """
+Validate task configuration"""
         pass
 
 
 class DataPipelineOrchestrator:
-    """Advanced data pipeline orchestration engine"""
+    """
+Advanced data pipeline orchestration engine"""
     
     def __init__(self):
         self.db = get_database()
@@ -139,7 +150,8 @@ class DataPipelineOrchestrator:
         self._register_builtin_processors()
 
     def _register_builtin_processors(self):
-        """Register built-in task processors"""
+        """
+Register built-in task processors"""
         try:
             # Register core content processing processors
             builtin_processors = [
@@ -290,7 +302,8 @@ class DataPipelineOrchestrator:
         return False
 
     async def _store_pipeline_definition(self, definition: PipelineDefinition) -> str:
-        """Store pipeline definition in database"""
+        """
+Store pipeline definition in database"""
         try:
             query = """
             INSERT INTO data_pipelines (
@@ -356,7 +369,8 @@ class DataPipelineOrchestrator:
         input_data: Optional[Dict[str, Any]] = None,
         override_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Execute a data pipeline"""
+        """
+Execute a data pipeline"""
         try:
             # Load pipeline definition
             definition = await self._load_pipeline_definition(pipeline_id)
@@ -454,7 +468,8 @@ class DataPipelineOrchestrator:
         input_data: Dict[str, Any],
         override_config: Dict[str, Any]
     ) -> List[PipelineTask]:
-        """Prepare tasks for execution with input data and config overrides"""
+        """
+Prepare tasks for execution with input data and config overrides"""
         prepared_tasks = []
         
         for task in tasks:
@@ -595,7 +610,8 @@ class DataPipelineOrchestrator:
         return graph
 
     async def _execute_task(self, task: PipelineTask) -> Dict[str, Any]:
-        """Execute a single task"""
+        """
+Execute a single task"""
         try:
             logger.info(f"Executing task: {task.id}")
             
@@ -657,7 +673,8 @@ class DataPipelineOrchestrator:
             return 0.0
 
     async def _update_task_status(self, execution_id: str, task: PipelineTask):
-        """Update task status in database"""
+        """
+Update task status in database"""
         try:
             query = """
             UPDATE pipeline_executions
@@ -860,7 +877,8 @@ class DataPipelineOrchestrator:
         return False
 
     async def get_pipeline_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get pipeline execution status"""
+        """
+Get pipeline execution status"""
         try:
             query = """
             SELECT id, pipeline_id, status, tasks, created_at, 

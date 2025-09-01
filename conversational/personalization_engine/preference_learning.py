@@ -8,11 +8,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class LearningAlgorithm(str, Enum):
-    """Preference learning algorithm types"""
+    """
+Preference learning algorithm types"""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     MATRIX_FACTORIZATION = "matrix_factorization"
@@ -53,6 +56,7 @@ class LearningAlgorithm(str, Enum):
 
 class PreferenceType(str, Enum):
     """Types of user preferences to learn"""
+
     CONTENT_TYPE = "content_type"
     STYLE_PREFERENCE = "style_preference"
     TIMING_PREFERENCE = "timing_preference"
@@ -78,7 +82,8 @@ class UserInteraction:
 
 @dataclass
 class PreferenceModel:
-    """Trained preference model"""
+    """
+Trained preference model"""
     model_id: str
     algorithm: LearningAlgorithm
     model_data: Any  # Actual model object
@@ -91,7 +96,8 @@ class PreferenceModel:
 
 @dataclass
 class LearningContext:
-    """Context for preference learning"""
+    """
+Context for preference learning"""
     user_id: str
     time_window: Tuple[datetime, datetime]
     content_domains: List[str]
@@ -115,7 +121,8 @@ class PreferenceUpdate:
 
 @dataclass
 class PreferencePrediction:
-    """Preference prediction result"""
+    """
+Preference prediction result"""
     user_id: str
     item_id: str
     predicted_rating: float
@@ -126,7 +133,8 @@ class PreferencePrediction:
 
 
 class CollaborativeFilteringEngine:
-    """Advanced collaborative filtering implementation"""
+    """
+Advanced collaborative filtering implementation"""
     
     def __init__(self, n_factors: int = 100, learning_rate: float = 0.01):
         self.n_factors = n_factors
@@ -140,7 +148,8 @@ class CollaborativeFilteringEngine:
         
     async def fit(self, interaction_matrix: np.ndarray, user_ids: List[str], 
                   item_ids: List[str], epochs: int = 100) -> None:
-        """Train collaborative filtering model"""
+        """
+Train collaborative filtering model"""
         try:
             n_users, n_items = interaction_matrix.shape
             
@@ -200,7 +209,8 @@ class CollaborativeFilteringEngine:
     
     async def predict_preferences(self, user_idx: int, 
                                   item_indices: List[int]) -> List[float]:
-        """Predict preferences for multiple items"""
+        """
+Predict preferences for multiple items"""
         predictions = []
         for item_idx in item_indices:
             prediction = await self._predict_rating(user_idx, item_idx)
@@ -209,7 +219,8 @@ class CollaborativeFilteringEngine:
 
 
 class ContentBasedFilteringEngine:
-    """Advanced content-based filtering implementation"""
+    """
+Advanced content-based filtering implementation"""
     
     def __init__(self):
         self.tfidf_vectorizer = TfidfVectorizer(max_features=10000, stop_words='english')
@@ -218,7 +229,8 @@ class ContentBasedFilteringEngine:
         self.is_trained = False
         
     async def fit(self, content_features: Dict[str, Dict[str, Any]]) -> None:
-        """Train content-based filtering model"""
+        """
+Train content-based filtering model"""
         try:
             # Extract text features
             item_ids = list(content_features.keys())
@@ -272,7 +284,8 @@ class ContentBasedFilteringEngine:
 
 
 class HybridRecommendationEngine:
-    """Hybrid recommendation combining multiple algorithms"""
+    """
+Hybrid recommendation combining multiple algorithms"""
     
     def __init__(self):
         self.collaborative_engine = CollaborativeFilteringEngine()
@@ -287,7 +300,8 @@ class HybridRecommendationEngine:
     
     async def fit(self, interactions: List[UserInteraction], 
                   content_features: Dict[str, Dict[str, Any]]) -> None:
-        """Train hybrid recommendation model"""
+        """
+Train hybrid recommendation model"""
         try:
             # Prepare interaction matrix
             interaction_matrix, user_ids, item_ids = await self._prepare_interaction_matrix(
@@ -576,7 +590,8 @@ async def train_preference_model(
     content_features: Dict[str, Dict[str, Any]],
     algorithm: LearningAlgorithm = LearningAlgorithm.HYBRID
 ) -> PreferenceModel:
-    """Train preference model using engine"""
+    """
+Train preference model using engine"""
     return await engine.train_preference_models(
         interactions, content_features, algorithm
     )

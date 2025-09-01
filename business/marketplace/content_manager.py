@@ -14,6 +14,7 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -27,7 +28,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types"""
+    """
+Supported content types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -40,6 +43,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content processing status"""
+
     UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROTECTED = "protected"
@@ -93,7 +97,8 @@ class ContentManager:
         }
         
     async def process_content(self, content_data: Dict[str, Any], creator_id: str) -> ContentMetadata:
-        """Process uploaded content with full AI analysis"""
+        """
+Process uploaded content with full AI analysis"""
         try:
             # Generate unique content ID
             content_id = str(uuid.uuid4())
@@ -241,14 +246,15 @@ class ContentManager:
         return completed_fields / len(required_fields)
     
     async def _apply_copyright_protection(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Apply comprehensive copyright protection"""
+        """
+Apply comprehensive copyright protection"""
         return {
             "protection_id": str(uuid.uuid4()),
             "protection_level": "ultra_industrial",
             "watermark_applied": True,
             "blockchain_registered": True,
             "fingerprint_stored": True,
-            "legal_notice": f"© {datetime.utcnow().year} Fahed Mlaiel. All rights reserved.",
+            "legal_notice": f"(c) {datetime.utcnow().year} Fahed Mlaiel. All rights reserved.",
             "dmca_protection": True,
             "usage_tracking": True,
             "unauthorized_use_detection": True
@@ -261,7 +267,8 @@ class ContentManager:
         return None
     
     async def update_content(self, content_id: str, updates: Dict[str, Any]) -> ContentMetadata:
-        """Update content metadata"""
+        """
+Update content metadata"""
         try:
             self.logger.info(f"Updating content {content_id} with {len(updates)} fields")
             
@@ -356,13 +363,15 @@ class ContentManager:
         return []
     
     async def get_creator_content(self, creator_id: str) -> List[ContentMetadata]:
-        """Get all content for a specific creator"""
+        """
+Get all content for a specific creator"""
         # This would typically query database
         # Placeholder implementation
         return []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for content manager"""
+        """
+Health check for content manager"""
         return {
             "status": "healthy",
             "supported_formats": len(self.supported_formats),

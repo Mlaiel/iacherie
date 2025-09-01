@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test New Crawlers
+"""
+Test New Crawlers
 Basic tests for the newly added crawler modules.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -34,10 +37,12 @@ from crawlers import (
 
 
 class TestNewCrawlers:
-    """Test cases for new crawler modules"""
+    """
+Test cases for new crawler modules"""
     @pytest.mark.asyncio
     async def test_spotify_crawler(self):
-        """Test Spotify crawler basic functionality"""
+        """
+Test Spotify crawler basic functionality"""
         async with SpotifyCrawler() as crawler:
             results = await crawler.search_tracks(
                 content_id="test_content",

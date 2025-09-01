@@ -29,6 +29,7 @@ Features:
 - Data synchronization performance
 - Real-time platform status monitoring
 """
+
 import time
 import asyncio
 import logging
@@ -45,7 +46,9 @@ logger = get_logger(__name__)
 
 
 class Platform(Enum):
-    """Supported external platforms"""
+    """
+Supported external platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -64,6 +67,7 @@ class Platform(Enum):
 
 class IntegrationType(Enum):
     """Types of platform integrations"""
+
     API_DIRECT = "api_direct"
     OAUTH2 = "oauth2"
     WEBHOOK = "webhook"
@@ -75,6 +79,7 @@ class IntegrationType(Enum):
 
 class APIEndpointType(Enum):
     """Types of API endpoints"""
+
     AUTHENTICATION = "authentication"
     USER_PROFILE = "user_profile"
     CONTENT_UPLOAD = "content_upload"
@@ -89,6 +94,7 @@ class APIEndpointType(Enum):
 
 class ConnectionStatus(Enum):
     """Platform connection status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     RATE_LIMITED = "rate_limited"
@@ -111,7 +117,8 @@ class PlatformConnection:
 
 @dataclass
 class APICall:
-    """API call details"""
+    """
+API call details"""
     call_id: str
     platform: Platform
     endpoint_type: APIEndpointType
@@ -146,7 +153,8 @@ class PlatformIntegrationMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize comprehensive platform integration metrics"""
+        """
+Initialize comprehensive platform integration metrics"""
         
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
@@ -343,7 +351,8 @@ class PlatformIntegrationMetricsCollector:
             self.prometheus_manager.register_metric(metric)
     
     async def record_api_call(self, api_call: APICall) -> None:
-        """Record API call metrics"""
+        """
+Record API call metrics"""
         
         self.api_calls_total.labels(
             platform=api_call.platform.value,
@@ -664,7 +673,8 @@ class PlatformIntegrationMetricsCollector:
         quota_type: str,
         usage_percent: float
     ) -> None:
-        """Trigger quota usage alert"""
+        """
+Trigger quota usage alert"""
         
         alert_data = {
             "timestamp": datetime.utcnow().isoformat(),

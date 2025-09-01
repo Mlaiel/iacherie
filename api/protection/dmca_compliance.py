@@ -25,6 +25,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -51,7 +52,9 @@ from ..core.exceptions import DMCAException, ComplianceException
 
 
 class TakedownStatus(Enum):
-    """DMCA takedown request status."""
+    """
+DMCA takedown request status."""
+
     DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -66,6 +69,7 @@ class TakedownStatus(Enum):
 
 class NoticeType(Enum):
     """Types of DMCA notices."""
+
     TAKEDOWN_NOTICE = "takedown_notice"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -75,6 +79,7 @@ class NoticeType(Enum):
 
 class PlatformCompliance(Enum):
     """Platform DMCA compliance levels."""
+
     FULL_COMPLIANCE = "full_compliance"
     PARTIAL_COMPLIANCE = "partial_compliance"
     NON_COMPLIANT = "non_compliant"
@@ -84,6 +89,7 @@ class PlatformCompliance(Enum):
 
 class EnforcementAction(Enum):
     """Types of enforcement actions."""
+
     AUTOMATED_TAKEDOWN = "automated_takedown"
     MANUAL_REVIEW = "manual_review"
     LEGAL_NOTICE = "legal_notice"
@@ -157,7 +163,8 @@ class PlatformDMCAConfig:
 
 @dataclass
 class ComplianceReport:
-    """DMCA compliance tracking report."""
+    """
+DMCA compliance tracking report."""
     report_id: str
     platform: str
     reporting_period: str
@@ -437,7 +444,8 @@ class EnterpriseDMCACompliance:
         """
     
     def _get_counter_notice_template(self) -> str:
-        """Get DMCA counter-notice template."""
+        """
+Get DMCA counter-notice template."""
         return """<!DOCTYPE html>
 <html>
 <head>
@@ -481,7 +489,8 @@ class EnterpriseDMCACompliance:
         """
     
     def _get_repeat_infringer_template(self) -> str:
-        """Get repeat infringer notice template."""
+        """
+Get repeat infringer notice template."""
         return """<!DOCTYPE html>
 <html>
 <head>
@@ -516,7 +525,8 @@ class EnterpriseDMCACompliance:
         """
     
     def _get_legal_demand_template(self) -> str:
-        """Get legal demand letter template."""
+        """
+Get legal demand letter template."""
         return """<!DOCTYPE html>
 <html>
 <head>

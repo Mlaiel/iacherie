@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any
 from enum import Enum
 from dataclasses import dataclass
@@ -26,7 +27,9 @@ import json
 
 
 class ContractTemplate(Enum):
-    """Available smart contract templates"""
+    """
+Available smart contract templates"""
+
     COPYRIGHT_REGISTRY = "copyright_registry"
     CONTENT_LICENSING = "content_licensing"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -1459,7 +1462,8 @@ contract ContentUsageTracking is Ownable, ReentrancyGuard {
     
     @staticmethod
     def get_contract_abi(template: ContractTemplate) -> List[Dict[str, Any]]:
-        """Get ABI for specific contract template"""
+        """
+Get ABI for specific contract template"""
         # This would contain the actual ABI definitions
         # For brevity, returning a simplified structure
         

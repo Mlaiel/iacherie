@@ -4,7 +4,7 @@ Advanced audio quality analysis for musicians, podcasters, and audio content cre
 Implements professional audio metrics and industry-standard quality assessment.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 import wave
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -46,6 +49,7 @@ class AudioFormat(Enum):
 
 class NoiseLevel(Enum):
     """Audio noise level categories"""
+
     EXCELLENT = "excellent"     # < -60 dB
     GOOD = "good"              # -60 to -50 dB
     ACCEPTABLE = "acceptable"   # -50 to -40 dB
@@ -55,6 +59,7 @@ class NoiseLevel(Enum):
 
 class DynamicRange(Enum):
     """Dynamic range categories"""
+
     EXCELLENT = "excellent"     # > 20 dB
     GOOD = "good"              # 15-20 dB
     ACCEPTABLE = "acceptable"   # 10-15 dB
@@ -86,7 +91,8 @@ class SpectralAnalysis:
 
 @dataclass
 class AudioQualityProfile:
-    """Comprehensive audio quality profile"""
+    """
+Comprehensive audio quality profile"""
     # Basic properties
     sample_rate: int = field(default=0)
     bit_depth: int = field(default=0)
@@ -171,7 +177,8 @@ class AudioQualityAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize audio quality analyzer"""
+        """
+Initialize audio quality analyzer"""
         super().__init__(config or ModelConfig(
             name="audio_quality_analyzer",
             model_type=ModelType.AUDIO_MODEL,
@@ -340,16 +347,19 @@ class AudioQualityAnalyzer(BaseAIModel):
         return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from audio processing services."""
+        """
+Disconnect from audio processing services."""
         return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio quality assessment."""
+        """
+Process audio quality assessment."""
         return await self.analyze_audio_quality(data.get('audio_data', b''), 
                                                data.get('profile', AudioQualityProfile()))
     
     async def _load_audio(self, audio_path: Path) -> Tuple[np.ndarray, int]:
-        """Load audio file and return data and sample rate"""
+        """
+Load audio file and return data and sample rate"""
         try:
             # For now, simulate audio loading with synthetic data
             # In production, use librosa, pydub, or similar library

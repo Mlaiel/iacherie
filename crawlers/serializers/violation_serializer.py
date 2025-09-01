@@ -29,6 +29,7 @@ Expertise combinée:
 - DevOps: Monitoring et alertes en temps réel des violations
 - IA Prompt Engineer: Génération automatique de notices légales
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of content violations."""
+    """
+Types of content violations."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -55,6 +58,7 @@ class ViolationType(Enum):
 
 class ViolationSeverity(Enum):
     """Severity levels for violations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -63,6 +67,7 @@ class ViolationSeverity(Enum):
 
 class ViolationStatus(Enum):
     """Status of violation cases."""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -75,6 +80,7 @@ class ViolationStatus(Enum):
 
 class ActionType(Enum):
     """Types of enforcement actions."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     LEGAL_NOTICE = "legal_notice"
@@ -233,7 +239,8 @@ class ViolationSerializer:
     """
     
     def __init__(self):
-        """Initialize violation serializer."""
+        """
+Initialize violation serializer."""
         self.evidence_compression_threshold = 1024 * 1024  # 1MB
         self.max_evidence_size = 50 * 1024 * 1024  # 50MB
         
@@ -475,7 +482,8 @@ class ViolationSerializer:
         return ViolationEvidence(**data)
     
     def _serialize_legal_action(self, action: LegalAction) -> Dict[str, Any]:
-        """Serialize legal action."""
+        """
+Serialize legal action."""
         data = {
             'action_id': action.action_id,
             'action_type': action.action_type.value,
@@ -499,7 +507,8 @@ class ViolationSerializer:
         return data
     
     def _deserialize_legal_action(self, data: Dict[str, Any]) -> LegalAction:
-        """Deserialize legal action."""
+        """
+Deserialize legal action."""
         if isinstance(data.get('action_date'), str):
             data['action_date'] = datetime.fromisoformat(data['action_date'])
         
@@ -512,7 +521,8 @@ class ViolationSerializer:
         return LegalAction(**data)
     
     def _serialize_monetization_impact(self, impact: MonetizationImpact) -> Dict[str, Any]:
-        """Serialize monetization impact."""
+        """
+Serialize monetization impact."""
         data = {
             'estimated_loss': impact.estimated_loss,
             'currency': impact.currency,
@@ -529,14 +539,16 @@ class ViolationSerializer:
         return data
     
     def _deserialize_monetization_impact(self, data: Dict[str, Any]) -> MonetizationImpact:
-        """Deserialize monetization impact."""
+        """
+Deserialize monetization impact."""
         if 'lost_revenue_period_days' in data:
             data['lost_revenue_period'] = timedelta(days=data.pop('lost_revenue_period_days'))
         
         return MonetizationImpact(**data)
     
     def _compress_evidence_data(self, data: bytes) -> str:
-        """Compress evidence data."""
+        """
+Compress evidence data."""
         try:
             import gzip
             import base64

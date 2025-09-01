@@ -5,8 +5,9 @@ Advanced embedding generation for multi-modal content fingerprints.
 Transforms content fingerprints into high-dimensional vectors for similarity search.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import asyncio
 import logging
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class EmbeddingType(Enum):
-    """Types of embeddings supported"""
+    """
+Types of embeddings supported"""
+
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_TEMPORAL = "video_temporal"
     IMAGE_VISUAL = "image_visual"
@@ -56,7 +59,8 @@ class EmbeddingResult:
 
 
 class AudioEmbeddingGenerator:
-    """Generate embeddings for audio content"""
+    """
+Generate embeddings for audio content"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -658,7 +662,8 @@ class EmbeddingService:
         embedding_type: Optional[EmbeddingType] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[EmbeddingResult]:
-        """Generate embeddings for multiple content items in batch"""
+        """
+Generate embeddings for multiple content items in batch"""
         try:
             tasks = []
             for content_features, content_id in content_features_list:

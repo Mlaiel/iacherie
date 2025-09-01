@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Callable
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """AI model types for audio processing"""
+    """
+AI model types for audio processing"""
+
     NEURAL_ENHANCEMENT = "neural_enhancement"
     NOISE_REDUCTION = "noise_reduction"
     VOCAL_ISOLATION = "vocal_isolation"
@@ -46,6 +49,7 @@ class AIModelType(Enum):
 
 class ProcessingPrecision(Enum):
     """AI model precision levels"""
+
     FP32 = "fp32"       # Full precision
     FP16 = "fp16"       # Half precision
     INT8 = "int8"       # Quantized 8-bit
@@ -54,6 +58,7 @@ class ProcessingPrecision(Enum):
 
 class AccelerationType(Enum):
     """Hardware acceleration types"""
+
     CPU = "cpu"
     GPU_CUDA = "gpu_cuda"
     GPU_OPENCL = "gpu_opencl"
@@ -64,6 +69,7 @@ class AccelerationType(Enum):
 
 class ModelComplexity(Enum):
     """AI model complexity levels"""
+
     LIGHTWEIGHT = "lightweight"    # Mobile/edge optimized
     STANDARD = "standard"          # Balanced performance
     PROFESSIONAL = "professional"  # High quality
@@ -105,7 +111,8 @@ class AIModelConfig:
 
 @dataclass
 class EnhancementPipeline:
-    """AI audio enhancement pipeline configuration"""
+    """
+AI audio enhancement pipeline configuration"""
     pipeline_name: str
     models: List[AIModelConfig] = field(default_factory=list)
     
@@ -132,7 +139,8 @@ class EnhancementPipeline:
 
 @dataclass
 class RealTimeProcessingConfig:
-    """Real-time AI audio processing configuration"""
+    """
+Real-time AI audio processing configuration"""
     enable_realtime: bool = False
     
     # Latency requirements
@@ -204,7 +212,8 @@ class AIAudioProcessingConfig:
         self.custom_models = {}
     
     def _initialize_ai_models(self) -> Dict[str, AIModelConfig]:
-        """Initialize AI model configurations"""
+        """
+Initialize AI model configurations"""
         models = {}
         
         # Neural Audio Enhancement Model
@@ -439,7 +448,8 @@ class AIAudioProcessingConfig:
         )
     
     def get_model_config(self, model_type: Union[AIModelType, str]) -> AIModelConfig:
-        """Get configuration for specific AI model"""
+        """
+Get configuration for specific AI model"""
         model_key = model_type.value if isinstance(model_type, AIModelType) else model_type
         
         if model_key in self.custom_models:
@@ -633,9 +643,11 @@ def get_model_config(model_type: Union[AIModelType, str]) -> AIModelConfig:
     return ai_audio_processing_config.get_model_config(model_type)
 
 def get_pipeline_config(pipeline_name: str) -> EnhancementPipeline:
-    """Get processing pipeline configuration"""
+    """
+Get processing pipeline configuration"""
     return ai_audio_processing_config.get_pipeline_config(pipeline_name)
 
 def optimize_for_hardware(target_hardware: AccelerationType) -> Dict[str, Any]:
-    """Optimize configurations for target hardware"""
+    """
+Optimize configurations for target hardware"""
     return ai_audio_processing_config.optimize_for_hardware(target_hardware)

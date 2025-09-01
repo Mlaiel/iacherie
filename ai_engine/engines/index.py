@@ -15,7 +15,7 @@ Provides easy access to all engine classes and utilities with intelligent routin
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 from typing import Dict, Type, Any, Optional, List, Union
 import logging
 from enum import Enum
@@ -137,7 +138,9 @@ from .monetization_engine import (
 
 
 class EngineCategory(Enum):
-    """Categories of available AI engines"""
+    """
+Categories of available AI engines"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -167,7 +170,8 @@ class EngineIndex:
         self._register_engines()
         
     def _register_engines(self):
-        """Register all available engines in the index"""
+        """
+Register all available engines in the index"""
         
         # Audio engines
         audio_engines = {
@@ -527,12 +531,14 @@ def get_engine_instance(
     engine_name: str,
     config: Optional[Dict[str, Any]] = None
 ) -> Optional[BaseAIEngine]:
-    """Get or create engine instance"""
+    """
+Get or create engine instance"""
     return engine_index.get_engine_instance(engine_name, config)
 
 
 def get_engines_for_content(content_type: ContentType) -> List[str]:
-    """Get recommended engines for content type"""
+    """
+Get recommended engines for content type"""
     return engine_index.get_engines_for_content_type(content_type)
 
 
@@ -540,12 +546,14 @@ def create_processing_pipeline(
     content_type: ContentType,
     business_goals: List[str]
 ) -> List[str]:
-    """Create optimal processing pipeline"""
+    """
+Create optimal processing pipeline"""
     return engine_index.get_recommended_pipeline(content_type, business_goals)
 
 
 def list_engines() -> Dict[str, Dict[str, Any]]:
-    """List all available engines"""
+    """
+List all available engines"""
     return engine_index.list_all_engines()
 
 

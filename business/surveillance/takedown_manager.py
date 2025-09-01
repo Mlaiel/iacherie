@@ -5,8 +5,9 @@ Automated takedown notice management system for copyright infringement
 enforcement across multiple digital platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class TakedownStatus(Enum):
-    """Status of takedown requests"""
+    """
+Status of takedown requests"""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -34,6 +37,7 @@ class TakedownStatus(Enum):
 
 class TakedownType(Enum):
     """Types of takedown requests"""
+
     DMCA = "dmca"
     COPYRIGHT_CLAIM = "copyright_claim"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -84,7 +88,8 @@ class TakedownRequest:
 
 @dataclass
 class TakedownTemplate:
-    """Template for takedown notices"""
+    """
+Template for takedown notices"""
     template_id: str
     takedown_type: TakedownType
     platform: str
@@ -354,7 +359,8 @@ class GenericTakedownHandler(PlatformTakedownHandler):
         super().__init__(platform, config)
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
-        """Submit generic takedown request"""
+        """
+Submit generic takedown request"""
         try:
             # Generic submission process
             formatted_request = await self.format_request(request)
@@ -429,7 +435,8 @@ class TakedownManager:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize takedown manager and platform handlers"""
+        """
+Initialize takedown manager and platform handlers"""
         try:
             # Initialize platform-specific handlers
             handler_config = {

@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class CollaborationStatus(Enum):
-    """Collaboration workflow status."""
+    """
+Collaboration workflow status."""
+
     PENDING = "pending"
     PROPOSAL_SENT = "proposal_sent"
     NEGOTIATING = "negotiating"
@@ -39,6 +42,7 @@ class CollaborationStatus(Enum):
 
 class PartnerType(Enum):
     """Types of collaboration partners."""
+
     INFLUENCER = "influencer"
     BRAND = "brand"
     CONTENT_CREATOR = "content_creator"
@@ -51,6 +55,7 @@ class PartnerType(Enum):
 
 class CampaignType(Enum):
     """Types of collaboration campaigns."""
+
     CROSS_PROMOTION = "cross_promotion"
     BRAND_SPONSORSHIP = "brand_sponsorship"
     PRODUCT_PLACEMENT = "product_placement"
@@ -63,6 +68,7 @@ class CampaignType(Enum):
 
 class CollaborationTier(Enum):
     """Collaboration partnership tiers."""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -91,7 +97,8 @@ class CollaborationProposal:
 
 @dataclass
 class ActiveCollaboration:
-    """Represents an active collaboration."""
+    """
+Represents an active collaboration."""
     collaboration_id: str
     proposal: CollaborationProposal
     status: CollaborationStatus
@@ -104,7 +111,8 @@ class ActiveCollaboration:
 
 
 class CollaborationWorkflow:
-    """Workflow system for content collaboration management."""
+    """
+Workflow system for content collaboration management."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}

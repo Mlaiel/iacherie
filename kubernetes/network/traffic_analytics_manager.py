@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrafficType(Enum):
-    """Types of network traffic"""
+    """
+Types of network traffic"""
+
     WEB_TRAFFIC = "web"
     API_TRAFFIC = "api"
     CONTENT_DELIVERY = "content"
@@ -53,6 +56,7 @@ class TrafficType(Enum):
 
 class AnalyticsMetric(Enum):
     """Available analytics metrics"""
+
     BANDWIDTH_USAGE = "bandwidth_usage"
     REQUEST_COUNT = "request_count"
     LATENCY = "latency"
@@ -65,6 +69,7 @@ class AnalyticsMetric(Enum):
 
 class TrafficPattern(Enum):
     """Traffic patterns for optimization"""
+
     PEAK_HOURS = "peak_hours"
     OFF_PEAK = "off_peak"
     WEEKEND = "weekend"
@@ -95,7 +100,8 @@ class TrafficData:
 
 @dataclass
 class ContentAnalytics:
-    """Content-specific analytics"""
+    """
+Content-specific analytics"""
     content_id: str
     content_type: str
     view_count: int
@@ -110,7 +116,8 @@ class ContentAnalytics:
 
 @dataclass
 class UserBehaviorMetrics:
-    """User behavior analytics"""
+    """
+User behavior analytics"""
     user_id: str
     session_count: int
     total_duration: timedelta

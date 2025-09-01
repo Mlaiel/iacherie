@@ -24,6 +24,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -51,7 +52,9 @@ from ..core.exceptions import PaymentException, FraudException
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateways."""
+    """
+Supported payment gateways."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -66,6 +69,7 @@ class PaymentGateway(Enum):
 
 class PaymentMethod(Enum):
     """Payment method types."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -78,6 +82,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment transaction status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     AUTHORIZED = "authorized"
@@ -93,6 +98,7 @@ class PaymentStatus(Enum):
 
 class Currency(Enum):
     """Supported currencies."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -110,6 +116,7 @@ class Currency(Enum):
 
 class FraudRiskLevel(Enum):
     """Fraud risk assessment levels."""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -187,7 +194,8 @@ class PaymentResult:
 
 @dataclass
 class FraudAssessment:
-    """Fraud risk assessment result."""
+    """
+Fraud risk assessment result."""
     transaction_id: str
     risk_level: FraudRiskLevel
     risk_score: float  # 0-100
@@ -200,7 +208,8 @@ class FraudAssessment:
 
 @dataclass
 class PayoutRequest:
-    """Payout processing request."""
+    """
+Payout processing request."""
     payout_id: str
     recipient_id: str
     amount: Decimal
@@ -502,14 +511,16 @@ class AdvancedPaymentProcessor:
         return check_behavior
     
     def _create_geographic_checker(self):
-        """Create geographic risk checker."""
+        """
+Create geographic risk checker."""
         def check_geographic(billing_country: str, ip_country: str) -> float:
             # Simplified geographic check
             return 0.0  # Risk score
         return check_geographic
     
     def _create_amount_checker(self):
-        """Create amount-based risk checker."""
+        """
+Create amount-based risk checker."""
         def check_amount(amount: Decimal, currency: Currency) -> float:
             # Simplified amount check
             return 0.0  # Risk score

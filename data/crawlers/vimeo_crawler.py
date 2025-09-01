@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class VimeoVideo:
-    """Vimeo video information"""
+    """
+Vimeo video information"""
     video_id: str
     name: str
     description: Optional[str]
@@ -88,7 +90,8 @@ class VimeoVideo:
 
 @dataclass
 class VimeoUser:
-    """Vimeo user information"""
+    """
+Vimeo user information"""
     user_id: str
     uri: str
     name: str
@@ -125,7 +128,8 @@ class VimeoUser:
 
 @dataclass
 class VimeoChannel:
-    """Vimeo channel information"""
+    """
+Vimeo channel information"""
     channel_id: str
     uri: str
     name: str

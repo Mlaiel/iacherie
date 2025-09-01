@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Advanced audio fingerprinting processor for multi-format content protection
 """
+
 import hashlib
 import librosa
 import numpy as np
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure"""
+    """
+Audio fingerprint data structure"""
     content_hash: str
     spectral_features: np.ndarray
     mfcc_features: np.ndarray
@@ -41,12 +43,14 @@ class AudioFingerprintProcessor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize audio fingerprinting processor"""
+        """
+Initialize audio fingerprinting processor"""
         self.config = config or self._get_default_config()
         self.executor = ThreadPoolExecutor(max_workers=4)
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for audio processing"""
+        """
+Get default configuration for audio processing"""
         return {
             'sample_rate': 22050,
             'n_mfcc': 13,
@@ -116,7 +120,8 @@ class AudioFingerprintProcessor:
         return hashlib.sha256(audio_bytes).hexdigest()
     
     async def _extract_spectral_features(self, audio_data: np.ndarray, sr: int) -> np.ndarray:
-        """Extract spectral features from audio"""
+        """
+Extract spectral features from audio"""
         loop = asyncio.get_event_loop()
         
         def compute_features():
@@ -150,7 +155,8 @@ class AudioFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_features)
     
     async def _extract_mfcc_features(self, audio_data: np.ndarray, sr: int) -> np.ndarray:
-        """Extract MFCC features from audio"""
+        """
+Extract MFCC features from audio"""
         loop = asyncio.get_event_loop()
         
         def compute_mfcc():
@@ -165,7 +171,8 @@ class AudioFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_mfcc)
     
     async def _extract_chromagram(self, audio_data: np.ndarray, sr: int) -> np.ndarray:
-        """Extract chromagram features from audio"""
+        """
+Extract chromagram features from audio"""
         loop = asyncio.get_event_loop()
         
         def compute_chroma():
@@ -180,7 +187,8 @@ class AudioFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_chroma)
     
     async def _extract_tempo(self, audio_data: np.ndarray, sr: int) -> float:
-        """Extract tempo from audio"""
+        """
+Extract tempo from audio"""
         loop = asyncio.get_event_loop()
         
         def compute_tempo():
@@ -190,7 +198,8 @@ class AudioFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_tempo)
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract file metadata"""
+        """
+Extract file metadata"""
         return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
@@ -265,16 +274,19 @@ class AudioFingerprintProcessor:
             return 0.0
     
     def is_duplicate(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> bool:
-        """Check if two fingerprints represent duplicate content"""
+        """
+Check if two fingerprints represent duplicate content"""
         similarity = self.calculate_similarity(fp1, fp2)
         return similarity >= self.config['similarity_threshold']
     
     async def batch_process(self, file_paths: List[Path]) -> List[AudioFingerprint]:
-        """Process multiple audio files in parallel"""
+        """
+Process multiple audio files in parallel"""
         tasks = [self.process_audio_file(path) for path in file_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def __del__(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)

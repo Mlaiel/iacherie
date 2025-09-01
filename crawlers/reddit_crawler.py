@@ -22,6 +22,7 @@ Features:
 - Comprehensive user analytics and behavior analysis
 - Content fingerprinting for copyright protection
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
@@ -54,7 +55,8 @@ settings = get_settings()
 
 @dataclass
 class RedditPost:
-    """Reddit submission/post data structure with enhanced analysis."""
+    """
+Reddit submission/post data structure with enhanced analysis."""
     post_id: str
     title: str
     selftext: Optional[str]
@@ -107,7 +109,8 @@ class RedditPost:
 
 @dataclass
 class RedditComment:
-    """Reddit comment data structure."""
+    """
+Reddit comment data structure."""
     comment_id: str
     body: str
     created_utc: datetime
@@ -132,7 +135,8 @@ class RedditComment:
 
 @dataclass
 class RedditSubreddit:
-    """Reddit subreddit data structure."""
+    """
+Reddit subreddit data structure."""
     subreddit_id: str
     display_name: str
     display_name_prefixed: str
@@ -161,7 +165,8 @@ class RedditSubreddit:
 
 @dataclass
 class RedditUser:
-    """Reddit user (Redditor) data structure."""
+    """
+Reddit user (Redditor) data structure."""
     user_id: str
     name: str
     created_utc: datetime
@@ -241,11 +246,13 @@ class RedditCrawler:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close()
         
     async def initialize(self):
-        """Initialize the crawler and Reddit client."""
+        """
+Initialize the crawler and Reddit client."""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
@@ -613,7 +620,8 @@ class RedditCrawler:
         )
     
     async def _analyze_subreddit(self, subreddit) -> RedditSubreddit:
-        """Perform comprehensive subreddit analysis."""
+        """
+Perform comprehensive subreddit analysis."""
         return RedditSubreddit(
             subreddit_id=subreddit.id,
             display_name=subreddit.display_name,
@@ -630,7 +638,8 @@ class RedditCrawler:
         )
     
     def _calculate_viral_score(self, post: RedditPost) -> float:
-        """Calculate viral score for a post."""
+        """
+Calculate viral score for a post."""
         # Viral score based on Reddit-specific metrics
         age_hours = (datetime.utcnow() - post.created_utc).total_seconds() / 3600
         age_factor = max(1, age_hours)
@@ -647,11 +656,13 @@ class RedditCrawler:
         return min(viral_score, 100.0)  # Cap at 100
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between content fingerprints."""
+        """
+Calculate similarity between content fingerprints."""
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
-        """Get crawler statistics and status."""
+        """
+Get crawler statistics and status."""
         return {
             'platform': 'reddit',
             'authenticated': bool(self.username),
@@ -736,7 +747,8 @@ class RedditPost(BaseModel):
 
 
 class RedditComment(BaseModel):
-    """Reddit Comment data model"""
+    """
+Reddit Comment data model"""
     comment_id: str
     body: str
     author: str
@@ -755,7 +767,8 @@ class RedditComment(BaseModel):
 
 
 class RedditSubreddit(BaseModel):
-    """Reddit Subreddit data model"""
+    """
+Reddit Subreddit data model"""
     subreddit_name: str
     display_name: str
     title: str
@@ -1523,7 +1536,8 @@ class RedditCrawler(BaseCrawler):
         protected_content: Dict,
         post: RedditPost
     ) -> float:
-        """Calculate similarity between protected content and Reddit post"""
+        """
+Calculate similarity between protected content and Reddit post"""
         from difflib import SequenceMatcher
         
         similarity_scores = []
@@ -1549,7 +1563,8 @@ class RedditCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _calculate_virality_score(self, post: RedditPost) -> float:
-        """Calculate post virality score"""
+        """
+Calculate post virality score"""
         post_age_hours = (datetime.utcnow() - post.created_utc).total_seconds() / 3600
         if post_age_hours == 0:
             post_age_hours = 1
@@ -1566,7 +1581,8 @@ class RedditCrawler(BaseCrawler):
         return min(virality_score, 10000)  # Cap at 10000
     
     def _calculate_virality_score_from_data(self, post_data: Dict) -> float:
-        """Calculate virality score from raw post data"""
+        """
+Calculate virality score from raw post data"""
         created_utc = post_data.get('created_utc', 0)
         post_age_hours = (datetime.utcnow().timestamp() - created_utc) / 3600
         if post_age_hours == 0:
@@ -1586,7 +1602,8 @@ class RedditCrawler(BaseCrawler):
         return min(virality_score, 10000)
     
     async def _predict_peak_activity(self, post: RedditPost) -> str:
-        """Predict when post will reach peak activity"""
+        """
+Predict when post will reach peak activity"""
         post_age_hours = (datetime.utcnow() - post.created_utc).total_seconds() / 3600
         
         if post_age_hours < 2:
@@ -1626,7 +1643,8 @@ class RedditCrawler(BaseCrawler):
         }
     
     def _assess_discussion_quality(self, comments: List[RedditComment]) -> str:
-        """Assess quality of discussion in comments"""
+        """
+Assess quality of discussion in comments"""
         if not comments:
             return 'no_discussion'
         
@@ -1658,7 +1676,8 @@ class RedditCrawler(BaseCrawler):
             return 'low_quality'
     
     def _categorize_performance(self, post: RedditPost) -> str:
-        """Categorize post performance level"""
+        """
+Categorize post performance level"""
         if post.score > 10000:
             return "viral"
         elif post.score > 1000:
@@ -1689,7 +1708,8 @@ class RedditCrawler(BaseCrawler):
         }
     
     async def _analyze_popular_flairs(self, posts: List[RedditPost]) -> Dict[str, int]:
-        """Analyze popular flairs in posts"""
+        """
+Analyze popular flairs in posts"""
         flair_counts = {}
         
         for post in posts:
@@ -1699,7 +1719,8 @@ class RedditCrawler(BaseCrawler):
         return dict(sorted(flair_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_engagement_distribution(self, posts: List[RedditPost]) -> Dict[str, Any]:
-        """Analyze engagement distribution across posts"""
+        """
+Analyze engagement distribution across posts"""
         if not posts:
             return {}
         
@@ -1722,7 +1743,8 @@ class RedditCrawler(BaseCrawler):
         }
     
     async def _analyze_content_types(self, posts: List[RedditPost]) -> Dict[str, int]:
-        """Analyze distribution of content types"""
+        """
+Analyze distribution of content types"""
         type_counts = {
             'text_posts': 0,
             'image_posts': 0,
@@ -1746,7 +1768,8 @@ class RedditCrawler(BaseCrawler):
         return type_counts
     
     async def _analyze_user_activity(self, posts: List[RedditPost]) -> Dict[str, Any]:
-        """Analyze user activity patterns"""
+        """
+Analyze user activity patterns"""
         authors = [p.author for p in posts if p.author != '[deleted]']
         unique_authors = set(authors)
         

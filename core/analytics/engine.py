@@ -4,7 +4,7 @@ Central orchestration engine for all analytics operations with advanced performa
 monitoring, business intelligence, and real-time analytics capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -23,6 +23,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Callable
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMode(Enum):
-    """Analytics operation modes"""
+    """
+Analytics operation modes"""
+
     REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -54,6 +57,7 @@ class AnalyticsMode(Enum):
 
 class PerformanceLevel(Enum):
     """Performance optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -77,7 +81,8 @@ class AnalyticsConfig:
 
 @dataclass
 class AnalyticsMetrics:
-    """Analytics engine performance metrics"""
+    """
+Analytics engine performance metrics"""
     timestamp: datetime = field(default_factory=datetime.now)
     total_events_processed: int = 0
     processing_rate_per_second: float = 0.0
@@ -138,7 +143,8 @@ class AnalyticsEngine:
         self.cache = {} if self.config.cache_enabled else None
         
     async def start(self) -> None:
-        """Start the analytics engine"""
+        """
+Start the analytics engine"""
         try:
             self.logger.info("Starting Analytics Engine...")
             
@@ -360,7 +366,8 @@ class AnalyticsEngine:
                 await component.initialize()
     
     async def _shutdown_components(self) -> None:
-        """Shutdown all analytics components"""
+        """
+Shutdown all analytics components"""
         components = [
             self.metrics_collector,
             self.business_collector,
@@ -384,7 +391,8 @@ class AnalyticsEngine:
                 await component.shutdown()
     
     async def _validate_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate analytics event"""
+        """
+Validate analytics event"""
         required_fields = ['type', 'timestamp']
         
         for field in required_fields:
@@ -407,7 +415,8 @@ class AnalyticsEngine:
             return await self.analytics_processor.process_generic_event(event)
     
     async def _realtime_processor(self) -> None:
-        """Process real-time analytics events"""
+        """
+Process real-time analytics events"""
         while self.is_running:
             try:
                 # Process events from queue with timeout
@@ -473,12 +482,14 @@ class AnalyticsEngine:
             )
     
     async def _update_error_metrics(self) -> None:
-        """Update error rate metrics"""
+        """
+Update error rate metrics"""
         # Implement error rate calculation
         pass
     
     async def _update_performance_metrics(self) -> None:
-        """Update overall performance metrics"""
+        """
+Update overall performance metrics"""
         self.performance_metrics.timestamp = datetime.now()
         self.performance_metrics.realtime_connections = len(
             getattr(self.realtime_dashboard, 'active_connections', [])
@@ -490,7 +501,8 @@ class AnalyticsEngine:
             pass
     
     async def _get_system_metrics(self) -> Dict[str, Any]:
-        """Get system-level metrics"""
+        """
+Get system-level metrics"""
         import psutil
         
         return {
@@ -505,7 +517,8 @@ class AnalyticsEngine:
         bi_insights: Dict[str, Any], 
         performance_report: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate executive summary for reports"""
+        """
+Generate executive summary for reports"""
         return {
             'key_insights': bi_insights.get('key_insights', []),
             'performance_highlights': performance_report.get('highlights', []),
@@ -514,6 +527,7 @@ class AnalyticsEngine:
         }
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""
+        """
+Generate unique report ID"""
         import uuid
         return f"report_{uuid.uuid4().hex[:8]}_{int(datetime.now().timestamp())}"

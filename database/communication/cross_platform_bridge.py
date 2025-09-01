@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -67,6 +70,7 @@ class PlatformType(Enum):
 
 class BridgeStatus(Enum):
     """Communication bridge status"""
+
     INACTIVE = "inactive"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -81,6 +85,7 @@ class BridgeStatus(Enum):
 
 class MessageDirection(Enum):
     """Message flow direction"""
+
     INBOUND = "inbound"
     OUTBOUND = "outbound"
     BIDIRECTIONAL = "bidirectional"
@@ -88,6 +93,7 @@ class MessageDirection(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     TEXT = "text"
     RICH_TEXT = "rich_text"
     MARKDOWN = "markdown"
@@ -117,7 +123,8 @@ class PlatformCredentials:
 
 @dataclass
 class CrossPlatformMessage:
-    """Cross-platform message structure"""
+    """
+Cross-platform message structure"""
     message_id: str
     source_platform: PlatformType
     target_platforms: List[PlatformType]
@@ -135,7 +142,8 @@ class CrossPlatformMessage:
 
 
 class PlatformIntegration(Base):
-    """Database model for platform integrations"""
+    """
+Database model for platform integrations"""
     __tablename__ = "platform_integrations"
     __table_args__ = (
         Index('idx_platform_user_id', 'user_id'),
@@ -206,7 +214,8 @@ class CrossPlatformBridge:
         self.message_queue = asyncio.Queue()
         
     async def initialize_platform_bridges(self) -> bool:
-        """Initialize all platform communication bridges"""
+        """
+Initialize all platform communication bridges"""
         try:
             # Initialize platform adapters
             await self._initialize_platform_adapters()
@@ -658,7 +667,8 @@ class PlatformAdapter:
         credentials: PlatformCredentials,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deliver message to platform"""
+        """
+Deliver message to platform"""
         logger.info(f"Delivering message to {self.platform.value} platform")
         
         # Basic implementation for cross-platform message delivery

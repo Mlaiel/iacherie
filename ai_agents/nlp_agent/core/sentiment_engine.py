@@ -7,6 +7,7 @@ for comprehensive emotion detection and sentiment classification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -33,6 +34,7 @@ logger = logging.getLogger(__name__)
 
 class SentimentLabel(Enum):
     """Sentiment classification labels"""
+
     POSITIVE = "positive"
     NEGATIVE = "negative" 
     NEUTRAL = "neutral"
@@ -40,6 +42,7 @@ class SentimentLabel(Enum):
 
 class EmotionLabel(Enum):
     """Emotion classification labels"""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -59,7 +62,8 @@ class SentimentScore:
 
 @dataclass
 class EmotionScore:
-    """Individual emotion score"""
+    """
+Individual emotion score"""
     emotion: str
     score: float
     intensity: str = "low"  # low, medium, high
@@ -87,7 +91,8 @@ class SentimentEngine:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Sentiment Engine"""
+        """
+Initialize Sentiment Engine"""
         self.config = config or default_config
         self.models = {}
         self.pipelines = {}
@@ -95,7 +100,8 @@ class SentimentEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize sentiment and emotion analysis models"""
+        """
+Initialize sentiment and emotion analysis models"""
         if not TRANSFORMERS_AVAILABLE:
             logger.warning("Transformers not available. Using fallback sentiment analysis.")
             return
@@ -385,7 +391,8 @@ class SentimentEngine:
         ]
     
     async def _analyze_emotions(self, text: str, result: SentimentResult):
-        """Analyze emotions in text"""
+        """
+Analyze emotions in text"""
         try:
             emotion_pipeline = self.pipelines["emotion"]
             
@@ -538,7 +545,8 @@ class SentimentEngine:
         return distribution
     
     def _calculate_trend_direction(self, polarities: List[float]) -> str:
-        """Calculate overall trend direction"""
+        """
+Calculate overall trend direction"""
         if len(polarities) < 2:
             return "insufficient_data"
         

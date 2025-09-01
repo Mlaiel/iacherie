@@ -15,6 +15,7 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import time
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class RetrievalStrategy(Enum):
-    """Content retrieval strategies"""
+    """
+Content retrieval strategies"""
+
     IMMEDIATE = "immediate"
     BACKGROUND = "background"
     PREDICTIVE = "predictive"
@@ -46,6 +49,7 @@ class RetrievalStrategy(Enum):
 
 class RetrievalPriority(Enum):
     """Retrieval priority levels"""
+
     URGENT = 1
     HIGH = 2
     NORMAL = 3
@@ -54,7 +58,9 @@ class RetrievalPriority(Enum):
 
 
 class CacheStrategy(Enum):
-    """Cache management strategies"""
+    """
+Cache management strategies"""
+
     LRU = "lru"
     LFU = "lfu"
     ADAPTIVE = "adaptive"
@@ -133,7 +139,8 @@ class RetrievalPerformance:
 
 @dataclass
 class CacheEntry:
-    """Cache entry for retrieved content"""
+    """
+Cache entry for retrieved content"""
     cache_key: str
     archive_id: str
     content_data: bytes
@@ -156,7 +163,8 @@ class CacheEntry:
     ttl_seconds: Optional[int] = None
     
     def update_access(self):
-        """Update access statistics"""
+        """
+Update access statistics"""
         self.access_count += 1
         self.last_accessed = datetime.utcnow()
         
@@ -166,7 +174,8 @@ class CacheEntry:
 
 
 class RetrievalQueue:
-    """Priority queue for retrieval requests"""
+    """
+Priority queue for retrieval requests"""
     
     def __init__(self):
         self.heap: List[Tuple[int, datetime, RetrievalRequest]] = []
@@ -174,7 +183,8 @@ class RetrievalQueue:
         self._counter = 0
     
     def add_request(self, request: RetrievalRequest):
-        """Add request to queue"""
+        """
+Add request to queue"""
         priority_value = request.priority.value
         timestamp = request.created_at
         
@@ -183,7 +193,8 @@ class RetrievalQueue:
         self._counter += 1
     
     def get_next_request(self) -> Optional[RetrievalRequest]:
-        """Get next request from queue"""
+        """
+Get next request from queue"""
         while self.heap:
             _, _, request = heapq.heappop(self.heap)
             
@@ -194,23 +205,27 @@ class RetrievalQueue:
         return None
     
     def remove_request(self, request_id: str) -> bool:
-        """Remove request from queue"""
+        """
+Remove request from queue"""
         if request_id in self.request_lookup:
             del self.request_lookup[request_id]
             return True
         return False
     
     def get_queue_size(self) -> int:
-        """Get current queue size"""
+        """
+Get current queue size"""
         return len(self.request_lookup)
     
     def get_pending_requests(self) -> List[RetrievalRequest]:
-        """Get all pending requests"""
+        """
+Get all pending requests"""
         return list(self.request_lookup.values())
 
 
 class ContentCache:
-    """High-performance content cache with multiple strategies"""
+    """
+High-performance content cache with multiple strategies"""
     
     def __init__(self, max_size_bytes: int = 1024**3, strategy: CacheStrategy = CacheStrategy.ADAPTIVE):
         self.max_size_bytes = max_size_bytes
@@ -345,7 +360,8 @@ class ContentCache:
             await self._evict_entry()
     
     async def _evict_entry(self):
-        """Evict entry based on strategy"""
+        """
+Evict entry based on strategy"""
         if self.strategy == CacheStrategy.LRU:
             await self._evict_lru()
         elif self.strategy == CacheStrategy.LFU:
@@ -359,19 +375,22 @@ class ContentCache:
         self.eviction_count += 1
     
     async def _evict_lru(self):
-        """Evict least recently used entry"""
+        """
+Evict least recently used entry"""
         if self.access_order:
             cache_key = self.access_order.pop(0)
             await self.remove(cache_key)
     
     async def _evict_lfu(self):
-        """Evict least frequently used entry"""
+        """
+Evict least frequently used entry"""
         if self.frequency_heap:
             _, cache_key = heapq.heappop(self.frequency_heap)
             await self.remove(cache_key)
     
     async def _evict_adaptive(self):
-        """Evict using adaptive strategy"""
+        """
+Evict using adaptive strategy"""
         # Simple adaptive: combine frequency and recency
         if not self.cache:
             return
@@ -392,7 +411,8 @@ class ContentCache:
             await self.remove(worst_key)
     
     async def _update_access_tracking(self, cache_key: str):
-        """Update access tracking for strategies"""
+        """
+Update access tracking for strategies"""
         if self.strategy == CacheStrategy.LRU:
             # Move to end of access order
             if cache_key in self.access_order:
@@ -405,42 +425,50 @@ class ContentCache:
             heapq.heappush(self.frequency_heap, (entry.frequency_score, cache_key))
     
     async def _add_to_tracking(self, cache_key: str):
-        """Add new entry to tracking structures"""
+        """
+Add new entry to tracking structures"""
         if self.strategy == CacheStrategy.LRU:
             self.access_order.append(cache_key)
         elif self.strategy == CacheStrategy.LFU:
             heapq.heappush(self.frequency_heap, (1.0, cache_key))
     
     async def _remove_from_tracking(self, cache_key: str):
-        """Remove entry from tracking structures"""
+        """
+Remove entry from tracking structures"""
         if self.strategy == CacheStrategy.LRU and cache_key in self.access_order:
             self.access_order.remove(cache_key)
 
 
 class TierRetrievalManager(ABC):
-    """Abstract base for tier-specific retrieval"""
+    """
+Abstract base for tier-specific retrieval"""
     
     @abstractmethod
     async def retrieve_content(self, entry: ArchiveEntry, request: RetrievalRequest) -> bytes:
-        """Retrieve content from storage tier"""
+        """
+Retrieve content from storage tier"""
         pass
     
     @abstractmethod
     async def get_retrieval_cost(self, entry: ArchiveEntry, size_bytes: int) -> float:
-        """Calculate retrieval cost"""
+        """
+Calculate retrieval cost"""
         pass
     
     @abstractmethod
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
-        """Estimate retrieval time in seconds"""
+        """
+Estimate retrieval time in seconds"""
         pass
 
 
 class HotTierRetrievalManager(TierRetrievalManager):
-    """Hot tier retrieval manager"""
+    """
+Hot tier retrieval manager"""
     
     async def retrieve_content(self, entry: ArchiveEntry, request: RetrievalRequest) -> bytes:
-        """Retrieve from hot storage"""
+        """
+Retrieve from hot storage"""
         # Simulate hot storage retrieval (immediate)
         logger.info(f"Retrieving from hot storage: {entry.archive_id}")
         await asyncio.sleep(0.01)  # Very fast retrieval
@@ -453,15 +481,18 @@ class HotTierRetrievalManager(TierRetrievalManager):
         return 0.0
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
-        """Hot storage retrieval time"""
+        """
+Hot storage retrieval time"""
         return 0.01  # 10ms
 
 
 class ColdTierRetrievalManager(TierRetrievalManager):
-    """Cold tier retrieval manager"""
+    """
+Cold tier retrieval manager"""
     
     async def retrieve_content(self, entry: ArchiveEntry, request: RetrievalRequest) -> bytes:
-        """Retrieve from cold storage"""
+        """
+Retrieve from cold storage"""
         logger.info(f"Retrieving from cold storage: {entry.archive_id}")
         await asyncio.sleep(0.1)  # Moderate retrieval time
         
@@ -472,15 +503,18 @@ class ColdTierRetrievalManager(TierRetrievalManager):
         return size_bytes * 0.01 / (1024**3)  # $0.01/GB
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
-        """Cold storage retrieval time"""
+        """
+Cold storage retrieval time"""
         return 0.1 + (size_bytes / (1024**2)) * 0.01  # Base + size factor
 
 
 class FrozenTierRetrievalManager(TierRetrievalManager):
-    """Frozen tier retrieval manager"""
+    """
+Frozen tier retrieval manager"""
     
     async def retrieve_content(self, entry: ArchiveEntry, request: RetrievalRequest) -> bytes:
-        """Retrieve from frozen storage"""
+        """
+Retrieve from frozen storage"""
         logger.info(f"Retrieving from frozen storage: {entry.archive_id}")
         await asyncio.sleep(1.0)  # Slow retrieval
         
@@ -491,15 +525,18 @@ class FrozenTierRetrievalManager(TierRetrievalManager):
         return size_bytes * 0.03 / (1024**3)  # $0.03/GB
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
-        """Frozen storage retrieval time"""
+        """
+Frozen storage retrieval time"""
         return 1.0 + (size_bytes / (1024**2)) * 0.1  # Base + size factor
 
 
 class DeepArchiveTierRetrievalManager(TierRetrievalManager):
-    """Deep archive tier retrieval manager"""
+    """
+Deep archive tier retrieval manager"""
     
     async def retrieve_content(self, entry: ArchiveEntry, request: RetrievalRequest) -> bytes:
-        """Retrieve from deep archive storage"""
+        """
+Retrieve from deep archive storage"""
         logger.info(f"Retrieving from deep archive: {entry.archive_id}")
         await asyncio.sleep(5.0)  # Very slow retrieval
         
@@ -510,7 +547,8 @@ class DeepArchiveTierRetrievalManager(TierRetrievalManager):
         return size_bytes * 0.10 / (1024**3)  # $0.10/GB
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
-        """Deep archive retrieval time"""
+        """
+Deep archive retrieval time"""
         return 5.0 + (size_bytes / (1024**2)) * 1.0  # Base + size factor
 
 

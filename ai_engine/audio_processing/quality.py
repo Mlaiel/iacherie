@@ -4,8 +4,9 @@ Advanced quality assessment system for comprehensive audio evaluation.
 Includes perceptual quality metrics, technical analysis, and optimization recommendations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityAspect(Enum):
-    """Different aspects of audio quality"""
+    """
+Different aspects of audio quality"""
+
     OVERALL = "overall"
     CLARITY = "clarity"
     LOUDNESS = "loudness"
@@ -42,6 +45,7 @@ class QualityAspect(Enum):
 
 class QualityGrade(Enum):
     """Quality grades"""
+
     EXCELLENT = "excellent"     # 9.0-10.0
     VERY_GOOD = "very_good"    # 8.0-8.9
     GOOD = "good"              # 7.0-7.9
@@ -63,7 +67,8 @@ class QualityMetric:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality assessment report"""
+    """
+Comprehensive quality assessment report"""
     overall_score: float
     overall_grade: QualityGrade
     metrics: Dict[QualityAspect, QualityMetric]
@@ -105,7 +110,8 @@ class PerceptualQualityAnalyzer:
         return bark_edges
     
     def _init_masking_thresholds(self) -> Dict[str, float]:
-        """Initialize masking threshold parameters"""
+        """
+Initialize masking threshold parameters"""
         return {
             'tonality_threshold': 0.5,
             'simultaneous_masking_slope': 15.0,  # dB/Bark
@@ -116,7 +122,8 @@ class PerceptualQualityAnalyzer:
     async def analyze_perceptual_quality(self,
                                        audio_data: np.ndarray,
                                        sample_rate: int) -> Dict[str, float]:
-        """Analyze perceptual quality aspects"""
+        """
+Analyze perceptual quality aspects"""
         try:
             metrics = {}
             
@@ -215,7 +222,8 @@ class PerceptualQualityAnalyzer:
     async def _analyze_frequency_balance(self,
                                        magnitude: np.ndarray,
                                        sample_rate: int) -> float:
-        """Analyze frequency balance across spectrum"""
+        """
+Analyze frequency balance across spectrum"""
         try:
             # Define frequency bands (bass, mids, treble)
             freqs = librosa.fft_frequencies(sr=sample_rate, n_fft=magnitude.shape[0]*2-1)
@@ -272,7 +280,8 @@ class PerceptualQualityAnalyzer:
     async def _analyze_spectral_clarity(self,
                                       magnitude: np.ndarray,
                                       sample_rate: int) -> float:
-        """Analyze spectral clarity and definition"""
+        """
+Analyze spectral clarity and definition"""
         try:
             # Calculate spectral centroid variation
             spectral_centroid = []
@@ -614,7 +623,8 @@ class TechnicalQualityAnalyzer:
         return bands
     
     async def _analyze_peak_rms_ratio(self, audio_data: np.ndarray) -> float:
-        """Analyze peak-to-RMS ratio"""
+        """
+Analyze peak-to-RMS ratio"""
         try:
             peak_level = np.max(np.abs(audio_data))
             rms_level = np.sqrt(np.mean(audio_data ** 2))
@@ -996,7 +1006,8 @@ class AudioQualityAssessor:
             return 5.0  # Default neutral score
     
     def _score_to_grade(self, score: float) -> QualityGrade:
-        """Convert numeric score to quality grade"""
+        """
+Convert numeric score to quality grade"""
         if score >= 9.0:
             return QualityGrade.EXCELLENT
         elif score >= 8.0:
@@ -1011,7 +1022,8 @@ class AudioQualityAssessor:
             return QualityGrade.VERY_POOR
     
     def _get_clarity_recommendations(self, score: float, metrics: Dict[str, float]) -> List[str]:
-        """Get recommendations for improving clarity"""
+        """
+Get recommendations for improving clarity"""
         recommendations = []
         
         if score < 7.0:
@@ -1175,7 +1187,8 @@ class AudioQualityAssessor:
                             audio1: np.ndarray,
                             audio2: np.ndarray,
                             sample_rate: int) -> Dict[str, Any]:
-        """Compare quality between two audio files"""
+        """
+Compare quality between two audio files"""
         try:
             # Assess both files
             report1 = await self.assess_quality(audio1, sample_rate)

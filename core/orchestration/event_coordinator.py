@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class EventType(Enum):
-    """Event type classification."""
+    """
+Event type classification."""
+
     SYSTEM = "system"
     BUSINESS = "business"
     TECHNICAL = "technical"
@@ -37,6 +40,7 @@ class EventType(Enum):
 
 class EventPriority(Enum):
     """Event priority levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -46,6 +50,7 @@ class EventPriority(Enum):
 
 class EventStatus(Enum):
     """Event processing status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -56,6 +61,7 @@ class EventStatus(Enum):
 
 class CoordinationPattern(Enum):
     """Event coordination patterns."""
+
     CHOREOGRAPHY = "choreography"
     ORCHESTRATION = "orchestration"
     SAGA = "saga"
@@ -81,7 +87,8 @@ class EventDefinition:
 
 @dataclass
 class EventInstance:
-    """Individual event instance."""
+    """
+Individual event instance."""
     instance_id: str
     event_id: str
     payload: Dict[str, Any]
@@ -99,7 +106,8 @@ class EventInstance:
 
 @dataclass
 class EventHandler:
-    """Event handler configuration."""
+    """
+Event handler configuration."""
     handler_id: str
     name: str
     event_types: List[str]
@@ -113,7 +121,8 @@ class EventHandler:
 
 @dataclass
 class EventFlow:
-    """Event flow coordination definition."""
+    """
+Event flow coordination definition."""
     flow_id: str
     name: str
     pattern: CoordinationPattern
@@ -127,7 +136,8 @@ class EventFlow:
 
 @dataclass
 class FlowExecution:
-    """Event flow execution instance."""
+    """
+Event flow execution instance."""
     execution_id: str
     flow_id: str
     trigger_event: EventInstance
@@ -485,13 +495,15 @@ class EventCoordinator:
         return matching_handlers
     
     async def _check_flow_triggers(self, event: EventInstance) -> None:
-        """Check if event triggers any flows."""
+        """
+Check if event triggers any flows."""
         for flow in self.event_flows.values():
             if event.event_id in flow.trigger_events:
                 await self._start_flow_execution(flow, event)
     
     async def _start_flow_execution(self, flow: EventFlow, trigger_event: EventInstance) -> str:
-        """Start flow execution."""
+        """
+Start flow execution."""
         execution_id = str(uuid.uuid4())
         
         execution = FlowExecution(
@@ -519,7 +531,8 @@ class EventCoordinator:
         return execution_id
     
     async def _execute_flow_async(self, execution: FlowExecution, flow: EventFlow) -> None:
-        """Execute flow steps asynchronously."""
+        """
+Execute flow steps asynchronously."""
         try:
             for step_index, step in enumerate(flow.steps):
                 execution.current_step = step_index
@@ -638,7 +651,8 @@ class EventCoordinator:
         correlation.events.append(event.instance_id)
     
     async def _check_circuit_breaker(self, handler_id: str) -> bool:
-        """Check circuit breaker state."""
+        """
+Check circuit breaker state."""
         cb = self.circuit_breakers.get(handler_id, {})
         
         if cb.get('state') == 'open':
@@ -655,7 +669,8 @@ class EventCoordinator:
         return True
     
     async def _record_circuit_breaker_failure(self, handler_id: str) -> None:
-        """Record circuit breaker failure."""
+        """
+Record circuit breaker failure."""
         cb = self.circuit_breakers.get(handler_id, {})
         
         cb['failure_count'] = cb.get('failure_count', 0) + 1
@@ -673,14 +688,16 @@ class EventCoordinator:
             })
     
     async def _reset_circuit_breaker(self, handler_id: str) -> None:
-        """Reset circuit breaker after successful execution."""
+        """
+Reset circuit breaker after successful execution."""
         cb = self.circuit_breakers.get(handler_id, {})
         cb['state'] = 'closed'
         cb['failure_count'] = 0
         cb['last_failure_time'] = None
     
     async def _check_handler_conditions(self, handler: EventHandler, event: EventInstance) -> bool:
-        """Check if handler conditions are met."""
+        """
+Check if handler conditions are met."""
         conditions = handler.conditions
         
         if not conditions:
@@ -695,7 +712,8 @@ class EventCoordinator:
         return True
     
     async def _evaluate_condition(self, condition: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Evaluate flow condition."""
+        """
+Evaluate flow condition."""
         # Simple condition evaluation
         condition_type = condition.get('type', 'equals')
         field = condition.get('field')
@@ -716,7 +734,8 @@ class EventCoordinator:
         return True
     
     async def _correlation_cleanup_task(self) -> None:
-        """Background task to clean up old correlations."""
+        """
+Background task to clean up old correlations."""
         while True:
             try:
                 current_time = datetime.now()
@@ -796,23 +815,28 @@ class EventCoordinator:
                 self.coordinator_stats['average_processing_time'] = event.processing_time
     
     async def _validate_event_definition(self, definition: EventDefinition) -> bool:
-        """Validate event definition."""
+        """
+Validate event definition."""
         return bool(definition.event_id and definition.name)
     
     async def _validate_event_handler(self, handler: EventHandler) -> bool:
-        """Validate event handler."""
+        """
+Validate event handler."""
         return bool(handler.handler_id and handler.name and handler.event_types and handler.handler_function)
     
     async def _validate_event_flow(self, flow: EventFlow) -> bool:
-        """Validate event flow."""
+        """
+Validate event flow."""
         return bool(flow.flow_id and flow.name and flow.trigger_events and flow.steps)
     
     async def _validate_event_instance(self, event: EventInstance) -> bool:
-        """Validate event instance."""
+        """
+Validate event instance."""
         return bool(event.instance_id and event.event_id and event.source)
     
     async def get_event_status(self, instance_id: str) -> Optional[Dict[str, Any]]:
-        """Get event processing status."""
+        """
+Get event processing status."""
         # Check pending events
         if instance_id in self.pending_events:
             event = self.pending_events[instance_id]
@@ -831,7 +855,8 @@ class EventCoordinator:
         return None
     
     async def get_flow_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get flow execution status."""
+        """
+Get flow execution status."""
         # Check active flows
         if execution_id in self.active_flows:
             execution = self.active_flows[execution_id]
@@ -845,7 +870,8 @@ class EventCoordinator:
         return None
     
     async def get_correlation_info(self, correlation_id: str) -> Optional[Dict[str, Any]]:
-        """Get correlation information."""
+        """
+Get correlation information."""
         correlation = self.correlations.get(correlation_id)
         if not correlation:
             return None
@@ -862,7 +888,8 @@ class EventCoordinator:
         }
     
     def _event_to_status_dict(self, event: EventInstance) -> Dict[str, Any]:
-        """Convert event to status dictionary."""
+        """
+Convert event to status dictionary."""
         return {
             'instance_id': event.instance_id,
             'event_id': event.event_id,
@@ -877,7 +904,8 @@ class EventCoordinator:
         }
     
     def _execution_to_status_dict(self, execution: FlowExecution) -> Dict[str, Any]:
-        """Convert execution to status dictionary."""
+        """
+Convert execution to status dictionary."""
         return {
             'execution_id': execution.execution_id,
             'flow_id': execution.flow_id,
@@ -892,7 +920,8 @@ class EventCoordinator:
         }
     
     async def get_coordinator_stats(self) -> Dict[str, Any]:
-        """Get event coordinator statistics."""
+        """
+Get event coordinator statistics."""
         return {
             **self.coordinator_stats,
             'pending_events': len(self.pending_events),

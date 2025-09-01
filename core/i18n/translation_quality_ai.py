@@ -8,7 +8,7 @@ Technologies: Python, Machine Learning, NLP, Quality Metrics, Neural Networks
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Translation input → AI analysis → Quality scoring → Error detection → 
 Improvement suggestions → Cultural accuracy → Fluency assessment → Final rating
 """
+
 import logging
 import asyncio
 import re
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Translation quality metrics"""
+    """
+Translation quality metrics"""
+
     FLUENCY = "fluency"                    # Natural flow and readability
     ACCURACY = "accuracy"                  # Semantic correctness
     CONSISTENCY = "consistency"            # Terminology consistency
@@ -46,6 +49,7 @@ class QualityMetric(Enum):
 
 class ErrorType(Enum):
     """Types of translation errors"""
+
     MISTRANSLATION = "mistranslation"      # Incorrect meaning
     OMISSION = "omission"                  # Missing content
     ADDITION = "addition"                  # Unnecessary content
@@ -60,6 +64,7 @@ class ErrorType(Enum):
 
 class Severity(Enum):
     """Error severity levels"""
+
     CRITICAL = "critical"    # Major meaning change
     MAJOR = "major"         # Significant quality impact
     MINOR = "minor"         # Small quality impact
@@ -68,6 +73,7 @@ class Severity(Enum):
 
 class AIModel(Enum):
     """AI models for quality assessment"""
+
     BERT_MULTILINGUAL = "bert_multilingual"
     XLMR_LARGE = "xlm_roberta_large"
     MBART = "mbart_large"
@@ -94,7 +100,8 @@ class QualityError:
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics"""
+    """
+Comprehensive quality metrics"""
     overall_score: float  # 0.0 - 1.0
     fluency_score: float
     accuracy_score: float
@@ -113,7 +120,8 @@ class QualityMetrics:
 
 @dataclass
 class AIQualityAssessment:
-    """AI-powered quality assessment result"""
+    """
+AI-powered quality assessment result"""
     assessment_id: str
     source_text: str
     target_text: str
@@ -132,7 +140,8 @@ class AIQualityAssessment:
 
 
 class TranslationQualityAI:
-    """Advanced AI-powered translation quality assessment engine"""
+    """
+Advanced AI-powered translation quality assessment engine"""
     
     def __init__(self):
         self.ai_models: Dict[AIModel, Dict[str, Any]] = {}
@@ -579,7 +588,8 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_accuracy(self, source: str, target: str, source_lang: str, target_lang: str) -> float:
-        """Assess semantic accuracy"""
+        """
+Assess semantic accuracy"""
         # Simplified accuracy assessment based on length and structure similarity
         source_len = len(source.split())
         target_len = len(target.split())
@@ -598,7 +608,8 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, accuracy_score))
     
     async def _assess_consistency(self, source: str, target: str) -> float:
-        """Assess terminology consistency"""
+        """
+Assess terminology consistency"""
         # Simplified consistency check
         base_score = 0.85
         
@@ -609,7 +620,8 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_completeness(self, source: str, target: str) -> float:
-        """Assess translation completeness"""
+        """
+Assess translation completeness"""
         # Simplified completeness check based on content preservation
         source_words = len(source.split())
         target_words = len(target.split())
@@ -628,7 +640,8 @@ class TranslationQualityAI:
             return 0.6
     
     async def _assess_cultural_appropriateness(self, source: str, target: str, target_lang: str) -> float:
-        """Assess cultural appropriateness"""
+        """
+Assess cultural appropriateness"""
         # Simplified cultural assessment
         base_score = 0.85
         
@@ -683,7 +696,8 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_tone_consistency(self, source: str, target: str) -> float:
-        """Assess tone consistency between source and target"""
+        """
+Assess tone consistency between source and target"""
         # Simplified tone assessment
         base_score = 0.85
         
@@ -725,7 +739,8 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_localization(self, text: str, target_lang: str) -> float:
-        """Assess localization quality"""
+        """
+Assess localization quality"""
         # Simplified localization assessment
         base_score = 0.8
         

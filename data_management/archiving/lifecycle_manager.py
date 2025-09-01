@@ -16,6 +16,7 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class LifecycleStage(Enum):
-    """Archive lifecycle stages"""
+    """
+Archive lifecycle stages"""
+
     ACTIVE = "active"
     TRANSITIONING = "transitioning"
     COLD = "cold"
@@ -44,6 +47,7 @@ class LifecycleStage(Enum):
 
 class TransitionTrigger(Enum):
     """Lifecycle transition triggers"""
+
     AGE_BASED = "age_based"
     ACCESS_BASED = "access_based"
     SIZE_BASED = "size_based"
@@ -87,7 +91,8 @@ class TransitionRule:
 
 @dataclass
 class LifecyclePolicy:
-    """Complete lifecycle management policy"""
+    """
+Complete lifecycle management policy"""
     policy_id: str
     name: str
     description: str
@@ -151,29 +156,35 @@ class LifecycleStageManager(ABC):
     
     @abstractmethod
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
-        """Check if transition to stage is possible"""
+        """
+Check if transition to stage is possible"""
         pass
     
     @abstractmethod
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
-        """Execute transition to target stage"""
+        """
+Execute transition to target stage"""
         pass
     
     @abstractmethod
     async def get_stage_cost(self, entry: ArchiveEntry) -> float:
-        """Calculate storage cost for this stage"""
+        """
+Calculate storage cost for this stage"""
         pass
 
 
 class ActiveStageManager(LifecycleStageManager):
-    """Manages active stage operations"""
+    """
+Manages active stage operations"""
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
-        """Active stage can transition to any other stage"""
+        """
+Active stage can transition to any other stage"""
         return stage in [LifecycleStage.COLD, LifecycleStage.FROZEN, LifecycleStage.DEEP_ARCHIVE]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
-        """Execute transition from active stage"""
+        """
+Execute transition from active stage"""
         logger.info(f"Transitioning archive {entry.archive_id} from ACTIVE to {target_stage}")
         
         # Update storage tier based on target stage
@@ -196,14 +207,17 @@ class ActiveStageManager(LifecycleStageManager):
 
 
 class ColdStageManager(LifecycleStageManager):
-    """Manages cold storage stage operations"""
+    """
+Manages cold storage stage operations"""
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
-        """Cold stage can transition to frozen or deep archive"""
+        """
+Cold stage can transition to frozen or deep archive"""
         return stage in [LifecycleStage.FROZEN, LifecycleStage.DEEP_ARCHIVE, LifecycleStage.ACTIVE]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
-        """Execute transition from cold stage"""
+        """
+Execute transition from cold stage"""
         logger.info(f"Transitioning archive {entry.archive_id} from COLD to {target_stage}")
         
         tier_mapping = {
@@ -225,14 +239,17 @@ class ColdStageManager(LifecycleStageManager):
 
 
 class FrozenStageManager(LifecycleStageManager):
-    """Manages frozen storage stage operations"""
+    """
+Manages frozen storage stage operations"""
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
-        """Frozen stage can transition to deep archive or back to cold/active"""
+        """
+Frozen stage can transition to deep archive or back to cold/active"""
         return stage in [LifecycleStage.DEEP_ARCHIVE, LifecycleStage.COLD, LifecycleStage.ACTIVE]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
-        """Execute transition from frozen stage"""
+        """
+Execute transition from frozen stage"""
         logger.info(f"Transitioning archive {entry.archive_id} from FROZEN to {target_stage}")
         
         tier_mapping = {
@@ -254,14 +271,17 @@ class FrozenStageManager(LifecycleStageManager):
 
 
 class DeepArchiveStageManager(LifecycleStageManager):
-    """Manages deep archive stage operations"""
+    """
+Manages deep archive stage operations"""
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
-        """Deep archive can transition back to any stage but with cost implications"""
+        """
+Deep archive can transition back to any stage but with cost implications"""
         return stage in [LifecycleStage.ACTIVE, LifecycleStage.COLD, LifecycleStage.FROZEN, LifecycleStage.EXPIRED]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
-        """Execute transition from deep archive stage"""
+        """
+Execute transition from deep archive stage"""
         logger.info(f"Transitioning archive {entry.archive_id} from DEEP_ARCHIVE to {target_stage}")
         
         if target_stage == LifecycleStage.EXPIRED:

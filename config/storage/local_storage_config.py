@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import shutil
 import stat
@@ -25,7 +26,8 @@ import json
 
 @dataclass
 class LocalDirectoryConfig:
-    """Local directory configuration for specific content types."""
+    """
+Local directory configuration for specific content types."""
     
     path: str
     permissions: int = 0o755
@@ -70,7 +72,8 @@ class LocalStorageConfig:
     max_storage_size_gb: float = 100.0
     
     def __post_init__(self):
-        """Initialize directory configurations if not provided."""
+        """
+Initialize directory configurations if not provided."""
         if self.directories is None:
             self.directories = self._get_default_directory_config()
         
@@ -78,7 +81,8 @@ class LocalStorageConfig:
         self._ensure_base_directories()
     
     def _get_default_directory_config(self) -> Dict[str, LocalDirectoryConfig]:
-        """Default directory configuration for different content types."""
+        """
+Default directory configuration for different content types."""
         env = os.getenv('ENVIRONMENT', 'development')
         
         return {
@@ -178,7 +182,8 @@ class LocalStorageConfig:
         }
     
     def _ensure_base_directories(self):
-        """Ensure all base directories exist with proper permissions."""
+        """
+Ensure all base directories exist with proper permissions."""
         for dir_config in self.directories.values():
             path = Path(dir_config.path)
             path.mkdir(parents=True, exist_ok=True)
@@ -187,7 +192,8 @@ class LocalStorageConfig:
             path.chmod(dir_config.permissions)
     
     def get_directory_path(self, content_type: str) -> str:
-        """Get directory path for specific content type."""
+        """
+Get directory path for specific content type."""
         # Map content types to directory keys
         content_mapping = {
             'audio': 'audio_files',
@@ -208,13 +214,15 @@ class LocalStorageConfig:
         return self.directories[dir_key].path
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
+        """
+Get list of supported content types."""
         return ['audio', 'video', 'image', 'document', 'model', 
                 'fingerprint', 'upload', 'processed', 'backup', 
                 'temp', 'log', 'cache']
     
     def validate_configuration(self) -> bool:
-        """Validate local storage configuration and accessibility."""
+        """
+Validate local storage configuration and accessibility."""
         try:
             for content_type, dir_config in self.directories.items():
                 path = Path(dir_config.path)
@@ -253,7 +261,8 @@ class LocalStorageConfig:
         return os.path.join(base_dir, filename)
     
     def calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate file checksum for integrity verification."""
+        """
+Calculate file checksum for integrity verification."""
         hash_func = hashlib.new(self.checksum_algorithm)
         
         with open(file_path, 'rb') as f:
@@ -274,7 +283,8 @@ class LocalStorageConfig:
         return total_size / (1024**3)  # Convert to GB
     
     def cleanup_old_files(self, content_type: str, force: bool = False):
-        """Clean up old files based on directory configuration."""
+        """
+Clean up old files based on directory configuration."""
         dir_config = self.directories.get(f"{content_type}_files")
         if not dir_config or (not dir_config.auto_cleanup and not force):
             return
@@ -327,7 +337,8 @@ class LocalStorageConfig:
         return stats
     
     def export_configuration(self) -> Dict:
-        """Export configuration to JSON-serializable format."""
+        """
+Export configuration to JSON-serializable format."""
         return {
             'base_path': self.base_path,
             'temp_path': self.temp_path,

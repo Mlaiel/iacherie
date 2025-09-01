@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class VectorDatabase(str, Enum):
-    """Supported vector database engines."""
+    """
+Supported vector database engines."""
+
     
     FAISS = "faiss"
     PINECONE = "pinecone"
@@ -38,6 +41,7 @@ class VectorDatabase(str, Enum):
 
 class IndexType(str, Enum):
     """Vector index types for different use cases."""
+
     
     FLAT = "flat"
     IVF = "ivf"
@@ -51,6 +55,7 @@ class IndexType(str, Enum):
 
 class DistanceMetric(str, Enum):
     """Distance metrics for similarity calculations."""
+
     
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
@@ -177,7 +182,8 @@ class VectorStoreConfig(BaseSettings):
         return v
     
     def get_vector_collection_config(self, collection_name: str) -> VectorCollection:
-        """Get vector collection configuration by name."""
+        """
+Get vector collection configuration by name."""
         
         collections = {
             self.AUDIO_FINGERPRINT_COLLECTION: VectorCollection(

@@ -4,6 +4,7 @@ Creates complete Swagger/OpenAPI documentation for all API endpoints.
 Author: AI Assistant
 Purpose: Generate complete Swagger API documentation
 """
+
 import json
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict
@@ -16,7 +17,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 
 class APIMethod(Enum):
-    """HTTP methods"""
+    """
+HTTP methods"""
+
     GET = "get"
     POST = "post"
     PUT = "put"
@@ -49,7 +52,8 @@ class APIResponse:
 
 @dataclass
 class APIEndpoint:
-    """API endpoint definition"""
+    """
+API endpoint definition"""
     path: str
     method: APIMethod
     summary: str
@@ -62,7 +66,8 @@ class APIEndpoint:
 
 
 class SwaggerDocumentationGenerator:
-    """Generates comprehensive Swagger/OpenAPI documentation"""
+    """
+Generates comprehensive Swagger/OpenAPI documentation"""
     
     def __init__(self, title: str = "Ainflue AI Platform API", version: str = "1.0.0"):
         self.title = title
@@ -81,7 +86,8 @@ class SwaggerDocumentationGenerator:
         self.endpoints.append(endpoint)
     
     def add_schema(self, name: str, schema: Dict[str, Any]):
-        """Add a schema definition"""
+        """
+Add a schema definition"""
         self.components["schemas"][name] = schema
     
     def add_security_scheme(self, name: str, scheme: Dict[str, Any]):

@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ from datetime import datetime, timedelta
 
 
 class LogLevel(Enum):
-    """Audit log severity levels."""
+    """
+Audit log severity levels."""
+
     DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
@@ -39,6 +42,7 @@ class LogLevel(Enum):
 
 class EventCategory(Enum):
     """Categories of audit events."""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     CONTENT_OPERATIONS = "content_operations"
@@ -94,6 +98,7 @@ class EventType(Enum):
 
 class AuditStorageType(Enum):
     """Types of audit log storage backends."""
+
     DATABASE = "database"
     FILE_SYSTEM = "file_system"
     ELASTICSEARCH = "elasticsearch"
@@ -147,7 +152,8 @@ class EventStructure:
 
 @dataclass
 class AuthenticationAuditConfig:
-    """Authentication-specific audit configuration."""
+    """
+Authentication-specific audit configuration."""
     
     # Events to log
     log_successful_logins: bool = True
@@ -585,18 +591,21 @@ audit_logging_config = AuditLoggingConfig()
 
 
 def get_audit_logging_config() -> AuditLoggingConfig:
-    """Get the audit logging configuration instance."""
+    """
+Get the audit logging configuration instance."""
     return audit_logging_config
 
 
 def get_retention_period(event_category: EventCategory) -> int:
-    """Get retention period for specific event category."""
+    """
+Get retention period for specific event category."""
     config = get_audit_logging_config()
     return config.retention.retention_periods.get(event_category, 365)
 
 
 def should_log_event(event_type: EventType, event_category: EventCategory) -> bool:
-    """Determine if an event type should be logged based on configuration."""
+    """
+Determine if an event type should be logged based on configuration."""
     config = get_audit_logging_config()
     
     # Category-specific logic
@@ -613,7 +622,8 @@ def should_log_event(event_type: EventType, event_category: EventCategory) -> bo
 
 
 def validate_audit_logging_config(config: AuditLoggingConfig) -> bool:
-    """Validate audit logging configuration settings."""
+    """
+Validate audit logging configuration settings."""
     # Validate retention periods
     for period in config.retention.retention_periods.values():
         if period <= 0:

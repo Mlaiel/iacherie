@@ -49,6 +49,7 @@ Security & Compliance Features:
 - Content protection deployment validation
 ================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -177,7 +178,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CICDConfiguration:
-    """Complete CI/CD configuration for IA Influencer platform"""
+    """
+Complete CI/CD configuration for IA Influencer platform"""
     environment: str
     enable_ai_validation: bool = True
     enable_content_protection: bool = True
@@ -208,7 +210,8 @@ class CICDOrchestrator:
     """
     
     def __init__(self, config: CICDConfiguration = None):
-        """Initialize CI/CD orchestrator"""
+        """
+Initialize CI/CD orchestrator"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.config = config or CICDConfiguration(environment="development")
         self.initialized = False
@@ -657,12 +660,15 @@ class CICDOrchestrator:
         await self.notification_system.send_deployment_notification(deployment_id, results, validation)
     
     async def _rollback_creator_workflow_deployment(self, deployment_id: str, environment: str):
-        """Rollback creator workflow deployment"""
+        """
+Rollback creator workflow deployment"""
         await self.rollback_automation.rollback_deployment(deployment_id, environment)
 
 # Enums and data classes
 class DeploymentPhase:
-    """Deployment phase enumeration"""
+    """
+Deployment phase enumeration"""
+
     PLANNING = "planning"
     BUILDING = "building"
     TESTING = "testing"
@@ -674,6 +680,7 @@ class DeploymentPhase:
 
 class CreatorWorkflowComponents:
     """Creator workflow components enumeration"""
+
     CONTENT_UPLOADER = "content_uploader"
     AI_PROCESSOR = "ai_processor"
     CONTENT_PROTECTOR = "content_protector"
@@ -851,7 +858,8 @@ class CICDOrchestrator:
     """Enterprise CI/CD orchestrator"""
     
     def __init__(self):
-        """Initialize CI/CD orchestrator"""
+        """
+Initialize CI/CD orchestrator"""
         self.pipeline_manager = pipeline_manager
         self.build_automation = build_automation
         self.artifact_manager = artifact_manager
@@ -868,7 +876,8 @@ class CICDOrchestrator:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize all CI/CD components"""
+        """
+Initialize all CI/CD components"""
         try:
             # Initialize components in order
             await self.pipeline_manager.initialize()
@@ -959,7 +968,7 @@ cicd_orchestrator = CICDOrchestrator()
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 __all__ = [
     # Core configurations

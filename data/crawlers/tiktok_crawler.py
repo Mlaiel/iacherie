@@ -5,12 +5,13 @@ Professional TikTok content crawler for copyright protection and content monitor
 Implements advanced web scraping and API integration for comprehensive video detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
 """
+
 import asyncio
 import re
 import json
@@ -454,7 +455,8 @@ class TikTokCrawler(PlatformCrawler):
         return results
     
     async def _search_by_users(self, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
-        """Search by detecting usernames in terms"""
+        """
+Search by detecting usernames in terms"""
         results = []
         
         for term in search_terms:
@@ -469,7 +471,8 @@ class TikTokCrawler(PlatformCrawler):
         return results
     
     async def _search_discover_page(self, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
-        """Search using TikTok's discover/trending page"""
+        """
+Search using TikTok's discover/trending page"""
         try:
             if not self.selenium_driver:
                 await self.initialize_selenium()
@@ -670,7 +673,8 @@ class TikTokCrawler(PlatformCrawler):
         return None
     
     def _parse_count(self, count_text: str) -> int:
-        """Parse engagement count from text (e.g., '1.2K' -> 1200)"""
+        """
+Parse engagement count from text (e.g., '1.2K' -> 1200)"""
         try:
             count_text = count_text.strip().upper()
             
@@ -687,12 +691,14 @@ class TikTokCrawler(PlatformCrawler):
             return 0
     
     async def _random_delay(self):
-        """Apply random delay to appear human-like"""
+        """
+Apply random delay to appear human-like"""
         delay = random.uniform(self.scraping_delay[0], self.scraping_delay[1])
         await asyncio.sleep(delay)
     
     def get_anti_detection_status(self) -> Dict[str, Any]:
-        """Get anti-detection measures status"""
+        """
+Get anti-detection measures status"""
         return {
             'platform': 'tiktok',
             'user_agents_count': len(self.user_agents),
@@ -704,6 +710,7 @@ class TikTokCrawler(PlatformCrawler):
         }
     
     async def close(self):
-        """Cleanup crawler resources"""
+        """
+Cleanup crawler resources"""
         await self.cleanup_selenium()
         await self.cleanup_session()

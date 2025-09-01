@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import statistics
@@ -27,7 +28,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class MetricType(Enum):
-    """Metric type classification."""
+    """
+Metric type classification."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -38,6 +41,7 @@ class MetricType(Enum):
 
 class AggregationType(Enum):
     """Metric aggregation types."""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -49,6 +53,7 @@ class AggregationType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -82,7 +87,8 @@ class MetricValue:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result."""
+    """
+Aggregated metric result."""
     metric_id: str
     aggregation_type: AggregationType
     value: Union[int, float]
@@ -95,7 +101,8 @@ class AggregatedMetric:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""
+    """
+Alert rule configuration."""
     rule_id: str
     metric_id: str
     condition: str  # e.g., "> 100", "< 0.95"
@@ -129,7 +136,8 @@ class Alert:
 
 @dataclass
 class Dashboard:
-    """Metrics dashboard configuration."""
+    """
+Metrics dashboard configuration."""
     dashboard_id: str
     name: str
     description: str
@@ -643,14 +651,16 @@ class MetricsCollector:
         await self.create_alert_rule(rule)
     
     def _tags_match(self, metric_tags: Dict[str, str], filter_tags: Dict[str, str]) -> bool:
-        """Check if metric tags match filter tags."""
+        """
+Check if metric tags match filter tags."""
         for key, value in filter_tags.items():
             if key not in metric_tags or metric_tags[key] != value:
                 return False
         return True
     
     async def _aggregation_task(self) -> None:
-        """Background task for metric aggregation."""
+        """
+Background task for metric aggregation."""
         while True:
             try:
                 current_time = datetime.now()
@@ -817,7 +827,8 @@ class MetricsCollector:
             return False
     
     async def _trigger_alert(self, rule: AlertRule, metric_value: Union[int, float], timestamp: datetime) -> None:
-        """Trigger new alert."""
+        """
+Trigger new alert."""
         alert_id = str(uuid.uuid4())
         
         alert = Alert(
@@ -970,7 +981,8 @@ class MetricsCollector:
             return {'error': str(e)}
     
     async def _analyze_trends(self, values: List[Union[int, float]]) -> Dict[str, Any]:
-        """Analyze trends in metric values."""
+        """
+Analyze trends in metric values."""
         if len(values) < 3:
             return {'trend': 'insufficient_data'}
         
@@ -999,7 +1011,8 @@ class MetricsCollector:
         }
     
     async def _detect_anomalies(self, values: List[Union[int, float]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in metric values."""
+        """
+Detect anomalies in metric values."""
         if len(values) < 10:
             return []
         
@@ -1022,7 +1035,8 @@ class MetricsCollector:
         return anomalies
     
     async def _calculate_percentiles(self, values: List[Union[int, float]]) -> Dict[str, float]:
-        """Calculate percentiles for metric values."""
+        """
+Calculate percentiles for metric values."""
         if not values:
             return {}
         
@@ -1046,19 +1060,23 @@ class MetricsCollector:
         }
     
     async def _validate_metric_definition(self, definition: MetricDefinition) -> bool:
-        """Validate metric definition."""
+        """
+Validate metric definition."""
         return bool(definition.metric_id and definition.name and definition.unit)
     
     async def _validate_alert_rule(self, rule: AlertRule) -> bool:
-        """Validate alert rule."""
+        """
+Validate alert rule."""
         return bool(rule.rule_id and rule.metric_id and rule.condition and rule.message)
     
     async def _validate_dashboard(self, dashboard: Dashboard) -> bool:
-        """Validate dashboard configuration."""
+        """
+Validate dashboard configuration."""
         return bool(dashboard.dashboard_id and dashboard.name)
     
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get all active alerts."""
+        """
+Get all active alerts."""
         return [
             {
                 'alert_id': alert.alert_id,
@@ -1075,7 +1093,8 @@ class MetricsCollector:
         ]
     
     async def get_metric_summary(self, metric_id: str) -> Optional[Dict[str, Any]]:
-        """Get metric summary information."""
+        """
+Get metric summary information."""
         if metric_id not in self.metric_definitions:
             return None
         
@@ -1105,7 +1124,8 @@ class MetricsCollector:
         return summary
     
     async def get_collector_stats(self) -> Dict[str, Any]:
-        """Get metrics collector statistics."""
+        """
+Get metrics collector statistics."""
         return {
             **self.collector_stats,
             'registered_metrics': len(self.metric_definitions),

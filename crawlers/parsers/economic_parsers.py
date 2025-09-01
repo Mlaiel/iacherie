@@ -5,7 +5,7 @@ Ultra-advanced parsers for economic data, revenue tracking, financial analytics,
 and business intelligence for creator monetization platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
@@ -22,6 +22,7 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
+
 import asyncio
 import json
 import logging
@@ -44,7 +45,9 @@ from .parser_config import ParserConfig
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     YOUTUBE_AD_REVENUE = "youtube_ads"
     YOUTUBE_PREMIUM = "youtube_premium"
     SPOTIFY_ROYALTIES = "spotify_royalties"
@@ -67,6 +70,7 @@ class RevenueSource(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -93,7 +97,8 @@ class RevenueRecord:
 
 @dataclass
 class FinancialMetrics:
-    """Comprehensive financial metrics"""
+    """
+Comprehensive financial metrics"""
     total_revenue: Decimal = Decimal('0.00')
     revenue_by_source: Dict[RevenueSource, Decimal] = field(default_factory=dict)
     revenue_by_currency: Dict[Currency, Decimal] = field(default_factory=dict)
@@ -107,7 +112,8 @@ class FinancialMetrics:
 
 @dataclass
 class EconomicIntelligence:
-    """Complete economic intelligence analysis"""
+    """
+Complete economic intelligence analysis"""
     financial_metrics: FinancialMetrics = field(default_factory=FinancialMetrics)
     revenue_forecast: Dict[str, Any] = field(default_factory=dict)
     market_analysis: Dict[str, Any] = field(default_factory=dict)
@@ -117,7 +123,8 @@ class EconomicIntelligence:
 
 
 class YouTubeRevenueParser:
-    """Advanced YouTube revenue and analytics parser"""
+    """
+Advanced YouTube revenue and analytics parser"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -161,14 +168,16 @@ class YouTubeRevenueParser:
 
 
 class SpotifyRoyaltyParser:
-    """Advanced Spotify royalty and streaming data parser"""
+    """
+Advanced Spotify royalty and streaming data parser"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def parse_royalty_report(self, report_data: str) -> List[RevenueRecord]:
-        """Parse Spotify royalty CSV report"""
+        """
+Parse Spotify royalty CSV report"""
         try:
             records = []
             csv_reader = csv.DictReader(StringIO(report_data))
@@ -273,7 +282,8 @@ class SpotifyRoyaltyParser:
 
 
 class StripePaymentsParser:
-    """Advanced Stripe payments and transaction parser"""
+    """
+Advanced Stripe payments and transaction parser"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -389,7 +399,8 @@ class EconomicIntelligenceEngine:
         revenue_records: List[RevenueRecord],
         period_days: int = 30
     ) -> EconomicIntelligence:
-        """Generate comprehensive economic intelligence report"""
+        """
+Generate comprehensive economic intelligence report"""
         try:
             # Calculate financial metrics
             financial_metrics = await self._calculate_financial_metrics(revenue_records)
@@ -464,7 +475,8 @@ class EconomicIntelligenceEngine:
         return metrics
     
     async def _calculate_growth_rate(self, records: List[RevenueRecord]) -> float:
-        """Calculate revenue growth rate"""
+        """
+Calculate revenue growth rate"""
         try:
             # Group by month
             monthly_revenue = {}
@@ -499,7 +511,8 @@ class EconomicIntelligenceEngine:
         records: List[RevenueRecord], 
         forecast_days: int
     ) -> Dict[str, Any]:
-        """Generate revenue forecast using trend analysis"""
+        """
+Generate revenue forecast using trend analysis"""
         try:
             # Simple linear trend analysis
             daily_revenue = {}

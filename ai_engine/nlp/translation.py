@@ -4,11 +4,12 @@ Advanced multilingual content translation and localization for global creators
 and influencers to reach international audiences effectively.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TranslationRequest:
-    """Translation request structure"""
+    """
+Translation request structure"""
     text: str
     source_language: str
     target_language: str
@@ -72,7 +74,8 @@ class AdvancedTranslator:
         self.quality_assessor = TranslationQualityAssessor()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'cache_translations': True,
             'max_cache_size': 1000,
@@ -84,7 +87,8 @@ class AdvancedTranslator:
         }
     
     def _load_supported_languages(self) -> Dict[str, Dict[str, Any]]:
-        """Load supported languages with metadata"""
+        """
+Load supported languages with metadata"""
         return {
             'en': {
                 'name': 'English',
@@ -173,7 +177,8 @@ class AdvancedTranslator:
         }
     
     def _load_cultural_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load cultural adaptation rules"""
+        """
+Load cultural adaptation rules"""
         return {
             'color_associations': {
                 'en': {'red': 'passion', 'white': 'purity', 'black': 'elegance'},
@@ -202,7 +207,8 @@ class AdvancedTranslator:
         }
     
     async def translate_content(self, request: TranslationRequest) -> TranslationResult:
-        """Translate content with cultural adaptation"""
+        """
+Translate content with cultural adaptation"""
         request_id = self._generate_request_id(request)
         
         try:
@@ -370,7 +376,8 @@ class AdvancedTranslator:
         }
     
     async def _extract_special_elements(self, text: str, request: TranslationRequest) -> Dict[str, List[str]]:
-        """Extract special elements to preserve during translation"""
+        """
+Extract special elements to preserve during translation"""
         preserved = {
             'hashtags': [],
             'mentions': [],
@@ -403,7 +410,8 @@ class AdvancedTranslator:
         return preserved
     
     async def _prepare_text_for_translation(self, text: str, preserved_elements: Dict[str, List[str]]) -> str:
-        """Prepare text for translation by replacing special elements with placeholders"""
+        """
+Prepare text for translation by replacing special elements with placeholders"""
         translation_text = text
         
         # Replace special elements with placeholders
@@ -503,7 +511,8 @@ class AdvancedTranslator:
         return adapted_text
     
     async def _restore_special_elements(self, text: str, preserved_elements: Dict[str, List[str]], request: TranslationRequest) -> str:
-        """Restore preserved special elements in the translated text"""
+        """
+Restore preserved special elements in the translated text"""
         restored_text = text
         
         # Restore placeholders with original elements
@@ -546,7 +555,8 @@ class AdvancedTranslator:
         return text
     
     async def _generate_alternative_translations(self, request: TranslationRequest, primary_translation: str) -> List[str]:
-        """Generate alternative translations"""
+        """
+Generate alternative translations"""
         alternatives = []
         
         # Generate variations by adjusting tone
@@ -569,7 +579,8 @@ class AdvancedTranslator:
         return alternatives[:3]  # Limit to 3 alternatives
     
     async def _calculate_confidence(self, request: TranslationRequest, translation: str, quality_metrics: Dict[str, float]) -> float:
-        """Calculate confidence score for translation"""
+        """
+Calculate confidence score for translation"""
         confidence_factors = []
         
         # Quality metrics confidence
@@ -593,7 +604,8 @@ class AdvancedTranslator:
         return sum(confidence_factors) / len(confidence_factors)
     
     async def _generate_localization_suggestions(self, request: TranslationRequest, translation: str, target_lang: str) -> List[str]:
-        """Generate localization suggestions"""
+        """
+Generate localization suggestions"""
         suggestions = []
         
         # Currency suggestions
@@ -659,7 +671,8 @@ class AdvancedTranslator:
                 target_lang in self.supported_languages)
     
     def _get_language_pair_difficulty(self, source_lang: str, target_lang: str) -> float:
-        """Get difficulty score for language pair (0-1, higher = more difficult)"""
+        """
+Get difficulty score for language pair (0-1, higher = more difficult)"""
         source_info = self.supported_languages.get(source_lang, {})
         target_info = self.supported_languages.get(target_lang, {})
         
@@ -676,7 +689,8 @@ class AdvancedTranslator:
         return min(1.0, base_difficulty + target_complexity)
     
     def _get_content_type_confidence(self, content_type: str) -> float:
-        """Get confidence based on content type"""
+        """
+Get confidence based on content type"""
         confidence_map = {
             'social_post': 0.8,
             'caption': 0.9,
@@ -689,7 +703,8 @@ class AdvancedTranslator:
         return confidence_map.get(content_type, 0.7)
     
     def _get_country_from_language(self, lang_code: str) -> str:
-        """Get country/cultural context from language code"""
+        """
+Get country/cultural context from language code"""
         # Simplified mapping - in practice, would be more sophisticated
         country_map = {
             'en': 'us',
@@ -708,7 +723,8 @@ class AdvancedTranslator:
         return country_map.get(lang_code, lang_code)
     
     async def _adjust_formality(self, text: str, formality_level: str, target_lang: str) -> str:
-        """Adjust formality level of text"""
+        """
+Adjust formality level of text"""
         # This would be more sophisticated in practice
         if formality_level in ['high', 'very_high']:
             # Add more formal expressions
@@ -725,7 +741,8 @@ class AdvancedTranslator:
         return text
     
     async def _adapt_cultural_symbols(self, text: str, source_lang: str, target_lang: str) -> str:
-        """Adapt cultural symbols and references"""
+        """
+Adapt cultural symbols and references"""
         # Example: color associations
         if 'white' in text.lower() and target_lang == 'zh':
             # In Chinese culture, white is associated with death/mourning
@@ -734,7 +751,8 @@ class AdvancedTranslator:
         return text
     
     def _generate_request_id(self, request: TranslationRequest) -> str:
-        """Generate unique request ID"""
+        """
+Generate unique request ID"""
         import hashlib
         id_string = f"{request.text[:50]}{request.source_language}{request.target_language}"
         return hashlib.md5(id_string.encode()).hexdigest()[:12]
@@ -758,7 +776,8 @@ class AdvancedTranslator:
                 del self.translation_cache[key]
     
     async def _create_fallback_translation(self, request: TranslationRequest, error_message: str) -> TranslationResult:
-        """Create fallback translation result"""
+        """
+Create fallback translation result"""
         return TranslationResult(
             request_id=self._generate_request_id(request),
             original_text=request.text,
@@ -782,7 +801,8 @@ class TranslationQualityAssessor:
         ]
     
     async def assess_quality(self, original: str, translation: str, source_lang: str, target_lang: str) -> Dict[str, float]:
-        """Assess translation quality across multiple metrics"""
+        """
+Assess translation quality across multiple metrics"""
         
         quality_scores = {}
         
@@ -804,7 +824,8 @@ class TranslationQualityAssessor:
         return quality_scores
     
     async def _assess_fluency(self, translation: str, target_lang: str) -> float:
-        """Assess fluency of translation"""
+        """
+Assess fluency of translation"""
         # Simplified fluency assessment
         
         # Check for basic sentence structure
@@ -830,7 +851,8 @@ class TranslationQualityAssessor:
         return fluency_score
     
     async def _assess_accuracy(self, original: str, translation: str) -> float:
-        """Assess accuracy of translation"""
+        """
+Assess accuracy of translation"""
         # Simplified accuracy assessment based on length ratio
         
         orig_words = len(original.split())
@@ -860,7 +882,8 @@ class TranslationQualityAssessor:
         return accuracy_score
     
     async def _assess_completeness(self, original: str, translation: str) -> float:
-        """Assess completeness of translation"""
+        """
+Assess completeness of translation"""
         # Check if major content elements are preserved
         
         orig_sentences = len(original.split('.'))
@@ -882,7 +905,8 @@ class TranslationQualityAssessor:
         return completeness_score
     
     async def _assess_cultural_appropriateness(self, translation: str, target_lang: str) -> float:
-        """Assess cultural appropriateness"""
+        """
+Assess cultural appropriateness"""
         # Simplified assessment - in practice would be more sophisticated
         
         # Check for obvious cultural issues
@@ -895,7 +919,8 @@ class TranslationQualityAssessor:
         return 0.8
     
     async def _assess_tone_preservation(self, original: str, translation: str) -> float:
-        """Assess tone preservation"""
+        """
+Assess tone preservation"""
         # Simplified tone assessment
         
         # Check for exclamation marks (enthusiasm)
@@ -919,7 +944,8 @@ class TranslationQualityAssessor:
 
 # Utility functions
 async def translate_quick(text: str, target_language: str, source_language: str = 'auto') -> str:
-    """Quick translation function"""
+    """
+Quick translation function"""
     translator = AdvancedTranslator()
     
     # Auto-detect source language if needed
@@ -937,7 +963,8 @@ async def translate_quick(text: str, target_language: str, source_language: str 
     return result.translated_text
 
 async def translate_social_post(text: str, target_language: str, tone: str = 'casual') -> Dict[str, Any]:
-    """Translate social media post with optimization"""
+    """
+Translate social media post with optimization"""
     translator = AdvancedTranslator()
     
     # Auto-detect source language
@@ -967,7 +994,8 @@ async def translate_social_post(text: str, target_language: str, tone: str = 'ca
 
 # Multi-language content manager
 class MultiLanguageContentManager:
-    """Manage content across multiple languages"""
+    """
+Manage content across multiple languages"""
     
     def __init__(self):
         self.translator = AdvancedTranslator()
@@ -976,7 +1004,8 @@ class MultiLanguageContentManager:
     
     async def create_multilingual_content(self, original_text: str, target_languages: List[str], 
                                         source_language: str = 'auto', content_type: str = 'general') -> Dict[str, TranslationResult]:
-        """Create content in multiple languages"""
+        """
+Create content in multiple languages"""
         
         # Auto-detect source language if needed
         if source_language == 'auto':
@@ -1009,7 +1038,8 @@ class MultiLanguageContentManager:
         return multilingual_content
     
     def get_supported_languages(self) -> Dict[str, str]:
-        """Get list of supported languages"""
+        """
+Get list of supported languages"""
         return {
             code: info['name']
             for code, info in self.translator.supported_languages.items()

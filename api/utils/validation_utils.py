@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import re
 import json
 import uuid
@@ -38,7 +39,9 @@ T = TypeVar('T')
 
 
 class ValidationSeverity(Enum):
-    """Validation severity levels"""
+    """
+Validation severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -69,7 +72,8 @@ class ValidationResult:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report"""
+    """
+Comprehensive validation report"""
     is_valid: bool
     results: List[ValidationResult] = field(default_factory=list)
     errors_count: int = 0
@@ -78,7 +82,8 @@ class ValidationReport:
     critical_count: int = 0
     
     def add_result(self, result: ValidationResult):
-        """Add validation result"""
+        """
+Add validation result"""
         self.results.append(result)
         
         if result.severity == ValidationSeverity.ERROR:
@@ -93,15 +98,18 @@ class ValidationReport:
             self.info_count += 1
     
     def get_errors(self) -> List[ValidationResult]:
-        """Get all error results"""
+        """
+Get all error results"""
         return [r for r in self.results if r.severity == ValidationSeverity.ERROR]
     
     def get_warnings(self) -> List[ValidationResult]:
-        """Get all warning results"""
+        """
+Get all warning results"""
         return [r for r in self.results if r.severity == ValidationSeverity.WARNING]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'is_valid': self.is_valid,
             'summary': {
@@ -116,13 +124,15 @@ class ValidationReport:
 
 
 class BaseValidator:
-    """Base validator class"""
+    """
+Base validator class"""
     
     def __init__(self, strict_mode: bool = True):
         self.strict_mode = strict_mode
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate value - base implementation"""
+        """
+Validate value - base implementation"""
         try:
             # Basic validation: check if value is not None
             if value is None:
@@ -188,7 +198,8 @@ class BaseValidator:
 
 
 class StringValidator(BaseValidator):
-    """String validation with various constraints"""
+    """
+String validation with various constraints"""
     
     def __init__(self, min_length: Optional[int] = None,
                  max_length: Optional[int] = None,
@@ -208,7 +219,8 @@ class StringValidator(BaseValidator):
         self.strip_whitespace = strip_whitespace
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate string value"""
+        """
+Validate string value"""
         if value is None:
             return self._create_result(
                 False, ValidationSeverity.ERROR,
@@ -288,7 +300,8 @@ class EmailValidator(BaseValidator):
         self.check_deliverability = check_deliverability
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate email address"""
+        """
+Validate email address"""
         if not isinstance(value, str):
             return self._create_result(
                 False, ValidationSeverity.ERROR,
@@ -327,7 +340,8 @@ class PhoneValidator(BaseValidator):
         self.default_country = default_country
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate phone number"""
+        """
+Validate phone number"""
         if not isinstance(value, str):
             return self._create_result(
                 False, ValidationSeverity.ERROR,
@@ -379,7 +393,8 @@ class URLValidator(BaseValidator):
         self.require_tld = require_tld
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate URL"""
+        """
+Validate URL"""
         if not isinstance(value, str):
             return self._create_result(
                 False, ValidationSeverity.ERROR,
@@ -445,7 +460,8 @@ class IPAddressValidator(BaseValidator):
         self.allow_loopback = allow_loopback
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate IP address"""
+        """
+Validate IP address"""
         if not isinstance(value, str):
             return self._create_result(
                 False, ValidationSeverity.ERROR,
@@ -519,7 +535,8 @@ class PasswordValidator(BaseValidator):
         self.min_strength_score = min_strength_score
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate password strength"""
+        """
+Validate password strength"""
         if not isinstance(value, str):
             return self._create_result(
                 False, ValidationSeverity.ERROR,
@@ -586,7 +603,8 @@ class NumericValidator(BaseValidator):
         self.precision = precision
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate numeric value"""
+        """
+Validate numeric value"""
         # Try to convert to number
         if isinstance(value, str):
             try:
@@ -662,7 +680,8 @@ class DateTimeValidator(BaseValidator):
         self.allow_past = allow_past
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate date/time value"""
+        """
+Validate date/time value"""
         # Convert string to datetime if needed
         if isinstance(value, str):
             try:
@@ -750,7 +769,8 @@ class FileValidator(BaseValidator):
         self.check_content = check_content
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate file"""
+        """
+Validate file"""
         if isinstance(value, str):
             # Assume it's a file path
             file_path = Path(value)
@@ -859,7 +879,8 @@ class JSONValidator(BaseValidator):
         self.max_size = max_size
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate JSON data"""
+        """
+Validate JSON data"""
         json_data = value
         
         # Parse JSON string if needed
@@ -922,7 +943,8 @@ class JSONValidator(BaseValidator):
 
 
 class CompositeValidator:
-    """Composite validator that combines multiple validators"""
+    """
+Composite validator that combines multiple validators"""
     
     def __init__(self, validators: List[BaseValidator], 
                  mode: str = 'all'):  # 'all', 'any', 'first_valid'
@@ -930,7 +952,8 @@ class CompositeValidator:
         self.mode = mode
     
     def validate(self, value: Any, field_name: str = None) -> ValidationReport:
-        """Validate using multiple validators"""
+        """
+Validate using multiple validators"""
         report = ValidationReport(is_valid=True)
         
         if self.mode == 'all':
@@ -963,23 +986,27 @@ class CompositeValidator:
 
 
 class DataValidator:
-    """Main data validation coordinator"""
+    """
+Main data validation coordinator"""
     
     def __init__(self):
         self.validators = {}
         self.schemas = {}
     
     def register_validator(self, name: str, validator: BaseValidator):
-        """Register a named validator"""
+        """
+Register a named validator"""
         self.validators[name] = validator
     
     def register_schema(self, name: str, schema: Dict[str, Any]):
-        """Register a validation schema"""
+        """
+Register a validation schema"""
         self.schemas[name] = schema
     
     def validate_field(self, value: Any, validator_name: str, 
                       field_name: str = None) -> ValidationResult:
-        """Validate a single field"""
+        """
+Validate a single field"""
         if validator_name not in self.validators:
             return ValidationResult(
                 is_valid=False,
@@ -1084,7 +1111,8 @@ class DataValidator:
         }
     
     def create_content_schema(self) -> Dict[str, Any]:
-        """Create a content validation schema"""
+        """
+Create a content validation schema"""
         return {
             'title': {
                 'type': 'string',
@@ -1121,14 +1149,16 @@ class DataValidator:
 
 
 class BusinessRuleValidator:
-    """Business logic validation"""
+    """
+Business logic validation"""
     
     def __init__(self):
         self.rules = {}
     
     def register_rule(self, name: str, rule_func: Callable[[Any], bool], 
                      error_message: str):
-        """Register a business rule"""
+        """
+Register a business rule"""
         self.rules[name] = {
             'function': rule_func,
             'message': error_message
@@ -1136,7 +1166,8 @@ class BusinessRuleValidator:
     
     def validate_business_rules(self, data: Dict[str, Any], 
                                rule_names: List[str]) -> ValidationReport:
-        """Validate against business rules"""
+        """
+Validate against business rules"""
         report = ValidationReport(is_valid=True)
         
         for rule_name in rule_names:
@@ -1175,7 +1206,8 @@ class ValidationUtils:
     
     @staticmethod
     def is_valid_uuid(value: str) -> bool:
-        """Check if string is a valid UUID"""
+        """
+Check if string is a valid UUID"""
         try:
             uuid.UUID(value)
             return True
@@ -1184,12 +1216,14 @@ class ValidationUtils:
     
     @staticmethod
     def is_valid_hex_color(value: str) -> bool:
-        """Check if string is a valid hex color"""
+        """
+Check if string is a valid hex color"""
         return bool(re.match(r'^#[0-9A-Fa-f]{6}$', value))
     
     @staticmethod
     def is_valid_credit_card(value: str) -> bool:
-        """Check if string is a valid credit card number (Luhn algorithm)"""
+        """
+Check if string is a valid credit card number (Luhn algorithm)"""
         value = re.sub(r'\D', '', value)  # Remove non-digits
         
         if len(value) < 13 or len(value) > 19:
@@ -1211,7 +1245,8 @@ class ValidationUtils:
     
     @staticmethod
     def sanitize_filename(filename: str) -> str:
-        """Sanitize filename for safe storage"""
+        """
+Sanitize filename for safe storage"""
         # Remove or replace unsafe characters
         filename = re.sub(r'[<>:"/\\|?*]', '_', filename)
         filename = filename.strip('. ')
@@ -1231,7 +1266,8 @@ class ValidationUtils:
 
 
 class ValidationError(Exception):
-    """Custom validation exception"""
+    """
+Custom validation exception"""
     
     def __init__(self, message: str, field: str = None, 
                  code: str = None, details: Dict[str, Any] = None):
@@ -1241,7 +1277,8 @@ class ValidationError(Exception):
         self.details = details or {}
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'message': str(self),
             'field': self.field,

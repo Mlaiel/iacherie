@@ -6,6 +6,7 @@ for the entire audio separation system.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import threading
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class SeparationModel(Enum):
-    """Available separation model types."""
+    """
+Available separation model types."""
+
     SPLEETER = "spleeter"
     OPEN_UNMIX = "open_unmix"
     DEMUCS = "demucs"
@@ -36,6 +39,7 @@ class SeparationModel(Enum):
 
 class SeparationQuality(Enum):
     """Quality levels for separation processing."""
+
     DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
@@ -44,6 +48,7 @@ class SeparationQuality(Enum):
 
 class OutputFormat(Enum):
     """Supported output audio formats."""
+
     WAV = "wav"
     FLAC = "flac"
     MP3 = "mp3"
@@ -110,7 +115,8 @@ class SeparationEngine:
     """
     
     def __init__(self, config: Optional[SeparationConfig] = None):
-        """Initialize the separation engine."""
+        """
+Initialize the separation engine."""
         self.config = config or SeparationConfig()
         self.models: Dict[str, Any] = {}
         self.is_initialized = False
@@ -397,7 +403,8 @@ class SeparationEngine:
         return demucs_results
     
     async def _enhance_vocal_separation(self, audio_path: Path) -> Optional[np.ndarray]:
-        """Enhance vocal separation using secondary model."""
+        """
+Enhance vocal separation using secondary model."""
         try:
             if 'spleeter' not in self.models:
                 return None
@@ -427,14 +434,16 @@ class SeparationEngine:
         return self._normalize_audio(blended)
     
     def _normalize_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Normalize audio to prevent clipping."""
+        """
+Normalize audio to prevent clipping."""
         if audio.max() == 0:
             return audio
         
         return audio / np.max(np.abs(audio)) * 0.95
     
     async def get_separation_info(self, audio_path: Union[str, Path]) -> Dict[str, Any]:
-        """Get information about potential separation quality."""
+        """
+Get information about potential separation quality."""
         audio_path = Path(audio_path)
         
         try:
@@ -481,7 +490,8 @@ class SeparationEngine:
         return min(max(complexity, 0.0), 1.0)
     
     def _recommend_quality(self, complexity: float) -> SeparationQuality:
-        """Recommend separation quality based on complexity."""
+        """
+Recommend separation quality based on complexity."""
         if complexity < 0.3:
             return SeparationQuality.STANDARD
         elif complexity < 0.6:
@@ -490,7 +500,8 @@ class SeparationEngine:
             return SeparationQuality.STUDIO
     
     def _estimate_processing_time(self, duration: float, complexity: float) -> float:
-        """Estimate processing time in seconds."""
+        """
+Estimate processing time in seconds."""
         base_ratio = {
             SeparationQuality.DRAFT: 0.5,
             SeparationQuality.STANDARD: 1.0,
@@ -504,7 +515,8 @@ class SeparationEngine:
         return duration * ratio * complexity_factor
     
     async def cleanup(self) -> None:
-        """Clean up resources and temporary files."""
+        """
+Clean up resources and temporary files."""
         try:
             # Clear models
             self.models.clear()

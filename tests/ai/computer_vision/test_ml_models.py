@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -99,14 +100,16 @@ class TestVisionModelManager(unittest.TestCase):
     """Test suite for VisionModelManager class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.manager = VisionModelManager()
         self.test_image = self._create_test_image()
         self.test_dataset = self._create_test_dataset()
         self.model_config = self._create_model_config()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for ML processing"""
+        """
+Create a test image for ML processing"""
         image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add rich visual features for ML testing
@@ -124,7 +127,8 @@ class TestVisionModelManager(unittest.TestCase):
         return image
     
     def _create_test_dataset(self) -> List[Dict[str, Any]]:
-        """Create a test dataset for training"""
+        """
+Create a test dataset for training"""
         dataset = []
         for i in range(10):
             # Create varied test images
@@ -151,7 +155,8 @@ class TestVisionModelManager(unittest.TestCase):
         return dataset
     
     def _create_model_config(self):
-        """Create model configuration for testing"""
+        """
+Create model configuration for testing"""
         try:
             return ModelConfig(
                 model_type='cnn',
@@ -174,11 +179,13 @@ class TestVisionModelManager(unittest.TestCase):
             }
     
     def test_manager_initialization(self):
-        """Test VisionModelManager initialization"""
+        """
+Test VisionModelManager initialization"""
         self.assertIsInstance(self.manager, VisionModelManager)
     
     def test_model_registration(self):
-        """Test model registration and management"""
+        """
+Test model registration and management"""
         try:
             # Register a test model
             model_id = self.manager.register_model(
@@ -319,13 +326,15 @@ class TestContentCNN(unittest.TestCase):
     """Test suite for ContentCNN class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.cnn = ContentCNN()
         self.test_image = self._create_test_image()
         self.test_batch = self._create_test_batch()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for CNN processing"""
+        """
+Create a test image for CNN processing"""
         image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add CNN-friendly features
@@ -347,7 +356,8 @@ class TestContentCNN(unittest.TestCase):
         return batch
     
     def test_cnn_initialization(self):
-        """Test ContentCNN initialization"""
+        """
+Test ContentCNN initialization"""
         self.assertIsInstance(self.cnn, ContentCNN)
     
     @unittest.skipUnless(TORCH_AVAILABLE or TENSORFLOW_AVAILABLE, "ML framework not available")
@@ -461,13 +471,15 @@ class TestStyleTransferModel(unittest.TestCase):
     """Test suite for StyleTransferModel class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.style_model = StyleTransferModel()
         self.content_image = self._create_content_image()
         self.style_image = self._create_style_image()
     
     def _create_content_image(self) -> np.ndarray:
-        """Create a content image for style transfer"""
+        """
+Create a content image for style transfer"""
         image = np.zeros((256, 256, 3), dtype=np.uint8)
         
         # Add content structure
@@ -497,11 +509,13 @@ class TestStyleTransferModel(unittest.TestCase):
         return image
     
     def test_style_model_initialization(self):
-        """Test StyleTransferModel initialization"""
+        """
+Test StyleTransferModel initialization"""
         self.assertIsInstance(self.style_model, StyleTransferModel)
     
     def test_neural_style_transfer(self):
-        """Test neural style transfer"""
+        """
+Test neural style transfer"""
         try:
             stylized_image = self.style_model.apply_neural_style_transfer(
                 content_image=self.content_image,
@@ -604,13 +618,15 @@ class TestGANProcessor(unittest.TestCase):
     """Test suite for GANProcessor class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.gan = GANProcessor()
         self.test_image = self._create_test_image()
         self.test_noise = self._create_test_noise()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for GAN processing"""
+        """
+Create a test image for GAN processing"""
         image = np.zeros((128, 128, 3), dtype=np.uint8)
         
         # Add some structure for GAN processing
@@ -620,15 +636,18 @@ class TestGANProcessor(unittest.TestCase):
         return image
     
     def _create_test_noise(self) -> np.ndarray:
-        """Create test noise vector for GAN generation"""
+        """
+Create test noise vector for GAN generation"""
         return np.random.randn(100).astype(np.float32)
     
     def test_gan_initialization(self):
-        """Test GANProcessor initialization"""
+        """
+Test GANProcessor initialization"""
         self.assertIsInstance(self.gan, GANProcessor)
     
     def test_image_generation(self):
-        """Test image generation from noise"""
+        """
+Test image generation from noise"""
         try:
             generated_image = self.gan.generate_image(
                 noise_vector=self.test_noise,
@@ -747,13 +766,15 @@ class TestTransformerVision(unittest.TestCase):
     """Test suite for TransformerVision class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.transformer = TransformerVision()
         self.test_image = self._create_test_image()
         self.test_sequence = self._create_test_sequence()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for transformer processing"""
+        """
+Create a test image for transformer processing"""
         image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add patch-like structure suitable for Vision Transformer
@@ -784,7 +805,8 @@ class TestTransformerVision(unittest.TestCase):
         self.assertIsInstance(self.transformer, TransformerVision)
     
     def test_patch_embedding(self):
-        """Test image patch embedding"""
+        """
+Test image patch embedding"""
         try:
             patch_embeddings = self.transformer.create_patch_embeddings(
                 image=self.test_image,
@@ -924,7 +946,8 @@ class TestMLModelsIntegration(unittest.TestCase):
     """Test suite for ML models integration and workflows"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.model_manager = VisionModelManager()
         self.cnn = ContentCNN()
         self.style_transfer = StyleTransferModel()
@@ -934,7 +957,8 @@ class TestMLModelsIntegration(unittest.TestCase):
         self.test_image = self._create_comprehensive_test_image()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image for integration testing"""
+        """
+Create comprehensive test image for integration testing"""
         image = np.zeros((256, 256, 3), dtype=np.uint8)
         
         # Add multiple objects for detection

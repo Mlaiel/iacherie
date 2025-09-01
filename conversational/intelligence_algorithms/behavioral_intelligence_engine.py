@@ -32,6 +32,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -67,7 +68,9 @@ logger = logging.getLogger(__name__)
 
 
 class BehaviorType(Enum):
-    """Types of behavioral patterns for analysis"""
+    """
+Types of behavioral patterns for analysis"""
+
     ENGAGEMENT = "engagement"
     CONTENT_CONSUMPTION = "content_consumption"
     COLLABORATION = "collaboration"
@@ -82,6 +85,7 @@ class BehaviorType(Enum):
 
 class BehaviorPattern(Enum):
     """Specific behavioral patterns detected"""
+
     CONSISTENT_ENGAGEMENT = "consistent_engagement"
     SPORADIC_ACTIVITY = "sporadic_activity"
     PEAK_PERFORMANCE = "peak_performance"
@@ -96,6 +100,7 @@ class BehaviorPattern(Enum):
 
 class PersonalityProfile(Enum):
     """Creator personality profiles based on behavioral analysis"""
+
     INNOVATIVE_CREATOR = "innovative_creator"
     SYSTEMATIC_PRODUCER = "systematic_producer"
     COLLABORATIVE_NETWORKER = "collaborative_networker"
@@ -123,7 +128,8 @@ class EngagementMetrics:
 
 @dataclass
 class BehaviorPattern:
-    """Advanced behavior pattern data structure"""
+    """
+Advanced behavior pattern data structure"""
     pattern_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     creator_type: str = ""

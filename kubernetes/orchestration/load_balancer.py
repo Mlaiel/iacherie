@@ -11,6 +11,7 @@ Features:
 - Traffic routing and canary deployments
 - Rate limiting and DDoS protection
 """
+
 import asyncio
 import logging
 import json
@@ -28,9 +29,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize load balancer metrics collector"""
+        """
+Initialize load balancer metrics collector"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.lb_metrics = ['request_count', 'response_time', 'error_rate', 'target_health']
         self.monitoring_endpoints = ['cloudwatch', 'prometheus', 'datadog']
@@ -45,7 +48,8 @@ class MetricsCollector:
 class CertificateManager:
     """Mock certificate manager."""
     def __init__(self):
-        """Initialize SSL/TLS certificate management"""
+        """
+Initialize SSL/TLS certificate management"""
         self.logger = logging.getLogger(f"{__name__}.CertificateManager")
         self.certificate_authorities = ['letsencrypt', 'aws_acm', 'digicert', 'sectigo']
         self.validation_methods = ['DNS', 'HTTP', 'EMAIL']
@@ -62,6 +66,7 @@ class CertificateManager:
 
 class LoadBalancerType(Enum):
     """Load balancer types."""
+
     APPLICATION = "application"  # Layer 7 (HTTP/HTTPS)
     NETWORK = "network"         # Layer 4 (TCP/UDP)
     CLASSIC = "classic"         # Legacy ELB
@@ -70,6 +75,7 @@ class LoadBalancerType(Enum):
 
 class HealthCheckProtocol(Enum):
     """Health check protocols."""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -79,6 +85,7 @@ class HealthCheckProtocol(Enum):
 
 class RoutingAlgorithm(Enum):
     """Load balancing algorithms."""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -88,6 +95,7 @@ class RoutingAlgorithm(Enum):
 
 class TargetStatus(Enum):
     """Target health status."""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DRAINING = "draining"
@@ -120,7 +128,8 @@ class LoadBalancerTarget:
 
 @dataclass
 class LoadBalancerRule:
-    """Load balancer routing rule."""
+    """
+Load balancer routing rule."""
     priority: int
     conditions: List[Dict[str, Any]]
     actions: List[Dict[str, Any]]
@@ -129,7 +138,8 @@ class LoadBalancerRule:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration."""
+    """
+Load balancer configuration."""
     name: str
     lb_type: LoadBalancerType
     scheme: str  # "internet-facing" or "internal"
@@ -847,7 +857,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return TargetStatus.UNHEALTHY
 
     async def _https_health_check(self, target: LoadBalancerTarget, health_check: HealthCheck) -> TargetStatus:
-        """Perform HTTPS health check."""
+        """
+Perform HTTPS health check."""
         try:
             # Simulate HTTPS health check
             await asyncio.sleep(0.1)
@@ -863,7 +874,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return TargetStatus.UNHEALTHY
 
     async def _tcp_health_check(self, target: LoadBalancerTarget, health_check: HealthCheck) -> TargetStatus:
-        """Perform TCP health check."""
+        """
+Perform TCP health check."""
         try:
             # Simulate TCP health check
             await asyncio.sleep(0.1)

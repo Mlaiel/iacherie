@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -50,7 +51,9 @@ from .scheduling_agent import ScheduledJob, SchedulingPriority, ScheduleStatus
 logger = logging.getLogger(__name__)
 
 class CampaignType(Enum):
-    """Types of campaigns"""
+    """
+Types of campaigns"""
+
     PRODUCT_LAUNCH = "product_launch"
     BRAND_AWARENESS = "brand_awareness"
     SEASONAL_PROMOTION = "seasonal_promotion"
@@ -62,6 +65,7 @@ class CampaignType(Enum):
 
 class CampaignStatus(Enum):
     """Campaign execution status"""
+
     PLANNING = "planning"
     SCHEDULED = "scheduled"
     ACTIVE = "active"
@@ -72,6 +76,7 @@ class CampaignStatus(Enum):
 
 class DistributionStrategy(Enum):
     """Content distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PLATFORM_OPTIMIZED = "platform_optimized"
@@ -490,7 +495,8 @@ class CampaignManager:
         config: CampaignConfig,
         audience_analysis: Dict[str, Any]
     ) -> Dict[str, PlatformSchedule]:
-        """Generate platform-specific schedules"""
+        """
+Generate platform-specific schedules"""
         platform_schedules = {}
         
         for platform in config.platforms:
@@ -529,7 +535,8 @@ class CampaignManager:
         platform: str,
         content_requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate platform-specific content adaptations"""
+        """
+Generate platform-specific content adaptations"""
         adaptations = {
             'instagram': {
                 'aspect_ratios': ['1:1', '4:5', '9:16'],
@@ -576,7 +583,8 @@ class CampaignManager:
         platform: str,
         audience_data: Dict[str, Any]
     ) -> List[datetime]:
-        """Calculate optimal posting times for platform"""
+        """
+Calculate optimal posting times for platform"""
         optimal_hours = audience_data.get('optimal_hours', [9, 12, 18, 21])
         optimal_times = []
         
@@ -605,7 +613,8 @@ class CampaignManager:
         platform_limits: Dict[str, int],
         config: CampaignConfig
     ) -> Dict[str, int]:
-        """Calculate posting frequency for platform"""
+        """
+Calculate posting frequency for platform"""
         frequency_settings = {
             'posts_per_day': min(
                 platform_limits.get('posts_per_day', 5),
@@ -623,7 +632,8 @@ class CampaignManager:
         platform: str,
         audience_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Set engagement targets for platform"""
+        """
+Set engagement targets for platform"""
         base_engagement_rate = audience_data.get('engagement_rate', 0.03)
         
         targets = {
@@ -640,7 +650,8 @@ class CampaignManager:
         platform: str,
         content_requirements: Dict[str, Any]
     ) -> List[str]:
-        """Generate platform-specific hashtags"""
+        """
+Generate platform-specific hashtags"""
         # This would use hashtag research APIs
         # For now, return generic hashtags
         
@@ -695,7 +706,8 @@ class CampaignManager:
         config: CampaignConfig,
         platform_schedules: Dict[str, PlatformSchedule]
     ) -> Dict[str, float]:
-        """Optimize budget allocation across platforms"""
+        """
+Optimize budget allocation across platforms"""
         total_budget = sum(config.budget_allocation.values())
         
         if total_budget == 0:
@@ -729,7 +741,8 @@ class CampaignManager:
         config: CampaignConfig,
         platform_schedules: Dict[str, PlatformSchedule]
     ) -> Dict[str, Any]:
-        """Create content distribution timeline"""
+        """
+Create content distribution timeline"""
         timeline = {
             'campaign_phases': [],
             'content_schedule': {},
@@ -775,7 +788,8 @@ class CampaignManager:
         self,
         config: CampaignConfig
     ) -> Dict[str, Any]:
-        """Set up campaign performance monitoring"""
+        """
+Set up campaign performance monitoring"""
         monitoring_config = {
             'metrics_to_track': [
                 'reach', 'impressions', 'engagement', 'clicks',
@@ -800,7 +814,8 @@ class CampaignManager:
         distribution_timeline: Dict[str, Any],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Store campaign configuration in database"""
+        """
+Store campaign configuration in database"""
         try:
             campaign_id = config.id
             
@@ -911,7 +926,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> float:
-        """Calculate campaign return on investment"""
+        """
+Calculate campaign return on investment"""
         # This would calculate actual ROI based on revenue and costs
         return 1.25  # 25% ROI simulation
     
@@ -919,7 +935,8 @@ class CampaignManager:
         self,
         campaign_id: str
     ) -> Dict[str, Dict[str, float]]:
-        """Analyze performance of individual content pieces"""
+        """
+Analyze performance of individual content pieces"""
         # This would analyze individual post performance
         return {
             'video_content': {'engagement_rate': 0.05, 'reach_rate': 0.12},
@@ -932,7 +949,8 @@ class CampaignManager:
         campaign_id: str,
         platforms: List[str]
     ) -> Dict[str, int]:
-        """Track audience growth across platforms"""
+        """
+Track audience growth across platforms"""
         growth = {}
         
         for platform in platforms:
@@ -946,7 +964,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> List[str]:
-        """Identify platforms that are underperforming"""
+        """
+Identify platforms that are underperforming"""
         underperforming = []
         
         for platform, performance in metrics.platform_performance.items():
@@ -963,7 +982,8 @@ class CampaignManager:
         metrics: CampaignMetrics,
         underperforming_platforms: List[str]
     ) -> Dict[str, float]:
-        """Optimize budget reallocation based on performance"""
+        """
+Optimize budget reallocation based on performance"""
         reallocation = {}
         
         # Move budget from underperforming to better performing platforms
@@ -980,7 +1000,8 @@ class CampaignManager:
         campaign_id: str,
         optimizations: Dict[str, float]
     ):
-        """Apply budget optimization changes"""
+        """
+Apply budget optimization changes"""
         logger.info(f"Applying budget optimizations for campaign {campaign_id}: {optimizations}")
         # Implementation would update actual budget allocations
     
@@ -1012,7 +1033,8 @@ class CampaignManager:
         campaign_id: str,
         optimizations: List[Dict[str, Any]]
     ):
-        """Apply timing optimization changes"""
+        """
+Apply timing optimization changes"""
         logger.info(f"Applying timing optimizations for campaign {campaign_id}")
         # Implementation would update actual schedules
     
@@ -1042,7 +1064,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> List[Dict[str, Any]]:
-        """Identify A/B testing opportunities"""
+        """
+Identify A/B testing opportunities"""
         opportunities = [
             {
                 'type': 'ab_test_opportunity',
@@ -1065,7 +1088,8 @@ class CampaignManager:
         current_metrics: CampaignMetrics,
         applied_optimizations: List[str]
     ) -> Dict[str, float]:
-        """Calculate expected improvements from optimizations"""
+        """
+Calculate expected improvements from optimizations"""
         improvements = {
             'engagement_rate_improvement': 0.0,
             'reach_improvement': 0.0,
@@ -1083,7 +1107,8 @@ class CampaignManager:
 
 # Factory function
 def create_campaign_manager() -> CampaignManager:
-    """Create and initialize campaign manager"""
+    """
+Create and initialize campaign manager"""
     return CampaignManager()
 
 # Export main classes

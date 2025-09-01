@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class AudioTask(str, Enum):
-    """Supported audio processing tasks."""
+    """
+Supported audio processing tasks."""
+
     
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     MUSIC_CLASSIFICATION = "music_classification"
@@ -49,6 +52,7 @@ class AudioTask(str, Enum):
 
 class AudioFormat(str, Enum):
     """Supported audio formats."""
+
     
     MP3 = "mp3"
     WAV = "wav"
@@ -62,6 +66,7 @@ class AudioFormat(str, Enum):
 
 class MusicGenre(str, Enum):
     """Supported music genres for classification."""
+
     
     ROCK = "rock"
     POP = "pop"
@@ -538,12 +543,14 @@ class AudioAnalysisConfig(BaseSettings):
         return [task for task in AudioTask]
     
     def estimate_processing_time(self, task: AudioTask, audio_duration_seconds: float) -> float:
-        """Estimate processing time for audio task."""
+        """
+Estimate processing time for audio task."""
         spec = self.get_audio_model_spec(task)
         return audio_duration_seconds * spec.processing_time_factor
     
     def get_optimal_sample_rate(self, task: AudioTask) -> int:
-        """Get optimal sample rate for specific audio task."""
+        """
+Get optimal sample rate for specific audio task."""
         # Speech tasks typically work better with 16kHz
         if task in [AudioTask.SPEECH_RECOGNITION, AudioTask.VOICE_DETECTION]:
             return 16000

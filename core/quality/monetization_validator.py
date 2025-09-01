@@ -8,8 +8,9 @@ Content analysis → Revenue potential assessment → Platform monetization rule
 Advertising compliance → Optimization recommendations → Monetization scoring
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import re
 from datetime import datetime, timezone
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationPlatform(Enum):
-    """Supported monetization platforms"""
+    """
+Supported monetization platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -39,6 +42,7 @@ class MonetizationPlatform(Enum):
 
 class RevenueModel(Enum):
     """Revenue generation models"""
+
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE = "affiliate"
@@ -55,6 +59,7 @@ class RevenueModel(Enum):
 
 class MonetizationCategory(Enum):
     """Monetization content categories"""
+
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     LIFESTYLE = "lifestyle"
@@ -74,6 +79,7 @@ class MonetizationCategory(Enum):
 
 class MonetizationStatus(Enum):
     """Monetization readiness status"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -177,7 +183,8 @@ class MonetizationValidationResult:
     analyzed_platforms: List[MonetizationPlatform] = field(default_factory=list)
     
     def add_opportunity(self, opportunity: MonetizationOpportunity):
-        """Add a monetization opportunity"""
+        """
+Add a monetization opportunity"""
         self.opportunities.append(opportunity)
         
         # Update platform scores
@@ -192,18 +199,21 @@ class MonetizationValidationResult:
         self.total_revenue_potential += (opportunity.estimated_revenue_low + opportunity.estimated_revenue_high) / 2
     
     def get_top_opportunities(self, limit: int = 5) -> List[MonetizationOpportunity]:
-        """Get top monetization opportunities by potential score"""
+        """
+Get top monetization opportunities by potential score"""
         sorted_opportunities = sorted(self.opportunities, 
                                     key=lambda x: x.potential_score, 
                                     reverse=True)
         return sorted_opportunities[:limit]
     
     def get_opportunities_by_platform(self, platform: MonetizationPlatform) -> List[MonetizationOpportunity]:
-        """Get opportunities for specific platform"""
+        """
+Get opportunities for specific platform"""
         return [opp for opp in self.opportunities if opp.platform == platform]
     
     def get_opportunities_by_revenue_model(self, model: RevenueModel) -> List[MonetizationOpportunity]:
-        """Get opportunities by revenue model"""
+        """
+Get opportunities by revenue model"""
         return [opp for opp in self.opportunities if opp.revenue_model == model]
     
     def to_dict(self) -> Dict[str, Any]:
@@ -244,14 +254,16 @@ class MonetizationValidationResult:
 
 
 class ContentCategoryAnalyzer:
-    """Content category analysis for monetization potential"""
+    """
+Content category analysis for monetization potential"""
     
     def __init__(self):
         self.category_keywords = self._initialize_category_keywords()
         self.category_monetization_potential = self._initialize_category_potential()
     
     def _initialize_category_keywords(self) -> Dict[MonetizationCategory, List[str]]:
-        """Initialize category detection keywords"""
+        """
+Initialize category detection keywords"""
         return {
             MonetizationCategory.ENTERTAINMENT: [
                 'funny', 'comedy', 'entertainment', 'humor', 'viral', 'trending',
@@ -304,7 +316,8 @@ class ContentCategoryAnalyzer:
         }
     
     def _initialize_category_potential(self) -> Dict[MonetizationCategory, float]:
-        """Initialize monetization potential by category (0-100)"""
+        """
+Initialize monetization potential by category (0-100)"""
         return {
             MonetizationCategory.FINANCE: 95.0,
             MonetizationCategory.BUSINESS: 90.0,
@@ -324,7 +337,8 @@ class ContentCategoryAnalyzer:
         }
     
     def analyze_content_category(self, content_text: str) -> Tuple[Optional[MonetizationCategory], float]:
-        """Analyze content to determine category and confidence"""
+        """
+Analyze content to determine category and confidence"""
         if not content_text:
             return None, 0.0
         
@@ -356,12 +370,14 @@ class ContentCategoryAnalyzer:
         return best_category[0], best_category[1]
     
     def get_category_monetization_potential(self, category: MonetizationCategory) -> float:
-        """Get monetization potential for category"""
+        """
+Get monetization potential for category"""
         return self.category_monetization_potential.get(category, 50.0)
 
 
 class PlatformAnalyzer:
-    """Platform-specific monetization analysis"""
+    """
+Platform-specific monetization analysis"""
     
     def __init__(self):
         self.platform_requirements = self._initialize_platform_requirements()
@@ -369,7 +385,8 @@ class PlatformAnalyzer:
         self.platform_category_fit = self._initialize_platform_category_fit()
     
     def _initialize_platform_requirements(self) -> Dict[MonetizationPlatform, Dict[str, Any]]:
-        """Initialize platform-specific requirements"""
+        """
+Initialize platform-specific requirements"""
         return {
             MonetizationPlatform.YOUTUBE: {
                 'min_subscribers': 1000,
@@ -413,7 +430,8 @@ class PlatformAnalyzer:
         }
     
     def _initialize_platform_revenue_models(self) -> Dict[MonetizationPlatform, List[RevenueModel]]:
-        """Initialize platform-supported revenue models"""
+        """
+Initialize platform-supported revenue models"""
         return {
             MonetizationPlatform.YOUTUBE: [
                 RevenueModel.ADVERTISING, RevenueModel.SPONSORSHIP, 
@@ -442,7 +460,8 @@ class PlatformAnalyzer:
         }
     
     def _initialize_platform_category_fit(self) -> Dict[MonetizationPlatform, Dict[MonetizationCategory, float]]:
-        """Initialize platform-category fit scores (0-100)"""
+        """
+Initialize platform-category fit scores (0-100)"""
         return {
             MonetizationPlatform.YOUTUBE: {
                 MonetizationCategory.EDUCATION: 95.0,
@@ -477,7 +496,8 @@ class PlatformAnalyzer:
     def analyze_platform_fit(self, platform: MonetizationPlatform,
                            category: MonetizationCategory,
                            content_data: Dict[str, Any]) -> float:
-        """Analyze how well content fits platform"""
+        """
+Analyze how well content fits platform"""
         # Base fit score from category
         category_fits = self.platform_category_fit.get(platform, {})
         base_score = category_fits.get(category, 50.0)
@@ -515,14 +535,16 @@ class PlatformAnalyzer:
 
 
 class RevenueEstimator:
-    """Revenue potential estimation engine"""
+    """
+Revenue potential estimation engine"""
     
     def __init__(self):
         self.revenue_models_data = self._initialize_revenue_models_data()
         self.platform_cpm_rates = self._initialize_platform_cpm_rates()
     
     def _initialize_revenue_models_data(self) -> Dict[RevenueModel, Dict[str, Any]]:
-        """Initialize revenue model characteristics"""
+        """
+Initialize revenue model characteristics"""
         return {
             RevenueModel.ADVERTISING: {
                 'typical_rpm': 2.5,  # Revenue per mille (thousand views)
@@ -563,7 +585,8 @@ class RevenueEstimator:
         }
     
     def _initialize_platform_cpm_rates(self) -> Dict[MonetizationPlatform, float]:
-        """Initialize platform CPM (cost per mille) rates"""
+        """
+Initialize platform CPM (cost per mille) rates"""
         return {
             MonetizationPlatform.YOUTUBE: 2.5,
             MonetizationPlatform.INSTAGRAM: 3.2,
@@ -577,7 +600,8 @@ class RevenueEstimator:
                                  revenue_model: RevenueModel,
                                  content_data: Dict[str, Any],
                                  audience_data: Dict[str, Any]) -> Tuple[float, float]:
-        """Estimate revenue potential (low, high)"""
+        """
+Estimate revenue potential (low, high)"""
         
         # Get follower/subscriber count
         followers = audience_data.get('followers', 0)
@@ -611,7 +635,8 @@ class RevenueEstimator:
     
     def _estimate_advertising_revenue(self, platform: MonetizationPlatform,
                                     monthly_views: int, engagement_rate: float) -> Tuple[float, float]:
-        """Estimate advertising revenue"""
+        """
+Estimate advertising revenue"""
         cpm = self.platform_cpm_rates.get(platform, 2.0)
         
         # Adjust CPM based on engagement
@@ -627,7 +652,8 @@ class RevenueEstimator:
         return creator_share * 0.7, creator_share * 1.3  # ±30% range
     
     def _estimate_sponsorship_revenue(self, followers: int, engagement_rate: float) -> Tuple[float, float]:
-        """Estimate sponsorship revenue"""
+        """
+Estimate sponsorship revenue"""
         # Base rate per 1k followers
         base_rate = 10.0
         
@@ -640,7 +666,8 @@ class RevenueEstimator:
         return monthly_potential * 0.3, monthly_potential * 1.5  # Wide range due to variability
     
     def _estimate_affiliate_revenue(self, monthly_views: int, engagement_rate: float) -> Tuple[float, float]:
-        """Estimate affiliate revenue"""
+        """
+Estimate affiliate revenue"""
         # Conversion rate (views to sales)
         base_conversion_rate = 0.001  # 0.1%
         engagement_boost = engagement_rate * 5  # Higher engagement = better conversion
@@ -655,7 +682,8 @@ class RevenueEstimator:
         return monthly_revenue * 0.5, monthly_revenue * 2.0
     
     def _estimate_subscription_revenue(self, followers: int, engagement_rate: float) -> Tuple[float, float]:
-        """Estimate subscription revenue"""
+        """
+Estimate subscription revenue"""
         # Conversion rate from followers to subscribers
         base_conversion = 0.02  # 2%
         engagement_boost = engagement_rate * 2
@@ -670,7 +698,8 @@ class RevenueEstimator:
         return monthly_revenue * 0.6, monthly_revenue * 1.4
     
     def _estimate_merchandise_revenue(self, followers: int, engagement_rate: float) -> Tuple[float, float]:
-        """Estimate merchandise revenue"""
+        """
+Estimate merchandise revenue"""
         # Purchase rate
         base_purchase_rate = 0.005  # 0.5%
         engagement_boost = engagement_rate * 3
@@ -686,7 +715,8 @@ class RevenueEstimator:
         return monthly_revenue * 0.4, monthly_revenue * 2.0
     
     def _estimate_course_revenue(self, followers: int, engagement_rate: float) -> Tuple[float, float]:
-        """Estimate course sales revenue"""
+        """
+Estimate course sales revenue"""
         # Course purchase rate (much lower than other products)
         base_conversion = 0.001  # 0.1%
         engagement_boost = engagement_rate * 2
@@ -703,7 +733,8 @@ class RevenueEstimator:
 
 
 class MonetizationQualityValidator:
-    """Enterprise monetization quality validation system"""
+    """
+Enterprise monetization quality validation system"""
     
     def __init__(self):
         self.category_analyzer = ContentCategoryAnalyzer()
@@ -823,7 +854,8 @@ class MonetizationQualityValidator:
                                        category: MonetizationCategory,
                                        content_data: Dict[str, Any],
                                        audience_data: Dict[str, Any]) -> List[MonetizationOpportunity]:
-        """Generate monetization opportunities for platform"""
+        """
+Generate monetization opportunities for platform"""
         opportunities = []
         
         # Get supported revenue models for platform
@@ -913,7 +945,8 @@ class MonetizationQualityValidator:
         return final_score
     
     def _assess_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Assess content quality for monetization"""
+        """
+Assess content quality for monetization"""
         score = 50.0  # Base score
         
         # Visual quality indicators
@@ -944,7 +977,8 @@ class MonetizationQualityValidator:
         return min(100.0, score)
     
     def _assess_audience_engagement(self, audience_data: Dict[str, Any]) -> float:
-        """Assess audience engagement quality"""
+        """
+Assess audience engagement quality"""
         engagement_rate = audience_data.get('engagement_rate', 0)
         
         # Convert engagement rate to score (0-100)
@@ -960,7 +994,8 @@ class MonetizationQualityValidator:
             return 25.0  # Below 1% is poor
     
     def _assess_brand_safety(self, content_data: Dict[str, Any]) -> float:
-        """Assess brand safety for monetization"""
+        """
+Assess brand safety for monetization"""
         score = 100.0  # Start with perfect score
         
         # Check for brand-unsafe content
@@ -986,7 +1021,8 @@ class MonetizationQualityValidator:
         return max(0.0, score)
     
     def _calculate_overall_score(self, result: MonetizationValidationResult) -> float:
-        """Calculate overall monetization score"""
+        """
+Calculate overall monetization score"""
         # Weight different factors
         content_weight = 0.25
         engagement_weight = 0.30
@@ -1010,7 +1046,8 @@ class MonetizationQualityValidator:
         return overall_score
     
     def _determine_monetization_status(self, result: MonetizationValidationResult) -> MonetizationStatus:
-        """Determine monetization status"""
+        """
+Determine monetization status"""
         score = result.overall_monetization_score
         
         if score >= 85:
@@ -1025,7 +1062,8 @@ class MonetizationQualityValidator:
             return MonetizationStatus.NOT_READY
     
     def _identify_primary_revenue_models(self, result: MonetizationValidationResult) -> List[RevenueModel]:
-        """Identify primary revenue models"""
+        """
+Identify primary revenue models"""
         # Group opportunities by revenue model and find top ones
         model_scores = {}
         
@@ -1045,7 +1083,8 @@ class MonetizationQualityValidator:
         return [model for model, score in sorted_models[:3]]
     
     def _get_recommended_platforms(self, result: MonetizationValidationResult) -> List[MonetizationPlatform]:
-        """Get recommended platforms based on scores"""
+        """
+Get recommended platforms based on scores"""
         # Sort platforms by score and return top ones with score > 60
         platform_scores = [(platform, score) for platform, score in result.platform_scores.items() if score > 60]
         platform_scores.sort(key=lambda x: x[1], reverse=True)
@@ -1053,7 +1092,8 @@ class MonetizationQualityValidator:
         return [platform for platform, score in platform_scores[:3]]
     
     def _generate_optimization_recommendations(self, result: MonetizationValidationResult) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         # Content quality recommendations
@@ -1266,7 +1306,8 @@ class MonetizationQualityValidator:
         return results
     
     def get_monetization_summary(self, results: List[MonetizationValidationResult]) -> Dict[str, Any]:
-        """Get monetization summary for multiple validations"""
+        """
+Get monetization summary for multiple validations"""
         if not results:
             return {}
         

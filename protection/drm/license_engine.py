@@ -5,7 +5,7 @@ Ultra-advanced license generation, validation, and management system for compreh
 digital rights management and content monetization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import secrets
@@ -41,7 +42,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class LicenseCategory(str, Enum):
-    """License categories for different content types."""
+    """
+License categories for different content types."""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -52,6 +55,7 @@ class LicenseCategory(str, Enum):
 
 class LicenseScope(str, Enum):
     """License scope definitions."""
+
     PERSONAL = "personal"
     COMMERCIAL = "commercial"
     EDUCATIONAL = "educational"
@@ -63,6 +67,7 @@ class LicenseScope(str, Enum):
 
 class TerritoryScope(str, Enum):
     """Geographic territory scope."""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -74,6 +79,7 @@ class TerritoryScope(str, Enum):
 
 class RevenueModel(str, Enum):
     """Revenue calculation models."""
+
     FLAT_FEE = "flat_fee"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
@@ -111,7 +117,8 @@ class LicenseTerms:
 
 @dataclass
 class LicenseHolder:
-    """License holder information."""
+    """
+License holder information."""
     user_id: int
     organization_id: Optional[str] = None
     legal_name: str = ""
@@ -151,7 +158,8 @@ class LicenseEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the License Engine."""
+        """
+Initialize the License Engine."""
         self.config = config
         self._initialized = False
         
@@ -557,7 +565,8 @@ class LicenseEngine:
         license_doc: Dict[str, Any],
         user_location: Optional[str]
     ) -> bool:
-        """Validate geographic access permissions."""
+        """
+Validate geographic access permissions."""
         license_terms = license_doc["license_terms"]
         territory = license_terms.get("territory")
         
@@ -766,7 +775,8 @@ class LicenseEngine:
         actions: Optional[List[str]] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[Dict[str, Any]]:
-        """Retrieve audit trail entries."""
+        """
+Retrieve audit trail entries."""
         filtered_entries = []
         
         for entry in self.audit_trail:

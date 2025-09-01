@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class ContentTypeEnum(str, Enum):
-    """Supported content types for fingerprinting"""
+    """
+Supported content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -30,6 +33,7 @@ class ContentTypeEnum(str, Enum):
 
 class ContentStatusEnum(str, Enum):
     """Content processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -40,6 +44,7 @@ class ContentStatusEnum(str, Enum):
 
 class FingerprintAlgorithmEnum(str, Enum):
     """Fingerprinting algorithms available"""
+
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     OPENCV_PHASH = "opencv_phash"
@@ -51,6 +56,7 @@ class FingerprintAlgorithmEnum(str, Enum):
 
 class ContentQualityEnum(str, Enum):
     """Content quality classifications"""
+
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"

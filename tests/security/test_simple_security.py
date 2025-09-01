@@ -19,7 +19,8 @@ from tests.utils.mock_api_server import ensure_api_server
 @pytest.mark.security
 @pytest.mark.asyncio
 async def test_authentication_security():
-    """Test authentication security - prevents unauthorized access."""
+    """
+Test authentication security - prevents unauthorized access."""
     # Ensure API server is available
     await ensure_api_server()
     

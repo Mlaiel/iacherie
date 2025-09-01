@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Union, Tuple
 from pydantic import BaseSettings, Field, validator
@@ -24,7 +25,9 @@ import asyncio
 
 
 class RateLimitStrategy(str, Enum):
-    """Rate limiting strategies."""
+    """
+Rate limiting strategies."""
+
     FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
@@ -34,6 +37,7 @@ class RateLimitStrategy(str, Enum):
 
 class RateLimitScope(str, Enum):
     """Rate limiting scope levels."""
+
     GLOBAL = "global"
     PER_USER = "per_user"
     PER_IP = "per_ip"
@@ -44,6 +48,7 @@ class RateLimitScope(str, Enum):
 
 class RateLimitAction(str, Enum):
     """Actions to take when rate limit is exceeded."""
+
     REJECT = "reject"
     QUEUE = "queue"
     THROTTLE = "throttle"
@@ -53,6 +58,7 @@ class RateLimitAction(str, Enum):
 
 class PriorityLevel(int, Enum):
     """Request priority levels."""
+
     EMERGENCY = 1
     HIGH = 2
     NORMAL = 3
@@ -62,7 +68,8 @@ class PriorityLevel(int, Enum):
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule configuration."""
+    """
+Rate limiting rule configuration."""
     name: str
     strategy: RateLimitStrategy
     scope: RateLimitScope
@@ -94,7 +101,8 @@ class QuotaConfig:
 
 @dataclass
 class BackoffConfig:
-    """Backoff configuration for rate limiting."""
+    """
+Backoff configuration for rate limiting."""
     initial_delay: float = 1.0
     max_delay: float = 300.0
     multiplier: float = 2.0
@@ -103,7 +111,8 @@ class BackoffConfig:
 
 
 class RateLimitingConfig(BaseSettings):
-    """Rate limiting configuration for API protection and service management."""
+    """
+Rate limiting configuration for API protection and service management."""
     
     # === GLOBAL RATE LIMITING ===
     
@@ -271,7 +280,8 @@ class RateLimitManager:
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialize default rate limiting rules."""
+        """
+Initialize default rate limiting rules."""
         # Global API rate limit
         self.register_rate_limit_rule(RateLimitRule(
             name="global_api_limit",
@@ -330,19 +340,23 @@ class RateLimitManager:
         self.rate_limit_rules[rule.name] = rule
     
     def register_quota_config(self, quota: QuotaConfig):
-        """Register a quota configuration."""
+        """
+Register a quota configuration."""
         self.quota_configs[quota.service_name] = quota
     
     def register_backoff_config(self, service_name: str, config: BackoffConfig):
-        """Register backoff configuration for a service."""
+        """
+Register backoff configuration for a service."""
         self.backoff_configs[service_name] = config
     
     def get_rate_limit_rule(self, rule_name: str) -> Optional[RateLimitRule]:
-        """Get a rate limiting rule by name."""
+        """
+Get a rate limiting rule by name."""
         return self.rate_limit_rules.get(rule_name)
     
     def get_quota_config(self, service_name: str) -> Optional[QuotaConfig]:
-        """Get quota configuration for a service."""
+        """
+Get quota configuration for a service."""
         return self.quota_configs.get(service_name)
     
     def calculate_delay(
@@ -351,7 +365,8 @@ class RateLimitManager:
         current_rate: float, 
         target_rate: float
     ) -> float:
-        """Calculate adaptive delay based on current and target rates."""
+        """
+Calculate adaptive delay based on current and target rates."""
         if current_rate <= target_rate:
             return 0.0
         
@@ -375,7 +390,8 @@ class RateLimitManager:
         return delay
     
     def get_service_rate_limits(self, service_name: str) -> Dict[str, Any]:
-        """Get rate limiting configuration for a service."""
+        """
+Get rate limiting configuration for a service."""
         service_attrs = {
             "requests_per_second": f"{service_name}_requests_per_second",
             "requests_per_minute": f"{service_name}_requests_per_minute",
@@ -425,12 +441,14 @@ class RateLimitManager:
         return (quota_config.current_usage + cost) > quota_config.daily_quota
     
     def update_quota_usage(self, service_name: str, cost: int = 1):
-        """Update quota usage for a service."""
+        """
+Update quota usage for a service."""
         if service_name in self.quota_configs:
             self.quota_configs[service_name].current_usage += cost
     
     def get_quota_usage_percentage(self, service_name: str) -> float:
-        """Get quota usage percentage for a service."""
+        """
+Get quota usage percentage for a service."""
         quota_config = self.get_quota_config(service_name)
         if not quota_config or quota_config.daily_quota == 0:
             return 0.0
@@ -438,7 +456,8 @@ class RateLimitManager:
         return (quota_config.current_usage / quota_config.daily_quota) * 100
     
     def should_apply_adaptive_limiting(self, metrics: Dict[str, float]) -> bool:
-        """Determine if adaptive rate limiting should be applied."""
+        """
+Determine if adaptive rate limiting should be applied."""
         if not self.config.enable_adaptive_limiting:
             return False
         

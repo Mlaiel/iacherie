@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ModelMetrics:
-    """Comprehensive model performance metrics"""
+    """
+Comprehensive model performance metrics"""
     accuracy: float
     precision: float
     recall: float
@@ -48,14 +50,16 @@ class ModelMetrics:
 
 
 class DeviceManager:
-    """Intelligent device management for optimal performance"""
+    """
+Intelligent device management for optimal performance"""
     
     def __init__(self):
         self.available_devices = self._detect_devices()
         self.device_capabilities = self._get_device_capabilities()
     
     def _detect_devices(self) -> List[str]:
-        """Detect available computing devices"""
+        """
+Detect available computing devices"""
         devices = ["cpu"]
         
         # CUDA devices
@@ -378,7 +382,8 @@ class PerformanceProfiler:
         return psutil.Process().memory_info().rss / (1024 * 1024)
     
     def _get_gpu_usage(self) -> float:
-        """Get current GPU utilization percentage"""
+        """
+Get current GPU utilization percentage"""
         try:
             gpus = GPUtil.getGPUs()
             if gpus:
@@ -388,7 +393,8 @@ class PerformanceProfiler:
         return 0.0
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""
+        """
+Get comprehensive performance summary"""
         
         if not self.metrics_history:
             return {}
@@ -412,7 +418,8 @@ class ContentAnalyzer:
     
     @staticmethod
     def extract_content_metadata(file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from content files"""
+        """
+Extract comprehensive metadata from content files"""
         
         metadata = {
             "file_path": str(file_path),

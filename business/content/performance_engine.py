@@ -15,6 +15,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import asyncio
 import json
 import logging
@@ -50,7 +51,8 @@ settings = get_settings()
 
 @dataclass
 class TestConfiguration:
-    """Configuration for performance tests."""
+    """
+Configuration for performance tests."""
     test_type: str
     duration_seconds: int
     concurrent_users: int
@@ -63,7 +65,8 @@ class TestConfiguration:
 
 @dataclass
 class LoadTestMetrics:
-    """Metrics collected during load testing."""
+    """
+Metrics collected during load testing."""
     timestamp: datetime
     response_time_ms: float
     throughput_rps: float
@@ -75,7 +78,8 @@ class LoadTestMetrics:
 
 
 class PerformanceTestEngine:
-    """Industrial performance testing and optimization engine."""
+    """
+Industrial performance testing and optimization engine."""
     
     def __init__(self):
         self.db = get_database()
@@ -742,7 +746,8 @@ class PerformanceTestEngine:
         test_id: UUID,
         monitoring_interval: int
     ):
-        """Monitor system resources during test execution."""
+        """
+Monitor system resources during test execution."""
         try:
             while test_id in self.active_tests and self.active_tests[test_id]['status'] == 'running':
                 metrics = {
@@ -834,7 +839,8 @@ class PerformanceTestEngine:
         }
     
     def _rate_performance(self, value: float, metric_type: str) -> str:
-        """Rate performance based on benchmarks."""
+        """
+Rate performance based on benchmarks."""
         benchmarks = self.performance_benchmarks.get(metric_type, {})
         
         if not benchmarks:

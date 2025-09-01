@@ -8,10 +8,11 @@ Responsibility: Compression avancée multi-format avec optimisation intelligente
 ===============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import zstandard as zstd
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CompressionResult:
-    """Résultat d'une opération de compression"""
+    """
+Résultat d'une opération de compression"""
     original_size: int
     compressed_size: int
     compression_ratio: float
@@ -50,12 +52,14 @@ class CompressionResult:
     
     @property
     def space_saved_bytes(self) -> int:
-        """Espace économisé en bytes"""
+        """
+Espace économisé en bytes"""
         return self.original_size - self.compressed_size
     
     @property
     def space_saved_percentage(self) -> float:
-        """Pourcentage d'espace économisé"""
+        """
+Pourcentage d'espace économisé"""
         if self.original_size == 0:
             return 0.0
         return ((self.original_size - self.compressed_size) / self.original_size) * 100
@@ -63,7 +67,8 @@ class CompressionResult:
 
 @dataclass
 class CompressionConfig:
-    """Configuration de compression"""
+    """
+Configuration de compression"""
     algorithm: str = "zstd"
     level: int = 6
     threads: int = 4
@@ -100,7 +105,8 @@ class CompressionAlgorithm(ABC):
         level: int = 6,
         **kwargs
     ) -> CompressionResult:
-        """Compresse un fichier"""
+        """
+Compresse un fichier"""
         pass
     
     @abstractmethod
@@ -110,12 +116,14 @@ class CompressionAlgorithm(ABC):
         output_path: Path,
         **kwargs
     ) -> bool:
-        """Décompresse un fichier"""
+        """
+Décompresse un fichier"""
         pass
     
     @abstractmethod
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
-        """Retourne le niveau optimal pour le type de contenu"""
+        """
+Retourne le niveau optimal pour le type de contenu"""
         pass
 
 
@@ -301,7 +309,8 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         return base_level
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256 d'un fichier"""
+        """
+Calcule le checksum SHA-256 d'un fichier"""
         hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
@@ -436,7 +445,8 @@ class GzipAlgorithm(CompressionAlgorithm):
         return self.optimal_levels.get(content_type, 6)
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256"""
+        """
+Calcule le checksum SHA-256"""
         hash_sha256 = hashlib.sha256()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b""):
@@ -542,7 +552,8 @@ class Bzip2Algorithm(CompressionAlgorithm):
         return self.optimal_levels.get(content_type, 6)
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256"""
+        """
+Calcule le checksum SHA-256"""
         hash_sha256 = hashlib.sha256()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b""):
@@ -895,7 +906,8 @@ class CompressionEngine:
         return hash_sha256.hexdigest()
     
     async def _update_compression_stats(self, result: CompressionResult):
-        """Met à jour les statistiques globales de compression"""
+        """
+Met à jour les statistiques globales de compression"""
         self.compression_stats["total_files_compressed"] += 1
         self.compression_stats["total_bytes_processed"] += result.original_size
         self.compression_stats["total_bytes_saved"] += result.space_saved_bytes

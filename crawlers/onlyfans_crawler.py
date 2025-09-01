@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class OnlyFansSubscriptionType(str, Enum):
-    """OnlyFans subscription types"""
+    """
+OnlyFans subscription types"""
+
     FREE = "free"
     PAID = "paid"
     PROMOTIONAL = "promotional"
@@ -44,6 +47,7 @@ class OnlyFansSubscriptionType(str, Enum):
 
 class OnlyFansContentType(str, Enum):
     """OnlyFans content types"""
+
     POST = "post"
     MESSAGE = "message"
     STORY = "story"
@@ -53,6 +57,7 @@ class OnlyFansContentType(str, Enum):
 
 class OnlyFansMediaType(str, Enum):
     """OnlyFans media types"""
+
     PHOTO = "photo"
     VIDEO = "video"
     AUDIO = "audio"
@@ -76,7 +81,8 @@ class OnlyFansMedia(BaseModel):
 
 
 class OnlyFansCreator(BaseModel):
-    """OnlyFans creator data model"""
+    """
+OnlyFans creator data model"""
     creator_id: str
     username: str
     display_name: str
@@ -102,7 +108,8 @@ class OnlyFansCreator(BaseModel):
 
 
 class OnlyFansPost(BaseModel):
-    """OnlyFans post data model"""
+    """
+OnlyFans post data model"""
     post_id: str
     creator: OnlyFansCreator
     text: Optional[str] = None
@@ -143,7 +150,8 @@ class OnlyFansMessage(BaseModel):
 
 
 class OnlyFansStory(BaseModel):
-    """OnlyFans story data model"""
+    """
+OnlyFans story data model"""
     story_id: str
     creator: OnlyFansCreator
     media: OnlyFansMedia
@@ -154,7 +162,8 @@ class OnlyFansStory(BaseModel):
 
 
 class OnlyFansSearchResults(BaseModel):
-    """OnlyFans search results data model"""
+    """
+OnlyFans search results data model"""
     query: str
     total_results: int
     creators: List[OnlyFansCreator] = Field(default_factory=list)
@@ -167,7 +176,8 @@ class OnlyFansSearchResults(BaseModel):
 
 
 class OnlyFansAnalytics(BaseModel):
-    """OnlyFans analytics data model"""
+    """
+OnlyFans analytics data model"""
     creator_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
@@ -583,7 +593,8 @@ class OnlyFansCrawler(BaseCrawler):
         return []
 
     async def _get_creator_recent_posts(self, username: str) -> List[OnlyFansPost]:
-        """Get recent posts from creator"""
+        """
+Get recent posts from creator"""
         try:
             async with self.session.get(f"{self.api_base}/users/{username}/posts") as response:
                 if response.status == 200:
@@ -728,12 +739,14 @@ class OnlyFansCrawler(BaseCrawler):
         return []
 
     async def _calculate_similarity(self, post: OnlyFansPost) -> float:
-        """Calculate similarity score against protected content"""
+        """
+Calculate similarity score against protected content"""
         # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, post: OnlyFansPost) -> str:
-        """Check protection status of post"""
+        """
+Check protection status of post"""
         if post.post_id in self.protected_content:
             return "protected"
         return "unprotected"

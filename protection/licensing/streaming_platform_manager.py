@@ -11,7 +11,7 @@ Ultra-advanced streaming platform licensing and rights management:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Music Business Expert + Platform Integration Specialist + Revenue Analyst + Legal Tech Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
@@ -21,6 +21,7 @@ applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -38,7 +39,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class StreamingPlatform(Enum):
-    """Supported streaming platforms"""
+    """
+Supported streaming platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -52,6 +55,7 @@ class StreamingPlatform(Enum):
 
 class LicenseScope(Enum):
     """License scope types"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     COUNTRY_SPECIFIC = "country_specific"
@@ -60,6 +64,7 @@ class LicenseScope(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     AUDIO_TRACK = "audio_track"
     ALBUM = "album"
     PLAYLIST = "playlist"
@@ -70,6 +75,7 @@ class ContentFormat(Enum):
 
 class RevenueModel(Enum):
     """Platform revenue models"""
+
     SUBSCRIPTION = "subscription"
     ADVERTISING = "advertising"
     PAY_PER_STREAM = "pay_per_stream"
@@ -93,7 +99,8 @@ class PlatformSpecifications:
 
 @dataclass
 class StreamingLicense:
-    """Streaming platform license structure"""
+    """
+Streaming platform license structure"""
     license_id: str
     content_id: str
     platform: StreamingPlatform
@@ -111,7 +118,8 @@ class StreamingLicense:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
+    """
+Platform performance metrics"""
     platform: StreamingPlatform
     total_streams: int
     unique_listeners: int
@@ -131,7 +139,8 @@ class StreamingPlatformLicenseManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize streaming platform license manager."""
+        """
+Initialize streaming platform license manager."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -258,7 +267,8 @@ class StreamingPlatformLicenseManager:
         }
 
     def _initialize_platform_apis(self):
-        """Initialize API connections for streaming platforms."""
+        """
+Initialize API connections for streaming platforms."""
         for platform, specs in self.platform_specs.items():
             api_config = specs.api_integration
             
@@ -508,7 +518,8 @@ class StreamingPlatformLicenseManager:
         return processing_times.get(platform, '3-7 business days')
 
     def _get_platform_next_steps(self, platform: StreamingPlatform) -> List[str]:
-        """Get next steps for platform submission."""
+        """
+Get next steps for platform submission."""
         common_steps = [
             'Monitor submission status',
             'Prepare promotional materials',
@@ -541,7 +552,8 @@ class StreamingPlatformLicenseManager:
         platform_licenses: Dict[str, Any],
         optimized_terms: Dict[StreamingPlatform, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate comprehensive licensing summary."""
+        """
+Generate comprehensive licensing summary."""
         successful_platforms = [
             platform for platform, result in platform_licenses.items()
             if result.get('status') == 'success'
@@ -571,7 +583,8 @@ class StreamingPlatformLicenseManager:
         }
 
     async def _calculate_potential_reach(self, platforms: List[str]) -> Dict[str, Any]:
-        """Calculate potential audience reach across platforms."""
+        """
+Calculate potential audience reach across platforms."""
         # Platform user bases (approximate)
         platform_users = {
             'spotify': 500_000_000,
@@ -606,7 +619,8 @@ class StreamingPlatformLicenseManager:
         platforms: List[str],
         optimized_terms: Dict[StreamingPlatform, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate revenue projections across platforms."""
+        """
+Calculate revenue projections across platforms."""
         # Average revenue per stream by platform (in USD)
         revenue_per_stream = {
             'spotify': 0.003,
@@ -659,7 +673,8 @@ class StreamingPlatformLicenseManager:
         self,
         optimized_terms: Dict[StreamingPlatform, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate impact of optimization on licensing terms."""
+        """
+Calculate impact of optimization on licensing terms."""
         optimization_improvements = []
         total_improvement = 0
         
@@ -682,7 +697,8 @@ class StreamingPlatformLicenseManager:
         }
 
     def _generate_recommended_actions(self, platform_licenses: Dict[str, Any]) -> List[str]:
-        """Generate recommended actions based on licensing results."""
+        """
+Generate recommended actions based on licensing results."""
         recommendations = []
         
         failed_licenses = [
@@ -763,7 +779,8 @@ class StreamingPlatformLicenseManager:
         content_id: str,
         date_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Get performance analytics across all platforms for content."""
+        """
+Get performance analytics across all platforms for content."""
         try:
             analytics_data = {}
             
@@ -835,7 +852,8 @@ class StreamingPlatformLicenseManager:
         self,
         analytics_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comparative analysis across platforms."""
+        """
+Generate comparative analysis across platforms."""
         if not analytics_data:
             return {}
         
@@ -879,7 +897,8 @@ class StreamingPlatformLicenseManager:
         self,
         analytics_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate performance improvement recommendations."""
+        """
+Generate performance improvement recommendations."""
         recommendations = []
         
         if not analytics_data:
@@ -919,10 +938,12 @@ class StreamingPlatformLicenseManager:
 
 
 class RevenueOptimizationEngine:
-    """Revenue optimization engine for streaming platforms."""
+    """
+Revenue optimization engine for streaming platforms."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize revenue optimization engine."""
+        """
+Initialize revenue optimization engine."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
 
@@ -949,7 +970,8 @@ class RevenueOptimizationEngine:
         platform: StreamingPlatform,
         base_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize terms for specific platform."""
+        """
+Optimize terms for specific platform."""
         optimized = base_terms.copy()
         
         # Platform-specific optimizations

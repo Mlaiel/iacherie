@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import json
 import logging
@@ -37,7 +38,8 @@ settings = get_settings()
 
 
 class RabbitMQNodeConfig(BaseModel):
-    """Configuration for RabbitMQ cluster node"""
+    """
+Configuration for RabbitMQ cluster node"""
     name: str = Field(..., description="Node name identifier")
     host: str = Field(default="localhost", description="Node host address")
     port: int = Field(default=5672, description="AMQP port")
@@ -98,7 +100,8 @@ class RabbitMQManager:
         self.monitoring_tasks: List[asyncio.Task] = []
 
     def _get_default_config(self) -> RabbitMQClusterConfig:
-        """Get default RabbitMQ cluster configuration"""
+        """
+Get default RabbitMQ cluster configuration"""
         return RabbitMQClusterConfig(
             cluster_name="ia-influencer-rabbitmq",
             nodes=[
@@ -273,7 +276,8 @@ class RabbitMQManager:
         return ''.join(secrets.choice(alphabet) for _ in range(32))
 
     async def _form_cluster(self) -> None:
-        """Form RabbitMQ cluster from deployed nodes"""
+        """
+Form RabbitMQ cluster from deployed nodes"""
         try:
             if len(self.config.nodes) < 2:
                 logger.info("Single node deployment, skipping cluster formation")

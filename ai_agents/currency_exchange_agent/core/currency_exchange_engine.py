@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CurrencyExchangeJob:
-    """Job configuration for currency_exchange operations"""
+    """
+Job configuration for currency_exchange operations"""
     job_id: str
     operation: str
     data: Dict[str, Any]
@@ -26,7 +28,8 @@ class CurrencyExchangeJob:
 
 @dataclass 
 class CurrencyExchangeResult:
-    """Result of currency_exchange operations"""
+    """
+Result of currency_exchange operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
@@ -52,7 +55,8 @@ class CurrencyExchangeEngine:
         self.active_jobs = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the currency_exchange engine"""
+        """
+Initialize the currency_exchange engine"""
         try:
             logger.info("Initializing CurrencyExchange Engine...")
             
@@ -150,7 +154,8 @@ class CurrencyExchangeEngine:
             del self.active_jobs[job_id]
     
     async def _process_job(self, job: CurrencyExchangeJob) -> Dict[str, Any]:
-        """Process a specific job"""
+        """
+Process a specific job"""
         # Implementation specific to currency_exchange operations
         return {
             "operation": job.operation,

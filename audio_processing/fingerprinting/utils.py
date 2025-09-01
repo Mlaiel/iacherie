@@ -9,6 +9,7 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
+
 import os
 import hashlib
 import mimetypes
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Container for comprehensive audio metadata."""
+    """
+Container for comprehensive audio metadata."""
     
     filename: str
     file_path: Optional[str] = None
@@ -65,7 +67,8 @@ class FileValidator:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the file validator."""
+        """
+Initialize the file validator."""
         self.config = config or self._default_config()
         
         # Supported MIME types
@@ -235,7 +238,8 @@ class FileValidator:
         return hash_obj.hexdigest()
     
     async def _scan_for_security_issues(self, file_path: str) -> List[str]:
-        """Basic security scanning for malicious content."""
+        """
+Basic security scanning for malicious content."""
         issues = []
         
         try:
@@ -271,7 +275,8 @@ class DataSerializer:
     """
     
     def __init__(self, compression_level: int = 6):
-        """Initialize the data serializer."""
+        """
+Initialize the data serializer."""
         self.compression_level = compression_level
         
     def serialize_features(self, features: np.ndarray, compress: bool = True) -> str:
@@ -380,13 +385,15 @@ class PerformanceMonitor:
     """
     
     def __init__(self, enable_detailed_profiling: bool = False):
-        """Initialize the performance monitor."""
+        """
+Initialize the performance monitor."""
         self.enable_detailed_profiling = enable_detailed_profiling
         self.metrics = {}
         self.operation_counts = {}
         
     def measure_execution_time(self, operation_name: str = None):
-        """Decorator to measure function execution time."""
+        """
+Decorator to measure function execution time."""
         def decorator(func: Callable) -> Callable:
             @wraps(func)
             async def async_wrapper(*args, **kwargs):
@@ -444,7 +451,8 @@ class PerformanceMonitor:
         self.operation_counts[operation] += 1
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary."""
+        """
+Get comprehensive performance summary."""
         summary = {}
         
         for operation, metrics in self.metrics.items():
@@ -466,7 +474,8 @@ class PerformanceMonitor:
         return summary
     
     def reset_metrics(self):
-        """Reset all collected metrics."""
+        """
+Reset all collected metrics."""
         self.metrics.clear()
         self.operation_counts.clear()
 
@@ -478,7 +487,8 @@ class TemporaryFileManager:
     """
     
     def __init__(self, temp_dir: Optional[str] = None):
-        """Initialize the temporary file manager."""
+        """
+Initialize the temporary file manager."""
         self.temp_dir = temp_dir or tempfile.gettempdir()
         self.temp_files = []
         
@@ -553,12 +563,14 @@ class TemporaryFileManager:
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit with cleanup."""
+        """
+Context manager exit with cleanup."""
         self.cleanup()
 
 
 def format_duration(seconds: float) -> str:
-    """Format duration in seconds to human-readable string."""
+    """
+Format duration in seconds to human-readable string."""
     if seconds < 60:
         return f"{seconds:.1f}s"
     elif seconds < 3600:
@@ -640,7 +652,8 @@ class BatchProcessor:
     """
     
     def __init__(self, batch_size: int = 10, max_workers: int = 4):
-        """Initialize the batch processor."""
+        """
+Initialize the batch processor."""
         self.batch_size = batch_size
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)

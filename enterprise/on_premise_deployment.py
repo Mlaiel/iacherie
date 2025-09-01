@@ -13,6 +13,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -58,6 +61,7 @@ class DeploymentEnvironment(Enum):
 
 class DeploymentStrategy(Enum):
     """Deployment strategy types"""
+
     ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -67,6 +71,7 @@ class DeploymentStrategy(Enum):
 
 class ContainerOrchestrator(Enum):
     """Container orchestration platforms"""
+
     KUBERNETES = "kubernetes"
     DOCKER_SWARM = "docker_swarm"
     DOCKER_COMPOSE = "docker_compose"
@@ -76,6 +81,7 @@ class ContainerOrchestrator(Enum):
 
 class NetworkMode(Enum):
     """Network configuration modes"""
+
     BRIDGE = "bridge"
     HOST = "host"
     OVERLAY = "overlay"
@@ -85,6 +91,7 @@ class NetworkMode(Enum):
 
 class SecurityProfile(Enum):
     """Security hardening profiles"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     HARDENED = "hardened"
@@ -131,7 +138,8 @@ class NetworkConfiguration:
 
 @dataclass
 class SecurityConfiguration:
-    """Security hardening configuration"""
+    """
+Security hardening configuration"""
     profile: SecurityProfile
     enable_rbac: bool = True
     enable_network_policies: bool = True
@@ -150,7 +158,8 @@ class SecurityConfiguration:
 
 @dataclass
 class InfrastructureConfiguration:
-    """Infrastructure configuration specification"""
+    """
+Infrastructure configuration specification"""
     cluster_name: str
     kubernetes_version: str
     node_pools: List[Dict[str, Any]]
@@ -166,7 +175,8 @@ class InfrastructureConfiguration:
 
 @dataclass
 class DeploymentPlan:
-    """Comprehensive deployment plan"""
+    """
+Comprehensive deployment plan"""
     deployment_id: str
     environment: DeploymentEnvironment
     strategy: DeploymentStrategy
@@ -194,7 +204,8 @@ class ContainerOrchestrator:
         self._k8s_core_v1: Optional[k8s_client.CoreV1Api] = None
         
     async def initialize(self):
-        """Initialize orchestrator connections"""
+        """
+Initialize orchestrator connections"""
         try:
             if self.orchestrator_type == ContainerOrchestrator.KUBERNETES:
                 await self._initialize_kubernetes()
@@ -546,7 +557,8 @@ class NetworkConfigurator:
         config: NetworkConfiguration,
         environment: DeploymentEnvironment
     ) -> Dict[str, Any]:
-        """Configure network for deployment"""
+        """
+Configure network for deployment"""
         try:
             network_config = {
                 'mode': config.mode.value,
@@ -603,7 +615,8 @@ class NetworkConfigurator:
         }
     
     def _get_development_network_template(self) -> Dict[str, Any]:
-        """Get development network template"""
+        """
+Get development network template"""
         return {
             'enable_monitoring': True,
             'enable_logging': True,
@@ -617,7 +630,8 @@ class NetworkConfigurator:
         }
     
     def _get_high_security_network_template(self) -> Dict[str, Any]:
-        """Get high security network template"""
+        """
+Get high security network template"""
         return {
             'enable_monitoring': True,
             'enable_logging': True,
@@ -634,7 +648,8 @@ class NetworkConfigurator:
         }
     
     async def _configure_load_balancer(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure load balancer"""
+        """
+Configure load balancer"""
         try:
             lb_config = {
                 'type': config.get('type', 'nginx'),
@@ -723,7 +738,8 @@ class SecurityHardening:
         config: SecurityConfiguration,
         infrastructure: InfrastructureConfiguration
     ) -> Dict[str, Any]:
-        """Apply comprehensive security hardening"""
+        """
+Apply comprehensive security hardening"""
         try:
             security_config = self._security_profiles[config.profile].copy()
             
@@ -776,7 +792,8 @@ class SecurityHardening:
         }
     
     def _get_standard_security_config(self) -> Dict[str, Any]:
-        """Get standard security configuration"""
+        """
+Get standard security configuration"""
         return {
             'level': 'standard',
             'features': {
@@ -790,7 +807,8 @@ class SecurityHardening:
         }
     
     def _get_hardened_security_config(self) -> Dict[str, Any]:
-        """Get hardened security configuration"""
+        """
+Get hardened security configuration"""
         return {
             'level': 'hardened',
             'features': {
@@ -808,7 +826,8 @@ class SecurityHardening:
         }
     
     def _get_government_security_config(self) -> Dict[str, Any]:
-        """Get government-grade security configuration"""
+        """
+Get government-grade security configuration"""
         return {
             'level': 'government',
             'compliance_standards': ['FISMA', 'FedRAMP', 'NIST'],
@@ -825,7 +844,8 @@ class SecurityHardening:
         }
     
     def _get_financial_security_config(self) -> Dict[str, Any]:
-        """Get financial-grade security configuration"""
+        """
+Get financial-grade security configuration"""
         return {
             'level': 'financial',
             'compliance_standards': ['PCI_DSS', 'SOX', 'GLBA'],
@@ -841,7 +861,8 @@ class SecurityHardening:
         }
     
     async def _configure_rbac(self, infrastructure: InfrastructureConfiguration) -> Dict[str, Any]:
-        """Configure Role-Based Access Control"""
+        """
+Configure Role-Based Access Control"""
         try:
             rbac_config = {
                 'enabled': True,
@@ -1033,7 +1054,8 @@ class OnPremiseDeployment:
         self._active_deployments: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self):
-        """Initialize deployment system"""
+        """
+Initialize deployment system"""
         try:
             await self.container_orchestrator.initialize()
             logger.info("On-premise deployment system initialized")
@@ -1234,7 +1256,8 @@ class OnPremiseDeployment:
         return self._active_deployments.get(deployment_id)
     
     async def list_deployments(self, organization_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List deployments"""
+        """
+List deployments"""
         deployments = []
         
         for deployment_id, status in self._active_deployments.items():
@@ -1256,7 +1279,8 @@ class OnPremiseDeployment:
         return deployments
     
     async def rollback_deployment(self, deployment_id: str) -> bool:
-        """Rollback deployment"""
+        """
+Rollback deployment"""
         try:
             if deployment_id not in self._deployment_plans:
                 raise ValueError(f"Deployment plan not found: {deployment_id}")

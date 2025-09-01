@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
 """
+
 from typing import Dict, Optional, Any, Union
 import asyncio
 from web3 import Web3
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NetworkConfig:
-    """Network configuration for blockchain connections."""
+    """
+Network configuration for blockchain connections."""
     
     name: str
     rpc_url: str
@@ -33,7 +35,8 @@ class NetworkConfig:
 
 
 class BlockchainConnection:
-    """Professional blockchain connection manager for multi-network support."""
+    """
+Professional blockchain connection manager for multi-network support."""
     
     # Network configurations
     NETWORKS = {
@@ -95,7 +98,8 @@ class BlockchainConnection:
         self.connection_retries = 3
         
     async def initialize_connection(self) -> bool:
-        """Initialize blockchain connection with retry logic."""
+        """
+Initialize blockchain connection with retry logic."""
         try:
             network_config = self.NETWORKS.get(self.network)
             if not network_config:
@@ -328,7 +332,8 @@ class MultiNetworkManager:
         return self.connections.get(target_network)
     
     async def switch_active_network(self, network: str) -> bool:
-        """Switch active network."""
+        """
+Switch active network."""
         if network in self.connections:
             self.active_network = network
             return True
@@ -340,7 +345,8 @@ class MultiNetworkManager:
         return False
     
     def get_all_network_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all network connections."""
+        """
+Get status of all network connections."""
         status = {}
         for network, connection in self.connections.items():
             status[network] = {

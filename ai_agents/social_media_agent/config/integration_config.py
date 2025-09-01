@@ -20,6 +20,7 @@ Expert Development Team Specialties:
 - Security & Microservices Expert - Secure credential management and API security
 - DevOps & Infrastructure Engineer - Configuration deployment and environment management
 """
+
 import asyncio
 import json
 import logging
@@ -52,7 +53,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class IntegrationType(Enum):
-    """Integration type classification"""
+    """
+Integration type classification"""
+
     SOCIAL_PLATFORM = "social_platform"
     CONTENT_PROTECTION = "content_protection"
     MONETIZATION = "monetization"
@@ -67,6 +70,7 @@ class IntegrationType(Enum):
 
 class ConfigurationScope(Enum):
     """Configuration scope levels"""
+
     GLOBAL = "global"
     TENANT = "tenant"
     USER = "user"
@@ -75,6 +79,7 @@ class ConfigurationScope(Enum):
 
 class PlatformCategory(Enum):
     """Platform category classification"""
+
     SOCIAL_MEDIA = "social_media"
     PROFESSIONAL = "professional"
     MESSAGING = "messaging"
@@ -124,7 +129,8 @@ class APICredentials:
         self.updated_at = datetime.now(timezone.utc)
 
     def decrypt_credentials(self, encryption_key: bytes) -> Dict[str, str]:
-        """Decrypt and return sensitive credential data"""
+        """
+Decrypt and return sensitive credential data"""
         if not self.encrypted:
             return {
                 "client_secret": self.client_secret,
@@ -222,7 +228,8 @@ class SocialMediaAgentIntegrator:
         self.agent_connections: Dict[str, Any] = {}
         
     async def initialize_integrations(self) -> Dict[str, Any]:
-        """Initialize all configured agent integrations"""
+        """
+Initialize all configured agent integrations"""
         results = {}
         
         for integration in self.config.enabled_integrations:
@@ -247,7 +254,8 @@ class SocialMediaAgentIntegrator:
         return results
     
     async def _init_protection_integration(self) -> Dict[str, Any]:
-        """Initialize protection agent integration"""
+        """
+Initialize protection agent integration"""
         return {
             'status': 'active',
             'features': {
@@ -259,7 +267,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_monetization_integration(self) -> Dict[str, Any]:
-        """Initialize monetization agent integration"""
+        """
+Initialize monetization agent integration"""
         return {
             'status': 'active',
             'features': {
@@ -271,7 +280,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_fingerprinting_integration(self) -> Dict[str, Any]:
-        """Initialize fingerprinting agent integration"""
+        """
+Initialize fingerprinting agent integration"""
         return {
             'status': 'active',
             'features': {
@@ -284,7 +294,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_seo_integration(self) -> Dict[str, Any]:
-        """Initialize SEO agent integration"""
+        """
+Initialize SEO agent integration"""
         return {
             'status': 'active',
             'features': {
@@ -295,7 +306,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_collaboration_integration(self) -> Dict[str, Any]:
-        """Initialize collaboration agent integration"""
+        """
+Initialize collaboration agent integration"""
         return {
             'status': 'active',
             'features': {
@@ -306,11 +318,13 @@ class SocialMediaAgentIntegrator:
         }
     
     def get_integration_status(self) -> Dict[IntegrationType, bool]:
-        """Get current status of all integrations"""
+        """
+Get current status of all integrations"""
         return self.integration_status.copy()
     
     async def process_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process complete workflow with all integrated agents"""
+        """
+Process complete workflow with all integrated agents"""
         workflow_results = {
             'content_id': content_data.get('content_id'),
             'workflow_status': 'processing',
@@ -355,7 +369,8 @@ class SocialMediaAgentIntegrator:
         return workflow_results
     
     async def _process_protection_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process protection workflow"""
+        """
+Process protection workflow"""
         return {
             'status': 'protected',
             'fingerprint_generated': True,
@@ -364,7 +379,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_fingerprinting_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process fingerprinting workflow"""
+        """
+Process fingerprinting workflow"""
         return {
             'status': 'fingerprinted',
             'fingerprint_types': ['audio', 'video', 'image', 'text'],
@@ -373,7 +389,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_seo_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process SEO workflow"""
+        """
+Process SEO workflow"""
         return {
             'status': 'optimized',
             'keywords_added': True,
@@ -382,7 +399,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_social_media_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process social media workflow"""
+        """
+Process social media workflow"""
         return {
             'status': 'published',
             'platforms': content_data.get('platforms', []),
@@ -391,7 +409,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_monetization_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process monetization workflow"""
+        """
+Process monetization workflow"""
         return {
             'status': 'tracking_active',
             'revenue_estimation': 'enabled',
@@ -400,7 +419,8 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_collaboration_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process collaboration workflow"""
+        """
+Process collaboration workflow"""
         return {
             'status': 'analyzed',
             'collaboration_matches': [],

@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -46,7 +47,9 @@ from ...integrations.schema_apis import SchemaAPIManager
 logger = logging.getLogger(__name__)
 
 class OptimizationLevel(Enum):
-    """Content optimization levels"""
+    """
+Content optimization levels"""
+
     BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -54,6 +57,7 @@ class OptimizationLevel(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     HTML = "html"
     MARKDOWN = "markdown"
     PLAIN_TEXT = "plain_text"
@@ -62,6 +66,7 @@ class ContentFormat(Enum):
 
 class SchemaType(Enum):
     """Schema.org markup types"""
+
     ARTICLE = "Article"
     BLOG_POST = "BlogPosting"
     MUSIC_RECORDING = "MusicRecording"
@@ -90,7 +95,8 @@ class OptimizationSuggestion:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis results"""
+    """
+Comprehensive content analysis results"""
     content_id: str
     content_type: str
     word_count: int
@@ -108,7 +114,8 @@ class ContentAnalysis:
 
 @dataclass
 class MetadataOptimization:
-    """Optimized metadata results"""
+    """
+Optimized metadata results"""
     title: str
     description: str
     keywords: List[str]
@@ -546,7 +553,8 @@ class ContentStructureOptimizer:
         self.heading_keyword_density = 0.8  # 80% of headings should contain keywords
         
     async def initialize(self):
-        """Initialize content structure optimizer"""
+        """
+Initialize content structure optimizer"""
         try:
             await self.text_analyzer.initialize()
             await self.html_parser.initialize()
@@ -789,7 +797,8 @@ class LinkBuilder:
         self.ideal_anchor_text_length = 4  # words
         
     async def initialize(self):
-        """Initialize link builder"""
+        """
+Initialize link builder"""
         try:
             await self.text_analyzer.initialize()
             

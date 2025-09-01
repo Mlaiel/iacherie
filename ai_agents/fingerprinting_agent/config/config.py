@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import os
 import json
 import logging
@@ -21,7 +22,9 @@ from datetime import timedelta
 
 
 class Environment(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -30,6 +33,7 @@ class Environment(Enum):
 
 class LogLevel(Enum):
     """Logging level configuration"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -168,7 +172,8 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""
+    """
+Monitoring and observability configuration"""
     enable_metrics: bool = True
     metrics_port: int = 8090
     metrics_path: str = "/metrics"
@@ -205,7 +210,8 @@ class FingerprintingConfig:
     
     @classmethod
     def from_env(cls) -> 'FingerprintingConfig':
-        """Create configuration from environment variables"""
+        """
+Create configuration from environment variables"""
         config = cls()
         
         # Environment
@@ -305,7 +311,8 @@ class FingerprintingConfig:
         return result
     
     def save_to_file(self, config_path: Union[str, Path]) -> None:
-        """Save configuration to JSON file"""
+        """
+Save configuration to JSON file"""
         config_path = Path(config_path)
         config_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -313,7 +320,8 @@ class FingerprintingConfig:
             json.dump(self.to_dict(), f, indent=2, sort_keys=True)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         # Database validation
@@ -355,7 +363,8 @@ class FingerprintingConfig:
         return self.environment == Environment.PRODUCTION
     
     def get_database_url(self) -> str:
-        """Get database connection URL"""
+        """
+Get database connection URL"""
         return (
             f"postgresql://{self.database.username}:{self.database.password}"
             f"@{self.database.host}:{self.database.port}/{self.database.database}"
@@ -453,7 +462,8 @@ def set_config(config: FingerprintingConfig) -> None:
 
 
 def reset_config() -> None:
-    """Reset global configuration instance"""
+    """
+Reset global configuration instance"""
     global _config
     _config = None
 

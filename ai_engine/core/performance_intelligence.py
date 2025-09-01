@@ -4,7 +4,7 @@ Advanced AI system for real-time performance monitoring, intelligent optimizatio
 and autonomous content strategy refinement for maximum ROI and engagement.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This revolutionary performance intelligence system represents proprietary AI technology.
@@ -12,6 +12,7 @@ Unauthorized copying, reverse engineering, or use will result in immediate prose
 
 Business Logic: Performance Monitoring → Pattern Recognition → Intelligent Analysis → Auto-Optimization → Strategy Refinement → Continuous Learning
 """
+
 import asyncio
 import json
 import uuid
@@ -56,7 +57,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -80,6 +83,7 @@ class PerformanceMetricType(Enum):
 
 class OptimizationDirection(Enum):
     """Direction of optimization"""
+
     MAXIMIZE = "maximize"
     MINIMIZE = "minimize"
     STABILIZE = "stabilize"
@@ -88,6 +92,7 @@ class OptimizationDirection(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -97,6 +102,7 @@ class AlertSeverity(Enum):
 
 class AutoOptimizationAction(Enum):
     """Types of automatic optimization actions"""
+
     ADJUST_POSTING_TIME = "adjust_posting_time"
     MODIFY_HASHTAGS = "modify_hashtags"
     CHANGE_CONTENT_FORMAT = "change_content_format"
@@ -287,7 +293,8 @@ class RealTimePerformanceMonitor:
         self._initialize_detectors()
     
     def _initialize_detectors(self):
-        """Initialize anomaly detection models"""
+        """
+Initialize anomaly detection models"""
         if ML_OPTIMIZATION_AVAILABLE:
             try:
                 for metric_type in PerformanceMetricType:
@@ -594,7 +601,8 @@ class IntelligentOptimizationEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize optimization models"""
+        """
+Initialize optimization models"""
         if ML_OPTIMIZATION_AVAILABLE:
             try:
                 # Different models for different optimization types
@@ -1054,7 +1062,8 @@ class AutoOptimizationExecutor:
     
     async def execute_optimization(self, 
                                  recommendation: OptimizationRecommendation) -> AutoOptimizationResult:
-        """Execute an optimization recommendation"""
+        """
+Execute an optimization recommendation"""
         try:
             optimization_id = str(uuid.uuid4())
             

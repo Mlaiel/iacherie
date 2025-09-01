@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade global configuration orchestrator for unified system management.
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -57,7 +58,9 @@ from .legal_licensing_config import LegalLicensingConfigManager
 logger = logging.getLogger(__name__)
 
 class SystemMode(Enum):
-    """System operation modes"""
+    """
+System operation modes"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -67,6 +70,7 @@ class SystemMode(Enum):
 
 class ConfigurationCategory(Enum):
     """Configuration categories"""
+
     CORE_INFRASTRUCTURE = "core_infrastructure"
     AI_PROTECTION = "ai_protection"
     BUSINESS_LOGIC = "business_logic"
@@ -89,7 +93,8 @@ class SystemHealthStatus:
 
 @dataclass
 class GlobalConfiguration:
-    """Global system configuration"""
+    """
+Global system configuration"""
     # System identification
     system_name: str = "IA-Influencer-Agent"
     system_version: str = "2.0.0"
@@ -171,7 +176,8 @@ class GlobalConfigurationManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize global configuration manager"""
+        """
+Initialize global configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -261,7 +267,8 @@ class GlobalConfigurationManager:
             self.all_managers.extend(manager_list)
     
     def _load_global_configuration(self) -> bool:
-        """Load global configuration from file"""
+        """
+Load global configuration from file"""
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:

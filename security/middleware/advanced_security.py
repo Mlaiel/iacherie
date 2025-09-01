@@ -20,6 +20,7 @@ License: Proprietary - Unauthorized use prohibited
 This security implementation contains proprietary algorithms and methods.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityConfig:
-    """Advanced security configuration"""
+    """
+Advanced security configuration"""
     
     # JWT Configuration
     JWT_SECRET_KEY: str = "your-super-secret-jwt-key-change-in-production"
@@ -96,7 +98,8 @@ class SecurityException(HTTPException):
 
 
 class SecurityLogger:
-    """Enhanced security logging"""
+    """
+Enhanced security logging"""
     
     def __init__(self):
         self.logger = logging.getLogger("security")
@@ -347,7 +350,8 @@ class InputValidator:
             return data
     
     def _validate_string(self, value: str, field_name: str) -> str:
-        """Validate string input"""
+        """
+Validate string input"""
         # Check length
         if len(value) > self.config.MAX_FIELD_LENGTH:
             raise SecurityException(
@@ -411,7 +415,8 @@ class BotDetector:
         self.request_patterns = {}
     
     def is_bot_request(self, request: Request) -> bool:
-        """Detect if request is from a bot"""
+        """
+Detect if request is from a bot"""
         if not self.config.BOT_DETECTION_ENABLED:
             return False
         
@@ -495,7 +500,8 @@ class CSRFProtection:
         self.security_logger = SecurityLogger()
     
     def generate_csrf_token(self, session_id: str) -> str:
-        """Generate CSRF token for session"""
+        """
+Generate CSRF token for session"""
         token = secrets.token_urlsafe(self.config.CSRF_TOKEN_LENGTH)
         expires_at = datetime.utcnow() + timedelta(
             minutes=self.config.CSRF_TOKEN_EXPIRE_MINUTES
@@ -567,15 +573,18 @@ class SecurityMiddleware:
         self.rate_limited_endpoints = set()
     
     def add_protected_endpoint(self, endpoint: str):
-        """Add endpoint that requires authentication"""
+        """
+Add endpoint that requires authentication"""
         self.protected_endpoints.add(endpoint)
     
     def add_rate_limited_endpoint(self, endpoint: str):
-        """Add endpoint that has rate limiting"""
+        """
+Add endpoint that has rate limiting"""
         self.rate_limited_endpoints.add(endpoint)
     
     async def __call__(self, request: Request, call_next: Callable):
-        """Main middleware processing"""
+        """
+Main middleware processing"""
         start_time = time.time()
         
         try:
@@ -678,7 +687,8 @@ class SecurityMiddleware:
 
 # Utility decorators and functions
 def require_auth(func: Callable):
-    """Decorator to require authentication for endpoint"""
+    """
+Decorator to require authentication for endpoint"""
     @wraps(func)
     async def wrapper(*args, **kwargs):
         # Authentication will be handled by middleware
@@ -698,7 +708,8 @@ def rate_limit(limit_type: str = "general"):
 
 
 def validate_input(validator_func: Optional[Callable] = None):
-    """Decorator to add input validation to endpoint"""
+    """
+Decorator to add input validation to endpoint"""
     def decorator(func: Callable):
         @wraps(func)
         async def wrapper(*args, **kwargs):

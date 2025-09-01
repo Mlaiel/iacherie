@@ -2,6 +2,7 @@
 Modèles de données avancés pour la gestion des droits d'auteur
 Système professionnel avec validation, sécurité et performance optimisées
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -26,7 +27,9 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
+    """
+Types de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -41,6 +44,7 @@ class ContentType(Enum):
 
 class RightScope(Enum):
     """Portée des droits"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SOLE = "sole"
@@ -49,6 +53,7 @@ class RightScope(Enum):
 
 class LicenseScope(Enum):
     """Portée des licences"""
+
     COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     EDUCATIONAL = "educational"
@@ -59,6 +64,7 @@ class LicenseScope(Enum):
 
 class RevenueSplitType(Enum):
     """Types de partage de revenus"""
+
     EQUAL = "equal"
     PROPORTIONAL = "proportional"
     CUSTOM = "custom"
@@ -894,7 +900,8 @@ class RightsHolderSchema(BaseModel):
 
 
 class RightsRecordSchema(BaseModel):
-    """Schema Pydantic pour RightsRecord"""
+    """
+Schema Pydantic pour RightsRecord"""
     record_id: str
     content_id: str
     primary_holder_id: str
@@ -958,7 +965,8 @@ class RightsRecordSchema(BaseModel):
 
 
 class LicenseAgreementSchema(BaseModel):
-    """Schema Pydantic pour LicenseAgreement"""
+    """
+Schema Pydantic pour LicenseAgreement"""
     license_id: str
     rights_record_id: str
     licensor_id: str
@@ -1039,7 +1047,8 @@ class LicenseAgreementSchema(BaseModel):
 # =============================================================================
 
 def generate_content_id() -> str:
-    """Génère un ID unique pour le contenu"""
+    """
+Génère un ID unique pour le contenu"""
     return f"CNT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_holder_id() -> str:
@@ -1065,11 +1074,13 @@ def calculate_content_hash(content_data: bytes) -> Tuple[str, str]:
     return md5_hash, sha256_hash
 
 def validate_percentage(value: float) -> bool:
-    """Valide qu'un pourcentage est entre 0 et 1"""
+    """
+Valide qu'un pourcentage est entre 0 et 1"""
     return 0.0 <= value <= 1.0
 
 def validate_currency_code(currency: str) -> bool:
-    """Valide un code de devise ISO 4217"""
+    """
+Valide un code de devise ISO 4217"""
     iso_currencies = {
         'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 
         'SEK', 'NOK', 'DKK', 'PLN', 'CZK', 'HUF', 'BRL', 'MXN',
@@ -1078,12 +1089,14 @@ def validate_currency_code(currency: str) -> bool:
     return currency.upper() in iso_currencies
 
 def validate_country_code(country: str) -> bool:
-    """Valide un code pays ISO 3166-1 alpha-2"""
+    """
+Valide un code pays ISO 3166-1 alpha-2"""
     # Validation basique - en production, utiliser une liste complète
     return len(country) == 2 and country.isalpha()
 
 def validate_email_format(email: str) -> bool:
-    """Validation basique du format email"""
+    """
+Validation basique du format email"""
     import re
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None

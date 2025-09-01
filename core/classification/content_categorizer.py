@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -44,7 +45,8 @@ class ContentCategorizer:
     """
     
     def __init__(self):
-        """Initialize content categorizer."""
+        """
+Initialize content categorizer."""
         self.settings = get_settings()
         
         # Initialize category hierarchies
@@ -59,7 +61,8 @@ class ContentCategorizer:
         }
 
     def _init_category_hierarchies(self):
-        """Initialize hierarchical category structures."""
+        """
+Initialize hierarchical category structures."""
         
         # Music genre hierarchy
         self.music_genres = {
@@ -725,19 +728,22 @@ class ContentCategorizer:
         return []
 
     def _get_related_genres(self, genre: str) -> List[str]:
-        """Get related genres."""
+        """
+Get related genres."""
         if genre in self.music_genres:
             return self.music_genres[genre]['subgenres'][:3]  # Top 3 subgenres
         return []
 
     def _get_related_themes(self, theme_category: str) -> List[str]:
-        """Get related themes."""
+        """
+Get related themes."""
         if theme_category in self.content_themes:
             return self.content_themes[theme_category]['categories'][:3]  # Top 3
         return []
 
     def _calculate_theme_intensity(self, theme_scores: Dict[str, float]) -> float:
-        """Calculate theme intensity based on scores."""
+        """
+Calculate theme intensity based on scores."""
         if not theme_scores:
             return 0.0
         
@@ -749,7 +755,8 @@ class ContentCategorizer:
         return min(intensity, 1.0)
 
     def _map_to_style_category(self, style_info: str, content_type: str) -> str:
-        """Map specific style to category."""
+        """
+Map specific style to category."""
         style_mappings = {
             'audio': {
                 'polished': 'polished', 'raw': 'raw', 'ambient': 'ambient',
@@ -769,7 +776,8 @@ class ContentCategorizer:
         return content_style_map.get(style_info.lower(), style_info)
 
     def _get_style_characteristics(self, style_category: str, content_type: str) -> List[str]:
-        """Get characteristics for a style category."""
+        """
+Get characteristics for a style category."""
         if content_type == 'image' or content_type == 'video':
             category_data = self.content_styles['visual']
         elif content_type == 'audio':
@@ -782,7 +790,8 @@ class ContentCategorizer:
         return category_data.get('characteristics', [])
 
     def _calculate_style_intensity(self, classifications: Dict[str, Any], content_type: str) -> float:
-        """Calculate style intensity."""
+        """
+Calculate style intensity."""
         # Simplified intensity calculation
         if content_type == 'audio':
             mood_data = classifications.get('mood_analysis', {})
@@ -794,7 +803,8 @@ class ContentCategorizer:
             return 0.5
 
     def _extract_purpose_indicators(self, purpose: str, features: Dict[str, Any]) -> List[str]:
-        """Extract specific indicators for a purpose."""
+        """
+Extract specific indicators for a purpose."""
         indicators = []
         
         purpose_data = self.content_purposes.get(purpose, {})
@@ -811,7 +821,8 @@ class ContentCategorizer:
         return indicators[:5]  # Top 5 indicators
 
     def _is_genre_mood_consistent(self, genre: str, mood: str) -> bool:
-        """Check if genre and mood are consistent."""
+        """
+Check if genre and mood are consistent."""
         if not mood:
             return True
         
@@ -828,7 +839,8 @@ class ContentCategorizer:
         return not consistent_moods or mood.lower() in consistent_moods
 
     def _calculate_confidence_adjustment(self, inconsistencies: List[str]) -> float:
-        """Calculate confidence adjustment based on inconsistencies."""
+        """
+Calculate confidence adjustment based on inconsistencies."""
         if not inconsistencies:
             return 1.0
         
@@ -837,12 +849,14 @@ class ContentCategorizer:
         return adjustment
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
+        """
+Get current timestamp."""
         from datetime import datetime
         return datetime.now().isoformat()
 
     def get_category_hierarchy(self, category_type: str) -> Dict[str, Any]:
-        """Get the hierarchy for a specific category type."""
+        """
+Get the hierarchy for a specific category type."""
         hierarchies = {
             'music_genres': self.music_genres,
             'content_themes': self.content_themes,
@@ -858,7 +872,8 @@ class ContentCategorizer:
         category_name: str, 
         category_data: Dict[str, Any]
     ) -> bool:
-        """Add a custom category to the system."""
+        """
+Add a custom category to the system."""
         try:
             if category_type == 'music_genres':
                 self.music_genres[category_name] = category_data

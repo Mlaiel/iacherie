@@ -5,8 +5,9 @@ Enterprise-grade central data quality management orchestrator for the IA Influen
 Coordinates all quality operations, manages quality workflows, and ensures data excellence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Callable
 import asyncio
 import logging
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QualityPolicy:
-    """Data quality policy configuration"""
+    """
+Data quality policy configuration"""
     name: str
     description: str
     rules: List[Dict[str, Any]]
@@ -30,7 +32,8 @@ class QualityPolicy:
 
 @dataclass
 class QualityWorkflow:
-    """Quality assessment workflow definition"""
+    """
+Quality assessment workflow definition"""
     name: str
     steps: List[str]
     parallel_execution: bool
@@ -524,5 +527,6 @@ class DataQualityManager:
         return list(self.policies.keys())
     
     def list_workflows(self) -> List[str]:
-        """List all available quality workflows"""
+        """
+List all available quality workflows"""
         return list(self.workflows.keys())

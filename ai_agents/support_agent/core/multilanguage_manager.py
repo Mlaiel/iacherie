@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -45,7 +46,9 @@ import redis.asyncio as aioredis
 logger = logging.getLogger(__name__)
 
 class SupportedLanguage(Enum):
-    """Supported languages with ISO codes"""
+    """
+Supported languages with ISO codes"""
+
     ENGLISH = "en"
     GERMAN = "de" 
     FRENCH = "fr"
@@ -67,6 +70,7 @@ class SupportedLanguage(Enum):
 
 class TranslationProvider(Enum):
     """Translation service providers"""
+
     GOOGLE_TRANSLATE = "google"
     AZURE_TRANSLATOR = "azure"
     AWS_TRANSLATE = "aws"
@@ -150,7 +154,8 @@ class TranslationResult:
 
 @dataclass
 class CulturalContext:
-    """Cultural context information"""
+    """
+Cultural context information"""
     language: SupportedLanguage
     country_code: str
     
@@ -460,7 +465,8 @@ class MultiLanguageManager:
         language: SupportedLanguage,
         user_id: Optional[str] = None
     ) -> str:
-        """Format content according to locale (dates, numbers, currency)"""
+        """
+Format content according to locale (dates, numbers, currency)"""
         try:
             cultural_context = await self._get_cultural_context(language, user_id)
             locale_code = f"{language.value}_{cultural_context.country_code}" if cultural_context.country_code else language.value

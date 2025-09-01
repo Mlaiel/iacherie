@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -82,7 +83,8 @@ This enhancement transforms the system into the world's most comprehensive
 multilingual platform for content creators targeting African markets.
 """
 class SupportedLanguage(Enum):
-    """Comprehensive supported languages and dialects for global content creators"""
+    """
+Comprehensive supported languages and dialects for global content creators"""
     
     # Major World Languages
     ENGLISH = "en"
@@ -1283,7 +1285,8 @@ class SupportedLanguage(Enum):
 
     @staticmethod
     def get_linguistic_complexity(language: 'SupportedLanguage') -> str:
-        """Get linguistic complexity level of the language"""
+        """
+Get linguistic complexity level of the language"""
         complexity_levels = {
             "very_high": [
                 SupportedLanguage.ARABIC, SupportedLanguage.CHINESE_SIMPLIFIED, SupportedLanguage.CHINESE_TRADITIONAL,
@@ -1378,7 +1381,8 @@ class LanguageDetector:
         self._initialize_detection_engines()
         
     async def _initialize_detection_engines(self):
-        """Initialize multiple language detection engines"""
+        """
+Initialize multiple language detection engines"""
         try:
             # FastText model for language detection
             self.fasttext_model = None
@@ -1696,7 +1700,8 @@ class LanguageDetector:
         return language_mapping.get(lang_code)
     
     def _clean_text_for_detection(self, text: str) -> str:
-        """Clean text for better language detection"""
+        """
+Clean text for better language detection"""
         # Remove URLs, mentions, hashtags
         text = re.sub(r'http[s]?://\S+', '', text)
         text = re.sub(r'@\w+', '', text)
@@ -1708,7 +1713,8 @@ class LanguageDetector:
         return text.strip()
     
     def _calculate_score_variance(self, scores: Dict[SupportedLanguage, float]) -> float:
-        """Calculate variance in detection scores"""
+        """
+Calculate variance in detection scores"""
         if len(scores) < 2:
             return 0.0
         
@@ -1719,7 +1725,8 @@ class LanguageDetector:
         return variance
     
     def _assess_text_quality(self, text: str) -> float:
-        """Assess text quality for detection"""
+        """
+Assess text quality for detection"""
         quality_score = 1.0
         
         # Length factor
@@ -1741,7 +1748,8 @@ class LanguageDetector:
         return min(quality_score, 1.0)
     
     async def _cache_detection_result(self, text: str, result: LanguageDetectionResult):
-        """Cache high-confidence detection results"""
+        """
+Cache high-confidence detection results"""
         try:
             cache_key = f"lang_detect:{hash(text[:100])}"
             cache_data = {
@@ -1774,7 +1782,8 @@ class LanguageProfileManager:
         country_code: Optional[str] = None,
         preferences: Optional[Dict[str, Any]] = None
     ) -> LanguageProfile:
-        """Create comprehensive language profile for user"""
+        """
+Create comprehensive language profile for user"""
         try:
             # Infer cultural settings from country code
             cultural_settings = await self._infer_cultural_settings(country_code)
@@ -1939,13 +1948,15 @@ class LanguageProfileManager:
         pass
     
     async def _load_language_profile_db(self, user_id: str) -> Optional[LanguageProfile]:
-        """Load language profile from database"""
+        """
+Load language profile from database"""
         # This would load from database
         # Implementation depends on your database schema
         return None
     
     def _deserialize_language_profile(self, data: Dict[str, Any]) -> LanguageProfile:
-        """Deserialize language profile from cached data"""
+        """
+Deserialize language profile from cached data"""
         return LanguageProfile(
             user_id=data["user_id"],
             primary_language=SupportedLanguage(data["primary_language"]),
@@ -1978,7 +1989,8 @@ class LanguageManager:
         self.language_configs = self._initialize_language_configs()
         
     def _initialize_language_configs(self) -> Dict[SupportedLanguage, LanguageConfiguration]:
-        """Initialize language configurations"""
+        """
+Initialize language configurations"""
         configs = {}
         
         # Major languages with full configuration
@@ -2041,7 +2053,8 @@ class LanguageManager:
         return detection_result, language_config
     
     async def get_user_language_context(self, user_id: str) -> Dict[str, Any]:
-        """Get complete language context for user"""
+        """
+Get complete language context for user"""
         profile = await self.profile_manager.get_language_profile(user_id)
         
         if profile:
@@ -2069,7 +2082,8 @@ class LanguageManager:
         return language in self.language_configs
     
     async def get_language_statistics(self) -> Dict[str, Any]:
-        """Get language usage statistics"""
+        """
+Get language usage statistics"""
         return {
             "detection_stats": dict(self.detector.detection_stats),
             "supported_languages_count": len(self.language_configs),

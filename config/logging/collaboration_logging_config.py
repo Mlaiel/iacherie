@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -29,7 +30,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations"""
+    """
+Types of creator collaborations"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     PODCAST_COLLABORATION = "podcast_collaboration"
@@ -48,6 +51,7 @@ class CollaborationType(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Collaboration project status"""
+
     PROPOSAL_CREATED = "proposal_created"
     MATCH_SUGGESTED = "match_suggested"
     INVITATION_SENT = "invitation_sent"
@@ -67,6 +71,7 @@ class CollaborationStatus(str, Enum):
 
 class MatchingAlgorithm(str, Enum):
     """AI matching algorithms for collaboration"""
+
     CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
@@ -114,14 +119,16 @@ class CollaborationLogConfig:
 
 
 class CollaborationLogger:
-    """Specialized logger for collaboration operations"""
+    """
+Specialized logger for collaboration operations"""
     
     def __init__(self, config: CollaborationLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for collaboration"""
+        """
+Setup structured logger for collaboration"""
         structlog.configure(
             processors=[
                 structlog.threadlocal.merge_threadlocal_context,
@@ -471,12 +478,14 @@ class CollaborationLoggingConfig:
     
     @staticmethod
     def create_default_config() -> CollaborationLogConfig:
-        """Create default collaboration logging configuration"""
+        """
+Create default collaboration logging configuration"""
         return CollaborationLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> CollaborationLogConfig:
-        """Create enterprise collaboration logging configuration"""
+        """
+Create enterprise collaboration logging configuration"""
         return CollaborationLogConfig(
             enable_matching_logging=True,
             enable_project_tracking=True,

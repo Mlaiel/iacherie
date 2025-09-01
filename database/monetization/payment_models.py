@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -43,7 +44,9 @@ Base = declarative_base()
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateway providers"""
+    """
+Supported payment gateway providers"""
+
     STRIPE = "stripe"
     WISE = "wise"
     PAYPAL = "paypal"
@@ -57,6 +60,7 @@ class PaymentGateway(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status tracking"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -71,6 +75,7 @@ class PaymentStatus(Enum):
 
 class PaymentType(Enum):
     """Types of payments in the system"""
+
     REVENUE_PAYOUT = "revenue_payout"
     LICENSING_FEE = "licensing_fee"
     SUBSCRIPTION_PAYMENT = "subscription_payment"
@@ -85,6 +90,7 @@ class PaymentType(Enum):
 
 class Currency(Enum):
     """Supported currencies for international operations"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"

@@ -1,4 +1,5 @@
 """Computer Vision: object detection, scene analysis, content moderation."""
+
 import logging
 from typing import Dict, List, Tuple
 

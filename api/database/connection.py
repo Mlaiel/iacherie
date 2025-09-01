@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import asyncio
 import asyncpg
 import psycopg2
@@ -34,7 +35,9 @@ settings = get_settings()
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
+    """
+Supported database types"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -43,6 +46,7 @@ class DatabaseType(Enum):
 
 class ConnectionState(Enum):
     """Connection state enumeration"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -89,7 +93,8 @@ class DatabaseConnection:
         
     @classmethod
     async def get_instance(cls) -> 'DatabaseConnection':
-        """Get singleton instance with async initialization"""
+        """
+Get singleton instance with async initialization"""
         if cls._instance is None:
             async with cls._lock:
                 if cls._instance is None:
@@ -98,7 +103,8 @@ class DatabaseConnection:
         return cls._instance
     
     async def initialize(self):
-        """Initialize all database connections"""
+        """
+Initialize all database connections"""
         if self._initialized:
             return
             
@@ -291,7 +297,8 @@ class DatabaseConnection:
                 self.health_check_tasks[connection_name] = task
     
     async def _health_check_loop(self, connection_name: str):
-        """Background health check loop for a specific connection"""
+        """
+Background health check loop for a specific connection"""
         while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -516,7 +523,8 @@ class SessionManager:
         self.active_sessions: Dict[str, List[Any]] = {}
     
     async def initialize(self):
-        """Initialize session manager"""
+        """
+Initialize session manager"""
         self.db_connection = await DatabaseConnection.get_instance()
         
         # Create async session factory

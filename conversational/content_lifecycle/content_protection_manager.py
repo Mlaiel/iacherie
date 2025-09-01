@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -49,6 +52,7 @@ class ProtectionLevel(Enum):
 
 class RightsType(Enum):
     """Content rights types"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     LICENSING = "licensing"
@@ -60,6 +64,7 @@ class RightsType(Enum):
 
 class ThreatLevel(Enum):
     """Threat detection levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -69,6 +74,7 @@ class ThreatLevel(Enum):
 
 class ProtectionAction(Enum):
     """Protection action types"""
+
     MONITOR = "monitor"
     ALERT = "alert"
     TAKEDOWN = "takedown"
@@ -93,7 +99,8 @@ class ContentFingerprint:
 
 @dataclass
 class DigitalWatermark:
-    """Digital watermark configuration"""
+    """
+Digital watermark configuration"""
     watermark_id: str
     content_id: str
     watermark_type: str  # visible, invisible, audio, steganographic
@@ -106,7 +113,8 @@ class DigitalWatermark:
 
 @dataclass
 class RightsManifest:
-    """Content rights manifest"""
+    """
+Content rights manifest"""
     manifest_id: str
     content_id: str
     owner_id: str
@@ -122,7 +130,8 @@ class RightsManifest:
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result"""
+    """
+Threat detection result"""
     detection_id: str
     content_id: str
     threat_type: str
@@ -138,7 +147,8 @@ class ThreatDetection:
 
 @dataclass
 class ProtectionPolicy:
-    """Content protection policy"""
+    """
+Content protection policy"""
     policy_id: str
     policy_name: str
     protection_level: ProtectionLevel
@@ -170,7 +180,8 @@ class ContentProtectionManager:
         self.encryption_key = self._generate_encryption_key()
         
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for sensitive data"""
+        """
+Generate encryption key for sensitive data"""
         return Fernet.generate_key()
     
     async def activate_content_protection(
@@ -835,27 +846,32 @@ class ContentProtectionManager:
         pass
     
     async def _get_user_info(self, user_id: str) -> Dict[str, Any]:
-        """Get user information from database"""
+        """
+Get user information from database"""
         # Implementation for retrieving user info
         pass
     
     async def _store_fingerprint_securely(self, fingerprint: ContentFingerprint):
-        """Store fingerprint data securely"""
+        """
+Store fingerprint data securely"""
         # Implementation for secure storage
         pass
     
     async def _store_watermark_securely(self, watermark: DigitalWatermark):
-        """Store watermark data securely"""
+        """
+Store watermark data securely"""
         # Implementation for secure storage
         pass
     
     async def _store_rights_manifest_securely(self, rights_manifest: RightsManifest):
-        """Store rights manifest securely"""
+        """
+Store rights manifest securely"""
         # Implementation for secure storage
         pass
     
     def _get_watermark_config(self, content_format: str, protection_level: ProtectionLevel) -> Dict[str, Any]:
-        """Get watermark configuration for content format and protection level"""
+        """
+Get watermark configuration for content format and protection level"""
         # Implementation for watermark configuration
         return {
             "type": "invisible",

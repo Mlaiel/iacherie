@@ -4,7 +4,7 @@ Advanced reporting and analytics system for content creators and influencers.
 Provides comprehensive reports, dashboards, and data visualization capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 import json
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports"""
+    """
+Types of reports"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYSIS = "detailed_analysis"
     PERFORMANCE_DASHBOARD = "performance_dashboard"
@@ -48,6 +51,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     HTML = "html"
     PDF = "pdf"
@@ -59,6 +63,7 @@ class ReportFormat(Enum):
 
 class VisualizationType(Enum):
     """Types of visualizations"""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -73,6 +78,7 @@ class VisualizationType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -151,7 +157,8 @@ class ReportSection:
 
 @dataclass
 class ExecutiveSummary:
-    """Executive summary structure"""
+    """
+Executive summary structure"""
     # Key performance indicators
     overall_score: float = field(default=0.0)
     performance_trend: str = field(default="stable")
@@ -287,7 +294,8 @@ class ReportGenerator(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize report generator"""
+        """
+Initialize report generator"""
         super().__init__(config or ModelConfig(
             model_name="report_generator",
             provider="internal",
@@ -356,7 +364,8 @@ class ReportGenerator(BaseAIModel):
         }
     
     def _initialize_visualization_templates(self):
-        """Initialize visualization templates"""
+        """
+Initialize visualization templates"""
         self.visualization_templates = {
             'performance_overview': {
                 'type': VisualizationType.GAUGE_CHART,
@@ -391,7 +400,8 @@ class ReportGenerator(BaseAIModel):
         }
     
     def _initialize_styling_themes(self):
-        """Initialize styling themes"""
+        """
+Initialize styling themes"""
         self.styling_themes = {
             'professional': {
                 'primary_color': '#2c3e50',

@@ -4,6 +4,7 @@ Automated compliance reporting for multiple regulatory frameworks
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -30,7 +31,9 @@ logger = get_logger(__name__)
 
 
 class ReportType(str, Enum):
-    """Regulatory report types"""
+    """
+Regulatory report types"""
+
     QUARTERLY = "quarterly"
     ANNUAL = "annual"
     INCIDENT = "incident"
@@ -42,6 +45,7 @@ class ReportType(str, Enum):
 
 class ReportFormat(str, Enum):
     """Report output formats"""
+
     PDF = "pdf"
     XML = "xml"
     JSON = "json"
@@ -51,6 +55,7 @@ class ReportFormat(str, Enum):
 
 class SubmissionMethod(str, Enum):
     """Report submission methods"""
+
     AUTOMATED_API = "automated_api"
     SECURE_PORTAL = "secure_portal"
     EMAIL_ENCRYPTED = "email_encrypted"
@@ -60,6 +65,7 @@ class SubmissionMethod(str, Enum):
 
 class ReportStatus(str, Enum):
     """Report generation and submission status"""
+
     DRAFT = "draft"
     GENERATED = "generated"
     REVIEWED = "reviewed"
@@ -90,7 +96,8 @@ class RegulatoryRequirement:
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance metrics for reporting"""
+    """
+Compliance metrics for reporting"""
     metric_name: str
     metric_value: float
     unit: str
@@ -104,7 +111,8 @@ class ComplianceMetrics:
 
 @dataclass
 class RegulatoryReport:
-    """Complete regulatory report structure"""
+    """
+Complete regulatory report structure"""
     report_id: str
     framework: ComplianceFramework
     report_type: ReportType
@@ -125,7 +133,8 @@ class RegulatoryReport:
 
 
 class RegulatoryReportingSystem:
-    """Automated regulatory reporting and submission system"""
+    """
+Automated regulatory reporting and submission system"""
     
     def __init__(self):
         self.logger = logger
@@ -146,7 +155,8 @@ class RegulatoryReportingSystem:
         self._scheduler_running = False
     
     async def start_reporting_scheduler(self) -> None:
-        """Start automated regulatory reporting scheduler"""
+        """
+Start automated regulatory reporting scheduler"""
         try:
             if self._scheduler_running:
                 self.logger.warning("Regulatory reporting scheduler already running")

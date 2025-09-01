@@ -6,6 +6,7 @@ Provides real-time profiling, bottleneck detection, and optimization recommendat
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import time
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProfilerType(Enum):
-    """Types of profilers"""
+    """
+Types of profilers"""
+
     CPU = "cpu"
     MEMORY = "memory"
     ASYNC = "async"
@@ -40,6 +43,7 @@ class ProfilerType(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization recommendation levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -59,7 +63,8 @@ class PerformanceMetric:
 
 @dataclass
 class BottleneckReport:
-    """Performance bottleneck report"""
+    """
+Performance bottleneck report"""
     function_name: str
     execution_time: float
     call_count: int
@@ -84,7 +89,8 @@ class PerformanceProfiler:
     """
     
     def __init__(self):
-        """Initialize performance profiler"""
+        """
+Initialize performance profiler"""
         
         # Prometheus metrics
         self.cpu_usage = Gauge(
@@ -491,7 +497,8 @@ class PerformanceProfiler:
         await self.stop_profiling(session_id)
     
     async def _generate_cpu_report(self) -> Dict[str, Any]:
-        """Generate CPU profiling report"""
+        """
+Generate CPU profiling report"""
         try:
             if not self.cpu_profiler:
                 return {"error": "No CPU profiler active"}
@@ -664,7 +671,8 @@ class PerformanceProfiler:
             return 0
     
     async def _calculate_performance_summary(self, metrics: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Calculate performance summary from metrics"""
+        """
+Calculate performance summary from metrics"""
         if not metrics:
             return {}
         

@@ -15,7 +15,7 @@ to all indexing capabilities for the IA-Influencer multi-content protection plat
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -68,7 +69,8 @@ class DatabaseIndexingPlatform:
     """
     
     def __init__(self):
-        """Initialize the database indexing platform"""
+        """
+Initialize the database indexing platform"""
         self.indexing_manager = IndexingManager()
         self.is_initialized = False
         self.performance_metrics = {}
@@ -452,38 +454,45 @@ async def create_content_index(table_name: str, content_type: str, strategy: str
     return await platform.create_content_index(table_name, content_type, strategy)
 
 async def search_similar_content(fingerprint_data: Dict[str, Any], similarity_threshold: float = 0.8, max_results: int = 50) -> List[Dict[str, Any]]:
-    """Convenience function for searching similar content"""
+    """
+Convenience function for searching similar content"""
     platform = await get_indexing_platform()
     return await platform.search_similar_content(fingerprint_data, similarity_threshold, max_results)
 
 async def add_content_fingerprint(content_data: Dict[str, Any]) -> bool:
-    """Convenience function for adding content fingerprints"""
+    """
+Convenience function for adding content fingerprints"""
     platform = await get_indexing_platform()
     return await platform.add_content_fingerprint(content_data)
 
 async def find_collaboration_matches(user_profile: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Convenience function for finding collaboration matches"""
+    """
+Convenience function for finding collaboration matches"""
     platform = await get_indexing_platform()
     return await platform.find_collaboration_matches(user_profile)
 
 async def multimodal_content_search(search_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Convenience function for multimodal content search"""
+    """
+Convenience function for multimodal content search"""
     platform = await get_indexing_platform()
     return await platform.multimodal_content_search(search_query)
 
 async def optimize_all_indexes() -> Dict[str, Any]:
-    """Convenience function for optimizing all indexes"""
+    """
+Convenience function for optimizing all indexes"""
     platform = await get_indexing_platform()
     return await platform.optimize_all_indexes()
 
 async def get_platform_statistics() -> Dict[str, Any]:
-    """Convenience function for getting platform statistics"""
+    """
+Convenience function for getting platform statistics"""
     platform = await get_indexing_platform()
     return await platform.get_platform_statistics()
 
 # Main execution for testing and demonstration
 async def main():
-    """Main function for testing the indexing platform"""
+    """
+Main function for testing the indexing platform"""
     try:
         logger.info("Starting Database Indexing Platform demonstration...")
         

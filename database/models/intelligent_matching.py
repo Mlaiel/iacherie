@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -38,7 +39,9 @@ Base = declarative_base()
 
 
 class MatchingType(Enum):
-    """Types of intelligent matching"""
+    """
+Types of intelligent matching"""
+
     CREATOR_COLLABORATION = "creator_collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     CONTENT_SYNERGY = "content_synergy"
@@ -58,6 +61,7 @@ class MatchingType(Enum):
 
 class MatchingAlgorithm(Enum):
     """AI algorithms used for matching"""
+
     NEURAL_SIMILARITY = "neural_similarity"
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_EMBEDDING = "content_embedding"
@@ -76,6 +80,7 @@ class MatchingAlgorithm(Enum):
 
 class MatchingStatus(Enum):
     """Status of matching suggestions"""
+
     PENDING = "pending"
     ACTIVE = "active"
     ACCEPTED = "accepted"
@@ -92,6 +97,7 @@ class MatchingStatus(Enum):
 
 class ConfidenceLevel(Enum):
     """AI confidence in matching quality"""
+
     VERY_LOW = "very_low"      # 0-20%
     LOW = "low"                # 20-40%
     MODERATE = "moderate"      # 40-60%
@@ -102,6 +108,7 @@ class ConfidenceLevel(Enum):
 
 class SynergyType(Enum):
     """Types of content/creator synergies"""
+
     COMPLEMENTARY_SKILLS = "complementary_skills"
     OVERLAPPING_AUDIENCE = "overlapping_audience"
     GENRE_CROSSOVER = "genre_crossover"
@@ -120,6 +127,7 @@ class SynergyType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaboration opportunities"""
+
     SINGLE_TRACK = "single_track"
     EP_COLLABORATION = "ep_collaboration"
     ALBUM_PROJECT = "album_project"
@@ -339,13 +347,15 @@ class IntelligentMatching(Base):
         return datetime.now(timezone.utc) > self.expiration_date
     
     def is_response_overdue(self) -> bool:
-        """Check if response is overdue"""
+        """
+Check if response is overdue"""
         if not self.response_deadline:
             return False
         return datetime.now(timezone.utc) > self.response_deadline
     
     def calculate_overall_compatibility(self) -> float:
-        """Calculate overall compatibility score"""
+        """
+Calculate overall compatibility score"""
         weights = {
             'skill_compatibility': 0.20,
             'style_compatibility': 0.15,
@@ -365,7 +375,8 @@ class IntelligentMatching(Base):
         return min(total_score, 1.0)
     
     def get_success_indicators(self) -> List[str]:
-        """Get list of success indicators"""
+        """
+Get list of success indicators"""
         indicators = []
         
         if self.matching_score > 0.8:

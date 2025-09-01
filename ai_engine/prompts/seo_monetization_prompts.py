@@ -9,6 +9,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class SEOStrategy(Enum):
-    """SEO strategies available"""
+    """
+SEO strategies available"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -31,6 +34,7 @@ class SEOStrategy(Enum):
 
 class MonetizationModel(Enum):
     """Monetization models supported"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     AFFILIATE = "affiliate"
@@ -42,6 +46,7 @@ class MonetizationModel(Enum):
 
 class Platform(Enum):
     """Platforms for optimization and monetization"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -55,6 +60,7 @@ class Platform(Enum):
 
 class ContentCategory(Enum):
     """Content categories for optimization"""
+
     MUSIC = "music"
     VIDEO = "video"
     BLOG = "blog"
@@ -76,17 +82,20 @@ class SEOMonetizationContext:
     timeline: Dict[str, str]
 
 class SEOMonetizationPrompts:
-    """Advanced SEO & Monetization Prompts System"""
+    """
+Advanced SEO & Monetization Prompts System"""
     
     def __init__(self):
-        """Initialize the SEO monetization prompts system"""
+        """
+Initialize the SEO monetization prompts system"""
         self.seo_templates = {}
         self.monetization_templates = {}
         self.platform_specific_prompts = {}
         self._load_seo_monetization_templates()
     
     def _load_seo_monetization_templates(self) -> None:
-        """Load and initialize SEO monetization templates"""
+        """
+Load and initialize SEO monetization templates"""
         
         # SEO Templates
         self.seo_templates = {
@@ -748,7 +757,8 @@ def create_seo_monetization_context(
     budget_range: Optional[Dict] = None,
     timeline: Optional[Dict] = None
 ) -> SEOMonetizationContext:
-    """Create SEO monetization context"""
+    """
+Create SEO monetization context"""
     return SEOMonetizationContext(
         content_category=ContentCategory(content_category),
         seo_strategy=SEOStrategy(seo_strategy),

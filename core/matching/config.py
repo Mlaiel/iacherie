@@ -11,6 +11,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This configuration module contains proprietary settings and algorithms
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -22,7 +23,9 @@ from pathlib import Path
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
+    """
+Environment types for configuration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -31,6 +34,7 @@ class EnvironmentType(Enum):
 
 class AIModelType(Enum):
     """AI model types for matching system"""
+
     NEURAL_NETWORK = "neural_network"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -122,7 +126,8 @@ class RecommendationConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings"""
+    """
+Security configuration settings"""
     enable_encryption: bool = True
     encryption_algorithm: str = "AES-256-GCM"
     key_rotation_interval: timedelta = field(default_factory=lambda: timedelta(days=30))
@@ -152,7 +157,8 @@ class PerformanceConfig:
 
 @dataclass
 class BusinessConfig:
-    """Business logic configuration"""
+    """
+Business logic configuration"""
     enable_revenue_optimization: bool = True
     enable_risk_assessment: bool = True
     enable_roi_calculation: bool = True
@@ -168,7 +174,8 @@ class BusinessConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""
+    """
+Monitoring and observability configuration"""
     enable_metrics_collection: bool = True
     enable_error_tracking: bool = True
     enable_performance_tracking: bool = True
@@ -239,7 +246,8 @@ class ConfigurationManager:
         self._load_configuration()
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""
+        """
+Get default configuration file path"""
         env = os.getenv("ENVIRONMENT", "development")
         return f"config/matching_module_{env}.yaml"
     
@@ -321,7 +329,8 @@ class ConfigurationManager:
                     setattr(self.config, key, value)
     
     def _set_config_value(self, config_path: tuple, value: str) -> None:
-        """Set configuration value from environment variable"""
+        """
+Set configuration value from environment variable"""
         try:
             # Convert string value to appropriate type
             converted_value = self._convert_env_value(value)
@@ -362,7 +371,8 @@ class ConfigurationManager:
         return value
     
     def _validate_configuration(self) -> None:
-        """Validate configuration settings"""
+        """
+Validate configuration settings"""
         errors = []
         
         # Validate database configuration
@@ -399,7 +409,8 @@ class ConfigurationManager:
         return self.config
     
     def save_configuration(self, file_path: Optional[str] = None) -> None:
-        """Save current configuration to file"""
+        """
+Save current configuration to file"""
         output_path = file_path or self.config_path
         
         try:
@@ -441,12 +452,14 @@ class ConfigurationManager:
         return config_dict
     
     def update_config(self, updates: Dict[str, Any]) -> None:
-        """Update configuration with new values"""
+        """
+Update configuration with new values"""
         self._update_config_from_dict(updates)
         self._validate_configuration()
     
     def get_environment_config(self, environment: EnvironmentType) -> MatchingModuleConfig:
-        """Get configuration optimized for specific environment"""
+        """
+Get configuration optimized for specific environment"""
         env_config = MatchingModuleConfig()
         
         if environment == EnvironmentType.DEVELOPMENT:
@@ -507,12 +520,14 @@ def get_config_manager() -> ConfigurationManager:
 
 
 def get_config() -> MatchingModuleConfig:
-    """Get current configuration"""
+    """
+Get current configuration"""
     return get_config_manager().get_config()
 
 
 def update_config(updates: Dict[str, Any]) -> None:
-    """Update global configuration"""
+    """
+Update global configuration"""
     get_config_manager().update_config(updates)
 
 

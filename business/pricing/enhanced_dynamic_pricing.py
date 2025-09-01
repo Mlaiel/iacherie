@@ -14,7 +14,7 @@ Features:
 - Revenue optimization algorithms
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -43,7 +43,9 @@ from scipy import stats
 logger = logging.getLogger(__name__)
 
 class PricingStrategy(Enum):
-    """Stratégies de pricing avancées"""
+    """
+Stratégies de pricing avancées"""
+
     PENETRATION = "penetration"      # Prix bas pour pénétrer le marché
     SKIMMING = "skimming"           # Prix élevé pour écrémer le marché
     COMPETITIVE = "competitive"      # Prix aligné sur la concurrence
@@ -54,6 +56,7 @@ class PricingStrategy(Enum):
 
 class MarketCondition(Enum):
     """Conditions de marché"""
+
     BULL_MARKET = "bull_market"
     BEAR_MARKET = "bear_market"
     STABLE_MARKET = "stable_market"
@@ -106,7 +109,8 @@ class CompetitorPricing:
 
 @dataclass
 class DemandPoint:
-    """Point de demande pour l'analyse d'élasticité"""
+    """
+Point de demande pour l'analyse d'élasticité"""
     price: Decimal
     demand: float
     conversion_rate: float
@@ -788,14 +792,16 @@ class EnhancedDynamicPricingEngine:
         return int(base_size * confidence_multiplier)
     
     def _estimate_market_share(self, price: float, demand: float) -> float:
-        """Estime la part de marché basée sur le prix et la demande"""
+        """
+Estime la part de marché basée sur le prix et la demande"""
         # Algorithme simplifié
         market_size = 1000000  # Taille estimée du marché
         estimated_share = min(demand / market_size, 1.0)
         return estimated_share
     
     async def _store_pricing_recommendation(self, recommendation: EnhancedPriceRecommendation):
-        """Stocke la recommandation de pricing"""
+        """
+Stocke la recommandation de pricing"""
         try:
             # Conversion en dictionnaire sérialisable
             rec_data = {

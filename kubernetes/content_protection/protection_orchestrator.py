@@ -5,8 +5,9 @@ This module orchestrates the deployment of comprehensive content protection
 services including violation detection, monitoring, alerting, and legal automation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENTERPRISE = "enterprise"
@@ -32,6 +35,7 @@ class ProtectionLevel(Enum):
 
 class ContentType(Enum):
     """Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -41,6 +45,7 @@ class ContentType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"

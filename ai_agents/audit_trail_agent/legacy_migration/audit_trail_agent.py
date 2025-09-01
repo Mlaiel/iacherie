@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -60,7 +61,9 @@ from ...utils.circuit_breaker import CircuitBreaker
 logger = logging.getLogger(__name__)
 
 class AuditEventType(Enum):
-    """Comprehensive audit event type classification"""
+    """
+Comprehensive audit event type classification"""
+
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
@@ -82,6 +85,7 @@ class AuditEventType(Enum):
 
 class AuditSeverityLevel(IntEnum):
     """Audit event severity classification"""
+
     INFO = 1
     WARNING = 2
     ERROR = 3
@@ -89,7 +93,9 @@ class AuditSeverityLevel(IntEnum):
     SECURITY_BREACH = 5
 
 class ComplianceStandard(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -113,7 +119,8 @@ class AuditConfiguration:
 
 @dataclass 
 class AuditMetrics:
-    """Comprehensive audit metrics tracking"""
+    """
+Comprehensive audit metrics tracking"""
     total_events_processed: int = 0
     events_by_type: Dict[str, int] = field(default_factory=dict)
     security_incidents: int = 0
@@ -872,7 +879,8 @@ class AuditTrailAgent(BaseAgent):
         return str(uuid.uuid4())  # Placeholder
 
     async def _encrypt_sensitive_data(self, audit_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive fields in audit record"""
+        """
+Encrypt sensitive fields in audit record"""
         sensitive_fields = ['user_id', 'ip_address', 'details']
         encrypted_record = audit_record.copy()
         
@@ -883,7 +891,8 @@ class AuditTrailAgent(BaseAgent):
         return encrypted_record
 
     async def _decrypt_sensitive_data(self, audit_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt sensitive fields in audit record"""
+        """
+Decrypt sensitive fields in audit record"""
         sensitive_fields = ['user_id', 'ip_address', 'details']
         decrypted_record = audit_record.copy()
         

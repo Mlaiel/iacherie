@@ -9,8 +9,9 @@ ensuring compliance with ultra-advanced requirements:
 - Industrial SLA compliance validation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PerformanceMetrics:
-    """Industrial performance metrics container"""
+    """
+Industrial performance metrics container"""
     # Processing performance
     processing_time_ms: float = 0.0
     realtime_compliant: bool = False  # <50ms requirement
@@ -52,7 +54,8 @@ class PerformanceMetrics:
 
 @dataclass
 class IndustrialSLARequirements:
-    """Service Level Agreement requirements for industrial deployment"""
+    """
+Service Level Agreement requirements for industrial deployment"""
     # Performance SLA
     max_processing_time_ms: float = 50.0
     max_search_time_ms: float = 50.0
@@ -176,7 +179,8 @@ class IndustrialPerformanceMonitor:
                                 index_size: int,
                                 results_count: int,
                                 query_id: str = None) -> PerformanceMetrics:
-        """Record performance metrics for a search operation"""
+        """
+Record performance metrics for a search operation"""
         
         metrics = PerformanceMetrics(
             faiss_search_time_ms=search_time_ms,
@@ -224,7 +228,8 @@ class IndustrialPerformanceMonitor:
         return processing_compliant and precision_compliant and resistance_compliant and memory_compliant
     
     def _update_cumulative_stats(self, metrics: PerformanceMetrics):
-        """Update cumulative statistics"""
+        """
+Update cumulative statistics"""
         self.cumulative_stats['total_fingerprints'] += 1
         self.cumulative_stats['total_processing_time'] += metrics.processing_time_ms
         
@@ -235,7 +240,8 @@ class IndustrialPerformanceMonitor:
             self.cumulative_stats['precision_failures'] += 1
     
     def _handle_sla_violation(self, metrics: PerformanceMetrics, content_id: str = None):
-        """Handle SLA violation with alerting and logging"""
+        """
+Handle SLA violation with alerting and logging"""
         violation_details = {
             'timestamp': metrics.timestamp.isoformat(),
             'content_id': content_id,
@@ -290,7 +296,8 @@ class IndustrialPerformanceMonitor:
         return stats
     
     def get_comprehensive_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
+        """
+Generate comprehensive performance report"""
         if not self.performance_history:
             return {'error': 'No performance data available'}
         
@@ -353,7 +360,8 @@ class IndustrialPerformanceMonitor:
         return report
     
     def _evaluate_industrial_readiness(self) -> bool:
-        """Evaluate if system is ready for industrial deployment"""
+        """
+Evaluate if system is ready for industrial deployment"""
         if len(self.performance_history) < 100:  # Need sufficient data
             return False
         
@@ -372,7 +380,8 @@ class IndustrialPerformanceMonitor:
         )
     
     def _generate_performance_recommendations(self) -> List[str]:
-        """Generate performance improvement recommendations"""
+        """
+Generate performance improvement recommendations"""
         recommendations = []
         
         if not self.performance_history:
@@ -455,7 +464,8 @@ class IndustrialPerformanceMonitor:
         self.alert_callbacks.append(callback)
     
     def export_performance_data(self, filepath: str):
-        """Export performance data to file"""
+        """
+Export performance data to file"""
         try:
             data = {
                 'sla_requirements': {

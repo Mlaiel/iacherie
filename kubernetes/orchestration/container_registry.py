@@ -11,6 +11,7 @@ Features:
 - Registry mirroring and replication
 - Access control and authentication
 """
+
 import asyncio
 import logging
 import json
@@ -30,9 +31,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class VulnerabilityScanner:
-    """Mock vulnerability scanner."""
+    """
+Mock vulnerability scanner."""
     def __init__(self):
-        """Initialize vulnerability scanner with security databases"""
+        """
+Initialize vulnerability scanner with security databases"""
         self.logger = logging.getLogger(f"{__name__}.VulnerabilityScanner")
         self.vulnerability_databases = ['CVE', 'NVD', 'OSV', 'GitHub_Advisory']
         self.scan_engines = ['trivy', 'clair', 'snyk', 'aqua']
@@ -46,9 +49,11 @@ class VulnerabilityScanner:
         return []
 
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize metrics collector with monitoring endpoints"""
+        """
+Initialize metrics collector with monitoring endpoints"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.metrics_endpoints = ['prometheus', 'grafana', 'datadog', 'newrelic']
         self.collection_interval = 60  # seconds
@@ -64,6 +69,7 @@ class MetricsCollector:
 
 class RegistryType(Enum):
     """Container registry types."""
+
     DOCKER_HUB = "docker_hub"
     AWS_ECR = "aws_ecr"
     GCP_GCR = "gcp_gcr"
@@ -75,6 +81,7 @@ class RegistryType(Enum):
 
 class ImageStatus(Enum):
     """Container image status."""
+
     BUILDING = "building"
     BUILT = "built"
     SCANNING = "scanning"
@@ -86,6 +93,7 @@ class ImageStatus(Enum):
 
 class ScanSeverity(Enum):
     """Vulnerability scan severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -108,7 +116,8 @@ class RegistryConfig:
 
 @dataclass
 class ImageConfig:
-    """Container image configuration."""
+    """
+Container image configuration."""
     name: str
     tag: str
     dockerfile_path: str
@@ -122,7 +131,8 @@ class ImageConfig:
 
 @dataclass
 class ScanResult:
-    """Security scan result."""
+    """
+Security scan result."""
     image_id: str
     scan_id: str
     timestamp: datetime
@@ -135,7 +145,8 @@ class ScanResult:
 
 @dataclass
 class ImageInfo:
-    """Container image information."""
+    """
+Container image information."""
     name: str
     tag: str
     digest: str

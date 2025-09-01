@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SimilarityScore:
-    """Comprehensive similarity score with breakdown"""
+    """
+Comprehensive similarity score with breakdown"""
     overall_score: float
     cosine_similarity: float
     euclidean_similarity: float
@@ -45,7 +47,8 @@ class SimilarityScore:
 
 
 class SimilarityAlgorithm:
-    """Individual similarity algorithm implementation"""
+    """
+Individual similarity algorithm implementation"""
     
     def __init__(self, algorithm_name: str, weight: float = 1.0):
         self.algorithm_name = algorithm_name
@@ -54,7 +57,8 @@ class SimilarityAlgorithm:
         self.total_execution_time = 0.0
     
     def compute_similarity(self, vector_a: np.ndarray, vector_b: np.ndarray) -> float:
-        """Compute similarity using specific algorithm"""
+        """
+Compute similarity using specific algorithm"""
         start_time = time.time()
         
         try:
@@ -94,18 +98,21 @@ class SimilarityAlgorithm:
         return cosine_similarity(a, b)[0, 0]
     
     def _euclidean_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Compute similarity based on Euclidean distance"""
+        """
+Compute similarity based on Euclidean distance"""
         distance = euclidean(a.flatten(), b.flatten())
         # Convert distance to similarity (0-1 range)
         return 1.0 / (1.0 + distance)
     
     def _manhattan_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Compute similarity based on Manhattan distance"""
+        """
+Compute similarity based on Manhattan distance"""
         distance = manhattan(a.flatten(), b.flatten())
         return 1.0 / (1.0 + distance)
     
     def _pearson_correlation(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Compute Pearson correlation coefficient"""
+        """
+Compute Pearson correlation coefficient"""
         try:
             corr, _ = pearsonr(a.flatten(), b.flatten())
             return abs(corr) if not np.isnan(corr) else 0.0
@@ -113,7 +120,8 @@ class SimilarityAlgorithm:
             return 0.0
     
     def _spearman_correlation(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Compute Spearman correlation coefficient"""
+        """
+Compute Spearman correlation coefficient"""
         try:
             corr, _ = spearmanr(a.flatten(), b.flatten())
             return abs(corr) if not np.isnan(corr) else 0.0
@@ -121,7 +129,8 @@ class SimilarityAlgorithm:
             return 0.0
     
     def _jaccard_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Compute Jaccard similarity (for binary/sparse vectors)"""
+        """
+Compute Jaccard similarity (for binary/sparse vectors)"""
         try:
             # Binarize vectors (threshold at mean)
             a_binary = (a > np.mean(a)).astype(int)
@@ -135,7 +144,8 @@ class SimilarityAlgorithm:
             return 0.0
     
     def _hamming_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Compute similarity based on Hamming distance"""
+        """
+Compute similarity based on Hamming distance"""
         try:
             # Binarize vectors
             a_binary = (a > np.mean(a)).astype(int)
@@ -148,7 +158,8 @@ class SimilarityAlgorithm:
 
 
 class ContentTypeSimilarityProcessor:
-    """Specialized similarity processor for specific content types"""
+    """
+Specialized similarity processor for specific content types"""
     
     def __init__(self, content_type: str, config: VectorConfig):
         self.content_type = content_type
@@ -156,7 +167,8 @@ class ContentTypeSimilarityProcessor:
         self.algorithms = self._initialize_algorithms()
     
     def _initialize_algorithms(self) -> List[SimilarityAlgorithm]:
-        """Initialize algorithms based on content type"""
+        """
+Initialize algorithms based on content type"""
         if self.content_type in ["audio", "music"]:
             return [
                 SimilarityAlgorithm("cosine", weight=0.4),
@@ -653,7 +665,8 @@ class SimilarityEngine:
         return self.metrics
     
     async def clear_cache(self):
-        """Clear similarity cache"""
+        """
+Clear similarity cache"""
         self.similarity_cache.clear()
         self.cache_hits = 0
         self.cache_misses = 0

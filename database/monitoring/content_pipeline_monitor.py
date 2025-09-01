@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ from ...ai.analysis.content_pipeline_ai import ContentPipelineAnalyzer
 
 
 class ContentType(Enum):
-    """Content type classification for IA Influencer Agent"""
+    """
+Content type classification for IA Influencer Agent"""
+
     AUDIO = "audio"          # Music files, podcasts, voice recordings
     VIDEO = "video"          # Video content, streams, recordings  
     IMAGE = "image"          # Photos, graphics, artwork
@@ -45,6 +48,7 @@ class ContentType(Enum):
 
 class PipelineStage(Enum):
     """Content processing pipeline stages"""
+
     UPLOAD = "upload"                    # Initial content upload
     VALIDATION = "validation"            # Content validation and preprocessing
     FINGERPRINTING = "fingerprinting"    # AI fingerprint generation
@@ -59,6 +63,7 @@ class PipelineStage(Enum):
 
 class PipelineStatus(Enum):
     """Pipeline execution status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -85,7 +90,8 @@ class ContentProcessingMetrics:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
+        """
+Convert to dictionary for JSON serialization"""
         data = {
             'content_id': self.content_id,
             'content_type': self.content_type.value,
@@ -106,7 +112,8 @@ class ContentProcessingMetrics:
 
 @dataclass
 class PipelinePerformanceSnapshot:
-    """Pipeline performance snapshot"""
+    """
+Pipeline performance snapshot"""
     timestamp: datetime
     active_content_count: int
     pending_content_count: int
@@ -122,7 +129,8 @@ class PipelinePerformanceSnapshot:
     creator_satisfaction_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = {
             'timestamp': self.timestamp.isoformat(),
             'active_content_count': self.active_content_count,
@@ -521,7 +529,8 @@ class ContentPipelineMonitor:
         }
     
     async def get_creator_analytics(self, creator_id: str, days: int = 7) -> Dict[str, Any]:
-        """Get analytics for specific creator"""
+        """
+Get analytics for specific creator"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             

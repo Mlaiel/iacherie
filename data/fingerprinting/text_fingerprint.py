@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import re
@@ -75,6 +76,7 @@ except ImportError:
 
 class TextFingerprintType(Enum):
     """Types of text fingerprints"""
+
     LEXICAL_HASH = "lexical_hash"
     SEMANTIC_EMBEDDING = "semantic_embedding"
     SYNTACTIC_PATTERN = "syntactic_pattern"
@@ -98,7 +100,8 @@ class TextFingerprint:
 
 @dataclass
 class TextMatchResult:
-    """Text similarity match result"""
+    """
+Text similarity match result"""
     query_text_id: str
     matched_text_id: str
     similarity_score: float
@@ -170,7 +173,8 @@ class TextFingerprinter:
         self._initialize_nlp_models()
     
     def _initialize_nlp_models(self):
-        """Initialize NLP models and components"""
+        """
+Initialize NLP models and components"""
         try:
             # Initialize transformers model
             if TRANSFORMERS_AVAILABLE:
@@ -1054,7 +1058,8 @@ class TextFingerprinter:
         }
     
     async def close(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)

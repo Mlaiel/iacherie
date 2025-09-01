@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -17,6 +17,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of German and international copyright law.
 """
+
 import mimetypes
 from typing import Dict, List, Optional, Union, Any, Type
 import logging
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Enumeration of supported content types."""
+    """
+Enumeration of supported content types."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -66,7 +69,8 @@ class ClassifierFactory:
     """
     
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize classifier factory."""
+        """
+Initialize classifier factory."""
         self.settings = get_settings()
         self.model_path = model_path
         
@@ -88,7 +92,8 @@ class ClassifierFactory:
         }
 
     def _init_format_mappings(self):
-        """Initialize file format to content type mappings."""
+        """
+Initialize file format to content type mappings."""
         self.format_mappings = {
             # Audio formats
             '.mp3': ContentType.AUDIO,
@@ -730,7 +735,8 @@ class ClassifierFactory:
         }
 
     def set_config(self, config: Dict[str, Any]):
-        """Update factory configuration."""
+        """
+Update factory configuration."""
         self.classifier_config.update(config)
         logger.info(f"Factory configuration updated: {config}")
 

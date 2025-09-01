@@ -13,6 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive analytics integration across multiple platforms
 with real-time data processing, advanced metrics computation, and AI-powered insights.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -51,7 +52,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AnalyticsProvider(Enum):
-    """Analytics providers"""
+    """
+Analytics providers"""
+
     GOOGLE_ANALYTICS = "google_analytics"
     FACEBOOK_ANALYTICS = "facebook_analytics"
     SPOTIFY_ANALYTICS = "spotify_analytics"
@@ -65,6 +68,7 @@ class AnalyticsProvider(Enum):
 
 class MetricType(Enum):
     """Types of metrics"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
@@ -76,6 +80,7 @@ class MetricType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for metrics"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -86,6 +91,7 @@ class TimeGranularity(Enum):
 
 class AggregationType(Enum):
     """Aggregation types"""
+
     SUM = "sum"
     AVERAGE = "average"
     MEDIAN = "median"
@@ -122,7 +128,8 @@ class DataPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric data"""
+    """
+Time series of metric data"""
     metric_name: str
     data_points: List[DataPoint]
     time_range: Tuple[datetime, datetime]
@@ -134,7 +141,8 @@ class MetricSeries:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     title: str
     description: str
@@ -146,7 +154,8 @@ class AnalyticsReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class BaseAnalyticsConnector(ABC):
-    """Base analytics connector"""
+    """
+Base analytics connector"""
     
     def __init__(self, provider: AnalyticsProvider, credentials: Dict[str, Any]):
         self.provider = provider
@@ -167,20 +176,24 @@ class BaseAnalyticsConnector(ABC):
                          end_date: datetime,
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
-        """Get metrics data"""
+        """
+Get metrics data"""
         pass
     
     @abstractmethod
     async def get_available_metrics(self) -> List[MetricDefinition]:
-        """Get list of available metrics"""
+        """
+Get list of available metrics"""
         pass
     
     def _cache_key(self, *args) -> str:
-        """Generate cache key"""
+        """
+Generate cache key"""
         return hashlib.md5(str(args).encode()).hexdigest()
     
     async def _get_cached_data(self, cache_key: str) -> Optional[Any]:
-        """Get cached data"""
+        """
+Get cached data"""
         if cache_key in self.cache:
             data, timestamp = self.cache[cache_key]
             if datetime.utcnow() - timestamp < timedelta(seconds=self.cache_ttl):
@@ -188,15 +201,18 @@ class BaseAnalyticsConnector(ABC):
         return None
     
     async def _cache_data(self, cache_key: str, data: Any):
-        """Cache data"""
+        """
+Cache data"""
         self.cache[cache_key] = (data, datetime.utcnow())
     
     def clear_cache(self):
-        """Clear cache"""
+        """
+Clear cache"""
         self.cache.clear()
 
 class GoogleAnalyticsConnector(BaseAnalyticsConnector):
-    """Google Analytics 4 connector"""
+    """
+Google Analytics 4 connector"""
     
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(AnalyticsProvider.GOOGLE_ANALYTICS, credentials)
@@ -204,7 +220,8 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
         self.service_account_key = credentials.get('service_account_key')
         
     async def authenticate(self) -> bool:
-        """Authenticate with Google Analytics"""
+        """
+Authenticate with Google Analytics"""
         try:
             # Implement Google Analytics authentication
             self.logger.info("Google Analytics authentication successful")
@@ -301,7 +318,8 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
         self.artist_id = credentials.get('artist_id')
         
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""
+        """
+Authenticate with Spotify API"""
         try:
             self.logger.info("Spotify Analytics authentication successful")
             return True
@@ -412,7 +430,8 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
         self.channel_id = credentials.get('channel_id')
         
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API"""
+        """
+Authenticate with YouTube API"""
         try:
             self.logger.info("YouTube Analytics authentication successful")
             return True
@@ -525,7 +544,8 @@ class TrendAnalyzer:
         self.logger = logging.getLogger(self.__class__.__name__)
         
     def analyze_trend(self, metric_series: MetricSeries) -> Dict[str, Any]:
-        """Analyze trend in metric series"""
+        """
+Analyze trend in metric series"""
         if len(metric_series.data_points) < 2:
             return {"trend": "insufficient_data"}
         
@@ -630,7 +650,8 @@ class InsightGenerator:
         self.trend_analyzer = TrendAnalyzer()
         
     async def generate_insights(self, metrics: List[MetricSeries]) -> List[str]:
-        """Generate insights from metrics data"""
+        """
+Generate insights from metrics data"""
         insights = []
         
         for metric in metrics:
@@ -720,7 +741,8 @@ class AnalyticsHub:
     
     async def add_connector(self, provider: AnalyticsProvider, 
                           credentials: Dict[str, Any]) -> bool:
-        """Add analytics connector"""
+        """
+Add analytics connector"""
         try:
             connector_classes = {
                 AnalyticsProvider.GOOGLE_ANALYTICS: GoogleAnalyticsConnector,
@@ -842,7 +864,8 @@ class AnalyticsHub:
     async def setup_real_time_monitoring(self, metrics: List[str],
                                        alert_thresholds: Dict[str, Dict[str, float]],
                                        callback: Callable) -> bool:
-        """Setup real-time metric monitoring"""
+        """
+Setup real-time metric monitoring"""
         try:
             # This would setup real-time data streams
             self.logger.info("Real-time monitoring setup completed")

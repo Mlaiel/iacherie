@@ -11,6 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -35,7 +36,9 @@ from ..core.exceptions import (
 
 
 class DiscoveryCategory(Enum):
-    """Content discovery categories."""
+    """
+Content discovery categories."""
+
     ORIGINAL_CONTENT = 'original_content'
     DERIVATIVE_CONTENT = 'derivative_content'
     POTENTIAL_INFRINGEMENT = 'potential_infringement'
@@ -45,7 +48,9 @@ class DiscoveryCategory(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for content matching."""
+    """
+Confidence levels for content matching."""
+
     VERY_LOW = 'very_low'      # 0-20%
     LOW = 'low'                # 21-40%
     MEDIUM = 'medium'          # 41-60%

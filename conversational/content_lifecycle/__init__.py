@@ -112,7 +112,7 @@ __all__ = [
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - All Rights Reserved"
 __status__ = "Production"
 
@@ -177,5 +177,5 @@ def get_module_status():
             "collaboration_matcher": "✅ Active - Creator matching enabled",
             "distribution_coordinator": "✅ Active - Multi-platform distribution ready"
         },
-        "legal_notice": "© 2025 Fahed Mlaiel. All rights reserved. Unauthorized use prohibited."
+        "legal_notice": "(c) 2025 Fahed Mlaiel. All rights reserved. Unauthorized use prohibited."
     }

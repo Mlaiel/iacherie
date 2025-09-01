@@ -4,6 +4,7 @@ Automated secret rotation with zero-downtime deployment
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import os
 import logging
 import asyncio
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class RotationStrategy(Enum):
-    """Secret rotation strategies."""
+    """
+Secret rotation strategies."""
+
     DATABASE_PASSWORD = "database_password"
     API_KEY = "api_key"
     JWT_SECRET = "jwt_secret"
@@ -43,6 +46,7 @@ class RotationStrategy(Enum):
 
 class RotationStatus(Enum):
     """Rotation job status."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -71,7 +75,8 @@ class RotationJob:
 
 @dataclass
 class RotationResult:
-    """Rotation operation result."""
+    """
+Rotation operation result."""
     job_id: str
     success: bool
     new_version: Optional[str] = None
@@ -400,7 +405,8 @@ class SecretRotator:
         return [self._rotation_result_to_dict(result) for result in history[:limit]]
     
     def _scheduler_loop(self) -> None:
-        """Main scheduler loop."""
+        """
+Main scheduler loop."""
         while self.is_running:
             try:
                 current_time = datetime.utcnow()
@@ -582,19 +588,23 @@ class SecretRotator:
         return secrets.token_urlsafe(32)
     
     def _generate_jwt_secret(self) -> str:
-        """Generate a JWT signing secret."""
+        """
+Generate a JWT signing secret."""
         return secrets.token_urlsafe(64)
     
     def _generate_encryption_key(self) -> str:
-        """Generate an encryption key."""
+        """
+Generate an encryption key."""
         return secrets.token_urlsafe(32)
     
     def _generate_webhook_token(self) -> str:
-        """Generate a webhook verification token."""
+        """
+Generate a webhook verification token."""
         return secrets.token_hex(32)
     
     def _generate_service_account_key(self) -> Dict[str, str]:
-        """Generate service account credentials."""
+        """
+Generate service account credentials."""
         return {
             'access_key': secrets.token_urlsafe(20),
             'secret_key': secrets.token_urlsafe(40)
@@ -605,7 +615,8 @@ class SecretRotator:
         strategy: RotationStrategy,
         secret_data: Dict[str, Any]
     ) -> bool:
-        """Validate generated secret meets requirements."""
+        """
+Validate generated secret meets requirements."""
         try:
             if strategy == RotationStrategy.DATABASE_PASSWORD:
                 password = secret_data.get('password', '')
@@ -687,7 +698,8 @@ class SecretRotator:
         return True
     
     def _test_api_key(self, api_config: Dict[str, Any]) -> bool:
-        """Test API key functionality."""
+        """
+Test API key functionality."""
         # Implement API key test
         # This is a placeholder - implement actual API test
         return True
@@ -697,7 +709,8 @@ class SecretRotator:
         old_data: Dict[str, Any],
         new_data: Dict[str, Any]
     ) -> None:
-        """Prepare database for credential rotation."""
+        """
+Prepare database for credential rotation."""
         # Implement database-specific preparation
         pass
     
@@ -706,7 +719,8 @@ class SecretRotator:
         old_data: Dict[str, Any],
         new_data: Dict[str, Any]
     ) -> None:
-        """Finalize database credential rotation."""
+        """
+Finalize database credential rotation."""
         # Implement database-specific finalization
         pass
     
@@ -716,7 +730,8 @@ class SecretRotator:
         result: RotationResult,
         success: bool
     ) -> None:
-        """Send rotation completion notification."""
+        """
+Send rotation completion notification."""
         try:
             notification_data = {
                 'event': 'secret_rotation',
@@ -857,7 +872,8 @@ class SecretRotator:
 
 
 class EmergencyRotator:
-    """Emergency secret rotation for security incidents."""
+    """
+Emergency secret rotation for security incidents."""
     
     def __init__(self, rotator: SecretRotator):
         self.rotator = rotator
@@ -932,7 +948,8 @@ class EmergencyRotator:
         reason: str,
         results: Dict[str, bool]
     ) -> None:
-        """Send emergency rotation notification."""
+        """
+Send emergency rotation notification."""
         try:
             total_secrets = len(results)
             successful_rotations = sum(1 for success in results.values() if success)
@@ -1313,7 +1330,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_instagram_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Instagram API credentials."""
+        """
+Rotate Instagram API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1322,7 +1340,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_tiktok_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate TikTok API credentials."""
+        """
+Rotate TikTok API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1332,7 +1351,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_spotify_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Spotify API credentials."""
+        """
+Rotate Spotify API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1342,7 +1362,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_twitter_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Twitter API credentials."""
+        """
+Rotate Twitter API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1351,7 +1372,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_facebook_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Facebook API credentials."""
+        """
+Rotate Facebook API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1360,7 +1382,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_linkedin_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate LinkedIn API credentials."""
+        """
+Rotate LinkedIn API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1369,7 +1392,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_twitch_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Twitch API credentials."""
+        """
+Rotate Twitch API credentials."""
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1379,7 +1403,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _generate_generic_api_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate generic API credentials for unknown platforms."""
+        """
+Generate generic API credentials for unknown platforms."""
         return {
             **current_creds,
             'api_key': self._generate_secure_token(64),
@@ -1388,7 +1413,8 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _generate_secure_token(self, length: int = 64) -> str:
-        """Generate cryptographically secure token."""
+        """
+Generate cryptographically secure token."""
         alphabet = string.ascii_letters + string.digits + "._-"
         return ''.join(secrets.choice(alphabet) for _ in range(length))
     
@@ -1409,13 +1435,15 @@ class InfluencerSecretRotator(SecretRotator):
         return all(field in credentials for field in platform_fields)
     
     def _test_platform_credentials(self, platform: str, credentials: Dict[str, Any]) -> bool:
-        """Test platform credentials with actual API calls."""
+        """
+Test platform credentials with actual API calls."""
         # In real implementation, this would make actual API test calls
         # For now, return True if credentials are properly formatted
         return self._validate_new_credentials(platform, credentials)
     
     def _send_bulk_rotation_notification(self, results: Dict[str, RotationResult]) -> None:
-        """Send notification for bulk rotation results."""
+        """
+Send notification for bulk rotation results."""
         try:
             total_platforms = len(results)
             successful_rotations = sum(1 for r in results.values() if r.success)

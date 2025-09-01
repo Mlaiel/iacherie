@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class NotificationTypeEnum(str, Enum):
-    """Types of notifications"""
+    """
+Types of notifications"""
+
     SYSTEM = "system"
     SECURITY = "security"
     CONTENT = "content"
@@ -38,6 +41,7 @@ class NotificationTypeEnum(str, Enum):
 
 class NotificationPriorityEnum(str, Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -47,6 +51,7 @@ class NotificationPriorityEnum(str, Enum):
 
 class NotificationChannelEnum(str, Enum):
     """Notification delivery channels"""
+
     IN_APP = "in_app"
     EMAIL = "email"
     SMS = "sms"
@@ -59,6 +64,7 @@ class NotificationChannelEnum(str, Enum):
 
 class NotificationStatusEnum(str, Enum):
     """Notification status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -70,6 +76,7 @@ class NotificationStatusEnum(str, Enum):
 
 class MessageTypeEnum(str, Enum):
     """Types of messages"""
+
     DIRECT_MESSAGE = "direct_message"
     GROUP_MESSAGE = "group_message"
     SYSTEM_MESSAGE = "system_message"
@@ -82,6 +89,7 @@ class MessageTypeEnum(str, Enum):
 
 class MessageStatusEnum(str, Enum):
     """Message status"""
+
     DRAFT = "draft"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -92,6 +100,7 @@ class MessageStatusEnum(str, Enum):
 
 class AttachmentTypeEnum(str, Enum):
     """Types of message attachments"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"

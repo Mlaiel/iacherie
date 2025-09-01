@@ -2,6 +2,7 @@
 """Infrastructure Provisioning Manager
 Handles automated infrastructure provisioning using Infrastructure as Code
 """
+
 import os
 import sys
 import time
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProvisioningStatus(Enum):
-    """Provisioning status enumeration"""
+    """
+Provisioning status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -39,6 +42,7 @@ class ProvisioningStatus(Enum):
 
 class InfrastructureProvider(Enum):
     """Infrastructure provider enumeration"""
+
     AWS = "aws"
     GOOGLE_CLOUD = "google_cloud"
     AZURE = "azure"
@@ -68,7 +72,8 @@ class InfrastructureProvisioner:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize infrastructure provisioner"""
+        """
+Initialize infrastructure provisioner"""
         self.config_path = config_path or "/etc/provisioning/config.yaml"
         self.terraform_dir = "/opt/ia-influencer/terraform"
         self.cloudformation_dir = "/opt/ia-influencer/cloudformation"

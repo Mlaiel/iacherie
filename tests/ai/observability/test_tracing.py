@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Distributed Tracing Module
+"""
+Ultra-Industrial Test Suite for Distributed Tracing Module
 
 Comprehensive testing for advanced distributed tracing, request tracking,
 end-to-end visibility, and microservices trace analysis.
@@ -36,6 +38,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import pytest
@@ -67,10 +70,12 @@ from ai.observability.tracing import (
 
 
 class TestDistributedTracingComprehensive:
-    """Ultra-comprehensive test suite for Distributed Tracing"""
+    """
+Ultra-comprehensive test suite for Distributed Tracing"""
     @pytest.fixture
     def tracing_config(self):
-        """Sample tracing configuration"""
+        """
+Sample tracing configuration"""
         return {
             'service_name': 'ia_influencer_platform',
             'service_version': '2.1.0',
@@ -94,26 +99,30 @@ class TestDistributedTracingComprehensive:
 
     @pytest.fixture
     async def distributed_tracer(self, tracing_config):
-        """Create distributed tracer instance"""
+        """
+Create distributed tracer instance"""
         tracer = DistributedTracer(tracing_config)
         await tracer.initialize()
         yield tracer
         await tracer.shutdown()
 
     def test_span_kind_enum_comprehensive(self):
-        """Test SpanKind enum completeness"""
+        """
+Test SpanKind enum completeness"""
         expected_kinds = {'INTERNAL', 'SERVER', 'CLIENT', 'PRODUCER', 'CONSUMER'}
         actual_kinds = {member.name for member in SpanKind}
         assert actual_kinds == expected_kinds
 
     def test_span_status_enum_comprehensive(self):
-        """Test SpanStatus enum completeness"""
+        """
+Test SpanStatus enum completeness"""
         expected_statuses = {'UNSET', 'OK', 'ERROR'}
         actual_statuses = {member.name for member in SpanStatus}
         assert actual_statuses == expected_statuses
 
     def test_span_event_creation_and_validation(self):
-        """Test SpanEvent creation and validation"""
+        """
+Test SpanEvent creation and validation"""
         timestamp = datetime.now(timezone.utc)
         
         event = SpanEvent(
@@ -165,7 +174,8 @@ class TestDistributedTracingComprehensive:
         assert 'attributes' in link_dict
 
     def test_span_creation_and_lifecycle_comprehensive(self):
-        """Test comprehensive Span creation and lifecycle"""
+        """
+Test comprehensive Span creation and lifecycle"""
         trace_id = str(uuid4())
         span_id = str(uuid4())
         parent_span_id = str(uuid4())
@@ -281,7 +291,8 @@ class TestDistributedTracingComprehensive:
 
     @pytest.mark.asyncio
     async def test_span_creation_and_management(self, distributed_tracer):
-        """Test span creation and management"""
+        """
+Test span creation and management"""
         tracer = distributed_tracer
         
         # Create root span
@@ -544,7 +555,8 @@ class TestDistributedTracingComprehensive:
 
     @pytest.mark.asyncio
     async def test_distributed_trace_collection_comprehensive(self, distributed_tracer):
-        """Test comprehensive distributed trace collection"""
+        """
+Test comprehensive distributed trace collection"""
         tracer = distributed_tracer
         
         # Initialize trace collector
@@ -1014,7 +1026,8 @@ class TestDistributedTracingComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_high_throughput_tracing_performance(self, distributed_tracer):
-        """Test performance with high-throughput tracing"""
+        """
+Test performance with high-throughput tracing"""
         tracer = distributed_tracer
         
         # Configure for high performance
@@ -1450,7 +1463,8 @@ class TestTracingBenchmarks:
     """Performance benchmarks for distributed tracing"""
     
     def test_span_creation_benchmark(self, benchmark):
-        """Benchmark span creation performance"""
+        """
+Benchmark span creation performance"""
         def create_span():
             trace_id = str(uuid4())
             span_id = str(uuid4())

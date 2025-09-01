@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -27,7 +28,9 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class SnapType(Enum):
-    """Snapchat content types"""
+    """
+Snapchat content types"""
+
     PHOTO = "photo"
     VIDEO = "video"
     STORY = "story"
@@ -39,6 +42,7 @@ class SnapType(Enum):
 
 class ContentLifespan(Enum):
     """Content lifespan categories"""
+
     TEMPORARY = "temporary"  # 1-10 seconds
     STORY = "story"  # 24 hours
     SPOTLIGHT = "spotlight"  # Permanent
@@ -172,7 +176,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         return snap_type in snap_types
         
     def _determine_snap_type(self, snap: Dict[str, Any]) -> SnapType:
-        """Determine snap type from snap data"""
+        """
+Determine snap type from snap data"""
         
         media_type = snap.get('media_type', 'photo')
         duration = snap.get('duration', 0)
@@ -189,7 +194,8 @@ class SnapchatEngine(BaseCrawlerEngine):
             return SnapType.PHOTO
             
     async def _process_snap(self, raw_snap: Dict[str, Any]) -> Optional[SnapchatContent]:
-        """Process and analyze snap with advanced ephemeral content handling"""
+        """
+Process and analyze snap with advanced ephemeral content handling"""
         
         try:
             content_id = raw_snap.get('id')
@@ -305,7 +311,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         return min(engagement_rate, 1.0)  # Cap at 100%
         
     async def _calculate_viral_potential(self, snap: Dict[str, Any]) -> float:
-        """Calculate viral potential for ephemeral content"""
+        """
+Calculate viral potential for ephemeral content"""
         
         # Factors: rapid view accumulation, share rate, AR innovation
         views = snap.get('view_count', 0)
@@ -330,7 +337,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         return min(viral_potential, 1.0)
         
     def _calculate_time_active(self, snap: Dict[str, Any]) -> float:
-        """Calculate how long the snap has been active (in minutes)"""
+        """
+Calculate how long the snap has been active (in minutes)"""
         
         created_at = snap.get('created_at', '')
         if not created_at:
@@ -344,7 +352,8 @@ class SnapchatEngine(BaseCrawlerEngine):
             return 1.0
             
     async def _analyze_ar_innovation(self, snap: Dict[str, Any]) -> float:
-        """Analyze AR innovation and creativity score"""
+        """
+Analyze AR innovation and creativity score"""
         
         if not self.enable_ar_analysis:
             return 0.0
@@ -382,7 +391,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         quality_score: float,
         ar_innovation_score: float
     ) -> float:
-        """Calculate monetization potential for Snapchat content"""
+        """
+Calculate monetization potential for Snapchat content"""
         
         # Factors: engagement, AR innovation, brand potential, audience
         engagement_rate = self._calculate_engagement_rate(snap)
@@ -408,7 +418,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         return min(monetization_potential, 1.0)
         
     def _determine_content_lifespan(self, snap: Dict[str, Any]) -> ContentLifespan:
-        """Determine content lifespan category"""
+        """
+Determine content lifespan category"""
         
         if snap.get('is_story', False):
             return ContentLifespan.STORY
@@ -426,7 +437,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         snap: Dict[str, Any],
         lifespan: ContentLifespan
     ) -> Optional[datetime]:
-        """Calculate when content expires"""
+        """
+Calculate when content expires"""
         
         created_at = snap.get('created_at', '')
         if not created_at:
@@ -450,7 +462,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         limit: int = 100,
         category_filter: Optional[str] = None
     ) -> List[SnapchatContent]:
-        """Crawl Snapchat Spotlight trending content"""
+        """
+Crawl Snapchat Spotlight trending content"""
         
         self.logger.info(f"Crawling Spotlight content, limit: {limit}")
         
@@ -608,7 +621,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         self, 
         monitoring_period: timedelta = timedelta(hours=6)
     ) -> Dict[str, Any]:
-        """Monitor ephemeral content trends in real-time"""
+        """
+Monitor ephemeral content trends in real-time"""
         
         self.logger.info("Monitoring ephemeral trends")
         
@@ -647,7 +661,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         ]
         
     async def _analyze_popular_ar_effects(self) -> List[Dict[str, Any]]:
-        """Analyze most popular AR effects"""
+        """
+Analyze most popular AR effects"""
         
         # This would analyze current AR effect usage
         # Placeholder implementation
@@ -658,7 +673,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         ]
         
     async def _analyze_viral_patterns(self) -> Dict[str, Any]:
-        """Analyze viral content patterns"""
+        """
+Analyze viral content patterns"""
         
         return {
             'optimal_duration': '3-7 seconds',
@@ -672,7 +688,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         }
         
     async def _analyze_engagement_hotspots(self) -> List[Dict[str, Any]]:
-        """Analyze geographic engagement hotspots"""
+        """
+Analyze geographic engagement hotspots"""
         
         return [
             {'location': 'Los Angeles', 'engagement_rate': 0.9, 'trending_content': 'AR filters'},
@@ -681,7 +698,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         ]
         
     async def _analyze_content_lifecycle(self) -> Dict[str, Any]:
-        """Analyze ephemeral content lifecycle patterns"""
+        """
+Analyze ephemeral content lifecycle patterns"""
         
         return {
             'average_view_duration': 2.5,
@@ -695,7 +713,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         }
         
     async def _identify_monetization_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify current monetization opportunities"""
+        """
+Identify current monetization opportunities"""
         
         return [
             {
@@ -719,7 +738,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         ]
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
+        """
+Get authenticated headers for API requests"""
         
         return {
             'User-Agent': 'Snapchat/1.0',
@@ -745,7 +765,8 @@ class SnapchatEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting optimized for ephemeral content"""
+        """
+Apply rate limiting optimized for ephemeral content"""
         
         # Faster rate limiting for time-sensitive ephemeral content
         await asyncio.sleep(60 / self.rate_limit_per_minute)

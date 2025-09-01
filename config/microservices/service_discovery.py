@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -25,7 +26,9 @@ from pydantic import BaseSettings, Field, validator
 
 
 class ServiceDiscoveryType(str, Enum):
-    """Service discovery backend types."""
+    """
+Service discovery backend types."""
+
     CONSUL = "consul"
     ETCD = "etcd"
     REDIS = "redis"
@@ -35,6 +38,7 @@ class ServiceDiscoveryType(str, Enum):
 
 class HealthCheckType(str, Enum):
     """Health check types for service registration."""
+
     HTTP = "http"
     TCP = "tcp"
     GRPC = "grpc"
@@ -64,7 +68,8 @@ class HealthCheckConfig:
 
 @dataclass
 class ServiceRegistration:
-    """Service registration configuration."""
+    """
+Service registration configuration."""
     service_id: str
     service_name: str
     version: str
@@ -154,7 +159,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         )
     
     def get_etcd_client(self) -> etcd3.Etcd3Client:
-        """Get configured etcd client."""
+        """
+Get configured etcd client."""
         return etcd3.client(
             host=self.etcd_host,
             port=self.etcd_port,
@@ -166,7 +172,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         )
     
     def get_redis_client(self) -> redis.Redis:
-        """Get configured Redis client."""
+        """
+Get configured Redis client."""
         return redis.Redis(
             host=self.redis_host,
             port=self.redis_port,
@@ -176,7 +183,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         )
     
     def get_service_config(self) -> Dict[str, Any]:
-        """Get complete service configuration."""
+        """
+Get complete service configuration."""
         return {
             "discovery": {
                 "type": self.discovery_type,
@@ -232,13 +240,15 @@ class ServiceRegistry:
         self._services: Dict[str, List[ServiceRegistration]] = {}
         
     def register_service(self, registration: ServiceRegistration):
-        """Register a service."""
+        """
+Register a service."""
         if registration.service_name not in self._services:
             self._services[registration.service_name] = []
         self._services[registration.service_name].append(registration)
     
     def deregister_service(self, service_name: str, service_id: str):
-        """Deregister a service."""
+        """
+Deregister a service."""
         if service_name in self._services:
             self._services[service_name] = [
                 s for s in self._services[service_name] 
@@ -246,11 +256,13 @@ class ServiceRegistry:
             ]
     
     def get_service_instances(self, service_name: str) -> List[ServiceRegistration]:
-        """Get all instances of a service."""
+        """
+Get all instances of a service."""
         return self._services.get(service_name, [])
     
     def get_healthy_instances(self, service_name: str) -> List[ServiceRegistration]:
-        """Get healthy instances of a service."""
+        """
+Get healthy instances of a service."""
         # Implementation would include health checking logic
         return self.get_service_instances(service_name)
 

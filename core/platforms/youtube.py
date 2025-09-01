@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -25,10 +26,12 @@ logger = logging.getLogger(__name__)
 
 
 class YouTubePlatform(PlatformBase):
-    """YouTube platform integration"""
+    """
+YouTube platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize YouTube platform"""
+        """
+Initialize YouTube platform"""
         super().__init__(config)
         self.api_base = "https://www.googleapis.com/youtube/v3"
         self.upload_base = "https://www.googleapis.com/upload/youtube/v3"
@@ -44,7 +47,8 @@ class YouTubePlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube using OAuth2"""
+        """
+Authenticate with YouTube using OAuth2"""
         try:
             # If we have a refresh token, use it
             if self.config.credentials.refresh_token:
@@ -165,7 +169,8 @@ class YouTubePlatform(PlatformBase):
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload video content to YouTube"""
+        """
+Upload video content to YouTube"""
         try:
             if not os.path.exists(content_path):
                 return UploadResult(
@@ -288,7 +293,8 @@ class YouTubePlatform(PlatformBase):
         return category_map.get(category.lower(), '22')  # Default to People & Blogs
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get YouTube analytics for a video"""
+        """
+Get YouTube analytics for a video"""
         try:
             # Get video statistics
             video_stats = await self._make_request(
@@ -345,7 +351,8 @@ class YouTubePlatform(PlatformBase):
         }
     
     def _calculate_engagement_rate(self, stats: Dict[str, Any]) -> float:
-        """Calculate engagement rate"""
+        """
+Calculate engagement rate"""
         views = int(stats.get('viewCount', 0))
         likes = int(stats.get('likeCount', 0))
         comments = int(stats.get('commentCount', 0))
@@ -356,7 +363,8 @@ class YouTubePlatform(PlatformBase):
         return ((likes + comments) / views) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on YouTube"""
+        """
+Search content on YouTube"""
         search_type = 'video'  # YouTube API default
         if content_type == ContentType.PLAYLIST:
             search_type = 'playlist'
@@ -391,7 +399,8 @@ class YouTubePlatform(PlatformBase):
         return formatted_results
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's videos from YouTube"""
+        """
+Get user's videos from YouTube"""
         try:
             # Get channel info first
             if user_id:
@@ -543,7 +552,8 @@ class YouTubePlatform(PlatformBase):
         return None
     
     async def add_video_to_playlist(self, playlist_id: str, video_id: str) -> bool:
-        """Add video to playlist"""
+        """
+Add video to playlist"""
         data = {
             'snippet': {
                 'playlistId': playlist_id,
@@ -564,6 +574,7 @@ class YouTubePlatform(PlatformBase):
         return result is not None
     
     async def close(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session and not self.session.closed:
             await self.session.close()

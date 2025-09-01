@@ -9,8 +9,9 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
@@ -33,6 +36,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of copyright violations"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -57,7 +61,8 @@ class DigitalFingerprint:
 
 @dataclass
 class ProtectionResult:
-    """Results of content protection analysis"""
+    """
+Results of content protection analysis"""
     is_protected: bool
     protection_strength: float
     fingerprint: DigitalFingerprint
@@ -66,7 +71,8 @@ class ProtectionResult:
 
 @dataclass
 class ViolationAlert:
-    """Copyright violation detection alert"""
+    """
+Copyright violation detection alert"""
     violation_id: str
     original_content_id: str
     infringing_content_id: str
@@ -78,7 +84,8 @@ class ViolationAlert:
     legal_priority: str
 
 class AdvancedFingerprintGenerator:
-    """Advanced multi-modal fingerprint generation system"""
+    """
+Advanced multi-modal fingerprint generation system"""
     
     def __init__(self):
         self.hash_algorithms = ['sha256', 'sha3_256', 'blake2b']
@@ -90,7 +97,8 @@ class AdvancedFingerprintGenerator:
         metadata: Dict[str, Any],
         protection_level: ProtectionLevel
     ) -> DigitalFingerprint:
-        """Generate multi-layered digital fingerprint"""
+        """
+Generate multi-layered digital fingerprint"""
         try:
             # Primary cryptographic hash
             primary_hash = await self._generate_primary_hash(content_data)
@@ -142,7 +150,8 @@ class AdvancedFingerprintGenerator:
         return await loop.run_in_executor(self.thread_executor, compute_hash)
     
     async def _generate_secondary_hashes(self, content_data: bytes) -> List[str]:
-        """Generate multiple secondary hashes for robustness"""
+        """
+Generate multiple secondary hashes for robustness"""
         def compute_secondary():
             hashes = []
             for algo in self.hash_algorithms:
@@ -260,19 +269,22 @@ class AdvancedFingerprintGenerator:
         return any(filename.endswith(ext) for ext in audio_extensions)
     
     def _is_visual_content(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content is visual-based"""
+        """
+Check if content is visual-based"""
         filename = metadata.get('filename', '').lower()
         visual_extensions = ['.jpg', '.jpeg', '.png', '.webp', '.tiff', '.mp4', '.avi', '.mkv']
         return any(filename.endswith(ext) for ext in visual_extensions)
     
     def _is_text_content(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content is text-based"""
+        """
+Check if content is text-based"""
         filename = metadata.get('filename', '').lower()
         text_extensions = ['.txt', '.md', '.html', '.pdf', '.doc']
         return any(filename.endswith(ext) for ext in text_extensions)
 
 class ViolationDetector:
-    """Advanced copyright violation detection system"""
+    """
+Advanced copyright violation detection system"""
     
     def __init__(self):
         self.similarity_threshold = 0.85
@@ -284,7 +296,8 @@ class ViolationDetector:
         target_fingerprint: DigitalFingerprint,
         search_sources: List[str] = None
     ) -> List[ViolationAlert]:
-        """Scan for potential copyright violations"""
+        """
+Scan for potential copyright violations"""
         try:
             violations = []
             
@@ -339,7 +352,8 @@ class ViolationDetector:
         target_fp: DigitalFingerprint, 
         sources: List[str]
     ) -> List[ViolationAlert]:
-        """Scan external sources for violations"""
+        """
+Scan external sources for violations"""
         # Simulate external scanning (YouTube, SoundCloud, etc.)
         external_violations = []
         
@@ -355,7 +369,8 @@ class ViolationDetector:
         target_fp: DigitalFingerprint, 
         platform: str
     ) -> List[ViolationAlert]:
-        """Simulate external platform scanning"""
+        """
+Simulate external platform scanning"""
         # This would integrate with real platform APIs
         return []
     
@@ -364,7 +379,8 @@ class ViolationDetector:
         fp1: DigitalFingerprint, 
         fp2: DigitalFingerprint
     ) -> float:
-        """Calculate similarity between two fingerprints"""
+        """
+Calculate similarity between two fingerprints"""
         similarities = []
         
         # Primary hash comparison
@@ -388,17 +404,20 @@ class ViolationDetector:
         return max(similarities) if similarities else 0.0
     
     def _compare_audio_fingerprints(self, fp1: str, fp2: str) -> float:
-        """Compare audio fingerprints"""
+        """
+Compare audio fingerprints"""
         # Simulate audio fingerprint comparison
         return 0.95 if fp1 == fp2 else 0.0
     
     def _compare_visual_fingerprints(self, fp1: str, fp2: str) -> float:
-        """Compare visual fingerprints"""
+        """
+Compare visual fingerprints"""
         # Simulate visual fingerprint comparison
         return 0.95 if fp1 == fp2 else 0.0
     
     def _determine_violation_type(self, similarity: float) -> ViolationType:
-        """Determine type of violation based on similarity"""
+        """
+Determine type of violation based on similarity"""
         if similarity >= 0.98:
             return ViolationType.EXACT_COPY
         elif similarity >= 0.90:
@@ -409,7 +428,8 @@ class ViolationDetector:
             return ViolationType.UNAUTHORIZED_USE
     
     def _assess_legal_priority(self, similarity: float) -> str:
-        """Assess legal priority of violation"""
+        """
+Assess legal priority of violation"""
         if similarity >= 0.95:
             return "critical"
         elif similarity >= 0.90:
@@ -439,7 +459,8 @@ class RightsProtectionEngine:
         metadata: Dict[str, Any],
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> ProtectionResult:
-        """Complete content protection process"""
+        """
+Complete content protection process"""
         try:
             # Generate comprehensive fingerprint
             fingerprint = await self.fingerprint_generator.generate_comprehensive_fingerprint(
@@ -497,7 +518,8 @@ class RightsProtectionEngine:
         return min(base_strength, 1.0)
     
     def _generate_warnings(self, violations: List[ViolationAlert]) -> List[str]:
-        """Generate protection warnings"""
+        """
+Generate protection warnings"""
         warnings = []
         
         if violations:

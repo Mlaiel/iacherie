@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Audit event types"""
+    """
+Audit event types"""
     # Authentication events
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
@@ -89,6 +91,7 @@ class AuditEventType(Enum):
 
 class AuditSeverity(Enum):
     """Audit event severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -98,6 +101,7 @@ class AuditSeverity(Enum):
 
 class ComplianceFramework(Enum):
     """Supported compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
@@ -130,7 +134,8 @@ class AuditEvent:
 
 @dataclass
 class AuditQuery:
-    """Audit log query parameters"""
+    """
+Audit log query parameters"""
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     event_types: Optional[List[AuditEventType]] = None
@@ -146,7 +151,8 @@ class AuditQuery:
 
 @dataclass
 class AuditReport:
-    """Audit analysis report"""
+    """
+Audit analysis report"""
     report_id: str
     generated_at: datetime
     period_start: datetime
@@ -163,7 +169,8 @@ class AuditReport:
 
 
 class AuditMetrics:
-    """Audit logging metrics"""
+    """
+Audit logging metrics"""
     
     def __init__(self):
         self.total_events: int = 0
@@ -176,7 +183,8 @@ class AuditMetrics:
         self.retention_purges: int = 0
         
     def record_event(self, event: AuditEvent, processing_time: float):
-        """Record audit event metrics"""
+        """
+Record audit event metrics"""
         self.total_events += 1
         
         # Count by type
@@ -197,26 +205,31 @@ class AuditMetrics:
 
 
 class AuditStorage(ABC):
-    """Abstract audit storage interface"""
+    """
+Abstract audit storage interface"""
     
     @abstractmethod
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store audit event"""
+        """
+Store audit event"""
         pass
     
     @abstractmethod
     async def query_events(self, query: AuditQuery) -> List[AuditEvent]:
-        """Query audit events"""
+        """
+Query audit events"""
         pass
     
     @abstractmethod
     async def purge_events(self, before_date: datetime) -> int:
-        """Purge old audit events"""
+        """
+Purge old audit events"""
         pass
 
 
 class FileAuditStorage(AuditStorage):
-    """File-based audit storage implementation"""
+    """
+File-based audit storage implementation"""
     
     def __init__(self, storage_path: str, compress: bool = True):
         self.storage_path = Path(storage_path)
@@ -224,7 +237,8 @@ class FileAuditStorage(AuditStorage):
         self.compress = compress
         
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store audit event to file"""
+        """
+Store audit event to file"""
         try:
             # Create date-based filename
             date_str = event.timestamp.strftime("%Y-%m-%d")
@@ -392,7 +406,8 @@ class FileAuditStorage(AuditStorage):
         return True
     
     async def purge_events(self, before_date: datetime) -> int:
-        """Purge old audit events"""
+        """
+Purge old audit events"""
         purged_count = 0
         
         try:
@@ -441,7 +456,8 @@ class DatabaseAuditLogger:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize audit logger"""
+        """
+Initialize audit logger"""
         self.config = config or {}
         self.storage_backends: List[AuditStorage] = []
         self.metrics = AuditMetrics()
@@ -614,13 +630,15 @@ class DatabaseAuditLogger:
         return False
     
     async def _is_privileged_user(self, user_id: str) -> bool:
-        """Check if user has privileged access"""
+        """
+Check if user has privileged access"""
         # This would check user roles and permissions
         # For now, return False as placeholder
         return False
     
     async def _flush_events(self):
-        """Flush buffered events to storage backends"""
+        """
+Flush buffered events to storage backends"""
         if not self.event_buffer:
             return
         

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
@@ -50,6 +53,7 @@ class BlockchainNetwork(Enum):
 
 class RightsType(Enum):
     """Digital rights types"""
+
     COPYRIGHT = "copyright"
     PERFORMANCE_RIGHTS = "performance_rights"
     MECHANICAL_RIGHTS = "mechanical_rights"
@@ -64,6 +68,7 @@ class RightsType(Enum):
 
 class SmartContractStatus(Enum):
     """Smart contract status"""
+
     PENDING_DEPLOYMENT = "pending_deployment"
     DEPLOYED = "deployed"
     ACTIVE = "active"

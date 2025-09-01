@@ -10,7 +10,7 @@ Module: backend/business/surveillance/__init__.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -29,6 +29,7 @@ Web Surveillance Activation → Real-time Monitoring → Infringement Detection 
 Automated Protection → Revenue Recovery → Analytics Reporting → 
 Performance Optimization → Legal Action Coordination
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -94,7 +95,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SurveillanceSystemConfig:
-    """Complete surveillance system configuration"""
+    """
+Complete surveillance system configuration"""
     # Core configuration
     mode: OrchestrationMode = OrchestrationMode.PRODUCTION
     database_url: Optional[str] = None
@@ -140,7 +142,8 @@ class ComprehensiveSurveillanceSystem:
     """
     
     def __init__(self, config: SurveillanceSystemConfig):
-        """Initialize comprehensive surveillance system"""
+        """
+Initialize comprehensive surveillance system"""
         self.config = config
         self.orchestrator: Optional[SurveillanceOrchestrator] = None
         self.realtime_monitor: Optional[RealtimeMonitor] = None
@@ -345,7 +348,8 @@ def create_surveillance_system(
 def create_development_surveillance_system(
     database_url: Optional[str] = None
 ) -> ComprehensiveSurveillanceSystem:
-    """Create surveillance system optimized for development"""
+    """
+Create surveillance system optimized for development"""
     
     config = SurveillanceSystemConfig(
         mode=OrchestrationMode.DEVELOPMENT,
@@ -366,7 +370,8 @@ def create_production_surveillance_system(
     redis_url: Optional[str] = None,
     storage_path: Optional[Path] = None
 ) -> ComprehensiveSurveillanceSystem:
-    """Create surveillance system optimized for production"""
+    """
+Create surveillance system optimized for production"""
     
     config = SurveillanceSystemConfig(
         mode=OrchestrationMode.PRODUCTION,
@@ -446,7 +451,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 
 @dataclass

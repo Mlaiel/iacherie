@@ -23,6 +23,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -76,7 +77,9 @@ from ..utils.cache_manager import CacheManager
 
 
 class PlatformAnalysisType(Enum):
-    """Types of platform analysis."""
+    """
+Types of platform analysis."""
+
     COMPETITOR_ANALYSIS = "competitor_analysis"
     TREND_ANALYSIS = "trend_analysis"
     CONTENT_PERFORMANCE = "content_performance"
@@ -91,6 +94,7 @@ class PlatformAnalysisType(Enum):
 
 class AnalysisMetrics(Enum):
     """Key metrics for platform analysis."""
+
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -105,6 +109,7 @@ class AnalysisMetrics(Enum):
 
 class CompetitorTier(Enum):
     """Competitor classification tiers."""
+
     DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     MARKET_LEADER = "market_leader"
@@ -144,7 +149,8 @@ class PlatformMetrics:
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile."""
+    """
+Comprehensive competitor profile."""
     competitor_id: str
     name: str
     tier: CompetitorTier
@@ -651,7 +657,8 @@ class PlatformAnalyzer:
         return (total_engagement / followers) * 100
     
     async def _cross_platform_analysis(self, profile: CompetitorProfile):
-        """Perform cross-platform analysis for competitor."""
+        """
+Perform cross-platform analysis for competitor."""
         try:
             # Calculate total reach across platforms
             total_followers = sum(

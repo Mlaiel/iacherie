@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -35,7 +36,8 @@ from ...utils.cache_manager import CacheManager
 
 @dataclass
 class DataSource:
-    """Data source configuration."""
+    """
+Data source configuration."""
     source_id: str
     name: str
     source_type: str
@@ -51,7 +53,8 @@ class DataSource:
 
 @dataclass
 class CollectedData:
-    """Structure for collected data."""
+    """
+Structure for collected data."""
     data_id: str
     source_id: str
     competitor_id: str
@@ -76,7 +79,8 @@ class DataCollectionManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the data collection manager."""
+        """
+Initialize the data collection manager."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

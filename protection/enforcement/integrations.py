@@ -1,6 +1,7 @@
 """External Service Integrations for Copyright Enforcement
 Professional integrations with external services, APIs, and platforms
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of external services"""
+    """
+Types of external services"""
+
     BLOCKCHAIN_TIMESTAMP = "blockchain_timestamp"
     LEGAL_DATABASE = "legal_database"
     COPYRIGHT_REGISTRY = "copyright_registry"
@@ -36,6 +39,7 @@ class ServiceType(Enum):
 
 class IntegrationStatus(Enum):
     """Status of service integrations"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -46,6 +50,7 @@ class IntegrationStatus(Enum):
 
 class RequestMethod(Enum):
     """HTTP request methods"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -70,7 +75,8 @@ class ServiceCredentials:
 
 @dataclass
 class ServiceConfig:
-    """Configuration for external service"""
+    """
+Configuration for external service"""
     service_name: str
     service_type: ServiceType
     base_url: str
@@ -99,7 +105,8 @@ class ServiceConfig:
 
 @dataclass
 class ServiceRequest:
-    """Request to external service"""
+    """
+Request to external service"""
     id: str
     service_name: str
     method: RequestMethod
@@ -123,7 +130,8 @@ class ServiceRequest:
 
 
 class BlockchainTimestampService:
-    """Integration with blockchain timestamping services"""
+    """
+Integration with blockchain timestamping services"""
     
     def __init__(self, config: ServiceConfig):
         self.config = config
@@ -230,7 +238,8 @@ class BlockchainTimestampService:
 
 
 class CopyrightRegistryService:
-    """Integration with copyright registration services"""
+    """
+Integration with copyright registration services"""
     
     def __init__(self, config: ServiceConfig):
         self.config = config
@@ -761,7 +770,8 @@ class ExternalIntegrationsManager:
         )
     
     async def start_health_monitoring(self):
-        """Start health monitoring for all services"""
+        """
+Start health monitoring for all services"""
         if self.health_check_task:
             return
         
@@ -830,7 +840,8 @@ class ExternalIntegrationsManager:
         return self.services.get(service_name)
     
     def is_service_available(self, service_name: str) -> bool:
-        """Check if service is available and healthy"""
+        """
+Check if service is available and healthy"""
         config = self.service_configs.get(service_name)
         if not config:
             return False
@@ -841,7 +852,8 @@ class ExternalIntegrationsManager:
         )
     
     async def create_blockchain_timestamp(self, content_hash: str, metadata: Dict[str, Any] = None) -> Optional[Dict[str, Any]]:
-        """Create blockchain timestamp using configured service"""
+        """
+Create blockchain timestamp using configured service"""
         try:
             if not self.is_service_available('blockchain_timestamp'):
                 logger.warning("Blockchain timestamp service not available")

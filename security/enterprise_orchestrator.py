@@ -14,6 +14,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationMethod(Enum):
-    """Supported authentication methods"""
+    """
+Supported authentication methods"""
+
     PASSWORD = "password"
     TOTP = "totp"
     SMS = "sms"
@@ -49,6 +52,7 @@ class AuthenticationMethod(Enum):
 
 class AuthenticationStrength(Enum):
     """Authentication strength levels"""
+
     WEAK = "weak"          # Single factor
     MEDIUM = "medium"      # Two factors
     STRONG = "strong"      # Multiple factors with hardware
@@ -71,7 +75,8 @@ class AuthenticationPolicy:
 
 
 class AuthenticationRequest(BaseModel):
-    """Unified authentication request"""
+    """
+Unified authentication request"""
     user_id: Optional[str] = Field(None, description="User identifier")
     username: Optional[str] = Field(None, description="Username")
     password: Optional[str] = Field(None, description="Password")
@@ -430,12 +435,14 @@ class EnterpriseSecurityOrchestrator:
         return AuthenticationStrength.MEDIUM
         
     async def _is_mfa_required(self, user_id: str) -> bool:
-        """Check if MFA is required for user"""
+        """
+Check if MFA is required for user"""
         # In production, check user settings and policies
         return True  # Default to requiring MFA
         
     async def _get_available_mfa_methods(self, user_id: str) -> List[str]:
-        """Get available MFA methods for user"""
+        """
+Get available MFA methods for user"""
         methods = []
         
         # Check if user has TOTP configured
@@ -463,7 +470,8 @@ class EnterpriseSecurityOrchestrator:
         return ip_address in allowed_ranges
         
     async def _get_user_permissions(self, user_id: str) -> List[str]:
-        """Get user permissions"""
+        """
+Get user permissions"""
         # In production, fetch from database
         return ["read", "write", "delete"]
         

@@ -15,6 +15,7 @@ THE FULL EXTENT OF THE LAW.
 
 ALL RIGHTS RESERVED. PROPRIETARY AND CONFIDENTIAL.
 """
+
 import logging
 import asyncio
 from pathlib import Path
@@ -72,7 +73,8 @@ class ConversionStatistics:
             self.error_distribution = {}
     
     def calculate_averages(self):
-        """Calculate average metrics"""
+        """
+Calculate average metrics"""
         if self.total_conversions > 0:
             self.average_processing_time = self.total_processing_time / self.total_conversions
         
@@ -84,13 +86,15 @@ class ConversionStatistics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage"""
+        """
+Calculate success rate percentage"""
         if self.total_conversions == 0:
             return 0.0
         return (self.successful_conversions / self.total_conversions) * 100.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert statistics to dictionary"""
+        """
+Convert statistics to dictionary"""
         return {
             'total_conversions': self.total_conversions,
             'successful_conversions': self.successful_conversions,
@@ -144,15 +148,18 @@ class AudioConversionIndex:
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit with cleanup"""
+        """
+Context manager exit with cleanup"""
         self.cleanup()
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit with cleanup"""
+        """
+Async context manager exit with cleanup"""
         await self.cleanup_async()
     
     # ========================================
@@ -587,7 +594,8 @@ class AudioConversionIndex:
         return self.statistics.to_dict()
     
     def reset_statistics(self):
-        """Reset session statistics"""
+        """
+Reset session statistics"""
         self.statistics = ConversionStatistics()
         logger.info("Statistics reset")
     
@@ -646,7 +654,8 @@ class AudioConversionIndex:
         return self.config.validate_configuration()
     
     def cleanup(self):
-        """Cleanup resources synchronously"""
+        """
+Cleanup resources synchronously"""
         try:
             # Cleanup temporary files if configured
             if self.config.clean_temp_files:

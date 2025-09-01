@@ -7,6 +7,7 @@ channels including subscriptions, NFTs, brand partnerships, and premium content 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,8 @@ settings = get_settings()
 
 
 class ContentMonetizationEngine:
-    """Advanced monetization system for content creators."""
+    """
+Advanced monetization system for content creators."""
     
     def __init__(self):
         self.db = get_database()
@@ -839,14 +841,16 @@ class ContentMonetizationEngine:
         return projections
     
     def _calculate_trial_end(self, settings: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate trial period end date."""
+        """
+Calculate trial period end date."""
         trial_days = settings.get('trial_period_days', 0)
         if trial_days > 0:
             return datetime.utcnow() + timedelta(days=trial_days)
         return None
     
     def _calculate_next_billing(self, frequency: str) -> datetime:
-        """Calculate next billing date."""
+        """
+Calculate next billing date."""
         now = datetime.utcnow()
         
         if frequency == 'monthly':
@@ -868,7 +872,8 @@ class ContentMonetizationEngine:
         transaction_type: str,
         payment_gateway_id: str
     ) -> None:
-        """Record revenue transaction in database."""
+        """
+Record revenue transaction in database."""
         transaction_data = {
             'id': uuid4(),
             'strategy_id': strategy_id,
@@ -893,7 +898,8 @@ class ContentMonetizationEngine:
         strategy_id: UUID,
         access_type: str
     ) -> None:
-        """Grant content access to user."""
+        """
+Grant content access to user."""
         access_data = {
             'user_id': user_id,
             'strategy_id': strategy_id,
@@ -906,7 +912,8 @@ class ContentMonetizationEngine:
         await self.db.content_access.create(access_data)
     
     async def _get_creator_wallet_address(self, creator_id: UUID) -> str:
-        """Get creator's blockchain wallet address."""
+        """
+Get creator's blockchain wallet address."""
         wallet = await self.db.creator_wallets.get_primary(creator_id)
         if not wallet:
             # Create default wallet
@@ -926,7 +933,8 @@ class ContentMonetizationEngine:
         content_item: Dict[str, Any],
         token_id: int
     ) -> Dict[str, Any]:
-        """Create individual NFT item."""
+        """
+Create individual NFT item."""
         nft_item_data = {
             'collection_id': collection_id,
             'token_id': token_id,
@@ -956,7 +964,8 @@ class ContentMonetizationEngine:
         nft_items: List[Dict[str, Any]],
         collection_config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Create marketplace listings for NFT collection."""
+        """
+Create marketplace listings for NFT collection."""
         listings = []
         
         for nft_item in nft_items:
@@ -1035,7 +1044,8 @@ class ContentMonetizationEngine:
         partnership_id: UUID,
         deliverables: List[str]
     ) -> List[Dict[str, Any]]:
-        """Create partnership milestones."""
+        """
+Create partnership milestones."""
         milestones = []
         
         for i, deliverable in enumerate(deliverables):
@@ -1060,7 +1070,8 @@ class ContentMonetizationEngine:
         return milestones
     
     async def _calculate_partnership_earnings(self, partnership_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate estimated partnership earnings."""
+        """
+Calculate estimated partnership earnings."""
         base_compensation = float(partnership_data['compensation_amount'])
         
         # Platform commission
@@ -1076,7 +1087,8 @@ class ContentMonetizationEngine:
         }
     
     def _calculate_period_start(self, period: str, end_date: datetime) -> datetime:
-        """Calculate start date for analysis period."""
+        """
+Calculate start date for analysis period."""
         if period == 'day':
             return end_date - timedelta(days=1)
         elif period == 'week':
@@ -1091,25 +1103,30 @@ class ContentMonetizationEngine:
             return end_date - timedelta(days=30)  # Default to month
     
     def _calculate_total_revenue(self, transactions: List[Any]) -> float:
-        """Calculate total gross revenue."""
+        """
+Calculate total gross revenue."""
         return float(sum(t.gross_amount for t in transactions))
     
     def _calculate_net_revenue(self, transactions: List[Any]) -> float:
-        """Calculate net revenue after platform fees."""
+        """
+Calculate net revenue after platform fees."""
         return float(sum(t.net_amount for t in transactions))
     
     def _calculate_platform_fees(self, transactions: List[Any]) -> float:
-        """Calculate total platform fees."""
+        """
+Calculate total platform fees."""
         return float(sum(t.commission_amount for t in transactions))
     
     def _calculate_average_transaction(self, transactions: List[Any]) -> float:
-        """Calculate average transaction value."""
+        """
+Calculate average transaction value."""
         if not transactions:
             return 0.0
         return self._calculate_total_revenue(transactions) / len(transactions)
     
     async def _calculate_revenue_growth(self, creator_id: UUID, period: str) -> Dict[str, float]:
-        """Calculate revenue growth compared to previous period."""
+        """
+Calculate revenue growth compared to previous period."""
         # Get current period revenue
         current_end = datetime.utcnow()
         current_start = self._calculate_period_start(period, current_end)
@@ -1144,7 +1161,8 @@ class ContentMonetizationEngine:
         transactions: List[Any],
         strategies: List[Any]
     ) -> Dict[str, Dict[str, float]]:
-        """Analyze revenue breakdown by strategy."""
+        """
+Analyze revenue breakdown by strategy."""
         strategy_revenue = {}
         
         # Create strategy lookup
@@ -1171,7 +1189,8 @@ class ContentMonetizationEngine:
         return strategy_revenue
     
     def _analyze_revenue_by_source(self, transactions: List[Any]) -> Dict[str, float]:
-        """Analyze revenue by source type."""
+        """
+Analyze revenue by source type."""
         source_revenue = {}
         
         for transaction in transactions:
@@ -1183,7 +1202,8 @@ class ContentMonetizationEngine:
         return source_revenue
     
     def _analyze_payment_methods(self, transactions: List[Any]) -> Dict[str, int]:
-        """Analyze payment method distribution."""
+        """
+Analyze payment method distribution."""
         method_counts = {}
         
         for transaction in transactions:
@@ -1196,7 +1216,8 @@ class ContentMonetizationEngine:
         return method_counts
     
     async def _analyze_geographic_revenue(self, transactions: List[Any]) -> Dict[str, float]:
-        """Analyze revenue by geographic region."""
+        """
+Analyze revenue by geographic region."""
         # This would integrate with payment gateway geolocation data
         # For now, return mock data
         return {
@@ -1212,7 +1233,8 @@ class ContentMonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get subscription-specific metrics."""
+        """
+Get subscription-specific metrics."""
         subscriptions = await self.db.subscriptions.get_by_creator_period(
             creator_id, start_date, end_date
         )
@@ -1232,7 +1254,8 @@ class ContentMonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get NFT-specific metrics."""
+        """
+Get NFT-specific metrics."""
         collections = await self.db.nft_collections.get_by_creator(creator_id)
         sales = await self.db.nft_sales.get_by_creator_period(
             creator_id, start_date, end_date
@@ -1253,7 +1276,8 @@ class ContentMonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get partnership-specific metrics."""
+        """
+Get partnership-specific metrics."""
         partnerships = await self.db.brand_partnerships.get_by_creator_period(
             creator_id, start_date, end_date
         )
@@ -1271,7 +1295,8 @@ class ContentMonetizationEngine:
         creator_id: UUID,
         transactions: List[Any]
     ) -> Dict[str, float]:
-        """Generate revenue forecast based on historical data."""
+        """
+Generate revenue forecast based on historical data."""
         if len(transactions) < 3:
             return {'forecast_available': False}
         
@@ -1306,7 +1331,8 @@ class ContentMonetizationEngine:
         transactions: List[Any],
         strategies: List[Any]
     ) -> List[Dict[str, str]]:
-        """Generate monetization optimization suggestions."""
+        """
+Generate monetization optimization suggestions."""
         suggestions = []
         
         # Analyze transaction patterns
@@ -1371,12 +1397,14 @@ class ContentMonetizationEngine:
             del self.revenue_cache[key]
     
     async def _get_available_balance(self, creator_id: UUID) -> Decimal:
-        """Get creator's available balance for payout."""
+        """
+Get creator's available balance for payout."""
         balance = await self.db.creator_balances.get_by_creator(creator_id)
         return balance.available_amount if balance else Decimal('0.00')
     
     async def _update_creator_balance(self, creator_id: UUID, amount_change: Decimal) -> None:
-        """Update creator's balance."""
+        """
+Update creator's balance."""
         current_balance = await self.db.creator_balances.get_by_creator(creator_id)
         
         if current_balance:
@@ -1393,7 +1421,8 @@ class ContentMonetizationEngine:
             })
     
     def _calculate_payout_arrival(self, payout_method: str) -> str:
-        """Calculate estimated payout arrival time."""
+        """
+Calculate estimated payout arrival time."""
         arrival_times = {
             'bank_transfer': '1-3 business days',
             'paypal': '1 business day',

@@ -12,6 +12,7 @@ Email: mlaiel@live.de
 This module provides comprehensive multi-platform content distribution including
 automated publishing, metadata optimization, and cross-platform analytics.
 """
+
 import logging
 import uuid
 import asyncio
@@ -29,7 +30,9 @@ from .signal_processing import AudioData
 logger = logging.getLogger(__name__)
 
 class DistributionChannel(Enum):
-    """Distribution channels/platforms"""
+    """
+Distribution channels/platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -53,6 +56,7 @@ class DistributionChannel(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -63,6 +67,7 @@ class DistributionStatus(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution"""
+
     AUDIO = "audio"
     VIDEO = "video"
     ALBUM = "album"
@@ -73,6 +78,7 @@ class ContentFormat(Enum):
 
 class ReleaseType(Enum):
     """Types of releases"""
+
     SINGLE = "single"
     EP = "ep"
     ALBUM = "album"
@@ -278,7 +284,8 @@ class MultiPlatformDistributor:
         }
     
     def _load_platform_credentials(self):
-        """Load platform credentials from configuration"""
+        """
+Load platform credentials from configuration"""
         credentials_config = self.config.get('platform_credentials', {})
         
         for platform_name, creds in credentials_config.items():
@@ -333,7 +340,8 @@ class MultiPlatformDistributor:
         }
     
     def _load_metadata_templates(self) -> Dict[DistributionChannel, Dict[str, str]]:
-        """Load platform-specific metadata templates"""
+        """
+Load platform-specific metadata templates"""
         return {
             DistributionChannel.SPOTIFY: {
                 'title_format': "{title}",
@@ -571,7 +579,7 @@ class MultiPlatformDistributor:
                 description=metadata.description or "New release",
                 artist_name=metadata.artist_name,
                 genre=metadata.genre,
-                copyright_notice=metadata.copyright_notice or f"© {datetime.now().year} {metadata.artist_name}",
+                copyright_notice=metadata.copyright_notice or f"(c) {datetime.now().year} {metadata.artist_name}",
                 mood=metadata.mood or "energetic"
             )
         
@@ -631,7 +639,8 @@ class MultiPlatformDistributor:
         return enhanced_tags[:50]  # YouTube has a tag limit
     
     def _generate_upc_code(self) -> str:
-        """Generate UPC code for releases"""
+        """
+Generate UPC code for releases"""
         # This is a simplified UPC generation - in production, use proper UPC allocation
         import random
         upc = f"0{random.randint(10**11, 10**12-1)}"
@@ -768,7 +777,8 @@ class MultiPlatformDistributor:
         result: DistributionResult,
         credentials: PlatformCredentials
     ):
-        """Monitor distribution status and update result"""
+        """
+Monitor distribution status and update result"""
         max_checks = 10
         check_interval = 300  # 5 minutes
         
@@ -872,7 +882,8 @@ class MultiPlatformDistributor:
         }
     
     def get_distribution_results(self, content_id: str) -> List[DistributionResult]:
-        """Get distribution results for content"""
+        """
+Get distribution results for content"""
         return self.distribution_results.get(content_id, [])
     
     async def update_content_metadata(
@@ -881,7 +892,8 @@ class MultiPlatformDistributor:
         platform: DistributionChannel,
         updated_metadata: DistributionMetadata
     ) -> bool:
-        """Update content metadata on platform"""
+        """
+Update content metadata on platform"""
         try:
             # Find distribution result
             results = self.distribution_results.get(content_id, [])

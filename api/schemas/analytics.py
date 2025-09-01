@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class AnalyticsReport(UUIDSchema, TimestampSchema, AuditSchema):
-    """Comprehensive analytics report schema."""
+    """
+Comprehensive analytics report schema."""
     
     report_name: str = Field(description="Analytics report name")
     report_type: str = Field(description="Type of analytics report")
@@ -180,7 +182,8 @@ class ContentAnalytics(UUIDSchema, TimestampSchema):
 
 
 class AudienceInsights(UUIDSchema, TimestampSchema):
-    """Comprehensive audience analytics and insights schema."""
+    """
+Comprehensive audience analytics and insights schema."""
     
     creator_id: UUID
     insight_period_start: datetime
@@ -251,7 +254,8 @@ class AudienceInsights(UUIDSchema, TimestampSchema):
 
 
 class RevenueAnalytics(UUIDSchema, TimestampSchema):
-    """Comprehensive revenue and monetization analytics schema."""
+    """
+Comprehensive revenue and monetization analytics schema."""
     
     creator_id: UUID
     analysis_period_start: datetime
@@ -329,7 +333,8 @@ class RevenueAnalytics(UUIDSchema, TimestampSchema):
 
 
 class CompetitiveIntelligence(UUIDSchema, TimestampSchema):
-    """Competitive analysis and market intelligence schema."""
+    """
+Competitive analysis and market intelligence schema."""
     
     creator_id: UUID
     analysis_date: datetime

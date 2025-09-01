@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import List, Dict, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,7 +25,9 @@ from pydantic import BaseModel, validator
 
 
 class MemcachedHashingAlgorithm(str, Enum):
-    """Memcached hashing algorithms for consistent hashing"""
+    """
+Memcached hashing algorithms for consistent hashing"""
+
     CRC32 = "crc32"
     FNV1_32 = "fnv1_32"
     FNV1A_32 = "fnv1a_32"
@@ -35,6 +38,7 @@ class MemcachedHashingAlgorithm(str, Enum):
 
 class MemcachedBehavior(str, Enum):
     """Memcached client behaviors"""
+
     BINARY_PROTOCOL = "binary_protocol"
     TCP_NODELAY = "tcp_nodelay"
     KETAMA_WEIGHTED = "ketama_weighted"
@@ -70,7 +74,8 @@ class MemcachedConnectionConfig:
 
 @dataclass
 class MemcachedFailureHandling:
-    """Memcached failure handling configuration"""
+    """
+Memcached failure handling configuration"""
     retry_timeout: int = 30  # seconds
     dead_timeout: int = 30  # seconds
     failure_limit: int = 5
@@ -154,11 +159,13 @@ class MemcachedConfig(BaseModel):
         return [str(server) for server in self.servers]
     
     def get_weighted_servers(self) -> List[Tuple[str, int]]:
-        """Get servers with weights for consistent hashing"""
+        """
+Get servers with weights for consistent hashing"""
         return [(str(server), server.weight) for server in self.servers]
     
     def get_client_config(self) -> Dict[str, Any]:
-        """Get configuration for memcached client"""
+        """
+Get configuration for memcached client"""
         config = {
             'servers': self.get_server_list(),
             'binary': self.connection.binary_protocol,
@@ -180,7 +187,8 @@ class MemcachedConfig(BaseModel):
         return config
     
     def _get_client_behaviors(self) -> Dict[str, Any]:
-        """Get memcached client behaviors"""
+        """
+Get memcached client behaviors"""
         behaviors = {
             'ketama_weighted': self.ketama_weighted,
             'remove_failed_servers': self.failure_handling.remove_failed_servers,
@@ -198,7 +206,8 @@ class MemcachedConfig(BaseModel):
         return behaviors
     
     def generate_tenant_key(self, tenant_id: str, key: str) -> str:
-        """Generate tenant-isolated cache key"""
+        """
+Generate tenant-isolated cache key"""
         if self.tenant_isolation:
             return f"{self.key_prefix}{tenant_id}:{key}"
         return f"{self.key_prefix}{key}"
@@ -215,7 +224,8 @@ class MemcachedConfig(BaseModel):
             return hashlib.md5(key.encode()).hexdigest()
     
     def get_server_stats_config(self) -> Dict[str, Any]:
-        """Get configuration for server statistics collection"""
+        """
+Get configuration for server statistics collection"""
         return {
             'collection_interval': self.stats_collection_interval,
             'track_keys': self.track_key_statistics,
@@ -224,7 +234,8 @@ class MemcachedConfig(BaseModel):
         }
     
     def validate_connection(self) -> bool:
-        """Validate connection to all configured servers"""
+        """
+Validate connection to all configured servers"""
         try:
             import pymemcache
             from pymemcache.client.base import Client
@@ -247,7 +258,8 @@ class MemcachedConfig(BaseModel):
             return False
     
     def get_connection_info(self) -> Dict[str, Any]:
-        """Get connection information for monitoring"""
+        """
+Get connection information for monitoring"""
         return {
             "servers": [
                 {
@@ -279,7 +291,8 @@ class MemcachedPoolManager:
         self._init_pool()
     
     def _init_pool(self):
-        """Initialize connection pool"""
+        """
+Initialize connection pool"""
         try:
             import threading
             import pymemcache
@@ -312,7 +325,8 @@ class MemcachedPoolManager:
             self._pool = []
     
     def get_client(self):
-        """Get client from pool"""
+        """
+Get client from pool"""
         if not self._pool:
             return None
         
@@ -323,13 +337,15 @@ class MemcachedPoolManager:
         return None
     
     def return_client(self, client):
-        """Return client to pool"""
+        """
+Return client to pool"""
         if client and len(self._pool) < self.config.pool_size:
             with self._pool_lock:
                 self._pool.append(client)
     
     def close_all(self):
-        """Close all pooled connections"""
+        """
+Close all pooled connections"""
         with self._pool_lock:
             for client in self._pool:
                 try:

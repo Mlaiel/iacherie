@@ -25,6 +25,7 @@ Components:
 - ReportGenerator: Quality reporting and dashboards
 - AutomatedCleaner: Intelligent data cleaning and repair
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
@@ -68,6 +69,7 @@ logger = logging.getLogger(__name__)
 
 class QualityLevel(Enum):
     """Data quality levels with specific thresholds"""
+
     EXCELLENT = "excellent"      # 95-100%
     GOOD = "good"               # 85-94%
     ACCEPTABLE = "acceptable"   # 70-84%
@@ -76,6 +78,7 @@ class QualityLevel(Enum):
 
 class ValidationStatus(Enum):
     """Validation status enumeration"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -542,7 +545,8 @@ class QualityManagementSystem:
         compliance_result: Dict[str, Any],
         content_quality: Dict[str, Any]
     ) -> List[str]:
-        """Generate quality improvement recommendations"""
+        """
+Generate quality improvement recommendations"""
         recommendations = []
         
         # Validation recommendations
@@ -567,7 +571,8 @@ class QualityManagementSystem:
 quality_system: Optional[QualityManagementSystem] = None
 
 def get_quality_system() -> Optional[QualityManagementSystem]:
-    """Get the global quality management system instance"""
+    """
+Get the global quality management system instance"""
     return quality_system
 
 def initialize_quality_system(config: Optional[Dict[str, Any]] = None) -> QualityManagementSystem:

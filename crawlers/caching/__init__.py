@@ -10,7 +10,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
 ⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 BUSINESS LOGIC:
@@ -425,7 +425,8 @@ def get_available_features():
     return features
 
 def check_system_requirements():
-    """Check if system meets minimum requirements for cache system."""
+    """
+Check if system meets minimum requirements for cache system."""
     import sys
     import psutil
     
@@ -441,7 +442,8 @@ def check_system_requirements():
 _default_cache_manager = None
 
 def get_default_cache_manager():
-    """Get the default cache manager instance."""
+    """
+Get the default cache manager instance."""
     global _default_cache_manager
     
     if _default_cache_manager is None:
@@ -450,29 +452,34 @@ def get_default_cache_manager():
     return _default_cache_manager
 
 def configure_default_cache(config: CacheConfig):
-    """Configure the default cache manager with custom configuration."""
+    """
+Configure the default cache manager with custom configuration."""
     global _default_cache_manager
     _default_cache_manager = CacheManager(config)
 
 # Convenience functions for quick cache operations
 async def quick_set(key: str, value: any, ttl: int = 3600):
-    """Quick cache set operation using default manager."""
+    """
+Quick cache set operation using default manager."""
     cache = get_default_cache_manager()
     return await cache.set(key, value, ttl)
 
 async def quick_get(key: str, default=None):
-    """Quick cache get operation using default manager."""
+    """
+Quick cache get operation using default manager."""
     cache = get_default_cache_manager()
     return await cache.get(key, default)
 
 async def quick_delete(key: str):
-    """Quick cache delete operation using default manager."""
+    """
+Quick cache delete operation using default manager."""
     cache = get_default_cache_manager()
     return await cache.delete(key)
 
 # Performance monitoring helpers
 def get_cache_performance_summary():
-    """Get a summary of cache performance across all components."""
+    """
+Get a summary of cache performance across all components."""
     cache = get_default_cache_manager()
     return {
         'cache_stats': cache.get_stats(),

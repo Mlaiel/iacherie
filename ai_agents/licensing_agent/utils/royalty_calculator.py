@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -49,7 +50,9 @@ from ...utils.fraud_detector import FraudDetector
 logger = logging.getLogger(__name__)
 
 class RoyaltyModel(Enum):
-    """Types of royalty calculation models"""
+    """
+Types of royalty calculation models"""
+
     PERCENTAGE = "percentage"
     FIXED_RATE = "fixed_rate"
     TIERED = "tiered"
@@ -59,6 +62,7 @@ class RoyaltyModel(Enum):
 
 class PaymentMethod(Enum):
     """Available payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -68,6 +72,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -77,6 +82,7 @@ class PaymentStatus(Enum):
 
 class RevenueSource(Enum):
     """Sources of revenue"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     SYNC_LICENSE = "sync_license"
@@ -104,7 +110,8 @@ class UsageMetrics:
 
 @dataclass
 class RevenueData:
-    """Revenue data for royalty calculation"""
+    """
+Revenue data for royalty calculation"""
     source: RevenueSource
     gross_revenue: Decimal
     platform_fees: Decimal
@@ -138,7 +145,8 @@ class RoyaltyCalculationResult:
 
 @dataclass
 class PaymentInstruction:
-    """Payment processing instruction"""
+    """
+Payment processing instruction"""
     payment_id: str
     recipient_id: str
     recipient_info: Dict[str, Any]
@@ -637,7 +645,8 @@ class RevenueDistributor:
         distributions: List[Dict[str, Any]],
         payment_schedule: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Process royalty payments to rights holders"""
+        """
+Process royalty payments to rights holders"""
         try:
             payment_results = []
             

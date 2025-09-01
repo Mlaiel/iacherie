@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Scalable hashtag processing systems
 - AI Prompt Engineer & Content Protection: Intelligent hashtag optimization and content safety
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -98,6 +99,7 @@ except Exception as e:
 
 class HashtagCategory(Enum):
     """Comprehensive hashtag categorization system"""
+
     TRENDING_VIRAL = "trending_viral"           # Currently viral hashtags
     EMERGING_TREND = "emerging_trend"           # Rising hashtags with potential
     EVERGREEN = "evergreen"                     # Consistently performing hashtags  
@@ -113,6 +115,7 @@ class HashtagCategory(Enum):
 
 class HashtagStrategy(Enum):
     """Advanced hashtag strategy types"""
+
     VIRAL_MAXIMIZATION = "viral_maximization"
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"  
     REACH_EXPANSION = "reach_expansion"
@@ -124,6 +127,7 @@ class HashtagStrategy(Enum):
 
 class HashtagRiskLevel(Enum):
     """Hashtag risk assessment levels"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
@@ -161,7 +165,8 @@ class AdvancedHashtagMetrics:
 
 @dataclass
 class HashtagRecommendationSet:
-    """Comprehensive hashtag recommendation package"""
+    """
+Comprehensive hashtag recommendation package"""
     strategy: HashtagStrategy
     primary_hashtags: List[AdvancedHashtagMetrics]      # 3-5 main hashtags
     secondary_hashtags: List[AdvancedHashtagMetrics]    # 5-10 supporting hashtags
@@ -179,7 +184,8 @@ class HashtagRecommendationSet:
     alternative_strategies: List[Dict[str, Any]]
 
 class SemanticHashtagEmbedding:
-    """Advanced semantic embedding for hashtag analysis"""
+    """
+Advanced semantic embedding for hashtag analysis"""
     
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.model = SentenceTransformer(model_name)
@@ -210,7 +216,8 @@ class SemanticHashtagEmbedding:
         candidate_hashtags: List[str], 
         top_k: int = 10
     ) -> List[Tuple[str, float]]:
-        """Find semantically similar hashtags"""
+        """
+Find semantically similar hashtags"""
         target_embedding = await self.embed_hashtags([target_hashtag])
         candidate_embeddings = await self.embed_hashtags(candidate_hashtags)
         
@@ -766,6 +773,7 @@ logger = logging.getLogger(__name__)
 
 class HashtagType(Enum):
     """Hashtag classification types"""
+
     TRENDING = "trending"
     NICHE = "niche"
     BRANDED = "branded"
@@ -777,6 +785,7 @@ class HashtagType(Enum):
 
 class HashtagStrategy(Enum):
     """Hashtag optimization strategies"""
+
     VIRAL_BOOST = "viral_boost"
     NICHE_TARGETING = "niche_targeting"
     BRAND_BUILDING = "brand_building"
@@ -800,7 +809,8 @@ class HashtagMetrics:
 
 @dataclass
 class HashtagRecommendation:
-    """Hashtag recommendation with optimization data"""
+    """
+Hashtag recommendation with optimization data"""
     hashtag: str
     hashtag_type: HashtagType
     confidence_score: float

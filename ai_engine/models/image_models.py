@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import cv2
 import numpy as np
 import torch
@@ -34,7 +35,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ImageQuality(Enum):
-    """Image quality levels for content analysis"""
+    """
+Image quality levels for content analysis"""
+
     LOW_QUALITY = "low_quality"
     STANDARD = "standard"
     HIGH_QUALITY = "high_quality"
@@ -45,6 +48,7 @@ class ImageQuality(Enum):
 
 class ImageStyle(Enum):
     """Image style classification"""
+
     PHOTOGRAPHY = "photography"
     ARTWORK = "artwork"
     DIGITAL_ART = "digital_art"
@@ -59,6 +63,7 @@ class ImageStyle(Enum):
 
 class ImageContentType(Enum):
     """Image content type classification"""
+
     PORTRAIT = "portrait"
     LANDSCAPE = "landscape"
     PRODUCT = "product"
@@ -110,7 +115,8 @@ class ImageFeatures:
 
 @dataclass
 class ImageProtectionResult:
-    """Image content protection analysis results"""
+    """
+Image content protection analysis results"""
     is_original: bool
     confidence_score: float
     copyright_matches: List[Dict]
@@ -125,7 +131,8 @@ class ImageProtectionResult:
 
 
 class ImageFeatureExtractor(BaseAIModel):
-    """Advanced image feature extraction using multiple computer vision techniques"""
+    """
+Advanced image feature extraction using multiple computer vision techniques"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -138,7 +145,8 @@ class ImageFeatureExtractor(BaseAIModel):
         self.text_detector = self._load_text_detector()
         
     def _load_feature_extractor(self):
-        """Load pre-trained feature extraction model"""
+        """
+Load pre-trained feature extraction model"""
         try:
             # Use ResNet-50 for feature extraction
             import torchvision.models as models
@@ -277,7 +285,8 @@ class ImageFeatureExtractor(BaseAIModel):
             return ImageQuality.LOW_QUALITY
     
     def _classify_style(self, image: np.ndarray) -> ImageStyle:
-        """Classify image style using basic computer vision"""
+        """
+Classify image style using basic computer vision"""
         # Simple heuristics for style classification
         # In production, use trained CNN model
         
@@ -297,7 +306,8 @@ class ImageFeatureExtractor(BaseAIModel):
             return ImageStyle.PHOTOGRAPHY
     
     def _classify_content_type(self, image: np.ndarray) -> ImageContentType:
-        """Classify image content type"""
+        """
+Classify image content type"""
         # Use face detection to identify portraits
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         faces = self.face_cascade.detectMultiScale(gray, 1.1, 4)
@@ -321,7 +331,8 @@ class ImageFeatureExtractor(BaseAIModel):
             return ImageContentType.LIFESTYLE
     
     def _extract_color_features(self, image: np.ndarray) -> Dict:
-        """Extract color-related features"""
+        """
+Extract color-related features"""
         # Convert to different color spaces for analysis
         hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         lab = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
@@ -366,7 +377,8 @@ class ImageFeatureExtractor(BaseAIModel):
             return [(128, 128, 128)] * k
     
     def _calculate_color_harmony(self, colors: List[Tuple[int, int, int]]) -> Dict[str, float]:
-        """Calculate color harmony metrics"""
+        """
+Calculate color harmony metrics"""
         if len(colors) < 2:
             return {"harmony_score": 0.0}
         
@@ -413,7 +425,8 @@ class ImageFeatureExtractor(BaseAIModel):
         return float(noise)
     
     def _extract_composition_features(self, image: np.ndarray) -> Dict:
-        """Extract composition and aesthetic features"""
+        """
+Extract composition and aesthetic features"""
         height, width = image.shape[:2]
         
         # Rule of thirds analysis
@@ -468,7 +481,8 @@ class ImageFeatureExtractor(BaseAIModel):
         return total_score / len(intersections)
     
     def _analyze_symmetry(self, image: np.ndarray) -> float:
-        """Analyze image symmetry"""
+        """
+Analyze image symmetry"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         height, width = gray.shape
         
@@ -488,7 +502,8 @@ class ImageFeatureExtractor(BaseAIModel):
         return max(0.0, symmetry)
     
     def _detect_leading_lines(self, image: np.ndarray) -> List[Dict]:
-        """Detect leading lines in image"""
+        """
+Detect leading lines in image"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         edges = cv2.Canny(gray, 50, 150)
         
@@ -534,7 +549,8 @@ class ImageFeatureExtractor(BaseAIModel):
         return min(max(aesthetic_score, 0.0), 1.0)
     
     async def _extract_detection_features(self, image: np.ndarray) -> Dict:
-        """Extract object, face, and text detection features"""
+        """
+Extract object, face, and text detection features"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Face detection
@@ -705,27 +721,32 @@ class ImageEnhancer(BaseAIModel):
         return enhanced
     
     def _adjust_brightness(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image brightness"""
+        """
+Adjust image brightness"""
         enhancer = ImageEnhance.Brightness(image)
         return enhancer.enhance(factor)
     
     def _adjust_contrast(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image contrast"""
+        """
+Adjust image contrast"""
         enhancer = ImageEnhance.Contrast(image)
         return enhancer.enhance(factor)
     
     def _adjust_sharpness(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image sharpness"""
+        """
+Adjust image sharpness"""
         enhancer = ImageEnhance.Sharpness(image)
         return enhancer.enhance(factor)
     
     def _adjust_color(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust color saturation"""
+        """
+Adjust color saturation"""
         enhancer = ImageEnhance.Color(image)
         return enhancer.enhance(factor)
     
     async def _super_resolution(self, image: Image.Image, scale: int) -> Image.Image:
-        """Apply super-resolution enhancement"""
+        """
+Apply super-resolution enhancement"""
         # Placeholder for AI super-resolution
         # In production, use ESRGAN or similar model
         width, height = image.size
@@ -733,12 +754,14 @@ class ImageEnhancer(BaseAIModel):
         return image.resize(new_size, Image.LANCZOS)
     
     def _reduce_noise(self, image: Image.Image) -> Image.Image:
-        """Reduce noise in image"""
+        """
+Reduce noise in image"""
         # Apply mild blur to reduce noise
         return image.filter(ImageFilter.BLUR)
     
     async def validate_connection(self) -> bool:
-        """Validate image enhancement capabilities"""
+        """
+Validate image enhancement capabilities"""
         try:
             test_image = Image.new('RGB', (100, 100), color='red')
             result = await self.process(test_image, "auto")
@@ -755,7 +778,8 @@ class ImageProtector(BaseAIModel):
         super().__init__(config)
         
     async def process(self, image_data: Any, **kwargs) -> ProcessingResult:
-        """Analyze image for protection and copyright status"""
+        """
+Analyze image for protection and copyright status"""
         try:
             start_time = datetime.now()
             
@@ -864,7 +888,8 @@ class ImageProtector(BaseAIModel):
         return peaks > 100  # Arbitrary threshold
     
     def _detect_manipulation(self, image: Image.Image) -> bool:
-        """Detect if image has been manipulated"""
+        """
+Detect if image has been manipulated"""
         # Convert to numpy for analysis
         np_image = np.array(image)
         
@@ -878,19 +903,22 @@ class ImageProtector(BaseAIModel):
         return False
     
     async def _reverse_image_search(self, image: Image.Image) -> List[Dict]:
-        """Perform reverse image search"""
+        """
+Perform reverse image search"""
         # Placeholder for reverse image search
         # In production, integrate with Google Images API or similar
         return []
     
     async def _check_copyright_database(self, fingerprints: Dict[str, str]) -> List[Dict]:
-        """Check fingerprints against copyright database"""
+        """
+Check fingerprints against copyright database"""
         # Placeholder for copyright database check
         # In production, query internal and external copyright databases
         return []
     
     def _calculate_protection_level(self, watermark: bool, manipulation: bool, copyright_matches: int) -> str:
-        """Calculate overall protection level"""
+        """
+Calculate overall protection level"""
         if copyright_matches > 0:
             return "high_risk"
         elif manipulation:

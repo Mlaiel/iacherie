@@ -5,13 +5,14 @@ Specialized parsers for extracting metadata from various structured formats.
 Handles Open Graph, Twitter Cards, Schema.org, Dublin Core, and other metadata standards.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import json
 import re
 from abc import ABC, abstractmethod
@@ -26,23 +27,27 @@ from .parser_config import ParserConfig
 
 
 class BaseMetadataParser(ABC):
-    """Abstract base class for metadata parsers"""
+    """
+Abstract base class for metadata parsers"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
     
     @abstractmethod
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse metadata from HTML content"""
+        """
+Parse metadata from HTML content"""
         pass
     
     @abstractmethod
     def get_parser_type(self) -> str:
-        """Get the type of metadata this parser handles"""
+        """
+Get the type of metadata this parser handles"""
         pass
     
     def _normalize_url(self, url: str, base_url: Optional[str] = None) -> str:
-        """Normalize relative URLs to absolute URLs"""
+        """
+Normalize relative URLs to absolute URLs"""
         if not url:
             return url
         
@@ -55,7 +60,8 @@ class BaseMetadataParser(ABC):
         return url
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text content"""
+        """
+Clean and normalize text content"""
         if not text:
             return ""
         
@@ -199,7 +205,8 @@ class OpenGraphParser(BaseMetadataParser):
 
 
 class TwitterCardParser(BaseMetadataParser):
-    """Parser for Twitter Card metadata"""
+    """
+Parser for Twitter Card metadata"""
     
     def get_parser_type(self) -> str:
         return "twitter_card"
@@ -291,7 +298,8 @@ class TwitterCardParser(BaseMetadataParser):
 
 
 class SchemaOrgParser(BaseMetadataParser):
-    """Parser for Schema.org structured data"""
+    """
+Parser for Schema.org structured data"""
     
     def get_parser_type(self) -> str:
         return "schema_org"
@@ -353,7 +361,8 @@ class SchemaOrgParser(BaseMetadataParser):
         return json_ld_data
     
     async def _parse_microdata(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Parse Microdata structured data"""
+        """
+Parse Microdata structured data"""
         microdata_items = []
         
         # Find all elements with itemscope
@@ -397,7 +406,8 @@ class SchemaOrgParser(BaseMetadataParser):
         return microdata_items
     
     async def _parse_rdfa(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Parse RDFa structured data"""
+        """
+Parse RDFa structured data"""
         rdfa_items = []
         
         # Find elements with RDFa attributes
@@ -435,7 +445,8 @@ class SchemaOrgParser(BaseMetadataParser):
 
 
 class DublinCoreParser(BaseMetadataParser):
-    """Parser for Dublin Core metadata"""
+    """
+Parser for Dublin Core metadata"""
     
     def get_parser_type(self) -> str:
         return "dublin_core"
@@ -567,7 +578,8 @@ class MetaTagParser(BaseMetadataParser):
         return viewport
     
     def _parse_robots(self, content: str) -> Dict[str, bool]:
-        """Parse robots meta tag content"""
+        """
+Parse robots meta tag content"""
         robots = {}
         
         directives = [directive.strip().lower() for directive in content.split(',')]
@@ -588,7 +600,8 @@ class MetaTagParser(BaseMetadataParser):
 
 
 class JsonLdParser(BaseMetadataParser):
-    """Specialized parser for JSON-LD structured data"""
+    """
+Specialized parser for JSON-LD structured data"""
     
     def get_parser_type(self) -> str:
         return "json_ld"
@@ -668,7 +681,8 @@ class JsonLdParser(BaseMetadataParser):
         return None
     
     def _process_json_ld_urls(self, data: Any, base_url: Optional[str]) -> Any:
-        """Process URLs in JSON-LD data to make them absolute"""
+        """
+Process URLs in JSON-LD data to make them absolute"""
         if isinstance(data, dict):
             processed = {}
             for key, value in data.items():
@@ -684,7 +698,8 @@ class JsonLdParser(BaseMetadataParser):
 
 
 class MicrodataParser(BaseMetadataParser):
-    """Specialized parser for HTML Microdata"""
+    """
+Specialized parser for HTML Microdata"""
     
     def get_parser_type(self) -> str:
         return "microdata"
@@ -782,7 +797,8 @@ class MicrodataParser(BaseMetadataParser):
         return item_data
     
     def _extract_property_value(self, element, base_url: Optional[str] = None) -> str:
-        """Extract property value from element based on type"""
+        """
+Extract property value from element based on type"""
         # Value extraction based on element type and attributes
         if element.get('content'):
             return element.get('content')

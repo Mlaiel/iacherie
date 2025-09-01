@@ -9,11 +9,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContextType(str, Enum):
-    """Types of context factors"""
+    """
+Types of context factors"""
+
     TEMPORAL = "temporal"
     SPATIAL = "spatial"
     DEVICE = "device"
@@ -49,6 +52,7 @@ class ContextType(str, Enum):
 
 class DeviceType(str, Enum):
     """Device types for context adaptation"""
+
     MOBILE_PHONE = "mobile_phone"
     TABLET = "tablet"
     DESKTOP = "desktop"
@@ -61,6 +65,7 @@ class DeviceType(str, Enum):
 
 class PlatformContext(str, Enum):
     """Platform contexts"""
+
     WEB_BROWSER = "web_browser"
     MOBILE_APP = "mobile_app"
     DESKTOP_APP = "desktop_app"
@@ -71,6 +76,7 @@ class PlatformContext(str, Enum):
 
 class TimeOfDay(str, Enum):
     """Time periods for temporal context"""
+
     EARLY_MORNING = "early_morning"  # 5-8 AM
     MORNING = "morning"  # 8-12 PM
     AFTERNOON = "afternoon"  # 12-5 PM
@@ -81,6 +87,7 @@ class TimeOfDay(str, Enum):
 
 class MoodState(str, Enum):
     """User mood states for emotional context"""
+
     CREATIVE_INSPIRED = "creative_inspired"
     FOCUSED_PRODUCTIVE = "focused_productive"
     RELAXED_BROWSING = "relaxed_browsing"
@@ -105,7 +112,8 @@ class ContextualFactor:
 
 @dataclass
 class UserContext:
-    """Complete user context information"""
+    """
+Complete user context information"""
     user_id: str
     session_id: str
     timestamp: datetime
@@ -155,7 +163,8 @@ class UserContext:
 
 @dataclass
 class AdaptationRule:
-    """Context adaptation rule"""
+    """
+Context adaptation rule"""
     rule_id: str
     rule_name: str
     conditions: Dict[str, Any]
@@ -167,7 +176,8 @@ class AdaptationRule:
 
 @dataclass
 class AdaptationResult:
-    """Result of context adaptation"""
+    """
+Result of context adaptation"""
     user_id: str
     original_context: UserContext
     applied_rules: List[str]
@@ -736,7 +746,8 @@ def create_context_adapter(
 
 
 def validate_user_context(user_context: UserContext) -> bool:
-    """Validate user context data"""
+    """
+Validate user context data"""
     if not user_context.user_id or not isinstance(user_context.user_id, str):
         return False
     

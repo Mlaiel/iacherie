@@ -5,16 +5,19 @@ Basic functionality tests for the 9 SEO & Marketing agents.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 from datetime import datetime
 from typing import Dict, Any
 
 class TestKeywordResearchAgent:
-    """Test the Keyword Research Agent functionality"""
+    """
+Test the Keyword Research Agent functionality"""
     
     def test_import_keyword_research_agent(self):
-        """Test that keyword research agent can be imported"""
+        """
+Test that keyword research agent can be imported"""
         try:
             from ai_agents.keyword_research_agent import KeywordResearchManager, KeywordEngine
             assert KeywordResearchManager is not None
@@ -45,7 +48,8 @@ class TestContentOptimizationAgent:
     """Test the Content Optimization Agent functionality"""
     
     def test_import_content_optimization_agent(self):
-        """Test that content optimization agent can be imported"""
+        """
+Test that content optimization agent can be imported"""
         try:
             from ai_agents.content_optimization_agent import ContentOptimizationManager, OptimizationEngine
             assert ContentOptimizationManager is not None
@@ -84,7 +88,8 @@ class TestInfluencerMatchingAgent:
     """Test the Influencer Matching Agent functionality"""
     
     def test_import_influencer_matching_agent(self):
-        """Test that influencer matching agent can be imported"""
+        """
+Test that influencer matching agent can be imported"""
         try:
             from ai_agents.influencer_matching_agent import InfluencerMatchingManager, MatchingEngine
             assert InfluencerMatchingManager is not None
@@ -121,7 +126,8 @@ class TestCampaignOptimizationAgent:
     """Test the Campaign Optimization Agent functionality"""
     
     def test_import_campaign_optimization_agent(self):
-        """Test that campaign optimization agent can be imported"""
+        """
+Test that campaign optimization agent can be imported"""
         try:
             from ai_agents.campaign_optimization_agent import CampaignOptimizationManager, CampaignOptimizationEngine
             assert CampaignOptimizationManager is not None
@@ -164,7 +170,8 @@ class TestSEOMarketingAgentsIntegration:
     
     @pytest.mark.asyncio
     async def test_keyword_to_content_optimization_workflow(self):
-        """Test workflow from keyword research to content optimization"""
+        """
+Test workflow from keyword research to content optimization"""
         try:
             from ai_agents.keyword_research_agent import KeywordEngine
             from ai_agents.content_optimization_agent import OptimizationEngine, OptimizationType, ContentType

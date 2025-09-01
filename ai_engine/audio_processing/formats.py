@@ -4,8 +4,9 @@ Advanced format conversion and quality optimization for the IA Influencer Agent 
 Supports all major audio formats with quality preservation and optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -40,6 +43,7 @@ class AudioFormat(Enum):
 
 class QualityLevel(Enum):
     """Audio quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -67,7 +71,8 @@ class ConversionSettings:
 
 @dataclass
 class ConversionResult:
-    """Conversion operation result"""
+    """
+Conversion operation result"""
     success: bool
     output_path: Optional[Path] = None
     original_size: Optional[int] = None
@@ -424,7 +429,8 @@ class FormatConverter:
                                      sample_rate: int,
                                      output_path: Path,
                                      format_params: Dict[str, Any]) -> bool:
-        """Convert to uncompressed formats (WAV, AIFF)"""
+        """
+Convert to uncompressed formats (WAV, AIFF)"""
         try:
             bit_depth = format_params.get('bit_depth', 16)
             
@@ -840,7 +846,8 @@ class QualityOptimizer:
     def _optimize_bit_depth(self,
                           target_format: AudioFormat,
                           analysis: Dict[str, Any]) -> int:
-        """Optimize bit depth based on dynamic range and format"""
+        """
+Optimize bit depth based on dynamic range and format"""
         try:
             dynamic_range = analysis.get('dynamic_range', 96)  # Default to 16-bit range
             
@@ -865,7 +872,8 @@ class QualityOptimizer:
                               target_format: AudioFormat,
                               target_size_mb: Optional[float],
                               min_quality_score: float) -> int:
-        """Optimize bitrate for lossy formats"""
+        """
+Optimize bitrate for lossy formats"""
         try:
             duration = len(audio_data) / sample_rate
             

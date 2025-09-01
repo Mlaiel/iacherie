@@ -15,6 +15,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ from .blockchain_agent import BlockchainNetwork, ContractType, TransactionStatus
 
 
 class ContractStatus(Enum):
-    """Smart contract deployment and execution statuses."""
+    """
+Smart contract deployment and execution statuses."""
+
     DRAFT = "draft"
     COMPILING = "compiling"
     COMPILED = "compiled"
@@ -54,6 +57,7 @@ class ContractStatus(Enum):
 
 class SecurityLevel(Enum):
     """Contract security audit levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -102,7 +106,8 @@ class SmartContractsManager:
     """
     
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the Smart Contracts Manager."""
+        """
+Initialize the Smart Contracts Manager."""
         self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
@@ -780,7 +785,8 @@ class SmartContractsManager:
         }
     
     async def _perform_security_audit(self, template: ContractTemplate) -> Dict[str, Any]:
-        """Perform automated security audit of smart contract."""
+        """
+Perform automated security audit of smart contract."""
         audit_issues = []
         passed = True
         

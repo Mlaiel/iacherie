@@ -27,6 +27,7 @@ Architecture:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
@@ -56,7 +57,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationServiceError(Exception):
-    """Custom exception for notification service errors."""
+    """
+Custom exception for notification service errors."""
     pass
 
 

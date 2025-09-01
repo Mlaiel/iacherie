@@ -8,7 +8,7 @@ Responsibility: Distribution intelligente contenu multi-plateformes avec optimis
 ============================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER DISTRIBUTION:
 Content Preparation → Platform Optimization → Automated Upload → Cross-Platform Sync → 
 Performance Monitoring → A/B Testing → Distribution Analytics → ROI Optimization
 """
+
 import json
 import logging
 import asyncio
@@ -39,7 +40,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 @dataclass
 class DistributionJob:
-    """Job de distribution de contenu"""
+    """
+Job de distribution de contenu"""
     job_id: str
     content_id: str
     platforms: List[str]
@@ -54,7 +56,8 @@ class DistributionJob:
 
 @dataclass
 class PlatformConfig:
-    """Configuration plateforme"""
+    """
+Configuration plateforme"""
     platform_name: str
     api_endpoint: str
     auth_config: Dict[str, Any]
@@ -64,7 +67,8 @@ class PlatformConfig:
 
 
 class DistributionProcessor(BaseProcessor):
-    """Processeur distribution multi-plateformes - Production Enterprise"""
+    """
+Processeur distribution multi-plateformes - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -229,7 +233,8 @@ class DistributionProcessor(BaseProcessor):
         self.ab_tests = {}
         
     def _init_rate_limiters(self):
-        """Initialise les limiteurs de débit"""
+        """
+Initialise les limiteurs de débit"""
         for platform, config in self.distribution_config['platforms'].items():
             self.rate_limiters[platform] = {
                 'requests': [],
@@ -238,7 +243,8 @@ class DistributionProcessor(BaseProcessor):
             }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite la distribution de contenu"""
+        """
+Traite la distribution de contenu"""
         operation = input_data.get('operation', 'distribute_content')
         
         result = {
@@ -398,7 +404,8 @@ class DistributionProcessor(BaseProcessor):
         return validation
     
     def _validate_content_for_platform(self, content_data: Dict, platform: str) -> Dict[str, Any]:
-        """Valide le contenu pour une plateforme spécifique"""
+        """
+Valide le contenu pour une plateforme spécifique"""
         validation = {
             'valid': True,
             'warnings': [],
@@ -460,7 +467,8 @@ class DistributionProcessor(BaseProcessor):
             return False
     
     def _get_file_size_mb(self, file_path: str) -> float:
-        """Récupère la taille du fichier en MB"""
+        """
+Récupère la taille du fichier en MB"""
         try:
             import os
             size_bytes = os.path.getsize(file_path)
@@ -469,7 +477,8 @@ class DistributionProcessor(BaseProcessor):
             return 0.0
     
     def _generate_job_id(self, content_data: Dict, platforms: List[str]) -> str:
-        """Génère un ID unique pour le job"""
+        """
+Génère un ID unique pour le job"""
         content_str = json.dumps(content_data, sort_keys=True)
         platforms_str = ','.join(sorted(platforms))
         timestamp = str(int(time.time()))
@@ -500,7 +509,8 @@ class DistributionProcessor(BaseProcessor):
             return (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
     
     def _start_distribution_workers(self):
-        """Démarre les workers de distribution"""
+        """
+Démarre les workers de distribution"""
         if self.workers_active:
             return
         
@@ -708,7 +718,8 @@ class DistributionProcessor(BaseProcessor):
         return self._execute_sequential_distribution(job)
     
     def _execute_staged_distribution(self, job: DistributionJob) -> Dict[str, Any]:
-        """Exécute la distribution par étapes"""
+        """
+Exécute la distribution par étapes"""
         result = {
             'success': True,
             'platform_results': {},
@@ -1015,7 +1026,8 @@ class DistributionProcessor(BaseProcessor):
 
 
 class AsyncDistributionProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur distribution"""
+    """
+Version asynchrone du processeur distribution"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -1023,7 +1035,8 @@ class AsyncDistributionProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=8)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone de la distribution"""
+        """
+Traitement asynchrone de la distribution"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1032,5 +1045,6 @@ class AsyncDistributionProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)

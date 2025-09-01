@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Content Processing Pipeline Tests
+"""
+Comprehensive Content Processing Pipeline Tests
 
 Ultra-advanced enterprise-grade test suite for content processing pipeline management.
 Tests complete workflow: User Upload → AI Protection → SEO → Collaboration → Distribution.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
@@ -34,6 +36,7 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -81,7 +84,8 @@ class TestProcessingStage:
     """Test suite for ProcessingStage enumeration"""
     
     def test_processing_stage_values(self):
-        """Test processing stage enum values"""
+        """
+Test processing stage enum values"""
         assert ProcessingStage.UPLOAD.value == "upload"
         assert ProcessingStage.VALIDATION.value == "validation"
         assert ProcessingStage.PREPROCESSING.value == "preprocessing"
@@ -115,7 +119,8 @@ class TestProcessingStage:
             assert isinstance(stage.value, str)
     
     def test_processing_stage_sequence_validation(self):
-        """Test logical sequence of processing stages"""
+        """
+Test logical sequence of processing stages"""
         # Should have proper progression
         stages_sequence = [
             ProcessingStage.UPLOAD,
@@ -137,10 +142,12 @@ class TestProcessingStage:
 
 
 class TestProcessingStatus:
-    """Test suite for ProcessingStatus enumeration"""
+    """
+Test suite for ProcessingStatus enumeration"""
     
     def test_processing_status_values(self):
-        """Test processing status enum values"""
+        """
+Test processing status enum values"""
         assert ProcessingStatus.PENDING.value == "pending"
         assert ProcessingStatus.PROCESSING.value == "processing"
         assert ProcessingStatus.COMPLETED.value == "completed"
@@ -178,10 +185,12 @@ class TestProcessingStatus:
 
 
 class TestContentFormat:
-    """Test suite for ContentFormat enumeration"""
+    """
+Test suite for ContentFormat enumeration"""
     
     def test_content_format_values(self):
-        """Test content format enum values"""
+        """
+Test content format enum values"""
         assert ContentFormat.AUDIO.value == "audio"
         assert ContentFormat.VIDEO.value == "video"
         assert ContentFormat.IMAGE.value == "image"
@@ -208,10 +217,12 @@ class TestContentFormat:
 
 
 class TestProcessingContext:
-    """Test suite for ProcessingContext data class"""
+    """
+Test suite for ProcessingContext data class"""
     
     def test_processing_context_creation(self):
-        """Test processing context creation"""
+        """
+Test processing context creation"""
         context = ProcessingContext(
             user_id="user123",
             session_id="session456",
@@ -331,7 +342,8 @@ class TestProcessingResult:
     """Test suite for ProcessingResult data class"""
     
     def test_processing_result_creation(self):
-        """Test processing result creation"""
+        """
+Test processing result creation"""
         result = ProcessingResult(
             stage=ProcessingStage.VALIDATION,
             status=ProcessingStatus.COMPLETED,
@@ -368,7 +380,8 @@ class TestProcessingResult:
         assert isinstance(result.timestamp, datetime)
     
     def test_processing_result_to_dict(self):
-        """Test processing result dictionary conversion"""
+        """
+Test processing result dictionary conversion"""
         result = ProcessingResult(
             stage=ProcessingStage.PROTECTION,
             status=ProcessingStatus.FAILED,
@@ -391,7 +404,8 @@ class TestPipelineState:
     """Test suite for PipelineState data class"""
     
     def setup_method(self):
-        """Setup pipeline state for testing"""
+        """
+Setup pipeline state for testing"""
         self.context = ProcessingContext(
             user_id="state_test_user",
             session_id="state_test_session",
@@ -416,7 +430,8 @@ class TestPipelineState:
         assert self.state.final_content is None
     
     def test_pipeline_state_stage_update(self):
-        """Test pipeline state stage updates"""
+        """
+Test pipeline state stage updates"""
         validation_result = ProcessingResult(
             stage=ProcessingStage.VALIDATION,
             status=ProcessingStatus.COMPLETED,
@@ -436,7 +451,8 @@ class TestPipelineState:
         assert self.state.status == ProcessingStatus.PENDING  # Not completed yet
     
     def test_pipeline_state_completion(self):
-        """Test pipeline state completion"""
+        """
+Test pipeline state completion"""
         completion_result = ProcessingResult(
             stage=ProcessingStage.COMPLETED,
             status=ProcessingStatus.COMPLETED,
@@ -451,7 +467,8 @@ class TestPipelineState:
         assert isinstance(self.state.completed_at, datetime)
     
     def test_pipeline_state_failure(self):
-        """Test pipeline state failure handling"""
+        """
+Test pipeline state failure handling"""
         failure_result = ProcessingResult(
             stage=ProcessingStage.FAILED,
             status=ProcessingStatus.FAILED,
@@ -526,7 +543,8 @@ class TestBaseProcessor:
     """Test suite for BaseProcessor class"""
     
     def test_base_processor_creation(self):
-        """Test base processor creation"""
+        """
+Test base processor creation"""
         processor = BaseProcessor("test-processor")
         
         assert processor.name == "test-processor"
@@ -563,7 +581,8 @@ class TestValidationProcessor:
     """Test suite for ValidationProcessor class"""
     
     def setup_method(self):
-        """Setup validation processor for testing"""
+        """
+Setup validation processor for testing"""
         self.processor = ValidationProcessor()
         self.context = ProcessingContext(
             user_id="validation_test",
@@ -642,7 +661,8 @@ class TestAIAnalysisProcessor:
     """Test suite for AIAnalysisProcessor class"""
     
     def setup_method(self):
-        """Setup AI analysis processor for testing"""
+        """
+Setup AI analysis processor for testing"""
         self.processor = AIAnalysisProcessor()
         self.context = ProcessingContext(
             user_id="ai_test",
@@ -708,10 +728,12 @@ class TestAIAnalysisProcessor:
 
 
 class TestProtectionProcessor:
-    """Test suite for ProtectionProcessor class"""
+    """
+Test suite for ProtectionProcessor class"""
     
     def setup_method(self):
-        """Setup protection processor for testing"""
+        """
+Setup protection processor for testing"""
         self.processor = ProtectionProcessor()
         self.context = ProcessingContext(
             user_id="protection_test",
@@ -775,7 +797,8 @@ class TestOptimizationProcessor:
     """Test suite for OptimizationProcessor class"""
     
     def setup_method(self):
-        """Setup optimization processor for testing"""
+        """
+Setup optimization processor for testing"""
         self.processor = OptimizationProcessor()
         self.context = ProcessingContext(
             user_id="optimization_test",
@@ -856,7 +879,8 @@ class TestSEOProcessor:
     """Test suite for SEOProcessor class"""
     
     def setup_method(self):
-        """Setup SEO processor for testing"""
+        """
+Setup SEO processor for testing"""
         self.processor = SEOProcessor()
         self.context = ProcessingContext(
             user_id="seo_test",
@@ -942,7 +966,8 @@ class TestCollaborationProcessor:
     """Test suite for CollaborationProcessor class"""
     
     def setup_method(self):
-        """Setup collaboration processor for testing"""
+        """
+Setup collaboration processor for testing"""
         self.processor = CollaborationProcessor()
         self.context = ProcessingContext(
             user_id="collab_test",
@@ -1030,7 +1055,8 @@ class TestContentProcessingPipeline:
     """Test suite for ContentProcessingPipeline class"""
     
     def setup_method(self):
-        """Setup content processing pipeline for testing"""
+        """
+Setup content processing pipeline for testing"""
         self.pipeline = ContentProcessingPipeline()
         self.context = ProcessingContext(
             user_id="pipeline_test",
@@ -1046,7 +1072,8 @@ class TestContentProcessingPipeline:
         self.pipeline.active_pipelines.clear()
     
     def test_pipeline_initialization(self):
-        """Test pipeline initialization"""
+        """
+Test pipeline initialization"""
         assert isinstance(self.pipeline.processors, dict)
         assert len(self.pipeline.processors) > 5  # Should have all main processors
         assert isinstance(self.pipeline.active_pipelines, dict)
@@ -1067,7 +1094,8 @@ class TestContentProcessingPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_full_processing_success(self):
-        """Test complete pipeline processing success"""
+        """
+Test complete pipeline processing success"""
         content = "This is a test blog post content for pipeline processing."
         
         # Mock all processors to return successful results
@@ -1223,12 +1251,14 @@ class TestGlobalPipeline:
     """Test suite for global pipeline instance"""
     
     def test_global_pipeline_instance(self):
-        """Test global pipeline instance"""
+        """
+Test global pipeline instance"""
         assert content_pipeline is not None
         assert isinstance(content_pipeline, ContentProcessingPipeline)
     
     def test_global_pipeline_functionality(self):
-        """Test global pipeline functionality"""
+        """
+Test global pipeline functionality"""
         # Test that global pipeline has all required processors
         assert len(content_pipeline.processors) > 5
         
@@ -1260,12 +1290,14 @@ class TestPipelineIntegration:
     """Integration tests for complete pipeline scenarios"""
     
     def setup_method(self):
-        """Setup integration testing"""
+        """
+Setup integration testing"""
         self.pipeline = ContentProcessingPipeline()
     
     @pytest.mark.asyncio
     async def test_musician_content_workflow(self):
-        """Test complete workflow for musician content"""
+        """
+Test complete workflow for musician content"""
         # Musician uploads a new track
         audio_content = b"fake_audio_track_data"
         context = ProcessingContext(

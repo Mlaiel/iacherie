@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import aiofiles
@@ -54,7 +55,9 @@ from ...monitoring.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class StorageBackend(str, Enum):
-    """Supported storage backends"""
+    """
+Supported storage backends"""
+
     LOCAL = "local"
     S3 = "s3"
     MINIO = "minio" 
@@ -65,6 +68,7 @@ class StorageBackend(str, Enum):
 
 class BackendStatus(str, Enum):
     """Backend operational status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -85,7 +89,8 @@ class StorageConfig:
 
 @dataclass
 class BackendHealth:
-    """Backend health information"""
+    """
+Backend health information"""
     backend: StorageBackend
     status: BackendStatus
     response_time: float
@@ -199,7 +204,8 @@ class BackendManager:
         }
     
     async def _initialize_s3_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize AWS S3 backend"""
+        """
+Initialize AWS S3 backend"""
         credentials = config.credentials
         settings = config.settings
         
@@ -222,7 +228,8 @@ class BackendManager:
         }
     
     async def _initialize_minio_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize MinIO backend"""
+        """
+Initialize MinIO backend"""
         credentials = config.credentials
         settings = config.settings
         
@@ -246,7 +253,8 @@ class BackendManager:
         }
     
     async def _initialize_gcs_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize Google Cloud Storage backend"""
+        """
+Initialize Google Cloud Storage backend"""
         credentials_path = config.credentials.get('service_account_path')
         bucket_name = config.settings.get('bucket')
         
@@ -265,7 +273,8 @@ class BackendManager:
         }
     
     async def _initialize_azure_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize Azure Blob Storage backend"""
+        """
+Initialize Azure Blob Storage backend"""
         connection_string = config.credentials.get('connection_string')
         container_name = config.settings.get('container', 'content-storage')
         
@@ -545,7 +554,8 @@ class BackendManager:
         target_path: str,
         metadata: Optional[Dict[str, Any]]
     ) -> str:
-        """Store file in local filesystem"""
+        """
+Store file in local filesystem"""
         base_path = backend_client['base_path']
         full_target_path = base_path / target_path
         full_target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -717,7 +727,8 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> str:
-        """Retrieve file from local filesystem"""
+        """
+Retrieve file from local filesystem"""
         base_path = backend_client['base_path']
         full_file_path = base_path / file_path
         
@@ -764,7 +775,8 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from MinIO"""
+        """
+Retrieve file from MinIO"""
         minio_client = backend_client['client']
         bucket = backend_client['bucket']
         
@@ -792,7 +804,8 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from Google Cloud Storage"""
+        """
+Retrieve file from Google Cloud Storage"""
         bucket = backend_client['bucket']
         blob = bucket.blob(file_path)
         
@@ -815,7 +828,8 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from Azure Blob Storage"""
+        """
+Retrieve file from Azure Blob Storage"""
         blob_service_client = backend_client['client']
         container = backend_client['container']
         
@@ -842,7 +856,8 @@ class BackendManager:
     # Backend-specific deletion implementations
     
     async def _delete_local(self, backend_client: Dict[str, Any], file_path: str) -> bool:
-        """Delete file from local filesystem"""
+        """
+Delete file from local filesystem"""
         try:
             base_path = backend_client['base_path']
             full_file_path = base_path / file_path
@@ -1044,7 +1059,8 @@ class BackendManager:
             )
     
     async def _check_local_space(self, backend_client: Dict[str, Any]) -> int:
-        """Check available space in local filesystem"""
+        """
+Check available space in local filesystem"""
         base_path = backend_client['base_path']
         stat = shutil.disk_usage(base_path)
         return stat.free
@@ -1055,7 +1071,8 @@ class BackendManager:
         success: bool, 
         response_time: float
     ):
-        """Update performance statistics"""
+        """
+Update performance statistics"""
         self.performance_stats['total_operations'] += 1
         self.performance_stats['backend_usage'][backend] += 1
         
@@ -1072,7 +1089,8 @@ class BackendManager:
         )
     
     async def cleanup(self):
-        """Cleanup backend manager resources"""
+        """
+Cleanup backend manager resources"""
         try:
             # Close all backend connections
             for backend_type, backend_client in self.backends.items():

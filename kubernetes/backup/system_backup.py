@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -26,7 +27,8 @@ from ...config.monitoring_config import MonitoringConfig
 
 @dataclass
 class ConfigBackupRecord:
-    """Configuration backup record metadata."""
+    """
+Configuration backup record metadata."""
     config_type: str
     config_name: str
     backup_timestamp: datetime
@@ -698,13 +700,15 @@ class SystemConfigBackupService:
             yaml.dump(config_data, f, default_flow_style=False)
 
     def _calculate_config_checksum(self, config_data: Dict[str, Any]) -> str:
-        """Calculate checksum for configuration data."""
+        """
+Calculate checksum for configuration data."""
         config_str = json.dumps(config_data, sort_keys=True, default=str)
         return hashlib.sha256(config_str.encode()).hexdigest()
 
     # Placeholder methods for specific config backups
     async def _backup_specific_app_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific application configurations."""
+        """
+Backup specific application configurations."""
         configs = {}
         full_config = await self._backup_application_config()
         for name in config_names:
@@ -713,7 +717,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_db_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific database configurations."""
+        """
+Backup specific database configurations."""
         configs = {}
         full_config = await self._backup_database_config()
         for name in config_names:
@@ -722,7 +727,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_ai_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific AI configurations."""
+        """
+Backup specific AI configurations."""
         configs = {}
         full_config = await self._backup_ai_model_config()
         for name in config_names:
@@ -731,7 +737,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_security_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific security configurations."""
+        """
+Backup specific security configurations."""
         configs = {}
         full_config = await self._backup_security_config()
         for name in config_names:
@@ -740,7 +747,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_monitoring_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific monitoring configurations."""
+        """
+Backup specific monitoring configurations."""
         configs = {}
         full_config = await self._backup_monitoring_config()
         for name in config_names:
@@ -749,7 +757,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_deployment_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific deployment configurations."""
+        """
+Backup specific deployment configurations."""
         configs = {}
         full_config = await self._backup_deployment_config()
         for name in config_names:
@@ -758,7 +767,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_integration_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific integration configurations."""
+        """
+Backup specific integration configurations."""
         configs = {}
         full_config = await self._backup_integration_config()
         for name in config_names:
@@ -767,7 +777,8 @@ class SystemConfigBackupService:
         return configs
 
     async def _backup_specific_environment_configs(self, config_names: List[str]) -> Dict[str, Any]:
-        """Backup specific environment configurations."""
+        """
+Backup specific environment configurations."""
         configs = {}
         full_config = await self._backup_environment_config()
         for name in config_names:
@@ -777,7 +788,8 @@ class SystemConfigBackupService:
 
     # Additional getter methods for remaining configs
     async def _get_connection_pool_config(self) -> Dict[str, Any]:
-        """Get database connection pool configuration."""
+        """
+Get database connection pool configuration."""
         return {"pool_size": 20, "max_overflow": 30, "pool_timeout": 30}
 
     async def _get_db_backup_schedules(self) -> Dict[str, Any]:

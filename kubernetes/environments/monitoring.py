@@ -15,6 +15,7 @@ Monitoring environment configuration for observability and alerting.
 Handles metrics collection, logging, tracing, and real-time monitoring.
 =====================================================
 """
+
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring configuration levels"""
+    """
+Monitoring configuration levels"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -37,6 +40,7 @@ class MonitoringLevel(Enum):
 
 class MetricType(Enum):
     """Types of metrics to collect"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -110,7 +114,8 @@ class TracingConfig:
 
 @dataclass
 class AlertingConfig:
-    """Alerting and notification configuration"""
+    """
+Alerting and notification configuration"""
     enabled: bool = True
     alert_manager_enabled: bool = bool(os.getenv('ALERT_MANAGER_ENABLED', 'true').lower() == 'true')
     notification_channels: List[str] = field(default_factory=lambda: ["email", "slack", "webhook"])
@@ -153,7 +158,8 @@ class DashboardConfig:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check and uptime monitoring configuration"""
+    """
+Health check and uptime monitoring configuration"""
     enabled: bool = True
     health_check_interval: int = int(os.getenv('HEALTH_CHECK_INTERVAL', '30'))
     endpoint_monitoring: bool = True
@@ -176,7 +182,8 @@ class HealthCheckConfig:
 
 @dataclass
 class PerformanceMonitoringConfig:
-    """Performance monitoring configuration"""
+    """
+Performance monitoring configuration"""
     enabled: bool = True
     apm_enabled: bool = bool(os.getenv('APM_ENABLED', 'true').lower() == 'true')
     profiling_enabled: bool = bool(os.getenv('PROFILING_ENABLED', 'false').lower() == 'true')
@@ -618,7 +625,8 @@ class MonitoringEnvironmentManager:
     
     # Private helper methods
     def _apply_monitoring_level_config(self):
-        """Apply monitoring level-specific configurations"""
+        """
+Apply monitoring level-specific configurations"""
         if self.monitoring_level == MonitoringLevel.ENTERPRISE:
             self.metrics.high_cardinality_metrics = True
             self.logging.debug_logging = True
@@ -633,7 +641,8 @@ class MonitoringEnvironmentManager:
             self.performance.anomaly_detection = True
     
     def _get_observability_stack(self) -> List[str]:
-        """Get enabled observability stack components"""
+        """
+Get enabled observability stack components"""
         stack = []
         if self.metrics.prometheus_enabled:
             stack.append("prometheus")

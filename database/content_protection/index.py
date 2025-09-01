@@ -5,7 +5,7 @@ storage, analytics, and management for AI-powered content protection platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentProtectionDatabaseError(Exception):
-    """Master exception for content protection database operations"""
+    """
+Master exception for content protection database operations"""
     pass
 
 
@@ -526,7 +528,8 @@ class ContentProtectionDatabase:
         pass
     
     async def _generate_executive_summary(self, modules_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary from all module data"""
+        """
+Generate executive summary from all module data"""
         return {
             "total_content_protected": 0,
             "violations_detected": 0,

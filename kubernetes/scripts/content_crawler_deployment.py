@@ -26,6 +26,7 @@ and international copyright laws.
 
 Specialization: Web Scraping Architecture & Content Surveillance Systems
 """
+
 import asyncio
 import logging
 import json
@@ -70,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerType(Enum):
-    """Types of content crawlers."""
+    """
+Types of content crawlers."""
+
     YOUTUBE_CRAWLER = "youtube"
     INSTAGRAM_CRAWLER = "instagram"
     TIKTOK_CRAWLER = "tiktok"
@@ -87,6 +90,7 @@ class CrawlerType(Enum):
 
 class CrawlerStrategy(Enum):
     """Crawler execution strategies."""
+
     SELENIUM_HEADLESS = "selenium_headless"
     SELENIUM_FULL = "selenium_full"
     SCRAPY = "scrapy"
@@ -97,6 +101,7 @@ class CrawlerStrategy(Enum):
 
 class ContentType(Enum):
     """Content types to crawl."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -107,6 +112,7 @@ class ContentType(Enum):
 
 class MonitoringMode(Enum):
     """Content monitoring modes."""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -135,7 +141,8 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlTarget:
-    """Target configuration for crawling."""
+    """
+Target configuration for crawling."""
     target_id: str
     platform: str
     urls: List[str]
@@ -161,7 +168,8 @@ class ContentCrawlerDeploymentManager:
     - Advanced content extraction and analysis
     """
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the content crawler deployment manager."""
+        """
+Initialize the content crawler deployment manager."""
         self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
@@ -388,7 +396,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy crawler on Kubernetes."""
+        """
+Deploy crawler on Kubernetes."""
         # Create namespace for crawlers
         namespace_manifest = {
             "apiVersion": "v1",
@@ -1082,7 +1091,8 @@ class ContentCrawlerDeploymentManager:
         return list(self.active_crawlers.values())
 
     async def scale_crawler(self, deployment_id: str, replicas: int) -> bool:
-        """Scale crawler deployment."""
+        """
+Scale crawler deployment."""
         try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")

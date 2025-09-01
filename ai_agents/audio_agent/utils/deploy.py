@@ -11,6 +11,7 @@ Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sec
 This deployment script contains proprietary deployment procedures and configurations.
 Unauthorized use or modification is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import sys
 import os
@@ -33,7 +34,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class AudioAgentDeployer:
-    """Enterprise-grade deployment automation for Audio Agent"""
+    """
+Enterprise-grade deployment automation for Audio Agent"""
     
     def __init__(self, environment: str = "production"):
         self.environment = environment
@@ -95,7 +97,7 @@ class AudioAgentDeployer:
         print("=" * 60)
         print(f"Author: Fahed Mlaiel <mlaiel@live.de>")
         print(f"Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security")
-        print(f"© 2025 Fahed Mlaiel - All Rights Reserved")  
+        print(f"(c) 2025 Fahed Mlaiel - All Rights Reserved")  
         print("=" * 60)
         
         success_count = 0
@@ -532,7 +534,7 @@ async def main():
 if __name__ == "__main__":
     print("🎵 Audio Agent Enterprise Deployment System")
     print("👨‍💻 Author: Fahed Mlaiel <mlaiel@live.de>")
-    print("© 2025 Fahed Mlaiel - All Rights Reserved\n")
+    print("(c) 2025 Fahed Mlaiel - All Rights Reserved\n")
     
     exit_code = asyncio.run(main())
     sys.exit(exit_code)

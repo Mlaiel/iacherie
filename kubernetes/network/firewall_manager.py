@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import ipaddress
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class FirewallAction(Enum):
-    """Firewall actions"""
+    """
+Firewall actions"""
+
     ALLOW = "allow"
     DENY = "deny"
     DROP = "drop"
@@ -52,6 +55,7 @@ class FirewallAction(Enum):
 
 class ProtocolType(Enum):
     """Network protocols"""
+
     TCP = "tcp"
     UDP = "udp"
     ICMP = "icmp"
@@ -64,6 +68,7 @@ class ProtocolType(Enum):
 
 class ThreatLevel(Enum):
     """Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -662,15 +667,18 @@ class FirewallManager:
         return False
     
     async def _start_monitoring(self) -> None:
-        """Start firewall monitoring"""
+        """
+Start firewall monitoring"""
         asyncio.create_task(self._monitoring_loop())
     
     async def _start_threat_feed_updates(self) -> None:
-        """Start threat feed updates"""
+        """
+Start threat feed updates"""
         asyncio.create_task(self._threat_feed_update_loop())
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while True:
             try:
                 # Check rule expiration

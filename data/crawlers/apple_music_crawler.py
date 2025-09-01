@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class AppleMusicTrack:
-    """Apple Music track information"""
+    """
+Apple Music track information"""
     track_id: str
     name: str
     artist_name: str
@@ -74,7 +76,8 @@ class AppleMusicTrack:
 
 @dataclass
 class AppleMusicAlbum:
-    """Apple Music album information"""
+    """
+Apple Music album information"""
     album_id: str
     name: str
     artist_name: str
@@ -101,7 +104,8 @@ class AppleMusicAlbum:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist information"""
+    """
+Apple Music artist information"""
     artist_id: str
     name: str
     genres: List[str]
@@ -121,7 +125,8 @@ class AppleMusicArtist:
 
 @dataclass
 class AppleMusicPlaylist:
-    """Apple Music playlist information"""
+    """
+Apple Music playlist information"""
     playlist_id: str
     name: str
     description: Optional[str]
@@ -139,7 +144,8 @@ class AppleMusicPlaylist:
 
 @dataclass
 class AppleMusicStation:
-    """Apple Music radio station information"""
+    """
+Apple Music radio station information"""
     station_id: str
     name: str
     description: Optional[str]
@@ -621,7 +627,8 @@ class AppleMusicCrawler(PlatformCrawler):
         return tracks
     
     async def _get_mock_albums(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock album data"""
+        """
+Generate mock album data"""
         albums = []
         
         for i in range(min(max_results, 25)):
@@ -645,7 +652,8 @@ class AppleMusicCrawler(PlatformCrawler):
         return albums
     
     async def _get_mock_artists(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock artist data"""
+        """
+Generate mock artist data"""
         artists = []
         
         for i in range(min(max_results, 25)):
@@ -662,7 +670,8 @@ class AppleMusicCrawler(PlatformCrawler):
         return artists
     
     async def _get_mock_playlists(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock playlist data"""
+        """
+Generate mock playlist data"""
         playlists = []
         
         for i in range(min(max_results, 25)):
@@ -681,7 +690,8 @@ class AppleMusicCrawler(PlatformCrawler):
         return playlists
     
     async def _get_mock_stations(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock station data"""
+        """
+Generate mock station data"""
         stations = []
         
         for i in range(min(max_results, 10)):
@@ -698,7 +708,8 @@ class AppleMusicCrawler(PlatformCrawler):
         return stations
     
     async def _get_chart_data(self, chart_type: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get chart data"""
+        """
+Get chart data"""
         chart_data = []
         
         for i in range(min(max_results, 50)):
@@ -712,7 +723,8 @@ class AppleMusicCrawler(PlatformCrawler):
         return chart_data
     
     async def _get_genres(self) -> List[Dict[str, Any]]:
-        """Get available genres"""
+        """
+Get available genres"""
         return [
             {'id': 'pop', 'name': 'Pop'},
             {'id': 'rock', 'name': 'Rock'},
@@ -727,7 +739,8 @@ class AppleMusicCrawler(PlatformCrawler):
         ]
     
     async def _get_genre_content(self, genre_id: str, max_results: int) -> List[Dict[str, Any]]:
-        """Get content for specific genre"""
+        """
+Get content for specific genre"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -742,7 +755,8 @@ class AppleMusicCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[AppleMusicTrack]:
-        """Parse track data"""
+        """
+Parse track data"""
         try:
             release_date = datetime.fromisoformat(track_data.get('releaseDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

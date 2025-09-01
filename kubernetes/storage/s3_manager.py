@@ -8,7 +8,7 @@ Technologies: Python, AWS S3, CloudFormation, IAM, Boto3, Multi-Region
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Créateur upload → S3 validation → Multi-région replication → 
 Lifecycle policies → Cost optimization → Backup strategy → CDN integration
 """
+
 import logging
 import asyncio
 import boto3
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class S3StorageClass(Enum):
-    """S3 storage classes for cost optimization"""
+    """
+S3 storage classes for cost optimization"""
+
     STANDARD = "STANDARD"
     REDUCED_REDUNDANCY = "REDUCED_REDUNDANCY"
     STANDARD_IA = "STANDARD_IA"
@@ -56,6 +59,7 @@ class S3StorageClass(Enum):
 
 class S3Region(Enum):
     """AWS regions for S3 deployment"""
+
     US_EAST_1 = "us-east-1"
     US_WEST_2 = "us-west-2"
     EU_WEST_1 = "eu-west-1"
@@ -66,6 +70,7 @@ class S3Region(Enum):
 
 class ReplicationStatus(Enum):
     """Replication status tracking"""
+
     PENDING = "PENDING"
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
@@ -855,7 +860,8 @@ class S3ConfigurationManager:
     
     @staticmethod
     def load_config_from_file(config_path: Path) -> S3BucketConfig:
-        """Load S3 configuration from YAML file"""
+        """
+Load S3 configuration from YAML file"""
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -925,7 +931,8 @@ def create_s3_manager(
 
 # Usage Example
 async def main():
-    """Example usage of S3Manager"""
+    """
+Example usage of S3Manager"""
     try:
         # Create S3 manager
         s3_manager = create_s3_manager(

@@ -23,6 +23,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -76,7 +77,9 @@ from ..utils.cache_manager import CacheManager
 
 
 class APIProvider(Enum):
-    """API service providers."""
+    """
+API service providers."""
+
     YOUTUBE_DATA_API = "youtube_data_api"
     INSTAGRAM_BASIC_DISPLAY = "instagram_basic_display"
     INSTAGRAM_BUSINESS = "instagram_business"
@@ -93,6 +96,7 @@ class APIProvider(Enum):
 
 class AuthenticationType(Enum):
     """API authentication types."""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
@@ -104,6 +108,7 @@ class AuthenticationType(Enum):
 
 class DataFormat(Enum):
     """API response data formats."""
+
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -135,7 +140,8 @@ class APICredentials:
 
 @dataclass
 class APIRequest:
-    """API request configuration."""
+    """
+API request configuration."""
     request_id: str
     provider: APIProvider
     endpoint: str
@@ -1002,7 +1008,8 @@ class APIDataNormalizer:
         platform: str,
         raw_metrics: Dict[str, Any]
     ) -> Dict[str, int]:
-        """Normalize engagement metrics across platforms."""
+        """
+Normalize engagement metrics across platforms."""
         normalized = {
             "likes": 0,
             "comments": 0,

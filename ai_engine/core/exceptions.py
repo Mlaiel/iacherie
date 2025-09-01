@@ -4,10 +4,11 @@ Advanced exception hierarchy for industrial-grade AI content processing system.
 Provides comprehensive error handling for multi-format content creators platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
@@ -15,7 +16,9 @@ from enum import Enum
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for monitoring and alerting"""
+    """
+Error severity levels for monitoring and alerting"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -24,6 +27,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Error categories for systematic classification"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
@@ -534,7 +538,8 @@ class ModelError(AIModelError):
 
 
 class ValidationError(AIModelError):
-    """Data validation error"""
+    """
+Data validation error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -734,22 +739,26 @@ class AudioProcessingError(ProcessingError):
 
 
 class VideoProcessingError(ProcessingError):
-    """Video-specific processing error"""
+    """
+Video-specific processing error"""
     pass
 
 
 class ImageProcessingError(ProcessingError):
-    """Image-specific processing error"""
+    """
+Image-specific processing error"""
     pass
 
 
 class TextProcessingError(ProcessingError):
-    """Text-specific processing error"""
+    """
+Text-specific processing error"""
     pass
 
 
 class MonitoringError(BaseAIException):
-    """Monitoring system error"""
+    """
+Monitoring system error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -843,7 +852,8 @@ class ComponentError(AIModelError):
 
 
 class AIOrchestrationError(BaseAIException):
-    """AI orchestration system error"""
+    """
+AI orchestration system error"""
     
     def __init__(self, message: str, component: str = None, context: Dict = None):
         super().__init__(

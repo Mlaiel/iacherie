@@ -5,8 +5,9 @@ Comprehensive financial reporting system for payment analytics, compliance
 reporting, and business intelligence with multi-dimensional analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Financial report types"""
+    """
+Financial report types"""
+
     TRANSACTION_SUMMARY = "transaction_summary"
     REVENUE_ANALYSIS = "revenue_analysis"
     FEE_ANALYSIS = "fee_analysis"
@@ -38,6 +41,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     JSON = "json"
     CSV = "csv"
     EXCEL = "excel"
@@ -47,6 +51,7 @@ class ReportFormat(Enum):
 
 class ReportFrequency(Enum):
     """Report generation frequency"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -59,6 +64,7 @@ class ReportFrequency(Enum):
 
 class MetricType(Enum):
     """Financial metrics types"""
+
     GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     TRANSACTION_COUNT = "transaction_count"
@@ -89,7 +95,8 @@ class ReportFilter:
 
 @dataclass
 class FinancialMetric:
-    """Financial metric data point"""
+    """
+Financial metric data point"""
     metric_type: MetricType
     value: Decimal
     currency: str
@@ -100,7 +107,8 @@ class FinancialMetric:
 
 @dataclass
 class ReportSchedule:
-    """Automated report schedule"""
+    """
+Automated report schedule"""
     id: str
     report_type: ReportType
     frequency: ReportFrequency
@@ -115,7 +123,8 @@ class ReportSchedule:
 
 @dataclass
 class FinancialReport:
-    """Generated financial report"""
+    """
+Generated financial report"""
     id: str
     report_type: ReportType
     format: ReportFormat
@@ -141,7 +150,8 @@ class FinancialReportingProcessor:
         config: Dict[str, Any],
         data_warehouse_config: Optional[Dict[str, Any]] = None
     ):
-        """Initialize financial reporting processor"""
+        """
+Initialize financial reporting processor"""
         self.config = config
         self.data_warehouse_config = data_warehouse_config or {}
         self.logger = logging.getLogger(__name__)
@@ -726,7 +736,8 @@ class FinancialReportingProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate value for specific metric type"""
+        """
+Calculate value for specific metric type"""
         # Mock metric calculations
         if metric_type == MetricType.GROSS_REVENUE:
             return Decimal("1875000.50")

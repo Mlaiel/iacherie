@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -52,7 +53,8 @@ class UserContentRepository(BaseRepository[UserContent]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize user content repository"""
+        """
+Initialize user content repository"""
         super().__init__(db_session, UserContent)
         
     def create_content(self,

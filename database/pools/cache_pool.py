@@ -38,6 +38,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import pickle
@@ -74,12 +75,14 @@ T = TypeVar('T')
 
 class CacheLevel(str, Enum):
     """Cache levels for multi-tier caching"""
+
     L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"
     L3_DISTRIBUTED = "l3_distributed"
 
 class CacheStrategy(str, Enum):
     """Cache strategies"""
+
     WRITE_THROUGH = "write_through"
     WRITE_BACK = "write_back"
     WRITE_AROUND = "write_around"
@@ -87,6 +90,7 @@ class CacheStrategy(str, Enum):
 
 class SerializationMethod(str, Enum):
     """Serialization methods for cache data"""
+
     JSON = "json"
     PICKLE = "pickle"
     MSGPACK = "msgpack"
@@ -94,6 +98,7 @@ class SerializationMethod(str, Enum):
 
 class EvictionPolicy(str, Enum):
     """Cache eviction policies"""
+
     LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
@@ -161,20 +166,23 @@ class CacheItem:
     level: CacheLevel = CacheLevel.L2_REDIS
     
     def is_expired(self) -> bool:
-        """Check if cache item is expired"""
+        """
+Check if cache item is expired"""
         if self.ttl <= 0:
             return False
         return time.time() - self.created_at > self.ttl
     
     def update_access(self) -> None:
-        """Update access statistics"""
+        """
+Update access statistics"""
         self.accessed_at = time.time()
         self.access_count += 1
 
 # =============== CACHE IMPLEMENTATIONS ===============
 
 class L1MemoryCache:
-    """Level 1 memory cache implementation"""
+    """
+Level 1 memory cache implementation"""
     
     def __init__(self, config: CacheConfig):
         self.config = config
@@ -256,7 +264,8 @@ class L1MemoryCache:
             self._cache.clear()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get L1 cache statistics"""
+        """
+Get L1 cache statistics"""
         with self._lock:
             hit_rate = self.stats["hits"] / (self.stats["hits"] + self.stats["misses"]) if (self.stats["hits"] + self.stats["misses"]) > 0 else 0
             return {
@@ -586,7 +595,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
         pass
     
     async def get(self, key: str, pattern: Optional[str] = None) -> Optional[Any]:
-        """Get value from cache with multi-level lookup"""
+        """
+Get value from cache with multi-level lookup"""
         start_time = time.time()
         self.stats["total_requests"] += 1
         
@@ -780,7 +790,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
         self._invalidation_listeners[pattern].append(callback)
     
     async def _update_response_time(self, start_time: float) -> None:
-        """Update average response time"""
+        """
+Update average response time"""
         response_time = (time.time() - start_time) * 1000  # ms
         total_requests = self.stats["total_requests"]
         
@@ -836,7 +847,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     # =============== BUSINESS LOGIC CACHE METHODS ===============
     
     async def cache_user_session(self, user_id: str, session_data: Dict[str, Any], ttl: int = 1800) -> bool:
-        """Cache user session data"""
+        """
+Cache user session data"""
         key = f"user_session:{user_id}"
         return await self.set(key, session_data, ttl, "user_session")
     

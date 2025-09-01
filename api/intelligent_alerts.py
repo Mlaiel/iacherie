@@ -7,6 +7,7 @@ with the existing Ainflue API infrastructure.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from typing import Dict, List, Any, Optional
@@ -52,7 +53,8 @@ class BusinessMetricsRequest(BaseModel):
 
 
 class TechnicalMetricsRequest(BaseModel):
-    """Request model for technical metrics"""
+    """
+Request model for technical metrics"""
     cpu_usage: float
     memory_usage: float
     disk_usage: float
@@ -575,6 +577,7 @@ async def health_check():
 
 # Example usage in main API app:
 """
+
 from fastapi import FastAPI
 from api.intelligent_alerts import router as alerts_router
 

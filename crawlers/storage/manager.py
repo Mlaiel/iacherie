@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple, Type
@@ -48,7 +49,9 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class RoutingStrategy(Enum):
-    """Storage routing strategies."""
+    """
+Storage routing strategies."""
+
     ROUND_ROBIN = "round_robin"
     LEAST_LOAD = "least_load"
     FASTEST_RESPONSE = "fastest_response"
@@ -57,6 +60,7 @@ class RoutingStrategy(Enum):
 
 class ReplicationMode(Enum):
     """Data replication modes."""
+
     NONE = "none"
     SYNC = "sync"
     ASYNC = "async"
@@ -80,7 +84,8 @@ class ProviderConfig:
 
 @dataclass
 class StoragePolicy:
-    """Storage policy configuration."""
+    """
+Storage policy configuration."""
     routing_strategy: RoutingStrategy = RoutingStrategy.ROUND_ROBIN
     replication_mode: ReplicationMode = ReplicationMode.NONE
     consistency_level: str = "eventual"  # strong, eventual, weak
@@ -125,7 +130,8 @@ class StorageManager:
         config_path: Optional[str] = None,
         policy: Optional[StoragePolicy] = None
     ):
-        """Initialize storage manager."""
+        """
+Initialize storage manager."""
         self.policy = policy or StoragePolicy()
         
         # Provider management
@@ -317,7 +323,8 @@ class StorageManager:
         return providers[index]
     
     def _least_load_selection(self, providers: List[str]) -> str:
-        """Least load provider selection."""
+        """
+Least load provider selection."""
         if not providers:
             return None
         
@@ -333,7 +340,8 @@ class StorageManager:
         return best_provider
     
     def _fastest_response_selection(self, providers: List[str]) -> str:
-        """Fastest response provider selection."""
+        """
+Fastest response provider selection."""
         if not providers:
             return None
         
@@ -349,7 +357,8 @@ class StorageManager:
         return best_provider
     
     def _primary_secondary_selection(self, providers: List[str]) -> str:
-        """Primary-secondary provider selection."""
+        """
+Primary-secondary provider selection."""
         if not providers:
             return None
         
@@ -361,7 +370,8 @@ class StorageManager:
         return sorted_providers[0]
     
     def _hash_based_selection(self, providers: List[str], key: str) -> str:
-        """Hash-based provider selection."""
+        """
+Hash-based provider selection."""
         if not providers:
             return None
         
@@ -377,7 +387,8 @@ class StorageManager:
         backend_type: Optional[StorageBackendType] = None,
         max_retries: Optional[int] = None
     ) -> Any:
-        """Execute operation with automatic fallback."""
+        """
+Execute operation with automatic fallback."""
         max_retries = max_retries or self.policy.max_retries
         attempted_providers = []
         last_error = None
@@ -590,7 +601,8 @@ class StorageManager:
         return metrics
     
     async def cleanup_cache(self) -> int:
-        """Clean up expired cache entries."""
+        """
+Clean up expired cache entries."""
         if not self.policy.enable_caching:
             return 0
         
@@ -643,13 +655,15 @@ class LoadBalancer:
     """
     
     def __init__(self, storage_manager: StorageManager):
-        """Initialize load balancer."""
+        """
+Initialize load balancer."""
         self.storage_manager = storage_manager
         self.load_history: Dict[str, List[Tuple[datetime, float]]] = {}
         self.prediction_cache: Dict[str, Tuple[float, datetime]] = {}
         
     async def calculate_provider_load(self, provider_id: str) -> float:
-        """Calculate current provider load score."""
+        """
+Calculate current provider load score."""
         metrics = self.storage_manager.provider_metrics.get(provider_id)
         if not metrics:
             return 1.0
@@ -672,7 +686,8 @@ class LoadBalancer:
         return min(total_load, 1.0)
     
     async def predict_future_load(self, provider_id: str, minutes_ahead: int = 5) -> float:
-        """Predict future load using historical data."""
+        """
+Predict future load using historical data."""
         cache_key = f"{provider_id}:{minutes_ahead}"
         
         # Check prediction cache
@@ -741,7 +756,8 @@ class LoadBalancer:
         backend_type: Optional[StorageBackendType] = None,
         consider_future_load: bool = True
     ) -> Optional[str]:
-        """Select optimal provider considering current and predicted load."""
+        """
+Select optimal provider considering current and predicted load."""
         available_providers = []
         
         for provider_id, config in self.storage_manager.provider_configs.items():
@@ -788,13 +804,15 @@ class FailoverManager:
     """
     
     def __init__(self, storage_manager: StorageManager):
-        """Initialize failover manager."""
+        """
+Initialize failover manager."""
         self.storage_manager = storage_manager
         self.circuit_breakers: Dict[str, Dict[str, Any]] = {}
         self.recovery_tasks: Dict[str, asyncio.Task] = {}
         
     def initialize_circuit_breaker(self, provider_id: str) -> None:
-        """Initialize circuit breaker for provider."""
+        """
+Initialize circuit breaker for provider."""
         self.circuit_breakers[provider_id] = {
             'state': 'closed',  # closed, open, half_open
             'failure_count': 0,
@@ -806,7 +824,8 @@ class FailoverManager:
         }
     
     async def record_success(self, provider_id: str) -> None:
-        """Record successful operation."""
+        """
+Record successful operation."""
         if provider_id not in self.circuit_breakers:
             self.initialize_circuit_breaker(provider_id)
         
@@ -858,7 +877,8 @@ class FailoverManager:
         return breaker['state'] != 'open'
     
     async def _recovery_task(self, provider_id: str) -> None:
-        """Recovery task for failed provider."""
+        """
+Recovery task for failed provider."""
         try:
             breaker = self.circuit_breakers[provider_id]
             
@@ -926,7 +946,8 @@ class PerformanceMonitor:
     """
     
     def __init__(self, storage_manager: StorageManager):
-        """Initialize performance monitor."""
+        """
+Initialize performance monitor."""
         self.storage_manager = storage_manager
         self.operation_metrics: Dict[str, Dict[str, Any]] = {}
         self.alert_thresholds = {
@@ -937,7 +958,8 @@ class PerformanceMonitor:
         self.alert_callbacks: List[Callable] = []
         
     def add_alert_callback(self, callback: Callable[[str, Dict[str, Any]], None]) -> None:
-        """Add alert callback function."""
+        """
+Add alert callback function."""
         self.alert_callbacks.append(callback)
     
     async def record_operation_metrics(
@@ -949,7 +971,8 @@ class PerformanceMonitor:
         success: bool = True,
         error_message: Optional[str] = None
     ) -> None:
-        """Record operation metrics."""
+        """
+Record operation metrics."""
         timestamp = datetime.now()
         
         if provider_id not in self.operation_metrics:
@@ -982,7 +1005,8 @@ class PerformanceMonitor:
         provider_id: str,
         operation_record: Dict[str, Any]
     ) -> None:
-        """Update aggregated statistics."""
+        """
+Update aggregated statistics."""
         timestamp = operation_record['timestamp']
         hour_key = timestamp.strftime('%Y-%m-%d-%H')
         day_key = timestamp.strftime('%Y-%m-%d')
@@ -1037,7 +1061,8 @@ class PerformanceMonitor:
             daily['total_data_bytes'] += operation_record['data_size_bytes']
     
     async def _check_performance_alerts(self, provider_id: str) -> None:
-        """Check for performance alerts."""
+        """
+Check for performance alerts."""
         if not self.alert_callbacks:
             return
         
@@ -1150,7 +1175,8 @@ class PerformanceMonitor:
         }
     
     async def get_system_performance_report(self) -> Dict[str, Any]:
-        """Get comprehensive system performance report."""
+        """
+Get comprehensive system performance report."""
         report = {
             'timestamp': datetime.now().isoformat(),
             'providers': {},

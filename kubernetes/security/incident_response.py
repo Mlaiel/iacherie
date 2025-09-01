@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class IncidentSeverity(Enum):
-    """Incident severity levels"""
+    """
+Incident severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -44,6 +47,7 @@ class IncidentSeverity(Enum):
 
 class IncidentStatus(Enum):
     """Incident status values"""
+
     NEW = "new"
     ASSIGNED = "assigned"
     INVESTIGATING = "investigating"
@@ -56,6 +60,7 @@ class IncidentStatus(Enum):
 
 class IncidentCategory(Enum):
     """Incident categories"""
+
     MALWARE = "malware"
     PHISHING = "phishing"
     WEB_INTRUSION = "web_intrusion"
@@ -70,6 +75,7 @@ class IncidentCategory(Enum):
 
 class EvidenceType(Enum):
     """Types of digital evidence"""
+
     LOG_FILE = "log_file"
     NETWORK_CAPTURE = "network_capture"
     MEMORY_DUMP = "memory_dump"
@@ -84,6 +90,7 @@ class EvidenceType(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions"""
+
     BLOCK_IP = "block_ip"
     ISOLATE_HOST = "isolate_host"
     DISABLE_ACCOUNT = "disable_account"
@@ -115,7 +122,8 @@ class DigitalEvidence:
 
 @dataclass
 class SecurityIncident:
-    """Security incident data structure"""
+    """
+Security incident data structure"""
     incident_id: str
     title: str
     description: str
@@ -137,7 +145,8 @@ class SecurityIncident:
 
 @dataclass
 class ForensicsTask:
-    """Forensics analysis task"""
+    """
+Forensics analysis task"""
     task_id: str
     incident_id: str
     task_type: str
@@ -609,7 +618,8 @@ class IncidentResponseOrchestrator:
         }
     
     def _setup_action_executors(self) -> Dict[ResponseAction, callable]:
-        """Setup action execution functions"""
+        """
+Setup action execution functions"""
         return {
             ResponseAction.BLOCK_IP: self._execute_block_ip,
             ResponseAction.ISOLATE_HOST: self._execute_isolate_host,

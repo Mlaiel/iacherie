@@ -11,7 +11,7 @@ Ultra-sophisticated royalty calculation and distribution system for licensing:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Music Industry Expert + Financial Engineer + Rights Specialist + Revenue Analyst
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
@@ -21,6 +21,7 @@ applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple, Set
@@ -39,7 +40,9 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class RoyaltyType(Enum):
-    """Types of royalties in the music industry"""
+    """
+Types of royalties in the music industry"""
+
     MECHANICAL = "mechanical"  # Reproduction royalties
     PERFORMANCE = "performance"  # Public performance royalties
     SYNCHRONIZATION = "sync"  # Sync licensing for media
@@ -55,6 +58,7 @@ class RoyaltyType(Enum):
 
 class PaymentFrequency(Enum):
     """Payment frequency options"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -65,6 +69,7 @@ class PaymentFrequency(Enum):
 
 class RightsHolderType(Enum):
     """Types of rights holders"""
+
     SONGWRITER = "songwriter"
     COMPOSER = "composer"
     LYRICIST = "lyricist"
@@ -78,6 +83,7 @@ class RightsHolderType(Enum):
 
 class Territory(Enum):
     """Geographic territories for royalty collection"""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -110,7 +116,8 @@ class RightsHolder:
 
 @dataclass
 class RoyaltyCalculationRule:
-    """Royalty calculation rule definition"""
+    """
+Royalty calculation rule definition"""
     rule_id: str
     name: str
     royalty_type: RoyaltyType
@@ -169,7 +176,8 @@ class UsageData:
 
 @dataclass
 class RoyaltyCalculation:
-    """Result of royalty calculation"""
+    """
+Result of royalty calculation"""
     calculation_id: str
     content_id: str
     usage_data_id: str
@@ -234,11 +242,13 @@ class RoyaltyCalculationEngine(ABC):
         rules: List[RoyaltyCalculationRule],
         rights_holders: List[RightsHolder]
     ) -> RoyaltyCalculation:
-        """Calculate royalty for given usage data"""
+        """
+Calculate royalty for given usage data"""
         pass
 
 class StandardRoyaltyEngine(RoyaltyCalculationEngine):
-    """Standard royalty calculation engine"""
+    """
+Standard royalty calculation engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -340,7 +350,8 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         usage_data: UsageData,
         rule: RoyaltyCalculationRule
     ) -> Decimal:
-        """Calculate base royalty amount"""
+        """
+Calculate base royalty amount"""
         
         if rule.calculation_method == "percentage":
             # Percentage of net revenue
@@ -413,7 +424,8 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         rule: RoyaltyCalculationRule,
         base_amount: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate royalty adjustments"""
+        """
+Calculate royalty adjustments"""
         
         adjustments = {}
         
@@ -453,7 +465,8 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         rights_holders: List[RightsHolder],
         royalty_type: RoyaltyType
     ) -> Dict[str, Decimal]:
-        """Distribute royalties among rights holders"""
+        """
+Distribute royalties among rights holders"""
         
         distributions = {}
         
@@ -491,7 +504,8 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         return distributions
 
 class AIRoyaltyOptimizer:
-    """AI-powered royalty optimization and forecasting"""
+    """
+AI-powered royalty optimization and forecasting"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -526,7 +540,8 @@ class AIRoyaltyOptimizer:
         forecast_period: int,  # days
         historical_data: List[UsageData]
     ) -> Dict[str, Any]:
-        """Forecast royalty revenue using AI models"""
+        """
+Forecast royalty revenue using AI models"""
         
         # Prepare data for forecasting
         time_series_data = self._prepare_time_series_data(historical_data)
@@ -553,7 +568,8 @@ class AIRoyaltyOptimizer:
         self,
         usage_history: List[UsageData]
     ) -> Dict[str, Any]:
-        """Analyze historical royalty performance"""
+        """
+Analyze historical royalty performance"""
         
         # Convert to DataFrame for analysis
         df_data = []
@@ -586,7 +602,8 @@ class AIRoyaltyOptimizer:
         return metrics
     
     def _calculate_growth_rate(self, df: pd.DataFrame) -> float:
-        """Calculate revenue growth rate"""
+        """
+Calculate revenue growth rate"""
         if len(df) < 2:
             return 0.0
         
@@ -610,7 +627,8 @@ class AIRoyaltyOptimizer:
         current_rules: List[RoyaltyCalculationRule],
         goals: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify royalty optimization opportunities"""
+        """
+Identify royalty optimization opportunities"""
         
         opportunities = []
         
@@ -656,7 +674,8 @@ class AIRoyaltyOptimizer:
         opportunities: List[Dict[str, Any]],
         goals: Dict[str, Any]
     ) -> List[RoyaltyCalculationRule]:
-        """Generate optimized royalty rules"""
+        """
+Generate optimized royalty rules"""
         
         optimized_rules = current_rules.copy()
         
@@ -734,7 +753,8 @@ class AIRoyaltyOptimizer:
         time_series_data: pd.DataFrame,
         forecast_days: int
     ) -> Dict[str, Any]:
-        """Generate revenue forecast using time series analysis"""
+        """
+Generate revenue forecast using time series analysis"""
         
         if time_series_data.empty or len(time_series_data) < 7:
             return {
@@ -790,7 +810,8 @@ class AIRoyaltyOptimizer:
         }
     
     def _calculate_confidence_intervals(self, forecast: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate confidence intervals for forecast"""
+        """
+Calculate confidence intervals for forecast"""
         
         revenue_forecast = forecast['revenue']
         
@@ -811,7 +832,8 @@ class AIRoyaltyOptimizer:
         }
     
     def _generate_revenue_recommendations(self, forecast: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on forecast"""
+        """
+Generate recommendations based on forecast"""
         
         recommendations = []
         trend_factor = forecast.get('trend_factor', 1.0)
@@ -838,7 +860,8 @@ class AdvancedRoyaltyManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize royalty manager with configuration."""
+        """
+Initialize royalty manager with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -1152,7 +1175,8 @@ class AdvancedRoyaltyManager:
         content_id: str,
         optimization_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize royalty rates for specific content using AI."""
+        """
+Optimize royalty rates for specific content using AI."""
         try:
             # Get historical usage data for content
             content_usage = [
@@ -1222,7 +1246,8 @@ class AdvancedRoyaltyManager:
         return []
 
     def _update_calculation_metrics(self, success: bool, processing_time: float):
-        """Update calculation performance metrics."""
+        """
+Update calculation performance metrics."""
         self.royalty_metrics['total_calculations'] += 1
         
         # Update average processing time
@@ -1237,7 +1262,8 @@ class AdvancedRoyaltyManager:
         start_date: Optional[date] = None,
         end_date: Optional[date] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive royalty analytics."""
+        """
+Get comprehensive royalty analytics."""
         
         # Filter calculations by date range
         filtered_calculations = self.calculations

@@ -6,7 +6,7 @@ prompt templates, dynamic prompt generation, context-aware prompts,
 multi-language support, and professional prompt optimization.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -30,6 +30,7 @@ User Request → Context Analysis → Prompt Selection → Template Processing �
 → Language Adaptation → Context Enhancement → Optimization → Quality Validation → Response Generation
 → Feedback Integration → Template Refinement → Business Value Creation
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable, AsyncGenerator, Set
 import asyncio
 import re
@@ -152,6 +153,7 @@ __email__ = "mlaiel@live.de"
 # Prompt Enums
 class PromptType(Enum):
     """Types of prompts."""
+
     SYSTEM_PROMPT = auto()
     USER_PROMPT = auto()
     ASSISTANT_PROMPT = auto()
@@ -162,7 +164,9 @@ class PromptType(Enum):
     CREATIVE_PROMPT = auto()
 
 class TemplateType(Enum):
-    """Template types."""
+    """
+Template types."""
+
     STATIC = "static"
     DYNAMIC = "dynamic"
     CONDITIONAL = "conditional"
@@ -174,6 +178,7 @@ class TemplateType(Enum):
 
 class ContentType(Enum):
     """Content types for prompts."""
+
     MUSIC = "music"
     BLOG = "blog"
     PHOTOGRAPHY = "photography"
@@ -187,6 +192,7 @@ class ContentType(Enum):
 
 class LanguageCode(Enum):
     """Supported languages."""
+
     EN = "en"
     FR = "fr"
     DE = "de"
@@ -200,6 +206,7 @@ class LanguageCode(Enum):
 
 class PromptComplexity(Enum):
     """Prompt complexity levels."""
+
     SIMPLE = "simple"
     INTERMEDIATE = "intermediate"
     PROFESSIONAL = "professional"
@@ -364,7 +371,8 @@ class PromptFrameworkManager:
         self.context_manager = ContextManager()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize prompt capabilities."""
+        """
+Initialize prompt capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -394,7 +402,8 @@ class PromptFrameworkManager:
     
     async def initialize_prompt_system_comprehensive(self, 
                                                    prompt_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize comprehensive prompt system."""
+        """
+Initialize comprehensive prompt system."""
         try:
             # Initialize prompt manager
             manager_setup = await self.prompt_manager.initialize(
@@ -495,7 +504,8 @@ class PromptFrameworkManager:
         }
     
     async def _setup_collaboration_prompts(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup collaboration and analytics prompt systems."""
+        """
+Setup collaboration and analytics prompt systems."""
         collaboration_prompts = CollaborationPrompts()
         await collaboration_prompts.initialize(config.get('collaboration_config', {}))
         
@@ -512,7 +522,8 @@ class PromptFrameworkManager:
         }
     
     async def _setup_protection_prompts(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup protection and security prompt systems."""
+        """
+Setup protection and security prompt systems."""
         protection_prompts = ProtectionPrompts()
         await protection_prompts.initialize(config.get('protection_config', {}))
         
@@ -534,7 +545,8 @@ class PromptFrameworkManager:
         }
     
     async def _setup_seo_monetization_prompts(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup SEO and monetization prompt systems."""
+        """
+Setup SEO and monetization prompt systems."""
         seo_prompts = SEOPrompts()
         await seo_prompts.initialize(config.get('seo_config', {}))
         
@@ -556,7 +568,8 @@ class PromptFrameworkManager:
         }
     
     async def _setup_distribution_prompts(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup distribution and platform prompt systems."""
+        """
+Setup distribution and platform prompt systems."""
         distribution_prompts = DistributionPrompts()
         await distribution_prompts.initialize(config.get('distribution_config', {}))
         
@@ -579,7 +592,8 @@ class PromptFrameworkManager:
     
     async def generate_prompt_comprehensive(self, 
                                           prompt_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive prompt based on request."""
+        """
+Generate comprehensive prompt based on request."""
         # Extract request parameters
         prompt_type = prompt_request.get('type', 'user_prompt')
         content_type = prompt_request.get('content_type', 'general')
@@ -642,7 +656,8 @@ class PromptFrameworkManager:
         }
     
     def _select_prompt_system(self, content_type: str, prompt_type: str) -> Optional[Any]:
-        """Select appropriate prompt system based on content and prompt type."""
+        """
+Select appropriate prompt system based on content and prompt type."""
         system_mapping = {
             'music': 'musician',
             'blog': 'blogger',
@@ -663,7 +678,8 @@ class PromptFrameworkManager:
         return self.active_prompt_systems.get(system_key)
     
     async def _localize_prompt(self, prompt: str, language: str) -> str:
-        """Localize prompt to specified language."""
+        """
+Localize prompt to specified language."""
         # Implementation would use translation services or multilingual templates
         # For now, return original prompt with language marker
         return f"[{language.upper()}] {prompt}"
@@ -740,15 +756,18 @@ class PromptFrameworkManager:
             return 'F'
     
     def get_supported_languages(self) -> List[str]:
-        """Get list of all supported languages."""
+        """
+Get list of all supported languages."""
         return [lc.value for lc in LanguageCode]
     
     def get_content_types(self) -> List[str]:
-        """Get list of all supported content types."""
+        """
+Get list of all supported content types."""
         return [ct.value for ct in ContentType]
     
     def get_prompt_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive prompt capabilities information."""
+        """
+Get comprehensive prompt capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         enterprise_capabilities = sum(
             1 for category in self.architecture.values()
@@ -807,7 +826,8 @@ class PromptFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'comprehensive_prompt_intelligence',
             'intelligent_template_processing_system',
@@ -827,7 +847,8 @@ class PromptFrameworkManager:
 
 # Custom Exception for Prompt System
 class PromptException(Exception):
-    """Exception raised for prompt system errors."""
+    """
+Exception raised for prompt system errors."""
     pass
 
 # Global prompt framework instance
@@ -835,16 +856,19 @@ prompt_framework = PromptFrameworkManager()
 
 # Prompt Utility Functions
 async def initialize_enterprise_prompt_system(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize enterprise-grade prompt system."""
+    """
+Initialize enterprise-grade prompt system."""
     return await prompt_framework.initialize_prompt_system_comprehensive(config)
 
 async def generate_intelligent_prompt(request: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate intelligent context-aware prompt."""
+    """
+Generate intelligent context-aware prompt."""
     return await prompt_framework.generate_prompt_comprehensive(request)
 
 def get_prompt_template(prompt_type: str = 'user_prompt', 
                        content_type: str = 'general') -> Dict[str, Any]:
-    """Get prompt template for specific type and content."""
+    """
+Get prompt template for specific type and content."""
     templates = {
         'content_creation': {
             'system_prompt': "You are an expert content creator specializing in {content_type}. Create high-quality, engaging content that resonates with the target audience while maintaining professional standards.",

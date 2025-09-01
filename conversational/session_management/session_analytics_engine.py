@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -41,7 +42,9 @@ logger = get_logger(__name__)
 
 
 class AnalyticsMetric(Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     SESSION_DURATION = "session_duration"
     MESSAGE_COUNT = "message_count"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -56,6 +59,7 @@ class AnalyticsMetric(Enum):
 
 class SessionPhase(Enum):
     """Session lifecycle phases"""
+
     ONBOARDING = "onboarding"
     EXPLORATION = "exploration"
     ENGAGEMENT = "engagement"
@@ -66,6 +70,7 @@ class SessionPhase(Enum):
 
 class BehaviorPattern(Enum):
     """User behavior patterns"""
+
     ACTIVE_CREATOR = "active_creator"
     PASSIVE_BROWSER = "passive_browser"
     COLLABORATION_SEEKER = "collaboration_seeker"
@@ -99,7 +104,8 @@ class SessionMetrics:
 
 @dataclass
 class ConversationInsight:
-    """Conversation-level insights"""
+    """
+Conversation-level insights"""
     session_id: str
     primary_intent: str
     intent_confidence: float
@@ -114,7 +120,8 @@ class ConversationInsight:
 
 
 class SessionBehaviorTracker:
-    """Advanced session behavior tracking and analysis"""
+    """
+Advanced session behavior tracking and analysis"""
     
     def __init__(self):
         self.cache_manager = CacheManager()
@@ -132,7 +139,8 @@ class SessionBehaviorTracker:
         event_type: str,
         event_data: Dict[str, Any]
     ):
-        """Track individual session event"""
+        """
+Track individual session event"""
         
         try:
             event = {
@@ -348,7 +356,8 @@ class ConversationInsightsGenerator:
         self.logger = get_logger(self.__class__.__name__)
     
     async def analyze_conversation(self, session_id: str) -> ConversationInsight:
-        """Generate comprehensive conversation insights"""
+        """
+Generate comprehensive conversation insights"""
         
         try:
             # Get conversation history
@@ -827,7 +836,8 @@ class SessionPerformanceMonitor:
             return 0.0
     
     async def _get_session_duration(self, events: List[Dict]) -> float:
-        """Calculate current session duration"""
+        """
+Calculate current session duration"""
         
         if not events:
             return 0.0
@@ -877,7 +887,8 @@ class SessionAnalyticsEngine:
         event_type: str,
         event_data: Dict[str, Any]
     ):
-        """Track session event and trigger analytics"""
+        """
+Track session event and trigger analytics"""
         
         await self.behavior_tracker.track_session_event(session_id, event_type, event_data)
         

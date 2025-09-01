@@ -6,6 +6,7 @@ and industry standards across different jurisdictions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -21,7 +22,9 @@ logger = get_logger(__name__)
 
 
 class ComplianceType(str, Enum):
-    """Types of compliance requirements."""
+    """
+Types of compliance requirements."""
+
     LEGAL = "legal"
     PLATFORM = "platform"
     INDUSTRY = "industry"
@@ -31,6 +34,7 @@ class ComplianceType(str, Enum):
 
 class ComplianceStatus(str, Enum):
     """Compliance status levels."""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -40,6 +44,7 @@ class ComplianceStatus(str, Enum):
 
 class ComplianceArea(str, Enum):
     """Areas of compliance."""
+
     COPYRIGHT = "copyright"
     PRIVACY = "privacy"
     DATA_PROTECTION = "data_protection"
@@ -73,7 +78,8 @@ class ComplianceRequirement:
 
 @dataclass
 class ComplianceCheck:
-    """Result of compliance verification."""
+    """
+Result of compliance verification."""
     check_id: str
     requirement_id: str
     content_id: Optional[str]
@@ -90,7 +96,8 @@ class ComplianceCheck:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report."""
+    """
+Comprehensive compliance assessment report."""
     report_id: str
     user_id: str
     scope: str
@@ -638,7 +645,8 @@ class ComplianceChecker:
         return critical_issues
     
     async def _check_upcoming_deadlines(self, requirements: List[ComplianceRequirement]) -> List[Dict[str, Any]]:
-        """Check for upcoming compliance deadlines."""
+        """
+Check for upcoming compliance deadlines."""
         upcoming = []
         now = datetime.utcnow()
         

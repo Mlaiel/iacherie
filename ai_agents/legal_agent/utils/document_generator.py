@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import json
@@ -53,7 +54,9 @@ from ...models.legal_models import LegalDocument, DocumentTemplate
 logger = logging.getLogger(__name__)
 
 class DocumentType(Enum):
-    """Legal document types"""
+    """
+Legal document types"""
+
     TERMS_OF_SERVICE = "terms_of_service"
     PRIVACY_POLICY = "privacy_policy"
     COPYRIGHT_NOTICE = "copyright_notice"
@@ -69,6 +72,7 @@ class DocumentType(Enum):
 
 class DocumentComplexity(Enum):
     """Document complexity levels"""
+
     BASIC = "basic"          # Simple templates with minimal customization
     STANDARD = "standard"    # Standard legal documents with moderate complexity
     ADVANCED = "advanced"    # Complex documents with extensive customization
@@ -76,6 +80,7 @@ class DocumentComplexity(Enum):
 
 class DocumentJurisdiction(Enum):
     """Document jurisdiction coverage"""
+
     US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GDPR = "eu_gdpr"
@@ -98,7 +103,8 @@ class DocumentRequest:
 
 @dataclass
 class GeneratedDocument:
-    """Generated document result structure"""
+    """
+Generated document result structure"""
     document_id: str
     document_type: DocumentType
     content: str
@@ -341,7 +347,7 @@ Last Updated: {{ current_date }}
 """,
             "copyright_notice_basic.j2": """COPYRIGHT NOTICE
 
-© {{ creation_date.year }} {{ copyright_holder }}. All rights reserved.
+(c) {{ creation_date.year }} {{ copyright_holder }}. All rights reserved.
 
 Work: {{ work_title }}
 Created: {{ creation_date }}
@@ -396,8 +402,10 @@ Licensee: ______________________
         return builtin_templates.get(filename, self._get_fallback_template())
     
     def _get_fallback_template(self) -> str:
-        """Get basic fallback template"""
-        return """LEGAL DOCUMENT
+        """
+Get basic fallback template"""
+        return """
+LEGAL DOCUMENT
 
 Generated on: {{ current_date }}
 Document Type: {{ document_type }}
@@ -411,11 +419,13 @@ Please customize according to your specific needs.
 """
     
     def _load_default_template(self, template_config: Dict[str, Any]) -> str:
-        """Load default template for document type"""
+        """
+Load default template for document type"""
         return self._get_fallback_template()
     
     def _load_jurisdiction_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load jurisdiction-specific document rules"""
+        """
+Load jurisdiction-specific document rules"""
         return {
             "us_federal": {
                 "required_disclaimers": [
@@ -665,7 +675,8 @@ Please customize according to your specific needs.
         return {}
     
     def _get_document_type_context(self, document_type: DocumentType) -> Dict[str, Any]:
-        """Get document-type specific context data"""
+        """
+Get document-type specific context data"""
         # Add document type specific default values
         type_contexts = {
             DocumentType.TERMS_OF_SERVICE: {
@@ -715,7 +726,8 @@ Please customize according to your specific needs.
         return content
     
     async def _apply_jurisdiction_requirements(self, content: str, jurisdiction: DocumentJurisdiction) -> str:
-        """Apply jurisdiction-specific requirements to document"""
+        """
+Apply jurisdiction-specific requirements to document"""
         jurisdiction_key = jurisdiction.value
         
         if jurisdiction_key not in self.jurisdiction_rules:
@@ -963,7 +975,8 @@ class ContractBuilder:
         self._initialize_contract_systems()
     
     def _initialize_contract_systems(self):
-        """Initialize contract building systems"""
+        """
+Initialize contract building systems"""
         try:
             # Load contract-specific templates
             self.contract_templates = self._load_contract_templates()
@@ -1471,7 +1484,8 @@ class DocumentGenerator:
         content: str,
         metadata: Dict[str, Any]
     ) -> Optional[str]:
-        """Apply digital signature to document"""
+        """
+Apply digital signature to document"""
         try:
             # Create signature data
             signature_data = {
@@ -1522,7 +1536,8 @@ class DocumentGenerator:
         Generate complete, ready-to-use legal document content.
         """
     def _calculate_expiration_date(self, doc_type: DocumentType) -> Optional[datetime]:
-        """Calculate document expiration date"""
+        """
+Calculate document expiration date"""
         expiration_periods = {
             DocumentType.TERMS_OF_SERVICE: 365,  # 1 year
             DocumentType.PRIVACY_POLICY: 365,    # 1 year
@@ -1554,7 +1569,8 @@ class ContractBuilder:
         project_details: Dict[str, Any],
         revenue_terms: Dict[str, Any]
     ) -> GeneratedDocument:
-        """Build comprehensive collaboration contract"""
+        """
+Build comprehensive collaboration contract"""
         
         try:
             # Analyze collaboration requirements

@@ -8,7 +8,7 @@ Technologies: Analytics Engine, ML Insights, Performance Metrics, Reporting
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Data collection → Metrics aggregation → Pattern analysis → Performance insights → 
 Prediction modeling → Optimization recommendations → Automated reporting
 """
+
 from typing import Any, Dict, List, Optional, Tuple, Set
 import logging
 import asyncio
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     REAL_TIME = "real_time"          # Last 5 minutes
     HOURLY = "hourly"                # Last hour
     DAILY = "daily"                  # Last 24 hours
@@ -51,6 +54,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Types of metrics to analyze"""
+
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
@@ -73,7 +77,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight with recommendations"""
+    """
+Performance insight with recommendations"""
     insight_type: str
     severity: str  # low, medium, high, critical
     title: str
@@ -88,7 +93,8 @@ class PerformanceInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     timeframe: AnalyticsTimeframe
     generated_at: datetime
@@ -545,7 +551,8 @@ class QueueAnalyticsEngine:
         pass
     
     async def _get_timeframe_start(self, timeframe: AnalyticsTimeframe, end_time: datetime) -> datetime:
-        """Calculate start time for timeframe"""
+        """
+Calculate start time for timeframe"""
         if timeframe == AnalyticsTimeframe.REAL_TIME:
             return end_time - timedelta(minutes=5)
         elif timeframe == AnalyticsTimeframe.HOURLY:
@@ -568,7 +575,8 @@ class QueueAnalyticsEngine:
         start_time: datetime, 
         end_time: datetime
     ) -> Dict[MetricType, List[AnalyticsDataPoint]]:
-        """Collect data for specific timeframe"""
+        """
+Collect data for specific timeframe"""
         timeframe_data = {}
         
         for metric_type in MetricType:
@@ -580,7 +588,8 @@ class QueueAnalyticsEngine:
         return timeframe_data
     
     async def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for values"""
+        """
+Calculate trend direction for values"""
         if len(values) < 2:
             return "stable"
         
@@ -663,7 +672,8 @@ class QueueAnalyticsEngine:
         self, 
         timeframe_data: Dict[MetricType, List[AnalyticsDataPoint]]
     ) -> Dict[str, Any]:
-        """Generate detailed metrics analysis"""
+        """
+Generate detailed metrics analysis"""
         detailed = {}
         
         for metric_type, data_points in timeframe_data.items():
@@ -950,48 +960,59 @@ class QueueAnalyticsEngine:
         return []
     
     async def _generate_throughput_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate throughput-specific insights"""
+        """
+Generate throughput-specific insights"""
         return []
     
     async def _generate_latency_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate latency-specific insights"""
+        """
+Generate latency-specific insights"""
         return []
     
     async def _generate_error_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate error-specific insights"""
+        """
+Generate error-specific insights"""
         return []
     
     async def _generate_capacity_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate capacity-specific insights"""
+        """
+Generate capacity-specific insights"""
         return []
     
     async def _generate_platform_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate platform-specific insights"""
+        """
+Generate platform-specific insights"""
         return []
     
     async def _generate_throughput_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate throughput optimization recommendations"""
+        """
+Generate throughput optimization recommendations"""
         return []
     
     async def _generate_latency_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate latency optimization recommendations"""
+        """
+Generate latency optimization recommendations"""
         return []
     
     async def _generate_capacity_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate capacity optimization recommendations"""
+        """
+Generate capacity optimization recommendations"""
         return []
     
     async def _generate_error_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate error reduction recommendations"""
+        """
+Generate error reduction recommendations"""
         return []
     
     async def _calculate_recommendation_priority(self, recommendation) -> float:
-        """Calculate priority score for recommendation"""
+        """
+Calculate priority score for recommendation"""
         # Implementation for priority calculation
         return 1.0
 
 
 # Factory function
 def create_analytics_engine(retention_days: int = 90) -> QueueAnalyticsEngine:
-    """Create and return configured analytics engine"""
+    """
+Create and return configured analytics engine"""
     return QueueAnalyticsEngine(retention_days)

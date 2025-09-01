@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -37,7 +38,8 @@ settings = get_settings()
 
 @dataclass
 class FacebookPost:
-    """Facebook post data structure."""
+    """
+Facebook post data structure."""
     post_id: str
     message: str
     story: str
@@ -63,7 +65,8 @@ class FacebookPost:
 
 @dataclass
 class FacebookPage:
-    """Facebook page data structure."""
+    """
+Facebook page data structure."""
     page_id: str
     name: str
     category: str
@@ -88,7 +91,8 @@ class FacebookPage:
 
 @dataclass
 class FacebookEvent:
-    """Facebook event data structure."""
+    """
+Facebook event data structure."""
     event_id: str
     name: str
     description: str
@@ -125,7 +129,8 @@ class FacebookCrawler:
     """
     
     def __init__(self):
-        """Initialize Facebook crawler."""
+        """
+Initialize Facebook crawler."""
         self.access_token = settings.FACEBOOK_ACCESS_TOKEN
         self.app_id = settings.FACEBOOK_APP_ID
         self.app_secret = settings.FACEBOOK_APP_SECRET
@@ -155,7 +160,8 @@ class FacebookCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -617,7 +623,8 @@ class FacebookCrawler:
         return similarity
     
     def _get_post_match_factors(self, post1: FacebookPost, post2: FacebookPost) -> List[str]:
-        """Get factors that contribute to post similarity."""
+        """
+Get factors that contribute to post similarity."""
         factors = []
         
         if post1.type == post2.type:
@@ -644,7 +651,8 @@ class FacebookCrawler:
         return factors
     
     async def get_page_insights(self, page_id: str, metrics: List[str] = None) -> Dict:
-        """Get Facebook page insights (requires page access token)."""
+        """
+Get Facebook page insights (requires page access token)."""
         try:
             await self.rate_limiter.wait_if_needed()
             

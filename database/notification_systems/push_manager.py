@@ -5,7 +5,7 @@ Support multi-plateformes avec Firebase, APNs, WebPush et analytics avancés.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, ML Engineer, Mobile Expert
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 AVERTISSEMENT LÉGAL:
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class PushPlatform(Enum):
-    """Plateformes de notification push"""
+    """
+Plateformes de notification push"""
+
     ANDROID = "android"
     IOS = "ios"
     WEB = "web"
@@ -46,6 +49,7 @@ class PushPlatform(Enum):
 
 class PushPriority(Enum):
     """Priorités des notifications push"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -54,6 +58,7 @@ class PushPriority(Enum):
 
 class PushStatus(Enum):
     """Statuts des notifications push"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -65,6 +70,7 @@ class PushStatus(Enum):
 
 class NotificationType(Enum):
     """Types de notifications"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_REQUEST = "collaboration_request"
@@ -154,7 +160,8 @@ class FirebasePushProvider:
         self._init_firebase(credentials_path)
     
     def _init_firebase(self, credentials_path: str):
-        """Initialiser Firebase"""
+        """
+Initialiser Firebase"""
         try:
             cred = credentials.Certificate(credentials_path)
             self.app = initialize_app(cred, name=f"push_{self.project_id}")
@@ -298,7 +305,8 @@ class WebPushProvider:
         self.vapid_subject = vapid_subject
     
     async def send_notification(self, notification: PushNotification, device: PushDevice) -> Dict[str, Any]:
-        """Envoyer une notification Web Push"""
+        """
+Envoyer une notification Web Push"""
         try:
             if not device.endpoint or not device.p256dh_key or not device.auth_key:
                 raise ValueError("Données Web Push incomplètes")
@@ -416,7 +424,8 @@ class WebPushProvider:
         return hmac.new(salt, ikm, hashlib.sha256).digest()
     
     def _hkdf_expand(self, prk: bytes, info: bytes, length: int) -> bytes:
-        """HKDF Expand"""
+        """
+HKDF Expand"""
         import hmac
         import hashlib
         t = b""
@@ -720,7 +729,8 @@ class PushNotificationManager:
             return result
     
     async def _save_delivery(self, delivery: PushDelivery):
-        """Sauvegarder une livraison"""
+        """
+Sauvegarder une livraison"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO push_deliveries (
@@ -743,7 +753,8 @@ class PushNotificationManager:
             )
     
     async def _create_device(self, device: PushDevice):
-        """Créer un nouvel appareil"""
+        """
+Créer un nouvel appareil"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO push_devices (
@@ -763,7 +774,8 @@ class PushNotificationManager:
             )
     
     async def _update_device(self, device: PushDevice):
-        """Mettre à jour un appareil"""
+        """
+Mettre à jour un appareil"""
         async with self.db_pool.acquire() as conn:
             query = """
                 UPDATE push_devices SET
@@ -783,7 +795,8 @@ class PushNotificationManager:
             )
     
     async def _find_device_by_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Trouver un appareil par token"""
+        """
+Trouver un appareil par token"""
         async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM push_devices WHERE token = $1"
             row = await conn.fetchrow(query, token)

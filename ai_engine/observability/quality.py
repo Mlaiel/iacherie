@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -57,6 +58,7 @@ except ImportError:
 
 class TestType(Enum):
     """Types of quality tests"""
+
     UNIT = "unit"
     INTEGRATION = "integration"
     PERFORMANCE = "performance"
@@ -71,6 +73,7 @@ class TestType(Enum):
 
 class TestStatus(Enum):
     """Test execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
@@ -82,6 +85,7 @@ class TestStatus(Enum):
 
 class TestSeverity(Enum):
     """Test failure severity"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -91,6 +95,7 @@ class TestSeverity(Enum):
 
 class QualityMetricType(Enum):
     """Types of quality metrics"""
+
     AVAILABILITY = "availability"
     RELIABILITY = "reliability"
     PERFORMANCE = "performance"
@@ -148,15 +153,18 @@ class TestResult:
         return result
     
     def is_passed(self) -> bool:
-        """Check if test passed"""
+        """
+Check if test passed"""
         return self.status == TestStatus.PASSED
     
     def is_failed(self) -> bool:
-        """Check if test failed"""
+        """
+Check if test failed"""
         return self.status in [TestStatus.FAILED, TestStatus.ERROR, TestStatus.TIMEOUT]
     
     def get_success_rate(self) -> float:
-        """Get success rate (for load tests with multiple runs)"""
+        """
+Get success rate (for load tests with multiple runs)"""
         if "success_count" in self.metrics and "total_count" in self.metrics:
             return self.metrics["success_count"] / self.metrics["total_count"]
         return 1.0 if self.is_passed() else 0.0
@@ -194,7 +202,8 @@ class QualityMetric:
         return True
     
     def get_status(self) -> str:
-        """Get metric status"""
+        """
+Get metric status"""
         if not self.is_healthy():
             return "critical"
         elif self.warning_threshold is not None:
@@ -216,7 +225,8 @@ class QualityMetric:
 
 
 class BaseQualityTest(ABC):
-    """Abstract base class for quality tests"""
+    """
+Abstract base class for quality tests"""
     
     def __init__(self, test_id: str, test_name: str, test_type: TestType, 
                  severity: TestSeverity = TestSeverity.MEDIUM):
@@ -237,16 +247,19 @@ class BaseQualityTest(ABC):
     
     @abstractmethod
     async def execute(self) -> TestResult:
-        """Execute the test"""
+        """
+Execute the test"""
         pass
     
     @abstractmethod
     async def teardown(self):
-        """Cleanup test environment"""
+        """
+Cleanup test environment"""
         pass
     
     async def run_test(self) -> TestResult:
-        """Run the complete test with setup and teardown"""
+        """
+Run the complete test with setup and teardown"""
         start_time = datetime.utcnow()
         test_result = TestResult(
             test_id=self.test_id,
@@ -541,7 +554,8 @@ class MetricsSystemTest(BaseQualityTest):
 
 
 class PerformanceTest(BaseQualityTest):
-    """Performance testing for observability components"""
+    """
+Performance testing for observability components"""
     
     def __init__(self, component, test_config: Dict[str, Any]):
         super().__init__("performance_test", "Performance Benchmark Test",
@@ -834,31 +848,36 @@ class ReliabilityTest(BaseQualityTest):
         return True
     
     async def _test_network_partition(self) -> bool:
-        """Test system behavior during network partition"""
+        """
+Test system behavior during network partition"""
         # Simulate network partition between components
         await asyncio.sleep(2)
         return True
     
     async def _test_high_latency(self) -> bool:
-        """Test system behavior under high latency conditions"""
+        """
+Test system behavior under high latency conditions"""
         # Simulate high latency and verify timeouts/retries work
         await asyncio.sleep(3)
         return True
     
     async def _test_resource_exhaustion(self) -> bool:
-        """Test system behavior under resource exhaustion"""
+        """
+Test system behavior under resource exhaustion"""
         # Simulate resource exhaustion (memory, CPU, disk)
         await asyncio.sleep(2)
         return True
     
     async def _test_dependency_failure(self) -> bool:
-        """Test system behavior when dependencies fail"""
+        """
+Test system behavior when dependencies fail"""
         # Simulate external dependency failures
         await asyncio.sleep(2)
         return True
     
     async def teardown(self):
-        """Cleanup reliability test"""
+        """
+Cleanup reliability test"""
         self.logger.info("Reliability test cleanup completed")
 
 
@@ -900,25 +919,29 @@ class QualityAssuranceEngine:
         return test
     
     def create_metrics_test(self, metrics_component) -> MetricsSystemTest:
-        """Create and register metrics system test"""
+        """
+Create and register metrics system test"""
         test = MetricsSystemTest(metrics_component)
         self.register_test(test)
         return test
     
     def create_performance_test(self, component, config: Dict[str, Any]) -> PerformanceTest:
-        """Create and register performance test"""
+        """
+Create and register performance test"""
         test = PerformanceTest(component, config)
         self.register_test(test)
         return test
     
     def create_reliability_test(self, components: List[Any]) -> ReliabilityTest:
-        """Create and register reliability test"""
+        """
+Create and register reliability test"""
         test = ReliabilityTest(components)
         self.register_test(test)
         return test
     
     async def run_test(self, test_id: str) -> TestResult:
-        """Run a specific test"""
+        """
+Run a specific test"""
         if test_id not in self.tests:
             raise ValueError(f"Test {test_id} not registered")
         

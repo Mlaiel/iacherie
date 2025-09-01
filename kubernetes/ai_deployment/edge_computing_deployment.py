@@ -6,8 +6,9 @@ for AI inference at the edge, including IoT devices, mobile devices,
 and distributed edge nodes with real-time processing capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class EdgePlatform(Enum):
-    """Supported edge platforms"""
+    """
+Supported edge platforms"""
+
     KUBERNETES_EDGE = "kubernetes_edge"
     DOCKER_SWARM = "docker_swarm"
     IOT_CORE = "iot_core"
@@ -44,6 +47,7 @@ class EdgePlatform(Enum):
 
 class EdgeRuntime(Enum):
     """Edge runtime environments"""
+
     ONNX_RUNTIME = "onnx_runtime"
     TENSORFLOW_LITE = "tensorflow_lite"
     PYTORCH_MOBILE = "pytorch_mobile"
@@ -56,6 +60,7 @@ class EdgeRuntime(Enum):
 
 class EdgeOptimization(Enum):
     """Edge optimization techniques"""
+
     QUANTIZATION_INT8 = "quantization_int8"
     QUANTIZATION_FP16 = "quantization_fp16"
     PRUNING = "pruning"

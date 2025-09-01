@@ -6,6 +6,7 @@ readability analysis, keyword density optimization, and content structure enhanc
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationLevel(Enum):
-    """SEO optimization levels"""
+    """
+SEO optimization levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -34,7 +37,8 @@ class ContentAnalysis:
 
 @dataclass
 class SEOOptimizationResult:
-    """SEO optimization result"""
+    """
+SEO optimization result"""
     original_content: str
     optimized_content: str
     analysis: ContentAnalysis
@@ -145,7 +149,8 @@ class ContentSEOOptimizer:
         )
 
     def _calculate_readability(self, content: str) -> float:
-        """Calculate readability score using simplified Flesch reading ease."""
+        """
+Calculate readability score using simplified Flesch reading ease."""
         sentences = len(re.findall(r'[.!?]+', content))
         words = len(content.split())
         syllables = self._count_syllables(content)
@@ -161,7 +166,8 @@ class ContentSEOOptimizer:
         return max(0.0, min(100.0, score))
 
     def _count_syllables(self, text: str) -> int:
-        """Count syllables in text (simplified approach)."""
+        """
+Count syllables in text (simplified approach)."""
         text = text.lower()
         syllables = 0
         vowels = 'aeiouy'
@@ -191,7 +197,8 @@ class ContentSEOOptimizer:
         content: str, 
         keywords: List[str]
     ) -> Dict[str, float]:
-        """Calculate keyword density for each target keyword."""
+        """
+Calculate keyword density for each target keyword."""
         content_lower = content.lower()
         total_words = len(content.split())
         
@@ -209,7 +216,8 @@ class ContentSEOOptimizer:
         return keyword_density
 
     def _analyze_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze content structure for SEO."""
+        """
+Analyze content structure for SEO."""
         return {
             "word_count": len(content.split()),
             "paragraph_count": len(content.split('\n\n')),
@@ -229,7 +237,8 @@ class ContentSEOOptimizer:
         return total_words / len(paragraphs)
 
     def _analyze_sentence_variety(self, content: str) -> Dict[str, int]:
-        """Analyze sentence variety for better readability."""
+        """
+Analyze sentence variety for better readability."""
         sentences = re.findall(r'[.!?]+', content)
         return {
             "total_sentences": len(sentences),
@@ -346,7 +355,8 @@ class ContentSEOOptimizer:
         target_keywords: List[str], 
         current_density: Dict[str, float]
     ) -> str:
-        """Optimize keyword distribution in content."""
+        """
+Optimize keyword distribution in content."""
         optimized = content
         
         for keyword in target_keywords:
@@ -359,7 +369,8 @@ class ContentSEOOptimizer:
         return optimized
 
     def _add_keyword_naturally(self, content: str, keyword: str) -> str:
-        """Add keyword naturally to content."""
+        """
+Add keyword naturally to content."""
         sentences = content.split('.')
         if len(sentences) > 1:
             # Add keyword to a random sentence
@@ -389,7 +400,8 @@ class ContentSEOOptimizer:
         return '. '.join(improved_sentences).strip()
 
     def _improve_structure(self, content: str, structure: Dict[str, Any]) -> str:
-        """Improve content structure."""
+        """
+Improve content structure."""
         improved = content
         
         # Add paragraph breaks for long content

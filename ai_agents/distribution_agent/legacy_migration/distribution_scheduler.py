@@ -14,6 +14,7 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -49,7 +50,9 @@ from ...models.distribution import DistributionPlan, PlatformConfig
 
 
 class ScheduleFrequency(Enum):
-    """Schedule frequency enumeration"""
+    """
+Schedule frequency enumeration"""
+
     ONCE = "once"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -59,6 +62,7 @@ class ScheduleFrequency(Enum):
 
 class SchedulePriority(Enum):
     """Schedule priority enumeration"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -67,7 +71,9 @@ class SchedulePriority(Enum):
 
 
 class ScheduleStatus(Enum):
-    """Schedule status enumeration"""
+    """
+Schedule status enumeration"""
+
     PENDING = "pending"
     ACTIVE = "active"
     RUNNING = "running"
@@ -79,6 +85,7 @@ class ScheduleStatus(Enum):
 
 class OptimalTimingStrategy(Enum):
     """Optimal timing strategy enumeration"""
+
     AUDIENCE_PEAK = "audience_peak"
     ENGAGEMENT_MAX = "engagement_max"
     COMPETITION_MIN = "competition_min"
@@ -606,7 +613,8 @@ class DistributionScheduler(BaseAgent):
         await self.db.execute(create_table_sql)
     
     def _generate_schedule_id(self) -> str:
-        """Generate unique schedule ID"""
+        """
+Generate unique schedule ID"""
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         import uuid
         return f"schedule_{timestamp}_{str(uuid.uuid4())[:8]}"
@@ -617,17 +625,20 @@ class DistributionScheduler(BaseAgent):
         pass
     
     async def _load_schedule_entry(self, schedule_id: str) -> Optional[ScheduleEntry]:
-        """Load schedule entry from database"""
+        """
+Load schedule entry from database"""
         # Implementation would load from database
         return None
     
     async def _add_scheduler_job(self, entry: ScheduleEntry, content: ContentItem) -> None:
-        """Add job to APScheduler"""
+        """
+Add job to APScheduler"""
         # Implementation would add job to scheduler
         pass
     
     async def _monitor_schedules(self) -> None:
-        """Background task to monitor schedules"""
+        """
+Background task to monitor schedules"""
         while True:
             try:
                 # Monitor active schedules

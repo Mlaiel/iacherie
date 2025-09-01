@@ -46,13 +46,14 @@ Lead Collaboration Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 This collaboration intelligence system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic Flow:
 Creator Profiles → AI Compatibility Analysis → Partnership Matching → 
 Success Prediction → Collaboration Facilitation → Revenue Optimization → 
 Community Building → Global Network Expansion → Performance Analytics
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -78,7 +79,9 @@ from ...ai.ml.social_network_analysis import SocialNetworkAnalyzer
 
 
 class CollaborationType(Enum):
-    """Types of collaborations tracked"""
+    """
+Types of collaborations tracked"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     REMIX_COVER = "remix_cover"
@@ -93,6 +96,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status tracking"""
+
     PROPOSED = "proposed"
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -105,6 +109,7 @@ class CollaborationStatus(Enum):
 
 class CompatibilityFactor(Enum):
     """Factors affecting collaboration compatibility"""
+
     CONTENT_STYLE = "content_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
@@ -119,6 +124,7 @@ class CompatibilityFactor(Enum):
 
 class OpportunitySource(Enum):
     """Sources of collaboration opportunities"""
+
     AI_RECOMMENDATION = "ai_recommendation"
     MUTUAL_CONNECTION = "mutual_connection"
     DIRECT_REQUEST = "direct_request"
@@ -147,7 +153,8 @@ class CollaborationProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity data structure"""
+    """
+Collaboration opportunity data structure"""
     opportunity_id: str
     primary_creator_id: str
     target_creator_id: str
@@ -167,7 +174,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationContext:
-    """Rich collaboration context tracking"""
+    """
+Rich collaboration context tracking"""
     collaboration_id: str
     participants: List[str]
     collaboration_type: CollaborationType
@@ -1078,7 +1086,8 @@ class CollaborationContextTracker:
             return optimal_threshold - (excess * 0.5)
 
     def _identify_complementary_skills(self, skills1: Set[str], skills2: Set[str], collaboration_type: CollaborationType = None) -> Set[str]:
-        """Identify complementary skill combinations"""
+        """
+Identify complementary skill combinations"""
         # Define skill complementarity maps
         skill_complements = {
             'music_production': ['vocal_performance', 'songwriting', 'mixing', 'mastering'],

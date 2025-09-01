@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from typing import Any, Dict, Generic, List, Optional, TypeVar, Union
 from uuid import UUID
@@ -17,7 +18,8 @@ from pydantic.generics import GenericModel
 
 # Configuration for all schemas
 class BaseSchema(BaseModel):
-    """Base schema with common configuration for all Pydantic models."""
+    """
+Base schema with common configuration for all Pydantic models."""
     
     model_config = ConfigDict(
         # Allow population by field name or alias
@@ -45,7 +47,8 @@ DataT = TypeVar('DataT')
 
 
 class PaginatedResponse(GenericModel, Generic[DataT]):
-    """Professional paginated response schema for API endpoints."""
+    """
+Professional paginated response schema for API endpoints."""
     
     items: List[DataT] = Field(description="List of items in current page")
     total: int = Field(description="Total number of items across all pages")
@@ -78,7 +81,8 @@ class PaginatedResponse(GenericModel, Generic[DataT]):
 
 
 class ApiResponse(GenericModel, Generic[DataT]):
-    """Professional API response wrapper with status and metadata."""
+    """
+Professional API response wrapper with status and metadata."""
     
     success: bool = Field(description="Whether the operation was successful")
     data: Optional[DataT] = Field(None, description="Response data")
@@ -118,7 +122,8 @@ class ApiResponse(GenericModel, Generic[DataT]):
 
 
 class ValidationError(BaseSchema):
-    """Professional validation error schema."""
+    """
+Professional validation error schema."""
     
     field: str = Field(description="Field that failed validation")
     message: str = Field(description="Validation error message")
@@ -144,7 +149,8 @@ class BulkOperationResult(BaseSchema):
 
 
 class TimestampSchema(BaseSchema):
-    """Schema mixin for timestamp fields."""
+    """
+Schema mixin for timestamp fields."""
     
     created_at: datetime = Field(description="Creation timestamp")
     updated_at: datetime = Field(description="Last update timestamp")

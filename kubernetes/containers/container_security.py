@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Advanced container security management for IA-Influencer-Agent platform.
 Includes vulnerability scanning, compliance validation, secret management, and security policies.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -32,7 +33,9 @@ import kubernetes.client as k8s_client
 logger = logging.getLogger(__name__)
 
 class SecurityScanType(Enum):
-    """Security scan types"""
+    """
+Security scan types"""
+
     VULNERABILITY = "vulnerability"
     COMPLIANCE = "compliance"
     SECRET_DETECTION = "secret_detection"
@@ -41,6 +44,7 @@ class SecurityScanType(Enum):
 
 class SecurityLevel(Enum):
     """Security levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -49,6 +53,7 @@ class SecurityLevel(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standards"""
+
     CIS_DOCKER = "cis_docker"
     CIS_KUBERNETES = "cis_kubernetes"
     NIST = "nist"
@@ -73,7 +78,8 @@ class SecurityVulnerability:
 
 @dataclass
 class SecurityScanResult:
-    """Security scan result"""
+    """
+Security scan result"""
     scan_id: str
     scan_type: SecurityScanType
     target: str  # image, container, or namespace
@@ -91,7 +97,8 @@ class SecurityScanResult:
 
 @dataclass
 class SecurityPolicy:
-    """Container security policy"""
+    """
+Container security policy"""
     name: str
     description: str
     rules: List[Dict[str, Any]]

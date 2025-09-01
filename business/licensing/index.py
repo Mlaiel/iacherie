@@ -12,6 +12,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -108,7 +109,8 @@ security = HTTPBearer()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan management"""
+    """
+Application lifespan management"""
     logger.info("Initializing IA Influencer Agent Licensing System...")
     
     # Initialize all licensing services
@@ -211,7 +213,7 @@ async def root():
         "version": "1.0.0",
         "status": "operational",
         "created_by": "Fahed Mlaiel <mlaiel@live.de>",
-        "copyright": "© 2024 Fahed Mlaiel. All Rights Reserved.",
+        "copyright": "(c) 2024 Fahed Mlaiel. All Rights Reserved.",
         "services": list(licensing_services.keys()),
         "business_flow": "Content Creation → AI Analysis → Rights Protection → Automated Licensing → Revenue Distribution → Collaborative Monetization"
     }
@@ -508,7 +510,7 @@ async def get_services_status(
         "total_services": len(licensing_services),
         "system_status": "operational",
         "created_by": "Fahed Mlaiel <mlaiel@live.de>",
-        "copyright": "© 2024 Fahed Mlaiel. All Rights Reserved."
+        "copyright": "(c) 2024 Fahed Mlaiel. All Rights Reserved."
     }
 
 
@@ -546,7 +548,7 @@ if __name__ == "__main__":
     
     logger.info("Starting IA Influencer Agent Licensing System...")
     logger.info("Created by: Fahed Mlaiel <mlaiel@live.de>")
-    logger.info("© 2024 Fahed Mlaiel. All Rights Reserved.")
+    logger.info("(c) 2024 Fahed Mlaiel. All Rights Reserved.")
     
     uvicorn.run(
         "backend.business.licensing.index:app",

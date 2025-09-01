@@ -6,8 +6,9 @@ depuis diverses sources web et plateformes digitales.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -47,7 +48,9 @@ except ImportError:
 
 
 class SourceType(Enum):
-    """Types de sources de données"""
+    """
+Types de sources de données"""
+
     WEB_PAGE = "web_page"
     API = "api"
     RSS_FEED = "rss_feed"
@@ -62,6 +65,7 @@ class SourceType(Enum):
 
 class DataFormat(Enum):
     """Formats de données"""
+
     HTML = "html"
     JSON = "json"
     XML = "xml"
@@ -76,6 +80,7 @@ class DataFormat(Enum):
 
 class HarvestingStatus(Enum):
     """Statuts de collecte"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -104,7 +109,8 @@ class HarvestingTarget:
 
 @dataclass
 class HarvestResult:
-    """Résultat de collecte"""
+    """
+Résultat de collecte"""
     target_id: str
     harvest_id: str
     status: HarvestingStatus
@@ -118,7 +124,8 @@ class HarvestResult:
 
 @dataclass
 class ExtractionRule:
-    """Règle d'extraction de données"""
+    """
+Règle d'extraction de données"""
     field_name: str
     selector_type: str  # css, xpath, regex, json_path
     selector: str
@@ -188,7 +195,8 @@ class DataHarvester:
         self._initialize_extraction_templates()
 
     def _initialize_extraction_templates(self) -> None:
-        """Initialise les templates d'extraction prédéfinis"""
+        """
+Initialise les templates d'extraction prédéfinis"""
         
         # Template pour articles de blog
         self.extraction_templates['blog_article'] = [
@@ -645,7 +653,8 @@ class DataHarvester:
         return None
 
     def _parse_date(self, text: str) -> Optional[str]:
-        """Parse une date depuis un texte"""
+        """
+Parse une date depuis un texte"""
         try:
             from dateutil import parser
             parsed_date = parser.parse(text)
@@ -654,7 +663,8 @@ class DataHarvester:
             return None
 
     def _apply_transformations(self, values: List[Any], transformations: List[str]) -> List[Any]:
-        """Applique des transformations aux valeurs"""
+        """
+Applique des transformations aux valeurs"""
         for transformation in transformations:
             if transformation == 'lowercase':
                 values = [str(v).lower() if v else v for v in values]
@@ -668,7 +678,8 @@ class DataHarvester:
         return values
 
     def _apply_validations(self, values: List[Any], validations: List[str]) -> List[Any]:
-        """Applique des validations aux valeurs"""
+        """
+Applique des validations aux valeurs"""
         validated_values = []
         
         for value in values:
@@ -691,7 +702,8 @@ class DataHarvester:
         return validated_values
 
     def _is_valid_url(self, url: str) -> bool:
-        """Valide une URL"""
+        """
+Valide une URL"""
         try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -699,12 +711,14 @@ class DataHarvester:
             return False
 
     def _is_valid_email(self, email: str) -> bool:
-        """Valide un email"""
+        """
+Valide un email"""
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
 
     async def _extract_generic_web_data(self, html_content: str) -> Dict[str, Any]:
-        """Extraction générique de données web"""
+        """
+Extraction générique de données web"""
         soup = BeautifulSoup(html_content, 'html.parser')
         
         data = {
@@ -767,7 +781,8 @@ class DataHarvester:
         return data
 
     async def _harvest_api(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte depuis une API"""
+        """
+Collecte depuis une API"""
         try:
             # Configuration de la requête
             method = target.extraction_rules.get('method', 'GET')
@@ -836,7 +851,8 @@ class DataHarvester:
         return filtered_data
 
     async def _harvest_rss_feed(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte depuis un flux RSS"""
+        """
+Collecte depuis un flux RSS"""
         try:
             import feedparser
             
@@ -895,7 +911,8 @@ class DataHarvester:
             return await self._harvest_web_page(target)
 
     async def _harvest_youtube(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte YouTube spécialisée"""
+        """
+Collecte YouTube spécialisée"""
         try:
             # Extraction de l'ID de la vidéo ou chaîne depuis l'URL
             url = target.source_url
@@ -1003,7 +1020,8 @@ class DataHarvester:
         target: HarvestingTarget,
         raw_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traite et valide les données collectées"""
+        """
+Traite et valide les données collectées"""
         try:
             # Nettoyage des données
             cleaned_data = self._clean_data(raw_data)
@@ -1048,7 +1066,8 @@ class DataHarvester:
         return cleaned
 
     async def _enrich_with_content_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrichit avec analyse de contenu IA"""
+        """
+Enrichit avec analyse de contenu IA"""
         enriched = data.copy()
         
         # Analyse des textes
@@ -1119,12 +1138,14 @@ class DataHarvester:
         os.makedirs(directory, exist_ok=True)
 
     async def _save_json_file(self, file_path: str, data: Dict[str, Any]) -> None:
-        """Sauvegarde un fichier JSON"""
+        """
+Sauvegarde un fichier JSON"""
         async with aiofiles.open(file_path, 'w', encoding='utf-8') as f:
             await f.write(json.dumps(data, indent=2, ensure_ascii=False, default=str))
 
     def _is_tabular_data(self, data: Dict[str, Any]) -> bool:
-        """Vérifie si les données sont tabulaires"""
+        """
+Vérifie si les données sont tabulaires"""
         # Vérification simple : présence d'une liste d'objets similaires
         for key, value in data.items():
             if isinstance(value, list) and len(value) > 0:
@@ -1133,7 +1154,8 @@ class DataHarvester:
         return False
 
     async def _save_csv_file(self, file_path: str, data: Dict[str, Any]) -> None:
-        """Sauvegarde un fichier CSV"""
+        """
+Sauvegarde un fichier CSV"""
         try:
             # Recherche de données tabulaires
             tabular_data = None
@@ -1199,12 +1221,14 @@ class DataHarvester:
         return list(set(urls))
 
     def _is_media_url(self, url: str) -> bool:
-        """Vérifie si une URL pointe vers un média"""
+        """
+Vérifie si une URL pointe vers un média"""
         media_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.avi', '.mov', '.mp3', '.wav']
         return any(url.lower().endswith(ext) for ext in media_extensions)
 
     async def _download_media_file(self, url: str, harvest_id: str, index: int) -> Optional[str]:
-        """Télécharge un fichier média"""
+        """
+Télécharge un fichier média"""
         try:
             async with self.session.get(url) as response:
                 if response.status == 200:
@@ -1351,7 +1375,8 @@ class DataHarvester:
         }
 
     async def stop_harvesting(self) -> None:
-        """Arrête toutes les collectes"""
+        """
+Arrête toutes les collectes"""
         for target in self.harvesting_targets.values():
             if target.status == HarvestingStatus.RUNNING:
                 target.status = HarvestingStatus.CANCELLED
@@ -1433,7 +1458,8 @@ class DataHarvester:
             return []
     
     def _extract_twitter_username(self, soup: BeautifulSoup) -> str:
-        """Extrait le nom d'utilisateur Twitter"""
+        """
+Extrait le nom d'utilisateur Twitter"""
         try:
             # Recherche dans les métadonnées Twitter
             username_tag = soup.find('meta', {'name': 'twitter:creator'})
@@ -1493,7 +1519,8 @@ class DataHarvester:
             return []
     
     def _extract_instagram_username(self, soup: BeautifulSoup) -> str:
-        """Extrait le nom d'utilisateur Instagram"""
+        """
+Extrait le nom d'utilisateur Instagram"""
         try:
             # Recherche dans les métadonnées
             title_tag = soup.find('title')
@@ -1549,13 +1576,15 @@ class DataHarvester:
             return []
 
     async def __aenter__(self):
-        """Gestionnaire de contexte async"""
+        """
+Gestionnaire de contexte async"""
         if not self.session:
             self.session = aiohttp.ClientSession()
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Nettoyage async"""
+        """
+Nettoyage async"""
         if self.session:
             await self.session.close()
         self.executor.shutdown(wait=True)

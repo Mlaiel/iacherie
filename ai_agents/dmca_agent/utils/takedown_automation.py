@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set, Callable
@@ -45,7 +46,9 @@ from ...models.dmca import DMCACase, TakedownStatus, PlatformResponse
 logger = logging.getLogger(__name__)
 
 class TakedownMethod(Enum):
-    """Takedown delivery methods"""
+    """
+Takedown delivery methods"""
+
     API_CALL = "api_call"
     EMAIL_FORM = "email_form"
     WEB_FORM = "web_form"
@@ -54,6 +57,7 @@ class TakedownMethod(Enum):
 
 class ResponseType(Enum):
     """Platform response types"""
+
     AUTOMATED_ACK = "automated_acknowledgment"
     HUMAN_REVIEW = "human_review"
     CONTENT_REMOVED = "content_removed"
@@ -64,6 +68,7 @@ class ResponseType(Enum):
 
 class EscalationLevel(Enum):
     """Escalation levels for takedown processing"""
+
     STANDARD = "standard"
     PRIORITY = "priority"
     URGENT = "urgent"
@@ -85,7 +90,8 @@ class PlatformConfig:
     
 @dataclass 
 class TakedownAttempt:
-    """Individual takedown attempt record"""
+    """
+Individual takedown attempt record"""
     attempt_id: str
     case_id: str
     platform: str
@@ -99,7 +105,8 @@ class TakedownAttempt:
 
 @dataclass
 class TakedownResult:
-    """Complete takedown operation result"""
+    """
+Complete takedown operation result"""
     case_id: str
     platform: str
     success: bool
@@ -331,7 +338,8 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         priority: EscalationLevel
     ) -> List[TakedownMethod]:
-        """Prioritize takedown methods based on success rates and priority"""
+        """
+Prioritize takedown methods based on success rates and priority"""
         methods = platform_config.takedown_methods.copy()
         
         # Sort by historical success rate
@@ -366,7 +374,8 @@ class TakedownAutomation:
         method: TakedownMethod,
         result: TakedownResult
     ) -> bool:
-        """Attempt takedown using specific method"""
+        """
+Attempt takedown using specific method"""
         attempt = TakedownAttempt(
             attempt_id=f"{case_data.get('case_id', '')}_{method.value}_{int(time.time())}",
             case_id=case_data.get('case_id', ''),
@@ -801,7 +810,8 @@ class TakedownAutomation:
         return base_cost + attempt_cost + time_cost
     
     async def _check_email_responses(self, case_id: str) -> bool:
-        """Check for email responses from platforms"""
+        """
+Check for email responses from platforms"""
         # Implement email checking logic
         return False  # Placeholder
     
@@ -810,12 +820,14 @@ class TakedownAutomation:
         case_data: Dict[str, Any],
         platform_config: PlatformConfig
     ) -> bool:
-        """Check API status for takedown progress"""
+        """
+Check API status for takedown progress"""
         # Implement API status checking logic
         return False  # Placeholder
     
     async def _check_content_status(self, case_data: Dict[str, Any]) -> Dict[str, bool]:
-        """Check if infringing content is still accessible"""
+        """
+Check if infringing content is still accessible"""
         # Implement content status checking logic
         return {"removed": False, "restricted": False}  # Placeholder
     
@@ -829,7 +841,8 @@ class TakedownAutomation:
             return False  # Assume removed if not accessible
     
     async def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive platform statistics"""
+        """
+Get comprehensive platform statistics"""
         stats = {}
         
         for platform, methods in self.success_rates.items():

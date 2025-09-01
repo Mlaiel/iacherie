@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import os
 import json
@@ -24,7 +25,8 @@ import base64
 from pathlib import Path
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
+    """
+Get current UTC datetime in a timezone-aware manner"""
     return datetime.now(timezone.utc)
 
 # Cryptographic libraries
@@ -42,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
+    """
+Supported encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -53,6 +57,7 @@ class EncryptionAlgorithm(Enum):
 
 class StorageType(Enum):
     """Types of secure storage"""
+
     LOCAL_ENCRYPTED = "local_encrypted"
     CLOUD_ENCRYPTED = "cloud_encrypted"
     DISTRIBUTED_STORAGE = "distributed_storage"
@@ -62,6 +67,7 @@ class StorageType(Enum):
 
 class AccessLevel(Enum):
     """Content access levels"""
+
     PUBLIC = "public"
     RESTRICTED = "restricted"
     PRIVATE = "private"
@@ -84,7 +90,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptedContent:
-    """Encrypted content package"""
+    """
+Encrypted content package"""
     content_id: str
     encrypted_data: bytes
     encryption_metadata: Dict[str, Any]
@@ -98,7 +105,8 @@ class EncryptedContent:
 
 @dataclass
 class SecureContainer:
-    """Secure content container"""
+    """
+Secure content container"""
     container_id: str
     content_items: List[EncryptedContent]
     container_key: EncryptionKey
@@ -109,7 +117,8 @@ class SecureContainer:
 
 @dataclass
 class AccessToken:
-    """Time-limited access token for content"""
+    """
+Time-limited access token for content"""
     token_id: str
     content_id: str
     user_id: str
@@ -129,7 +138,8 @@ class ContentEncryption:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content encryption system"""
+        """
+Initialize content encryption system"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -155,7 +165,8 @@ class ContentEncryption:
         expires_at: Optional[datetime] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Union[EncryptedContent, Dict[str, Any]]:
-        """Encrypt content with specified algorithm and protection level"""
+        """
+Encrypt content with specified algorithm and protection level"""
         try:
             # Handle different call signatures for backward compatibility
             if isinstance(content_data_or_id, bytes):
@@ -686,7 +697,8 @@ class ContentEncryption:
         key: EncryptionKey,
         metadata: Dict[str, Any]
     ) -> bytes:
-        """Decrypt data using AES-256-GCM"""
+        """
+Decrypt data using AES-256-GCM"""
         # Extract components
         nonce = encrypted_data[:12]
         tag = encrypted_data[12:28]
@@ -710,7 +722,8 @@ class ContentEncryption:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Encrypt data using AES-256-CBC"""
+        """
+Encrypt data using AES-256-CBC"""
         # Pad data to block size
         block_size = 16
         padding_length = block_size - (len(data) % block_size)
@@ -746,7 +759,8 @@ class ContentEncryption:
         key: EncryptionKey,
         metadata: Dict[str, Any]
     ) -> bytes:
-        """Decrypt data using AES-256-CBC"""
+        """
+Decrypt data using AES-256-CBC"""
         # Extract IV and ciphertext
         iv = encrypted_data[:16]
         ciphertext = encrypted_data[16:]
@@ -773,7 +787,8 @@ class ContentEncryption:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Encrypt data using Fernet (symmetric encryption)"""
+        """
+Encrypt data using Fernet (symmetric encryption)"""
         fernet = Fernet(key.key_data)
         encrypted_data = fernet.encrypt(data)
         
@@ -790,7 +805,8 @@ class ContentEncryption:
         key: EncryptionKey,
         metadata: Dict[str, Any]
     ) -> bytes:
-        """Decrypt data using Fernet"""
+        """
+Decrypt data using Fernet"""
         fernet = Fernet(key.key_data)
         plaintext = fernet.decrypt(encrypted_data)
         return plaintext
@@ -800,7 +816,8 @@ class ContentEncryption:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Encrypt data using ChaCha20-Poly1305"""
+        """
+Encrypt data using ChaCha20-Poly1305"""
         # Generate nonce
         nonce = secrets.token_bytes(12)
         
@@ -831,7 +848,8 @@ class ContentEncryption:
         key: EncryptionKey,
         metadata: Dict[str, Any]
     ) -> bytes:
-        """Decrypt data using ChaCha20-Poly1305"""
+        """
+Decrypt data using ChaCha20-Poly1305"""
         # Extract nonce and ciphertext
         nonce = encrypted_data[:12]
         ciphertext = encrypted_data[12:]
@@ -854,7 +872,8 @@ class ContentEncryption:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Encrypt data using hybrid RSA-AES encryption"""
+        """
+Encrypt data using hybrid RSA-AES encryption"""
         # Generate AES key for data encryption
         aes_key = secrets.token_bytes(32)
         
@@ -905,7 +924,8 @@ class ContentEncryption:
         key: EncryptionKey,
         metadata: Dict[str, Any]
     ) -> bytes:
-        """Decrypt data using hybrid RSA-AES encryption"""
+        """
+Decrypt data using hybrid RSA-AES encryption"""
         # Extract components
         key_length = metadata['encrypted_key_length']
         encrypted_aes_key = encrypted_data[:key_length]
@@ -942,7 +962,8 @@ class ContentEncryption:
         return plaintext
     
     def _generate_master_key(self) -> bytes:
-        """Generate master key for key encryption"""
+        """
+Generate master key for key encryption"""
         # In production, this would be derived from HSM or secure key vault
         master_password = self.config.get('master_password', 'default_master_key').encode()
         salt = self.config.get('master_salt', b'default_salt')
@@ -958,7 +979,8 @@ class ContentEncryption:
         return kdf.derive(master_password)
     
     async def _store_encryption_key(self, key: EncryptionKey):
-        """Store encryption key securely"""
+        """
+Store encryption key securely"""
         # Encrypt key with master key before storage
         fernet = Fernet(base64.urlsafe_b64encode(self._master_key))
         encrypted_key_data = fernet.encrypt(key.key_data)
@@ -968,7 +990,8 @@ class ContentEncryption:
         self._key_storage[key.key_id] = key
     
     async def _retrieve_encryption_key(self, key_id: str) -> EncryptionKey:
-        """Retrieve and decrypt encryption key"""
+        """
+Retrieve and decrypt encryption key"""
         key = self._key_storage.get(key_id)
         if not key:
             raise ValueError(f"Encryption key not found: {key_id}")
@@ -1721,7 +1744,8 @@ class ContentEncryption:
         algorithm: str = 'AES-256',
         security_level: str = 'fips_140_level_4'
     ):
-        """Generate HSM-backed cryptographic key"""
+        """
+Generate HSM-backed cryptographic key"""
         try:
             import uuid
             import time
@@ -1778,7 +1802,8 @@ class SecureStorage:
     """
     
     def __init__(self, config_or_engine):
-        """Initialize secure storage"""
+        """
+Initialize secure storage"""
         if isinstance(config_or_engine, ContentEncryption):
             self.encryption_engine = config_or_engine
             self.config = {}
@@ -1802,7 +1827,8 @@ class SecureStorage:
         encrypted_content: EncryptedContent,
         storage_policy: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """Store encrypted content across multiple storage backends"""
+        """
+Store encrypted content across multiple storage backends"""
         try:
             self.logger.info(f"Storing content: {content_id}")
             
@@ -1891,7 +1917,8 @@ class SecureStorage:
         }
     
     def _get_default_storage_policy(self, access_level: AccessLevel) -> Dict[str, Any]:
-        """Get default storage policy based on access level"""
+        """
+Get default storage policy based on access level"""
         if access_level in [AccessLevel.CONFIDENTIAL, AccessLevel.TOP_SECRET]:
             return {
                 'primary_backend': 'local_encrypted',
@@ -1913,7 +1940,8 @@ class SecureStorage:
         content_id: str,
         encrypted_content: EncryptedContent
     ) -> str:
-        """Store content to specific backend"""
+        """
+Store content to specific backend"""
         backend_config = self._storage_backends.get(backend_id)
         if not backend_config:
             raise ValueError(f"Storage backend not found: {backend_id}")
@@ -2318,17 +2346,20 @@ class SecureStorage:
 
 
 class CryptoProvider:
-    """Cryptographic provider with various algorithms and utilities"""
+    """
+Cryptographic provider with various algorithms and utilities"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     def generate_random_key(self, key_size: int = 32) -> bytes:
-        """Generate a random cryptographic key"""
+        """
+Generate a random cryptographic key"""
         return secrets.token_bytes(key_size)
     
     def hash_data(self, data: bytes, algorithm: str = 'sha256') -> str:
-        """Hash data using specified algorithm"""
+        """
+Hash data using specified algorithm"""
         if algorithm == 'sha256':
             return hashlib.sha256(data).hexdigest()
         elif algorithm == 'sha512':
@@ -2365,14 +2396,16 @@ class CryptoProvider:
 
 # PREMIÈRE CLASSE DIGITAWATERMARKER COMMENTÉE - DUPLICATE
 # class DigitalWatermarker:
-    """Digital watermarking system for various content types"""
+    """
+Digital watermarking system for various content types"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
     async def embed_audio_watermark(self, audio_data: bytes, watermark_data: Dict[str, Any]) -> bytes:
-        """Embed watermark in audio content"""
+        """
+Embed watermark in audio content"""
         try:
             # Real audio watermarking would use signal processing
             # For now, simulate watermark embedding
@@ -2491,7 +2524,8 @@ class ContentEncryptor:
         content_type: str,
         protection_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Comprehensive content protection workflow"""
+        """
+Comprehensive content protection workflow"""
         try:
             result = {
                 'original_size': len(content_data),
@@ -3000,7 +3034,8 @@ class ContentEncryptor:
 
 
 class SecureKeyManager:
-    """Secure key management system"""
+    """
+Secure key management system"""
     
     def __init__(self):
         self.key_storage = {}
@@ -3012,7 +3047,8 @@ class SecureKeyManager:
         key_data: bytes,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Store encryption key securely"""
+        """
+Store encryption key securely"""
         try:
             self.key_storage[key_id] = {
                 'key_data': key_data,
@@ -3033,7 +3069,8 @@ class SecureKeyManager:
         verification_required: bool = True,
         include_archived: bool = False
     ) -> Dict[str, Any]:
-        """Retrieve encryption key"""
+        """
+Retrieve encryption key"""
         try:
             if key_id in self.key_storage:
                 key_info = self.key_storage[key_id]
@@ -3060,7 +3097,8 @@ class SecureKeyManager:
         key_id: str,
         new_key: bytes
     ) -> Dict[str, Any]:
-        """Rotate encryption key"""
+        """
+Rotate encryption key"""
         try:
             if key_id in self.key_storage:
                 # Archive old key
@@ -3091,7 +3129,8 @@ class SecureKeyManager:
 
 
 class DigitalWatermarker:
-    """Digital watermarking for content protection"""
+    """
+Digital watermarking for content protection"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -3105,7 +3144,8 @@ class DigitalWatermarker:
         method=None,
         strength=None
     ):
-        """Embed watermark in audio content - supports multiple signatures"""
+        """
+Embed watermark in audio content - supports multiple signatures"""
         try:
             # Handle different call signatures
             if isinstance(watermark_data_or_payload, str):
@@ -3167,7 +3207,8 @@ class DigitalWatermarker:
         video_data: bytes,
         watermark_data: Dict[str, Any]
     ) -> bytes:
-        """Embed watermark in video content"""
+        """
+Embed watermark in video content"""
         # Mock watermarking - in real implementation would use video processing
         watermark_bytes = json.dumps(watermark_data).encode('utf-8')
         return video_data + b'WATERMARK:' + watermark_bytes
@@ -3177,7 +3218,8 @@ class DigitalWatermarker:
         content_data: bytes,
         content_type: str
     ) -> Dict[str, Any]:
-        """Detect watermark in content"""
+        """
+Detect watermark in content"""
         try:
             if b'WATERMARK:' in content_data:
                 watermark_start = content_data.find(b'WATERMARK:') + len(b'WATERMARK:')
@@ -3209,7 +3251,8 @@ class DigitalWatermarker:
         strength=None,
         preserve_meaning=None
     ):
-        """Embed watermark in text content"""
+        """
+Embed watermark in text content"""
         try:
             # Text watermarking using invisible characters or semantic techniques
             watermark_data = {
@@ -3774,7 +3817,8 @@ class CryptoProvider:
     """Cryptographic provider for various crypto operations"""
     
     def __init__(self):
-        """Initialize cryptographic provider with secure defaults"""
+        """
+Initialize cryptographic provider with secure defaults"""
         self.backend = default_backend()
         self.secure_random = secrets.SystemRandom()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -3818,7 +3862,8 @@ class CryptoProvider:
         data: bytes,
         algorithm: str = 'SHA256'
     ) -> Dict[str, Any]:
-        """Hash data using specified algorithm"""
+        """
+Hash data using specified algorithm"""
         try:
             if algorithm == 'SHA256':
                 hash_obj = hashlib.sha256()
@@ -3846,7 +3891,8 @@ class CryptoProvider:
         data: bytes,
         algorithm: str = 'sha256'
     ) -> bytes:
-        """Compute hash of data - simplified interface for tests"""
+        """
+Compute hash of data - simplified interface for tests"""
         try:
             if algorithm.lower() == 'sha256':
                 hash_obj = hashlib.sha256()
@@ -3881,7 +3927,8 @@ class ContentEncryptor:
         algorithm: str = 'AES-256',
         **kwargs
     ):
-        """Wrapper for content encryption"""
+        """
+Wrapper for content encryption"""
         try:
             return await self.encryption.encrypt_content(content, key, algorithm, **kwargs)
         except AttributeError:
@@ -3896,7 +3943,9 @@ class ContentEncryptor:
 
 # Enum definitions for test compatibility
 class EncryptionMethod(Enum):
-    """Encryption methods for testing"""
+    """
+Encryption methods for testing"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CTR = "aes_256_ctr"
     RSA_OAEP = "rsa_oaep"
@@ -3905,6 +3954,7 @@ class EncryptionMethod(Enum):
 
 class SecurityLevel(Enum):
     """Security levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -3913,6 +3963,7 @@ class SecurityLevel(Enum):
 
 class KeyDerivationMethod(Enum):
     """Key derivation methods"""
+
     PBKDF2 = "PBKDF2"
     SCRYPT = "SCRYPT"
     ARGON2 = "ARGON2"
@@ -3920,6 +3971,7 @@ class KeyDerivationMethod(Enum):
 
 class WatermarkType(Enum):
     """Watermark types"""
+
     ROBUST = "robust"
     FRAGILE = "fragile"
     SEMI_FRAGILE = "semi_fragile"

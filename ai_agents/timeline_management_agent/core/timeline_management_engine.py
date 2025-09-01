@@ -5,6 +5,7 @@ Core engine for timeline management operations with optimal timeline planning an
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TimelineManagementJob:
-    """Timeline Management operation job"""
+    """
+Timeline Management operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class TimelineManagementJob:
 
 @dataclass
 class TimelineManagementResult:
-    """Timeline Management operation result"""
+    """
+Timeline Management operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class TimelineManagementResult:
     completed_at: datetime = None
 
 class TimelineManagementEngine:
-    """Core timeline management processing engine"""
+    """
+Core timeline management processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

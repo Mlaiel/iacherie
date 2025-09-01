@@ -15,6 +15,7 @@ Tests for the core Remix IA Professionnel requirements:
 - Mastering IA professionnel
 - Collaboration temps réel multi-users
 """
+
 import asyncio
 import unittest
 import numpy as np
@@ -31,10 +32,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class TestRemixIAProfessionnelIntegration(unittest.TestCase):
-    """Integration tests for Remix IA Professionnel system"""
+    """
+Integration tests for Remix IA Professionnel system"""
     
     def setUp(self):
-        """Set up test environment"""
+        """
+Set up test environment"""
         self.sample_rate = 44100
         self.test_audio_mono = np.random.normal(0, 0.1, self.sample_rate)  # 1 second of audio
         self.test_audio_stereo = np.random.normal(0, 0.1, (2, self.sample_rate))  # Stereo

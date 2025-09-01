@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class MediumPlatform(PlatformBase):
-    """Medium platform integration"""
+    """
+Medium platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Medium platform"""
+        """
+Initialize Medium platform"""
         super().__init__(config)
         self.api_base = "https://api.medium.com/v1"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -39,7 +42,8 @@ class MediumPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Medium OAuth2"""
+        """
+Authenticate with Medium OAuth2"""
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -78,7 +82,8 @@ class MediumPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Medium API"""
+        """
+Make authenticated request to Medium API"""
         try:
             session = await self._get_session()
             

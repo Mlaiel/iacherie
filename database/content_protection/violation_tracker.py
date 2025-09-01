@@ -5,7 +5,7 @@ analysis, and automated response to content protection violations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_MANIPULATION = "content_manipulation"
@@ -59,6 +62,7 @@ class ViolationType(Enum):
 
 class ViolationSeverity(Enum):
     """Violation severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -68,6 +72,7 @@ class ViolationSeverity(Enum):
 
 class ViolationStatus(Enum):
     """Violation status types"""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -80,6 +85,7 @@ class ViolationStatus(Enum):
 
 class ActionType(Enum):
     """Types of actions taken for violations"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
@@ -825,7 +831,8 @@ class ViolationTracker:
             return url.lower()
     
     async def _calculate_average_severity(self, violations: List[ViolationReport]) -> float:
-        """Calculate average severity score for violations"""
+        """
+Calculate average severity score for violations"""
         severity_scores = {
             "low": 1,
             "medium": 2,
@@ -903,7 +910,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action_type: ActionType
     ) -> str:
-        """Determine legal basis for action"""
+        """
+Determine legal basis for action"""
         legal_bases = {
             ActionType.DMCA_TAKEDOWN: "Digital Millennium Copyright Act (DMCA)",
             ActionType.CEASE_DESIST: "Copyright infringement under applicable law",
@@ -932,7 +940,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action: ViolationAction
     ) -> Dict[str, Any]:
-        """Execute the specified violation action"""
+        """
+Execute the specified violation action"""
         action_type = ActionType(action.action_type)
         
         if action_type in [ActionType.DMCA_TAKEDOWN, ActionType.LEGAL_NOTICE, ActionType.COURT_ACTION]:
@@ -947,7 +956,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action: ViolationAction
     ) -> Dict[str, Any]:
-        """Execute platform-specific action"""
+        """
+Execute platform-specific action"""
         # Implementation would integrate with platform APIs
         return {
             "status": "initiated",
@@ -962,7 +972,8 @@ class ViolationTracker:
         pass
     
     async def _handle_action_taken(self, violation: ViolationReport) -> None:
-        """Handle action taken status"""
+        """
+Handle action taken status"""
         # Start monitoring for compliance
         pass
     
@@ -972,7 +983,8 @@ class ViolationTracker:
         old_status: str,
         new_status: str
     ) -> None:
-        """Send notifications for status updates"""
+        """
+Send notifications for status updates"""
         try:
             notification_data = {
                 "violation_id": violation.violation_id,
@@ -1019,12 +1031,14 @@ class ViolationTracker:
         return [action.value for action in self.escalation_matrix.get(severity, [])]
     
     async def _is_automatic_action_enabled(self, action_type: ActionType) -> bool:
-        """Check if automatic action is enabled"""
+        """
+Check if automatic action is enabled"""
         # Configuration-based check for automatic actions
         return action_type in [ActionType.WARNING_NOTICE, ActionType.PLATFORM_REPORT]
     
     async def _generate_violation_predictions(self, analytics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate ML-based violation predictions"""
+        """
+Generate ML-based violation predictions"""
         # Placeholder for ML-based predictions
         return {
             "predicted_violations_next_week": analytics["total_violations"] * 1.1,

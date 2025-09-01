@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Union
 from dataclasses import dataclass
@@ -20,7 +21,9 @@ from pydantic import BaseModel, Field
 
 
 class ContentType(str, Enum):
-    """Content type enumeration for workflow processing."""
+    """
+Content type enumeration for workflow processing."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -32,6 +35,7 @@ class ContentType(str, Enum):
 
 class WorkflowStage(str, Enum):
     """Workflow processing stages."""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
@@ -48,6 +52,7 @@ class WorkflowStage(str, Enum):
 
 class ProcessingPriority(str, Enum):
     """Processing priority levels."""
+
     ULTRA_HIGH = "ultra_high"
     HIGH = "high"
     NORMAL = "normal"
@@ -69,7 +74,8 @@ class StageConfiguration:
 
 
 class WorkflowConfig:
-    """Enterprise workflow configuration management."""
+    """
+Enterprise workflow configuration management."""
     # Content processing workflows
     CONTENT_WORKFLOWS = {
         ContentType.AUDIO: {
@@ -378,7 +384,8 @@ class WorkflowConfig:
 
     @classmethod
     def get_creator_workflow(cls, creator_type: str) -> Dict:
-        """Get workflow configuration for specific creator type."""
+        """
+Get workflow configuration for specific creator type."""
         return cls.CREATOR_WORKFLOWS.get(creator_type.lower(), cls.CREATOR_WORKFLOWS["influencer"])
 
     @classmethod
@@ -388,7 +395,8 @@ class WorkflowConfig:
 
     @classmethod
     def validate_business_rules(cls, content_type: ContentType, file_size: int, format_type: str) -> bool:
-        """Validate content against business rules."""
+        """
+Validate content against business rules."""
         max_size = cls.BUSINESS_RULES["content_validation"]["max_file_size"].get(content_type, 0)
         allowed_formats = cls.BUSINESS_RULES["content_validation"]["allowed_formats"].get(content_type, [])
         

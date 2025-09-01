@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE FILES D'ATTENTE ASYNCHRONE
@@ -15,6 +15,7 @@ Message queue enterprise avec traitement distribué
 - Priority queues avec backpressure
 - Monitoring temps réel et métriques avancées
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,9 @@ from pydantic import BaseModel, Field
 logger = logging.getLogger(__name__)
 
 class MessagePriority(Enum):
-    """Priorités des messages"""
+    """
+Priorités des messages"""
+
     LOW = 1
     NORMAL = 3
     HIGH = 5
@@ -42,6 +45,7 @@ class MessagePriority(Enum):
 
 class MessageStatus(Enum):
     """États des messages"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -85,7 +89,8 @@ class QueueMessage:
         
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'QueueMessage':
-        """Crée un message depuis un dictionnaire"""
+        """
+Crée un message depuis un dictionnaire"""
         # Convertir les dates depuis ISO format
         for date_field in ['created_at', 'scheduled_at', 'expires_at', 'processed_at']:
             if data.get(date_field):
@@ -101,7 +106,8 @@ class QueueMessage:
 
 @dataclass
 class QueueStats:
-    """Statistiques d'une queue"""
+    """
+Statistiques d'une queue"""
     total_messages: int = 0
     pending_messages: int = 0
     processing_messages: int = 0
@@ -113,7 +119,8 @@ class QueueStats:
     last_message_time: Optional[datetime] = None
 
 class MessageQueue:
-    """File d'attente de messages avec Redis Streams"""
+    """
+File d'attente de messages avec Redis Streams"""
     
     def __init__(self, 
                  redis_client: aioredis.Redis,
@@ -368,7 +375,8 @@ class MessageQueue:
             )
             
     async def _update_stats(self, operation: str, message: QueueMessage):
-        """Met à jour les statistiques de la queue"""
+        """
+Met à jour les statistiques de la queue"""
         now = datetime.utcnow()
         
         if operation == "put":
@@ -422,7 +430,8 @@ class MessageQueue:
         )
         
     async def get_queue_info(self) -> Dict[str, Any]:
-        """Retourne les informations détaillées de la queue"""
+        """
+Retourne les informations détaillées de la queue"""
         info = {
             "queue_name": self.queue_name,
             "stats": asdict(self.stats),
@@ -475,7 +484,8 @@ class QueueManager:
                           queue_name: str,
                           max_length: int = 10000,
                           dead_letter_queue: bool = True) -> MessageQueue:
-        """Crée une nouvelle queue"""
+        """
+Crée une nouvelle queue"""
         if queue_name in self.queues:
             return self.queues[queue_name]
             
@@ -499,7 +509,8 @@ class QueueManager:
             await self._start_consumer(queue_name)
             
     async def start(self):
-        """Démarre le gestionnaire de queues"""
+        """
+Démarre le gestionnaire de queues"""
         self._running = True
         
         # Démarrer les consumers pour les handlers enregistrés

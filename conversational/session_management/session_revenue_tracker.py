@@ -24,6 +24,7 @@ Team Specialists:
 - DevOps: Financial Data Scalability & Performance
 - IA Prompt Engineer: Revenue Intelligence & Insights
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -62,7 +63,9 @@ logger = get_logger(__name__)
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
     ADVERTISING = "advertising"
@@ -77,6 +80,7 @@ class RevenueStreamType(Enum):
 
 class TransactionType(Enum):
     """Transaction types"""
+
     INCOME = "income"
     EXPENSE = "expense"
     REFUND = "refund"
@@ -88,6 +92,7 @@ class TransactionType(Enum):
 
 class TransactionStatus(Enum):
     """Transaction status"""
+
     PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -98,6 +103,7 @@ class TransactionStatus(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization strategies"""
+
     FREEMIUM = "freemium"
     PREMIUM = "premium"
     AD_SUPPORTED = "ad_supported"
@@ -133,7 +139,8 @@ class SessionRevenueData(BaseModel):
 
 
 class RevenueTransaction(BaseModel):
-    """Revenue transaction model"""
+    """
+Revenue transaction model"""
     transaction_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     user_id: str
@@ -185,7 +192,8 @@ class MonetizationMetrics(BaseModel):
 
 
 class RevenueAnalytics(BaseModel):
-    """Revenue analytics and insights"""
+    """
+Revenue analytics and insights"""
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -209,7 +217,8 @@ class RevenueAnalytics(BaseModel):
 
 @dataclass
 class RevenueTrackerConfig:
-    """Revenue tracker configuration"""
+    """
+Revenue tracker configuration"""
     enable_real_time_tracking: bool = True
     enable_fraud_detection: bool = True
     enable_predictive_analytics: bool = True
@@ -238,7 +247,8 @@ class SessionRevenueCalculator:
         session_data: SessionRevenueData,
         transactions: List[RevenueTransaction]
     ) -> Decimal:
-        """Calculate total session revenue"""
+        """
+Calculate total session revenue"""
         
         try:
             total_revenue = Decimal('0.00')
@@ -386,7 +396,8 @@ class FraudDetectionEngine:
         session_data: SessionRevenueData,
         user_history: Dict[str, Any]
     ) -> float:
-        """Analyze fraud risk for transaction"""
+        """
+Analyze fraud risk for transaction"""
         
         try:
             risk_factors = []
@@ -560,7 +571,8 @@ class RevenuePredictionEngine:
         session_data: SessionRevenueData,
         session_duration_prediction: float
     ) -> Dict[str, Any]:
-        """Predict final session revenue"""
+        """
+Predict final session revenue"""
         
         try:
             # Feature engineering
@@ -746,7 +758,8 @@ class SessionRevenueTracker:
         session_id: str,
         user_id: str
     ) -> SessionRevenueData:
-        """Initialize revenue tracking for session"""
+        """
+Initialize revenue tracking for session"""
         
         try:
             session_data = SessionRevenueData(

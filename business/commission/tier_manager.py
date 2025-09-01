@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -45,7 +46,9 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class TierStatus(str, Enum):
-    """Tier status enumeration"""
+    """
+Tier status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -55,6 +58,7 @@ class TierStatus(str, Enum):
 
 class TierProgression(str, Enum):
     """Tier progression type enumeration"""
+
     AUTOMATIC = "automatic"
     MANUAL_REVIEW = "manual_review"
     APPLICATION_BASED = "application_based"
@@ -62,6 +66,7 @@ class TierProgression(str, Enum):
 
 class TierBenefit(str, Enum):
     """Tier benefit type enumeration"""
+
     COMMISSION_DISCOUNT = "commission_discount"
     PRIORITY_SUPPORT = "priority_support"
     ADVANCED_ANALYTICS = "advanced_analytics"
@@ -80,7 +85,8 @@ class TierRequirement:
     description: str
 
 class TierConfiguration(BaseModel):
-    """Tier configuration model"""
+    """
+Tier configuration model"""
     
     tier: CommissionTier
     name: str
@@ -202,7 +208,8 @@ class TierManagerEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Tier Manager Engine"""
+        """
+Initialize Tier Manager Engine"""
         self.config = config or {}
         
         # Components
@@ -991,25 +998,30 @@ class TierEvaluator:
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize tier evaluator"""
+        """
+Initialize tier evaluator"""
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown tier evaluator"""
+        """
+Shutdown tier evaluator"""
         pass
 
 class BenefitsCalculator:
-    """Benefits calculation component"""
+    """
+Benefits calculation component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize benefits calculator"""
+        """
+Initialize benefits calculator"""
         pass
     
     async def calculate_benefits(self, creator_id: str, transaction_amount: Decimal) -> Dict[str, Any]:
-        """Calculate tier benefits"""
+        """
+Calculate tier benefits"""
         # Implementation for benefits calculation
         return {
             "commission_discount": Decimal("5.00"),
@@ -1022,27 +1034,32 @@ class BenefitsCalculator:
         pass
 
 class ProgressionManager:
-    """Tier progression management component"""
+    """
+Tier progression management component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize progression manager"""
+        """
+Initialize progression manager"""
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown progression manager"""
+        """
+Shutdown progression manager"""
         pass
 
 class NotificationManager:
-    """Notification management component"""
+    """
+Notification management component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize notification manager"""
+        """
+Initialize notification manager"""
         pass
     
     async def send_tier_upgrade_notification(
@@ -1051,7 +1068,8 @@ class NotificationManager:
         old_tier: CommissionTier, 
         new_tier: CommissionTier
     ) -> None:
-        """Send tier upgrade notification"""
+        """
+Send tier upgrade notification"""
         # Implementation for upgrade notification
         pass
     
@@ -1062,16 +1080,19 @@ class NotificationManager:
         new_tier: CommissionTier, 
         reason: str
     ) -> None:
-        """Send tier downgrade notification"""
+        """
+Send tier downgrade notification"""
         # Implementation for downgrade notification
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown notification manager"""
+        """
+Shutdown notification manager"""
         pass
 
-"""Professional Tier Manager Engine
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+"""
+Professional Tier Manager Engine
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides comprehensive tier management capabilities with dynamic
 tier progression, benefits calculation, and membership management.

@@ -28,7 +28,7 @@ Platform Coverage:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM LEGAL PROTECTION WARNING ⚠️
 ========================================
@@ -47,6 +47,7 @@ UNAUTHORIZED ACCESS, USE, OR APPROPRIATION IS CRIMINAL OFFENSE:
 Contact mlaiel@live.de for MANDATORY authorization before any interaction.
 All access attempts are logged, monitored, and legally documented.
 """
+
 import logging
 from typing import Optional, Dict, Any
 from datetime import datetime
@@ -89,7 +90,7 @@ logger = logging.getLogger(__name__)
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 # Legal notice
@@ -424,11 +425,12 @@ is strictly prohibited and will result in immediate legal action.
 
 For licensing inquiries, contact: mlaiel@live.de
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 def print_legal_notice():
-    """Print the legal notice and copyright information."""
+    """
+Print the legal notice and copyright information."""
     print(LEGAL_NOTICE)
 
 # Automatic legal notice display (can be disabled in production)
@@ -465,7 +467,7 @@ logger = logging.getLogger(__name__)
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 # Legal notice

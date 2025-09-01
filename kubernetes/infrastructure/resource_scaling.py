@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class ScalingType(Enum):
-    """Types of scaling"""
+    """
+Types of scaling"""
+
     HORIZONTAL_POD_AUTOSCALER = "hpa"
     VERTICAL_POD_AUTOSCALER = "vpa"
     CLUSTER_AUTOSCALER = "cluster"
@@ -29,6 +32,7 @@ class ScalingType(Enum):
 
 class MetricType(Enum):
     """Metric types for scaling"""
+
     CPU_UTILIZATION = "cpu"
     MEMORY_UTILIZATION = "memory"
     CUSTOM_METRIC = "custom"
@@ -37,6 +41,7 @@ class MetricType(Enum):
 
 class ScalingBehavior(Enum):
     """Scaling behavior types"""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
 
@@ -71,7 +76,8 @@ class HPASpec:
 
 @dataclass
 class VPASpec:
-    """Vertical Pod Autoscaler specification"""
+    """
+Vertical Pod Autoscaler specification"""
     name: str
     namespace: str
     target_ref: Dict[str, str]
@@ -104,7 +110,8 @@ class ResourceScalingManager:
         self.custom_objects_api = client.CustomObjectsApi() if k8s_client else None
         
     async def create_horizontal_pod_autoscaler(self, hpa_spec: HPASpec) -> Dict[str, Any]:
-        """Create Horizontal Pod Autoscaler"""
+        """
+Create Horizontal Pod Autoscaler"""
         try:
             # Convert metrics to HPA format
             hpa_metrics = []

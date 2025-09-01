@@ -23,6 +23,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
@@ -42,7 +43,9 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class DistributionChannel(Enum):
-    """Distribution channel types."""
+    """
+Distribution channel types."""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -66,6 +69,7 @@ class DistributionChannel(Enum):
 
 class PublishingStatus(Enum):
     """Publishing status types."""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
@@ -78,6 +82,7 @@ class PublishingStatus(Enum):
 
 class ContentFormat(Enum):
     """Content format for different platforms."""
+
     ORIGINAL = "original"
     OPTIMIZED = "optimized"
     COMPRESSED = "compressed"
@@ -102,7 +107,8 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionSchedule:
-    """Content distribution schedule."""
+    """
+Content distribution schedule."""
     schedule_id: str
     user_id: str
     content_id: str
@@ -136,7 +142,8 @@ class DistributionJob:
 
 @dataclass
 class ContentVariant:
-    """Content variant for different platforms."""
+    """
+Content variant for different platforms."""
     variant_id: str
     content_id: str
     platform: DistributionChannel
@@ -148,7 +155,8 @@ class ContentVariant:
 
 @dataclass
 class CrossPlatformSync:
-    """Cross-platform synchronization tracking."""
+    """
+Cross-platform synchronization tracking."""
     sync_id: str
     master_content_id: str
     linked_content_ids: List[str]
@@ -179,7 +187,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         self.retry_delay = config.get('retry_delay', 300)  # 5 minutes
 
     async def initialize(self) -> None:
-        """Initialize distribution storage provider."""
+        """
+Initialize distribution storage provider."""
         try:
             await self._create_connections()
             await self._create_tables()
@@ -564,17 +573,20 @@ class DistributionStorageProvider(BaseStorageProvider):
         pass
 
     async def _create_tables(self) -> None:
-        """Create distribution tables with proper schema."""
+        """
+Create distribution tables with proper schema."""
         # Implementation depends on storage backend
         pass
 
     async def _load_platform_configurations(self) -> None:
-        """Load platform configurations from storage."""
+        """
+Load platform configurations from storage."""
         # Implementation to load platform configs
         pass
 
     async def _start_workers(self) -> None:
-        """Start background workers for job processing."""
+        """
+Start background workers for job processing."""
         for i in range(self.max_workers):
             task = asyncio.create_task(self._worker(f"worker_{i}"))
             self.worker_tasks.append(task)
@@ -655,37 +667,44 @@ class DistributionStorageProvider(BaseStorageProvider):
         pass
 
     async def _store_schedule_data(self, schedule: DistributionSchedule) -> None:
-        """Store schedule data to database."""
+        """
+Store schedule data to database."""
         # Implementation depends on storage backend
         pass
 
     async def _store_job_data(self, job: DistributionJob) -> None:
-        """Store job data to database."""
+        """
+Store job data to database."""
         # Implementation depends on storage backend
         pass
 
     async def _store_variant_data(self, variant: ContentVariant) -> None:
-        """Store variant data to database."""
+        """
+Store variant data to database."""
         # Implementation depends on storage backend
         pass
 
     async def _query_jobs(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query jobs from database."""
+        """
+Query jobs from database."""
         # Implementation depends on storage backend
         return []
 
     async def _query_variants(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query variants from database."""
+        """
+Query variants from database."""
         # Implementation depends on storage backend
         return []
 
     async def _update_job_data(self, job_id: str, update_data: Dict[str, Any]) -> None:
-        """Update job data in database."""
+        """
+Update job data in database."""
         # Implementation depends on storage backend
         pass
 
     def _data_to_job(self, data: Dict[str, Any]) -> DistributionJob:
-        """Convert database data to DistributionJob."""
+        """
+Convert database data to DistributionJob."""
         # Implementation depends on storage backend
         return DistributionJob(
             job_id=data.get('job_id', ''),
@@ -697,7 +716,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         )
 
     def _data_to_variant(self, data: Dict[str, Any]) -> ContentVariant:
-        """Convert database data to ContentVariant."""
+        """
+Convert database data to ContentVariant."""
         # Implementation depends on storage backend
         return ContentVariant(
             variant_id=data.get('variant_id', ''),
@@ -713,7 +733,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         content_id: str, 
         platforms: List[DistributionChannel]
     ) -> None:
-        """Generate platform-specific content variants."""
+        """
+Generate platform-specific content variants."""
         # Implementation for variant generation
         pass
 
@@ -723,22 +744,26 @@ class DistributionStorageProvider(BaseStorageProvider):
         variant: ContentVariant,
         config: PlatformConfiguration
     ) -> Dict[str, Any]:
-        """Publish content to specific platform."""
+        """
+Publish content to specific platform."""
         # Implementation for platform-specific publishing
         return {'success': True, 'post_id': '12345', 'url': 'https://example.com'}
 
     async def _store_sync_config(self, sync_config: CrossPlatformSync) -> None:
-        """Store sync configuration."""
+        """
+Store sync configuration."""
         # Implementation depends on storage backend
         pass
 
     async def _get_sync_config(self, sync_id: str) -> Optional[CrossPlatformSync]:
-        """Get sync configuration."""
+        """
+Get sync configuration."""
         # Implementation depends on storage backend
         return None
 
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content data."""
+        """
+Get content data."""
         # Implementation depends on storage backend
         return None
 
@@ -748,22 +773,26 @@ class DistributionStorageProvider(BaseStorageProvider):
         linked_id: str, 
         sync_rules: Dict[str, Any]
     ) -> None:
-        """Apply sync rules to linked content."""
+        """
+Apply sync rules to linked content."""
         # Implementation for sync rule application
         pass
 
     async def _update_sync_timestamp(self, sync_id: str) -> None:
-        """Update sync timestamp."""
+        """
+Update sync timestamp."""
         # Implementation depends on storage backend
         pass
 
     async def _test_connection(self) -> bool:
-        """Test database connection."""
+        """
+Test database connection."""
         # Implementation for connection test
         return True
 
 class InMemoryDistributionStorage(DistributionStorageProvider):
-    """In-memory distribution storage for testing and development."""
+    """
+In-memory distribution storage for testing and development."""
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
@@ -774,7 +803,8 @@ class InMemoryDistributionStorage(DistributionStorageProvider):
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize in-memory storage."""
+        """
+Initialize in-memory storage."""
         self.is_initialized = True
         logger.info(f"In-memory distribution storage {self.provider_id} initialized")
     
@@ -783,7 +813,8 @@ class InMemoryDistributionStorage(DistributionStorageProvider):
         self.jobs_store.append(job)
     
     async def _query_jobs(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query jobs from memory."""
+        """
+Query jobs from memory."""
         # Simple implementation for testing
         return [{'job_id': j.job_id, 'status': j.status.value} for j in self.jobs_store]
 
@@ -793,7 +824,8 @@ def create_distribution_storage(
     provider_id: str, 
     config: Dict[str, Any]
 ) -> DistributionStorageProvider:
-    """Create distribution storage provider instance."""
+    """
+Create distribution storage provider instance."""
     if provider_type == 'memory':
         return InMemoryDistributionStorage(provider_id, config)
     elif provider_type == 'postgresql':

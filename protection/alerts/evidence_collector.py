@@ -5,8 +5,9 @@ Automated evidence collection system for content protection violations.
 Captures screenshots, metadata, and digital fingerprints as legal proof.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -41,7 +42,9 @@ from ...core.storage import StorageManager
 logger = logging.getLogger(__name__)
 
 class EvidenceCollectionType(str, Enum):
-    """Types of evidence collection."""
+    """
+Types of evidence collection."""
+
     SCREENSHOT = "screenshot"
     VIDEO_CAPTURE = "video_capture"
     METADATA_EXTRACTION = "metadata_extraction"
@@ -52,6 +55,7 @@ class EvidenceCollectionType(str, Enum):
 
 class CollectionStatus(str, Enum):
     """Evidence collection status."""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -84,7 +88,8 @@ class CollectionResult:
     collection_time: Optional[datetime] = None
 
 class WebDriverManager:
-    """Manages headless web drivers for evidence collection."""
+    """
+Manages headless web drivers for evidence collection."""
     
     def __init__(self, config: EvidenceConfig):
         self.config = config
@@ -93,7 +98,8 @@ class WebDriverManager:
         self._max_drivers = config.parallel_collections
     
     async def get_driver(self) -> webdriver.Chrome:
-        """Get a web driver from the pool."""
+        """
+Get a web driver from the pool."""
         async with self._pool_lock:
             if self._driver_pool:
                 return self._driver_pool.pop()
@@ -101,7 +107,8 @@ class WebDriverManager:
             return self._create_driver()
     
     async def return_driver(self, driver: webdriver.Chrome) -> None:
-        """Return a web driver to the pool."""
+        """
+Return a web driver to the pool."""
         async with self._pool_lock:
             if len(self._driver_pool) < self._max_drivers:
                 self._driver_pool.append(driver)
@@ -109,7 +116,8 @@ class WebDriverManager:
                 driver.quit()
     
     def _create_driver(self) -> webdriver.Chrome:
-        """Create a new headless Chrome driver."""
+        """
+Create a new headless Chrome driver."""
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
@@ -143,7 +151,8 @@ class ScreenshotCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect screenshot evidence from URL."""
+        """
+Collect screenshot evidence from URL."""
         try:
             driver = await self.driver_manager.get_driver()
             
@@ -219,7 +228,8 @@ class ScreenshotCollector:
         return image
     
     async def _add_watermark(self, image: Image.Image, alert: Alert, url: str) -> Image.Image:
-        """Add watermark to screenshot."""
+        """
+Add watermark to screenshot."""
         draw = ImageDraw.Draw(image)
         
         # Watermark text
@@ -281,7 +291,8 @@ class ScreenshotCollector:
         )
     
     async def _collect_page_metadata(self, driver: webdriver.Chrome, url: str) -> Dict[str, Any]:
-        """Collect page metadata."""
+        """
+Collect page metadata."""
         metadata = {
             "url": url,
             "title": driver.title,
@@ -330,7 +341,8 @@ class VideoCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect video evidence from URL."""
+        """
+Collect video evidence from URL."""
         try:
             # For now, implement as series of screenshots
             # In production, would use screen recording tools
@@ -408,7 +420,8 @@ class VideoCollector:
             out.release()
     
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum."""
+        """
+Calculate file checksum."""
         sha256_hash = hashlib.sha256()
         
         async with aiofiles.open(file_path, "rb") as f:
@@ -429,7 +442,8 @@ class MetadataCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect comprehensive metadata."""
+        """
+Collect comprehensive metadata."""
         try:
             metadata = {}
             
@@ -585,7 +599,8 @@ class MetadataCollector:
             await f.write(json.dumps(metadata, indent=2, default=str))
     
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum."""
+        """
+Calculate file checksum."""
         sha256_hash = hashlib.sha256()
         
         async with aiofiles.open(file_path, "rb") as f:

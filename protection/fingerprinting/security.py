@@ -5,13 +5,14 @@ Enterprise-grade security system with multi-factor authentication,
 encryption, access control, and threat detection for content fingerprinting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -59,7 +60,9 @@ from .models import ContentType
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(str, Enum):
-    """Security levels."""
+    """
+Security levels."""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -68,6 +71,7 @@ class SecurityLevel(str, Enum):
 
 class AuthenticationMethod(str, Enum):
     """Authentication methods."""
+
     PASSWORD = "password"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
@@ -77,6 +81,7 @@ class AuthenticationMethod(str, Enum):
 
 class PermissionLevel(str, Enum):
     """Permission levels."""
+
     READ = "read"
     WRITE = "write"
     ADMIN = "admin"
@@ -84,6 +89,7 @@ class PermissionLevel(str, Enum):
 
 class ThreatLevel(str, Enum):
     """Threat severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -109,7 +115,8 @@ class User:
 
 @dataclass
 class SecurityEvent:
-    """Security event for audit logging."""
+    """
+Security event for audit logging."""
     id: str
     event_type: str
     user_id: Optional[str]
@@ -122,7 +129,8 @@ class SecurityEvent:
 
 @dataclass
 class AccessToken:
-    """Access token with metadata."""
+    """
+Access token with metadata."""
     token: str
     user_id: str
     permissions: List[PermissionLevel]
@@ -131,7 +139,8 @@ class AccessToken:
     last_used: Optional[datetime] = None
 
 class EncryptionManager:
-    """Advanced encryption and key management."""
+    """
+Advanced encryption and key management."""
     
     def __init__(self, master_key: Optional[str] = None):
         if not CRYPTO_AVAILABLE:
@@ -163,12 +172,14 @@ class EncryptionManager:
         return encrypted.decode()
     
     def decrypt_data(self, encrypted_data: str) -> str:
-        """Decrypt data using symmetric encryption."""
+        """
+Decrypt data using symmetric encryption."""
         decrypted = self.fernet.decrypt(encrypted_data.encode())
         return decrypted.decode()
     
     def encrypt_large_data(self, data: bytes) -> bytes:
-        """Encrypt large data using asymmetric encryption."""
+        """
+Encrypt large data using asymmetric encryption."""
         # For large data, use hybrid encryption
         # Generate symmetric key for this data
         data_key = Fernet.generate_key()
@@ -238,11 +249,13 @@ class EncryptionManager:
         return secrets.token_urlsafe(32)
     
     def generate_session_token(self) -> str:
-        """Generate secure session token."""
+        """
+Generate secure session token."""
         return secrets.token_urlsafe(64)
 
 class MFAManager:
-    """Multi-Factor Authentication manager."""
+    """
+Multi-Factor Authentication manager."""
     
     def __init__(self):
         if not MFA_AVAILABLE:
@@ -292,11 +305,13 @@ class MFAManager:
         return totp.verify(token, valid_window=1)
     
     def generate_backup_codes(self, count: int = 10) -> List[str]:
-        """Generate backup codes for account recovery."""
+        """
+Generate backup codes for account recovery."""
         return [secrets.token_hex(4) for _ in range(count)]
 
 class JWTManager:
-    """JWT token management."""
+    """
+JWT token management."""
     
     def __init__(self, secret_key: str, algorithm: str = "HS256"):
         self.secret_key = secret_key
@@ -409,7 +424,8 @@ class AccessControlManager:
         return list(permissions)
 
 class ThreatDetectionSystem:
-    """Advanced threat detection and response."""
+    """
+Advanced threat detection and response."""
     
     def __init__(self, redis_client=None):
         self.redis_client = redis_client
@@ -535,7 +551,8 @@ class ThreatDetectionSystem:
         return False
     
     def _calculate_threat_severity(self, threats: List[str]) -> ThreatLevel:
-        """Calculate overall threat severity."""
+        """
+Calculate overall threat severity."""
         if len(threats) >= 3:
             return ThreatLevel.CRITICAL
         elif len(threats) == 2:
@@ -546,7 +563,8 @@ class ThreatDetectionSystem:
             return ThreatLevel.LOW
     
     def add_suspicious_ip(self, ip_address: str, score_increment: int = 10):
-        """Add IP to suspicious list."""
+        """
+Add IP to suspicious list."""
         if ip_address in self.suspicious_ips:
             self.suspicious_ips[ip_address] += score_increment
         else:
@@ -811,7 +829,8 @@ class SecurityManager:
     
     async def check_permissions(self, token: str, resource: str, 
                                ip_address: str, user_agent: str) -> bool:
-        """Check if user has permissions for resource."""
+        """
+Check if user has permissions for resource."""
         
         access_token = await self.verify_access_token(token)
         if not access_token:
@@ -831,7 +850,8 @@ class SecurityManager:
         return has_permission
     
     async def enable_mfa(self, user_id: str) -> Tuple[str, bytes]:
-        """Enable MFA for user and return secret and QR code."""
+        """
+Enable MFA for user and return secret and QR code."""
         
         user = self.users.get(user_id)
         if not user:

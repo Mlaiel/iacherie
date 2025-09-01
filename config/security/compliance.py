@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ from datetime import datetime, timedelta
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""
+    """
+Supported compliance frameworks."""
+
     GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"                # Personal Information Protection (Canada)
@@ -43,6 +46,7 @@ class ComplianceFramework(Enum):
 
 class DataCategory(Enum):
     """Categories of data for compliance purposes."""
+
     PERSONAL_DATA = "personal_data"
     SENSITIVE_DATA = "sensitive_data"
     FINANCIAL_DATA = "financial_data"
@@ -56,6 +60,7 @@ class DataCategory(Enum):
 
 class LegalBasis(Enum):
     """Legal basis for data processing under GDPR."""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -66,6 +71,7 @@ class LegalBasis(Enum):
 
 class DataSubjectRight(Enum):
     """Data subject rights under privacy regulations."""
+
     ACCESS = "access"                # Right to access personal data
     RECTIFICATION = "rectification"  # Right to correct inaccurate data
     ERASURE = "erasure"             # Right to be forgotten
@@ -560,25 +566,29 @@ def get_compliance_config() -> ComplianceConfig:
 
 
 def get_applicable_frameworks(region: str) -> List[ComplianceFramework]:
-    """Get applicable compliance frameworks for a specific region."""
+    """
+Get applicable compliance frameworks for a specific region."""
     config = get_compliance_config()
     return config.regional_compliance.get(region, [])
 
 
 def is_framework_enabled(framework: ComplianceFramework) -> bool:
-    """Check if a compliance framework is enabled."""
+    """
+Check if a compliance framework is enabled."""
     config = get_compliance_config()
     return framework in config.enabled_frameworks
 
 
 def get_data_retention_period(data_category: DataCategory) -> int:
-    """Get data retention period for a specific data category under GDPR."""
+    """
+Get data retention period for a specific data category under GDPR."""
     config = get_compliance_config()
     return config.gdpr.data_retention_periods.get(data_category, 365)
 
 
 def validate_compliance_config(config: ComplianceConfig) -> bool:
-    """Validate compliance configuration settings."""
+    """
+Validate compliance configuration settings."""
     # Validate enabled frameworks
     for framework in config.enabled_frameworks:
         if not isinstance(framework, ComplianceFramework):

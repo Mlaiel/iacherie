@@ -19,6 +19,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ from ..legal.regulatory_database import RegulatoryDatabase
 
 
 class ComplianceLevel(Enum):
-    """Comprehensive compliance risk levels"""
+    """
+Comprehensive compliance risk levels"""
+
     COMPLIANT = "compliant"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
@@ -54,6 +57,7 @@ class ComplianceLevel(Enum):
 
 class RiskCategory(Enum):
     """Categories of compliance risks"""
+
     LEGAL = "legal"
     FINANCIAL = "financial"
     OPERATIONAL = "operational"
@@ -66,6 +70,7 @@ class RiskCategory(Enum):
 
 class ViolationType(Enum):
     """Types of compliance violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     LICENSING_BREACH = "licensing_breach"
     TERRITORIAL_VIOLATION = "territorial_violation"
@@ -85,6 +90,7 @@ class ViolationType(Enum):
 
 class ComplianceFramework(Enum):
     """Legal and regulatory frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -787,7 +793,8 @@ class UltraAdvancedComplianceMonitor:
         return report
     
     async def _cache_compliance_check(self, check: ComplianceCheck) -> None:
-        """Cache compliance check result"""
+        """
+Cache compliance check result"""
         if not self.redis_client:
             return
         
@@ -868,7 +875,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+Compliance violation record"""
     violation_id: str
     license_id: str
     rule_id: str
@@ -937,7 +945,8 @@ class ComplianceMonitor:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize compliance monitor and regulatory systems"""
+        """
+Initialize compliance monitor and regulatory systems"""
         try:
             self.logger.info("Initializing ComplianceMonitor")
             
@@ -1249,7 +1258,8 @@ class ComplianceMonitor:
         return applicable_rules
     
     async def _validate_against_rule(self, license: Any, rule: ComplianceRule) -> Any:
-        """Validate license against specific compliance rule"""
+        """
+Validate license against specific compliance rule"""
         class RuleValidationResult:
             def __init__(self):
                 self.compliant = True
@@ -1497,7 +1507,8 @@ class ComplianceMonitor:
         compliance_score: float,
         violations: List[ComplianceViolation]
     ) -> ComplianceLevel:
-        """Determine overall compliance level"""
+        """
+Determine overall compliance level"""
         # Check for critical violations
         if any(v.severity == ComplianceLevel.CRITICAL for v in violations):
             return ComplianceLevel.CRITICAL
@@ -1517,7 +1528,8 @@ class ComplianceMonitor:
         compliance_level: ComplianceLevel,
         violations: List[ComplianceViolation]
     ) -> datetime:
-        """Calculate when next compliance review should occur"""
+        """
+Calculate when next compliance review should occur"""
         if compliance_level == ComplianceLevel.CRITICAL:
             # Daily review for critical issues
             return datetime.now() + timedelta(days=1)
@@ -1532,7 +1544,8 @@ class ComplianceMonitor:
             return datetime.now() + timedelta(days=90)
     
     async def _schedule_compliance_checks(self, license_id: str) -> None:
-        """Schedule periodic compliance checks for license"""
+        """
+Schedule periodic compliance checks for license"""
         # This would integrate with task scheduler
         self.logger.info(f"Compliance checks scheduled for license: {license_id}")
     
@@ -1553,7 +1566,8 @@ class ComplianceMonitor:
         return violations
     
     async def _get_current_violations(self, license_id: str) -> List[ComplianceViolation]:
-        """Get current unresolved violations for license"""
+        """
+Get current unresolved violations for license"""
         violations = []
         
         for violation in self.violation_records.values():
@@ -1563,12 +1577,14 @@ class ComplianceMonitor:
         return violations
     
     async def _get_compliance_warnings(self, license_id: str) -> List[Dict[str, Any]]:
-        """Get current compliance warnings for license"""
+        """
+Get current compliance warnings for license"""
         # Mock warnings - would implement actual warning detection
         return []
     
     async def _get_current_risk_assessment(self, license_id: str) -> Dict[str, Any]:
-        """Get current risk assessment for license"""
+        """
+Get current risk assessment for license"""
         return self.risk_assessments.get(license_id, {'risk_score': 0.0})
     
     async def _calculate_compliance_trend(
@@ -1576,7 +1592,8 @@ class ComplianceMonitor:
         license_id: str,
         period_days: int
     ) -> List[Dict[str, Any]]:
-        """Calculate compliance trend over period"""
+        """
+Calculate compliance trend over period"""
         # Mock trend calculation
         return [
             {'date': (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d'), 'score': 95.0 - i}
@@ -1589,7 +1606,8 @@ class ComplianceMonitor:
         violations: List[ComplianceViolation],
         warnings: List[Dict[str, Any]]
     ) -> float:
-        """Calculate overall compliance score for license"""
+        """
+Calculate overall compliance score for license"""
         return await self._calculate_compliance_score(violations, warnings, 10)  # Assume 10 total rules
     
     async def _generate_compliance_recommendations(
@@ -1598,7 +1616,8 @@ class ComplianceMonitor:
         violations: List[ComplianceViolation],
         warnings: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate compliance improvement recommendations"""
+        """
+Generate compliance improvement recommendations"""
         recommendations = []
         
         if violations:
@@ -1626,7 +1645,8 @@ class ComplianceMonitor:
         }
     
     async def _load_compliance_rules(self) -> None:
-        """Load compliance rules from regulatory database"""
+        """
+Load compliance rules from regulatory database"""
         # Mock compliance rules
         self.compliance_rules = {
             'rule_001': ComplianceRule(

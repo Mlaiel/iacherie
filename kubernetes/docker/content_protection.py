@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional content protection Docker configuration for real-time
 monitoring, violation detection, and automated protection systems.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentProtectionDockerConfig:
-    """Enterprise Content Protection Docker configuration"""
+    """
+Enterprise Content Protection Docker configuration"""
     
     # Container Configuration
     image_name: str = "ia-influencer/content-protection"
@@ -277,7 +279,8 @@ CMD ["gunicorn", \\
      "main:app"]
 """
     def _generate_protection_env_vars(self) -> str:
-        """Generate protection mode environment variables"""
+        """
+Generate protection mode environment variables"""
         env_vars = []
         for mode, enabled in self.protection_modes.items():
             env_vars.append(f"ENV PROTECTION_{mode.upper()}_ENABLED={str(enabled).lower()}")
@@ -593,7 +596,8 @@ isort==5.12.0
 flake8==6.1.0
 """
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
+        """
+Save all configuration files to output directory"""
         import os
         from pathlib import Path
         

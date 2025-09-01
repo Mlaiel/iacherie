@@ -7,6 +7,7 @@ revenue tracking, and automated payment distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class LicenseType(Enum):
-    """Types of music licenses"""
+    """
+Types of music licenses"""
+
     SYNC_LICENSE = "sync_license"
     MECHANICAL_LICENSE = "mechanical_license"
     PERFORMANCE_LICENSE = "performance_license"
@@ -33,6 +36,7 @@ class LicenseType(Enum):
 
 class RevenueSource(Enum):
     """Sources of audio revenue"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -47,6 +51,7 @@ class RevenueSource(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing statuses"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"

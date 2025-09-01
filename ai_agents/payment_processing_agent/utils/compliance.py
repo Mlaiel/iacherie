@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, ROUND_HALF_UP
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceStatus(str, Enum):
-    """Compliance verification status"""
+    """
+Compliance verification status"""
+
     PENDING = "pending"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -41,6 +44,7 @@ class ComplianceStatus(str, Enum):
 
 class KYCLevel(str, Enum):
     """KYC verification levels"""
+
     BASIC = "basic"          # Basic identity verification
     STANDARD = "standard"    # Enhanced verification
     PREMIUM = "premium"      # Full verification with source of funds
@@ -48,6 +52,7 @@ class KYCLevel(str, Enum):
 
 class RiskLevel(str, Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -70,7 +75,8 @@ class KYCVerification:
 
 @dataclass
 class AMLScreening:
-    """AML screening result data structure"""
+    """
+AML screening result data structure"""
     creator_id: str
     screening_date: datetime
     risk_level: RiskLevel
@@ -85,7 +91,8 @@ class AMLScreening:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
+    """
+Tax calculation result"""
     creator_id: str
     gross_amount: Decimal
     tax_amount: Decimal
@@ -99,7 +106,8 @@ class TaxCalculation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report data structure"""
+    """
+Compliance report data structure"""
     report_type: str
     creator_id: Optional[str] = None
     period_start: Optional[datetime] = None
@@ -123,7 +131,8 @@ class ComplianceManager:
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None
     ):
-        """Initialize compliance manager"""
+        """
+Initialize compliance manager"""
         self.config = config or PaymentConfig()
         self.db_session = db_session
         
@@ -777,6 +786,7 @@ class ComplianceManager:
         return True  # Mock implementation
 
     async def _is_aml_screening_valid(self, creator_id: str) -> bool:
-        """Check if creator has valid AML screening"""
+        """
+Check if creator has valid AML screening"""
         # Would check database for valid AML screening
         return True  # Mock implementation

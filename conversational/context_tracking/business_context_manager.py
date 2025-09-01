@@ -46,13 +46,14 @@ Lead Business Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 This business intelligence system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic Flow:
 Financial Analysis → Market Intelligence → Strategic Planning → 
 Revenue Optimization → Risk Management → Growth Strategy → 
 Investment Planning → Performance Analytics → Continuous Optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -77,7 +78,9 @@ from ...ai.recommendation.monetization_optimizer import MonetizationOptimizer
 
 
 class RevenueStream(Enum):
-    """Types of revenue streams tracked"""
+    """
+Types of revenue streams tracked"""
+
     ADVERTISING = "advertising"
     SPONSORSHIPS = "sponsorships"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -97,6 +100,7 @@ class RevenueStream(Enum):
 
 class BusinessStage(Enum):
     """Business development stages"""
+
     HOBBY = "hobby"
     EMERGING = "emerging"
     GROWING = "growing"
@@ -107,6 +111,7 @@ class BusinessStage(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization strategy types"""
+
     DIVERSIFIED = "diversified"
     FOCUSED = "focused"
     PASSIVE_INCOME = "passive_income"
@@ -119,6 +124,7 @@ class MonetizationStrategy(Enum):
 
 class MarketSegment(Enum):
     """Target market segments"""
+
     MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
@@ -152,7 +158,8 @@ class RevenueMetrics:
 
 @dataclass
 class BusinessIntelligence:
-    """Business intelligence and analytics"""
+    """
+Business intelligence and analytics"""
     user_id: str
     business_stage: BusinessStage
     revenue_metrics: RevenueMetrics
@@ -170,7 +177,8 @@ class BusinessIntelligence:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity data"""
+    """
+Monetization opportunity data"""
     opportunity_id: str
     user_id: str
     opportunity_type: RevenueStream
@@ -190,7 +198,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class FinancialForecast:
-    """Financial performance forecast"""
+    """
+Financial performance forecast"""
     user_id: str
     forecast_period: timedelta
     revenue_projections: Dict[str, Decimal]
@@ -798,17 +807,20 @@ class BusinessContextManager:
         return MonetizationStrategy.DIVERSIFIED  # Placeholder
     
     async def _identify_market_segments(self, user_id: str, business_data: Dict[str, Any] = None) -> List[MarketSegment]:
-        """Identify target market segments"""
+        """
+Identify target market segments"""
         return [MarketSegment.MUSIC, MarketSegment.ENTERTAINMENT]  # Placeholder
     
     async def _calculate_financial_health_score(self, revenue_metrics: RevenueMetrics) -> float:
-        """Calculate financial health score"""
+        """
+Calculate financial health score"""
         return 0.75  # Placeholder
 
     # Additional helper methods would continue implementing the full business intelligence engine...
 
     async def get_business_insights(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive business insights for user"""
+        """
+Get comprehensive business insights for user"""
         try:
             business_intelligence = await self._get_business_intelligence(user_id)
             if not business_intelligence:

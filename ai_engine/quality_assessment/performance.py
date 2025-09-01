@@ -4,7 +4,7 @@ Advanced performance monitoring and metrics collection for quality assessment op
 Provides real-time monitoring, performance analytics, and resource optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import time
 import logging
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics to collect"""
+    """
+Types of metrics to collect"""
+
     PROCESSING_TIME = "processing_time"
     MEMORY_USAGE = "memory_usage"
     CPU_USAGE = "cpu_usage"
@@ -46,6 +49,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -63,7 +67,8 @@ class PerformanceMetric:
     context: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary"""
+        """
+Convert metric to dictionary"""
         return {
             'name': self.name,
             'value': self.value,
@@ -76,7 +81,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
+    """
+Performance alert"""
     message: str
     severity: AlertSeverity
     metric_name: str
@@ -86,7 +92,8 @@ class PerformanceAlert:
     context: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary"""
+        """
+Convert alert to dictionary"""
         return {
             'message': self.message,
             'severity': self.severity.value,
@@ -100,7 +107,8 @@ class PerformanceAlert:
 
 @dataclass
 class SystemResourceInfo:
-    """System resource information"""
+    """
+System resource information"""
     cpu_percent: float
     memory_percent: float
     memory_available_mb: float
@@ -111,7 +119,8 @@ class SystemResourceInfo:
     timestamp: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'cpu_percent': self.cpu_percent,
             'memory_percent': self.memory_percent,
@@ -156,7 +165,8 @@ class PerformanceTracker:
         self._set_default_thresholds()
     
     def _set_default_thresholds(self):
-        """Set default performance thresholds"""
+        """
+Set default performance thresholds"""
         self.thresholds = {
             'processing_time': {
                 'warning': 30.0,    # 30 seconds
@@ -265,7 +275,8 @@ class PerformanceTracker:
         )
     
     def _check_resource_thresholds(self, resource_info: SystemResourceInfo):
-        """Check resource metrics against thresholds"""
+        """
+Check resource metrics against thresholds"""
         checks = [
             ('cpu_usage', resource_info.cpu_percent, '%'),
             ('memory_usage', resource_info.memory_percent, '%'),
@@ -603,12 +614,14 @@ def get_performance_summary() -> Dict[str, Any]:
 
 
 def start_performance_monitoring(interval: float = 5.0):
-    """Start performance monitoring"""
+    """
+Start performance monitoring"""
     performance_tracker.start_monitoring(interval)
 
 
 def stop_performance_monitoring():
-    """Stop performance monitoring"""
+    """
+Stop performance monitoring"""
     performance_tracker.stop_monitoring()
 
 

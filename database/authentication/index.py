@@ -30,6 +30,7 @@ Multi-Format Creator → Registration → Identity Verification → Multi-Factor
 Device Trust → Biometric Enrollment → Content Upload → AI Protection → 
 Rights Management → Distribution → Monetization → Advanced Analytics
 """
+
 import asyncio
 import hashlib
 import json
@@ -65,7 +66,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Content creator type classifications"""
+    """
+Content creator type classifications"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -78,6 +81,7 @@ class CreatorType(Enum):
     
 class AuthenticationResult(Enum):
     """Authentication operation results"""
+
     SUCCESS = "success"
     INVALID_CREDENTIALS = "invalid_credentials"
     ACCOUNT_LOCKED = "account_locked"
@@ -552,7 +556,8 @@ class AuthenticationDatabaseManager:
         pass
     
     async def get_creator_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive dashboard data for content creator"""
+        """
+Get comprehensive dashboard data for content creator"""
         try:
             dashboard_data = {
                 "authentication_status": {
@@ -894,7 +899,8 @@ class AuthenticationFactory:
         redis_client: redis.Redis,
         config: Dict[str, Any]
     ) -> AuthenticationDatabaseManager:
-        """Create production-ready authentication manager"""
+        """
+Create production-ready authentication manager"""
         return AuthenticationDatabaseManager(
             db_session=db_session,
             redis_client=redis_client,

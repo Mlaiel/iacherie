@@ -5,8 +5,9 @@ Professional base crawler for multi-platform content monitoring and surveillance
 Provides foundation for platform-specific crawlers with advanced detection capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -22,7 +23,9 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 
 class CrawlerStatus(Enum):
-    """Crawler status enumeration"""
+    """
+Crawler status enumeration"""
+
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -32,6 +35,7 @@ class CrawlerStatus(Enum):
 
 class ContentMatchType(Enum):
     """Content match types"""
+
     EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     SIMILAR_CONTENT = "similar_content"
@@ -56,7 +60,8 @@ class CrawlerConfig:
 
 @dataclass
 class ContentMatch:
-    """Content match result"""
+    """
+Content match result"""
     url: str
     platform: str
     title: str
@@ -77,7 +82,8 @@ class ContentMatch:
 
 @dataclass
 class CrawlerResult:
-    """Crawler execution result"""
+    """
+Crawler execution result"""
     platform: str
     crawl_id: str
     start_time: datetime
@@ -134,7 +140,8 @@ class PlatformCrawler(ABC):
         }
     
     async def initialize_session(self):
-        """Initialize HTTP session"""
+        """
+Initialize HTTP session"""
         if not self.session:
             timeout = aiohttp.ClientTimeout(total=self.config.timeout_seconds)
             self.session = aiohttp.ClientSession(
@@ -144,7 +151,8 @@ class PlatformCrawler(ABC):
             )
     
     async def cleanup_session(self):
-        """Cleanup HTTP session"""
+        """
+Cleanup HTTP session"""
         if self.session:
             await self.session.close()
             self.session = None
@@ -405,7 +413,8 @@ class PlatformCrawler(ABC):
         return search_terms[:10]  # Limit to 10 terms
     
     async def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases from text"""
+        """
+Extract key phrases from text"""
         # Simple keyword extraction (in production, would use NLP)
         words = text.split()
         phrases = []
@@ -542,7 +551,8 @@ class PlatformCrawler(ABC):
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _determine_match_type(self, similarity_score: float) -> ContentMatchType:
-        """Determine match type based on similarity score"""
+        """
+Determine match type based on similarity score"""
         if similarity_score >= 0.95:
             return ContentMatchType.EXACT_MATCH
         elif similarity_score >= 0.85:
@@ -555,7 +565,8 @@ class PlatformCrawler(ABC):
             return ContentMatchType.FALSE_POSITIVE
     
     def _parse_upload_date(self, date_str: Any) -> datetime:
-        """Parse upload date from various formats"""
+        """
+Parse upload date from various formats"""
         if isinstance(date_str, datetime):
             return date_str
         
@@ -573,7 +584,8 @@ class PlatformCrawler(ABC):
         return datetime.utcnow()  # Default to now
     
     async def _apply_rate_limit(self):
-        """Apply rate limiting between requests"""
+        """
+Apply rate limiting between requests"""
         current_time = asyncio.get_event_loop().time()
         time_since_last = current_time - self.last_request_time
         
@@ -585,7 +597,8 @@ class PlatformCrawler(ABC):
         self.request_count += 1
     
     async def _extract_search_terms_from_fingerprints(self, fingerprints: Dict[str, Any]) -> List[str]:
-        """Extract search terms from fingerprints"""
+        """
+Extract search terms from fingerprints"""
         terms = []
         
         # Extract from various fingerprint types
@@ -611,13 +624,15 @@ class PlatformCrawler(ABC):
         return list(set(terms))  # Remove duplicates
     
     async def _extract_content_vector(self, content: Dict[str, Any]) -> Optional[List[float]]:
-        """Extract vector representation from content"""
+        """
+Extract vector representation from content"""
         # This would implement content-to-vector conversion
         # Placeholder implementation
         return None
     
     async def _handle_monitoring_matches(self, result: CrawlerResult, callback_url: str = None):
-        """Handle matches found during monitoring"""
+        """
+Handle matches found during monitoring"""
         if not result.matches:
             return
         

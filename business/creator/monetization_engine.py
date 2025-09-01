@@ -5,7 +5,7 @@ multiple streams including subscriptions, merchandise, sponsors, and direct sale
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ logger = get_logger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     SUBSCRIPTIONS = "subscriptions"
     MERCHANDISE = "merchandise"
     SPONSORSHIPS = "sponsorships"
@@ -60,7 +63,8 @@ class SubscriptionManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_subscription_tier(self, creator_id: str, tier_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new subscription tier"""
+        """
+Create new subscription tier"""
         tier_id = f"tier_{creator_id}_{datetime.utcnow().timestamp()}"
         
         subscription_tier = {
@@ -98,14 +102,16 @@ class SubscriptionManager:
 
 
 class MerchandiseManager:
-    """Merchandise management system"""
+    """
+Merchandise management system"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_product(self, creator_id: str, product_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new merchandise product"""
+        """
+Create new merchandise product"""
         product_id = f"prod_{creator_id}_{datetime.utcnow().timestamp()}"
         
         product = {
@@ -131,7 +137,8 @@ class SponsorshipManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def find_sponsorship_opportunities(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Find potential sponsorship opportunities"""
+        """
+Find potential sponsorship opportunities"""
         # Mock sponsorship opportunities
         return [
             {
@@ -145,7 +152,8 @@ class SponsorshipManager:
 
 
 class RevenueAnalytics:
-    """Advanced revenue analytics"""
+    """
+Advanced revenue analytics"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
@@ -167,14 +175,16 @@ class RevenueAnalytics:
 
 
 class PaymentProcessor:
-    """Payment processing integration"""
+    """
+Payment processing integration"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment transaction"""
+        """
+Process payment transaction"""
         payment_id = f"pay_{datetime.utcnow().timestamp()}"
         
         # Mock payment processing
@@ -273,7 +283,8 @@ class MonetizationEngine:
         ]
     
     async def create_revenue_stream(self, creator_id: str, stream_type: RevenueStream, stream_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new revenue stream"""
+        """
+Create new revenue stream"""
         try:
             if stream_type == RevenueStream.SUBSCRIPTIONS:
                 return await self.subscription_manager.create_subscription_tier(creator_id, stream_data)

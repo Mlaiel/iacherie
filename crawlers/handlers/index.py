@@ -22,6 +22,7 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
+
 import asyncio
 import logging
 from typing import Dict, Optional, Any
@@ -169,7 +170,8 @@ class HandlersManager:
         )
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all handlers."""
+        """
+Perform health check on all handlers."""
         try:
             health_status = {
                 'overall_status': 'healthy',
@@ -280,7 +282,8 @@ async def initialize_handlers(
 
 
 async def shutdown_handlers():
-    """Shutdown the global handlers manager."""
+    """
+Shutdown the global handlers manager."""
     global _handlers_manager
     
     if _handlers_manager:
@@ -290,37 +293,43 @@ async def shutdown_handlers():
 
 # Convenience functions for direct handler access
 async def get_content_handler() -> ContentHandler:
-    """Get the content handler instance."""
+    """
+Get the content handler instance."""
     manager = await get_handlers_manager()
     return manager.content_handler
 
 
 async def get_event_dispatcher() -> EventDispatcher:
-    """Get the event dispatcher instance."""
+    """
+Get the event dispatcher instance."""
     manager = await get_handlers_manager()
     return manager.event_dispatcher
 
 
 async def get_response_handler() -> ResponseHandler:
-    """Get the response handler instance."""
+    """
+Get the response handler instance."""
     manager = await get_handlers_manager()
     return manager.response_handler
 
 
 async def get_error_handler() -> ErrorHandler:
-    """Get the error handler instance."""
+    """
+Get the error handler instance."""
     manager = await get_handlers_manager()
     return manager.error_handler
 
 
 async def get_retry_handler() -> RetryHandler:
-    """Get the retry handler instance."""
+    """
+Get the retry handler instance."""
     manager = await get_handlers_manager()
     return manager.retry_handler
 
 
 async def get_data_handler() -> DataHandler:
-    """Get the data handler instance."""
+    """
+Get the data handler instance."""
     manager = await get_handlers_manager()
     return manager.data_handler
 

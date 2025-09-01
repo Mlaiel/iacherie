@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive privacy-preserving capabilities including
 differential privacy, federated learning, and secure multi-party computation.
 """
+
 import logging
 import json
 import os
@@ -22,7 +23,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class PrivacyTechnique(Enum):
-    """Privacy preservation techniques"""
+    """
+Privacy preservation techniques"""
+
     DIFFERENTIAL_PRIVACY = "differential_privacy"
     FEDERATED_LEARNING = "federated_learning"
     SECURE_AGGREGATION = "secure_aggregation"
@@ -31,6 +34,7 @@ class PrivacyTechnique(Enum):
 
 class PrivacyLevel(Enum):
     """Privacy protection levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -49,7 +53,8 @@ class PrivacyConfig:
 
 @dataclass
 class PrivacyMetrics:
-    """Privacy preservation metrics"""
+    """
+Privacy preservation metrics"""
     privacy_loss: float
     utility_score: float
     noise_level: float
@@ -57,7 +62,8 @@ class PrivacyMetrics:
     security_strength: float
 
 class PrivacyPreserver:
-    """Main privacy preservation orchestrator"""
+    """
+Main privacy preservation orchestrator"""
     
     def __init__(self, config: PrivacyConfig):
         self.config = config
@@ -150,7 +156,8 @@ class PrivacyPreserver:
         return base_cost.get(technique, 0.05)
     
     def _assess_reidentification_risk(self, data: Any) -> float:
-        """Assess re-identification risk"""
+        """
+Assess re-identification risk"""
         # Simplified risk assessment
         if isinstance(data, dict):
             identifiable_fields = ["name", "email", "phone", "ssn", "address"]

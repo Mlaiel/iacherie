@@ -6,6 +6,7 @@ and database-specific metrics with intelligent alerting and trend analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import time
 import psutil
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class ResourceType(Enum):
-    """Types of system resources"""
+    """
+Types of system resources"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK_IO = "disk_io"
@@ -39,6 +42,7 @@ class ResourceType(Enum):
 
 class AlertLevel(Enum):
     """Resource alert levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -47,6 +51,7 @@ class AlertLevel(Enum):
 
 class TrendDirection(Enum):
     """Resource usage trend directions"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -67,7 +72,8 @@ class ResourceThreshold:
 
 @dataclass
 class ResourceMetrics:
-    """Resource usage metrics at a point in time"""
+    """
+Resource usage metrics at a point in time"""
     timestamp: datetime
     cpu_percent: float = 0.0
     memory_percent: float = 0.0
@@ -91,7 +97,8 @@ class ResourceMetrics:
     
     @property
     def connection_utilization(self) -> float:
-        """Calculate connection pool utilization percentage"""
+        """
+Calculate connection pool utilization percentage"""
         if self.total_connections == 0:
             return 0.0
         return (self.active_connections / self.total_connections) * 100
@@ -99,7 +106,8 @@ class ResourceMetrics:
 
 @dataclass
 class ResourceAlert:
-    """Resource usage alert"""
+    """
+Resource usage alert"""
     alert_id: str
     resource_type: ResourceType
     level: AlertLevel
@@ -112,7 +120,8 @@ class ResourceAlert:
     duration: Optional[timedelta] = None
     
     def resolve(self) -> None:
-        """Mark alert as resolved"""
+        """
+Mark alert as resolved"""
         if not self.resolved:
             self.resolved = True
             self.resolved_at = datetime.now()
@@ -121,7 +130,8 @@ class ResourceAlert:
 
 @dataclass
 class ResourceTrend:
-    """Resource usage trend analysis"""
+    """
+Resource usage trend analysis"""
     resource_type: ResourceType
     direction: TrendDirection
     rate_of_change: float  # Units per minute
@@ -132,18 +142,21 @@ class ResourceTrend:
 
 
 class ResourcePredictor:
-    """Predictive analytics for resource usage"""
+    """
+Predictive analytics for resource usage"""
     
     def __init__(self, window_size: int = 60):
         self.window_size = window_size
         self._data_points: Dict[ResourceType, deque] = defaultdict(lambda: deque(maxlen=window_size))
     
     def add_data_point(self, resource_type: ResourceType, value: float, timestamp: datetime) -> None:
-        """Add a data point for trend analysis"""
+        """
+Add a data point for trend analysis"""
         self._data_points[resource_type].append((timestamp, value))
     
     def analyze_trend(self, resource_type: ResourceType) -> Optional[ResourceTrend]:
-        """Analyze trend for a specific resource"""
+        """
+Analyze trend for a specific resource"""
         data = self._data_points[resource_type]
         if len(data) < 10:  # Need minimum data points
             return None
@@ -234,7 +247,8 @@ class ResourcePredictor:
 
 
 class ResourceMonitor:
-    """Advanced system and database resource monitor"""
+    """
+Advanced system and database resource monitor"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -264,7 +278,8 @@ class ResourceMonitor:
         self._alert_callbacks: List[Callable[[ResourceAlert], Awaitable[None]]] = []
     
     def _load_thresholds(self) -> Dict[ResourceType, ResourceThreshold]:
-        """Load resource monitoring thresholds"""
+        """
+Load resource monitoring thresholds"""
         default_thresholds = {
             ResourceType.CPU: ResourceThreshold(
                 resource_type=ResourceType.CPU,
@@ -302,7 +317,8 @@ class ResourceMonitor:
         return default_thresholds
     
     async def start_monitoring(self, database_engine: Optional[AsyncEngine] = None) -> None:
-        """Start resource monitoring"""
+        """
+Start resource monitoring"""
         try:
             self._database_engine = database_engine
             
@@ -492,7 +508,8 @@ class ResourceMonitor:
                                      metrics.connection_utilization, timestamp)
     
     async def _check_thresholds(self, metrics: ResourceMetrics) -> None:
-        """Check metrics against thresholds and generate alerts"""
+        """
+Check metrics against thresholds and generate alerts"""
         checks = [
             (ResourceType.CPU, metrics.cpu_percent),
             (ResourceType.MEMORY, metrics.memory_percent),
@@ -508,7 +525,8 @@ class ResourceMonitor:
             await self._check_single_threshold(resource_type, current_value, threshold)
     
     async def _check_single_threshold(self, resource_type: ResourceType, current_value: float, threshold: ResourceThreshold) -> None:
-        """Check a single resource against its threshold"""
+        """
+Check a single resource against its threshold"""
         alert_level = None
         threshold_value = None
         
@@ -573,7 +591,8 @@ class ResourceMonitor:
         self._alert_callbacks.append(callback)
     
     async def _send_metrics(self, metrics: ResourceMetrics) -> None:
-        """Send metrics to monitoring system"""
+        """
+Send metrics to monitoring system"""
         try:
             # System metrics
             self.metrics_collector.gauge("system_cpu_percent", metrics.cpu_percent)
@@ -609,11 +628,13 @@ class ResourceMonitor:
         ]
     
     def get_current_metrics(self) -> Optional[ResourceMetrics]:
-        """Get the most recent metrics"""
+        """
+Get the most recent metrics"""
         return self._metrics_history[-1] if self._metrics_history else None
     
     def get_metrics_history(self, hours: int = 1) -> List[ResourceMetrics]:
-        """Get metrics history for specified hours"""
+        """
+Get metrics history for specified hours"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         return [
             metrics for metrics in self._metrics_history
@@ -621,11 +642,13 @@ class ResourceMonitor:
         ]
     
     def get_active_alerts(self) -> List[ResourceAlert]:
-        """Get all active alerts"""
+        """
+Get all active alerts"""
         return list(self._active_alerts.values())
     
     def get_alert_history(self, hours: int = 24) -> List[ResourceAlert]:
-        """Get alert history for specified hours"""
+        """
+Get alert history for specified hours"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         return [
             alert for alert in self._alert_history
@@ -633,11 +656,13 @@ class ResourceMonitor:
         ]
     
     def get_resource_trends(self) -> Dict[ResourceType, ResourceTrend]:
-        """Get current resource trends"""
+        """
+Get current resource trends"""
         return self.predictor.get_all_trends()
     
     async def get_resource_summary(self) -> Dict[str, Any]:
-        """Get comprehensive resource summary"""
+        """
+Get comprehensive resource summary"""
         current_metrics = self.get_current_metrics()
         active_alerts = self.get_active_alerts()
         trends = self.get_resource_trends()
@@ -688,13 +713,15 @@ def get_resource_monitor(config: Optional[Dict[str, Any]] = None) -> ResourceMon
 
 
 async def start_resource_monitoring(database_engine: Optional[AsyncEngine] = None, config: Optional[Dict[str, Any]] = None) -> None:
-    """Start global resource monitoring"""
+    """
+Start global resource monitoring"""
     monitor = get_resource_monitor(config)
     await monitor.start_monitoring(database_engine)
 
 
 async def stop_resource_monitoring() -> None:
-    """Stop global resource monitoring"""
+    """
+Stop global resource monitoring"""
     global _resource_monitor
     
     if _resource_monitor:
@@ -703,7 +730,8 @@ async def stop_resource_monitoring() -> None:
 
 
 class ContentProtectionResourceMonitor:
-    """Specialized resource monitor for content protection operations"""
+    """
+Specialized resource monitor for content protection operations"""
     
     def __init__(self, base_monitor: ResourceMonitor):
         self.base_monitor = base_monitor
@@ -726,7 +754,8 @@ class ContentProtectionResourceMonitor:
         content_size: int,
         vector_dimension: int = None
     ) -> Dict[str, Any]:
-        """Monitor fingerprint generation operation"""
+        """
+Monitor fingerprint generation operation"""
         start_time = time.time()
         start_memory = psutil.Process().memory_info().rss / 1024 / 1024  # MB
         
@@ -800,7 +829,8 @@ class ContentProtectionResourceMonitor:
             return max(0, 100 - ((search_time - baseline_time) / baseline_time * 100))
     
     def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get content protection specific metrics"""
+        """
+Get content protection specific metrics"""
         if not self.fingerprint_metrics['processing_time']:
             return {}
         
@@ -816,7 +846,8 @@ class ContentProtectionResourceMonitor:
 
 
 class MonetizationResourceMonitor:
-    """Specialized resource monitor for monetization operations"""
+    """
+Specialized resource monitor for monetization operations"""
     
     def __init__(self, base_monitor: ResourceMonitor):
         self.base_monitor = base_monitor
@@ -838,7 +869,8 @@ class MonetizationResourceMonitor:
         user_count: int, 
         period_days: int
     ) -> Dict[str, Any]:
-        """Monitor revenue calculation performance"""
+        """
+Monitor revenue calculation performance"""
         start_time = time.time()
         
         try:
@@ -894,7 +926,8 @@ class MonetizationResourceMonitor:
             return max(0, 100 - ((calculation_time - baseline_time) / baseline_time * 100))
     
     def _calculate_report_performance(self, generation_time: float, data_points: int) -> float:
-        """Calculate report generation performance score"""
+        """
+Calculate report generation performance score"""
         # Baseline: 0.01 second per data point is score 100
         baseline_time = data_points * 0.01
         if generation_time <= baseline_time:
@@ -903,7 +936,8 @@ class MonetizationResourceMonitor:
             return max(0, 100 - ((generation_time - baseline_time) / baseline_time * 100))
     
     def get_monetization_metrics(self) -> Dict[str, Any]:
-        """Get monetization specific metrics"""
+        """
+Get monetization specific metrics"""
         if not self.revenue_metrics['calculation_time']:
             return {}
         
@@ -918,7 +952,8 @@ class MonetizationResourceMonitor:
 
 
 class MultimediaResourceMonitor:
-    """Specialized resource monitor for multimedia processing operations"""
+    """
+Specialized resource monitor for multimedia processing operations"""
     
     def __init__(self, base_monitor: ResourceMonitor):
         self.base_monitor = base_monitor
@@ -943,7 +978,8 @@ class MultimediaResourceMonitor:
         file_size: int, 
         format: str
     ) -> Dict[str, Any]:
-        """Monitor content upload performance"""
+        """
+Monitor content upload performance"""
         start_time = time.time()
         
         try:
@@ -1044,7 +1080,8 @@ class AIProcessingResourceMonitor:
         input_size: int,
         batch_size: int = 1
     ) -> Dict[str, Any]:
-        """Monitor ML model inference performance"""
+        """
+Monitor ML model inference performance"""
         start_time = time.time()
         start_memory = psutil.Process().memory_info().rss / 1024 / 1024
         

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Content format types"""
+    """
+Content format types"""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
@@ -56,6 +59,7 @@ class ContentFormat(Enum):
 
 class PlatformType(Enum):
     """Platform types for content distribution"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -74,6 +78,7 @@ class PlatformType(Enum):
 
 class MetricType(Enum):
     """Types of performance metrics"""
+
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -441,7 +446,8 @@ class MetricsCollector:
         content_performance: ContentPerformance,
         metrics: Dict[MetricType, Union[int, float, Decimal]]
     ):
-        """Check if any performance alerts should be triggered"""
+        """
+Check if any performance alerts should be triggered"""
         # Get active alerts for this user/content
         alerts = self.db_session.query(PerformanceAlerts).filter(
             PerformanceAlerts.user_id == content_performance.user_id,

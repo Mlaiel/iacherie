@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class SessionState(Enum):
-    """Multilingual session states"""
+    """
+Multilingual session states"""
+
     INITIALIZING = "initializing"
     LANGUAGE_DETECTION = "language_detection"
     ACTIVE = "active"
@@ -79,6 +82,7 @@ class SessionState(Enum):
 
 class CrossLanguageStrategy(Enum):
     """Strategies for cross-language conversations"""
+
     AUTO_TRANSLATE = "auto_translate"
     MANUAL_TRANSLATE = "manual_translate"
     LANGUAGE_SWITCH = "language_switch"
@@ -109,7 +113,8 @@ class MultilingualSession:
 
 @dataclass
 class LanguageFlowEvent:
-    """Language flow event for tracking and analytics"""
+    """
+Language flow event for tracking and analytics"""
     event_id: str
     session_id: str
     event_type: str  # detection, translation, adaptation, switch
@@ -124,7 +129,8 @@ class LanguageFlowEvent:
 
 @dataclass
 class MultilingualResponse:
-    """Comprehensive multilingual response"""
+    """
+Comprehensive multilingual response"""
     original_message: str
     processed_message: LocalizedMessage
     language_detection: Optional[LanguageDetectionResult] = None
@@ -157,7 +163,8 @@ class LanguageFlowManager:
         target_language: Optional[SupportedLanguage] = None,
         **kwargs
     ) -> LanguageFlowEvent:
-        """Track language flow event for analytics"""
+        """
+Track language flow event for analytics"""
         try:
             event = LanguageFlowEvent(
                 event_id=str(uuid.uuid4()),
@@ -295,7 +302,8 @@ class CrossLanguageContextManager:
         primary_context: ConversationContext,
         target_languages: List[SupportedLanguage]
     ) -> Dict[str, ConversationContext]:
-        """Create cross-language contexts for session"""
+        """
+Create cross-language contexts for session"""
         try:
             contexts = {}
             
@@ -404,7 +412,8 @@ class MultilingualSessionManager:
         target_languages: List[SupportedLanguage],
         **kwargs
     ) -> MultilingualSession:
-        """Create new multilingual session"""
+        """
+Create new multilingual session"""
         try:
             session_id = str(uuid.uuid4())
             
@@ -627,7 +636,8 @@ class InternationalConversationHandler:
         conversation_context: ConversationContext,
         cross_language_strategy: CrossLanguageStrategy = CrossLanguageStrategy.AUTO_TRANSLATE
     ) -> MultilingualResponse:
-        """Handle international conversation with cultural awareness"""
+        """
+Handle international conversation with cultural awareness"""
         try:
             start_time = datetime.now()
             processing_chain = []
@@ -730,7 +740,8 @@ class InternationalConversationHandler:
         response: MultilingualResponse,
         context: ConversationContext
     ):
-        """Apply international conversation patterns"""
+        """
+Apply international conversation patterns"""
         try:
             # Apply time zone awareness
             if context.cultural_context:

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Audience Development AI Agents
+"""
+Test suite for Audience Development AI Agents
 
 Tests all functionalities of audience development, community building, 
 engagement optimization, and growth strategy agents.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -26,6 +28,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,16 +52,19 @@ from ai.ai_agents.audience_development_agents import (
 
 
 class TestAudienceDevelopmentAgent:
-    """Test AudienceDevelopmentAgent functionality"""
+    """
+Test AudienceDevelopmentAgent functionality"""
     
     @pytest.fixture
     def agent(self):
-        """Create AudienceDevelopmentAgent instance"""
+        """
+Create AudienceDevelopmentAgent instance"""
         return AudienceDevelopmentAgent()
     
     @pytest.fixture
     def sample_audience_data(self):
-        """Sample audience data for testing"""
+        """
+Sample audience data for testing"""
         return {
             "total_followers": 15000,
             "monthly_growth": 1200,
@@ -166,12 +172,14 @@ class TestCommunityBuildingAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create CommunityBuildingAgent instance"""
+        """
+Create CommunityBuildingAgent instance"""
         return CommunityBuildingAgent()
     
     @pytest.fixture
     def sample_community_data(self):
-        """Sample community data for testing"""
+        """
+Sample community data for testing"""
         return {
             "total_members": 5000,
             "active_members": 1500,
@@ -206,7 +214,8 @@ class TestCommunityBuildingAgent:
     
     @pytest.mark.asyncio
     async def test_identify_community_leaders(self, agent, sample_community_data):
-        """Test community leader identification"""
+        """
+Test community leader identification"""
         leaders = await agent.identify_community_leaders(sample_community_data)
         
         assert isinstance(leaders, list)
@@ -253,12 +262,14 @@ class TestEngagementOptimizationAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create EngagementOptimizationAgent instance"""
+        """
+Create EngagementOptimizationAgent instance"""
         return EngagementOptimizationAgent()
     
     @pytest.fixture
     def sample_engagement_data(self):
-        """Sample engagement data for testing"""
+        """
+Sample engagement data for testing"""
         return {
             "content_performance": {
                 "posts": [
@@ -347,12 +358,14 @@ class TestGrowthStrategyAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create GrowthStrategyAgent instance"""
+        """
+Create GrowthStrategyAgent instance"""
         return GrowthStrategyAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for testing"""
+        """
+Sample creator profile for testing"""
         return {
             "creator_id": "test_creator",
             "current_metrics": {
@@ -383,7 +396,8 @@ class TestGrowthStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_competitor_strategies(self, agent, sample_creator_profile):
-        """Test competitor strategy analysis"""
+        """
+Test competitor strategy analysis"""
         competitor_analysis = await agent.analyze_competitor_strategies(
             sample_creator_profile,
             competitor_data=[
@@ -430,7 +444,8 @@ class TestIntegrationScenarios:
     
     @pytest.fixture
     def agents(self):
-        """Create all agents for integration testing"""
+        """
+Create all agents for integration testing"""
         return {
             "audience_dev": AudienceDevelopmentAgent(),
             "community": CommunityBuildingAgent(),
@@ -494,12 +509,14 @@ class TestErrorHandling:
     
     @pytest.fixture
     def agent(self):
-        """Create AudienceDevelopmentAgent for error testing"""
+        """
+Create AudienceDevelopmentAgent for error testing"""
         return AudienceDevelopmentAgent()
     
     @pytest.mark.asyncio
     async def test_invalid_audience_data(self, agent):
-        """Test handling of invalid audience data"""
+        """
+Test handling of invalid audience data"""
         invalid_data = {"invalid": "data"}
         
         with pytest.raises((ValueError, KeyError)):
@@ -520,7 +537,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_network_failure_handling(self, agent):
-        """Test handling of network failures"""
+        """
+Test handling of network failures"""
         with patch('aiohttp.ClientSession.post') as mock_post:
             mock_post.side_effect = Exception("Network error")
             
@@ -539,12 +557,14 @@ class TestPerformanceAndScaling:
     
     @pytest.fixture
     def agent(self):
-        """Create AudienceDevelopmentAgent for performance testing"""
+        """
+Create AudienceDevelopmentAgent for performance testing"""
         return AudienceDevelopmentAgent()
     
     @pytest.mark.asyncio
     async def test_large_dataset_processing(self, agent):
-        """Test processing of large audience datasets"""
+        """
+Test processing of large audience datasets"""
         large_dataset = {
             "total_followers": 1000000,
             "demographics": {

@@ -6,6 +6,7 @@ performance based on access patterns, content characteristics, and business logi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import math
@@ -22,7 +23,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class EvictionReason(Enum):
-    """Reasons for cache entry eviction"""
+    """
+Reasons for cache entry eviction"""
+
     TTL_EXPIRED = "ttl_expired"
     MEMORY_PRESSURE = "memory_pressure"
     LRU_EVICTION = "lru_eviction"
@@ -47,7 +50,8 @@ class AccessPattern:
 
 @dataclass
 class EvictionCandidate:
-    """Candidate for cache eviction with scoring"""
+    """
+Candidate for cache eviction with scoring"""
     key: str
     score: float
     reason: EvictionReason
@@ -56,7 +60,8 @@ class EvictionCandidate:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class CacheStrategy(ABC):
-    """Abstract base class for cache strategies"""
+    """
+Abstract base class for cache strategies"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -64,7 +69,8 @@ class CacheStrategy(ABC):
         
     @abstractmethod
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
-        """Determine if item should be cached"""
+        """
+Determine if item should be cached"""
         pass
     
     @abstractmethod
@@ -75,17 +81,20 @@ class CacheStrategy(ABC):
         current_usage: int,
         max_capacity: int
     ) -> List[EvictionCandidate]:
-        """Select entries for eviction"""
+        """
+Select entries for eviction"""
         pass
     
     @abstractmethod
     async def update_access_pattern(self, key: str, access_info: Dict[str, Any]):
-        """Update access pattern for cache optimization"""
+        """
+Update access pattern for cache optimization"""
         pass
     
     def record_access(self, key: str, user_id: Optional[str] = None, 
                      location: Optional[str] = None):
-        """Record cache access for pattern analysis"""
+        """
+Record cache access for pattern analysis"""
         if key not in self.access_patterns:
             self.access_patterns[key] = AccessPattern(key=key)
         
@@ -121,7 +130,8 @@ class CacheStrategy(ABC):
             pattern.user_diversity.add(user_id)
 
 class LRUStrategy(CacheStrategy):
-    """Least Recently Used eviction strategy with enhanced analytics"""
+    """
+Least Recently Used eviction strategy with enhanced analytics"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -129,7 +139,8 @@ class LRUStrategy(CacheStrategy):
         self.access_times: Dict[str, datetime] = {}
     
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
-        """Always cache with LRU - relies on eviction for space management"""
+        """
+Always cache with LRU - relies on eviction for space management"""
         return True
     
     async def select_eviction_candidates(
@@ -139,7 +150,8 @@ class LRUStrategy(CacheStrategy):
         current_usage: int,
         max_capacity: int
     ) -> List[EvictionCandidate]:
-        """Select least recently used entries for eviction"""
+        """
+Select least recently used entries for eviction"""
         candidates = []
         
         # Sort entries by last access time (oldest first)
@@ -166,7 +178,8 @@ class LRUStrategy(CacheStrategy):
         return candidates
     
     async def update_access_pattern(self, key: str, access_info: Dict[str, Any]):
-        """Update LRU access tracking"""
+        """
+Update LRU access tracking"""
         self.record_access(
             key, 
             access_info.get('user_id'),
@@ -186,7 +199,8 @@ class LRUStrategy(CacheStrategy):
         self.access_times[key] = datetime.utcnow()
 
 class TTLStrategy(CacheStrategy):
-    """Time-To-Live based eviction with smart TTL adjustment"""
+    """
+Time-To-Live based eviction with smart TTL adjustment"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -194,7 +208,8 @@ class TTLStrategy(CacheStrategy):
         self.ttl_adjustments: Dict[str, float] = {}  # Key -> TTL multiplier
     
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
-        """Cache with TTL consideration"""
+        """
+Cache with TTL consideration"""
         content_type = metadata.get('content_type')
         
         # Don't cache very short-lived data
@@ -210,7 +225,8 @@ class TTLStrategy(CacheStrategy):
         current_usage: int,
         max_capacity: int
     ) -> List[EvictionCandidate]:
-        """Select expired and near-expiry entries"""
+        """
+Select expired and near-expiry entries"""
         candidates = []
         current_time = datetime.utcnow()
         
@@ -248,7 +264,8 @@ class TTLStrategy(CacheStrategy):
         return candidates
     
     async def update_access_pattern(self, key: str, access_info: Dict[str, Any]):
-        """Update TTL based on access patterns"""
+        """
+Update TTL based on access patterns"""
         self.record_access(
             key,
             access_info.get('user_id'),
@@ -270,7 +287,8 @@ class TTLStrategy(CacheStrategy):
                 self.ttl_adjustments[key] = 1.0
 
 class AdaptiveStrategy(CacheStrategy):
-    """Intelligent adaptive strategy combining multiple algorithms"""
+    """
+Intelligent adaptive strategy combining multiple algorithms"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -290,7 +308,8 @@ class AdaptiveStrategy(CacheStrategy):
         self.strategy_performance: Dict[str, List[float]] = defaultdict(list)
     
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
-        """Intelligent caching decision based on multiple factors"""
+        """
+Intelligent caching decision based on multiple factors"""
         content_type = metadata.get('content_type', '')
         size_bytes = metadata.get('size_bytes', 0)
         priority = metadata.get('priority', 'normal')
@@ -331,7 +350,8 @@ class AdaptiveStrategy(CacheStrategy):
         current_usage: int,
         max_capacity: int
     ) -> List[EvictionCandidate]:
-        """Advanced eviction selection using composite scoring"""
+        """
+Advanced eviction selection using composite scoring"""
         candidates = []
         
         for key, entry in cache_entries.items():
@@ -356,7 +376,8 @@ class AdaptiveStrategy(CacheStrategy):
         return candidates
     
     async def update_access_pattern(self, key: str, access_info: Dict[str, Any]):
-        """Update comprehensive access patterns"""
+        """
+Update comprehensive access patterns"""
         await self.lru_strategy.update_access_pattern(key, access_info)
         await self.ttl_strategy.update_access_pattern(key, access_info)
         
@@ -367,7 +388,8 @@ class AdaptiveStrategy(CacheStrategy):
         )
     
     async def _calculate_eviction_score(self, key: str, entry: Any) -> float:
-        """Calculate composite eviction score"""
+        """
+Calculate composite eviction score"""
         score = 0.0
         
         # Access frequency component (inverse - less frequent = higher eviction score)
@@ -402,7 +424,8 @@ class AdaptiveStrategy(CacheStrategy):
         return score
     
     def _determine_eviction_reason(self, key: str, entry: Any, score: float) -> EvictionReason:
-        """Determine primary reason for eviction"""
+        """
+Determine primary reason for eviction"""
         if entry.ttl and (datetime.utcnow() - entry.created_at).total_seconds() >= entry.ttl:
             return EvictionReason.TTL_EXPIRED
         
@@ -415,7 +438,8 @@ class AdaptiveStrategy(CacheStrategy):
         return EvictionReason.LRU_EVICTION
 
 class GeographicStrategy(CacheStrategy):
-    """Geographic locality-aware caching strategy"""
+    """
+Geographic locality-aware caching strategy"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -423,7 +447,8 @@ class GeographicStrategy(CacheStrategy):
         self.location_access_counts: Dict[Tuple[str, str], int] = defaultdict(int)
     
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
-        """Cache based on geographic relevance"""
+        """
+Cache based on geographic relevance"""
         user_location = metadata.get('user_location')
         content_regions = metadata.get('relevant_regions', [])
         
@@ -452,7 +477,8 @@ class GeographicStrategy(CacheStrategy):
         current_usage: int,
         max_capacity: int
     ) -> List[EvictionCandidate]:
-        """Select entries with poor geographic relevance"""
+        """
+Select entries with poor geographic relevance"""
         candidates = []
         
         for key, entry in cache_entries.items():
@@ -485,7 +511,8 @@ class GeographicStrategy(CacheStrategy):
         return candidates
     
     async def update_access_pattern(self, key: str, access_info: Dict[str, Any]):
-        """Update geographic access patterns"""
+        """
+Update geographic access patterns"""
         self.record_access(
             key,
             access_info.get('user_id'),
@@ -501,7 +528,8 @@ class GeographicStrategy(CacheStrategy):
             self.regional_preferences[location].add(key)
 
 class ContentAwareStrategy(CacheStrategy):
-    """Content-type aware caching with specialized handling"""
+    """
+Content-type aware caching with specialized handling"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -521,7 +549,8 @@ class ContentAwareStrategy(CacheStrategy):
         }
     
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
-        """Content-aware caching decisions"""
+        """
+Content-aware caching decisions"""
         content_type = metadata.get('content_type')
         
         if not content_type:
@@ -551,7 +580,8 @@ class ContentAwareStrategy(CacheStrategy):
         current_usage: int,
         max_capacity: int
     ) -> List[EvictionCandidate]:
-        """Content-aware eviction selection"""
+        """
+Content-aware eviction selection"""
         candidates = []
         
         for key, entry in cache_entries.items():
@@ -595,7 +625,8 @@ class ContentAwareStrategy(CacheStrategy):
         return candidates
     
     async def update_access_pattern(self, key: str, access_info: Dict[str, Any]):
-        """Update content-aware access patterns"""
+        """
+Update content-aware access patterns"""
         self.record_access(
             key,
             access_info.get('user_id'), 
@@ -608,7 +639,8 @@ class ContentAwareStrategy(CacheStrategy):
             await self._analyze_new_content_type(content_type, access_info)
     
     async def _analyze_new_content_type(self, content_type: str, access_info: Dict[str, Any]):
-        """Analyze and create rules for new content types"""
+        """
+Analyze and create rules for new content types"""
         # This would implement ML-based content type analysis
         # For now, use heuristics based on content type name
         

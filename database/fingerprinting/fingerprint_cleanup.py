@@ -6,6 +6,7 @@ lifecycle management, intelligent retention policies, and performance optimizati
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class CleanupAction(Enum):
-    """Types of cleanup actions"""
+    """
+Types of cleanup actions"""
+
     SOFT_DELETE = "soft_delete"
     HARD_DELETE = "hard_delete"
     ARCHIVE = "archive"
@@ -42,6 +45,7 @@ class CleanupAction(Enum):
 
 class RetentionPolicyType(Enum):
     """Types of retention policies"""
+
     TIME_BASED = "time_based"
     SIZE_BASED = "size_based"
     ACCESS_BASED = "access_based"
@@ -89,7 +93,8 @@ class RetentionPolicy:
 
 @dataclass
 class CleanupReport:
-    """Report of cleanup operations"""
+    """
+Report of cleanup operations"""
     policy_name: str
     start_time: datetime
     end_time: datetime
@@ -130,7 +135,8 @@ class CleanupReport:
 
 
 class FingerprintAnalyzer:
-    """Analyze fingerprint data for cleanup decisions"""
+    """
+Analyze fingerprint data for cleanup decisions"""
     
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
@@ -907,7 +913,8 @@ class FingerprintCleanupService:
         return self.cleanup_history[-limit:] if self.cleanup_history else []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on cleanup service"""
+        """
+Perform health check on cleanup service"""
         try:
             health = {
                 "status": "healthy",

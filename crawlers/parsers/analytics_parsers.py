@@ -5,13 +5,14 @@ Specialized parsers for extracting analytics data from various platforms.
 Handles Google Analytics, social media insights, and performance metrics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import re
@@ -27,7 +28,8 @@ from .parser_config import ParserConfig
 
 
 class BaseAnalyticsParser(ABC):
-    """Abstract base class for analytics parsers"""
+    """
+Abstract base class for analytics parsers"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -35,27 +37,32 @@ class BaseAnalyticsParser(ABC):
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_analytics(self, **kwargs) -> Dict[str, Any]:
-        """Parse analytics data from platform"""
+        """
+Parse analytics data from platform"""
         pass
     
     @abstractmethod
     def get_platform_name(self) -> str:
-        """Get the platform name for this analytics parser"""
+        """
+Get the platform name for this analytics parser"""
         pass
     
     def _calculate_date_range(self, days: Optional[int] = None) -> tuple:
-        """Calculate date range for analytics queries"""
+        """
+Calculate date range for analytics queries"""
         if days is None:
             days = self.analytics_config.date_range_days
         
@@ -262,7 +269,8 @@ class GoogleAnalyticsParser(BaseAnalyticsParser):
 
 
 class FacebookInsightsParser(BaseAnalyticsParser):
-    """Parser for Facebook Insights data"""
+    """
+Parser for Facebook Insights data"""
     
     def get_platform_name(self) -> str:
         return "facebook_insights"
@@ -371,7 +379,8 @@ class FacebookInsightsParser(BaseAnalyticsParser):
 
 
 class TwitterAnalyticsParser(BaseAnalyticsParser):
-    """Parser for Twitter Analytics data"""
+    """
+Parser for Twitter Analytics data"""
     
     def get_platform_name(self) -> str:
         return "twitter_analytics"
@@ -417,7 +426,8 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
         }
     
     async def _parse_twitter_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Twitter metrics data"""
+        """
+Parse Twitter metrics data"""
         return {
             'overview': {
                 'total_tweets': 0,
@@ -431,7 +441,8 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
 
 
 class YouTubeAnalyticsParser(BaseAnalyticsParser):
-    """Parser for YouTube Analytics data"""
+    """
+Parser for YouTube Analytics data"""
     
     def get_platform_name(self) -> str:
         return "youtube_analytics"
@@ -535,7 +546,8 @@ class YouTubeAnalyticsParser(BaseAnalyticsParser):
 
 
 class InstagramInsightsParser(BaseAnalyticsParser):
-    """Parser for Instagram Insights data"""
+    """
+Parser for Instagram Insights data"""
     
     def get_platform_name(self) -> str:
         return "instagram_insights"
@@ -628,7 +640,8 @@ class InstagramInsightsParser(BaseAnalyticsParser):
 
 
 class TikTokAnalyticsParser(BaseAnalyticsParser):
-    """Parser for TikTok Analytics data"""
+    """
+Parser for TikTok Analytics data"""
     
     def get_platform_name(self) -> str:
         return "tiktok_analytics"
@@ -667,7 +680,8 @@ class TikTokAnalyticsParser(BaseAnalyticsParser):
         return {}
     
     async def _parse_tiktok_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse TikTok Analytics data"""
+        """
+Parse TikTok Analytics data"""
         return {
             'overview': {},
             'time_series': [],
@@ -677,7 +691,8 @@ class TikTokAnalyticsParser(BaseAnalyticsParser):
 
 
 class SpotifyAnalyticsParser(BaseAnalyticsParser):
-    """Parser for Spotify for Artists analytics data"""
+    """
+Parser for Spotify for Artists analytics data"""
     
     def get_platform_name(self) -> str:
         return "spotify_analytics"
@@ -716,7 +731,8 @@ class SpotifyAnalyticsParser(BaseAnalyticsParser):
         return {}
     
     async def _parse_spotify_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify analytics data"""
+        """
+Parse Spotify analytics data"""
         return {
             'overview': {
                 'total_streams': 0,

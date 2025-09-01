@@ -6,6 +6,7 @@ Handles earnings tracking, profit sharing, and financial transparency.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueSource(Enum):
-    """Revenue source enumeration"""
+    """
+Revenue source enumeration"""
+
     CONTENT_SALES = "content_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
@@ -43,6 +46,7 @@ class RevenueSource(Enum):
 
 class ShareType(Enum):
     """Revenue share type enumeration"""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED_PERCENTAGE = "tiered_percentage"
@@ -51,6 +55,7 @@ class ShareType(Enum):
 
 class PaymentStatus(Enum):
     """Payment status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -364,7 +369,8 @@ class PaymentDistribution(Base):
 
 @dataclass
 class RevenueShareRequest:
-    """Data class for revenue share agreement creation"""
+    """
+Data class for revenue share agreement creation"""
     project_id: str
     agreement_name: str
     created_by: str
@@ -378,7 +384,8 @@ class RevenueShareRequest:
 
 @dataclass
 class RevenueEntryRequest:
-    """Data class for revenue entry creation"""
+    """
+Data class for revenue entry creation"""
     project_id: str
     agreement_id: str
     revenue_source: RevenueSource
@@ -770,7 +777,8 @@ class RevenueShareManager:
         revenue_entries: List[RevenueEntry],
         batch_id: str
     ) -> Optional[PaymentDistribution]:
-        """Create payment distribution record"""
+        """
+Create payment distribution record"""
         payment_id = f"PAY-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{str(uuid.uuid4())[:8]}"
         
         # Calculate tax withholding

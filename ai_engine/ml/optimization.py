@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides optimization engines for content, strategies, and campaigns
 with advanced AI-driven optimization algorithms.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
@@ -16,7 +17,9 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization"""
+    """
+Types of optimization"""
+
     CONTENT = "content"
     STRATEGY = "strategy"
     CAMPAIGN = "campaign"
@@ -24,6 +27,7 @@ class OptimizationType(Enum):
 
 class OptimizationObjective(Enum):
     """Optimization objectives"""
+
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MINIMIZE_COST = "minimize_cost"
     MAXIMIZE_REACH = "maximize_reach"
@@ -41,7 +45,8 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization"""
+    """
+Result of optimization"""
     optimized_parameters: Dict[str, Any]
     performance_score: float
     iterations: int
@@ -49,7 +54,8 @@ class OptimizationResult:
     metadata: Dict[str, Any]
 
 class BaseOptimizer(ABC):
-    """Base class for all optimizers"""
+    """
+Base class for all optimizers"""
     
     def __init__(self, config: OptimizationConfig):
         self.config = config
@@ -57,11 +63,13 @@ class BaseOptimizer(ABC):
     
     @abstractmethod
     def optimize(self, data: Dict[str, Any]) -> OptimizationResult:
-        """Abstract method to perform optimization"""
+        """
+Abstract method to perform optimization"""
         pass
 
 class ContentOptimizer(BaseOptimizer):
-    """Optimizer for content optimization"""
+    """
+Optimizer for content optimization"""
     
     def __init__(self, config: Optional[OptimizationConfig] = None):
         if config is None:
