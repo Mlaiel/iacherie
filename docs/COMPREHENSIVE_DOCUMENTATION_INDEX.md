@@ -71,7 +71,9 @@ This is the complete documentation suite for the Ainflue AI-powered content prot
 
 #### 2. Operations Manual
 - **[Operational Runbooks](./operations/runbooks.md)** - Day-to-day operations guide
-- **[Troubleshooting Guide](./operations/troubleshooting.md)** - Common issues and solutions
+- **[Troubleshooting Guide](./operations/troubleshooting-guide.md)** - Comprehensive troubleshooting with tested solutions
+- **[Scaling Procedures](./operations/scaling-procedures.md)** - Detailed scaling with precise thresholds
+- **[Training & Certification](./operations/training-certification.md)** - Operations team training program
 - **[Performance Tuning](./operations/performance-tuning.md)** - System optimization
 - **[Health Checks](./operations/health-checks.md)** - System health monitoring
 - **[Log Management](./operations/log-management.md)** - Log collection and analysis
@@ -79,6 +81,7 @@ This is the complete documentation suite for the Ainflue AI-powered content prot
 ### 👥 User Documentation
 
 #### 1. User Guides
+- **[Complete End-User Guide](./user/end-user-guide.md)** - Comprehensive user guide with screenshots
 - **[User Manual](./user/user-manual.md)** - Complete user guide
 - **[Quick Start Guide](./user/quick-start.md)** - Getting started quickly
 - **[Feature Guides](./user/features/)** - Individual feature documentation
@@ -90,6 +93,37 @@ This is the complete documentation suite for the Ainflue AI-powered content prot
 - **[API Integration Examples](./integrations/api-examples/)** - Code samples
 - **[Webhook Configuration](./integrations/webhooks.md)** - Event notification setup
 - **[SDK Documentation](./integrations/sdks/)** - Client library documentation
+
+### 👨‍💻 Developer Documentation
+
+#### 1. Onboarding & Training
+- **[Developer Onboarding Guide](./development/developer-onboarding.md)** - Complete new developer guide
+- **[Coding Standards](./development/coding-standards.md)** - Code style and best practices
+- **[Development Environment Setup](./development/setup.md)** - Local development guide
+- **[Git Workflow](./development/git-workflow.md)** - Version control procedures
+- **[Testing Guidelines](./development/testing.md)** - Testing strategy and practices
+
+#### 2. Architecture & Design
+- **[System Architecture](./architecture/system-overview.md)** - High-level architecture with diagrams
+- **[Microservices Design](./architecture/microservices.md)** - Service decomposition
+- **[Database Design](./architecture/database-schema.md)** - Data models and relationships
+- **[API Design Patterns](./architecture/api-patterns.md)** - RESTful API guidelines
+- **[Security Architecture](./architecture/security-design.md)** - Security by design principles
+
+### 📋 Governance & Compliance
+
+#### 1. Compliance Procedures
+- **[Compliance Framework](./governance/compliance-procedures.md)** - Complete compliance procedures with checklists
+- **[GDPR Compliance](./governance/gdpr-compliance.md)** - GDPR requirements and procedures
+- **[SOC 2 Compliance](./governance/soc2-compliance.md)** - SOC 2 Type II controls
+- **[ISO 27001 Compliance](./governance/iso27001-compliance.md)** - Information security management
+- **[PCI DSS Compliance](./governance/pci-compliance.md)** - Payment card industry standards
+
+#### 2. Data Governance
+- **[Data Governance Framework](./governance/data-governance.md)** - Data management policies
+- **[Privacy Policy](./governance/privacy-policy.md)** - Data privacy procedures
+- **[Data Retention](./governance/data-retention.md)** - Data lifecycle management
+- **[Audit Procedures](./governance/audit-procedures.md)** - Internal and external audits
 
 ## 📊 Documentation Standards
 
