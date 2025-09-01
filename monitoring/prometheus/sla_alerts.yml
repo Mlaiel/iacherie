@@ -1,0 +1,346 @@
+# SLA Alert Rules for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Production-ready SLA monitoring with performance thresholds
+
+groups:
+  # SLA Alerts - API Performance
+  - name: sla.api.performance
+    interval: 30s
+    rules:
+      # API Response Time SLA - 95th percentile < 500ms
+      - alert: APIResponseTimeSLA
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])) > 0.5
+        for: 2m
+        labels:
+          severity: critical
+          category: performance
+          sla: "api-response-time"
+          business_impact: "high"
+        annotations:
+          summary: "API response time SLA violation"
+          description: "95th percentile response time {{ $value }}s exceeds SLA threshold of 500ms"
+          runbook_url: "https://docs.ainflue.com/runbooks/api-performance"
+          dashboard_url: "http://grafana.ainflue.com/d/api-overview"
+
+      # API Availability SLA - 99.9% uptime
+      - alert: APIAvailabilitySLA
+        expr: (rate(http_requests_total{job="ainflue-api",code!~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m])) < 0.999
+        for: 1m
+        labels:
+          severity: critical
+          category: availability
+          sla: "api-availability"
+          business_impact: "critical"
+        annotations:
+          summary: "API availability SLA violation"
+          description: "API availability {{ $value | humanizePercentage }} is below SLA threshold of 99.9%"
+          runbook_url: "https://docs.ainflue.com/runbooks/api-availability"
+
+      # API Error Rate SLA - < 1% error rate
+      - alert: APIErrorRateSLA
+        expr: (rate(http_requests_total{job="ainflue-api",code=~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: warning
+          category: performance
+          sla: "api-error-rate"
+          business_impact: "medium"
+        annotations:
+          summary: "API error rate SLA violation"
+          description: "API error rate {{ $value | humanizePercentage }} exceeds SLA threshold of 1%"
+          runbook_url: "https://docs.ainflue.com/runbooks/api-errors"
+
+  # SLA Alerts - Business KPIs
+  - name: sla.business.kpis
+    interval: 60s
+    rules:
+      # Content Processing SLA - 95% within 60 seconds
+      - alert: ContentProcessingSLA
+        expr: histogram_quantile(0.95, rate(content_processing_duration_seconds_bucket[10m])) > 60
+        for: 5m
+        labels:
+          severity: warning
+          category: business
+          sla: "content-processing"
+          business_impact: "high"
+        annotations:
+          summary: "Content processing time SLA violation"
+          description: "95th percentile content processing time {{ $value }}s exceeds SLA of 60s"
+          runbook_url: "https://docs.ainflue.com/runbooks/content-processing"
+
+      # Revenue Detection SLA - 90% accuracy
+      - alert: RevenueDetectionAccuracySLA
+        expr: revenue_detection_accuracy < 0.90
+        for: 10m
+        labels:
+          severity: critical
+          category: business
+          sla: "revenue-detection"
+          business_impact: "critical"
+        annotations:
+          summary: "Revenue detection accuracy SLA violation"
+          description: "Revenue detection accuracy {{ $value | humanizePercentage }} is below SLA threshold of 90%"
+          runbook_url: "https://docs.ainflue.com/runbooks/revenue-detection"
+
+      # Content Protection SLA - < 5% false positives
+      - alert: ContentProtectionFalsePositiveSLA
+        expr: (content_protection_false_positives_total / content_protection_detections_total) > 0.05
+        for: 15m
+        labels:
+          severity: warning
+          category: business
+          sla: "content-protection"
+          business_impact: "medium"
+        annotations:
+          summary: "Content protection false positive rate SLA violation"
+          description: "False positive rate {{ $value | humanizePercentage }} exceeds SLA threshold of 5%"
+          runbook_url: "https://docs.ainflue.com/runbooks/content-protection"
+
+      # AI Model Performance SLA - 95th percentile inference < 2s
+      - alert: AIModelInferenceSLA
+        expr: histogram_quantile(0.95, rate(ai_inference_duration_seconds_bucket[10m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          category: performance
+          sla: "ai-inference"
+          business_impact: "high"
+          model_name: "{{ $labels.model_name }}"
+        annotations:
+          summary: "AI model inference time SLA violation"
+          description: "Model {{ $labels.model_name }} 95th percentile inference time {{ $value }}s exceeds SLA of 2s"
+          runbook_url: "https://docs.ainflue.com/runbooks/ai-performance"
+
+  # SLA Alerts - Infrastructure
+  - name: sla.infrastructure
+    interval: 30s
+    rules:
+      # Database Query Performance SLA - 95th percentile < 100ms
+      - alert: DatabaseQueryPerformanceSLA
+        expr: histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[5m])) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          category: performance
+          sla: "database-performance"
+          business_impact: "medium"
+        annotations:
+          summary: "Database query performance SLA violation"
+          description: "Database {{ $labels.database }} 95th percentile query time {{ $value }}s exceeds SLA of 100ms"
+          runbook_url: "https://docs.ainflue.com/runbooks/database-performance"
+
+      # Cache Hit Rate SLA - > 90%
+      - alert: CacheHitRateSLA
+        expr: (rate(cache_hits_total[5m]) / (rate(cache_hits_total[5m]) + rate(cache_misses_total[5m]))) < 0.90
+        for: 10m
+        labels:
+          severity: warning
+          category: performance
+          sla: "cache-performance"
+          business_impact: "low"
+        annotations:
+          summary: "Cache hit rate SLA violation"
+          description: "Cache hit rate {{ $value | humanizePercentage }} is below SLA threshold of 90%"
+          runbook_url: "https://docs.ainflue.com/runbooks/cache-performance"
+
+      # Kubernetes Resource SLA - CPU < 80%
+      - alert: KubernetesCPUSLA
+        expr: (1 - rate(node_cpu_seconds_total{mode="idle"}[5m])) > 0.80
+        for: 10m
+        labels:
+          severity: warning
+          category: infrastructure
+          sla: "kubernetes-cpu"
+          business_impact: "medium"
+        annotations:
+          summary: "Kubernetes CPU usage SLA violation"
+          description: "Node {{ $labels.instance }} CPU usage {{ $value | humanizePercentage }} exceeds SLA threshold of 80%"
+          runbook_url: "https://docs.ainflue.com/runbooks/kubernetes-resources"
+
+      # Kubernetes Memory SLA - < 85%
+      - alert: KubernetesMemorySLA
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.85
+        for: 10m
+        labels:
+          severity: warning
+          category: infrastructure
+          sla: "kubernetes-memory"
+          business_impact: "medium"
+        annotations:
+          summary: "Kubernetes memory usage SLA violation"
+          description: "Node {{ $labels.instance }} memory usage {{ $value | humanizePercentage }} exceeds SLA threshold of 85%"
+          runbook_url: "https://docs.ainflue.com/runbooks/kubernetes-resources"
+
+      # Storage SLA - < 90% usage
+      - alert: KubernetesStorageSLA
+        expr: (1 - (node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"})) > 0.90
+        for: 5m
+        labels:
+          severity: critical
+          category: infrastructure
+          sla: "kubernetes-storage"
+          business_impact: "high"
+        annotations:
+          summary: "Kubernetes storage usage SLA violation"
+          description: "Node {{ $labels.instance }} storage usage {{ $value | humanizePercentage }} exceeds SLA threshold of 90%"
+          runbook_url: "https://docs.ainflue.com/runbooks/kubernetes-storage"
+
+  # SLA Alerts - Business Metrics
+  - name: sla.business.metrics
+    interval: 300s  # 5 minutes
+    rules:
+      # Revenue Generation SLA - Hourly target
+      - alert: HourlyRevenueSLA
+        expr: increase(revenue_generated_total[1h]) < 1000
+        for: 0m
+        labels:
+          severity: warning
+          category: business
+          sla: "hourly-revenue"
+          business_impact: "high"
+        annotations:
+          summary: "Hourly revenue SLA not met"
+          description: "Hourly revenue ${{ $value }} is below SLA target of $1000"
+          dashboard_url: "http://grafana.ainflue.com/d/business-metrics"
+
+      # User Engagement SLA - Active users
+      - alert: ActiveUsersSLA
+        expr: active_users_total < 100
+        for: 30m
+        labels:
+          severity: warning
+          category: business
+          sla: "active-users"
+          business_impact: "medium"
+        annotations:
+          summary: "Active users SLA violation"
+          description: "Active users {{ $value }} is below SLA threshold of 100"
+          dashboard_url: "http://grafana.ainflue.com/d/user-activity"
+
+      # Content Upload Rate SLA - Per hour
+      - alert: ContentUploadRateSLA
+        expr: rate(content_uploads_total[1h]) < 50
+        for: 15m
+        labels:
+          severity: info
+          category: business
+          sla: "content-uploads"
+          business_impact: "low"
+        annotations:
+          summary: "Content upload rate below SLA"
+          description: "Content upload rate {{ $value }}/hour is below SLA threshold of 50/hour"
+          dashboard_url: "http://grafana.ainflue.com/d/content-metrics"
+
+      # Payment Processing SLA - Success rate > 99%
+      - alert: PaymentProcessingSLA
+        expr: (rate(payments_processed_success_total[10m]) / rate(payments_processed_total[10m])) < 0.99
+        for: 5m
+        labels:
+          severity: critical
+          category: business
+          sla: "payment-processing"
+          business_impact: "critical"
+        annotations:
+          summary: "Payment processing success rate SLA violation"
+          description: "Payment success rate {{ $value | humanizePercentage }} is below SLA threshold of 99%"
+          runbook_url: "https://docs.ainflue.com/runbooks/payment-processing"
+
+  # SLA Alerts - Security
+  - name: sla.security
+    interval: 60s
+    rules:
+      # Authentication Success Rate SLA - > 98%
+      - alert: AuthenticationSuccessRateSLA
+        expr: (rate(auth_attempts_success_total[5m]) / rate(auth_attempts_total[5m])) < 0.98
+        for: 10m
+        labels:
+          severity: warning
+          category: security
+          sla: "authentication"
+          business_impact: "medium"
+        annotations:
+          summary: "Authentication success rate SLA violation"
+          description: "Authentication success rate {{ $value | humanizePercentage }} is below SLA threshold of 98%"
+          runbook_url: "https://docs.ainflue.com/runbooks/authentication"
+
+      # Security Incident Response SLA - Response time < 15 minutes
+      - alert: SecurityIncidentResponseSLA
+        expr: security_incident_response_time_seconds > 900
+        for: 0m
+        labels:
+          severity: critical
+          category: security
+          sla: "incident-response"
+          business_impact: "critical"
+        annotations:
+          summary: "Security incident response time SLA violation"
+          description: "Security incident response time {{ $value }}s exceeds SLA threshold of 15 minutes"
+          runbook_url: "https://docs.ainflue.com/runbooks/security-incidents"
+
+  # SLA Alerts - External Dependencies
+  - name: sla.external.dependencies
+    interval: 60s
+    rules:
+      # Third-party API SLA - Response time < 2s
+      - alert: ThirdPartyAPIResponseTimeSLA
+        expr: histogram_quantile(0.95, rate(external_api_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          category: performance
+          sla: "external-api"
+          business_impact: "medium"
+          api_provider: "{{ $labels.provider }}"
+        annotations:
+          summary: "Third-party API response time SLA violation"
+          description: "API {{ $labels.provider }} response time {{ $value }}s exceeds SLA threshold of 2s"
+          runbook_url: "https://docs.ainflue.com/runbooks/external-apis"
+
+      # CDN Performance SLA - < 200ms response time
+      - alert: CDNPerformanceSLA
+        expr: histogram_quantile(0.95, rate(cdn_request_duration_seconds_bucket[5m])) > 0.2
+        for: 10m
+        labels:
+          severity: warning
+          category: performance
+          sla: "cdn-performance"
+          business_impact: "low"
+        annotations:
+          summary: "CDN performance SLA violation"
+          description: "CDN response time {{ $value }}s exceeds SLA threshold of 200ms"
+          runbook_url: "https://docs.ainflue.com/runbooks/cdn-performance"
+
+  # SLA Recording Rules for Dashboard and Alerting
+  - name: sla.recording.rules
+    interval: 30s
+    rules:
+      # API SLA Score (composite)
+      - record: sla:api:score
+        expr: |
+          (
+            (histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])) < 0.5) * 0.4 +
+            ((rate(http_requests_total{job="ainflue-api",code!~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m])) > 0.999) * 0.4 +
+            ((rate(http_requests_total{job="ainflue-api",code=~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m])) < 0.01) * 0.2
+          )
+
+      # Business SLA Score
+      - record: sla:business:score
+        expr: |
+          (
+            (revenue_detection_accuracy > 0.90) * 0.3 +
+            (histogram_quantile(0.95, rate(content_processing_duration_seconds_bucket[10m])) < 60) * 0.3 +
+            ((rate(payments_processed_success_total[10m]) / rate(payments_processed_total[10m])) > 0.99) * 0.4
+          )
+
+      # Infrastructure SLA Score
+      - record: sla:infrastructure:score
+        expr: |
+          (
+            (histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[5m])) < 0.1) * 0.3 +
+            ((1 - rate(node_cpu_seconds_total{mode="idle"}[5m])) < 0.80) * 0.3 +
+            ((1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) < 0.85) * 0.4
+          )
+
+      # Overall SLA Compliance
+      - record: sla:overall:compliance
+        expr: (sla:api:score + sla:business:score + sla:infrastructure:score) / 3
