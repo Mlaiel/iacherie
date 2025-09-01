@@ -92,10 +92,10 @@ Professional performance repository with advanced analytics and optimization"""
         
         self._ensure_indexes()
         
-        # Performance thresholds and targets
+        # Performance thresholds and targets (industrialization requirements)
         self.performance_thresholds = {
-            MetricType.RESPONSE_TIME: {'warning': 1000, 'critical': 2000},  # ms
-            MetricType.ERROR_RATE: {'warning': 5, 'critical': 10},  # %
+            MetricType.RESPONSE_TIME: {'warning': 200, 'critical': 500},  # ms - <200ms P95 target
+            MetricType.ERROR_RATE: {'warning': 0.1, 'critical': 1.0},  # % - <0.1% target
             MetricType.THROUGHPUT: {'warning': 100, 'critical': 50},  # req/s
             MetricType.CPU_USAGE: {'warning': 80, 'critical': 95},  # %
             MetricType.MEMORY_USAGE: {'warning': 85, 'critical': 95},  # %

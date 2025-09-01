@@ -86,10 +86,10 @@ Check performance requirements compliance"""
             'requirements': {}
         }
         
-        # Response Time: <2s for 95% of API calls
+        # Response Time: <200ms P95 for API calls (industrialization requirement)
         response_time_status = {
-            'requirement': 'Response Time <2s for 95% of API calls',
-            'target': '2000ms',
+            'requirement': 'Response Time <200ms P95 for API calls',
+            'target': '200ms',
             'current': 'N/A',
             'compliant': False,
             'status': 'NOT_MEASURED'

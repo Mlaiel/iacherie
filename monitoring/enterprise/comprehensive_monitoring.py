@@ -679,10 +679,10 @@ Setup default system metrics"""
             AlertRule(
                 rule_id="high_response_time",
                 name="High API Response Time",
-                description="API response time is above 2000ms",
+                description="API response time is above 200ms (industrialization target)",
                 metric_name="api_response_time",
-                condition="> 2000",
-                threshold=2000.0,
+                condition="> 200",
+                threshold=200.0,
                 severity=AlertSeverity.WARNING,
                 notification_channels=[NotificationChannel.SLACK]
             )

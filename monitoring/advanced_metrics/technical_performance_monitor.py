@@ -292,16 +292,24 @@ class TechnicalPerformanceMonitor:
         }
         
         # Performance thresholds
+        # Technical KPI thresholds from industrialization requirements
         self.thresholds = {
             "cpu_warning": 70.0,
             "cpu_critical": 90.0,
             "memory_warning": 80.0,
             "memory_critical": 95.0,
-            "api_response_warning": 1000.0,  # ms
-            "api_response_critical": 5000.0,  # ms
-            "error_rate_warning": 5.0,  # percent
-            "error_rate_critical": 10.0,  # percent
-            "uptime_sla": 99.9  # percent
+            "api_response_target": 200.0,  # ms - <200ms P95 target
+            "api_response_warning": 200.0,  # ms - warn at target
+            "api_response_critical": 500.0,  # ms - critical above 500ms
+            "error_rate_target": 0.1,  # percent - <0.1% error rate target
+            "error_rate_warning": 0.1,  # percent - warn at target
+            "error_rate_critical": 1.0,  # percent - critical above 1%
+            "uptime_sla": 99.9,  # percent - 99.9% uptime
+            "mttr_target": 15.0,  # minutes - <15 minutes MTTR
+            "deployment_frequency": 10.0,  # per day - >10/jour
+            "security_score": 95.0,  # percent - A+ (95%+)
+            "code_coverage": 90.0,  # percent - >90% code coverage
+            "technical_debt_ratio": 5.0  # percent - <5% technical debt
         }
     
     async def initialize(self) -> None:

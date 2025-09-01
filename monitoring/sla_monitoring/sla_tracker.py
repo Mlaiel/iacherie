@@ -27,11 +27,17 @@ SLA metric definition"""
 @dataclass
 class SLATarget:
     """SLA target configuration"""
-    response_time_p95_ms: float = 2000.0  # <2s for 95% of API calls
+    response_time_p95_ms: float = 200.0  # <200ms P95 for API calls
     throughput_rps: float = 10000.0  # 10,000+ requests/second
     uptime_percentage: float = 99.9  # 99.9% uptime
     max_downtime_hours_yearly: float = 8.77  # 8.77 hours max downtime/year
     availability_percentage: float = 99.9
+    error_rate_percentage: float = 0.1  # <0.1% error rate
+    mttr_minutes: float = 15.0  # <15 minutes MTTR
+    security_score_percentage: float = 95.0  # A+ (95%+) security score
+    code_coverage_percentage: float = 90.0  # >90% code coverage
+    technical_debt_ratio: float = 5.0  # <5% technical debt ratio
+    deployment_frequency_per_day: float = 10.0  # >10/jour deployment frequency
 
 class SLATracker:
     """
