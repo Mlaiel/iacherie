@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Monitor Configuration - Ainflue Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            height: 100vh;
+            padding: 24px;
+        }
+        
+        .config-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(55, 65, 81, 0.8);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+        
+        .displays-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .display-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .display-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .display-card.primary {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .display-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .display-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .primary-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .display-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .info-item {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .window-assignments {
+            margin-bottom: 16px;
+        }
+        
+        .assignment-header {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+        
+        .assignment-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .assignment-tag {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(107, 114, 128, 0.3);
+            color: white;
+        }
+        
+        .config-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .option-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .option-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .option-description {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox input {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="config-container">
+        <div class="header">
+            <h1 class="title">Multi-Monitor Configuration</h1>
+            <p class="subtitle">Optimize your workflow across multiple displays</p>
+        </div>
+        
+        <div class="displays-grid" id="displays-grid">
+            <!-- Displays will be populated here -->
+        </div>
+        
+        <div class="config-options">
+            <div class="option-card">
+                <div class="option-title">Extended Mode</div>
+                <div class="option-description">Use displays as extended desktop</div>
+                <div class="checkbox">
+                    <input type="checkbox" id="extended-mode" checked>
+                    <label for="extended-mode">Enable extended mode</label>
+                </div>
+            </div>
+            
+            <div class="option-card">
+                <div class="option-title">Mirror Mode</div>
+                <div class="option-description">Mirror content across displays</div>
+                <div class="checkbox">
+                    <input type="checkbox" id="mirror-mode">
+                    <label for="mirror-mode">Enable mirror mode</label>
+                </div>
+            </div>
+            
+            <div class="option-card">
+                <div class="option-title">Auto-Arrange</div>
+                <div class="option-description">Automatically arrange windows</div>
+                <div class="checkbox">
+                    <input type="checkbox" id="auto-arrange" checked>
+                    <label for="auto-arrange">Auto-arrange windows</label>
+                </div>
+            </div>
+            
+            <div class="option-card">
+                <div class="option-title">Smart Positioning</div>
+                <div class="option-description">Intelligent window positioning</div>
+                <div class="checkbox">
+                    <input type="checkbox" id="smart-positioning" checked>
+                    <label for="smart-positioning">Enable smart positioning</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="window.close()">Cancel</button>
+            <button class="btn btn-primary" onclick="applyConfiguration()">Apply Configuration</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize configuration
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Multi-monitor configuration loaded');
+            
+            if (window.electronAPI) {
+                // Listen for display information
+                window.electronAPI.on('displays-info', (displays) => {
+                    populateDisplays(displays);
+                });
+            } else {
+                // Demo data
+                const demoDisplays = [
+                    {
+                        id: 1,
+                        bounds: { x: 0, y: 0, width: 2560, height: 1440 },
+                        size: { width: 2560, height: 1440 },
+                        scaleFactor: 2,
+                        primary: true
+                    },
+                    {
+                        id: 2,
+                        bounds: { x: 2560, y: 0, width: 1920, height: 1080 },
+                        size: { width: 1920, height: 1080 },
+                        scaleFactor: 1,
+                        primary: false
+                    }
+                ];
+                populateDisplays(demoDisplays);
+            }
+        });
+        
+        function populateDisplays(displays) {
+            const grid = document.getElementById('displays-grid');
+            grid.innerHTML = '';
+            
+            displays.forEach((display, index) => {
+                const card = document.createElement('div');
+                card.className = `display-card ${display.primary ? 'primary' : ''}`;
+                
+                const assignments = getWindowAssignments(display, index);
+                
+                card.innerHTML = `
+                    <div class="display-header">
+                        <div class="display-name">Display ${index + 1}</div>
+                        ${display.primary ? '<div class="primary-badge">Primary</div>' : ''}
+                    </div>
+                    
+                    <div class="display-info">
+                        <div class="info-item">
+                            <div class="info-label">Resolution</div>
+                            <div class="info-value">${display.size.width} × ${display.size.height}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Scale Factor</div>
+                            <div class="info-value">${display.scaleFactor}x</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Position</div>
+                            <div class="info-value">${display.bounds.x}, ${display.bounds.y}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Type</div>
+                            <div class="info-value">${display.primary ? 'Primary' : 'Secondary'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="window-assignments">
+                        <div class="assignment-header">Window Assignments</div>
+                        <div class="assignment-list">
+                            ${assignments.map(assignment => `<div class="assignment-tag">${assignment}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        function getWindowAssignments(display, index) {
+            if (display.primary) {
+                return ['Main Window', 'Inspector Panel', 'Library Panel'];
+            } else if (index === 1) {
+                return ['Advanced Studio', 'Timeline Editor', 'Preview Window'];
+            } else {
+                return ['AI Tools', 'Effects Panel', 'Output Preview'];
+            }
+        }
+        
+        function applyConfiguration() {
+            const config = {
+                extendedMode: document.getElementById('extended-mode').checked,
+                mirrorMode: document.getElementById('mirror-mode').checked,
+                autoArrange: document.getElementById('auto-arrange').checked,
+                smartPositioning: document.getElementById('smart-positioning').checked
+            };
+            
+            console.log('Applying multi-monitor configuration:', config);
+            
+            if (window.electronAPI) {
+                window.electronAPI.invoke('apply-monitor-config', config).then(() => {
+                    console.log('Configuration applied successfully');
+                    window.close();
+                });
+            } else {
+                alert('Configuration applied successfully!');
+                window.close();
+            }
+        }
+        
+        // Handle mutual exclusivity of extended and mirror modes
+        document.getElementById('extended-mode').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.getElementById('mirror-mode').checked = false;
+            }
+        });
+        
+        document.getElementById('mirror-mode').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.getElementById('extended-mode').checked = false;
+            }
+        });
+    </script>
+</body>
+</html>

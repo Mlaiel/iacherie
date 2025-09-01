@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences - Ainflue Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .preferences-container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: rgba(55, 65, 81, 0.8);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(75, 85, 99, 0.3);
+            padding: 24px 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .nav-list {
+            list-style: none;
+            padding: 24px 0;
+        }
+        
+        .nav-item {
+            padding: 0 24px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+        
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .content-header {
+            padding: 32px 40px 24px;
+            border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .content-description {
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+        
+        .content-body {
+            padding: 32px 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #e2e8f0;
+        }
+        
+        .setting-group {
+            background: rgba(55, 65, 81, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            margin-bottom: 16px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(75, 85, 99, 0.2);
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-info {
+            flex: 1;
+        }
+        
+        .setting-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .setting-description {
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+        
+        .setting-control {
+            margin-left: 24px;
+        }
+        
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+        
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #3b82f6;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        .select-wrapper {
+            position: relative;
+        }
+        
+        .select {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            border-radius: 8px;
+            padding: 8px 32px 8px 12px;
+            color: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            appearance: none;
+            cursor: pointer;
+        }
+        
+        .select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .input {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(107, 114, 128, 0.3);
+            color: white;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 24px 40px;
+            border-top: 1px solid rgba(75, 85, 99, 0.3);
+            background: rgba(17, 24, 39, 0.8);
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="preferences-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Preferences</div>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-section="general">
+                            <span>⚙️</span> General
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="interface">
+                            <span>🎨</span> Interface
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="audio">
+                            <span>🎵</span> Audio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="video">
+                            <span>🎬</span> Video
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="ai">
+                            <span>🤖</span> AI Processing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="security">
+                            <span>🛡️</span> Security
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="advanced">
+                            <span>🔧</span> Advanced
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-title" id="section-title">General Settings</div>
+                <div class="content-description" id="section-description">Configure general application settings and preferences</div>
+            </div>
+            
+            <div class="content-body">
+                <!-- General Section -->
+                <div class="section" id="general-section">
+                    <div class="setting-group">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Auto-save projects</div>
+                                <div class="setting-description">Automatically save your work every few minutes</div>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Check for updates</div>
+                                <div class="setting-description">Automatically check for application updates</div>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Default project location</div>
+                                <div class="setting-description">Where new projects are saved by default</div>
+                            </div>
+                            <div class="setting-control">
+                                <button class="btn btn-secondary">Choose Folder</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interface Section -->
+                <div class="section hidden" id="interface-section">
+                    <div class="setting-group">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Theme</div>
+                                <div class="setting-description">Choose your preferred interface theme</div>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select">
+                                    <option value="dark">Dark</option>
+                                    <option value="light">Light</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">UI Scale</div>
+                                <div class="setting-description">Adjust the size of interface elements</div>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select">
+                                    <option value="0.8">Small (80%)</option>
+                                    <option value="1.0" selected>Normal (100%)</option>
+                                    <option value="1.2">Large (120%)</option>
+                                    <option value="1.5">Extra Large (150%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Show tooltips</div>
+                                <div class="setting-description">Display helpful tooltips on hover</div>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Audio Section -->
+                <div class="section hidden" id="audio-section">
+                    <div class="setting-group">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Audio device</div>
+                                <div class="setting-description">Select default audio output device</div>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select">
+                                    <option>Default System Device</option>
+                                    <option>Built-in Output</option>
+                                    <option>External Audio Interface</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Sample rate</div>
+                                <div class="setting-description">Audio processing sample rate</div>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select">
+                                    <option value="44100">44.1 kHz</option>
+                                    <option value="48000" selected>48 kHz</option>
+                                    <option value="96000">96 kHz</option>
+                                    <option value="192000">192 kHz</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Buffer size</div>
+                                <div class="setting-description">Audio buffer size for low latency</div>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select">
+                                    <option value="128">128 samples</option>
+                                    <option value="256" selected>256 samples</option>
+                                    <option value="512">512 samples</option>
+                                    <option value="1024">1024 samples</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Section -->
+                <div class="section hidden" id="ai-section">
+                    <div class="setting-group">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Enable AI processing</div>
+                                <div class="setting-description">Use AI for content enhancement and analysis</div>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Processing quality</div>
+                                <div class="setting-description">AI processing quality vs speed balance</div>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select">
+                                    <option value="fast">Fast</option>
+                                    <option value="balanced" selected>Balanced</option>
+                                    <option value="high">High Quality</option>
+                                    <option value="maximum">Maximum</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Use GPU acceleration</div>
+                                <div class="setting-description">Accelerate AI processing with GPU</div>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="resetDefaults()">Reset to Defaults</button>
+                <button class="btn btn-primary" onclick="savePreferences()">Save Preferences</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize preferences
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Preferences interface loaded');
+            
+            // Setup navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Update active nav item
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    // Show corresponding section
+                    const sectionId = link.dataset.section + '-section';
+                    sections.forEach(section => section.classList.add('hidden'));
+                    document.getElementById(sectionId).classList.remove('hidden');
+                    
+                    // Update header
+                    updateSectionHeader(link.dataset.section);
+                });
+            });
+            
+            // Load saved preferences
+            loadPreferences();
+        });
+        
+        function updateSectionHeader(section) {
+            const titles = {
+                general: 'General Settings',
+                interface: 'Interface Preferences',
+                audio: 'Audio Configuration',
+                video: 'Video Settings',
+                ai: 'AI Processing',
+                security: 'Security & Privacy',
+                advanced: 'Advanced Options'
+            };
+            
+            const descriptions = {
+                general: 'Configure general application settings and preferences',
+                interface: 'Customize the look and feel of the application',
+                audio: 'Configure audio devices and processing settings',
+                video: 'Set up video processing and export options',
+                ai: 'Configure AI processing and enhancement features',
+                security: 'Manage security settings and content protection',
+                advanced: 'Advanced configuration options for power users'
+            };
+            
+            document.getElementById('section-title').textContent = titles[section];
+            document.getElementById('section-description').textContent = descriptions[section];
+        }
+        
+        function loadPreferences() {
+            if (window.electronAPI) {
+                window.electronAPI.invoke('store-get', 'preferences').then(prefs => {
+                    if (prefs) {
+                        console.log('Loaded preferences:', prefs);
+                        applyPreferences(prefs);
+                    }
+                });
+            } else {
+                console.log('Demo mode - using default preferences');
+            }
+        }
+        
+        function applyPreferences(prefs) {
+            // Apply loaded preferences to UI elements
+            // This would iterate through the preferences object and set UI states
+            console.log('Applying preferences to UI');
+        }
+        
+        function savePreferences() {
+            const preferences = gatherPreferences();
+            
+            if (window.electronAPI) {
+                window.electronAPI.invoke('store-set', 'preferences', preferences).then(() => {
+                    console.log('Preferences saved successfully');
+                    showSaveConfirmation();
+                });
+            } else {
+                console.log('Demo mode - preferences would be saved:', preferences);
+                showSaveConfirmation();
+            }
+        }
+        
+        function gatherPreferences() {
+            const prefs = {};
+            
+            // Gather all form values
+            document.querySelectorAll('input, select').forEach(input => {
+                if (input.type === 'checkbox') {
+                    prefs[input.name || 'setting'] = input.checked;
+                } else {
+                    prefs[input.name || 'setting'] = input.value;
+                }
+            });
+            
+            return prefs;
+        }
+        
+        function resetDefaults() {
+            if (confirm('Are you sure you want to reset all preferences to default values?')) {
+                // Reset all inputs to default values
+                document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    input.checked = input.hasAttribute('checked');
+                });
+                
+                document.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                    // Look for selected attribute
+                    const defaultOption = select.querySelector('[selected]');
+                    if (defaultOption) {
+                        select.value = defaultOption.value;
+                    }
+                });
+                
+                console.log('Preferences reset to defaults');
+            }
+        }
+        
+        function showSaveConfirmation() {
+            // Simple confirmation - in a real app this might be a toast notification
+            const originalText = document.querySelector('.btn-primary').textContent;
+            const btn = document.querySelector('.btn-primary');
+            btn.textContent = '✓ Saved!';
+            btn.style.background = '#10b981';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#3b82f6';
+            }, 2000);
+        }
+        
+        console.log('Preferences interface ready');
+    </script>
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ainflue Advanced Studio - Professional Content Creation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .studio-container {
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "sidebar timeline preview"
+                "sidebar timeline preview"
+                "controls controls controls";
+            grid-template-rows: 60px 1fr 1fr 80px;
+            grid-template-columns: 300px 1fr 400px;
+            height: 100vh;
+            gap: 1px;
+            background: rgba(30, 41, 59, 0.3);
+        }
+        
+        .studio-header {
+            grid-area: header;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            -webkit-app-region: drag;
+        }
+        
+        .studio-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .studio-actions {
+            display: flex;
+            gap: 12px;
+            -webkit-app-region: no-drag;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+        
+        .btn.primary {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .btn.primary:hover {
+            background: #2563eb;
+        }
+        
+        .studio-sidebar {
+            grid-area: sidebar;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .panel {
+            margin-bottom: 24px;
+        }
+        
+        .panel-header {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .panel-content {
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .tool-btn {
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        .tool-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .timeline-area {
+            grid-area: timeline;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .timeline-header {
+            padding: 16px 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .timeline-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .timeline-workspace {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .track {
+            margin-bottom: 16px;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            overflow: hidden;
+        }
+        
+        .track-header {
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+        
+        .track-content {
+            height: 80px;
+            background: rgba(51, 65, 85, 0.1);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .track-content:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .preview-area {
+            grid-area: preview;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .preview-header {
+            padding: 16px 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .preview-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .preview-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .preview-placeholder {
+            text-align: center;
+            color: #64748b;
+        }
+        
+        .preview-placeholder .icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+        
+        .controls-area {
+            grid-area: controls;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+        
+        .playback-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .playback-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: #3b82f6;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+        
+        .playback-btn:hover {
+            background: #2563eb;
+            transform: scale(1.05);
+        }
+        
+        .playback-btn.secondary {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+        }
+        
+        .timeline-scrubber {
+            flex: 1;
+            margin: 0 24px;
+            height: 8px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .scrubber-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        
+        .time-display {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            min-width: 120px;
+            text-align: right;
+        }
+        
+        .status-indicators {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            min-width: 400px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .system-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .info-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="studio-container">
+        <!-- Header -->
+        <header class="studio-header">
+            <div class="studio-title">🎬 Advanced Studio</div>
+            <div class="studio-actions">
+                <button class="btn" onclick="showSystemInfo()">System Info</button>
+                <button class="btn" onclick="openMultiMonitorConfig()">Multi-Monitor</button>
+                <button class="btn primary" onclick="renderProject()">Render</button>
+            </div>
+        </header>
+        
+        <!-- Sidebar -->
+        <aside class="studio-sidebar">
+            <div class="panel">
+                <div class="panel-header">
+                    <span>🎵</span> Audio Tools
+                </div>
+                <div class="panel-content">
+                    <div class="tool-grid">
+                        <div class="tool-btn" onclick="enhanceAudio()">Enhance</div>
+                        <div class="tool-btn" onclick="noiseReduction()">Denoise</div>
+                        <div class="tool-btn" onclick="normalize()">Normalize</div>
+                        <div class="tool-btn" onclick="addEffects()">Effects</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <span>🎬</span> Video Tools
+                </div>
+                <div class="panel-content">
+                    <div class="tool-grid">
+                        <div class="tool-btn" onclick="stabilize()">Stabilize</div>
+                        <div class="tool-btn" onclick="colorCorrect()">Color</div>
+                        <div class="tool-btn" onclick="addTransitions()">Transitions</div>
+                        <div class="tool-btn" onclick="addTitles()">Titles</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <span>🤖</span> AI Processing
+                </div>
+                <div class="panel-content">
+                    <div class="tool-grid">
+                        <div class="tool-btn" onclick="aiEnhance()">AI Enhance</div>
+                        <div class="tool-btn" onclick="autoEdit()">Auto Edit</div>
+                        <div class="tool-btn" onclick="smartCrop()">Smart Crop</div>
+                        <div class="tool-btn" onclick="generateSubtitles()">Subtitles</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <span>🛡️</span> Protection
+                </div>
+                <div class="panel-content">
+                    <div class="tool-grid">
+                        <div class="tool-btn" onclick="addWatermark()">Watermark</div>
+                        <div class="tool-btn" onclick="fingerprint()">Fingerprint</div>
+                        <div class="tool-btn" onclick="drm()">DRM</div>
+                        <div class="tool-btn" onclick="analytics()">Analytics</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Timeline -->
+        <main class="timeline-area">
+            <div class="timeline-header">
+                <div class="timeline-title">Timeline</div>
+                <div class="timeline-controls">
+                    <button class="btn" onclick="addTrack()">+ Track</button>
+                    <button class="btn" onclick="importMedia()">Import</button>
+                </div>
+            </div>
+            <div class="timeline-workspace">
+                <div class="track">
+                    <div class="track-header">🎵 Audio Track 1</div>
+                    <div class="track-content" onclick="selectTrack(this)"></div>
+                </div>
+                <div class="track">
+                    <div class="track-header">🎬 Video Track 1</div>
+                    <div class="track-content" onclick="selectTrack(this)"></div>
+                </div>
+                <div class="track">
+                    <div class="track-header">📝 Title Track</div>
+                    <div class="track-content" onclick="selectTrack(this)"></div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Preview -->
+        <section class="preview-area">
+            <div class="preview-header">
+                <div class="preview-title">Preview</div>
+            </div>
+            <div class="preview-content">
+                <div class="preview-placeholder">
+                    <div class="icon">🎬</div>
+                    <div>Import media to preview</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Controls -->
+        <footer class="controls-area">
+            <div class="playback-controls">
+                <button class="playback-btn secondary" onclick="previousFrame()">⏮</button>
+                <button class="playback-btn" onclick="togglePlayback()" id="play-pause-btn">▶️</button>
+                <button class="playback-btn secondary" onclick="nextFrame()">⏭</button>
+            </div>
+            
+            <div class="timeline-scrubber" onclick="seekTo(event)">
+                <div class="scrubber-progress" id="scrubber-progress"></div>
+            </div>
+            
+            <div class="time-display" id="time-display">00:00 / 00:00</div>
+            
+            <div class="status-indicators">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Ready</span>
+                </div>
+                <div class="status-indicator">
+                    <span id="fps-display">30 FPS</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- System Info Modal -->
+    <div id="system-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">System Information</div>
+                <button class="close-btn" onclick="closeModal('system-modal')">&times;</button>
+            </div>
+            <div class="system-info-grid" id="system-info-grid">
+                <!-- System info will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Processing</div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 16px;">
+                <span id="processing-text">Processing content...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        let currentTime = 0;
+        let duration = 100; // seconds
+        let playbackInterval;
+        
+        // Initialize studio
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🎬 Advanced Studio initialized');
+            
+            // Listen for studio initialization data
+            if (window.electronAPI) {
+                window.electronAPI.onStudioInit((data) => {
+                    console.log('Studio init data:', data);
+                    initializeStudio(data);
+                });
+                
+                window.electronAPI.onDisplayChanged((display) => {
+                    console.log('Display changed:', display);
+                    updateDisplayInfo(display);
+                });
+            }
+            
+            updateTimeDisplay();
+        });
+        
+        function initializeStudio(data) {
+            if (data.systemInfo) {
+                populateSystemInfo(data.systemInfo);
+            }
+            
+            if (data.displays) {
+                console.log(`Studio running on ${data.displays.length} displays`);
+            }
+        }
+        
+        // Playback controls
+        function togglePlayback() {
+            const btn = document.getElementById('play-pause-btn');
+            
+            if (isPlaying) {
+                pausePlayback();
+                btn.textContent = '▶️';
+            } else {
+                startPlayback();
+                btn.textContent = '⏸️';
+            }
+            
+            isPlaying = !isPlaying;
+        }
+        
+        function startPlayback() {
+            playbackInterval = setInterval(() => {
+                currentTime += 0.1;
+                if (currentTime >= duration) {
+                    currentTime = duration;
+                    pausePlayback();
+                    document.getElementById('play-pause-btn').textContent = '▶️';
+                    isPlaying = false;
+                }
+                updateScrubber();
+                updateTimeDisplay();
+            }, 100);
+        }
+        
+        function pausePlayback() {
+            if (playbackInterval) {
+                clearInterval(playbackInterval);
+                playbackInterval = null;
+            }
+        }
+        
+        function previousFrame() {
+            currentTime = Math.max(0, currentTime - 1/30);
+            updateScrubber();
+            updateTimeDisplay();
+        }
+        
+        function nextFrame() {
+            currentTime = Math.min(duration, currentTime + 1/30);
+            updateScrubber();
+            updateTimeDisplay();
+        }
+        
+        function seekTo(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const percentage = x / rect.width;
+            currentTime = percentage * duration;
+            updateScrubber();
+            updateTimeDisplay();
+        }
+        
+        function updateScrubber() {
+            const progress = (currentTime / duration) * 100;
+            document.getElementById('scrubber-progress').style.width = progress + '%';
+        }
+        
+        function updateTimeDisplay() {
+            const formatTime = (seconds) => {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            };
+            
+            document.getElementById('time-display').textContent = 
+                `${formatTime(currentTime)} / ${formatTime(duration)}`;
+        }
+        
+        // Tool functions
+        function enhanceAudio() {
+            showProcessing('Enhancing audio quality...');
+            setTimeout(() => closeModal('processing-modal'), 3000);
+        }
+        
+        function noiseReduction() {
+            showProcessing('Reducing background noise...');
+            setTimeout(() => closeModal('processing-modal'), 2500);
+        }
+        
+        function aiEnhance() {
+            showProcessing('AI enhancement in progress...');
+            setTimeout(() => closeModal('processing-modal'), 4000);
+        }
+        
+        function addWatermark() {
+            showProcessing('Adding watermark protection...');
+            setTimeout(() => closeModal('processing-modal'), 2000);
+        }
+        
+        function selectTrack(element) {
+            document.querySelectorAll('.track-content').forEach(track => {
+                track.style.background = 'rgba(51, 65, 85, 0.1)';
+            });
+            element.style.background = 'rgba(59, 130, 246, 0.2)';
+        }
+        
+        function addTrack() {
+            console.log('Adding new track...');
+        }
+        
+        function importMedia() {
+            if (window.electronAPI) {
+                window.electronAPI.selectFile().then(files => {
+                    if (files && files.length > 0) {
+                        console.log('Imported files:', files);
+                        showProcessing('Importing media files...');
+                        setTimeout(() => closeModal('processing-modal'), 2000);
+                    }
+                });
+            }
+        }
+        
+        function renderProject() {
+            showProcessing('Rendering project...');
+            let progress = 0;
+            const renderInterval = setInterval(() => {
+                progress += 2;
+                document.getElementById('progress-fill').style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(renderInterval);
+                    setTimeout(() => closeModal('processing-modal'), 500);
+                }
+            }, 100);
+        }
+        
+        function showSystemInfo() {
+            if (window.electronAPI) {
+                window.electronAPI.getSystemInfo().then(info => {
+                    populateSystemInfo(info);
+                    document.getElementById('system-modal').style.display = 'block';
+                });
+            } else {
+                // Demo data
+                const demoInfo = {
+                    platform: 'darwin',
+                    arch: 'x64',
+                    cpus: 8,
+                    totalMemory: '16 GB',
+                    displays: 2
+                };
+                populateSystemInfo(demoInfo);
+                document.getElementById('system-modal').style.display = 'block';
+            }
+        }
+        
+        function populateSystemInfo(info) {
+            const grid = document.getElementById('system-info-grid');
+            grid.innerHTML = '';
+            
+            const items = [
+                { label: 'Platform', value: info.platform },
+                { label: 'Architecture', value: info.arch },
+                { label: 'CPU Cores', value: info.cpus },
+                { label: 'Memory', value: info.totalMemory },
+                { label: 'Displays', value: info.displays },
+                { label: 'Node.js', value: info.nodeVersion || 'N/A' }
+            ];
+            
+            items.forEach(item => {
+                const element = document.createElement('div');
+                element.className = 'info-item';
+                element.innerHTML = `
+                    <div class="info-label">${item.label}</div>
+                    <div class="info-value">${item.value}</div>
+                `;
+                grid.appendChild(element);
+            });
+        }
+        
+        function openMultiMonitorConfig() {
+            if (window.electronAPI) {
+                window.electronAPI.invoke('detect-displays').then(displays => {
+                    console.log('Available displays:', displays);
+                    alert(`Detected ${displays.length} display(s). Multi-monitor configuration would open here.`);
+                });
+            }
+        }
+        
+        function showProcessing(text) {
+            document.getElementById('processing-text').textContent = text;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('processing-modal').style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') {
+                e.preventDefault();
+                togglePlayback();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousFrame();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextFrame();
+            } else if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+        
+        // Add window functions for all tools
+        ['normalize', 'addEffects', 'stabilize', 'colorCorrect', 'addTransitions', 
+         'addTitles', 'autoEdit', 'smartCrop', 'generateSubtitles', 'fingerprint', 
+         'drm', 'analytics'].forEach(funcName => {
+            window[funcName] = function() {
+                showProcessing(`${funcName.replace(/([A-Z])/g, ' $1').toLowerCase()}...`);
+                setTimeout(() => closeModal('processing-modal'), 2000);
+            };
+        });
+        
+        console.log('🚀 Advanced Studio ready for professional content creation!');
+    </script>
+</body>
+</html>
