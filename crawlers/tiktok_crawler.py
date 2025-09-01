@@ -956,3 +956,116 @@ Get factors that contribute to video similarity."""
             factors.append('similar_description')
         
         return factors
+    
+    async def crawl(self, targets: List[str], **kwargs) -> List[CrawlerResult]:
+        """
+        Standard crawl method for industrial compliance.
+        Crawls TikTok content based on targets (usernames, hashtags, or URLs).
+        """
+        results = []
+        
+        for target in targets:
+            try:
+                if target.startswith('#'):
+                    # Hashtag crawling
+                    hashtag = target[1:]  # Remove # symbol
+                    videos = await self.search_hashtag(hashtag, max_results=10)
+                    for video in videos:
+                        result = self._convert_video_to_crawler_result(video)
+                        results.append(result)
+                        
+                elif target.startswith('http'):
+                    # URL-based crawling (single video)
+                    video_id = self._extract_video_id(target)
+                    if video_id:
+                        video = await self.get_video_details(video_id)
+                        if video:
+                            result = self._convert_video_to_crawler_result(video)
+                            results.append(result)
+                else:
+                    # Username crawling
+                    videos = await self.get_user_videos(target, max_results=10)
+                    for video in videos:
+                        result = self._convert_video_to_crawler_result(video)
+                        results.append(result)
+                        
+            except Exception as e:
+                logger.error(f"Crawl failed for target {target}: {e}")
+        
+        return results
+    
+    def extract(self, raw_data: Dict) -> CrawlerResult:
+        """
+        Standard extract method for industrial compliance.
+        Extracts structured data from raw TikTok API/scraping response.
+        """
+        try:
+            return CrawlerResult(
+                platform="tiktok",
+                content_id=raw_data.get('video_id', raw_data.get('id', '')),
+                content_type="video",
+                title=raw_data.get('video_description', raw_data.get('description', ''))[:100],
+                description=raw_data.get('video_description', raw_data.get('description', '')),
+                url=f"https://www.tiktok.com/@{raw_data.get('username', '')}/video/{raw_data.get('video_id', '')}",
+                author=raw_data.get('username', ''),
+                timestamp=time.time(),
+                metadata={
+                    'view_count': raw_data.get('view_count', 0),
+                    'like_count': raw_data.get('like_count', 0),
+                    'comment_count': raw_data.get('comment_count', 0),
+                    'share_count': raw_data.get('share_count', 0),
+                    'video_url': raw_data.get('video_url', ''),
+                    'cover_url': raw_data.get('cover_image_url', ''),
+                    'music_title': raw_data.get('music_title', ''),
+                    'duration': raw_data.get('duration', 0)
+                },
+                raw_data=raw_data
+            )
+                
+        except Exception as e:
+            logger.error(f"Extract failed: {e}")
+            return CrawlerResult(
+                platform="tiktok",
+                content_id="error",
+                content_type="error",
+                title="Extraction Error",
+                description=str(e),
+                url="",
+                author="",
+                timestamp=time.time(),
+                metadata={'error': str(e)},
+                raw_data=raw_data
+            )
+    
+    def _convert_video_to_crawler_result(self, video: TikTokVideo) -> CrawlerResult:
+        """Convert TikTokVideo to CrawlerResult."""
+        return CrawlerResult(
+            platform="tiktok",
+            content_id=video.video_id,
+            content_type="video",
+            title=video.description[:100] if video.description else '',
+            description=video.description,
+            url=f"https://www.tiktok.com/@{video.username}/video/{video.video_id}",
+            author=video.username,
+            timestamp=time.time(),
+            metadata={
+                'view_count': video.view_count,
+                'like_count': video.like_count,
+                'comment_count': video.comment_count,
+                'share_count': video.share_count,
+                'hashtags': video.hashtags,
+                'music_title': video.music_title,
+                'duration': video.duration,
+                'video_url': video.video_url,
+                'cover_url': video.cover_url
+            },
+            raw_data=video.__dict__
+        )
+    
+    def _extract_video_id(self, url: str) -> Optional[str]:
+        """Extract video ID from TikTok URL."""
+        import re
+        
+        pattern = r'tiktok\.com/@[^/]+/video/(\d+)'
+        match = re.search(pattern, url)
+        return match.group(1) if match else None

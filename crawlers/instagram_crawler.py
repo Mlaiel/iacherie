@@ -775,3 +775,109 @@ Get factors that contribute to post similarity."""
             factors.append('similar_caption')
         
         return factors
+    
+    async def crawl(self, targets: List[str], **kwargs) -> List[CrawlerResult]:
+        """
+        Standard crawl method for industrial compliance.
+        Crawls Instagram content based on targets (usernames, hashtags, or URLs).
+        """
+        results = []
+        
+        for target in targets:
+            try:
+                if target.startswith('#'):
+                    # Hashtag crawling
+                    hashtag = target[1:]  # Remove # symbol
+                    posts = await self.search_hashtag(hashtag, max_results=10)
+                    for post in posts:
+                        result = self._convert_post_to_crawler_result(post)
+                        results.append(result)
+                        
+                elif target.startswith('http'):
+                    # URL-based crawling (single post)
+                    shortcode = self._extract_shortcode(target)
+                    if shortcode:
+                        post = await self.get_post_by_shortcode(shortcode)
+                        if post:
+                            result = self._convert_post_to_crawler_result(post)
+                            results.append(result)
+                else:
+                    # Username crawling
+                    posts = await self.get_user_recent_posts(target, max_results=10)
+                    for post in posts:
+                        result = self._convert_post_to_crawler_result(post)
+                        results.append(result)
+                        
+            except Exception as e:
+                logger.error(f"Crawl failed for target {target}: {e}")
+        
+        return results
+    
+    def extract(self, raw_data: Dict) -> CrawlerResult:
+        """
+        Standard extract method for industrial compliance.
+        Extracts structured data from raw Instagram API/scraping response.
+        """
+        try:
+            return CrawlerResult(
+                platform="instagram",
+                content_id=raw_data.get('shortcode', raw_data.get('id', '')),
+                content_type=raw_data.get('__typename', 'post').lower(),
+                title=raw_data.get('edge_media_to_caption', {}).get('edges', [{}])[0].get('node', {}).get('text', '')[:100],
+                description=raw_data.get('edge_media_to_caption', {}).get('edges', [{}])[0].get('node', {}).get('text', ''),
+                url=f"https://www.instagram.com/p/{raw_data.get('shortcode', '')}",
+                author=raw_data.get('owner', {}).get('username', ''),
+                timestamp=time.time(),
+                metadata={
+                    'like_count': raw_data.get('edge_media_preview_like', {}).get('count', 0),
+                    'comment_count': raw_data.get('edge_media_to_comment', {}).get('count', 0),
+                    'display_url': raw_data.get('display_url', ''),
+                    'taken_at_timestamp': raw_data.get('taken_at_timestamp', 0),
+                    'is_video': raw_data.get('is_video', False)
+                },
+                raw_data=raw_data
+            )
+                
+        except Exception as e:
+            logger.error(f"Extract failed: {e}")
+            return CrawlerResult(
+                platform="instagram",
+                content_id="error",
+                content_type="error",
+                title="Extraction Error",
+                description=str(e),
+                url="",
+                author="",
+                timestamp=time.time(),
+                metadata={'error': str(e)},
+                raw_data=raw_data
+            )
+    
+    def _convert_post_to_crawler_result(self, post: InstagramPost) -> CrawlerResult:
+        """Convert InstagramPost to CrawlerResult."""
+        return CrawlerResult(
+            platform="instagram",
+            content_id=post.shortcode,
+            content_type=post.post_type,
+            title=post.caption[:100] if post.caption else '',
+            description=post.caption,
+            url=f"https://www.instagram.com/p/{post.shortcode}",
+            author=post.username,
+            timestamp=time.time(),
+            metadata={
+                'like_count': post.like_count,
+                'comment_count': post.comment_count,
+                'hashtags': post.hashtags,
+                'media_url': post.media_url,
+                'is_video': post.post_type == 'video'
+            },
+            raw_data=post.__dict__
+        )
+    
+    def _extract_shortcode(self, url: str) -> Optional[str]:
+        """Extract shortcode from Instagram URL."""
+        import re
+        
+        pattern = r'instagram\.com/p/([^/?]+)'
+        match = re.search(pattern, url)
+        return match.group(1) if match else None
