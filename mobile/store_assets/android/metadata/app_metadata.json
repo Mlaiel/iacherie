@@ -1,0 +1,189 @@
+{
+  "app_info": {
+    "package_name": "com.ainflue.mobile",
+    "app_name": "Ainflue",
+    "short_description": "Professional Content Creation Platform",
+    "version": "1.0.0",
+    "version_code": 1,
+    "developer": {
+      "name": "Fahed Mlaiel",
+      "email": "mlaiel@live.de",
+      "website": "https://ainflue.com",
+      "privacy_policy": "https://ainflue.com/privacy",
+      "support_email": "support@ainflue.com"
+    }
+  },
+  "play_store_info": {
+    "category": "PRODUCTIVITY",
+    "content_rating": "Everyone",
+    "target_age_group": "13+",
+    "pricing": {
+      "type": "Free",
+      "contains_ads": false,
+      "in_app_products": true,
+      "subscription_model": "Freemium"
+    },
+    "tags": [
+      "content creation",
+      "video editing",
+      "social media",
+      "creator tools",
+      "AI protection",
+      "influencer",
+      "content marketing",
+      "video maker",
+      "professional tools",
+      "creator economy"
+    ]
+  },
+  "technical_requirements": {
+    "min_sdk_version": 26,
+    "target_sdk_version": 34,
+    "supported_abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ],
+    "required_features": [
+      "android.hardware.camera",
+      "android.hardware.microphone"
+    ],
+    "optional_features": [
+      "android.hardware.camera.autofocus",
+      "android.hardware.camera.flash",
+      "android.hardware.fingerprint",
+      "android.hardware.location",
+      "android.hardware.location.gps"
+    ],
+    "supported_languages": [
+      "en-US",
+      "es-ES",
+      "fr-FR",
+      "de-DE",
+      "it-IT",
+      "pt-BR",
+      "ja-JP",
+      "ko-KR",
+      "zh-CN",
+      "zh-TW",
+      "ar-SA",
+      "ru-RU"
+    ]
+  },
+  "permissions": {
+    "required": [
+      {
+        "permission": "android.permission.CAMERA",
+        "reason": "Required for content creation, video recording, and photo capture"
+      },
+      {
+        "permission": "android.permission.RECORD_AUDIO",
+        "reason": "Required for audio recording and voice content creation"
+      },
+      {
+        "permission": "android.permission.INTERNET",
+        "reason": "Required for content publishing, synchronization, and cloud features"
+      },
+      {
+        "permission": "android.permission.ACCESS_NETWORK_STATE",
+        "reason": "Required to check internet connectivity for optimal user experience"
+      },
+      {
+        "permission": "android.permission.WRITE_EXTERNAL_STORAGE",
+        "reason": "Required to save created content and export files"
+      },
+      {
+        "permission": "android.permission.READ_EXTERNAL_STORAGE",
+        "reason": "Required to access and import media files from device storage"
+      }
+    ],
+    "optional": [
+      {
+        "permission": "android.permission.USE_FINGERPRINT",
+        "reason": "Optional biometric authentication for enhanced security"
+      },
+      {
+        "permission": "android.permission.USE_BIOMETRIC",
+        "reason": "Optional biometric authentication for enhanced security"
+      },
+      {
+        "permission": "android.permission.ACCESS_FINE_LOCATION",
+        "reason": "Optional location-based content tagging and analytics"
+      },
+      {
+        "permission": "android.permission.WAKE_LOCK",
+        "reason": "Required for background content processing and uploads"
+      }
+    ]
+  },
+  "content_rating": {
+    "questionnaire": {
+      "violence": "None",
+      "sexual_content": "None",
+      "profanity": "None",
+      "gambling": "None",
+      "illegal_activities": "None",
+      "user_generated_content": "Yes - Users can create and share content",
+      "social_features": "Yes - Users can share content on social platforms",
+      "data_sharing": "Limited - Only essential data for app functionality"
+    },
+    "rating": "Everyone",
+    "content_descriptors": [
+      "Interactive Elements",
+      "Users Interact Online",
+      "Shares Info"
+    ]
+  },
+  "store_listing": {
+    "short_description": "Create, protect, and distribute professional content with AI-powered tools",
+    "feature_graphic_text": "Transform Your Content Creation",
+    "promo_video_url": "https://youtube.com/watch?v=ainflue-demo",
+    "screenshots": {
+      "phone": [
+        "screenshot_phone_1_main_interface.png",
+        "screenshot_phone_2_content_creation.png", 
+        "screenshot_phone_3_ai_protection.png",
+        "screenshot_phone_4_analytics.png",
+        "screenshot_phone_5_publishing.png",
+        "screenshot_phone_6_monetization.png",
+        "screenshot_phone_7_collaboration.png",
+        "screenshot_phone_8_security.png"
+      ],
+      "tablet": [
+        "screenshot_tablet_1_main_dashboard.png",
+        "screenshot_tablet_2_editing_interface.png",
+        "screenshot_tablet_3_analytics_dashboard.png",
+        "screenshot_tablet_4_collaboration_view.png"
+      ]
+    }
+  },
+  "release_info": {
+    "release_notes": "🚀 Welcome to Ainflue v1.0.0!\n\n✨ NEW IN THIS RELEASE:\n• Complete content creation suite\n• AI-powered content protection\n• Multi-platform publishing\n• Professional analytics dashboard\n• Secure biometric authentication\n• Real-time collaboration tools\n• Advanced monetization features\n\n🎯 KEY FEATURES:\n• Create stunning videos with AI enhancement\n• Protect your content with fingerprinting technology\n• Publish to all major social platforms instantly\n• Track performance with detailed analytics\n• Collaborate with team members in real-time\n• Monetize content with smart recommendations\n\n🔒 PRIVACY & SECURITY:\n• On-device AI processing\n• End-to-end encryption\n• Biometric authentication\n• GDPR compliant\n\nJoin the creator revolution with Ainflue!",
+    "rollout_percentage": 100,
+    "release_status": "Completed",
+    "in_app_update_priority": 3
+  },
+  "testing": {
+    "internal_testing": {
+      "enabled": true,
+      "track": "internal",
+      "testers": [
+        "fahed.mlaiel@gmail.com",
+        "dev-team@ainflue.com"
+      ]
+    },
+    "closed_testing": {
+      "enabled": true,
+      "track": "alpha",
+      "countries": ["US", "CA", "GB", "DE", "FR"],
+      "min_testers": 20,
+      "feedback_url": "https://feedback.ainflue.com"
+    },
+    "open_testing": {
+      "enabled": false,
+      "track": "beta",
+      "countries": ["US"]
+    }
+  }
+}
