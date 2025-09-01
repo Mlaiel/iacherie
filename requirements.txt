@@ -1,0 +1,36 @@
+# Ainflue Platform - Main Requirements
+# Production-ready AI-powered content protection and monetization platform
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+# Core Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Core Dependencies for Startup
+python-dotenv==1.0.0
+python-multipart==0.0.6
+
+# Database & Cache (Core)
+asyncpg==0.29.0
+sqlalchemy[asyncio]==2.0.23
+redis==5.0.1
+
+# Security (Essential)
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+cryptography>=41.0.7
+
+# Production Server
+gunicorn==21.2.0
+
+# Monitoring & Health
+prometheus-client==0.19.0
+structlog==23.2.0
+requests==2.31.0
+
+# Extended functionality (optional - loads from config/requirements.txt if available)
+# For full AI features, install: pip install -r config/requirements.txt
