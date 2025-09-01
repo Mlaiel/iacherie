@@ -1,0 +1,28 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environment
+venv/
+env/
+.env
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore temporary files
+*.tmp
+*.log
+.DS_Store
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
+
+# Keep test reports
+!test_reports/
