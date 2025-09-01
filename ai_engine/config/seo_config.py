@@ -51,19 +51,73 @@ class ContentCategory(Enum):
 
 
 class Platform(Enum):
-    """Target platforms for SEO optimization"""
+    """Target platforms for SEO optimization - 35+ platforms"""
 
+    # Search & Web
     GOOGLE = "google"
+    
+    # Video Platforms
     YOUTUBE = "youtube"
+    VIMEO = "vimeo"
+    DAILYMOTION = "dailymotion"
+    TWITCH = "twitch"
+    RUMBLE = "rumble"
+    
+    # Social Media
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
-    FACEBOOK = "facebook"
     TWITTER = "twitter"
+    FACEBOOK = "facebook"
+    SNAPCHAT = "snapchat"
+    DISCORD = "discord"
+    CLUBHOUSE = "clubhouse"
+    BEREAL = "bereal"
+    THREADS = "threads"
+    
+    # Professional Networks
     LINKEDIN = "linkedin"
-    PINTEREST = "pinterest"
+    GITHUB = "github"
+    STACKOVERFLOW = "stackoverflow"
+    BEHANCE = "behance"
+    DRIBBBLE = "dribbble"
+    DEVIANTART = "deviantart"
+    
+    # Music Platforms
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
     APPLE_MUSIC = "apple_music"
+    DEEZER = "deezer"
+    BANDCAMP = "bandcamp"
+    YOUTUBE_MUSIC = "youtube_music"
+    AMAZON_MUSIC = "amazon_music"
+    
+    # Content Platforms
+    MEDIUM = "medium"
+    SUBSTACK = "substack"
+    WORDPRESS = "wordpress"
+    BLOGGER = "blogger"
+    TUMBLR = "tumblr"
+    WIX = "wix"
+    SQUARESPACE = "squarespace"
+    
+    # Visual & Creative
+    PINTEREST = "pinterest"
+    
+    # Forums & Communities
+    REDDIT = "reddit"
+    
+    # International Platforms
+    WECHAT = "wechat"
+    WEIBO = "weibo"
+    VKONTAKTE = "vkontakte"
+    TELEGRAM = "telegram"
+    LINE = "line"
+    
+    # Emerging Platforms
+    TRUTH_SOCIAL = "truth_social"
+    MASTODON = "mastodon"
+    BLUESKY = "bluesky"
+    MINDS = "minds"
 
 
 class Language(Enum):

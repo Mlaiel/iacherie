@@ -76,20 +76,72 @@ class ContentType(str, Enum):
 
 
 class Platform(str, Enum):
-    """Platforms for SEO optimization"""
+    """Platforms for SEO optimization - 35+ supported platforms"""
+    # Search & Web
     GOOGLE = "google"
+    
+    # Video Platforms
     YOUTUBE = "youtube"
+    VIMEO = "vimeo"
+    DAILYMOTION = "dailymotion"
+    TWITCH = "twitch"
+    RUMBLE = "rumble"
+    
+    # Social Media
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
-    LINKEDIN = "linkedin"
     FACEBOOK = "facebook"
+    SNAPCHAT = "snapchat"
+    DISCORD = "discord"
+    CLUBHOUSE = "clubhouse"
+    BEREAL = "bereal"
+    THREADS = "threads"
+    
+    # Professional Networks
+    LINKEDIN = "linkedin"
+    GITHUB = "github"
+    STACKOVERFLOW = "stackoverflow"
+    BEHANCE = "behance"
+    DRIBBBLE = "dribbble"
+    DEVIANTART = "deviantart"
+    
+    # Music Platforms
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
-    PINTEREST = "pinterest"
-    REDDIT = "reddit"
+    APPLE_MUSIC = "apple_music"
+    DEEZER = "deezer"
+    BANDCAMP = "bandcamp"
+    YOUTUBE_MUSIC = "youtube_music"
+    AMAZON_MUSIC = "amazon_music"
+    
+    # Content Platforms
     MEDIUM = "medium"
     SUBSTACK = "substack"
+    WORDPRESS = "wordpress"
+    BLOGGER = "blogger"
+    TUMBLR = "tumblr"
+    WIX = "wix"
+    SQUARESPACE = "squarespace"
+    
+    # Visual & Creative
+    PINTEREST = "pinterest"
+    
+    # Forums & Communities
+    REDDIT = "reddit"
+    
+    # International Platforms
+    WECHAT = "wechat"
+    WEIBO = "weibo"
+    VKONTAKTE = "vkontakte"
+    TELEGRAM = "telegram"
+    LINE = "line"
+    
+    # Emerging Platforms
+    TRUTH_SOCIAL = "truth_social"
+    MASTODON = "mastodon"
+    BLUESKY = "bluesky"
+    MINDS = "minds"
 
 
 class OptimizationLevel(str, Enum):
@@ -1163,6 +1215,240 @@ class SEOOptimizationEngine:
                     "hashtags": 0.20,
                     "timing": 0.15,
                     "thread_quality": 0.10
+                }
+            },
+            # Video Platforms
+            "vimeo": {
+                "title_max_length": 128,
+                "description_max_length": 5000,
+                "tags_max_count": 20,
+                "focus_keywords": ["creative", "professional", "portfolio", "demo"],
+                "ranking_factors": {
+                    "video_quality": 0.30,
+                    "engagement": 0.25,
+                    "keywords": 0.20,
+                    "thumbnail": 0.15,
+                    "duration": 0.10
+                }
+            },
+            "dailymotion": {
+                "title_max_length": 150,
+                "description_max_length": 3000,
+                "tags_max_count": 12,
+                "focus_keywords": ["entertainment", "news", "sports", "music"],
+                "ranking_factors": {
+                    "watch_time": 0.25,
+                    "engagement": 0.25,
+                    "keywords": 0.20,
+                    "thumbnail": 0.15,
+                    "freshness": 0.15
+                }
+            },
+            "twitch": {
+                "title_max_length": 140,
+                "description_max_length": 300,
+                "tags_max_count": 10,
+                "focus_keywords": ["gaming", "live", "stream", "esports"],
+                "ranking_factors": {
+                    "live_viewers": 0.35,
+                    "chat_engagement": 0.25,
+                    "keywords": 0.15,
+                    "consistency": 0.15,
+                    "thumbnail": 0.10
+                }
+            },
+            "rumble": {
+                "title_max_length": 100,
+                "description_max_length": 5000,
+                "tags_max_count": 15,
+                "focus_keywords": ["alternative", "free speech", "independent", "creator"],
+                "ranking_factors": {
+                    "watch_time": 0.30,
+                    "engagement": 0.25,
+                    "keywords": 0.20,
+                    "thumbnail": 0.15,
+                    "shares": 0.10
+                }
+            },
+            # Social Media Platforms
+            "snapchat": {
+                "caption_max_length": 31,
+                "hashtags_optimal": 3,
+                "focus_keywords": ["snap", "story", "filter", "lens"],
+                "ranking_factors": {
+                    "view_time": 0.30,
+                    "screenshots": 0.25,
+                    "shares": 0.20,
+                    "timing": 0.15,
+                    "creativity": 0.10
+                }
+            },
+            "discord": {
+                "message_max_length": 2000,
+                "hashtags_optimal": 0,
+                "focus_keywords": ["community", "gaming", "chat", "server"],
+                "ranking_factors": {
+                    "engagement": 0.40,
+                    "activity": 0.25,
+                    "keywords": 0.15,
+                    "consistency": 0.15,
+                    "community_size": 0.05
+                }
+            },
+            "threads": {
+                "post_max_length": 500,
+                "hashtags_optimal": 3,
+                "focus_keywords": ["conversation", "discussion", "thread", "connect"],
+                "ranking_factors": {
+                    "engagement_rate": 0.35,
+                    "replies": 0.25,
+                    "hashtags": 0.20,
+                    "timing": 0.15,
+                    "thread_quality": 0.05
+                }
+            },
+            # Professional Networks
+            "github": {
+                "title_max_length": 100,
+                "description_max_length": 10000,
+                "tags_max_count": 20,
+                "focus_keywords": ["code", "open source", "developer", "repository"],
+                "ranking_factors": {
+                    "code_quality": 0.30,
+                    "documentation": 0.25,
+                    "stars": 0.20,
+                    "keywords": 0.15,
+                    "activity": 0.10
+                }
+            },
+            "stackoverflow": {
+                "title_max_length": 150,
+                "description_max_length": 30000,
+                "tags_max_count": 5,
+                "focus_keywords": ["programming", "solution", "help", "code"],
+                "ranking_factors": {
+                    "answer_quality": 0.35,
+                    "upvotes": 0.25,
+                    "keywords": 0.20,
+                    "code_examples": 0.15,
+                    "acceptance": 0.05
+                }
+            },
+            "behance": {
+                "title_max_length": 100,
+                "description_max_length": 1000,
+                "tags_max_count": 15,
+                "focus_keywords": ["design", "creative", "portfolio", "art"],
+                "ranking_factors": {
+                    "visual_quality": 0.35,
+                    "engagement": 0.25,
+                    "keywords": 0.15,
+                    "views": 0.15,
+                    "appreciations": 0.10
+                }
+            },
+            # Music Platforms
+            "apple_music": {
+                "title_max_length": 100,
+                "description_max_length": 400,
+                "tags_max_count": 10,
+                "focus_keywords": ["music", "artist", "album", "song"],
+                "ranking_factors": {
+                    "play_count": 0.30,
+                    "playlist_adds": 0.25,
+                    "keywords": 0.20,
+                    "completion_rate": 0.15,
+                    "shares": 0.10
+                }
+            },
+            "deezer": {
+                "title_max_length": 100,
+                "description_max_length": 500,
+                "tags_max_count": 12,
+                "focus_keywords": ["music", "flow", "discovery", "artist"],
+                "ranking_factors": {
+                    "streams": 0.30,
+                    "favorites": 0.25,
+                    "keywords": 0.20,
+                    "flow_inclusion": 0.15,
+                    "completion_rate": 0.10
+                }
+            },
+            # Content Platforms
+            "wordpress": {
+                "title_max_length": 60,
+                "description_max_length": 160,
+                "tags_max_count": 15,
+                "focus_keywords": ["blog", "content", "SEO", "website"],
+                "ranking_factors": {
+                    "seo_score": 0.30,
+                    "readability": 0.25,
+                    "keywords": 0.20,
+                    "backlinks": 0.15,
+                    "page_speed": 0.10
+                }
+            },
+            "blogger": {
+                "title_max_length": 60,
+                "description_max_length": 150,
+                "tags_max_count": 20,
+                "focus_keywords": ["blog", "personal", "story", "share"],
+                "ranking_factors": {
+                    "content_quality": 0.30,
+                    "engagement": 0.25,
+                    "keywords": 0.20,
+                    "frequency": 0.15,
+                    "pageviews": 0.10
+                }
+            },
+            "tumblr": {
+                "caption_max_length": 475,
+                "hashtags_optimal": 30,
+                "focus_keywords": ["aesthetic", "fandom", "creative", "blog"],
+                "ranking_factors": {
+                    "reblogs": 0.30,
+                    "likes": 0.25,
+                    "hashtags": 0.20,
+                    "content_type": 0.15,
+                    "timing": 0.10
+                }
+            },
+            # International Platforms
+            "wechat": {
+                "title_max_length": 30,
+                "description_max_length": 600,
+                "hashtags_optimal": 0,
+                "focus_keywords": ["微信", "分享", "朋友圈", "公众号"],
+                "ranking_factors": {
+                    "engagement": 0.35,
+                    "shares": 0.25,
+                    "keywords": 0.20,
+                    "timing": 0.15,
+                    "quality": 0.05
+                }
+            },
+            "weibo": {
+                "post_max_length": 140,
+                "hashtags_optimal": 3,
+                "focus_keywords": ["微博", "热门", "话题", "分享"],
+                "ranking_factors": {
+                    "reposts": 0.30,
+                    "comments": 0.25,
+                    "likes": 0.20,
+                    "hashtags": 0.15,
+                    "trending": 0.10
+                }
+            },
+            "telegram": {
+                "message_max_length": 4096,
+                "hashtags_optimal": 5,
+                "focus_keywords": ["channel", "group", "message", "share"],
+                "ranking_factors": {
+                    "views": 0.30,
+                    "forwards": 0.25,
+                    "engagement": 0.20,
+                    "timing": 0.15,
+                    "content_quality": 0.10
                 }
             }
         }
