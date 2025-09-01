@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: disaster-recovery-us-east-1
+  namespace: production
+  labels:
+    component: disaster-recovery
+    region: us-east-1
+data:
+  rto_target_minutes: '15'
+  rpo_target_minutes: '5'
+  backup_region: us-west-2
+  backup_frequency_hours: '6'
+  backup_retention_days: '30'
+  failover_strategy: automatic
+  health_check_url: https://api-us-east-1.ainflue.com/health
+  monitoring_endpoints: '["https://api-us-east-1.ainflue.com/metrics", "https://api-us-east-1.ainflue.com/health"]'
+  backup_storage: ainflue-prod-primary-us-east-1-backups
+  database_backup_enabled: 'true'
+  cross_region_replication: 'true'

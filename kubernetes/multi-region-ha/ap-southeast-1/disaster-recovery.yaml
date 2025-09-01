@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: disaster-recovery-ap-southeast-1
+  namespace: production
+  labels:
+    component: disaster-recovery
+    region: ap-southeast-1
+data:
+  rto_target_minutes: '15'
+  rpo_target_minutes: '5'
+  backup_region: ''
+  backup_frequency_hours: '6'
+  backup_retention_days: '30'
+  failover_strategy: manual
+  health_check_url: https://api-ap-southeast-1.ainflue.com/health
+  monitoring_endpoints: '["https://api-ap-southeast-1.ainflue.com/metrics", "https://api-ap-southeast-1.ainflue.com/health"]'
+  backup_storage: ainflue-prod-apac-ap-southeast-1-backups
+  database_backup_enabled: 'true'
+  cross_region_replication: 'false'

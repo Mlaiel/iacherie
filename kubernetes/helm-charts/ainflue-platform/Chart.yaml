@@ -1,0 +1,49 @@
+apiVersion: v2
+name: ainflue-platform
+description: Ainflue AI-powered content protection and monetization platform
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.24.0"
+
+keywords:
+  - ainflue
+  - content-protection
+  - ai
+  - monetization
+
+home: https://ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+
+dependencies:
+  - name: postgresql
+    version: "12.1.6"
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: "17.3.7"
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: prometheus
+    version: "15.18.0"
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: monitoring.prometheus.enabled
+  - name: grafana
+    version: "6.44.11"
+    repository: https://grafana.github.io/helm-charts
+    condition: monitoring.grafana.enabled
+
+annotations:
+  category: Infrastructure
+  images: |
+    - name: ainflue-api
+      image: docker.io/ainflue/api:1.0.0
+    - name: ainflue-worker
+      image: docker.io/ainflue/worker:1.0.0
+    - name: ainflue-fingerprinting
+      image: docker.io/ainflue/fingerprinting:1.0.0

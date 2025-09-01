@@ -1,0 +1,176 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: ainflue-prod-us-west-2
+  region: us-west-2
+  version: '1.28'
+  tags:
+    Environment: production
+    Project: ainflue
+    Region: us-west-2
+    RegionType: secondary
+    ManagedBy: eksctl
+vpc:
+  enableDnsHostnames: true
+  enableDnsSupport: true
+  cidr: 10.0.0.0/16
+  subnets:
+    private:
+      private-us-west-2a:
+        id: subnet-496174
+        az: us-west-2a
+        cidr: 10.0.0.0/20
+      private-us-west-2b:
+        id: subnet-856335
+        az: us-west-2b
+        cidr: 10.0.16.0/20
+      private-us-west-2c:
+        id: subnet-101243
+        az: us-west-2c
+        cidr: 10.0.32.0/20
+    public:
+      public-us-west-2a:
+        id: subnet-pub-496174
+        az: us-west-2a
+        cidr: 10.0.100.0/20
+      public-us-west-2b:
+        id: subnet-pub-856335
+        az: us-west-2b
+        cidr: 10.0.116.0/20
+      public-us-west-2c:
+        id: subnet-pub-101243
+        az: us-west-2c
+        cidr: 10.0.132.0/20
+  nat:
+    gateway: HighlyAvailable
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: cluster-autoscaler
+      namespace: kube-system
+    wellKnownPolicies:
+      autoScaler: true
+  - metadata:
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    wellKnownPolicies:
+      awsLoadBalancerController: true
+managedNodeGroups:
+- name: api-nodes
+  instanceTypes:
+  - m5.large
+  minSize: 3
+  maxSize: 10
+  desiredCapacity: 3
+  availabilityZones:
+  - us-west-2a
+  - us-west-2b
+  - us-west-2c
+  privateNetworking: true
+  volumeType: gp3
+  volumeSize: 100
+  volumeEncrypted: true
+  amiFamily: AmazonLinux2
+  iam:
+    withAddonPolicies:
+      imageBuilder: true
+      autoScaler: true
+      externalDNS: true
+      certManager: true
+      appMesh: true
+      appMeshPreview: true
+      ebs: true
+      fsx: true
+      efs: true
+      awsLoadBalancerController: true
+      xRay: true
+      cloudWatch: true
+  labels:
+    workload: api
+    tier: frontend
+  tags:
+    Environment: production
+    NodeGroup: api-nodes
+    Region: us-west-2
+    k8s.io/cluster-autoscaler/enabled: 'true'
+    k8s.io/cluster-autoscaler/ainflue-prod-us-west-2: owned
+  securityGroups:
+    withShared: true
+    withLocal: true
+  ssh:
+    allow: false
+- name: worker-nodes
+  instanceTypes:
+  - c5.xlarge
+  minSize: 2
+  maxSize: 20
+  desiredCapacity: 3
+  availabilityZones:
+  - us-west-2a
+  - us-west-2b
+  privateNetworking: true
+  volumeType: gp3
+  volumeSize: 100
+  volumeEncrypted: true
+  amiFamily: AmazonLinux2
+  iam:
+    withAddonPolicies:
+      imageBuilder: true
+      autoScaler: true
+      externalDNS: true
+      certManager: true
+      appMesh: true
+      appMeshPreview: true
+      ebs: true
+      fsx: true
+      efs: true
+      awsLoadBalancerController: true
+      xRay: true
+      cloudWatch: true
+  labels:
+    workload: processing
+    tier: backend
+  tags:
+    Environment: production
+    NodeGroup: worker-nodes
+    Region: us-west-2
+    k8s.io/cluster-autoscaler/enabled: 'true'
+    k8s.io/cluster-autoscaler/ainflue-prod-us-west-2: owned
+  securityGroups:
+    withShared: true
+    withLocal: true
+  ssh:
+    allow: false
+  spot: true
+  instancesDistribution:
+    maxPrice: 0.1
+    instanceTypes:
+    - c5.xlarge
+    - m5.xlarge
+    - c5.large
+    onDemandBaseCapacity: 1
+    onDemandPercentageAboveBaseCapacity: 20
+    spotInstancePools: 3
+addons:
+- name: vpc-cni
+  version: latest
+- name: coredns
+  version: latest
+- name: kube-proxy
+  version: latest
+- name: aws-ebs-csi-driver
+  version: latest
+  wellKnownPolicies:
+    ebsCSIController: true
+cloudWatch:
+  clusterLogging:
+    enable:
+    - audit
+    - authenticator
+    - controllerManager
+    - scheduler
+    - api
+    logRetentionInDays: 30
+secretsEncryption:
+  keyARN: arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-123456789012

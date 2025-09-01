@@ -1,0 +1,242 @@
+# Enterprise Alert Rules for Ainflue Platform
+groups:
+  - name: ainflue.critical
+    interval: 30s
+    rules:
+      # API Health and Availability
+      - alert: AinfluAPIDown
+        expr: up{job="ainflue-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: api
+        annotations:
+          summary: "Ainflue API is down"
+          description: "Ainflue API has been down for more than 1 minute"
+          runbook_url: "https://docs.ainflue.com/runbooks/api-down"
+
+      - alert: AinfluAPIHighErrorRate
+        expr: (rate(http_requests_total{job="ainflue-api",status=~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m])) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+          service: api
+        annotations:
+          summary: "High error rate in Ainflue API"
+          description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes"
+
+      - alert: AinfluAPIHighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          service: api
+        annotations:
+          summary: "High latency in Ainflue API"
+          description: "95th percentile latency is {{ $value }}s"
+
+      # Database Alerts
+      - alert: PostgreSQLDown
+        expr: up{job="postgresql"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: database
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "PostgreSQL database is not responding"
+
+      - alert: PostgreSQLHighConnections
+        expr: (postgresql_stat_activity_count / postgresql_settings_max_connections) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "PostgreSQL high connection usage"
+          description: "Connection usage is {{ $value | humanizePercentage }}"
+
+      - alert: PostgreSQLSlowQueries
+        expr: rate(postgresql_stat_activity_max_tx_duration{state="active"}[5m]) > 60
+        for: 2m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "PostgreSQL slow queries detected"
+          description: "Slow queries detected in PostgreSQL"
+
+      # Redis Alerts
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: cache
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache is not responding"
+
+      - alert: RedisHighMemoryUsage
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          service: cache
+        annotations:
+          summary: "Redis high memory usage"
+          description: "Redis memory usage is {{ $value | humanizePercentage }}"
+
+      # Kubernetes Cluster Health
+      - alert: KubernetesNodeNotReady
+        expr: kube_node_status_ready{condition="Ready"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: kubernetes
+        annotations:
+          summary: "Kubernetes node not ready"
+          description: "Node {{ $labels.node }} is not ready"
+
+      - alert: KubernetesPodCrashLooping
+        expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: kubernetes
+        annotations:
+          summary: "Pod is crash looping"
+          description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is crash looping"
+
+      - alert: KubernetesDeploymentReplicasMismatch
+        expr: kube_deployment_spec_replicas != kube_deployment_status_ready_replicas
+        for: 5m
+        labels:
+          severity: warning
+          service: kubernetes
+        annotations:
+          summary: "Deployment replicas mismatch"
+          description: "Deployment {{ $labels.namespace }}/{{ $labels.deployment }} has {{ $value }} ready replicas"
+
+  - name: ainflue.business
+    interval: 60s
+    rules:
+      # Business Metrics
+      - alert: LowContentUploads
+        expr: rate(ainflue_content_uploads_total[1h]) < 10
+        for: 10m
+        labels:
+          severity: warning
+          service: business
+        annotations:
+          summary: "Low content upload rate"
+          description: "Content upload rate is {{ $value }} per hour, below threshold"
+
+      - alert: HighCopyrightViolations
+        expr: rate(ainflue_copyright_violations_total[1h]) > 100
+        for: 5m
+        labels:
+          severity: critical
+          service: business
+        annotations:
+          summary: "High copyright violation rate"
+          description: "Copyright violation rate is {{ $value }} per hour"
+
+      - alert: LowCollaborationMatches
+        expr: rate(ainflue_collaboration_matches_total[1h]) < 5
+        for: 15m
+        labels:
+          severity: warning
+          service: business
+        annotations:
+          summary: "Low collaboration match rate"
+          description: "Collaboration match rate is {{ $value }} per hour"
+
+      # Resource Utilization
+      - alert: HighCPUUsage
+        expr: (100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value | humanizePercentage }} on {{ $labels.instance }}"
+
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) < 0.1
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+        annotations:
+          summary: "Low disk space"
+          description: "Disk space is {{ $value | humanizePercentage }} available on {{ $labels.instance }}"
+
+  - name: ainflue.security
+    interval: 30s
+    rules:
+      # Security Alerts
+      - alert: UnauthorizedAPIAccess
+        expr: rate(http_requests_total{job="ainflue-api",status="401"}[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          service: security
+        annotations:
+          summary: "High rate of unauthorized API access"
+          description: "Unauthorized access rate is {{ $value }} per second"
+
+      - alert: SuspiciousLoginActivity
+        expr: rate(ainflue_login_failures_total[5m]) > 50
+        for: 2m
+        labels:
+          severity: critical
+          service: security
+        annotations:
+          summary: "Suspicious login activity detected"
+          description: "High rate of login failures: {{ $value }} per second"
+
+      - alert: SecurityScanFailed
+        expr: ainflue_security_scan_status == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: security
+        annotations:
+          summary: "Security scan failed"
+          description: "Automated security scan has failed"
+
+  - name: ainflue.compliance
+    interval: 300s
+    rules:
+      # Compliance Monitoring
+      - alert: GDPRDataRetentionViolation
+        expr: ainflue_data_retention_days > 730
+        for: 0s
+        labels:
+          severity: critical
+          service: compliance
+        annotations:
+          summary: "GDPR data retention violation"
+          description: "Data retention period exceeds GDPR requirements"
+
+      - alert: ComplianceAuditFailed
+        expr: ainflue_compliance_audit_status == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: compliance
+        annotations:
+          summary: "Compliance audit failed"
+          description: "Automated compliance audit has failed"

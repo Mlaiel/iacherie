@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-load-balancer-config
+  namespace: production
+  labels:
+    component: global-load-balancer
+    tier: infrastructure
+data:
+  nginx.conf: "\n# Global Load Balancer Configuration for Ainflue\nupstream primary_region\
+    \ {\n    least_conn;\n    server api-us-east-1.ainflue.com:443 max_fails=3 fail_timeout=30s\
+    \ weight=10;\n    keepalive 32;\n}\n\nupstream secondary_regions {\n    least_conn;\n\
+    \    server api-us-west-2.ainflue.com:443 max_fails=3 fail_timeout=30s weight=8\
+    \ backup;\n    server api-eu-west-1.ainflue.com:443 max_fails=3 fail_timeout=30s\
+    \ weight=6 backup;\n    server api-ap-southeast-1.ainflue.com:443 max_fails=3\
+    \ fail_timeout=30s weight=4 backup;\n    keepalive 16;\n}\n\n# Geolocation-based\
+    \ routing\nmap $http_cf_ipcountry $region_backend {\n    default primary_region;\n\
+    \    US primary_region;\n    CA primary_region;\n    EU secondary_regions;\n \
+    \   GB secondary_regions;\n    FR secondary_regions;\n    DE secondary_regions;\n\
+    \    SG secondary_regions;\n    JP secondary_regions;\n    AU secondary_regions;\n\
+    \    IN secondary_regions;\n}\n\n# Health check configuration\nupstream_conf {\n\
+    \    server;\n    check interval=5000 rise=2 fall=3 timeout=3000 default_down=true\
+    \ type=http;\n    check_http_send \"GET /health HTTP/1.1\\r\\nHost: api.ainflue.com\\\
+    r\\n\\r\\n\";\n    check_http_expect_alive http_2xx http_3xx;\n}\n\nserver {\n\
+    \    listen 80;\n    listen 443 ssl http2;\n    server_name api.ainflue.com;\n\
+    \    \n    # SSL Configuration\n    ssl_certificate /etc/ssl/certs/ainflue.crt;\n\
+    \    ssl_certificate_key /etc/ssl/private/ainflue.key;\n    ssl_protocols TLSv1.2\
+    \ TLSv1.3;\n    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384;\n\
+    \    ssl_prefer_server_ciphers off;\n    \n    # Security headers\n    add_header\
+    \ Strict-Transport-Security \"max-age=31536000; includeSubDomains\" always;\n\
+    \    add_header X-Frame-Options DENY always;\n    add_header X-Content-Type-Options\
+    \ nosniff always;\n    add_header X-XSS-Protection \"1; mode=block\" always;\n\
+    \    \n    # Rate limiting\n    limit_req_zone $binary_remote_addr zone=api:10m\
+    \ rate=10r/s;\n    limit_req zone=api burst=20 nodelay;\n    \n    # Health check\
+    \ endpoint\n    location /health {\n        access_log off;\n        return 200\
+    \ \"healthy\\n\";\n        add_header Content-Type text/plain;\n    }\n    \n\
+    \    # Main application\n    location / {\n        proxy_pass https://$region_backend;\n\
+    \        proxy_ssl_verify off;\n        proxy_ssl_server_name on;\n        proxy_set_header\
+    \ Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header\
+    \ X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto\
+    \ $scheme;\n        proxy_set_header X-Region $region_backend;\n        \n   \
+    \     # Timeouts\n        proxy_connect_timeout 5s;\n        proxy_send_timeout\
+    \ 60s;\n        proxy_read_timeout 60s;\n        \n        # Buffering\n     \
+    \   proxy_buffering on;\n        proxy_buffer_size 4k;\n        proxy_buffers\
+    \ 8 4k;\n        \n        # Circuit breaker\n        proxy_next_upstream error\
+    \ timeout invalid_header http_500 http_502 http_503 http_504;\n        proxy_next_upstream_tries\
+    \ 3;\n        proxy_next_upstream_timeout 10s;\n    }\n    \n    # Status page\n\
+    \    location /status {\n        stub_status on;\n        access_log off;\n  \
+    \      allow 127.0.0.1;\n        allow 10.0.0.0/8;\n        deny all;\n    }\n\
+    }\n"
+  health_check_config: '{"check_interval": 5, "timeout": 3, "healthy_threshold": 2,
+    "unhealthy_threshold": 3, "endpoints": ["https://api-us-east-1.ainflue.com/health",
+    "https://api-us-west-2.ainflue.com/health", "https://api-eu-west-1.ainflue.com/health",
+    "https://api-ap-southeast-1.ainflue.com/health"]}'

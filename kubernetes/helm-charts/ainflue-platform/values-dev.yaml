@@ -1,0 +1,83 @@
+# Environment-specific values for development
+# Override default values for development environment
+
+global:
+  environment: development
+  region: us-east-1
+  
+replicaCount: 1
+
+image:
+  tag: "dev-latest"
+  pullPolicy: Always
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+autoscaling:
+  enabled: false
+
+ingress:
+  hosts:
+    - host: api-dev.ainflue.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: ainflue-dev-tls
+      hosts:
+        - api-dev.ainflue.com
+
+# Development database (smaller configuration)
+postgresql:
+  primary:
+    persistence:
+      size: 5Gi
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  readReplicas:
+    replicaCount: 0
+
+# Development Redis (smaller configuration)
+redis:
+  master:
+    persistence:
+      size: 2Gi
+    resources:
+      limits:
+        cpu: 250m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  replica:
+    replicaCount: 0
+
+# Disable some microservices in development
+microservices:
+  fingerprinting:
+    enabled: true
+    replicaCount: 1
+  seo:
+    enabled: false
+  ai_engine:
+    enabled: false
+
+# Development-specific environment variables
+env:
+  - name: DEBUG
+    value: "true"
+  - name: LOG_LEVEL
+    value: "DEBUG"
+  - name: ENVIRONMENT
+    value: "development"

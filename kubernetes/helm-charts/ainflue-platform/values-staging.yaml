@@ -1,0 +1,88 @@
+# Environment-specific values for staging
+# Override default values for staging environment
+
+global:
+  environment: staging
+  region: us-east-1
+  
+replicaCount: 2
+
+image:
+  tag: "staging-latest"
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: 750m
+    memory: 1.5Gi
+  requests:
+    cpu: 375m
+    memory: 768Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+ingress:
+  hosts:
+    - host: api-staging.ainflue.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: ainflue-staging-tls
+      hosts:
+        - api-staging.ainflue.com
+
+# Staging database (medium configuration)
+postgresql:
+  primary:
+    persistence:
+      size: 10Gi
+    resources:
+      limits:
+        cpu: 750m
+        memory: 1.5Gi
+      requests:
+        cpu: 375m
+        memory: 768Mi
+  readReplicas:
+    replicaCount: 1
+
+# Staging Redis (medium configuration)
+redis:
+  master:
+    persistence:
+      size: 4Gi
+    resources:
+      limits:
+        cpu: 375m
+        memory: 768Mi
+      requests:
+        cpu: 187m
+        memory: 384Mi
+  replica:
+    replicaCount: 1
+
+# Enable most microservices in staging
+microservices:
+  fingerprinting:
+    enabled: true
+    replicaCount: 1
+  seo:
+    enabled: true
+    replicaCount: 1
+  ai_engine:
+    enabled: true
+    replicaCount: 1
+
+# Staging-specific environment variables
+env:
+  - name: DEBUG
+    value: "false"
+  - name: LOG_LEVEL
+    value: "INFO"
+  - name: ENVIRONMENT
+    value: "staging"

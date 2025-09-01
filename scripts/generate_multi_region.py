@@ -161,7 +161,7 @@ class MultiRegionDeploymentManager:
         }
     
     def generate_cluster_autoscaler_config(self, region_code: str) -> Dict[str, Any]:
-        """Generate cluster autoscaler configuration for region"""
+        """Generate production-ready HA cluster autoscaler configuration for region"""
         region = self.regions[region_code]
         
         return {
@@ -172,27 +172,69 @@ class MultiRegionDeploymentManager:
                 "namespace": "kube-system",
                 "labels": {
                     "app": "cluster-autoscaler",
-                    "region": region_code
+                    "region": region_code,
+                    "tier": "infrastructure",
+                    "version": "v1.21.0"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1",
+                    "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
                 }
             },
             "spec": {
-                "replicas": 1,
+                "replicas": 2,  # HA configuration
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                },
                 "selector": {
                     "matchLabels": {
-                        "app": "cluster-autoscaler"
+                        "app": "cluster-autoscaler",
+                        "region": region_code
                     }
                 },
                 "template": {
                     "metadata": {
                         "labels": {
-                            "app": "cluster-autoscaler"
+                            "app": "cluster-autoscaler",
+                            "region": region_code,
+                            "tier": "infrastructure"
                         },
                         "annotations": {
                             "prometheus.io/scrape": "true",
-                            "prometheus.io/port": "8085"
+                            "prometheus.io/port": "8085",
+                            "prometheus.io/path": "/metrics",
+                            "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
                         }
                     },
                     "spec": {
+                        "priorityClassName": "system-cluster-critical",
+                        "securityContext": {
+                            "runAsNonRoot": True,
+                            "runAsUser": 65534,
+                            "fsGroup": 65534
+                        },
+                        "affinity": {
+                            "podAntiAffinity": {
+                                "requiredDuringSchedulingIgnoredDuringExecution": [
+                                    {
+                                        "labelSelector": {
+                                            "matchExpressions": [
+                                                {
+                                                    "key": "app",
+                                                    "operator": "In",
+                                                    "values": ["cluster-autoscaler"]
+                                                }
+                                            ]
+                                        },
+                                        "topologyKey": "kubernetes.io/hostname"
+                                    }
+                                ]
+                            }
+                        },
                         "serviceAccountName": "cluster-autoscaler",
                         "containers": [{
                             "name": "cluster-autoscaler",
