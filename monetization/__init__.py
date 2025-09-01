@@ -1,31 +1,111 @@
-"""Licensing Engine Module  
-=======================
+"""Monetization and Licensing Engine Module  
+=========================================
 
-Advanced licensing and rights management system for automated content licensing,
-royalty distribution, and usage tracking across platforms.
+Comprehensive monetization system with advanced licensing, billing, payment processing,
+fraud detection, and subscription management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
 
+# Legacy licensing components
 from .licensing_manager import LicensingManager
 from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
 from .rights_validator import RightsValidator
+from .payment_processor import PaymentProcessor, PaymentTransaction, PaymentProvider, PaymentStatus, PaymentType
 
-# Only import modules that exist
+# New comprehensive billing features
+from .billing_engine import (
+    ComprehensiveBillingEngine,
+    BillingCycle,
+    InvoiceStatus,
+    SubscriptionStatus,
+    FraudRiskLevel,
+    TaxRate,
+    Invoice,
+    Subscription,
+    FraudAnalysis,
+    RevenueRecognition
+)
 
-__version__ = "1.0.0"
+from .subscription_manager import (
+    AdvancedSubscriptionManager,
+    SubscriptionAction,
+    ProrationMethod,
+    SubscriptionPlan,
+    SubscriptionModification
+)
+
+from .fraud_detector import (
+    AdvancedFraudDetector,
+    FraudSignal,
+    ActionType,
+    FraudRule,
+    TransactionContext,
+    FraudEvent
+)
+
+from .enhanced_payment_providers import (
+    EnhancedMultiProviderPaymentService,
+    ExtendedPaymentProvider,
+    PaymentProviderConfig
+)
+
+from .billing_api import billing_router
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
+    # Legacy licensing
     "LicensingManager",
     "RoyaltyEngine",
     "UsageTracker",
     "ContractGenerator",
     "RightsValidator",
+    "PaymentProcessor",
+    "PaymentTransaction", 
+    "PaymentProvider",
+    "PaymentStatus",
+    "PaymentType",
+    
+    # Comprehensive billing engine
+    "ComprehensiveBillingEngine",
+    "BillingCycle",
+    "InvoiceStatus",
+    "SubscriptionStatus",
+    "FraudRiskLevel",
+    "TaxRate",
+    "Invoice",
+    "Subscription",
+    "FraudAnalysis",
+    "RevenueRecognition",
+    
+    # Advanced subscription management
+    "AdvancedSubscriptionManager",
+    "SubscriptionAction",
+    "ProrationMethod",
+    "SubscriptionPlan",
+    "SubscriptionModification",
+    
+    # Fraud detection
+    "AdvancedFraudDetector",
+    "FraudSignal",
+    "ActionType",
+    "FraudRule",
+    "TransactionContext",
+    "FraudEvent",
+    
+    # Enhanced payment providers
+    "EnhancedMultiProviderPaymentService",
+    "ExtendedPaymentProvider",
+    "PaymentProviderConfig",
+    
+    # API router
+    "billing_router"
 ]
 
 # Licensing configuration
