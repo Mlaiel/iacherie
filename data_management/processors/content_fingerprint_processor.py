@@ -300,7 +300,7 @@ Initialise les modèles AI pour fingerprinting"""
             fingerprints['frame_hashes'] = frame_hashes
             fingerprints['video_signature'] = hashlib.sha256(''.join(frame_hashes).encode()).hexdigest()
             
-            # 2. CNN features from representative frames
+            # 2. CNN features from representative frames with edit detection
             if len(frames) > 0:
                 representative_frames = frames[::max(1, len(frames) // 10)]  # Take 10 representative frames
                 cnn_features = self._extract_video_cnn_features(representative_frames)
@@ -308,6 +308,14 @@ Initialise les modèles AI pour fingerprinting"""
                     str(cnn_features).encode()
                 ).hexdigest()
                 fingerprints['similarity_vector'] = cnn_features.tolist()
+                
+                # 3. Advanced edit detection
+                edit_analysis = self._detect_video_edits(frames, fps)
+                if edit_analysis:
+                    fingerprints['edit_analysis'] = edit_analysis
+                    fingerprints['edit_signature'] = hashlib.sha256(
+                        str(edit_analysis).encode()
+                    ).hexdigest()
             
             # Metadata
             metadata.update({
@@ -450,16 +458,174 @@ Extrait les caractéristiques AI de l'audio"""
     
     def _extract_video_cnn_features(self, frames: List[np.ndarray]) -> np.ndarray:
         """
-Extrait les caractéristiques CNN des frames vidéo"""
-        # Use a pre-trained CNN model to extract features
-        # For now, return mean pixel values as basic features
+Extrait les caractéristiques CNN des frames vidéo avec deep learning"""
+        try:
+            # Try to use advanced edit detection if available
+            from .fingerprinting.advanced_edit_detector import AdvancedEditDetector
+            
+            if hasattr(self, '_edit_detector'):
+                detector = self._edit_detector
+            else:
+                detector = AdvancedEditDetector()
+                self._edit_detector = detector
+            
+            # Extract CNN features if deep learning is available
+            if detector.models.get('cnn'):
+                features = []
+                for frame in frames:
+                    frame_features = detector._extract_cnn_features(frame)
+                    if frame_features is not None:
+                        features.append(frame_features)
+                
+                if features:
+                    return np.mean(features, axis=0)
+            
+        except ImportError:
+            self.logger.warning("Advanced edit detector not available, using basic features")
+        except Exception as e:
+            self.logger.warning(f"CNN feature extraction failed: {e}")
+        
+        # Fallback to basic features
         features = []
         for frame in frames:
-            # Simple feature: mean of each channel
-            frame_features = np.mean(frame, axis=(0, 1))
+            # Enhanced basic features: mean, std, and edge statistics
+            frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            
+            # Color statistics
+            color_features = np.mean(frame, axis=(0, 1))
+            
+            # Texture features using edge detection
+            edges = cv2.Canny(frame_gray, 50, 150)
+            edge_density = np.sum(edges > 0) / (edges.shape[0] * edges.shape[1])
+            
+            # Combine features
+            frame_features = np.concatenate([
+                color_features,
+                [np.std(frame_gray), edge_density]
+            ])
             features.append(frame_features)
         
         return np.mean(features, axis=0)
+    
+    def _detect_video_edits(self, frames: List[np.ndarray], fps: float) -> Dict[str, Any]:
+        """
+        Détecte les éditions dans une séquence de frames vidéo
+        
+        Args:
+            frames: Liste des frames extraits
+            fps: Frame rate de la vidéo
+            
+        Returns:
+            Dictionnaire contenant l'analyse des éditions
+        """
+        try:
+            from .fingerprinting.advanced_edit_detector import AdvancedEditDetector, AdvancedEditConfig
+            
+            # Create a simplified config for integration
+            config = AdvancedEditConfig(
+                frame_extraction_rate=1,  # We already have extracted frames
+                use_deep_features=True,
+                use_gpu=False  # Conservative default
+            )
+            
+            detector = AdvancedEditDetector(config)
+            
+            # Convert frames to the format expected by the detector
+            frame_tuples = []
+            for i, frame in enumerate(frames):
+                timestamp = i / fps
+                frame_tuples.append((i, frame, timestamp))
+            
+            # Detect temporal edits (cuts, transitions)
+            edits = []
+            for i in range(1, len(frame_tuples)):
+                prev_frame = frame_tuples[i-1][1]
+                curr_frame = frame_tuples[i][1]
+                timestamp = frame_tuples[i][2]
+                
+                # Analyze histogram difference for cuts
+                hist_diff = detector._analyze_histogram_difference(prev_frame, curr_frame)
+                
+                # Detect fades
+                fade_conf = detector._detect_fade(prev_frame, curr_frame)
+                
+                # Detect spatial edits
+                color_conf = detector._detect_color_correction(prev_frame, curr_frame)
+                
+                if hist_diff > 0.3 or fade_conf > 0.15 or color_conf > 0.3:
+                    edit_info = {
+                        'timestamp': timestamp,
+                        'frame_index': i,
+                        'histogram_difference': float(hist_diff),
+                        'fade_confidence': float(fade_conf),
+                        'color_change_confidence': float(color_conf),
+                        'edit_confidence': float(max(hist_diff, fade_conf, color_conf))
+                    }
+                    edits.append(edit_info)
+            
+            # Analyze overall edit statistics
+            edit_analysis = {
+                'total_edits_detected': len(edits),
+                'edits': edits[:10],  # Limit to first 10 edits for fingerprint
+                'edit_density': len(edits) / len(frames) if frames else 0,
+                'avg_edit_confidence': float(np.mean([e['edit_confidence'] for e in edits])) if edits else 0,
+                'max_edit_confidence': float(max([e['edit_confidence'] for e in edits])) if edits else 0,
+                'edit_timestamps': [e['timestamp'] for e in edits[:5]]  # First 5 edit timestamps
+            }
+            
+            return edit_analysis
+            
+        except ImportError:
+            self.logger.warning("Advanced edit detector not available")
+            return self._basic_edit_detection(frames, fps)
+        except Exception as e:
+            self.logger.warning(f"Advanced edit detection failed: {e}")
+            return self._basic_edit_detection(frames, fps)
+    
+    def _basic_edit_detection(self, frames: List[np.ndarray], fps: float) -> Dict[str, Any]:
+        """
+        Détection d'éditions basique sans dépendances avancées
+        """
+        try:
+            edits = []
+            
+            for i in range(1, len(frames)):
+                prev_frame = frames[i-1]
+                curr_frame = frames[i]
+                timestamp = i / fps
+                
+                # Basic histogram difference
+                gray1 = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
+                gray2 = cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY)
+                
+                hist1 = cv2.calcHist([gray1], [0], None, [256], [0, 256])
+                hist2 = cv2.calcHist([gray2], [0], None, [256], [0, 256])
+                
+                # Normalize and compare
+                cv2.normalize(hist1, hist1, 0, 1, cv2.NORM_MINMAX)
+                cv2.normalize(hist2, hist2, 0, 1, cv2.NORM_MINMAX)
+                
+                correlation = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
+                difference = 1.0 - correlation
+                
+                if difference > 0.3:  # Threshold for basic cut detection
+                    edits.append({
+                        'timestamp': timestamp,
+                        'frame_index': i,
+                        'histogram_difference': float(difference),
+                        'edit_confidence': float(difference)
+                    })
+            
+            return {
+                'total_edits_detected': len(edits),
+                'edits': edits[:10],
+                'edit_density': len(edits) / len(frames) if frames else 0,
+                'method': 'basic_histogram_analysis'
+            }
+            
+        except Exception as e:
+            self.logger.warning(f"Basic edit detection failed: {e}")
+            return {'total_edits_detected': 0, 'edits': [], 'edit_density': 0, 'method': 'failed'}
     
     def _extract_color_histogram(self, image: Image.Image) -> np.ndarray:
         """

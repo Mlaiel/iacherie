@@ -44,6 +44,13 @@ import base64
 
 # Computer vision libraries
 try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+    logging.warning("OpenCV not available - install opencv-python")
+
+try:
     import imagehash
     from PIL import Image
     IMAGEHASH_AVAILABLE = True
@@ -586,7 +593,359 @@ Analyse les objets détectés dans toute la vidéo"""
             logger.warning(f"Object analysis failed: {e}")
             return {}
 
+class AdvancedEditProcessor(VideoProcessor):
+    """Processeur pour la détection avancée d'éditions vidéo"""
+    
+    def __init__(self):
+        """Initialise le processeur de détection d'éditions avancée"""
+        self.name = "advanced_edit"
+        self.logger = logging.getLogger(__name__)
+    
+    async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
+        """Analyse les éditions avancées dans la vidéo"""
+        try:
+            start_time = time.time()
+            
+            # Import the advanced edit detector
+            try:
+                from .advanced_edit_detector import AdvancedEditDetector, AdvancedEditConfig, EditType
+                
+                # Create detector config
+                detector_config = AdvancedEditConfig(
+                    frame_extraction_rate=max(1, config.frame_extraction_rate),
+                    cut_threshold=0.3,
+                    fade_threshold=0.15,
+                    use_deep_features=config.deep_features,
+                    use_gpu=config.use_gpu,
+                    max_workers=min(config.max_workers, 2)
+                )
+                
+                detector = AdvancedEditDetector(detector_config)
+                self.logger.info("Advanced edit detector initialized")
+                
+                # Extract frames from video
+                cap = cv2.VideoCapture(video_path)
+                
+                if not cap.isOpened():
+                    raise ValueError(f"Cannot open video: {video_path}")
+                
+                fps = cap.get(cv2.CAP_PROP_FPS)
+                total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                
+                # Extract frames for analysis
+                frames = []
+                frame_interval = max(1, int(fps / config.frame_extraction_rate))
+                frame_idx = 0
+                
+                while frame_idx < total_frames and len(frames) < config.max_frames:
+                    cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+                    ret, frame = cap.read()
+                    
+                    if not ret:
+                        break
+                    
+                    timestamp = frame_idx / fps
+                    frames.append((frame_idx, frame, timestamp))
+                    frame_idx += frame_interval
+                
+                cap.release()
+                
+                if not frames:
+                    raise ValueError("No frames extracted for edit detection")
+                
+                # Detect edits using the advanced detector
+                temporal_edits = await detector._detect_temporal_edits(frames)
+                spatial_edits = await detector._detect_spatial_edits(frames)
+                scene_changes = await detector._detect_scene_changes(frames)
+                
+                # Classify and analyze edits
+                all_edits = temporal_edits + spatial_edits + scene_changes
+                classified_edits = await detector._classify_and_score_edits(all_edits)
+                
+                # Calculate edit statistics
+                edit_types = {}
+                confidence_levels = {}
+                total_confidence = 0
+                
+                for edit in classified_edits:
+                    edit_type = edit.edit_type.value
+                    confidence_level = edit.confidence_level.value
+                    
+                    edit_types[edit_type] = edit_types.get(edit_type, 0) + 1
+                    confidence_levels[confidence_level] = confidence_levels.get(confidence_level, 0) + 1
+                    total_confidence += edit.confidence
+                
+                processing_time = time.time() - start_time
+                
+                return {
+                    "processor": "advanced_edit_detection",
+                    "video_path": video_path,
+                    "total_frames_analyzed": len(frames),
+                    "processing_time": processing_time,
+                    "edits_detected": len(classified_edits),
+                    "temporal_edits": len(temporal_edits),
+                    "spatial_edits": len(spatial_edits),
+                    "scene_changes": len(scene_changes),
+                    "edit_types": edit_types,
+                    "confidence_levels": confidence_levels,
+                    "average_confidence": total_confidence / len(classified_edits) if classified_edits else 0,
+                    "edit_density": len(classified_edits) / len(frames) if frames else 0,
+                    "edits": [
+                        {
+                            "timestamp": edit.timestamp,
+                            "frame_index": edit.frame_index,
+                            "edit_type": edit.edit_type.value,
+                            "confidence": edit.confidence,
+                            "confidence_level": edit.confidence_level.value,
+                            "description": edit.description,
+                            "features": edit.features
+                        }
+                        for edit in classified_edits[:20]  # Limit to first 20 edits
+                    ],
+                    "video_properties": {
+                        "fps": fps,
+                        "total_frames": total_frames,
+                        "duration": total_frames / fps if fps > 0 else 0
+                    },
+                    "detection_config": {
+                        "cut_threshold": detector_config.cut_threshold,
+                        "fade_threshold": detector_config.fade_threshold,
+                        "use_deep_features": detector_config.use_deep_features
+                    }
+                }
+                
+            except ImportError:
+                self.logger.warning("Advanced edit detector not available, using basic detection")
+                return await self._basic_edit_detection(video_path, config)
+                
+        except Exception as e:
+            self.logger.error(f"Advanced edit detection failed: {e}")
+            raise
+    
+    async def _basic_edit_detection(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
+        """Détection d'éditions basique de fallback"""
+        try:
+            cap = cv2.VideoCapture(video_path)
+            
+            if not cap.isOpened():
+                raise ValueError(f"Cannot open video: {video_path}")
+            
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            
+            # Extract frames
+            frames = []
+            frame_interval = max(1, int(fps / config.frame_extraction_rate))
+            frame_idx = 0
+            
+            while frame_idx < total_frames and len(frames) < config.max_frames:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+                ret, frame = cap.read()
+                
+                if not ret:
+                    break
+                
+                frames.append(frame)
+                frame_idx += frame_interval
+            
+            cap.release()
+            
+            # Basic cut detection using histogram differences
+            edits = []
+            for i in range(1, len(frames)):
+                prev_frame = frames[i-1]
+                curr_frame = frames[i]
+                
+                # Convert to grayscale and calculate histograms
+                gray1 = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
+                gray2 = cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY)
+                
+                hist1 = cv2.calcHist([gray1], [0], None, [256], [0, 256])
+                hist2 = cv2.calcHist([gray2], [0], None, [256], [0, 256])
+                
+                # Normalize and compare
+                cv2.normalize(hist1, hist1, 0, 1, cv2.NORM_MINMAX)
+                cv2.normalize(hist2, hist2, 0, 1, cv2.NORM_MINMAX)
+                
+                correlation = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
+                difference = 1.0 - correlation
+                
+                if difference > 0.3:  # Basic threshold
+                    timestamp = (i * frame_interval) / fps
+                    edits.append({
+                        "timestamp": timestamp,
+                        "frame_index": i * frame_interval,
+                        "edit_type": "cut",
+                        "confidence": difference,
+                        "description": f"Basic cut detected with confidence {difference:.3f}"
+                    })
+            
+            return {
+                "processor": "basic_edit_detection",
+                "edits_detected": len(edits),
+                "edits": edits[:10],  # Limit results
+                "edit_density": len(edits) / len(frames) if frames else 0,
+                "method": "basic_histogram_analysis",
+                "total_frames_analyzed": len(frames)
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Basic edit detection failed: {e}")
+            return {
+                "processor": "basic_edit_detection",
+                "edits_detected": 0,
+                "edits": [],
+                "error": str(e)
+            }
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return self.name
+
 class MotionVectorProcessor(VideoProcessor):
+    """Processeur pour l'analyse des vecteurs de mouvement"""
+    
+    def __init__(self):
+        """Initialise le processeur de vecteurs de mouvement"""
+        if not CV2_AVAILABLE:
+            raise ImportError("OpenCV library not available for motion vector analysis")
+        self.name = "motion_vector"
+    
+    async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
+        """Analyse les vecteurs de mouvement dans la vidéo"""
+        try:
+            start_time = time.time()
+            
+            # Ouverture de la vidéo
+            cap = cv2.VideoCapture(video_path)
+            
+            if not cap.isOpened():
+                raise ValueError(f"Cannot open video: {video_path}")
+            
+            # Propriétés de la vidéo
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            
+            # Analyse des vecteurs de mouvement
+            motion_data = []
+            prev_gray = None
+            frame_idx = 0
+            
+            # Configuration de l'analyse
+            frame_interval = max(1, int(fps / config.frame_extraction_rate))
+            
+            while frame_idx < frame_count and len(motion_data) < config.max_frames:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+                ret, frame = cap.read()
+                
+                if not ret:
+                    break
+                
+                # Conversion en niveaux de gris
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                
+                if prev_gray is not None:
+                    # Calcul du flux optique
+                    flow = cv2.calcOpticalFlowPyrLK(prev_gray, gray, None, None)
+                    
+                    if flow[0] is not None and len(flow[0]) > 0:
+                        # Analyse des vecteurs de mouvement
+                        vectors = flow[0]
+                        
+                        # Calcul de l'intensité du mouvement
+                        motion_magnitude = np.mean(np.sqrt(vectors[:, 0]**2 + vectors[:, 1]**2))
+                        
+                        # Direction dominante du mouvement
+                        motion_direction = np.arctan2(np.mean(vectors[:, 1]), np.mean(vectors[:, 0]))
+                        
+                        motion_data.append({
+                            "timestamp": frame_idx / fps,
+                            "frame_index": frame_idx,
+                            "motion_magnitude": float(motion_magnitude),
+                            "motion_direction": float(motion_direction),
+                            "vectors_count": len(vectors)
+                        })
+                
+                prev_gray = gray
+                frame_idx += frame_interval
+            
+            cap.release()
+            
+            # Analyse des patterns de mouvement
+            motion_analysis = self._analyze_motion_patterns(motion_data)
+            
+            processing_time = time.time() - start_time
+            
+            return {
+                "processor": "motion_vector",
+                "motion_data": motion_data[:20],  # Limiter pour l'empreinte
+                "motion_analysis": motion_analysis,
+                "frames_analyzed": len(motion_data),
+                "processing_time": processing_time,
+                "motion_detected": len(motion_data) > 0 and motion_analysis.get("avg_motion_magnitude", 0) > config.motion_threshold
+            }
+            
+        except Exception as e:
+            logger.error(f"Motion vector analysis failed: {e}")
+            raise
+    
+    def _analyze_motion_patterns(self, motion_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Analyse les patterns de mouvement globaux"""
+        try:
+            if not motion_data:
+                return {}
+            
+            # Extraction des métriques
+            magnitudes = [data["motion_magnitude"] for data in motion_data]
+            directions = [data["motion_direction"] for data in motion_data]
+            
+            analysis = {
+                "avg_motion_magnitude": float(np.mean(magnitudes)),
+                "max_motion_magnitude": float(np.max(magnitudes)),
+                "motion_variance": float(np.var(magnitudes)),
+                "motion_patterns": {}
+            }
+            
+            # Classification du type de mouvement
+            intensities = [data["motion_magnitude"] for data in motion_data]
+            if intensities:
+                avg_intensity = np.mean(intensities)
+                if avg_intensity < 1.0:
+                    motion_type = "static"
+                elif avg_intensity < 5.0:
+                    motion_type = "slow"
+                elif avg_intensity < 15.0:
+                    motion_type = "moderate"
+                else:
+                    motion_type = "fast"
+                
+                analysis["motion_patterns"]["type"] = motion_type
+                analysis["motion_patterns"]["intensity_level"] = avg_intensity
+            
+            # Analyse de la direction dominante
+            if directions:
+                # Conversion en vecteurs unitaires
+                x_components = [np.cos(d) for d in directions]
+                y_components = [np.sin(d) for d in directions]
+                
+                avg_x = np.mean(x_components)
+                avg_y = np.mean(y_components)
+                
+                dominant_direction = np.arctan2(avg_y, avg_x)
+                direction_consistency = np.sqrt(avg_x**2 + avg_y**2)
+                
+                analysis["motion_patterns"]["dominant_direction"] = float(dominant_direction)
+                analysis["motion_patterns"]["direction_consistency"] = float(direction_consistency)
+            
+            return analysis
+            
+        except Exception as e:
+            logger.warning(f"Motion pattern analysis failed: {e}")
+            return {}
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return self.name
     """Processeur pour l'analyse des vecteurs de mouvement"""
     
     def __init__(self):
@@ -801,6 +1160,9 @@ class VideoFingerprintEngine:
         
         if self.config.motion_analysis:
             self.processors["motion_vector"] = MotionVectorProcessor()
+        
+        # Add advanced edit detection processor
+        self.processors["advanced_edit"] = AdvancedEditProcessor()
         
         logger.info(f"VideoFingerprintEngine initialized with {len(self.processors)} processors")
     
