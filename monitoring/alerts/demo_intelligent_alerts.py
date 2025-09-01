@@ -79,7 +79,7 @@ async def demonstrate_business_alerts():
     
     print("📊 Evaluating normal business metrics...")
     result = await alert_coordinator.evaluate_all_metrics(business_metrics=normal_metrics)
-    print(f"   Result: {result.get('system_health', 'healthy')} system health")
+    print(f"   Result: {result.system_health.value} system health")
     
     # Simulate critical revenue drop
     critical_metrics = BusinessMetrics(
@@ -103,8 +103,8 @@ async def demonstrate_business_alerts():
     
     print("🚨 Evaluating critical business metrics (revenue drop)...")
     result = await alert_coordinator.evaluate_all_metrics(business_metrics=critical_metrics)
-    print(f"   Result: {result.get('system_health', 'critical')} system health")
-    print(f"   Active alerts: {result.get('total_active_alerts', 0)}")
+    print(f"   Result: {result.system_health.value} system health")
+    print(f"   Active alerts: {result.total_active_alerts}")
 
 
 async def demonstrate_technical_alerts():
@@ -133,7 +133,7 @@ async def demonstrate_technical_alerts():
     
     print("📊 Evaluating normal technical metrics...")
     result = await alert_coordinator.evaluate_all_metrics(technical_metrics=normal_metrics)
-    print(f"   Result: {result.get('system_health', 'healthy')} system health")
+    print(f"   Result: {result.system_health.value} system health")
     
     # Simulate critical system issues
     critical_metrics = TechnicalMetrics(
@@ -160,8 +160,8 @@ async def demonstrate_technical_alerts():
     
     print("🚨 Evaluating critical technical metrics (system overload + security threats)...")
     result = await alert_coordinator.evaluate_all_metrics(technical_metrics=critical_metrics)
-    print(f"   Result: {result.get('system_health', 'critical')} system health")
-    print(f"   Active alerts: {result.get('total_active_alerts', 0)}")
+    print(f"   Result: {result.system_health.value} system health")
+    print(f"   Active alerts: {result.total_active_alerts}")
     
     # Demonstrate security event processing
     security_event = SecurityEvent(
@@ -217,7 +217,7 @@ async def demonstrate_ai_alerts():
     
     print("📊 Evaluating normal AI model metrics...")
     result = await alert_coordinator.evaluate_all_metrics(ai_metrics=[normal_metrics])
-    print(f"   Result: {result.get('system_health', 'healthy')} system health")
+    print(f"   Result: {result.system_health.value} system health")
     
     # Simulate critical AI model issues
     critical_metrics = ModelMetrics(
@@ -252,8 +252,8 @@ async def demonstrate_ai_alerts():
     
     print("🚨 Evaluating critical AI model metrics (drift + performance degradation)...")
     result = await alert_coordinator.evaluate_all_metrics(ai_metrics=[critical_metrics])
-    print(f"   Result: {result.get('system_health', 'critical')} system health")
-    print(f"   Active alerts: {result.get('total_active_alerts', 0)}")
+    print(f"   Result: {result.system_health.value} system health")
+    print(f"   Active alerts: {result.total_active_alerts}")
     
     # Demonstrate training failure
     print("💥 Simulating model training failure...")
@@ -353,8 +353,8 @@ async def demonstrate_unified_coordination():
         ai_metrics=ai_metrics
     )
     
-    print(f"   System Health: {result.get('system_health', 'unknown')}")
-    print(f"   Total Active Alerts: {result.get('total_active_alerts', 0)}")
+    print(f"   System Health: {result.system_health.value}")
+    print(f"   Total Active Alerts: {result.total_active_alerts}")
     
     # Get comprehensive status
     status = await alert_coordinator.get_comprehensive_status()

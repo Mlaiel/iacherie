@@ -329,6 +329,7 @@ class TechnicalAlertManager:
                     self.alert_manager.alert_rules["technical_cpu_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
             # Memory Usage Alert
@@ -365,6 +366,7 @@ class TechnicalAlertManager:
                     self.alert_manager.alert_rules["technical_service_down_emergency"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
         except Exception as e:
@@ -393,6 +395,7 @@ class TechnicalAlertManager:
                     self.alert_manager.alert_rules["technical_api_performance_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
             # Network Latency Alert
@@ -422,6 +425,7 @@ class TechnicalAlertManager:
                     self.alert_manager.alert_rules["security_breach_emergency"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
             # Suspicious Activity Alert
@@ -439,6 +443,7 @@ class TechnicalAlertManager:
                     self.alert_manager.alert_rules["security_suspicious_activity_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
             # Authentication Failure Spike
@@ -454,6 +459,7 @@ class TechnicalAlertManager:
                     self.alert_manager.alert_rules["security_auth_failure_spike"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
         except Exception as e:

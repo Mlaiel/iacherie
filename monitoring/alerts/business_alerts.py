@@ -77,14 +77,14 @@ class BusinessAlertManager:
         
         # Business alert thresholds
         self.thresholds = {
-            "revenue_drop_critical": 0.25,  # 25% drop
-            "revenue_drop_warning": 0.15,   # 15% drop
-            "user_experience_critical": 0.30,  # 30% degradation
-            "user_experience_warning": 0.20,   # 20% degradation
-            "engagement_drop_critical": 0.40,  # 40% drop
-            "engagement_drop_warning": 0.25,   # 25% drop
-            "payment_failure_critical": 0.10,  # 10% failure rate
-            "payment_failure_warning": 0.05,   # 5% failure rate
+            "revenue_drop_critical": 25.0,  # 25% drop
+            "revenue_drop_warning": 15.0,   # 15% drop
+            "user_experience_critical": 30.0,  # 30% degradation
+            "user_experience_warning": 20.0,   # 20% degradation
+            "engagement_drop_critical": 40.0,  # 40% drop
+            "engagement_drop_warning": 25.0,   # 25% drop
+            "payment_failure_critical": 10.0,  # 10% failure rate
+            "payment_failure_warning": 5.0,   # 5% failure rate
             "satisfaction_critical": 3.0,      # Score below 3.0
             "satisfaction_warning": 3.5,       # Score below 3.5
         }
@@ -259,6 +259,7 @@ class BusinessAlertManager:
                         self.alert_manager.alert_rules["business_revenue_drop_critical"],
                         alert_metrics
                     )
+                    await self.alert_manager._process_new_alert(alert)
                     alerts.append(alert)
                 
                 # Revenue anomaly detection
@@ -275,6 +276,7 @@ class BusinessAlertManager:
                         self.alert_manager.alert_rules["business_revenue_anomaly"],
                         alert_metrics
                     )
+                    await self.alert_manager._process_new_alert(alert)
                     alerts.append(alert)
             
         except Exception as e:
@@ -303,6 +305,7 @@ class BusinessAlertManager:
                     self.alert_manager.alert_rules["business_user_experience_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
         except Exception as e:
@@ -329,6 +332,7 @@ class BusinessAlertManager:
                     self.alert_manager.alert_rules["business_payment_failure_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
         except Exception as e:
@@ -357,6 +361,7 @@ class BusinessAlertManager:
                     self.alert_manager.alert_rules["business_engagement_drop"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
         except Exception as e:
