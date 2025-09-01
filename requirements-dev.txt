@@ -1,0 +1,48 @@
+# Development Dependencies for Ainflue Platform
+# For enhanced developer experience and code quality
+
+# Testing Framework
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+pytest-xdist==3.3.1  # Parallel test execution
+pytest-html==4.1.1   # HTML test reports
+
+# Code Quality & Formatting
+black==23.11.0
+flake8==6.1.0
+flake8-docstrings==1.7.0
+flake8-import-order==0.18.2
+isort==5.12.0
+mypy==1.7.1
+
+# Pre-commit hooks
+pre-commit==3.5.0
+
+# Development tools
+ipython==8.17.2
+ipdb==0.13.13  # Debugger
+watchdog==3.0.0  # File watching for hot-reload
+rich==13.7.0  # Enhanced console output
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.4.8
+mkdocstrings==0.24.0
+
+# API Documentation
+fastapi[all]==0.104.1
+httpx==0.25.2  # For testing API endpoints
+
+# Performance profiling
+memory-profiler==0.61.0
+py-spy==0.3.14
+line-profiler==4.1.1
+
+# Security
+bandit==1.7.5
+safety==2.3.5
+
+# Docker development
+docker-compose==1.29.2

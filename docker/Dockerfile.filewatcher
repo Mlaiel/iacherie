@@ -1,0 +1,22 @@
+# File Watcher Dockerfile for hot-reload development
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    inotify-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python dependencies for file watching
+RUN pip install --no-cache-dir watchdog rich
+
+# Copy file watcher script
+COPY scripts/dev_file_watcher.py .
+
+# Default command
+CMD ["python", "dev_file_watcher.py"]

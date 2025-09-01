@@ -1,0 +1,232 @@
+# Development Docker Compose Configuration
+# Optimized for local development with hot-reload and debugging capabilities
+
+version: '3.8'
+
+services:
+  # Main Application with Hot Reload
+  ainflue-dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+      target: development
+    container_name: ainflue-dev
+    ports:
+      - "8000:8000"  # Main API
+      - "8001:8001"  # Debug port
+      - "5678:5678"  # Debugpy port
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - POSTGRES_HOST=postgres-dev
+      - REDIS_HOST=redis-dev
+      - MONGODB_HOST=mongodb-dev
+      - PYTHONPATH=/app
+      - WATCHDOG_ENABLED=true
+      - HOT_RELOAD=true
+    depends_on:
+      - postgres-dev
+      - redis-dev
+      - mongodb-dev
+    volumes:
+      # Source code for hot reload
+      - .:/app
+      - /app/__pycache__  # Exclude cache
+      - /app/.pytest_cache  # Exclude pytest cache
+      - ./logs:/app/logs
+      - ./storage:/app/storage
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - ainflue-dev-network
+    command: >
+      sh -c "
+        pip install -r requirements-dev.txt &&
+        python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m uvicorn main:app 
+        --host 0.0.0.0 --port 8000 --reload --reload-dir /app 
+        --log-level debug --access-log
+      "
+
+  # Development PostgreSQL
+  postgres-dev:
+    image: postgres:15
+    container_name: ainflue-postgres-dev
+    environment:
+      POSTGRES_DB: ainflue_dev
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./scripts/init-dev-db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"  # Different port to avoid conflicts
+    restart: unless-stopped
+    networks:
+      - ainflue-dev-network
+    command: >
+      postgres -c log_statement=all 
+      -c log_destination=stderr 
+      -c log_min_messages=info
+
+  # Development Redis
+  redis-dev:
+    image: redis:7-alpine
+    container_name: ainflue-redis-dev
+    command: >
+      redis-server --appendonly yes 
+      --appendfsync everysec 
+      --loglevel verbose
+    volumes:
+      - redis_dev_data:/data
+    ports:
+      - "6380:6379"  # Different port to avoid conflicts
+    restart: unless-stopped
+    networks:
+      - ainflue-dev-network
+
+  # Development MongoDB
+  mongodb-dev:
+    image: mongo:7
+    container_name: ainflue-mongodb-dev
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev_user
+      MONGO_INITDB_ROOT_PASSWORD: dev_password
+      MONGO_INITDB_DATABASE: ainflue_dev
+    volumes:
+      - mongodb_dev_data:/data/db
+    ports:
+      - "27018:27017"  # Different port to avoid conflicts
+    restart: unless-stopped
+    networks:
+      - ainflue-dev-network
+
+  # Swagger UI for API Documentation
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: ainflue-swagger-dev
+    ports:
+      - "8080:8080"
+    environment:
+      SWAGGER_JSON_URL: http://localhost:8000/openapi.json
+    depends_on:
+      - ainflue-dev
+    networks:
+      - ainflue-dev-network
+
+  # Hot Reload File Watcher Service
+  file-watcher:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.filewatcher
+    container_name: ainflue-file-watcher
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - ainflue-dev-network
+    command: >
+      python scripts/dev_file_watcher.py
+
+  # Test Runner Service
+  test-runner:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+      target: testing
+    container_name: ainflue-test-runner
+    volumes:
+      - .:/app
+      - ./test-results:/app/test-results
+    environment:
+      - ENVIRONMENT=testing
+      - POSTGRES_HOST=postgres-test
+      - REDIS_HOST=redis-test
+      - MONGODB_HOST=mongodb-test
+    depends_on:
+      - postgres-test
+      - redis-test
+      - mongodb-test
+    networks:
+      - ainflue-dev-network
+    profiles:
+      - testing
+
+  # Isolated Test Databases
+  postgres-test:
+    image: postgres:15
+    container_name: ainflue-postgres-test
+    environment:
+      POSTGRES_DB: ainflue_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - ainflue-dev-network
+    profiles:
+      - testing
+
+  redis-test:
+    image: redis:7-alpine
+    container_name: ainflue-redis-test
+    volumes:
+      - redis_test_data:/data
+    ports:
+      - "6381:6379"
+    networks:
+      - ainflue-dev-network
+    profiles:
+      - testing
+
+  mongodb-test:
+    image: mongo:7
+    container_name: ainflue-mongodb-test
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test_user
+      MONGO_INITDB_ROOT_PASSWORD: test_password
+      MONGO_INITDB_DATABASE: ainflue_test
+    volumes:
+      - mongodb_test_data:/data/db
+    ports:
+      - "27019:27017"
+    networks:
+      - ainflue-dev-network
+    profiles:
+      - testing
+
+  # Performance Monitoring
+  performance-monitor:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    container_name: ainflue-performance-monitor
+    volumes:
+      - .:/app
+      - ./performance-reports:/app/performance-reports
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - ainflue-dev-network
+    command: >
+      python scripts/dev_performance_monitor.py
+    profiles:
+      - monitoring
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:
+  mongodb_dev_data:
+  postgres_test_data:
+  redis_test_data:
+  mongodb_test_data:
+
+networks:
+  ainflue-dev-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

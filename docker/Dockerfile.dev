@@ -1,0 +1,94 @@
+# Development Dockerfile with hot-reload and debugging capabilities
+# Multi-stage build for different development scenarios
+
+# Base development image
+FROM python:3.11-slim as base-dev
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    git \
+    curl \
+    wget \
+    vim \
+    htop \
+    procps \
+    net-tools \
+    postgresql-client \
+    redis-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt requirements-dev.txt ./
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r requirements-dev.txt
+
+# Development stage with debugging tools
+FROM base-dev as development
+
+# Install additional development tools
+RUN pip install debugpy watchdog[watchmedo]
+
+# Copy application code
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p logs storage data test-results performance-reports
+
+# Expose ports
+EXPOSE 8000 8001 5678
+
+# Default command for development
+CMD ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "--wait-for-client", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+# Testing stage
+FROM base-dev as testing
+
+# Copy application code
+COPY . .
+
+# Install test dependencies
+RUN pip install --no-cache-dir pytest-xdist pytest-html pytest-cov
+
+# Create test directories
+RUN mkdir -p test-results coverage-reports
+
+# Default command for testing
+CMD ["python", "-m", "pytest", "-v", "--tb=short", "--html=test-results/report.html", "--cov=.", "--cov-report=html:coverage-reports"]
+
+# Production development stage (for local production testing)
+FROM python:3.11-slim as production-dev
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["gunicorn", "main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
