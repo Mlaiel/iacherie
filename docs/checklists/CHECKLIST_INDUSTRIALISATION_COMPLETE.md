@@ -31,16 +31,16 @@ Cette checklist exhaustive liste **SANS EXCEPTION** tous les éléments manquant
 
 ### 🗄️ **BASE DE DONNÉES PRODUCTION**
 
-- [ ] **Exécuter migrations Alembic** sur base de production
-- [ ] **Créer index de performance** sur toutes les tables à fort volume
-- [ ] **Configurer connection pooling** (pgbouncer ou équivalent)
-- [ ] **Implémenter backup automatique** quotidien avec rétention 30 jours
-- [ ] **Configurer réplication** master-slave pour lecture
-- [ ] **Monitorer performances requêtes** avec pg_stat_statements
-- [ ] **Configurer archivage WAL** pour point-in-time recovery
-- [ ] **Implémenter health check** base de données avec timeout
-- [ ] **Sécuriser connexions** avec SSL/TLS obligatoire
-- [ ] **Configurer utilisateurs** avec privilèges minimaux par service
+- [x] **Exécuter migrations Alembic** sur base de production
+- [x] **Créer index de performance** sur toutes les tables à fort volume
+- [x] **Configurer connection pooling** (pgbouncer ou équivalent)
+- [x] **Implémenter backup automatique** quotidien avec rétention 30 jours
+- [x] **Configurer réplication** master-slave pour lecture
+- [x] **Monitorer performances requêtes** avec pg_stat_statements
+- [x] **Configurer archivage WAL** pour point-in-time recovery
+- [x] **Implémenter health check** base de données avec timeout
+- [x] **Sécuriser connexions** avec SSL/TLS obligatoire
+- [x] **Configurer utilisateurs** avec privilèges minimaux par service
 
 ### 🔍 **MONITORING & OBSERVABILITÉ**
 

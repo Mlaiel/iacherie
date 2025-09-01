@@ -18,7 +18,10 @@ from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
-import motor.motor_asyncio as motor
+try:
+    import motor.motor_asyncio as motor
+except ImportError:
+    motor = None
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
 from pymongo import ASCENDING, DESCENDING, TEXT
 from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError

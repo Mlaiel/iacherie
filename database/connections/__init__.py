@@ -37,16 +37,35 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 from .manager import DatabaseConnectionManager, get_connection_manager
 from .postgresql import PostgreSQLConnectionHandler
 
-from .redis import RedisConnectionHandler  
-from .mongodb import MongoDBConnectionHandler
+try:
+    from .redis import RedisConnectionHandler  
+except ImportError:
+    pass
 
-from .elasticsearch import ElasticsearchConnectionHandler
+try:
+    from .mongodb import MongoDBConnectionHandler
+except ImportError:
+    pass
 
-from .vector_stores import VectorStoreConnectionHandler
+try:
+    from .elasticsearch import ElasticsearchConnectionHandler
+except ImportError:
+    pass
 
-from .object_storage import ObjectStorageConnectionHandler
+try:
+    from .vector_stores import VectorStoreConnectionHandler
+except ImportError:
+    pass
 
-from .health_monitor import DatabaseHealthMonitor
+try:
+    from .object_storage import ObjectStorageConnectionHandler
+except ImportError:
+    pass
+
+try:
+    from .health_monitor import DatabaseHealthMonitor
+except ImportError:
+    pass
 
 from .pool_manager import ConnectionPoolManager
 
@@ -54,16 +73,35 @@ from .transaction_manager import TransactionManager
 
 from .session_manager import SessionManager
 
-from .failover import FailoverManager
+try:
+    from .failover import FailoverManager
+except ImportError:
+    pass
 
-from .load_balancer import DatabaseLoadBalancer
+try:
+    from .load_balancer import DatabaseLoadBalancer
+except ImportError:
+    pass
 
-from .config_manager import ConnectionConfigManager
+try:
+    from .config_manager import ConnectionConfigManager
+except ImportError:
+    pass
 
-from .factory import ConnectionFactory
+try:
+    from .factory import ConnectionFactory
+except ImportError:
+    pass
 
-from .tenant_manager import TenantConnectionManager, TenantType, TenantConfig
-from .content_protection import ContentProtectionConnections, ContentFingerprint, ProtectionAlert
+try:
+    from .tenant_manager import TenantConnectionManager, TenantType, TenantConfig
+except ImportError:
+    pass
+
+try:
+    from .content_protection import ContentProtectionConnections, ContentFingerprint, ProtectionAlert
+except ImportError:
+    pass
 from .monetization import MonetizationConnections, RevenueRecord, PayoutRequest, LicenseAgreement
 from .index import DatabaseConnectionsIndex, get_database_index
 
