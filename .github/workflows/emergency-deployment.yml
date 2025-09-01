@@ -1,0 +1,446 @@
+---
+# Emergency Deployment Workflow
+# Fast-track deployment procedures for critical issues and security patches
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Project: Ainflue Platform Emergency Response
+
+name: 🚨 Emergency Deployment Procedures
+
+on:
+  workflow_dispatch:
+    inputs:
+      emergency_type:
+        description: 'Type of emergency'
+        required: true
+        type: choice
+        options:
+          - security-patch
+          - critical-bugfix
+          - service-outage
+          - data-breach-response
+          - performance-critical
+      severity:
+        description: 'Emergency severity level'
+        required: true
+        type: choice
+        options:
+          - critical
+          - high
+          - medium
+      image_tag:
+        description: 'Emergency fix image tag'
+        required: true
+        type: string
+      description:
+        description: 'Emergency description'
+        required: true
+        type: string
+      approver:
+        description: 'Emergency approver (for audit)'
+        required: true
+        type: string
+      skip_tests:
+        description: 'Skip non-critical tests (DANGER)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  EMERGENCY_TYPE: ${{ inputs.emergency_type }}
+  SEVERITY: ${{ inputs.severity }}
+  SKIP_TESTS: ${{ inputs.skip_tests }}
+
+jobs:
+  emergency-validation:
+    name: 🚨 Emergency Deployment Validation
+    runs-on: ubuntu-latest
+    outputs:
+      deployment_approved: ${{ steps.validation.outputs.deployment_approved }}
+      deployment_strategy: ${{ steps.validation.outputs.deployment_strategy }}
+      notification_channels: ${{ steps.validation.outputs.notification_channels }}
+      
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Emergency Request
+        id: validation
+        run: |
+          echo "🚨 Validating emergency deployment request..."
+          echo "Emergency Type: ${{ env.EMERGENCY_TYPE }}"
+          echo "Severity: ${{ env.SEVERITY }}"
+          echo "Description: ${{ inputs.description }}"
+          echo "Approver: ${{ inputs.approver }}"
+          
+          # Set deployment strategy based on emergency type and severity
+          DEPLOYMENT_STRATEGY="blue-green"  # Default safe strategy
+          NOTIFICATION_CHANNELS="all"       # Notify all channels for emergencies
+          DEPLOYMENT_APPROVED="true"
+          
+          # Adjust strategy based on emergency type
+          case "${{ env.EMERGENCY_TYPE }}" in
+            "security-patch")
+              echo "🔒 Security patch deployment - Using blue-green for safety"
+              DEPLOYMENT_STRATEGY="blue-green"
+              ;;
+            "critical-bugfix")
+              if [ "${{ env.SEVERITY }}" = "critical" ]; then
+                echo "🐛 Critical bugfix - Using canary for validation"
+                DEPLOYMENT_STRATEGY="canary"
+              else
+                DEPLOYMENT_STRATEGY="blue-green"
+              fi
+              ;;
+            "service-outage")
+              echo "💥 Service outage fix - Using fastest safe deployment"
+              DEPLOYMENT_STRATEGY="blue-green"
+              ;;
+            "data-breach-response")
+              echo "🔐 Data breach response - Maximum security deployment"
+              DEPLOYMENT_STRATEGY="blue-green"
+              ;;
+            "performance-critical")
+              echo "⚡ Performance critical fix - Using canary for validation"
+              DEPLOYMENT_STRATEGY="canary"
+              ;;
+          esac
+          
+          # Additional validations for critical severity
+          if [ "${{ env.SEVERITY }}" = "critical" ]; then
+            echo "⚠️ Critical severity - Additional validations required"
+            
+            # Check if approver is authorized for critical deployments
+            AUTHORIZED_APPROVERS=("admin" "cto" "lead-engineer" "security-officer")
+            APPROVER_FOUND=false
+            
+            for approver in "${AUTHORIZED_APPROVERS[@]}"; do
+              if [ "$approver" = "${{ inputs.approver }}" ]; then
+                APPROVER_FOUND=true
+                break
+              fi
+            done
+            
+            if [ "$APPROVER_FOUND" = "false" ]; then
+              echo "❌ Approver '${{ inputs.approver }}' not authorized for critical deployments"
+              echo "   Authorized approvers: ${AUTHORIZED_APPROVERS[*]}"
+              DEPLOYMENT_APPROVED="false"
+            fi
+          fi
+          
+          # Log emergency for audit trail
+          echo "📝 Recording emergency deployment request..."
+          AUDIT_LOG=$(cat <<EOF
+          {
+            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "emergency_type": "${{ env.EMERGENCY_TYPE }}",
+            "severity": "${{ env.SEVERITY }}",
+            "description": "${{ inputs.description }}",
+            "approver": "${{ inputs.approver }}",
+            "image_tag": "${{ inputs.image_tag }}",
+            "deployment_strategy": "$DEPLOYMENT_STRATEGY",
+            "skip_tests": "${{ env.SKIP_TESTS }}",
+            "github_actor": "${{ github.actor }}",
+            "workflow_run": "${{ github.run_id }}"
+          }
+          EOF
+          )
+          
+          echo "🔍 Emergency Audit Log: $AUDIT_LOG"
+          
+          echo "deployment_approved=$DEPLOYMENT_APPROVED" >> $GITHUB_OUTPUT
+          echo "deployment_strategy=$DEPLOYMENT_STRATEGY" >> $GITHUB_OUTPUT
+          echo "notification_channels=$NOTIFICATION_CHANNELS" >> $GITHUB_OUTPUT
+
+      - name: Emergency Risk Assessment
+        run: |
+          echo "⚠️ Performing emergency risk assessment..."
+          
+          RISK_SCORE=0
+          RISK_FACTORS=()
+          
+          # Risk factors assessment
+          if [ "${{ env.SKIP_TESTS }}" = "true" ]; then
+            RISK_SCORE=$((RISK_SCORE + 30))
+            RISK_FACTORS+=("skipping-tests")
+          fi
+          
+          if [ "${{ env.SEVERITY }}" = "critical" ]; then
+            RISK_SCORE=$((RISK_SCORE + 20))
+            RISK_FACTORS+=("critical-severity")
+          fi
+          
+          if [ "${{ env.EMERGENCY_TYPE }}" = "security-patch" ]; then
+            RISK_SCORE=$((RISK_SCORE + 10))
+            RISK_FACTORS+=("security-related")
+          fi
+          
+          # Check deployment time (higher risk during business hours)
+          HOUR=$(date -u +%H)
+          if [ $HOUR -ge 8 ] && [ $HOUR -le 18 ]; then
+            RISK_SCORE=$((RISK_SCORE + 15))
+            RISK_FACTORS+=("business-hours")
+          fi
+          
+          echo "📊 Risk Assessment Results:"
+          echo "   Risk Score: $RISK_SCORE/100"
+          echo "   Risk Factors: ${RISK_FACTORS[*]}"
+          
+          if [ $RISK_SCORE -gt 70 ]; then
+            echo "🚨 HIGH RISK deployment detected"
+            echo "⚠️ Consider additional validation steps"
+          elif [ $RISK_SCORE -gt 40 ]; then
+            echo "⚠️ MEDIUM RISK deployment"
+            echo "ℹ️ Proceed with caution"
+          else
+            echo "✅ LOW RISK deployment"
+          fi
+
+  emergency-notification:
+    name: 📢 Emergency Deployment Alert
+    runs-on: ubuntu-latest
+    needs: emergency-validation
+    if: needs.emergency-validation.outputs.deployment_approved == 'true'
+    
+    steps:
+      - name: Send Emergency Alert
+        uses: ./.github/workflows/enhanced-notifications.yml
+        with:
+          event_type: 'emergency-deployment-start'
+          environment: 'production'
+          service_name: 'Ainflue Platform'
+          urgency: 'high'
+          additional_info: |
+            {
+              "emergency_type": "${{ env.EMERGENCY_TYPE }}",
+              "severity": "${{ env.SEVERITY }}",
+              "description": "${{ inputs.description }}",
+              "approver": "${{ inputs.approver }}",
+              "deployment_strategy": "${{ needs.emergency-validation.outputs.deployment_strategy }}",
+              "risk_assessment": "completed",
+              "skip_tests": "${{ env.SKIP_TESTS }}"
+            }
+        secrets:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_ALERTS: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_PHONE_NUMBERS: ${{ secrets.TWILIO_PHONE_NUMBERS }}
+
+  emergency-deployment:
+    name: 🚀 Execute Emergency Deployment
+    needs: [emergency-validation, emergency-notification]
+    if: needs.emergency-validation.outputs.deployment_approved == 'true'
+    uses: ./.github/workflows/production-deployment.yml
+    with:
+      environment: 'production'
+      deployment_type: ${{ needs.emergency-validation.outputs.deployment_strategy }}
+      skip_approval: true  # Emergency deployments skip normal approval
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      KUBE_CONFIG_PRODUCTION: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
+      VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+      VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      VAULT_NAMESPACE: ${{ secrets.VAULT_NAMESPACE }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_WEBHOOK_DEPLOYMENTS: ${{ secrets.SLACK_WEBHOOK_DEPLOYMENTS }}
+      SLACK_WEBHOOK_ALERTS: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+      EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+      TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+      TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+      TWILIO_PHONE_NUMBERS: ${{ secrets.TWILIO_PHONE_NUMBERS }}
+      PRODUCTION_API_KEY: ${{ secrets.PRODUCTION_API_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      PRODUCTION_DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+      DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+      ADMIN_API_TOKEN: ${{ secrets.ADMIN_API_TOKEN }}
+
+  post-emergency-monitoring:
+    name: 🔍 Post-Emergency Monitoring
+    runs-on: ubuntu-latest
+    needs: emergency-deployment
+    if: success()
+    
+    steps:
+      - name: Enhanced Post-Emergency Monitoring
+        run: |
+          echo "🔍 Starting enhanced post-emergency monitoring..."
+          
+          # Monitor for 60 minutes instead of normal 30 minutes
+          MONITOR_DURATION=3600  # 60 minutes
+          CHECK_INTERVAL=60      # 1 minute checks
+          START_TIME=$(date +%s)
+          
+          echo "⏰ Monitoring for $((MONITOR_DURATION / 60)) minutes with $((CHECK_INTERVAL)) second intervals"
+          
+          while [ $(($(date +%s) - START_TIME)) -lt $MONITOR_DURATION ]; do
+            echo "📊 Emergency monitoring check at $(date)"
+            
+            # More frequent and comprehensive health checks for emergencies
+            ERROR_RATE=$(curl -s "http://prometheus:9090/api/v1/query?query=rate(http_requests_total{status=~\"5..\"}[1m])" | jq -r '.data.result[0].value[1] // "0"')
+            RESPONSE_TIME_P99=$(curl -s "http://prometheus:9090/api/v1/query?query=histogram_quantile(0.99,rate(http_request_duration_seconds_bucket[1m]))" | jq -r '.data.result[0].value[1] // "0"')
+            
+            # Emergency-specific metrics
+            ACTIVE_USERS=$(curl -s "http://prometheus:9090/api/v1/query?query=active_users_total" | jq -r '.data.result[0].value[1] // "0"')
+            TRANSACTION_SUCCESS_RATE=$(curl -s "http://prometheus:9090/api/v1/query?query=rate(successful_transactions_total[1m])" | jq -r '.data.result[0].value[1] // "0"')
+            
+            echo "📈 Emergency Metrics:"
+            echo "   Error Rate (1m): $ERROR_RATE"
+            echo "   Response Time P99: $RESPONSE_TIME_P99"
+            echo "   Active Users: $ACTIVE_USERS"
+            echo "   Transaction Success Rate: $TRANSACTION_SUCCESS_RATE"
+            
+            # Tighter thresholds for emergency monitoring
+            ERROR_THRESHOLD=0.01      # 1% error rate (tighter than normal)
+            RESPONSE_THRESHOLD=1.5    # 1.5 seconds (tighter than normal)
+            
+            if (( $(echo "$ERROR_RATE > $ERROR_THRESHOLD" | bc -l) )) || \
+               (( $(echo "$RESPONSE_TIME_P99 > $RESPONSE_THRESHOLD" | bc -l) )); then
+              
+              echo "🚨 EMERGENCY ROLLBACK TRIGGERED - Metrics threshold breached!"
+              echo "   Error rate: $ERROR_RATE (threshold: $ERROR_THRESHOLD)"
+              echo "   Response time: $RESPONSE_TIME_P99 (threshold: $RESPONSE_THRESHOLD)"
+              exit 1
+            fi
+            
+            sleep $CHECK_INTERVAL
+          done
+          
+          echo "✅ Emergency monitoring completed - No issues detected"
+
+      - name: Emergency Rollback (if needed)
+        if: failure()
+        run: |
+          echo "🚨 Executing emergency rollback due to monitoring failure..."
+          
+          # Immediate rollback for emergency deployments
+          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"blue"}}}'
+          kubectl scale deployment ainflue-api-blue -n ainflue --replicas=3
+          
+          echo "📞 Sending critical alert..."
+          # This would trigger immediate alerts to all emergency contacts
+
+  emergency-report:
+    name: 📋 Emergency Deployment Report
+    runs-on: ubuntu-latest
+    needs: [emergency-deployment, post-emergency-monitoring]
+    if: always()
+    
+    steps:
+      - name: Generate Emergency Report
+        run: |
+          echo "📋 Generating emergency deployment report..."
+          
+          DEPLOYMENT_STATUS="${{ needs.emergency-deployment.result }}"
+          MONITORING_STATUS="${{ needs.post-emergency-monitoring.result }}"
+          
+          cat > emergency-report.md << EOF
+          # 🚨 Emergency Deployment Report
+          
+          **Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S") UTC
+          **Emergency Type:** ${{ env.EMERGENCY_TYPE }}
+          **Severity:** ${{ env.SEVERITY }}
+          **Approver:** ${{ inputs.approver }}
+          **GitHub Actor:** ${{ github.actor }}
+          
+          ## Emergency Details
+          **Description:** ${{ inputs.description }}
+          **Image Tag:** ${{ inputs.image_tag }}
+          **Deployment Strategy:** ${{ needs.emergency-validation.outputs.deployment_strategy }}
+          **Tests Skipped:** ${{ env.SKIP_TESTS }}
+          
+          ## Deployment Results
+          **Deployment Status:** $DEPLOYMENT_STATUS
+          **Post-Emergency Monitoring:** $MONITORING_STATUS
+          **Workflow Run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          
+          ## Actions Taken
+          1. Emergency validation completed
+          2. Risk assessment performed
+          3. All stakeholders notified
+          4. Deployment executed with ${{ needs.emergency-validation.outputs.deployment_strategy }} strategy
+          5. Enhanced 60-minute monitoring initiated
+          
+          ## Next Steps
+          - Review emergency response effectiveness
+          - Document lessons learned
+          - Update emergency procedures if needed
+          - Schedule post-mortem meeting within 24 hours
+          EOF
+          
+          echo "📄 Emergency report generated"
+          cat emergency-report.md
+
+      - name: Upload Emergency Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: emergency-deployment-report
+          path: emergency-report.md
+
+      - name: Send Emergency Completion Notification
+        uses: ./.github/workflows/enhanced-notifications.yml
+        with:
+          event_type: 'emergency-deployment-complete'
+          environment: 'production'
+          service_name: 'Ainflue Platform'
+          urgency: 'high'
+          additional_info: |
+            {
+              "emergency_type": "${{ env.EMERGENCY_TYPE }}",
+              "severity": "${{ env.SEVERITY }}",
+              "deployment_status": "${{ needs.emergency-deployment.result }}",
+              "monitoring_status": "${{ needs.post-emergency-monitoring.result }}",
+              "total_duration": "$(date -d @$(($(date +%s) - ${{ github.event.head_commit.timestamp && strftime('%s', github.event.head_commit.timestamp) || 0 }})) -u +%H:%M:%S)"
+            }
+        secrets:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_ALERTS: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+
+  deployment-denied:
+    name: ❌ Emergency Deployment Denied
+    runs-on: ubuntu-latest
+    needs: emergency-validation
+    if: needs.emergency-validation.outputs.deployment_approved == 'false'
+    
+    steps:
+      - name: Log Deployment Denial
+        run: |
+          echo "❌ Emergency deployment request denied"
+          echo "Reason: Insufficient authorization or validation failure"
+          echo "Approver: ${{ inputs.approver }}"
+          echo "Emergency Type: ${{ env.EMERGENCY_TYPE }}"
+          echo "Severity: ${{ env.SEVERITY }}"
+          
+      - name: Send Denial Notification
+        uses: ./.github/workflows/enhanced-notifications.yml
+        with:
+          event_type: 'emergency-deployment-denied'
+          environment: 'production'
+          service_name: 'Ainflue Platform'
+          urgency: 'medium'
+          additional_info: |
+            {
+              "emergency_type": "${{ env.EMERGENCY_TYPE }}",
+              "severity": "${{ env.SEVERITY }}",
+              "approver": "${{ inputs.approver }}",
+              "denial_reason": "insufficient_authorization"
+            }
+        secrets:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
