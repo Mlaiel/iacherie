@@ -82,3 +82,5 @@ test_reports/
 sdk/python/build/
 sdk/python/dist/
 sdk/python/*.egg-info/
+__pycache__/
+*.pyc
