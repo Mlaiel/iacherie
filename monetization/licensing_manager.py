@@ -1148,21 +1148,6 @@ Initialize licensing manager."""
                                      content: Dict,
                                      license_config: Dict,
                                      custom_terms: Dict) -> Dict:
-        """Generate comprehensive license terms."""
-        terms = {
-            "content_id": content["id"],
-            "content_title": content.get("metadata", {}).get("title", "Untitled"),
-            "license_type": license_config,
-            "usage_rights": license_config.get("usage_limits", {}),
-            "commercial_use": license_config.get("commercial_use", False),
-            "territory": custom_terms.get("territory", "worldwide"),
-            "exclusivity": custom_terms.get("exclusive", False),
-            "attribution_required": custom_terms.get("attribution_required", True),
-            "modifications_allowed": custom_terms.get("modifications_allowed", False),
-    async def _generate_license_terms(self, 
-                                     content: Dict,
-                                     license_config: Dict,
-                                     custom_terms: Dict) -> Dict:
         """Generate comprehensive license terms with legal compliance"""
         try:
             # Base terms from configuration
@@ -1647,12 +1632,6 @@ Initialize licensing manager."""
             "asia_pacific": "Singapore_Law"
         }
         return laws.get(territory, "English_Law")
-            "cancellation_policy": custom_terms.get("cancellation_policy", "30_days_notice"),
-            "governing_law": custom_terms.get("governing_law", "German Law"),
-            "dispute_resolution": custom_terms.get("dispute_resolution", "arbitration")
-        }
-        
-        return terms
     
     async def _check_usage_limits(self, 
                                  license: Dict,
