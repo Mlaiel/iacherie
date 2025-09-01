@@ -5,7 +5,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 import logging
 from typing import Dict, Any, Optional
-from ..base import BaseAgent, AgentRequest, AgentResponse
+from ai_agents.base import BaseAgent, AgentRequest, AgentResponse
 
 logger = logging.getLogger(__name__)
 

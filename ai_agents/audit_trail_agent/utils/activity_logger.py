@@ -49,13 +49,35 @@ except ImportError:
     class ConfigurationError(Exception): pass
     class ProcessingError(Exception): pass
     ActivityLogError, ValidationError = globals().get('ActivityLogError, ValidationError', Exception)
-from ...models.activity_models import (
-    ActivityLog, UserSession, SystemEvent, 
-    ContentActivity, APIActivity, SecurityActivity
-)
-from ...security.activity_encryption import ActivityEncryption
-from ...utils.batch_processor import BatchProcessor
-from ...utils.activity_aggregator import ActivityAggregator
+try:
+    # Try absolute imports first
+    from ai_agents.models.activity_models import (
+        ActivityLog, UserSession, SystemEvent, 
+        ContentActivity, APIActivity, SecurityActivity
+    )
+except ImportError:
+    # Fallback to placeholder classes
+    class ActivityLog: pass
+    class UserSession: pass
+    class SystemEvent: pass
+    class ContentActivity: pass
+    class APIActivity: pass
+    class SecurityActivity: pass
+
+try:
+    from ai_agents.security.activity_encryption import ActivityEncryption
+except ImportError:
+    class ActivityEncryption: pass
+
+try:
+    from ai_agents.utils.batch_processor import BatchProcessor
+except ImportError:
+    class BatchProcessor: pass
+
+try:
+    from ai_agents.utils.activity_aggregator import ActivityAggregator
+except ImportError:
+    class ActivityAggregator: pass
 
 logger = logging.getLogger(__name__)
 

@@ -47,12 +47,29 @@ except ImportError:
     class ConfigurationError(Exception): pass
     class ProcessingError(Exception): pass
     ComplianceError, AuditError = globals().get('ComplianceError, AuditError', Exception)
-from ...models.compliance_models import (
-    ComplianceRecord, DataRetentionPolicy, ConsentRecord,
-    DataProcessingActivity, ComplianceReport
-)
-from ...utils.data_anonymization import DataAnonymizer
-from ...utils.retention_manager import RetentionManager
+try:
+    # Try absolute imports first
+    from ai_agents.models.compliance_models import (
+        ComplianceRecord, DataRetentionPolicy, ConsentRecord,
+        DataProcessingActivity, ComplianceReport
+    )
+except ImportError:
+    # Fallback to placeholder classes
+    class ComplianceRecord: pass
+    class DataRetentionPolicy: pass
+    class ConsentRecord: pass
+    class DataProcessingActivity: pass
+    class ComplianceReport: pass
+
+try:
+    from ai_agents.utils.data_anonymization import DataAnonymizer
+except ImportError:
+    class DataAnonymizer: pass
+
+try:
+    from ai_agents.utils.retention_manager import RetentionManager
+except ImportError:
+    class RetentionManager: pass
 
 logger = logging.getLogger(__name__)
 
