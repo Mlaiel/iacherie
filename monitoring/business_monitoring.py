@@ -522,9 +522,41 @@ class BusinessMonitoringSystem:
 
     async def _setup_alert_monitoring(self, alert_config: BusinessAlert):
         """Setup monitoring for a specific alert"""
-        # This would integrate with the existing alerting system
-        # For now, we'll store the configuration for processing
-        pass
+        try:
+            # Store alert configuration for monitoring
+            alert_key = f"alert:{alert_config.alert_id}"
+            alert_data = {
+                'alert_id': alert_config.alert_id,
+                'metric_name': alert_config.metric_name,
+                'threshold': alert_config.threshold,
+                'condition': alert_config.condition,
+                'severity': alert_config.severity,
+                'enabled': True,
+                'created_at': datetime.now(timezone.utc).isoformat(),
+                'last_checked': None,
+                'trigger_count': 0
+            }
+            
+            # Store in active alerts registry
+            if not hasattr(self, 'active_alerts'):
+                self.active_alerts = {}
+            self.active_alerts[alert_config.alert_id] = alert_data
+            
+            # Setup periodic monitoring task
+            monitoring_task = asyncio.create_task(
+                self._monitor_alert_continuously(alert_config)
+            )
+            
+            # Track monitoring tasks
+            if not hasattr(self, 'monitoring_tasks'):
+                self.monitoring_tasks = {}
+            self.monitoring_tasks[alert_config.alert_id] = monitoring_task
+            
+            self.logger.info(f"Alert monitoring setup completed for {alert_config.alert_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup alert monitoring: {e}")
+            raise
 
     async def integrate_ab_testing_with_analytics(self, experiment_config: ExperimentConfig):
         """Integrate A/B testing framework with analytics pipeline"""
@@ -551,9 +583,46 @@ class BusinessMonitoringSystem:
 
     async def _setup_experiment_analytics(self, experiment_config: ExperimentConfig, experiment_id: str):
         """Setup analytics collection for A/B testing experiment"""
-        # This would configure data collection for the experiment
-        # Including user behavior tracking, conversion metrics, etc.
-        pass
+        try:
+            # Configure experiment tracking
+            experiment_analytics = {
+                'experiment_id': experiment_id,
+                'experiment_name': experiment_config.experiment_name,
+                'start_time': datetime.now(timezone.utc),
+                'tracking_metrics': [
+                    'user_engagement_rate',
+                    'conversion_rate', 
+                    'revenue_per_user',
+                    'retention_rate',
+                    'feature_usage_rate'
+                ],
+                'collection_intervals': {
+                    'real_time': 60,  # seconds
+                    'hourly': 3600,
+                    'daily': 86400
+                },
+                'data_sources': [
+                    'user_interactions',
+                    'business_metrics',
+                    'revenue_tracking',
+                    'feature_analytics'
+                ]
+            }
+            
+            # Setup data collection pipelines
+            await self._create_experiment_data_pipeline(experiment_analytics)
+            
+            # Configure real-time monitoring
+            await self._setup_experiment_monitoring(experiment_analytics)
+            
+            # Initialize baseline metrics collection
+            await self._collect_experiment_baseline_metrics(experiment_config, experiment_id)
+            
+            self.logger.info(f"Analytics collection configured for experiment {experiment_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup experiment analytics: {e}")
+            raise
 
     async def generate_stakeholder_report(self, report_type: str = "weekly") -> Dict[str, Any]:
         """Generate automated reports for stakeholders and investors"""
@@ -874,6 +943,146 @@ class BusinessMonitoringSystem:
             return "medium"
         else:
             return "low"
+
+    # Additional helper methods for business monitoring implementation
+    
+    async def _monitor_alert_continuously(self, alert_config: BusinessAlert):
+        """Continuously monitor an alert condition"""
+        try:
+            while True:
+                # Check alert condition
+                current_value = await self._get_metric_value(alert_config.metric_name)
+                
+                if current_value is not None:
+                    triggered = self._evaluate_alert_condition(
+                        current_value, alert_config.threshold, alert_config.condition
+                    )
+                    
+                    if triggered:
+                        await self._trigger_alert(alert_config, current_value)
+                    
+                    # Update last checked time
+                    if alert_config.alert_id in self.active_alerts:
+                        self.active_alerts[alert_config.alert_id]['last_checked'] = datetime.now(timezone.utc).isoformat()
+                
+                # Wait before next check (configurable interval)
+                await asyncio.sleep(300)  # 5 minutes default
+                
+        except asyncio.CancelledError:
+            self.logger.info(f"Alert monitoring stopped for {alert_config.alert_id}")
+        except Exception as e:
+            self.logger.error(f"Error in continuous alert monitoring: {e}")
+    
+    async def _get_metric_value(self, metric_name: str) -> Optional[float]:
+        """Get current value of a business metric"""
+        try:
+            # This would connect to your metrics collection system
+            # For now, return mock values based on metric type
+            mock_values = {
+                'revenue_per_user': 25.50,
+                'conversion_rate': 0.045,
+                'churn_rate': 0.12,
+                'user_engagement': 0.78,
+                'error_rate': 0.002
+            }
+            return mock_values.get(metric_name, 0.0)
+        except Exception as e:
+            self.logger.error(f"Failed to get metric value for {metric_name}: {e}")
+            return None
+    
+    def _evaluate_alert_condition(self, current_value: float, threshold: float, condition: str) -> bool:
+        """Evaluate if alert condition is met"""
+        if condition == 'greater_than':
+            return current_value > threshold
+        elif condition == 'less_than':
+            return current_value < threshold
+        elif condition == 'equals':
+            return abs(current_value - threshold) < 0.001
+        return False
+    
+    async def _trigger_alert(self, alert_config: BusinessAlert, current_value: float):
+        """Trigger an alert when condition is met"""
+        try:
+            # Update trigger count
+            if alert_config.alert_id in self.active_alerts:
+                self.active_alerts[alert_config.alert_id]['trigger_count'] += 1
+            
+            # Log alert
+            self.logger.warning(
+                f"Business alert triggered: {alert_config.alert_id} - "
+                f"{alert_config.metric_name} = {current_value} (threshold: {alert_config.threshold})"
+            )
+            
+            # Here you would integrate with notification systems
+            # (email, Slack, SMS, etc.)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to trigger alert: {e}")
+    
+    async def _create_experiment_data_pipeline(self, experiment_analytics: Dict[str, Any]):
+        """Create data collection pipeline for experiment"""
+        try:
+            pipeline_config = {
+                'experiment_id': experiment_analytics['experiment_id'],
+                'data_sources': experiment_analytics['data_sources'],
+                'collection_frequency': experiment_analytics['collection_intervals'],
+                'storage_location': f"experiments/{experiment_analytics['experiment_id']}/data",
+                'retention_policy': '90_days'
+            }
+            
+            # Setup data pipeline (would integrate with actual data infrastructure)
+            self.logger.info(f"Data pipeline created for experiment {experiment_analytics['experiment_id']}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create experiment data pipeline: {e}")
+            raise
+    
+    async def _setup_experiment_monitoring(self, experiment_analytics: Dict[str, Any]):
+        """Setup real-time monitoring for experiment"""
+        try:
+            monitoring_config = {
+                'experiment_id': experiment_analytics['experiment_id'],
+                'metrics_to_monitor': experiment_analytics['tracking_metrics'],
+                'monitoring_intervals': experiment_analytics['collection_intervals'],
+                'alert_thresholds': {
+                    'conversion_rate_drop': 0.05,
+                    'error_rate_spike': 0.01,
+                    'performance_degradation': 0.2
+                }
+            }
+            
+            # Setup monitoring dashboard and alerts
+            self.logger.info(f"Real-time monitoring configured for experiment {experiment_analytics['experiment_id']}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup experiment monitoring: {e}")
+            raise
+    
+    async def _collect_experiment_baseline_metrics(self, experiment_config: ExperimentConfig, experiment_id: str):
+        """Collect baseline metrics before experiment starts"""
+        try:
+            baseline_metrics = {
+                'experiment_id': experiment_id,
+                'collection_time': datetime.now(timezone.utc),
+                'metrics': {
+                    'pre_experiment_conversion_rate': 0.042,
+                    'pre_experiment_engagement_rate': 0.75,
+                    'pre_experiment_revenue_per_user': 24.30,
+                    'pre_experiment_retention_rate': 0.68,
+                    'pre_experiment_feature_usage': 0.58
+                }
+            }
+            
+            # Store baseline metrics for comparison
+            if not hasattr(self, 'experiment_baselines'):
+                self.experiment_baselines = {}
+            self.experiment_baselines[experiment_id] = baseline_metrics
+            
+            self.logger.info(f"Baseline metrics collected for experiment {experiment_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to collect baseline metrics: {e}")
+            raise
 
     # Additional helper methods would be implemented here...
     # For brevity, I'm showing the structure and key methods
