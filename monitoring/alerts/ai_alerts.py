@@ -353,6 +353,7 @@ class AIAlertManager:
                         self.alert_manager.alert_rules["ai_accuracy_degradation_critical"],
                         alert_metrics
                     )
+                    await self.alert_manager._process_new_alert(alert)
                     alerts.append(alert)
                 
                 # Check other performance metrics
@@ -397,6 +398,7 @@ class AIAlertManager:
                         self.alert_manager.alert_rules["ai_model_drift_critical"],
                         alert_metrics
                     )
+                    await self.alert_manager._process_new_alert(alert)
                     alerts.append(alert)
                     
                     # Store drift detection result
@@ -441,6 +443,7 @@ class AIAlertManager:
                     self.alert_manager.alert_rules["ai_inference_latency_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
             # Error Rate Alert
@@ -479,6 +482,7 @@ class AIAlertManager:
                     self.alert_manager.alert_rules["ai_data_quality_critical"],
                     alert_metrics
                 )
+                await self.alert_manager._process_new_alert(alert)
                 alerts.append(alert)
             
         except Exception as e:
@@ -505,6 +509,7 @@ class AIAlertManager:
                 self.alert_manager.alert_rules["ai_training_failure"],
                 alert_metrics
             )
+            await self.alert_manager._process_new_alert(alert)
             alerts.append(alert)
             
         except Exception as e:
