@@ -1,0 +1,168 @@
+# Quality Metrics Configuration - Ainflue Platform
+# ================================================================
+# Comprehensive quality thresholds and configuration settings
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# ================================================================
+
+# Code Coverage Configuration
+code_coverage:
+  enabled: true
+  minimum_threshold: 75.0
+  warning_threshold: 80.0
+  critical_threshold: 90.0
+  fail_on_minimum: true
+  exclude_patterns:
+    - "*/tests/*"
+    - "*/migrations/*"
+    - "*/node_modules/*"
+    - "*/__pycache__/*"
+    - "*/.*"
+
+# Security Score Configuration
+security_score:
+  enabled: true
+  minimum_threshold: 80.0
+  warning_threshold: 85.0
+  critical_threshold: 95.0
+  fail_on_critical_vulns: true
+  max_high_severity: 2
+  max_medium_severity: 5
+  tools:
+    - "bandit"
+    - "safety"
+    - "semgrep"
+
+# Dependency Vulnerability Configuration
+dependency_vulnerabilities:
+  enabled: true
+  max_critical: 0
+  max_high: 0
+  max_medium: 3
+  fail_on_critical: true
+  fail_on_high: true
+  auto_update_minor: false
+  scan_tools:
+    - "safety"
+    - "pip-audit"
+    - "snyk"
+
+# Code Complexity Configuration
+code_complexity:
+  enabled: true
+  max_complexity_per_function: 10
+  max_average_complexity: 6
+  warning_complexity: 8
+  fail_on_high_complexity: false
+  tools:
+    - "radon"
+    - "mccabe"
+
+# Technical Debt Configuration
+technical_debt:
+  enabled: true
+  max_hours: 24.0
+  warning_hours: 16.0
+  critical_hours: 8.0
+  debt_indicators:
+    - "TODO"
+    - "FIXME"
+    - "HACK"
+    - "XXX"
+    - "BUG"
+    - "DEPRECATED"
+  estimate_per_item: 0.5  # hours
+
+# Documentation Coverage Configuration
+documentation_coverage:
+  enabled: true
+  minimum_file_coverage: 80.0
+  minimum_function_coverage: 80.0
+  minimum_class_coverage: 85.0
+  minimum_module_coverage: 90.0
+  check_docstring_quality: true
+  require_examples: false
+
+# License Compliance Configuration
+license_compliance:
+  enabled: true
+  minimum_compliance: 95.0
+  warning_compliance: 98.0
+  critical_compliance: 100.0
+  allowed_licenses:
+    - "MIT"
+    - "Apache-2.0"
+    - "BSD-3-Clause"
+    - "BSD-2-Clause"
+    - "ISC"
+    - "Python-2.0"
+  problematic_licenses:
+    - "GPL"
+    - "AGPL"
+    - "LGPL"
+    - "SSPL"
+    - "OSL"
+  fail_on_problematic: false
+
+# Performance Baseline Configuration
+performance_baseline:
+  enabled: true
+  minimum_performance: 90.0
+  warning_performance: 95.0
+  critical_performance: 98.0
+  baseline_retention_days: 30
+  auto_update_baseline: true
+  metrics:
+    - "response_time"
+    - "throughput"
+    - "memory_usage"
+    - "cpu_usage"
+
+# API Breaking Changes Configuration
+api_breaking_changes:
+  enabled: true
+  max_breaking_changes: 0
+  max_deprecations: 5
+  require_versioning: true
+  check_backward_compatibility: true
+  api_paths:
+    - "api/"
+    - "routes/"
+    - "endpoints/"
+
+# Quality Gates Configuration
+quality_gates:
+  enabled: true
+  fail_fast: false
+  parallel_execution: true
+  timeout_minutes: 30
+  generate_reports: true
+  upload_artifacts: true
+
+# Notification Configuration
+notifications:
+  enabled: true
+  on_failure: true
+  on_warning: false
+  on_success: false
+  channels:
+    - "slack"
+    - "email"
+    - "github"
+
+# Reporting Configuration
+reporting:
+  generate_html: true
+  generate_json: true
+  generate_junit: true
+  include_history: true
+  retention_days: 90
+  artifacts_path: "quality_reports/"
+
+# CI/CD Integration Configuration
+ci_cd:
+  block_on_failure: true
+  block_on_warning: false
+  update_pr_status: true
+  comment_on_pr: true
+  publish_metrics: true
+  store_baselines: true

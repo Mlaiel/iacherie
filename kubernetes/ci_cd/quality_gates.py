@@ -35,6 +35,10 @@ Quality gate type enumeration"""
     DEPENDENCY_CHECK = "dependency_check"
     CODE_COMPLEXITY = "code_complexity"
     DOCUMENTATION = "documentation"
+    LICENSE_COMPLIANCE = "license_compliance"
+    TECHNICAL_DEBT = "technical_debt"
+    API_BREAKING_CHANGES = "api_breaking_changes"
+    PERFORMANCE_BASELINE = "performance_baseline"
 
 class QualityStatus(Enum):
     """Quality status enumeration"""
@@ -120,6 +124,26 @@ Initialize quality gate validator"""
             QualityGateType.CODE_COMPLEXITY: QualityGateConfig(
                 gate_type=QualityGateType.CODE_COMPLEXITY,
                 threshold=10.0,  # Maximum cyclomatic complexity
+                fail_on_warning=False
+            ),
+            QualityGateType.LICENSE_COMPLIANCE: QualityGateConfig(
+                gate_type=QualityGateType.LICENSE_COMPLIANCE,
+                threshold=95.0,  # Minimum license compliance percentage
+                fail_on_warning=False
+            ),
+            QualityGateType.TECHNICAL_DEBT: QualityGateConfig(
+                gate_type=QualityGateType.TECHNICAL_DEBT,
+                threshold=24.0,  # Maximum technical debt hours
+                fail_on_warning=False
+            ),
+            QualityGateType.API_BREAKING_CHANGES: QualityGateConfig(
+                gate_type=QualityGateType.API_BREAKING_CHANGES,
+                threshold=0.0,  # No breaking changes allowed
+                fail_on_warning=False
+            ),
+            QualityGateType.PERFORMANCE_BASELINE: QualityGateConfig(
+                gate_type=QualityGateType.PERFORMANCE_BASELINE,
+                threshold=95.0,  # Minimum 95% of baseline performance
                 fail_on_warning=False
             )
         }
