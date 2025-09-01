@@ -46,6 +46,33 @@ from .revenue_engine import (
     RevenueStatus
 )
 
+# Enterprise monetization features
+from .enterprise_crypto_processor import (
+    EnterpriseCryptoProcessor,
+    CryptoCurrency,
+    CryptoNetwork,
+    CryptoTransaction
+)
+
+from .ai_revenue_tracking import (
+    AIRevenueTrackingEngine,
+    RevenueDataPoint,
+    RevenueAttribution,
+    RevenueOptimization,
+    RevenuePrediction,
+    RevenueStream,
+    Platform,
+    AttributionModel
+)
+
+from .intelligent_payment_router import (
+    IntelligentPaymentRouter,
+    PaymentRequest,
+    RoutingDecision,
+    RoutingStrategy,
+    PaymentProvider
+)
+
 # Payment processing
 from .payment_processor import (
     PaymentProcessor,
@@ -205,13 +232,6 @@ __license__ = "Proprietary - Commercial licensing required"
 logger.info("💰 Monetization Module loaded successfully")
 logger.info(f"📊 {len(__all__)} main components exported")
 logger.info("🔒 © 2025 Fahed Mlaiel - All rights reserved")
-    FinancialAnalytics,
-    RevenueForecaster,
-    ProfitAnalyzer,
-    TaxCalculator,
-    FinancialReporting,
-    ROICalculator
-)
 
 from .blockchain_monetization import (
     BlockchainMonetization,
