@@ -30,6 +30,11 @@ from .tax_compliance import TaxComplianceEngine
 from .billing_analytics import BillingAnalyticsEngine
 from .payment_gateway import PaymentGatewayEngine
 from .dispute_manager import DisputeManagerEngine
+from .revenue_recognition import RevenueRecognitionEngine
+from .dunning_management import DunningManagementSystem
+from .financial_reporting import FinancialReportingEngine
+from .advanced_fraud_detection import AdvancedFraudDetection
+from .refund_processing import RefundProcessingWorkflow
 
 logger = logging.getLogger(__name__)
 
@@ -97,6 +102,13 @@ class BillingAggregatorEngine:
         self.payment_gateway = PaymentGatewayEngine(redis_client, db_pool)
         self.dispute_manager = DisputeManagerEngine(redis_client, db_pool)
         
+        # Initialize new advanced components
+        self.revenue_recognition = RevenueRecognitionEngine(redis_client, db_pool)
+        self.dunning_management = DunningManagementSystem(redis_client, db_pool)
+        self.financial_reporting = FinancialReportingEngine(redis_client, db_pool)
+        self.fraud_detection = AdvancedFraudDetection(redis_client, db_pool)
+        self.refund_processing = RefundProcessingWorkflow(redis_client, db_pool)
+        
     async def initialize(self) -> None:
         """
 Initialize billing aggregator and all components"""
@@ -113,7 +125,13 @@ Initialize billing aggregator and all components"""
                 self.tax_compliance.initialize(),
                 self.billing_analytics.initialize(),
                 self.payment_gateway.initialize(),
-                self.dispute_manager.initialize()
+                self.dispute_manager.initialize(),
+                # Initialize new advanced components
+                self.revenue_recognition.initialize(),
+                self.dunning_management.initialize(),
+                self.financial_reporting.initialize(),
+                self.fraud_detection.initialize(),
+                self.refund_processing.initialize()
             )
             
             await self._setup_workflow_templates()
@@ -849,3 +867,313 @@ Trigger analytics update"""
                 'last_error': str(e),
                 'checked_at': datetime.now().isoformat()
             }
+            
+    # New advanced integration methods
+    
+    async def process_payment_with_full_workflow(
+        self,
+        customer_id: str,
+        amount: Decimal,
+        currency: str,
+        payment_method: str,
+        metadata: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """Process payment with full fraud detection and revenue recognition workflow"""
+        try:
+            # Step 1: Fraud detection
+            from .advanced_fraud_detection import PaymentContext
+            payment_context = PaymentContext(
+                payment_id=f"PAY_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{customer_id[:8]}",
+                customer_id=customer_id,
+                amount=amount,
+                currency=currency,
+                payment_method=payment_method,
+                ip_address=metadata.get("ip_address") if metadata else None,
+                user_agent=metadata.get("user_agent") if metadata else None,
+                device_fingerprint=metadata.get("device_fingerprint") if metadata else None,
+                billing_address=metadata.get("billing_address") if metadata else None,
+                shipping_address=metadata.get("shipping_address") if metadata else None,
+                timestamp=datetime.utcnow(),
+                metadata=metadata or {}
+            )
+            
+            fraud_assessment = await self.fraud_detection.assess_payment_fraud(payment_context)
+            
+            # Step 2: Block if high fraud risk
+            if fraud_assessment.recommended_action.value in ["block", "reject"]:
+                return {
+                    "success": False,
+                    "reason": "fraud_detected",
+                    "fraud_assessment": {
+                        "risk_level": fraud_assessment.risk_level.value,
+                        "risk_score": fraud_assessment.risk_score,
+                        "recommended_action": fraud_assessment.recommended_action.value
+                    }
+                }
+            
+            # Step 3: Process payment (simplified - would use actual payment processor)
+            payment_result = {
+                "success": True,
+                "payment_id": payment_context.payment_id,
+                "transaction_id": f"TXN_{payment_context.payment_id}",
+                "status": "completed"
+            }
+            
+            # Step 4: Create revenue recognition contract
+            from .revenue_recognition import RevenueType, AccountingStandard
+            revenue_contract = await self.revenue_recognition.create_revenue_contract(
+                customer_id=customer_id,
+                total_value=amount,
+                currency=currency,
+                start_date=datetime.utcnow(),
+                revenue_type=RevenueType.ONE_TIME,
+                accounting_standard=AccountingStandard.ASC_606
+            )
+            
+            # Step 5: Log audit event
+            await self.financial_reporting.log_audit_event(
+                event_type=self.financial_reporting.AuditEventType.PAYMENT_PROCESSED,
+                entity_type="payment",
+                entity_id=payment_context.payment_id,
+                metadata={
+                    "amount": float(amount),
+                    "currency": currency,
+                    "fraud_risk_level": fraud_assessment.risk_level.value,
+                    "revenue_contract_id": revenue_contract.contract_id
+                }
+            )
+            
+            return {
+                "success": True,
+                "payment_id": payment_context.payment_id,
+                "fraud_assessment": {
+                    "risk_level": fraud_assessment.risk_level.value,
+                    "risk_score": fraud_assessment.risk_score
+                },
+                "revenue_contract_id": revenue_contract.contract_id,
+                "transaction_details": payment_result
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to process payment with full workflow: {e}")
+            raise
+            
+    async def handle_failed_payment(
+        self,
+        customer_id: str,
+        payment_id: str,
+        amount: Decimal,
+        currency: str,
+        failure_reason: str,
+        subscription_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Handle failed payment with dunning management"""
+        try:
+            from .dunning_management import FailureReason
+            
+            # Map failure reason
+            failure_reason_enum = FailureReason.INSUFFICIENT_FUNDS
+            if failure_reason == "expired_card":
+                failure_reason_enum = FailureReason.EXPIRED_CARD
+            elif failure_reason == "declined_card":
+                failure_reason_enum = FailureReason.DECLINED_CARD
+            elif failure_reason == "network_error":
+                failure_reason_enum = FailureReason.NETWORK_ERROR
+                
+            # Create dunning case
+            dunning_case = await self.dunning_management.create_dunning_case(
+                customer_id=customer_id,
+                payment_id=payment_id,
+                amount=amount,
+                currency=currency,
+                failure_reason=failure_reason_enum,
+                subscription_id=subscription_id
+            )
+            
+            # Log audit event
+            await self.financial_reporting.log_audit_event(
+                event_type=self.financial_reporting.AuditEventType.DUNNING_INITIATED,
+                entity_type="payment",
+                entity_id=payment_id,
+                metadata={
+                    "dunning_case_id": dunning_case.case_id,
+                    "failure_reason": failure_reason,
+                    "amount": float(amount)
+                }
+            )
+            
+            return {
+                "success": True,
+                "dunning_case_id": dunning_case.case_id,
+                "current_stage": dunning_case.current_stage.value,
+                "next_action_date": dunning_case.next_action_date.isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to handle failed payment: {e}")
+            raise
+            
+    async def process_refund_request(
+        self,
+        customer_id: str,
+        payment_id: str,
+        refund_amount: Decimal,
+        currency: str,
+        reason: str,
+        requested_by: str,
+        description: str = ""
+    ) -> Dict[str, Any]:
+        """Process refund request with workflow"""
+        try:
+            from .refund_processing import RefundReason, RefundType
+            
+            # Map reason
+            refund_reason = RefundReason.CUSTOMER_REQUEST
+            if reason == "billing_error":
+                refund_reason = RefundReason.BILLING_ERROR
+            elif reason == "technical_issue":
+                refund_reason = RefundReason.TECHNICAL_ISSUE
+            elif reason == "fraud_protection":
+                refund_reason = RefundReason.FRAUD_PROTECTION
+                
+            # Submit refund request
+            refund_request = await self.refund_processing.submit_refund_request(
+                customer_id=customer_id,
+                payment_id=payment_id,
+                refund_amount=refund_amount,
+                currency=currency,
+                reason=refund_reason,
+                refund_type=RefundType.FULL_REFUND,
+                description=description,
+                requested_by=requested_by
+            )
+            
+            # Log audit event
+            await self.financial_reporting.log_audit_event(
+                event_type=self.financial_reporting.AuditEventType.REFUND_ISSUED,
+                entity_type="refund",
+                entity_id=refund_request.request_id,
+                user_id=requested_by,
+                metadata={
+                    "payment_id": payment_id,
+                    "amount": float(refund_amount),
+                    "reason": reason
+                }
+            )
+            
+            return {
+                "success": True,
+                "refund_request_id": refund_request.request_id,
+                "status": refund_request.status.value,
+                "workflow_created": True
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to process refund request: {e}")
+            raise
+            
+    async def generate_financial_report(
+        self,
+        report_type: str,
+        period_start: datetime,
+        period_end: datetime,
+        generated_by: str
+    ) -> Dict[str, Any]:
+        """Generate financial report"""
+        try:
+            from .financial_reporting import ReportType, ReportFormat
+            
+            # Map report type
+            report_type_enum = ReportType.REVENUE_SUMMARY
+            if report_type == "payment_report":
+                report_type_enum = ReportType.PAYMENT_REPORT
+            elif report_type == "tax_report":
+                report_type_enum = ReportType.TAX_REPORT
+            elif report_type == "audit_trail":
+                report_type_enum = ReportType.AUDIT_TRAIL
+                
+            # Generate report
+            report = await self.financial_reporting.generate_report(
+                report_type=report_type_enum,
+                period_start=period_start,
+                period_end=period_end,
+                format=ReportFormat.JSON,
+                generated_by=generated_by
+            )
+            
+            return {
+                "success": True,
+                "report_id": report.report_id,
+                "report_type": report.report_type.value,
+                "generated_at": report.generated_at.isoformat(),
+                "checksum": report.checksum,
+                "data": report.data
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to generate financial report: {e}")
+            raise
+            
+    async def process_scheduled_tasks(self) -> Dict[str, Any]:
+        """Process all scheduled billing tasks"""
+        try:
+            results = {}
+            
+            # Process dunning queue
+            dunning_result = await self.dunning_management.process_dunning_queue()
+            results["dunning_processing"] = dunning_result
+            
+            # Process revenue recognition
+            revenue_result = await self.revenue_recognition.process_revenue_recognition()
+            results["revenue_recognition"] = revenue_result
+            
+            # Process scheduled reports
+            reports_result = await self.financial_reporting.process_scheduled_reports()
+            results["scheduled_reports"] = reports_result
+            
+            return {
+                "success": True,
+                "processed_at": datetime.utcnow().isoformat(),
+                "results": results
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to process scheduled tasks: {e}")
+            raise
+            
+    async def get_enhanced_billing_dashboard(self) -> Dict[str, Any]:
+        """Get enhanced billing dashboard with all new components"""
+        try:
+            # Get data from all components
+            analytics_data = await self.billing_analytics.get_comprehensive_analytics()
+            revenue_analytics = await self.revenue_recognition.get_revenue_analytics(
+                datetime.utcnow() - timedelta(days=30),
+                datetime.utcnow()
+            )
+            dunning_analytics = await self.dunning_management.get_dunning_analytics(
+                datetime.utcnow() - timedelta(days=30),
+                datetime.utcnow()
+            )
+            fraud_analytics = await self.fraud_detection.get_fraud_analytics(
+                datetime.utcnow() - timedelta(days=30),
+                datetime.utcnow()
+            )
+            refund_analytics = await self.refund_processing.get_refund_analytics(
+                datetime.utcnow() - timedelta(days=30),
+                datetime.utcnow()
+            )
+            reporting_analytics = await self.financial_reporting.get_reporting_analytics()
+            
+            return {
+                "billing_overview": analytics_data,
+                "revenue_recognition": revenue_analytics,
+                "dunning_management": dunning_analytics,
+                "fraud_detection": fraud_analytics,
+                "refund_processing": refund_analytics,
+                "financial_reporting": reporting_analytics,
+                "dashboard_generated_at": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to get enhanced billing dashboard: {e}")
+            raise
