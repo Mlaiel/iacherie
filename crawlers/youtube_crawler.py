@@ -276,3 +276,105 @@ Initialize YouTube crawler."""
         union = words1.union(words2)
         
         return len(intersection) / len(union) if union else 0.0
+    
+    async def crawl(self, targets: List[str], **kwargs) -> List[CrawlerResult]:
+        """
+        Standard crawl method for industrial compliance.
+        Crawls YouTube content based on targets (URLs, channels, or queries).
+        """
+        results = []
+        
+        for target in targets:
+            try:
+                # Determine target type
+                if target.startswith('http'):
+                    # URL-based crawling
+                    video_id = self._extract_video_id(target)
+                    if video_id:
+                        detail = await self.get_content_details(video_id)
+                        if detail:
+                            results.append(detail)
+                else:
+                    # Query-based crawling
+                    search_results = await self.search_content(target, max_results=10)
+                    results.extend(search_results)
+                    
+            except Exception as e:
+                logger.error(f"Crawl failed for target {target}: {e}")
+        
+        return results
+    
+    def extract(self, raw_data: Dict) -> CrawlerResult:
+        """
+        Standard extract method for industrial compliance.
+        Extracts structured data from raw YouTube API response.
+        """
+        try:
+            if 'snippet' in raw_data:
+                snippet = raw_data['snippet']
+                statistics = raw_data.get('statistics', {})
+                
+                return CrawlerResult(
+                    platform="youtube",
+                    content_id=raw_data.get('id', ''),
+                    content_type="video",
+                    title=snippet.get('title', ''),
+                    description=snippet.get('description', ''),
+                    url=f"https://www.youtube.com/watch?v={raw_data.get('id', '')}",
+                    author=snippet.get('channelTitle', ''),
+                    timestamp=time.time(),
+                    metadata={
+                        'channel_id': snippet.get('channelId'),
+                        'published_at': snippet.get('publishedAt'),
+                        'view_count': statistics.get('viewCount', 0),
+                        'like_count': statistics.get('likeCount', 0),
+                        'thumbnail': snippet.get('thumbnails', {}).get('default', {}).get('url')
+                    },
+                    raw_data=raw_data
+                )
+            else:
+                # Handle other data formats
+                return CrawlerResult(
+                    platform="youtube",
+                    content_id=raw_data.get('id', 'unknown'),
+                    content_type="unknown",
+                    title=raw_data.get('title', ''),
+                    description=raw_data.get('description', ''),
+                    url=raw_data.get('url', ''),
+                    author=raw_data.get('author', ''),
+                    timestamp=time.time(),
+                    metadata=raw_data,
+                    raw_data=raw_data
+                )
+                
+        except Exception as e:
+            logger.error(f"Extract failed: {e}")
+            return CrawlerResult(
+                platform="youtube",
+                content_id="error",
+                content_type="error",
+                title="Extraction Error",
+                description=str(e),
+                url="",
+                author="",
+                timestamp=time.time(),
+                metadata={'error': str(e)},
+                raw_data=raw_data
+            )
+    
+    def _extract_video_id(self, url: str) -> Optional[str]:
+        """Extract video ID from YouTube URL."""
+        import re
+        
+        patterns = [
+            r'(?:youtube\.com/watch\?v=)([^&]+)',
+            r'(?:youtu\.be/)([^?]+)',
+            r'(?:youtube\.com/embed/)([^?]+)'
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, url)
+            if match:
+                return match.group(1)
+        
+        return None

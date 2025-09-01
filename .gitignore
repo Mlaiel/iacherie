@@ -2,6 +2,9 @@
 test_gamification_complete.py
 demo_gamification_complete.py
 __pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
 *.pyc
 *.pyo
 .pytest_cache/
