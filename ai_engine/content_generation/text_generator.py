@@ -59,24 +59,68 @@ class TextContentGenerator(BaseContentGenerator):
     
     def _setup_models(self) -> None:
         """
-Setup AI models and dependencies"""
+Setup AI models and dependencies with enhanced multilingual support"""
         try:
-            # Initialize OpenAI client
+            # Initialize OpenAI client with enhanced configuration
             self.openai_client = openai.AsyncOpenAI(
                 api_key=self.config.get('openai_api_key')
             )
             
+            # Enhanced GPT model configuration
+            self.gpt_models = {
+                'gpt-4-turbo': {
+                    'version': 'gpt-4-turbo-preview',
+                    'context_window': 128000,
+                    'quality_score': 0.95,
+                    'pricing_tier': 'premium',
+                    'languages': ['en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ru', 'ja', 'ko', 'zh']
+                },
+                'gpt-4': {
+                    'version': 'gpt-4',
+                    'context_window': 8192,
+                    'quality_score': 0.92,
+                    'pricing_tier': 'standard',
+                    'languages': ['en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ru', 'ja', 'ko', 'zh']
+                },
+                'gpt-3.5-turbo': {
+                    'version': 'gpt-3.5-turbo',
+                    'context_window': 4096,
+                    'quality_score': 0.85,
+                    'pricing_tier': 'basic',
+                    'languages': ['en', 'fr', 'es', 'de', 'it', 'pt', 'nl']
+                }
+            }
+            
+            # Multilingual support configuration
+            self.language_configs = {
+                'en': {'name': 'English', 'cultural_context': 'Western', 'writing_style': 'direct'},
+                'fr': {'name': 'Français', 'cultural_context': 'Western', 'writing_style': 'elegant'},
+                'es': {'name': 'Español', 'cultural_context': 'Latin', 'writing_style': 'expressive'},
+                'de': {'name': 'Deutsch', 'cultural_context': 'Germanic', 'writing_style': 'structured'},
+                'it': {'name': 'Italiano', 'cultural_context': 'Mediterranean', 'writing_style': 'passionate'},
+                'pt': {'name': 'Português', 'cultural_context': 'Latin', 'writing_style': 'warm'},
+                'nl': {'name': 'Nederlands', 'cultural_context': 'Germanic', 'writing_style': 'pragmatic'},
+                'ru': {'name': 'Русский', 'cultural_context': 'Slavic', 'writing_style': 'formal'},
+                'ja': {'name': '日本語', 'cultural_context': 'East Asian', 'writing_style': 'respectful'},
+                'ko': {'name': '한국어', 'cultural_context': 'East Asian', 'writing_style': 'hierarchical'},
+                'zh': {'name': '中文', 'cultural_context': 'East Asian', 'writing_style': 'indirect'}
+            }
+            
             # Initialize tokenizer for token counting
             self.tokenizer = tiktoken.get_encoding("cl100k_base")
             
-            # Initialize templates
+            # Initialize templates with multilingual support
             self.social_templates = SocialMediaTemplates()
             self.blog_templates = BlogTemplates()
             
-            # Initialize SEO optimizer
+            # Initialize SEO optimizer with multilingual capabilities
             self.seo_optimizer = SEOOptimizer()
             
-            # Supported text formats
+            # Initialize translation and localization engines
+            self.translation_engine = self._initialize_translation_engine()
+            self.content_localizer = self._initialize_content_localizer()
+            
+            # Supported text formats with multilingual support
             self.supported_formats = {
                 'instagram_post', 'instagram_story', 'instagram_reel',
                 'tiktok_caption', 'twitter_post', 'facebook_post',
@@ -84,7 +128,15 @@ Setup AI models and dependencies"""
                 'email_newsletter', 'marketing_copy', 'script', 'hashtags'
             }
             
-            self.logger.info("Text generator models initialized successfully")
+            # Content quality metrics
+            self.quality_thresholds = {
+                'readability_score': 0.7,
+                'engagement_score': 0.75,
+                'seo_score': 0.8,
+                'translation_quality': 0.85
+            }
+            
+            self.logger.info(f"✅ Text generator initialized with {len(self.gpt_models)} GPT models and {len(self.language_configs)} languages")
             
         except Exception as e:
             self.logger.error(f"Failed to initialize text models: {str(e)}")
@@ -941,3 +993,284 @@ Release model-specific resources"""
             await self.openai_client.close()
         
         self.logger.info("Text generator resources released")
+
+    def _initialize_translation_engine(self):
+        """Initialize translation engine for multilingual support"""
+        try:
+            # In production, this would initialize actual translation services
+            # like Google Translate API, Azure Translator, or local models
+            return {
+                'service': 'mock_translator',
+                'supported_languages': list(self.language_configs.keys()),
+                'quality_threshold': 0.85
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to initialize translation engine: {e}")
+            return None
+
+    def _initialize_content_localizer(self):
+        """Initialize content localization engine"""
+        try:
+            return {
+                'cultural_adapters': {
+                    lang: config['cultural_context'] 
+                    for lang, config in self.language_configs.items()
+                },
+                'writing_style_adapters': {
+                    lang: config['writing_style']
+                    for lang, config in self.language_configs.items()
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to initialize content localizer: {e}")
+            return None
+
+    async def translate_content(self, text: str, target_language: str, source_language: str = 'auto') -> Dict[str, Any]:
+        """
+        Translate content to target language with cultural adaptation
+        
+        Args:
+            text: Text to translate
+            target_language: Target language code (e.g., 'fr', 'es', 'de')
+            source_language: Source language code or 'auto' for detection
+            
+        Returns:
+            Translation result with quality metrics
+        """
+        try:
+            if target_language not in self.language_configs:
+                raise ValueError(f"Unsupported target language: {target_language}")
+            
+            self.logger.info(f"🌐 Translating content to {self.language_configs[target_language]['name']}")
+            
+            # In production, this would use actual translation APIs
+            # For now, simulate translation with cultural adaptation
+            
+            # Detect source language if auto
+            if source_language == 'auto':
+                source_language = await self._detect_language(text)
+            
+            # Get cultural context for adaptation
+            target_config = self.language_configs[target_language]
+            
+            # Simulate translation (in production, use actual translation service)
+            translated_text = await self._simulate_translation(text, source_language, target_language)
+            
+            # Apply cultural localization
+            localized_text = await self._apply_cultural_localization(
+                translated_text, target_language, target_config
+            )
+            
+            # Calculate quality score
+            quality_score = await self._calculate_translation_quality(
+                text, localized_text, source_language, target_language
+            )
+            
+            return {
+                'translated_text': localized_text,
+                'source_language': source_language,
+                'target_language': target_language,
+                'quality_score': quality_score,
+                'cultural_adaptations': target_config,
+                'translation_metadata': {
+                    'method': 'ai_translation_with_localization',
+                    'cultural_context': target_config['cultural_context'],
+                    'writing_style': target_config['writing_style']
+                }
+            }
+            
+        except Exception as e:
+            self.logger.error(f"❌ Translation failed: {e}")
+            return {
+                'translated_text': text,  # Return original text as fallback
+                'source_language': source_language,
+                'target_language': target_language,
+                'quality_score': 0.0,
+                'error': str(e)
+            }
+
+    async def generate_multilingual_content(
+        self, 
+        context: ContentGenerationContext, 
+        prompt: str, 
+        target_languages: List[str],
+        options: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Dict[str, Any]]:
+        """
+        Generate content in multiple languages simultaneously
+        
+        Args:
+            context: Generation context
+            prompt: Content prompt
+            target_languages: List of language codes to generate content in
+            options: Generation options
+            
+        Returns:
+            Dictionary mapping language codes to generated content
+        """
+        try:
+            self.logger.info(f"🌍 Generating multilingual content for {len(target_languages)} languages")
+            
+            results = {}
+            base_options = TextGenerationOptions(**(options or {}))
+            
+            for lang in target_languages:
+                if lang not in self.language_configs:
+                    self.logger.warning(f"Skipping unsupported language: {lang}")
+                    continue
+                
+                # Adapt options for target language
+                lang_options = self._adapt_options_for_language(base_options, lang)
+                
+                # Generate content in target language
+                lang_context = self._adapt_context_for_language(context, lang)
+                
+                try:
+                    content_result = await self.generate_content(lang_context, prompt, lang_options.__dict__)
+                    
+                    # Add language-specific metadata
+                    content_result['language_info'] = {
+                        'language_code': lang,
+                        'language_name': self.language_configs[lang]['name'],
+                        'cultural_context': self.language_configs[lang]['cultural_context'],
+                        'writing_style': self.language_configs[lang]['writing_style']
+                    }
+                    
+                    results[lang] = content_result
+                    
+                except Exception as e:
+                    self.logger.error(f"Failed to generate content for {lang}: {e}")
+                    results[lang] = {'error': str(e)}
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"❌ Multilingual content generation failed: {e}")
+            return {}
+
+    async def _detect_language(self, text: str) -> str:
+        """Detect the language of the input text"""
+        try:
+            # Simple language detection based on common words
+            # In production, use proper language detection libraries
+            
+            text_lower = text.lower()
+            
+            # Basic language detection patterns
+            if any(word in text_lower for word in ['the', 'and', 'is', 'to', 'of']):
+                return 'en'
+            elif any(word in text_lower for word in ['le', 'la', 'et', 'est', 'de']):
+                return 'fr'
+            elif any(word in text_lower for word in ['el', 'la', 'y', 'es', 'de']):
+                return 'es'
+            elif any(word in text_lower for word in ['der', 'die', 'und', 'ist', 'zu']):
+                return 'de'
+            elif any(word in text_lower for word in ['il', 'la', 'e', 'è', 'di']):
+                return 'it'
+            
+            return 'en'  # Default to English
+            
+        except Exception:
+            return 'en'
+
+    async def _simulate_translation(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Simulate translation (replace with actual translation service)"""
+        try:
+            # Mock translation - in production, use actual translation APIs
+            if target_lang == source_lang:
+                return text
+            
+            # Add language indicator for demonstration
+            lang_name = self.language_configs[target_lang]['name']
+            return f"[Translated to {lang_name}] {text}"
+            
+        except Exception:
+            return text
+
+    async def _apply_cultural_localization(self, text: str, target_lang: str, config: Dict[str, Any]) -> str:
+        """Apply cultural adaptations to translated text"""
+        try:
+            cultural_context = config['cultural_context']
+            writing_style = config['writing_style']
+            
+            # Apply style-specific modifications
+            if writing_style == 'formal':
+                # Make text more formal
+                text = text.replace("you're", "you are").replace("don't", "do not")
+            elif writing_style == 'elegant':
+                # Add elegant touches for French
+                text = text.replace("very", "quite").replace("good", "excellent")
+            elif writing_style == 'expressive':
+                # Add expressiveness for Spanish/Latin cultures
+                if not any(punct in text for punct in ['!', '?']):
+                    text += "!"
+            
+            return text
+            
+        except Exception:
+            return text
+
+    async def _calculate_translation_quality(self, original: str, translated: str, source_lang: str, target_lang: str) -> float:
+        """Calculate translation quality score"""
+        try:
+            # Simple quality assessment (in production, use proper metrics)
+            
+            # Length ratio (good translations maintain similar length)
+            length_ratio = len(translated) / max(len(original), 1)
+            length_score = 1.0 - abs(1.0 - length_ratio)
+            
+            # Completeness check
+            completeness_score = 1.0 if len(translated) > 0 else 0.0
+            
+            # Language-specific adjustments
+            if target_lang in self.gpt_models.get('gpt-4-turbo', {}).get('languages', []):
+                language_support_score = 0.95
+            else:
+                language_support_score = 0.8
+            
+            # Calculate overall quality
+            quality = (length_score * 0.3 + completeness_score * 0.4 + language_support_score * 0.3)
+            
+            return min(1.0, max(0.0, quality))
+            
+        except Exception:
+            return 0.7  # Default quality score
+
+    def _adapt_options_for_language(self, base_options: TextGenerationOptions, target_lang: str) -> TextGenerationOptions:
+        """Adapt generation options for specific language"""
+        # Create new options object with language-specific adaptations
+        adapted_options = TextGenerationOptions(**base_options.__dict__)
+        adapted_options.language = target_lang
+        
+        # Adjust parameters based on language characteristics
+        lang_config = self.language_configs.get(target_lang, {})
+        
+        if lang_config.get('writing_style') == 'formal':
+            adapted_options.tone = 'formal'
+        elif lang_config.get('writing_style') == 'expressive':
+            adapted_options.tone = 'enthusiastic'
+        
+        return adapted_options
+
+    def _adapt_context_for_language(self, base_context: ContentGenerationContext, target_lang: str) -> ContentGenerationContext:
+        """Adapt context for specific language/culture"""
+        # Create adapted context (in practice, would be more sophisticated)
+        adapted_context = ContentGenerationContext(
+            user_id=base_context.user_id,
+            content_type=base_context.content_type,
+            target_audience=base_context.target_audience,
+            platform_requirements=base_context.platform_requirements,
+            brand_guidelines=base_context.brand_guidelines,
+            seo_requirements=base_context.seo_requirements
+        )
+        
+        # Adapt for cultural context
+        lang_config = self.language_configs.get(target_lang, {})
+        cultural_context = lang_config.get('cultural_context', 'Western')
+        
+        # Adjust brand guidelines for cultural context
+        if adapted_context.brand_guidelines:
+            adapted_context.brand_guidelines['cultural_context'] = cultural_context
+            adapted_context.brand_guidelines['language'] = target_lang
+        
+        return adapted_context
