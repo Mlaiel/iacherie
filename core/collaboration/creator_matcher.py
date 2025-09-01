@@ -302,7 +302,7 @@ Advanced AI-powered creator matching system"""
         self.analytics_tracker = analytics_tracker
         self.scaler = StandardScaler()
         
-        # ML model weights for different dimensions
+        # Enhanced ML model weights for advanced multi-dimensional matching
         self.dimension_weights = {
             MatchingDimension.GENRE_STYLE: 0.20,
             MatchingDimension.AUDIENCE_OVERLAP: 0.18,
@@ -314,6 +314,11 @@ Advanced AI-powered creator matching system"""
             MatchingDimension.BUDGET_COMPATIBILITY: 0.04,
             MatchingDimension.COLLABORATION_HISTORY: 0.02
         }
+        
+        # Advanced AI matching components
+        self.behavioral_analyzer = None
+        self.trend_predictor = None
+        self.success_predictor = None
         
     async def find_matches(
         self,
@@ -1712,3 +1717,174 @@ Calculate schedule compatibility score"""
         except Exception as e:
             logger.error(f"Error getting social metrics: {str(e)}")
             return {}
+
+    async def analyze_behavioral_patterns(
+        self,
+        creator_profile: 'CreatorProfile',
+        candidate_profile: 'CreatorProfile'
+    ) -> Dict[str, float]:
+        """
+        Advanced behavioral pattern analysis for enhanced matching
+        """
+        try:
+            patterns = {}
+            
+            # Content creation frequency pattern matching
+            creator_frequency = creator_profile.metadata.get('content_frequency', 1.0)
+            candidate_frequency = candidate_profile.metadata.get('content_frequency', 1.0)
+            frequency_compatibility = 1.0 - abs(creator_frequency - candidate_frequency) / max(creator_frequency, candidate_frequency)
+            patterns['frequency_sync'] = frequency_compatibility
+            
+            # Audience engagement time patterns
+            creator_peak_hours = creator_profile.metadata.get('peak_engagement_hours', [])
+            candidate_peak_hours = candidate_profile.metadata.get('peak_engagement_hours', [])
+            if creator_peak_hours and candidate_peak_hours:
+                overlap_hours = set(creator_peak_hours) & set(candidate_peak_hours)
+                time_compatibility = len(overlap_hours) / max(len(creator_peak_hours), len(candidate_peak_hours))
+                patterns['engagement_timing'] = time_compatibility
+            else:
+                patterns['engagement_timing'] = 0.5
+                
+            # Communication style compatibility
+            creator_style = creator_profile.metadata.get('communication_style', 'neutral')
+            candidate_style = candidate_profile.metadata.get('communication_style', 'neutral')
+            style_matrix = {
+                ('formal', 'formal'): 0.9,
+                ('casual', 'casual'): 0.9,
+                ('creative', 'creative'): 0.95,
+                ('formal', 'casual'): 0.6,
+                ('formal', 'creative'): 0.5,
+                ('casual', 'creative'): 0.8
+            }
+            patterns['communication_style'] = style_matrix.get((creator_style, candidate_style), 0.7)
+            
+            # Brand alignment score
+            creator_values = set(creator_profile.metadata.get('brand_values', []))
+            candidate_values = set(candidate_profile.metadata.get('brand_values', []))
+            if creator_values and candidate_values:
+                value_overlap = len(creator_values & candidate_values)
+                total_values = len(creator_values | candidate_values)
+                patterns['brand_alignment'] = value_overlap / total_values if total_values > 0 else 0.5
+            else:
+                patterns['brand_alignment'] = 0.5
+                
+            return patterns
+            
+        except Exception as e:
+            logger.error(f"Error analyzing behavioral patterns: {str(e)}")
+            return {'frequency_sync': 0.5, 'engagement_timing': 0.5, 'communication_style': 0.5, 'brand_alignment': 0.5}
+    
+    async def predict_collaboration_success(
+        self,
+        creator_profile: 'CreatorProfile',
+        candidate_profile: 'CreatorProfile',
+        collaboration_type: str
+    ) -> float:
+        """
+        AI-powered collaboration success prediction
+        """
+        try:
+            # Historical success rate based on similar collaborations
+            similar_collabs = await self._get_similar_collaborations(creator_profile, candidate_profile, collaboration_type)
+            historical_score = self._calculate_historical_success_rate(similar_collabs)
+            
+            # Audience synergy analysis
+            audience_synergy = await self._analyze_audience_synergy(creator_profile, candidate_profile)
+            
+            # Content compatibility analysis
+            content_compatibility = await self._analyze_content_compatibility(creator_profile, candidate_profile)
+            
+            # Behavioral pattern compatibility
+            behavioral_patterns = await self.analyze_behavioral_patterns(creator_profile, candidate_profile)
+            behavioral_score = sum(behavioral_patterns.values()) / len(behavioral_patterns)
+            
+            # Market trend alignment
+            market_trend_score = await self._analyze_market_trends(creator_profile, candidate_profile, collaboration_type)
+            
+            # Weighted success prediction
+            success_probability = (
+                historical_score * 0.25 +
+                audience_synergy * 0.25 +
+                content_compatibility * 0.20 +
+                behavioral_score * 0.20 +
+                market_trend_score * 0.10
+            )
+            
+            return min(max(success_probability, 0.0), 1.0)
+            
+        except Exception as e:
+            logger.error(f"Error predicting collaboration success: {str(e)}")
+            return 0.5
+    
+    async def _get_similar_collaborations(
+        self,
+        creator_profile: 'CreatorProfile',
+        candidate_profile: 'CreatorProfile',
+        collaboration_type: str
+    ) -> List[Dict[str, Any]]:
+        """Get similar historical collaborations for success prediction"""
+        try:
+            # Query database for similar collaborations
+            query = """
+            SELECT success_rate, outcome_score, collaboration_duration
+            FROM collaboration_history 
+            WHERE (creator_type_1 = %s AND creator_type_2 = %s)
+               OR (creator_type_1 = %s AND creator_type_2 = %s)
+            AND collaboration_type = %s
+            AND outcome_score IS NOT NULL
+            ORDER BY created_at DESC
+            LIMIT 50
+            """
+            
+            result = await self.db_session.execute(query, (
+                creator_profile.content_type, candidate_profile.content_type,
+                candidate_profile.content_type, creator_profile.content_type,
+                collaboration_type
+            ))
+            
+            return [dict(row) for row in result.fetchall()]
+            
+        except Exception as e:
+            logger.error(f"Error getting similar collaborations: {str(e)}")
+            return []
+    
+    async def _analyze_audience_synergy(
+        self,
+        creator_profile: 'CreatorProfile',
+        candidate_profile: 'CreatorProfile'
+    ) -> float:
+        """Analyze potential audience synergy between creators"""
+        try:
+            # Get audience demographics
+            creator_audience = creator_profile.metadata.get('audience_demographics', {})
+            candidate_audience = candidate_profile.metadata.get('audience_demographics', {})
+            
+            # Calculate demographic overlap
+            age_overlap = self._calculate_age_overlap(
+                creator_audience.get('age_distribution', {}),
+                candidate_audience.get('age_distribution', {})
+            )
+            
+            # Geographic overlap
+            geo_overlap = self._calculate_geographic_overlap(
+                creator_audience.get('geographic_distribution', {}),
+                candidate_audience.get('geographic_distribution', {})
+            )
+            
+            # Interest overlap
+            interest_overlap = self._calculate_interest_overlap(
+                creator_audience.get('interests', []),
+                candidate_audience.get('interests', [])
+            )
+            
+            # Complementary audience potential (low overlap might be good for expansion)
+            complementary_score = 1.0 - ((age_overlap + geo_overlap + interest_overlap) / 3.0)
+            
+            # Balance between overlap and complementarity
+            synergy_score = (age_overlap * 0.3 + geo_overlap * 0.2 + interest_overlap * 0.3 + complementary_score * 0.2)
+            
+            return synergy_score
+            
+        except Exception as e:
+            logger.error(f"Error analyzing audience synergy: {str(e)}")
+            return 0.5
