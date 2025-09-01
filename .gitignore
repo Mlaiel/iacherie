@@ -28,6 +28,13 @@ data/
 storage/
 uploads/
 backups/
+
+# Test artifacts and temporary files
+test_*.py
+demo_*.py
+*.log
+*.tmp
+/tmp/test_backups/
 cache/
 *.db
 *.sqlite
