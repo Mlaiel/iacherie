@@ -307,13 +307,24 @@ Protocol for log writers"""
     
     async def write(self, entries: List[LogEntry]) -> bool:
         """
-Write log entries to destination"""
-        ...
+Write log entries to destination
+        
+        Args:
+            entries: List of log entries to write
+            
+        Returns:
+            bool: True if write was successful, False otherwise
+        """
+        pass  # Protocol method - implemented by concrete writers
     
     async def close(self) -> None:
         """
-Close writer and cleanup resources"""
-        ...
+Close writer and cleanup resources
+        
+        This method should be called to properly cleanup resources
+        when the writer is no longer needed.
+        """
+        pass  # Protocol method - implemented by concrete writers
 
 
 class ConsoleLogWriter:
