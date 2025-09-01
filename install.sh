@@ -171,6 +171,16 @@ install_dependencies() {
         pip install -r config/requirements-production.txt
         log_success "Production dependencies installed"
     fi
+    
+    # Install spaCy language models (critical for NLP functionality)
+    log_info "Installing spaCy language models..."
+    if command -v python -c "import spacy" >/dev/null 2>&1; then
+        python -m spacy download en_core_web_sm >/dev/null 2>&1 || log_warning "Failed to download en_core_web_sm model"
+        python -m spacy download fr_core_news_sm >/dev/null 2>&1 || log_warning "Failed to download fr_core_news_sm model"
+        log_success "spaCy language models installation attempted"
+    else
+        log_warning "spaCy not found, skipping language models installation"
+    fi
 }
 
 # Setup environment configuration

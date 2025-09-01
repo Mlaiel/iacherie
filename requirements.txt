@@ -7,7 +7,7 @@
 # Core Web Framework
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-pydantic==2.5.0
+pydantic[email]==2.5.0
 
 # AI/ML Dependencies for Advanced Generation
 openai==1.6.1
@@ -43,6 +43,38 @@ gunicorn==21.2.0
 prometheus-client==0.19.0
 structlog==23.2.0
 requests==2.31.0
+
+# Critical Dependencies (from PRIORITIES_IMMEDIATES_100_COMPLETION.md)
+# Email validation for pydantic
+email-validator>=2.1.0
+
+# MongoDB and async driver
+motor>=3.7.0
+pymongo>=4.14.0
+
+# NLP processing
+spacy>=3.7.0
+
+# Audio processing 
+torchaudio>=2.0.0
+
+# Compression utilities
+lz4>=4.3.0
+brotli>=1.1.0
+
+# Blockchain and web3
+web3>=6.15.0
+eth-account>=0.10.0
+
+# Monitoring and observability
+elastic-apm>=6.20.0
+jaeger-client>=4.8.0
+
+# Additional ML libraries
+xgboost>=2.0.0
+lightgbm>=4.3.0
+tensorflow-hub>=0.16.0
+sentence-transformers>=2.5.0
 
 # Extended functionality (optional - loads from config/requirements.txt if available)
 # For full AI features, install: pip install -r config/requirements.txt
