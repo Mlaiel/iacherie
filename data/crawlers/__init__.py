@@ -82,6 +82,7 @@ from .vimeo_crawler import VimeoCrawler
 from .dailymotion_crawler import DailymotionCrawler
 from .snapchat_crawler import SnapchatCrawler
 from .pinterest_crawler import PinterestCrawler
+from .behance_crawler import BehanceCrawler
 from .telegram_crawler import TelegramCrawler
 from .whatsapp_business_crawler import WhatsAppBusinessCrawler
 from .content_detector import ContentDetector, DetectionResult, DetectionType
@@ -116,6 +117,7 @@ __all__ = [
     "DailymotionCrawler",
     "SnapchatCrawler",
     "PinterestCrawler",
+    "BehanceCrawler",
     "TelegramCrawler",
     "WhatsAppBusinessCrawler",
     
