@@ -9,6 +9,21 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
+# Frontend build artifacts and dependencies
+frontend/node_modules/
+frontend/.next/
+frontend/dist/
+frontend/build/
+frontend/out/
+frontend/package-lock.json
+frontend/.turbo/
+desktop/node_modules/
+desktop/dist/
+desktop/build/
+desktop/package-lock.json
+mobile/react_native/node_modules/
+mobile/react_native/package-lock.json
+
 # Environments and build artifacts
 .env
 .env.local
