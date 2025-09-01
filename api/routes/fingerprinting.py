@@ -27,6 +27,9 @@ from ...ai_engine.fingerprinting.image_fingerprint_engine import ImageFingerprin
 from ...ai_engine.fingerprinting.text_fingerprint_engine import TextFingerprintEngine
 from ...ai_engine.fingerprinting.vector_matching_engine import VectorMatchingEngine
 
+# Import production audio fingerprinting
+from .audio_fingerprinting_production import router as audio_production_router
+
 
 # Pydantic models
 class FingerprintRequest(BaseModel):
