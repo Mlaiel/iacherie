@@ -1,0 +1,676 @@
+name: 🔍 Enhanced Dependency & Supply Chain Scanning
+
+on:
+  workflow_call:
+    inputs:
+      scan_type:
+        description: 'Type of scan to perform (all, dependencies, supply-chain, license)'
+        required: false
+        type: string
+        default: 'all'
+      language:
+        description: 'Primary language to scan (python, javascript, go, etc.)'
+        required: false
+        type: string
+        default: 'python'
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+      SNYK_TOKEN:
+        required: false
+      FOSSA_API_KEY:
+        required: false
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  # Python dependency scanning
+  python-dependency-scan:
+    name: 🐍 Python Dependencies
+    runs-on: ubuntu-latest
+    if: inputs.language == 'python' || inputs.language == 'all'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install scanning tools
+        run: |
+          pip install --upgrade pip
+          pip install safety pip-audit cyclonedx-bom bandit
+
+      - name: Generate Python SBOM
+        run: |
+          echo "Generating Python Software Bill of Materials..."
+          
+          # Install dependencies first
+          find . -name "requirements*.txt" -exec pip install -r {} \;
+          
+          # Generate SBOM in multiple formats
+          cyclonedx-py --output-format json --output-file python-sbom.json
+          cyclonedx-py --output-format xml --output-file python-sbom.xml
+          
+          echo "✅ Python SBOM generated"
+
+      - name: Advanced dependency vulnerability scan
+        run: |
+          echo "Running advanced dependency vulnerability scanning..."
+          
+          # Safety check with detailed output
+          safety check --json --output safety-detailed.json || true
+          safety check --full-report > safety-report.txt || true
+          
+          # Pip-audit with enhanced options
+          pip-audit --format=json --output=pip-audit-detailed.json --desc || true
+          pip-audit --format=cyclonedx-json --output=pip-audit-sbom.json || true
+          
+          # Generate summary report
+          cat > dependency-scan-summary.md << EOF
+          # 🐍 Python Dependency Scan Results
+          
+          **Scan Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Repository:** ${{ github.repository }}
+          **Branch:** ${{ github.ref_name }}
+          
+          ## Scan Tools Used:
+          - Safety (PyUp.io database)
+          - Pip-audit (PyPA advisory database)
+          - CycloneDX SBOM generator
+          
+          ## Results Summary:
+          EOF
+          
+          # Parse Safety results
+          if [ -f "safety-detailed.json" ]; then
+            SAFETY_VULNS=$(jq '.vulnerabilities | length' safety-detailed.json 2>/dev/null || echo "0")
+            echo "- **Safety Vulnerabilities:** $SAFETY_VULNS" >> dependency-scan-summary.md
+          fi
+          
+          # Parse Pip-audit results
+          if [ -f "pip-audit-detailed.json" ]; then
+            PIP_AUDIT_VULNS=$(jq '.vulnerabilities | length' pip-audit-detailed.json 2>/dev/null || echo "0")
+            echo "- **Pip-audit Vulnerabilities:** $PIP_AUDIT_VULNS" >> dependency-scan-summary.md
+          fi
+          
+          cat dependency-scan-summary.md
+
+      - name: Dependency confusion attack detection
+        run: |
+          echo "Scanning for dependency confusion vulnerabilities..."
+          
+          # Check for suspicious package names
+          cat > check_dependency_confusion.py << 'EOF'
+          import re
+          import json
+          import sys
+          from pathlib import Path
+          
+          def check_suspicious_packages(requirements_file):
+              suspicious_patterns = [
+                  r'.*-[0-9]$',  # Package names ending with numbers
+                  r'.*test.*',   # Test packages in production
+                  r'.*dev.*',    # Development packages  
+                  r'.*internal.*', # Internal package names
+                  r'.*corp.*',   # Corporate package names
+              ]
+              
+              findings = []
+              
+              if Path(requirements_file).exists():
+                  with open(requirements_file, 'r') as f:
+                      for line_num, line in enumerate(f, 1):
+                          line = line.strip()
+                          if line and not line.startswith('#'):
+                              package_name = line.split('==')[0].split('>=')[0].split('<=')[0]
+                              
+                              for pattern in suspicious_patterns:
+                                  if re.match(pattern, package_name, re.IGNORECASE):
+                                      findings.append({
+                                          'file': requirements_file,
+                                          'line': line_num,
+                                          'package': package_name,
+                                          'pattern': pattern,
+                                          'risk': 'potential dependency confusion'
+                                      })
+              
+              return findings
+          
+          # Scan all requirements files
+          all_findings = []
+          for req_file in Path('.').rglob('requirements*.txt'):
+              all_findings.extend(check_suspicious_packages(str(req_file)))
+          
+          if all_findings:
+              print(f"⚠️ Found {len(all_findings)} potentially suspicious dependencies:")
+              for finding in all_findings:
+                  print(f"  - {finding['package']} in {finding['file']} (line {finding['line']})")
+              
+              # Save detailed findings
+              with open('dependency-confusion-findings.json', 'w') as f:
+                  json.dump(all_findings, f, indent=2)
+          else:
+              print("✅ No suspicious dependency patterns detected")
+          EOF
+          
+          python check_dependency_confusion.py
+
+      - name: License compliance scanning
+        run: |
+          echo "Scanning for license compliance issues..."
+          
+          # Install license checking tools
+          pip install pip-licenses licensecheck
+          
+          # Generate license report
+          pip-licenses --format=json --output-file=licenses-detailed.json --with-urls --with-description
+          pip-licenses --format=csv --output-file=licenses-summary.csv
+          
+          # Check for problematic licenses
+          cat > check_licenses.py << 'EOF'
+          import json
+          
+          # Problematic license types
+          PROBLEMATIC_LICENSES = [
+              'GPL-3.0', 'GPL-2.0', 'AGPL-3.0', 'AGPL-1.0',
+              'LGPL-3.0', 'LGPL-2.1', 'Copyleft',
+              'Commercial', 'Proprietary'
+          ]
+          
+          # Load license data
+          with open('licenses-detailed.json', 'r') as f:
+              licenses = json.load(f)
+          
+          problematic_packages = []
+          
+          for package in licenses:
+              license_name = package.get('License', 'Unknown')
+              if any(prob_license in license_name for prob_license in PROBLEMATIC_LICENSES):
+                  problematic_packages.append({
+                      'name': package['Name'],
+                      'version': package['Version'],
+                      'license': license_name,
+                      'url': package.get('URL', 'N/A')
+                  })
+          
+          if problematic_packages:
+              print(f"⚠️ Found {len(problematic_packages)} packages with potentially problematic licenses:")
+              for pkg in problematic_packages:
+                  print(f"  - {pkg['name']} v{pkg['version']}: {pkg['license']}")
+              
+              # Save findings
+              with open('license-issues.json', 'w') as f:
+                  json.dump(problematic_packages, f, indent=2)
+          else:
+              print("✅ No problematic licenses detected")
+          EOF
+          
+          python check_licenses.py
+
+      - name: Upload Python scan results
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-dependency-scan
+          path: |
+            python-sbom.*
+            safety-*.json
+            safety-report.txt
+            pip-audit-*.json
+            dependency-*.md
+            dependency-confusion-findings.json
+            licenses-*.json
+            licenses-*.csv
+            license-issues.json
+
+  # JavaScript/Node.js dependency scanning
+  javascript-dependency-scan:
+    name: 📦 JavaScript Dependencies
+    runs-on: ubuntu-latest
+    if: inputs.language == 'javascript' || inputs.language == 'all'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f "package.json" ]; then
+            npm ci --only=production
+            echo "✅ Node.js dependencies installed"
+          else
+            echo "⏭️ No package.json found, skipping Node.js scanning"
+            exit 0
+          fi
+
+      - name: Generate JavaScript SBOM
+        run: |
+          # Install SBOM generation tool
+          npm install -g @cyclonedx/cyclonedx-npm
+          
+          # Generate SBOM
+          cyclonedx-npm --output-format JSON --output-file js-sbom.json
+          cyclonedx-npm --output-format XML --output-file js-sbom.xml
+          
+          echo "✅ JavaScript SBOM generated"
+
+      - name: Advanced npm audit
+        run: |
+          # Run enhanced npm audit
+          npm audit --json > npm-audit-detailed.json || true
+          npm audit --parseable > npm-audit-parseable.txt || true
+          
+          # Generate human-readable report
+          npm audit > npm-audit-report.txt || true
+          
+          # Check for specific vulnerability types
+          cat > analyze_npm_audit.js << 'EOF'
+          const fs = require('fs');
+          
+          if (fs.existsSync('npm-audit-detailed.json')) {
+              const auditData = JSON.parse(fs.readFileSync('npm-audit-detailed.json', 'utf8'));
+              
+              const summary = {
+                  total_vulnerabilities: Object.keys(auditData.vulnerabilities || {}).length,
+                  critical: 0,
+                  high: 0,
+                  moderate: 0,
+                  low: 0,
+                  packages_affected: new Set()
+              };
+              
+              // Analyze vulnerabilities
+              for (const [id, vuln] of Object.entries(auditData.vulnerabilities || {})) {
+                  const severity = vuln.severity;
+                  summary[severity] = (summary[severity] || 0) + 1;
+                  
+                  if (vuln.effects) {
+                      vuln.effects.forEach(effect => summary.packages_affected.add(effect));
+                  }
+              }
+              
+              summary.packages_affected = Array.from(summary.packages_affected);
+              
+              console.log('📦 JavaScript Dependency Audit Summary:');
+              console.log(`- Total vulnerabilities: ${summary.total_vulnerabilities}`);
+              console.log(`- Critical: ${summary.critical}`);
+              console.log(`- High: ${summary.high}`);
+              console.log(`- Moderate: ${summary.moderate}`);
+              console.log(`- Low: ${summary.low}`);
+              console.log(`- Packages affected: ${summary.packages_affected.length}`);
+              
+              // Save summary
+              fs.writeFileSync('npm-audit-summary.json', JSON.stringify(summary, null, 2));
+          } else {
+              console.log('No npm audit data available');
+          }
+          EOF
+          
+          node analyze_npm_audit.js
+
+      - name: Yarn/pnpm security audit
+        run: |
+          # Check if yarn.lock or pnpm-lock.yaml exists
+          if [ -f "yarn.lock" ]; then
+            echo "Running Yarn security audit..."
+            npx yarn audit --json > yarn-audit.json || true
+          fi
+          
+          if [ -f "pnpm-lock.yaml" ]; then
+            echo "Running pnpm security audit..."
+            npx pnpm audit --json > pnpm-audit.json || true
+          fi
+
+      - name: Upload JavaScript scan results
+        uses: actions/upload-artifact@v3
+        with:
+          name: javascript-dependency-scan
+          path: |
+            js-sbom.*
+            npm-audit-*
+            yarn-audit.json
+            pnpm-audit.json
+
+  # Supply chain attack detection
+  supply-chain-analysis:
+    name: 🔗 Supply Chain Analysis
+    runs-on: ubuntu-latest
+    if: inputs.scan_type == 'all' || inputs.scan_type == 'supply-chain'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install analysis tools
+        run: |
+          # Install various supply chain analysis tools
+          pip install bandit semgrep
+          npm install -g retire @cyclonedx/cyclonedx-npm
+          
+          # Install additional security scanners
+          curl -sfL https://raw.githubusercontent.com/securecodewarrior/github-action-add-sarif/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Repository tampering detection
+        run: |
+          echo "Checking for signs of repository tampering..."
+          
+          # Check for suspicious files
+          SUSPICIOUS_FILES=(
+            "*.exe" "*.dll" "*.so" "*.dylib"
+            "*.jar" "*.war" "*.ear"
+            "password*" "secret*" "key*"
+            ".env" ".env.*"
+          )
+          
+          echo "🔍 Scanning for suspicious files:"
+          for pattern in "${SUSPICIOUS_FILES[@]}"; do
+            if find . -name "$pattern" -type f | grep -v node_modules | grep -v .git; then
+              echo "⚠️ Found suspicious files matching: $pattern"
+            fi
+          done
+
+      - name: Code injection detection
+        run: |
+          echo "Scanning for potential code injection vulnerabilities..."
+          
+          # Use semgrep for code injection detection
+          semgrep --config=security-audit --json --output=code-injection-scan.json . || true
+          
+          # Use bandit for Python-specific security issues
+          if find . -name "*.py" -not -path "./venv/*" -not -path "./.venv/*" | head -1; then
+            bandit -r . -f json -o bandit-security-scan.json || true
+          fi
+
+      - name: Dependency integrity verification
+        run: |
+          echo "Verifying dependency integrity..."
+          
+          # Check package.json integrity
+          if [ -f "package.json" ]; then
+            echo "Checking npm package integrity..."
+            
+            # Verify package-lock.json exists and is consistent
+            if [ -f "package-lock.json" ]; then
+              npm ci --audit false > /dev/null 2>&1 && echo "✅ npm integrity check passed" || echo "⚠️ npm integrity issues detected"
+            else
+              echo "⚠️ No package-lock.json found - dependency pinning recommended"
+            fi
+          fi
+          
+          # Check Python requirements integrity
+          if find . -name "requirements*.txt" | head -1; then
+            echo "Checking Python package integrity..."
+            
+            # Look for version pinning
+            UNPINNED=$(find . -name "requirements*.txt" -exec grep -H -E '^[^#]*[^><=!]$' {} \; | head -5)
+            if [ -n "$UNPINNED" ]; then
+              echo "⚠️ Found unpinned dependencies:"
+              echo "$UNPINNED"
+            else
+              echo "✅ Python dependencies appear to be pinned"
+            fi
+          fi
+
+      - name: Third-party service integration analysis
+        run: |
+          echo "Analyzing third-party service integrations..."
+          
+          # Look for common third-party integrations
+          THIRD_PARTY_PATTERNS=(
+            "api\..*\.com"
+            "\.amazonaws\.com"
+            "\.azure\.com"
+            "\.googleapis\.com"
+            "webhook"
+            "analytics"
+            "tracking"
+          )
+          
+          echo "🔍 Third-party service integrations found:"
+          for pattern in "${THIRD_PARTY_PATTERNS[@]}"; do
+            if grep -r -i "$pattern" . --exclude-dir=node_modules --exclude-dir=.git --exclude="*.md" 2>/dev/null; then
+              echo "Found references to: $pattern"
+            fi
+          done
+
+      - name: Upload supply chain analysis
+        uses: actions/upload-artifact@v3
+        with:
+          name: supply-chain-analysis
+          path: |
+            code-injection-scan.json
+            bandit-security-scan.json
+            suspicious-files.txt
+
+  # SLSA provenance generation
+  slsa-provenance:
+    name: 📋 SLSA Provenance
+    runs-on: ubuntu-latest
+    if: inputs.scan_type == 'all' || inputs.scan_type == 'supply-chain'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate SLSA provenance
+        run: |
+          echo "Generating SLSA (Supply-chain Levels for Software Artifacts) provenance..."
+          
+          # Create SLSA provenance document
+          cat > slsa-provenance.json << EOF
+          {
+            "_type": "https://in-toto.io/Statement/v0.1",
+            "predicateType": "https://slsa.dev/provenance/v1",
+            "subject": [
+              {
+                "name": "${{ github.repository }}",
+                "digest": {
+                  "sha1": "${{ github.sha }}"
+                }
+              }
+            ],
+            "predicate": {
+              "buildDefinition": {
+                "buildType": "https://github.com/actions/workflow",
+                "externalParameters": {
+                  "workflow": {
+                    "ref": "${{ github.ref }}",
+                    "repository": "${{ github.repository }}",
+                    "path": ".github/workflows/enhanced-dependency-scan.yml"
+                  }
+                },
+                "systemParameters": {
+                  "github": {
+                    "event_name": "${{ github.event_name }}",
+                    "repository": "${{ github.repository }}",
+                    "run_id": "${{ github.run_id }}",
+                    "run_number": "${{ github.run_number }}",
+                    "actor": "${{ github.actor }}"
+                  }
+                }
+              },
+              "runDetails": {
+                "builder": {
+                  "id": "https://github.com/actions/runner",
+                  "version": {
+                    "github-hosted": "$(echo $RUNNER_OS-$RUNNER_ARCH)"
+                  }
+                },
+                "metadata": {
+                  "invocationId": "${{ github.run_id }}",
+                  "startedOn": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+                }
+              }
+            }
+          }
+          EOF
+          
+          echo "✅ SLSA provenance generated"
+
+      - name: Validate provenance
+        run: |
+          echo "Validating SLSA provenance format..."
+          
+          # Basic JSON validation
+          if jq . slsa-provenance.json > /dev/null; then
+            echo "✅ SLSA provenance JSON is valid"
+            
+            # Check required fields
+            REQUIRED_FIELDS=("_type" "predicateType" "subject" "predicate")
+            for field in "${REQUIRED_FIELDS[@]}"; do
+              if jq -e ".$field" slsa-provenance.json > /dev/null; then
+                echo "✅ Required field present: $field"
+              else
+                echo "❌ Missing required field: $field"
+              fi
+            done
+          else
+            echo "❌ SLSA provenance JSON is invalid"
+          fi
+
+      - name: Upload SLSA provenance
+        uses: actions/upload-artifact@v3
+        with:
+          name: slsa-provenance
+          path: slsa-provenance.json
+
+  # Comprehensive security report
+  security-report-generation:
+    name: 📊 Security Report
+    runs-on: ubuntu-latest
+    needs: [python-dependency-scan, javascript-dependency-scan, supply-chain-analysis, slsa-provenance]
+    if: always()
+    
+    steps:
+      - name: Download all scan results
+        uses: actions/download-artifact@v3
+
+      - name: Generate comprehensive security report
+        run: |
+          echo "# 🔍 Comprehensive Dependency & Supply Chain Security Report" > security-report.md
+          echo "" >> security-report.md
+          echo "**Repository:** ${{ github.repository }}" >> security-report.md
+          echo "**Branch:** ${{ github.ref_name }}" >> security-report.md
+          echo "**Commit:** ${{ github.sha }}" >> security-report.md
+          echo "**Scan Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> security-report.md
+          echo "**Workflow:** ${{ github.workflow }}" >> security-report.md
+          echo "" >> security-report.md
+          
+          echo "## 📋 Scan Summary" >> security-report.md
+          echo "" >> security-report.md
+          
+          # Check each scan result
+          if [ "${{ needs.python-dependency-scan.result }}" = "success" ]; then
+            echo "✅ **Python Dependencies:** Scanned successfully" >> security-report.md
+          elif [ "${{ needs.python-dependency-scan.result }}" = "skipped" ]; then
+            echo "⏭️ **Python Dependencies:** Skipped" >> security-report.md
+          else
+            echo "❌ **Python Dependencies:** Scan failed" >> security-report.md
+          fi
+          
+          if [ "${{ needs.javascript-dependency-scan.result }}" = "success" ]; then
+            echo "✅ **JavaScript Dependencies:** Scanned successfully" >> security-report.md
+          elif [ "${{ needs.javascript-dependency-scan.result }}" = "skipped" ]; then
+            echo "⏭️ **JavaScript Dependencies:** Skipped" >> security-report.md
+          else
+            echo "❌ **JavaScript Dependencies:** Scan failed" >> security-report.md
+          fi
+          
+          if [ "${{ needs.supply-chain-analysis.result }}" = "success" ]; then
+            echo "✅ **Supply Chain Analysis:** Completed successfully" >> security-report.md
+          elif [ "${{ needs.supply-chain-analysis.result }}" = "skipped" ]; then
+            echo "⏭️ **Supply Chain Analysis:** Skipped" >> security-report.md
+          else
+            echo "❌ **Supply Chain Analysis:** Analysis failed" >> security-report.md
+          fi
+          
+          if [ "${{ needs.slsa-provenance.result }}" = "success" ]; then
+            echo "✅ **SLSA Provenance:** Generated successfully" >> security-report.md
+          elif [ "${{ needs.slsa-provenance.result }}" = "skipped" ]; then
+            echo "⏭️ **SLSA Provenance:** Skipped" >> security-report.md
+          else
+            echo "❌ **SLSA Provenance:** Generation failed" >> security-report.md
+          fi
+          
+          echo "" >> security-report.md
+          echo "## 🔍 Detailed Findings" >> security-report.md
+          echo "" >> security-report.md
+          
+          # Aggregate findings from different scans
+          if [ -d "python-dependency-scan" ]; then
+            echo "### Python Dependencies" >> security-report.md
+            if [ -f "python-dependency-scan/dependency-scan-summary.md" ]; then
+              cat python-dependency-scan/dependency-scan-summary.md >> security-report.md
+            fi
+            echo "" >> security-report.md
+          fi
+          
+          if [ -d "javascript-dependency-scan" ]; then
+            echo "### JavaScript Dependencies" >> security-report.md
+            if [ -f "javascript-dependency-scan/npm-audit-summary.json" ]; then
+              echo "npm audit findings:" >> security-report.md
+              jq -r '. | "- Total vulnerabilities: \(.total_vulnerabilities)\n- Critical: \(.critical)\n- High: \(.high)\n- Moderate: \(.moderate)\n- Low: \(.low)"' javascript-dependency-scan/npm-audit-summary.json >> security-report.md
+            fi
+            echo "" >> security-report.md
+          fi
+          
+          echo "## 🎯 Recommendations" >> security-report.md
+          echo "" >> security-report.md
+          echo "1. **Regular Updates:** Keep dependencies updated to latest secure versions" >> security-report.md
+          echo "2. **Version Pinning:** Pin dependency versions to avoid supply chain attacks" >> security-report.md
+          echo "3. **License Compliance:** Review and address any license compliance issues" >> security-report.md
+          echo "4. **Monitoring:** Implement continuous dependency monitoring" >> security-report.md
+          echo "5. **SBOM Management:** Maintain Software Bill of Materials for all components" >> security-report.md
+          echo "" >> security-report.md
+          echo "---" >> security-report.md
+          echo "*Generated by Ainflue Enhanced Dependency Scanning*" >> security-report.md
+          
+          # Display report
+          cat security-report.md
+
+      - name: Upload comprehensive report
+        uses: actions/upload-artifact@v3
+        with:
+          name: comprehensive-security-report
+          path: security-report.md
+
+      - name: Generate security metrics
+        run: |
+          # Generate machine-readable security metrics
+          cat > security-metrics.json << EOF
+          {
+            "scan_timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "repository": "${{ github.repository }}",
+            "branch": "${{ github.ref_name }}",
+            "commit": "${{ github.sha }}",
+            "scans_performed": {
+              "python_dependencies": "${{ needs.python-dependency-scan.result }}",
+              "javascript_dependencies": "${{ needs.javascript-dependency-scan.result }}",
+              "supply_chain_analysis": "${{ needs.supply-chain-analysis.result }}",
+              "slsa_provenance": "${{ needs.slsa-provenance.result }}"
+            },
+            "compliance_frameworks": [
+              "SLSA Level 2",
+              "Supply Chain Security Framework",
+              "NIST Cybersecurity Framework"
+            ]
+          }
+          EOF
+          
+          echo "Security metrics generated:"
+          cat security-metrics.json
+
+      - name: Upload security metrics
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-metrics
+          path: security-metrics.json

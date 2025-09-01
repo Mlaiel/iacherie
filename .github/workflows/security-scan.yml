@@ -115,10 +115,31 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # Enhanced dependency scanning
+  enhanced-dependency-scan:
+    name: 🔍 Enhanced Dependency Scanning
+    runs-on: ubuntu-latest
+    needs: sast-scan
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run enhanced dependency scanning
+        uses: ./.github/workflows/enhanced-dependency-scan.yml
+        with:
+          scan_type: 'all'
+          language: 'python'
+        secrets:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+
   # Container Security Scan
   container-scan:
     name: 🐳 Container Security
     runs-on: ubuntu-latest
+    needs: enhanced-dependency-scan
     
     steps:
     - name: Checkout code
@@ -276,7 +297,7 @@ jobs:
   security-dashboard:
     name: 📊 Security Dashboard
     runs-on: ubuntu-latest
-    needs: [dependency-scan, sast-scan, secret-scan, container-scan, license-scan, custom-security-audit]
+    needs: [dependency-scan, sast-scan, secret-scan, container-scan, enhanced-dependency-scan, license-scan, custom-security-audit]
     if: always()
     
     steps:
