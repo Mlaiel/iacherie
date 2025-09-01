@@ -136,9 +136,11 @@ class CorsConfiguration:
     
     # Allowed origins
     allowed_origins: List[str] = field(default_factory=lambda: [
-        "https://app.ia-influencer.com",
-        "https://dashboard.ia-influencer.com",
-        "https://creator.ia-influencer.com"
+        "https://ainflue.com",
+        "https://www.ainflue.com", 
+        "https://app.ainflue.com",
+        "https://dashboard.ainflue.com",
+        "https://creator.ainflue.com"
     ])
     
     # Allowed methods

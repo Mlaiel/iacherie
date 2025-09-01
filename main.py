@@ -35,9 +35,8 @@ try:
 except ImportError as e:
     try:
         # Fallback to unified app_config module
-        import app_config
-        settings = app_config.settings
-        print("✓ Successfully imported app_config.py as fallback")
+        from config.app_config import settings
+        print("✓ Successfully imported config.app_config as fallback")
         print(f"✓ Environment: {settings.app.environment}")
         print(f"✓ Debug mode: {settings.app.debug}")
         print(f"✓ Host: {settings.app.host}")
@@ -103,6 +102,8 @@ try:
 except ImportError as e:
     print(f"⚠️  Core logging not available: {e}")
     import logging
+    # Setup basic logging
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     LOGGING_AVAILABLE = False
 
