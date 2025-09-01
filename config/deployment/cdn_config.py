@@ -132,6 +132,77 @@ class CDNConfig:
     
     def get_cache_rules(self) -> List[CacheRule]:
         """Get CDN cache rules for different content types"""
+        rules = []
+        
+        # Static assets - long cache
+        rules.append(CacheRule(
+            path_pattern="/static/*",
+            ttl_seconds=31536000,  # 1 year
+            cache_headers={"Cache-Control": "public, max-age=31536000, immutable"},
+            compression_enabled=True,
+            vary_headers=["Accept-Encoding"]
+        ))
+        
+        # Images - long cache with format optimization
+        rules.append(CacheRule(
+            path_pattern="/images/*",
+            ttl_seconds=2592000,  # 30 days
+            cache_headers={"Cache-Control": "public, max-age=2592000"},
+            compression_enabled=False,  # Images already compressed
+            vary_headers=["Accept", "Accept-Encoding"],
+            optimization_rules=["webp_conversion", "quality_adjustment"]
+        ))
+        
+        # API responses - short cache with conditions
+        rules.append(CacheRule(
+            path_pattern="/api/v1/public/*",
+            ttl_seconds=300,  # 5 minutes
+            cache_headers={"Cache-Control": "public, max-age=300, s-maxage=600"},
+            compression_enabled=True,
+            vary_headers=["Accept-Encoding", "Authorization"],
+            cache_conditions=["no_auth_header", "get_method_only"]
+        ))
+        
+        # Content fingerprints - medium cache
+        rules.append(CacheRule(
+            path_pattern="/api/v1/fingerprint/*",
+            ttl_seconds=3600,  # 1 hour
+            cache_headers={"Cache-Control": "public, max-age=3600"},
+            compression_enabled=True,
+            vary_headers=["Accept-Encoding"]
+        ))
+        
+        # Analytics data - very short cache
+        rules.append(CacheRule(
+            path_pattern="/api/v1/analytics/*",
+            ttl_seconds=60,  # 1 minute
+            cache_headers={"Cache-Control": "public, max-age=60"},
+            compression_enabled=True,
+            vary_headers=["Accept-Encoding", "Authorization"],
+            cache_conditions=["authenticated_user"]
+        ))
+        
+        # Font files - very long cache
+        rules.append(CacheRule(
+            path_pattern="*.woff2",
+            ttl_seconds=31536000,  # 1 year
+            cache_headers={"Cache-Control": "public, max-age=31536000, immutable"},
+            compression_enabled=False,  # WOFF2 already compressed
+            vary_headers=[],
+            cors_enabled=True
+        ))
+        
+        # CSS/JS files - long cache with versioning
+        rules.append(CacheRule(
+            path_pattern="*.css,*.js",
+            ttl_seconds=31536000,  # 1 year
+            cache_headers={"Cache-Control": "public, max-age=31536000, immutable"},
+            compression_enabled=True,
+            vary_headers=["Accept-Encoding"],
+            optimization_rules=["minify", "gzip_precompression"]
+        ))
+        
+        return rules
         return [
             # Static assets - long cache
             CacheRule(

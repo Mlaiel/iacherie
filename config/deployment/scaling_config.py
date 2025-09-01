@@ -387,6 +387,87 @@ class ScalingConfig:
                     }
                 })
             
+            # Business metrics for content processing
+            if service_name in ["ia-influencer-api", "ia-ai-fingerprinting"]:
+                metrics.append({
+                    "type": "External",
+                    "external": {
+                        "metric": {
+                            "name": "content_processing_queue_length",
+                            "selector": {
+                                "matchLabels": {
+                                    "app": service_name,
+                                    "environment": self.environment
+                                }
+                            }
+                        },
+                        "target": {
+                            "type": "AverageValue",
+                            "averageValue": "10"  # Scale when queue > 10 items
+                        }
+                    }
+                })
+                
+                # Revenue processing rate metric
+                metrics.append({
+                    "type": "External", 
+                    "external": {
+                        "metric": {
+                            "name": "revenue_processing_rate",
+                            "selector": {
+                                "matchLabels": {
+                                    "app": service_name,
+                                    "environment": self.environment
+                                }
+                            }
+                        },
+                        "target": {
+                            "type": "AverageValue",
+                            "averageValue": "100"  # Scale when rate > 100 transactions/min
+                        }
+                    }
+                })
+                
+                # API response time metric
+                metrics.append({
+                    "type": "External",
+                    "external": {
+                        "metric": {
+                            "name": "api_response_time_p95",
+                            "selector": {
+                                "matchLabels": {
+                                    "app": service_name,
+                                    "environment": self.environment
+                                }
+                            }
+                        },
+                        "target": {
+                            "type": "AverageValue",
+                            "averageValue": "500"  # Scale when P95 > 500ms
+                        }
+                    }
+                })
+                
+                # Active user connections metric
+                metrics.append({
+                    "type": "External",
+                    "external": {
+                        "metric": {
+                            "name": "active_user_connections",
+                            "selector": {
+                                "matchLabels": {
+                                    "app": service_name,
+                                    "environment": self.environment
+                                }
+                            }
+                        },
+                        "target": {
+                            "type": "AverageValue",
+                            "averageValue": "1000"  # Scale when > 1000 active connections
+                        }
+                    }
+                })
+            
             # Scaling behavior configuration
             behavior = {
                 "scaleUp": {
