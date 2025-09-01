@@ -77,6 +77,8 @@ class ComprehensiveSyntaxAuditor:
     
     def _setup_logging(self) -> logging.Logger:
         """Setup logging for the audit process."""
+def main():
+    """Main function for running the comprehensive syntax audit."""
     import argparse
     
     parser = argparse.ArgumentParser(description="Comprehensive Python syntax audit and correction")
