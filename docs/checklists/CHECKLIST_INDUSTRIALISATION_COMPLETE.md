@@ -95,8 +95,8 @@ Cette checklist exhaustive liste **SANS EXCEPTION** tous les éléments manquant
 - [ ] **Optimiser connection pooling** avec monitoring connexions actives
 - [ ] **Implémenter circuit breakers** pour resilience inter-services
 - [ ] **Configurer compression** HTTP/2 avec optimization assets
-- [ ] **Monitorer métriques performance** avec seuils d'alerte automatiques
-- [ ] **Implémenter graceful shutdown** pour tous les services
+- [x] **Monitorer métriques performance** avec seuils d'alerte automatiques
+- [x] **Implémenter graceful shutdown** pour tous les services
 
 ### 📊 **DONNÉES & COMPLIANCE**
 

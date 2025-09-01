@@ -221,6 +221,11 @@ Generate Redis Docker Compose service"""
                     }
                 }
             },
+            "environment": [
+                "SENTINEL_QUORUM=2",
+                "SENTINEL_DOWN_AFTER=30000",
+                "SENTINEL_FAILOVER_TIMEOUT=180000"
+            ],
             "healthcheck": {
                 "test": "redis-cli -p 26379 ping || exit 1",
                 "interval": "30s",
