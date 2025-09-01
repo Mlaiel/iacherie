@@ -1,29 +1,30 @@
-"""IA Influencer Agent - Marketplace Business Module
-Enterprise-grade marketplace system for content creators and AI-powered collaborations.
+"""🏪 Creator Marketplace Module - Advanced Service Marketplace
+============================================================
 
-Author: Fahed Mlaiel <mlaiel@live.de>
-Project: IA Influencer Agent
-Copyright: All rights reserved - Unauthorized use strictly prohibited
+Professional marketplace system for creator services with:
+- AI-powered service matching and discovery
+- Real-time bidding and auction system  
+- Secure escrow integration
+- Performance analytics and quality assurance
 
-WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
-Any unauthorized use, reproduction, or distribution is strictly prohibited.
-Legal action will be taken against violators.
-
-Team Specialties:
-- Lead AI Developer & Backend Senior Engineer: Fahed Mlaiel
-- ML Engineer & Data Scientist: Fahed Mlaiel  
-- Database Administrator & Security Expert: Fahed Mlaiel
-- Microservices & Audio Processing Specialist: Fahed Mlaiel
-- DevOps & IA Prompt Engineer: Fahed Mlaiel
-
-This module provides comprehensive marketplace functionality including:
-- Content discovery and matching
-- Creator collaboration platforms
-- AI-powered content optimization
-- Multi-format content distribution
-- Revenue sharing and monetization
+Author: Fahed Mlaiel (mlaiel@live.de)
+Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
 
+from .creator_marketplace import (
+    CreatorMarketplace,
+    ServiceListing,
+    ServiceBid,
+    ServiceOrder,
+    ServiceCategory,
+    ServiceStatus,
+    BidStatus,
+    OrderStatus,
+    create_marketplace_instance,
+    calculate_marketplace_commission
+)
+
+# Keep existing imports for compatibility
 from .content_manager import ContentManager, ContentMetadata
 from .creator_profile import CreatorProfileManager, CreatorProfile
 from .collaboration_engine import CollaborationEngine, CollaborationOpportunity
@@ -34,9 +35,20 @@ from .performance_tracker import PerformanceTracker, PerformanceReport
 from .metrics_collector import MetricsCollector, MarketplaceMetrics
 from .index import MarketplaceIndex, MarketplaceServiceRegistry, marketplace_index, service_registry, router
 
-# Export all main classes and functions
 __all__ = [
-    # Content Management
+    # New Advanced Marketplace
+    'CreatorMarketplace',
+    'ServiceListing',
+    'ServiceBid', 
+    'ServiceOrder',
+    'ServiceCategory',
+    'ServiceStatus',
+    'BidStatus',
+    'OrderStatus',
+    'create_marketplace_instance',
+    'calculate_marketplace_commission',
+    
+    # Existing Content Management
     'ContentManager',
     'ContentMetadata',
     
@@ -74,6 +86,6 @@ __all__ = [
     'router'
 ]
 
-__version__ = "1.0.0"
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
