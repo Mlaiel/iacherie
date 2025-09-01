@@ -1,0 +1,76 @@
+# Prospector Configuration for Technical Debt Analysis
+# Enhanced configuration for Ainflue Platform
+
+# Output configuration
+output-format: json
+output-file: technical-debt-report.json
+
+# Strictness level
+strictness: high
+doc-warnings: true
+test-warnings: false
+member-warnings: false
+
+# Tools to use
+uses:
+  - pep8
+  - pep257
+  - pyflakes
+  - mccabe
+  - pylint
+  - vulture
+  - pyroma
+  - profile
+
+# Tool-specific configurations
+pep8:
+  max-line-length: 120
+  ignore:
+    - E203  # whitespace before ':'
+    - E501  # line too long (handled by max-line-length)
+    - W503  # line break before binary operator
+
+pylint:
+  max-line-length: 120
+  disable:
+    - too-few-public-methods
+    - too-many-arguments
+    - too-many-instance-attributes
+    - too-many-public-methods
+    - duplicate-code  # handled separately
+
+mccabe:
+  max-complexity: 10
+
+pep257:
+  ignore:
+    - D100  # Missing docstring in public module
+    - D104  # Missing docstring in public package
+    - D105  # Missing docstring in magic method
+
+# File patterns to ignore
+ignore-patterns:
+  - __pycache__
+  - .git
+  - .tox
+  - .venv
+  - venv
+  - env
+  - dist
+  - build
+  - migrations
+  - test_*
+  - *_test.py
+  - conftest.py
+
+ignore-paths:
+  - tests/
+  - docs/
+  - scripts/
+  - migrations/
+  - .pytest_cache/
+  - htmlcov/
+
+# Technical debt scoring
+max-line-length: 120
+autodetect: true

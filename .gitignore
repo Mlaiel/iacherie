@@ -59,3 +59,23 @@ private_keys/
 certificates/
 *.pem
 *.key
+
+# Quality metrics reports
+coverage.xml
+htmlcov/
+.coverage
+*.coverage.*
+bandit-report.json
+safety-report.json
+sonar-report.json
+complexity-report.json
+license-report.json
+doc-coverage-report.json
+api-diff-report.json
+security-scorecard.json
+trivy-results.sarif
+.scannerwork/
+quality-reports/
+
+# Performance test results
+locust-reports/
