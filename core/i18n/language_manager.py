@@ -160,6 +160,15 @@ class InternationalizationManager:
         self._add_extended_languages()
         
         logger.info(f"Initialized {len(self.languages)} languages")
+        
+        # Initialize extended language support for 644+ languages
+        try:
+            from .extended_language_support import ExtendedLanguageSupport
+            self.extended_support = ExtendedLanguageSupport(self)
+            logger.info(f"Extended language support initialized: {self.extended_support.get_language_count()} total languages")
+        except ImportError as e:
+            logger.warning(f"Extended language support not available: {e}")
+            self.extended_support = None
     
     def _add_extended_languages(self):
         """Add extended language support for comprehensive coverage"""
@@ -765,7 +774,7 @@ Detect language of given text"""
             "auto_translate_languages": auto_translate_languages,
             "languages_by_region": regions,
             "languages_by_script": scripts,
-            "coverage_percentage": (total_languages / 350) * 100,  # Updated target: 350+ languages including dialects
+            "coverage_percentage": (total_languages / 644) * 100,  # Updated target: 644 languages including dialects and regional variants
             "amazigh_berber_languages": len([l for l in self.languages.values() if any(code in l.code for code in ['tzm', 'rif', 'shi', 'kab', 'shy', 'mzb', 'thv', 'ttq', 'taq', 'zen'])]),
             "north_african_dialects": len([l for l in self.languages.values() if l.code.startswith(('ar-TN', 'ar-DZ', 'ar-MA', 'ar-LY', 'ar-EG', 'ar-SD', 'ar-MR')) or l.code == 'mey']),
             "tifinagh_script_languages": len([l for l in self.languages.values() if l.script == LanguageScript.TIFINAGH])
