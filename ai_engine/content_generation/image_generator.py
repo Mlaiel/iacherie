@@ -21,6 +21,9 @@ import os
 import io
 import base64
 
+# Import our enhanced AI service clients
+from ..ai_service_clients import DALLEClient, MidjourneyClient, StableDiffusionClient
+
 from .base_generator import BaseContentGenerator, ContentGenerationContext
 
 

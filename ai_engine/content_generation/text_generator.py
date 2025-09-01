@@ -12,10 +12,12 @@ This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 
 import asyncio
 import logging
-import openai
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-import tiktoken
+import json
+
+# Import our enhanced OpenAI client
+from ..ai_service_clients import OpenAIClient
 
 from .base_generator import BaseContentGenerator, ContentGenerationContext
 from .social_templates import SocialMediaTemplates
@@ -941,3 +943,300 @@ Release model-specific resources"""
             await self.openai_client.close()
         
         self.logger.info("Text generator resources released")
+
+    # Enhanced AI Generation Methods with GPT-4 and Multilingual Support
+    
+    async def generate_multilingual_content(
+        self,
+        prompt: str,
+        target_language: str = 'en',
+        content_type: str = 'social',
+        cultural_adaptation: bool = True,
+        context: Optional[ContentGenerationContext] = None
+    ) -> Dict[str, Any]:
+        """
+        Generate content in specific language with cultural adaptation.
+        
+        Args:
+            prompt: Content description or prompt
+            target_language: ISO language code (en, fr, es, de, etc.)
+            content_type: Type of content (social, blog, marketing, email)
+            cultural_adaptation: Whether to adapt for local culture
+            context: Generation context
+            
+        Returns:
+            Dictionary with generated multilingual content
+        """
+        try:
+            if not hasattr(self, 'openai_client') or not self.openai_client.is_available():
+                return await self._generate_fallback_content(prompt, context)
+            
+            # Determine appropriate tone and style for content type
+            tone_mapping = {
+                'social': 'casual',
+                'blog': 'professional', 
+                'marketing': 'persuasive',
+                'email': 'friendly',
+                'formal': 'formal'
+            }
+            
+            tone = tone_mapping.get(content_type, 'professional')
+            
+            # Generate content with GPT-4
+            result = await self.openai_client.generate_text(
+                prompt=prompt,
+                language=target_language,
+                tone=tone,
+                style=content_type,
+                audience='general',
+                max_tokens=1000
+            )
+            
+            if result['success']:
+                content = result['content']
+                
+                # Apply cultural adaptation if requested
+                if cultural_adaptation and target_language != 'en':
+                    # Map language to culture codes
+                    culture_map = {
+                        'fr': 'FR', 'es': 'ES', 'de': 'DE', 'it': 'IT',
+                        'pt': 'BR', 'ja': 'JP', 'ko': 'KR', 'zh': 'CN'
+                    }
+                    
+                    if target_language in culture_map:
+                        adaptation_result = await self.openai_client.adapt_content_culturally(
+                            content=content,
+                            target_culture=culture_map[target_language],
+                            content_type=content_type
+                        )
+                        
+                        if adaptation_result['success']:
+                            content = adaptation_result['adapted_content']
+                
+                return {
+                    'success': True,
+                    'content': content,
+                    'language': target_language,
+                    'content_type': content_type,
+                    'cultural_adaptation': cultural_adaptation,
+                    'metadata': result['metadata'],
+                    'quality_score': 90  # High score for GPT-4 content
+                }
+            else:
+                return await self._generate_fallback_content(prompt, context)
+                
+        except Exception as e:
+            self.logger.error(f"Multilingual content generation failed: {e}")
+            return await self._generate_fallback_content(prompt, context)
+
+    async def translate_and_adapt_content(
+        self,
+        content: str,
+        source_language: str,
+        target_language: str,
+        preserve_style: bool = True,
+        cultural_adaptation: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Translate existing content to target language with cultural adaptation.
+        
+        Args:
+            content: Content to translate
+            source_language: Source language code
+            target_language: Target language code
+            preserve_style: Whether to maintain original style
+            cultural_adaptation: Whether to adapt culturally
+            
+        Returns:
+            Dictionary with translated and adapted content
+        """
+        try:
+            if not hasattr(self, 'openai_client') or not self.openai_client.is_available():
+                return {
+                    'success': False,
+                    'error': 'Advanced translation not available',
+                    'translated_content': content,
+                    'metadata': {}
+                }
+            
+            # First translate the content
+            translation_result = await self.openai_client.translate_content(
+                content=content,
+                target_language=target_language,
+                source_language=source_language,
+                preserve_style=preserve_style
+            )
+            
+            if not translation_result['success']:
+                return translation_result
+            
+            translated_content = translation_result['translated_content']
+            
+            # Apply cultural adaptation if requested
+            if cultural_adaptation:
+                culture_map = {
+                    'fr': 'FR', 'es': 'ES', 'de': 'DE', 'it': 'IT',
+                    'pt': 'BR', 'ja': 'JP', 'ko': 'KR', 'zh': 'CN'
+                }
+                
+                if target_language in culture_map:
+                    adaptation_result = await self.openai_client.adapt_content_culturally(
+                        content=translated_content,
+                        target_culture=culture_map[target_language],
+                        content_type='general'
+                    )
+                    
+                    if adaptation_result['success']:
+                        translated_content = adaptation_result['adapted_content']
+            
+            return {
+                'success': True,
+                'translated_content': translated_content,
+                'source_language': source_language,
+                'target_language': target_language,
+                'preserve_style': preserve_style,
+                'cultural_adaptation': cultural_adaptation,
+                'metadata': translation_result['metadata']
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Content translation failed: {e}")
+            return {
+                'success': False,
+                'error': str(e),
+                'translated_content': content,
+                'metadata': {}
+            }
+
+    async def generate_social_media_captions(
+        self,
+        image_description: str,
+        platform: str = 'instagram',
+        language: str = 'en',
+        hashtags: bool = True,
+        call_to_action: bool = True,
+        brand_voice: str = 'friendly'
+    ) -> Dict[str, Any]:
+        """
+        Generate optimized social media captions with GPT-4.
+        
+        Args:
+            image_description: Description of the image/video content
+            platform: Social media platform (instagram, tiktok, facebook, twitter)
+            language: Target language for caption
+            hashtags: Whether to include relevant hashtags
+            call_to_action: Whether to include call-to-action
+            brand_voice: Brand voice tone
+            
+        Returns:
+            Dictionary with generated caption and suggestions
+        """
+        try:
+            if not hasattr(self, 'openai_client') or not self.openai_client.is_available():
+                return await self._generate_fallback_social_caption(image_description, platform)
+            
+            # Platform-specific prompt engineering
+            platform_guidelines = {
+                'instagram': "Create an engaging Instagram caption that's 1-3 sentences, uses emojis naturally, and encourages engagement.",
+                'tiktok': "Create a short, trendy TikTok caption that's catchy, uses relevant slang, and encourages views and shares.",
+                'facebook': "Create a Facebook post that's conversational, storytelling-focused, and encourages comments and shares.",
+                'twitter': "Create a concise Twitter post under 280 characters that's witty, informative, or engaging.",
+                'linkedin': "Create a professional LinkedIn post that's informative, industry-relevant, and encourages professional engagement."
+            }
+            
+            prompt = f"""
+            Create a {platform} caption for content showing: {image_description}
+            
+            Guidelines: {platform_guidelines.get(platform, platform_guidelines['instagram'])}
+            Brand voice: {brand_voice}
+            Include hashtags: {hashtags}
+            Include call-to-action: {call_to_action}
+            """
+            
+            result = await self.openai_client.generate_text(
+                prompt=prompt,
+                language=language,
+                tone=brand_voice,
+                style='social',
+                audience='social_media',
+                max_tokens=300
+            )
+            
+            if result['success']:
+                caption = result['content']
+                
+                # Extract hashtags if included
+                hashtag_list = []
+                if hashtags and '#' in caption:
+                    hashtag_list = [word for word in caption.split() if word.startswith('#')]
+                
+                return {
+                    'success': True,
+                    'caption': caption,
+                    'platform': platform,
+                    'language': language,
+                    'hashtags': hashtag_list,
+                    'brand_voice': brand_voice,
+                    'metadata': result['metadata'],
+                    'character_count': len(caption)
+                }
+            else:
+                return await self._generate_fallback_social_caption(image_description, platform)
+                
+        except Exception as e:
+            self.logger.error(f"Social media caption generation failed: {e}")
+            return await self._generate_fallback_social_caption(image_description, platform)
+
+    async def analyze_content_quality(self, content: str) -> Dict[str, Any]:
+        """
+        Analyze content quality using GPT-4 and provide improvement suggestions.
+        
+        Args:
+            content: Content to analyze
+            
+        Returns:
+            Dictionary with quality analysis and suggestions
+        """
+        try:
+            if not hasattr(self, 'openai_client') or not self.openai_client.is_available():
+                return {
+                    'success': False,
+                    'error': 'Content quality analysis not available',
+                    'analysis': {},
+                    'suggestions': []
+                }
+            
+            return await self.openai_client.check_content_quality(content)
+            
+        except Exception as e:
+            self.logger.error(f"Content quality analysis failed: {e}")
+            return {
+                'success': False,
+                'error': str(e),
+                'analysis': {},
+                'suggestions': []
+            }
+
+    async def _generate_fallback_content(self, prompt: str, context: Optional[ContentGenerationContext] = None) -> Dict[str, Any]:
+        """Generate basic fallback content when advanced AI is not available."""
+        return {
+            'success': True,
+            'content': f"Generated content based on: {prompt}",
+            'language': 'en',
+            'content_type': 'general',
+            'metadata': {'fallback': True, 'timestamp': datetime.utcnow().isoformat()},
+            'quality_score': 60
+        }
+
+    async def _generate_fallback_social_caption(self, description: str, platform: str) -> Dict[str, Any]:
+        """Generate basic fallback social caption."""
+        caption = f"Check out this amazing {description}! #{platform} #content"
+        return {
+            'success': True,
+            'caption': caption,
+            'platform': platform,
+            'language': 'en',
+            'hashtags': [f'#{platform}', '#content'],
+            'metadata': {'fallback': True},
+            'character_count': len(caption)
+        }

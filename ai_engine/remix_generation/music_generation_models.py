@@ -2196,3 +2196,326 @@ __all__ = [
     "JukeboxGenerator",
     "MusicGenerationOrchestrator"
 ]
+# Enhanced AI Music Generation Integration
+
+from ..ai_service_clients import WaveNetClient, MuseNetClient, AIVAClient
+
+
+class EnhancedMusicGenerationOrchestrator:
+    """
+    Enhanced orchestrator that integrates WaveNet, MuseNet, and AIVA
+    for professional AI music generation.
+    """
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        
+        # Initialize AI service clients
+        self.wavenet_client = WaveNetClient()
+        self.musenet_client = MuseNetClient()
+        self.aiva_client = AIVAClient()
+        
+        # Track available services
+        self.available_services = {
+            'wavenet': self.wavenet_client.is_available(),
+            'musenet': self.musenet_client.is_available(),
+            'aiva': self.aiva_client.is_available()
+        }
+        
+        self.logger.info(f"Enhanced music orchestrator initialized. Available services: {self.available_services}")
+
+    async def generate_with_wavenet(
+        self,
+        prompt: str,
+        duration: float = 30.0,
+        quality: str = "high",
+        style: str = "instrumental"
+    ) -> Dict[str, Any]:
+        """
+        Generate high-quality audio using WaveNet.
+        
+        Args:
+            prompt: Audio description
+            duration: Audio duration in seconds
+            quality: Quality preset (draft, standard, high, ultra)
+            style: Music style
+            
+        Returns:
+            Dictionary with generated audio and metadata
+        """
+        try:
+            if not self.available_services['wavenet']:
+                return self._create_fallback_response("WaveNet", prompt, duration)
+            
+            result = await self.wavenet_client.generate_audio(
+                prompt=prompt,
+                duration=duration,
+                quality=quality,
+                style=style
+            )
+            
+            self.logger.info(f"WaveNet generation completed: {result['success']}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"WaveNet generation failed: {e}")
+            return self._create_error_response("WaveNet", str(e))
+
+    async def compose_with_musenet(
+        self,
+        prompt: str,
+        instruments: List[str] = None,
+        style: str = "classical",
+        duration: int = 60
+    ) -> Dict[str, Any]:
+        """
+        Compose multi-instrument music using MuseNet.
+        
+        Args:
+            prompt: Musical description or theme
+            instruments: List of instruments to include
+            style: Musical style
+            duration: Composition duration in seconds
+            
+        Returns:
+            Dictionary with composed music and metadata
+        """
+        try:
+            if not self.available_services['musenet']:
+                return self._create_fallback_response("MuseNet", prompt, duration)
+            
+            result = await self.musenet_client.compose_music(
+                prompt=prompt,
+                instruments=instruments,
+                style=style,
+                duration=duration
+            )
+            
+            self.logger.info(f"MuseNet composition completed: {result['success']}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"MuseNet composition failed: {e}")
+            return self._create_error_response("MuseNet", str(e))
+
+    async def create_with_aiva(
+        self,
+        emotion: str,
+        genre: str = "cinematic",
+        duration: int = 120,
+        intensity: float = 0.7
+    ) -> Dict[str, Any]:
+        """
+        Create emotional music using AIVA.
+        
+        Args:
+            emotion: Target emotion for the composition
+            genre: Musical genre
+            duration: Composition duration in seconds
+            intensity: Emotional intensity (0.0 to 1.0)
+            
+        Returns:
+            Dictionary with composed music and metadata
+        """
+        try:
+            if not self.available_services['aiva']:
+                return self._create_fallback_response("AIVA", f"emotional {emotion} music", duration)
+            
+            result = await self.aiva_client.compose_emotional_music(
+                emotion=emotion,
+                genre=genre,
+                duration=duration,
+                intensity=intensity
+            )
+            
+            self.logger.info(f"AIVA composition completed: {result['success']}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"AIVA composition failed: {e}")
+            return self._create_error_response("AIVA", str(e))
+
+    async def generate_multi_model_music(
+        self,
+        prompt: str,
+        models: List[str] = None,
+        duration: int = 60
+    ) -> Dict[str, Any]:
+        """
+        Generate music using multiple AI models for comparison.
+        
+        Args:
+            prompt: Musical description
+            models: List of models to use (wavenet, musenet, aiva)
+            duration: Duration in seconds
+            
+        Returns:
+            Dictionary with music from all models and comparison data
+        """
+        try:
+            if models is None:
+                models = ['wavenet', 'musenet', 'aiva']
+            
+            results = {}
+            
+            # Generate with WaveNet
+            if 'wavenet' in models:
+                wavenet_result = await self.generate_with_wavenet(
+                    prompt=prompt,
+                    duration=float(duration),
+                    quality="high"
+                )
+                results['wavenet'] = wavenet_result
+            
+            # Generate with MuseNet
+            if 'musenet' in models:
+                musenet_result = await self.compose_with_musenet(
+                    prompt=prompt,
+                    duration=duration,
+                    style="classical"
+                )
+                results['musenet'] = musenet_result
+            
+            # Generate with AIVA
+            if 'aiva' in models:
+                aiva_result = await self.create_with_aiva(
+                    emotion="calm",
+                    duration=duration,
+                    genre="cinematic"
+                )
+                results['aiva'] = aiva_result
+            
+            # Compile comparison
+            successful_models = [model for model, result in results.items() if result.get('success', False)]
+            
+            return {
+                'success': len(successful_models) > 0,
+                'prompt': prompt,
+                'models_used': models,
+                'successful_models': successful_models,
+                'results': results,
+                'comparison_metadata': {
+                    'total_models': len(models),
+                    'successful_generations': len(successful_models),
+                    'timestamp': datetime.utcnow().isoformat()
+                }
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Multi-model music generation failed: {e}")
+            return {
+                'success': False,
+                'error': str(e),
+                'results': {},
+                'comparison_metadata': {}
+            }
+
+    async def create_film_score(
+        self,
+        scene_description: str,
+        scene_type: str = "action",
+        duration: int = 180
+    ) -> Dict[str, Any]:
+        """
+        Create film score using the best available AI model.
+        
+        Args:
+            scene_description: Description of the scene
+            scene_type: Type of scene (action, romance, suspense, etc.)
+            duration: Score duration in seconds
+            
+        Returns:
+            Dictionary with film score and metadata
+        """
+        try:
+            # AIVA is best for film scores
+            if self.available_services['aiva']:
+                return await self.aiva_client.create_film_score(
+                    scene_description=scene_description,
+                    scene_type=scene_type,
+                    duration=duration
+                )
+            
+            # Fallback to MuseNet for orchestral composition
+            elif self.available_services['musenet']:
+                return await self.compose_with_musenet(
+                    prompt=f"Film score for {scene_type} scene: {scene_description}",
+                    instruments=["strings", "brass", "woodwinds", "percussion"],
+                    style="cinematic",
+                    duration=duration
+                )
+            
+            # Final fallback to WaveNet
+            elif self.available_services['wavenet']:
+                return await self.generate_with_wavenet(
+                    prompt=f"Cinematic {scene_type} music for: {scene_description}",
+                    duration=float(duration),
+                    style="cinematic"
+                )
+            
+            else:
+                return {
+                    'success': False,
+                    'error': 'No AI music generation services available',
+                    'audio_url': '',
+                    'metadata': {}
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Film score creation failed: {e}")
+            return self._create_error_response("FilmScore", str(e))
+
+    def _create_fallback_response(self, service: str, prompt: str, duration: float) -> Dict[str, Any]:
+        """Create a fallback response when service is not available."""
+        return {
+            'success': False,
+            'error': f'{service} service not available',
+            'audio_url': '',
+            'metadata': {
+                'service': service.lower(),
+                'prompt': prompt,
+                'duration': duration,
+                'fallback': True,
+                'timestamp': datetime.utcnow().isoformat()
+            }
+        }
+
+    def _create_error_response(self, service: str, error: str) -> Dict[str, Any]:
+        """Create an error response."""
+        return {
+            'success': False,
+            'error': f'{service} error: {error}',
+            'audio_url': '',
+            'metadata': {
+                'service': service.lower(),
+                'timestamp': datetime.utcnow().isoformat()
+            }
+        }
+
+    def get_available_services(self) -> Dict[str, bool]:
+        """Get status of available AI music generation services."""
+        return self.available_services.copy()
+
+    def get_service_capabilities(self) -> Dict[str, Dict[str, Any]]:
+        """Get capabilities of each AI service."""
+        return {
+            'wavenet': {
+                'quality_score': 95,
+                'strengths': ['Raw audio synthesis', 'High fidelity', 'Speech synthesis'],
+                'best_for': ['Audio effects', 'Voice generation', 'Sound design']
+            },
+            'musenet': {
+                'quality_score': 88,
+                'strengths': ['Multi-instrument', 'Various styles', 'Composition'],
+                'best_for': ['Classical music', 'Jazz', 'Multi-part arrangements']
+            },
+            'aiva': {
+                'quality_score': 92,
+                'strengths': ['Emotional composition', 'Film scoring', 'Professional quality'],
+                'best_for': ['Film scores', 'Commercial music', 'Emotional content']
+            }
+        }
+
+
+# Export the enhanced orchestrator
+__all__.append('EnhancedMusicGenerationOrchestrator')
