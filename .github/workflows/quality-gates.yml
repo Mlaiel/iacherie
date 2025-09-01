@@ -1,0 +1,616 @@
+name: 📊 Quality Gates & Metrics
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  PYTHON_VERSION: '3.12'
+  MIN_COVERAGE: 90
+  MAX_COMPLEXITY: 10
+  MIN_DOCUMENTATION: 80
+
+jobs:
+  # Code Coverage Analysis with Strict Thresholds
+  coverage-analysis:
+    name: 📈 Coverage Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt', '**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,quality]"
+          pip install -r requirements.txt
+
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=. --cov-report=xml --cov-report=html --cov-report=term-missing \
+                 --cov-fail-under=${{ env.MIN_COVERAGE }} \
+                 --junitxml=pytest-results.xml \
+                 --maxfail=10 \
+                 -x
+
+      - name: Coverage quality gate
+        run: |
+          coverage report --fail-under=${{ env.MIN_COVERAGE }}
+          
+      - name: Generate coverage badge
+        run: |
+          coverage-badge -o coverage-badge.svg
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: coverage-reports
+          path: |
+            coverage.xml
+            htmlcov/
+            coverage-badge.svg
+            pytest-results.xml
+
+  # Code Quality Analysis
+  code-quality:
+    name: 🔍 Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install quality tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,quality]"
+          pip install -r requirements.txt
+
+      - name: Code formatting check (Black)
+        run: |
+          black --check --diff . --line-length=120
+
+      - name: Import sorting check (isort)
+        run: |
+          isort --check-only --diff .
+
+      - name: Linting (Ruff)
+        run: |
+          ruff check . --output-format=github
+
+      - name: Type checking (MyPy)
+        run: |
+          mypy . --install-types --non-interactive --ignore-missing-imports \
+               --html-report mypy-report \
+               --txt-report mypy-report.txt
+
+      - name: Upload quality reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: quality-reports
+          path: |
+            mypy-report/
+            mypy-report.txt
+
+  # Code Complexity Analysis
+  complexity-analysis:
+    name: 🧮 Complexity Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install radon vulture xenon
+
+      - name: Cyclomatic complexity analysis
+        run: |
+          radon cc . --min=C --show-complexity --average --total-average
+          radon cc . --json > complexity-report.json
+
+      - name: Maintainability index
+        run: |
+          radon mi . --min=B --show --json > maintainability-report.json
+
+      - name: Halstead complexity
+        run: |
+          radon hal . --json > halstead-report.json
+
+      - name: Raw metrics
+        run: |
+          radon raw . --json > raw-metrics.json
+
+      - name: Dead code detection
+        run: |
+          vulture . --min-confidence=60 --sort-by-size > dead-code-report.txt || true
+
+      - name: Complexity quality gate
+        run: |
+          # Fail if average complexity is too high
+          xenon --max-absolute=C --max-modules=B --max-average=B .
+
+      - name: Upload complexity reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: complexity-reports
+          path: |
+            complexity-report.json
+            maintainability-report.json
+            halstead-report.json
+            raw-metrics.json
+            dead-code-report.txt
+
+  # Security Analysis
+  security-analysis:
+    name: 🔒 Security Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit safety pip-audit semgrep
+          pip install -r requirements.txt
+
+      - name: Security linting (Bandit)
+        run: |
+          bandit -r . -f json -o bandit-report.json || true
+          bandit -r . -f txt -o bandit-report.txt || true
+
+      - name: Dependency vulnerability scan (Safety)
+        run: |
+          safety check --json --output safety-report.json || true
+          safety check --output safety-report.txt || true
+
+      - name: Advanced dependency audit (pip-audit)
+        run: |
+          pip-audit --format=json --output=pip-audit-report.json || true
+          pip-audit --format=text --output=pip-audit-report.txt || true
+
+      - name: Static analysis (Semgrep)
+        run: |
+          semgrep --config=auto --json --output=semgrep-report.json . || true
+
+      - name: Security quality gate
+        run: |
+          # Check if there are high/critical security issues
+          python -c "
+          import json
+          try:
+              with open('bandit-report.json', 'r') as f:
+                  bandit_data = json.load(f)
+              high_issues = [issue for issue in bandit_data.get('results', []) 
+                           if issue.get('issue_severity') in ['HIGH', 'CRITICAL']]
+              if high_issues:
+                  print(f'❌ Found {len(high_issues)} high/critical security issues')
+                  exit(1)
+              else:
+                  print('✅ No high/critical security issues found')
+          except FileNotFoundError:
+              print('⚠️ Bandit report not found')
+          "
+
+      - name: Upload security reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            bandit-report.json
+            bandit-report.txt
+            safety-report.json
+            safety-report.txt
+            pip-audit-report.json
+            pip-audit-report.txt
+            semgrep-report.json
+
+  # License Compliance Scanning
+  license-compliance:
+    name: 📄 License Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install licensecheck pip-licenses
+          pip install -r requirements.txt
+
+      - name: License compatibility check
+        run: |
+          licensecheck --zero --ignore-packages pip setuptools wheel pkg_resources
+          pip-licenses --format=json --output-file=licenses.json
+          pip-licenses --format=plain --output-file=licenses.txt
+
+      - name: Check for copyleft licenses
+        run: |
+          python -c "
+          import json
+          with open('licenses.json', 'r') as f:
+              licenses = json.load(f)
+          
+          copyleft_licenses = ['GPL', 'AGPL', 'LGPL', 'MPL', 'EPL', 'CDDL']
+          problematic = []
+          
+          for pkg in licenses:
+              license_name = pkg.get('License', '').upper()
+              for copyleft in copyleft_licenses:
+                  if copyleft in license_name:
+                      problematic.append(f\"{pkg['Name']} ({pkg['License']})\")
+          
+          if problematic:
+              print('⚠️ Found potentially problematic licenses:')
+              for pkg in problematic:
+                  print(f'  - {pkg}')
+              # Don't fail for now, just warn
+          else:
+              print('✅ No problematic licenses found')
+          "
+
+      - name: Upload license reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: license-reports
+          path: |
+            licenses.json
+            licenses.txt
+
+  # Documentation Coverage
+  documentation-coverage:
+    name: 📚 Documentation Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install interrogate pydocstyle docstr-coverage
+
+      - name: Documentation coverage analysis
+        run: |
+          interrogate . --fail-under=${{ env.MIN_DOCUMENTATION }} \
+                      --ignore-init-method \
+                      --ignore-init-module \
+                      --ignore-magic \
+                      --ignore-nested-functions \
+                      --exclude tests \
+                      --verbose \
+                      --generate-badge docs-badge.svg \
+                      --output-format json > docs-coverage.json
+
+      - name: Docstring style check
+        run: |
+          pydocstyle . --count --convention=google --add-ignore=D100,D104,D105,D107 > pydocstyle-report.txt || true
+
+      - name: Alternative documentation coverage
+        run: |
+          docstr-coverage . --badge=docs-coverage-badge.svg --percentage-only > docs-coverage-alt.txt
+
+      - name: Upload documentation reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: documentation-reports
+          path: |
+            docs-coverage.json
+            docs-badge.svg
+            docs-coverage-badge.svg
+            docs-coverage-alt.txt
+            pydocstyle-report.txt
+
+  # Performance Benchmarks
+  performance-benchmarks:
+    name: ⚡ Performance Benchmarks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest-benchmark memray py-spy
+          pip install -r requirements.txt
+
+      - name: Create benchmark baseline
+        run: |
+          mkdir -p benchmarks
+          if [ ! -f benchmarks/baseline.json ]; then
+            echo '{"benchmarks": []}' > benchmarks/baseline.json
+          fi
+
+      - name: Run performance benchmarks
+        run: |
+          pytest tests/performance/ --benchmark-json=benchmarks/current.json || true
+
+      - name: Compare with baseline
+        run: |
+          python -c "
+          import json
+          import os
+          
+          if os.path.exists('benchmarks/current.json'):
+              with open('benchmarks/current.json', 'r') as f:
+                  current = json.load(f)
+              
+              print('📊 Performance Benchmark Results:')
+              for test in current.get('benchmarks', []):
+                  name = test.get('name', 'Unknown')
+                  mean = test.get('stats', {}).get('mean', 0)
+                  print(f'  {name}: {mean:.4f}s')
+          else:
+              print('⚠️ No benchmark results found')
+          "
+
+      - name: Upload benchmark reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: performance-reports
+          path: |
+            benchmarks/
+
+  # SonarQube Analysis
+  sonarqube-analysis:
+    name: 🎯 SonarQube Analysis
+    runs-on: ubuntu-latest
+    needs: [coverage-analysis, code-quality, security-analysis]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for better analysis
+
+      - name: Download coverage reports
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-reports
+          path: ./
+
+      - name: Download security reports
+        uses: actions/download-artifact@v3
+        with:
+          name: security-reports
+          path: ./
+
+      - name: SonarQube Scan
+        uses: sonarqube-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: SonarQube Quality Gate Check
+        uses: sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  # Technical Debt Tracking
+  technical-debt:
+    name: 🔧 Technical Debt Tracking
+    runs-on: ubuntu-latest
+    needs: [complexity-analysis]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download complexity reports
+        uses: actions/download-artifact@v3
+        with:
+          name: complexity-reports
+          path: ./
+
+      - name: Calculate technical debt metrics
+        run: |
+          python -c "
+          import json
+          import os
+          
+          debt_score = 0
+          total_files = 0
+          
+          if os.path.exists('complexity-report.json'):
+              with open('complexity-report.json', 'r') as f:
+                  complexity_data = json.load(f)
+              
+              for file_data in complexity_data.values():
+                  if isinstance(file_data, list):
+                      for func in file_data:
+                          complexity = func.get('complexity', 0)
+                          if complexity > 10:
+                              debt_score += (complexity - 10) * 5  # 5 minutes per excess complexity point
+                          total_files += 1
+          
+          if os.path.exists('maintainability-report.json'):
+              with open('maintainability-report.json', 'r') as f:
+                  maint_data = json.load(f)
+              
+              for file_path, maint_index in maint_data.items():
+                  if maint_index < 20:  # Low maintainability
+                      debt_score += (20 - maint_index) * 2  # 2 minutes per point below threshold
+          
+          print(f'📊 Technical Debt Metrics:')
+          print(f'  Total debt: {debt_score} minutes')
+          print(f'  Files analyzed: {total_files}')
+          print(f'  Average debt per file: {debt_score/max(total_files, 1):.2f} minutes')
+          
+          # Create debt report
+          debt_report = {
+              'total_debt_minutes': debt_score,
+              'files_analyzed': total_files,
+              'average_debt_per_file': debt_score/max(total_files, 1),
+              'debt_level': 'LOW' if debt_score < 100 else 'MEDIUM' if debt_score < 500 else 'HIGH'
+          }
+          
+          with open('technical-debt-report.json', 'w') as f:
+              json.dump(debt_report, f, indent=2)
+          "
+
+      - name: Upload debt tracking
+        uses: actions/upload-artifact@v3
+        with:
+          name: technical-debt-report
+          path: technical-debt-report.json
+
+  # Quality Gates Summary
+  quality-gates-summary:
+    name: ✅ Quality Gates Summary
+    runs-on: ubuntu-latest
+    needs: [coverage-analysis, code-quality, complexity-analysis, security-analysis, license-compliance, documentation-coverage]
+    if: always()
+    steps:
+      - name: Check quality gates status
+        run: |
+          echo "📊 Quality Gates Summary:"
+          echo "========================"
+          
+          # Coverage
+          if [ "${{ needs.coverage-analysis.result }}" == "success" ]; then
+            echo "✅ Coverage: PASSED (≥${{ env.MIN_COVERAGE }}%)"
+          else
+            echo "❌ Coverage: FAILED"
+          fi
+          
+          # Code Quality
+          if [ "${{ needs.code-quality.result }}" == "success" ]; then
+            echo "✅ Code Quality: PASSED"
+          else
+            echo "❌ Code Quality: FAILED"
+          fi
+          
+          # Complexity
+          if [ "${{ needs.complexity-analysis.result }}" == "success" ]; then
+            echo "✅ Complexity: PASSED (≤${{ env.MAX_COMPLEXITY }})"
+          else
+            echo "❌ Complexity: FAILED"
+          fi
+          
+          # Security
+          if [ "${{ needs.security-analysis.result }}" == "success" ]; then
+            echo "✅ Security: PASSED"
+          else
+            echo "❌ Security: FAILED"
+          fi
+          
+          # License Compliance
+          if [ "${{ needs.license-compliance.result }}" == "success" ]; then
+            echo "✅ License Compliance: PASSED"
+          else
+            echo "❌ License Compliance: FAILED"
+          fi
+          
+          # Documentation
+          if [ "${{ needs.documentation-coverage.result }}" == "success" ]; then
+            echo "✅ Documentation: PASSED (≥${{ env.MIN_DOCUMENTATION }}%)"
+          else
+            echo "❌ Documentation: FAILED"
+          fi
+          
+          # Check if any gate failed
+          if [ "${{ needs.coverage-analysis.result }}" != "success" ] || \
+             [ "${{ needs.code-quality.result }}" != "success" ] || \
+             [ "${{ needs.complexity-analysis.result }}" != "success" ] || \
+             [ "${{ needs.security-analysis.result }}" != "success" ] || \
+             [ "${{ needs.license-compliance.result }}" != "success" ] || \
+             [ "${{ needs.documentation-coverage.result }}" != "success" ]; then
+            echo ""
+            echo "❌ QUALITY GATES FAILED - Please fix the issues above"
+            exit 1
+          else
+            echo ""
+            echo "🎉 ALL QUALITY GATES PASSED!"
+          fi
+
+      - name: Create quality report
+        run: |
+          cat > quality-report.md << EOF
+          # 📊 Quality Gates Report
+          
+          ## Summary
+          - **Coverage**: ${{ needs.coverage-analysis.result == 'success' && '✅ PASSED' || '❌ FAILED' }}
+          - **Code Quality**: ${{ needs.code-quality.result == 'success' && '✅ PASSED' || '❌ FAILED' }}
+          - **Complexity**: ${{ needs.complexity-analysis.result == 'success' && '✅ PASSED' || '❌ FAILED' }}
+          - **Security**: ${{ needs.security-analysis.result == 'success' && '✅ PASSED' || '❌ FAILED' }}
+          - **License Compliance**: ${{ needs.license-compliance.result == 'success' && '✅ PASSED' || '❌ FAILED' }}
+          - **Documentation**: ${{ needs.documentation-coverage.result == 'success' && '✅ PASSED' || '❌ FAILED' }}
+          
+          ## Thresholds
+          - **Minimum Coverage**: ${{ env.MIN_COVERAGE }}%
+          - **Maximum Complexity**: ${{ env.MAX_COMPLEXITY }}
+          - **Minimum Documentation**: ${{ env.MIN_DOCUMENTATION }}%
+          
+          Generated on: $(date)
+          Commit: ${{ github.sha }}
+          Branch: ${{ github.ref_name }}
+          EOF
+
+      - name: Upload quality report
+        uses: actions/upload-artifact@v3
+        with:
+          name: quality-gates-report
+          path: quality-report.md

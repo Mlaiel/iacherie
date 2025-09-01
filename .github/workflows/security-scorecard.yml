@@ -1,0 +1,552 @@
+name: 🛡️ Security Scorecard & Tracking
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Monday at 6 AM
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  security-scorecard:
+    name: 🛡️ Security Scorecard Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit safety pip-audit semgrep checkov cyclonedx-bom
+          pip install -r requirements.txt
+
+      # OSSF Scorecard
+      - name: Run OSSF Scorecard
+        uses: ossf/scorecard-action@v2.3.1
+        with:
+          results_file: scorecard-results.sarif
+          results_format: sarif
+          publish_results: true
+
+      # Comprehensive Security Analysis
+      - name: Run Bandit security analysis
+        run: |
+          bandit -r . \
+            --format json \
+            --output bandit-security-report.json \
+            --severity-level medium \
+            --confidence-level medium || true
+          
+          bandit -r . \
+            --format txt \
+            --output bandit-security-report.txt \
+            --severity-level medium \
+            --confidence-level medium || true
+
+      - name: Run Safety vulnerability check
+        run: |
+          safety check \
+            --json \
+            --output safety-security-report.json || true
+          
+          safety check \
+            --output safety-security-report.txt || true
+
+      - name: Run pip-audit
+        run: |
+          pip-audit \
+            --format=json \
+            --output=pip-audit-security-report.json || true
+          
+          pip-audit \
+            --format=text \
+            --output=pip-audit-security-report.txt || true
+
+      - name: Run Semgrep SAST
+        run: |
+          semgrep \
+            --config=auto \
+            --json \
+            --output=semgrep-security-report.json \
+            --severity=WARNING \
+            --verbose || true
+
+      - name: Infrastructure security scan (Checkov)
+        run: |
+          checkov \
+            --directory . \
+            --output json \
+            --output-file checkov-security-report.json \
+            --skip-check CKV_DOCKER_* || true
+
+      - name: Generate SBOM (Software Bill of Materials)
+        run: |
+          cyclonedx-py \
+            --output-file sbom.json \
+            --output-format json \
+            requirements.txt || true
+
+      # Calculate Security Score
+      - name: Calculate comprehensive security score
+        run: |
+          python -c "
+          import json
+          import os
+          from datetime import datetime
+          
+          def calculate_security_score():
+              score = 100  # Start with perfect score
+              issues = []
+              
+              # Bandit analysis
+              try:
+                  with open('bandit-security-report.json', 'r') as f:
+                      bandit_data = json.load(f)
+                  
+                  bandit_issues = bandit_data.get('results', [])
+                  for issue in bandit_issues:
+                      severity = issue.get('issue_severity', 'LOW')
+                      if severity == 'HIGH':
+                          score -= 10
+                          issues.append(f'High severity security issue: {issue.get(\"test_name\", \"Unknown\")}')
+                      elif severity == 'MEDIUM':
+                          score -= 5
+                          issues.append(f'Medium severity security issue: {issue.get(\"test_name\", \"Unknown\")}')
+                      elif severity == 'LOW':
+                          score -= 2
+                          issues.append(f'Low severity security issue: {issue.get(\"test_name\", \"Unknown\")}')
+              except FileNotFoundError:
+                  score -= 5
+                  issues.append('Bandit analysis failed')
+              
+              # Safety analysis
+              try:
+                  with open('safety-security-report.json', 'r') as f:
+                      safety_data = json.load(f)
+                  
+                  vulnerabilities = safety_data.get('vulnerabilities', [])
+                  for vuln in vulnerabilities:
+                      score -= 15  # Each vulnerability is serious
+                      issues.append(f'Dependency vulnerability: {vuln.get(\"package_name\", \"Unknown\")}')
+              except FileNotFoundError:
+                  score -= 5
+                  issues.append('Safety analysis failed')
+              
+              # Semgrep analysis
+              try:
+                  with open('semgrep-security-report.json', 'r') as f:
+                      semgrep_data = json.load(f)
+                  
+                  semgrep_results = semgrep_data.get('results', [])
+                  for result in semgrep_results:
+                      severity = result.get('extra', {}).get('severity', 'INFO')
+                      if severity == 'ERROR':
+                          score -= 8
+                          issues.append(f'Critical SAST finding: {result.get(\"check_id\", \"Unknown\")}')
+                      elif severity == 'WARNING':
+                          score -= 4
+                          issues.append(f'Warning SAST finding: {result.get(\"check_id\", \"Unknown\")}')
+              except FileNotFoundError:
+                  score -= 3
+                  issues.append('Semgrep analysis failed')
+              
+              # Checkov infrastructure analysis
+              try:
+                  with open('checkov-security-report.json', 'r') as f:
+                      checkov_data = json.load(f)
+                  
+                  failed_checks = checkov_data.get('results', {}).get('failed_checks', [])
+                  for check in failed_checks:
+                      severity = check.get('severity', 'MEDIUM')
+                      if severity == 'HIGH':
+                          score -= 6
+                          issues.append(f'Infrastructure security issue: {check.get(\"check_name\", \"Unknown\")}')
+                      elif severity == 'MEDIUM':
+                          score -= 3
+                          issues.append(f'Infrastructure warning: {check.get(\"check_name\", \"Unknown\")}')
+              except FileNotFoundError:
+                  score -= 2
+                  issues.append('Infrastructure security scan failed')
+              
+              # Ensure score doesn't go below 0
+              score = max(0, score)
+              
+              # Determine security grade
+              if score >= 90:
+                  grade = 'A'
+                  status = '🟢 EXCELLENT'
+              elif score >= 80:
+                  grade = 'B'
+                  status = '🟡 GOOD'
+              elif score >= 70:
+                  grade = 'C'
+                  status = '🟠 FAIR'
+              elif score >= 60:
+                  grade = 'D'
+                  status = '🔴 POOR'
+              else:
+                  grade = 'F'
+                  status = '🔴 CRITICAL'
+              
+              return {
+                  'score': score,
+                  'grade': grade,
+                  'status': status,
+                  'issues': issues,
+                  'timestamp': datetime.now().isoformat(),
+                  'commit': os.getenv('GITHUB_SHA', 'unknown'),
+                  'branch': os.getenv('GITHUB_REF_NAME', 'unknown')
+              }
+          
+          scorecard = calculate_security_score()
+          
+          print(f'🛡️ Security Scorecard Results')
+          print(f'=============================')
+          print(f'Overall Score: {scorecard[\"score\"]}/100')
+          print(f'Security Grade: {scorecard[\"grade\"]}')
+          print(f'Status: {scorecard[\"status\"]}')
+          print(f'Issues Found: {len(scorecard[\"issues\"])}')
+          print()
+          
+          if scorecard['issues']:
+              print('Security Issues:')
+              for issue in scorecard['issues'][:10]:  # Show first 10 issues
+                  print(f'  • {issue}')
+              if len(scorecard['issues']) > 10:
+                  print(f'  ... and {len(scorecard[\"issues\"]) - 10} more issues')
+          
+          # Save detailed scorecard
+          with open('security-scorecard.json', 'w') as f:
+              json.dump(scorecard, f, indent=2)
+          
+          # Create markdown report
+          with open('security-scorecard.md', 'w') as f:
+              f.write('# 🛡️ Security Scorecard Report\\n\\n')
+              f.write(f'## Overall Score: {scorecard[\"score\"]}/100 (Grade: {scorecard[\"grade\"]})\\n\\n')
+              f.write(f'**Status**: {scorecard[\"status\"]}\\n\\n')
+              f.write(f'**Timestamp**: {scorecard[\"timestamp\"]}\\n')
+              f.write(f'**Commit**: {scorecard[\"commit\"]}\\n')
+              f.write(f'**Branch**: {scorecard[\"branch\"]}\\n\\n')
+              
+              if scorecard['issues']:
+                  f.write(f'## Security Issues ({len(scorecard[\"issues\"])})\\n\\n')
+                  for i, issue in enumerate(scorecard['issues'], 1):
+                      f.write(f'{i}. {issue}\\n')
+              else:
+                  f.write('## ✅ No Security Issues Found\\n\\n')
+              
+              f.write('\\n## Score Breakdown\\n\\n')
+              f.write('- **A (90-100)**: 🟢 Excellent security posture\\n')
+              f.write('- **B (80-89)**: 🟡 Good security with minor issues\\n')
+              f.write('- **C (70-79)**: 🟠 Fair security, needs improvement\\n')
+              f.write('- **D (60-69)**: 🔴 Poor security, urgent fixes needed\\n')
+              f.write('- **F (0-59)**: 🔴 Critical security issues\\n')
+          
+          print(f'\\n📊 Security scorecard saved to security-scorecard.json')
+          
+          # Fail if score is below threshold
+          if scorecard['score'] < 70:
+              print(f'❌ Security score {scorecard[\"score\"]} is below threshold (70)')
+              exit(1)
+          else:
+              print(f'✅ Security score {scorecard[\"score\"]} meets threshold')
+          "
+
+      # Track Security Trends
+      - name: Track security trends
+        run: |
+          python -c "
+          import json
+          import os
+          from datetime import datetime, timedelta
+          
+          # Load current scorecard
+          try:
+              with open('security-scorecard.json', 'r') as f:
+                  current_scorecard = json.load(f)
+          except FileNotFoundError:
+              print('No current scorecard found')
+              exit(1)
+          
+          # Create trends file if it doesn't exist
+          trends_file = 'security-trends.json'
+          if os.path.exists(trends_file):
+              with open(trends_file, 'r') as f:
+                  trends = json.load(f)
+          else:
+              trends = {'history': []}
+          
+          # Add current scorecard to history
+          trends['history'].append({
+              'timestamp': current_scorecard['timestamp'],
+              'score': current_scorecard['score'],
+              'grade': current_scorecard['grade'],
+              'issues_count': len(current_scorecard['issues']),
+              'commit': current_scorecard['commit'],
+              'branch': current_scorecard['branch']
+          })
+          
+          # Keep only last 50 entries
+          trends['history'] = trends['history'][-50:]
+          
+          # Calculate trend
+          if len(trends['history']) >= 2:
+              recent_scores = [entry['score'] for entry in trends['history'][-5:]]
+              if len(recent_scores) >= 2:
+                  if recent_scores[-1] > recent_scores[0]:
+                      trend = 'IMPROVING'
+                      trend_icon = '📈'
+                  elif recent_scores[-1] < recent_scores[0]:
+                      trend = 'DECLINING'
+                      trend_icon = '📉'
+                  else:
+                      trend = 'STABLE'
+                      trend_icon = '➡️'
+              else:
+                  trend = 'INSUFFICIENT_DATA'
+                  trend_icon = '❓'
+          else:
+              trend = 'FIRST_RUN'
+              trend_icon = '🆕'
+          
+          trends['latest'] = {
+              'score': current_scorecard['score'],
+              'grade': current_scorecard['grade'],
+              'trend': trend,
+              'trend_icon': trend_icon,
+              'last_updated': current_scorecard['timestamp']
+          }
+          
+          # Save trends
+          with open(trends_file, 'w') as f:
+              json.dump(trends, f, indent=2)
+          
+          print(f'📊 Security Trend: {trend_icon} {trend}')
+          print(f'Current Score: {current_scorecard[\"score\"]} (Grade: {current_scorecard[\"grade\"]})')
+          
+          if len(trends['history']) >= 2:
+              previous_score = trends['history'][-2]['score']
+              change = current_scorecard['score'] - previous_score
+              change_icon = '⬆️' if change > 0 else '⬇️' if change < 0 else '➡️'
+              print(f'Change from previous: {change_icon} {change:+d} points')
+          "
+
+      # Generate Security Badge
+      - name: Generate security badge
+        run: |
+          python -c "
+          import json
+          
+          try:
+              with open('security-scorecard.json', 'r') as f:
+                  scorecard = json.load(f)
+              
+              score = scorecard['score']
+              grade = scorecard['grade']
+              
+              # Color based on grade
+              color_map = {
+                  'A': 'brightgreen',
+                  'B': 'green', 
+                  'C': 'yellow',
+                  'D': 'orange',
+                  'F': 'red'
+              }
+              
+              color = color_map.get(grade, 'red')
+              
+              # Create badge URL (shields.io format)
+              badge_url = f'https://img.shields.io/badge/Security_Score-{score}%25_{grade}-{color}'
+              
+              # Save badge info
+              badge_info = {
+                  'score': score,
+                  'grade': grade,
+                  'color': color,
+                  'url': badge_url,
+                  'markdown': f'![Security Score](https://img.shields.io/badge/Security_Score-{score}%25_{grade}-{color})'
+              }
+              
+              with open('security-badge.json', 'w') as f:
+                  json.dump(badge_info, f, indent=2)
+              
+              print(f'🏆 Security Badge Generated: {badge_info[\"markdown\"]}')
+              
+          except Exception as e:
+              print(f'Error generating badge: {e}')
+          "
+
+      # Upload artifacts
+      - name: Upload security reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            bandit-security-report.json
+            bandit-security-report.txt
+            safety-security-report.json
+            safety-security-report.txt
+            pip-audit-security-report.json
+            pip-audit-security-report.txt
+            semgrep-security-report.json
+            checkov-security-report.json
+            sbom.json
+            security-scorecard.json
+            security-scorecard.md
+            security-trends.json
+            security-badge.json
+
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: scorecard-results.sarif
+
+      # Comment on PR
+      - name: Comment PR with security scorecard
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            
+            try {
+              const scorecard = JSON.parse(fs.readFileSync('security-scorecard.json', 'utf8'));
+              const badge = JSON.parse(fs.readFileSync('security-badge.json', 'utf8'));
+              
+              let comment = '## 🛡️ Security Scorecard\\n\\n';
+              comment += badge.markdown + '\\n\\n';
+              comment += `**Overall Score**: ${scorecard.score}/100 (Grade: ${scorecard.grade})\\n`;
+              comment += `**Status**: ${scorecard.status}\\n\\n`;
+              
+              if (scorecard.issues.length > 0) {
+                comment += `**Security Issues Found**: ${scorecard.issues.length}\\n\\n`;
+                comment += '### Top Issues:\\n';
+                scorecard.issues.slice(0, 5).forEach((issue, index) => {
+                  comment += `${index + 1}. ${issue}\\n`;
+                });
+                if (scorecard.issues.length > 5) {
+                  comment += `\\n... and ${scorecard.issues.length - 5} more issues. See artifacts for details.\\n`;
+                }
+              } else {
+                comment += '✅ **No security issues found!**\\n';
+              }
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            } catch (error) {
+              console.log('Could not post security scorecard comment:', error);
+            }
+
+  # Security Policy Compliance Check
+  security-compliance:
+    name: 📋 Security Compliance Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check security policy files
+        run: |
+          echo '🔍 Checking security policy compliance...'
+          
+          compliance_score=100
+          missing_files=()
+          
+          # Check for security policy
+          if [ ! -f 'SECURITY.md' ]; then
+            compliance_score=$((compliance_score - 20))
+            missing_files+=('SECURITY.md')
+          fi
+          
+          # Check for license file
+          if [ ! -f 'LICENSE' ] && [ ! -f 'LICENSE.md' ] && [ ! -f 'LICENSE.txt' ]; then
+            compliance_score=$((compliance_score - 15))
+            missing_files+=('LICENSE')
+          fi
+          
+          # Check for code of conduct
+          if [ ! -f 'CODE_OF_CONDUCT.md' ]; then
+            compliance_score=$((compliance_score - 10))
+            missing_files+=('CODE_OF_CONDUCT.md')
+          fi
+          
+          # Check for contributing guidelines
+          if [ ! -f 'CONTRIBUTING.md' ]; then
+            compliance_score=$((compliance_score - 10))
+            missing_files+=('CONTRIBUTING.md')
+          fi
+          
+          # Check for dependency files
+          if [ ! -f 'requirements.txt' ] && [ ! -f 'pyproject.toml' ]; then
+            compliance_score=$((compliance_score - 15))
+            missing_files+=('requirements.txt or pyproject.toml')
+          fi
+          
+          # Check for .gitignore
+          if [ ! -f '.gitignore' ]; then
+            compliance_score=$((compliance_score - 10))
+            missing_files+=('.gitignore')
+          fi
+          
+          # Check for workflow security
+          if [ -d '.github/workflows' ]; then
+            workflow_issues=0
+            for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
+              if [ -f "$workflow" ]; then
+                # Check for potential security issues in workflows
+                if grep -q 'pull_request_target' "$workflow"; then
+                  echo "⚠️ Found pull_request_target in $workflow - potential security risk"
+                  workflow_issues=$((workflow_issues + 1))
+                fi
+              fi
+            done
+            if [ $workflow_issues -gt 0 ]; then
+              compliance_score=$((compliance_score - workflow_issues * 5))
+            fi
+          fi
+          
+          echo "📊 Security Compliance Score: $compliance_score/100"
+          
+          if [ ${#missing_files[@]} -gt 0 ]; then
+            echo "❌ Missing required files:"
+            for file in "${missing_files[@]}"; do
+              echo "  - $file"
+            done
+          fi
+          
+          if [ $compliance_score -lt 80 ]; then
+            echo "💥 Security compliance below threshold (80)"
+            exit 1
+          else
+            echo "✅ Security compliance meets requirements"
+          fi
+
+      - name: Upload compliance report
+        uses: actions/upload-artifact@v3
+        with:
+          name: compliance-report
+          path: |
+            compliance-report.txt

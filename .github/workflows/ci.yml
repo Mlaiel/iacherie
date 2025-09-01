@@ -326,11 +326,72 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
+  # Generate Quality Dashboard
+  quality-dashboard:
+    name: 📊 Generate Quality Dashboard
+    runs-on: ubuntu-latest
+    needs: [code-quality, unit-tests, integration-tests, api-tests, build, docker-build]
+    if: always()
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+      with:
+        path: ./artifacts
+
+    - name: Consolidate quality reports
+      run: |
+        # Move reports to expected locations
+        find ./artifacts -name "*.json" -o -name "*.xml" -o -name "*.txt" | while read file; do
+          basename_file=$(basename "$file")
+          cp "$file" "./$basename_file" 2>/dev/null || true
+        done
+
+    - name: Install dashboard dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Dashboard script is self-contained
+
+    - name: Generate quality dashboard
+      run: |
+        python scripts/quality_dashboard.py
+
+    - name: Upload quality dashboard
+      uses: actions/upload-artifact@v3
+      with:
+        name: quality-dashboard
+        path: |
+          quality-dashboard/
+
+    - name: Create quality summary
+      run: |
+        echo "📊 Quality Metrics Summary" > quality-summary.txt
+        echo "=========================" >> quality-summary.txt
+        echo "CI Pipeline Status:" >> quality-summary.txt
+        echo "  Code Quality: ${{ needs.code-quality.result }}" >> quality-summary.txt
+        echo "  Unit Tests: ${{ needs.unit-tests.result }}" >> quality-summary.txt
+        echo "  Integration Tests: ${{ needs.integration-tests.result }}" >> quality-summary.txt
+        echo "  API Tests: ${{ needs.api-tests.result }}" >> quality-summary.txt
+        echo "  Build: ${{ needs.build.result }}" >> quality-summary.txt
+        echo "  Docker Build: ${{ needs.docker-build.result }}" >> quality-summary.txt
+        echo "" >> quality-summary.txt
+        echo "Generated: $(date)" >> quality-summary.txt
+        echo "Commit: ${{ github.sha }}" >> quality-summary.txt
+        echo "Branch: ${{ github.ref_name }}" >> quality-summary.txt
+
   # Final Status Check
   ci-success:
     name: ✅ CI Success
     runs-on: ubuntu-latest
-    needs: [code-quality, unit-tests, integration-tests, api-tests, build, docker-build]
+    needs: [code-quality, unit-tests, integration-tests, api-tests, build, docker-build, quality-dashboard]
     if: always()
 
     steps:
@@ -343,9 +404,11 @@ jobs:
            [ "${{ needs.build.result }}" != "success" ] || \
            [ "${{ needs.docker-build.result }}" != "success" ]; then
           echo "❌ One or more CI jobs failed"
+          echo "Quality Dashboard: ${{ needs.quality-dashboard.result }}"
           exit 1
         else
           echo "✅ All CI jobs passed successfully"
+          echo "Quality Dashboard: ${{ needs.quality-dashboard.result }}"
         fi
 
     - name: Post success notification
@@ -354,4 +417,5 @@ jobs:
         echo "🎉 CI pipeline completed successfully!"
         echo "Branch: ${{ github.ref_name }}"
         echo "Commit: ${{ github.sha }}"
+        echo "Quality Dashboard Generated: ${{ needs.quality-dashboard.result }}"
         echo "Ready for deployment!"

@@ -1,0 +1,581 @@
+name: ⚡ Performance Benchmarking
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 4 * * 0'  # Weekly on Sunday at 4 AM
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  # Performance Benchmarks
+  performance-benchmarks:
+    name: ⚡ Performance Benchmarks
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        benchmark-type: [unit, integration, load, memory]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-benchmark locust memray py-spy psutil
+          pip install -r requirements.txt
+
+      - name: Create benchmarks directory
+        run: |
+          mkdir -p benchmarks/baselines
+          mkdir -p benchmarks/results
+          mkdir -p benchmarks/reports
+
+      - name: Run unit performance benchmarks
+        if: matrix.benchmark-type == 'unit'
+        run: |
+          # Create baseline if it doesn't exist
+          if [ ! -f "benchmarks/baselines/unit-baseline.json" ]; then
+            echo '{"benchmarks": []}' > benchmarks/baselines/unit-baseline.json
+          fi
+          
+          # Run unit benchmarks
+          pytest tests/performance/unit/ \
+            --benchmark-json=benchmarks/results/unit-current.json \
+            --benchmark-compare=benchmarks/baselines/unit-baseline.json \
+            --benchmark-compare-fail=mean:20% \
+            --benchmark-histogram=benchmarks/reports/unit-histogram \
+            --benchmark-save=unit-baseline \
+            || true
+
+      - name: Run integration performance benchmarks
+        if: matrix.benchmark-type == 'integration'
+        run: |
+          # Create baseline if it doesn't exist
+          if [ ! -f "benchmarks/baselines/integration-baseline.json" ]; then
+            echo '{"benchmarks": []}' > benchmarks/baselines/integration-baseline.json
+          fi
+          
+          # Start services for integration tests
+          docker-compose -f docker/docker-compose.test.yml up -d || echo "No docker-compose file found"
+          sleep 10
+          
+          # Run integration benchmarks
+          pytest tests/performance/integration/ \
+            --benchmark-json=benchmarks/results/integration-current.json \
+            --benchmark-compare=benchmarks/baselines/integration-baseline.json \
+            --benchmark-compare-fail=mean:30% \
+            --benchmark-histogram=benchmarks/reports/integration-histogram \
+            --benchmark-save=integration-baseline \
+            || true
+          
+          # Cleanup
+          docker-compose -f docker/docker-compose.test.yml down || echo "No cleanup needed"
+
+      - name: Run load testing benchmarks
+        if: matrix.benchmark-type == 'load'
+        run: |
+          # Start the application
+          uvicorn main:app --host 0.0.0.0 --port 8000 &
+          APP_PID=$!
+          sleep 10
+          
+          # Create locust test file if it doesn't exist
+          cat > locustfile.py << 'EOF'
+          from locust import HttpUser, task, between
+          
+          class AinflueBenchmarkUser(HttpUser):
+              wait_time = between(1, 3)
+              
+              @task(3)
+              def test_health_endpoint(self):
+                  self.client.get("/health")
+              
+              @task(2)
+              def test_root_endpoint(self):
+                  self.client.get("/")
+              
+              @task(1)
+              def test_docs_endpoint(self):
+                  self.client.get("/docs")
+          EOF
+          
+          # Run load tests
+          locust \
+            --headless \
+            --users 50 \
+            --spawn-rate 5 \
+            --run-time 120s \
+            --host http://localhost:8000 \
+            --html benchmarks/reports/load-report.html \
+            --csv benchmarks/results/load-results
+          
+          # Stop the application
+          kill $APP_PID || true
+
+      - name: Run memory profiling
+        if: matrix.benchmark-type == 'memory'
+        run: |
+          # Create memory profiling script
+          cat > memory_profile.py << 'EOF'
+          import psutil
+          import time
+          import json
+          import sys
+          import subprocess
+          from datetime import datetime
+          
+          def profile_memory():
+              # Start the application
+              proc = subprocess.Popen([
+                  sys.executable, '-m', 'uvicorn', 'main:app',
+                  '--host', '0.0.0.0', '--port', '8000'
+              ])
+              
+              time.sleep(5)  # Let app start
+              
+              # Monitor memory usage
+              memory_data = []
+              start_time = time.time()
+              
+              try:
+                  app_process = psutil.Process(proc.pid)
+                  
+                  for i in range(60):  # Monitor for 60 seconds
+                      memory_info = app_process.memory_info()
+                      cpu_percent = app_process.cpu_percent()
+                      
+                      memory_data.append({
+                          'timestamp': time.time() - start_time,
+                          'rss_mb': memory_info.rss / 1024 / 1024,
+                          'vms_mb': memory_info.vms / 1024 / 1024,
+                          'cpu_percent': cpu_percent,
+                          'num_threads': app_process.num_threads()
+                      })
+                      
+                      time.sleep(1)
+              
+              except psutil.NoSuchProcess:
+                  pass
+              finally:
+                  proc.terminate()
+                  proc.wait()
+              
+              # Calculate statistics
+              if memory_data:
+                  rss_values = [d['rss_mb'] for d in memory_data]
+                  cpu_values = [d['cpu_percent'] for d in memory_data if d['cpu_percent'] > 0]
+                  
+                  stats = {
+                      'timestamp': datetime.now().isoformat(),
+                      'duration_seconds': 60,
+                      'memory_stats': {
+                          'peak_rss_mb': max(rss_values),
+                          'avg_rss_mb': sum(rss_values) / len(rss_values),
+                          'min_rss_mb': min(rss_values)
+                      },
+                      'cpu_stats': {
+                          'avg_cpu_percent': sum(cpu_values) / len(cpu_values) if cpu_values else 0,
+                          'max_cpu_percent': max(cpu_values) if cpu_values else 0
+                      },
+                      'thread_count': memory_data[-1]['num_threads'] if memory_data else 0,
+                      'raw_data': memory_data
+                  }
+                  
+                  # Save results
+                  with open('benchmarks/results/memory-profile.json', 'w') as f:
+                      json.dump(stats, f, indent=2)
+                  
+                  print(f'Memory profiling completed:')
+                  print(f'  Peak RSS: {stats["memory_stats"]["peak_rss_mb"]:.2f} MB')
+                  print(f'  Avg RSS: {stats["memory_stats"]["avg_rss_mb"]:.2f} MB')
+                  print(f'  Avg CPU: {stats["cpu_stats"]["avg_cpu_percent"]:.2f}%')
+                  print(f'  Threads: {stats["thread_count"]}')
+          
+          if __name__ == '__main__':
+              profile_memory()
+          EOF
+          
+          python memory_profile.py
+
+      - name: Analyze benchmark results
+        run: |
+          python -c "
+          import json
+          import os
+          from datetime import datetime
+          
+          benchmark_type = '${{ matrix.benchmark-type }}'
+          results = {}
+          
+          # Load current results
+          current_file = f'benchmarks/results/{benchmark_type}-current.json'
+          baseline_file = f'benchmarks/baselines/{benchmark_type}-baseline.json'
+          
+          if benchmark_type == 'unit' or benchmark_type == 'integration':
+              if os.path.exists(current_file):
+                  with open(current_file, 'r') as f:
+                      current_data = json.load(f)
+                  
+                  results['type'] = benchmark_type
+                  results['timestamp'] = datetime.now().isoformat()
+                  results['benchmarks'] = []
+                  
+                  for bench in current_data.get('benchmarks', []):
+                      name = bench.get('name', 'Unknown')
+                      stats = bench.get('stats', {})
+                      
+                      results['benchmarks'].append({
+                          'name': name,
+                          'mean_time': stats.get('mean', 0),
+                          'stddev': stats.get('stddev', 0),
+                          'min_time': stats.get('min', 0),
+                          'max_time': stats.get('max', 0),
+                          'iterations': stats.get('iterations', 0)
+                      })
+                  
+                  print(f'📊 {benchmark_type.title()} Benchmark Results:')
+                  for bench in results['benchmarks']:
+                      print(f'  {bench[\"name\"]}: {bench[\"mean_time\"]:.4f}s (±{bench[\"stddev\"]:.4f}s)')
+          
+          elif benchmark_type == 'load':
+              # Parse load test results
+              try:
+                  with open('benchmarks/results/load-results_stats.csv', 'r') as f:
+                      lines = f.readlines()
+                  
+                  if len(lines) > 1:
+                      # Parse CSV data (skip header)
+                      data_line = lines[1].strip().split(',')
+                      results = {
+                          'type': 'load',
+                          'timestamp': datetime.now().isoformat(),
+                          'total_requests': int(data_line[1]) if len(data_line) > 1 else 0,
+                          'failures': int(data_line[2]) if len(data_line) > 2 else 0,
+                          'avg_response_time': float(data_line[3]) if len(data_line) > 3 else 0,
+                          'min_response_time': float(data_line[4]) if len(data_line) > 4 else 0,
+                          'max_response_time': float(data_line[5]) if len(data_line) > 5 else 0,
+                          'requests_per_second': float(data_line[6]) if len(data_line) > 6 else 0
+                      }
+                      
+                      print(f'📊 Load Test Results:')
+                      print(f'  Total Requests: {results[\"total_requests\"]}')
+                      print(f'  Failures: {results[\"failures\"]}')
+                      print(f'  Avg Response Time: {results[\"avg_response_time\"]}ms')
+                      print(f'  Requests/sec: {results[\"requests_per_second\"]}')
+              except Exception as e:
+                  print(f'Error parsing load test results: {e}')
+                  results = {'type': 'load', 'error': str(e)}
+          
+          elif benchmark_type == 'memory':
+              if os.path.exists('benchmarks/results/memory-profile.json'):
+                  with open('benchmarks/results/memory-profile.json', 'r') as f:
+                      results = json.load(f)
+                  
+                  print(f'📊 Memory Profile Results:')
+                  print(f'  Peak RSS: {results[\"memory_stats\"][\"peak_rss_mb\"]:.2f} MB')
+                  print(f'  Avg RSS: {results[\"memory_stats\"][\"avg_rss_mb\"]:.2f} MB')
+                  print(f'  Avg CPU: {results[\"cpu_stats\"][\"avg_cpu_percent\"]:.2f}%')
+          
+          # Save analysis results
+          with open(f'benchmarks/results/{benchmark_type}-analysis.json', 'w') as f:
+              json.dump(results, f, indent=2)
+          "
+
+      - name: Compare with baseline
+        run: |
+          python -c "
+          import json
+          import os
+          
+          benchmark_type = '${{ matrix.benchmark-type }}'
+          
+          analysis_file = f'benchmarks/results/{benchmark_type}-analysis.json'
+          baseline_file = f'benchmarks/baselines/{benchmark_type}-baseline.json'
+          
+          if not os.path.exists(analysis_file):
+              print(f'No analysis results found for {benchmark_type}')
+              exit(0)
+          
+          with open(analysis_file, 'r') as f:
+              current = json.load(f)
+          
+          if os.path.exists(baseline_file) and benchmark_type in ['unit', 'integration']:
+              with open(baseline_file, 'r') as f:
+                  baseline = json.load(f)
+              
+              print(f'📈 Performance Comparison ({benchmark_type}):')
+              print('=' * 50)
+              
+              # Create lookup for baseline benchmarks
+              baseline_lookup = {}
+              for bench in baseline.get('benchmarks', []):
+                  baseline_lookup[bench['name']] = bench.get('stats', {}).get('mean', 0)
+              
+              regressions = []
+              improvements = []
+              
+              for bench in current.get('benchmarks', []):
+                  name = bench['name']
+                  current_time = bench['mean_time']
+                  
+                  if name in baseline_lookup:
+                      baseline_time = baseline_lookup[name]
+                      if baseline_time > 0:
+                          change_percent = ((current_time - baseline_time) / baseline_time) * 100
+                          
+                          if change_percent > 20:  # 20% slower
+                              regressions.append((name, change_percent, current_time, baseline_time))
+                              status = '📉 REGRESSION'
+                          elif change_percent < -10:  # 10% faster
+                              improvements.append((name, change_percent, current_time, baseline_time))
+                              status = '📈 IMPROVEMENT'
+                          else:
+                              status = '➡️ STABLE'
+                          
+                          print(f'{status} {name}:')
+                          print(f'  Current: {current_time:.4f}s')
+                          print(f'  Baseline: {baseline_time:.4f}s')
+                          print(f'  Change: {change_percent:+.1f}%')
+                          print()
+              
+              # Summary
+              print(f'Summary:')
+              print(f'  Regressions: {len(regressions)}')
+              print(f'  Improvements: {len(improvements)}')
+              
+              if regressions:
+                  print('\\n❌ Performance Regressions:')
+                  for name, change, current_time, baseline_time in regressions:
+                      print(f'  {name}: {change:+.1f}% slower ({current_time:.4f}s vs {baseline_time:.4f}s)')
+              
+              if improvements:
+                  print('\\n✅ Performance Improvements:')
+                  for name, change, current_time, baseline_time in improvements:
+                      print(f'  {name}: {change:+.1f}% faster ({current_time:.4f}s vs {baseline_time:.4f}s)')
+              
+              # Fail if significant regressions
+              if len(regressions) > 0:
+                  print(f'\\n💥 Performance regression detected!')
+                  # Don't fail for now, just warn
+                  # exit(1)
+          
+          elif benchmark_type == 'memory':
+              # Compare memory usage with thresholds
+              memory_stats = current.get('memory_stats', {})
+              peak_rss = memory_stats.get('peak_rss_mb', 0)
+              avg_cpu = current.get('cpu_stats', {}).get('avg_cpu_percent', 0)
+              
+              print(f'📊 Memory Performance Check:')
+              
+              # Memory thresholds
+              if peak_rss > 500:  # 500MB
+                  print(f'❌ High memory usage: {peak_rss:.2f} MB (threshold: 500 MB)')
+              elif peak_rss > 250:  # 250MB
+                  print(f'⚠️ Moderate memory usage: {peak_rss:.2f} MB (threshold: 250 MB)')
+              else:
+                  print(f'✅ Good memory usage: {peak_rss:.2f} MB')
+              
+              # CPU thresholds
+              if avg_cpu > 80:
+                  print(f'❌ High CPU usage: {avg_cpu:.2f}% (threshold: 80%)')
+              elif avg_cpu > 50:
+                  print(f'⚠️ Moderate CPU usage: {avg_cpu:.2f}% (threshold: 50%)')
+              else:
+                  print(f'✅ Good CPU usage: {avg_cpu:.2f}%')
+          
+          elif benchmark_type == 'load':
+              # Check load test results
+              rps = current.get('requests_per_second', 0)
+              avg_response = current.get('avg_response_time', 0)
+              failures = current.get('failures', 0)
+              total = current.get('total_requests', 1)
+              
+              failure_rate = (failures / total) * 100 if total > 0 else 0
+              
+              print(f'📊 Load Test Performance Check:')
+              
+              if rps < 10:
+                  print(f'❌ Low throughput: {rps:.2f} req/s (threshold: 10 req/s)')
+              elif rps < 50:
+                  print(f'⚠️ Moderate throughput: {rps:.2f} req/s (threshold: 50 req/s)')
+              else:
+                  print(f'✅ Good throughput: {rps:.2f} req/s')
+              
+              if avg_response > 1000:  # 1 second
+                  print(f'❌ High response time: {avg_response:.2f}ms (threshold: 1000ms)')
+              elif avg_response > 500:  # 500ms
+                  print(f'⚠️ Moderate response time: {avg_response:.2f}ms (threshold: 500ms)')
+              else:
+                  print(f'✅ Good response time: {avg_response:.2f}ms')
+              
+              if failure_rate > 5:
+                  print(f'❌ High failure rate: {failure_rate:.2f}% (threshold: 5%)')
+              elif failure_rate > 1:
+                  print(f'⚠️ Moderate failure rate: {failure_rate:.2f}% (threshold: 1%)')
+              else:
+                  print(f'✅ Good failure rate: {failure_rate:.2f}%')
+          "
+
+      - name: Upload benchmark artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: benchmark-results-${{ matrix.benchmark-type }}
+          path: |
+            benchmarks/results/
+            benchmarks/reports/
+
+  # Aggregate Performance Report
+  aggregate-performance:
+    name: 📊 Performance Summary
+    runs-on: ubuntu-latest
+    needs: [performance-benchmarks]
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all benchmark results
+        uses: actions/download-artifact@v3
+        with:
+          path: benchmark-artifacts/
+
+      - name: Create performance summary
+        run: |
+          python -c "
+          import json
+          import os
+          from datetime import datetime
+          
+          print('📊 Performance Benchmark Summary')
+          print('=' * 50)
+          
+          summary = {
+              'timestamp': datetime.now().isoformat(),
+              'commit': os.getenv('GITHUB_SHA', 'unknown'),
+              'branch': os.getenv('GITHUB_REF_NAME', 'unknown'),
+              'benchmarks': {}
+          }
+          
+          # Collect results from all benchmark types
+          for benchmark_type in ['unit', 'integration', 'load', 'memory']:
+              artifact_dir = f'benchmark-artifacts/benchmark-results-{benchmark_type}'
+              analysis_file = f'{artifact_dir}/benchmarks/results/{benchmark_type}-analysis.json'
+              
+              if os.path.exists(analysis_file):
+                  with open(analysis_file, 'r') as f:
+                      data = json.load(f)
+                  
+                  summary['benchmarks'][benchmark_type] = data
+                  
+                  print(f'\\n{benchmark_type.upper()} BENCHMARKS:')
+                  
+                  if benchmark_type in ['unit', 'integration']:
+                      benchmarks = data.get('benchmarks', [])
+                      if benchmarks:
+                          avg_time = sum(b['mean_time'] for b in benchmarks) / len(benchmarks)
+                          print(f'  Tests: {len(benchmarks)}')
+                          print(f'  Average time: {avg_time:.4f}s')
+                          slowest = max(benchmarks, key=lambda x: x['mean_time'])
+                          print(f'  Slowest: {slowest[\"name\"]} ({slowest[\"mean_time\"]:.4f}s)')
+                  
+                  elif benchmark_type == 'load':
+                      print(f'  Requests/sec: {data.get(\"requests_per_second\", 0):.2f}')
+                      print(f'  Avg response: {data.get(\"avg_response_time\", 0):.2f}ms')
+                      print(f'  Failures: {data.get(\"failures\", 0)}')
+                  
+                  elif benchmark_type == 'memory':
+                      memory_stats = data.get('memory_stats', {})
+                      cpu_stats = data.get('cpu_stats', {})
+                      print(f'  Peak memory: {memory_stats.get(\"peak_rss_mb\", 0):.2f} MB')
+                      print(f'  Avg CPU: {cpu_stats.get(\"avg_cpu_percent\", 0):.2f}%')
+              else:
+                  print(f'\\n{benchmark_type.upper()}: No results found')
+                  summary['benchmarks'][benchmark_type] = {'status': 'no_results'}
+          
+          # Save summary
+          with open('performance-summary.json', 'w') as f:
+              json.dump(summary, f, indent=2)
+          
+          # Create markdown report
+          with open('performance-report.md', 'w') as f:
+              f.write('# ⚡ Performance Benchmark Report\\n\\n')
+              f.write(f'**Timestamp**: {summary[\"timestamp\"]}\\n')
+              f.write(f'**Commit**: {summary[\"commit\"]}\\n')
+              f.write(f'**Branch**: {summary[\"branch\"]}\\n\\n')
+              
+              for bench_type, data in summary['benchmarks'].items():
+                  f.write(f'## {bench_type.title()} Benchmarks\\n\\n')
+                  
+                  if data.get('status') == 'no_results':
+                      f.write('❌ No results available\\n\\n')
+                      continue
+                  
+                  if bench_type in ['unit', 'integration']:
+                      benchmarks = data.get('benchmarks', [])
+                      if benchmarks:
+                          f.write(f'**Tests Run**: {len(benchmarks)}\\n\\n')
+                          f.write('| Test | Mean Time | Std Dev |\\n')
+                          f.write('|------|-----------|---------|\\n')
+                          for bench in benchmarks[:10]:  # Top 10
+                              f.write(f'| {bench[\"name\"]} | {bench[\"mean_time\"]:.4f}s | {bench[\"stddev\"]:.4f}s |\\n')
+                          if len(benchmarks) > 10:
+                              f.write(f'| ... and {len(benchmarks) - 10} more tests | | |\\n')
+                  
+                  elif bench_type == 'load':
+                      f.write(f'**Requests/sec**: {data.get(\"requests_per_second\", 0):.2f}\\n')
+                      f.write(f'**Average Response Time**: {data.get(\"avg_response_time\", 0):.2f}ms\\n')
+                      f.write(f'**Total Requests**: {data.get(\"total_requests\", 0)}\\n')
+                      f.write(f'**Failures**: {data.get(\"failures\", 0)}\\n')
+                  
+                  elif bench_type == 'memory':
+                      memory_stats = data.get('memory_stats', {})
+                      cpu_stats = data.get('cpu_stats', {})
+                      f.write(f'**Peak Memory**: {memory_stats.get(\"peak_rss_mb\", 0):.2f} MB\\n')
+                      f.write(f'**Average Memory**: {memory_stats.get(\"avg_rss_mb\", 0):.2f} MB\\n')
+                      f.write(f'**Average CPU**: {cpu_stats.get(\"avg_cpu_percent\", 0):.2f}%\\n')
+                  
+                  f.write('\\n')
+          
+          print(f'\\n📝 Performance report saved to performance-report.md')
+          "
+
+      - name: Upload performance summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-summary
+          path: |
+            performance-summary.json
+            performance-report.md
+
+      - name: Comment PR with performance summary
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            
+            try {
+              const report = fs.readFileSync('performance-report.md', 'utf8');
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: report
+              });
+            } catch (error) {
+              console.log('Could not post performance report:', error);
+            }
