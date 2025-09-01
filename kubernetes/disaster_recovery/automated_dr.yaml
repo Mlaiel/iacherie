@@ -1,0 +1,616 @@
+# Disaster Recovery Automation for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Enterprise-grade disaster recovery with automated failover and backup restoration
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: disaster-recovery-config
+  namespace: ainflue-system
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+    app.kubernetes.io/component: config
+data:
+  dr_config.yaml: |
+    disaster_recovery:
+      rto_target: 300  # Recovery Time Objective in seconds (5 minutes)
+      rpo_target: 60   # Recovery Point Objective in seconds (1 minute)
+      
+      regions:
+        primary: "us-east-1"
+        secondary: 
+          - "us-west-2"
+          - "eu-west-1"
+          - "ap-southeast-1"
+      
+      services:
+        database:
+          type: "postgresql"
+          backup_frequency: "15m"
+          backup_retention: "7d"
+          cross_region_replication: true
+          point_in_time_recovery: true
+        
+        cache:
+          type: "redis"
+          backup_frequency: "30m"
+          backup_retention: "3d"
+          cluster_mode: true
+        
+        storage:
+          type: "s3"
+          replication: "cross-region"
+          versioning: true
+          lifecycle_policies: true
+        
+        kubernetes:
+          backup_frequency: "1h"
+          backup_retention: "30d"
+          etcd_backup: true
+          persistent_volumes: true
+      
+      monitoring:
+        health_checks:
+          - endpoint: "https://api.ainflue.com/health"
+            interval: "30s"
+            timeout: "10s"
+            failure_threshold: 3
+          - endpoint: "https://api.ainflue.com/api/v1/status"
+            interval: "60s"
+            timeout: "15s"
+            failure_threshold: 2
+        
+        alerts:
+          - name: "primary_region_down"
+            condition: "health_check_failures > 3"
+            severity: "critical"
+            actions: ["trigger_failover", "notify_on_call"]
+          - name: "database_replication_lag"
+            condition: "replication_lag > 60s"
+            severity: "warning"
+            actions: ["notify_team"]
+          - name: "backup_failure"
+            condition: "backup_failed"
+            severity: "high"
+            actions: ["retry_backup", "notify_team"]
+
+  failover_scripts.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    
+    # Disaster Recovery Failover Script
+    # This script handles automated failover to secondary regions
+    
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    LOG_FILE="/var/log/dr/failover.log"
+    
+    # Logging function
+    log() {
+        echo "$(date '+%Y-%m-%d %H:%M:%S') [DR-FAILOVER] $*" | tee -a "$LOG_FILE"
+    }
+    
+    # Function to check region health
+    check_region_health() {
+        local region=$1
+        local endpoint="https://api-${region}.ainflue.com/health"
+        
+        if curl -f -s --max-time 10 "$endpoint" > /dev/null 2>&1; then
+            return 0
+        else
+            return 1
+        fi
+    }
+    
+    # Function to update DNS for failover
+    update_dns_failover() {
+        local target_region=$1
+        
+        log "Updating DNS to point to region: $target_region"
+        
+        # Update Route53 weighted routing
+        aws route53 change-resource-record-sets \
+            --hosted-zone-id "$HOSTED_ZONE_ID" \
+            --change-batch '{
+                "Changes": [{
+                    "Action": "UPSERT",
+                    "ResourceRecordSet": {
+                        "Name": "api.ainflue.com",
+                        "Type": "A",
+                        "SetIdentifier": "primary",
+                        "Weight": 0,
+                        "AliasTarget": {
+                            "DNSName": "api-us-east-1.ainflue.com",
+                            "EvaluateTargetHealth": false,
+                            "HostedZoneId": "'$PRIMARY_ZONE_ID'"
+                        }
+                    }
+                }, {
+                    "Action": "UPSERT",
+                    "ResourceRecordSet": {
+                        "Name": "api.ainflue.com",
+                        "Type": "A",
+                        "SetIdentifier": "secondary",
+                        "Weight": 100,
+                        "AliasTarget": {
+                            "DNSName": "api-'$target_region'.ainflue.com",
+                            "EvaluateTargetHealth": true,
+                            "HostedZoneId": "'$SECONDARY_ZONE_ID'"
+                        }
+                    }
+                }]
+            }'
+        
+        log "DNS failover completed to region: $target_region"
+    }
+    
+    # Function to promote read replica
+    promote_read_replica() {
+        local region=$1
+        
+        log "Promoting read replica in region: $region"
+        
+        # Get the read replica identifier
+        local replica_id="ainflue-prod-replica-$region"
+        
+        # Promote the read replica
+        aws rds promote-read-replica \
+            --db-instance-identifier "$replica_id" \
+            --region "$region"
+        
+        # Wait for promotion to complete
+        aws rds wait db-instance-available \
+            --db-instance-identifier "$replica_id" \
+            --region "$region"
+        
+        log "Database replica promoted successfully in region: $region"
+    }
+    
+    # Function to scale up secondary region
+    scale_secondary_region() {
+        local region=$1
+        
+        log "Scaling up secondary region: $region"
+        
+        # Scale EKS node groups
+        aws eks update-nodegroup-config \
+            --cluster-name "ainflue-prod-$region" \
+            --nodegroup-name "main" \
+            --scaling-config minSize=5,maxSize=20,desiredSize=10 \
+            --region "$region"
+        
+        # Update application replicas
+        kubectl --context="arn:aws:eks:$region:$AWS_ACCOUNT_ID:cluster/ainflue-prod-$region" \
+            scale deployment/ainflue-api --replicas=10 -n production
+        
+        kubectl --context="arn:aws:eks:$region:$AWS_ACCOUNT_ID:cluster/ainflue-prod-$region" \
+            scale deployment/ainflue-worker --replicas=8 -n production
+        
+        log "Secondary region scaled up successfully: $region"
+    }
+    
+    # Main failover function
+    execute_failover() {
+        local target_region=$1
+        
+        log "Starting disaster recovery failover to region: $target_region"
+        
+        # 1. Verify target region is healthy
+        if ! check_region_health "$target_region"; then
+            log "ERROR: Target region $target_region is not healthy. Aborting failover."
+            exit 1
+        fi
+        
+        # 2. Promote database read replica
+        promote_read_replica "$target_region"
+        
+        # 3. Scale up secondary region infrastructure
+        scale_secondary_region "$target_region"
+        
+        # 4. Update DNS routing
+        update_dns_failover "$target_region"
+        
+        # 5. Update monitoring and alerting
+        update_monitoring_config "$target_region"
+        
+        # 6. Send notifications
+        send_failover_notification "$target_region"
+        
+        log "Disaster recovery failover completed successfully to region: $target_region"
+    }
+    
+    # Function to update monitoring configuration
+    update_monitoring_config() {
+        local region=$1
+        
+        log "Updating monitoring configuration for region: $region"
+        
+        # Update Prometheus targets
+        kubectl patch configmap prometheus-config \
+            -n ainflue-monitoring \
+            --patch '{"data":{"prometheus.yml":"'$(cat /etc/prometheus/prometheus-$region.yml | base64 -w 0)'"}}'
+        
+        # Restart Prometheus
+        kubectl rollout restart deployment/prometheus -n ainflue-monitoring
+        
+        log "Monitoring configuration updated for region: $region"
+    }
+    
+    # Function to send notifications
+    send_failover_notification() {
+        local region=$1
+        
+        log "Sending failover notifications"
+        
+        # Slack notification
+        curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"🚨 DISASTER RECOVERY FAILOVER ACTIVATED\n\nPrimary region (us-east-1) is down.\nTraffic has been failed over to: '$region'\n\nStatus: Active\nTime: '$(date)'\n\nPlease check the disaster recovery dashboard for more details."}' \
+            "$SLACK_WEBHOOK_URL"
+        
+        # Email notification
+        aws ses send-email \
+            --source "alerts@ainflue.com" \
+            --destination "ToAddresses=ops@ainflue.com,mlaiel@live.de" \
+            --message "Subject={Data='CRITICAL: Disaster Recovery Failover Activated',Charset=utf-8},Body={Text={Data='Disaster recovery failover has been activated. Primary region is down and traffic has been redirected to $region. Please check the DR dashboard immediately.',Charset=utf-8}}" \
+            --region us-east-1
+        
+        log "Failover notifications sent"
+    }
+    
+    # Check if this is a test run
+    if [[ "${1:-}" == "--test" ]]; then
+        log "Running disaster recovery test"
+        check_region_health "us-west-2" && log "us-west-2 is healthy" || log "us-west-2 is unhealthy"
+        check_region_health "eu-west-1" && log "eu-west-1 is healthy" || log "eu-west-1 is unhealthy"
+        check_region_health "ap-southeast-1" && log "ap-southeast-1 is healthy" || log "ap-southeast-1 is unhealthy"
+        exit 0
+    fi
+    
+    # Main execution
+    if [[ $# -eq 0 ]]; then
+        log "ERROR: Target region not specified"
+        echo "Usage: $0 <target-region> [--test]"
+        echo "Available regions: us-west-2, eu-west-1, ap-southeast-1"
+        exit 1
+    fi
+    
+    TARGET_REGION=$1
+    
+    # Validate target region
+    case $TARGET_REGION in
+        us-west-2|eu-west-1|ap-southeast-1)
+            execute_failover "$TARGET_REGION"
+            ;;
+        *)
+            log "ERROR: Invalid target region: $TARGET_REGION"
+            echo "Available regions: us-west-2, eu-west-1, ap-southeast-1"
+            exit 1
+            ;;
+    esac
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: disaster-recovery-controller
+  namespace: ainflue-system
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+    app.kubernetes.io/component: controller
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: disaster-recovery
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: disaster-recovery
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: disaster-recovery
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+      - name: dr-controller
+        image: ghcr.io/mlaiel/ainflue/disaster-recovery:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: metrics
+        - containerPort: 8081
+          name: health
+        env:
+        - name: AWS_REGION
+          value: "us-east-1"
+        - name: HOSTED_ZONE_ID
+          valueFrom:
+            secretKeyRef:
+              name: dns-credentials
+              key: hosted_zone_id
+        - name: SLACK_WEBHOOK_URL
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: slack_webhook_url
+        - name: PRIMARY_ZONE_ID
+          valueFrom:
+            secretKeyRef:
+              name: dns-credentials
+              key: primary_zone_id
+        - name: SECONDARY_ZONE_ID
+          valueFrom:
+            secretKeyRef:
+              name: dns-credentials
+              key: secondary_zone_id
+        - name: AWS_ACCOUNT_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: account_id
+        volumeMounts:
+        - name: config
+          mountPath: /etc/dr
+          readOnly: true
+        - name: scripts
+          mountPath: /usr/local/bin/dr-scripts
+          readOnly: true
+        - name: logs
+          mountPath: /var/log/dr
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "300m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: config
+        configMap:
+          name: disaster-recovery-config
+      - name: scripts
+        configMap:
+          name: disaster-recovery-config
+          defaultMode: 0755
+      - name: logs
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: disaster-recovery
+  namespace: ainflue-system
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/AinflueDRRole
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: disaster-recovery
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "secrets"]
+  verbs: ["get", "list", "watch", "patch", "update"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets"]
+  verbs: ["get", "list", "watch", "patch", "update", "scale"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "watch", "patch", "update"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch", "patch", "update"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: disaster-recovery
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: disaster-recovery
+subjects:
+- kind: ServiceAccount
+  name: disaster-recovery
+  namespace: ainflue-system
+
+---
+# Health Check CronJob
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dr-health-check
+  namespace: ainflue-system
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+    app.kubernetes.io/component: health-check
+spec:
+  schedule: "*/1 * * * *" # Every minute
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: dr-health-check
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: disaster-recovery
+          containers:
+          - name: health-checker
+            image: ghcr.io/mlaiel/ainflue/disaster-recovery:latest
+            imagePullPolicy: Always
+            command:
+            - /bin/bash
+            - -c
+            - |
+              echo "Running disaster recovery health checks..."
+              
+              # Check primary region health
+              if ! curl -f -s --max-time 10 https://api.ainflue.com/health > /dev/null; then
+                FAILURES=$((FAILURES + 1))
+                echo "Primary region health check failed (attempt $FAILURES)"
+                
+                # After 3 consecutive failures, trigger failover
+                if [ $FAILURES -ge 3 ]; then
+                  echo "CRITICAL: Primary region is down. Triggering disaster recovery failover..."
+                  
+                  # Determine best secondary region
+                  for region in us-west-2 eu-west-1 ap-southeast-1; do
+                    if curl -f -s --max-time 10 "https://api-$region.ainflue.com/health" > /dev/null; then
+                      echo "Secondary region $region is healthy. Initiating failover..."
+                      /usr/local/bin/dr-scripts/failover_scripts.sh "$region"
+                      break
+                    fi
+                  done
+                fi
+              else
+                FAILURES=0
+                echo "Primary region health check passed"
+              fi
+              
+              # Check backup status
+              if ! /usr/local/bin/dr-scripts/check_backups.sh; then
+                echo "WARNING: Backup health check failed"
+                # Send warning notification but don't trigger failover
+                curl -X POST -H 'Content-type: application/json' \
+                  --data '{"text":"⚠️ Backup health check failed. Please investigate backup systems immediately."}' \
+                  "$SLACK_WEBHOOK_URL"
+              fi
+              
+              echo "Health check completed"
+            env:
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: notification-secrets
+                  key: slack_webhook_url
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "100m"
+              limits:
+                memory: "256Mi"
+                cpu: "200m"
+
+---
+# Backup Verification CronJob
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dr-backup-verification
+  namespace: ainflue-system
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+    app.kubernetes.io/component: backup-verification
+spec:
+  schedule: "0 */6 * * *" # Every 6 hours
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: dr-backup-verification
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: disaster-recovery
+          containers:
+          - name: backup-verifier
+            image: ghcr.io/mlaiel/ainflue/disaster-recovery:latest
+            imagePullPolicy: Always
+            command:
+            - /bin/bash
+            - -c
+            - |
+              echo "Starting backup verification..."
+              
+              # Verify database backups
+              echo "Verifying database backups..."
+              aws rds describe-db-snapshots \
+                --db-instance-identifier ainflue-prod-primary \
+                --snapshot-type automated \
+                --max-records 1 \
+                --query 'DBSnapshots[0].{Status:Status,Time:SnapshotCreateTime}' \
+                --output table
+              
+              # Verify Redis backups
+              echo "Verifying Redis backups..."
+              aws elasticache describe-snapshots \
+                --cache-cluster-id ainflue-prod-us-east \
+                --max-records 1 \
+                --query 'Snapshots[0].{Status:SnapshotStatus,Time:SnapshotCreateTime}' \
+                --output table
+              
+              # Verify S3 replication
+              echo "Verifying S3 cross-region replication..."
+              aws s3api get-bucket-replication \
+                --bucket ainflue-content-us-east \
+                --query 'ReplicationConfiguration.Rules[0].Status' \
+                --output text
+              
+              # Verify etcd backups
+              echo "Verifying Kubernetes etcd backups..."
+              kubectl get volumesnapshots -n kube-system \
+                --sort-by='.metadata.creationTimestamp' \
+                -o custom-columns='NAME:.metadata.name,STATUS:.status.readyToUse,AGE:.metadata.creationTimestamp'
+              
+              echo "Backup verification completed"
+            env:
+            - name: AWS_REGION
+              value: "us-east-1"
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "100m"
+              limits:
+                memory: "256Mi"
+                cpu: "200m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: disaster-recovery
+  namespace: ainflue-system
+  labels:
+    app.kubernetes.io/name: disaster-recovery
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: metrics
+  - port: 8081
+    targetPort: 8081
+    name: health
+  selector:
+    app.kubernetes.io/name: disaster-recovery
