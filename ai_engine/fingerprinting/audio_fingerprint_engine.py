@@ -21,8 +21,12 @@ except ImportError:
 import json
 
 # Audio processing imports
-from chromaprint import acoustid_match
-import pyacoustid
+try:
+    import pyacoustid
+    ACOUSTID_AVAILABLE = True
+except ImportError:
+    ACOUSTID_AVAILABLE = False
+    pyacoustid = None
 
 # ML and signal processing
 from scipy import signal
