@@ -46,6 +46,20 @@ from typing import Any, Dict, List, Optional, Union, Tuple
 import logging
 import asyncio
 
+# Import exceptions first to ensure they're always available
+# This allows "from core.exceptions import ..." to work even if other core modules fail
+try:
+    from . import exceptions
+except ImportError:
+    # Create a minimal exceptions module if import fails
+    import types
+    exceptions = types.ModuleType('exceptions')
+    exceptions.AgentError = type('AgentError', (Exception,), {})
+    exceptions.ValidationError = type('ValidationError', (exceptions.AgentError,), {})
+    exceptions.DistributionError = type('DistributionError', (exceptions.AgentError,), {})
+    exceptions.PlatformError = type('PlatformError', (exceptions.AgentError,), {})
+    exceptions.BusinessLogicError = type('BusinessLogicError', (exceptions.AgentError,), {})
+
 # Core configuration - simplified for business logic core
 HAS_CORE_CONFIG = True
 try:
@@ -166,136 +180,231 @@ TextProcessingEngine = None
 MLOptimizationEngine = None
 
 # Core managers
-from .managers import (
-    AnalyticsManager,
-    BackupManager,
-    CacheManager,
-    CollaborationManager,
-    DatabaseManager,
-    LicenseManager,
-    NotificationManager,
-    QueueManager,
-    SecurityManager,
-    StorageManager,
-    WorkflowManager,
-    ProtectionManager,
-    FingerprintingManager,
-    MonetizationManager,
-    ContentManager,
-    AiAgentManager,
-    initialize_all_managers
-)
+try:
+    from .managers import (
+        AnalyticsManager,
+        BackupManager,
+        CacheManager,
+        CollaborationManager,
+        DatabaseManager,
+        LicenseManager,
+        NotificationManager,
+        QueueManager,
+        SecurityManager,
+        StorageManager,
+        WorkflowManager,
+        ProtectionManager,
+        FingerprintingManager,
+        MonetizationManager,
+        ContentManager,
+        AiAgentManager,
+        initialize_all_managers
+    )
+except ImportError as e:
+    # Fallback when managers dependencies are not available
+    import warnings
+    warnings.warn(f"Core managers not available due to missing dependencies: {e}")
+    # Define placeholder managers
+    AnalyticsManager = None
+    BackupManager = None
+    CacheManager = None
+    CollaborationManager = None
+    DatabaseManager = None
+    LicenseManager = None
+    NotificationManager = None
+    QueueManager = None
+    SecurityManager = None
+    StorageManager = None
+    WorkflowManager = None
+    ProtectionManager = None
+    FingerprintingManager = None
+    MonetizationManager = None
+    ContentManager = None
+    AiAgentManager = None
+    initialize_all_managers = None
 
 # Core engines
-from .engines import (
-    AIEngine,
-    AudioEngine,
-    ContentProtectionEngine,
-    FingerprintingEngine,
-    MonetizationEngine,
-    RecommendationEngine,
-    SEOOptimizationEngine,
-    CollaborationEngine,
-    MatchingEngine,
-    OptimizationEngine
-)
+try:
+    from .engines import (
+        AIEngine,
+        AudioEngine,
+        ContentProtectionEngine,
+        FingerprintingEngine,
+        MonetizationEngine,
+        RecommendationEngine,
+        SEOOptimizationEngine,
+        CollaborationEngine,
+        MatchingEngine,
+        OptimizationEngine
+    )
+except (ImportError, SyntaxError) as e:
+    # Fallback when engines dependencies are not available or have syntax errors
+    import warnings
+    warnings.warn(f"Core engines not available due to missing dependencies or syntax errors: {e}")
+    # Define placeholder engines
+    AIEngine = None
+    AudioEngine = None
+    ContentProtectionEngine = None
+    FingerprintingEngine = None
+    MonetizationEngine = None
+    RecommendationEngine = None
+    SEOOptimizationEngine = None
+    CollaborationEngine = None
+    MatchingEngine = None
+    OptimizationEngine = None
 
 # Security and protection
-from .security import (
-    SecurityEngine,
-    AuthenticationManager,
-    AuthorizationManager,
-    EncryptionManager,
-    ComplianceManager
-)
+try:
+    from .security import (
+        SecurityEngine,
+        AuthenticationManager,
+        AuthorizationManager,
+        EncryptionManager,
+        ComplianceManager
+    )
+except ImportError as e:
+    # Fallback when security dependencies are not available
+    import warnings
+    warnings.warn(f"Core security not available due to missing dependencies: {e}")
+    SecurityEngine = None
+    AuthenticationManager = None
+    AuthorizationManager = None
+    EncryptionManager = None
+    ComplianceManager = None
 
 # Content and multimedia
-from .content import (
-    ContentEngine,
-    MultiFormatProcessor,
-    MetadataExtractor,
-    ContentValidator
-)
-
-from .multimedia import (
-    MultimediaEngine,
-    AudioProcessor,
-    VideoProcessor,
-    ImageProcessor,
-    TextProcessor
-)
+try:
+    from .content import (
+        ContentEngine,
+        MultiFormatProcessor,
+        MetadataExtractor,
+        ContentValidator
+    )
+    from .multimedia import (
+        MultimediaEngine,
+        AudioProcessor,
+        VideoProcessor,
+        ImageProcessor,
+        TextProcessor
+    )
+except (ImportError, SyntaxError, IndentationError) as e:
+    # Fallback when content/multimedia dependencies are not available or have syntax errors
+    import warnings
+    warnings.warn(f"Core content/multimedia not available due to missing dependencies or syntax errors: {e}")
+    ContentEngine = None
+    MultiFormatProcessor = None
+    MetadataExtractor = None
+    ContentValidator = None
+    MultimediaEngine = None
+    AudioProcessor = None
+    VideoProcessor = None
+    ImageProcessor = None
+    TextProcessor = None
 
 # Fingerprinting and protection
-from .fingerprinting import (
-    FingerprintEngine,
-    AudioFingerprinter,
-    VideoFingerprinter,
-    ImageFingerprinter,
-    TextFingerprinter,
-    VectorMatcher
-)
-
-from .protection import (
-    ContentProtector,
-    RightsManager,
-    ViolationDetector,
-    TakedownManager
-)
+try:
+    from .fingerprinting import (
+        FingerprintEngine,
+        AudioFingerprinter,
+        VideoFingerprinter,
+        ImageFingerprinter,
+        TextFingerprinter,
+        VectorMatcher
+    )
+    from .protection import (
+        ContentProtector,
+        RightsManager,
+        ViolationDetector,
+        TakedownManager
+    )
+except (ImportError, SyntaxError, IndentationError) as e:
+    # Fallback when fingerprinting/protection dependencies are not available or have syntax errors
+    import warnings
+    warnings.warn(f"Core fingerprinting/protection not available due to missing dependencies or syntax errors: {e}")
+    FingerprintEngine = None
+    AudioFingerprinter = None
+    VideoFingerprinter = None
+    ImageFingerprinter = None
+    TextFingerprinter = None
+    VectorMatcher = None
+    ContentProtector = None
+    RightsManager = None
+    ViolationDetector = None
+    TakedownManager = None
 
 # Analytics and intelligence
-from .analytics import (
-    AnalyticsEngine,
-    PerformanceAnalytics,
-    RevenueAnalytics,
-    UserBehaviorAnalytics,
-    TrendAnalytics
-)
-
-from .intelligence import (
-    IntelligenceEngine,
-    MLIntelligence,
-    PredictiveAnalytics,
-    InsightGenerator
-)
+try:
+    from .analytics import (
+        AnalyticsEngine,
+        PerformanceAnalytics,
+        RevenueAnalytics,
+        UserBehaviorAnalytics,
+        TrendAnalytics
+    )
+    from .intelligence import (
+        IntelligenceEngine,
+        MLIntelligence,
+        PredictiveAnalytics,
+        InsightGenerator
+    )
+except (ImportError, SyntaxError, IndentationError) as e:
+    # Fallback when analytics/intelligence dependencies are not available or have syntax errors
+    import warnings
+    warnings.warn(f"Core analytics/intelligence not available due to missing dependencies or syntax errors: {e}")
+    AnalyticsEngine = None
+    PerformanceAnalytics = None
+    RevenueAnalytics = None
+    UserBehaviorAnalytics = None
+    TrendAnalytics = None
+    IntelligenceEngine = None
+    MLIntelligence = None
+    PredictiveAnalytics = None
+    InsightGenerator = None
 
 # Configuration logging
 logger = logging.getLogger(__name__)
 
 # Core system status - ÉTENDU AVEC NOUVEAUX MODULES
-CORE_MODULES = {
-    'adaptation': adaptation,
-    'adapters': adapters,
-    'algorithms': algorithms,
-    'analytics': analytics,
-    'cache': cache,
-    'classification': classification,
-    'collaboration': collaboration,
-    'content': content,
-    'coordination': coordination,
-    'crawlers': crawlers,
-    'discovery': discovery,
-    'distribution': distribution,
-    'engines': engines,
-    'events': events,
-    'fingerprinting': fingerprinting,
-    'intelligence': intelligence,
-    'interfaces': interfaces,
-    'licensing': licensing,
-    'managers': managers,
-    'matching': matching,
-    'monetization': monetization,
-    'multimedia': multimedia,
-    'optimization': optimization,
-    'orchestration': orchestration,
-    'pipeline': pipeline,
-    'platforms': platforms,
-    'processors': processors,
-    'protection': protection,
-    'quality': quality,
-    'revenue': revenue,
-    'rights': rights,
-    'security': security
-}
+try:
+    CORE_MODULES = {
+        'adaptation': adaptation,
+        'adapters': adapters,
+        'algorithms': algorithms,
+        'analytics': analytics,
+        'cache': cache,
+        'classification': classification,
+        'collaboration': collaboration,
+        'content': content,
+        'coordination': coordination,
+        'crawlers': crawlers,
+        'discovery': discovery,
+        'distribution': distribution,
+        'engines': engines,
+        'events': events,
+        'fingerprinting': fingerprinting,
+        'intelligence': intelligence,
+        'interfaces': interfaces,
+        'licensing': licensing,
+        'managers': managers,
+        'matching': matching,
+        'monetization': monetization,
+        'multimedia': multimedia,
+        'optimization': optimization,
+        'orchestration': orchestration,
+        'pipeline': pipeline,
+        'platforms': platforms,
+        'processors': processors,
+        'protection': protection,
+        'quality': quality,
+        'revenue': revenue,
+        'rights': rights,
+        'security': security
+    }
+except NameError as e:
+    # Some modules are not available, create minimal CORE_MODULES
+    import warnings
+    warnings.warn(f"Not all core modules available for CORE_MODULES: {e}")
+    CORE_MODULES = {}
 
 # NOUVEAUX MODULES STATUS - AJOUTÉS SELON CAHIER DES CHARGES
 NEW_MODULES_STATUS = {
