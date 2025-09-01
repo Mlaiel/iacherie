@@ -8,3 +8,47 @@ __pycache__/
 *.pyc
 *.pyo
 .pytest_cache/
+
+# Environments and build artifacts
+.env
+.env.local
+.env.development.local
+.env.staging.local  
+.env.production.local
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Application specific
+logs/
+data/
+storage/
+uploads/
+backups/
+cache/
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# Security sensitive files
+secrets/
+private_keys/
+certificates/
+*.pem
+*.key
