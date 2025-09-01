@@ -1,0 +1,773 @@
+# Enterprise ELK Stack Configuration for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Complete Elasticsearch, Logstash, and Kibana deployment with security
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-logging
+  labels:
+    name: ainflue-logging
+    app.kubernetes.io/name: elk-stack
+    app.kubernetes.io/instance: ainflue
+
+---
+# Elasticsearch Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: elasticsearch-config
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/component: config
+data:
+  elasticsearch.yml: |
+    cluster.name: "ainflue-logs"
+    network.host: 0.0.0.0
+    
+    # Discovery settings
+    discovery.seed_hosts: ["elasticsearch-0.elasticsearch-headless.ainflue-logging.svc.cluster.local:9300"]
+    cluster.initial_master_nodes: ["elasticsearch-0"]
+    
+    # Security settings
+    xpack.security.enabled: true
+    xpack.security.transport.ssl.enabled: true
+    xpack.security.transport.ssl.verification_mode: certificate
+    xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12
+    xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12
+    xpack.security.http.ssl.enabled: true
+    xpack.security.http.ssl.keystore.path: certs/elastic-certificates.p12
+    
+    # Monitoring and audit
+    xpack.monitoring.collection.enabled: true
+    xpack.security.audit.enabled: true
+    xpack.security.audit.logfile.events.include: ["access_granted", "access_denied", "authentication_failed", "authentication_success"]
+    
+    # Index settings
+    action.destructive_requires_name: true
+    action.auto_create_index: "+ainflue-*,+filebeat-*,+logstash-*"
+    
+    # Memory settings
+    bootstrap.memory_lock: true
+    
+    # Data path
+    path.data: /usr/share/elasticsearch/data
+    path.logs: /usr/share/elasticsearch/logs
+
+  jvm.options: |
+    -Xms2g
+    -Xmx2g
+    -XX:+UseG1GC
+    -XX:G1HeapRegionSize=32m
+    -XX:+UseG1OldGCMixedGCCount=16
+    -XX:+UseStringDeduplication
+    -Djava.io.tmpdir=${ES_TMPDIR}
+    -XX:+HeapDumpOnOutOfMemoryError
+    -XX:HeapDumpPath=data
+    -XX:ErrorFile=logs/hs_err_pid%p.log
+    -XX:+PrintGCDetails
+    -XX:+PrintGCTimeStamps
+    -XX:+PrintGCDateStamps
+    -XX:+PrintClassHistogram
+    -XX:+PrintTenuringDistribution
+    -XX:+PrintGCApplicationStoppedTime
+    -Xloggc:logs/gc.log
+    -XX:+UseGCLogFileRotation
+    -XX:NumberOfGCLogFiles=32
+    -XX:GCLogFileSize=64m
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/component: database
+spec:
+  serviceName: elasticsearch-headless
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: elasticsearch
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: elasticsearch
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9200"
+        prometheus.io/path: "/_prometheus/metrics"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - elasticsearch
+            topologyKey: kubernetes.io/hostname
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+      initContainers:
+      - name: configure-sysctl
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+        command: ["sysctl", "-w", "vm.max_map_count=262144"]
+        securityContext:
+          privileged: true
+      - name: volume-mount-hack
+        image: busybox:1.35
+        command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9200
+          name: http
+        - containerPort: 9300
+          name: transport
+        env:
+        - name: node.name
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: ES_JAVA_OPTS
+          value: "-Xms2g -Xmx2g"
+        - name: ELASTIC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elasticsearch-credentials
+              key: password
+        - name: xpack.security.enrollment.enabled
+          value: "true"
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+        - name: config
+          mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+          subPath: elasticsearch.yml
+        - name: config
+          mountPath: /usr/share/elasticsearch/config/jvm.options
+          subPath: jvm.options
+        - name: certs
+          mountPath: /usr/share/elasticsearch/config/certs
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /_cluster/health?local=true
+            port: 9200
+            httpHeaders:
+            - name: Authorization
+              value: "Basic ZWxhc3RpYzpjaGFuZ2VtZQ=="
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /_cluster/health?wait_for_status=green&timeout=1s
+            port: 9200
+            httpHeaders:
+            - name: Authorization
+              value: "Basic ZWxhc3RpYzpjaGFuZ2VtZQ=="
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      volumes:
+      - name: config
+        configMap:
+          name: elasticsearch-config
+      - name: certs
+        secret:
+          secretName: elasticsearch-certificates
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      labels:
+        app.kubernetes.io/name: elasticsearch
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: fast-ssd
+      resources:
+        requests:
+          storage: 100Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: elasticsearch
+spec:
+  ports:
+  - port: 9200
+    name: http
+  - port: 9300
+    name: transport
+  selector:
+    app.kubernetes.io/name: elasticsearch
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-headless
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: elasticsearch
+spec:
+  clusterIP: None
+  ports:
+  - port: 9200
+    name: http
+  - port: 9300
+    name: transport
+  selector:
+    app.kubernetes.io/name: elasticsearch
+
+---
+# Logstash Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: logstash
+    app.kubernetes.io/component: config
+data:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+    pipeline.workers: 4
+    pipeline.batch.size: 1000
+    pipeline.batch.delay: 50
+    
+    # Monitoring
+    xpack.monitoring.enabled: true
+    xpack.monitoring.elasticsearch.hosts: ["https://elasticsearch.ainflue-logging.svc.cluster.local:9200"]
+    xpack.monitoring.elasticsearch.username: "logstash_system"
+    xpack.monitoring.elasticsearch.password: "${LOGSTASH_PASSWORD}"
+    xpack.monitoring.elasticsearch.ssl.verification_mode: none
+
+  pipeline.yml: |
+    - pipeline.id: ainflue-logs
+      path.config: "/usr/share/logstash/pipeline/ainflue-logs.conf"
+      pipeline.workers: 2
+    - pipeline.id: security-logs
+      path.config: "/usr/share/logstash/pipeline/security-logs.conf"
+      pipeline.workers: 2
+    - pipeline.id: business-logs
+      path.config: "/usr/share/logstash/pipeline/business-logs.conf"
+      pipeline.workers: 1
+
+  ainflue-logs.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+      
+      http {
+        port => 8080
+        codec => json
+      }
+    }
+    
+    filter {
+      # Parse timestamp
+      date {
+        match => [ "timestamp", "ISO8601" ]
+        target => "@timestamp"
+      }
+      
+      # Add fields based on log source
+      if [fields][service] {
+        mutate {
+          add_field => { "service" => "%{[fields][service]}" }
+        }
+      }
+      
+      # Parse application logs
+      if [service] == "ainflue-api" {
+        grok {
+          match => { 
+            "message" => "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} %{DATA:logger} - %{GREEDYDATA:log_message}"
+          }
+        }
+        
+        # Extract API request information
+        if [log_message] =~ /Request/ {
+          grok {
+            match => {
+              "log_message" => "Request %{WORD:method} %{URIPATH:path} from %{IP:client_ip} - Response: %{NUMBER:status_code} in %{NUMBER:response_time}ms"
+            }
+          }
+          
+          mutate {
+            convert => { "response_time" => "float" }
+            convert => { "status_code" => "integer" }
+            add_tag => ["api_request"]
+          }
+        }
+      }
+      
+      # Parse business events
+      if [service] == "ainflue-business" {
+        json {
+          source => "message"
+          target => "business_event"
+        }
+        
+        if [business_event][event_type] {
+          mutate {
+            add_field => { "event_type" => "%{[business_event][event_type]}" }
+            add_tag => ["business_metric"]
+          }
+        }
+      }
+      
+      # Security log parsing
+      if [service] == "ainflue-security" {
+        json {
+          source => "message"
+          target => "security_event"
+        }
+        
+        if [security_event][threat_level] {
+          mutate {
+            add_field => { "threat_level" => "%{[security_event][threat_level]}" }
+            add_tag => ["security_alert"]
+          }
+        }
+      }
+      
+      # Geographic enrichment
+      if [client_ip] {
+        geoip {
+          source => "client_ip"
+          target => "geoip"
+        }
+      }
+      
+      # User agent parsing
+      if [user_agent] {
+        useragent {
+          source => "user_agent"
+          target => "ua"
+        }
+      }
+    }
+    
+    output {
+      elasticsearch {
+        hosts => ["https://elasticsearch.ainflue-logging.svc.cluster.local:9200"]
+        index => "ainflue-logs-%{+YYYY.MM.dd}"
+        user => "logstash_writer"
+        password => "${LOGSTASH_PASSWORD}"
+        ssl_certificate_verification => false
+      }
+      
+      # Send high-priority logs to monitoring
+      if "security_alert" in [tags] or "error" in [tags] {
+        http {
+          url => "http://alertmanager.ainflue-monitoring.svc.cluster.local:9093/api/v1/alerts"
+          http_method => "post"
+          format => "json"
+          mapping => {
+            "labels" => {
+              "alertname" => "LogAlert"
+              "severity" => "%{level}"
+              "service" => "%{service}"
+              "instance" => "%{host}"
+            }
+            "annotations" => {
+              "summary" => "%{message}"
+              "description" => "%{log_message}"
+            }
+          }
+        }
+      }
+    }
+
+  security-logs.conf: |
+    input {
+      beats {
+        port => 5045
+        type => "security"
+      }
+    }
+    
+    filter {
+      # Parse security events
+      if [type] == "security" {
+        json {
+          source => "message"
+          target => "security"
+        }
+        
+        # Add security classification
+        if [security][event_type] in ["authentication_failure", "authorization_failure", "suspicious_activity"] {
+          mutate {
+            add_tag => ["security_incident"]
+          }
+        }
+        
+        # Threat scoring
+        ruby {
+          code => "
+            threat_score = 0
+            if event.get('[security][failed_attempts]').to_i > 5
+              threat_score += 30
+            end
+            if event.get('[security][privilege_escalation]') == true
+              threat_score += 50
+            end
+            if event.get('[security][data_access]') == true
+              threat_score += 40
+            end
+            event.set('threat_score', threat_score)
+          "
+        }
+      }
+    }
+    
+    output {
+      elasticsearch {
+        hosts => ["https://elasticsearch.ainflue-logging.svc.cluster.local:9200"]
+        index => "ainflue-security-%{+YYYY.MM.dd}"
+        user => "logstash_writer"
+        password => "${LOGSTASH_PASSWORD}"
+        ssl_certificate_verification => false
+      }
+    }
+
+  business-logs.conf: |
+    input {
+      beats {
+        port => 5046
+        type => "business"
+      }
+    }
+    
+    filter {
+      if [type] == "business" {
+        json {
+          source => "message"
+          target => "business"
+        }
+        
+        # Calculate business metrics
+        if [business][event_type] == "revenue" {
+          mutate {
+            add_tag => ["revenue_event"]
+          }
+        }
+        
+        if [business][event_type] == "collaboration" {
+          mutate {
+            add_tag => ["collaboration_event"]
+          }
+        }
+      }
+    }
+    
+    output {
+      elasticsearch {
+        hosts => ["https://elasticsearch.ainflue-logging.svc.cluster.local:9200"]
+        index => "ainflue-business-%{+YYYY.MM.dd}"
+        user => "logstash_writer"
+        password => "${LOGSTASH_PASSWORD}"
+        ssl_certificate_verification => false
+      }
+    }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: logstash
+    app.kubernetes.io/component: processor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: logstash
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: logstash
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9600"
+        prometheus.io/path: "/_node/stats"
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: logstash
+        image: docker.elastic.co/logstash/logstash:8.11.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5044
+          name: beats
+        - containerPort: 5045
+          name: security
+        - containerPort: 5046
+          name: business
+        - containerPort: 8080
+          name: http
+        - containerPort: 9600
+          name: monitoring
+        env:
+        - name: LS_JAVA_OPTS
+          value: "-Xmx2g -Xms2g"
+        - name: LOGSTASH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elasticsearch-credentials
+              key: logstash_password
+        volumeMounts:
+        - name: config
+          mountPath: /usr/share/logstash/config/logstash.yml
+          subPath: logstash.yml
+        - name: config
+          mountPath: /usr/share/logstash/config/pipeline.yml
+          subPath: pipeline.yml
+        - name: pipeline
+          mountPath: /usr/share/logstash/pipeline
+        resources:
+          requests:
+            memory: "3Gi"
+            cpu: "1000m"
+          limits:
+            memory: "3Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9600
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9600
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      volumes:
+      - name: config
+        configMap:
+          name: logstash-config
+      - name: pipeline
+        configMap:
+          name: logstash-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: logstash
+spec:
+  ports:
+  - port: 5044
+    name: beats
+  - port: 5045
+    name: security
+  - port: 5046
+    name: business
+  - port: 8080
+    name: http
+  - port: 9600
+    name: monitoring
+  selector:
+    app.kubernetes.io/name: logstash
+
+---
+# Kibana Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: kibana
+    app.kubernetes.io/component: config
+data:
+  kibana.yml: |
+    server.name: kibana
+    server.host: 0.0.0.0
+    server.port: 5601
+    
+    elasticsearch.hosts: ["https://elasticsearch.ainflue-logging.svc.cluster.local:9200"]
+    elasticsearch.username: "kibana_system"
+    elasticsearch.password: "${KIBANA_PASSWORD}"
+    elasticsearch.ssl.verificationMode: none
+    
+    # Security settings
+    xpack.security.enabled: true
+    xpack.security.encryptionKey: "something_at_least_32_characters_long"
+    xpack.security.session.idleTimeout: "1h"
+    xpack.security.session.lifespan: "30d"
+    
+    # Monitoring
+    xpack.monitoring.ui.container.elasticsearch.enabled: true
+    
+    # Index patterns
+    kibana.defaultAppId: "discover"
+    
+    # Logging
+    logging.dest: stdout
+    logging.level: info
+    
+    # UI settings
+    server.basePath: ""
+    server.rewriteBasePath: false
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: kibana
+    app.kubernetes.io/component: ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kibana
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kibana
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:8.11.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5601
+          name: ui
+        env:
+        - name: KIBANA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elasticsearch-credentials
+              key: kibana_password
+        volumeMounts:
+        - name: config
+          mountPath: /usr/share/kibana/config/kibana.yml
+          subPath: kibana.yml
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /api/status
+            port: 5601
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: 5601
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      volumes:
+      - name: config
+        configMap:
+          name: kibana-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: kibana
+spec:
+  ports:
+  - port: 5601
+    targetPort: 5601
+    name: ui
+  selector:
+    app.kubernetes.io/name: kibana
+
+---
+# Ingress for Kibana
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  namespace: ainflue-logging
+  labels:
+    app.kubernetes.io/name: kibana
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: kibana-auth
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+spec:
+  tls:
+  - hosts:
+    - logs.ainflue.com
+    secretName: kibana-tls
+  rules:
+  - host: logs.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kibana
+            port:
+              number: 5601
