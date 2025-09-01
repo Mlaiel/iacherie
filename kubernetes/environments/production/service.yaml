@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-api
+  namespace: ainflue
+  labels:
+    app: ainflue
+    environment: production
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: ainflue
+    version: green  # This will be updated during blue-green deployment
+  sessionAffinity: None
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0  # Restrict this in production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-api-green
+  namespace: ainflue
+  labels:
+    app: ainflue
+    environment: production
+    version: green
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: ainflue
+    version: green
+  sessionAffinity: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-api-blue
+  namespace: ainflue
+  labels:
+    app: ainflue
+    environment: production
+    version: blue
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: ainflue
+    version: blue
+  sessionAffinity: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-metrics
+  namespace: ainflue
+  labels:
+    app: ainflue
+    environment: production
+    service: metrics
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - name: metrics
+    port: 9090
+    targetPort: metrics
+    protocol: TCP
+  selector:
+    app: ainflue
+  sessionAffinity: None
