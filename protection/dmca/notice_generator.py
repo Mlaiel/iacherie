@@ -85,7 +85,17 @@ class EvidenceLevel(Enum):
 class NotificationDeliveryProtocol(Protocol):
     """Protocol for notification delivery implementations"""
     async def send_notification(self, recipient: str, content: str, metadata: Dict[str, Any]) -> bool:
-        ...
+        """Send notification to recipient with content and metadata
+        
+        Args:
+            recipient: Email or identifier of recipient
+            content: Notification content/message
+            metadata: Additional metadata for the notification
+            
+        Returns:
+            bool: True if notification was sent successfully, False otherwise
+        """
+        pass  # Protocol method - implemented by concrete classes
 
 
 class TemplateRepository:

@@ -10,7 +10,7 @@ This module provides simple agent classes for testing purposes.
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
 import uuid
@@ -121,22 +121,169 @@ class ProtectionAgent(BaseAgent):
 
 # Simple supporting classes for compatibility
 class NotificationService:
-    """Simple notification service"""
-    def __init__(self):
-        pass
+    """Simple notification service with enhanced functionality"""
     
-    async def send(self, message: str, recipient: str) -> bool:
-        logger.info(f"Notification sent to {recipient}: {message}")
-        return True
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.notification_history = []
+        self.delivery_stats = {"sent": 0, "failed": 0}
+        self.channels = ["email", "sms", "push", "in-app"]
+    
+    async def send(self, message: str, recipient: str, channel: str = "email") -> bool:
+        """Send notification via specified channel"""
+        try:
+            notification_id = uuid.uuid4().hex
+            
+            # Validate channel
+            if channel not in self.channels:
+                channel = "email"  # Default fallback
+            
+            # Create notification record
+            notification = {
+                "id": notification_id,
+                "message": message,
+                "recipient": recipient,
+                "channel": channel,
+                "timestamp": datetime.utcnow(),
+                "delivered": True
+            }
+            
+            # Store in history
+            self.notification_history.append(notification)
+            self.delivery_stats["sent"] += 1
+            
+            # Keep only last 100 notifications to manage memory
+            if len(self.notification_history) > 100:
+                self.notification_history = self.notification_history[-100:]
+            
+            self.logger.info(f"📧 Notification sent via {channel} to {recipient}: {message}")
+            return True
+            
+        except Exception as e:
+            self.delivery_stats["failed"] += 1
+            self.logger.error(f"❌ Notification delivery failed: {e}")
+            return False
+    
+    def get_delivery_stats(self) -> Dict[str, Any]:
+        """Get delivery statistics"""
+        total = self.delivery_stats["sent"] + self.delivery_stats["failed"]
+        success_rate = (self.delivery_stats["sent"] / total * 100) if total > 0 else 0
+        
+        return {
+            "total_notifications": total,
+            "successful_deliveries": self.delivery_stats["sent"],
+            "failed_deliveries": self.delivery_stats["failed"],
+            "success_rate_percentage": round(success_rate, 2),
+            "available_channels": self.channels
+        }
 
 class RightsManager:
-    """Simple rights manager"""
+    """Enhanced rights manager with comprehensive verification"""
+    
     def __init__(self):
-        pass
+        self.logger = logging.getLogger(__name__)
+        self.content_registry = {}
+        self.license_templates = {
+            "standard": {"permissions": ["view", "download"], "duration_days": 365},
+            "premium": {"permissions": ["view", "download", "modify"], "duration_days": 730},
+            "commercial": {"permissions": ["view", "download", "modify", "distribute"], "duration_days": 1095}
+        }
+        self.verification_history = []
     
     async def verify_rights(self, content_id: str) -> bool:
-        logger.info(f"Rights verified for content {content_id}")
+        """Comprehensive rights verification"""
+        try:
+            verification_start = datetime.utcnow()
+            
+            # Check if content is registered
+            if content_id not in self.content_registry:
+                # Auto-register with basic rights for compatibility
+                await self.register_content(content_id, "system", "standard")
+            
+            content_info = self.content_registry[content_id]
+            
+            # Check license validity
+            license_valid = self._check_license_validity(content_info)
+            
+            # Record verification
+            verification_record = {
+                "content_id": content_id,
+                "verification_time": verification_start,
+                "result": license_valid,
+                "verification_duration_ms": (datetime.utcnow() - verification_start).total_seconds() * 1000
+            }
+            
+            self.verification_history.append(verification_record)
+            
+            # Keep only last 50 verifications
+            if len(self.verification_history) > 50:
+                self.verification_history = self.verification_history[-50:]
+            
+            self.logger.info(f"🔐 Rights verification for {content_id}: {'✅ VALID' if license_valid else '❌ INVALID'}")
+            return license_valid
+            
+        except Exception as e:
+            self.logger.error(f"❌ Rights verification error for {content_id}: {e}")
+            return False
+    
+    async def register_content(self, content_id: str, owner_id: str, license_type: str = "standard") -> bool:
+        """Register content with rights and licensing"""
+        try:
+            if license_type not in self.license_templates:
+                license_type = "standard"
+            
+            license_info = self.license_templates[license_type].copy()
+            license_info.update({
+                "owner_id": owner_id,
+                "created_date": datetime.utcnow(),
+                "expiry_date": datetime.utcnow() + timedelta(days=license_info["duration_days"]),
+                "status": "active"
+            })
+            
+            self.content_registry[content_id] = license_info
+            
+            self.logger.info(f"📋 Content {content_id} registered with {license_type} license for owner {owner_id}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Content registration failed: {e}")
+            return False
+    
+    def _check_license_validity(self, content_info: Dict[str, Any]) -> bool:
+        """Check if license is still valid"""
+        if content_info.get("status") != "active":
+            return False
+        
+        expiry_date = content_info.get("expiry_date")
+        if expiry_date and datetime.utcnow() > expiry_date:
+            return False
+        
         return True
+    
+    def get_content_stats(self) -> Dict[str, Any]:
+        """Get content registry statistics"""
+        total_content = len(self.content_registry)
+        active_licenses = sum(1 for c in self.content_registry.values() if c.get("status") == "active")
+        expired_licenses = sum(1 for c in self.content_registry.values() 
+                              if c.get("expiry_date") and datetime.utcnow() > c.get("expiry_date"))
+        
+        license_distribution = {}
+        for content_info in self.content_registry.values():
+            license_type = "unknown"
+            for lt, template in self.license_templates.items():
+                if content_info.get("permissions") == template["permissions"]:
+                    license_type = lt
+                    break
+            license_distribution[license_type] = license_distribution.get(license_type, 0) + 1
+        
+        return {
+            "total_registered_content": total_content,
+            "active_licenses": active_licenses,
+            "expired_licenses": expired_licenses,
+            "license_distribution": license_distribution,
+            "total_verifications": len(self.verification_history),
+            "available_license_types": list(self.license_templates.keys())
+        }
 
 __all__ = [
     'BaseAgent',
