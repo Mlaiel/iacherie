@@ -1,0 +1,155 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React Native
+.expo/
+.expo-shared/
+dist/
+build/
+
+# iOS
+ios/build/
+ios/DerivedData/
+ios/Pods/
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/main.jsbundle
+ios/main.jsbundle.map
+
+# Android
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+android/gradlew
+android/gradlew.bat
+android/gradle/wrapper/gradle-wrapper.jar
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/assets/index.android.bundle.map
+
+# Keystore files
+*.keystore
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Temporary folders
+tmp/
+temp/
+
+# Build artifacts
+*.ipa
+*.apk
+*.aab
+*.dSYM.zip
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Sentry
+.sentryclirc
+
+# CocoaPods
+ios/Podfile.lock
+
+# Gradle
+android/gradle.properties
+
+# React Native bundle artifacts
+*.jsbundle
+*.jsbundle.map
+
+# ESLint cache
+.eslintcache
+
+# Jest
+coverage/
+
+# Flipper
+ios/Flipper/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Bundle artifacts
+*.js.map
+
+# TypeScript
+*.tsbuildinfo
+
+# Generated files
+android/app/src/main/java/com/ainflue/mobile/BuildConfig.java
+ios/Ainflue/RCTBundleURLProvider.h
+
+# Local configuration
+local.properties
+
+# Store assets (generated)
+store_assets/screenshots/
+store_assets/icons/generated/
+
+# Deployment artifacts
+build/
+dist/
+archive/
+
+# Certificates and keys (security)
+*.pem
+*.key
+*.crt
+*.p8
+certificates/
+keys/
+
+# Backup files
+*.backup
+*.bak
+
+# Cache
+.cache/
+.tmp/

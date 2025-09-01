@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "Ainflue Mobile",
+    "name": "Ainflue",
     "slug": "ainflue-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
+    "scheme": "ainflue",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -14,15 +15,53 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "platforms": ["ios", "android"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ainflue.mobile",
-      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.fahedmlaiel.ainflue",
+      "buildNumber": "1",
+      "config": {
+        "usesNonExemptEncryption": true
+      },
       "infoPlist": {
-        "NSCameraUsageDescription": "This app uses the camera to capture content for AI-powered editing and protection.",
-        "NSMicrophoneUsageDescription": "This app uses the microphone to record audio content for processing.",
-        "NSPhotoLibraryUsageDescription": "This app accesses your photo library to select content for upload and editing."
-      }
+        "NSCameraUsageDescription": "Ainflue requires camera access for professional video content creation, live streaming, and advanced visual content capture with AI-powered enhancement.",
+        "NSMicrophoneUsageDescription": "Ainflue requires microphone access for high-quality audio recording, voice content creation, and advanced audio processing with AI enhancement.",
+        "NSPhotoLibraryUsageDescription": "Ainflue requires photo library access to import, enhance, and distribute your existing content with AI-powered protection and optimization.",
+        "NSPhotoLibraryAddUsageDescription": "Ainflue saves your created and enhanced content to your photo library for easy access and sharing across platforms.",
+        "NSLocationWhenInUseUsageDescription": "Ainflue uses location data to provide geo-targeted content optimization, platform-specific distribution, and location-based analytics insights.",
+        "NSFaceIDUsageDescription": "Ainflue uses Face ID for secure authentication, protecting your valuable content and revenue data with enterprise-grade biometric security.",
+        "NSContactsUsageDescription": "Ainflue accesses contacts to facilitate collaboration invitations and streamline professional networking for content creators.",
+        "NSCalendarsUsageDescription": "Ainflue integrates with your calendar to schedule content uploads, manage publishing schedules, and optimize posting times.",
+        "NSUserTrackingUsageDescription": "Ainflue uses tracking data to provide personalized content recommendations, optimize platform performance, and deliver targeted analytics insights for your content strategy.",
+        "NSSpeechRecognitionUsageDescription": "Ainflue uses speech recognition for voice-to-text transcription, automated captions, and voice command functionality to enhance content creation workflow.",
+        "NSMotionUsageDescription": "Ainflue uses motion sensors for advanced camera stabilization, gesture-based controls, and immersive content creation features.",
+        "NSLocalNetworkUsageDescription": "Ainflue discovers and connects to local devices for content transfer, wireless collaboration, and professional studio equipment integration.",
+        "ITSAppUsesNonExemptEncryption": true,
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLName": "com.fahedmlaiel.ainflue",
+            "CFBundleURLSchemes": ["ainflue", "ainflue-auth"]
+          }
+        ],
+        "UIBackgroundModes": [
+          "background-processing",
+          "background-fetch",
+          "remote-notification",
+          "audio",
+          "background-app-refresh"
+        ],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "com.fahedmlaiel.ainflue.backgroundprocessing",
+          "com.fahedmlaiel.ainflue.sync",
+          "com.fahedmlaiel.ainflue.analytics",
+          "com.fahedmlaiel.ainflue.contentprotection"
+        ]
+      },
+      "associatedDomains": [
+        "applinks:ainflue.com",
+        "applinks:www.ainflue.com",
+        "applinks:app.ainflue.com"
+      ]
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +70,9 @@
       },
       "package": "com.ainflue.mobile",
       "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 26,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
@@ -40,21 +82,138 @@
         "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.WAKE_LOCK",
         "android.permission.USE_FINGERPRINT",
-        "android.permission.USE_BIOMETRIC"
-      ]
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.VIBRATE",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "ainflue.com"
+            },
+            {
+              "scheme": "https", 
+              "host": "www.ainflue.com"
+            },
+            {
+              "scheme": "ainflue"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
+      "config": {
+        "googleServicesFile": "./google-services.json"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+      "bundler": "metro",
+      "config": {
+        "firebase": {
+          "config": {
+            "apiKey": "your-firebase-api-key",
+            "authDomain": "ainflue-app.firebaseapp.com",
+            "projectId": "ainflue-app",
+            "storageBucket": "ainflue-app.appspot.com",
+            "messagingSenderId": "123456789",
+            "appId": "1:123456789:web:abcdef123456"
+          }
+        }
+      }
     },
     "notification": {
       "icon": "./assets/notification-icon.png",
-      "color": "#3B82F6"
+      "color": "#3B82F6",
+      "iosDisplayInForeground": true,
+      "androidMode": "default",
+      "androidCollapsedTitle": "#{unread_notifications} new notifications"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 5000
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Ainflue to access your camera for content creation.",
+          "microphonePermission": "Allow Ainflue to access your microphone for audio recording.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Ainflue accesses your photo library to import and enhance your content."
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#3B82F6",
+          "sounds": ["./assets/notification-sound.wav"],
+          "mode": "production"
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Ainflue uses Face ID for secure authentication to protect your valuable content and revenue data."
+        }
+      ],
+      [
+        "expo-secure-store"
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow Ainflue to access your microphone for audio recording and processing."
+        }
+      ]
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "ainflue",
+            "project": "ainflue-mobile"
+          }
+        }
+      ]
     },
     "extra": {
       "apiUrl": "https://api.ainflue.com",
       "aiProcessingEndpoint": "/api/ai/process",
-      "uploadEndpoint": "/api/mobile/upload"
+      "uploadEndpoint": "/api/mobile/upload",
+      "websocketUrl": "wss://ws.ainflue.com",
+      "cdnUrl": "https://cdn.ainflue.com",
+      "supportUrl": "https://support.ainflue.com",
+      "privacyPolicyUrl": "https://ainflue.com/privacy",
+      "termsOfServiceUrl": "https://ainflue.com/terms",
+      "appVersion": "1.0.0",
+      "buildNumber": "1",
+      "environment": "production",
+      "sentryDsn": "https://your-sentry-dsn@sentry.io/project-id",
+      "analyticsEnabled": true,
+      "crashReportingEnabled": true,
+      "performanceMonitoringEnabled": true
     }
   }
 }
