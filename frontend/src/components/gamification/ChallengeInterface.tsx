@@ -358,7 +358,7 @@ const ChallengeInterface: React.FC<ChallengeInterfaceProps> = ({
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-slate-500">Difficulty:</span>
-                    <span className={difficultyColors[challenge.difficulty]}>
+                    <span className={difficultyColors[challenge.difficulty as keyof typeof difficultyColors]}>
                       {getDifficultyLabel(challenge.difficulty)}
                     </span>
                   </div>

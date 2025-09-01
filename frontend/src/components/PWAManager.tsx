@@ -130,7 +130,7 @@ export default function PWAManager() {
         toast.success('🎉 Ainflue installed successfully!');
         console.log('✅ PWA installation accepted');
       } else {
-        toast.info('📱 You can install Ainflue later from the browser menu');
+        toast('📱 You can install Ainflue later from the browser menu');
         console.log('❌ PWA installation dismissed');
       }
       
@@ -146,8 +146,8 @@ export default function PWAManager() {
     if (swRegistration && 'sync' in swRegistration) {
       try {
         // Trigger background sync for pending uploads
-        await swRegistration.sync.register('content-upload');
-        await swRegistration.sync.register('analytics-sync');
+        await (swRegistration as any).sync.register('content-upload');
+        await (swRegistration as any).sync.register('analytics-sync');
         console.log('🔄 Background sync registered');
       } catch (error) {
         console.error('❌ Background sync registration failed:', error);

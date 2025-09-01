@@ -29,7 +29,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { EngagementMetrics, ApiResponse } from './types';
 import { gamificationStyles } from './gamification.styles';
-import { ChartBarIcon, UsersIcon, ClockIcon, TrendingUpIcon } from '@heroicons/react/24/outline';
+import { ChartBarIcon, UsersIcon, ClockIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
 import clsx from 'clsx';
 

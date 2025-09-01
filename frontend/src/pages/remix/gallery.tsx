@@ -34,7 +34,7 @@ import {
   PauseIcon,
   HeartIcon,
   ShareIcon,
-  DownloadIcon,
+  ArrowDownTrayIcon,
   EyeIcon,
   ChatBubbleLeftIcon,
   StarIcon,
@@ -644,7 +644,7 @@ const GalleryPage: React.FC<GalleryPageProps> = ({ params }) => {
                 onClick={() => handleDownload(item.id)}
                 className="p-1 text-slate-400 hover:text-green-500 rounded transition-colors"
               >
-                <DownloadIcon className="h-4 w-4" />
+                <ArrowDownTrayIcon className="h-4 w-4" />
               </button>
             </div>
           </div>
