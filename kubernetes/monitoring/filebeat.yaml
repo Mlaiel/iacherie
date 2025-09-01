@@ -1,0 +1,233 @@
+# Filebeat DaemonSet for Centralized Log Collection
+# Author: Fahed Mlaiel <mlaiel@live.de>
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: filebeat
+    app.kubernetes.io/component: config
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+      # Kubernetes container logs
+      - type: container
+        paths:
+          - /var/log/containers/*-ainflue-*.log
+          - /var/log/containers/*-ai-engine-*.log
+          - /var/log/containers/*-crawler-*.log
+          - /var/log/containers/*-analytics-*.log
+          - /var/log/containers/*-protection-*.log
+        
+        processors:
+          - add_kubernetes_metadata:
+              host: ${NODE_NAME}
+              matchers:
+                - logs_path:
+                    logs_path: "/var/log/containers/"
+        
+        multiline.pattern: '^\d{4}-\d{2}-\d{2}|\[|\{'
+        multiline.negate: true
+        multiline.match: after
+        multiline.max_lines: 500
+        
+        fields:
+          environment: production
+          cluster: ainflue-production
+          log_type: container
+        fields_under_root: true
+        
+        exclude_lines: ['^DBG:', '^DEBUG:']
+        json.keys_under_root: true
+        json.add_error_key: true
+        json.message_key: message
+
+    processors:
+      - add_host_metadata:
+          when.not.contains.tags: forwarded
+      - add_docker_metadata: ~
+      - add_kubernetes_metadata: ~
+
+    output.logstash:
+      hosts: ["logstash.ainflue-monitoring.svc.cluster.local:5044"]
+      loadbalance: true
+      compression_level: 3
+      worker: 2
+      bulk_max_size: 2048
+
+    logging.level: info
+    monitoring.enabled: true
+    http.enabled: true
+    http.host: 0.0.0.0
+    http.port: 5066
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: filebeat
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: filebeat
+    app.kubernetes.io/instance: filebeat
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: filebeat
+      app.kubernetes.io/instance: filebeat
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: filebeat
+        app.kubernetes.io/instance: filebeat
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5066"
+    spec:
+      serviceAccountName: filebeat
+      terminationGracePeriodSeconds: 30
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.6.0
+          args: [
+            "-c", "/etc/filebeat.yml",
+            "-e",
+          ]
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          securityContext:
+            runAsUser: 0
+            # If using Red Hat OpenShift uncomment this:
+            #privileged: true
+          resources:
+            limits:
+              memory: 200Mi
+              cpu: 100m
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - name: config
+              mountPath: /etc/filebeat.yml
+              readOnly: true
+              subPath: filebeat.yml
+            - name: data
+              mountPath: /usr/share/filebeat/data
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: varlog
+              mountPath: /var/log
+              readOnly: true
+            - name: dockersock
+              mountPath: /var/run/docker.sock
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5066
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5066
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+      volumes:
+        - name: config
+          configMap:
+            defaultMode: 0640
+            name: filebeat-config
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: dockersock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: data
+          hostPath:
+            path: /var/lib/filebeat-data
+            type: DirectoryOrCreate
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: filebeat
+  labels:
+    app.kubernetes.io/name: filebeat
+rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources:
+      - namespaces
+      - pods
+      - nodes
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups: ["apps"]
+    resources:
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: filebeat
+    app.kubernetes.io/instance: filebeat
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat
+  labels:
+    app.kubernetes.io/name: filebeat
+subjects:
+  - kind: ServiceAccount
+    name: filebeat
+    namespace: ainflue-monitoring
+roleRef:
+  kind: ClusterRole
+  name: filebeat
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filebeat
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: filebeat
+    app.kubernetes.io/instance: filebeat
+spec:
+  clusterIP: None
+  ports:
+    - name: http
+      port: 5066
+      targetPort: 5066
+  selector:
+    app.kubernetes.io/name: filebeat
+    app.kubernetes.io/instance: filebeat

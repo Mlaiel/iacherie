@@ -1,0 +1,453 @@
+# Storage and RBAC for Monitoring Stack
+# Author: Fahed Mlaiel <mlaiel@live.de>
+
+---
+# ServiceAccount for Prometheus
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus
+
+---
+# ClusterRole for Prometheus
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus
+rules:
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - nodes/proxy
+      - services
+      - endpoints
+      - pods
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["extensions"]
+    resources:
+      - ingresses
+    verbs: ["get", "list", "watch"]
+  - nonResourceURLs: ["/metrics"]
+    verbs: ["get"]
+
+---
+# ClusterRoleBinding for Prometheus
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus
+subjects:
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: ainflue-monitoring
+
+---
+# Prometheus Storage PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-storage
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: standard
+
+---
+# Grafana Storage PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-storage
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+
+---
+# AlertManager Storage PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: alertmanager-storage
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/instance: alertmanager
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard
+
+---
+# Elasticsearch Storage PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-storage
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/instance: elasticsearch
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: standard
+
+---
+# Grafana Admin Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-secret
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+type: Opaque
+data:
+  admin-password: YWRtaW4xMjM=  # base64 encoded "admin123"
+
+---
+# Grafana Provisioning ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-provisioning
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: provisioning
+data:
+  datasources.yml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus.ainflue-monitoring.svc.cluster.local:9090
+        isDefault: true
+        editable: true
+      - name: Jaeger
+        type: jaeger
+        access: proxy
+        url: http://jaeger.ainflue-monitoring.svc.cluster.local:16686
+        editable: true
+      - name: Elasticsearch
+        type: elasticsearch
+        access: proxy
+        url: http://elasticsearch.ainflue-monitoring.svc.cluster.local:9200
+        database: "[logstash-]YYYY.MM.DD"
+        interval: Daily
+        timeField: "@timestamp"
+        editable: true
+
+  dashboards.yml: |
+    apiVersion: 1
+    providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards
+
+---
+# Logstash Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: logstash
+    app.kubernetes.io/component: config
+data:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+      
+      tcp {
+        port => 5000
+        codec => json_lines
+      }
+      
+      udp {
+        port => 5000
+        codec => json_lines
+      }
+    }
+
+    filter {
+      # Parse Kubernetes logs
+      if [kubernetes] {
+        mutate {
+          add_field => { "[@metadata][index]" => "k8s-logs-%{+YYYY.MM.dd}" }
+        }
+        
+        # Parse container logs
+        if [kubernetes][container][name] {
+          mutate {
+            add_field => { "service_name" => "%{[kubernetes][container][name]}" }
+          }
+        }
+        
+        # Add namespace info
+        if [kubernetes][namespace] {
+          mutate {
+            add_field => { "namespace" => "%{[kubernetes][namespace]}" }
+          }
+        }
+      }
+      
+      # Parse application logs
+      if [fields][service] {
+        mutate {
+          add_field => { "[@metadata][index]" => "app-logs-%{+YYYY.MM.dd}" }
+          add_field => { "service_name" => "%{[fields][service]}" }
+        }
+      }
+      
+      # Parse JSON log messages
+      if [message] {
+        json {
+          source => "message"
+          skip_on_invalid_json => true
+        }
+      }
+      
+      # Add timestamp processing
+      date {
+        match => [ "timestamp", "ISO8601" ]
+        target => "@timestamp"
+      }
+      
+      # Grok patterns for different log formats
+      grok {
+        match => { 
+          "message" => [
+            "%{TIMESTAMP_ISO8601:timestamp} \[%{LOGLEVEL:level}\] %{DATA:logger} - %{GREEDYDATA:log_message}",
+            "\[%{TIMESTAMP_ISO8601:timestamp}\] %{WORD:level} %{GREEDYDATA:log_message}",
+            "%{COMBINEDAPACHELOG}"
+          ]
+        }
+        tag_on_failure => ["_grokparsefailure"]
+      }
+      
+      # Add environment info
+      mutate {
+        add_field => { "environment" => "production" }
+        add_field => { "cluster" => "ainflue-production" }
+      }
+    }
+
+    output {
+      elasticsearch {
+        hosts => ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
+        index => "%{[@metadata][index]}"
+        template_name => "logstash"
+        template_pattern => "logstash-*"
+        template => {
+          "index_patterns" => ["logstash-*", "k8s-logs-*", "app-logs-*"],
+          "settings" => {
+            "number_of_shards" => 1,
+            "number_of_replicas" => 0,
+            "index.refresh_interval" => "5s"
+          },
+          "mappings" => {
+            "properties" => {
+              "@timestamp" => { "type" => "date" },
+              "level" => { "type" => "keyword" },
+              "service_name" => { "type" => "keyword" },
+              "namespace" => { "type" => "keyword" },
+              "environment" => { "type" => "keyword" },
+              "cluster" => { "type" => "keyword" },
+              "message" => { "type" => "text" },
+              "log_message" => { "type" => "text" }
+            }
+          }
+        }
+      }
+      
+      # Debug output (can be disabled in production)
+      stdout {
+        codec => rubydebug {
+          metadata => true
+        }
+      }
+    }
+
+---
+# Ingress for monitoring services
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring-ingress
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: monitoring
+    app.kubernetes.io/component: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - prometheus.ainflue.com
+        - grafana.ainflue.com
+        - alertmanager.ainflue.com
+        - jaeger.ainflue.com
+        - kibana.ainflue.com
+      secretName: monitoring-tls
+  rules:
+    - host: prometheus.ainflue.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+    - host: grafana.ainflue.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+    - host: alertmanager.ainflue.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: alertmanager
+                port:
+                  number: 9093
+    - host: jaeger.ainflue.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jaeger
+                port:
+                  number: 16686
+    - host: kibana.ainflue.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kibana
+                port:
+                  number: 5601
+
+---
+# Network Policies for security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-network-policy
+  namespace: ainflue-monitoring
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Allow ingress from nginx-ingress namespace
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+    # Allow internal monitoring communication
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ainflue-monitoring
+    # Allow from application namespaces
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ainflue
+  egress:
+    # Allow all egress for now (can be restricted further)
+    - {}
+
+---
+# HorizontalPodAutoscaler for Grafana
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: grafana-hpa
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: grafana
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80

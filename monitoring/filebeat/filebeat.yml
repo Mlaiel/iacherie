@@ -1,0 +1,315 @@
+# Filebeat Configuration for Centralized Log Aggregation
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Production-ready log collection for all Ainflue services
+
+filebeat.inputs:
+  # Kubernetes container logs
+  - type: container
+    paths:
+      - /var/log/containers/*-ainflue-*.log
+      - /var/log/containers/*-ai-engine-*.log
+      - /var/log/containers/*-crawler-*.log
+      - /var/log/containers/*-analytics-*.log
+      - /var/log/containers/*-protection-*.log
+    
+    # Kubernetes metadata enrichment
+    processors:
+      - add_kubernetes_metadata:
+          host: ${NODE_NAME}
+          matchers:
+            - logs_path:
+                logs_path: "/var/log/containers/"
+      - add_docker_metadata:
+          host: "unix:///var/run/docker.sock"
+    
+    # Multiline pattern for stack traces
+    multiline.pattern: '^\d{4}-\d{2}-\d{2}|\[|\{'
+    multiline.negate: true
+    multiline.match: after
+    multiline.max_lines: 500
+    
+    # Fields to add
+    fields:
+      environment: production
+      cluster: ainflue-production
+      log_type: container
+    fields_under_root: true
+    
+    # Exclude system containers
+    exclude_lines: ['^DBG:', '^DEBUG:']
+    
+    # JSON parsing for structured logs
+    json.keys_under_root: true
+    json.add_error_key: true
+    json.message_key: message
+
+  # Application-specific logs
+  - type: log
+    paths:
+      - /var/log/ainflue/api/*.log
+      - /var/log/ainflue/ai-engine/*.log
+      - /var/log/ainflue/crawler/*.log
+      - /var/log/ainflue/analytics/*.log
+    
+    fields:
+      environment: production
+      cluster: ainflue-production
+      log_type: application
+    fields_under_root: true
+    
+    # Different multiline pattern for application logs
+    multiline.pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}'
+    multiline.negate: true
+    multiline.match: after
+    
+    # JSON parsing
+    json.keys_under_root: true
+    json.add_error_key: true
+
+  # Nginx access logs
+  - type: log
+    paths:
+      - /var/log/nginx/access.log
+      - /var/log/nginx/ainflue-*.log
+    
+    fields:
+      environment: production
+      cluster: ainflue-production
+      log_type: nginx_access
+      service: nginx
+    fields_under_root: true
+
+  # Nginx error logs
+  - type: log
+    paths:
+      - /var/log/nginx/error.log
+    
+    fields:
+      environment: production
+      cluster: ainflue-production
+      log_type: nginx_error
+      service: nginx
+    fields_under_root: true
+
+  # Database logs
+  - type: log
+    paths:
+      - /var/log/postgresql/postgresql-*.log
+      - /var/log/redis/redis.log
+      - /var/log/mongodb/mongod.log
+    
+    fields:
+      environment: production
+      cluster: ainflue-production
+      log_type: database
+    fields_under_root: true
+    
+    multiline.pattern: '^\d{4}-\d{2}-\d{2}'
+    multiline.negate: true
+    multiline.match: after
+
+  # System logs
+  - type: syslog
+    protocol.udp:
+      host: "0.0.0.0:514"
+    
+    fields:
+      environment: production
+      cluster: ainflue-production
+      log_type: syslog
+    fields_under_root: true
+
+# Global processors for all inputs
+processors:
+  # Add hostname
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+      
+  # Add Docker metadata
+  - add_docker_metadata: ~
+  
+  # Add Kubernetes metadata
+  - add_kubernetes_metadata: ~
+  
+  # Parse timestamp
+  - timestamp:
+      field: json.timestamp
+      layouts:
+        - '2006-01-02T15:04:05.000Z'
+        - '2006-01-02 15:04:05'
+      test:
+        - '2023-01-01T12:00:00.000Z'
+        - '2023-01-01 12:00:00'
+  
+  # Extract log level
+  - dissect:
+      tokenizer: '[%{timestamp}] %{level} %{message}'
+      field: "message"
+      target_prefix: "parsed"
+  
+  # Normalize log levels
+  - script:
+      lang: javascript
+      id: normalize_level
+      source: >
+        function process(event) {
+          var level = event.Get("level") || event.Get("parsed.level") || "";
+          level = level.toLowerCase();
+          
+          if (level.includes("error") || level.includes("err")) {
+            event.Put("log.level", "error");
+          } else if (level.includes("warn")) {
+            event.Put("log.level", "warning");
+          } else if (level.includes("info")) {
+            event.Put("log.level", "info");
+          } else if (level.includes("debug") || level.includes("dbg")) {
+            event.Put("log.level", "debug");
+          } else if (level.includes("trace")) {
+            event.Put("log.level", "trace");
+          } else {
+            event.Put("log.level", "unknown");
+          }
+        }
+  
+  # Extract service name from Kubernetes labels
+  - script:
+      lang: javascript
+      id: extract_service
+      source: >
+        function process(event) {
+          var k8s = event.Get("kubernetes");
+          if (k8s && k8s.labels) {
+            if (k8s.labels["app.kubernetes.io/name"]) {
+              event.Put("service.name", k8s.labels["app.kubernetes.io/name"]);
+            } else if (k8s.labels["app"]) {
+              event.Put("service.name", k8s.labels["app"]);
+            }
+            
+            if (k8s.labels["version"]) {
+              event.Put("service.version", k8s.labels["version"]);
+            }
+          }
+        }
+  
+  # Add trace correlation
+  - script:
+      lang: javascript
+      id: trace_correlation
+      source: >
+        function process(event) {
+          var message = event.Get("message") || "";
+          
+          // Extract trace ID from message
+          var traceMatch = message.match(/trace[_-]?id[=:]?\s*([a-f0-9]+)/i);
+          if (traceMatch) {
+            event.Put("trace.id", traceMatch[1]);
+          }
+          
+          // Extract span ID from message
+          var spanMatch = message.match(/span[_-]?id[=:]?\s*([a-f0-9]+)/i);
+          if (spanMatch) {
+            event.Put("span.id", spanMatch[1]);
+          }
+          
+          // Extract correlation ID
+          var corrMatch = message.match(/correlation[_-]?id[=:]?\s*([a-f0-9-]+)/i);
+          if (corrMatch) {
+            event.Put("correlation.id", corrMatch[1]);
+          }
+        }
+  
+  # Drop debug logs in production (optional)
+  - drop_event:
+      when:
+        and:
+          - equals:
+              environment: production
+          - equals:
+              log.level: debug
+
+# Output configuration
+output.logstash:
+  hosts: ["logstash.ainflue-monitoring.svc.cluster.local:5044"]
+  
+  # Load balancing
+  loadbalance: true
+  
+  # Compression
+  compression_level: 3
+  
+  # Connection settings
+  worker: 2
+  bulk_max_size: 2048
+  template.enabled: false
+  
+  # SSL configuration (if needed)
+  #ssl.enabled: true
+  #ssl.certificate_authorities: ["/etc/ssl/certs/ca.crt"]
+  #ssl.certificate: "/etc/ssl/certs/client.crt"
+  #ssl.key: "/etc/ssl/private/client.key"
+
+# Alternative direct Elasticsearch output (if not using Logstash)
+#output.elasticsearch:
+#  hosts: ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
+#  index: "ainflue-logs-%{+yyyy.MM.dd}"
+#  template.enabled: true
+#  template.name: "ainflue-logs"
+#  template.pattern: "ainflue-logs-*"
+
+# Logging configuration
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat.log
+  keepfiles: 7
+  permissions: 0644
+
+# Monitoring
+monitoring.enabled: true
+monitoring.elasticsearch:
+  hosts: ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
+  username: "filebeat_monitoring"
+  #password: "${ELASTICSEARCH_PASSWORD}"
+
+# Metrics for Prometheus
+http.enabled: true
+http.host: 0.0.0.0
+http.port: 5066
+
+# Performance tuning
+queue.mem:
+  events: 4096
+  flush.min_events: 512
+  flush.timeout: 1s
+
+# Setup template and ILM
+setup.template.enabled: true
+setup.template.name: "ainflue-logs"
+setup.template.pattern: "ainflue-logs-*"
+setup.template.settings:
+  index:
+    number_of_shards: 1
+    number_of_replicas: 0
+    refresh_interval: "5s"
+    mapping:
+      total_fields:
+        limit: 2000
+
+# ILM (Index Lifecycle Management)
+setup.ilm.enabled: true
+setup.ilm.rollover_alias: "ainflue-logs"
+setup.ilm.pattern: "ainflue-logs-%{now/d}-000001"
+setup.ilm.policy: "ainflue-logs-policy"
+
+# Dashboards
+setup.dashboards.enabled: true
+setup.dashboards.index: ".kibana"
+
+# Kibana configuration
+setup.kibana:
+  host: "kibana.ainflue-monitoring.svc.cluster.local:5601"
+  
+# Security
+#setup.kibana.username: "filebeat_setup"
+#setup.kibana.password: "${KIBANA_PASSWORD}"
