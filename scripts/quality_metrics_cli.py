@@ -38,6 +38,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Async command wrapper
+def async_command(f):
+    """Decorator to handle async commands in Click"""
+    import functools
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        return asyncio.run(f(*args, **kwargs))
+    return wrapper
+
 @click.group()
 @click.option('--config', '-c', default='config/quality_metrics.yaml', 
               help='Path to quality metrics configuration file')
@@ -61,6 +70,7 @@ def cli(ctx, config, project_root, verbose):
 @click.option('--environment', '-e', default='development', 
               help='Environment (development, staging, production)')
 @click.pass_context
+@async_command
 async def analyze(ctx, format, output, environment):
     """Run comprehensive quality analysis"""
     try:
@@ -113,6 +123,7 @@ async def analyze(ctx, format, output, environment):
               default='json', help='Output format')
 @click.option('--output', '-o', help='Output file path')
 @click.pass_context
+@async_command
 async def debt(ctx, format, output):
     """Analyze technical debt"""
     try:
@@ -161,6 +172,7 @@ async def debt(ctx, format, output):
 @click.option('--baseline', '-b', help='Baseline contract file path')
 @click.option('--output', '-o', help='Output file path')
 @click.pass_context
+@async_command
 async def api_changes(ctx, baseline, output):
     """Detect API breaking changes"""
     try:
@@ -210,6 +222,7 @@ async def api_changes(ctx, baseline, output):
               default='json', help='Output format')
 @click.option('--output', '-o', help='Output file path')
 @click.pass_context
+@async_command
 async def security(ctx, format, output):
     """Generate security scorecard"""
     try:
@@ -265,6 +278,7 @@ async def security(ctx, format, output):
 @click.option('--environment', '-e', default='development', 
               help='Environment (development, staging, production)')
 @click.pass_context
+@async_command
 async def all(ctx, format, output, environment):
     """Run all quality checks and generate comprehensive report"""
     try:
@@ -419,29 +433,6 @@ async def _generate_comprehensive_report(results, format):
 
 def main():
     """Main entry point"""
-    # Check if we're in async context
-    if sys.platform == "win32":
-        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-    
-    # Create async wrapper for CLI
-    def async_cli():
-        return asyncio.run(cli(standalone_mode=False))
-    
-    # Handle async commands
-    import inspect
-    original_main = cli.main
-    
-    def wrapper(*args, **kwargs):
-        ctx = cli.make_context('cli', list(args))
-        cmd_name = ctx.info_name if hasattr(ctx, 'info_name') else 'cli'
-        
-        # Check if command is async
-        if ctx.protected_args and ctx.protected_args[0] in ['analyze', 'debt', 'api-changes', 'security', 'all']:
-            return asyncio.run(cli.main(*args, **kwargs, standalone_mode=False))
-        else:
-            return original_main(*args, **kwargs)
-    
-    cli.main = wrapper
     cli()
 
 if __name__ == '__main__':

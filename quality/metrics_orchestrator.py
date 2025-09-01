@@ -25,11 +25,42 @@ import statistics
 # Import existing quality components
 try:
     from kubernetes.ci_cd.quality_gates import QualityGateValidator, QualityGateType, QualityStatus
-    from kubernetes.ci_cd.security_scanner import SecurityScanEngine, ScanType
-    from monitoring.documentation.api_validator import APIDocumentationValidator
+    HAS_QUALITY_GATE_VALIDATOR = True
 except ImportError:
-    # Fallback for testing
-    logging.warning("Could not import existing quality components")
+    HAS_QUALITY_GATE_VALIDATOR = False
+    # Define fallback enums
+    class QualityGateType(Enum):
+        CODE_COVERAGE = "code_coverage"
+        LINTING = "linting"
+        TYPE_CHECKING = "type_checking"
+        SECURITY_SCAN = "security_scan"
+        PERFORMANCE_TEST = "performance_test"
+        DEPENDENCY_CHECK = "dependency_check"
+        CODE_COMPLEXITY = "code_complexity"
+        DOCUMENTATION = "documentation"
+    
+    class QualityStatus(Enum):
+        PASSED = "passed"
+        FAILED = "failed"
+        WARNING = "warning"
+        SKIPPED = "skipped"
+
+try:
+    from kubernetes.ci_cd.security_scanner import SecurityScanEngine, ScanType
+    HAS_SECURITY_SCANNER = True
+except ImportError:
+    HAS_SECURITY_SCANNER = False
+    class ScanType(Enum):
+        STATIC_ANALYSIS = "static_analysis"
+        DEPENDENCY_SCAN = "dependency_scan"
+        CONTAINER_SCAN = "container_scan"
+        SECRET_SCAN = "secret_scan"
+
+try:
+    from monitoring.documentation.api_validator import APIDocumentationValidator
+    HAS_API_VALIDATOR = True
+except ImportError:
+    HAS_API_VALIDATOR = False
 
 logger = logging.getLogger(__name__)
 
@@ -110,9 +141,12 @@ class QualityMetricsOrchestrator:
         self.doc_validator = None
         
         try:
-            self.quality_gate_validator = QualityGateValidator()
-            self.security_scanner = SecurityScanEngine()
-            self.doc_validator = APIDocumentationValidator()
+            if HAS_QUALITY_GATE_VALIDATOR:
+                self.quality_gate_validator = QualityGateValidator()
+            if HAS_SECURITY_SCANNER:
+                self.security_scanner = SecurityScanEngine()
+            if HAS_API_VALIDATOR:
+                self.doc_validator = APIDocumentationValidator()
         except Exception as e:
             self.logger.warning(f"Could not initialize some quality components: {e}")
 
