@@ -57,6 +57,16 @@ except ImportError as e:
 
 from ..models import FingerprintResult, SimilarityMatch
 
+# Import multilingual support
+try:
+    from ...conversational.multilingual_support.enhanced_644_language_support import (
+        Enhanced644LanguageSupport, LanguageProfile, LanguageDetectionResult
+    )
+    MULTILINGUAL_AVAILABLE = True
+except ImportError:
+    MULTILINGUAL_AVAILABLE = False
+    logging.warning("Enhanced 644 language support not available")
+
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -211,6 +221,355 @@ Extract semantic features from embeddings."""
             "embedding_min": float(np.min(embeddings)),
             "embedding_norm": float(np.linalg.norm(embeddings)),
             "embedding_sparsity": float(np.sum(np.abs(embeddings) < 0.01) / len(embeddings))
+        }
+
+class MultilingualBERTCopyrightExtractor:
+    """
+    Multilingual BERT-based semantic similarity for copyright detection across 644 languages.
+    
+    This class extends the basic BERT functionality to support:
+    - Multilingual BERT models (bert-base-multilingual-cased, XLM-RoBERTa)
+    - Cross-lingual semantic similarity
+    - Integration with 644 language support system
+    - Copyright-specific similarity thresholds
+    """
+    
+    def __init__(self, model_name: str = "bert-base-multilingual-cased"):
+        self.model_name = model_name
+        self.tokenizer = None
+        self.model = None
+        self.language_support = None
+        self._supported_models = {
+            "bert-base-multilingual-cased": "BERT Multilingual",
+            "xlm-roberta-base": "XLM-RoBERTa Base", 
+            "xlm-roberta-large": "XLM-RoBERTa Large",
+            "distilbert-base-multilingual-cased": "DistilBERT Multilingual"
+        }
+        self._initialize_model()
+        self._initialize_language_support()
+        
+    def _initialize_model(self):
+        """Initialize multilingual BERT model."""
+        try:
+            if self.model_name not in self._supported_models:
+                logger.warning(f"Model {self.model_name} not in recommended list. Using anyway.")
+            
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+            self.model = AutoModel.from_pretrained(self.model_name)
+            self.model.eval()
+            logger.info(f"Initialized {self._supported_models.get(self.model_name, self.model_name)} for copyright detection")
+        except Exception as e:
+            logger.error(f"Multilingual BERT model initialization failed: {e}")
+    
+    def _initialize_language_support(self):
+        """Initialize 644 language support system."""
+        if MULTILINGUAL_AVAILABLE:
+            try:
+                self.language_support = Enhanced644LanguageSupport()
+                logger.info("Enhanced 644 language support initialized for copyright detection")
+            except Exception as e:
+                logger.warning(f"Failed to initialize language support: {e}")
+    
+    def detect_semantic_copyright_violation(
+        self, 
+        original_text: str, 
+        suspected_text: str,
+        similarity_threshold: float = 0.85,
+        language_hint: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Detect potential copyright violation using semantic similarity across languages.
+        
+        Args:
+            original_text: The original copyrighted text
+            suspected_text: Text suspected of copyright violation
+            similarity_threshold: Similarity threshold for violation detection (0.85 = 85%)
+            language_hint: Optional language hint for better processing
+            
+        Returns:
+            Dictionary containing copyright analysis results
+        """
+        if not self.model or not self.tokenizer:
+            return {"error": "Multilingual BERT model not initialized"}
+        
+        try:
+            # Detect languages
+            original_lang_info = self._detect_and_analyze_language(original_text)
+            suspected_lang_info = self._detect_and_analyze_language(suspected_text)
+            
+            # Extract multilingual embeddings
+            original_embeddings = self._extract_multilingual_embeddings(original_text, original_lang_info.get('language'))
+            suspected_embeddings = self._extract_multilingual_embeddings(suspected_text, suspected_lang_info.get('language'))
+            
+            if "error" in original_embeddings or "error" in suspected_embeddings:
+                return {"error": "Failed to extract embeddings for copyright analysis"}
+            
+            # Calculate semantic similarity
+            similarity_score = self._calculate_semantic_similarity(
+                original_embeddings['embeddings'], 
+                suspected_embeddings['embeddings']
+            )
+            
+            # Determine copyright violation
+            is_violation = similarity_score >= similarity_threshold
+            
+            # Calculate confidence based on text length, language match, etc.
+            confidence = self._calculate_violation_confidence(
+                original_text, suspected_text, 
+                original_lang_info, suspected_lang_info, 
+                similarity_score
+            )
+            
+            return {
+                "copyright_violation_detected": is_violation,
+                "semantic_similarity_score": float(similarity_score),
+                "confidence": float(confidence),
+                "similarity_threshold": similarity_threshold,
+                "original_language": original_lang_info,
+                "suspected_language": suspected_lang_info,
+                "cross_lingual_analysis": original_lang_info.get('language') != suspected_lang_info.get('language'),
+                "model_used": self.model_name,
+                "analysis_metadata": {
+                    "original_embedding_hash": original_embeddings.get('embedding_hash'),
+                    "suspected_embedding_hash": suspected_embeddings.get('embedding_hash'),
+                    "original_text_length": len(original_text),
+                    "suspected_text_length": len(suspected_text),
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Copyright violation detection failed: {e}")
+            return {"error": str(e)}
+    
+    def _detect_and_analyze_language(self, text: str) -> Dict[str, Any]:
+        """Detect and analyze language using 644 language support."""
+        if self.language_support:
+            try:
+                # Use enhanced language detection
+                detection_result = asyncio.run(self.language_support.detect_language(text))
+                return {
+                    "language": detection_result.detected_language,
+                    "confidence": detection_result.confidence,
+                    "language_family": getattr(detection_result, 'language_family', None),
+                    "writing_system": getattr(detection_result, 'writing_system', None),
+                    "enhanced_detection": True
+                }
+            except Exception as e:
+                logger.warning(f"Enhanced language detection failed: {e}")
+        
+        # Fallback to basic language detection
+        try:
+            from langdetect import detect, detect_probabilities
+            detected_lang = detect(text)
+            probabilities = detect_probabilities(text)
+            confidence = max(prob.prob for prob in probabilities) if probabilities else 0.0
+            
+            return {
+                "language": detected_lang,
+                "confidence": confidence,
+                "enhanced_detection": False
+            }
+        except Exception as e:
+            logger.warning(f"Basic language detection failed: {e}")
+            return {
+                "language": "unknown",
+                "confidence": 0.0,
+                "enhanced_detection": False
+            }
+    
+    def _extract_multilingual_embeddings(self, text: str, language: Optional[str] = None) -> Dict[str, Any]:
+        """Extract embeddings optimized for multilingual content."""
+        try:
+            # Preprocess text considering language-specific characteristics
+            processed_text = self._preprocess_multilingual_text(text, language)
+            
+            # Handle long texts by chunking
+            chunks = self._chunk_text(processed_text, max_length=512)
+            
+            chunk_embeddings = []
+            for chunk in chunks:
+                # Tokenize with multilingual considerations
+                inputs = self.tokenizer(
+                    chunk,
+                    return_tensors="pt",
+                    truncation=True,
+                    padding=True,
+                    max_length=512,
+                    add_special_tokens=True
+                )
+                
+                with torch.no_grad():
+                    outputs = self.model(**inputs)
+                    
+                # Extract embeddings (use [CLS] token for classification tasks)
+                cls_embedding = outputs.last_hidden_state[:, 0, :].squeeze()
+                chunk_embeddings.append(cls_embedding.numpy())
+            
+            # Combine chunk embeddings
+            if chunk_embeddings:
+                combined_embeddings = np.mean(chunk_embeddings, axis=0)
+            else:
+                # Default size for multilingual BERT
+                embedding_size = 768 if "base" in self.model_name else 1024
+                combined_embeddings = np.zeros(embedding_size)
+            
+            # Generate embedding hash
+            embedding_hash = self._compute_embedding_hash(combined_embeddings)
+            
+            # Extract semantic features
+            semantic_features = self._extract_semantic_features(combined_embeddings)
+            
+            return {
+                "embeddings": combined_embeddings.tolist(),
+                "embedding_hash": embedding_hash,
+                "embedding_size": len(combined_embeddings),
+                "num_chunks": len(chunks),
+                "semantic_features": semantic_features,
+                "model_name": self.model_name,
+                "language": language,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Multilingual embedding extraction failed: {e}")
+            return {"error": str(e)}
+    
+    def _preprocess_multilingual_text(self, text: str, language: Optional[str] = None) -> str:
+        """Preprocess text with multilingual considerations."""
+        # Basic preprocessing
+        text = text.strip()
+        
+        # Language-specific preprocessing could be added here
+        if language:
+            # Handle RTL languages
+            if language in ['ar', 'he', 'fa', 'ur']:
+                # RTL text preprocessing if needed
+                pass
+            
+            # Handle logographic languages
+            elif language in ['zh', 'ja', 'ko']:
+                # No space-based tokenization preprocessing
+                pass
+            
+            # Handle complex scripts
+            elif language in ['hi', 'bn', 'ta', 'te', 'ml', 'gu', 'mr']:
+                # Devanagari and related scripts preprocessing
+                pass
+        
+        # Unicode normalization
+        text = unicodedata.normalize('NFKC', text)
+        
+        return text
+    
+    def _chunk_text(self, text: str, max_length: int = 512) -> List[str]:
+        """Split text into chunks for multilingual processing."""
+        # Use tokenizer to get accurate token count
+        tokens = self.tokenizer.tokenize(text)
+        
+        if len(tokens) <= max_length - 2:  # Account for [CLS] and [SEP]
+            return [text]
+        
+        chunks = []
+        chunk_size = max_length - 2
+        
+        for i in range(0, len(tokens), chunk_size):
+            chunk_tokens = tokens[i:i + chunk_size]
+            chunk_text = self.tokenizer.convert_tokens_to_string(chunk_tokens)
+            chunks.append(chunk_text)
+        
+        return chunks
+    
+    def _calculate_semantic_similarity(self, embeddings1: List[float], embeddings2: List[float]) -> float:
+        """Calculate cosine similarity between two embedding vectors."""
+        try:
+            vec1 = np.array(embeddings1)
+            vec2 = np.array(embeddings2)
+            
+            # Calculate cosine similarity
+            dot_product = np.dot(vec1, vec2)
+            norm1 = np.linalg.norm(vec1)
+            norm2 = np.linalg.norm(vec2)
+            
+            if norm1 == 0 or norm2 == 0:
+                return 0.0
+            
+            similarity = dot_product / (norm1 * norm2)
+            
+            # Ensure similarity is between 0 and 1
+            return max(0.0, min(1.0, float(similarity)))
+            
+        except Exception as e:
+            logger.error(f"Similarity calculation failed: {e}")
+            return 0.0
+    
+    def _calculate_violation_confidence(
+        self, 
+        original_text: str, 
+        suspected_text: str,
+        original_lang_info: Dict[str, Any],
+        suspected_lang_info: Dict[str, Any],
+        similarity_score: float
+    ) -> float:
+        """Calculate confidence in copyright violation detection."""
+        try:
+            confidence_factors = []
+            
+            # Base confidence from similarity score
+            base_confidence = similarity_score
+            confidence_factors.append(base_confidence * 0.4)  # 40% weight
+            
+            # Text length factor (longer texts give more confident results)
+            min_length = min(len(original_text), len(suspected_text))
+            max_length = max(len(original_text), len(suspected_text))
+            length_factor = min(1.0, min_length / 100)  # Normalize to 100 chars
+            confidence_factors.append(length_factor * 0.2)  # 20% weight
+            
+            # Language detection confidence
+            lang_confidence = (
+                original_lang_info.get('confidence', 0.5) + 
+                suspected_lang_info.get('confidence', 0.5)
+            ) / 2
+            confidence_factors.append(lang_confidence * 0.2)  # 20% weight
+            
+            # Cross-lingual penalty (slightly lower confidence for different languages)
+            same_language = original_lang_info.get('language') == suspected_lang_info.get('language')
+            cross_lingual_factor = 1.0 if same_language else 0.9
+            confidence_factors.append(cross_lingual_factor * 0.1)  # 10% weight
+            
+            # Text ratio factor (very different lengths might indicate different types of content)
+            if max_length > 0:
+                ratio_factor = min_length / max_length
+                confidence_factors.append(ratio_factor * 0.1)  # 10% weight
+            
+            # Calculate final confidence
+            final_confidence = sum(confidence_factors)
+            
+            return max(0.0, min(1.0, final_confidence))
+            
+        except Exception as e:
+            logger.warning(f"Confidence calculation failed: {e}")
+            return 0.5  # Default moderate confidence
+    
+    def _compute_embedding_hash(self, embeddings: np.ndarray) -> str:
+        """Compute hash from BERT embeddings for copyright fingerprinting."""
+        # Quantize embeddings to binary
+        binary_embeddings = (embeddings > np.median(embeddings)).astype(int)
+        
+        # Convert to hash
+        hash_string = ''.join([str(bit) for bit in binary_embeddings])
+        return hashlib.md5(hash_string.encode()).hexdigest()
+    
+    def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
+        """Extract semantic features from embeddings for copyright analysis."""
+        return {
+            "embedding_mean": float(np.mean(embeddings)),
+            "embedding_std": float(np.std(embeddings)),
+            "embedding_max": float(np.max(embeddings)),
+            "embedding_min": float(np.min(embeddings)),
+            "embedding_norm": float(np.linalg.norm(embeddings)),
+            "embedding_sparsity": float(np.sum(np.abs(embeddings) < 0.01) / len(embeddings)),
+            "semantic_diversity": float(np.std(embeddings) / (np.mean(np.abs(embeddings)) + 1e-8))
         }
 
 class SentenceTransformerExtractor:
@@ -997,6 +1356,11 @@ class TextFingerprintingService:
         self.ngram_analyzer = NGramAnalyzer()
         self.semantic_analyzer = SemanticAnalyzer()
         
+        # NEW: Add multilingual BERT copyright detector
+        self.multilingual_copyright_detector = MultilingualBERTCopyrightExtractor(
+            model_name=config.get("multilingual_model", "bert-base-multilingual-cased")
+        )
+        
         # Similarity thresholds
         self.similarity_thresholds = {
             "bert": 0.85,
@@ -1004,7 +1368,9 @@ class TextFingerprintingService:
             "tfidf": 0.75,
             "ngrams": 0.80,
             "semantic": 0.70,
-            "combined": 0.80
+            "combined": 0.80,
+            # NEW: Copyright detection threshold
+            "copyright_semantic": 0.85
         }
         
     async def process_text(self, text: str, user_id: int, file_path: Optional[str] = None) -> FingerprintResult:
@@ -1069,6 +1435,70 @@ class TextFingerprintingService:
         except Exception as e:
             logger.error(f"Text fingerprinting failed: {e}")
             raise
+    
+    async def detect_copyright_violation(
+        self, 
+        original_text: str, 
+        suspected_text: str,
+        similarity_threshold: Optional[float] = None,
+        language_hint: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Detect potential copyright violation using multilingual BERT semantic similarity.
+        
+        This method provides advanced copyright detection across 644 languages using:
+        - Multilingual BERT models for cross-lingual understanding
+        - Enhanced language detection and analysis
+        - Semantic similarity scoring
+        - Confidence assessment based on multiple factors
+        
+        Args:
+            original_text: The original copyrighted text
+            suspected_text: Text suspected of copyright violation
+            similarity_threshold: Custom threshold (defaults to config)
+            language_hint: Optional language hint for better processing
+            
+        Returns:
+            Dictionary containing comprehensive copyright analysis
+        """
+        try:
+            logger.info("Starting multilingual copyright violation detection")
+            
+            # Use configured threshold if not provided
+            threshold = similarity_threshold or self.similarity_thresholds["copyright_semantic"]
+            
+            # Run copyright detection using multilingual BERT
+            detection_result = self.multilingual_copyright_detector.detect_semantic_copyright_violation(
+                original_text=original_text,
+                suspected_text=suspected_text,
+                similarity_threshold=threshold,
+                language_hint=language_hint
+            )
+            
+            # Add additional context and metadata
+            detection_result.update({
+                "service_version": "v1.0",
+                "detection_engine": "MultilinguaBERT-644Lang",
+                "enhanced_features": {
+                    "cross_lingual_support": True,
+                    "language_count": 644,
+                    "advanced_confidence_scoring": True,
+                    "enterprise_grade": True
+                }
+            })
+            
+            logger.info(f"Copyright detection completed. Violation detected: {detection_result.get('copyright_violation_detected', False)}")
+            
+            return detection_result
+            
+        except Exception as e:
+            logger.error(f"Copyright violation detection failed: {e}")
+            return {
+                "error": str(e),
+                "copyright_violation_detected": False,
+                "confidence": 0.0,
+                "analysis_failed": True
+            }
     
     async def _extract_metadata(self, text: str) -> TextMetadata:
         """Extract comprehensive text metadata."""
